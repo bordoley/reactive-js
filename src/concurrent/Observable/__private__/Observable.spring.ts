@@ -14,7 +14,7 @@ import Observable_map from "./Observable.map.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 
-const Observable_spring: Observable.Signature["spring"] = (options?: {
+const Observable_spring = (options?: {
   readonly stiffness?: number;
   readonly damping?: number;
   readonly precision?: number;

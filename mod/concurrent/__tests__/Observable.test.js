@@ -39,13 +39,20 @@ const expectIsMulticastObservable = (obs) => {
     expectTrue(obs[ObservableLike_isPure]);
     expectFalse(obs[ObservableLike_isDeferred]);
 };
+const testIsPureRunnable = (obs) => test("is PureRunnableLike", pipeLazy(obs, expectIsPureRunnable));
 const PureObservableOperatorTests = (op) => describe("PureObservableOperator", test("with PureRunnableLike", pipeLazy(Observable.empty(), op, expectIsPureRunnable)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty(), Observable.forEach(ignore), op, expectIsRunnableWithSideEffects)), test("with DeferredSideEffectsObservableLike", pipeLazy(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory(), op, expectIsDeferredSideEffectsObservable)), test("with MulticastObservableLike", pipeLazy(new Promise(ignore), Observable.fromPromise(), op, expectIsMulticastObservable)));
 const ObservableOperatorWithSideEffectsTests = (op) => describe("ObservableOperatorWithSideEffects", test("with PureRunnableLike", pipeLazy(Observable.empty(), op, expectIsRunnableWithSideEffects)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty(), Observable.forEach(ignore), op, expectIsRunnableWithSideEffects)), test("with DeferredSideEffectsObservableLike", pipeLazy(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory(), op, expectIsDeferredSideEffectsObservable)), test("with MulticastObservableLike", pipeLazy(new Promise(ignore), Observable.fromPromise(), op, expectIsDeferredSideEffectsObservable)));
-testModule("Observable", PureComputationModuleTests(Observable, Observable.toReadonlyArray), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
+testModule("Observable", PureComputationModuleTests(Observable, Observable.toReadonlyArray), describe("animate", testIsPureRunnable(Observable.animate([
+    { type: "keyframe", duration: 500, from: 0, to: 1 },
+    { type: "delay", duration: 250 },
+    { type: "frame", value: 1 },
+    { type: "spring", stiffness: 0.01, damping: 0.1, from: 1, to: 0 },
+    { type: "spring", from: 0, to: 1 },
+]))), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
     await expectToThrowAsync(pipeLazyAsync(Observable.create(observer => {
         for (let i = 0; i < 10; i++) {
             observer[QueueableLike_enqueue](i);
@@ -88,7 +95,7 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
         result = e["cause"];
     }), Observable.toReadonlyArray());
     pipe(result, ReadonlyArray.map(x => x.message), expectArrayEquals(["e2", "e1"]));
-}), PureObservableOperatorTests(Observable.catchError(ignore))), describe("combineLatest", test("combineLatest", pipeLazy(Observable.combineLatest(pipe(Enumerable.generate(incrementBy(2), returns(1)), Observable.fromEnumerable({ delay: 2 }), Observable.takeFirst({ count: 3 })), pipe(Enumerable.generate(incrementBy(2), returns(0)), Observable.fromEnumerable({ delay: 3 }), Observable.takeFirst({ count: 2 }))), Observable.toReadonlyArray(), expectArrayEquals([tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)], { valuesEquality: arrayEquality() }))), test("with PureRunnables", pipeLazy(Observable.combineLatest(Observable.empty(), Observable.empty()), expectIsPureRunnable)), test("with runnables with side effects", pipeLazy(Observable.combineLatest(Observable.empty(), pipe(Observable.empty(), Observable.forEach(ignore))), expectIsRunnableWithSideEffects)), test("with deferred observables with side effects", pipeLazy(Observable.combineLatest(pipe(async () => {
+}), PureObservableOperatorTests(Observable.catchError(ignore))), describe("combineLatest", test("combineLatest", pipeLazy(Observable.combineLatest(pipe(Enumerable.generate(incrementBy(2), returns(1)), Observable.fromEnumerable({ delay: 2 }), Observable.takeFirst({ count: 3 })), pipe(Enumerable.generate(incrementBy(2), returns(0)), Observable.fromEnumerable({ delay: 3 }), Observable.takeFirst({ count: 2 }))), Observable.toReadonlyArray(), expectArrayEquals([tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)], { valuesEquality: arrayEquality() }))), testIsPureRunnable(Observable.combineLatest(Observable.empty(), Observable.empty())), test("with runnables with side effects", pipeLazy(Observable.combineLatest(Observable.empty(), pipe(Observable.empty(), Observable.forEach(ignore))), expectIsRunnableWithSideEffects)), test("with deferred observables with side effects", pipeLazy(Observable.combineLatest(pipe(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory()), Observable.empty(), pipe(Observable.empty(), Observable.forEach(ignore))), x => x, expectIsDeferredSideEffectsObservable))), describe("computeDeferred", testAsync("__stream", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => pipeAsync(Observable.computeDeferred(() => {
     const stream = __stream(Streamable.identity());

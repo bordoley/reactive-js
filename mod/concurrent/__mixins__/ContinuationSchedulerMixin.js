@@ -77,7 +77,6 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
             let head = none;
             while (((head = thiz[QueueLike_dequeue]()), isSome(head))) {
                 thiz[QueueableContinuationLike_activeChild] = head;
-                // FIXME
                 runContinuation(head);
                 thiz[QueueableContinuationLike_activeChild] = none;
                 if (thiz[DisposableLike_isDisposed]) {

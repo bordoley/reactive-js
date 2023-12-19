@@ -119,6 +119,9 @@ const expectIsMulticastObservable = (obs: MulticastObservableLike) => {
   expectFalse(obs[ObservableLike_isDeferred]);
 };
 
+const testIsPureRunnable = (obs: PureRunnableLike) =>
+  test("is PureRunnableLike", pipeLazy(obs, expectIsPureRunnable));
+
 const PureObservableOperatorTests = (
   op: Observable.PureObservableOperator<unknown, unknown>,
 ) =>
@@ -204,6 +207,18 @@ testModule(
   PureComputationModuleTests(
     Observable as PureComputationModule<Observable.PureRunnableComputation>,
     Observable.toReadonlyArray,
+  ),
+  describe(
+    "animate",
+    testIsPureRunnable(
+      Observable.animate<number>([
+        { type: "keyframe", duration: 500, from: 0, to: 1 },
+        { type: "delay", duration: 250 },
+        { type: "frame", value: 1 },
+        { type: "spring", stiffness: 0.01, damping: 0.1, from: 1, to: 0 },
+        { type: "spring", from: 0, to: 1 },
+      ]),
+    ),
   ),
   describe(
     "backpressureStrategy",
@@ -358,12 +373,8 @@ testModule(
         ),
       ),
     ),
-    test(
-      "with PureRunnables",
-      pipeLazy(
-        Observable.combineLatest(Observable.empty(), Observable.empty()),
-        expectIsPureRunnable,
-      ),
+    testIsPureRunnable(
+      Observable.combineLatest(Observable.empty(), Observable.empty()),
     ),
     test(
       "with runnables with side effects",

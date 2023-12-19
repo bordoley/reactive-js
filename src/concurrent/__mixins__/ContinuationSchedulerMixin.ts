@@ -210,7 +210,7 @@ const ContinuationSchedulerMixin: Mixin1<
       let head: Optional<QueueableContinuationLike> = none;
       while (((head = thiz[QueueLike_dequeue]()), isSome(head))) {
         thiz[QueueableContinuationLike_activeChild] = head;
-        // FIXME
+
         runContinuation(head);
 
         thiz[QueueableContinuationLike_activeChild] = none;

@@ -1,5 +1,6 @@
 /// <reference types="./Observable.animate.d.ts" />
 
+import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import { identity, isReadonlyArray, isSome, pipe } from "../../../functions.js";
 import Observable_concatMany from "./Observable.concatMany.js";
 import Observable_empty from "./Observable.empty.js";
@@ -29,13 +30,5 @@ const parseAnimationConfig = (config) => config.type === "loop"
                     : Observable_spring(config), Observable_map(scale(config.from, config.to)), isSome(config.selector)
                     ? Observable_map(config.selector)
                     : identity);
-const Observable_animate = (config) => {
-    const configs = isReadonlyArray(config)
-        ? config
-        : [config];
-    const observables = configs.map(parseAnimationConfig);
-    // FIXME: concat many will return the wrong purity flag in some cases.
-    // Need to wrap this is in a Runnable.defer or RunnableWithSideEffects create function
-    return Observable_concatMany(observables);
-};
+const Observable_animate = (config) => Observable_concatMany(pipe(isReadonlyArray(config) ? config : [config], ReadonlyArray.map(parseAnimationConfig)));
 export default Observable_animate;

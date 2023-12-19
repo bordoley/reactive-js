@@ -1,12 +1,12 @@
 /// <reference types="./IndexedQueue.test.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, expectIsNone, expectToThrow, test, testModule, } from "../../__internal__/testing.js";
+import { expectArrayEquals, expectEquals, expectIsNone, expectToThrow, test, testModule, } from "../../__internal__/testing.js";
 import { CollectionLike_count, KeyedLike_get, MutableKeyedLike_set, } from "../../collections.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import { none, pipe } from "../../functions.js";
 import { QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, StackLike_head, StackLike_pop, } from "../../utils.js";
 import * as IndexedQueue from "../IndexedQueue.js";
-testModule("IndexedQueue", describe("indexedQueueMixin", test("push/pull/count", () => {
+testModule("IndexedQueue", test("push/pull/count", () => {
     const queue = IndexedQueue.create();
     pipe(queue[StackLike_head], expectIsNone);
     pipe(queue[StackLike_pop](), expectIsNone);
@@ -65,4 +65,4 @@ testModule("IndexedQueue", describe("indexedQueueMixin", test("push/pull/count",
         queue[QueueLike_dequeue]();
     }
     pipe(queue[QueueLike_head], expectEquals(250));
-})));
+}));

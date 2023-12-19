@@ -358,11 +358,6 @@ export interface ObservableModule extends PureComputationModule<PureRunnableComp
     skipFirst<T>(options?: {
         readonly count?: number;
     }): PureObservableOperator<T, T>;
-    spring(options?: {
-        readonly stiffness?: number;
-        readonly damping?: number;
-        readonly precision?: number;
-    }): PureRunnableLike<number>;
     startWith<T>(value: T, ...values: readonly T[]): PureObservableOperator<T, T>;
     switchAll<T>(): PureObservableOperator<PureRunnableLike<T>, T>;
     switchAll<T>(options: {
@@ -531,7 +526,6 @@ export declare const scan: Signature["scan"];
 export declare const scanMany: Signature["scanMany"];
 export declare const share: Signature["share"];
 export declare const skipFirst: Signature["skipFirst"];
-export declare const spring: Signature["spring"];
 export declare const startWith: Signature["startWith"];
 export declare const subscribe: Signature["subscribe"];
 export declare const subscribeOn: Signature["subscribeOn"];

@@ -115,7 +115,6 @@ import Observable_scan from "./Observable/__private__/Observable.scan.js";
 import Observable_scanMany from "./Observable/__private__/Observable.scanMany.js";
 import Observable_share from "./Observable/__private__/Observable.share.js";
 import Observable_skipFirst from "./Observable/__private__/Observable.skipFirst.js";
-import Observable_spring from "./Observable/__private__/Observable.spring.js";
 import Observable_startWith from "./Observable/__private__/Observable.startWith.js";
 import Observable_subscribe from "./Observable/__private__/Observable.subscribe.js";
 import Observable_subscribeOn from "./Observable/__private__/Observable.subscribeOn.js";
@@ -1091,12 +1090,6 @@ export interface ObservableModule
     readonly count?: number;
   }): PureObservableOperator<T, T>;
 
-  spring(options?: {
-    readonly stiffness?: number;
-    readonly damping?: number;
-    readonly precision?: number;
-  }): PureRunnableLike<number>;
-
   startWith<T>(value: T, ...values: readonly T[]): PureObservableOperator<T, T>;
 
   switchAll<T>(): PureObservableOperator<PureRunnableLike<T>, T>;
@@ -1562,7 +1555,6 @@ export const scan: Signature["scan"] = Observable_scan;
 export const scanMany: Signature["scanMany"] = Observable_scanMany;
 export const share: Signature["share"] = Observable_share;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
-export const spring: Signature["spring"] = Observable_spring;
 export const startWith: Signature["startWith"] = Observable_startWith;
 export const subscribe: Signature["subscribe"] = Observable_subscribe;
 export const subscribeOn: Signature["subscribeOn"] = Observable_subscribeOn;

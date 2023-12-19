@@ -84,7 +84,6 @@
 - [scanMany](concurrent_Observable.ObservableModule.md#scanmany)
 - [share](concurrent_Observable.ObservableModule.md#share)
 - [skipFirst](concurrent_Observable.ObservableModule.md#skipfirst)
-- [spring](concurrent_Observable.ObservableModule.md#spring)
 - [startWith](concurrent_Observable.ObservableModule.md#startwith)
 - [subscribe](concurrent_Observable.ObservableModule.md#subscribe)
 - [subscribeOn](concurrent_Observable.ObservableModule.md#subscribeon)
@@ -3275,25 +3274,6 @@ ___
 #### Overrides
 
 [PureComputationModule](computations.PureComputationModule.md).[skipFirst](computations.PureComputationModule.md#skipfirst)
-
-___
-
-### spring
-
-▸ **spring**(`options?`): [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`number`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.damping?` | `number` |
-| `options.precision?` | `number` |
-| `options.stiffness?` | `number` |
-
-#### Returns
-
-[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`number`\>
 
 ___
 

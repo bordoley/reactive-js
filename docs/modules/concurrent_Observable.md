@@ -103,7 +103,6 @@
 - [scanMany](concurrent_Observable.md#scanmany)
 - [share](concurrent_Observable.md#share)
 - [skipFirst](concurrent_Observable.md#skipfirst)
-- [spring](concurrent_Observable.md#spring)
 - [startWith](concurrent_Observable.md#startwith)
 - [subscribe](concurrent_Observable.md#subscribe)
 - [subscribeOn](concurrent_Observable.md#subscribeon)
@@ -3465,25 +3464,6 @@ ___
 #### Returns
 
 [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
-
-___
-
-### spring
-
-▸ **spring**(`options?`): [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`number`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.damping?` | `number` |
-| `options.precision?` | `number` |
-| `options.stiffness?` | `number` |
-
-#### Returns
-
-[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`number`\>
 
 ___
 

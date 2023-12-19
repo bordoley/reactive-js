@@ -1,3 +1,4 @@
+import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import { PureRunnableLike } from "../../../concurrent.js";
 import { identity, isReadonlyArray, isSome, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
@@ -52,15 +53,12 @@ const parseAnimationConfig = <T = number>(
 
 const Observable_animate: Observable.Signature["animate"] = <T = number>(
   config: Observable.Animation<T> | readonly Observable.Animation<T>[],
-) => {
-  const configs = isReadonlyArray<Observable.Animation<T>>(config)
-    ? config
-    : [config];
-  const observables = configs.map(parseAnimationConfig);
-
-  // FIXME: concat many will return the wrong purity flag in some cases.
-  // Need to wrap this is in a Runnable.defer or RunnableWithSideEffects create function
-  return Observable_concatMany(observables);
-};
+) =>
+  Observable_concatMany(
+    pipe(
+      isReadonlyArray<Observable.Animation<T>>(config) ? config : [config],
+      ReadonlyArray.map(parseAnimationConfig),
+    ),
+  );
 
 export default Observable_animate;
