@@ -355,6 +355,37 @@ testModule(
         ),
       ),
     ),
+    test(
+      "with PureRunnables",
+      pipeLazy(
+        Observable.combineLatest(Observable.empty(), Observable.empty()),
+        expectIsPureRunnable,
+      ),
+    ),
+    test(
+      "with runnables with side effects",
+      pipeLazy(
+        Observable.combineLatest(
+          Observable.empty(),
+          pipe(Observable.empty(), Observable.forEach(ignore)),
+        ),
+        expectIsRunnableWithSideEffects,
+      ),
+    ),
+    test(
+      "with deferred observables with side effects",
+      pipeLazy(
+        Observable.combineLatest(
+          pipe(async () => {
+            throw new Error();
+          }, Observable.fromAsyncFactory()),
+          Observable.empty(),
+          pipe(Observable.empty(), Observable.forEach(ignore)),
+        ),
+        x => x,
+        expectIsDeferredSideEffectsObservable,
+      ),
+    ),
   ),
   describe(
     "computeDeferred",
