@@ -30,7 +30,7 @@ import {
   SchedulerTaskLike_dueTime,
   SchedulerTaskLike_id,
 } from "../concurrent/__private__.js";
-import { isSome } from "../functions.js";
+import { isSome, none } from "../functions.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -100,8 +100,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           PriorityQueueMixin<SchedulerTaskLike>(),
           instance,
           comparator,
-          MAX_SAFE_INTEGER,
-          "overflow",
+          none,
         );
 
         instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;

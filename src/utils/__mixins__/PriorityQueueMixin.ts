@@ -1,6 +1,6 @@
 import { floor } from "../../__internal__/math.js";
 import {
-  Mixin3,
+  Mixin2,
   Mutable,
   getPrototype,
   include,
@@ -36,11 +36,13 @@ import {
 } from "../../utils.js";
 import IndexedQueueMixin from "./IndexedQueueMixin.js";
 
-const PriorityQueueMixin: <T>() => Mixin3<
+const PriorityQueueMixin: <T>() => Mixin2<
   QueueCollectionLike<T>,
   Comparator<T>,
-  number,
-  QueueableLike[typeof QueueableLike_backpressureStrategy]
+  Optional<{
+    readonly [QueueableLike_backpressureStrategy]?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly [QueueableLike_capacity]?: number;
+  }>
 > = /*@__PURE__*/ (<T>() => {
   const IndexedQueuePrototype = getPrototype(IndexedQueueMixin());
 
@@ -111,10 +113,12 @@ const PriorityQueueMixin: <T>() => Mixin3<
         > &
           Mutable<TProperties>,
         comparator: Comparator<T>,
-        capacity: number,
-        backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
+        config?: {
+          readonly [QueueableLike_backpressureStrategy]?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+          readonly [QueueableLike_capacity]?: number;
+        },
       ): QueueCollectionLike<T> {
-        init(IndexedQueueMixin<T>(), instance, capacity, backpressureStrategy);
+        init(IndexedQueueMixin<T>(), instance, config);
         instance[PriorityQueueMixin_comparator] = comparator;
         return instance;
       },

@@ -1,9 +1,12 @@
 /// <reference types="./IndexedQueue.d.ts" />
 
-import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import { createInstanceFactory } from "../__internal__/mixins.js";
+import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../utils.js";
 import IndexedQueueMixin from "./__mixins__/IndexedQueueMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const createIndexedQueue = createInstanceFactory(IndexedQueueMixin());
-    return (options) => createIndexedQueue(options?.capacity ?? MAX_SAFE_INTEGER, options?.backpressureStrategy ?? "overflow");
+    return (options) => createIndexedQueue({
+        [QueueableLike_backpressureStrategy]: options?.backpressureStrategy,
+        [QueueableLike_capacity]: options?.capacity,
+    });
 })();

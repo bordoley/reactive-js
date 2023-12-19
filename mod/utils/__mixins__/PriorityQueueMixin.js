@@ -52,8 +52,8 @@ const PriorityQueueMixin = /*@__PURE__*/ (() => {
             queue[MutableKeyedLike_set](index, parent);
         }
     };
-    return pipe(mix(include(IndexedQueueMixin()), function PriorityQueueMixin(instance, comparator, capacity, backpressureStrategy) {
-        init(IndexedQueueMixin(), instance, capacity, backpressureStrategy);
+    return pipe(mix(include(IndexedQueueMixin()), function PriorityQueueMixin(instance, comparator, config) {
+        init(IndexedQueueMixin(), instance, config);
         instance[PriorityQueueMixin_comparator] = comparator;
         return instance;
     }, props({

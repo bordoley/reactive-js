@@ -269,12 +269,7 @@ const ContinuationSchedulerMixin: Mixin1<
         ): QueueableContinuationLike {
           init(DisposableMixin, instance);
 
-          init(
-            IndexedQueueMixin<QueueableContinuationLike>(),
-            instance,
-            MAX_SAFE_INTEGER,
-            "overflow",
-          );
+          init(IndexedQueueMixin<QueueableContinuationLike>(), instance, none);
 
           instance[QueueableContinuationLike_scheduler] = scheduler;
           instance[QueueableContinuationLike_effect] = effect;

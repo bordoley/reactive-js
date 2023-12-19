@@ -119,7 +119,7 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
         };
         return createInstanceFactory(mix(include(DisposableMixin, IndexedQueueMixin()), function Continuation(instance, scheduler, effect) {
             init(DisposableMixin, instance);
-            init(IndexedQueueMixin(), instance, MAX_SAFE_INTEGER, "overflow");
+            init(IndexedQueueMixin(), instance, none);
             instance[QueueableContinuationLike_scheduler] = scheduler;
             instance[QueueableContinuationLike_effect] = effect;
             pipe(instance, Disposable.onDisposed(pipeLazy(instance, rescheduleChildrenOnParentOrScheduler)));

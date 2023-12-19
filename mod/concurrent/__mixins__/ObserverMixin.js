@@ -36,9 +36,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
     };
     const indexedQueueProtoype = getPrototype(IndexedQueueMixin());
     return returns(mix(include(IndexedQueueMixin(), LazyInitEventSourceMixin()), function ObserverMixin(instance, scheduler, config) {
-        init(
-        // FIXME: Change this to take a config
-        IndexedQueueMixin(), instance, config[QueueableLike_capacity], config[QueueableLike_backpressureStrategy]);
+        init(IndexedQueueMixin(), instance, config);
         init(LazyInitEventSourceMixin(), instance);
         instance[ObserverMixin_scheduler] = scheduler;
         return instance;

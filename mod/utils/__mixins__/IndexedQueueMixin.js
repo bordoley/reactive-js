@@ -70,9 +70,10 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         }
         instance[IndexedQueueMixin_capacityMask] = newCapacity - 1;
     };
-    return pipe(mix(function IndexedQueueMixin(instance, capacity, backpressureStrategy) {
-        instance[QueueableLike_backpressureStrategy] = backpressureStrategy;
-        instance[QueueableLike_capacity] = clampPositiveInteger(capacity);
+    return pipe(mix(function IndexedQueueMixin(instance, config) {
+        instance[QueueableLike_backpressureStrategy] =
+            config?.[QueueableLike_backpressureStrategy] ?? "overflow";
+        instance[QueueableLike_capacity] = clampPositiveInteger(config?.[QueueableLike_capacity] ?? MAX_SAFE_INTEGER);
         return instance;
     }, props({
         [CollectionLike_count]: 0,

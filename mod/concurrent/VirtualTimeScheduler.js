@@ -7,7 +7,7 @@ import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move,
 import MutableEnumeratorMixin from "../collections/__mixins__/MutableEnumeratorMixin.js";
 import { SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../concurrent.js";
 import { SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTaskLike_id, } from "../concurrent/__private__.js";
-import { isSome } from "../functions.js";
+import { isSome, none } from "../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../utils.js";
 import PriorityQueueMixin from "../utils/__mixins__/PriorityQueueMixin.js";
 import ContinuationSchedulerMixin, { ContinuationLike_run, ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, } from "./__mixins__/ContinuationSchedulerMixin.js";
@@ -21,7 +21,7 @@ const VirtualTimeScheduler_taskIDCount = Symbol("VirtualTimeScheduler_taskIDCoun
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(ContinuationSchedulerMixin, MutableEnumeratorMixin(), PriorityQueueMixin()), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
     init(ContinuationSchedulerMixin, instance, 1);
     init(MutableEnumeratorMixin(), instance);
-    init(PriorityQueueMixin(), instance, comparator, MAX_SAFE_INTEGER, "overflow");
+    init(PriorityQueueMixin(), instance, comparator, none);
     instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
     return instance;
 }, props({

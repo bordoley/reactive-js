@@ -1,7 +1,7 @@
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import {
-  Mixin2,
+  Mixin1,
   Mutable,
   mix,
   props,
@@ -36,10 +36,12 @@ import {
   StackLike_pop,
 } from "../../utils.js";
 
-const IndexedQueueMixin: <T>() => Mixin2<
+const IndexedQueueMixin: <T>() => Mixin1<
   IndexedQueueLike<T>,
-  number,
-  QueueableLike[typeof QueueableLike_backpressureStrategy],
+  Optional<{
+    readonly [QueueableLike_backpressureStrategy]?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly [QueueableLike_capacity]?: number;
+  }>,
   unknown,
   Omit<
     IndexedQueueLike<T>,
@@ -150,11 +152,16 @@ const IndexedQueueMixin: <T>() => Mixin2<
           typeof CollectionLike_count | typeof QueueableLike_capacity
         > &
           Mutable<TProperties>,
-        capacity: number,
-        backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
+        config?: {
+          readonly [QueueableLike_backpressureStrategy]?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+          readonly [QueueableLike_capacity]?: number;
+        },
       ): IndexedQueueLike<T> {
-        instance[QueueableLike_backpressureStrategy] = backpressureStrategy;
-        instance[QueueableLike_capacity] = clampPositiveInteger(capacity);
+        instance[QueueableLike_backpressureStrategy] =
+          config?.[QueueableLike_backpressureStrategy] ?? "overflow";
+        instance[QueueableLike_capacity] = clampPositiveInteger(
+          config?.[QueueableLike_capacity] ?? MAX_SAFE_INTEGER,
+        );
         return instance;
       },
       props<TProperties>({

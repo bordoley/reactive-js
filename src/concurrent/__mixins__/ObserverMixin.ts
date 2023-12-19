@@ -161,13 +161,7 @@ const ObserverMixin: <T>() => Mixin2<
           | typeof QueueableLike_backpressureStrategy
         >,
       ): ObserverLike<T> {
-        init(
-          // FIXME: Change this to take a config
-          IndexedQueueMixin<T>(),
-          instance,
-          config[QueueableLike_capacity],
-          config[QueueableLike_backpressureStrategy],
-        );
+        init(IndexedQueueMixin<T>(), instance, config);
 
         init(LazyInitEventSourceMixin(), instance);
 
