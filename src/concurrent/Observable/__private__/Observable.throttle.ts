@@ -35,8 +35,8 @@ import type * as Observable from "../../Observable.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_fromIterable from "./Observable.fromIterable.js";
-import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
+import Observable_fromValue from "./Observable.fromValue.js";
+import Observable_liftPure from "./Observable.liftPure.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 const Observer_createThrottleObserver: <T>(
@@ -178,15 +178,14 @@ const Observable_throttle: Observable.Signature["throttle"] = (
   const { mode = "interval" } = options;
 
   const durationObservable = pipeLazy(
-    [none],
-    // FIXME: Observable_fromValue
-    Observable_fromIterable({ delay: duration, delayStart: true }),
+    none,
+    Observable_fromValue({ delay: duration }),
   );
 
   return pipe(
     Observer_createThrottleObserver,
     partial(durationObservable, mode),
-    Observable_liftWithSideEffects,
+    Observable_liftPure,
   );
 };
 

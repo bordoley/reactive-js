@@ -126,7 +126,6 @@ const Observable_switchAll: Observable.Signature["switchAll"] = ((options?: {
       [ObservableLike_isDeferred]: true,
       [ObservableLike_isPure]: true,
       [ObservableLike_isRunnable]: true,
-      ...(options ?? {}),
     },
   )(Observer_createSwitchAllObserver)) as Observable.Signature["switchAll"];
 

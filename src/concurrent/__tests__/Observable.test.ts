@@ -22,6 +22,7 @@ import { PureComputationModule, keepType, mapTo } from "../../computations.js";
 import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
 import {
   DeferredObservableLike,
+  DispatcherLike,
   DispatcherLikeEvent_completed,
   DispatcherLike_complete,
   FlowableLike_flow,
@@ -74,9 +75,9 @@ import {
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as IndexedQueue from "../../utils/IndexedQueue.js";
 import * as HostScheduler from "../HostScheduler.js";
 import * as Observable from "../Observable.js";
-import { PureObservableOperator } from "../Observable.js";
 import {
   __await,
   __bindMethod,
@@ -116,7 +117,7 @@ const expectIsMulticastObservable = (obs: ObservableLike) => {
 };
 
 const PureObservableOperatorTests = (
-  op: PureObservableOperator<unknown, unknown>,
+  op: Observable.PureObservableOperator<unknown, unknown>,
 ) =>
   describe(
     "PureObservableOperator",
@@ -151,6 +152,46 @@ const PureObservableOperatorTests = (
         Observable.fromPromise(),
         op,
         expectIsMulticastObservable,
+      ),
+    ),
+  );
+
+const ObservableOperatorWithSideEffectsTests = (
+  op: Observable.ObservableOperatorWithSideEffects<unknown, unknown>,
+) =>
+  describe(
+    "ObservableOperatorWithSideEffects",
+    test(
+      "with PureRunnableLike",
+      pipeLazy(Observable.empty(), op, expectIsRunnableWithSideEffects),
+    ),
+    test(
+      "with RunnableWithSideEffectsLike",
+      pipeLazy(
+        Observable.empty(),
+        Observable.forEach(ignore),
+        op,
+        expectIsRunnableWithSideEffects,
+      ),
+    ),
+    test(
+      "with DeferredSideEffectsObservableLike",
+      pipeLazy(
+        async () => {
+          throw new Error();
+        },
+        Observable.fromAsyncFactory(),
+        op,
+        expectIsDeferredSideEffectsObservable,
+      ),
+    ),
+    test(
+      "with MulticastObservableLike",
+      pipeLazy(
+        new Promise(ignore),
+        Observable.fromPromise(),
+        op,
+        expectIsDeferredSideEffectsObservable,
       ),
     ),
   );
@@ -288,6 +329,7 @@ testModule(
         expectArrayEquals(["e2", "e1"]),
       );
     }),
+    PureObservableOperatorTests(Observable.catchError(ignore)),
   ),
   describe(
     "combineLatest",
@@ -552,7 +594,8 @@ testModule(
       ),
     ),
     // FIXME
-    //PureObservableOperatorTests(Observable.concatWith())
+    //PureObservableOperatorTests(Observable.concatWith(Observable.empty(), Observable.empty()))
+    //ObservableOperatorWithSideEffectsTests(Observable.concatWith())
   ),
   describe(
     "currentTime",
@@ -664,6 +707,9 @@ testModule(
         expectTrue(completed);
       }),
     ),
+    ObservableOperatorWithSideEffectsTests(
+      Observable.dispatchTo({} as unknown as DispatcherLike),
+    ),
   ),
   describe(
     "distinctUntilChanged",
@@ -702,6 +748,12 @@ testModule(
     ),
     // FIXME
     // PureObservableOperatorTests(Observable.endWith(1)),
+  ),
+  describe(
+    "enqueue",
+    ObservableOperatorWithSideEffectsTests(
+      Observable.enqueue(IndexedQueue.create()),
+    ),
   ),
   describe(
     "exhaust",
@@ -814,6 +866,9 @@ testModule(
         Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
+    ),
+    ObservableOperatorWithSideEffectsTests(
+      Observable.flatMapIterable(returns([])),
     ),
   ),
   describe(
@@ -949,6 +1004,7 @@ testModule(
         expectToThrowError(err),
       );
     }),
+    ObservableOperatorWithSideEffectsTests(Observable.forEach(ignore)),
   ),
   describe(
     "forkMerge",
@@ -1527,6 +1583,7 @@ testModule(
     "mergeWith",
     // FIXME
     // PureObservableOperatorTests(Observable.mergeWith()),
+    // ObservableOperatorWithSideEffectsTests(Observable.concatWith())
   ),
   describe(
     "onSubscribe",
@@ -1551,7 +1608,6 @@ testModule(
       pipe(disp, expectToHaveBeenCalledTimes(1));
       pipe(f, expectToHaveBeenCalledTimes(1));
     }),
-
     test(
       "when callback function throws",
       Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
@@ -1565,7 +1621,6 @@ testModule(
         pipe(subscription[DisposableLike_error], expectIsSome);
       }),
     ),
-
     test("when callback returns a disposable", () => {
       const scheduler = VirtualTimeScheduler.create();
 
@@ -1588,7 +1643,6 @@ testModule(
       expectIsNone(disp[DisposableLike_error]);
       pipe(f, expectToHaveBeenCalledTimes(1));
     }),
-
     test("when callback only performs sideeffects", () => {
       const scheduler = VirtualTimeScheduler.create();
 
@@ -1607,6 +1661,7 @@ testModule(
 
       expectTrue(called);
     }),
+    ObservableOperatorWithSideEffectsTests(Observable.onSubscribe(ignore)),
   ),
   describe("pairwise", PureObservableOperatorTests(Observable.pairwise())),
   describe(
@@ -1981,6 +2036,11 @@ testModule(
       ),
     ),
     PureObservableOperatorTests(Observable.takeUntil(Observable.empty())),
+    ObservableOperatorWithSideEffectsTests(
+      Observable.takeUntil(
+        pipe(Observable.empty(), Observable.forEach(ignore)),
+      ),
+    ),
   ),
   describe(
     "takeWhile",
@@ -1999,7 +2059,6 @@ testModule(
         expectArrayEquals([0, 49, 99]),
       ),
     ),
-
     test(
       "last",
       pipeLazy(
@@ -2022,6 +2081,7 @@ testModule(
         expectArrayEquals([0, 74, 149, 199]),
       ),
     ),
+    PureObservableOperatorTests(Observable.throttle(1)),
   ),
   describe(
     "throwIfEmpty",
@@ -2193,6 +2253,12 @@ testModule(
     }),
     PureObservableOperatorTests(
       Observable.withLatestFrom(Observable.empty(), returns),
+    ),
+    ObservableOperatorWithSideEffectsTests(
+      Observable.withLatestFrom(
+        pipe(Observable.empty(), Observable.forEach(ignore)),
+        returns,
+      ),
     ),
   ),
   describe(

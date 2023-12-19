@@ -46,6 +46,5 @@ const Observable_switchAll = ((options) => Observable_lift(options?.innerType ??
     [ObservableLike_isDeferred]: true,
     [ObservableLike_isPure]: true,
     [ObservableLike_isRunnable]: true,
-    ...(options ?? {}),
 })(Observer_createSwitchAllObserver));
 export default Observable_switchAll;

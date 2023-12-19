@@ -341,9 +341,7 @@ export interface ObservableModule
     readonly count?: number;
   }): PureObservableOperator<T, readonly T[]>;
 
-  catchError<T>(
-    onError: SideEffect1<Error>,
-  ): ObservableOperatorWithSideEffects<T, T>;
+  catchError<T>(onError: SideEffect1<Error>): PureObservableOperator<T, T>;
 
   combineLatest<TA, TB>(
     a: PureRunnableLike<TA>,
@@ -687,25 +685,11 @@ export interface ObservableModule
   concatWith<T>(
     snd: RunnableLike<T>,
     ...tail: readonly RunnableLike<T>[]
-  ): <TObservable extends ObservableLike<T>>(
-    obs: TObservable,
-  ) => TObservable extends MulticastObservableLike<T>
-    ? MulticastObservableLike<T>
-    : TObservable extends RunnableLike<T>
-    ? RunnableWithSideEffectsLike<T>
-    : TObservable extends DeferredSideEffectsObservableLike<T>
-    ? DeferredSideEffectsObservableLike<T>
-    : ObservableLike<T>;
+  ): ObservableOperatorWithSideEffects<T, T>;
   concatWith<T>(
     snd: DeferredObservableLike<T>,
     ...tail: readonly DeferredObservableLike<T>[]
-  ): <TObservable extends ObservableLike<T>>(
-    obs: TObservable,
-  ) => TObservable extends MulticastObservableLike<T>
-    ? MulticastObservableLike<T>
-    : TObservable extends DeferredObservableLike<T>
-    ? DeferredSideEffectsObservableLike<T>
-    : ObservableLike<T>;
+  ): ObservableOperatorWithSideEffects<T, T>;
 
   create<T>(
     f: SideEffect1<ObserverLike<T>>,
@@ -1198,7 +1182,7 @@ export interface ObservableModule
   throttle<T>(
     duration: number,
     options?: { readonly mode?: "first" | "last" | "interval" },
-  ): ObservableOperatorWithSideEffects<T, T>;
+  ): PureObservableOperator<T, T>;
 
   throwIfEmpty<T>(
     factory: Factory<unknown>,
