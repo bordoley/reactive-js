@@ -3347,7 +3347,7 @@ ___
 
 ### subscribeOn
 
-▸ **subscribeOn**<`T`\>(`scheduler`, `options?`): <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`unknown`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> : [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>
+▸ **subscribeOn**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3366,25 +3366,7 @@ ___
 
 #### Returns
 
-`fn`
-
-▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`unknown`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> : [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>
-
-##### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TObservableIn` | extends [`ObservableLike`](concurrent.ObservableLike.md)<`T`, `TObservableIn`\> |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observable` | `TObservableIn` |
-
-##### Returns
-
-`TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`unknown`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> : [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\>
 
 ___
 

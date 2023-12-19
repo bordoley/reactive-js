@@ -22,6 +22,7 @@ import { PureComputationModule, keepType, mapTo } from "../../computations.js";
 import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
 import {
   DeferredObservableLike,
+  DeferredSideEffectsObservableLike,
   DispatcherLike,
   DispatcherLikeEvent_completed,
   DispatcherLike_complete,
@@ -92,25 +93,27 @@ import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
-const expectIsPureRunnable = (obs: ObservableLike) => {
+const expectIsPureRunnable = (obs: PureRunnableLike) => {
   expectTrue(obs[ObservableLike_isRunnable]);
   expectTrue(obs[ObservableLike_isPure]);
   expectTrue(obs[ObservableLike_isDeferred]);
 };
 
-const expectIsRunnableWithSideEffects = (obs: ObservableLike) => {
+const expectIsRunnableWithSideEffects = (obs: RunnableWithSideEffectsLike) => {
   expectTrue(obs[ObservableLike_isRunnable]);
   expectFalse(obs[ObservableLike_isPure]);
   expectTrue(obs[ObservableLike_isDeferred]);
 };
 
-const expectIsDeferredSideEffectsObservable = (obs: ObservableLike) => {
+const expectIsDeferredSideEffectsObservable = (
+  obs: DeferredSideEffectsObservableLike,
+) => {
   expectFalse(obs[ObservableLike_isRunnable]);
   expectFalse(obs[ObservableLike_isPure]);
   expectTrue(obs[ObservableLike_isDeferred]);
 };
 
-const expectIsMulticastObservable = (obs: ObservableLike) => {
+const expectIsMulticastObservable = (obs: MulticastObservableLike) => {
   expectFalse(obs[ObservableLike_isRunnable]);
   expectTrue(obs[ObservableLike_isPure]);
   expectFalse(obs[ObservableLike_isDeferred]);
@@ -1885,6 +1888,8 @@ testModule(
         Observable.forEach(ignore),
         Observable.share(scheduler, { replay: 1 }),
       );
+
+      expectIsMulticastObservable(shared);
 
       let result: number[] = [];
       pipe(

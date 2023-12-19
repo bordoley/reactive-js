@@ -15,9 +15,9 @@ import {
   KeyedLike_get,
   ReadonlyObjectMapLike,
 } from "../../../collections.js";
+import * as Enumerable from "../../../collections/Enumerable.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import {
-  DeferredObservableLike,
   RunnableWithSideEffectsLike,
   SchedulerLike,
   StreamLike,
@@ -161,12 +161,8 @@ export const Streamable_createAnimationGroupEventHandlerStream: <
               const deferredAnimatedObservables = pipe(
                 observables,
                 ReadonlyObjectMap.values(),
-                Observable.fromEnumerable(),
-                Observable.map<
-                  RunnableWithSideEffectsLike<T>,
-                  DeferredObservableLike<T>
-                >(Observable.subscribeOn(animationScheduler)),
-                Observable.toReadonlyArray(),
+                Enumerable.map(Observable.subscribeOn(animationScheduler)),
+                Enumerable.toReadonlyArray(),
               );
 
               return Observable.mergeMany(deferredAnimatedObservables);

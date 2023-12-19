@@ -2,6 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
 import { AssociativeLike_keys, CollectionLike_count, EnumerableLike_enumerate, KeyedLike_get, } from "../../../collections.js";
+import * as Enumerable from "../../../collections/Enumerable.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { StreamableLike_stream, } from "../../../concurrent.js";
 import { SinkLike_notify, } from "../../../events.js";
@@ -22,7 +23,7 @@ export const Streamable_createAnimationGroupEventHandlerStream =
                     publisher[SinkLike_notify](value);
                 }
             }), Observable.ignoreElements())));
-            const deferredAnimatedObservables = pipe(observables, ReadonlyObjectMap.values(), Observable.fromEnumerable(), Observable.map(Observable.subscribeOn(animationScheduler)), Observable.toReadonlyArray());
+            const deferredAnimatedObservables = pipe(observables, ReadonlyObjectMap.values(), Enumerable.map(Observable.subscribeOn(animationScheduler)), Enumerable.toReadonlyArray());
             return Observable.mergeMany(deferredAnimatedObservables);
         }, creationOptions)[StreamableLike_stream](scheduler, streamOptions);
         init(DelegatingStreamMixin(), instance, streamDelegate);

@@ -1149,11 +1149,7 @@ export interface ObservableModule
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): <TObservableIn extends ObservableLike<T>>(
-    observable: TObservableIn,
-  ) => TObservableIn extends MulticastObservableLike
-    ? MulticastObservableLike<T>
-    : DeferredSideEffectsObservableLike<T>;
+  ): Function1<ObservableLike<T>, DeferredSideEffectsObservableLike<T>>;
 
   takeFirst<T>(options?: {
     readonly count?: number;
