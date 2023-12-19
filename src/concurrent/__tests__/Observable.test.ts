@@ -1277,17 +1277,26 @@ testModule(
   ),
   describe(
     "fromIterable",
-    test("with delay", () => {
-      const result: number[] = [];
-      pipe(
+    test(
+      "with delay",
+      pipeLazy(
         [9, 9, 9, 9],
         Observable.fromIterable({ delay: 2 }),
         Observable.withCurrentTime(t => t),
-        Observable.forEach<number>(bind(Array.prototype.push, result)),
-        Observable.run(),
-      );
-      pipe(result, expectArrayEquals([0, 2, 4, 6]));
-    }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([0, 2, 4, 6]),
+      ),
+    ),
+    test(
+      "with delay and delayed start",
+      pipeLazy(
+        [9, 9, 9, 9],
+        Observable.fromIterable({ delay: 2, delayStart: true }),
+        Observable.withCurrentTime(t => t),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([2, 4, 6, 8]),
+      ),
+    ),
     test(
       "when the iterable throws",
       pipeLazy(
