@@ -46,7 +46,7 @@ import {
 } from "../../concurrent.js";
 import { StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
-import * as WritableStotre from "../../events/WritableStore.js";
+import * as WritableStore from "../../events/WritableStore.js";
 import {
   Optional,
   Tuple2,
@@ -467,6 +467,7 @@ testModule(
         ),
       ),
     ),
+    testIsDeferredSideEffectsObservable(Observable.computeDeferred(() => {})),
   ),
   describe(
     "computeRunnable",
@@ -559,6 +560,7 @@ testModule(
         ]),
       );
     }),
+    testIsRunnableWithSideEffects(Observable.computeRunnable(() => {})),
   ),
   describe(
     "concat",
@@ -661,6 +663,10 @@ testModule(
     //ObservableOperatorWithSideEffectsTests(Observable.concatWith())
   ),
   describe(
+    "create",
+    testIsDeferredSideEffectsObservable(Observable.create(ignore)),
+  ),
+  describe(
     "currentTime",
     test(
       "publish current time from VTS",
@@ -672,7 +678,9 @@ testModule(
         expectArrayEquals([0, 0, 0, 0, 0]),
       ),
     ),
+    testIsPureRunnable(Observable.currentTime),
   ),
+  describe("debug", ObservableOperatorWithSideEffectsTests(Observable.debug())),
   describe(
     "decodeWithCharset",
     PureObservableOperatorTests(Observable.decodeWithCharset()),
@@ -691,6 +699,7 @@ testModule(
         ),
       ),
     ),
+    testIsDeferredSideEffectsObservable(Observable.defer(Subject.create)),
   ),
   describe(
     "dispatchTo",
@@ -795,6 +804,7 @@ testModule(
 
       pipe(disposedTime, expectEquals(5));
     }),
+    testIsPureRunnable(Observable.empty({ delay: 1 })),
   ),
   describe("encodeUtf8", PureObservableOperatorTests(Observable.encodeUtf8())),
   describe(
@@ -1453,7 +1463,7 @@ testModule(
   describe(
     "fromStore",
     test("it publishes the current value and all subsequent values", () => {
-      const store = WritableStotre.create<number>(-1);
+      const store = WritableStore.create<number>(-1);
       const scheduler = VirtualTimeScheduler.create();
 
       const result: number[] = [];
@@ -1480,7 +1490,7 @@ testModule(
       pipe(result, expectArrayEquals([-1, 0, 1, 2]));
     }),
     testIsMulticastObservable(
-      pipe(WritableStotre.create<number>(-1), Observable.fromStore()),
+      pipe(WritableStore.create<number>(-1), Observable.fromStore()),
     ),
   ),
   describe(

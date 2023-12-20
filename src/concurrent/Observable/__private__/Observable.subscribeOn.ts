@@ -1,5 +1,5 @@
 import {
-  DeferredObservableLike,
+  DeferredSideEffectsObservableLike,
   ObservableLike,
   SchedulerLike,
 } from "../../../concurrent.js";
@@ -22,7 +22,7 @@ const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
       readonly capacity?: number;
     },
   ) =>
-  (observable: ObservableLike<T>): DeferredObservableLike<T> =>
+  (observable: ObservableLike<T>): DeferredSideEffectsObservableLike<T> =>
     Observable_create<T>(observer =>
       pipe(
         observable,
