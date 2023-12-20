@@ -41,6 +41,7 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
   StreamableLike_stream,
+  VirtualTimeSchedulerLike,
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
 import { StoreLike_value } from "../../events.js";
@@ -121,6 +122,23 @@ const expectIsMulticastObservable = (obs: MulticastObservableLike) => {
 
 const testIsPureRunnable = (obs: PureRunnableLike) =>
   test("is PureRunnableLike", pipeLazy(obs, expectIsPureRunnable));
+
+const testIsRunnableWithSideEffects = (obs: RunnableWithSideEffectsLike) =>
+  test("is PureRunnableLike", pipeLazy(obs, expectIsRunnableWithSideEffects));
+
+const testIsDeferredSideEffectsObservable = (
+  obs: DeferredSideEffectsObservableLike,
+) =>
+  test(
+    "is DeferredSideEffectsObservableLike",
+    pipeLazy(obs, expectIsDeferredSideEffectsObservable),
+  );
+
+const testIsMulticastObservable = (obs: MulticastObservableLike) =>
+  test(
+    "is MulticastObservableLike",
+    pipeLazy(obs, expectIsMulticastObservable),
+  );
 
 const PureObservableOperatorTests = (
   op: Observable.PureObservableOperator<unknown, unknown>,
@@ -1254,6 +1272,11 @@ testModule(
         ),
       ),
     ),
+    testIsDeferredSideEffectsObservable(
+      pipe(async () => {
+        raise();
+      }, Observable.fromAsyncFactory()),
+    ),
   ),
   describe(
     "fromAsyncIterable",
@@ -1297,7 +1320,6 @@ testModule(
         },
       ),
     ),
-
     testAsync(
       "iterable that throws",
       pipeLazy(
@@ -1319,6 +1341,36 @@ testModule(
         expectToThrowAsync,
       ),
     ),
+    testIsDeferredSideEffectsObservable(
+      pipe(
+        (async function* foo() {
+          let i = 0;
+          while (true) {
+            yield i++;
+          }
+        })(),
+        Observable.fromAsyncIterable(),
+      ),
+    ),
+  ),
+  describe(
+    "fromEnumerable",
+    testIsPureRunnable(
+      pipe(
+        Enumerable.generate(increment, returns(0)),
+        Observable.fromEnumerable({ delay: 1, delayStart: true }),
+      ),
+    ),
+  ),
+  describe(
+    "fromEventSource",
+    testIsMulticastObservable(
+      pipe(EventSource.create(ignore), Observable.fromEventSource()),
+    ),
+  ),
+  describe(
+    "fromFactory",
+    testIsPureRunnable(pipe(() => 1, Observable.fromFactory())),
   ),
   describe(
     "fromIterable",
@@ -1355,6 +1407,14 @@ testModule(
         expectToThrow,
       ),
     ),
+    testIsRunnableWithSideEffects(
+      pipe(
+        (function* Generator() {
+          throw newInstance(Error);
+        })(),
+        Observable.fromIterable(),
+      ),
+    ),
   ),
   describe(
     "fromPromise",
@@ -1382,6 +1442,13 @@ testModule(
         ),
       ),
     ),
+    testIsMulticastObservable(
+      pipe(Promise.resolve(true), Observable.fromPromise()),
+    ),
+  ),
+  describe(
+    "fromReadonlyArray",
+    testIsPureRunnable(pipe([], Observable.fromReadonlyArray({ delay: 1 }))),
   ),
   describe(
     "fromStore",
@@ -1412,6 +1479,13 @@ testModule(
 
       pipe(result, expectArrayEquals([-1, 0, 1, 2]));
     }),
+    testIsMulticastObservable(
+      pipe(WritableStotre.create<number>(-1), Observable.fromStore()),
+    ),
+  ),
+  describe(
+    "fromValue",
+    testIsPureRunnable(pipe("a", Observable.fromValue({ delay: 1 }))),
   ),
   describe(
     "ignoreElements",
@@ -1453,6 +1527,7 @@ testModule(
       ),
     ),
   ),
+  describe("log", ObservableOperatorWithSideEffectsTests(Observable.log())),
   describe("map", PureObservableOperatorTests(Observable.map(returns(none)))),
   describe(
     "merge",
@@ -1639,6 +1714,15 @@ testModule(
     // PureObservableOperatorTests(Observable.mergeWith()),
     // ObservableOperatorWithSideEffectsTests(Observable.concatWith())
   ),
+  describe(
+    "multicast",
+    testIsMulticastObservable(
+      Disposable.using<VirtualTimeSchedulerLike, MulticastObservableLike>(
+        VirtualTimeScheduler.create,
+      )(vts => pipe(Observable.empty(), Observable.multicast(vts))),
+    ),
+  ),
+  describe("never", testIsMulticastObservable(Observable.never())),
   describe(
     "onSubscribe",
     test("when subscribe function returns a teardown function", () => {
@@ -1913,6 +1997,11 @@ testModule(
       scheduler[VirtualTimeSchedulerLike_run]();
       pipe(result, expectArrayEquals([2, 4, 6]));
     }),
+    testIsMulticastObservable(
+      Disposable.using<VirtualTimeSchedulerLike, MulticastObservableLike>(
+        VirtualTimeScheduler.create,
+      )(vts => pipe(Observable.empty(), Observable.share(vts))),
+    ),
   ),
   describe("skipFirst", PureObservableOperatorTests(Observable.skipFirst())),
   describe(
@@ -2139,6 +2228,7 @@ testModule(
     ),
     PureObservableOperatorTests(Observable.throttle(1)),
   ),
+  describe("throws", testIsPureRunnable(Observable.throws())),
   describe(
     "throwIfEmpty",
     test("when source is empty", () => {

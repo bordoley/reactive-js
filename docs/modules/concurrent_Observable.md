@@ -3420,7 +3420,7 @@ ___
 
 ### share
 
-▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>\>
+▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](../interfaces/concurrent.ReplayObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3440,7 +3440,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](../interfaces/concurrent.ReplayObservableLike.md)<`T`\>\>
 
 ___
 
@@ -3894,7 +3894,7 @@ ___
 
 ### throws
 
-▸ **throws**<`T`\>(`options?`): [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+▸ **throws**<`T`\>(`options?`): [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -3908,30 +3908,11 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
+| `options.raise?` | [`Factory`](functions.md#factory)<`unknown`\> |
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>
-
-▸ **throws**<`T`\>(`options`): [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.delay?` | `number` |
-| `options.raise` | [`Factory`](functions.md#factory)<`unknown`\> |
-
-#### Returns
-
-[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>
 
 ___
 

@@ -5,8 +5,8 @@ import { SinkLike_notify } from "../../../events.js";
 import { error, isSome, none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Observable_createRunnableWithSideEffects from "./Observable.createRunnableWithSideEffects.js";
-const Observable_fromIterable = (options) => (iterable) => Observable_createRunnableWithSideEffects((observer) => {
+import Observable_createPureRunnableWithSideEffects from "./Observable.createRunnableWithSideEffects.js";
+const Observable_fromIterable = (options) => (iterable) => Observable_createPureRunnableWithSideEffects((observer) => {
     const { delay = 0, delayStart = false } = options ?? {};
     const iterator = iterable[Symbol.iterator]();
     const continuation = (ctx) => {

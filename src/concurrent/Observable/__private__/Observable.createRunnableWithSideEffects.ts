@@ -7,7 +7,7 @@ import {
 import { SideEffect1 } from "../../../functions.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 
-const Observable_createRunnableWithSideEffects = <T>(
+const Observable_createPureRunnableWithSideEffects = <T>(
   f: SideEffect1<ObserverLike<T>>,
 ) =>
   Observable_createWithConfig(f, {
@@ -16,4 +16,4 @@ const Observable_createRunnableWithSideEffects = <T>(
     [ObservableLike_isRunnable]: true,
   });
 
-export default Observable_createRunnableWithSideEffects;
+export default Observable_createPureRunnableWithSideEffects;

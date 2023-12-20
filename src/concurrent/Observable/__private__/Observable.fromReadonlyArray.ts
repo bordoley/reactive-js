@@ -12,12 +12,12 @@ import {
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
-import Observable_createRunnable from "./Observable.createRunnable.js";
+import Observable_createPureRunnable from "./Observable.createPureRunnable.js";
 
 const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
   <T>(options?: { delay: number; delayStart?: boolean }) =>
   (array: ReadonlyArray<T>) =>
-    Observable_createRunnable((observer: ObserverLike<T>) => {
+    Observable_createPureRunnable((observer: ObserverLike<T>) => {
       const { delay = 0, delayStart = false } = options ?? {};
 
       let i = 0;

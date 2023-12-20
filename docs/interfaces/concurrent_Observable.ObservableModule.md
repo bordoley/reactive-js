@@ -3226,7 +3226,7 @@ ___
 
 ### share
 
-▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
+▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3246,7 +3246,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\>\>
 
 ___
 
@@ -3712,7 +3712,7 @@ ___
 
 ### throws
 
-▸ **throws**<`T`\>(`options?`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+▸ **throws**<`T`\>(`options?`): [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -3726,30 +3726,11 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
+| `options.raise?` | [`Factory`](../modules/functions.md#factory)<`unknown`\> |
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
-
-▸ **throws**<`T`\>(`options`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.delay?` | `number` |
-| `options.raise` | [`Factory`](../modules/functions.md#factory)<`unknown`\> |
-
-#### Returns
-
-[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>
 
 ___
 

@@ -1084,13 +1084,29 @@ export interface ObservableModule
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): Function1<DeferredObservableLike<T>, MulticastObservableLike<T>>;
+  ): Function1<DeferredObservableLike<T>, ReplayObservableLike<T>>;
 
   skipFirst<T>(options?: {
     readonly count?: number;
   }): PureObservableOperator<T, T>;
 
   startWith<T>(value: T, ...values: readonly T[]): PureObservableOperator<T, T>;
+
+  subscribe<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<ObservableLike<T>, DisposableLike>;
+
+  subscribeOn<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<ObservableLike<T>, DeferredSideEffectsObservableLike<T>>;
 
   switchAll<T>(): PureObservableOperator<PureRunnableLike<T>, T>;
   switchAll<T>(options: {
@@ -1128,22 +1144,6 @@ export interface ObservableModule
     },
   ): Function1<ObservableLike<TA>, DeferredSideEffectsObservableLike<TB>>;
 
-  subscribe<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): Function1<ObservableLike<T>, DisposableLike>;
-
-  subscribeOn<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): Function1<ObservableLike<T>, DeferredSideEffectsObservableLike<T>>;
-
   takeFirst<T>(options?: {
     readonly count?: number;
   }): PureObservableOperator<T, T>;
@@ -1179,12 +1179,9 @@ export interface ObservableModule
   ): PureObservableOperator<T, T>;
 
   throws<T>(options?: {
+    readonly raise?: Factory<unknown>;
     readonly delay?: number;
-  }): RunnableWithSideEffectsLike<T>;
-  throws<T>(options: {
-    readonly raise: Factory<unknown>;
-    readonly delay?: number;
-  }): RunnableWithSideEffectsLike<T>;
+  }): PureRunnableLike<T>;
 
   toEventSource<T>(
     scheduler: SchedulerLike,

@@ -8,7 +8,7 @@ import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import { ComputeContext_awaitOrObserve, ComputeContext_constant, ComputeContext_memoOrUse, ComputeContext_observableConfig, ComputeContext_observer, assertCurrentContext, } from "./__private__/Observable.computeWithConfig.js";
-import Observable_createRunnableWithSideEffects from "./__private__/Observable.createRunnableWithSideEffects.js";
+import Observable_createPureRunnableWithSideEffects from "./__private__/Observable.createRunnableWithSideEffects.js";
 export const __memo = (f, ...args) => {
     const ctx = assertCurrentContext();
     return ctx[ComputeContext_memoOrUse](false, f, ...args);
@@ -39,7 +39,7 @@ export const __do = /*@__PURE__*/ (() => {
         const scheduler = ctx[ComputeContext_observer];
         const observableConfig = ctx[ComputeContext_observableConfig];
         const observable = ctx[ComputeContext_memoOrUse](false, deferSideEffect, observableConfig[ObservableLike_isRunnable]
-            ? Observable_createRunnableWithSideEffects
+            ? Observable_createPureRunnableWithSideEffects
             : Observable.create, f, ...args);
         const subscribeOnScheduler = ctx[ComputeContext_memoOrUse](false, Observable.subscribe, scheduler);
         ctx[ComputeContext_memoOrUse](true, subscribeOnScheduler, observable);

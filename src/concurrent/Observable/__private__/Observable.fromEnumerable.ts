@@ -18,12 +18,12 @@ import {
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
-import Observable_createRunnable from "./Observable.createRunnable.js";
+import Observable_createPureRunnable from "./Observable.createPureRunnable.js";
 
 const Observable_fromEnumerable: Observable.Signature["fromEnumerable"] =
   <T>(options?: { delay: number; delayStart?: boolean }) =>
   (enumerable: EnumerableLike<T>) =>
-    Observable_createRunnable((observer: ObserverLike<T>) => {
+    Observable_createPureRunnable((observer: ObserverLike<T>) => {
       const { delay = 0, delayStart = false } = options ?? {};
 
       const enumerator = enumerable[EnumerableLike_enumerate]();

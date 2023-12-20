@@ -3,9 +3,9 @@
 import { ContinuationContextLike_yield, SchedulerLike_now, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { DisposableLike_isDisposed } from "../../../utils.js";
-import Observable_createRunnable from "./Observable.createRunnable.js";
+import Observable_createPureRunnable from "./Observable.createPureRunnable.js";
 const Observable_currentTime = 
-/*@__PURE__*/ Observable_createRunnable((observer) => {
+/*@__PURE__*/ Observable_createPureRunnable((observer) => {
     const continuation = (ctx) => {
         while (!observer[DisposableLike_isDisposed]) {
             observer[SinkLike_notify](observer[SchedulerLike_now]);

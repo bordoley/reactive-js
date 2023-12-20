@@ -6,8 +6,8 @@ import { SinkLike_notify } from "../../../events.js";
 import { none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Observable_createRunnable from "./Observable.createRunnable.js";
-const Observable_fromEnumerable = (options) => (enumerable) => Observable_createRunnable((observer) => {
+import Observable_createPureRunnable from "./Observable.createPureRunnable.js";
+const Observable_fromEnumerable = (options) => (enumerable) => Observable_createPureRunnable((observer) => {
     const { delay = 0, delayStart = false } = options ?? {};
     const enumerator = enumerable[EnumerableLike_enumerate]();
     const continuation = (ctx) => {
