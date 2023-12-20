@@ -53,7 +53,7 @@ const Stream_syncState: Stream.Signature["syncState"] = <T>(
         compose(
           Observable.takeFirst(),
           Observable.concatMap(onInit, {
-            innerType: Observable.DeferredSideEffectsObservableType,
+            innerType: Observable.DeferredObservableWithSideEffectsType,
           }),
         ),
         compose(
@@ -63,7 +63,7 @@ const Stream_syncState: Stream.Signature["syncState"] = <T>(
           Observable.pairwise(),
           Observable.concatMap<Tuple2<T, T>, Updater<T>>(
             ([oldValue, newValue]) => onChange(oldValue, newValue),
-            { innerType: Observable.DeferredSideEffectsObservableType },
+            { innerType: Observable.DeferredObservableWithSideEffectsType },
           ),
         ),
       ),

@@ -16,7 +16,7 @@
 
   ↳ **`PureObservableLike`**
 
-  ↳↳ [`PureRunnableLike`](concurrent.PureRunnableLike.md)
+  ↳↳ [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)
 
   ↳↳ [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)
 

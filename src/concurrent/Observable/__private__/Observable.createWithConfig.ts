@@ -6,7 +6,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  DeferredSideEffectsObservableLike,
+  DeferredObservableWithSideEffectsLike,
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
@@ -14,6 +14,7 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
+  PureDeferredObservableLike,
   PureRunnableLike,
   RunnableWithSideEffectsLike,
 } from "../../../concurrent.js";
@@ -44,12 +45,22 @@ interface ObservableCreateWithConfig {
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
     config: Pick<
-      DeferredSideEffectsObservableLike,
+      PureDeferredObservableLike,
       | typeof ObservableLike_isDeferred
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
-  ): DeferredSideEffectsObservableLike<T>;
+  ): PureDeferredObservableLike<T>;
+
+  createWithConfig<T>(
+    f: SideEffect1<ObserverLike<T>>,
+    config: Pick<
+      DeferredObservableWithSideEffectsLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isPure
+      | typeof ObservableLike_isRunnable
+    >,
+  ): DeferredObservableWithSideEffectsLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,

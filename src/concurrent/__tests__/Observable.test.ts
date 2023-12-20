@@ -22,7 +22,7 @@ import { PureComputationModule, keepType, mapTo } from "../../computations.js";
 import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
 import {
   DeferredObservableLike,
-  DeferredSideEffectsObservableLike,
+  DeferredObservableWithSideEffectsLike,
   DispatcherLike,
   DispatcherLikeEvent_completed,
   DispatcherLike_complete,
@@ -34,6 +34,7 @@ import {
   ObservableLike_isRunnable,
   PauseableLike_pause,
   PauseableLike_resume,
+  PureDeferredObservableLike,
   PureRunnableLike,
   RunnableLike,
   RunnableWithSideEffectsLike,
@@ -106,8 +107,14 @@ const expectIsRunnableWithSideEffects = (obs: RunnableWithSideEffectsLike) => {
   expectTrue(obs[ObservableLike_isDeferred]);
 };
 
-const expectIsDeferredSideEffectsObservable = (
-  obs: DeferredSideEffectsObservableLike,
+const expectIsPureDeferredObservable = (obs: PureDeferredObservableLike) => {
+  expectFalse(obs[ObservableLike_isRunnable]);
+  expectTrue(obs[ObservableLike_isPure]);
+  expectTrue(obs[ObservableLike_isDeferred]);
+};
+
+const expectIsDeferredObservableWithSideEffects = (
+  obs: DeferredObservableWithSideEffectsLike,
 ) => {
   expectFalse(obs[ObservableLike_isRunnable]);
   expectFalse(obs[ObservableLike_isPure]);
@@ -126,12 +133,18 @@ const testIsPureRunnable = (obs: PureRunnableLike) =>
 const testIsRunnableWithSideEffects = (obs: RunnableWithSideEffectsLike) =>
   test("is PureRunnableLike", pipeLazy(obs, expectIsRunnableWithSideEffects));
 
-const testIsDeferredSideEffectsObservable = (
-  obs: DeferredSideEffectsObservableLike,
+const testIsDeferredObservableWithSideEffects = (
+  obs: DeferredObservableWithSideEffectsLike,
 ) =>
   test(
-    "is DeferredSideEffectsObservableLike",
-    pipeLazy(obs, expectIsDeferredSideEffectsObservable),
+    "is DeferredObservableWithSideEffectsLike",
+    pipeLazy(obs, expectIsDeferredObservableWithSideEffects),
+  );
+
+const testIsPureDeferredObservable = (obs: PureDeferredObservableLike) =>
+  test(
+    "is PureDeferredObservableLike",
+    pipeLazy(obs, expectIsPureDeferredObservable),
   );
 
 const testIsMulticastObservable = (obs: MulticastObservableLike) =>
@@ -159,14 +172,26 @@ const PureObservableOperatorTests = (
       ),
     ),
     test(
-      "with DeferredSideEffectsObservableLike",
+      "with PureDeferredObservableLike",
+      Disposable.usingLazy(VirtualTimeScheduler.create)(vts =>
+        pipe(
+          Observable.empty(),
+          Observable.subscribeOn(vts),
+          x => x,
+          op,
+          expectIsPureDeferredObservable,
+        ),
+      ),
+    ),
+    test(
+      "with DeferredObservableWithSideEffectsLike",
       pipeLazy(
         async () => {
           throw new Error();
         },
         Observable.fromAsyncFactory(),
         op,
-        expectIsDeferredSideEffectsObservable,
+        expectIsDeferredObservableWithSideEffects,
       ),
     ),
     test(
@@ -199,14 +224,26 @@ const ObservableOperatorWithSideEffectsTests = (
       ),
     ),
     test(
-      "with DeferredSideEffectsObservableLike",
+      "with PureDeferredObservableLike",
+      Disposable.usingLazy(VirtualTimeScheduler.create)(vts =>
+        pipe(
+          Observable.empty(),
+          Observable.subscribeOn(vts),
+          x => x,
+          op,
+          expectIsDeferredObservableWithSideEffects,
+        ),
+      ),
+    ),
+    test(
+      "with DeferredObservableWithSideEffectsLike",
       pipeLazy(
         async () => {
           throw new Error();
         },
         Observable.fromAsyncFactory(),
         op,
-        expectIsDeferredSideEffectsObservable,
+        expectIsDeferredObservableWithSideEffects,
       ),
     ),
     test(
@@ -215,7 +252,7 @@ const ObservableOperatorWithSideEffectsTests = (
         new Promise(ignore),
         Observable.fromPromise(),
         op,
-        expectIsDeferredSideEffectsObservable,
+        expectIsDeferredObservableWithSideEffects,
       ),
     ),
   );
@@ -415,7 +452,7 @@ testModule(
           pipe(Observable.empty(), Observable.forEach(ignore)),
         ),
         x => x,
-        expectIsDeferredSideEffectsObservable,
+        expectIsDeferredObservableWithSideEffects,
       ),
     ),
   ),
@@ -467,7 +504,9 @@ testModule(
         ),
       ),
     ),
-    testIsDeferredSideEffectsObservable(Observable.computeDeferred(() => {})),
+    testIsDeferredObservableWithSideEffects(
+      Observable.computeDeferred(() => {}),
+    ),
   ),
   describe(
     "computeRunnable",
@@ -664,7 +703,7 @@ testModule(
   ),
   describe(
     "create",
-    testIsDeferredSideEffectsObservable(Observable.create(ignore)),
+    testIsDeferredObservableWithSideEffects(Observable.create(ignore)),
   ),
   describe(
     "currentTime",
@@ -699,7 +738,7 @@ testModule(
         ),
       ),
     ),
-    testIsDeferredSideEffectsObservable(Observable.defer(Subject.create)),
+    testIsDeferredObservableWithSideEffects(Observable.defer(Subject.create)),
   ),
   describe(
     "dispatchTo",
@@ -1282,7 +1321,7 @@ testModule(
         ),
       ),
     ),
-    testIsDeferredSideEffectsObservable(
+    testIsDeferredObservableWithSideEffects(
       pipe(async () => {
         raise();
       }, Observable.fromAsyncFactory()),
@@ -1351,7 +1390,7 @@ testModule(
         expectToThrowAsync,
       ),
     ),
-    testIsDeferredSideEffectsObservable(
+    testIsDeferredObservableWithSideEffects(
       pipe(
         (async function* foo() {
           let i = 0;
@@ -2028,6 +2067,26 @@ testModule(
     ),
     // FIXME
     // PureObservableOperatorTests(Observable.startWith()),
+  ),
+  describe(
+    "subscribeOn",
+    testIsPureDeferredObservable(
+      Disposable.using<VirtualTimeSchedulerLike, PureDeferredObservableLike>(
+        VirtualTimeScheduler.create,
+      )(vts => pipe(Observable.empty(), Observable.subscribeOn(vts))),
+    ),
+    testIsDeferredObservableWithSideEffects(
+      Disposable.using<
+        VirtualTimeSchedulerLike,
+        DeferredObservableWithSideEffectsLike
+      >(VirtualTimeScheduler.create)(vts =>
+        pipe(
+          Observable.empty(),
+          Observable.forEach(ignore),
+          Observable.subscribeOn(vts),
+        ),
+      ),
+    ),
   ),
   describe(
     "switchAll",

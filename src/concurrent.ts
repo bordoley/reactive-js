@@ -234,7 +234,17 @@ export interface PureObservableLike<T = unknown> extends ObservableLike<T> {
 /**
  * @noInheritDoc
  */
-export interface DeferredSideEffectsObservableLike<T = unknown>
+export interface PureDeferredObservableLike<T = unknown>
+  extends DeferredObservableLike<T>,
+    PureObservableLike<T> {
+  readonly [ObservableLike_isPure]: true;
+  readonly [ObservableLike_isDeferred]: true;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface DeferredObservableWithSideEffectsLike<T = unknown>
   extends DeferredObservableLike<T> {
   readonly [ObservableLike_isPure]: false;
 }
@@ -244,7 +254,7 @@ export interface DeferredSideEffectsObservableLike<T = unknown>
  */
 export interface PureRunnableLike<T = unknown>
   extends RunnableLike<T>,
-    PureObservableLike<T> {
+    PureDeferredObservableLike<T> {
   readonly [ObservableLike_isDeferred]: true;
   readonly [ObservableLike_isPure]: true;
   readonly [ObservableLike_isRunnable]: true;

@@ -1,4 +1,4 @@
-import { DeferredSideEffectsObservableLike } from "../../../concurrent.js";
+import { DeferredObservableWithSideEffectsLike } from "../../../concurrent.js";
 import { pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
 import Observable_concatWith from "./Observable.concatWith.js";
@@ -7,8 +7,8 @@ import Observable_fromReadonlyArray from "./Observable.fromReadonlyArray.js";
 const Observable_endWith: Observable.Signature["endWith"] = (<T>(
     ...values: readonly T[]
   ) =>
-  // typed as DeferredSideEffectsObservableLike to avoid dealing with function overrides
-  (observable: DeferredSideEffectsObservableLike<T>) =>
+  // typed as DeferredObservableWithSideEffectsLike to avoid dealing with function overrides
+  (observable: DeferredObservableWithSideEffectsLike<T>) =>
     pipe(
       observable,
       Observable_concatWith<T>(pipe(values, Observable_fromReadonlyArray())),

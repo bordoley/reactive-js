@@ -28,7 +28,7 @@ const Streamable_createEventHandler: Streamable.Signature["createEventHandler"] 
                 Observable.startWith<boolean>(true),
                 Observable.endWith<boolean>(false),
               ),
-              { innerType: Observable.DeferredSideEffectsObservableType },
+              { innerType: Observable.DeferredObservableWithSideEffectsType },
             )
           : mode === "blocking"
           ? Observable.exhaustMap<TEventType, boolean>(
@@ -38,7 +38,7 @@ const Streamable_createEventHandler: Streamable.Signature["createEventHandler"] 
                 Observable.startWith<boolean>(true),
                 Observable.endWith<boolean>(false),
               ),
-              { innerType: Observable.DeferredSideEffectsObservableType },
+              { innerType: Observable.DeferredObservableWithSideEffectsType },
             )
           : Observable.mergeMap<TEventType, boolean>(
               compose(
@@ -50,7 +50,7 @@ const Streamable_createEventHandler: Streamable.Signature["createEventHandler"] 
               {
                 ...options,
                 concurrency: 1,
-                innerType: Observable.DeferredSideEffectsObservableType,
+                innerType: Observable.DeferredObservableWithSideEffectsType,
               },
             ),
         Observable.mergeWith<boolean>(pipe(false, Observable.fromValue())),

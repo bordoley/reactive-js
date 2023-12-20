@@ -8,7 +8,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   DeferredObservableLike,
-  DeferredSideEffectsObservableLike,
+  DeferredObservableWithSideEffectsLike,
   DispatcherLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
@@ -41,7 +41,7 @@ import DelegatingReplayObservableMixin from "../../__mixins__/DelegatingReplayOb
 
 const Stream_create: <TReq, T>(
   op: Function1<
-    DeferredSideEffectsObservableLike<TReq>,
+    DeferredObservableWithSideEffectsLike<TReq>,
     DeferredObservableLike<T>
   >,
   scheduler: SchedulerLike,
@@ -56,7 +56,7 @@ const Stream_create: <TReq, T>(
   );
 
   interface DispatchedObservableLike<T>
-    extends DeferredSideEffectsObservableLike<T> {
+    extends DeferredObservableWithSideEffectsLike<T> {
     [DispatchedObservableLike_dispatcher]: Optional<DispatcherLike<T>>;
   }
 
@@ -111,7 +111,7 @@ const Stream_create: <TReq, T>(
       function StreamMixin(
         instance: TProperties,
         op: Function1<
-          DeferredSideEffectsObservableLike<TReq>,
+          DeferredObservableWithSideEffectsLike<TReq>,
           DeferredObservableLike<T>
         >,
         scheduler: SchedulerLike,
@@ -152,7 +152,7 @@ const Stream_create: <TReq, T>(
 
 const Streamable_create: Streamable.Signature["create"] = <TReq, T>(
   op: Function1<
-    DeferredSideEffectsObservableLike<TReq>,
+    DeferredObservableWithSideEffectsLike<TReq>,
     DeferredObservableLike<T>
   >,
 ) => ({

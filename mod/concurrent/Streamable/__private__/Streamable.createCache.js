@@ -53,7 +53,9 @@ const createCacheStream = /*@__PURE__*/ (() => {
                 return keys.size > 0
                     ? pipe(persistentStore.load(keys), Observable.map((persistedValues) => tuple(updaters, pipe(values, ReadonlyObjectMap.union(persistedValues)))))
                     : pipe(next, Observable.fromValue());
-            }, { innerType: Observable.DeferredSideEffectsObservableType })
+            }, {
+                innerType: Observable.DeferredObservableWithSideEffectsType,
+            })
             : identity, Observable.map(([updaters, values]) => pipe(updaters, ReadonlyObjectMap.map((updater, k) => 
         // This could be the cached value or the value
         // loaded from a persistent store.
@@ -76,7 +78,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
             instance.scheduleCleanup(key);
         })), isSome(persistentStore)
             ? Observable.concatMap(bindMethod(persistentStore, "store"), {
-                innerType: Observable.DeferredSideEffectsObservableType,
+                innerType: Observable.DeferredObservableWithSideEffectsType,
             })
             : Observable.ignoreElements())), invoke(StreamableLike_stream, scheduler, options));
         init(DelegatingStreamMixin(), instance, delegate);

@@ -13,7 +13,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../../collections.js";
 import {
-  DeferredSideEffectsObservableLike,
+  DeferredObservableWithSideEffectsLike,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
@@ -56,7 +56,7 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
   readonly concurrency?: number;
 }) => Function1<
   ObserverLike<T>,
-  ObserverLike<DeferredSideEffectsObservableLike<T>>
+  ObserverLike<DeferredObservableWithSideEffectsLike<T>>
 > = /*@__PURE__*/ (<T>() => {
   const MergeAllObserver_activeCount = Symbol("MergeAllObserver_activeCount");
   const MergeAllObserver_concurrency = Symbol("MergeAllObserver_concurrency");
@@ -101,11 +101,11 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
       mix(
         include(
           DisposableMixin,
-          DelegatingObserverMixin<DeferredSideEffectsObservableLike<T>>(),
+          DelegatingObserverMixin<DeferredObservableWithSideEffectsLike<T>>(),
         ),
         function MergeAllObserver(
           instance: Pick<
-            ObserverLike<DeferredSideEffectsObservableLike<T>>,
+            ObserverLike<DeferredObservableWithSideEffectsLike<T>>,
             typeof SinkLike_notify
           > &
             Mutable<TProperties>,
@@ -169,9 +169,9 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
         {
           [SinkLike_notify](
             this: TProperties &
-              ObserverLike<DeferredSideEffectsObservableLike<T>> &
-              QueueLike<DeferredSideEffectsObservableLike<T>>,
-            next: DeferredSideEffectsObservableLike<T>,
+              ObserverLike<DeferredObservableWithSideEffectsLike<T>> &
+              QueueLike<DeferredObservableWithSideEffectsLike<T>>,
+            next: DeferredObservableWithSideEffectsLike<T>,
           ) {
             if (
               this[MergeAllObserver_activeCount] <

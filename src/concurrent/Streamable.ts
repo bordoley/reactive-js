@@ -1,7 +1,7 @@
 import { AssociativeLike, ReadonlyObjectMapLike } from "../collections.js";
 import {
   DeferredObservableLike,
-  DeferredSideEffectsObservableLike,
+  DeferredObservableWithSideEffectsLike,
   ObservableLike,
   SchedulerLike,
   StreamLike,
@@ -34,7 +34,7 @@ export interface StreamableModule {
    */
   create<TReq, T>(
     op: Function1<
-      DeferredSideEffectsObservableLike<TReq>,
+      DeferredObservableWithSideEffectsLike<TReq>,
       DeferredObservableLike<T>
     >,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;

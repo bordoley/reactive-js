@@ -14,7 +14,7 @@
 
 - [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>
 
-- [`PureObservableLike`](concurrent.PureObservableLike.md)<`T`\>
+- [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\>
 
   ↳ **`PureRunnableLike`**
 
@@ -32,9 +32,11 @@
 
 • `Readonly` **[ObservableLike\_isDeferred]**: ``true``
 
+Indicates if the `ObservableLike` is deferred, ie. cold.
+
 #### Overrides
 
-RunnableLike.\_\_@ObservableLike\_isDeferred@24704
+[PureDeferredObservableLike](concurrent.PureDeferredObservableLike.md).[[ObservableLike_isDeferred]](concurrent.PureDeferredObservableLike.md#[observablelike_isdeferred])
 
 ___
 
@@ -46,7 +48,7 @@ Indicates if subscribing to the `ObservableLike` is free of side-effects
 
 #### Overrides
 
-[PureObservableLike](concurrent.PureObservableLike.md).[[ObservableLike_isPure]](concurrent.PureObservableLike.md#[observablelike_ispure])
+[PureDeferredObservableLike](concurrent.PureDeferredObservableLike.md).[[ObservableLike_isPure]](concurrent.PureDeferredObservableLike.md#[observablelike_ispure])
 
 ___
 

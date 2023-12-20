@@ -16,7 +16,7 @@
 
   ↳ [`RunnableWithSideEffectsComputation`](concurrent_Observable.RunnableWithSideEffectsComputation.md)
 
-  ↳ [`DeferredSideEffectsObservableComputation`](concurrent_Observable.DeferredSideEffectsObservableComputation.md)
+  ↳ [`DeferredObservableWithSideEffectsComputation`](concurrent_Observable.DeferredObservableWithSideEffectsComputation.md)
 
   ↳ [`MulticastObservableComputation`](concurrent_Observable.MulticastObservableComputation.md)
 

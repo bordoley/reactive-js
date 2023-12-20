@@ -25,7 +25,7 @@ const Observable_flatMapIterable: Observable.Signature["flatMapIterable"] = (<
           [ObservableLike_isPure]: false,
           [ObservableLike_isDeferred]: observable[ObservableLike_isDeferred],
           [ObservableLike_isRunnable]: observable[ObservableLike_isRunnable],
-        } as typeof Observable.DeferredSideEffectsObservableType,
+        } as typeof Observable.DeferredObservableWithSideEffectsType,
       }),
     );
 }) as Observable.Signature["flatMapIterable"];

@@ -8,7 +8,7 @@
 
 - [ContinuationContextLike](../interfaces/concurrent.ContinuationContextLike.md)
 - [DeferredObservableLike](../interfaces/concurrent.DeferredObservableLike.md)
-- [DeferredSideEffectsObservableLike](../interfaces/concurrent.DeferredSideEffectsObservableLike.md)
+- [DeferredObservableWithSideEffectsLike](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)
 - [DispatcherLike](../interfaces/concurrent.DispatcherLike.md)
 - [DispatcherLikeEventMap](../interfaces/concurrent.DispatcherLikeEventMap.md)
 - [FlowableLike](../interfaces/concurrent.FlowableLike.md)
@@ -18,6 +18,7 @@
 - [PauseableLike](../interfaces/concurrent.PauseableLike.md)
 - [PauseableObservableLike](../interfaces/concurrent.PauseableObservableLike.md)
 - [PauseableSchedulerLike](../interfaces/concurrent.PauseableSchedulerLike.md)
+- [PureDeferredObservableLike](../interfaces/concurrent.PureDeferredObservableLike.md)
 - [PureObservableLike](../interfaces/concurrent.PureObservableLike.md)
 - [PureRunnableLike](../interfaces/concurrent.PureRunnableLike.md)
 - [ReplayObservableLike](../interfaces/concurrent.ReplayObservableLike.md)

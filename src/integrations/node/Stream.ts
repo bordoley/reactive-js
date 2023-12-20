@@ -1,6 +1,6 @@
 import { Readable, Transform, Writable } from "stream";
 import {
-  DeferredSideEffectsObservableLike,
+  DeferredObservableWithSideEffectsLike,
   DispatcherLike_complete,
   FlowableLike,
   PauseableLike_pause,
@@ -31,7 +31,7 @@ interface NodeStreamModule {
     factory: Writable | Factory<Writable>,
   ): Function1<
     PauseableObservableLike<Uint8Array>,
-    DeferredSideEffectsObservableLike<void>
+    DeferredObservableWithSideEffectsLike<void>
   >;
 }
 
@@ -126,7 +126,7 @@ export const sinkInto: Signature["sinkInto"] =
     factory: Writable | Factory<Writable>,
   ): Function1<
     PauseableObservableLike<Uint8Array>,
-    DeferredSideEffectsObservableLike<void>
+    DeferredObservableWithSideEffectsLike<void>
   > =>
   flowable =>
     Observable.create<void>(observer => {

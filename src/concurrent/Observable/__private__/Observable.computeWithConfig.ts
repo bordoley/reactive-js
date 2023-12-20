@@ -1,7 +1,7 @@
 import { CollectionLike_count, KeyedLike_get } from "../../../collections.js";
 import * as Indexed from "../../../collections/Indexed.js";
 import {
-  DeferredSideEffectsObservableLike,
+  DeferredObservableWithSideEffectsLike,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
@@ -410,20 +410,20 @@ interface ObservableComputeWithConfig {
   computeWithConfig<T>(
     computation: Factory<T>,
     config: Pick<
-      DeferredSideEffectsObservableLike,
+      DeferredObservableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
     options?: { readonly mode?: "batched" | "combine-latest" },
-  ): DeferredSideEffectsObservableLike<T>;
+  ): DeferredObservableWithSideEffectsLike<T>;
 }
 
 const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConfig"] =
   (<T>(
     computation: Factory<T>,
     config: Pick<
-      DeferredSideEffectsObservableLike,
+      DeferredObservableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable

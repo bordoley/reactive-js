@@ -227,7 +227,10 @@ const createCacheStream: <T>(
                             Observable.fromValue(),
                           ) as DeferredObservableLike);
                     },
-                    { innerType: Observable.DeferredSideEffectsObservableType },
+                    {
+                      innerType:
+                        Observable.DeferredObservableWithSideEffectsType,
+                    },
                   )
                 : (identity as Function1<
                     DeferredObservableLike,
@@ -280,7 +283,7 @@ const createCacheStream: <T>(
               ),
               isSome(persistentStore)
                 ? Observable.concatMap(bindMethod(persistentStore, "store"), {
-                    innerType: Observable.DeferredSideEffectsObservableType,
+                    innerType: Observable.DeferredObservableWithSideEffectsType,
                   })
                 : Observable.ignoreElements(),
             ),

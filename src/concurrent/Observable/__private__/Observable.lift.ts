@@ -5,7 +5,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  DeferredSideEffectsObservableLike,
+  DeferredObservableWithSideEffectsLike,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
@@ -23,7 +23,7 @@ import {
   raiseIf,
 } from "../../../functions.js";
 import type {
-  DeferredSideEffectsObservableOperator,
+  DeferredObservableWithSideEffectsOperator,
   ObservableOperatorWithSideEffects,
   PureObservableOperator,
 } from "../../Observable.js";
@@ -152,14 +152,14 @@ interface ObservableLift {
 
   lift(
     options: Pick<
-      DeferredSideEffectsObservableLike,
+      DeferredObservableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
   ): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => DeferredSideEffectsObservableOperator<TA, TB>;
+  ) => DeferredObservableWithSideEffectsOperator<TA, TB>;
 
   lift(
     options: Pick<
