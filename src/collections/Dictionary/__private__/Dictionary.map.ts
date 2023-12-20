@@ -14,16 +14,18 @@ import {
   isSome,
   newInstance,
   none,
-  pipe,
 } from "../../../functions.js";
 import type * as Dictionary from "../../Dictionary.js";
-import Enumerator_fromIterator from "../../Enumerator/__private__/Enumerator.fromIterator.js";
+import EnumerableIterable from "../../__classes__/EnumerableIterable.js";
 
 const MappingDictionary_delegate = Symbol("MappingDictionary_delegate");
 
 const MappingDictionary_selector = Symbol("MappingDictionary_selector");
 
-class MappingDictionary<T, TKey, TIn> implements DictionaryLike<TKey, T> {
+class MappingDictionary<T, TKey, TIn>
+  extends EnumerableIterable<T>
+  implements DictionaryLike<TKey, T>
+{
   [MappingDictionary_delegate]: DictionaryLike<TKey, TIn>;
   [MappingDictionary_selector]: Function2<TIn, TKey, T>;
 
@@ -31,6 +33,8 @@ class MappingDictionary<T, TKey, TIn> implements DictionaryLike<TKey, T> {
     delegate: DictionaryLike<TKey, TIn>,
     mapper: Function2<TIn, TKey, T>,
   ) {
+    super();
+
     this[MappingDictionary_delegate] = delegate;
     this[MappingDictionary_selector] = mapper;
   }
@@ -57,10 +61,6 @@ class MappingDictionary<T, TKey, TIn> implements DictionaryLike<TKey, T> {
       const key = enumerator[EnumeratorLike_current];
       yield this[KeyedLike_get](key) as T;
     }
-  }
-
-  [EnumerableLike_enumerate]() {
-    return pipe(this[Symbol.iterator](), Enumerator_fromIterator());
   }
 }
 

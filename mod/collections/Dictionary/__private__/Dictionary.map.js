@@ -1,14 +1,15 @@
 /// <reference types="./Dictionary.map.d.ts" />
 
 import { AssociativeLike_keys, CollectionLike_count, EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_move, KeyedLike_get, } from "../../../collections.js";
-import { isSome, newInstance, none, pipe, } from "../../../functions.js";
-import Enumerator_fromIterator from "../../Enumerator/__private__/Enumerator.fromIterator.js";
+import { isSome, newInstance, none, } from "../../../functions.js";
+import EnumerableIterable from "../../__classes__/EnumerableIterable.js";
 const MappingDictionary_delegate = Symbol("MappingDictionary_delegate");
 const MappingDictionary_selector = Symbol("MappingDictionary_selector");
-class MappingDictionary {
+class MappingDictionary extends EnumerableIterable {
     [MappingDictionary_delegate];
     [MappingDictionary_selector];
     constructor(delegate, mapper) {
+        super();
         this[MappingDictionary_delegate] = delegate;
         this[MappingDictionary_selector] = mapper;
     }
@@ -28,9 +29,6 @@ class MappingDictionary {
             const key = enumerator[EnumeratorLike_current];
             yield this[KeyedLike_get](key);
         }
-    }
-    [EnumerableLike_enumerate]() {
-        return pipe(this[Symbol.iterator](), Enumerator_fromIterator());
     }
 }
 const Dictionary_map = (selector) => (dict) => newInstance((MappingDictionary), dict, selector);

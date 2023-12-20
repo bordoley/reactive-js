@@ -3,20 +3,22 @@ import {
   CollectionLike_count,
   DictionaryLike,
   EnumerableLike,
-  EnumerableLike_enumerate,
   KeyedLike_get,
 } from "../../../collections.js";
 import { Optional, newInstance, pipe } from "../../../functions.js";
-import Enumerator_fromIterator from "../../Enumerator/__private__/Enumerator.fromIterator.js";
 import type * as ReadonlyArray from "../../ReadonlyArray.js";
+import EnumerableIterable from "../../__classes__/EnumerableIterable.js";
 import ReadonlyArray_keys from "./ReadonlyArray.keys.js";
 
 class ReadonlyArrayDictionary<T, TKey extends ReadonlyArray.TKeyBase>
+  extends EnumerableIterable<T>
   implements DictionaryLike<TKey, T>
 {
   readonly d: ReadonlyArray<T>;
 
   constructor(delegate: ReadonlyArray<T>) {
+    super();
+
     this.d = delegate;
   }
 
@@ -30,10 +32,6 @@ class ReadonlyArrayDictionary<T, TKey extends ReadonlyArray.TKeyBase>
 
   get [AssociativeLike_keys](): EnumerableLike<TKey> {
     return pipe(this.d, ReadonlyArray_keys());
-  }
-
-  [EnumerableLike_enumerate]() {
-    return pipe(this[Symbol.iterator](), Enumerator_fromIterator());
   }
 
   [Symbol.iterator](): Iterator<T, any, undefined> {

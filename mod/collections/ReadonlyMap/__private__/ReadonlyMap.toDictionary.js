@@ -1,13 +1,14 @@
 /// <reference types="./ReadonlyMap.toDictionary.d.ts" />
 
-import { AssociativeLike_keys, CollectionLike_count, EnumerableLike_enumerate, KeyedLike_get, } from "../../../collections.js";
+import { AssociativeLike_keys, CollectionLike_count, KeyedLike_get, } from "../../../collections.js";
 import { newInstance, pipe } from "../../../functions.js";
-import Enumerator_fromIterator from "../../Enumerator/__private__/Enumerator.fromIterator.js";
+import EnumerableIterable from "../../__classes__/EnumerableIterable.js";
 import ReadonlyMap_keys from "./ReadonlyMap.keys.js";
-class ReadonlyMapDictionary {
+class ReadonlyMapDictionary extends EnumerableIterable {
     d;
     [AssociativeLike_keys];
     constructor(d) {
+        super();
         this.d = d;
         this[AssociativeLike_keys] = pipe(this.d, ReadonlyMap_keys());
     }
@@ -16,9 +17,6 @@ class ReadonlyMapDictionary {
     }
     [Symbol.iterator]() {
         return this.d.values();
-    }
-    [EnumerableLike_enumerate]() {
-        return pipe(this[Symbol.iterator](), Enumerator_fromIterator());
     }
     [KeyedLike_get](index) {
         return this.d.get(index);

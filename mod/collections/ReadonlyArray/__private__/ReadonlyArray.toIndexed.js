@@ -1,12 +1,13 @@
 /// <reference types="./ReadonlyArray.toIndexed.d.ts" />
 
-import { CollectionLike_count, EnumerableLike_enumerate, KeyedLike_get, } from "../../../collections.js";
+import { CollectionLike_count, KeyedLike_get, } from "../../../collections.js";
 import { newInstance, pipe, raiseIf } from "../../../functions.js";
-import Enumerator_fromIterator from "../../Enumerator/__private__/Enumerator.fromIterator.js";
+import EnumerableIterable from "../../__classes__/EnumerableIterable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray.toReadonlyArray.js";
-class ReadonlyArrayIndexedCollection {
+class ReadonlyArrayIndexedCollection extends EnumerableIterable {
     d;
     constructor(delegate) {
+        super();
         this.d = delegate;
     }
     get [CollectionLike_count]() {
@@ -15,9 +16,6 @@ class ReadonlyArrayIndexedCollection {
     [KeyedLike_get](index) {
         raiseIf(index < 0 || index >= this[CollectionLike_count], "out of range");
         return this.d[index];
-    }
-    [EnumerableLike_enumerate]() {
-        return pipe(this[Symbol.iterator](), Enumerator_fromIterator());
     }
     [Symbol.iterator]() {
         return this.d[Symbol.iterator]();
