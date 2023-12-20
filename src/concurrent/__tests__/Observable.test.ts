@@ -177,7 +177,6 @@ const PureObservableOperatorTests = (
         pipe(
           Observable.empty(),
           Observable.subscribeOn(vts),
-          x => x,
           op,
           expectIsPureDeferredObservable,
         ),
@@ -858,8 +857,7 @@ testModule(
         expectArrayEquals([0, 1, 2, 3, 4]),
       ),
     ),
-    // FIXME
-    // PureObservableOperatorTests(Observable.endWith(1)),
+    PureObservableOperatorTests(Observable.endWith(1)),
   ),
   describe(
     "enqueue",
@@ -2065,8 +2063,7 @@ testModule(
         expectArrayEquals([2, 3, 4, 0, 1]),
       ),
     ),
-    // FIXME
-    // PureObservableOperatorTests(Observable.startWith()),
+    PureObservableOperatorTests(Observable.startWith(1, 2, 3)),
   ),
   describe(
     "subscribeOn",

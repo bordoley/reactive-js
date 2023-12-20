@@ -11,6 +11,7 @@ import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
+import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
@@ -45,7 +46,7 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
         );
       };
 
-      const isDeferred = true;
+      const isDeferred = Observable_allAreDeferred(observables);
       const isRunnable = Observable_allAreRunnable(observables);
       const isPure = Observable_allArePure(observables);
 
