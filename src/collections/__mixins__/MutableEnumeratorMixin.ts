@@ -7,7 +7,7 @@ import {
   EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../collections.js";
-import { none, pipe, raiseIf, returns } from "../../functions.js";
+import { none, raiseIf, returns } from "../../functions.js";
 
 export const MutableEnumeratorLike_reset = Symbol(
   "MutableEnumeratorLike_reset",
@@ -34,7 +34,7 @@ const MutableEnumeratorMixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
       [EnumeratorLike_isCompleted]: boolean;
     };
 
-    return pipe(
+    return returns(
       mix(
         function MutableEnumeratorMixin(
           instance: Pick<
@@ -84,7 +84,6 @@ const MutableEnumeratorMixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
           },
         },
       ),
-      returns,
     );
   })();
 

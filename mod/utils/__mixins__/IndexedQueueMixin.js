@@ -2,10 +2,10 @@
 
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
-import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
-import { CollectionLike_count, EnumerableLike_enumerate, KeyedLike_get, MutableKeyedLike_set, } from "../../collections.js";
-import Enumerator_fromIterator from "../../collections/Enumerator/__private__/Enumerator.fromIterator.js";
-import { newInstance, none, pipe, raiseError, raiseWithDebugMessage, returns, } from "../../functions.js";
+import { include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
+import { CollectionLike_count, KeyedLike_get, MutableKeyedLike_set, } from "../../collections.js";
+import EnumerableIterableMixin from "../../collections/__mixins__/EnumerableIterableMixin.js";
+import { newInstance, none, raiseError, raiseWithDebugMessage, returns, } from "../../functions.js";
 import { BackPressureError, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, StackLike_head, StackLike_pop, } from "../../utils.js";
 const IndexedQueueMixin = /*@PURE*/ (() => {
     const IndexedQueueMixin_capacityMask = Symbol("IndexedQueueMixin_capacityMask");
@@ -70,7 +70,8 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         }
         instance[IndexedQueueMixin_capacityMask] = newCapacity - 1;
     };
-    return pipe(mix(function IndexedQueueMixin(instance, config) {
+    return returns(mix(include(EnumerableIterableMixin()), function IndexedQueueMixin(instance, config) {
+        init(EnumerableIterableMixin(), instance);
         instance[QueueableLike_backpressureStrategy] =
             config?.[QueueableLike_backpressureStrategy] ?? "overflow";
         instance[QueueableLike_capacity] = clampPositiveInteger(config?.[QueueableLike_capacity] ?? MAX_SAFE_INTEGER);
@@ -194,9 +195,6 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
             grow(this);
             return this[CollectionLike_count] < this[QueueableLike_capacity];
         },
-        [EnumerableLike_enumerate]() {
-            return pipe(this[Symbol.iterator](), Enumerator_fromIterator());
-        },
         *[Symbol.iterator]() {
             const head = this[IndexedQueueMixin_head];
             const count = this[CollectionLike_count];
@@ -211,6 +209,6 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
                 i = i < valuesLength ? i : 0;
             }
         },
-    }), returns);
+    }));
 })();
 export default IndexedQueueMixin;

@@ -2,10 +2,10 @@
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
-import { AssociativeLike_keys, CollectionLike_count, EnumerableLike_enumerate, KeyedLike_get, } from "../../../collections.js";
-import Enumerator_fromIterator from "../../../collections/Enumerator/__private__/Enumerator.fromIterator.js";
+import { AssociativeLike_keys, CollectionLike_count, KeyedLike_get, } from "../../../collections.js";
 import * as ReadonlyMap from "../../../collections/ReadonlyMap.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
+import EnumerableIterableMixin from "../../../collections/__mixins__/EnumerableIterableMixin.js";
 import { ContinuationContextLike_yield, SchedulerLike_schedule, StreamableLike_stream, } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { bindMethod, compose, identity, invoke, isNone, isSome, none, pipe, tuple, } from "../../../functions.js";
@@ -17,7 +17,8 @@ import * as Subject from "../../Subject.js";
 import DelegatingStreamMixin from "../../__mixins__/DelegatingStreamMixin.js";
 import Streamable_create from "./Streamable.create.js";
 const createCacheStream = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(DelegatingStreamMixin()), function CacheStream(instance, scheduler, options, capacity, cleanupScheduler, persistentStore) {
+    return createInstanceFactory(mix(include(EnumerableIterableMixin(), DelegatingStreamMixin()), function CacheStream(instance, scheduler, options, capacity, cleanupScheduler, persistentStore) {
+        init(EnumerableIterableMixin(), instance);
         instance.store = new Map();
         instance.subscriptions = new Map();
         const cleanupQueue = IndexedQueue.create();
@@ -101,9 +102,6 @@ const createCacheStream = /*@__PURE__*/ (() => {
         [Symbol.iterator]() {
             unsafeCast(this);
             return pipe(this.subscriptions, ReadonlyMap.values())[Symbol.iterator]();
-        },
-        [EnumerableLike_enumerate]() {
-            return pipe(this[Symbol.iterator](), Enumerator_fromIterator());
         },
         [KeyedLike_get](key) {
             const { scheduleCleanup, store, subscriptions, delegate } = this;

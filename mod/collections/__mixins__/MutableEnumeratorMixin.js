@@ -3,12 +3,12 @@
 import { __DEV__ } from "../../__internal__/constants.js";
 import { mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, } from "../../collections.js";
-import { none, pipe, raiseIf, returns } from "../../functions.js";
+import { none, raiseIf, returns } from "../../functions.js";
 export const MutableEnumeratorLike_reset = Symbol("MutableEnumeratorLike_reset");
 const MutableEnumeratorMixin_current = Symbol("MutableEnumeratorMixin_current");
 const MutableEnumeratorMixin = 
 /*@__PURE__*/ (() => {
-    return pipe(mix(function MutableEnumeratorMixin(instance) {
+    return returns(mix(function MutableEnumeratorMixin(instance) {
         return instance;
     }, props({
         [MutableEnumeratorMixin_current]: none,
@@ -33,6 +33,6 @@ const MutableEnumeratorMixin =
             this[EnumeratorLike_hasCurrent] = false;
             return this[EnumeratorLike_isCompleted];
         },
-    }), returns);
+    }));
 })();
 export default MutableEnumeratorMixin;

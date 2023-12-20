@@ -3,6 +3,8 @@ import { clampPositiveInteger } from "../../__internal__/math.js";
 import {
   Mixin1,
   Mutable,
+  include,
+  init,
   mix,
   props,
   unsafeCast,
@@ -13,12 +15,11 @@ import {
   KeyedLike_get,
   MutableKeyedLike_set,
 } from "../../collections.js";
-import Enumerator_fromIterator from "../../collections/Enumerator/__private__/Enumerator.fromIterator.js";
+import EnumerableIterableMixin from "../../collections/__mixins__/EnumerableIterableMixin.js";
 import {
   Optional,
   newInstance,
   none,
-  pipe,
   raiseError,
   raiseWithDebugMessage,
   returns,
@@ -48,6 +49,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
     | typeof QueueableLike_backpressureStrategy
     | typeof CollectionLike_count
     | typeof QueueableLike_capacity
+    | typeof EnumerableLike_enumerate
   >
 > = /*@PURE*/ (<T>() => {
   const IndexedQueueMixin_capacityMask = Symbol(
@@ -144,12 +146,15 @@ const IndexedQueueMixin: <T>() => Mixin1<
     instance[IndexedQueueMixin_capacityMask] = newCapacity - 1;
   };
 
-  return pipe(
+  return returns(
     mix(
+      include(EnumerableIterableMixin<T>()),
       function IndexedQueueMixin(
         instance: Omit<
           IndexedQueueLike<T>,
-          typeof CollectionLike_count | typeof QueueableLike_capacity
+          | typeof CollectionLike_count
+          | typeof QueueableLike_capacity
+          | typeof EnumerableLike_enumerate
         > &
           Mutable<TProperties>,
         config?: {
@@ -157,6 +162,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
           readonly [QueueableLike_capacity]?: number;
         },
       ): IndexedQueueLike<T> {
+        init(EnumerableIterableMixin<T>(), instance);
         instance[QueueableLike_backpressureStrategy] =
           config?.[QueueableLike_backpressureStrategy] ?? "overflow";
         instance[QueueableLike_capacity] = clampPositiveInteger(
@@ -337,10 +343,6 @@ const IndexedQueueMixin: <T>() => Mixin1<
           return this[CollectionLike_count] < this[QueueableLike_capacity];
         },
 
-        [EnumerableLike_enumerate](this: TProperties & IndexedQueueLike<T>) {
-          return pipe(this[Symbol.iterator](), Enumerator_fromIterator<T>());
-        },
-
         *[Symbol.iterator](
           this: TProperties & IndexedQueueLike<T>,
         ): Iterator<T, any, undefined> {
@@ -362,7 +364,6 @@ const IndexedQueueMixin: <T>() => Mixin1<
         },
       },
     ),
-    returns,
   );
 })();
 

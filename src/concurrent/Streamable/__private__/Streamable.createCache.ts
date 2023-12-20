@@ -12,14 +12,12 @@ import {
   AssociativeLike_keys,
   CollectionLike_count,
   EnumerableLike,
-  EnumerableLike_enumerate,
-  EnumeratorLike,
   KeyedLike_get,
   ReadonlyObjectMapLike,
 } from "../../../collections.js";
-import Enumerator_fromIterator from "../../../collections/Enumerator/__private__/Enumerator.fromIterator.js";
 import * as ReadonlyMap from "../../../collections/ReadonlyMap.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
+import EnumerableIterableMixin from "../../../collections/__mixins__/EnumerableIterableMixin.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
@@ -107,6 +105,7 @@ const createCacheStream: <T>(
   return createInstanceFactory(
     mix(
       include(
+        EnumerableIterableMixin(),
         DelegatingStreamMixin<
           ReadonlyObjectMapLike<string, Function1<Optional<T>, T>>,
           never
@@ -120,7 +119,6 @@ const createCacheStream: <T>(
             | typeof CollectionLike_count
             | typeof AssociativeLike_keys
             | typeof Symbol.iterator
-            | typeof EnumerableLike_enumerate
           >,
         scheduler: SchedulerLike,
         options: Optional<{
@@ -132,6 +130,8 @@ const createCacheStream: <T>(
         cleanupScheduler: SchedulerLike,
         persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
       ): StreamOf<CacheLike<T>> {
+        init(EnumerableIterableMixin<ObservableLike<T>>(), instance);
+
         instance.store = new Map();
         instance.subscriptions = new Map();
 
@@ -326,10 +326,6 @@ const createCacheStream: <T>(
           return pipe(this.subscriptions, ReadonlyMap.values())[
             Symbol.iterator
           ]() as Iterator<ObservableLike<T>>;
-        },
-
-        [EnumerableLike_enumerate](): EnumeratorLike<ObservableLike<T>> {
-          return pipe(this[Symbol.iterator](), Enumerator_fromIterator());
         },
 
         [KeyedLike_get](
