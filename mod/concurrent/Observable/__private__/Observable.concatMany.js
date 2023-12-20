@@ -30,7 +30,7 @@ const Observable_concatMany =
         return observables.length === 0
             ? Observable_empty()
             : Observable_createWithConfig(onSubscribe, {
-                [ObservableLike_isDeferred]: isDeferred,
+                [ObservableLike_isDeferred]: isDeferred || (!isDeferred && !isRunnable && !isPure),
                 [ObservableLike_isRunnable]: isRunnable,
                 [ObservableLike_isPure]: isPure,
             });

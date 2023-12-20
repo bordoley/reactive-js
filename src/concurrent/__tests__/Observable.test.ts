@@ -696,9 +696,155 @@ testModule(
         expectArrayEquals([0, 1, 2, 3, 4]),
       ),
     ),
-    // FIXME
-    //PureObservableOperatorTests(Observable.concatWith(Observable.empty(), Observable.empty()))
-    //ObservableOperatorWithSideEffectsTests(Observable.concatWith())
+    PureObservableOperatorTests(
+      Observable.concatWith(Observable.empty(), Observable.empty()),
+    ),
+    ObservableOperatorWithSideEffectsTests(
+      Observable.concatWith(
+        pipe(Observable.empty(), Observable.forEach(ignore)),
+      ),
+    ),
+    describe(
+      "concat with PureDeferredObservableLikes",
+      test(
+        "with PureRunnableLike",
+        Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
+          pipe(
+            Observable.empty(),
+            Observable.concatWith(
+              pipe(Observable.empty(), Observable.subscribeOn(vts)),
+            ),
+            expectIsPureDeferredObservable,
+          );
+        }),
+      ),
+      test(
+        "with RunnableWithSideEffectsLike",
+        Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
+          pipe(
+            Observable.empty(),
+            Observable.forEach(ignore),
+            Observable.concatWith(
+              pipe(Observable.empty(), Observable.subscribeOn(vts)),
+            ),
+            expectIsDeferredObservableWithSideEffects,
+          );
+        }),
+      ),
+      test(
+        "with PureDeferredObservableLike",
+        Disposable.usingLazy(VirtualTimeScheduler.create)(vts =>
+          pipe(
+            Observable.empty(),
+            Observable.subscribeOn(vts),
+            Observable.concatWith(
+              pipe(Observable.empty(), Observable.subscribeOn(vts)),
+            ),
+            expectIsPureDeferredObservable,
+          ),
+        ),
+      ),
+      test(
+        "with DeferredObservableWithSideEffectsLike",
+        Disposable.usingLazy(VirtualTimeScheduler.create)(vts =>
+          pipe(
+            async () => {
+              throw new Error();
+            },
+            Observable.fromAsyncFactory(),
+            Observable.concatWith(
+              pipe(Observable.empty(), Observable.subscribeOn(vts)),
+            ),
+            expectIsDeferredObservableWithSideEffects,
+          ),
+        ),
+      ),
+      test(
+        "with MulticastObservableLike",
+        Disposable.usingLazy(VirtualTimeScheduler.create)(vts =>
+          pipe(
+            new Promise(ignore),
+            Observable.fromPromise(),
+            Observable.concatWith(
+              pipe(Observable.empty(), Observable.subscribeOn(vts)),
+            ),
+            expectIsMulticastObservable,
+          ),
+        ),
+      ),
+    ),
+    describe(
+      "concat with DeferredObservableWithSideEffectsLikes",
+      test(
+        "with PureRunnableLike",
+        pipeLazy(
+          Observable.empty(),
+          Observable.concatWith(
+            pipe(async () => {
+              throw new Error();
+            }, Observable.fromAsyncFactory()),
+          ),
+          expectIsDeferredObservableWithSideEffects,
+        ),
+      ),
+      test(
+        "with RunnableWithSideEffectsLike",
+        pipeLazy(
+          Observable.empty(),
+          Observable.forEach(ignore),
+          Observable.concatWith(
+            pipe(async () => {
+              throw new Error();
+            }, Observable.fromAsyncFactory()),
+          ),
+          expectIsDeferredObservableWithSideEffects,
+        ),
+      ),
+      test(
+        "with PureDeferredObservableLike",
+        Disposable.usingLazy(VirtualTimeScheduler.create)(vts =>
+          pipe(
+            Observable.empty(),
+            Observable.subscribeOn(vts),
+            Observable.concatWith(
+              pipe(async () => {
+                throw new Error();
+              }, Observable.fromAsyncFactory()),
+            ),
+            expectIsDeferredObservableWithSideEffects,
+          ),
+        ),
+      ),
+      test(
+        "with DeferredObservableWithSideEffectsLike",
+
+        pipeLazy(
+          async () => {
+            throw new Error();
+          },
+          Observable.fromAsyncFactory(),
+          Observable.concatWith(
+            pipe(async () => {
+              throw new Error();
+            }, Observable.fromAsyncFactory()),
+          ),
+          expectIsDeferredObservableWithSideEffects,
+        ),
+      ),
+      test(
+        "with MulticastObservableLike",
+        Disposable.usingLazy(VirtualTimeScheduler.create)(vts =>
+          pipe(
+            new Promise(ignore),
+            Observable.fromPromise(),
+            Observable.concatWith(
+              pipe(Observable.empty(), Observable.subscribeOn(vts)),
+            ),
+            expectIsMulticastObservable,
+          ),
+        ),
+      ),
+    ),
   ),
   describe(
     "create",

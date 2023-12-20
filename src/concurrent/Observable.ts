@@ -623,15 +623,25 @@ export interface ObservableModule
     ...tail: readonly RunnableLike<T>[]
   ): RunnableWithSideEffectsLike<T>;
   concat<T>(
+    fst: PureDeferredObservableLike<T>,
+    snd: PureDeferredObservableLike<T>,
+    ...tail: readonly PureDeferredObservableLike<T>[]
+  ): PureDeferredObservableLike<T>;
+  concat<T>(
     fst: DeferredObservableLike<T>,
     snd: DeferredObservableLike<T>,
     ...tail: readonly DeferredObservableLike<T>[]
   ): DeferredObservableWithSideEffectsLike<T>;
   concat<T>(
     fst: MulticastObservableLike<T>,
+    snd: PureDeferredObservableLike<T>,
+    ...tail: readonly PureDeferredObservableLike[]
+  ): MulticastObservableLike<T>;
+  concat<T>(
+    fst: MulticastObservableLike<T>,
     snd: DeferredObservableLike<T>,
     ...tail: readonly DeferredObservableLike[]
-  ): MulticastObservableLike<T>;
+  ): DeferredObservableWithSideEffectsLike<T>;
 
   concatAll<T>(): PureObservableOperator<PureRunnableLike<T>, T>;
   concatAll<T>(options: {
@@ -654,14 +664,23 @@ export interface ObservableModule
     observables: readonly RunnableLike<T>[],
   ): RunnableWithSideEffectsLike<T>;
   concatMany<T>(
+    observables: readonly PureDeferredObservableLike[],
+  ): PureDeferredObservableLike<T>;
+  concatMany<T>(
     observables: readonly DeferredObservableLike[],
   ): DeferredObservableWithSideEffectsLike<T>;
   concatMany<T>(
     observables: readonly [
       MulticastObservableLike<T>,
-      ...DeferredObservableLike[],
+      ...PureDeferredObservableLike[],
     ],
   ): MulticastObservableLike<T>;
+  concatMany<T>(
+    observables: readonly [
+      MulticastObservableLike<T>,
+      ...DeferredObservableLike[],
+    ],
+  ): DeferredObservableWithSideEffectsLike<T>;
 
   concatMap<TA, TB>(
     selector: Function1<TA, PureRunnableLike<TB>>,
@@ -694,9 +713,25 @@ export interface ObservableModule
     ...tail: readonly RunnableLike<T>[]
   ): ObservableOperatorWithSideEffects<T, T>;
   concatWith<T>(
+    snd: PureDeferredObservableLike<T>,
+    ...tail: readonly PureDeferredObservableLike<T>[]
+  ): <TObservableIn extends ObservableLike<T>>(
+    obs: TObservableIn,
+  ) => TObservableIn extends PureDeferredObservableLike<T>
+    ? PureDeferredObservableLike<T>
+    : TObservableIn extends MulticastObservableLike<T>
+    ? MulticastObservableLike<T>
+    : never;
+  concatWith<T>(
     snd: DeferredObservableLike<T>,
     ...tail: readonly DeferredObservableLike<T>[]
-  ): ObservableOperatorWithSideEffects<T, T>;
+  ): <
+    TObservableIn extends
+      | DeferredObservableLike<T>
+      | MulticastObservableLike<T>,
+  >(
+    obs: TObservableIn,
+  ) => DeferredObservableWithSideEffectsLike<T>;
 
   create<T>(
     f: SideEffect1<ObserverLike<T>>,
