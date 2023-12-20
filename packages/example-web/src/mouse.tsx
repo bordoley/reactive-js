@@ -55,10 +55,13 @@ const Root = () => {
             Observable.scanMany(
               (prev: Point, next: Point) =>
                 pipe(
-                  Observable.spring({
+                  Observable.animate({
+                    type: "spring",
                     stiffness: 0.01,
                     damping: 0.1,
                     precision: 0.001,
+                    from: 0,
+                    to: 1,
                   }),
                   Observable.map(scale(prev, next)),
                 ),

@@ -33,6 +33,7 @@ import {
 } from "../../functions.js";
 import {
   DisposableLike,
+  IndexedQueueLike,
   QueueLike_dequeue,
   QueueableLike_enqueue,
 } from "../../utils.js";
@@ -43,54 +44,25 @@ interface Signature {
   create(hostScheduler: SchedulerLike): SchedulerLike & DisposableLike;
 }
 
-const AnimationFrameScheduler_host = Symbol("AnimationFrameScheduler_host");
-
 export const create: Signature["create"] = /*@__PURE__*/ (() => {
-  let rafQueue = IndexedQueue.create<SideEffect>();
-  let rafIsRunning = false;
+  const AnimationFrameScheduler_host = Symbol("AnimationFrameScheduler_host");
+  const AnimationFrameScheduler_rafCallback = Symbol(
+    "AnimationFrameScheduler_rafCallback",
+  );
 
-  const rafCallback = () => {
-    const startTime = CurrentTime.now();
-    const workQueue = rafQueue;
+  const AnimationFrameScheduler_rafQueue = Symbol(
+    "AnimationFrameScheduler_rafQueue",
+  );
 
-    rafQueue = IndexedQueue.create();
-
-    let job: Optional<SideEffect> = none;
-    while (((job = workQueue[QueueLike_dequeue]()), isSome(job))) {
-      job();
-
-      const elapsedTime = CurrentTime.now() - startTime;
-      if (elapsedTime > 5 /*ms*/) {
-        break;
-      }
-    }
-
-    const jobsCount = workQueue[CollectionLike_count];
-    const newWorkQueue = rafQueue;
-    const newJobsCount = newWorkQueue[CollectionLike_count];
-
-    if (jobsCount > 0 && newJobsCount === 0) {
-      rafQueue = workQueue;
-    } else if (jobsCount > 0) {
-      // Merge the job queues copying the newly enqueued jobs
-      // onto the original queue.
-      let job: Optional<SideEffect> = none;
-      while (((job = newWorkQueue[QueueLike_dequeue]()), isSome(job))) {
-        workQueue[QueueableLike_enqueue](job);
-      }
-      rafQueue = workQueue;
-    }
-
-    const workQueueCount = rafQueue[CollectionLike_count];
-    if (workQueueCount > 0) {
-      requestAnimationFrame(rafCallback);
-    } else {
-      rafIsRunning = false;
-    }
-  };
+  const AnimationFrameScheduler_rafIsRunning = Symbol(
+    "AnimationFrameScheduler_rafIsRunning",
+  );
 
   type TProperties = {
     [AnimationFrameScheduler_host]: SchedulerLike;
+    [AnimationFrameScheduler_rafCallback]: () => void;
+    [AnimationFrameScheduler_rafQueue]: IndexedQueueLike<SideEffect>;
+    [AnimationFrameScheduler_rafIsRunning]: boolean;
   };
 
   return createInstanceFactory(
@@ -103,11 +75,60 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
         init(ContinuationSchedulerMixin, instance, 5);
 
         instance[AnimationFrameScheduler_host] = hostScheduler;
+        instance[AnimationFrameScheduler_rafQueue] =
+          IndexedQueue.create<SideEffect>();
+        instance[AnimationFrameScheduler_rafIsRunning] = false;
+
+        instance[AnimationFrameScheduler_rafCallback] = () => {
+          const startTime = instance[SchedulerLike_now];
+          const workQueue = instance[AnimationFrameScheduler_rafQueue];
+
+          instance[AnimationFrameScheduler_rafQueue] = IndexedQueue.create();
+
+          let job: Optional<SideEffect> = none;
+          while (((job = workQueue[QueueLike_dequeue]()), isSome(job))) {
+            job();
+
+            const elapsedTime = instance[SchedulerLike_now] - startTime;
+            if (elapsedTime > 5 /*ms*/) {
+              break;
+            }
+          }
+
+          const jobsCount = workQueue[CollectionLike_count];
+          const newWorkQueue = instance[AnimationFrameScheduler_rafQueue];
+          const newJobsCount = newWorkQueue[CollectionLike_count];
+
+          if (jobsCount > 0 && newJobsCount === 0) {
+            instance[AnimationFrameScheduler_rafQueue] = workQueue;
+          } else if (jobsCount > 0) {
+            // Merge the job queues copying the newly enqueued jobs
+            // onto the original queue.
+            let job: Optional<SideEffect> = none;
+            while (((job = newWorkQueue[QueueLike_dequeue]()), isSome(job))) {
+              workQueue[QueueableLike_enqueue](job);
+            }
+            instance[AnimationFrameScheduler_rafQueue] = workQueue;
+          }
+
+          const workQueueCount =
+            instance[AnimationFrameScheduler_rafQueue][CollectionLike_count];
+          if (workQueueCount > 0) {
+            requestAnimationFrame(
+              instance[AnimationFrameScheduler_rafCallback],
+            );
+          } else {
+            instance[AnimationFrameScheduler_rafIsRunning] = false;
+          }
+        };
 
         return instance;
       },
       props<TProperties>({
         [AnimationFrameScheduler_host]: none,
+        [AnimationFrameScheduler_rafCallback]: none,
+        [AnimationFrameScheduler_rafQueue]: none,
+        [AnimationFrameScheduler_rafIsRunning]: false,
       }),
       {
         get [SchedulerLike_now](): number {
@@ -142,13 +163,13 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
               Disposable.addTo(continuation),
             );
           } else {
-            rafQueue[QueueableLike_enqueue](
+            this[AnimationFrameScheduler_rafQueue][QueueableLike_enqueue](
               bindMethod(continuation, ContinuationLike_run),
             );
 
-            if (!rafIsRunning) {
-              rafIsRunning = true;
-              requestAnimationFrame(rafCallback);
+            if (!this[AnimationFrameScheduler_rafIsRunning]) {
+              this[AnimationFrameScheduler_rafIsRunning] = true;
+              requestAnimationFrame(this[AnimationFrameScheduler_rafCallback]);
             }
           }
         },

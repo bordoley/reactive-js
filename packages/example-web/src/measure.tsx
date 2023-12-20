@@ -24,10 +24,7 @@ import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler"
 import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
 import { pick } from "@reactive-js/core/computations";
 import { KeyedLike_get } from "@reactive-js/core/collections";
-import {
-  DeferredObservableLike,
-  MulticastObservableLike,
-} from "@reactive-js/core/concurrent";
+import { MulticastObservableLike } from "@reactive-js/core/concurrent";
 
 const Measure = () => {
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
@@ -48,7 +45,7 @@ const Measure = () => {
         number
       >(
         {
-          a: ({ prevWidth, width }) =>
+          a: ({ prevWidth, width }: { prevWidth: number; width: number }) =>
             isSome(prevWidth)
               ? {
                   type: "spring",
@@ -91,7 +88,7 @@ const Measure = () => {
         Observable.forkMerge<
           number,
           MulticastObservableLike<number>,
-          DeferredObservableLike<number>
+          MulticastObservableLike<number>
         >(
           compose(
             Observable.withLatestFrom<number, number, Tuple2<number, number>>(
