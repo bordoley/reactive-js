@@ -22,12 +22,17 @@ const createEnumerableFromReadonlyArray = <TKey extends number, T>(
   count: number,
 ) => {
   function* ReadonlyArrayEntries() {
+    let startIndexInstance = startIndex;
+    let countInstance = count;
+
     for (
       ;
-      count !== 0;
-      count > 0 ? (startIndex++, count--) : (startIndex--, count++)
+      countInstance !== 0;
+      countInstance > 0
+        ? (startIndexInstance++, countInstance--)
+        : (startIndexInstance--, countInstance++)
     ) {
-      yield tuple(startIndex as TKey, arr[startIndex]);
+      yield tuple(startIndexInstance as TKey, arr[startIndexInstance]);
     }
   }
   return Enumerable_create(() =>

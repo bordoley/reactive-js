@@ -8,8 +8,12 @@ import Indexed_toCollection from "./Indexed.toCollection.js";
 const Indexed_entries = 
 /*@__PURE__*/ Indexed_toCollection((indexed, startIndex, count) => {
     function* Indexed_entries() {
-        for (; count !== 0; count > 0 ? (startIndex++, count--) : (startIndex--, count++)) {
-            yield tuple(startIndex, indexed[KeyedLike_get](startIndex));
+        let startIndexInstance = startIndex;
+        let countInstance = count;
+        for (; countInstance !== 0; countInstance > 0
+            ? (startIndexInstance++, countInstance--)
+            : (startIndexInstance--, countInstance++)) {
+            yield tuple(startIndexInstance, indexed[KeyedLike_get](startIndexInstance));
         }
     }
     return Enumerable_create(() => pipe(Indexed_entries(), Enumerator_fromIterator()));

@@ -27,14 +27,22 @@ const Indexed_entries: Indexed.Signature["entries"] =
       count: number,
     ) => {
       function* Indexed_entries() {
+        let startIndexInstance = startIndex;
+        let countInstance = count;
         for (
           ;
-          count !== 0;
-          count > 0 ? (startIndex++, count--) : (startIndex--, count++)
+          countInstance !== 0;
+          countInstance > 0
+            ? (startIndexInstance++, countInstance--)
+            : (startIndexInstance--, countInstance++)
         ) {
-          yield tuple(startIndex as TKey, indexed[KeyedLike_get](startIndex));
+          yield tuple(
+            startIndexInstance as TKey,
+            indexed[KeyedLike_get](startIndexInstance),
+          );
         }
       }
+
       return Enumerable_create(() =>
         pipe(Indexed_entries(), Enumerator_fromIterator()),
       );

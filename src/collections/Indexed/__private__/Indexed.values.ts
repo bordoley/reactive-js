@@ -27,12 +27,17 @@ const Indexed_values: Indexed.Signature["values"] =
       count: number,
     ) => {
       function* Indexed_values(): Iterator<T> {
+        let startIndexInstance = startIndex;
+        let countInstance = count;
+
         for (
           ;
-          count !== 0;
-          count > 0 ? (startIndex++, count--) : (startIndex--, count++)
+          countInstance !== 0;
+          countInstance > 0
+            ? (startIndexInstance++, countInstance--)
+            : (startIndexInstance--, countInstance++)
         ) {
-          yield indexed[KeyedLike_get](startIndex);
+          yield indexed[KeyedLike_get](startIndexInstance);
         }
       }
       return Enumerable_create(() =>

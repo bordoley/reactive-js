@@ -7,8 +7,12 @@ import Enumerator_fromIterator from "../../Enumerator/__private__/Enumerator.fro
 import Indexed_toCollection from "../../Indexed/__private__/Indexed.toCollection.js";
 const createEnumerableFromReadonlyArray = (arr, startIndex, count) => {
     function* ReadonlyArrayEntries() {
-        for (; count !== 0; count > 0 ? (startIndex++, count--) : (startIndex--, count++)) {
-            yield tuple(startIndex, arr[startIndex]);
+        let startIndexInstance = startIndex;
+        let countInstance = count;
+        for (; countInstance !== 0; countInstance > 0
+            ? (startIndexInstance++, countInstance--)
+            : (startIndexInstance--, countInstance++)) {
+            yield tuple(startIndexInstance, arr[startIndexInstance]);
         }
     }
     return Enumerable_create(() => pipe(ReadonlyArrayEntries(), Enumerator_fromIterator()));

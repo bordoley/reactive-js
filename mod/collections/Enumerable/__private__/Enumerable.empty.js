@@ -1,10 +1,7 @@
 /// <reference types="./Enumerable.empty.d.ts" />
 
-import { pipe, returns } from "../../../functions.js";
-import Enumerator_fromIterator from "../../Enumerator/__private__/Enumerator.fromIterator.js";
-import Enumerable_create from "./Enumerable.create.js";
-const Enumerable_empty = /*@__PURE__*/ (() => pipe(() => {
-    const iter = function* () { };
-    return pipe(iter(), Enumerator_fromIterator());
-}, Enumerable_create, returns))();
+import { pipeLazy } from "../../../functions.js";
+import ReadonlyArray_empty from "../../ReadonlyArray/__private__/ReadonlyArray.empty.js";
+import ReadonlyArray_values from "../../ReadonlyArray/__private__/ReadonlyArray.values.js";
+const Enumerable_empty = /*@__PURE__*/ (() => pipeLazy(ReadonlyArray_empty(), ReadonlyArray_values()))();
 export default Enumerable_empty;
