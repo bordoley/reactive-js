@@ -8,8 +8,7 @@ import {
   KeyedLike_get,
 } from "../../../collections.js";
 import { pick, pipe } from "../../../functions.js";
-import Enumerable_create from "../../Enumerable/__private__/Enumerable.create.js";
-import Enumerator_fromIterator from "../../Enumerator/__private__/Enumerator.fromIterator.js";
+import Enumerable_fromIteratorFactory from "../../Enumerable/__private__/Enumerable.fromIteratorFactory.js";
 import type * as Indexed from "../../Indexed.js";
 import Indexed_toCollection from "./Indexed.toCollection.js";
 
@@ -25,8 +24,8 @@ const Indexed_values: Indexed.Signature["values"] =
       indexed: IndexedLike<T>,
       startIndex: number,
       count: number,
-    ) => {
-      function* Indexed_values(): Iterator<T> {
+    ) =>
+      pipe(function* (): Iterator<T> {
         let startIndexInstance = startIndex;
         let countInstance = count;
 
@@ -39,11 +38,7 @@ const Indexed_values: Indexed.Signature["values"] =
         ) {
           yield indexed[KeyedLike_get](startIndexInstance);
         }
-      }
-      return Enumerable_create(() =>
-        pipe(Indexed_values(), Enumerator_fromIterator()),
-      );
-    },
+      }, Enumerable_fromIteratorFactory()),
     pick(CollectionLike_count),
   ) as Indexed.Signature["values"];
 

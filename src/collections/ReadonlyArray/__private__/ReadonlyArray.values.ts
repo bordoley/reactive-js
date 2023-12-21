@@ -5,8 +5,7 @@ import {
   KeyedCollection_type,
 } from "../../../collections.js";
 import { pipe } from "../../../functions.js";
-import Enumerable_create from "../../Enumerable/__private__/Enumerable.create.js";
-import Enumerator_fromIterator from "../../Enumerator/__private__/Enumerator.fromIterator.js";
+import Enumerable_fromIteratorFactory from "../../Enumerable/__private__/Enumerable.fromIteratorFactory.js";
 import Indexed_toCollection from "../../Indexed/__private__/Indexed.toCollection.js";
 import type * as ReadonlyArray from "../../ReadonlyArray.js";
 
@@ -22,8 +21,8 @@ const ReadonlyArray_values: ReadonlyArray.Signature["values"] =
       arr: readonly T[],
       startIndex: number,
       count: number,
-    ) => {
-      function* ReadonlyArrayValues(): Iterator<T> {
+    ) =>
+      pipe(function* (): Iterator<T> {
         let iterCount = count;
         let iterStartIndex = startIndex;
         for (
@@ -35,12 +34,7 @@ const ReadonlyArray_values: ReadonlyArray.Signature["values"] =
         ) {
           yield arr[iterStartIndex];
         }
-      }
-
-      return Enumerable_create(() =>
-        pipe(ReadonlyArrayValues(), Enumerator_fromIterator()),
-      );
-    },
+      }, Enumerable_fromIteratorFactory()),
     v => v.length,
   ) as ReadonlyArray.Signature["values"];
 
