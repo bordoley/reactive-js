@@ -1,12 +1,11 @@
 /// <reference types="./HostScheduler.d.ts" />
 
-import * as CurrentTime from "../__internal__/CurrentTime.js";
 import { createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
-import { SchedulerLike_now } from "../concurrent.js";
 import { none, pipe } from "../functions.js";
 import { DisposableLike_dispose } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
 import ContinuationSchedulerMixin, { ContinuationLike_run, ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, } from "./__mixins__/ContinuationSchedulerMixin.js";
+import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
 const supportsSetImmediate = typeof setImmediate === "function";
 const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
     navigator.scheduling !== none &&
@@ -33,13 +32,11 @@ const runContinuation = (continuation, immmediateOrTimerDisposable) => {
     immmediateOrTimerDisposable[DisposableLike_dispose]();
     continuation[ContinuationLike_run]();
 };
-const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(ContinuationSchedulerMixin), function HostScheduler(instance, maxYieldInterval) {
+const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(CurrentTimeSchedulerMixin, ContinuationSchedulerMixin), function HostScheduler(instance, maxYieldInterval) {
+    init(CurrentTimeSchedulerMixin, instance);
     init(ContinuationSchedulerMixin, instance, maxYieldInterval);
     return instance;
 }, props({}), {
-    get [SchedulerLike_now]() {
-        return CurrentTime.now();
-    },
     get [ContinuationSchedulerImplementationLike_shouldYield]() {
         return isInputPending();
     },

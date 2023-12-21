@@ -1,4 +1,3 @@
-import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import {
   createInstanceFactory,
   include,
@@ -21,6 +20,7 @@ import ContinuationSchedulerMixin, {
   ContinuationSchedulerImplementationLike_shouldYield,
   ContinuationSchedulerLike,
 } from "../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
+import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
 import {
   Optional,
   SideEffect,
@@ -67,11 +67,16 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
 
   return createInstanceFactory(
     mix(
-      include(ContinuationSchedulerMixin),
+      include(CurrentTimeSchedulerMixin, ContinuationSchedulerMixin),
       function AnimationFrameScheduler(
-        instance: ContinuationSchedulerImplementationLike & TProperties,
+        instance: Omit<
+          ContinuationSchedulerImplementationLike,
+          typeof SchedulerLike_now
+        > &
+          TProperties,
         hostScheduler: SchedulerLike,
       ): SchedulerLike & DisposableLike {
+        init(CurrentTimeSchedulerMixin, instance);
         init(ContinuationSchedulerMixin, instance, 5);
 
         instance[AnimationFrameScheduler_host] = hostScheduler;
@@ -131,10 +136,6 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
         [AnimationFrameScheduler_rafIsRunning]: false,
       }),
       {
-        get [SchedulerLike_now](): number {
-          return CurrentTime.now();
-        },
-
         [ContinuationSchedulerImplementationLike_shouldYield]: true,
         [SchedulerLike_shouldYield]: true,
 

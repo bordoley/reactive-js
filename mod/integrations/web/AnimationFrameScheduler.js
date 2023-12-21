@@ -1,10 +1,10 @@
 /// <reference types="./AnimationFrameScheduler.d.ts" />
 
-import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../collections.js";
 import { SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import ContinuationSchedulerMixin, { ContinuationLike_run, ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, } from "../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
+import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
 import { bindMethod, invoke, isSome, none, pipe, pipeLazy, } from "../../functions.js";
 import { QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -14,7 +14,8 @@ export const create = /*@__PURE__*/ (() => {
     const AnimationFrameScheduler_rafCallback = Symbol("AnimationFrameScheduler_rafCallback");
     const AnimationFrameScheduler_rafQueue = Symbol("AnimationFrameScheduler_rafQueue");
     const AnimationFrameScheduler_rafIsRunning = Symbol("AnimationFrameScheduler_rafIsRunning");
-    return createInstanceFactory(mix(include(ContinuationSchedulerMixin), function AnimationFrameScheduler(instance, hostScheduler) {
+    return createInstanceFactory(mix(include(CurrentTimeSchedulerMixin, ContinuationSchedulerMixin), function AnimationFrameScheduler(instance, hostScheduler) {
+        init(CurrentTimeSchedulerMixin, instance);
         init(ContinuationSchedulerMixin, instance, 5);
         instance[AnimationFrameScheduler_host] = hostScheduler;
         instance[AnimationFrameScheduler_rafQueue] =
@@ -62,9 +63,6 @@ export const create = /*@__PURE__*/ (() => {
         [AnimationFrameScheduler_rafQueue]: none,
         [AnimationFrameScheduler_rafIsRunning]: false,
     }), {
-        get [SchedulerLike_now]() {
-            return CurrentTime.now();
-        },
         [ContinuationSchedulerImplementationLike_shouldYield]: true,
         [SchedulerLike_shouldYield]: true,
         [ContinuationSchedulerImplementationLike_scheduleContinuation](continuation, delay) {

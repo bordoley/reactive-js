@@ -1,4 +1,3 @@
-import * as CurrentTime from "../__internal__/CurrentTime.js";
 import {
   createInstanceFactory,
   include,
@@ -18,6 +17,7 @@ import ContinuationSchedulerMixin, {
   ContinuationSchedulerImplementationLike_shouldYield,
   ContinuationSchedulerLike,
 } from "./__mixins__/ContinuationSchedulerMixin.js";
+import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
 
 /**
  * @noInheritDoc
@@ -92,21 +92,21 @@ const runContinuation = (
 const createHostSchedulerInstance = /*@__PURE__*/ (() =>
   createInstanceFactory(
     mix(
-      include(ContinuationSchedulerMixin),
+      include(CurrentTimeSchedulerMixin, ContinuationSchedulerMixin),
       function HostScheduler(
-        instance: ContinuationSchedulerImplementationLike,
+        instance: Omit<
+          ContinuationSchedulerImplementationLike,
+          typeof SchedulerLike_now
+        >,
         maxYieldInterval: number,
       ): SchedulerLike & DisposableLike {
+        init(CurrentTimeSchedulerMixin, instance);
         init(ContinuationSchedulerMixin, instance, maxYieldInterval);
 
         return instance;
       },
       props({}),
       {
-        get [SchedulerLike_now](): number {
-          return CurrentTime.now();
-        },
-
         get [ContinuationSchedulerImplementationLike_shouldYield](): boolean {
           return isInputPending();
         },
