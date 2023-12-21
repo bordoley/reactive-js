@@ -1,7 +1,6 @@
 /// <reference types="./ReadonlyMap.keys.d.ts" />
 
-import { pipe } from "../../../functions.js";
-import Enumerable_create from "../../Enumerable/__private__/Enumerable.create.js";
-import Enumerator_fromIterator from "../../Enumerator/__private__/Enumerator.fromIterator.js";
-const ReadonlyMap_keys = () => map => Enumerable_create(() => pipe(map.keys(), Enumerator_fromIterator()));
+import { bind, pipe } from "../../../functions.js";
+import Enumerable_fromIteratorFactory from "../../Enumerable/__private__/Enumerable.fromIteratorFactory.js";
+const ReadonlyMap_keys = () => map => pipe(bind(map.keys, map), Enumerable_fromIteratorFactory());
 export default ReadonlyMap_keys;

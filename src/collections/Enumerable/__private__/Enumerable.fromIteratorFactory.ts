@@ -1,7 +1,7 @@
-import { EnumerableLike } from "../../../collections";
-import { Factory, Function1, pipe, returns } from "../../../functions";
-import Enumerator_fromIterator from "../../Enumerator/__private__/Enumerator.fromIterator";
-import Enumerable_create from "./Enumerable.create";
+import { EnumerableLike } from "../../../collections.js";
+import { Factory, Function1, pipe, returns } from "../../../functions.js";
+import Enumerator_fromIterator from "../../Enumerator/__private__/Enumerator.fromIterator.js";
+import Enumerable_create from "./Enumerable.create.js";
 
 const Enumerable_fromIteratorFactory: <T>() => Function1<
   Factory<Iterator<T>>,
