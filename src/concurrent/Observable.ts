@@ -410,6 +410,67 @@ export interface ObservableModule
   ): PureRunnableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   combineLatest<TA, TB>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+  ): PureDeferredObservableLike<Tuple2<TA, TB>>;
+  combineLatest<TA, TB, TC>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+    c: PureDeferredObservableLike<TC>,
+  ): PureDeferredObservableLike<Tuple3<TA, TB, TC>>;
+  combineLatest<TA, TB, TC, TD>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+    c: PureDeferredObservableLike<TC>,
+    d: PureDeferredObservableLike<TD>,
+  ): PureDeferredObservableLike<Tuple4<TA, TB, TC, TD>>;
+  combineLatest<TA, TB, TC, TD, TE>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+    c: PureDeferredObservableLike<TC>,
+    d: PureDeferredObservableLike<TD>,
+    e: PureDeferredObservableLike<TE>,
+  ): PureDeferredObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
+  combineLatest<TA, TB, TC, TD, TE, TF>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+    c: PureDeferredObservableLike<TC>,
+    d: PureDeferredObservableLike<TD>,
+    e: PureDeferredObservableLike<TE>,
+    f: PureDeferredObservableLike<TF>,
+  ): PureDeferredObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
+  combineLatest<TA, TB, TC, TD, TE, TF, TG>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+    c: PureDeferredObservableLike<TC>,
+    d: PureDeferredObservableLike<TD>,
+    e: PureDeferredObservableLike<TE>,
+    f: PureDeferredObservableLike<TF>,
+    g: PureDeferredObservableLike<TG>,
+  ): PureDeferredObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
+  combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+    c: PureDeferredObservableLike<TC>,
+    d: PureDeferredObservableLike<TD>,
+    e: PureDeferredObservableLike<TE>,
+    f: PureDeferredObservableLike<TF>,
+    g: PureDeferredObservableLike<TG>,
+    h: PureDeferredObservableLike<TH>,
+  ): PureDeferredObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
+  combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+    c: PureDeferredObservableLike<TC>,
+    d: PureDeferredObservableLike<TD>,
+    e: PureDeferredObservableLike<TE>,
+    f: PureDeferredObservableLike<TF>,
+    g: PureDeferredObservableLike<TG>,
+    h: PureDeferredObservableLike<TH>,
+    i: PureDeferredObservableLike<TI>,
+  ): PureDeferredObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
+
+  combineLatest<TA, TB>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
   ): RunnableWithSideEffectsLike<Tuple2<TA, TB>>;
@@ -661,24 +722,24 @@ export interface ObservableModule
     observables: readonly PureRunnableLike<T>[],
   ): PureRunnableLike<T>;
   concatMany<T>(
+    observables: readonly PureDeferredObservableLike<T>[],
+  ): PureDeferredObservableLike<T>;
+  concatMany<T>(
     observables: readonly RunnableLike<T>[],
   ): RunnableWithSideEffectsLike<T>;
   concatMany<T>(
-    observables: readonly PureDeferredObservableLike[],
-  ): PureDeferredObservableLike<T>;
-  concatMany<T>(
-    observables: readonly DeferredObservableLike[],
+    observables: readonly DeferredObservableLike<T>[],
   ): DeferredObservableWithSideEffectsLike<T>;
   concatMany<T>(
     observables: readonly [
       MulticastObservableLike<T>,
-      ...PureDeferredObservableLike[],
+      ...(readonly PureDeferredObservableLike<T>[]),
     ],
   ): MulticastObservableLike<T>;
   concatMany<T>(
     observables: readonly [
       MulticastObservableLike<T>,
-      ...DeferredObservableLike[],
+      ...(readonly DeferredObservableLike<T>[]),
     ],
   ): DeferredObservableWithSideEffectsLike<T>;
 
@@ -841,11 +902,6 @@ export interface ObservableModule
     ...tail: readonly Function1<TObservableIn, RunnableLike<T>>[]
   ): Function1<TObservableIn, RunnableWithSideEffectsLike<T>>;
   forkMerge<TObservableIn extends ObservableLike, T>(
-    fst: Function1<TObservableIn, DeferredObservableLike<T>>,
-    snd: Function1<TObservableIn, DeferredObservableLike<T>>,
-    ...tail: readonly Function1<TObservableIn, DeferredObservableLike<T>>[]
-  ): Function1<TObservableIn, DeferredObservableWithSideEffectsLike<T>>;
-  forkMerge<TObservableIn extends ObservableLike, T>(
     fst: Function1<TObservableIn, PureObservableLike<T>>,
     snd: Function1<TObservableIn, PureObservableLike<T>>,
     ...tail: readonly Function1<TObservableIn, PureObservableLike<T>>[]
@@ -975,6 +1031,9 @@ export interface ObservableModule
   mergeMany<T>(
     observables: readonly PureRunnableLike<T>[],
   ): PureRunnableLike<T>;
+  mergeMany<T>(
+    observables: readonly PureDeferredObservableLike<T>[],
+  ): PureDeferredObservableLike<T>;
   mergeMany<T>(
     observables: readonly RunnableLike<T>[],
   ): RunnableWithSideEffectsLike<T>;
@@ -1328,6 +1387,67 @@ export interface ObservableModule
     h: PureRunnableLike<TH>,
     i: PureRunnableLike<TI>,
   ): PureRunnableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
+
+  zipLatest<TA, TB>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+  ): PureDeferredObservableLike<Tuple2<TA, TB>>;
+  zipLatest<TA, TB, TC>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+    c: PureDeferredObservableLike<TC>,
+  ): PureDeferredObservableLike<Tuple3<TA, TB, TC>>;
+  zipLatest<TA, TB, TC, TD>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+    c: PureDeferredObservableLike<TC>,
+    d: PureDeferredObservableLike<TD>,
+  ): PureDeferredObservableLike<Tuple4<TA, TB, TC, TD>>;
+  zipLatest<TA, TB, TC, TD, TE>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+    c: PureDeferredObservableLike<TC>,
+    d: PureDeferredObservableLike<TD>,
+    e: PureDeferredObservableLike<TE>,
+  ): PureDeferredObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
+  zipLatest<TA, TB, TC, TD, TE, TF>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+    c: PureDeferredObservableLike<TC>,
+    d: PureDeferredObservableLike<TD>,
+    e: PureDeferredObservableLike<TE>,
+    f: PureDeferredObservableLike<TF>,
+  ): PureDeferredObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
+  zipLatest<TA, TB, TC, TD, TE, TF, TG>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+    c: PureDeferredObservableLike<TC>,
+    d: PureDeferredObservableLike<TD>,
+    e: PureDeferredObservableLike<TE>,
+    f: PureDeferredObservableLike<TF>,
+    g: PureDeferredObservableLike<TG>,
+  ): PureDeferredObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
+  zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+    c: PureDeferredObservableLike<TC>,
+    d: PureDeferredObservableLike<TD>,
+    e: PureDeferredObservableLike<TE>,
+    f: PureDeferredObservableLike<TF>,
+    g: PureDeferredObservableLike<TG>,
+    h: PureDeferredObservableLike<TH>,
+  ): PureDeferredObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
+  zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: PureDeferredObservableLike<TA>,
+    b: PureDeferredObservableLike<TB>,
+    c: PureDeferredObservableLike<TC>,
+    d: PureDeferredObservableLike<TD>,
+    e: PureDeferredObservableLike<TE>,
+    f: PureDeferredObservableLike<TF>,
+    g: PureDeferredObservableLike<TG>,
+    h: PureDeferredObservableLike<TH>,
+    i: PureDeferredObservableLike<TI>,
+  ): PureDeferredObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   zipLatest<TA, TB>(
     a: RunnableLike<TA>,

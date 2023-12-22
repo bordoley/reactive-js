@@ -428,28 +428,32 @@ testModule(
     testIsPureRunnable(
       Observable.combineLatest(Observable.empty(), Observable.empty()),
     ),
-    test(
-      "with runnables with side effects",
-      pipeLazy(
+    testIsPureDeferredObservable(
+      Disposable.using<VirtualTimeSchedulerLike, PureDeferredObservableLike>(
+        VirtualTimeScheduler.create,
+      )(vts =>
         Observable.combineLatest(
+          pipe(Observable.empty(), Observable.subscribeOn(vts)),
           Observable.empty(),
-          pipe(Observable.empty(), Observable.forEach(ignore)),
         ),
-        expectIsRunnableWithSideEffects,
       ),
     ),
-    test(
-      "with deferred observables with side effects",
-      pipeLazy(
-        Observable.combineLatest(
-          pipe(async () => {
-            throw new Error();
-          }, Observable.fromAsyncFactory()),
-          Observable.empty(),
-          pipe(Observable.empty(), Observable.forEach(ignore)),
-        ),
-        x => x,
-        expectIsDeferredObservableWithSideEffects,
+    testIsRunnableWithSideEffects(
+      Observable.combineLatest(
+        Observable.empty(),
+        pipe(Observable.empty(), Observable.forEach(ignore)),
+      ),
+    ),
+    testIsMulticastObservable(
+      Observable.combineLatest(Observable.empty(), Subject.create()),
+    ),
+    testIsDeferredObservableWithSideEffects(
+      Observable.combineLatest(
+        pipe(async () => {
+          throw new Error();
+        }, Observable.fromAsyncFactory()),
+        Observable.empty(),
+        pipe(Observable.empty(), Observable.forEach(ignore)),
       ),
     ),
   ),
@@ -646,6 +650,37 @@ testModule(
     test(
       "concating an empty array returns the empty observable",
       pipeLazy(Observable.concatMany([]), expectEquals(Observable.empty())),
+    ),
+    testIsPureRunnable(
+      Observable.concatMany([Observable.empty(), Observable.empty()]),
+    ),
+    testIsPureDeferredObservable(
+      Disposable.using<VirtualTimeSchedulerLike, PureDeferredObservableLike>(
+        VirtualTimeScheduler.create,
+      )(vts =>
+        Observable.concatMany([
+          pipe(Observable.empty(), Observable.subscribeOn(vts)),
+          Observable.empty(),
+        ]),
+      ),
+    ),
+    testIsRunnableWithSideEffects(
+      Observable.concatMany([
+        pipe(Observable.empty(), Observable.forEach(ignore)),
+        Observable.empty(),
+      ]),
+    ),
+    testIsDeferredObservableWithSideEffects(
+      Observable.concatMany([Observable.create(ignore), Observable.empty()]),
+    ),
+    testIsMulticastObservable(
+      Observable.concatMany([Subject.create(), Observable.empty()]),
+    ),
+    testIsDeferredObservableWithSideEffects(
+      Observable.concatMany([
+        Subject.create(),
+        pipe(Observable.empty(), Observable.forEach(ignore)),
+      ]),
     ),
   ),
   describe(
@@ -1568,73 +1603,6 @@ testModule(
         ),
       ),
       describe(
-        "with DeferredObservableWithSideEffects inner functions",
-        test(
-          "with PureRunnable source",
-          pipeLazy(
-            Observable.empty(),
-            Observable.forkMerge(
-              pipe(
-                () => Promise.resolve(1),
-                Observable.fromAsyncFactory(),
-                returns,
-              ),
-              returns(Observable.empty()),
-            ),
-            expectIsDeferredObservableWithSideEffects,
-          ),
-        ),
-        test(
-          "with RunnableWithSideEffects source",
-          pipeLazy(
-            Observable.empty(),
-            Observable.forEach(ignore),
-            Observable.forkMerge(
-              pipe(
-                () => Promise.resolve(1),
-                Observable.fromAsyncFactory(),
-                returns,
-              ),
-              returns(Observable.empty()),
-            ),
-            expectIsDeferredObservableWithSideEffects,
-          ),
-        ),
-        test(
-          "with DeferredObservableWithSideEffects source",
-          pipeLazy(
-            async () => {
-              throw new Error();
-            },
-            Observable.fromAsyncFactory(),
-            Observable.forkMerge(
-              pipe(
-                () => Promise.resolve(1),
-                Observable.fromAsyncFactory(),
-                returns,
-              ),
-              returns(Observable.empty()),
-            ),
-            expectIsDeferredObservableWithSideEffects,
-          ),
-        ),
-        test(
-          "with MulticastObservable source",
-          pipeLazy(
-            Subject.create(),
-            Observable.forkMerge(
-              pipe(
-                () => Promise.resolve(1),
-                Observable.fromAsyncFactory(),
-                returns,
-              ),
-              returns(Observable.empty()),
-            ),
-            expectIsDeferredObservableWithSideEffects,
-          ),
-        ),
-      ),
-      describe(
         "with PureObservable inner functions",
         test(
           "with PureRunnable source",
@@ -1692,6 +1660,11 @@ testModule(
           pipeLazy(
             Observable.empty(),
             Observable.forkMerge(
+              pipe(
+                () => Promise.resolve(1),
+                Observable.fromAsyncFactory(),
+                returns,
+              ),
               () => Subject.create(),
               returns(Observable.empty()),
               pipe(Observable.empty(), Observable.forEach(ignore), returns),
@@ -1705,6 +1678,11 @@ testModule(
             Observable.empty(),
             Observable.forEach(ignore),
             Observable.forkMerge(
+              pipe(
+                () => Promise.resolve(1),
+                Observable.fromAsyncFactory(),
+                returns,
+              ),
               () => Subject.create(),
               returns(Observable.empty()),
               pipe(Observable.empty(), Observable.forEach(ignore), returns),
@@ -1721,6 +1699,11 @@ testModule(
             },
             Observable.fromAsyncFactory(),
             Observable.forkMerge(
+              pipe(
+                () => Promise.resolve(1),
+                Observable.fromAsyncFactory(),
+                returns,
+              ),
               () => Subject.create(),
               returns(Observable.empty()),
               pipe(Observable.empty(), Observable.forEach(ignore), returns),
@@ -1733,6 +1716,11 @@ testModule(
           pipeLazy(
             Subject.create(),
             Observable.forkMerge(
+              pipe(
+                () => Promise.resolve(1),
+                Observable.fromAsyncFactory(),
+                returns,
+              ),
               () => Subject.create(),
               returns(Observable.empty()),
               pipe(Observable.empty(), Observable.forEach(ignore), returns),
@@ -2962,6 +2950,37 @@ testModule(
         Observable.map<Tuple2<number, number>, number>(([a, b]) => a + b),
         Observable.toReadonlyArray(),
         expectArrayEquals([2, 5, 8, 11]),
+      ),
+    ),
+    testIsPureRunnable(
+      Observable.zipLatest(Observable.empty(), Observable.empty()),
+    ),
+    testIsPureDeferredObservable(
+      Disposable.using<VirtualTimeSchedulerLike, PureDeferredObservableLike>(
+        VirtualTimeScheduler.create,
+      )(vts =>
+        Observable.zipLatest(
+          pipe(Observable.empty(), Observable.subscribeOn(vts)),
+          Observable.empty(),
+        ),
+      ),
+    ),
+    testIsRunnableWithSideEffects(
+      Observable.zipLatest(
+        Observable.empty(),
+        pipe(Observable.empty(), Observable.forEach(ignore)),
+      ),
+    ),
+    testIsMulticastObservable(
+      Observable.zipLatest(Observable.empty(), Subject.create()),
+    ),
+    testIsDeferredObservableWithSideEffects(
+      Observable.zipLatest(
+        pipe(async () => {
+          throw new Error();
+        }, Observable.fromAsyncFactory()),
+        Observable.empty(),
+        pipe(Observable.empty(), Observable.forEach(ignore)),
       ),
     ),
   ),
