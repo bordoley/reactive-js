@@ -2181,6 +2181,38 @@ testModule(
     // PureObservableOperatorTests(Observable.mergeAll()),
   ),
   describe(
+    "mergeMany",
+    testIsPureRunnable(
+      Observable.mergeMany([Observable.empty(), Observable.empty()]),
+    ),
+    testIsPureDeferredObservable(
+      Disposable.using<VirtualTimeSchedulerLike, PureDeferredObservableLike>(
+        VirtualTimeScheduler.create,
+      )(vts =>
+        Observable.mergeMany([
+          pipe(Observable.empty(), Observable.subscribeOn(vts)),
+          Observable.empty(),
+        ]),
+      ),
+    ),
+    testIsRunnableWithSideEffects(
+      Observable.mergeMany([
+        pipe(Observable.empty(), Observable.forEach(ignore)),
+        Observable.empty(),
+      ]),
+    ),
+    testIsMulticastObservable(
+      Observable.mergeMany([Subject.create(), Observable.empty()]),
+    ),
+    testIsDeferredObservableWithSideEffects(
+      Observable.mergeMany([
+        Observable.create(ignore),
+        Subject.create(),
+        Observable.empty(),
+      ]),
+    ),
+  ),
+  describe(
     "mergeMap",
     testAsync(
       "without delay, merge all observables as they are produced",

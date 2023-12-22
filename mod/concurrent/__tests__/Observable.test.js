@@ -441,7 +441,17 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
 ], Observable.fromReadonlyArray(), Observable.mergeAll({
     concurrency: 2,
     innerType: Observable.PureRunnableType,
-}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10])))), describe("mergeMap", testAsync("without delay, merge all observables as they are produced", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.mergeMap(x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3])))), test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.mergeMap(x => pipe([x, x, x], Observable.fromReadonlyArray()), {
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10])))), describe("mergeMany", testIsPureRunnable(Observable.mergeMany([Observable.empty(), Observable.empty()])), testIsPureDeferredObservable(Disposable.using(VirtualTimeScheduler.create)(vts => Observable.mergeMany([
+    pipe(Observable.empty(), Observable.subscribeOn(vts)),
+    Observable.empty(),
+]))), testIsRunnableWithSideEffects(Observable.mergeMany([
+    pipe(Observable.empty(), Observable.forEach(ignore)),
+    Observable.empty(),
+])), testIsMulticastObservable(Observable.mergeMany([Subject.create(), Observable.empty()])), testIsDeferredObservableWithSideEffects(Observable.mergeMany([
+    Observable.create(ignore),
+    Subject.create(),
+    Observable.empty(),
+]))), describe("mergeMap", testAsync("without delay, merge all observables as they are produced", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.mergeMap(x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3])))), test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.mergeMap(x => pipe([x, x, x], Observable.fromReadonlyArray()), {
     innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3])))), describe("mergeWith"), describe("multicast", testIsMulticastObservable(Disposable.using(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.multicast(vts))))), describe("never", testIsMulticastObservable(Observable.never())), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
     const scheduler = VirtualTimeScheduler.create();
