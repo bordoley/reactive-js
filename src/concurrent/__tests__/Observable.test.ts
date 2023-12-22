@@ -254,6 +254,57 @@ const ObservableOperatorWithSideEffectsTests = (
     ),
   );
 
+const MulticastObservableOperatorTests = (
+  op: Observable.MulticastObservableOperator<unknown, unknown>,
+) =>
+  describe(
+    "MulticastObservableOperatorTests",
+    test(
+      "with PureRunnableLike",
+      pipeLazy(Observable.empty(), op, expectIsMulticastObservable),
+    ),
+    test(
+      "with RunnableWithSideEffectsLike",
+      pipeLazy(
+        Observable.empty(),
+        Observable.forEach(ignore),
+        op,
+        expectIsDeferredObservableWithSideEffects,
+      ),
+    ),
+    test(
+      "with PureDeferredObservableLike",
+      Disposable.usingLazy(VirtualTimeScheduler.create)(vts =>
+        pipe(
+          Observable.empty(),
+          Observable.subscribeOn(vts),
+          op,
+          expectIsMulticastObservable,
+        ),
+      ),
+    ),
+    test(
+      "with DeferredObservableWithSideEffectsLike",
+      pipeLazy(
+        async () => {
+          throw new Error();
+        },
+        Observable.fromAsyncFactory(),
+        op,
+        expectIsDeferredObservableWithSideEffects,
+      ),
+    ),
+    test(
+      "with MulticastObservableLike",
+      pipeLazy(
+        new Promise(ignore),
+        Observable.fromPromise(),
+        op,
+        expectIsMulticastObservable,
+      ),
+    ),
+  );
+
 testModule(
   "Observable",
   PureComputationModuleTests(
@@ -2962,6 +3013,9 @@ testModule(
         pipe(Observable.empty(), Observable.forEach(ignore)),
         returns,
       ),
+    ),
+    MulticastObservableOperatorTests(
+      Observable.withLatestFrom(Subject.create(), returns),
     ),
   ),
   describe(
