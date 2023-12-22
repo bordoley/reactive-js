@@ -2130,27 +2130,131 @@ ___
 
 ### forkMerge
 
-▸ **forkMerge**<`TOut`, `TObservableIn`, `TObservableOut`\>(`fst`, `snd`, `...tail`): `TObservableIn` extends [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\> ? `TObservableOut` extends [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TOut`\>\> : `TObservableOut` extends [`RunnableLike`](concurrent.RunnableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TOut`\>\> : `TObservableOut` extends [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\> ? `TObservableOut` extends [`RunnableLike`](concurrent.RunnableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TOut`\>\> : `TObservableOut` extends [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\> ? `TObservableOut` extends [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : `TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`unknown`\> ? `TObservableOut` extends [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : `never`
+▸ **forkMerge**<`TObservableIn`, `T`\>(`fst`, `snd`, `...tail`): [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TOut` | `TOut` |
 | `TObservableIn` | extends [`ObservableLike`](concurrent.ObservableLike.md)<`unknown`, `TObservableIn`\> |
-| `TObservableOut` | extends [`ObservableLike`](concurrent.ObservableLike.md)<`TOut`, `TObservableOut`\> |
+| `T` | `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Function1`](../modules/functions.md#function1)<`TObservableIn`, `TObservableOut`\> |
-| `snd` | [`Function1`](../modules/functions.md#function1)<`TObservableIn`, `TObservableOut`\> |
-| `...tail` | readonly [`Function1`](../modules/functions.md#function1)<`TObservableIn`, `TObservableOut`\>[] |
+| `fst` | [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\> |
+| `snd` | [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\> |
+| `...tail` | readonly [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\>[] |
 
 #### Returns
 
-`TObservableIn` extends [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\> ? `TObservableOut` extends [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TOut`\>\> : `TObservableOut` extends [`RunnableLike`](concurrent.RunnableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TOut`\>\> : `TObservableOut` extends [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\> ? `TObservableOut` extends [`RunnableLike`](concurrent.RunnableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TOut`\>\> : `TObservableOut` extends [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\> ? `TObservableOut` extends [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : `TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`unknown`\> ? `TObservableOut` extends [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\> : `never`
+[`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\>
+
+▸ **forkMerge**<`TObservableIn`, `T`\>(`fst`, `snd`, `...tail`): [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`ObservableLike`](concurrent.ObservableLike.md)<`unknown`, `TObservableIn`\> |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\>\> |
+| `snd` | [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\>\> |
+| `...tail` | readonly [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\>\>[] |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\>\>
+
+▸ **forkMerge**<`TObservableIn`, `T`\>(`fst`, `snd`, `...tail`): [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`ObservableLike`](concurrent.ObservableLike.md)<`unknown`, `TObservableIn`\> |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\> |
+| `snd` | [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\> |
+| `...tail` | readonly [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>[] |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>\>
+
+▸ **forkMerge**<`TObservableIn`, `T`\>(`fst`, `snd`, `...tail`): [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`ObservableLike`](concurrent.ObservableLike.md)<`unknown`, `TObservableIn`\> |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\> |
+| `snd` | [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\> |
+| `...tail` | readonly [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>[] |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
+
+▸ **forkMerge**<`TObservableIn`, `T`\>(`fst`, `snd`, `...tail`): [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`ObservableLike`](concurrent.ObservableLike.md)<`unknown`, `TObservableIn`\> |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`PureObservableLike`](concurrent.PureObservableLike.md)<`T`\>\> |
+| `snd` | [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`PureObservableLike`](concurrent.PureObservableLike.md)<`T`\>\> |
+| `...tail` | readonly [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`PureObservableLike`](concurrent.PureObservableLike.md)<`T`\>\>[] |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
+
+▸ **forkMerge**<`TObservableIn`, `T`\>(`fst`, `snd`, `...tail`): [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`ObservableLike`](concurrent.ObservableLike.md)<`unknown`, `TObservableIn`\> |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`ObservableLike`](concurrent.ObservableLike.md)<`T`\>\> |
+| `snd` | [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`ObservableLike`](concurrent.ObservableLike.md)<`T`\>\> |
+| `...tail` | readonly [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`ObservableLike`](concurrent.ObservableLike.md)<`T`\>\>[] |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
 
 ___
 

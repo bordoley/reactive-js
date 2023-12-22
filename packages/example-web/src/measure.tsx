@@ -24,7 +24,6 @@ import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler"
 import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
 import { pick } from "@reactive-js/core/computations";
 import { KeyedLike_get } from "@reactive-js/core/collections";
-import { MulticastObservableLike } from "@reactive-js/core/concurrent";
 
 const Measure = () => {
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
@@ -45,7 +44,7 @@ const Measure = () => {
         number
       >(
         {
-          a: ({ prevWidth, width }: { prevWidth: number; width: number }) =>
+          a: ({ prevWidth, width }: { prevWidth?: number; width: number }) =>
             isSome(prevWidth)
               ? {
                   type: "spring",
@@ -85,11 +84,7 @@ const Measure = () => {
           { map: Observable.map },
           "width",
         ),
-        Observable.forkMerge<
-          number,
-          MulticastObservableLike<number>,
-          MulticastObservableLike<number>
-        >(
+        Observable.forkMerge(
           compose(
             Observable.withLatestFrom<number, number, Tuple2<number, number>>(
               pipeSome(animation, Observable.fromEventSource()) ??
@@ -105,7 +100,8 @@ const Measure = () => {
             ),
             Observable.ignoreElements(),
           ),
-          Observable.throttle(50, { mode: "interval" }),
+
+          compose(Observable.throttle(50, { mode: "interval" }), x => x),
         ),
       ),
       [containerSize, animation, enqueue],

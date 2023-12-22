@@ -21,14 +21,12 @@ import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import { PureComputationModule, keepType, mapTo } from "../../computations.js";
 import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
 import {
-  DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
   DispatcherLike,
   DispatcherLikeEvent_completed,
   DispatcherLike_complete,
   FlowableLike_flow,
   MulticastObservableLike,
-  ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
@@ -1268,11 +1266,7 @@ testModule(
       const obs: RunnableWithSideEffectsLike<number> = pipe(
         [1, 2, 3],
         Observable.fromReadonlyArray({ delay: 1 }),
-        Observable.forkMerge<
-          number,
-          RunnableLike<number>,
-          RunnableWithSideEffectsLike<number>
-        >(
+        Observable.forkMerge<PureRunnableLike<number>, number>(
           Observable.flatMapIterable(_ => [1, 2]),
           Observable.flatMapIterable(_ => [3, 4]),
         ),
@@ -1357,11 +1351,7 @@ testModule(
     test("with multicast src and deferred inner transforms", () => {
       const forked = pipe(
         Subject.create(),
-        Observable.forkMerge<
-          number,
-          MulticastObservableLike,
-          ObservableLike<number>
-        >(
+        Observable.forkMerge<MulticastObservableLike<number>, number>(
           Observable.flatMapAsync(_ => Promise.resolve(1)),
           Observable.flatMapAsync(_ => Promise.resolve(1)),
           mapTo<Observable.MulticastObservableComputation, number>(
@@ -1380,11 +1370,7 @@ testModule(
         [],
         Observable.fromReadonlyArray<number>(),
         x => x,
-        Observable.forkMerge<
-          number,
-          PureRunnableLike<number>,
-          DeferredObservableLike<number>
-        >(
+        Observable.forkMerge<PureRunnableLike<number>, number>(
           Observable.flatMapAsync(_ => Promise.resolve(1)),
           mapTo<Observable.PureRunnableComputation, number>(Observable, 2),
         ),
@@ -1416,6 +1402,345 @@ testModule(
 
         pipe(sideEffect, expectToHaveBeenCalledTimes(1));
       }),
+    ),
+    describe(
+      "type tests",
+      describe(
+        "with PureRunnable inner functions",
+        test(
+          "with PureRunnable source",
+          pipeLazy(
+            Observable.empty(),
+            Observable.forkMerge(
+              returns(Observable.empty()),
+              returns(Observable.empty()),
+            ),
+            expectIsPureRunnable,
+          ),
+        ),
+        test(
+          "with RunnableWithSideEffects source",
+          pipeLazy(
+            Observable.empty(),
+            Observable.forEach(ignore),
+            Observable.forkMerge(
+              returns(Observable.empty()),
+              returns(Observable.empty()),
+            ),
+            expectIsPureRunnable,
+          ),
+        ),
+        test(
+          "with DeferredObservableWithSideEffects source",
+          pipeLazy(
+            async () => {
+              throw new Error();
+            },
+            Observable.fromAsyncFactory(),
+            Observable.forkMerge(
+              returns(Observable.empty()),
+              returns(Observable.empty()),
+            ),
+            expectIsPureRunnable,
+          ),
+        ),
+        test(
+          "with MulticastObservable source",
+          pipeLazy(
+            Subject.create(),
+            Observable.forkMerge(
+              returns(Observable.empty()),
+              returns(Observable.empty()),
+            ),
+            expectIsPureRunnable,
+          ),
+        ),
+      ),
+      describe(
+        "with PureDeferredObservable inner functions",
+        test(
+          "with PureRunnable source",
+          Disposable.usingLazy(VirtualTimeScheduler.create)(vts =>
+            pipe(
+              Observable.empty(),
+              Observable.forkMerge(
+                pipe(Observable.empty(), Observable.subscribeOn(vts), returns),
+                returns(Observable.empty()),
+              ),
+              expectIsPureDeferredObservable,
+            ),
+          ),
+        ),
+        test(
+          "with RunnableWithSideEffects source",
+          Disposable.usingLazy(VirtualTimeScheduler.create)(vts =>
+            pipe(
+              Observable.empty(),
+              Observable.forEach(ignore),
+              Observable.forkMerge(
+                pipe(Observable.empty(), Observable.subscribeOn(vts), returns),
+                returns(Observable.empty()),
+              ),
+              expectIsPureDeferredObservable,
+            ),
+          ),
+        ),
+        test(
+          "with DeferredObservableWithSideEffects source",
+          Disposable.usingLazy(VirtualTimeScheduler.create)(vts =>
+            pipe(
+              async () => {
+                throw new Error();
+              },
+              Observable.fromAsyncFactory(),
+              Observable.forkMerge(
+                pipe(Observable.empty(), Observable.subscribeOn(vts), returns),
+                returns(Observable.empty()),
+              ),
+              expectIsPureDeferredObservable,
+            ),
+          ),
+        ),
+        test(
+          "with MulticastObservable source",
+          Disposable.usingLazy(VirtualTimeScheduler.create)(vts =>
+            pipe(
+              Subject.create(),
+              Observable.forkMerge(
+                pipe(Observable.empty(), Observable.subscribeOn(vts), returns),
+                returns(Observable.empty()),
+              ),
+              expectIsPureDeferredObservable,
+            ),
+          ),
+        ),
+      ),
+      describe(
+        "with RunnableWithSideEffects inner functions",
+        test(
+          "with PureRunnable source",
+          pipeLazy(
+            Observable.empty(),
+            Observable.forkMerge(
+              pipe(Observable.empty(), Observable.forEach(ignore), returns),
+              returns(Observable.empty()),
+            ),
+            expectIsRunnableWithSideEffects,
+          ),
+        ),
+        test(
+          "with RunnableWithSideEffects source",
+          pipeLazy(
+            Observable.empty(),
+            Observable.forEach(ignore),
+            Observable.forkMerge(
+              pipe(Observable.empty(), Observable.forEach(ignore), returns),
+              returns(Observable.empty()),
+            ),
+            expectIsRunnableWithSideEffects,
+          ),
+        ),
+        test(
+          "with DeferredObservableWithSideEffects source",
+          pipeLazy(
+            async () => {
+              throw new Error();
+            },
+            Observable.fromAsyncFactory(),
+            Observable.forkMerge(
+              pipe(Observable.empty(), Observable.forEach(ignore), returns),
+              returns(Observable.empty()),
+            ),
+            expectIsRunnableWithSideEffects,
+          ),
+        ),
+        test(
+          "with MulticastObservable source",
+          pipeLazy(
+            Subject.create(),
+            Observable.forkMerge(
+              pipe(Observable.empty(), Observable.forEach(ignore), returns),
+              returns(Observable.empty()),
+            ),
+
+            expectIsRunnableWithSideEffects,
+          ),
+        ),
+      ),
+      describe(
+        "with DeferredObservableWithSideEffects inner functions",
+        test(
+          "with PureRunnable source",
+          pipeLazy(
+            Observable.empty(),
+            Observable.forkMerge(
+              pipe(
+                () => Promise.resolve(1),
+                Observable.fromAsyncFactory(),
+                returns,
+              ),
+              returns(Observable.empty()),
+            ),
+            expectIsDeferredObservableWithSideEffects,
+          ),
+        ),
+        test(
+          "with RunnableWithSideEffects source",
+          pipeLazy(
+            Observable.empty(),
+            Observable.forEach(ignore),
+            Observable.forkMerge(
+              pipe(
+                () => Promise.resolve(1),
+                Observable.fromAsyncFactory(),
+                returns,
+              ),
+              returns(Observable.empty()),
+            ),
+            expectIsDeferredObservableWithSideEffects,
+          ),
+        ),
+        test(
+          "with DeferredObservableWithSideEffects source",
+          pipeLazy(
+            async () => {
+              throw new Error();
+            },
+            Observable.fromAsyncFactory(),
+            Observable.forkMerge(
+              pipe(
+                () => Promise.resolve(1),
+                Observable.fromAsyncFactory(),
+                returns,
+              ),
+              returns(Observable.empty()),
+            ),
+            expectIsDeferredObservableWithSideEffects,
+          ),
+        ),
+        test(
+          "with MulticastObservable source",
+          pipeLazy(
+            Subject.create(),
+            Observable.forkMerge(
+              pipe(
+                () => Promise.resolve(1),
+                Observable.fromAsyncFactory(),
+                returns,
+              ),
+              returns(Observable.empty()),
+            ),
+            expectIsDeferredObservableWithSideEffects,
+          ),
+        ),
+      ),
+      describe(
+        "with PureObservable inner functions",
+        test(
+          "with PureRunnable source",
+          pipeLazy(
+            Observable.empty(),
+            Observable.forkMerge(
+              () => Subject.create(),
+              returns(Observable.empty()),
+            ),
+            expectIsMulticastObservable,
+          ),
+        ),
+        test(
+          "with RunnableWithSideEffects source",
+          pipeLazy(
+            Observable.empty(),
+            Observable.forEach(ignore),
+            Observable.forkMerge(
+              () => Subject.create(),
+              returns(Observable.empty()),
+            ),
+            expectIsMulticastObservable,
+          ),
+        ),
+        test(
+          "with DeferredObservableWithSideEffects source",
+          pipeLazy(
+            async () => {
+              throw new Error();
+            },
+            Observable.fromAsyncFactory(),
+            Observable.forkMerge(
+              () => Subject.create(),
+              returns(Observable.empty()),
+            ),
+            expectIsMulticastObservable,
+          ),
+        ),
+        test(
+          "with MulticastObservable source",
+          pipeLazy(
+            Subject.create(),
+            Observable.forkMerge(
+              () => Subject.create(),
+              returns(Observable.empty()),
+            ),
+            expectIsMulticastObservable,
+          ),
+        ),
+      ),
+      describe(
+        "with mixed inner functions",
+        test(
+          "with PureRunnable source",
+          pipeLazy(
+            Observable.empty(),
+            Observable.forkMerge(
+              () => Subject.create(),
+              returns(Observable.empty()),
+              pipe(Observable.empty(), Observable.forEach(ignore), returns),
+            ),
+            expectIsDeferredObservableWithSideEffects,
+          ),
+        ),
+        test(
+          "with RunnableWithSideEffects source",
+          pipeLazy(
+            Observable.empty(),
+            Observable.forEach(ignore),
+            Observable.forkMerge(
+              () => Subject.create(),
+              returns(Observable.empty()),
+              pipe(Observable.empty(), Observable.forEach(ignore), returns),
+            ),
+
+            expectIsDeferredObservableWithSideEffects,
+          ),
+        ),
+        test(
+          "with DeferredObservableWithSideEffects source",
+          pipeLazy(
+            async () => {
+              throw new Error();
+            },
+            Observable.fromAsyncFactory(),
+            Observable.forkMerge(
+              () => Subject.create(),
+              returns(Observable.empty()),
+              pipe(Observable.empty(), Observable.forEach(ignore), returns),
+            ),
+            expectIsDeferredObservableWithSideEffects,
+          ),
+        ),
+        test(
+          "with MulticastObservable source",
+          pipeLazy(
+            Subject.create(),
+            Observable.forkMerge(
+              () => Subject.create(),
+              returns(Observable.empty()),
+              pipe(Observable.empty(), Observable.forEach(ignore), returns),
+            ),
+            expectIsDeferredObservableWithSideEffects,
+          ),
+        ),
+      ),
     ),
   ),
   describe(

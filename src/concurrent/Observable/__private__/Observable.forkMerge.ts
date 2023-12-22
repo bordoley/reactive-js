@@ -1,6 +1,5 @@
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import {
-  DeferredObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
@@ -12,7 +11,7 @@ import type * as Observable from "../../Observable.js";
 import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
-import Observable_isRunnable from "./Observable.isRunnable.js";
+import Observable_isDeferred from "./Observable.isDeferred.js";
 import Observable_mergeMany from "./Observable.mergeMany.js";
 import Observable_share from "./Observable.share.js";
 
@@ -29,10 +28,9 @@ const Observable_forkMerge: Observable.Signature["forkMerge"] = (<TIn, TOut>(
       ? Observable_mergeMany(mapped)
       : Observable_createWithConfig(
           observer => {
-            const src = pipe(
-              obs as DeferredObservableLike<TIn>,
-              Observable_share(observer),
-            );
+            const src = Observable_isDeferred(obs)
+              ? pipe(obs, Observable_share(observer))
+              : obs;
 
             pipe(
               ops,
@@ -44,8 +42,7 @@ const Observable_forkMerge: Observable.Signature["forkMerge"] = (<TIn, TOut>(
           {
             [ObservableLike_isPure]: false,
             [ObservableLike_isDeferred]: true,
-            [ObservableLike_isRunnable]:
-              Observable_isRunnable(obs) && Observable_allAreRunnable(mapped),
+            [ObservableLike_isRunnable]: Observable_allAreRunnable(mapped),
           },
         );
   }) as Observable.Signature["forkMerge"];
