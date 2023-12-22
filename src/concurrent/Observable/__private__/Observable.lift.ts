@@ -23,7 +23,6 @@ import {
   raiseIf,
 } from "../../../functions.js";
 import type {
-  DeferredObservableWithSideEffectsOperator,
   ObservableOperatorWithSideEffects,
   PureObservableOperator,
 } from "../../Observable.js";
@@ -159,7 +158,7 @@ interface ObservableLift {
     >,
   ): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => DeferredObservableWithSideEffectsOperator<TA, TB>;
+  ) => Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
 
   lift(
     options: Pick<
