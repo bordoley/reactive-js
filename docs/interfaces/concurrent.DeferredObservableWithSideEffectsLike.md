@@ -21,6 +21,7 @@
 ### Properties
 
 - [[ObservableLike\_isPure]](concurrent.DeferredObservableWithSideEffectsLike.md#[observablelike_ispure])
+- [[ObservableLike\_isRunnable]](concurrent.DeferredObservableWithSideEffectsLike.md#[observablelike_isrunnable])
 
 ## Properties
 
@@ -31,3 +32,13 @@
 #### Overrides
 
 DeferredObservableLike.\_\_@ObservableLike\_isPure@24705
+
+___
+
+### [ObservableLike\_isRunnable]
+
+• `Readonly` **[ObservableLike\_isRunnable]**: ``false``
+
+#### Overrides
+
+DeferredObservableLike.\_\_@ObservableLike\_isRunnable@24706

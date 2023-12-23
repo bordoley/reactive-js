@@ -774,6 +774,8 @@ export interface ObservableModule
     obs: TObservableIn,
   ) => TObservableIn extends PureDeferredObservableLike<T>
     ? PureDeferredObservableLike<T>
+    : TObservableIn extends DeferredObservableWithSideEffectsLike<T>
+    ? DeferredObservableWithSideEffectsLike<T>
     : TObservableIn extends MulticastObservableLike<T>
     ? MulticastObservableLike<T>
     : never;
@@ -975,6 +977,11 @@ export interface ObservableModule
     ...tail: readonly PureRunnableLike<T>[]
   ): PureRunnableLike<T>;
   merge<T>(
+    fst: PureDeferredObservableLike<T>,
+    snd: PureDeferredObservableLike<T>,
+    ...tail: readonly PureDeferredObservableLike<T>[]
+  ): PureDeferredObservableLike<T>;
+  merge<T>(
     fst: RunnableLike<T>,
     snd: RunnableLike<T>,
     ...tail: readonly RunnableLike<T>[]
@@ -1025,6 +1032,9 @@ export interface ObservableModule
   ): PureDeferredObservableLike<T>;
   mergeMany<T>(
     observables: readonly RunnableLike<T>[],
+  ): RunnableWithSideEffectsLike<T>;
+  mergeMany<T>(
+    observables: readonly DeferredObservableLike<T>[],
   ): RunnableWithSideEffectsLike<T>;
   mergeMany<T>(
     observables: readonly PureObservableLike<T>[],

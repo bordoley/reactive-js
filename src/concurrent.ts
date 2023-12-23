@@ -247,6 +247,7 @@ export interface PureDeferredObservableLike<T = unknown>
 export interface DeferredObservableWithSideEffectsLike<T = unknown>
   extends DeferredObservableLike<T> {
   readonly [ObservableLike_isPure]: false;
+  readonly [ObservableLike_isRunnable]: false;
 }
 
 /**

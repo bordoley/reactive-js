@@ -1772,7 +1772,7 @@ ___
 
 [`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
 
-▸ **concatWith**<`T`\>(`snd`, `...tail`): <TObservableIn\>(`obs`: `TObservableIn`) => `TObservableIn` extends [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\> ? [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\> : `TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> : `never`
+▸ **concatWith**<`T`\>(`snd`, `...tail`): <TObservableIn\>(`obs`: `TObservableIn`) => `TObservableIn` extends [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\> ? [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\> ? [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\> : `TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> : `never`
 
 #### Type parameters
 
@@ -1791,7 +1791,7 @@ ___
 
 `fn`
 
-▸ <`TObservableIn`\>(`obs`): `TObservableIn` extends [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\> ? [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\> : `TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> : `never`
+▸ <`TObservableIn`\>(`obs`): `TObservableIn` extends [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\> ? [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\> ? [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\> : `TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> : `never`
 
 ##### Type parameters
 
@@ -1807,7 +1807,7 @@ ___
 
 ##### Returns
 
-`TObservableIn` extends [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\> ? [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\> : `TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> : `never`
+`TObservableIn` extends [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\> ? [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\> ? [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\> : `TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> : `never`
 
 ▸ **concatWith**<`T`\>(`snd`, `...tail`): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
 
@@ -2832,6 +2832,26 @@ ___
 
 [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>
 
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\> |
+| `snd` | [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\> |
+| `...tail` | readonly [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\>
+
 ▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
 
 #### Type parameters
@@ -3036,6 +3056,24 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `observables` | readonly [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+▸ **mergeMany**<`T`\>(`observables`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>[] |
 
 #### Returns
 

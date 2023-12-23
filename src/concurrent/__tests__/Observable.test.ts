@@ -27,6 +27,7 @@ import {
   DispatcherLike_complete,
   FlowableLike_flow,
   MulticastObservableLike,
+  ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
@@ -47,6 +48,7 @@ import { StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
 import {
+  Function1,
   Optional,
   Tuple2,
   alwaysTrue,
@@ -149,6 +151,48 @@ const testIsMulticastObservable = (obs: MulticastObservableLike) =>
   test(
     "is MulticastObservableLike",
     pipeLazy(obs, expectIsMulticastObservable),
+  );
+
+const PureDeferredObservableOperatorTests = (
+  op: Observable.PureDeferredObservableOperator<unknown, unknown>,
+) =>
+  describe(
+    "PureDeferredObservableOperatorTests",
+    test(
+      "with PureRunnableLike",
+      pipeLazy(Observable.empty(), op, expectIsPureRunnable),
+    ),
+    test(
+      "with RunnableWithSideEffectsLike",
+      pipeLazy(
+        Observable.empty(),
+        Observable.forEach(ignore),
+        op,
+        expectIsRunnableWithSideEffects,
+      ),
+    ),
+    test(
+      "with PureDeferredObservableLike",
+      Disposable.usingLazy(VirtualTimeScheduler.create)(vts =>
+        pipe(
+          Observable.empty(),
+          Observable.subscribeOn(vts),
+          op,
+          expectIsPureDeferredObservable,
+        ),
+      ),
+    ),
+    test(
+      "with DeferredObservableWithSideEffectsLike",
+      pipeLazy(
+        async () => {
+          throw new Error();
+        },
+        Observable.fromAsyncFactory(),
+        op,
+        expectIsDeferredObservableWithSideEffects,
+      ),
+    ),
   );
 
 const PureObservableOperatorTests = (
@@ -301,6 +345,61 @@ const MulticastObservableOperatorTests = (
         Observable.fromPromise(),
         op,
         expectIsMulticastObservable,
+      ),
+    ),
+  );
+
+const AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests = (
+  op: Function1<ObservableLike, DeferredObservableWithSideEffectsLike>,
+) =>
+  describe(
+    "AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests",
+    test(
+      "with PureRunnableLike",
+      pipeLazy(
+        Observable.empty(),
+        op,
+        expectIsDeferredObservableWithSideEffects,
+      ),
+    ),
+    test(
+      "with RunnableWithSideEffectsLike",
+      pipeLazy(
+        Observable.empty(),
+        Observable.forEach(ignore),
+        op,
+        expectIsDeferredObservableWithSideEffects,
+      ),
+    ),
+    test(
+      "with PureDeferredObservableLike",
+      Disposable.usingLazy(VirtualTimeScheduler.create)(vts =>
+        pipe(
+          Observable.empty(),
+          Observable.subscribeOn(vts),
+          op,
+          expectIsDeferredObservableWithSideEffects,
+        ),
+      ),
+    ),
+    test(
+      "with DeferredObservableWithSideEffectsLike",
+      pipeLazy(
+        async () => {
+          throw new Error();
+        },
+        Observable.fromAsyncFactory(),
+        op,
+        expectIsDeferredObservableWithSideEffects,
+      ),
+    ),
+    test(
+      "with MulticastObservableLike",
+      pipeLazy(
+        new Promise(ignore),
+        Observable.fromPromise(),
+        op,
+        expectIsDeferredObservableWithSideEffects,
       ),
     ),
   );
@@ -1175,6 +1274,9 @@ testModule(
           expectArrayEquals([1]),
         ),
       ),
+    ),
+    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
+      Observable.flatMapAsync(async x => await Promise.resolve(x)),
     ),
   ),
   describe(
@@ -2487,6 +2589,7 @@ testModule(
         expectToThrowError(err),
       );
     }),
+    PureDeferredObservableOperatorTests(Observable.repeat()),
   ),
   describe(
     "retry",
@@ -2535,6 +2638,7 @@ testModule(
         expectToThrow,
       ),
     ),
+    PureDeferredObservableOperatorTests(Observable.retry(raise)),
   ),
   describe(
     "scan",
@@ -2794,6 +2898,16 @@ testModule(
         pipe(Observable.empty(), Observable.forEach(ignore)),
       ),
     ),
+    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
+      Observable.takeUntil(
+        pipe(
+          () => Promise.resolve(1),
+          Observable.fromAsyncFactory(),
+          Observable.forEach(ignore),
+        ),
+      ),
+    ),
+    MulticastObservableOperatorTests(Observable.takeUntil(Subject.create())),
   ),
   describe(
     "takeWhile",
@@ -3011,6 +3125,16 @@ testModule(
     ObservableOperatorWithSideEffectsTests(
       Observable.withLatestFrom(
         pipe(Observable.empty(), Observable.forEach(ignore)),
+        returns,
+      ),
+    ),
+    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
+      Observable.withLatestFrom(
+        pipe(
+          () => Promise.resolve(1),
+          Observable.fromAsyncFactory(),
+          Observable.forEach(ignore),
+        ),
         returns,
       ),
     ),

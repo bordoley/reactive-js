@@ -190,7 +190,7 @@ export interface ObservableModule extends PureComputationModule<PureRunnableComp
     }): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
     concatWith<T>(snd: PureRunnableLike<T>, ...tail: readonly PureRunnableLike<T>[]): PureObservableOperator<T, T>;
     concatWith<T>(snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): ObservableOperatorWithSideEffects<T, T>;
-    concatWith<T>(snd: PureDeferredObservableLike<T>, ...tail: readonly PureDeferredObservableLike<T>[]): <TObservableIn extends ObservableLike<T>>(obs: TObservableIn) => TObservableIn extends PureDeferredObservableLike<T> ? PureDeferredObservableLike<T> : TObservableIn extends MulticastObservableLike<T> ? MulticastObservableLike<T> : never;
+    concatWith<T>(snd: PureDeferredObservableLike<T>, ...tail: readonly PureDeferredObservableLike<T>[]): <TObservableIn extends ObservableLike<T>>(obs: TObservableIn) => TObservableIn extends PureDeferredObservableLike<T> ? PureDeferredObservableLike<T> : TObservableIn extends DeferredObservableWithSideEffectsLike<T> ? DeferredObservableWithSideEffectsLike<T> : TObservableIn extends MulticastObservableLike<T> ? MulticastObservableLike<T> : never;
     concatWith<T>(snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): Function1<DeferredObservableLike<T> | MulticastObservableLike<T>, DeferredObservableWithSideEffectsLike<T>>;
     create<T>(f: SideEffect1<ObserverLike<T>>): DeferredObservableWithSideEffectsLike<T>;
     currentTime: PureRunnableLike<number>;
@@ -278,6 +278,7 @@ export interface ObservableModule extends PureComputationModule<PureRunnableComp
     log<T>(): ObservableOperatorWithSideEffects<T, T>;
     map<TA, TB>(selector: Function1<TA, TB>): PureObservableOperator<TA, TB>;
     merge<T>(fst: PureRunnableLike<T>, snd: PureRunnableLike<T>, ...tail: readonly PureRunnableLike<T>[]): PureRunnableLike<T>;
+    merge<T>(fst: PureDeferredObservableLike<T>, snd: PureDeferredObservableLike<T>, ...tail: readonly PureDeferredObservableLike<T>[]): PureDeferredObservableLike<T>;
     merge<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableWithSideEffectsLike<T>;
     merge<T>(fst: PureObservableLike<T>, snd: PureObservableLike<T>, ...tail: readonly PureObservableLike<T>[]): MulticastObservableLike<T>;
     merge<T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): DeferredObservableWithSideEffectsLike<T>;
@@ -307,6 +308,7 @@ export interface ObservableModule extends PureComputationModule<PureRunnableComp
     mergeMany<T>(observables: readonly PureRunnableLike<T>[]): PureRunnableLike<T>;
     mergeMany<T>(observables: readonly PureDeferredObservableLike<T>[]): PureDeferredObservableLike<T>;
     mergeMany<T>(observables: readonly RunnableLike<T>[]): RunnableWithSideEffectsLike<T>;
+    mergeMany<T>(observables: readonly DeferredObservableLike<T>[]): RunnableWithSideEffectsLike<T>;
     mergeMany<T>(observables: readonly PureObservableLike<T>[]): MulticastObservableLike<T>;
     mergeMany<T>(observables: readonly ObservableLike<T>[]): DeferredObservableWithSideEffectsLike<T>;
     mergeMap<TA, TB>(selector: Function1<TA, PureRunnableLike<TB>>, options?: {
