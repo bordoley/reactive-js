@@ -11,9 +11,11 @@ import Observable_mergeMap from "./Observable.mergeMap.js";
 const Observable_exhaustMap: Observable.Signature["exhaustMap"] = (<TA, TB>(
     selector: Function1<TA, PureRunnableLike<TB>>,
     options?: {
-      readonly [ObservableLike_isDeferred]?: boolean;
-      readonly [ObservableLike_isPure]?: boolean;
-      readonly [ObservableLike_isRunnable]?: boolean;
+      readonly innerType?: {
+        readonly [ObservableLike_isDeferred]?: boolean;
+        readonly [ObservableLike_isPure]?: boolean;
+        readonly [ObservableLike_isRunnable]?: boolean;
+      };
     },
   ) =>
   (obs: PureRunnableLike<TA>) =>

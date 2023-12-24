@@ -223,10 +223,11 @@ const Observable_mergeAll: Observable.Signature["mergeAll"] = ((options?: {
   readonly concurrency?: number;
 }) =>
   Observable_lift({
-    [ObservableLike_isDeferred]: false,
-    [ObservableLike_isPure]: false,
-    [ObservableLike_isRunnable]: false,
-    ...(options?.innerType ?? {}),
+    ...(options?.innerType ?? {
+      [ObservableLike_isDeferred]: true,
+      [ObservableLike_isPure]: true,
+      [ObservableLike_isRunnable]: true,
+    }),
   })(
     Observer_createMergeAllObserverOperator(options),
   )) as Observable.Signature["mergeAll"];

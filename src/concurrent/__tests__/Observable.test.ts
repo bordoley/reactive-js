@@ -792,8 +792,7 @@ testModule(
         expectArrayEquals([1, 2, 3, 4, 5, 6]),
       ),
     ),
-    // FIXME
-    //PureObservableOperatorTests(Observable.concatAll())
+    PureObservableOperatorTests(Observable.concatAll()),
   ),
   describe(
     "concatMany",
@@ -1212,8 +1211,7 @@ testModule(
         expectArrayEquals([1, 2, 3]),
       ),
     ),
-    // FIXME
-    // PureObservableOperatorTests(Observable.exhaust()),
+    PureObservableOperatorTests(Observable.exhaust()),
   ),
   describe(
     "exhaustMap",
@@ -1233,8 +1231,7 @@ testModule(
         expectArrayEquals([1, 2, 3]),
       ),
     ),
-    // FIXME
-    // PureObservableOperatorTests(Observable.exhaustMap()),
+    PureObservableOperatorTests(Observable.exhaustMap(_ => Observable.empty())),
   ),
   describe(
     "firstAsync",
@@ -2330,8 +2327,7 @@ testModule(
         expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]),
       ),
     ),
-    // FIXME
-    // PureObservableOperatorTests(Observable.mergeAll()),
+    PureObservableOperatorTests(Observable.mergeAll()),
   ),
   describe(
     "mergeMany",
