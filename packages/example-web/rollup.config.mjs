@@ -33,6 +33,7 @@ export default [
       terser({
         compress: {
           unsafe: true,
+          unsafe_symbols: true
         },
       }),
     ],
@@ -62,6 +63,7 @@ export default [
       terser({
         compress: {
           unsafe: true,
+          unsafe_symbols: true
         },
       }),
     ],
@@ -91,6 +93,7 @@ export default [
       terser({
         compress: {
           unsafe: true,
+          unsafe_symbols: true
         },
       }),
     ],
