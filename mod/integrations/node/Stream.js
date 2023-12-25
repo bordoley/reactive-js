@@ -12,9 +12,6 @@ const disposeStream = (stream) => () => {
     // if we don't catch the error, it crashes the process.
     // This kind of sucks, but its the best we can do;
     stream.once("error", ignore);
-    stream.once("close", () => {
-        stream.removeAllListeners();
-    });
     stream.destroy();
 };
 const addToNodeStream = (stream) => disposable => {

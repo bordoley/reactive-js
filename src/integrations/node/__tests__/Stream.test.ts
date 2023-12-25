@@ -3,6 +3,7 @@ import zlib from "node:zlib";
 import {
   describe,
   expectEquals,
+  expectFalse,
   expectPromiseToThrow,
   testAsync,
   testModule,
@@ -20,7 +21,6 @@ import {
   invoke,
   newInstance,
   pipe,
-  pipeLazy,
   returns,
 } from "../../../functions.js";
 
@@ -34,105 +34,184 @@ testModule(
     "sinkInto",
     testAsync(
       "sinking to writable",
-      pipeLazy(async (scheduler: SchedulerLike & DisposableLike) => {
-        const encoder = newInstance(TextEncoder);
-        let data = "";
-        const writable = newInstance(Writable, {
-          autoDestroy: true,
-          highWaterMark: 4,
+      Disposable.usingAsyncLazy(HostScheduler.create)(
+        async (scheduler: SchedulerLike & DisposableLike) => {
+          const encoder = newInstance(TextEncoder);
+          let data = "";
+          const writable = newInstance(Writable, {
+            autoDestroy: false,
+            highWaterMark: 4,
 
-          write(chunk, _encoding, callback) {
-            data += chunk;
-            callback();
-          },
-        });
+            write(chunk, _encoding, callback) {
+              data += chunk;
+              callback();
+            },
+          });
 
-        await pipe(
-          ["abc", "defg", "xyz"],
-          Observable.fromReadonlyArray(),
-          Observable.keep(x => x !== "xyz"),
-          Observable.map(bindMethod(encoder, "encode")),
-          Observable.flow(),
-          invoke(FlowableLike_flow, scheduler),
-          Disposable.addTo(scheduler),
-          NodeStream.sinkInto(writable),
-          Observable.lastAsync(scheduler),
-        );
+          await pipe(
+            ["abc", "defg", "xyz"],
+            Observable.fromReadonlyArray(),
+            Observable.keep(x => x !== "xyz"),
+            Observable.map(bindMethod(encoder, "encode")),
+            Observable.flow(),
+            invoke(FlowableLike_flow, scheduler),
+            Disposable.addTo(scheduler),
+            NodeStream.sinkInto(writable),
+            Observable.lastAsync(scheduler),
+          );
 
-        pipe(writable.destroyed, expectEquals(true));
-        pipe(data, expectEquals("abcdefg"));
-      }, Disposable.usingAsync(HostScheduler.create)),
+          expectFalse(writable.destroyed);
+          pipe(data, expectEquals("abcdefg"));
+          writable.destroy();
+        },
+      ),
+    ),
+    testAsync(
+      "sinking to writable factory",
+      Disposable.usingAsyncLazy(HostScheduler.create)(
+        async (scheduler: SchedulerLike & DisposableLike) => {
+          const encoder = newInstance(TextEncoder);
+          let data = "";
+
+          const writable = newInstance(Writable, {
+            autoDestroy: false,
+            highWaterMark: 4,
+
+            write(chunk, _encoding, callback) {
+              data += chunk;
+              callback();
+            },
+          });
+
+          const factory = returns(writable);
+
+          await pipe(
+            ["abc", "defg", "xyz"],
+            Observable.fromReadonlyArray(),
+            Observable.keep(x => x !== "xyz"),
+            Observable.map(bindMethod(encoder, "encode")),
+            Observable.flow(),
+            invoke(FlowableLike_flow, scheduler),
+            Disposable.addTo(scheduler),
+            NodeStream.sinkInto(factory),
+            Observable.lastAsync(scheduler),
+          );
+
+          pipe(writable.destroyed, expectEquals(true));
+          pipe(data, expectEquals("abcdefg"));
+        },
+      ),
     ),
     testAsync(
       "sinking to writable that throws",
-      pipeLazy(async (scheduler: SchedulerLike & DisposableLike) => {
-        const encoder = newInstance(TextEncoder);
+      Disposable.usingAsyncLazy(HostScheduler.create)(
+        async (scheduler: SchedulerLike & DisposableLike) => {
+          const encoder = newInstance(TextEncoder);
 
-        const err = newInstance(Error);
-        const writable = newInstance(Writable, {
-          autoDestroy: true,
-          highWaterMark: 4,
+          const err = newInstance(Error);
+          const writable = newInstance(Writable, {
+            autoDestroy: true,
+            highWaterMark: 4,
 
-          write(_chunk, _encoding, callback) {
-            callback(err);
-          },
-        });
+            write(_chunk, _encoding, callback) {
+              callback(err);
+            },
+          });
 
-        const promise = pipe(
-          [encoder.encode("abc"), encoder.encode("defg")],
-          Observable.fromReadonlyArray(),
-          Observable.flow(),
-          invoke(FlowableLike_flow, scheduler),
-          Disposable.addTo(scheduler),
-          NodeStream.sinkInto(writable),
-          Observable.lastAsync(scheduler),
-        );
+          const promise = pipe(
+            [encoder.encode("abc"), encoder.encode("defg")],
+            Observable.fromReadonlyArray(),
+            Observable.flow(),
+            invoke(FlowableLike_flow, scheduler),
+            Disposable.addTo(scheduler),
+            NodeStream.sinkInto(writable),
+            Observable.lastAsync(scheduler),
+          );
 
-        await expectPromiseToThrow(promise);
-        pipe(writable.destroyed, expectEquals(true));
-      }, Disposable.usingAsync(HostScheduler.create)),
+          await expectPromiseToThrow(promise);
+          pipe(writable.destroyed, expectEquals(true));
+        },
+      ),
     ),
     testAsync(
       "sinking to writable with pipeline",
-      pipeLazy(async (scheduler: SchedulerLike & DisposableLike) => {
-        const encoder = newInstance(TextEncoder);
-        let data = "";
-        const writable = newInstance(Writable, {
-          autoDestroy: true,
-          highWaterMark: 4,
+      Disposable.usingAsyncLazy(HostScheduler.create)(
+        async (scheduler: SchedulerLike & DisposableLike) => {
+          const encoder = newInstance(TextEncoder);
+          let data = "";
+          const writable = newInstance(Writable, {
+            autoDestroy: true,
+            highWaterMark: 4,
 
-          write(chunk, _encoding, callback) {
-            data += chunk;
-            callback();
-          },
-        });
+            write(chunk, _encoding, callback) {
+              data += chunk;
+              callback();
+            },
+          });
 
-        const compressionPipeline = pipeline(
-          zlib.createGzip(),
-          zlib.createGunzip(),
-          writable,
-          Disposable.toErrorHandler(scheduler),
-        );
+          const compressionPipeline = pipeline(
+            zlib.createGzip(),
+            zlib.createGunzip(),
+            writable,
+            Disposable.toErrorHandler(scheduler),
+          );
 
-        await pipe(
-          [encoder.encode("abc"), encoder.encode("defg")],
-          Observable.fromReadonlyArray(),
-          Observable.flow(),
-          invoke(FlowableLike_flow, scheduler),
-          Disposable.addTo(scheduler),
-          NodeStream.sinkInto(compressionPipeline),
-          Observable.lastAsync(scheduler),
-        );
+          await pipe(
+            [encoder.encode("abc"), encoder.encode("defg")],
+            Observable.fromReadonlyArray(),
+            Observable.flow(),
+            invoke(FlowableLike_flow, scheduler),
+            Disposable.addTo(scheduler),
+            NodeStream.sinkInto(compressionPipeline),
+            Observable.lastAsync(scheduler),
+          );
 
-        pipe(writable.destroyed, expectEquals(true));
-        pipe(data, expectEquals("abcdefg"));
-      }, Disposable.usingAsync(HostScheduler.create)),
+          pipe(writable.destroyed, expectEquals(true));
+          pipe(data, expectEquals("abcdefg"));
+        },
+      ),
     ),
   ),
 
   describe(
     "flow",
     testAsync("reading from readable", async () => {
+      function* generate() {
+        yield Buffer.from("abc", "utf8");
+        yield Buffer.from("defg", "utf8");
+      }
+
+      const textDecoder = newInstance(TextDecoder);
+
+      await Disposable.usingAsync(HostScheduler.create)(async scheduler => {
+        const readable = Readable.from(generate(), {
+          autoDestroy: false,
+        });
+
+        const flowable = pipe(
+          readable,
+          NodeStream.flow(),
+          invoke(FlowableLike_flow, scheduler),
+          Disposable.addTo(scheduler),
+        );
+
+        flowable[PauseableLike_resume]();
+
+        const acc = await pipe(
+          flowable,
+          Observable.scan<Uint8Array, string>(
+            (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
+            returns(""),
+          ),
+          Observable.lastAsync<string>(scheduler),
+        );
+        pipe(acc, expectEquals<Optional<string>>("abcdefg"));
+
+        expectFalse(readable.destroyed);
+        readable.destroy();
+      });
+    }),
+    testAsync("reading from readable factory", async () => {
       function* generate() {
         yield Buffer.from("abc", "utf8");
         yield Buffer.from("defg", "utf8");
