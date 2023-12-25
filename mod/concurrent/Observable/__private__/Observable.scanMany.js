@@ -9,19 +9,33 @@ import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_switchMap from "./Observable.switchMap.js";
 import Observable_zipLatest from "./Observable.zipLatest.js";
-const Observable_scanMany = ((scanner, initialValue, options) => (observable) => Observable_createWithConfig(observer => {
-    const accFeedbackStream = pipe(Subject.create(), Disposable.addTo(observer));
-    pipe(Observable_zipLatest(accFeedbackStream, observable), Observable_switchMap(([acc, next]) => scanner(acc, next), {
-        innerType: {
-            [ObservableLike_isDeferred]: true,
-            [ObservableLike_isPure]: false,
-            [ObservableLike_isRunnable]: false,
-        },
-    }), Observable_forEach(bindMethod(accFeedbackStream, SinkLike_notify)), invoke(ObservableLike_observe, observer));
-    accFeedbackStream[SinkLike_notify](initialValue());
-}, options?.innerType ?? {
-    [ObservableLike_isDeferred]: true,
-    [ObservableLike_isPure]: true,
-    [ObservableLike_isRunnable]: true,
-}));
+const Observable_scanMany = ((scanner, initialValue, options) => {
+    const innerType = options?.innerType ?? {
+        [ObservableLike_isDeferred]: true,
+        [ObservableLike_isPure]: true,
+        [ObservableLike_isRunnable]: true,
+    };
+    return (observable) => {
+        const isDeferred = innerType[ObservableLike_isDeferred] &&
+            observable[ObservableLike_isDeferred];
+        const isPure = innerType[ObservableLike_isPure] && observable[ObservableLike_isPure];
+        const isRunnable = innerType[ObservableLike_isRunnable] &&
+            observable[ObservableLike_isRunnable];
+        return Observable_createWithConfig(observer => {
+            const accFeedbackStream = pipe(Subject.create(), Disposable.addTo(observer));
+            pipe(Observable_zipLatest(accFeedbackStream, observable), Observable_switchMap(([acc, next]) => scanner(acc, next), {
+                innerType: {
+                    [ObservableLike_isDeferred]: true,
+                    [ObservableLike_isPure]: false,
+                    [ObservableLike_isRunnable]: false,
+                },
+            }), Observable_forEach(bindMethod(accFeedbackStream, SinkLike_notify)), invoke(ObservableLike_observe, observer));
+            accFeedbackStream[SinkLike_notify](initialValue());
+        }, {
+            [ObservableLike_isDeferred]: isDeferred || (!isDeferred && !isPure),
+            [ObservableLike_isPure]: isPure,
+            [ObservableLike_isRunnable]: isRunnable,
+        });
+    };
+});
 export default Observable_scanMany;

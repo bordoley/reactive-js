@@ -97,6 +97,11 @@ export const RunnableWithSideEffectsType = {
     [ObservableLike_isPure]: false,
     [ObservableLike_isRunnable]: true,
 };
+export const PureDeferredObservableType = {
+    [ObservableLike_isDeferred]: true,
+    [ObservableLike_isPure]: true,
+    [ObservableLike_isRunnable]: false,
+};
 export const DeferredObservableWithSideEffectsType = {
     [ObservableLike_isDeferred]: true,
     [ObservableLike_isPure]: false,

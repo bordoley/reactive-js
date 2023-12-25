@@ -15,6 +15,7 @@ import * as Disposable from "../../utils/Disposable.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
 import * as HostScheduler from "../HostScheduler.js";
 import * as Observable from "../Observable.js";
+import { DeferredObservableWithSideEffectsType, PureDeferredObservableType, RunnableWithSideEffectsType, } from "../Observable.js";
 import { __await, __bindMethod, __constant, __do, __memo, __observe, __state, __stream, } from "../Observable/effects.js";
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
@@ -49,10 +50,13 @@ const testIsRunnableWithSideEffects = (obs) => test("is PureRunnableLike", pipeL
 const testIsDeferredObservableWithSideEffects = (obs) => test("is DeferredObservableWithSideEffectsLike", pipeLazy(obs, expectIsDeferredObservableWithSideEffects));
 const testIsPureDeferredObservable = (obs) => test("is PureDeferredObservableLike", pipeLazy(obs, expectIsPureDeferredObservable));
 const testIsMulticastObservable = (obs) => test("is MulticastObservableLike", pipeLazy(obs, expectIsMulticastObservable));
-const PureDeferredObservableOperatorTests = (op) => describe("PureDeferredObservableOperatorTests", test("with PureRunnableLike", pipeLazy(Observable.empty(), op, expectIsPureRunnable)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty(), Observable.forEach(ignore), op, expectIsRunnableWithSideEffects)), test("with PureDeferredObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.subscribeOn(vts), op, expectIsPureDeferredObservable))), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
+const PureObservableOperatorTests = (op) => describe("PureObservableOperator", test("with PureRunnableLike", pipeLazy(Observable.empty(), op, expectIsPureRunnable)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty(), Observable.forEach(ignore), op, expectIsRunnableWithSideEffects)), test("with PureDeferredObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.subscribeOn(vts), op, expectIsPureDeferredObservable))), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
+    throw new Error();
+}, Observable.fromAsyncFactory(), op, expectIsDeferredObservableWithSideEffects)), test("with MulticastObservableLike", pipeLazy(new Promise(ignore), Observable.fromPromise(), op, expectIsMulticastObservable)));
+const PureObservableOperatorWithDeferredObservableBaseTests = (op) => describe("PureObservableOperatorWithDeferredObservableBaseTests", test("with PureRunnableLike", pipeLazy(Observable.empty(), op, expectIsPureRunnable)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty(), Observable.forEach(ignore), op, expectIsRunnableWithSideEffects)), test("with PureDeferredObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.subscribeOn(vts), op, expectIsPureDeferredObservable))), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory(), op, expectIsDeferredObservableWithSideEffects)));
-const PureObservableOperatorTests = (op) => describe("PureObservableOperator", test("with PureRunnableLike", pipeLazy(Observable.empty(), op, expectIsPureRunnable)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty(), Observable.forEach(ignore), op, expectIsRunnableWithSideEffects)), test("with PureDeferredObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.subscribeOn(vts), op, expectIsPureDeferredObservable))), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
+const PureDeferredObservableOperatorTests = (op) => describe("PureObservableOperator", test("with PureRunnableLike", pipeLazy(Observable.empty(), op, expectIsPureDeferredObservable)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty(), Observable.forEach(ignore), op, expectIsDeferredObservableWithSideEffects)), test("with PureDeferredObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.subscribeOn(vts), op, expectIsPureDeferredObservable))), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory(), op, expectIsDeferredObservableWithSideEffects)), test("with MulticastObservableLike", pipeLazy(new Promise(ignore), Observable.fromPromise(), op, expectIsMulticastObservable)));
 const ObservableOperatorWithSideEffectsTests = (op) => describe("ObservableOperatorWithSideEffects", test("with PureRunnableLike", pipeLazy(Observable.empty(), op, expectIsRunnableWithSideEffects)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty(), Observable.forEach(ignore), op, expectIsRunnableWithSideEffects)), test("with PureDeferredObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.subscribeOn(vts), x => x, op, expectIsDeferredObservableWithSideEffects))), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
@@ -171,7 +175,9 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
 }), testIsRunnableWithSideEffects(Observable.computeRunnable(() => { }))), describe("concat", test("concats the input containers in order", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray()), pipe([4, 5, 6], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), test("concats the input containers in order, when sources have delay", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("concatAll", test("concating pure Runnables", pipeLazy([
     pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
     pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 2 })),
-], Observable.fromReadonlyArray(), Observable.concatAll(), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), PureObservableOperatorTests(Observable.concatAll()), ObservableOperatorWithSideEffectsTests(Observable.concatAll({
+], Observable.fromReadonlyArray(), Observable.concatAll(), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), PureObservableOperatorTests(Observable.concatAll()), PureDeferredObservableOperatorTests(Observable.concatAll({
+    innerType: Observable.PureDeferredObservableType,
+})), ObservableOperatorWithSideEffectsTests(Observable.concatAll({
     innerType: Observable.RunnableWithSideEffectsType,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.concatAll({
     innerType: Observable.DeferredObservableWithSideEffectsType,
@@ -186,17 +192,13 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
     pipe(Observable.empty(), Observable.forEach(ignore)),
 ]))), describe("concatMap", testAsync("maps each value to a container and flattens", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync([0, 1], Observable.fromReadonlyArray(), Observable.concatMap(pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }))), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 1, 2, 3])))), test("maps each value to a container and flattens", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatMap(pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })), {
     innerType: Observable.PureRunnableType,
-}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), PureObservableOperatorTests(Observable.concatMap(_ => Observable.empty())), ObservableOperatorWithSideEffectsTests(Observable.concatMap(_ => pipe(Observable.empty(), Observable.forEach(ignore)), {
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), PureObservableOperatorTests(Observable.concatMap(_ => Observable.empty())), PureDeferredObservableOperatorTests(Observable.concatMap(_ => Observable.empty(), {
+    innerType: Observable.PureDeferredObservableType,
+})), ObservableOperatorWithSideEffectsTests(Observable.concatMap(_ => pipe(Observable.empty(), Observable.forEach(ignore)), {
     innerType: Observable.RunnableWithSideEffectsType,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.concatMap(_ => pipe(Observable.empty(), Observable.forEach(ignore)), {
     innerType: Observable.DeferredObservableWithSideEffectsType,
-}))), describe("concatWith", test("concats two containers together", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatWith(pipe([2, 3, 4], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4]))), PureObservableOperatorTests(Observable.concatWith(Observable.empty(), Observable.empty())), ObservableOperatorWithSideEffectsTests(Observable.concatWith(pipe(Observable.empty(), Observable.forEach(ignore)))), describe("concat with PureDeferredObservableLikes", test("with PureRunnableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
-    pipe(Observable.empty(), Observable.concatWith(pipe(Observable.empty(), Observable.subscribeOn(vts))), expectIsPureDeferredObservable);
-})), test("with RunnableWithSideEffectsLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
-    pipe(Observable.empty(), Observable.forEach(ignore), Observable.concatWith(pipe(Observable.empty(), Observable.subscribeOn(vts))), expectIsDeferredObservableWithSideEffects);
-})), test("with PureDeferredObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.subscribeOn(vts), Observable.concatWith(pipe(Observable.empty(), Observable.subscribeOn(vts))), expectIsPureDeferredObservable))), test("with DeferredObservableWithSideEffectsLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(async () => {
-    throw new Error();
-}, Observable.fromAsyncFactory(), Observable.concatWith(pipe(Observable.empty(), Observable.subscribeOn(vts))), expectIsDeferredObservableWithSideEffects))), test("with MulticastObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(new Promise(ignore), Observable.fromPromise(), Observable.concatWith(pipe(Observable.empty(), Observable.subscribeOn(vts))), expectIsMulticastObservable)))), describe("concat with DeferredObservableWithSideEffectsLikes", test("with PureRunnableLike", pipeLazy(Observable.empty(), Observable.concatWith(pipe(async () => {
+}))), describe("concatWith", test("concats two containers together", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatWith(pipe([2, 3, 4], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4]))), PureObservableOperatorTests(Observable.concatWith(Observable.empty(), Observable.empty())), ObservableOperatorWithSideEffectsTests(Observable.concatWith(pipe(Observable.empty(), Observable.forEach(ignore)))), PureDeferredObservableOperatorTests(Disposable.using(VirtualTimeScheduler.create)(vts => Observable.concatWith(pipe(Observable.empty(), Observable.subscribeOn(vts))))), describe("concat with DeferredObservableWithSideEffectsLikes", test("with PureRunnableLike", pipeLazy(Observable.empty(), Observable.concatWith(pipe(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory())), expectIsDeferredObservableWithSideEffects)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty(), Observable.forEach(ignore), Observable.concatWith(pipe(async () => {
     throw new Error();
@@ -254,13 +256,17 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     pipe([7, 8, 9], Observable.fromReadonlyArray()),
 ], Observable.fromReadonlyArray(), Observable.exhaust({
     innerType: Observable.PureRunnableType,
-}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), PureObservableOperatorTests(Observable.exhaust()), ObservableOperatorWithSideEffectsTests(Observable.exhaust({
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), PureObservableOperatorTests(Observable.exhaust()), PureDeferredObservableOperatorTests(Observable.exhaust({
+    innerType: Observable.PureDeferredObservableType,
+})), ObservableOperatorWithSideEffectsTests(Observable.exhaust({
     innerType: Observable.RunnableWithSideEffectsType,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.exhaust({
     innerType: Observable.DeferredObservableWithSideEffectsType,
 }))), describe("exhaustMap", test("when the initial observable never disposes", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.exhaustMap(_ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), {
     innerType: Observable.PureRunnableType,
-}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), PureObservableOperatorTests(Observable.exhaustMap(_ => Observable.empty())), ObservableOperatorWithSideEffectsTests(Observable.exhaustMap(_ => pipe(Observable.empty(), Observable.forEach(ignore)), {
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), PureObservableOperatorTests(Observable.exhaustMap(_ => Observable.empty())), PureDeferredObservableOperatorTests(Observable.exhaustMap(_ => Observable.empty(), {
+    innerType: Observable.PureDeferredObservableType,
+})), ObservableOperatorWithSideEffectsTests(Observable.exhaustMap(_ => pipe(Observable.empty(), Observable.forEach(ignore)), {
     innerType: Observable.RunnableWithSideEffectsType,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.exhaustMap(_ => pipe(Observable.empty(), Observable.forEach(ignore)), {
     innerType: Observable.DeferredObservableWithSideEffectsType,
@@ -466,7 +472,9 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
 ], Observable.fromReadonlyArray(), Observable.mergeAll({
     concurrency: 2,
     innerType: Observable.PureRunnableType,
-}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]))), PureObservableOperatorTests(Observable.mergeAll()), ObservableOperatorWithSideEffectsTests(Observable.mergeAll({
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]))), PureObservableOperatorTests(Observable.mergeAll()), PureDeferredObservableOperatorTests(Observable.mergeAll({
+    innerType: Observable.PureDeferredObservableType,
+})), ObservableOperatorWithSideEffectsTests(Observable.mergeAll({
     innerType: Observable.RunnableWithSideEffectsType,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.mergeAll({
     innerType: Observable.DeferredObservableWithSideEffectsType,
@@ -482,11 +490,13 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     Observable.empty(),
 ]))), describe("mergeMap", testAsync("without delay, merge all observables as they are produced", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.mergeMap(x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3])))), test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.mergeMap(x => pipe([x, x, x], Observable.fromReadonlyArray()), {
     innerType: Observable.PureRunnableType,
-}), Observable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]))), PureObservableOperatorTests(Observable.mergeMap(_ => Observable.empty())), ObservableOperatorWithSideEffectsTests(Observable.mergeMap(_ => pipe(Observable.empty(), Observable.forEach(ignore)), {
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]))), PureObservableOperatorTests(Observable.mergeMap(_ => Observable.empty())), PureDeferredObservableOperatorTests(Observable.mergeMap(_ => Observable.empty(), {
+    innerType: Observable.PureDeferredObservableType,
+})), ObservableOperatorWithSideEffectsTests(Observable.mergeMap(_ => pipe(Observable.empty(), Observable.forEach(ignore)), {
     innerType: Observable.RunnableWithSideEffectsType,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.mergeMap(_ => pipe(Observable.empty(), Observable.forEach(ignore)), {
     innerType: Observable.DeferredObservableWithSideEffectsType,
-}))), describe("mergeWith"), describe("multicast", testIsMulticastObservable(Disposable.using(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.multicast(vts))))), describe("never", testIsMulticastObservable(Observable.never())), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
+}))), describe("mergeWith", PureObservableOperatorTests(Observable.mergeWith(Observable.empty())), ObservableOperatorWithSideEffectsTests(Observable.mergeWith(pipe(Observable.empty(), Observable.forEach(ignore)))), PureDeferredObservableOperatorTests(Disposable.using(VirtualTimeScheduler.create)(vts => Observable.mergeWith(pipe(Observable.empty(), Observable.subscribeOn(vts))))), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.mergeWith(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), Observable.forEach(ignore))))), describe("multicast", testIsMulticastObservable(Disposable.using(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.multicast(vts))))), describe("never", testIsMulticastObservable(Observable.never())), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
     const scheduler = VirtualTimeScheduler.create();
     const disp = mockFn();
     const f = mockFn(disp);
@@ -528,7 +538,13 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     pipe(pipeLazy([1, 1], Observable.fromReadonlyArray({ delay: 3 }), Observable.repeat(_ => {
         throw err;
     }), Observable.toReadonlyArray()), expectToThrowError(err));
-}), PureDeferredObservableOperatorTests(Observable.repeat())), describe("retry", test("retrys the container on an exception", pipeLazy(Observable.concat(pipe(Enumerable.generate(increment, returns(0)), Observable.fromEnumerable(), Observable.takeFirst({ count: 3 })), Observable.throws()), Observable.retry(alwaysTrue), Observable.takeFirst({ count: 6 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("retrys with the default predicate", pipeLazy(Observable.concat(pipe(Enumerable.generate(increment, returns(0)), Observable.fromEnumerable(), Observable.takeFirst({ count: 3 })), Observable.throws()), Observable.retry(), Observable.takeFirst({ count: 6 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("when source and the retry predicate throw", pipeLazy(pipeLazy(Observable.throws(), Observable.retry(raise), Observable.toReadonlyArray()), expectToThrow)), PureDeferredObservableOperatorTests(Observable.retry(raise))), describe("scan", PureObservableOperatorTests(Observable.scan((acc, _) => acc, returns(none)))), describe("scanMany", test("slow source, fast scan function", pipeLazy(Enumerable.generate(increment, returns(-1)), Enumerable.takeFirst({ count: 10 }), Observable.fromEnumerable({ delay: 10 }), Observable.scanMany((_acc, next) => pipe(next, Observable.fromValue({ delay: 2 })), returns(0)), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])))), describe("share", test("shared observable zipped with itself", () => {
+}), PureObservableOperatorWithDeferredObservableBaseTests(Observable.repeat())), describe("retry", test("retrys the container on an exception", pipeLazy(Observable.concat(pipe(Enumerable.generate(increment, returns(0)), Observable.fromEnumerable(), Observable.takeFirst({ count: 3 })), Observable.throws()), Observable.retry(alwaysTrue), Observable.takeFirst({ count: 6 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("retrys with the default predicate", pipeLazy(Observable.concat(pipe(Enumerable.generate(increment, returns(0)), Observable.fromEnumerable(), Observable.takeFirst({ count: 3 })), Observable.throws()), Observable.retry(), Observable.takeFirst({ count: 6 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("when source and the retry predicate throw", pipeLazy(pipeLazy(Observable.throws(), Observable.retry(raise), Observable.toReadonlyArray()), expectToThrow)), PureObservableOperatorWithDeferredObservableBaseTests(Observable.retry(raise))), describe("scan", PureObservableOperatorTests(Observable.scan((acc, _) => acc, returns(none)))), describe("scanMany", test("slow source, fast scan function", pipeLazy(Enumerable.generate(increment, returns(-1)), Enumerable.takeFirst({ count: 10 }), Observable.fromEnumerable({ delay: 10 }), Observable.scanMany((_acc, next) => pipe(next, Observable.fromValue({ delay: 2 })), returns(0)), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]))), PureObservableOperatorTests(Observable.scanMany(() => Observable.empty(), returns(none))), PureDeferredObservableOperatorTests(Observable.scanMany(() => Observable.empty(), returns(none), {
+    innerType: PureDeferredObservableType,
+})), ObservableOperatorWithSideEffectsTests(Observable.scanMany(() => Observable.empty(), returns(none), {
+    innerType: RunnableWithSideEffectsType,
+})), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.scanMany(() => Observable.empty(), returns(none), {
+    innerType: DeferredObservableWithSideEffectsType,
+}))), describe("share", test("shared observable zipped with itself", () => {
     const scheduler = VirtualTimeScheduler.create();
     const shared = pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forEach(ignore), Observable.share(scheduler, { replay: 1 }));
     expectIsMulticastObservable(shared);
@@ -538,7 +554,9 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     pipe(result, expectArrayEquals([2, 4, 6]));
 }), testIsMulticastObservable(Disposable.using(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.share(vts))))), describe("skipFirst", PureObservableOperatorTests(Observable.skipFirst())), describe("startWith", test("appends the additional values to the start of the container", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.startWith(2, 3, 4), Observable.toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1]))), PureObservableOperatorTests(Observable.startWith(1, 2, 3))), describe("subscribeOn", testIsPureDeferredObservable(Disposable.using(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.subscribeOn(vts)))), testIsDeferredObservableWithSideEffects(Disposable.using(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.forEach(ignore), Observable.subscribeOn(vts))))), describe("switchAll", test("with empty source", pipeLazy(Observable.empty(), Observable.switchAll({
     innerType: Observable.PureRunnableType,
-}), Observable.toReadonlyArray(), expectArrayEquals([]))), PureObservableOperatorTests(Observable.switchAll()), ObservableOperatorWithSideEffectsTests(Observable.switchAll({
+}), Observable.toReadonlyArray(), expectArrayEquals([]))), PureObservableOperatorTests(Observable.switchAll()), PureDeferredObservableOperatorTests(Observable.switchAll({
+    innerType: Observable.PureDeferredObservableType,
+})), ObservableOperatorWithSideEffectsTests(Observable.switchAll({
     innerType: Observable.RunnableWithSideEffectsType,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.switchAll({
     innerType: Observable.DeferredObservableWithSideEffectsType,
@@ -553,7 +571,9 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 1, 2, 1, 2, 3]))), test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.switchMap(_ => pipe([1, 2, 3], Observable.fromReadonlyArray()), {
     innerType: Observable.PureRunnableType,
-}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), PureObservableOperatorTests(Observable.switchMap(_ => Observable.empty())), ObservableOperatorWithSideEffectsTests(Observable.switchMap(_ => pipe(Observable.empty(), Observable.forEach(ignore)), {
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), PureObservableOperatorTests(Observable.switchMap(_ => Observable.empty())), PureDeferredObservableOperatorTests(Observable.switchMap(_ => Observable.empty(), {
+    innerType: Observable.PureDeferredObservableType,
+})), ObservableOperatorWithSideEffectsTests(Observable.switchMap(_ => pipe(Observable.empty(), Observable.forEach(ignore)), {
     innerType: Observable.RunnableWithSideEffectsType,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.switchMap(_ => pipe(Observable.empty(), Observable.forEach(ignore)), {
     innerType: Observable.DeferredObservableWithSideEffectsType,

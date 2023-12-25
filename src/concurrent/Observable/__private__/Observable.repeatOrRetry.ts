@@ -21,7 +21,7 @@ import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js"
 
 type ObservableRepeatOrRetry = <T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
-) => Observable.PureDeferredObservableOperator<T, T>;
+) => Observable.PureObservableOperator<T, T, DeferredObservableLike<T>>;
 
 const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
   T,
