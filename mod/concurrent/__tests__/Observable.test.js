@@ -6,10 +6,10 @@ import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import { keepType, mapTo } from "../../computations.js";
 import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
 import { DispatcherLikeEvent_completed, DispatcherLike_complete, FlowableLike_flow, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
-import { StoreLike_value } from "../../events.js";
+import { SinkLike_notify, StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
-import { alwaysTrue, arrayEquality, bind, error, ignore, increment, incrementBy, invoke, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
+import { alwaysTrue, arrayEquality, bind, bindMethod, error, ignore, increment, incrementBy, invoke, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
@@ -134,7 +134,15 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
         __do(push, () => result + 1);
     }
     return result;
-}), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler), x => x ?? [], expectArrayEquals([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8])))), testIsDeferredObservableWithSideEffects(Observable.computeDeferred(() => { }))), describe("computeRunnable", test("batch mode", () => {
+}), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler), x => x ?? [], expectArrayEquals([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8])))), testAsync("awaiting a Multicast Observable", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => {
+    const subject = Subject.create({ replay: 2 });
+    subject[SinkLike_notify](1);
+    return pipeAsync(Observable.computeDeferred(() => {
+        const result = __await(subject);
+        __do(bindMethod(subject, DisposableLike_dispose));
+        return result;
+    }), Observable.distinctUntilChanged(), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1]));
+})), testIsDeferredObservableWithSideEffects(Observable.computeDeferred(() => { }))), describe("computeRunnable", test("batch mode", () => {
     const result = [];
     pipe(Observable.computeRunnable(() => {
         const fromValueWithDelay = __constant((delay, value) => pipe([value], Observable.fromReadonlyArray({ delay })));
@@ -157,7 +165,14 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
         return __await(next);
     }, { mode: "combine-latest" }), keepType(Observable, isSome), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
-}), test("conditional hooks", () => {
+}), test("when compute function throws", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
+    const error = newInstance(Error);
+    const subscription = pipe(Observable.computeRunnable(() => {
+        raise(error);
+    }), Observable.subscribe(vts));
+    vts[VirtualTimeSchedulerLike_run]();
+    pipe(subscription[DisposableLike_error], expectEquals(error));
+})), test("conditional hooks", () => {
     const result = [];
     pipe(Observable.computeRunnable(() => {
         const src = __constant(pipe([0, 1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 5 })));

@@ -45,7 +45,7 @@ import {
   VirtualTimeSchedulerLike,
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
-import { StoreLike_value } from "../../events.js";
+import { SinkLike_notify, StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
 import {
@@ -55,6 +55,7 @@ import {
   alwaysTrue,
   arrayEquality,
   bind,
+  bindMethod,
   error,
   ignore,
   increment,
@@ -716,6 +717,25 @@ testModule(
         ),
       ),
     ),
+    testAsync(
+      "awaiting a Multicast Observable",
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => {
+        const subject = Subject.create<number>({ replay: 2 });
+        subject[SinkLike_notify](1);
+
+        return pipeAsync(
+          Observable.computeDeferred(() => {
+            const result = __await(subject);
+            __do(bindMethod(subject, DisposableLike_dispose));
+
+            return result;
+          }),
+          Observable.distinctUntilChanged<number>(),
+          Observable.toReadonlyArrayAsync(scheduler),
+          expectArrayEquals([1]),
+        );
+      }),
+    ),
     testIsDeferredObservableWithSideEffects(
       Observable.computeDeferred(() => {}),
     ),
@@ -775,6 +795,26 @@ testModule(
 
       pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
     }),
+    test(
+      "when compute function throws",
+      Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
+        const error = newInstance(Error);
+
+        const subscription = pipe(
+          Observable.computeRunnable(() => {
+            raise(error);
+          }),
+          Observable.subscribe(vts),
+        );
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        pipe(
+          subscription[DisposableLike_error],
+          expectEquals<Optional<Error>>(error),
+        );
+      }),
+    ),
     test("conditional hooks", () => {
       const result: number[] = [];
       pipe(
