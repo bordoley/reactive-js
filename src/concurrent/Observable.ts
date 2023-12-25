@@ -200,9 +200,21 @@ export type ObservableOperatorWithSideEffects<TIn, TOut> = <
   TObservableIn extends ObservableLike<TIn>,
 >(
   observable: TObservableIn,
-) => TObservableIn extends RunnableLike<TIn>
+) => TObservableIn extends PureRunnableLike<TIn>
   ? RunnableWithSideEffectsLike<TOut>
-  : DeferredObservableWithSideEffectsLike<TOut>;
+  : TObservableIn extends RunnableWithSideEffectsLike<TIn>
+  ? RunnableWithSideEffectsLike<TOut>
+  : TObservableIn extends RunnableLike<TIn>
+  ? RunnableWithSideEffectsLike<TOut>
+  : TObservableIn extends PureDeferredObservableLike<TIn>
+  ? DeferredObservableWithSideEffectsLike<TOut>
+  : TObservableIn extends DeferredObservableWithSideEffectsLike<TIn>
+  ? DeferredObservableWithSideEffectsLike<TOut>
+  : TObservableIn extends DeferredObservableLike<TIn>
+  ? DeferredObservableWithSideEffectsLike<TOut>
+  : TObservableIn extends MulticastObservableLike<TIn>
+  ? DeferredObservableWithSideEffectsLike<TOut>
+  : ObservableLike<TOut>;
 
 export const PureRunnableType: Pick<
   PureRunnableLike,
