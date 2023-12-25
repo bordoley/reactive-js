@@ -180,9 +180,21 @@ export type PureMulticastingObservableOperator<TIn, TOut> = <
   TObservableIn extends ObservableLike<TIn>,
 >(
   observable: TObservableIn,
-) => TObservableIn extends PureObservableLike<TIn>
+) => TObservableIn extends PureRunnableLike<TIn>
   ? MulticastObservableLike<TOut>
-  : DeferredObservableWithSideEffectsLike<TOut>;
+  : TObservableIn extends RunnableWithSideEffectsLike<TIn>
+  ? DeferredObservableWithSideEffectsLike<TOut>
+  : TObservableIn extends RunnableLike<TIn>
+  ? ObservableLike<TOut>
+  : TObservableIn extends PureDeferredObservableLike<TIn>
+  ? MulticastObservableLike<TOut>
+  : TObservableIn extends DeferredObservableWithSideEffectsLike<TIn>
+  ? DeferredObservableWithSideEffectsLike<TOut>
+  : TObservableIn extends DeferredObservableLike<TIn>
+  ? ObservableLike<TOut>
+  : TObservableIn extends MulticastObservableLike<TIn>
+  ? MulticastObservableLike<TOut>
+  : ObservableLike<TOut>;
 
 export type ObservableOperatorWithSideEffects<TIn, TOut> = <
   TObservableIn extends ObservableLike<TIn>,
