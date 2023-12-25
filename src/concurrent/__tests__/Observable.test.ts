@@ -793,6 +793,16 @@ testModule(
       ),
     ),
     PureObservableOperatorTests(Observable.concatAll()),
+    ObservableOperatorWithSideEffectsTests(
+      Observable.concatAll({
+        innerType: Observable.RunnableWithSideEffectsType,
+      }),
+    ),
+    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
+      Observable.concatAll({
+        innerType: Observable.DeferredObservableWithSideEffectsType,
+      }),
+    ),
   ),
   describe(
     "concatMany",
@@ -863,8 +873,23 @@ testModule(
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
     ),
-    // FIXME
-    //PureObservableOperatorTests(Observable.concatMap())
+    PureObservableOperatorTests(Observable.concatMap(_ => Observable.empty())),
+    ObservableOperatorWithSideEffectsTests(
+      Observable.concatMap(
+        _ => pipe(Observable.empty(), Observable.forEach(ignore)),
+        {
+          innerType: Observable.RunnableWithSideEffectsType,
+        },
+      ),
+    ),
+    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
+      Observable.concatMap(
+        _ => pipe(Observable.empty(), Observable.forEach(ignore)),
+        {
+          innerType: Observable.DeferredObservableWithSideEffectsType,
+        },
+      ),
+    ),
   ),
   describe(
     "concatWith",
@@ -1212,6 +1237,16 @@ testModule(
       ),
     ),
     PureObservableOperatorTests(Observable.exhaust()),
+    ObservableOperatorWithSideEffectsTests(
+      Observable.exhaust({
+        innerType: Observable.RunnableWithSideEffectsType,
+      }),
+    ),
+    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
+      Observable.exhaust({
+        innerType: Observable.DeferredObservableWithSideEffectsType,
+      }),
+    ),
   ),
   describe(
     "exhaustMap",
@@ -1232,6 +1267,22 @@ testModule(
       ),
     ),
     PureObservableOperatorTests(Observable.exhaustMap(_ => Observable.empty())),
+    ObservableOperatorWithSideEffectsTests(
+      Observable.exhaustMap(
+        _ => pipe(Observable.empty(), Observable.forEach(ignore)),
+        {
+          innerType: Observable.RunnableWithSideEffectsType,
+        },
+      ),
+    ),
+    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
+      Observable.exhaustMap(
+        _ => pipe(Observable.empty(), Observable.forEach(ignore)),
+        {
+          innerType: Observable.DeferredObservableWithSideEffectsType,
+        },
+      ),
+    ),
   ),
   describe(
     "firstAsync",
@@ -2328,6 +2379,16 @@ testModule(
       ),
     ),
     PureObservableOperatorTests(Observable.mergeAll()),
+    ObservableOperatorWithSideEffectsTests(
+      Observable.mergeAll({
+        innerType: Observable.RunnableWithSideEffectsType,
+      }),
+    ),
+    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
+      Observable.mergeAll({
+        innerType: Observable.DeferredObservableWithSideEffectsType,
+      }),
+    ),
   ),
   describe(
     "mergeMany",
@@ -2392,8 +2453,23 @@ testModule(
         expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
       ),
     ),
-    // FIXME
-    // PureObservableOperatorTests(Observable.mergeMap()),
+    PureObservableOperatorTests(Observable.mergeMap(_ => Observable.empty())),
+    ObservableOperatorWithSideEffectsTests(
+      Observable.mergeMap(
+        _ => pipe(Observable.empty(), Observable.forEach(ignore)),
+        {
+          innerType: Observable.RunnableWithSideEffectsType,
+        },
+      ),
+    ),
+    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
+      Observable.mergeMap(
+        _ => pipe(Observable.empty(), Observable.forEach(ignore)),
+        {
+          innerType: Observable.DeferredObservableWithSideEffectsType,
+        },
+      ),
+    ),
   ),
   describe(
     "mergeWith",
@@ -2741,6 +2817,16 @@ testModule(
       ),
     ),
     PureObservableOperatorTests(Observable.switchAll()),
+    ObservableOperatorWithSideEffectsTests(
+      Observable.switchAll({
+        innerType: Observable.RunnableWithSideEffectsType,
+      }),
+    ),
+    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
+      Observable.switchAll({
+        innerType: Observable.DeferredObservableWithSideEffectsType,
+      }),
+    ),
   ),
   describe(
     "switchMap",
@@ -2813,6 +2899,22 @@ testModule(
       ),
     ),
     PureObservableOperatorTests(Observable.switchMap(_ => Observable.empty())),
+    ObservableOperatorWithSideEffectsTests(
+      Observable.switchMap(
+        _ => pipe(Observable.empty(), Observable.forEach(ignore)),
+        {
+          innerType: Observable.RunnableWithSideEffectsType,
+        },
+      ),
+    ),
+    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
+      Observable.switchMap(
+        _ => pipe(Observable.empty(), Observable.forEach(ignore)),
+        {
+          innerType: Observable.DeferredObservableWithSideEffectsType,
+        },
+      ),
+    ),
   ),
   describe("takeFirst", PureObservableOperatorTests(Observable.takeFirst())),
   describe(

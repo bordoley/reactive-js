@@ -704,7 +704,7 @@ export interface ObservableModule
   }): PureObservableOperator<PureRunnableLike<T>, T>;
   concatAll<T>(options: {
     readonly innerType: typeof RunnableWithSideEffectsType;
-  }): Function1<RunnableLike<RunnableLike<T>>, RunnableWithSideEffectsLike<T>>;
+  }): ObservableOperatorWithSideEffects<RunnableLike<T>, T>;
   concatAll<T>(options: {
     readonly innerType: typeof DeferredObservableWithSideEffectsType;
   }): Function1<
@@ -751,7 +751,7 @@ export interface ObservableModule
     options: {
       readonly innerType: typeof RunnableWithSideEffectsType;
     },
-  ): Function1<RunnableLike<TA>, RunnableWithSideEffectsLike<TB>>;
+  ): ObservableOperatorWithSideEffects<TA, TB>;
   concatMap<TA, TB>(
     selector: Function1<TA, DeferredObservableLike<TB>>,
     options: {
@@ -827,7 +827,7 @@ export interface ObservableModule
   }): PureObservableOperator<PureRunnableLike<T>, T>;
   exhaust<T>(options: {
     readonly innerType: typeof RunnableWithSideEffectsType;
-  }): Function1<RunnableLike<RunnableLike<T>>, RunnableWithSideEffectsLike<T>>;
+  }): ObservableOperatorWithSideEffects<RunnableLike<T>, T>;
   exhaust<T>(options: {
     readonly innerType: typeof DeferredObservableWithSideEffectsType;
   }): Function1<
@@ -849,7 +849,7 @@ export interface ObservableModule
     options: {
       readonly innerType: typeof RunnableWithSideEffectsType;
     },
-  ): Function1<RunnableLike<TA>, RunnableWithSideEffectsLike<TB>>;
+  ): ObservableOperatorWithSideEffects<TA, TB>;
   exhaustMap<TA, TB>(
     selector: Function1<TA, DeferredObservableLike<TB>>,
     options: {
@@ -1013,7 +1013,7 @@ export interface ObservableModule
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
     readonly concurrency?: number;
-  }): Function1<RunnableLike<RunnableLike<T>>, RunnableWithSideEffectsLike<T>>;
+  }): ObservableOperatorWithSideEffects<RunnableLike<T>, T>;
   mergeAll<T>(options?: {
     readonly innerType: typeof DeferredObservableWithSideEffectsType;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -1068,7 +1068,7 @@ export interface ObservableModule
       readonly capacity?: number;
       readonly concurrency?: number;
     },
-  ): Function1<RunnableLike<TA>, RunnableWithSideEffectsLike<TB>>;
+  ): ObservableOperatorWithSideEffects<TA, TB>;
   mergeMap<TA, TB>(
     selector: Function1<TA, DeferredObservableLike<TB>>,
     options: {
@@ -1212,7 +1212,7 @@ export interface ObservableModule
   }): PureObservableOperator<PureRunnableLike<T>, T>;
   switchAll<T>(options: {
     readonly innerType: typeof RunnableWithSideEffectsType;
-  }): Function1<RunnableLike<RunnableLike<T>>, RunnableWithSideEffectsLike<T>>;
+  }): ObservableOperatorWithSideEffects<RunnableLike<T>, T>;
   switchAll<T>(options: {
     readonly innerType: typeof DeferredObservableWithSideEffectsType;
   }): Function1<
@@ -1234,7 +1234,7 @@ export interface ObservableModule
     options: {
       readonly innerType: typeof RunnableWithSideEffectsType;
     },
-  ): Function1<RunnableLike<TA>, RunnableWithSideEffectsLike<TB>>;
+  ): ObservableOperatorWithSideEffects<TA, TB>;
   switchMap<TA, TB>(
     selector: Function1<TA, DeferredObservableLike<TB>>,
     options: {
