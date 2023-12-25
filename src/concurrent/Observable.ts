@@ -976,8 +976,10 @@ export interface ObservableModule {
   fromPromise<T>(): Function1<Promise<T>, MulticastObservableLike<T>>;
 
   fromReadonlyArray<T>(options?: {
-    readonly delay: number;
+    readonly delay?: number;
     readonly delayStart?: boolean;
+    readonly count?: number;
+    readonly start?: number;
   }): Function1<ReadonlyArray<T>, PureRunnableLike<T>>;
 
   fromStore<T>(): Function1<StoreLike<T>, MulticastObservableLike<T>>;

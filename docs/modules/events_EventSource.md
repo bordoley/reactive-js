@@ -186,13 +186,21 @@ ___
 
 ### fromReadonlyArray
 
-▸ **fromReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
 
 #### Returns
 

@@ -8,6 +8,7 @@ import EventSource_decodeWithCharset from "./EventSource/__private__/EventSource
 import EventSource_distinctUntilChanged from "./EventSource/__private__/EventSource.distinctUntilChanged.js";
 import EventSource_fromIterable from "./EventSource/__private__/EventSource.fromIterable.js";
 import EventSource_fromPromise from "./EventSource/__private__/EventSource.fromPromise.js";
+import EventSource_fromReadonlyArray from "./EventSource/__private__/EventSource.fromReadonlyArray.js";
 import EventSource_keep from "./EventSource/__private__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__private__/EventSource.map.js";
 import EventSource_merge from "./EventSource/__private__/EventSource.merge.js";
@@ -26,7 +27,7 @@ export const decodeWithCharset = EventSource_decodeWithCharset;
 export const distinctUntilChanged = EventSource_distinctUntilChanged;
 export const fromIterable = EventSource_fromIterable;
 export const fromPromise = EventSource_fromPromise;
-export const fromReadonlyArray = EventSource_fromIterable;
+export const fromReadonlyArray = EventSource_fromReadonlyArray;
 export const keep = EventSource_keep;
 export const map = EventSource_map;
 export const merge = EventSource_merge;

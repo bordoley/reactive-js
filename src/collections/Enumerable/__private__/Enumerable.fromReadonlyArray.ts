@@ -5,9 +5,10 @@ import {
   KeyedCollection_type,
 } from "../../../collections.js";
 import { pipe } from "../../../functions.js";
+import type * as Enumerable from "../../Enumerable.js";
 import Enumerable_fromIteratorFactory from "../../Enumerable/__private__/Enumerable.fromIteratorFactory.js";
 import Indexed_toCollection from "../../Indexed/__private__/Indexed.toCollection.js";
-import type * as ReadonlyArray from "../../ReadonlyArray.js";
+import type { ReadonlyArrayCollection } from "../../ReadonlyArray.js";
 
 interface ValuesCollection extends KeyedCollection<number> {
   readonly [KeyedCollection_type]?: EnumerableLike<
@@ -15,11 +16,8 @@ interface ValuesCollection extends KeyedCollection<number> {
   >;
 }
 
-const ReadonlyArray_values: ReadonlyArray.Signature["values"] =
-  /*@__PURE__*/ Indexed_toCollection<
-    ReadonlyArray.ReadonlyArrayCollection,
-    ValuesCollection
-  >(
+const Enumerable_fromReadonlyArray: Enumerable.Signature["fromReadonlyArray"] =
+  /*@__PURE__*/ Indexed_toCollection<ReadonlyArrayCollection, ValuesCollection>(
     <_ extends number, T>(
       arr: readonly T[],
       startIndex: number,
@@ -39,6 +37,6 @@ const ReadonlyArray_values: ReadonlyArray.Signature["values"] =
         }
       }, Enumerable_fromIteratorFactory()),
     v => v.length,
-  ) as ReadonlyArray.Signature["values"];
+  ) as Enumerable.Signature["fromReadonlyArray"];
 
-export default ReadonlyArray_values;
+export default Enumerable_fromReadonlyArray;

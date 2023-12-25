@@ -29,6 +29,7 @@ import Enumerable_concatWith from "./Enumerable/__private__/Enumerable.concatWit
 import Enumerable_decodeWithCharset from "./Enumerable/__private__/Enumerable.decodeWithCharset.js";
 import Enumerable_distinctUntilChanged from "./Enumerable/__private__/Enumerable.distinctUntilChanged.js";
 import Enumerable_empty from "./Enumerable/__private__/Enumerable.empty.js";
+import Enumerable_fromReadonlyArray from "./Enumerable/__private__/Enumerable.fromReadonlyArray.js";
 import Enumerable_generate from "./Enumerable/__private__/Enumerable.generate.js";
 import Enumerable_keep from "./Enumerable/__private__/Enumerable.keep.js";
 import Enumerable_map from "./Enumerable/__private__/Enumerable.map.js";
@@ -43,7 +44,6 @@ import Enumerable_takeWhile from "./Enumerable/__private__/Enumerable.takeWhile.
 import Enumerable_toReadonlyArray from "./Enumerable/__private__/Enumerable.toReadonlyArray.js";
 import Enumerable_zip from "./Enumerable/__private__/Enumerable.zip.js";
 import Enumerable_zipWith from "./Enumerable/__private__/Enumerable.zipWith.js";
-import ReadonlyArray_values from "./ReadonlyArray/__private__/ReadonlyArray.values.js";
 
 /**
  * @noInheritDoc
@@ -252,7 +252,7 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Enumerable_distinctUntilChanged;
 export const empty: Signature["empty"] = Enumerable_empty;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
-  ReadonlyArray_values;
+  Enumerable_fromReadonlyArray;
 export const generate: Signature["generate"] = Enumerable_generate;
 export const keep: Signature["keep"] = Enumerable_keep;
 export const map: Signature["map"] = Enumerable_map;

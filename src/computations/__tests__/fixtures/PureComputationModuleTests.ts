@@ -199,6 +199,54 @@ const PureComputationModuleTests = <C extends Computation>(
       ),
     ),
     describe(
+      "fromReadonlyArray",
+      test(
+        "starting at index greater than 0",
+        pipeLazy(
+          [1, 2, 3, 4],
+          m.fromReadonlyArray({ start: 1 }),
+          toReadonlyArray(),
+          expectArrayEquals([2, 3, 4]),
+        ),
+      ),
+      test(
+        "starting at index greater than 0 with count",
+        pipeLazy(
+          [1, 2, 3, 4],
+          m.fromReadonlyArray({ start: 1, count: 2 }),
+          toReadonlyArray(),
+          expectArrayEquals([2, 3]),
+        ),
+      ),
+      test(
+        "starting at index greater than 0 with count exceeding the length",
+        pipeLazy(
+          [1, 2, 3, 4],
+          m.fromReadonlyArray({ start: 1, count: 10 }),
+          toReadonlyArray(),
+          expectArrayEquals([2, 3, 4]),
+        ),
+      ),
+      test(
+        "negative count",
+        pipeLazy(
+          [1, 2, 3, 4],
+          m.fromReadonlyArray({ count: -2 }),
+          toReadonlyArray(),
+          expectArrayEquals([4, 3]),
+        ),
+      ),
+      test(
+        "starting at index greater than 0 with negative count",
+        pipeLazy(
+          [1, 2, 3, 4],
+          m.fromReadonlyArray({ start: 2, count: -2 }),
+          toReadonlyArray(),
+          expectArrayEquals([3, 2]),
+        ),
+      ),
+    ),
+    describe(
       "keep",
       test(
         "keeps only values greater than 5",

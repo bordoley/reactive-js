@@ -2799,8 +2799,10 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.delay` | `number` |
+| `options.count?` | `number` |
+| `options.delay?` | `number` |
 | `options.delayStart?` | `boolean` |
+| `options.start?` | `number` |
 
 #### Returns
 

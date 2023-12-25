@@ -1,7 +1,15 @@
 import {
+  KeyedCollection,
+  KeyedCollection_T,
+  KeyedCollection_type,
+} from "../../../collections.js";
+import Indexed_toCollection from "../../../collections/Indexed/__private__/Indexed.toCollection.js";
+import { ReadonlyArrayCollection } from "../../../collections/ReadonlyArray.js";
+import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   ObserverLike,
+  PureRunnableLike,
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
@@ -14,33 +22,101 @@ import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createPureRunnable from "./Observable.createPureRunnable.js";
 
+interface ValuesCollection extends KeyedCollection<number> {
+  readonly [KeyedCollection_type]?: PureRunnableLike<
+    this[typeof KeyedCollection_T]
+  >;
+}
+
 const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
-  <T>(options?: { delay: number; delayStart?: boolean }) =>
-  (array: ReadonlyArray<T>) =>
-    Observable_createPureRunnable((observer: ObserverLike<T>) => {
-      const { delay = 0, delayStart = false } = options ?? {};
+  (options?: {
+    delay?: number;
+    delayStart?: boolean;
+    count?: number;
+    start?: number;
+  }) =>
+    Indexed_toCollection<ReadonlyArrayCollection, ValuesCollection>(
+      <_ extends number, T>(
+        arr: readonly T[],
+        startIndex: number,
+        count: number,
+      ) =>
+        Observable_createPureRunnable((observer: ObserverLike<T>) => {
+          const { delay = 0, delayStart = false } = options ?? {};
 
-      let i = 0;
-      const { length } = array;
+          let iterCount = count;
+          let iterStartIndex = startIndex;
 
-      const continuation = (ctx: ContinuationContextLike) => {
-        while (!observer[DisposableLike_isDisposed] && i < length) {
-          const next = array[i];
-          observer[SinkLike_notify](next);
-          i++;
+          const continuation = (ctx: ContinuationContextLike) => {
+            while (!observer[DisposableLike_isDisposed] && iterCount !== 0) {
+              const next = arr[iterStartIndex];
+              observer[SinkLike_notify](next);
 
-          ctx[ContinuationContextLike_yield](delay);
-        }
-        observer[DisposableLike_dispose]();
-      };
+              iterCount > 0
+                ? (iterStartIndex++, iterCount--)
+                : (iterStartIndex--, iterCount++);
 
-      pipe(
-        observer[SchedulerLike_schedule](
-          continuation,
-          delayStart ? { delay } : none,
-        ),
-        Disposable.addTo(observer),
-      );
-    });
+              ctx[ContinuationContextLike_yield](delay);
+            }
+            observer[DisposableLike_dispose]();
+          };
+
+          pipe(
+            observer[SchedulerLike_schedule](
+              continuation,
+              delayStart ? { delay } : none,
+            ),
+            Disposable.addTo(observer),
+          );
+        }),
+      v => v.length,
+    )(options);
 
 export default Observable_fromReadonlyArray;
+
+/*
+import {
+  KeyedCollection,
+  KeyedCollection_T,
+  KeyedCollection_type,
+} from "../../../collections.js";
+import Indexed_toCollection from "../../../collections/Indexed/__private__/Indexed.toCollection.js";
+import { ReadonlyArrayCollection } from "../../../collections/ReadonlyArray.js";
+import { EventSourceLike, SinkLike_notify } from "../../../events.js";
+import { DisposableLike_dispose } from "../../../utils.js";
+import type * as EventSource from "../../EventSource.js";
+import EventSource_create from "./EventSource.create.js";
+
+interface ValuesCollection extends KeyedCollection<number> {
+  readonly [KeyedCollection_type]?: EventSourceLike<
+    this[typeof KeyedCollection_T]
+  >;
+}
+
+const EventSource_fromReadonlyArray: EventSource.Signature["fromReadonlyArray"] =
+   Indexed_toCollection<ReadonlyArrayCollection, ValuesCollection>(
+    <_ extends number, T>(
+      arr: readonly T[],
+      startIndex: number,
+      count: number,
+    ) =>
+      EventSource_create<T>(listener => {
+        let iterCount = count;
+        let iterStartIndex = startIndex;
+
+        for (
+          ;
+          iterCount !== 0;
+          iterCount > 0
+            ? (iterStartIndex++, iterCount--)
+            : (iterStartIndex--, iterCount++)
+        ) {
+          listener[SinkLike_notify](arr[iterStartIndex]);
+        }
+        listener[DisposableLike_dispose]();
+      }),
+    v => v.length,
+  ) as EventSource.Signature["fromReadonlyArray"];
+
+export default EventSource_fromReadonlyArray;
+*/
