@@ -120,7 +120,7 @@ const AnimationGroup = () => {
           b: [
             { type: "keyframe", duration: 500, from: 0, to: 1 },
             { type: "delay", duration: 250 },
-            { type: "spring", stiffness: 0.01, damping: 0.1, from: 1, to: 0 },
+            { type: "spring", stiffness: 0.01, damping: 0.01, from: 1, to: 0 },
           ],
         },
         { mode: "blocking", scheduler: animationScheduler },
@@ -311,7 +311,7 @@ const RxComponent = createComponent(
                   {
                     type: "spring",
                     stiffness: 0.01,
-                    damping: 0.1,
+                    damping: 0.01,
                     from: 50,
                     to: 0,
                     selector: (v: number) => ({

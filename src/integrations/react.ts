@@ -14,7 +14,6 @@ import {
   EnumeratorLike_move,
   KeyedLike_get,
 } from "../collections.js";
-import * as Indexed from "../collections/Indexed.js";
 import {
   DispatcherLike,
   DispatcherLike_complete,
@@ -353,11 +352,13 @@ export const useObserve: Signature["useObserve"] = <T>(
     ],
   );
 
-  const buffer =
-    (observable as ReplayObservableLike<T>)[ReplayObservableLike_buffer] ??
-    Indexed.empty<T>();
+  const buffer = (observable as Optional<ReplayObservableLike<T>>)?.[
+    ReplayObservableLike_buffer
+  ];
   const defaultValue =
-    buffer[CollectionLike_count] > 0 ? buffer[KeyedLike_get](0) : none;
+    (buffer?.[CollectionLike_count] ?? 0) > 0
+      ? buffer?.[KeyedLike_get](0)
+      : none;
 
   return isSome(error) ? raiseError<T>(error) : state ?? defaultValue;
 };
