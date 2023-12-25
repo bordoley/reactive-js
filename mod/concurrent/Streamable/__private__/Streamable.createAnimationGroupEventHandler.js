@@ -12,7 +12,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as Observable from "../../Observable.js";
 import DelegatingStreamMixin from "../../__mixins__/DelegatingStreamMixin.js";
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
-export const Streamable_createAnimationGroupEventHandlerStream = 
+const Streamable_createAnimationGroupEventHandlerStream = 
 /*@__PURE__*/ (() => {
     const AnimationEventHandlerStream_delegate = Symbol("AnimationEventHandlerStream_delegate");
     return createInstanceFactory(mix(include(DelegatingStreamMixin()), function AnimationEventHandlerStream(instance, animationGroup, creationOptions, scheduler, streamOptions) {

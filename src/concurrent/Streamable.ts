@@ -1,4 +1,8 @@
-import { AssociativeLike, ReadonlyObjectMapLike } from "../collections.js";
+import {
+  AssociativeLike,
+  DictionaryLike,
+  ReadonlyObjectMapLike,
+} from "../collections.js";
 import {
   DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
@@ -7,6 +11,7 @@ import {
   StreamLike,
   StreamableLike,
 } from "../concurrent.js";
+import { EventSourceLike } from "../events.js";
 import {
   Equality,
   Factory,
@@ -17,9 +22,7 @@ import {
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
 import { Animation } from "./Observable.js";
 import Streamable_create from "./Streamable/__private__/Streamable.create.js";
-import Streamable_createAnimationGroupEventHandler, {
-  Streamable_createAnimationGroupEventHandlerStream,
-} from "./Streamable/__private__/Streamable.createAnimationGroupEventHandler.js";
+import Streamable_createAnimationGroupEventHandler from "./Streamable/__private__/Streamable.createAnimationGroupEventHandler.js";
 import Streamable_createEventHandler from "./Streamable/__private__/Streamable.createEventHandler.js";
 import Streamable_createInMemoryCache from "./Streamable/__private__/Streamable.createInMemoryCache.js";
 import Streamable_createPersistentCache from "./Streamable/__private__/Streamable.createPersistentCache.js";
@@ -48,9 +51,7 @@ export interface StreamableModule {
   ): StreamableLike<
     TEvent,
     boolean,
-    ReturnType<
-      typeof Streamable_createAnimationGroupEventHandlerStream<TEvent, TKey, T>
-    >
+    StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
   >;
   createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(
     animationGroup: ReadonlyObjectMapLike<
@@ -61,9 +62,7 @@ export interface StreamableModule {
   ): StreamableLike<
     TEvent,
     boolean,
-    ReturnType<
-      typeof Streamable_createAnimationGroupEventHandlerStream<TEvent, TKey, T>
-    >
+    StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
   >;
   createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(
     animationGroup: ReadonlyObjectMapLike<
@@ -79,9 +78,7 @@ export interface StreamableModule {
   ): StreamableLike<
     TEvent,
     boolean,
-    ReturnType<
-      typeof Streamable_createAnimationGroupEventHandlerStream<TEvent, TKey, T>
-    >
+    StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
   >;
 
   createAnimationGroupEventHandler<TKey extends string | symbol, T>(
@@ -93,9 +90,7 @@ export interface StreamableModule {
   ): StreamableLike<
     void,
     boolean,
-    ReturnType<
-      typeof Streamable_createAnimationGroupEventHandlerStream<void, TKey, T>
-    >
+    StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
   >;
   createAnimationGroupEventHandler<TKey extends string | symbol, T>(
     animationGroup: ReadonlyObjectMapLike<
@@ -106,9 +101,7 @@ export interface StreamableModule {
   ): StreamableLike<
     void,
     boolean,
-    ReturnType<
-      typeof Streamable_createAnimationGroupEventHandlerStream<void, TKey, T>
-    >
+    StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
   >;
   createAnimationGroupEventHandler<TKey extends string | symbol, T>(
     animationGroup: ReadonlyObjectMapLike<
@@ -124,9 +117,7 @@ export interface StreamableModule {
   ): StreamableLike<
     void,
     boolean,
-    ReturnType<
-      typeof Streamable_createAnimationGroupEventHandlerStream<void, TKey, T>
-    >
+    StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
   >;
 
   createEventHandler<TEventType>(

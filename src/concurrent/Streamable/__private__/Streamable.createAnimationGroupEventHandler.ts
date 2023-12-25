@@ -21,7 +21,6 @@ import {
   RunnableWithSideEffectsLike,
   SchedulerLike,
   StreamLike,
-  StreamOf,
   StreamableLike,
   StreamableLike_stream,
 } from "../../../concurrent.js";
@@ -52,17 +51,7 @@ import type * as Streamable from "../../Streamable.js";
 import DelegatingStreamMixin from "../../__mixins__/DelegatingStreamMixin.js";
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
 
-export type AnimationGroupEventHandlerLike<
-  TEvent,
-  TKey extends string | number | symbol,
-  T,
-> = StreamableLike<
-  TEvent,
-  boolean,
-  StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
->;
-
-export const Streamable_createAnimationGroupEventHandlerStream: <
+const Streamable_createAnimationGroupEventHandlerStream: <
   TEvent,
   TKey extends string | symbol,
   T,
@@ -85,7 +74,7 @@ export const Streamable_createAnimationGroupEventHandlerStream: <
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   }>,
-) => StreamOf<AnimationGroupEventHandlerLike<TEvent, TKey, T>> =
+) => StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>> =
   /*@__PURE__*/ (<TEvent, TKey extends string | symbol, T>() => {
     const AnimationEventHandlerStream_delegate = Symbol(
       "AnimationEventHandlerStream_delegate",
@@ -128,7 +117,8 @@ export const Streamable_createAnimationGroupEventHandlerStream: <
             readonly capacity?: number;
             readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
           }>,
-        ): StreamOf<AnimationGroupEventHandlerLike<TEvent, TKey, T>> {
+        ): StreamLike<TEvent, boolean> &
+          DictionaryLike<TKey, EventSourceLike<T>> {
           const streamDelegate = Streamable_createEventHandler(
             (event: TEvent) => {
               const observables: ReadonlyObjectMapLike<
@@ -249,7 +239,11 @@ const Streamable_createAnimationGroupEventHandler: Streamable.Signature["createA
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): AnimationGroupEventHandlerLike<TEvent, TKey, T> => ({
+  ): StreamableLike<
+    TEvent,
+    boolean,
+    StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
+  > => ({
     [StreamableLike_stream]: (scheduler, options) =>
       Streamable_createAnimationGroupEventHandlerStream(
         animationGroup,

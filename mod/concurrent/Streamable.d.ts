@@ -1,9 +1,9 @@
-import { AssociativeLike, ReadonlyObjectMapLike } from "../collections.js";
+import { AssociativeLike, DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
 import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, ObservableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
+import { EventSourceLike } from "../events.js";
 import { Equality, Factory, Function1, Optional, Updater } from "../functions.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
 import { Animation } from "./Observable.js";
-import { Streamable_createAnimationGroupEventHandlerStream } from "./Streamable/__private__/Streamable.createAnimationGroupEventHandler.js";
 /**
  * @noInheritDoc
  */
@@ -14,31 +14,31 @@ export interface StreamableModule {
     createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
         readonly mode: "switching";
         readonly scheduler?: SchedulerLike;
-    }): StreamableLike<TEvent, boolean, ReturnType<typeof Streamable_createAnimationGroupEventHandlerStream<TEvent, TKey, T>>>;
+    }): StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
     createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
         readonly mode: "blocking";
         readonly scheduler?: SchedulerLike;
-    }): StreamableLike<TEvent, boolean, ReturnType<typeof Streamable_createAnimationGroupEventHandlerStream<TEvent, TKey, T>>>;
+    }): StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
     createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
         readonly mode: "queueing";
         readonly scheduler?: SchedulerLike;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
-    }): StreamableLike<TEvent, boolean, ReturnType<typeof Streamable_createAnimationGroupEventHandlerStream<TEvent, TKey, T>>>;
+    }): StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
     createAnimationGroupEventHandler<TKey extends string | symbol, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
         readonly mode: "switching";
         readonly scheduler?: SchedulerLike;
-    }): StreamableLike<void, boolean, ReturnType<typeof Streamable_createAnimationGroupEventHandlerStream<void, TKey, T>>>;
+    }): StreamableLike<void, boolean, StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
     createAnimationGroupEventHandler<TKey extends string | symbol, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
         readonly mode: "blocking";
         readonly scheduler?: SchedulerLike;
-    }): StreamableLike<void, boolean, ReturnType<typeof Streamable_createAnimationGroupEventHandlerStream<void, TKey, T>>>;
+    }): StreamableLike<void, boolean, StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
     createAnimationGroupEventHandler<TKey extends string | symbol, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
         readonly mode: "queueing";
         readonly scheduler?: SchedulerLike;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
-    }): StreamableLike<void, boolean, ReturnType<typeof Streamable_createAnimationGroupEventHandlerStream<void, TKey, T>>>;
+    }): StreamableLike<void, boolean, StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
     createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>, options: {
         readonly mode: "switching";
     }): StreamableLike<TEventType, boolean>;

@@ -222,10 +222,7 @@ const createCacheStream: <T>(
                                 ),
                             ),
                           )
-                        : (pipe(
-                            next,
-                            Observable.fromValue(),
-                          ) as DeferredObservableLike);
+                        : pipe(next, Observable.fromValue());
                     },
                     {
                       innerType:
