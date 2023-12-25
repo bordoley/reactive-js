@@ -145,8 +145,6 @@ export interface ObservableModule {
     computeDeferred<T>(computation: Factory<T>, options?: {
         readonly mode?: "batched" | "combine-latest";
     }): DeferredObservableWithSideEffectsLike<T>;
-    /**
-     */
     computeRunnable<T>(computation: Factory<T>, options?: {
         readonly mode?: "batched" | "combine-latest";
     }): RunnableWithSideEffectsLike<T>;
@@ -206,7 +204,7 @@ export interface ObservableModule {
         readonly fatal?: boolean;
         readonly ignoreBOM?: boolean;
     }): PureObservableOperator<ArrayBuffer, string>;
-    defer<T>(f: Factory<MulticastObservableLike<T>>): DeferredObservableWithSideEffectsLike<T>;
+    defer<T>(f: Factory<MulticastObservableLike<T>>): PureDeferredObservableLike<T>;
     dispatchTo<T>(dispatcher: DispatcherLike<T>): ObservableOperatorWithSideEffects<T, T>;
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;

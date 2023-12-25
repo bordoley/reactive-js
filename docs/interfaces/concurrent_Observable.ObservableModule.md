@@ -1901,7 +1901,7 @@ ___
 
 ### defer
 
-▸ **defer**<`T`\>(`f`): [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>
+▸ **defer**<`T`\>(`f`): [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -1917,7 +1917,7 @@ ___
 
 #### Returns
 
-[`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>
+[`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\>
 
 ___
 

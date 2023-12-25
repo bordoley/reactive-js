@@ -697,8 +697,6 @@ export interface ObservableModule {
     },
   ): DeferredObservableWithSideEffectsLike<T>;
 
-  /**
-   */
   computeRunnable<T>(
     computation: Factory<T>,
     options?: {
@@ -843,7 +841,7 @@ export interface ObservableModule {
 
   defer<T>(
     f: Factory<MulticastObservableLike<T>>,
-  ): DeferredObservableWithSideEffectsLike<T>;
+  ): PureDeferredObservableLike<T>;
 
   dispatchTo<T>(
     dispatcher: DispatcherLike<T>,

@@ -1184,7 +1184,7 @@ testModule(
         ),
       ),
     ),
-    testIsDeferredObservableWithSideEffects(Observable.defer(Subject.create)),
+    testIsPureDeferredObservable(Observable.defer(Subject.create)),
   ),
   describe(
     "dispatchTo",
