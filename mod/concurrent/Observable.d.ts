@@ -276,10 +276,6 @@ export interface ObservableModule {
         readonly delay: number;
     }): Function1<T, PureRunnableLike<T>>;
     ignoreElements<T>(): PureObservableOperator<unknown, T>;
-    isDeferred<T = unknown>(obs: ObservableLike<T>): obs is DeferredObservableLike<T>;
-    isPure<T = unknown>(obs: ObservableLike<T>): obs is PureObservableLike<T>;
-    isReplayObservable<T = unknown>(o: ObservableLike<T>): o is ReplayObservableLike<T>;
-    isRunnable<T = unknown>(obs: ObservableLike<T>): obs is RunnableLike<T>;
     keep<T>(predicate: Predicate<T>): PureObservableOperator<T, T>;
     lastAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
@@ -558,10 +554,6 @@ export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const fromStore: Signature["fromStore"];
 export declare const fromValue: Signature["fromValue"];
 export declare const ignoreElements: Signature["ignoreElements"];
-export declare const isDeferred: Signature["isDeferred"];
-export declare const isPure: Signature["isPure"];
-export declare const isReplayObservable: Signature["isReplayObservable"];
-export declare const isRunnable: Signature["isRunnable"];
 export declare const keep: Signature["keep"];
 export declare const lastAsync: Signature["lastAsync"];
 export declare const log: Signature["log"];

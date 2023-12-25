@@ -24,6 +24,7 @@ import {
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
+  ReplayObservableLike,
   ReplayObservableLike_buffer,
   StreamOf,
   StreamableLike,
@@ -353,9 +354,8 @@ export const useObserve: Signature["useObserve"] = <T>(
   );
 
   const buffer =
-    isSome(observable) && Observable.isReplayObservable<T>(observable)
-      ? observable[ReplayObservableLike_buffer]
-      : Indexed.empty<T>();
+    (observable as ReplayObservableLike<T>)[ReplayObservableLike_buffer] ??
+    Indexed.empty<T>();
   const defaultValue =
     buffer[CollectionLike_count] > 0 ? buffer[KeyedLike_get](0) : none;
 

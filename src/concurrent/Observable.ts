@@ -90,10 +90,6 @@ import Observable_fromReadonlyArray from "./Observable/__private__/Observable.fr
 import Observable_fromStore from "./Observable/__private__/Observable.fromStore.js";
 import Observable_fromValue from "./Observable/__private__/Observable.fromValue.js";
 import Observable_ignoreElements from "./Observable/__private__/Observable.ignoreElements.js";
-import Observable_isDeferred from "./Observable/__private__/Observable.isDeferred.js";
-import Observable_isPure from "./Observable/__private__/Observable.isPure.js";
-import Observable_isReplayObservable from "./Observable/__private__/Observable.isReplayObservable.js";
-import Observable_isRunnable from "./Observable/__private__/Observable.isRunnable.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
 import Observable_lastAsync from "./Observable/__private__/Observable.lastAsync.js";
 import Observable_log from "./Observable/__private__/Observable.log.js";
@@ -992,18 +988,6 @@ export interface ObservableModule {
 
   ignoreElements<T>(): PureObservableOperator<unknown, T>;
 
-  isDeferred<T = unknown>(
-    obs: ObservableLike<T>,
-  ): obs is DeferredObservableLike<T>;
-
-  isPure<T = unknown>(obs: ObservableLike<T>): obs is PureObservableLike<T>;
-
-  isReplayObservable<T = unknown>(
-    o: ObservableLike<T>,
-  ): o is ReplayObservableLike<T>;
-
-  isRunnable<T = unknown>(obs: ObservableLike<T>): obs is RunnableLike<T>;
-
   keep<T>(predicate: Predicate<T>): PureObservableOperator<T, T>;
 
   lastAsync<T>(
@@ -1769,11 +1753,6 @@ export const fromStore: Signature["fromStore"] = Observable_fromStore;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;
 export const ignoreElements: Signature["ignoreElements"] =
   Observable_ignoreElements;
-export const isDeferred: Signature["isDeferred"] = Observable_isDeferred;
-export const isPure: Signature["isPure"] = Observable_isPure;
-export const isReplayObservable: Signature["isReplayObservable"] =
-  Observable_isReplayObservable;
-export const isRunnable: Signature["isRunnable"] = Observable_isRunnable;
 export const keep: Signature["keep"] = Observable_keep;
 export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
 export const log: Signature["log"] = Observable_log;
