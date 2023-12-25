@@ -468,6 +468,12 @@ const AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests = (
 
 testModule(
   "Observable",
+  describe(
+    "effects",
+    test("calling an effect from outside a computation expression throws", () => {
+      expectToThrow(() => __constant(0));
+    }),
+  ),
   PureComputationModuleTests(
     Observable as PureComputationModule<Observable.PureRunnableComputation>,
     Observable.toReadonlyArray,
@@ -818,28 +824,31 @@ testModule(
     test(
       "conditional hooks",
       pipeLazy(
-        Observable.computeRunnable(() => {
-          const src = __constant(
-            pipe(
-              [0, 1, 2, 3, 4, 5],
-              Observable.fromReadonlyArray({ delay: 5 }),
-            ),
-          );
-          const src2 = __constant(
-            pipe(
-              Enumerable.generate(increment, returns(100)),
-              Observable.fromEnumerable({ delay: 2 }),
-            ),
-          );
+        Observable.computeRunnable(
+          () => {
+            const src = __constant(
+              pipe(
+                [0, 1, 2, 3, 4, 5],
+                Observable.fromReadonlyArray({ delay: 5 }),
+              ),
+            );
+            const src2 = __constant(
+              pipe(
+                Enumerable.generate(increment, returns(100)),
+                Observable.fromEnumerable({ delay: 2 }),
+              ),
+            );
 
-          const v = __await(src);
+            const v = __await(src);
 
-          if (v % 2 === 0) {
-            __memo(increment, 1);
-            return __await(src2);
-          }
-          return v;
-        }),
+            if (v % 2 === 0) {
+              __memo(increment, 1);
+              return __await(src2);
+            }
+            return v;
+          },
+          { mode: "batched" },
+        ),
         Observable.toReadonlyArray(),
         expectArrayEquals([
           101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,

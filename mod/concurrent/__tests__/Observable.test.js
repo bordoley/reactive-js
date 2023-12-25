@@ -68,7 +68,9 @@ const PureMulticastingObservableOperatorTests = (op) => describe("PureMulticasti
 const AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests = (op) => describe("AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests", test("with PureRunnableLike", pipeLazy(Observable.empty(), op, expectIsDeferredObservableWithSideEffects)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty(), Observable.forEach(ignore), op, expectIsDeferredObservableWithSideEffects)), test("with PureDeferredObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.subscribeOn(vts), op, expectIsDeferredObservableWithSideEffects))), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory(), op, expectIsDeferredObservableWithSideEffects)), test("with MulticastObservableLike", pipeLazy(new Promise(ignore), Observable.fromPromise(), op, expectIsDeferredObservableWithSideEffects)));
-testModule("Observable", PureComputationModuleTests(Observable, Observable.toReadonlyArray), describe("animate", testIsPureRunnable(Observable.animate([
+testModule("Observable", describe("effects", test("calling an effect from outside a computation expression throws", () => {
+    expectToThrow(() => __constant(0));
+})), PureComputationModuleTests(Observable, Observable.toReadonlyArray), describe("animate", testIsPureRunnable(Observable.animate([
     { type: "keyframe", duration: 500, from: 0, to: 1 },
     { type: "delay", duration: 250 },
     { type: "frame", value: 1 },
@@ -181,7 +183,7 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
         return __await(src2);
     }
     return v;
-}), Observable.toReadonlyArray(), expectArrayEquals([
+}, { mode: "batched" }), Observable.toReadonlyArray(), expectArrayEquals([
     101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
 ]))), test("conditional await", pipeLazy(Observable.computeRunnable(() => {
     const src = __constant(pipe([0, 1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 5 })));
