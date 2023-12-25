@@ -480,6 +480,28 @@ testModule(
   ),
   describe(
     "animate",
+    test(
+      "keyframing from 0 to 10 over a during of 10",
+      Disposable.usingLazy(() =>
+        VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }),
+      )(vts => {
+        const result: number[] = [];
+        pipe(
+          Observable.animate({
+            type: "keyframe",
+            duration: 10,
+            from: 0,
+            to: 10,
+          }),
+          Observable.forEach(bind(result.push, result)),
+          Observable.subscribe(vts),
+        );
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        pipe(result, expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
+      }),
+    ),
     testIsPureRunnable(
       Observable.animate<number>([
         { type: "keyframe", duration: 500, from: 0, to: 1 },
@@ -850,9 +872,7 @@ testModule(
           { mode: "batched" },
         ),
         Observable.toReadonlyArray(),
-        expectArrayEquals([
-          101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
-        ]),
+        expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]),
       ),
     ),
     test(
@@ -888,9 +908,7 @@ testModule(
         }),
         Observable.distinctUntilChanged<number>(),
         Observable.toReadonlyArray(),
-        expectArrayEquals([
-          101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
-        ]),
+        expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]),
       ),
     ),
     testIsRunnableWithSideEffects(Observable.computeRunnable(() => {})),
@@ -1510,7 +1528,7 @@ testModule(
 
       scheduler[VirtualTimeSchedulerLike_run]();
 
-      pipe(f, expectToHaveBeenCalledTimes(3));
+      pipe(f, expectToHaveBeenCalledTimes(2));
       pipe(
         f.calls as [][],
         expectArrayEquals(
