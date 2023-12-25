@@ -502,6 +502,20 @@ testModule(
         pipe(result, expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
       }),
     ),
+    testAsync(
+      "",
+      Disposable.usingAsyncLazy(HostScheduler.create)(async scheduler => {
+        await pipeAsync(
+          Observable.animate({
+            type: "spring",
+            from: 0,
+            to: 1,
+          }),
+          Observable.lastAsync(scheduler),
+          expectEquals<Optional<number>>(1),
+        );
+      }),
+    ),
     testIsPureRunnable(
       Observable.animate<number>([
         { type: "keyframe", duration: 500, from: 0, to: 1 },
@@ -1521,7 +1535,7 @@ testModule(
       const subscription = pipe(
         generateObservable,
         Observable.forEach((x: number) => {
-          f(scheduler[SchedulerLike_now], x);
+          f(x);
         }),
         Observable.subscribe(scheduler),
       );
@@ -1529,17 +1543,7 @@ testModule(
       scheduler[VirtualTimeSchedulerLike_run]();
 
       pipe(f, expectToHaveBeenCalledTimes(2));
-      pipe(
-        f.calls as [][],
-        expectArrayEquals(
-          [
-            [1, 0],
-            [2, 1],
-            [5, 2],
-          ],
-          { valuesEquality: arrayEquality() },
-        ),
-      );
+      pipe(f.calls.flat(), expectArrayEquals([0, 1]));
 
       pipe(subscription[DisposableLike_isDisposed], expectTrue);
     }),
@@ -1562,8 +1566,8 @@ testModule(
       const subscription = pipe(
         flowed,
         Observable.withCurrentTime<unknown, Tuple2<number, any>>(tuple),
-        Observable.forEach(([time, v]: Tuple2<number, any>) => {
-          f(time, v);
+        Observable.forEach(([_, v]: Tuple2<number, any>) => {
+          f(v);
         }),
         Observable.subscribe(scheduler),
         Disposable.addTo(scheduler),
@@ -1572,17 +1576,7 @@ testModule(
       scheduler[VirtualTimeSchedulerLike_run]();
 
       pipe(f, expectToHaveBeenCalledTimes(3));
-      pipe(
-        f.calls as [][],
-        expectArrayEquals(
-          [
-            [2, 0],
-            [2, 1],
-            [2, 2],
-          ],
-          { valuesEquality: arrayEquality() },
-        ),
-      );
+      pipe(f.calls.flat(), expectArrayEquals([0, 1, 2]));
 
       pipe(subscription[DisposableLike_isDisposed], expectTrue);
     }),

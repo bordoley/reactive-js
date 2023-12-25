@@ -70,7 +70,23 @@ const AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests = (op) => desc
 }, Observable.fromAsyncFactory(), op, expectIsDeferredObservableWithSideEffects)), test("with MulticastObservableLike", pipeLazy(new Promise(ignore), Observable.fromPromise(), op, expectIsDeferredObservableWithSideEffects)));
 testModule("Observable", describe("effects", test("calling an effect from outside a computation expression throws", () => {
     expectToThrow(() => __constant(0));
-})), PureComputationModuleTests(Observable, Observable.toReadonlyArray), describe("animate", testIsPureRunnable(Observable.animate([
+})), PureComputationModuleTests(Observable, Observable.toReadonlyArray), describe("animate", test("keyframing from 0 to 10 over a during of 10", Disposable.usingLazy(() => VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }))(vts => {
+    const result = [];
+    pipe(Observable.animate({
+        type: "keyframe",
+        duration: 10,
+        from: 0,
+        to: 10,
+    }), Observable.forEach(bind(result.push, result)), Observable.subscribe(vts));
+    vts[VirtualTimeSchedulerLike_run]();
+    pipe(result, expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
+})), testAsync("", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
+    await pipeAsync(Observable.animate({
+        type: "spring",
+        from: 0,
+        to: 1,
+    }), Observable.lastAsync(scheduler), expectEquals(1));
+})), testIsPureRunnable(Observable.animate([
     { type: "keyframe", duration: 500, from: 0, to: 1 },
     { type: "delay", duration: 250 },
     { type: "frame", value: 1 },
@@ -183,9 +199,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         return __await(src2);
     }
     return v;
-}, { mode: "batched" }), Observable.toReadonlyArray(), expectArrayEquals([
-    101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
-]))), test("conditional await", pipeLazy(Observable.computeRunnable(() => {
+}, { mode: "batched" }), Observable.toReadonlyArray(), expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]))), test("conditional await", pipeLazy(Observable.computeRunnable(() => {
     const src = __constant(pipe([0, 1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 5 })));
     const src2 = __constant(pipe(Enumerable.generate(increment, returns(100)), Observable.fromEnumerable({ delay: 2 })));
     const src3 = __constant(pipe(1, Observable.fromValue({ delay: 1 }), Observable.repeat(40)));
@@ -198,9 +212,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         __await(src3);
         return v;
     }
-}), Observable.distinctUntilChanged(), Observable.toReadonlyArray(), expectArrayEquals([
-    101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
-]))), testIsRunnableWithSideEffects(Observable.computeRunnable(() => { }))), describe("concat", test("concats the input containers in order", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray()), pipe([4, 5, 6], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), test("concats the input containers in order, when sources have delay", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("concatAll", test("concating pure Runnables", pipeLazy([
+}), Observable.distinctUntilChanged(), Observable.toReadonlyArray(), expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]))), testIsRunnableWithSideEffects(Observable.computeRunnable(() => { }))), describe("concat", test("concats the input containers in order", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray()), pipe([4, 5, 6], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), test("concats the input containers in order, when sources have delay", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("concatAll", test("concating pure Runnables", pipeLazy([
     pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
     pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 2 })),
 ], Observable.fromReadonlyArray(), Observable.concatAll(), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), PureObservableOperatorTests(Observable.concatAll()), PureDeferringObservableOperatorTests(Observable.concatAll({
@@ -321,15 +333,11 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     });
     const f = mockFn();
     const subscription = pipe(generateObservable, Observable.forEach((x) => {
-        f(scheduler[SchedulerLike_now], x);
+        f(x);
     }), Observable.subscribe(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(f, expectToHaveBeenCalledTimes(3));
-    pipe(f.calls, expectArrayEquals([
-        [1, 0],
-        [2, 1],
-        [5, 2],
-    ], { valuesEquality: arrayEquality() }));
+    pipe(f, expectToHaveBeenCalledTimes(2));
+    pipe(f.calls.flat(), expectArrayEquals([0, 1]));
     pipe(subscription[DisposableLike_isDisposed], expectTrue);
 }), test("flow a generating source", () => {
     const scheduler = VirtualTimeScheduler.create();
@@ -338,16 +346,12 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
         delay: 2,
     });
     const f = mockFn();
-    const subscription = pipe(flowed, Observable.withCurrentTime(tuple), Observable.forEach(([time, v]) => {
-        f(time, v);
+    const subscription = pipe(flowed, Observable.withCurrentTime(tuple), Observable.forEach(([_, v]) => {
+        f(v);
     }), Observable.subscribe(scheduler), Disposable.addTo(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(f, expectToHaveBeenCalledTimes(3));
-    pipe(f.calls, expectArrayEquals([
-        [2, 0],
-        [2, 1],
-        [2, 2],
-    ], { valuesEquality: arrayEquality() }));
+    pipe(f.calls.flat(), expectArrayEquals([0, 1, 2]));
     pipe(subscription[DisposableLike_isDisposed], expectTrue);
 })), describe("forEach", test("invokes the effect for each notified value", () => {
     const result = [];

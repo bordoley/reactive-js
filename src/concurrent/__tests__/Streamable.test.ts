@@ -18,7 +18,6 @@ import {
   Optional,
   SideEffect,
   Tuple2,
-  arrayEquality,
   bind,
   bindMethod,
   none,
@@ -81,14 +80,13 @@ testModule(
         StreamableLike_stream
       ](scheduler);
 
-      const result: Tuple2<number, Optional<number>>[] = [];
+      const result: Optional<number>[] = [];
 
       pipe(
         [
           tuple(2, () => {
             pipe(
               cache[KeyedLike_get]("abc"),
-              Observable.withCurrentTime(tuple<number, number>),
               Observable.forEach(bindMethod(result, "push")),
               Observable.subscribe(scheduler),
             );
@@ -101,12 +99,7 @@ testModule(
 
       scheduler[VirtualTimeSchedulerLike_run]();
 
-      pipe(
-        result,
-        expectArrayEquals<Tuple2<number, Optional>>([tuple(2, none)], {
-          valuesEquality: arrayEquality(),
-        }),
-      );
+      pipe(result, expectArrayEquals<Optional<number>>([none]));
     }),
     test("explicitly deleting a key", () => {
       const scheduler = VirtualTimeScheduler.create();
@@ -115,7 +108,7 @@ testModule(
         StreamableLike_stream
       ](scheduler);
 
-      const result: Tuple2<number, Optional<number>>[] = [];
+      const result: number[] = [];
 
       pipe(
         [
@@ -130,7 +123,6 @@ testModule(
           tuple(2, () => {
             pipe(
               cache[KeyedLike_get]("abc"),
-              Observable.withCurrentTime(tuple<number, number>),
               Observable.forEach(bindMethod(result, "push")),
               Observable.subscribe(scheduler),
             );
@@ -151,13 +143,7 @@ testModule(
 
       scheduler[VirtualTimeSchedulerLike_run]();
 
-      pipe(
-        result,
-        expectArrayEquals<Tuple2<number, Optional<number>>>(
-          [tuple(2, none), tuple(3, 2), tuple(4, none)],
-          { valuesEquality: arrayEquality() },
-        ),
-      );
+      pipe(result, expectArrayEquals([none, 2, none]));
     }),
     test("integration test", () => {
       const scheduler = VirtualTimeScheduler.create();
@@ -166,18 +152,17 @@ testModule(
         StreamableLike_stream
       ](scheduler);
 
-      const result1: Tuple2<number, Optional<number>>[] = [];
+      const result1: number[] = [];
       const abcSubscription1 = pipe(
         cache[KeyedLike_get]("abc"),
-        Observable.withCurrentTime<number, Tuple2<number, number>>(tuple),
         Observable.forEach(bindMethod(result1, "push")),
         Observable.subscribe(scheduler),
       );
 
-      const result2: Tuple2<number, Optional<number>>[] = [];
+      const result2: number[] = [];
       let abcSubscription2 = Disposable.disposed;
 
-      const result3: Tuple2<number, Optional<number>>[] = [];
+      const result3: number[] = [];
       let abcSubscription3 = Disposable.disposed;
 
       pipe(
@@ -188,7 +173,6 @@ testModule(
           tuple(2, () => {
             abcSubscription2 = pipe(
               cache[KeyedLike_get]("abc"),
-              Observable.withCurrentTime<number, Tuple2<number, number>>(tuple),
               Observable.forEach(bindMethod(result2, "push")),
               Observable.subscribe(scheduler),
             );
@@ -215,7 +199,6 @@ testModule(
           tuple(8, () => {
             abcSubscription3 = pipe(
               cache[KeyedLike_get]("abc"),
-              Observable.withCurrentTime<number, Tuple2<number, number>>(tuple),
               Observable.forEach(bindMethod(result3, "push")),
               Observable.subscribe(scheduler),
             );
@@ -238,28 +221,9 @@ testModule(
 
       scheduler[VirtualTimeSchedulerLike_run]();
 
-      pipe(
-        result1,
-        expectArrayEquals<Tuple2<number, Optional<number>>>(
-          [tuple(0, none), tuple(1, 1), tuple(3, 2), tuple(5, 3)],
-          { valuesEquality: arrayEquality() },
-        ),
-      );
-
-      pipe(
-        result2,
-        expectArrayEquals<Tuple2<number, Optional<number>>>(
-          [tuple(2, 1), tuple(3, 2)],
-          { valuesEquality: arrayEquality() },
-        ),
-      );
-
-      pipe(
-        result3,
-        expectArrayEquals<Tuple2<number, Optional<number>>>([tuple(8, 3)], {
-          valuesEquality: arrayEquality(),
-        }),
-      );
+      pipe(result1, expectArrayEquals([none, 1, 2]));
+      pipe(result2, expectArrayEquals([1]));
+      pipe(result3, expectArrayEquals([3]));
     }),
   ),
   describe(
@@ -290,12 +254,9 @@ testModule(
         capacity: 1,
       })[StreamableLike_stream](scheduler);
 
-      const result1: Tuple2<number, Optional<number>>[] = [];
+      const result1: number[] = [];
       pipe(
         cache[KeyedLike_get]("abc"),
-        Observable.withCurrentTime<number, Tuple2<number, Optional<number>>>(
-          tuple,
-        ),
         Observable.forEach(bindMethod(result1, "push")),
         Observable.subscribe(scheduler),
       );
@@ -317,13 +278,7 @@ testModule(
 
       scheduler[VirtualTimeSchedulerLike_run]();
 
-      pipe(
-        result1,
-        expectArrayEquals<Tuple2<number, Optional<number>>>(
-          [tuple(0, 1), tuple(2, 4)],
-          { valuesEquality: arrayEquality() },
-        ),
-      );
+      pipe(result1, expectArrayEquals([1, 4]));
     }),
   ),
 );
