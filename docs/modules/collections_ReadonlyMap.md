@@ -12,7 +12,6 @@
 
 - [Signature](collections_ReadonlyMap.md#signature)
 - [TKeyBase](collections_ReadonlyMap.md#tkeybase)
-- [Type](collections_ReadonlyMap.md#type)
 
 ### Functions
 
@@ -34,25 +33,13 @@
 
 ### Signature
 
-Ƭ **Signature**: [`DictionaryCollectionModule`](../interfaces/collections.DictionaryCollectionModule.md)<[`Type`](collections_ReadonlyMap.md#type)\>
+Ƭ **Signature**: [`DictionaryCollectionModule`](../interfaces/collections.DictionaryCollectionModule.md)<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)\>
 
 ___
 
 ### TKeyBase
 
-Ƭ **TKeyBase**: [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyMap.md#type)\>
-
-___
-
-### Type
-
-Ƭ **Type**<`TKey`\>: [`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)<`TKey`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | `unknown` |
+Ƭ **TKeyBase**: [`KeyOf`](collections.md#keyof)<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)\>
 
 ## Functions
 
@@ -134,7 +121,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_ReadonlyMap.md#type)<`unknown`\>, `T`, `T`, `TKey`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)<`unknown`\>, `T`, `T`, `TKey`\>
 
 #### Type parameters
 
@@ -151,7 +138,7 @@ ___
 
 #### Returns
 
-[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_ReadonlyMap.md#type)<`unknown`\>, `T`, `T`, `TKey`\>
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)<`unknown`\>, `T`, `T`, `TKey`\>
 
 ___
 
@@ -189,7 +176,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_ReadonlyMap.md#type)<`unknown`\>, `TA`, `TB`, `TKey`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)<`unknown`\>, `TA`, `TB`, `TKey`\>
 
 Returns a KeyedCollectionOperator that applies the `selector` function to each
 value emitted by the source.
@@ -218,7 +205,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_ReadonlyMap.md#type)<`unknown`\>, `TA`, `TB`, `TKey`\>
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)<`unknown`\>, `TA`, `TB`, `TKey`\>
 
 ___
 

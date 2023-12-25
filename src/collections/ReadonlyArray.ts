@@ -28,11 +28,9 @@ export interface ReadonlyArrayCollection extends KeyedCollection<number> {
   >;
 }
 
-export type Type = ReadonlyArrayCollection;
+export type TKeyBase = KeyOf<ReadonlyArrayCollection>;
 
-export type TKeyBase = KeyOf<Type>;
-
-export type Signature = IndexedCollectionModule<Type>;
+export type Signature = IndexedCollectionModule<ReadonlyArrayCollection>;
 
 export const empty: Signature["empty"] = ReadonlyArray_empty;
 export const entries: Signature["entries"] = ReadonlyArray_entries;

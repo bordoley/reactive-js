@@ -6,9 +6,8 @@ export interface ReadonlyObjectMapCollection<TKey extends symbol | string = symb
     readonly [KeyedCollection_type]?: ReadonlyObjectMapLike<NonNullable<this[typeof KeyedCollection_TKey]>, this[typeof KeyedCollection_T]>;
     readonly [KeyedCollection_TKey]?: TKey;
 }
-export type Type<TKey extends symbol | string = symbol | string> = ReadonlyObjectMapCollection<TKey>;
-export type TKeyBase = KeyOf<Type>;
-export type Signature = DictionaryCollectionModule<Type>;
+export type TKeyBase = KeyOf<ReadonlyObjectMapCollection>;
+export type Signature = DictionaryCollectionModule<ReadonlyObjectMapCollection>;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const forEach: Signature["forEach"];

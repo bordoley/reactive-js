@@ -10,31 +10,31 @@ import type * as ReadonlyArray from "../../ReadonlyArray.js";
 import Indexed_toCollection from "./Indexed.toCollection.js";
 
 const Indexed_toReadonlyArray: Indexed.Signature["toReadonlyArray"] =
-  /*@__PURE__*/ Indexed_toCollection<Indexed.Type, ReadonlyArray.Type>(
-    <T>(values: IndexedLike<T>, startIndex: number, count: number) => {
-      const result = newInstance<Array<T>, number>(Array, abs(count));
-      let resultIndex = 0;
+  /*@__PURE__*/ Indexed_toCollection<
+    Indexed.IndexedCollection,
+    ReadonlyArray.ReadonlyArrayCollection
+  >(<T>(values: IndexedLike<T>, startIndex: number, count: number) => {
+    const result = newInstance<Array<T>, number>(Array, abs(count));
+    let resultIndex = 0;
 
-      let index = startIndex;
-      let cnt = count;
+    let index = startIndex;
+    let cnt = count;
 
-      while (cnt > 0) {
-        result[resultIndex] = values[KeyedLike_get](index);
-        cnt--;
-        index++;
-        resultIndex++;
-      }
+    while (cnt > 0) {
+      result[resultIndex] = values[KeyedLike_get](index);
+      cnt--;
+      index++;
+      resultIndex++;
+    }
 
-      while (cnt < 0) {
-        result[resultIndex] = values[KeyedLike_get](index);
-        cnt++;
-        index--;
-        resultIndex++;
-      }
+    while (cnt < 0) {
+      result[resultIndex] = values[KeyedLike_get](index);
+      cnt++;
+      index--;
+      resultIndex++;
+    }
 
-      return result;
-    },
-    pick(CollectionLike_count),
-  );
+    return result;
+  }, pick(CollectionLike_count));
 
 export default Indexed_toReadonlyArray;

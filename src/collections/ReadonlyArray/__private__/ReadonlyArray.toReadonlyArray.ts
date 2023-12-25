@@ -2,7 +2,10 @@ import Indexed_toCollection from "../../Indexed/__private__/Indexed.toCollection
 import type * as ReadonlyArray from "./../../ReadonlyArray.js";
 
 const ReadonlyArray_toReadonlyArray: ReadonlyArray.Signature["toReadonlyArray"] =
-  /*@__PURE__*/ Indexed_toCollection<ReadonlyArray.Type, ReadonlyArray.Type>(
+  /*@__PURE__*/ Indexed_toCollection<
+    ReadonlyArray.ReadonlyArrayCollection,
+    ReadonlyArray.ReadonlyArrayCollection
+  >(
     <T>(values: readonly T[], startIndex: number, count: number) =>
       startIndex === 0 && count === values.length
         ? values

@@ -35,12 +35,9 @@ export interface ReadonlyObjectMapCollection<
   readonly [KeyedCollection_TKey]?: TKey;
 }
 
-export type Type<TKey extends symbol | string = symbol | string> =
-  ReadonlyObjectMapCollection<TKey>;
+export type TKeyBase = KeyOf<ReadonlyObjectMapCollection>;
 
-export type TKeyBase = KeyOf<Type>;
-
-export type Signature = DictionaryCollectionModule<Type>;
+export type Signature = DictionaryCollectionModule<ReadonlyObjectMapCollection>;
 
 export const empty: Signature["empty"] = ReadonlyObjectMap_empty;
 export const entries: Signature["entries"] = ReadonlyObjectMap_entries;

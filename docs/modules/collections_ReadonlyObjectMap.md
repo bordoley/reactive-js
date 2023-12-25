@@ -12,7 +12,6 @@
 
 - [Signature](collections_ReadonlyObjectMap.md#signature)
 - [TKeyBase](collections_ReadonlyObjectMap.md#tkeybase)
-- [Type](collections_ReadonlyObjectMap.md#type)
 
 ### Functions
 
@@ -34,25 +33,13 @@
 
 ### Signature
 
-Ƭ **Signature**: [`DictionaryCollectionModule`](../interfaces/collections.DictionaryCollectionModule.md)<[`Type`](collections_ReadonlyObjectMap.md#type)\>
+Ƭ **Signature**: [`DictionaryCollectionModule`](../interfaces/collections.DictionaryCollectionModule.md)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)\>
 
 ___
 
 ### TKeyBase
 
-Ƭ **TKeyBase**: [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)\>
-
-___
-
-### Type
-
-Ƭ **Type**<`TKey`\>: [`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`TKey`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `symbol` \| `string` = `symbol` \| `string` |
+Ƭ **TKeyBase**: [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)\>
 
 ## Functions
 
@@ -67,7 +54,7 @@ Return an Collection that emits no items.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> |
 
 #### Returns
 
@@ -84,7 +71,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> |
 
 #### Returns
 
@@ -101,7 +88,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> |
 
 #### Parameters
 
@@ -124,7 +111,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> |
 
 #### Returns
 
@@ -134,14 +121,14 @@ ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>, `T`, `T`, `TKey`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>, `T`, `T`, `TKey`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> |
 
 #### Parameters
 
@@ -151,7 +138,7 @@ ___
 
 #### Returns
 
-[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>, `T`, `T`, `TKey`\>
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>, `T`, `T`, `TKey`\>
 
 ___
 
@@ -163,7 +150,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> |
 
 #### Returns
 
@@ -179,7 +166,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> |
 
 #### Returns
 
@@ -189,7 +176,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>, `TA`, `TB`, `TKey`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>, `TA`, `TB`, `TKey`\>
 
 Returns a KeyedCollectionOperator that applies the `selector` function to each
 value emitted by the source.
@@ -208,7 +195,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> |
 
 #### Parameters
 
@@ -218,7 +205,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>, `TA`, `TB`, `TKey`\>
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>, `TA`, `TB`, `TKey`\>
 
 ___
 
@@ -232,7 +219,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> |
 
 #### Parameters
 
@@ -256,7 +243,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> |
 
 #### Returns
 
@@ -273,7 +260,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> |
 
 #### Returns
 
@@ -313,7 +300,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>\> |
 
 #### Returns
 

@@ -16,7 +16,10 @@ interface EntriesCollection extends KeyedCollection<number> {
 }
 
 const ReadonlyArray_entries: ReadonlyArray.Signature["entries"] =
-  /*@__PURE__*/ Indexed_toCollection<ReadonlyArray.Type, EntriesCollection>(
+  /*@__PURE__*/ Indexed_toCollection<
+    ReadonlyArray.ReadonlyArrayCollection,
+    EntriesCollection
+  >(
     <TKey extends number, T>(
       arr: readonly T[],
       startIndex: number,

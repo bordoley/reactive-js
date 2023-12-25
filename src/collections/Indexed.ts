@@ -27,11 +27,9 @@ export interface IndexedCollection extends KeyedCollection<number> {
   readonly [KeyedCollection_type]?: IndexedLike<this[typeof KeyedCollection_T]>;
 }
 
-export type Type = IndexedCollection;
+export type TKeyBase = KeyOf<IndexedCollection>;
 
-export type TKeyBase = KeyOf<Type>;
-
-export type Signature = IndexedCollectionModuleBase<Type>;
+export type Signature = IndexedCollectionModuleBase<IndexedCollection>;
 
 export const empty: Signature["empty"] = Indexed_empty;
 export const entries: Signature["entries"] = Indexed_entries;

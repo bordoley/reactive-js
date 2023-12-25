@@ -12,7 +12,6 @@
 
 - [Signature](collections_Dictionary.md#signature)
 - [TKeyBase](collections_Dictionary.md#tkeybase)
-- [Type](collections_Dictionary.md#type)
 
 ### Functions
 
@@ -34,25 +33,13 @@
 
 ### Signature
 
-Ƭ **Signature**: [`DictionaryCollectionModule`](../interfaces/collections.DictionaryCollectionModule.md)<[`Type`](collections_Dictionary.md#type)\>
+Ƭ **Signature**: [`DictionaryCollectionModule`](../interfaces/collections.DictionaryCollectionModule.md)<[`DictionaryCollection`](../interfaces/collections_Dictionary.DictionaryCollection.md)\>
 
 ___
 
 ### TKeyBase
 
-Ƭ **TKeyBase**: [`KeyOf`](collections.md#keyof)<[`Type`](collections_Dictionary.md#type)\>
-
-___
-
-### Type
-
-Ƭ **Type**<`TKey`\>: [`DictionaryCollection`](../interfaces/collections_Dictionary.DictionaryCollection.md)<`TKey`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | `unknown` |
+Ƭ **TKeyBase**: [`KeyOf`](collections.md#keyof)<[`DictionaryCollection`](../interfaces/collections_Dictionary.DictionaryCollection.md)\>
 
 ## Functions
 
@@ -134,7 +121,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_Dictionary.md#type)<`unknown`\>, `T`, `T`, `TKey`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`DictionaryCollection`](../interfaces/collections_Dictionary.DictionaryCollection.md)<`unknown`\>, `T`, `T`, `TKey`\>
 
 #### Type parameters
 
@@ -151,7 +138,7 @@ ___
 
 #### Returns
 
-[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_Dictionary.md#type)<`unknown`\>, `T`, `T`, `TKey`\>
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`DictionaryCollection`](../interfaces/collections_Dictionary.DictionaryCollection.md)<`unknown`\>, `T`, `T`, `TKey`\>
 
 ___
 
@@ -189,7 +176,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_Dictionary.md#type)<`unknown`\>, `TA`, `TB`, `TKey`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`DictionaryCollection`](../interfaces/collections_Dictionary.DictionaryCollection.md)<`unknown`\>, `TA`, `TB`, `TKey`\>
 
 Returns a KeyedCollectionOperator that applies the `selector` function to each
 value emitted by the source.
@@ -218,7 +205,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_Dictionary.md#type)<`unknown`\>, `TA`, `TB`, `TKey`\>
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`DictionaryCollection`](../interfaces/collections_Dictionary.DictionaryCollection.md)<`unknown`\>, `TA`, `TB`, `TKey`\>
 
 ___
 

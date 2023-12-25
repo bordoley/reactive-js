@@ -19,6 +19,7 @@ import {
   StreamableLike_stream,
 } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
+import { ObservableComputation } from "../../concurrent/Observable.js";
 import * as Stream from "../../concurrent/Stream.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import DelegatingStreamMixin from "../../concurrent/__mixins__/DelegatingStreamMixin.js";
@@ -228,8 +229,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
         ): void {
           pipe(
             this[WindowLocation_delegate],
-
-            pick<Observable.Type, TState, "uri">(
+            pick<ObservableComputation, TState, "uri">(
               { map: Observable.map },
               "uri",
             ),

@@ -5,9 +5,8 @@ import { IndexedCollectionModule as IndexedCollectionModuleBase, IndexedLike, Ke
 export interface IndexedCollection extends KeyedCollection<number> {
     readonly [KeyedCollection_type]?: IndexedLike<this[typeof KeyedCollection_T]>;
 }
-export type Type = IndexedCollection;
-export type TKeyBase = KeyOf<Type>;
-export type Signature = IndexedCollectionModuleBase<Type>;
+export type TKeyBase = KeyOf<IndexedCollection>;
+export type Signature = IndexedCollectionModuleBase<IndexedCollection>;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const forEach: Signature["forEach"];

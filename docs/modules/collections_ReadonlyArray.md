@@ -12,7 +12,6 @@
 
 - [Signature](collections_ReadonlyArray.md#signature)
 - [TKeyBase](collections_ReadonlyArray.md#tkeybase)
-- [Type](collections_ReadonlyArray.md#type)
 
 ### Functions
 
@@ -34,19 +33,13 @@
 
 ### Signature
 
-Ƭ **Signature**: [`IndexedCollectionModule`](../interfaces/collections.IndexedCollectionModule.md)<[`Type`](collections_ReadonlyArray.md#type)\>
+Ƭ **Signature**: [`IndexedCollectionModule`](../interfaces/collections.IndexedCollectionModule.md)<[`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md)\>
 
 ___
 
 ### TKeyBase
 
-Ƭ **TKeyBase**: [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyArray.md#type)\>
-
-___
-
-### Type
-
-Ƭ **Type**: [`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md)
+Ƭ **TKeyBase**: [`KeyOf`](collections.md#keyof)<[`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md)\>
 
 ## Functions
 

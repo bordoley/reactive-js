@@ -5,7 +5,6 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { PureComputationModule } from "../../computations.js";
 import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
 import {
   arrayEquality,
@@ -15,22 +14,15 @@ import {
   returns,
   tuple,
 } from "../../functions.js";
-
 import * as Enumerable from "../Enumerable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 
 testModule(
   "Enumerable",
-  PureComputationModuleTests(
-    Enumerable as PureComputationModule<Enumerable.Type>,
-    Enumerable.toReadonlyArray,
-  ),
+  PureComputationModuleTests(Enumerable, Enumerable.toReadonlyArray),
   describe(
     "Iterable",
-    PureComputationModuleTests(
-      Enumerable as PureComputationModule<Enumerable.Type>,
-      returns(Array.from),
-    ),
+    PureComputationModuleTests(Enumerable, returns(Array.from)),
   ),
   describe(
     "concat",

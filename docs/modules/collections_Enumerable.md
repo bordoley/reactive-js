@@ -12,7 +12,6 @@
 ### Type Aliases
 
 - [Signature](collections_Enumerable.md#signature)
-- [Type](collections_Enumerable.md#type)
 
 ### Functions
 
@@ -46,12 +45,6 @@
 ### Signature
 
 Ƭ **Signature**: [`EnumerableModule`](../interfaces/collections_Enumerable.EnumerableModule.md)
-
-___
-
-### Type
-
-Ƭ **Type**: [`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md)
 
 ## Functions
 

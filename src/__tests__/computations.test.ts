@@ -26,7 +26,10 @@ testModule(
       pipeLazy(
         ["b", none, "v"],
         ReadonlyArray.values(),
-        keepType<Enumerable.Type, Optional<string>, string>(Enumerable, isSome),
+        keepType<Enumerable.EnumerableComputation, Optional<string>, string>(
+          Enumerable,
+          isSome,
+        ),
         Enumerable.toReadonlyArray(),
         expectArrayEquals(["b", "v"]),
       ),
@@ -43,7 +46,7 @@ testModule(
           ["e", "f"],
         ],
         ReadonlyArray.values(),
-        mapTo<Enumerable.Type, number>(Enumerable, 2),
+        mapTo<Enumerable.EnumerableComputation, number>(Enumerable, 2),
         Enumerable.toReadonlyArray(),
         expectArrayEquals([2, 2, 2]),
       ),
@@ -65,7 +68,7 @@ testModule(
         [obj],
         ReadonlyArray.values(),
         pick<
-          Enumerable.Type,
+          Enumerable.EnumerableComputation,
           { [keyA]: { [keyB]: string } },
           typeof keyA,
           typeof keyB
@@ -84,11 +87,12 @@ testModule(
       pipe(
         [obj],
         ReadonlyArray.values(),
-        pick<Enumerable.Type, { keyA: { keyB: string } }, "keyA", "keyB">(
-          Enumerable,
+        pick<
+          Enumerable.EnumerableComputation,
+          { keyA: { keyB: string } },
           "keyA",
-          "keyB",
-        ),
+          "keyB"
+        >(Enumerable, "keyA", "keyB"),
         Enumerable.toReadonlyArray<string>(),
         expectArrayEquals<string>(["value"]),
       );
@@ -100,7 +104,7 @@ testModule(
         [obj],
         ReadonlyArray.values(),
         pick<
-          Enumerable.Type,
+          Enumerable.EnumerableComputation,
           Tuple6<number, number, number, number, number, number>,
           number
         >(Enumerable, 3),

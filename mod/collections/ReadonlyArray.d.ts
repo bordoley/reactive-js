@@ -5,9 +5,8 @@ import { IndexedCollectionModule, KeyOf, KeyedCollection, KeyedCollection_T, Key
 export interface ReadonlyArrayCollection extends KeyedCollection<number> {
     readonly [KeyedCollection_type]?: ReadonlyArray<this[typeof KeyedCollection_T]>;
 }
-export type Type = ReadonlyArrayCollection;
-export type TKeyBase = KeyOf<Type>;
-export type Signature = IndexedCollectionModule<Type>;
+export type TKeyBase = KeyOf<ReadonlyArrayCollection>;
+export type Signature = IndexedCollectionModule<ReadonlyArrayCollection>;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const forEach: Signature["forEach"];

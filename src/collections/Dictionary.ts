@@ -34,11 +34,9 @@ export interface DictionaryCollection<TKey = unknown>
   readonly [KeyedCollection_TKey]?: TKey;
 }
 
-export type Type<TKey = unknown> = DictionaryCollection<TKey>;
+export type TKeyBase = KeyOf<DictionaryCollection>;
 
-export type TKeyBase = KeyOf<Type>;
-
-export type Signature = DictionaryCollectionModule<Type>;
+export type Signature = DictionaryCollectionModule<DictionaryCollection>;
 
 export const empty: Signature["empty"] = Dictionary_empty;
 export const entries: Signature["entries"] = Dictionary_entries;

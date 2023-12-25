@@ -12,7 +12,6 @@
 ### Type Aliases
 
 - [Signature](events_EventSource.md#signature)
-- [Type](events_EventSource.md#type)
 
 ### Functions
 
@@ -41,12 +40,6 @@
 ### Signature
 
 Ƭ **Signature**: [`EventSourceModule`](../interfaces/events_EventSource.EventSourceModule.md)
-
-___
-
-### Type
-
-Ƭ **Type**: [`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md)
 
 ## Functions
 

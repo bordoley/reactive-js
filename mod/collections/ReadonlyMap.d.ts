@@ -6,9 +6,8 @@ export interface ReadonlyMapCollection<TKey = unknown> extends KeyedCollection<T
     readonly [KeyedCollection_type]?: ReadonlyMap<NonNullable<this[typeof KeyedCollection_TKey]>, this[typeof KeyedCollection_T]>;
     readonly [KeyedCollection_TKey]?: TKey;
 }
-export type Type<TKey = unknown> = ReadonlyMapCollection<TKey>;
-export type TKeyBase = KeyOf<Type>;
-export type Signature = DictionaryCollectionModule<Type>;
+export type TKeyBase = KeyOf<ReadonlyMapCollection>;
+export type Signature = DictionaryCollectionModule<ReadonlyMapCollection>;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const forEach: Signature["forEach"];

@@ -19,7 +19,10 @@ interface EntriesCollection extends KeyedCollection<number> {
 }
 
 const Indexed_entries: Indexed.Signature["entries"] =
-  /*@__PURE__*/ Indexed_toCollection<Indexed.Type, EntriesCollection>(
+  /*@__PURE__*/ Indexed_toCollection<
+    Indexed.IndexedCollection,
+    EntriesCollection
+  >(
     <TKey extends number, T>(
       indexed: IndexedLike<T>,
       startIndex: number,

@@ -12,7 +12,6 @@
 
 - [Signature](collections_Indexed.md#signature)
 - [TKeyBase](collections_Indexed.md#tkeybase)
-- [Type](collections_Indexed.md#type)
 
 ### Functions
 
@@ -34,19 +33,13 @@
 
 ### Signature
 
-Ƭ **Signature**: [`IndexedCollectionModule`](../interfaces/collections.IndexedCollectionModule.md)<[`Type`](collections_Indexed.md#type)\>
+Ƭ **Signature**: [`IndexedCollectionModule`](../interfaces/collections.IndexedCollectionModule.md)<[`IndexedCollection`](../interfaces/collections_Indexed.IndexedCollection.md)\>
 
 ___
 
 ### TKeyBase
 
-Ƭ **TKeyBase**: [`KeyOf`](collections.md#keyof)<[`Type`](collections_Indexed.md#type)\>
-
-___
-
-### Type
-
-Ƭ **Type**: [`IndexedCollection`](../interfaces/collections_Indexed.IndexedCollection.md)
+Ƭ **TKeyBase**: [`KeyOf`](collections.md#keyof)<[`IndexedCollection`](../interfaces/collections_Indexed.IndexedCollection.md)\>
 
 ## Functions
 

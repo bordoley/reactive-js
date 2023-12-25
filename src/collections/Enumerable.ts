@@ -52,8 +52,6 @@ export interface EnumerableComputation extends Computation {
   readonly [Computation_type]?: EnumerableLike<this[typeof Computation_T]>;
 }
 
-export type Type = EnumerableComputation;
-
 /**
  * @noInheritDoc
  */

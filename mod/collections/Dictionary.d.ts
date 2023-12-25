@@ -6,9 +6,8 @@ export interface DictionaryCollection<TKey = unknown> extends KeyedCollection<TK
     readonly [KeyedCollection_type]?: DictionaryLike<NonNullable<this[typeof KeyedCollection_TKey]>, this[typeof KeyedCollection_T]>;
     readonly [KeyedCollection_TKey]?: TKey;
 }
-export type Type<TKey = unknown> = DictionaryCollection<TKey>;
-export type TKeyBase = KeyOf<Type>;
-export type Signature = DictionaryCollectionModule<Type>;
+export type TKeyBase = KeyOf<DictionaryCollection>;
+export type Signature = DictionaryCollectionModule<DictionaryCollection>;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const forEach: Signature["forEach"];
