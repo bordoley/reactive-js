@@ -2930,22 +2930,11 @@ testModule(
   ),
   describe(
     "subscribeOn",
-    testIsPureDeferredObservable(
-      Disposable.using<VirtualTimeSchedulerLike, PureDeferredObservableLike>(
-        VirtualTimeScheduler.create,
-      )(vts => pipe(Observable.empty(), Observable.subscribeOn(vts))),
-    ),
-    testIsDeferredObservableWithSideEffects(
+    PureDeferringObservableOperatorTests(
       Disposable.using<
         VirtualTimeSchedulerLike,
-        DeferredObservableWithSideEffectsLike
-      >(VirtualTimeScheduler.create)(vts =>
-        pipe(
-          Observable.empty(),
-          Observable.forEach(ignore),
-          Observable.subscribeOn(vts),
-        ),
-      ),
+        Observable.PureDeferringObservableOperator<unknown, unknown>
+      >(VirtualTimeScheduler.create)(Observable.subscribeOn),
     ),
   ),
   describe(

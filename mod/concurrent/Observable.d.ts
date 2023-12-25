@@ -414,7 +414,7 @@ export interface ObservableModule {
     subscribeOn<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
-    }): <TObservableIn extends DeferredObservableLike<T>>(obs: TObservableIn) => TObservableIn extends PureObservableLike<T> ? PureDeferredObservableLike<T> : DeferredObservableWithSideEffectsLike<T>;
+    }): PureDeferringObservableOperator<T, T>;
     switchAll<T>(): PureObservableOperator<PureRunnableLike<T>, T>;
     switchAll<T>(options: {
         readonly innerType: typeof PureRunnableType;
