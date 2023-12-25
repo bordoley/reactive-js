@@ -172,22 +172,33 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
     }), Observable.subscribe(vts));
     vts[VirtualTimeSchedulerLike_run]();
     pipe(subscription[DisposableLike_error], expectEquals(error));
-})), test("conditional hooks", () => {
-    const result = [];
-    pipe(Observable.computeRunnable(() => {
-        const src = __constant(pipe([0, 1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 5 })));
-        const src2 = __constant(pipe(Enumerable.generate(increment, returns(100)), Observable.fromEnumerable({ delay: 2 })));
-        const v = __await(src);
-        if (v % 2 === 0) {
-            __memo(increment, 1);
-            return __await(src2);
-        }
+})), test("conditional hooks", pipeLazy(Observable.computeRunnable(() => {
+    const src = __constant(pipe([0, 1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 5 })));
+    const src2 = __constant(pipe(Enumerable.generate(increment, returns(100)), Observable.fromEnumerable({ delay: 2 })));
+    const v = __await(src);
+    if (v % 2 === 0) {
+        __memo(increment, 1);
+        return __await(src2);
+    }
+    return v;
+}), Observable.toReadonlyArray(), expectArrayEquals([
+    101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
+]))), test("conditional await", pipeLazy(Observable.computeRunnable(() => {
+    const src = __constant(pipe([0, 1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 5 })));
+    const src2 = __constant(pipe(Enumerable.generate(increment, returns(100)), Observable.fromEnumerable({ delay: 2 })));
+    const src3 = __constant(pipe(1, Observable.fromValue({ delay: 1 }), Observable.repeat(40)));
+    const v = __await(src);
+    if (v % 2 === 0) {
+        __memo(increment, 1);
+        return __await(src2);
+    }
+    else {
+        __await(src3);
         return v;
-    }), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
-    pipe(result, expectArrayEquals([
-        101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
-    ]));
-}), testIsRunnableWithSideEffects(Observable.computeRunnable(() => { }))), describe("concat", test("concats the input containers in order", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray()), pipe([4, 5, 6], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), test("concats the input containers in order, when sources have delay", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("concatAll", test("concating pure Runnables", pipeLazy([
+    }
+}), Observable.distinctUntilChanged(), Observable.toReadonlyArray(), expectArrayEquals([
+    101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
+]))), testIsRunnableWithSideEffects(Observable.computeRunnable(() => { }))), describe("concat", test("concats the input containers in order", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray()), pipe([4, 5, 6], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), test("concats the input containers in order, when sources have delay", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("concatAll", test("concating pure Runnables", pipeLazy([
     pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
     pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 2 })),
 ], Observable.fromReadonlyArray(), Observable.concatAll(), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), PureObservableOperatorTests(Observable.concatAll()), PureDeferredObservableOperatorTests(Observable.concatAll({

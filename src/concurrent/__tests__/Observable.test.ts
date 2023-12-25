@@ -815,9 +815,9 @@ testModule(
         );
       }),
     ),
-    test("conditional hooks", () => {
-      const result: number[] = [];
-      pipe(
+    test(
+      "conditional hooks",
+      pipeLazy(
         Observable.computeRunnable(() => {
           const src = __constant(
             pipe(
@@ -840,17 +840,50 @@ testModule(
           }
           return v;
         }),
-        Observable.forEach<number>(bind(Array.prototype.push, result)),
-        Observable.run(),
-      );
-
-      pipe(
-        result,
+        Observable.toReadonlyArray(),
         expectArrayEquals([
           101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
         ]),
-      );
-    }),
+      ),
+    ),
+    test(
+      "conditional await",
+      pipeLazy(
+        Observable.computeRunnable<number>(() => {
+          const src = __constant(
+            pipe(
+              [0, 1, 2, 3, 4, 5],
+              Observable.fromReadonlyArray({ delay: 5 }),
+            ),
+          );
+          const src2 = __constant(
+            pipe(
+              Enumerable.generate(increment, returns(100)),
+              Observable.fromEnumerable({ delay: 2 }),
+            ),
+          );
+
+          const src3 = __constant(
+            pipe(1, Observable.fromValue({ delay: 1 }), Observable.repeat(40)),
+          );
+
+          const v = __await(src);
+
+          if (v % 2 === 0) {
+            __memo(increment, 1);
+            return __await(src2);
+          } else {
+            __await(src3);
+            return v;
+          }
+        }),
+        Observable.distinctUntilChanged<number>(),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([
+          101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
+        ]),
+      ),
+    ),
     testIsRunnableWithSideEffects(Observable.computeRunnable(() => {})),
   ),
   describe(
