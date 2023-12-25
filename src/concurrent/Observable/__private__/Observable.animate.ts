@@ -21,7 +21,7 @@ const parseAnimationConfig = <T = number>(
   config.type === "loop"
     ? pipe(
         Observable_animate<T>(config.animation),
-        Observable_repeat<T>(config.count ?? 1),
+        Observable_repeat<T>(config.count as number),
       )
     : config.type === "delay"
     ? Observable_empty<T>({ delay: config.duration })

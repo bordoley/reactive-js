@@ -70,17 +70,40 @@ const AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests = (op) => desc
 }, Observable.fromAsyncFactory(), op, expectIsDeferredObservableWithSideEffects)), test("with MulticastObservableLike", pipeLazy(new Promise(ignore), Observable.fromPromise(), op, expectIsDeferredObservableWithSideEffects)));
 testModule("Observable", describe("effects", test("calling an effect from outside a computation expression throws", () => {
     expectToThrow(() => __constant(0));
-})), PureComputationModuleTests(Observable, Observable.toReadonlyArray), describe("animate", test("keyframing from 0 to 10 over a during of 10", Disposable.usingLazy(() => VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }))(vts => {
+})), PureComputationModuleTests(Observable, Observable.toReadonlyArray), describe("animate", test("keyframing from 0 to 10 over a during of 10, repeating one", Disposable.usingLazy(() => VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }))(vts => {
     const result = [];
     pipe(Observable.animate({
-        type: "keyframe",
-        duration: 10,
-        from: 0,
-        to: 10,
-    }), Observable.forEach(bind(result.push, result)), Observable.subscribe(vts));
+        type: "loop",
+        animation: {
+            type: "keyframe",
+            duration: 10,
+            from: 0,
+            to: 10,
+        },
+    }), Observable.takeFirst({ count: 20 }), Observable.forEach(bind(result.push, result)), Observable.subscribe(vts));
     vts[VirtualTimeSchedulerLike_run]();
-    pipe(result, expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
-})), testAsync("", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
+    pipe(result, expectArrayEquals([
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 1, 2, 3, 4, 5, 6, 7, 8,
+    ]));
+})), test("2 frames with dealy", Disposable.usingLazy(() => VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }))(vts => {
+    const result = [];
+    pipe(Observable.animate([
+        {
+            type: "frame",
+            value: 0,
+        },
+        {
+            type: "delay",
+            duration: 10,
+        },
+        {
+            type: "frame",
+            value: 1,
+        },
+    ]), Observable.forEach(bind(result.push, result)), Observable.subscribe(vts));
+    vts[VirtualTimeSchedulerLike_run]();
+    pipe(result, expectArrayEquals([0, 1]));
+})), testAsync("test with spring", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
     await pipeAsync(Observable.animate({
         type: "spring",
         from: 0,

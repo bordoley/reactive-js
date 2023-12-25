@@ -14,7 +14,7 @@ const scale = (start, end) => (v) => {
     return start + v * diff;
 };
 const parseAnimationConfig = (config) => config.type === "loop"
-    ? pipe(Observable_animate(config.animation), Observable_repeat(config.count ?? 1))
+    ? pipe(Observable_animate(config.animation), Observable_repeat(config.count))
     : config.type === "delay"
         ? Observable_empty({ delay: config.duration })
         : config.type === "frame" && isSome(config.selector)
