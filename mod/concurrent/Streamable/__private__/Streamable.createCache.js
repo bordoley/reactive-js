@@ -91,17 +91,17 @@ const createCacheStream = /*@__PURE__*/ (() => {
             const { scheduleCleanup, store, subscriptions, delegate } = this;
             return (subscriptions.get(key) ??
                 (() => {
-                    const publisher = Subject.createRefCounted({
+                    const subject = Subject.createRefCounted({
                         replay: 1,
                     });
-                    subscriptions.set(key, publisher);
-                    pipe(publisher, Disposable.onDisposed(_ => {
+                    subscriptions.set(key, subject);
+                    pipe(subject, Disposable.onDisposed(_ => {
                         subscriptions.delete(key);
                         scheduleCleanup(key);
                     }), Disposable.addTo(this, { ignoreChildErrors: true }));
                     const initialValue = store.get(key);
                     if (isSome(initialValue)) {
-                        publisher[SinkLike_notify](initialValue);
+                        subject[SinkLike_notify](initialValue);
                     }
                     else {
                         // Try to load the value from the persistence store
@@ -109,7 +109,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
                             [key]: identity,
                         });
                     }
-                    return publisher;
+                    return subject;
                 })());
         },
     }));
