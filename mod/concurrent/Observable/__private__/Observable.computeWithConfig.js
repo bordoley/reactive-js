@@ -1,7 +1,6 @@
 /// <reference types="./Observable.computeWithConfig.d.ts" />
 
 import { CollectionLike_count, KeyedLike_get } from "../../../collections.js";
-import * as Indexed from "../../../collections/Indexed.js";
 import { ObservableLike_isDeferred, ObservableLike_isRunnable, ReplayObservableLike_buffer, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseIf, raiseWithDebugMessage, } from "../../../functions.js";
@@ -10,7 +9,6 @@ import * as Disposable from "../../../utils/Disposable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_isReplayObservable from "./Observable.isReplayObservable.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Memo = 1;
 const Await = 2;
@@ -141,11 +139,9 @@ class ComputeContext {
                             : scheduledComputationSubscription;
                 }
             }), Observable_subscribeWithConfig(observer, observer), Disposable.addTo(observer), Disposable.onComplete(this[ComputeContext_cleanup]));
-            const buffer = Observable_isReplayObservable(observable)
-                ? observable[ReplayObservableLike_buffer]
-                : Indexed.empty();
-            const hasDefaultValue = buffer[CollectionLike_count] > 0;
-            const defaultValue = hasDefaultValue ? buffer[KeyedLike_get](0) : none;
+            const buffer = observable?.[ReplayObservableLike_buffer];
+            const hasDefaultValue = (buffer?.[CollectionLike_count] ?? 0) > 0;
+            const defaultValue = hasDefaultValue ? buffer?.[KeyedLike_get](0) : none;
             effect[AwaitOrObserveEffect_observable] = observable;
             effect[AwaitOrObserveEffect_subscription] = subscription;
             effect[AwaitOrObserveEffect_value] = defaultValue;

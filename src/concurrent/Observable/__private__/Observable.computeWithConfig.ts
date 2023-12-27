@@ -1,5 +1,4 @@
 import { CollectionLike_count, KeyedLike_get } from "../../../collections.js";
-import * as Indexed from "../../../collections/Indexed.js";
 import {
   DeferredObservableWithSideEffectsLike,
   ObservableLike,
@@ -7,6 +6,7 @@ import {
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
+  ReplayObservableLike,
   ReplayObservableLike_buffer,
   RunnableWithSideEffectsLike,
   SchedulerLike_schedule,
@@ -36,7 +36,6 @@ import * as Disposable from "../../../utils/Disposable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_isReplayObservable from "./Observable.isReplayObservable.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 type EffectsMode = "batched" | "combine-latest";
@@ -308,11 +307,11 @@ class ComputeContext {
         Disposable.onComplete(this[ComputeContext_cleanup]),
       );
 
-      const buffer = Observable_isReplayObservable<T>(observable)
-        ? observable[ReplayObservableLike_buffer]
-        : Indexed.empty<T>();
-      const hasDefaultValue = buffer[CollectionLike_count] > 0;
-      const defaultValue = hasDefaultValue ? buffer[KeyedLike_get](0) : none;
+      const buffer = (observable as Optional<ReplayObservableLike<T>>)?.[
+        ReplayObservableLike_buffer
+      ];
+      const hasDefaultValue = (buffer?.[CollectionLike_count] ?? 0) > 0;
+      const defaultValue = hasDefaultValue ? buffer?.[KeyedLike_get](0) : none;
 
       effect[AwaitOrObserveEffect_observable] = observable;
       effect[AwaitOrObserveEffect_subscription] = subscription;

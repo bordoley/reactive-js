@@ -355,10 +355,8 @@ export const useObserve: Signature["useObserve"] = <T>(
   const buffer = (observable as Optional<ReplayObservableLike<T>>)?.[
     ReplayObservableLike_buffer
   ];
-  const defaultValue =
-    (buffer?.[CollectionLike_count] ?? 0) > 0
-      ? buffer?.[KeyedLike_get](0)
-      : none;
+  const hasDefaultValue = (buffer?.[CollectionLike_count] ?? 0) > 0;
+  const defaultValue = hasDefaultValue ? buffer?.[KeyedLike_get](0) : none;
 
   return isSome(error) ? raiseError<T>(error) : state ?? defaultValue;
 };
