@@ -59,12 +59,13 @@ import {
   PauseableLike_isPaused,
   PauseableLike_pause,
   FlowableLike_flow,
+  CacheLike_get,
 } from "@reactive-js/core/concurrent";
 import { EventSourceLike, StoreLike_value } from "@reactive-js/core/events";
 import { QueueableLike_enqueue } from "@reactive-js/core/utils";
 import {
+  DictionaryLike_get,
   EnumerableLike_enumerate,
-  KeyedLike_get,
 } from "@reactive-js/core/collections";
 import * as Enumerable from "@reactive-js/core/collections/Enumerable";
 
@@ -160,7 +161,7 @@ const AnimationGroup = () => {
 const Cache = () => {
   const cache = useStream(() => Streamable.createInMemoryCache<string>(), []);
 
-  const values = cache?.[KeyedLike_get]("a");
+  const values = cache?.[CacheLike_get]("a");
   const value = useObserve(values) ?? "";
 
   const onChange = useCallback(
@@ -377,7 +378,7 @@ const RxComponent = createComponent(
       );
 
       const animatedDivRef = __animate(
-        animationGroupEventHandler[KeyedLike_get]("a")!,
+        animationGroupEventHandler[DictionaryLike_get]("a")!,
       );
 
       return (

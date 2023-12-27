@@ -12,7 +12,7 @@ import { Optional, pipeLazy } from "@reactive-js/core/functions";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
 import { EventSourceLike } from "@reactive-js/core/events";
-import { KeyedLike_get } from "@reactive-js/core/collections";
+import { DictionaryLike_get } from "@reactive-js/core/collections";
 
 const items = ["W", "O", "R", "D", "L", "E"];
 
@@ -139,7 +139,7 @@ export const Wordle = () => {
     [animationScheduler],
   );
 
-  const animation = animationGroup?.[KeyedLike_get]("a");
+  const animation = animationGroup?.[DictionaryLike_get]("a");
   const { enqueue } = useDispatcher(animationGroup);
   const isAnimationRunning = useObserve(animationGroup) ?? false;
 

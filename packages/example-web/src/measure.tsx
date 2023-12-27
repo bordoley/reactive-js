@@ -23,7 +23,7 @@ import * as Streamable from "@reactive-js/core/concurrent/Streamable";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
 import { pick } from "@reactive-js/core/computations";
-import { KeyedLike_get } from "@reactive-js/core/collections";
+import { DictionaryLike_get } from "@reactive-js/core/collections";
 
 const Measure = () => {
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
@@ -63,7 +63,7 @@ const Measure = () => {
     { capacity: 1, backpressureStrategy: "drop-oldest" },
   );
 
-  const animation = animationGroup?.[KeyedLike_get]("a");
+  const animation = animationGroup?.[DictionaryLike_get]("a");
 
   const { enqueue } = useDispatcher(animationGroup);
 

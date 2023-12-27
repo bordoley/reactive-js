@@ -16,9 +16,9 @@ import * as Streamable from "@reactive-js/core/concurrent/Streamable";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
 import { EventSourceLike } from "@reactive-js/core/events";
-import { KeyedLike_get } from "@reactive-js/core/collections";
 import * as Publisher from "@reactive-js/core/events/Publisher";
 import { SinkLike_notify } from "@reactive-js/core/events";
+import { DictionaryLike_get } from "@reactive-js/core/collections";
 
 const AnimatedCircle = ({
   animation,
@@ -97,7 +97,7 @@ const ScrollApp = () => {
   );
   const { enqueue } = useDispatcher(animationGroup);
 
-  const springAnimation = animationGroup?.[KeyedLike_get]("spring");
+  const springAnimation = animationGroup?.[DictionaryLike_get]("spring");
 
   const publishedAnimation = useDisposable(Publisher.create, []);
 
