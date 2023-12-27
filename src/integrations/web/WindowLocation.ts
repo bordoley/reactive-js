@@ -9,12 +9,12 @@ import {
 import { pick } from "../../computations.js";
 import {
   DeferredObservableLike,
-  MulticastObservableLike,
   ObservableLike_observe,
   ObserverLike,
   ReplayObservableLike_buffer,
   SchedulerLike,
   StreamLike,
+  StreamLike_scheduler,
   StreamableLike_stream,
 } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
@@ -22,7 +22,9 @@ import { ObservableComputation } from "../../concurrent/Observable.js";
 import * as Stream from "../../concurrent/Stream.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import DelegatingStreamMixin from "../../concurrent/__mixins__/DelegatingStreamMixin.js";
+import { StoreLike_value, WritableStoreLike } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
+import * as WritableStore from "../../events/WritableStore.js";
 import {
   Optional,
   Updater,
@@ -145,7 +147,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
   type TProperties = {
     [WindowLocation_delegate]: StreamLike<Updater<TState>, TState> &
       DisposableLike;
-    [WindowLocationLike_canGoBack]: MulticastObservableLike<boolean>;
+    [WindowLocationLike_canGoBack]: WritableStoreLike<boolean>;
   };
 
   const createWindowLocationObservable = createInstanceFactory(
@@ -168,8 +170,18 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
         instance[WindowLocation_delegate] = delegate;
 
         instance[WindowLocationLike_canGoBack] = pipe(
+          WritableStore.create(false),
+          Disposable.addTo(instance),
+        );
+
+        pipe(
           delegate,
-          Observable.map<TState, boolean>(({ counter }) => counter > 0),
+          Observable.forEach<TState>(({ counter }) => {
+            instance[WindowLocationLike_canGoBack][StoreLike_value] =
+              counter > 0;
+          }),
+          Observable.subscribe(instance[StreamLike_scheduler]),
+          Disposable.addTo(instance),
         );
 
         return instance;

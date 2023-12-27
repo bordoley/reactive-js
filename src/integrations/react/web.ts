@@ -9,7 +9,7 @@ import {
 } from "react";
 import * as React from "react";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
-import { EventSourceLike } from "../../events.js";
+import { EventSourceLike, StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
 import {
   Function1,
@@ -23,7 +23,7 @@ import {
   pipe,
   pipeSomeLazy,
 } from "../../functions.js";
-import { useDisposable, useObserve } from "../react.js";
+import { useDisposable, useListen, useObserve } from "../react.js";
 import {
   CSSStyleMapLike,
   ScrollValue,
@@ -168,7 +168,8 @@ export const useWindowLocation: Signature["useWindowLocation"] = () => {
   }, [stableWindowLocationRef]);
 
   const canGoBack =
-    useObserve(windowLocation[WindowLocationLike_canGoBack]) ?? false;
+    useListen(windowLocation[WindowLocationLike_canGoBack]) ??
+    windowLocation[WindowLocationLike_canGoBack][StoreLike_value];
 
   return {
     uri,

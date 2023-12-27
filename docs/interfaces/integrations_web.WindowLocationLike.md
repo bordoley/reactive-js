@@ -26,7 +26,7 @@
 
 ### [WindowLocationLike\_canGoBack]
 
-• `Readonly` **[WindowLocationLike\_canGoBack]**: [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`boolean`\>
+• `Readonly` **[WindowLocationLike\_canGoBack]**: [`StoreLike`](events.StoreLike.md)<`boolean`\>
 
 ## Methods
 

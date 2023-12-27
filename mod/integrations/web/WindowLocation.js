@@ -2,12 +2,14 @@
 
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { pick } from "../../computations.js";
-import { ObservableLike_observe, ReplayObservableLike_buffer, StreamableLike_stream, } from "../../concurrent.js";
+import { ObservableLike_observe, ReplayObservableLike_buffer, StreamLike_scheduler, StreamableLike_stream, } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as Stream from "../../concurrent/Stream.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import DelegatingStreamMixin from "../../concurrent/__mixins__/DelegatingStreamMixin.js";
+import { StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
+import * as WritableStore from "../../events/WritableStore.js";
 import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, pipeLazy, raiseIf, returns, } from "../../functions.js";
 import { QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -51,7 +53,11 @@ export const subscribe = /*@__PURE__*/ (() => {
     const createWindowLocationObservable = createInstanceFactory(mix(include(DelegatingStreamMixin()), function WindowLocationStream(instance, delegate) {
         init(DelegatingStreamMixin(), instance, delegate);
         instance[WindowLocation_delegate] = delegate;
-        instance[WindowLocationLike_canGoBack] = pipe(delegate, Observable.map(({ counter }) => counter > 0));
+        instance[WindowLocationLike_canGoBack] = pipe(WritableStore.create(false), Disposable.addTo(instance));
+        pipe(delegate, Observable.forEach(({ counter }) => {
+            instance[WindowLocationLike_canGoBack][StoreLike_value] =
+                counter > 0;
+        }), Observable.subscribe(instance[StreamLike_scheduler]), Disposable.addTo(instance));
         return instance;
     }, props({
         [WindowLocation_delegate]: none,
