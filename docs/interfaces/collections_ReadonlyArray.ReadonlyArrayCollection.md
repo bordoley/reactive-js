@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`KeyedCollection`](collections.KeyedCollection.md)<`number`\>
+- [`Collection`](collections.Collection.md)<`number`\>
 
   ↳ **`ReadonlyArrayCollection`**
 
@@ -14,14 +14,14 @@
 
 ### Properties
 
-- [[KeyedCollection\_type]](collections_ReadonlyArray.ReadonlyArrayCollection.md#[keyedcollection_type])
+- [[Collection\_type]](collections_ReadonlyArray.ReadonlyArrayCollection.md#[collection_type])
 
 ## Properties
 
-### [KeyedCollection\_type]
+### [Collection\_type]
 
-• `Optional` `Readonly` **[KeyedCollection\_type]**: readonly `unknown`[]
+• `Optional` `Readonly` **[Collection\_type]**: readonly `unknown`[]
 
 #### Overrides
 
-[KeyedCollection](collections.KeyedCollection.md).[[KeyedCollection_type]](collections.KeyedCollection.md#[keyedcollection_type])
+[Collection](collections.Collection.md).[[Collection_type]](collections.Collection.md#[collection_type])

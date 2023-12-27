@@ -1,6 +1,6 @@
 /// <reference types="./ReadonlyArray.d.ts" />
 
-import { KeyedCollection_type, } from "../collections.js";
+import { Collection_type, } from "../collections.js";
 import Enumerable_fromReadonlyArray from "./Enumerable/__private__/Enumerable.fromReadonlyArray.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__private__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__private__/ReadonlyArray.entries.js";

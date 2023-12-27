@@ -1,11 +1,11 @@
 import {
+  Collection,
+  CollectionModule,
+  CollectionOf,
+  Collection_T,
+  Collection_type,
   EnumerableLike,
   KeyOf,
-  KeyedCollection,
-  KeyedCollectionModule,
-  KeyedCollectionOf,
-  KeyedCollection_T,
-  KeyedCollection_type,
 } from "../collections.js";
 import { Function1, Tuple2 } from "../functions.js";
 import Enumerable_fromReadonlyArray from "./Enumerable/__private__/Enumerable.fromReadonlyArray.js";
@@ -24,10 +24,8 @@ import ReadonlyArray_toReadonlyMap from "./ReadonlyArray/__private__/ReadonlyArr
 /**
  * @noInheritDoc
  */
-export interface ReadonlyArrayCollection extends KeyedCollection<number> {
-  readonly [KeyedCollection_type]?: ReadonlyArray<
-    this[typeof KeyedCollection_T]
-  >;
+export interface ReadonlyArrayCollection extends Collection<number> {
+  readonly [Collection_type]?: ReadonlyArray<this[typeof Collection_T]>;
 }
 
 export type TKeyBase = KeyOf<ReadonlyArrayCollection>;
@@ -36,14 +34,14 @@ export type TKeyBase = KeyOf<ReadonlyArrayCollection>;
  * @noInheritDoc
  */
 export interface ReadonlyArrayModule
-  extends KeyedCollectionModule<ReadonlyArrayCollection> {
+  extends CollectionModule<ReadonlyArrayCollection> {
   /**
    */
   entries<T, TKey extends number = number>(options?: {
     readonly count?: number;
     readonly start?: number;
   }): Function1<
-    KeyedCollectionOf<ReadonlyArrayCollection, T, TKey>,
+    CollectionOf<ReadonlyArrayCollection, T, TKey>,
     EnumerableLike<Tuple2<TKey, T>>
   >;
 
@@ -57,17 +55,14 @@ export interface ReadonlyArrayModule
     readonly count?: number;
     readonly start?: number;
   }): Function1<
-    KeyedCollectionOf<ReadonlyArrayCollection, T, TKey>,
+    CollectionOf<ReadonlyArrayCollection, T, TKey>,
     EnumerableLike<T>
   >;
 
   slice<T>(options?: {
     readonly count?: number;
     readonly start?: number;
-  }): Function1<
-    KeyedCollectionOf<ReadonlyArrayCollection, T>,
-    ReadonlyArray<T>
-  >;
+  }): Function1<CollectionOf<ReadonlyArrayCollection, T>, ReadonlyArray<T>>;
 }
 
 export type Signature = ReadonlyArrayModule;

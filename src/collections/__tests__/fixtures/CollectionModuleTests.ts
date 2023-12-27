@@ -6,11 +6,11 @@ import {
   test,
 } from "../../../__internal__/testing.js";
 import {
+  Collection,
+  CollectionModule,
+  CollectionOf,
   DictionaryLike_count,
   DictionaryLike_get,
-  KeyedCollection,
-  KeyedCollectionModule,
-  KeyedCollectionOf,
 } from "../../../collections.js";
 import {
   Function1,
@@ -27,15 +27,15 @@ import * as Dictionary from "../../Dictionary.js";
 import * as Enumerable from "../../Enumerable.js";
 import * as ReadonlyMap from "../../ReadonlyMap.js";
 
-const KeyedCollectionModuleTests = <C extends KeyedCollection>(
-  m: KeyedCollectionModule<C>,
+const CollectionModuleTests = <C extends Collection>(
+  m: CollectionModule<C>,
   fromReadonlyArray: <T>() => Function1<
     ReadonlyArray<T>,
-    KeyedCollectionOf<C, T, number>
+    CollectionOf<C, T, number>
   >,
 ) =>
   describe(
-    "KeyedCollectionModule",
+    "CollectionModule",
     describe(
       "empty",
       test(
@@ -222,4 +222,4 @@ const KeyedCollectionModuleTests = <C extends KeyedCollection>(
     ),
   );
 
-export default KeyedCollectionModuleTests;
+export default CollectionModuleTests;

@@ -15,12 +15,12 @@ import { Optional, compose, pipe } from "../../functions.js";
 import * as Dictionary from "../Dictionary.js";
 import * as Enumerable from "../Enumerable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
+import CollectionModuleTests from "./fixtures/CollectionModuleTests.js";
 import DictionaryCollectionModuleTests from "./fixtures/DictionaryCollectionModuleTests.js";
-import KeyedCollectionModuleTests from "./fixtures/KeyedCollectionModuleTests.js";
 
 testModule(
   "Dictionary",
-  KeyedCollectionModuleTests(Dictionary, <T>() =>
+  CollectionModuleTests(Dictionary, <T>() =>
     compose(ReadonlyArray.entries<T, number>(), Dictionary.fromEntries()),
   ),
   DictionaryCollectionModuleTests(Dictionary),

@@ -121,7 +121,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>, `T`, `T`, `TKey`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`CollectionOperator`](collections.md#collectionoperator)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>, `T`, `T`, `TKey`\>
 
 #### Type parameters
 
@@ -138,7 +138,7 @@ ___
 
 #### Returns
 
-[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>, `T`, `T`, `TKey`\>
+[`CollectionOperator`](collections.md#collectionoperator)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>, `T`, `T`, `TKey`\>
 
 ___
 
@@ -176,9 +176,9 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>, `TA`, `TB`, `TKey`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`CollectionOperator`](collections.md#collectionoperator)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>, `TA`, `TB`, `TKey`\>
 
-Returns a KeyedCollectionOperator that applies the `selector` function to each
+Returns a CollectionOperator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -205,7 +205,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>, `TA`, `TB`, `TKey`\>
+[`CollectionOperator`](collections.md#collectionoperator)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string` \| `symbol`\>, `TA`, `TB`, `TKey`\>
 
 ___
 

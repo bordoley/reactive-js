@@ -7,11 +7,11 @@ import {
 import { identity, pipeLazy } from "../../functions.js";
 import * as Enumerable from "../Enumerable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
-import KeyedCollectionModuleTests from "./fixtures/KeyedCollectionModuleTests.js";
+import CollectionModuleTests from "./fixtures/CollectionModuleTests.js";
 
 testModule(
   "ReadonlyArray",
-  KeyedCollectionModuleTests(ReadonlyArray, <T>() => identity<readonly T[]>),
+  CollectionModuleTests(ReadonlyArray, <T>() => identity<readonly T[]>),
   describe(
     "entries",
     test(

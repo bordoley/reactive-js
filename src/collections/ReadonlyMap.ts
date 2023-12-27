@@ -1,10 +1,10 @@
 import {
+  Collection,
+  Collection_T,
+  Collection_TKey,
+  Collection_type,
   DictionaryCollectionModule,
   KeyOf,
-  KeyedCollection,
-  KeyedCollection_T,
-  KeyedCollection_TKey,
-  KeyedCollection_type,
 } from "../collections.js";
 import { identityLazy } from "../functions.js";
 import ReadonlyMap_empty from "./ReadonlyMap/__private__/ReadonlyMap.empty.js";
@@ -24,13 +24,13 @@ import ReadonlyMap_values from "./ReadonlyMap/__private__/ReadonlyMap.values.js"
  * @noInheritDoc
  */
 export interface ReadonlyMapCollection<TKey = unknown>
-  extends KeyedCollection<TKey> {
-  readonly [KeyedCollection_type]?: ReadonlyMap<
-    NonNullable<this[typeof KeyedCollection_TKey]>,
-    this[typeof KeyedCollection_T]
+  extends Collection<TKey> {
+  readonly [Collection_type]?: ReadonlyMap<
+    NonNullable<this[typeof Collection_TKey]>,
+    this[typeof Collection_T]
   >;
 
-  readonly [KeyedCollection_TKey]?: TKey;
+  readonly [Collection_TKey]?: TKey;
 }
 
 export type TKeyBase = KeyOf<ReadonlyMapCollection>;

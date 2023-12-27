@@ -1,6 +1,6 @@
 /// <reference types="./Dictionary.d.ts" />
 
-import { KeyedCollection_TKey, KeyedCollection_type, } from "../collections.js";
+import { Collection_TKey, Collection_type, } from "../collections.js";
 import { identityLazy } from "../functions.js";
 import Dictionary_empty from "./Dictionary/__private__/Dictionary.empty.js";
 import Dictionary_entries from "./Dictionary/__private__/Dictionary.entries.js";

@@ -4,14 +4,14 @@ import {
   test,
 } from "../../../__internal__/testing.js";
 import {
+  Collection,
   DictionaryCollectionModule,
-  KeyedCollection,
 } from "../../../collections.js";
 import { arrayEquality, pipe, pipeLazy, tuple } from "../../../functions.js";
 import * as Enumerable from "../../Enumerable.js";
 import * as ReadonlyArray from "../../ReadonlyArray.js";
 
-const DictionaryCollectionModuleTests = <C extends KeyedCollection>(
+const DictionaryCollectionModuleTests = <C extends Collection>(
   m: DictionaryCollectionModule<C>,
 ) =>
   describe(

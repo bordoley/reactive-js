@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`KeyedCollectionModule`](collections.KeyedCollectionModule.md)<[`ReadonlyArrayCollection`](collections_ReadonlyArray.ReadonlyArrayCollection.md)\>
+- [`CollectionModule`](collections.CollectionModule.md)<[`ReadonlyArrayCollection`](collections_ReadonlyArray.ReadonlyArrayCollection.md)\>
 
   ↳ **`ReadonlyArrayModule`**
 
@@ -45,7 +45,7 @@
 
 #### Overrides
 
-[KeyedCollectionModule](collections.KeyedCollectionModule.md).[entries](collections.KeyedCollectionModule.md#entries)
+[CollectionModule](collections.CollectionModule.md).[entries](collections.CollectionModule.md#entries)
 
 ___
 
@@ -98,4 +98,4 @@ ___
 
 #### Overrides
 
-[KeyedCollectionModule](collections.KeyedCollectionModule.md).[values](collections.KeyedCollectionModule.md#values)
+[CollectionModule](collections.CollectionModule.md).[values](collections.CollectionModule.md#values)
