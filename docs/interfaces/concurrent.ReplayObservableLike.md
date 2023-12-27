@@ -36,4 +36,4 @@ A stateful ObservableLike resource.
 
 ### [ReplayObservableLike\_buffer]
 
-• `Readonly` **[ReplayObservableLike\_buffer]**: [`IndexedLike`](collections.IndexedLike.md)<`T`\>
+• `Readonly` **[ReplayObservableLike\_buffer]**: readonly `T`[]

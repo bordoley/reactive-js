@@ -16,8 +16,6 @@
 
   ↳ [`DictionaryCollection`](collections_Dictionary.DictionaryCollection.md)
 
-  ↳ [`IndexedCollection`](collections_Indexed.IndexedCollection.md)
-
   ↳ [`ReadonlyArrayCollection`](collections_ReadonlyArray.ReadonlyArrayCollection.md)
 
   ↳ [`ReadonlyMapCollection`](collections_ReadonlyMap.ReadonlyMapCollection.md)

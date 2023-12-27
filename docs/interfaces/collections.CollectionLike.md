@@ -18,8 +18,6 @@
 
   ↳↳ [`KeyedLike`](collections.KeyedLike.md)
 
-  ↳↳ [`QueueCollectionLike`](utils.QueueCollectionLike.md)
-
 ## Table of contents
 
 ### Properties

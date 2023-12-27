@@ -12,13 +12,9 @@
 - [DictionaryLike](../interfaces/collections.DictionaryLike.md)
 - [EnumerableLike](../interfaces/collections.EnumerableLike.md)
 - [EnumeratorLike](../interfaces/collections.EnumeratorLike.md)
-- [IndexedCollectionModule](../interfaces/collections.IndexedCollectionModule.md)
-- [IndexedLike](../interfaces/collections.IndexedLike.md)
 - [KeyedCollection](../interfaces/collections.KeyedCollection.md)
 - [KeyedCollectionModule](../interfaces/collections.KeyedCollectionModule.md)
 - [KeyedLike](../interfaces/collections.KeyedLike.md)
-- [MutableIndexedLike](../interfaces/collections.MutableIndexedLike.md)
-- [MutableKeyedLike](../interfaces/collections.MutableKeyedLike.md)
 
 ### Type Aliases
 
@@ -40,7 +36,6 @@
 - [KeyedCollection\_TKey](collections.md#keyedcollection_tkey)
 - [KeyedCollection\_type](collections.md#keyedcollection_type)
 - [KeyedLike\_get](collections.md#keyedlike_get)
-- [MutableKeyedLike\_set](collections.md#mutablekeyedlike_set)
 
 ## Type Aliases
 
@@ -165,9 +160,3 @@ ___
 ### KeyedLike\_get
 
 • `Const` **KeyedLike\_get**: unique `symbol`
-
-___
-
-### MutableKeyedLike\_set
-
-• `Const` **MutableKeyedLike\_set**: unique `symbol`

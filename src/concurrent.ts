@@ -1,4 +1,3 @@
-import { IndexedLike } from "./collections.js";
 import {
   ErrorSafeEventListenerLike,
   EventSourceLike,
@@ -289,7 +288,7 @@ export const ReplayObservableLike_buffer = Symbol(
  */
 export interface ReplayObservableLike<T = unknown>
   extends MulticastObservableLike<T> {
-  readonly [ReplayObservableLike_buffer]: IndexedLike<T>;
+  readonly [ReplayObservableLike_buffer]: ReadonlyArray<T>;
 }
 
 export const SubjectLike_observerCount = Symbol("SubjectLike_observerCount");

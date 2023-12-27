@@ -5,7 +5,6 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import { CollectionLike_count } from "../../collections.js";
 import {
   SchedulerLike,
   SchedulerLike_now,
@@ -34,6 +33,7 @@ import {
   DisposableLike,
   IndexedQueueLike,
   QueueLike_dequeue,
+  QueueableLike_count,
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -96,9 +96,9 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
             }
           }
 
-          const jobsCount = workQueue[CollectionLike_count];
+          const jobsCount = workQueue[QueueableLike_count];
           const newWorkQueue = instance[AnimationFrameScheduler_rafQueue];
-          const newJobsCount = newWorkQueue[CollectionLike_count];
+          const newJobsCount = newWorkQueue[QueueableLike_count];
 
           if (jobsCount > 0 && newJobsCount === 0) {
             instance[AnimationFrameScheduler_rafQueue] = workQueue;
@@ -113,7 +113,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
           }
 
           const workQueueCount =
-            instance[AnimationFrameScheduler_rafQueue][CollectionLike_count];
+            instance[AnimationFrameScheduler_rafQueue][QueueableLike_count];
           if (workQueueCount > 0) {
             requestAnimationFrame(
               instance[AnimationFrameScheduler_rafCallback],

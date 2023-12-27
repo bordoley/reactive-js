@@ -4,9 +4,8 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
-import { IndexedLike } from "../../collections.js";
-import * as Indexed from "../../collections/Indexed.js";
 import { pick } from "../../computations.js";
 import {
   DeferredObservableLike,
@@ -146,7 +145,6 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
   type TProperties = {
     [WindowLocation_delegate]: StreamLike<Updater<TState>, TState> &
       DisposableLike;
-    [ReplayObservableLike_buffer]: IndexedLike<WindowLocationURI>;
     [WindowLocationLike_canGoBack]: MulticastObservableLike<boolean>;
   };
 
@@ -160,6 +158,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
           | typeof WindowLocationLike_push
           | typeof WindowLocationLike_replace
           | typeof ObservableLike_observe
+          | typeof ReplayObservableLike_buffer
         > &
           TProperties,
         delegate: StreamLike<Updater<TState>, TState> & DisposableLike,
@@ -167,10 +166,6 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
         init(DelegatingStreamMixin(), instance, delegate);
 
         instance[WindowLocation_delegate] = delegate;
-        instance[ReplayObservableLike_buffer] = pipe(
-          delegate[ReplayObservableLike_buffer],
-          Indexed.map(location => location.uri),
-        );
 
         instance[WindowLocationLike_canGoBack] = pipe(
           delegate,
@@ -181,10 +176,16 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       },
       props<TProperties>({
         [WindowLocation_delegate]: none,
-        [ReplayObservableLike_buffer]: none,
         [WindowLocationLike_canGoBack]: none,
       }),
       {
+        get [ReplayObservableLike_buffer]() {
+          unsafeCast<TProperties>(this);
+          return this[WindowLocation_delegate][ReplayObservableLike_buffer].map(
+            location => location.uri,
+          );
+        },
+
         [WindowLocationLike_push](
           this: TProperties,
           stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,

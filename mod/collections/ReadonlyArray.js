@@ -11,7 +11,6 @@ import ReadonlyArray_keys from "./ReadonlyArray/__private__/ReadonlyArray.keys.j
 import ReadonlyArray_map from "./ReadonlyArray/__private__/ReadonlyArray.map.js";
 import ReadonlyArray_reduce from "./ReadonlyArray/__private__/ReadonlyArray.reduce.js";
 import ReadonlyArray_toDictionary from "./ReadonlyArray/__private__/ReadonlyArray.toDictionary.js";
-import ReadonlyArray_toIndexed from "./ReadonlyArray/__private__/ReadonlyArray.toIndexed.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__private__/ReadonlyArray.toReadonlyArray.js";
 import ReadonlyArray_toReadonlyMap from "./ReadonlyArray/__private__/ReadonlyArray.toReadonlyMap.js";
 export const empty = ReadonlyArray_empty;
@@ -23,7 +22,6 @@ export const keySet = ReadonlyArray_keySet;
 export const map = ReadonlyArray_map;
 export const reduce = ReadonlyArray_reduce;
 export const toDictionary = ReadonlyArray_toDictionary;
-export const toIndexed = ReadonlyArray_toIndexed;
 export const toReadonlyArray = ReadonlyArray_toReadonlyArray;
 export const toReadonlyMap = ReadonlyArray_toReadonlyMap;
 export const values = Enumerable_fromReadonlyArray;

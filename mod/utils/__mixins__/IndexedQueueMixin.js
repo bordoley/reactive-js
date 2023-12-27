@@ -2,11 +2,9 @@
 
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
-import { include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
-import { CollectionLike_count, KeyedLike_get, MutableKeyedLike_set, } from "../../collections.js";
-import EnumerableIterableMixin from "../../collections/__mixins__/EnumerableIterableMixin.js";
+import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { newInstance, none, raiseError, raiseWithDebugMessage, returns, } from "../../functions.js";
-import { BackPressureError, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, StackLike_head, StackLike_pop, } from "../../utils.js";
+import { BackPressureError, IndexedQueueLike_get, IndexedQueueLike_set, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_count, QueueableLike_enqueue, StackLike_head, StackLike_pop, } from "../../utils.js";
 const IndexedQueueMixin = /*@PURE*/ (() => {
     const IndexedQueueMixin_capacityMask = Symbol("IndexedQueueMixin_capacityMask");
     const IndexedQueueMixin_head = Symbol("IndexedQueueMixin_head");
@@ -35,7 +33,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         const values = instance[IndexedQueueMixin_values] ?? [];
         const capacity = values.length;
         const capacityMask = instance[IndexedQueueMixin_capacityMask];
-        const count = instance[CollectionLike_count];
+        const count = instance[QueueableLike_count];
         if (head === 0 || (tail === 0 && head < capacity >> 2)) {
             values.length <<= 1;
             instance[IndexedQueueMixin_tail] = count + head;
@@ -52,7 +50,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
     const shrink = (instance) => {
         const values = instance[IndexedQueueMixin_values] ?? [];
         const capacity = values.length;
-        const count = instance[CollectionLike_count];
+        const count = instance[QueueableLike_count];
         if (count >= capacity >> 2 || capacity <= 32) {
             return;
         }
@@ -70,14 +68,13 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         }
         instance[IndexedQueueMixin_capacityMask] = newCapacity - 1;
     };
-    return returns(mix(include(EnumerableIterableMixin()), function IndexedQueueMixin(instance, config) {
-        init(EnumerableIterableMixin(), instance);
+    return returns(mix(function IndexedQueueMixin(instance, config) {
         instance[QueueableLike_backpressureStrategy] =
             config?.[QueueableLike_backpressureStrategy] ?? "overflow";
         instance[QueueableLike_capacity] = clampPositiveInteger(config?.[QueueableLike_capacity] ?? MAX_SAFE_INTEGER);
         return instance;
     }, props({
-        [CollectionLike_count]: 0,
+        [QueueableLike_count]: 0,
         [QueueableLike_backpressureStrategy]: "overflow",
         [QueueableLike_capacity]: MAX_SAFE_INTEGER,
         [IndexedQueueMixin_head]: 0,
@@ -108,7 +105,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
                 values[head] = none;
                 head = (head + 1) & this[IndexedQueueMixin_capacityMask];
                 this[IndexedQueueMixin_head] = head;
-                this[CollectionLike_count]--;
+                this[QueueableLike_count]--;
             }
             shrink(this);
             return item;
@@ -123,14 +120,14 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
                 : ((tail =
                     (tail - 1 + capacity) & this[IndexedQueueMixin_capacityMask]),
                     (this[IndexedQueueMixin_tail] = tail),
-                    this[CollectionLike_count]--,
+                    this[QueueableLike_count]--,
                     values[tail]);
             values[tail] = none;
             shrink(this);
             return item;
         },
-        [KeyedLike_get](index) {
-            const count = this[CollectionLike_count];
+        [IndexedQueueLike_get](index) {
+            const count = this[QueueableLike_count];
             const capacity = this[IndexedQueueMixin_values]?.length ?? 0;
             const head = this[IndexedQueueMixin_head];
             const values = this[IndexedQueueMixin_values] ?? [];
@@ -143,8 +140,8 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
                     : tailOffsetIndex;
             return values[computedIndex];
         },
-        [MutableKeyedLike_set](index, value) {
-            const count = this[CollectionLike_count];
+        [IndexedQueueLike_set](index, value) {
+            const count = this[QueueableLike_count];
             const capacity = this[IndexedQueueMixin_values]?.length ?? 0;
             const head = this[IndexedQueueMixin_head];
             const values = this[IndexedQueueMixin_values] ?? [];
@@ -161,7 +158,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         },
         [QueueableLike_enqueue](item) {
             const backpressureStrategy = this[QueueableLike_backpressureStrategy];
-            let count = this[CollectionLike_count];
+            let count = this[QueueableLike_count];
             const capacity = this[QueueableLike_capacity];
             if (backpressureStrategy === "drop-latest" && count >= capacity) {
                 return false;
@@ -189,25 +186,11 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
             const capacityMask = this[IndexedQueueMixin_capacityMask];
             let tail = this[IndexedQueueMixin_tail];
             values[tail] = item;
-            this[CollectionLike_count]++;
+            this[QueueableLike_count]++;
             tail = (tail + 1) & capacityMask;
             this[IndexedQueueMixin_tail] = tail;
             grow(this);
-            return this[CollectionLike_count] < this[QueueableLike_capacity];
-        },
-        *[Symbol.iterator]() {
-            const head = this[IndexedQueueMixin_head];
-            const count = this[CollectionLike_count];
-            const values = this[IndexedQueueMixin_values] ?? [];
-            const valuesLength = values.length;
-            let i = head;
-            let iNormalized = 0;
-            while (iNormalized < count) {
-                yield values[i];
-                iNormalized++;
-                i = i + 1;
-                i = i < valuesLength ? i : 0;
-            }
+            return this[QueueableLike_count] < this[QueueableLike_capacity];
         },
     }));
 })();

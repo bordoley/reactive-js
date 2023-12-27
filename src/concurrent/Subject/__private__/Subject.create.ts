@@ -8,7 +8,6 @@ import {
   props,
   unsafeCast,
 } from "../../../__internal__/mixins.js";
-import { CollectionLike_count, KeyedLike_get } from "../../../collections.js";
 import {
   DispatcherLike_complete,
   ObservableLike_isDeferred,
@@ -39,10 +38,11 @@ import type * as Subject from "../../Subject.js";
 
 const Subject_create: Subject.Signature["create"] = /*@__PURE__*/ (<T>() => {
   const Subject_observers = Symbol("Subject_observers");
+  const Subject_buffer = Symbol("Subject_observers");
 
   type TProperties = {
     readonly [Subject_observers]: Set<ObserverLike<T>>;
-    readonly [ReplayObservableLike_buffer]: IndexedQueueLike<T>;
+    readonly [Subject_buffer]: IndexedQueueLike<T>;
   };
 
   const createSubjectInstance = createInstanceFactory(
@@ -66,7 +66,7 @@ const Subject_create: Subject.Signature["create"] = /*@__PURE__*/ (<T>() => {
         init(DisposableMixin, instance);
 
         instance[Subject_observers] = newInstance<Set<ObserverLike>>(Set);
-        instance[ReplayObservableLike_buffer] = IndexedQueue.create({
+        instance[Subject_buffer] = IndexedQueue.create({
           capacity: replay,
           backpressureStrategy: "drop-oldest",
         });
@@ -88,7 +88,7 @@ const Subject_create: Subject.Signature["create"] = /*@__PURE__*/ (<T>() => {
       },
       props<TProperties>({
         [Subject_observers]: none,
-        [ReplayObservableLike_buffer]: none,
+        [Subject_buffer]: none,
       }),
       {
         [EventListenerLike_isErrorSafe]: true as const,
@@ -101,12 +101,17 @@ const Subject_create: Subject.Signature["create"] = /*@__PURE__*/ (<T>() => {
           return this[Subject_observers].size;
         },
 
+        get [ReplayObservableLike_buffer]() {
+          unsafeCast<TProperties>(this);
+          return pipe(this[Subject_buffer], IndexedQueue.toReadonlyArray<T>());
+        },
+
         [SinkLike_notify](this: TProperties & SubjectLike<T>, next: T) {
           if (this[DisposableLike_isDisposed]) {
             return;
           }
 
-          this[ReplayObservableLike_buffer][QueueableLike_enqueue](next);
+          this[Subject_buffer][QueueableLike_enqueue](next);
 
           for (const observer of this[Subject_observers]) {
             try {
@@ -144,10 +149,10 @@ const Subject_create: Subject.Signature["create"] = /*@__PURE__*/ (<T>() => {
           // call next from unscheduled sources such as event handlers.
           // So we marshall those events back to the scheduler.
           const buffer = this[ReplayObservableLike_buffer];
-          const count = buffer[CollectionLike_count];
+          const count = buffer.length;
 
           for (let i = 0; i < count; i++) {
-            const next = buffer[KeyedLike_get](i);
+            const next = buffer[i];
             observer[QueueableLike_enqueue](next);
           }
 

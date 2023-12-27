@@ -3,11 +3,10 @@
 import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, } from "../__internal__/constants.js";
 import { clampPositiveNonZeroInteger, max } from "../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../__internal__/mixins.js";
-import { CollectionLike_count } from "../collections.js";
 import { SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../concurrent.js";
 import { SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTaskLike_id, } from "../concurrent/__private__.js";
 import { isSome, none } from "../functions.js";
-import { DisposableLike_dispose, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, } from "../utils.js";
+import { DisposableLike_dispose, QueueLike_dequeue, QueueLike_head, QueueableLike_count, QueueableLike_enqueue, } from "../utils.js";
 import * as PriorityQueue from "../utils/PriorityQueue.js";
 import ContinuationSchedulerMixin, { ContinuationLike_run, ContinuationSchedulerLike_scheduleContinuation, ContinuationSchedulerLike_shouldYield, } from "./__mixins__/ContinuationSchedulerMixin.js";
 const comparator = (a, b) => {
@@ -39,7 +38,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFa
     [VirtualTimeSchedulerLike_run]() {
         let queue = none;
         while (((queue = this[VirtualTimeScheduler_queue]),
-            queue[CollectionLike_count] > 0)) {
+            queue[QueueableLike_count] > 0)) {
             this[VirtualTimeScheduler_queue] = PriorityQueue.create(comparator);
             const currentTime = this[SchedulerLike_now];
             let task = none;

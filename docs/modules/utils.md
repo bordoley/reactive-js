@@ -12,7 +12,6 @@
 
 - [DisposableLike](../interfaces/utils.DisposableLike.md)
 - [IndexedQueueLike](../interfaces/utils.IndexedQueueLike.md)
-- [QueueCollectionLike](../interfaces/utils.QueueCollectionLike.md)
 - [QueueLike](../interfaces/utils.QueueLike.md)
 - [QueueableLike](../interfaces/utils.QueueableLike.md)
 - [SerialDisposableLike](../interfaces/utils.SerialDisposableLike.md)
@@ -24,10 +23,13 @@
 - [DisposableLike\_dispose](utils.md#disposablelike_dispose)
 - [DisposableLike\_error](utils.md#disposablelike_error)
 - [DisposableLike\_isDisposed](utils.md#disposablelike_isdisposed)
+- [IndexedQueueLike\_get](utils.md#indexedqueuelike_get)
+- [IndexedQueueLike\_set](utils.md#indexedqueuelike_set)
 - [QueueLike\_dequeue](utils.md#queuelike_dequeue)
 - [QueueLike\_head](utils.md#queuelike_head)
 - [QueueableLike\_backpressureStrategy](utils.md#queueablelike_backpressurestrategy)
 - [QueueableLike\_capacity](utils.md#queueablelike_capacity)
+- [QueueableLike\_count](utils.md#queueablelike_count)
 - [QueueableLike\_enqueue](utils.md#queueablelike_enqueue)
 - [SerialDisposableLike\_current](utils.md#serialdisposablelike_current)
 - [StackLike\_head](utils.md#stacklike_head)
@@ -59,6 +61,18 @@ ___
 
 ___
 
+### IndexedQueueLike\_get
+
+• `Const` **IndexedQueueLike\_get**: unique `symbol`
+
+___
+
+### IndexedQueueLike\_set
+
+• `Const` **IndexedQueueLike\_set**: unique `symbol`
+
+___
+
 ### QueueLike\_dequeue
 
 • `Const` **QueueLike\_dequeue**: unique `symbol`
@@ -80,6 +94,12 @@ ___
 ### QueueableLike\_capacity
 
 • `Const` **QueueableLike\_capacity**: unique `symbol`
+
+___
+
+### QueueableLike\_count
+
+• `Const` **QueueableLike\_count**: unique `symbol`
 
 ___
 

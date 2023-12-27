@@ -1,4 +1,3 @@
-import { CollectionLike, MutableIndexedLike } from "./collections.js";
 import { Optional, SideEffect1 } from "./functions.js";
 export declare const DisposableLike_add: unique symbol;
 export declare const DisposableLike_dispose: unique symbol;
@@ -42,12 +41,14 @@ export interface SerialDisposableLike<TDisposable extends DisposableLike = Dispo
 export declare const QueueableLike_backpressureStrategy: unique symbol;
 export declare const QueueableLike_capacity: unique symbol;
 export declare const QueueableLike_enqueue: unique symbol;
+export declare const QueueableLike_count: unique symbol;
 /**
  * An interface for types that support buffering items with backpressure.
  *
  * @noInheritDoc
  */
 export interface QueueableLike<T = unknown> {
+    readonly [QueueableLike_count]: number;
     /**
      * The back pressure strategy utilized by the queue when it is at capacity.
      */
@@ -82,15 +83,14 @@ export interface QueueLike<T = unknown> extends QueueableLike<T> {
     readonly [QueueLike_head]: Optional<T>;
     [QueueLike_dequeue](): Optional<T>;
 }
+export declare const IndexedQueueLike_get: unique symbol;
+export declare const IndexedQueueLike_set: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface QueueCollectionLike<T = unknown> extends QueueLike<T>, CollectionLike<T> {
-}
-/**
- * @noInheritDoc
- */
-export interface IndexedQueueLike<T = unknown> extends QueueLike<T>, MutableIndexedLike<T>, StackLike<T> {
+export interface IndexedQueueLike<T = unknown> extends QueueLike<T>, StackLike<T> {
+    [IndexedQueueLike_get](index: number): T;
+    [IndexedQueueLike_set](key: number, value: T): T;
 }
 /**
  * @noInheritDoc

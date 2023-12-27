@@ -20,7 +20,7 @@ import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
-import Observable_fromIterable from "./Observable.fromIterable.js";
+import Observable_fromReadonlyArray from "./Observable.fromReadonlyArray.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() => {
@@ -51,7 +51,8 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() => {
           Disposable.onComplete(() => {
             pipe(
               instance[TakeLastObserver_queue],
-              Observable_fromIterable(),
+              IndexedQueue.toReadonlyArray(),
+              Observable_fromReadonlyArray(),
               invoke(ObservableLike_observe, delegate),
             );
           }),

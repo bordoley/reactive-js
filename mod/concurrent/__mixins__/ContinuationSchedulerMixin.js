@@ -3,10 +3,9 @@
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { createInstanceFactory, getPrototype, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
-import { CollectionLike_count } from "../../collections.js";
 import { ContinuationContextLike_yield, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import { call, error, isNone, isSome, newInstance, none, pipe, pipeLazy, } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_count, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
@@ -193,7 +192,7 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
                     this[SchedulerLike_now] >
                         this[ContinuationSchedulerMixinLike_startTime] +
                             this[SchedulerLike_maxYieldInterval] ||
-                    (getActiveContinuation(this)?.[CollectionLike_count] ?? 0) > 0 ||
+                    (getActiveContinuation(this)?.[QueueableLike_count] ?? 0) > 0 ||
                     this[ContinuationSchedulerLike_shouldYield]));
         },
         [SchedulerLike_requestYield]() {

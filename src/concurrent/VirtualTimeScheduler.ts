@@ -12,7 +12,6 @@ import {
   props,
   unsafeCast,
 } from "../__internal__/mixins.js";
-import { CollectionLike_count } from "../collections.js";
 import {
   SchedulerLike,
   SchedulerLike_now,
@@ -29,10 +28,10 @@ import { Optional, isSome, none } from "../functions.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
-  QueueCollectionLike,
   QueueLike,
   QueueLike_dequeue,
   QueueLike_head,
+  QueueableLike_count,
   QueueableLike_enqueue,
 } from "../utils.js";
 import * as PriorityQueue from "../utils/PriorityQueue.js";
@@ -72,7 +71,7 @@ type TProperties = {
   readonly [VirtualTimeScheduler_maxMicroTaskTicks]: number;
   [VirtualTimeScheduler_microTaskTicks]: number;
   [VirtualTimeScheduler_taskIDCount]: number;
-  [VirtualTimeScheduler_queue]: QueueCollectionLike<SchedulerTaskLike>;
+  [VirtualTimeScheduler_queue]: QueueLike<SchedulerTaskLike>;
 };
 
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
@@ -116,10 +115,10 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         [VirtualTimeSchedulerLike_run](
           this: TProperties & ContinuationSchedulerLike & DisposableLike,
         ) {
-          let queue: Optional<QueueCollectionLike<SchedulerTaskLike>> = none;
+          let queue: Optional<QueueLike<SchedulerTaskLike>> = none;
           while (
             ((queue = this[VirtualTimeScheduler_queue]),
-            queue[CollectionLike_count] > 0)
+            queue[QueueableLike_count] > 0)
           ) {
             this[VirtualTimeScheduler_queue] = PriorityQueue.create(comparator);
 

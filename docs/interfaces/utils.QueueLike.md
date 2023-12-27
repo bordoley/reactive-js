@@ -16,8 +16,6 @@
 
   ↳ **`QueueLike`**
 
-  ↳↳ [`QueueCollectionLike`](utils.QueueCollectionLike.md)
-
   ↳↳ [`IndexedQueueLike`](utils.IndexedQueueLike.md)
 
 ## Table of contents

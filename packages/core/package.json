@@ -50,7 +50,6 @@
     "./collections": "./collections.js",
     "./collections/Dictionary": "./collections/Dictionary.js",
     "./collections/Enumerable": "./collections/Enumerable.js",
-    "./collections/Indexed": "./collections/Indexed.js",
     "./collections/ReadonlyArray": "./collections/ReadonlyArray.js",
     "./collections/ReadonlyMap": "./collections/ReadonlyMap.js",
     "./collections/ReadonlyObjectMap": "./collections/ReadonlyObjectMap.js",

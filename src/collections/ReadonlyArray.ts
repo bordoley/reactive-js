@@ -1,10 +1,13 @@
 import {
-  IndexedCollectionModule,
+  EnumerableLike,
   KeyOf,
   KeyedCollection,
+  KeyedCollectionModule,
+  KeyedCollectionOf,
   KeyedCollection_T,
   KeyedCollection_type,
 } from "../collections.js";
+import { Function1, Tuple2 } from "../functions.js";
 import Enumerable_fromReadonlyArray from "./Enumerable/__private__/Enumerable.fromReadonlyArray.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__private__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__private__/ReadonlyArray.entries.js";
@@ -15,7 +18,6 @@ import ReadonlyArray_keys from "./ReadonlyArray/__private__/ReadonlyArray.keys.j
 import ReadonlyArray_map from "./ReadonlyArray/__private__/ReadonlyArray.map.js";
 import ReadonlyArray_reduce from "./ReadonlyArray/__private__/ReadonlyArray.reduce.js";
 import ReadonlyArray_toDictionary from "./ReadonlyArray/__private__/ReadonlyArray.toDictionary.js";
-import ReadonlyArray_toIndexed from "./ReadonlyArray/__private__/ReadonlyArray.toIndexed.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__private__/ReadonlyArray.toReadonlyArray.js";
 import ReadonlyArray_toReadonlyMap from "./ReadonlyArray/__private__/ReadonlyArray.toReadonlyMap.js";
 
@@ -30,7 +32,45 @@ export interface ReadonlyArrayCollection extends KeyedCollection<number> {
 
 export type TKeyBase = KeyOf<ReadonlyArrayCollection>;
 
-export type Signature = IndexedCollectionModule<ReadonlyArrayCollection>;
+/**
+ * @noInheritDoc
+ */
+export interface ReadonlyArrayModule
+  extends KeyedCollectionModule<ReadonlyArrayCollection> {
+  /**
+   */
+  entries<T, TKey extends number = number>(options?: {
+    readonly count?: number;
+    readonly start?: number;
+  }): Function1<
+    KeyedCollectionOf<ReadonlyArrayCollection, T, TKey>,
+    EnumerableLike<Tuple2<TKey, T>>
+  >;
+
+  /**
+   *
+   */
+  values<
+    T,
+    TKey extends KeyOf<ReadonlyArrayCollection> = KeyOf<ReadonlyArrayCollection>,
+  >(options?: {
+    readonly count?: number;
+    readonly start?: number;
+  }): Function1<
+    KeyedCollectionOf<ReadonlyArrayCollection, T, TKey>,
+    EnumerableLike<T>
+  >;
+
+  toReadonlyArray<T>(options?: {
+    readonly count?: number;
+    readonly start?: number;
+  }): Function1<
+    KeyedCollectionOf<ReadonlyArrayCollection, T>,
+    ReadonlyArray<T>
+  >;
+}
+
+export type Signature = ReadonlyArrayModule;
 
 export const empty: Signature["empty"] = ReadonlyArray_empty;
 export const entries: Signature["entries"] = ReadonlyArray_entries;
@@ -42,7 +82,6 @@ export const map: Signature["map"] = ReadonlyArray_map;
 export const reduce: Signature["reduce"] = ReadonlyArray_reduce;
 export const toDictionary: Signature["toDictionary"] =
   ReadonlyArray_toDictionary;
-export const toIndexed: Signature["toIndexed"] = ReadonlyArray_toIndexed;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
 export const toReadonlyMap: Signature["toReadonlyMap"] =

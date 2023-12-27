@@ -5,7 +5,6 @@ import "./computations.test.js";
 import "./functions.test.js";
 import "../collections/__tests__/Dictionary.test.js";
 import "../collections/__tests__/Enumerable.test.js";
-import "../collections/__tests__/Indexed.test.js";
 import "../collections/__tests__/ReadonlyArray.test.js";
 import "../collections/__tests__/ReadonlyMap.test.js";
 import "../collections/__tests__/ReadonlyObjectMap.test.js";

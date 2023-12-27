@@ -19,10 +19,6 @@
 
   ↳↳ [`AssociativeLike`](collections.AssociativeLike.md)
 
-  ↳↳ [`IndexedLike`](collections.IndexedLike.md)
-
-  ↳↳ [`MutableKeyedLike`](collections.MutableKeyedLike.md)
-
 ## Table of contents
 
 ### Methods

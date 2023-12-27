@@ -14,7 +14,7 @@
 
 - **`KeyedCollectionModule`**
 
-  ↳ [`IndexedCollectionModule`](collections.IndexedCollectionModule.md)
+  ↳ [`ReadonlyArrayModule`](collections_ReadonlyArray.ReadonlyArrayModule.md)
 
   ↳ [`DictionaryCollectionModule`](collections.DictionaryCollectionModule.md)
 

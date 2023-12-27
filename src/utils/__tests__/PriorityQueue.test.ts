@@ -6,11 +6,11 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { CollectionLike_count } from "../../collections.js";
 import { Optional, newInstance, pipe } from "../../functions.js";
 import {
   QueueLike_dequeue,
   QueueLike_head,
+  QueueableLike_count,
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as PriorityQueue from "../PriorityQueue.js";
@@ -53,7 +53,7 @@ testModule(
     }
 
     const acc: number[] = [];
-    while (queue[CollectionLike_count] > 0) {
+    while (queue[QueueableLike_count] > 0) {
       acc.push(queue[QueueLike_dequeue]() as number);
     }
 
@@ -70,7 +70,7 @@ testModule(
     queue[QueueableLike_enqueue](0);
     queue[QueueableLike_enqueue](1);
 
-    pipe(queue[CollectionLike_count], expectEquals(1));
+    pipe(queue[QueueableLike_count], expectEquals(1));
     pipe(queue[QueueLike_head], expectEquals<Optional<number>>(0));
   }),
   test("drop-oldest backpressure", () => {
@@ -84,7 +84,7 @@ testModule(
     queue[QueueableLike_enqueue](0);
     queue[QueueableLike_enqueue](1);
 
-    pipe(queue[CollectionLike_count], expectEquals(1));
+    pipe(queue[QueueableLike_count], expectEquals(1));
     pipe(queue[QueueLike_head], expectEquals<Optional<number>>(1));
   }),
   test("throw backpressure", () => {
@@ -101,7 +101,7 @@ testModule(
       queue[QueueableLike_enqueue](1);
     });
 
-    pipe(queue[CollectionLike_count], expectEquals(1));
+    pipe(queue[QueueableLike_count], expectEquals(1));
     pipe(queue[QueueLike_head], expectEquals<Optional<number>>(0));
   }),
 );

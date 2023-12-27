@@ -8,11 +8,9 @@ import {
   useState,
 } from "react";
 import {
-  CollectionLike_count,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_move,
-  KeyedLike_get,
 } from "../collections.js";
 import {
   DispatcherLike,
@@ -355,8 +353,7 @@ export const useObserve: Signature["useObserve"] = <T>(
   const buffer = (observable as Optional<ReplayObservableLike<T>>)?.[
     ReplayObservableLike_buffer
   ];
-  const hasDefaultValue = (buffer?.[CollectionLike_count] ?? 0) > 0;
-  const defaultValue = hasDefaultValue ? buffer?.[KeyedLike_get](0) : none;
+  const defaultValue = buffer?.[0];
 
   return isSome(error) ? raiseError<T>(error) : state ?? defaultValue;
 };

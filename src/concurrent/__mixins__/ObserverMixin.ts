@@ -7,7 +7,6 @@ import {
   props,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import { CollectionLike_count } from "../../collections.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
@@ -47,6 +46,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
+  QueueableLike_count,
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -87,11 +87,11 @@ const ObserverMixin: <T>() => Mixin2<
       const continuation = (ctx: ContinuationContextLike) => {
         unsafeCast<TProperties & ObserverLike<T>>(observer);
 
-        while (observer[CollectionLike_count] > 0) {
+        while (observer[QueueableLike_count] > 0) {
           const next = observer[QueueLike_dequeue]() as T;
           observer[SinkLike_notify](next);
 
-          if (observer[CollectionLike_count] > 0) {
+          if (observer[QueueableLike_count] > 0) {
             ctx[ContinuationContextLike_yield]();
           }
         }

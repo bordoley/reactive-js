@@ -1,4 +1,3 @@
-import { CollectionLike_count, KeyedLike_get } from "../../../collections.js";
 import {
   DeferredObservableWithSideEffectsLike,
   ObservableLike,
@@ -310,8 +309,8 @@ class ComputeContext {
       const buffer = (observable as Optional<ReplayObservableLike<T>>)?.[
         ReplayObservableLike_buffer
       ];
-      const hasDefaultValue = (buffer?.[CollectionLike_count] ?? 0) > 0;
-      const defaultValue = hasDefaultValue ? buffer?.[KeyedLike_get](0) : none;
+      const hasDefaultValue = (buffer?.length ?? 0) > 0;
+      const defaultValue = buffer?.[0];
 
       effect[AwaitOrObserveEffect_observable] = observable;
       effect[AwaitOrObserveEffect_subscription] = subscription;

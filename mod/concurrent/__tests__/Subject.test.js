@@ -2,7 +2,6 @@
 
 import { describe, expectArrayEquals, expectEquals, expectIsSome, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
-import * as Indexed from "../../collections/Indexed.js";
 import { ObservableLike_observe, ReplayObservableLike_buffer, SchedulerLike_schedule, SubjectLike_observerCount, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import { SinkLike_notify } from "../../events.js";
 import { bind, bindMethod, increment, pipe, returns, } from "../../functions.js";
@@ -17,7 +16,7 @@ testModule("Subject", describe("create", test("with replay", () => {
     for (const v of [1, 2, 3, 4]) {
         subject[SinkLike_notify](v);
     }
-    pipe(subject[ReplayObservableLike_buffer], Indexed.toReadonlyArray(), expectArrayEquals([3, 4]));
+    pipe(subject[ReplayObservableLike_buffer], expectArrayEquals([3, 4]));
     subject[DisposableLike_dispose]();
     const result = [];
     pipe(subject, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
@@ -80,6 +79,6 @@ testModule("Subject", describe("create", test("with replay", () => {
     for (const v of [1, 2, 3, 4]) {
         subject[SinkLike_notify](v);
     }
-    pipe(subject[ReplayObservableLike_buffer], Indexed.toReadonlyArray(), expectArrayEquals([3, 4]));
+    pipe(subject[ReplayObservableLike_buffer], expectArrayEquals([3, 4]));
 })));
 ((_) => { })(Subject);

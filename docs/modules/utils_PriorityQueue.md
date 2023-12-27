@@ -12,7 +12,7 @@
 
 ### create
 
-▸ **create**<`T`\>(`comparator`, `options?`): [`QueueCollectionLike`](../interfaces/utils.QueueCollectionLike.md)<`T`\>
+▸ **create**<`T`\>(`comparator`, `options?`): [`QueueLike`](../interfaces/utils.QueueLike.md)<`T`\>
 
 #### Type parameters
 
@@ -31,4 +31,4 @@
 
 #### Returns
 
-[`QueueCollectionLike`](../interfaces/utils.QueueCollectionLike.md)<`T`\>
+[`QueueLike`](../interfaces/utils.QueueLike.md)<`T`\>

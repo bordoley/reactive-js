@@ -1,12 +1,11 @@
 /// <reference types="./ObserverMixin.d.ts" />
 
 import { getPrototype, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
-import { CollectionLike_count } from "../../collections.js";
 import { ContinuationContextLike_yield, DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import { SinkLike_notify } from "../../events.js";
 import LazyInitEventSourceMixin, { LazyInitEventSourceMixin_publisher, } from "../../events/__mixins__/LazyInitEventSourceMixin.js";
 import { call, none, pipe, returns, } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_count, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
 const ObserverMixin = /*@__PURE__*/ (() => {
@@ -17,10 +16,10 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         if (observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]) {
             const continuation = (ctx) => {
                 unsafeCast(observer);
-                while (observer[CollectionLike_count] > 0) {
+                while (observer[QueueableLike_count] > 0) {
                     const next = observer[QueueLike_dequeue]();
                     observer[SinkLike_notify](next);
-                    if (observer[CollectionLike_count] > 0) {
+                    if (observer[QueueableLike_count] > 0) {
                         ctx[ContinuationContextLike_yield]();
                     }
                 }

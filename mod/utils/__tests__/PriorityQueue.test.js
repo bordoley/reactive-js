@@ -2,9 +2,8 @@
 
 import { floor, random } from "../../__internal__/math.js";
 import { expectArrayEquals, expectEquals, expectToThrow, test, testModule, } from "../../__internal__/testing.js";
-import { CollectionLike_count } from "../../collections.js";
 import { newInstance, pipe } from "../../functions.js";
-import { QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, } from "../../utils.js";
+import { QueueLike_dequeue, QueueLike_head, QueueableLike_count, QueueableLike_enqueue, } from "../../utils.js";
 import * as PriorityQueue from "../PriorityQueue.js";
 const createPriorityQueue = /*@__PURE__*/ (() => {
     const compare = (a, b) => a - b;
@@ -34,7 +33,7 @@ testModule("PriorityQueue", test("push", () => {
         queue[QueueableLike_enqueue](shuffledArray[i]);
     }
     const acc = [];
-    while (queue[CollectionLike_count] > 0) {
+    while (queue[QueueableLike_count] > 0) {
         acc.push(queue[QueueLike_dequeue]());
     }
     pipe(acc, expectArrayEquals(makeSortedArray(100)));
@@ -46,7 +45,7 @@ testModule("PriorityQueue", test("push", () => {
     });
     queue[QueueableLike_enqueue](0);
     queue[QueueableLike_enqueue](1);
-    pipe(queue[CollectionLike_count], expectEquals(1));
+    pipe(queue[QueueableLike_count], expectEquals(1));
     pipe(queue[QueueLike_head], expectEquals(0));
 }), test("drop-oldest backpressure", () => {
     const compare = (a, b) => a - b;
@@ -56,7 +55,7 @@ testModule("PriorityQueue", test("push", () => {
     });
     queue[QueueableLike_enqueue](0);
     queue[QueueableLike_enqueue](1);
-    pipe(queue[CollectionLike_count], expectEquals(1));
+    pipe(queue[QueueableLike_count], expectEquals(1));
     pipe(queue[QueueLike_head], expectEquals(1));
 }), test("throw backpressure", () => {
     const compare = (a, b) => a - b;
@@ -68,6 +67,6 @@ testModule("PriorityQueue", test("push", () => {
     expectToThrow(() => {
         queue[QueueableLike_enqueue](1);
     });
-    pipe(queue[CollectionLike_count], expectEquals(1));
+    pipe(queue[QueueableLike_count], expectEquals(1));
     pipe(queue[QueueLike_head], expectEquals(0));
 }));

@@ -11,7 +11,6 @@ import {
   props,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import { CollectionLike, CollectionLike_count } from "../../collections.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
@@ -40,8 +39,9 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueCollectionLike,
+  QueueLike,
   QueueLike_dequeue,
+  QueueableLike_count,
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -123,8 +123,7 @@ const ContinuationSchedulerMixin: Mixin1<
 
   interface QueueableContinuationLike
     extends ContinuationLike,
-      QueueCollectionLike<QueueableContinuationLike>,
-      CollectionLike<QueueableContinuationLike>,
+      QueueLike<QueueableContinuationLike>,
       ContinuationContextLike {
     [QueueableContinuationLike_activeChild]: Optional<QueueableContinuationLike>;
 
@@ -290,7 +289,7 @@ const ContinuationSchedulerMixin: Mixin1<
         {
           [ContinuationLike_run](
             this: QueueableContinuationLike &
-              QueueCollectionLike<QueueableContinuationLike> &
+              QueueLike<QueueableContinuationLike> &
               TContinuationProperties &
               SchedulerLike,
           ): void {
@@ -428,7 +427,7 @@ const ContinuationSchedulerMixin: Mixin1<
             this[SchedulerLike_now] >
               this[ContinuationSchedulerMixinLike_startTime] +
                 this[SchedulerLike_maxYieldInterval] ||
-            (getActiveContinuation(this)?.[CollectionLike_count] ?? 0) > 0 ||
+            (getActiveContinuation(this)?.[QueueableLike_count] ?? 0) > 0 ||
             this[ContinuationSchedulerLike_shouldYield])
         );
       },

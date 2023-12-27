@@ -7,6 +7,7 @@
 ### Functions
 
 - [create](utils_IndexedQueue.md#create)
+- [toReadonlyArray](utils_IndexedQueue.md#toreadonlyarray)
 
 ## Functions
 
@@ -31,3 +32,19 @@
 #### Returns
 
 [`IndexedQueueLike`](../interfaces/utils.IndexedQueueLike.md)<`T`\>
+
+___
+
+### toReadonlyArray
+
+▸ **toReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<[`IndexedQueueLike`](../interfaces/utils.IndexedQueueLike.md)<`T`\>, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`IndexedQueueLike`](../interfaces/utils.IndexedQueueLike.md)<`T`\>, readonly `T`[]\>

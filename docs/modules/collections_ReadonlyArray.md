@@ -7,6 +7,7 @@
 ### Interfaces
 
 - [ReadonlyArrayCollection](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md)
+- [ReadonlyArrayModule](../interfaces/collections_ReadonlyArray.ReadonlyArrayModule.md)
 
 ### Type Aliases
 
@@ -24,7 +25,6 @@
 - [map](collections_ReadonlyArray.md#map)
 - [reduce](collections_ReadonlyArray.md#reduce)
 - [toDictionary](collections_ReadonlyArray.md#todictionary)
-- [toIndexed](collections_ReadonlyArray.md#toindexed)
 - [toReadonlyArray](collections_ReadonlyArray.md#toreadonlyarray)
 - [toReadonlyMap](collections_ReadonlyArray.md#toreadonlymap)
 - [values](collections_ReadonlyArray.md#values)
@@ -33,7 +33,7 @@
 
 ### Signature
 
-Ƭ **Signature**: [`IndexedCollectionModule`](../interfaces/collections.IndexedCollectionModule.md)<[`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md)\>
+Ƭ **Signature**: [`ReadonlyArrayModule`](../interfaces/collections_ReadonlyArray.ReadonlyArrayModule.md)
 
 ___
 
@@ -239,30 +239,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`TKey`, `T`\>\>
-
-___
-
-### toIndexed
-
-▸ **toIndexed**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`IndexedLike`](../interfaces/collections.IndexedLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], [`IndexedLike`](../interfaces/collections.IndexedLike.md)<`T`\>\>
 
 ___
 

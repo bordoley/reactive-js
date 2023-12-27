@@ -11,7 +11,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { CollectionLike_count } from "../../../collections.js";
 import {
   DeferredObservableWithSideEffectsLike,
   ObservableLike,
@@ -38,6 +37,7 @@ import {
   QueueLike_dequeue,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  QueueableLike_count,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -147,7 +147,7 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
                 // FIXME: Clear the queue
               } else if (
                 instance[MergeAllObserver_observablesQueue][
-                  CollectionLike_count
+                  QueueableLike_count
                 ] +
                   instance[MergeAllObserver_activeCount] ===
                 0

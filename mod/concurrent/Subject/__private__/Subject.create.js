@@ -2,7 +2,6 @@
 
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
-import { CollectionLike_count, KeyedLike_get } from "../../../collections.js";
 import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, ReplayObservableLike_buffer, SubjectLike_observerCount, } from "../../../concurrent.js";
 import { EventListenerLike_isErrorSafe, SinkLike_notify, } from "../../../events.js";
 import { error, isSome, newInstance, none, pipe } from "../../../functions.js";
@@ -12,10 +11,11 @@ import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 const Subject_create = /*@__PURE__*/ (() => {
     const Subject_observers = Symbol("Subject_observers");
+    const Subject_buffer = Symbol("Subject_observers");
     const createSubjectInstance = createInstanceFactory(mix(include(DisposableMixin), function Subject(instance, replay) {
         init(DisposableMixin, instance);
         instance[Subject_observers] = newInstance(Set);
-        instance[ReplayObservableLike_buffer] = IndexedQueue.create({
+        instance[Subject_buffer] = IndexedQueue.create({
             capacity: replay,
             backpressureStrategy: "drop-oldest",
         });
@@ -32,7 +32,7 @@ const Subject_create = /*@__PURE__*/ (() => {
         return instance;
     }, props({
         [Subject_observers]: none,
-        [ReplayObservableLike_buffer]: none,
+        [Subject_buffer]: none,
     }), {
         [EventListenerLike_isErrorSafe]: true,
         [ObservableLike_isDeferred]: false,
@@ -42,11 +42,15 @@ const Subject_create = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[Subject_observers].size;
         },
+        get [ReplayObservableLike_buffer]() {
+            unsafeCast(this);
+            return pipe(this[Subject_buffer], IndexedQueue.toReadonlyArray());
+        },
         [SinkLike_notify](next) {
             if (this[DisposableLike_isDisposed]) {
                 return;
             }
-            this[ReplayObservableLike_buffer][QueueableLike_enqueue](next);
+            this[Subject_buffer][QueueableLike_enqueue](next);
             for (const observer of this[Subject_observers]) {
                 try {
                     observer[QueueableLike_enqueue](next);
@@ -72,9 +76,9 @@ const Subject_create = /*@__PURE__*/ (() => {
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
             const buffer = this[ReplayObservableLike_buffer];
-            const count = buffer[CollectionLike_count];
+            const count = buffer.length;
             for (let i = 0; i < count; i++) {
-                const next = buffer[KeyedLike_get](i);
+                const next = buffer[i];
                 observer[QueueableLike_enqueue](next);
             }
             if (this[DisposableLike_isDisposed]) {

@@ -1,4 +1,3 @@
-import { CollectionLike, MutableIndexedLike } from "./collections.js";
 import { Optional, SideEffect1 } from "./functions.js";
 
 export const DisposableLike_add = Symbol("DisposableLike_add");
@@ -56,6 +55,7 @@ export const QueueableLike_backpressureStrategy = Symbol(
 );
 export const QueueableLike_capacity = Symbol("QueueableLike_capacity");
 export const QueueableLike_enqueue = Symbol("QueueableLike_enqueue");
+export const QueueableLike_count = Symbol("QueueableLike_count");
 
 /**
  * An interface for types that support buffering items with backpressure.
@@ -63,6 +63,8 @@ export const QueueableLike_enqueue = Symbol("QueueableLike_enqueue");
  * @noInheritDoc
  */
 export interface QueueableLike<T = unknown> {
+  readonly [QueueableLike_count]: number;
+
   /**
    * The back pressure strategy utilized by the queue when it is at capacity.
    */
@@ -109,20 +111,18 @@ export interface QueueLike<T = unknown> extends QueueableLike<T> {
   [QueueLike_dequeue](): Optional<T>;
 }
 
-/**
- * @noInheritDoc
- */
-export interface QueueCollectionLike<T = unknown>
-  extends QueueLike<T>,
-    CollectionLike<T> {}
+export const IndexedQueueLike_get = Symbol("IndexedQueueLike_get");
+export const IndexedQueueLike_set = Symbol("IndexedQueueLike_set");
 
 /**
  * @noInheritDoc
  */
 export interface IndexedQueueLike<T = unknown>
   extends QueueLike<T>,
-    MutableIndexedLike<T>,
-    StackLike<T> {}
+    StackLike<T> {
+  [IndexedQueueLike_get](index: number): T;
+  [IndexedQueueLike_set](key: number, value: T): T;
+}
 
 /**
  * @noInheritDoc

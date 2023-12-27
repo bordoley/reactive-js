@@ -3,19 +3,10 @@ import { clampPositiveInteger } from "../../__internal__/math.js";
 import {
   Mixin1,
   Mutable,
-  include,
-  init,
   mix,
   props,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import {
-  CollectionLike_count,
-  EnumerableLike_enumerate,
-  KeyedLike_get,
-  MutableKeyedLike_set,
-} from "../../collections.js";
-import EnumerableIterableMixin from "../../collections/__mixins__/EnumerableIterableMixin.js";
 import {
   Optional,
   newInstance,
@@ -27,11 +18,14 @@ import {
 import {
   BackPressureError,
   IndexedQueueLike,
+  IndexedQueueLike_get,
+  IndexedQueueLike_set,
   QueueLike_dequeue,
   QueueLike_head,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
+  QueueableLike_count,
   QueueableLike_enqueue,
   StackLike_head,
   StackLike_pop,
@@ -47,9 +41,8 @@ const IndexedQueueMixin: <T>() => Mixin1<
   Omit<
     IndexedQueueLike<T>,
     | typeof QueueableLike_backpressureStrategy
-    | typeof CollectionLike_count
+    | typeof QueueableLike_count
     | typeof QueueableLike_capacity
-    | typeof EnumerableLike_enumerate
   >
 > = /*@PURE*/ (<T>() => {
   const IndexedQueueMixin_capacityMask = Symbol(
@@ -59,7 +52,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
   const IndexedQueueMixin_tail = Symbol("IndexedQueueMixin_tail");
   const IndexedQueueMixin_values = Symbol("IndexedQueueMixin_values");
   type TProperties = {
-    [CollectionLike_count]: number;
+    [QueueableLike_count]: number;
     readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly [QueueableLike_capacity]: number;
     [IndexedQueueMixin_head]: number;
@@ -103,7 +96,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
     const values = instance[IndexedQueueMixin_values] ?? [];
     const capacity = values.length;
     const capacityMask = instance[IndexedQueueMixin_capacityMask];
-    const count = instance[CollectionLike_count];
+    const count = instance[QueueableLike_count];
 
     if (head === 0 || (tail === 0 && head < capacity >> 2)) {
       values.length <<= 1;
@@ -123,7 +116,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
   const shrink = (instance: TProperties) => {
     const values = instance[IndexedQueueMixin_values] ?? [];
     const capacity = values.length;
-    const count = instance[CollectionLike_count];
+    const count = instance[QueueableLike_count];
 
     if (count >= capacity >> 2 || capacity <= 32) {
       return;
@@ -148,13 +141,10 @@ const IndexedQueueMixin: <T>() => Mixin1<
 
   return returns(
     mix(
-      include(EnumerableIterableMixin<T>()),
       function IndexedQueueMixin(
         instance: Omit<
           IndexedQueueLike<T>,
-          | typeof CollectionLike_count
-          | typeof QueueableLike_capacity
-          | typeof EnumerableLike_enumerate
+          typeof QueueableLike_count | typeof QueueableLike_capacity
         > &
           Mutable<TProperties>,
         config?: {
@@ -162,7 +152,6 @@ const IndexedQueueMixin: <T>() => Mixin1<
           readonly [QueueableLike_capacity]?: number;
         },
       ): IndexedQueueLike<T> {
-        init(EnumerableIterableMixin<T>(), instance);
         instance[QueueableLike_backpressureStrategy] =
           config?.[QueueableLike_backpressureStrategy] ?? "overflow";
         instance[QueueableLike_capacity] = clampPositiveInteger(
@@ -171,7 +160,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
         return instance;
       },
       props<TProperties>({
-        [CollectionLike_count]: 0,
+        [QueueableLike_count]: 0,
         [QueueableLike_backpressureStrategy]: "overflow",
         [QueueableLike_capacity]: MAX_SAFE_INTEGER,
         [IndexedQueueMixin_head]: 0,
@@ -210,7 +199,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
             values[head] = none;
             head = (head + 1) & this[IndexedQueueMixin_capacityMask];
             this[IndexedQueueMixin_head] = head;
-            this[CollectionLike_count]--;
+            this[QueueableLike_count]--;
           }
 
           shrink(this);
@@ -231,7 +220,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
               : ((tail =
                   (tail - 1 + capacity) & this[IndexedQueueMixin_capacityMask]),
                 (this[IndexedQueueMixin_tail] = tail),
-                this[CollectionLike_count]--,
+                this[QueueableLike_count]--,
                 values[tail]);
 
           values[tail] = none;
@@ -241,11 +230,11 @@ const IndexedQueueMixin: <T>() => Mixin1<
           return item;
         },
 
-        [KeyedLike_get](
+        [IndexedQueueLike_get](
           this: TProperties & IndexedQueueLike<T>,
           index: number,
         ): T {
-          const count = this[CollectionLike_count];
+          const count = this[QueueableLike_count];
           const capacity = this[IndexedQueueMixin_values]?.length ?? 0;
           const head = this[IndexedQueueMixin_head];
           const values = this[IndexedQueueMixin_values] ?? [];
@@ -263,12 +252,12 @@ const IndexedQueueMixin: <T>() => Mixin1<
           return values[computedIndex] as T;
         },
 
-        [MutableKeyedLike_set](
+        [IndexedQueueLike_set](
           this: TProperties & IndexedQueueLike<T>,
           index: number,
           value: T,
         ): T {
-          const count = this[CollectionLike_count];
+          const count = this[QueueableLike_count];
           const capacity = this[IndexedQueueMixin_values]?.length ?? 0;
           const head = this[IndexedQueueMixin_head];
           const values = this[IndexedQueueMixin_values] ?? [];
@@ -295,7 +284,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
           item: T,
         ): boolean {
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
-          let count = this[CollectionLike_count];
+          let count = this[QueueableLike_count];
           const capacity = this[QueueableLike_capacity];
 
           if (backpressureStrategy === "drop-latest" && count >= capacity) {
@@ -333,34 +322,14 @@ const IndexedQueueMixin: <T>() => Mixin1<
           let tail = this[IndexedQueueMixin_tail];
 
           values[tail] = item;
-          this[CollectionLike_count]++;
+          this[QueueableLike_count]++;
 
           tail = (tail + 1) & capacityMask;
           this[IndexedQueueMixin_tail] = tail;
 
           grow(this);
 
-          return this[CollectionLike_count] < this[QueueableLike_capacity];
-        },
-
-        *[Symbol.iterator](
-          this: TProperties & IndexedQueueLike<T>,
-        ): Iterator<T, any, undefined> {
-          const head = this[IndexedQueueMixin_head];
-          const count = this[CollectionLike_count];
-          const values = this[IndexedQueueMixin_values] ?? [];
-          const valuesLength = values.length;
-
-          let i = head;
-          let iNormalized = 0;
-
-          while (iNormalized < count) {
-            yield values[i] as T;
-
-            iNormalized++;
-            i = i + 1;
-            i = i < valuesLength ? i : 0;
-          }
+          return this[QueueableLike_count] < this[QueueableLike_capacity];
         },
       },
     ),

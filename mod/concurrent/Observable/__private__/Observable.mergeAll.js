@@ -3,11 +3,10 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger, clampPositiveNonZeroInteger, } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { CollectionLike_count } from "../../../collections.js";
 import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { bindMethod, isSome, none, pipe, } from "../../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_count, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
@@ -51,7 +50,7 @@ const Observer_createMergeAllObserverOperator = /*@__PURE__*/ (() => {
             if (delegate[DisposableLike_isDisposed]) {
                 // FIXME: Clear the queue
             }
-            else if (instance[MergeAllObserver_observablesQueue][CollectionLike_count] +
+            else if (instance[MergeAllObserver_observablesQueue][QueueableLike_count] +
                 instance[MergeAllObserver_activeCount] ===
                 0) {
                 delegate[DisposableLike_dispose]();

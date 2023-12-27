@@ -4,7 +4,7 @@ import { include, init, mix, props, unsafeCast, } from "../../__internal__/mixin
 import { DispatcherLike_complete, } from "../../concurrent.js";
 import { EventSourceLike_addEventListener, } from "../../events.js";
 import { none, returns } from "../../functions.js";
-import { QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
+import { QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_count, QueueableLike_enqueue, } from "../../utils.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 const DelegatingDispatcherMixin = /*@__PURE__*/ (() => {
     const DelegatingDispatcherMixin_delegate = Symbol("DelegatingDispatcherMixin_delegate");
@@ -15,6 +15,10 @@ const DelegatingDispatcherMixin = /*@__PURE__*/ (() => {
     }, props({
         [DelegatingDispatcherMixin_delegate]: none,
     }), {
+        get [QueueableLike_count]() {
+            unsafeCast(this);
+            return this[DelegatingDispatcherMixin_delegate][QueueableLike_count];
+        },
         get [QueueableLike_backpressureStrategy]() {
             unsafeCast(this);
             return this[DelegatingDispatcherMixin_delegate][QueueableLike_backpressureStrategy];

@@ -6,16 +6,13 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import {
-  CollectionLike_count,
-  KeyedLike_get,
-  MutableKeyedLike_set,
-} from "../../collections.js";
-import * as Enumerable from "../../collections/Enumerable.js";
 import { Optional, none, pipe } from "../../functions.js";
 import {
+  IndexedQueueLike_get,
+  IndexedQueueLike_set,
   QueueLike_dequeue,
   QueueLike_head,
+  QueueableLike_count,
   QueueableLike_enqueue,
   StackLike_head,
   StackLike_pop,
@@ -29,9 +26,8 @@ testModule(
 
     pipe(queue[StackLike_head], expectIsNone);
     pipe(queue[StackLike_pop](), expectIsNone);
-    expectToThrow(() => queue[KeyedLike_get](0));
-
-    expectToThrow(() => queue[MutableKeyedLike_set](0, 0));
+    expectToThrow(() => queue[IndexedQueueLike_get](0));
+    expectToThrow(() => queue[IndexedQueueLike_set](0, 0));
 
     pipe(queue[QueueLike_head], expectEquals(none as Optional<number>));
     pipe(queue[QueueLike_dequeue](), expectEquals(none as Optional<number>));
@@ -42,19 +38,19 @@ testModule(
       pipe(queue[StackLike_head], expectEquals<Optional<number>>(i));
     }
 
-    expectToThrow(() => queue[KeyedLike_get](-10));
+    expectToThrow(() => queue[IndexedQueueLike_get](-10));
 
     pipe(
       queue,
-      Enumerable.toReadonlyArray(),
+      IndexedQueue.toReadonlyArray(),
       expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]),
     );
 
     for (let i = 0; i < 8; i++) {
-      pipe(queue[KeyedLike_get](i), expectEquals(i));
+      pipe(queue[IndexedQueueLike_get](i), expectEquals(i));
     }
 
-    pipe(queue[CollectionLike_count], expectEquals(8));
+    pipe(queue[QueueableLike_count], expectEquals(8));
 
     pipe(queue[QueueLike_dequeue](), expectEquals(0 as Optional<number>));
     pipe(queue[QueueLike_head], expectEquals(1 as Optional<number>));

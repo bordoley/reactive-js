@@ -1,7 +1,6 @@
 /// <reference types="./WindowLocation.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
-import * as Indexed from "../../collections/Indexed.js";
+import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { pick } from "../../computations.js";
 import { ObservableLike_observe, ReplayObservableLike_buffer, StreamableLike_stream, } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
@@ -52,14 +51,16 @@ export const subscribe = /*@__PURE__*/ (() => {
     const createWindowLocationObservable = createInstanceFactory(mix(include(DelegatingStreamMixin()), function WindowLocationStream(instance, delegate) {
         init(DelegatingStreamMixin(), instance, delegate);
         instance[WindowLocation_delegate] = delegate;
-        instance[ReplayObservableLike_buffer] = pipe(delegate[ReplayObservableLike_buffer], Indexed.map(location => location.uri));
         instance[WindowLocationLike_canGoBack] = pipe(delegate, Observable.map(({ counter }) => counter > 0));
         return instance;
     }, props({
         [WindowLocation_delegate]: none,
-        [ReplayObservableLike_buffer]: none,
         [WindowLocationLike_canGoBack]: none,
     }), {
+        get [ReplayObservableLike_buffer]() {
+            unsafeCast(this);
+            return this[WindowLocation_delegate][ReplayObservableLike_buffer].map(location => location.uri);
+        },
         [WindowLocationLike_push](stateOrUpdater) {
             this[WindowLocation_delegate][QueueableLike_enqueue]((prevState) => {
                 const uri = createWindowLocationURIWithPrototype(isFunction(stateOrUpdater)

@@ -8,7 +8,6 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
-import * as Indexed from "../../collections/Indexed.js";
 import {
   ObservableLike_observe,
   ReplayObservableLike_buffer,
@@ -47,11 +46,7 @@ testModule(
         subject[SinkLike_notify](v);
       }
 
-      pipe(
-        subject[ReplayObservableLike_buffer],
-        Indexed.toReadonlyArray(),
-        expectArrayEquals([3, 4]),
-      );
+      pipe(subject[ReplayObservableLike_buffer], expectArrayEquals([3, 4]));
 
       subject[DisposableLike_dispose]();
 
@@ -175,11 +170,7 @@ testModule(
         subject[SinkLike_notify](v);
       }
 
-      pipe(
-        subject[ReplayObservableLike_buffer],
-        Indexed.toReadonlyArray(),
-        expectArrayEquals([3, 4]),
-      );
+      pipe(subject[ReplayObservableLike_buffer], expectArrayEquals([3, 4]));
     }),
   ),
 );
