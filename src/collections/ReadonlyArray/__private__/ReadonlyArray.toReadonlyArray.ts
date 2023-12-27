@@ -1,9 +1,8 @@
-import Indexed_toCollection from "../../Indexed/__private__/Indexed.toCollection.js";
+import ReadonlyArray_toCollection from "../../ReadonlyArray/__private__/ReadonlyArray.toCollection.js";
 import type * as ReadonlyArray from "./../../ReadonlyArray.js";
 
 const ReadonlyArray_toReadonlyArray: ReadonlyArray.Signature["toReadonlyArray"] =
-  /*@__PURE__*/ Indexed_toCollection<
-    ReadonlyArray.ReadonlyArrayCollection,
+  /*@__PURE__*/ ReadonlyArray_toCollection<
     ReadonlyArray.ReadonlyArrayCollection
   >(
     <T>(values: readonly T[], startIndex: number, count: number) =>
@@ -12,7 +11,6 @@ const ReadonlyArray_toReadonlyArray: ReadonlyArray.Signature["toReadonlyArray"] 
         : count >= 0
         ? values.slice(startIndex, count + startIndex)
         : values.slice(startIndex + count + 1, startIndex + 1).reverse(),
-    v => v.length,
   );
 
 export default ReadonlyArray_toReadonlyArray;

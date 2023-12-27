@@ -4,20 +4,19 @@ import { KeyedCollection, KeyedCollectionOf } from "../../../collections.js";
 import { Function1 } from "../../../functions.js";
 
 const Indexed_toCollection =
-  <CIn extends KeyedCollection<number>, COut extends KeyedCollection<number>>(
+  <COut extends KeyedCollection<number>>(
     factory: <T>(
-      values: KeyedCollectionOf<CIn, T>,
+      values: ReadonlyArray<T>,
       start: number,
       count: number,
     ) => KeyedCollectionOf<COut, T>,
-    getLength: (c: KeyedCollectionOf<CIn, unknown>) => number,
   ) =>
   <T>(options?: {
     readonly start?: number;
     readonly count?: number;
-  }): Function1<KeyedCollectionOf<CIn, T>, KeyedCollectionOf<COut, T>> =>
+  }): Function1<ReadonlyArray<T>, KeyedCollectionOf<COut, T>> =>
   values => {
-    const valuesLength = getLength(values);
+    const valuesLength = values.length;
     const { start: startOption, count: countOption = MAX_SAFE_INTEGER } =
       options ?? {};
 

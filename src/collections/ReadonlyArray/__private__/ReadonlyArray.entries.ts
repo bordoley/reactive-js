@@ -6,7 +6,7 @@ import {
 } from "../../../collections.js";
 import { Tuple2, pipe, tuple } from "../../../functions.js";
 import Enumerable_fromIteratorFactory from "../../Enumerable/__private__/Enumerable.fromIteratorFactory.js";
-import Indexed_toCollection from "../../Indexed/__private__/Indexed.toCollection.js";
+import ReadonlyArray_toCollection from "../../ReadonlyArray/__private__/ReadonlyArray.toCollection.js";
 import type * as ReadonlyArray from "../../ReadonlyArray.js";
 
 interface EntriesCollection extends KeyedCollection<number> {
@@ -16,8 +16,7 @@ interface EntriesCollection extends KeyedCollection<number> {
 }
 
 const ReadonlyArray_entries: ReadonlyArray.Signature["entries"] =
-  /*@__PURE__*/ Indexed_toCollection<
-    ReadonlyArray.ReadonlyArrayCollection,
+  /*@__PURE__*/ ReadonlyArray_toCollection<
     EntriesCollection
   >(
     <TKey extends number, T>(
@@ -39,7 +38,6 @@ const ReadonlyArray_entries: ReadonlyArray.Signature["entries"] =
           yield tuple(startIndexInstance as TKey, arr[startIndexInstance]);
         }
       }, Enumerable_fromIteratorFactory()),
-    v => v.length,
   ) as ReadonlyArray.Signature["entries"];
 
 export default ReadonlyArray_entries;

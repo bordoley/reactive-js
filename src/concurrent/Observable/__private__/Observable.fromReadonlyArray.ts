@@ -3,8 +3,7 @@ import {
   KeyedCollection_T,
   KeyedCollection_type,
 } from "../../../collections.js";
-import Indexed_toCollection from "../../../collections/Indexed/__private__/Indexed.toCollection.js";
-import { ReadonlyArrayCollection } from "../../../collections/ReadonlyArray.js";
+import ReadonlyArray_toCollection from "../../../collections/ReadonlyArray/__private__/ReadonlyArray.toCollection.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
@@ -35,7 +34,7 @@ const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
     count?: number;
     start?: number;
   }) =>
-    Indexed_toCollection<ReadonlyArrayCollection, ValuesCollection>(
+    ReadonlyArray_toCollection<ValuesCollection>(
       <_ extends number, T>(
         arr: readonly T[],
         startIndex: number,
@@ -69,7 +68,6 @@ const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
             Disposable.addTo(observer),
           );
         }),
-      v => v.length,
     )(options);
 
 export default Observable_fromReadonlyArray;
