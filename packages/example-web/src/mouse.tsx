@@ -27,15 +27,6 @@ import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/Ani
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 
 type Point = { x: number; y: number };
-const scale = (start: Point, end: Point) => (v: number) => {
-  const diffX = end.x - start.x;
-  const diffY = end.y - start.y;
-
-  return {
-    x: start.x + diffX * v,
-    y: start.y + diffY * v,
-  };
-};
 
 const Root = () => {
   const animationScheduler = useDisposable(
@@ -52,21 +43,23 @@ const Root = () => {
             EventSource.map(ev => ({ x: ev.clientX, y: ev.clientY })),
             Observable.fromEventSource(),
             Observable.throttle(300, { mode: "interval" }),
-            Observable.scanMany(
-              (prev: Point, next: Point) =>
-                pipe(
-                  Observable.animate({
-                    type: "spring",
-                    stiffness: 0.01,
-                    damping: 0.1,
-                    precision: 0.001,
-                    from: 0,
-                    to: 1,
-                  }),
-                  Observable.map(scale(prev, next)),
-                ),
-              returns({ x: 0, y: 0 }),
-            ),
+            Observable.scanMany((prev: Point, next: Point) => {
+              const diffX = next.x - prev.x;
+              const diffY = next.y - prev.y;
+
+              return Observable.animate({
+                type: "spring",
+                stiffness: 0.01,
+                damping: 0.1,
+                precision: 0.001,
+                from: 0,
+                to: 1,
+                selector: (v: number) => ({
+                  x: prev.x + diffX * v,
+                  y: prev.y + diffY * v,
+                }),
+              });
+            }, returns({ x: 0, y: 0 })),
             Observable.toEventSource(animationScheduler),
           )
         : none,
