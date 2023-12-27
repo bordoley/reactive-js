@@ -1,10 +1,10 @@
 import {
-  AssociativeLike_keys,
   DictionaryLike,
+  DictionaryLike_get,
+  DictionaryLike_keys,
   EnumerableLike_enumerate,
   EnumeratorLike_current,
   EnumeratorLike_move,
-  KeyedLike_get,
 } from "../../../collections.js";
 import { Function2, newInstance, pipe } from "../../../functions.js";
 import type * as Dictionary from "../../Dictionary.js";
@@ -16,11 +16,11 @@ const Dictionary_keep: Dictionary.Signature["keep"] =
   ) =>
   (dict: DictionaryLike<TKey, T>) => {
     const resultMap = newInstance<Map<TKey, T>>(Map);
-    const keys = dict[AssociativeLike_keys][EnumerableLike_enumerate]();
+    const keys = dict[DictionaryLike_keys][EnumerableLike_enumerate]();
 
     while (keys[EnumeratorLike_move]()) {
       const key = keys[EnumeratorLike_current];
-      const value = dict[KeyedLike_get](key) as T;
+      const value = dict[DictionaryLike_get](key) as T;
 
       if (predicate(value, key)) {
         resultMap.set(key, value);

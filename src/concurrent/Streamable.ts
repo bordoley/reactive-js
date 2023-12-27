@@ -1,12 +1,8 @@
+import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
 import {
-  AssociativeLike,
-  DictionaryLike,
-  ReadonlyObjectMapLike,
-} from "../collections.js";
-import {
+  CacheLike,
   DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
-  ObservableLike,
   SchedulerLike,
   StreamLike,
   StreamableLike,
@@ -146,11 +142,7 @@ export interface StreamableModule {
   }): StreamableLike<
     ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
     never,
-    StreamLike<
-      ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
-      never
-    > &
-      AssociativeLike<string, ObservableLike<T>>
+    CacheLike<T>
   >;
 
   createPersistentCache<T>(
@@ -167,11 +159,7 @@ export interface StreamableModule {
   ): StreamableLike<
     ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
     never,
-    StreamLike<
-      ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
-      never
-    > &
-      AssociativeLike<string, ObservableLike<T>>
+    CacheLike<T>
   >;
 
   /**

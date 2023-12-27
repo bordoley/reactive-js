@@ -270,7 +270,7 @@ ___
 
 ### createInMemoryCache
 
-▸ **createInMemoryCache**<`T`\>(`options?`): [`StreamableLike`](concurrent.StreamableLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`, [`StreamLike`](concurrent.StreamLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`\> & [`AssociativeLike`](collections.AssociativeLike.md)<`string`, [`ObservableLike`](concurrent.ObservableLike.md)<`T`\>\>\>
+▸ **createInMemoryCache**<`T`\>(`options?`): [`StreamableLike`](concurrent.StreamableLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`, [`CacheLike`](concurrent.CacheLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -288,13 +288,13 @@ ___
 
 #### Returns
 
-[`StreamableLike`](concurrent.StreamableLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`, [`StreamLike`](concurrent.StreamLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`\> & [`AssociativeLike`](collections.AssociativeLike.md)<`string`, [`ObservableLike`](concurrent.ObservableLike.md)<`T`\>\>\>
+[`StreamableLike`](concurrent.StreamableLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`, [`CacheLike`](concurrent.CacheLike.md)<`T`\>\>
 
 ___
 
 ### createPersistentCache
 
-▸ **createPersistentCache**<`T`\>(`persistentStore`, `options?`): [`StreamableLike`](concurrent.StreamableLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`, [`StreamLike`](concurrent.StreamLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`\> & [`AssociativeLike`](collections.AssociativeLike.md)<`string`, [`ObservableLike`](concurrent.ObservableLike.md)<`T`\>\>\>
+▸ **createPersistentCache**<`T`\>(`persistentStore`, `options?`): [`StreamableLike`](concurrent.StreamableLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`, [`CacheLike`](concurrent.CacheLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -315,7 +315,7 @@ ___
 
 #### Returns
 
-[`StreamableLike`](concurrent.StreamableLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`, [`StreamLike`](concurrent.StreamLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`\> & [`AssociativeLike`](collections.AssociativeLike.md)<`string`, [`ObservableLike`](concurrent.ObservableLike.md)<`T`\>\>\>
+[`StreamableLike`](concurrent.StreamableLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`, [`CacheLike`](concurrent.CacheLike.md)<`T`\>\>
 
 ___
 

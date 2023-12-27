@@ -1,9 +1,9 @@
 import {
-  AssociativeLike_keys,
-  CollectionLike_count,
   DictionaryLike,
+  DictionaryLike_count,
+  DictionaryLike_get,
+  DictionaryLike_keys,
   EnumerableLike,
-  KeyedLike_get,
 } from "../../../collections.js";
 import { Optional, newInstance, pipe } from "../../../functions.js";
 import type * as ReadonlyArray from "../../ReadonlyArray.js";
@@ -22,15 +22,15 @@ class ReadonlyArrayDictionary<T, TKey extends ReadonlyArray.TKeyBase>
     this.d = delegate;
   }
 
-  get [CollectionLike_count](): number {
+  get [DictionaryLike_count](): number {
     return this.d.length;
   }
 
-  [KeyedLike_get](index: TKey): Optional<T> {
+  [DictionaryLike_get](index: TKey): Optional<T> {
     return this.d[index];
   }
 
-  get [AssociativeLike_keys](): EnumerableLike<TKey> {
+  get [DictionaryLike_keys](): EnumerableLike<TKey> {
     return pipe(this.d, ReadonlyArray_keys());
   }
 

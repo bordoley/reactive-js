@@ -7,5 +7,5 @@ declare const Streamable_createPersistentCache: <T>(persistentStore: {
 }, options?: {
     readonly capacity?: number;
     readonly cleanupScheduler?: SchedulerLike;
-}) => import("../../../concurrent.js").StreamableLike<import("../../../collections.js").ReadonlyObjectMapLike<string, import("../../../functions.js").Function1<Optional<T>, Optional<T>>>, never, import("../../../concurrent.js").StreamLike<import("../../../collections.js").ReadonlyObjectMapLike<string, import("../../../functions.js").Function1<Optional<T>, Optional<T>>>, never> & import("../../../collections.js").AssociativeLike<string, import("../../../concurrent.js").ObservableLike<T>>>;
+}) => import("../../../concurrent.js").StreamableLike<import("../../../collections.js").ReadonlyObjectMapLike<string, import("../../../functions.js").Function1<Optional<T>, Optional<T>>>, never, import("../../../concurrent.js").CacheLike<T>>;
 export default Streamable_createPersistentCache;

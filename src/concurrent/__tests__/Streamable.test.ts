@@ -5,10 +5,11 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { KeyedLike_get, ReadonlyObjectMapLike } from "../../collections.js";
+import { ReadonlyObjectMapLike } from "../../collections.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import {
+  CacheLike_get,
   DispatcherLike_complete,
   SchedulerLike_schedule,
   StreamableLike_stream,
@@ -86,7 +87,7 @@ testModule(
         [
           tuple(2, () => {
             pipe(
-              cache[KeyedLike_get]("abc"),
+              cache[CacheLike_get]("abc"),
               Observable.forEach(bindMethod(result, "push")),
               Observable.subscribe(scheduler),
             );
@@ -122,7 +123,7 @@ testModule(
 
           tuple(2, () => {
             pipe(
-              cache[KeyedLike_get]("abc"),
+              cache[CacheLike_get]("abc"),
               Observable.forEach(bindMethod(result, "push")),
               Observable.subscribe(scheduler),
             );
@@ -154,7 +155,7 @@ testModule(
 
       const result1: number[] = [];
       const abcSubscription1 = pipe(
-        cache[KeyedLike_get]("abc"),
+        cache[CacheLike_get]("abc"),
         Observable.forEach(bindMethod(result1, "push")),
         Observable.subscribe(scheduler),
       );
@@ -172,7 +173,7 @@ testModule(
           }),
           tuple(2, () => {
             abcSubscription2 = pipe(
-              cache[KeyedLike_get]("abc"),
+              cache[CacheLike_get]("abc"),
               Observable.forEach(bindMethod(result2, "push")),
               Observable.subscribe(scheduler),
             );
@@ -198,7 +199,7 @@ testModule(
 
           tuple(8, () => {
             abcSubscription3 = pipe(
-              cache[KeyedLike_get]("abc"),
+              cache[CacheLike_get]("abc"),
               Observable.forEach(bindMethod(result3, "push")),
               Observable.subscribe(scheduler),
             );
@@ -256,7 +257,7 @@ testModule(
 
       const result1: number[] = [];
       pipe(
-        cache[KeyedLike_get]("abc"),
+        cache[CacheLike_get]("abc"),
         Observable.forEach(bindMethod(result1, "push")),
         Observable.subscribe(scheduler),
       );

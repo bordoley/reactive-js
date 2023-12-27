@@ -6,11 +6,11 @@ import {
   test,
 } from "../../../__internal__/testing.js";
 import {
-  CollectionLike_count,
+  DictionaryLike_count,
+  DictionaryLike_get,
   KeyedCollection,
   KeyedCollectionModule,
   KeyedCollectionOf,
-  KeyedLike_get,
 } from "../../../collections.js";
 import {
   Function1,
@@ -157,7 +157,7 @@ const KeyedCollectionModuleTests = <C extends KeyedCollection>(
           m.toDictionary(),
         );
 
-        expectEquals(3)(dict[CollectionLike_count]);
+        expectEquals(3)(dict[DictionaryLike_count]);
       }),
       test("get values", () => {
         const dict = pipe(
@@ -191,7 +191,7 @@ const KeyedCollectionModuleTests = <C extends KeyedCollection>(
           m.toDictionary(),
         );
 
-        pipe(dict[KeyedLike_get](5), expectIsNone);
+        pipe(dict[DictionaryLike_get](5), expectIsNone);
       }),
       test("get returns value of the key", () => {
         const dict = pipe(
@@ -200,7 +200,7 @@ const KeyedCollectionModuleTests = <C extends KeyedCollection>(
           m.toDictionary(),
         );
 
-        pipe(dict[KeyedLike_get](0), expectEquals<Optional<string>>("b"));
+        pipe(dict[DictionaryLike_get](0), expectEquals<Optional<string>>("b"));
       }),
     ),
     describe(

@@ -61,42 +61,20 @@ export type ReadonlyObjectMapLike<
   T = unknown,
 > = { readonly [P in TKey]?: T };
 
-export const CollectionLike_count = Symbol("CollectionLike_count");
-
-/**
- * @noInheritDoc
- */
-export interface CollectionLike<T> extends EnumerableLike<T> {
-  readonly [CollectionLike_count]: number;
-}
-
-export const KeyedLike_get = Symbol("KeyedLike_get");
-
-/**
- * @noInheritDoc
- */
-export interface KeyedLike<TKey = unknown, T = unknown>
-  extends CollectionLike<T> {
-  [KeyedLike_get](index: TKey): T;
-}
-
-export const AssociativeLike_keys = Symbol("AssociativeLike_keys");
-
-/**
- * @noInheritDoc
- */
-export interface AssociativeLike<TKey = unknown, T = unknown>
-  extends KeyedLike<TKey, T> {
-  readonly [AssociativeLike_keys]: EnumerableLike<TKey>;
-}
+export const DictionaryLike_count = Symbol("DictionaryLike_count");
+export const DictionaryLike_get = Symbol("DictionaryLike_get");
+export const DictionaryLike_keys = Symbol("DictionaryLike_keys");
 
 /**
  * @noInheritDoc
  */
 export interface DictionaryLike<TKey = unknown, T = unknown>
-  extends AssociativeLike<TKey, Optional<T>> {
-  [EnumerableLike_enumerate](): EnumeratorLike<T>;
-  [Symbol.iterator](): Iterator<T>;
+  extends EnumerableLike<T> {
+  readonly [DictionaryLike_count]: number;
+
+  readonly [DictionaryLike_keys]: EnumerableLike<TKey>;
+
+  [DictionaryLike_get](index: TKey): Optional<T>;
 }
 
 export const KeyedCollection_T = Symbol("KeyedCollection_T");

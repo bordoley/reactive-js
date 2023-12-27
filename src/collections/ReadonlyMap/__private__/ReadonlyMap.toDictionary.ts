@@ -1,9 +1,9 @@
 import {
-  AssociativeLike_keys,
-  CollectionLike_count,
   DictionaryLike,
+  DictionaryLike_count,
+  DictionaryLike_get,
+  DictionaryLike_keys,
   EnumerableLike,
-  KeyedLike_get,
 } from "../../../collections.js";
 import { Optional, newInstance, pipe } from "../../../functions.js";
 import type * as ReadonlyMap from "../../ReadonlyMap.js";
@@ -17,15 +17,15 @@ class ReadonlyMapDictionary<
   extends EnumerableIterable<T>
   implements DictionaryLike<TKey, T>
 {
-  readonly [AssociativeLike_keys]: EnumerableLike<TKey>;
+  readonly [DictionaryLike_keys]: EnumerableLike<TKey>;
 
   constructor(readonly d: ReadonlyMap<TKey, T>) {
     super();
 
-    this[AssociativeLike_keys] = pipe(this.d, ReadonlyMap_keys());
+    this[DictionaryLike_keys] = pipe(this.d, ReadonlyMap_keys());
   }
 
-  get [CollectionLike_count](): number {
+  get [DictionaryLike_count](): number {
     return this.d.size;
   }
 
@@ -33,7 +33,7 @@ class ReadonlyMapDictionary<
     return this.d.values();
   }
 
-  [KeyedLike_get](index: TKey): Optional<T> {
+  [DictionaryLike_get](index: TKey): Optional<T> {
     return this.d.get(index);
   }
 }

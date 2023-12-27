@@ -1,6 +1,6 @@
 /// <reference types="./Dictionary.map.d.ts" />
 
-import { AssociativeLike_keys, CollectionLike_count, EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_move, KeyedLike_get, } from "../../../collections.js";
+import { DictionaryLike_count, DictionaryLike_get, DictionaryLike_keys, EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_move, } from "../../../collections.js";
 import { isSome, newInstance, none, } from "../../../functions.js";
 import EnumerableIterable from "../../__classes__/EnumerableIterable.js";
 const MappingDictionary_delegate = Symbol("MappingDictionary_delegate");
@@ -13,21 +13,21 @@ class MappingDictionary extends EnumerableIterable {
         this[MappingDictionary_delegate] = delegate;
         this[MappingDictionary_selector] = mapper;
     }
-    get [AssociativeLike_keys]() {
-        return this[MappingDictionary_delegate][AssociativeLike_keys];
+    get [DictionaryLike_keys]() {
+        return this[MappingDictionary_delegate][DictionaryLike_keys];
     }
-    get [CollectionLike_count]() {
-        return this[MappingDictionary_delegate][CollectionLike_count];
+    get [DictionaryLike_count]() {
+        return this[MappingDictionary_delegate][DictionaryLike_count];
     }
-    [KeyedLike_get](index) {
-        const v = this[MappingDictionary_delegate][KeyedLike_get](index);
+    [DictionaryLike_get](index) {
+        const v = this[MappingDictionary_delegate][DictionaryLike_get](index);
         return isSome(v) ? this[MappingDictionary_selector](v, index) : none;
     }
     *[Symbol.iterator]() {
-        const enumerator = this[MappingDictionary_delegate][AssociativeLike_keys][EnumerableLike_enumerate]();
+        const enumerator = this[MappingDictionary_delegate][DictionaryLike_keys][EnumerableLike_enumerate]();
         while (enumerator[EnumeratorLike_move]()) {
             const key = enumerator[EnumeratorLike_current];
-            yield this[KeyedLike_get](key);
+            yield this[DictionaryLike_get](key);
         }
     }
 }

@@ -13,41 +13,45 @@
 
 ## Hierarchy
 
-- [`AssociativeLike`](collections.AssociativeLike.md)<`TKey`, [`Optional`](../modules/functions.md#optional)<`T`\>\>
+- [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>
 
   ↳ **`DictionaryLike`**
 
 ## Table of contents
 
+### Properties
+
+- [[DictionaryLike\_count]](collections.DictionaryLike.md#[dictionarylike_count])
+- [[DictionaryLike\_keys]](collections.DictionaryLike.md#[dictionarylike_keys])
+
 ### Methods
 
-- [[EnumerableLike\_enumerate]](collections.DictionaryLike.md#[enumerablelike_enumerate])
-- [[iterator]](collections.DictionaryLike.md#[iterator])
+- [[DictionaryLike\_get]](collections.DictionaryLike.md#[dictionarylike_get])
 
-## Methods
+## Properties
 
-### [EnumerableLike\_enumerate]
+### [DictionaryLike\_count]
 
-▸ **[EnumerableLike_enumerate]**(): [`EnumeratorLike`](collections.EnumeratorLike.md)<`T`\>
-
-#### Returns
-
-[`EnumeratorLike`](collections.EnumeratorLike.md)<`T`\>
-
-#### Overrides
-
-AssociativeLike.\_\_@EnumerableLike\_enumerate@24146
+• `Readonly` **[DictionaryLike\_count]**: `number`
 
 ___
 
-### [iterator]
+### [DictionaryLike\_keys]
 
-▸ **[iterator]**(): `Iterator`<`T`, `any`, `undefined`\>
+• `Readonly` **[DictionaryLike\_keys]**: [`EnumerableLike`](collections.EnumerableLike.md)<`TKey`\>
+
+## Methods
+
+### [DictionaryLike\_get]
+
+▸ **[DictionaryLike_get]**(`index`): [`Optional`](../modules/functions.md#optional)<`T`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `index` | `TKey` |
 
 #### Returns
 
-`Iterator`<`T`, `any`, `undefined`\>
-
-#### Overrides
-
-AssociativeLike.\_\_@iterator@85
+[`Optional`](../modules/functions.md#optional)<`T`\>

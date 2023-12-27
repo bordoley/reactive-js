@@ -1,4 +1,4 @@
-import { DictionaryLike, KeyedLike_get } from "../../../collections.js";
+import { DictionaryLike, DictionaryLike_get } from "../../../collections.js";
 import { pipe, tuple } from "../../../functions.js";
 import type * as Dictionary from "../../Dictionary.js";
 import * as Enumerable from "../../Enumerable.js";
@@ -10,7 +10,7 @@ const Dictionary_entries: Dictionary.Signature["entries"] =
     pipe(
       dict,
       Dictionary_keys<TKey>(),
-      Enumerable.map(key => tuple(key, dict[KeyedLike_get](key) as T)),
+      Enumerable.map(key => tuple(key, dict[DictionaryLike_get](key) as T)),
     );
 
 export default Dictionary_entries;

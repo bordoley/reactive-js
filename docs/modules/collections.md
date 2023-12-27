@@ -6,15 +6,12 @@
 
 ### Interfaces
 
-- [AssociativeLike](../interfaces/collections.AssociativeLike.md)
-- [CollectionLike](../interfaces/collections.CollectionLike.md)
 - [DictionaryCollectionModule](../interfaces/collections.DictionaryCollectionModule.md)
 - [DictionaryLike](../interfaces/collections.DictionaryLike.md)
 - [EnumerableLike](../interfaces/collections.EnumerableLike.md)
 - [EnumeratorLike](../interfaces/collections.EnumeratorLike.md)
 - [KeyedCollection](../interfaces/collections.KeyedCollection.md)
 - [KeyedCollectionModule](../interfaces/collections.KeyedCollectionModule.md)
-- [KeyedLike](../interfaces/collections.KeyedLike.md)
 
 ### Type Aliases
 
@@ -25,8 +22,9 @@
 
 ### Variables
 
-- [AssociativeLike\_keys](collections.md#associativelike_keys)
-- [CollectionLike\_count](collections.md#collectionlike_count)
+- [DictionaryLike\_count](collections.md#dictionarylike_count)
+- [DictionaryLike\_get](collections.md#dictionarylike_get)
+- [DictionaryLike\_keys](collections.md#dictionarylike_keys)
 - [EnumerableLike\_enumerate](collections.md#enumerablelike_enumerate)
 - [EnumeratorLike\_current](collections.md#enumeratorlike_current)
 - [EnumeratorLike\_hasCurrent](collections.md#enumeratorlike_hascurrent)
@@ -35,7 +33,6 @@
 - [KeyedCollection\_T](collections.md#keyedcollection_t)
 - [KeyedCollection\_TKey](collections.md#keyedcollection_tkey)
 - [KeyedCollection\_type](collections.md#keyedcollection_type)
-- [KeyedLike\_get](collections.md#keyedlike_get)
 
 ## Type Aliases
 
@@ -97,15 +94,21 @@ ___
 
 ## Variables
 
-### AssociativeLike\_keys
+### DictionaryLike\_count
 
-• `Const` **AssociativeLike\_keys**: unique `symbol`
+• `Const` **DictionaryLike\_count**: unique `symbol`
 
 ___
 
-### CollectionLike\_count
+### DictionaryLike\_get
 
-• `Const` **CollectionLike\_count**: unique `symbol`
+• `Const` **DictionaryLike\_get**: unique `symbol`
+
+___
+
+### DictionaryLike\_keys
+
+• `Const` **DictionaryLike\_keys**: unique `symbol`
 
 ___
 
@@ -154,9 +157,3 @@ ___
 ### KeyedCollection\_type
 
 • `Const` **KeyedCollection\_type**: unique `symbol`
-
-___
-
-### KeyedLike\_get
-
-• `Const` **KeyedLike\_get**: unique `symbol`

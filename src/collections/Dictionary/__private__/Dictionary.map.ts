@@ -1,12 +1,12 @@
 import {
-  AssociativeLike_keys,
-  CollectionLike_count,
   DictionaryLike,
+  DictionaryLike_count,
+  DictionaryLike_get,
+  DictionaryLike_keys,
   EnumerableLike,
   EnumerableLike_enumerate,
   EnumeratorLike_current,
   EnumeratorLike_move,
-  KeyedLike_get,
 } from "../../../collections.js";
 import {
   Function2,
@@ -39,27 +39,27 @@ class MappingDictionary<T, TKey, TIn>
     this[MappingDictionary_selector] = mapper;
   }
 
-  get [AssociativeLike_keys](): EnumerableLike<TKey> {
-    return this[MappingDictionary_delegate][AssociativeLike_keys];
+  get [DictionaryLike_keys](): EnumerableLike<TKey> {
+    return this[MappingDictionary_delegate][DictionaryLike_keys];
   }
 
-  get [CollectionLike_count](): number {
-    return this[MappingDictionary_delegate][CollectionLike_count];
+  get [DictionaryLike_count](): number {
+    return this[MappingDictionary_delegate][DictionaryLike_count];
   }
 
-  [KeyedLike_get](index: TKey): Optional<T> {
-    const v = this[MappingDictionary_delegate][KeyedLike_get](index);
+  [DictionaryLike_get](index: TKey): Optional<T> {
+    const v = this[MappingDictionary_delegate][DictionaryLike_get](index);
     return isSome(v) ? this[MappingDictionary_selector](v, index) : none;
   }
 
   *[Symbol.iterator]() {
     const enumerator =
-      this[MappingDictionary_delegate][AssociativeLike_keys][
+      this[MappingDictionary_delegate][DictionaryLike_keys][
         EnumerableLike_enumerate
       ]();
     while (enumerator[EnumeratorLike_move]()) {
       const key = enumerator[EnumeratorLike_current];
-      yield this[KeyedLike_get](key) as T;
+      yield this[DictionaryLike_get](key) as T;
     }
   }
 }

@@ -1,12 +1,9 @@
 /// <reference types="./Streamable.createCache.d.ts" />
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
-import { AssociativeLike_keys, CollectionLike_count, KeyedLike_get, } from "../../../collections.js";
-import * as ReadonlyMap from "../../../collections/ReadonlyMap.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
-import EnumerableIterableMixin from "../../../collections/__mixins__/EnumerableIterableMixin.js";
-import { ContinuationContextLike_yield, SchedulerLike_schedule, StreamableLike_stream, } from "../../../concurrent.js";
+import { CacheLike_get, ContinuationContextLike_yield, SchedulerLike_schedule, StreamableLike_stream, } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { bindMethod, compose, identity, invoke, isNone, isSome, none, pipe, tuple, } from "../../../functions.js";
 import { DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
@@ -17,8 +14,7 @@ import * as Subject from "../../Subject.js";
 import DelegatingStreamMixin from "../../__mixins__/DelegatingStreamMixin.js";
 import Streamable_create from "./Streamable.create.js";
 const createCacheStream = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(EnumerableIterableMixin(), DelegatingStreamMixin()), function CacheStream(instance, scheduler, options, capacity, cleanupScheduler, persistentStore) {
-        init(EnumerableIterableMixin(), instance);
+    return createInstanceFactory(mix(include(DelegatingStreamMixin()), function CacheStream(instance, scheduler, options, capacity, cleanupScheduler, persistentStore) {
         instance.store = new Map();
         instance.subscriptions = new Map();
         const cleanupQueue = IndexedQueue.create();
@@ -91,19 +87,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
         store: none,
         subscriptions: none,
     }), {
-        get [CollectionLike_count]() {
-            unsafeCast(this);
-            return this.store.size;
-        },
-        get [AssociativeLike_keys]() {
-            unsafeCast(this);
-            return pipe(this.store, ReadonlyMap.keys());
-        },
-        [Symbol.iterator]() {
-            unsafeCast(this);
-            return pipe(this.subscriptions, ReadonlyMap.values())[Symbol.iterator]();
-        },
-        [KeyedLike_get](key) {
+        [CacheLike_get](key) {
             const { scheduleCleanup, store, subscriptions, delegate } = this;
             return (subscriptions.get(key) ??
                 (() => {

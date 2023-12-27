@@ -42,33 +42,16 @@ export interface EnumerableLike<T = unknown> extends Iterable<T> {
 export type ReadonlyObjectMapLike<TKey extends symbol | string = string, T = unknown> = {
     readonly [P in TKey]?: T;
 };
-export declare const CollectionLike_count: unique symbol;
+export declare const DictionaryLike_count: unique symbol;
+export declare const DictionaryLike_get: unique symbol;
+export declare const DictionaryLike_keys: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface CollectionLike<T> extends EnumerableLike<T> {
-    readonly [CollectionLike_count]: number;
-}
-export declare const KeyedLike_get: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface KeyedLike<TKey = unknown, T = unknown> extends CollectionLike<T> {
-    [KeyedLike_get](index: TKey): T;
-}
-export declare const AssociativeLike_keys: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface AssociativeLike<TKey = unknown, T = unknown> extends KeyedLike<TKey, T> {
-    readonly [AssociativeLike_keys]: EnumerableLike<TKey>;
-}
-/**
- * @noInheritDoc
- */
-export interface DictionaryLike<TKey = unknown, T = unknown> extends AssociativeLike<TKey, Optional<T>> {
-    [EnumerableLike_enumerate](): EnumeratorLike<T>;
-    [Symbol.iterator](): Iterator<T>;
+export interface DictionaryLike<TKey = unknown, T = unknown> extends EnumerableLike<T> {
+    readonly [DictionaryLike_count]: number;
+    readonly [DictionaryLike_keys]: EnumerableLike<TKey>;
+    [DictionaryLike_get](index: TKey): Optional<T>;
 }
 export declare const KeyedCollection_T: unique symbol;
 export declare const KeyedCollection_type: unique symbol;

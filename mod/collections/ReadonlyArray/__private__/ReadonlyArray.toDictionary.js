@@ -1,6 +1,6 @@
 /// <reference types="./ReadonlyArray.toDictionary.d.ts" />
 
-import { AssociativeLike_keys, CollectionLike_count, KeyedLike_get, } from "../../../collections.js";
+import { DictionaryLike_count, DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
 import { newInstance, pipe } from "../../../functions.js";
 import EnumerableIterable from "../../__classes__/EnumerableIterable.js";
 import ReadonlyArray_keys from "./ReadonlyArray.keys.js";
@@ -10,13 +10,13 @@ class ReadonlyArrayDictionary extends EnumerableIterable {
         super();
         this.d = delegate;
     }
-    get [CollectionLike_count]() {
+    get [DictionaryLike_count]() {
         return this.d.length;
     }
-    [KeyedLike_get](index) {
+    [DictionaryLike_get](index) {
         return this.d[index];
     }
-    get [AssociativeLike_keys]() {
+    get [DictionaryLike_keys]() {
         return pipe(this.d, ReadonlyArray_keys());
     }
     [Symbol.iterator]() {

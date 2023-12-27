@@ -1,7 +1,7 @@
 /// <reference types="./Streamable.createAnimationGroupEventHandler.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
-import { AssociativeLike_keys, CollectionLike_count, EnumerableLike_enumerate, KeyedLike_get, } from "../../../collections.js";
+import { DictionaryLike_count, DictionaryLike_get, DictionaryLike_keys, EnumerableLike_enumerate, } from "../../../collections.js";
 import * as Enumerable from "../../../collections/Enumerable.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { StreamableLike_stream, } from "../../../concurrent.js";
@@ -29,14 +29,14 @@ const Streamable_createAnimationGroupEventHandlerStream =
         init(DelegatingStreamMixin(), instance, streamDelegate);
         const publishers = pipe(animationGroup, ReadonlyObjectMap.map(_ => pipe(Publisher.create(), Disposable.addTo(instance))));
         const animationScheduler = creationOptions?.scheduler ?? scheduler;
-        instance[CollectionLike_count] = pipe(publishers, ReadonlyObjectMap.reduce(incrementBy(1), returns(0)));
+        instance[DictionaryLike_count] = pipe(publishers, ReadonlyObjectMap.reduce(incrementBy(1), returns(0)));
         instance[AnimationEventHandlerStream_delegate] = publishers;
         return instance;
     }, props({
         [AnimationEventHandlerStream_delegate]: none,
-        [CollectionLike_count]: 0,
+        [DictionaryLike_count]: 0,
     }), {
-        get [AssociativeLike_keys]() {
+        get [DictionaryLike_keys]() {
             unsafeCast(this);
             return pipe(this[AnimationEventHandlerStream_delegate], ReadonlyObjectMap.keys());
         },
@@ -46,7 +46,7 @@ const Streamable_createAnimationGroupEventHandlerStream =
         [Symbol.iterator]() {
             return this[AnimationEventHandlerStream_delegate][Symbol.iterator]();
         },
-        [KeyedLike_get](index) {
+        [DictionaryLike_get](index) {
             return this[AnimationEventHandlerStream_delegate][index];
         },
     }));

@@ -16,7 +16,7 @@
 
   ↳ **`EnumerableLike`**
 
-  ↳↳ [`CollectionLike`](collections.CollectionLike.md)
+  ↳↳ [`DictionaryLike`](collections.DictionaryLike.md)
 
 ## Table of contents
 

@@ -1,5 +1,5 @@
-import { AssociativeLike, DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
-import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, ObservableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
+import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
+import { CacheLike, DeferredObservableLike, DeferredObservableWithSideEffectsLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
 import { EventSourceLike } from "../events.js";
 import { Equality, Factory, Function1, Optional, Updater } from "../functions.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
@@ -54,14 +54,14 @@ export interface StreamableModule {
     createInMemoryCache<T>(options?: {
         readonly capacity?: number;
         readonly cleanupScheduler?: SchedulerLike;
-    }): StreamableLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never, StreamLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never> & AssociativeLike<string, ObservableLike<T>>>;
+    }): StreamableLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never, CacheLike<T>>;
     createPersistentCache<T>(persistentStore: {
         load(keys: ReadonlySet<string>): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
         store(updates: Readonly<Record<string, T>>): DeferredObservableLike<void>;
     }, options?: {
         readonly capacity?: number;
         readonly cleanupScheduler?: SchedulerLike;
-    }): StreamableLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never, StreamLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never> & AssociativeLike<string, ObservableLike<T>>>;
+    }): StreamableLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never, CacheLike<T>>;
     /**
      * Returns a new `StateStoreLike` instance that stores state which can
      * be updated by notifying the instance with a `StateUpdater` that computes a

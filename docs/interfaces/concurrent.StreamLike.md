@@ -21,6 +21,8 @@ Represents a duplex stream
 
   ↳ **`StreamLike`**
 
+  ↳↳ [`CacheLike`](concurrent.CacheLike.md)
+
 ## Table of contents
 
 ### Properties

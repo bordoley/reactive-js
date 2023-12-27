@@ -6,6 +6,7 @@
 
 ### Interfaces
 
+- [CacheLike](../interfaces/concurrent.CacheLike.md)
 - [ContinuationContextLike](../interfaces/concurrent.ContinuationContextLike.md)
 - [DeferredObservableLike](../interfaces/concurrent.DeferredObservableLike.md)
 - [DeferredObservableWithSideEffectsLike](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)
@@ -36,6 +37,7 @@
 
 ### Variables
 
+- [CacheLike\_get](concurrent.md#cachelike_get)
 - [ContinuationContextLike\_yield](concurrent.md#continuationcontextlike_yield)
 - [DispatcherLikeEvent\_capacityExceeded](concurrent.md#dispatcherlikeevent_capacityexceeded)
 - [DispatcherLikeEvent\_completed](concurrent.md#dispatcherlikeevent_completed)
@@ -74,6 +76,12 @@
 | `TStreamable` | extends [`StreamableLike`](../interfaces/concurrent.StreamableLike.md) |
 
 ## Variables
+
+### CacheLike\_get
+
+• `Const` **CacheLike\_get**: unique `symbol`
+
+___
 
 ### ContinuationContextLike\_yield
 

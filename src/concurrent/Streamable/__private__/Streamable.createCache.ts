@@ -5,20 +5,12 @@ import {
   init,
   mix,
   props,
-  unsafeCast,
 } from "../../../__internal__/mixins.js";
-import {
-  AssociativeLike,
-  AssociativeLike_keys,
-  CollectionLike_count,
-  EnumerableLike,
-  KeyedLike_get,
-  ReadonlyObjectMapLike,
-} from "../../../collections.js";
-import * as ReadonlyMap from "../../../collections/ReadonlyMap.js";
+import { ReadonlyObjectMapLike } from "../../../collections.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
-import EnumerableIterableMixin from "../../../collections/__mixins__/EnumerableIterableMixin.js";
 import {
+  CacheLike,
+  CacheLike_get,
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DeferredObservableLike,
@@ -26,7 +18,6 @@ import {
   SchedulerLike,
   SchedulerLike_schedule,
   StreamLike,
-  StreamOf,
   StreamableLike,
   StreamableLike_stream,
   SubjectLike,
@@ -71,16 +62,6 @@ interface ReactiveCachePersistentStorageLike<T> {
   ): DeferredObservableLike<void>;
 }
 
-type CacheLike<T> = StreamableLike<
-  ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
-  never,
-  StreamLike<
-    ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
-    never
-  > &
-    AssociativeLike<string, ObservableLike<T>>
->;
-
 const createCacheStream: <T>(
   scheduler: SchedulerLike,
   options: Optional<{
@@ -91,7 +72,7 @@ const createCacheStream: <T>(
   capacity: number,
   cleanupScheduler: SchedulerLike,
   persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
-) => StreamOf<CacheLike<T>> = /*@__PURE__*/ (<T>() => {
+) => CacheLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties<T> = {
     delegate: StreamLike<
       ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
@@ -105,21 +86,13 @@ const createCacheStream: <T>(
   return createInstanceFactory(
     mix(
       include(
-        EnumerableIterableMixin(),
         DelegatingStreamMixin<
           ReadonlyObjectMapLike<string, Function1<Optional<T>, T>>,
           never
         >(),
       ),
       function CacheStream(
-        instance: TProperties<T> &
-          Pick<
-            AssociativeLike<string, ObservableLike<T>>,
-            | typeof KeyedLike_get
-            | typeof CollectionLike_count
-            | typeof AssociativeLike_keys
-            | typeof Symbol.iterator
-          >,
+        instance: TProperties<T> & Pick<CacheLike<T>, typeof CacheLike_get>,
         scheduler: SchedulerLike,
         options: Optional<{
           readonly replay?: number;
@@ -129,9 +102,7 @@ const createCacheStream: <T>(
         capacity: number,
         cleanupScheduler: SchedulerLike,
         persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
-      ): StreamOf<CacheLike<T>> {
-        init(EnumerableIterableMixin<ObservableLike<T>>(), instance);
-
+      ): CacheLike<T> {
         instance.store = new Map();
         instance.subscriptions = new Map();
 
@@ -308,24 +279,7 @@ const createCacheStream: <T>(
         subscriptions: none,
       }),
       {
-        get [CollectionLike_count]() {
-          unsafeCast<TProperties<T>>(this);
-          return this.store.size;
-        },
-
-        get [AssociativeLike_keys](): EnumerableLike<string> {
-          unsafeCast<TProperties<T>>(this);
-          return pipe(this.store, ReadonlyMap.keys());
-        },
-
-        [Symbol.iterator](): Iterator<ObservableLike<T>> {
-          unsafeCast<TProperties<T>>(this);
-          return pipe(this.subscriptions, ReadonlyMap.values())[
-            Symbol.iterator
-          ]() as Iterator<ObservableLike<T>>;
-        },
-
-        [KeyedLike_get](
+        [CacheLike_get](
           this: TProperties<T> & DisposableLike,
           key: string,
         ): ObservableLike<T> {
@@ -381,7 +335,11 @@ const Streamable_createCache = <T>(
     readonly capacity?: number;
     readonly cleanupScheduler?: SchedulerLike;
   } = {},
-): CacheLike<T> => ({
+): StreamableLike<
+  ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
+  never,
+  CacheLike<T>
+> => ({
   [StreamableLike_stream]: (scheduler, streamOptions) =>
     createCacheStream(
       scheduler,

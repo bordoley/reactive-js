@@ -7,12 +7,12 @@ import {
   unsafeCast,
 } from "../../../__internal__/mixins.js";
 import {
-  AssociativeLike_keys,
-  CollectionLike_count,
   DictionaryLike,
+  DictionaryLike_count,
+  DictionaryLike_get,
+  DictionaryLike_keys,
   EnumerableLike,
   EnumerableLike_enumerate,
-  KeyedLike_get,
   ReadonlyObjectMapLike,
 } from "../../../collections.js";
 import * as Enumerable from "../../../collections/Enumerable.js";
@@ -85,7 +85,7 @@ const Streamable_createAnimationGroupEventHandlerStream: <
         TKey,
         EventSourceLike<T>
       >;
-      [CollectionLike_count]: number;
+      [DictionaryLike_count]: number;
     };
 
     return createInstanceFactory(
@@ -95,8 +95,8 @@ const Streamable_createAnimationGroupEventHandlerStream: <
           instance: TProperties &
             Pick<
               DictionaryLike<TKey, EventSourceLike<T>>,
-              | typeof AssociativeLike_keys
-              | typeof KeyedLike_get
+              | typeof DictionaryLike_keys
+              | typeof DictionaryLike_get
               | typeof EnumerableLike_enumerate
               | typeof Symbol.iterator
             >,
@@ -176,7 +176,7 @@ const Streamable_createAnimationGroupEventHandlerStream: <
           const animationScheduler: SchedulerLike =
             creationOptions?.scheduler ?? scheduler;
 
-          instance[CollectionLike_count] = pipe(
+          instance[DictionaryLike_count] = pipe(
             publishers,
             ReadonlyObjectMap.reduce<unknown, number, string>(
               incrementBy(1),
@@ -190,10 +190,10 @@ const Streamable_createAnimationGroupEventHandlerStream: <
         },
         props<TProperties>({
           [AnimationEventHandlerStream_delegate]: none,
-          [CollectionLike_count]: 0,
+          [DictionaryLike_count]: 0,
         }),
         {
-          get [AssociativeLike_keys](): EnumerableLike<TKey> {
+          get [DictionaryLike_keys](): EnumerableLike<TKey> {
             unsafeCast<TProperties>(this);
             return pipe(
               this[AnimationEventHandlerStream_delegate],
@@ -214,7 +214,7 @@ const Streamable_createAnimationGroupEventHandlerStream: <
             ]();
           },
 
-          [KeyedLike_get](
+          [DictionaryLike_get](
             this: TProperties,
             index: TKey,
           ): Optional<EventSourceLike<T>> {

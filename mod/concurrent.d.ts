@@ -1,5 +1,6 @@
+import { ReadonlyObjectMapLike } from "./collections.js";
 import { ErrorSafeEventListenerLike, EventSourceLike, SinkLike, StoreLike } from "./events.js";
-import { SideEffect1 } from "./functions.js";
+import { Function1, Optional, SideEffect1 } from "./functions.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "./utils.js";
 export declare const DispatcherLikeEvent_ready: unique symbol;
 export declare const DispatcherLikeEvent_capacityExceeded: unique symbol;
@@ -278,3 +279,7 @@ export interface StreamableLike<TReq = unknown, T = unknown, TStream extends Str
     }): TStream;
 }
 export type StreamOf<TStreamable extends StreamableLike> = ReturnType<TStreamable[typeof StreamableLike_stream]>;
+export declare const CacheLike_get: unique symbol;
+export interface CacheLike<T> extends StreamLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never> {
+    [CacheLike_get](index: string): ObservableLike<T>;
+}

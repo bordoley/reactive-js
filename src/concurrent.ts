@@ -1,10 +1,11 @@
+import { ReadonlyObjectMapLike } from "./collections.js";
 import {
   ErrorSafeEventListenerLike,
   EventSourceLike,
   SinkLike,
   StoreLike,
 } from "./events.js";
-import { SideEffect1 } from "./functions.js";
+import { Function1, Optional, SideEffect1 } from "./functions.js";
 import {
   DisposableLike,
   QueueableLike,
@@ -382,3 +383,12 @@ export interface StreamableLike<
 export type StreamOf<TStreamable extends StreamableLike> = ReturnType<
   TStreamable[typeof StreamableLike_stream]
 >;
+
+export const CacheLike_get = Symbol("CacheLike_get");
+export interface CacheLike<T>
+  extends StreamLike<
+    ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
+    never
+  > {
+  [CacheLike_get](index: string): ObservableLike<T>;
+}

@@ -6,7 +6,7 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { CollectionLike_count, KeyedLike_get } from "../../collections.js";
+import { DictionaryLike_count, DictionaryLike_get } from "../../collections.js";
 import {
   Optional,
   Tuple2,
@@ -111,7 +111,7 @@ testModule(
         ReadonlyObjectMap.toDictionary(),
       );
 
-      expectEquals(3)(dict[CollectionLike_count]);
+      expectEquals(3)(dict[DictionaryLike_count]);
     }),
     test("get values", () => {
       const dict = pipe(
@@ -148,7 +148,7 @@ testModule(
         ReadonlyObjectMap.toDictionary<Optional<string>, string>(),
       );
 
-      pipe(dict[KeyedLike_get]("5"), expectIsNone);
+      pipe(dict[DictionaryLike_get]("5"), expectIsNone);
     }),
     test("get returns value of the key", () => {
       const dict = pipe(
@@ -158,7 +158,7 @@ testModule(
         ReadonlyObjectMap.toDictionary<Optional<string>, string>(),
       );
 
-      pipe(dict[KeyedLike_get]("0"), expectEquals<Optional<string>>("b"));
+      pipe(dict[DictionaryLike_get]("0"), expectEquals<Optional<string>>("b"));
     }),
   ),
   describe(

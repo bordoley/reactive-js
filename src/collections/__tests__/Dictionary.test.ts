@@ -7,9 +7,9 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import {
-  AssociativeLike_keys,
-  CollectionLike_count,
-  KeyedLike_get,
+  DictionaryLike_count,
+  DictionaryLike_get,
+  DictionaryLike_keys,
 } from "../../collections.js";
 import { Optional, compose, pipe } from "../../functions.js";
 import * as Dictionary from "../Dictionary.js";
@@ -36,12 +36,12 @@ testModule(
         Dictionary.map<string, number, number>((_, key: number) => key),
       );
 
-      pipe(mapped[CollectionLike_count], expectEquals(3));
-      pipe(mapped[KeyedLike_get](0), expectEquals<Optional<number>>(0));
-      pipe(mapped[KeyedLike_get](100), expectIsNone);
+      pipe(mapped[DictionaryLike_count], expectEquals(3));
+      pipe(mapped[DictionaryLike_get](0), expectEquals<Optional<number>>(0));
+      pipe(mapped[DictionaryLike_get](100), expectIsNone);
 
       pipe(
-        mapped[AssociativeLike_keys],
+        mapped[DictionaryLike_keys],
         Enumerable.toReadonlyArray(),
         expectArrayEquals([0, 1, 2]),
       );

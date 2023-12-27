@@ -1,6 +1,6 @@
 import {
-  AssociativeLike_keys,
   DictionaryLike,
+  DictionaryLike_keys,
   EnumerableLike_enumerate,
   EnumeratorLike_current,
   EnumeratorLike_move,
@@ -12,7 +12,7 @@ const Dictionary_keySet: Dictionary.Signature["keySet"] =
   <TKey extends Dictionary.TKeyBase = Dictionary.TKeyBase>() =>
   (dict: DictionaryLike<TKey, unknown>): ReadonlySet<TKey> => {
     const result = newInstance<Set<TKey>>(Set);
-    const keys = dict[AssociativeLike_keys][EnumerableLike_enumerate]();
+    const keys = dict[DictionaryLike_keys][EnumerableLike_enumerate]();
 
     while (keys[EnumeratorLike_move]()) {
       result.add(keys[EnumeratorLike_current]);
