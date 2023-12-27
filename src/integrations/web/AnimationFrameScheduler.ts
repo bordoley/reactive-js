@@ -15,10 +15,9 @@ import {
 import ContinuationSchedulerMixin, {
   ContinuationLike,
   ContinuationLike_run,
-  ContinuationSchedulerImplementationLike,
-  ContinuationSchedulerImplementationLike_scheduleContinuation,
-  ContinuationSchedulerImplementationLike_shouldYield,
   ContinuationSchedulerLike,
+  ContinuationSchedulerLike_scheduleContinuation,
+  ContinuationSchedulerLike_shouldYield,
 } from "../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
 import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
 import {
@@ -69,10 +68,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
     mix(
       include(CurrentTimeSchedulerMixin, ContinuationSchedulerMixin),
       function AnimationFrameScheduler(
-        instance: Omit<
-          ContinuationSchedulerImplementationLike,
-          typeof SchedulerLike_now
-        > &
+        instance: Omit<ContinuationSchedulerLike, typeof SchedulerLike_now> &
           TProperties,
         hostScheduler: SchedulerLike,
       ): SchedulerLike & DisposableLike {
@@ -136,10 +132,10 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
         [AnimationFrameScheduler_rafIsRunning]: false,
       }),
       {
-        [ContinuationSchedulerImplementationLike_shouldYield]: true,
+        [ContinuationSchedulerLike_shouldYield]: true,
         [SchedulerLike_shouldYield]: true,
 
-        [ContinuationSchedulerImplementationLike_scheduleContinuation](
+        [ContinuationSchedulerLike_scheduleContinuation](
           this: ContinuationSchedulerLike & TProperties,
           continuation: ContinuationLike,
           delay: number,
@@ -154,7 +150,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
                 pipeLazy(
                   this,
                   invoke(
-                    ContinuationSchedulerImplementationLike_scheduleContinuation,
+                    ContinuationSchedulerLike_scheduleContinuation,
                     continuation,
                     0,
                   ),

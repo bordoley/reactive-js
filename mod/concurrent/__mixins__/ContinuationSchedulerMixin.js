@@ -11,8 +11,8 @@ import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
 export const ContinuationLike_run = Symbol("ContinuationLike_run");
-export const ContinuationSchedulerImplementationLike_shouldYield = Symbol("ContinuationSchedulerImplementationLike_shouldYield");
-export const ContinuationSchedulerImplementationLike_scheduleContinuation = Symbol("ContinuationSchedulerImplementationLike_scheduleContinuation");
+export const ContinuationSchedulerLike_shouldYield = Symbol("ContinuationSchedulerLike_shouldYield");
+export const ContinuationSchedulerLike_scheduleContinuation = Symbol("ContinuationSchedulerLike_scheduleContinuation");
 const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
     const ContinuationSchedulerMixinLike_currentContinuation = Symbol("ContinuationSchedulerMixinLike_currentContinuation");
     const ContinuationSchedulerMixinLike_yieldRequested = Symbol("ContinuationSchedulerMixinLike_yieldRequested");
@@ -194,7 +194,7 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
                         this[ContinuationSchedulerMixinLike_startTime] +
                             this[SchedulerLike_maxYieldInterval] ||
                     (getActiveContinuation(this)?.[CollectionLike_count] ?? 0) > 0 ||
-                    this[ContinuationSchedulerImplementationLike_shouldYield]));
+                    this[ContinuationSchedulerLike_shouldYield]));
         },
         [SchedulerLike_requestYield]() {
             this[ContinuationSchedulerMixinLike_yieldRequested] = true;
@@ -215,7 +215,7 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
                 // children because it will be disposed.
                 continuation[QueueableContinuationLike_parent] === activeContinuation) {
                 continuation[QueueableContinuationLike_parent] = none;
-                this[ContinuationSchedulerImplementationLike_scheduleContinuation](continuation, delay);
+                this[ContinuationSchedulerLike_scheduleContinuation](continuation, delay);
             }
             else {
                 activeContinuation[QueueableLike_enqueue](continuation);

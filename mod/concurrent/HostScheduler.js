@@ -4,7 +4,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../__internal
 import { none, pipe } from "../functions.js";
 import { DisposableLike_dispose } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
-import ContinuationSchedulerMixin, { ContinuationLike_run, ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, } from "./__mixins__/ContinuationSchedulerMixin.js";
+import ContinuationSchedulerMixin, { ContinuationLike_run, ContinuationSchedulerLike_scheduleContinuation, ContinuationSchedulerLike_shouldYield, } from "./__mixins__/ContinuationSchedulerMixin.js";
 import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
 const supportsSetImmediate = typeof setImmediate === "function";
 const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
@@ -37,10 +37,10 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(m
     init(ContinuationSchedulerMixin, instance, maxYieldInterval);
     return instance;
 }, props({}), {
-    get [ContinuationSchedulerImplementationLike_shouldYield]() {
+    get [ContinuationSchedulerLike_shouldYield]() {
         return isInputPending();
     },
-    [ContinuationSchedulerImplementationLike_scheduleContinuation](continuation, delay) {
+    [ContinuationSchedulerLike_scheduleContinuation](continuation, delay) {
         if (delay > 0) {
             scheduleDelayed(continuation, delay);
         }

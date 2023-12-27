@@ -27,6 +27,7 @@ import {
 } from "../concurrent/__private__.js";
 import { Optional, isSome, none } from "../functions.js";
 import {
+  DisposableLike,
   DisposableLike_dispose,
   QueueCollectionLike,
   QueueLike,
@@ -38,10 +39,9 @@ import * as PriorityQueue from "../utils/PriorityQueue.js";
 import ContinuationSchedulerMixin, {
   ContinuationLike,
   ContinuationLike_run,
-  ContinuationSchedulerImplementationLike,
-  ContinuationSchedulerImplementationLike_scheduleContinuation,
-  ContinuationSchedulerImplementationLike_shouldYield,
   ContinuationSchedulerLike,
+  ContinuationSchedulerLike_scheduleContinuation,
+  ContinuationSchedulerLike_shouldYield,
 } from "./__mixins__/ContinuationSchedulerMixin.js";
 
 interface Signature {
@@ -85,7 +85,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           typeof VirtualTimeSchedulerLike_run
         > &
           Mutable<TProperties> &
-          ContinuationSchedulerImplementationLike,
+          ContinuationSchedulerLike,
         maxMicroTaskTicks: number,
       ): VirtualTimeSchedulerLike {
         init(ContinuationSchedulerMixin, instance, 1);
@@ -103,7 +103,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         [VirtualTimeScheduler_queue]: none,
       }),
       {
-        get [ContinuationSchedulerImplementationLike_shouldYield]() {
+        get [ContinuationSchedulerLike_shouldYield]() {
           unsafeCast<TProperties>(this);
 
           this[VirtualTimeScheduler_microTaskTicks]++;
@@ -114,7 +114,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           );
         },
         [VirtualTimeSchedulerLike_run](
-          this: TProperties & ContinuationSchedulerLike,
+          this: TProperties & ContinuationSchedulerLike & DisposableLike,
         ) {
           let queue: Optional<QueueCollectionLike<SchedulerTaskLike>> = none;
           while (
@@ -151,7 +151,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
 
           this[DisposableLike_dispose]();
         },
-        [ContinuationSchedulerImplementationLike_scheduleContinuation](
+        [ContinuationSchedulerLike_scheduleContinuation](
           this: TProperties & QueueLike<SchedulerTaskLike> & SchedulerLike,
           continuation: ContinuationLike,
           delay: number,

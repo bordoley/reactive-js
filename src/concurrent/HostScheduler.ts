@@ -12,10 +12,9 @@ import * as Disposable from "../utils/Disposable.js";
 import ContinuationSchedulerMixin, {
   ContinuationLike,
   ContinuationLike_run,
-  ContinuationSchedulerImplementationLike,
-  ContinuationSchedulerImplementationLike_scheduleContinuation,
-  ContinuationSchedulerImplementationLike_shouldYield,
   ContinuationSchedulerLike,
+  ContinuationSchedulerLike_scheduleContinuation,
+  ContinuationSchedulerLike_shouldYield,
 } from "./__mixins__/ContinuationSchedulerMixin.js";
 import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
 
@@ -94,10 +93,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
     mix(
       include(CurrentTimeSchedulerMixin, ContinuationSchedulerMixin),
       function HostScheduler(
-        instance: Omit<
-          ContinuationSchedulerImplementationLike,
-          typeof SchedulerLike_now
-        >,
+        instance: Omit<ContinuationSchedulerLike, typeof SchedulerLike_now>,
         maxYieldInterval: number,
       ): SchedulerLike & DisposableLike {
         init(CurrentTimeSchedulerMixin, instance);
@@ -107,11 +103,11 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
       },
       props({}),
       {
-        get [ContinuationSchedulerImplementationLike_shouldYield](): boolean {
+        get [ContinuationSchedulerLike_shouldYield](): boolean {
           return isInputPending();
         },
 
-        [ContinuationSchedulerImplementationLike_scheduleContinuation](
+        [ContinuationSchedulerLike_scheduleContinuation](
           this: ContinuationSchedulerLike,
           continuation: ContinuationLike,
           delay: number,

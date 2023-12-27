@@ -9,7 +9,7 @@ import { SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTas
 import { isSome, none } from "../functions.js";
 import { DisposableLike_dispose, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, } from "../utils.js";
 import * as PriorityQueue from "../utils/PriorityQueue.js";
-import ContinuationSchedulerMixin, { ContinuationLike_run, ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, } from "./__mixins__/ContinuationSchedulerMixin.js";
+import ContinuationSchedulerMixin, { ContinuationLike_run, ContinuationSchedulerLike_scheduleContinuation, ContinuationSchedulerLike_shouldYield, } from "./__mixins__/ContinuationSchedulerMixin.js";
 const comparator = (a, b) => {
     const diff = a[SchedulerTaskLike_dueTime] - b[SchedulerTaskLike_dueTime];
     return diff !== 0 ? diff : a[SchedulerTaskLike_id] - b[SchedulerTaskLike_id];
@@ -30,7 +30,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFa
     [VirtualTimeScheduler_taskIDCount]: 0,
     [VirtualTimeScheduler_queue]: none,
 }), {
-    get [ContinuationSchedulerImplementationLike_shouldYield]() {
+    get [ContinuationSchedulerLike_shouldYield]() {
         unsafeCast(this);
         this[VirtualTimeScheduler_microTaskTicks]++;
         return (this[VirtualTimeScheduler_microTaskTicks] >=
@@ -61,7 +61,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFa
         }
         this[DisposableLike_dispose]();
     },
-    [ContinuationSchedulerImplementationLike_scheduleContinuation](continuation, delay) {
+    [ContinuationSchedulerLike_scheduleContinuation](continuation, delay) {
         this[VirtualTimeScheduler_queue][QueueableLike_enqueue]({
             [SchedulerTaskLike_id]: this[VirtualTimeScheduler_taskIDCount]++,
             [SchedulerTaskLike_dueTime]: this[SchedulerLike_now] + delay,

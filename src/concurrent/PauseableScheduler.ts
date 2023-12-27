@@ -57,10 +57,9 @@ import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js"
 import ContinuationSchedulerMixin, {
   ContinuationLike,
   ContinuationLike_run,
-  ContinuationSchedulerImplementationLike,
-  ContinuationSchedulerImplementationLike_scheduleContinuation,
-  ContinuationSchedulerImplementationLike_shouldYield,
   ContinuationSchedulerLike,
+  ContinuationSchedulerLike_scheduleContinuation,
+  ContinuationSchedulerLike_shouldYield,
 } from "./__mixins__/ContinuationSchedulerMixin.js";
 
 interface Signature {
@@ -113,7 +112,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   };
 
   const peek = (
-    instance: TProperties & SchedulerLike,
+    instance: TProperties & ContinuationSchedulerLike,
   ): Optional<SchedulerTaskLike> => {
     const {
       [PauseableScheduler_delayed]: delayed,
@@ -229,7 +228,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           PauseableSchedulerLike,
           typeof PauseableLike_pause | typeof PauseableLike_resume
         > &
-          ContinuationSchedulerImplementationLike &
+          ContinuationSchedulerLike &
           Mutable<TProperties>,
         host: SchedulerLike,
       ): PauseableSchedulerLike {
@@ -276,7 +275,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
             (hostNow - this[PauseableScheduler_resumedTime])
           );
         },
-        get [ContinuationSchedulerImplementationLike_shouldYield](): boolean {
+        get [ContinuationSchedulerLike_shouldYield](): boolean {
           unsafeCast<
             TProperties &
               EnumeratorLike<SchedulerTaskLike> &
@@ -299,7 +298,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           this: TProperties &
             SerialDisposableLike &
             EnumeratorLike &
-            ContinuationSchedulerImplementationLike,
+            ContinuationSchedulerLike,
         ) {
           this[PauseableScheduler_initialTime] = this[SchedulerLike_now];
           this[SerialDisposableLike_current] = Disposable.disposed;
@@ -319,7 +318,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         [EnumeratorLike_move](
           this: TProperties &
             MutableEnumeratorLike<SchedulerTaskLike> &
-            SchedulerLike,
+            ContinuationSchedulerLike,
         ): boolean {
           // First fast forward through disposed tasks.
           peek(this);
@@ -332,11 +331,12 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
           return this[EnumeratorLike_hasCurrent];
         },
-        [ContinuationSchedulerImplementationLike_scheduleContinuation](
+        [ContinuationSchedulerLike_scheduleContinuation](
           this: TProperties &
             SerialDisposableLike &
             EnumeratorLike<SchedulerTaskLike> &
-            ContinuationSchedulerLike,
+            ContinuationSchedulerLike &
+            SchedulerLike,
           continuation: ContinuationLike,
           delay: number,
         ) {
