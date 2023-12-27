@@ -17,8 +17,8 @@ import ReadonlyArray_keySet from "./ReadonlyArray/__private__/ReadonlyArray.keyS
 import ReadonlyArray_keys from "./ReadonlyArray/__private__/ReadonlyArray.keys.js";
 import ReadonlyArray_map from "./ReadonlyArray/__private__/ReadonlyArray.map.js";
 import ReadonlyArray_reduce from "./ReadonlyArray/__private__/ReadonlyArray.reduce.js";
+import ReadonlyArray_slice from "./ReadonlyArray/__private__/ReadonlyArray.slice.js";
 import ReadonlyArray_toDictionary from "./ReadonlyArray/__private__/ReadonlyArray.toDictionary.js";
-import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__private__/ReadonlyArray.toReadonlyArray.js";
 import ReadonlyArray_toReadonlyMap from "./ReadonlyArray/__private__/ReadonlyArray.toReadonlyMap.js";
 
 /**
@@ -61,7 +61,7 @@ export interface ReadonlyArrayModule
     EnumerableLike<T>
   >;
 
-  toReadonlyArray<T>(options?: {
+  slice<T>(options?: {
     readonly count?: number;
     readonly start?: number;
   }): Function1<
@@ -80,10 +80,9 @@ export const keys: Signature["keys"] = ReadonlyArray_keys;
 export const keySet: Signature["keySet"] = ReadonlyArray_keySet;
 export const map: Signature["map"] = ReadonlyArray_map;
 export const reduce: Signature["reduce"] = ReadonlyArray_reduce;
+export const slice: Signature["slice"] = ReadonlyArray_slice;
 export const toDictionary: Signature["toDictionary"] =
   ReadonlyArray_toDictionary;
-export const toReadonlyArray: Signature["toReadonlyArray"] =
-  ReadonlyArray_toReadonlyArray;
 export const toReadonlyMap: Signature["toReadonlyMap"] =
   ReadonlyArray_toReadonlyMap;
 export const values: Signature["values"] = Enumerable_fromReadonlyArray;

@@ -24,8 +24,8 @@
 - [keys](collections_ReadonlyArray.md#keys)
 - [map](collections_ReadonlyArray.md#map)
 - [reduce](collections_ReadonlyArray.md#reduce)
+- [slice](collections_ReadonlyArray.md#slice)
 - [toDictionary](collections_ReadonlyArray.md#todictionary)
-- [toReadonlyArray](collections_ReadonlyArray.md#toreadonlyarray)
 - [toReadonlyMap](collections_ReadonlyArray.md#toreadonlymap)
 - [values](collections_ReadonlyArray.md#values)
 
@@ -225,26 +225,9 @@ ___
 
 ___
 
-### toDictionary
+### slice
 
-▸ **toDictionary**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`TKey`, `T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`TKey`, `T`\>\>
-
-___
-
-### toReadonlyArray
-
-▸ **toReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
+▸ **slice**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
 #### Type parameters
 
@@ -263,6 +246,23 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
+
+___
+
+### toDictionary
+
+▸ **toDictionary**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`TKey`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`TKey`, `T`\>\>
 
 ___
 

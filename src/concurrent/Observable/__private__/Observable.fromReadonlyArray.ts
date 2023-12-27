@@ -1,14 +1,8 @@
-import {
-  KeyedCollection,
-  KeyedCollection_T,
-  KeyedCollection_type,
-} from "../../../collections.js";
-import ReadonlyArray_toCollection from "../../../collections/ReadonlyArray/__private__/ReadonlyArray.toCollection.js";
+import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   ObserverLike,
-  PureRunnableLike,
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
@@ -21,53 +15,38 @@ import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createPureRunnable from "./Observable.createPureRunnable.js";
 
-interface ValuesCollection extends KeyedCollection<number> {
-  readonly [KeyedCollection_type]?: PureRunnableLike<
-    this[typeof KeyedCollection_T]
-  >;
-}
-
 const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
-  (options?: {
+  <T>(options?: {
     delay?: number;
     delayStart?: boolean;
     count?: number;
     start?: number;
   }) =>
-    ReadonlyArray_toCollection<ValuesCollection>(
-      <_ extends number, T>(
-        arr: readonly T[],
-        startIndex: number,
-        count: number,
-      ) =>
-        Observable_createPureRunnable((observer: ObserverLike<T>) => {
-          const { delay = 0, delayStart = false } = options ?? {};
+  (arr: readonly T[]) =>
+    Observable_createPureRunnable((observer: ObserverLike<T>) => {
+      const { delay = 0, delayStart = false } = options ?? {};
 
-          let iterCount = count;
-          let iterStartIndex = startIndex;
+      let { start, count } = parseArrayBounds(arr, options);
 
-          const continuation = (ctx: ContinuationContextLike) => {
-            while (!observer[DisposableLike_isDisposed] && iterCount !== 0) {
-              const next = arr[iterStartIndex];
-              observer[SinkLike_notify](next);
+      const continuation = (ctx: ContinuationContextLike) => {
+        while (!observer[DisposableLike_isDisposed] && count !== 0) {
+          const next = arr[start];
+          observer[SinkLike_notify](next);
 
-              iterCount > 0
-                ? (iterStartIndex++, iterCount--)
-                : (iterStartIndex--, iterCount++);
+          count > 0 ? (start++, count--) : (start--, count++);
 
-              ctx[ContinuationContextLike_yield](delay);
-            }
-            observer[DisposableLike_dispose]();
-          };
+          ctx[ContinuationContextLike_yield](delay);
+        }
+        observer[DisposableLike_dispose]();
+      };
 
-          pipe(
-            observer[SchedulerLike_schedule](
-              continuation,
-              delayStart ? { delay } : none,
-            ),
-            Disposable.addTo(observer),
-          );
-        }),
-    )(options);
+      pipe(
+        observer[SchedulerLike_schedule](
+          continuation,
+          delayStart ? { delay } : none,
+        ),
+        Disposable.addTo(observer),
+      );
+    });
 
 export default Observable_fromReadonlyArray;

@@ -68,6 +68,53 @@ testModule(
     ),
   ),
   describe(
+    "slice",
+    test(
+      "starting at index greater than 0",
+      pipeLazy(
+        [1, 2, 3, 4],
+
+        ReadonlyArray.slice({ start: 1 }),
+        expectArrayEquals([2, 3, 4]),
+      ),
+    ),
+    test(
+      "starting at index greater than 0 with count",
+      pipeLazy(
+        [1, 2, 3, 4],
+
+        ReadonlyArray.slice({ start: 1, count: 2 }),
+        expectArrayEquals([2, 3]),
+      ),
+    ),
+    test(
+      "starting at index greater than 0 with count exceeding the length",
+      pipeLazy(
+        [1, 2, 3, 4],
+
+        ReadonlyArray.slice({ start: 1, count: 10 }),
+        expectArrayEquals([2, 3, 4]),
+      ),
+    ),
+    test(
+      "negative count",
+      pipeLazy(
+        [1, 2, 3, 4],
+
+        ReadonlyArray.slice({ count: -2 }),
+        expectArrayEquals([4, 3]),
+      ),
+    ),
+    test(
+      "starting at index greater than 0 with negative count",
+      pipeLazy(
+        [1, 2, 3, 4],
+        ReadonlyArray.slice({ start: 2, count: -2 }),
+        expectArrayEquals([3, 2]),
+      ),
+    ),
+  ),
+  describe(
     "values",
     test(
       "starting at index greater than 0",
@@ -116,53 +163,6 @@ testModule(
 
         ReadonlyArray.values({ start: 2, count: -2 }),
         Enumerable.toReadonlyArray(),
-        expectArrayEquals([3, 2]),
-      ),
-    ),
-  ),
-  describe(
-    "toReadonlyArray",
-    test(
-      "starting at index greater than 0",
-      pipeLazy(
-        [1, 2, 3, 4],
-
-        ReadonlyArray.toReadonlyArray({ start: 1 }),
-        expectArrayEquals([2, 3, 4]),
-      ),
-    ),
-    test(
-      "starting at index greater than 0 with count",
-      pipeLazy(
-        [1, 2, 3, 4],
-
-        ReadonlyArray.toReadonlyArray({ start: 1, count: 2 }),
-        expectArrayEquals([2, 3]),
-      ),
-    ),
-    test(
-      "starting at index greater than 0 with count exceeding the length",
-      pipeLazy(
-        [1, 2, 3, 4],
-
-        ReadonlyArray.toReadonlyArray({ start: 1, count: 10 }),
-        expectArrayEquals([2, 3, 4]),
-      ),
-    ),
-    test(
-      "negative count",
-      pipeLazy(
-        [1, 2, 3, 4],
-
-        ReadonlyArray.toReadonlyArray({ count: -2 }),
-        expectArrayEquals([4, 3]),
-      ),
-    ),
-    test(
-      "starting at index greater than 0 with negative count",
-      pipeLazy(
-        [1, 2, 3, 4],
-        ReadonlyArray.toReadonlyArray({ start: 2, count: -2 }),
         expectArrayEquals([3, 2]),
       ),
     ),

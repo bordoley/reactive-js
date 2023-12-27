@@ -15,7 +15,7 @@
 ### Methods
 
 - [entries](collections_ReadonlyArray.ReadonlyArrayModule.md#entries)
-- [toReadonlyArray](collections_ReadonlyArray.ReadonlyArrayModule.md#toreadonlyarray)
+- [slice](collections_ReadonlyArray.ReadonlyArrayModule.md#slice)
 - [values](collections_ReadonlyArray.ReadonlyArrayModule.md#values)
 
 ## Methods
@@ -49,9 +49,9 @@
 
 ___
 
-### toReadonlyArray
+### slice
 
-▸ **toReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
+▸ **slice**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
 #### Type parameters
 

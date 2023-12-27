@@ -24,7 +24,7 @@ export interface ReadonlyArrayModule extends KeyedCollectionModule<ReadonlyArray
         readonly count?: number;
         readonly start?: number;
     }): Function1<KeyedCollectionOf<ReadonlyArrayCollection, T, TKey>, EnumerableLike<T>>;
-    toReadonlyArray<T>(options?: {
+    slice<T>(options?: {
         readonly count?: number;
         readonly start?: number;
     }): Function1<KeyedCollectionOf<ReadonlyArrayCollection, T>, ReadonlyArray<T>>;
@@ -38,7 +38,7 @@ export declare const keys: Signature["keys"];
 export declare const keySet: Signature["keySet"];
 export declare const map: Signature["map"];
 export declare const reduce: Signature["reduce"];
+export declare const slice: Signature["slice"];
 export declare const toDictionary: Signature["toDictionary"];
-export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const toReadonlyMap: Signature["toReadonlyMap"];
 export declare const values: Signature["values"];
