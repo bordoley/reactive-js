@@ -11,3 +11,11 @@ export interface SchedulerTaskLike {
   [SchedulerTaskLike_dueTime]: number;
   [SchedulerTaskLike_id]: number;
 }
+
+export const SchedulerTask_comparator = (
+  a: SchedulerTaskLike,
+  b: SchedulerTaskLike,
+) => {
+  const diff = a[SchedulerTaskLike_dueTime] - b[SchedulerTaskLike_dueTime];
+  return diff !== 0 ? diff : a[SchedulerTaskLike_id] - b[SchedulerTaskLike_id];
+};

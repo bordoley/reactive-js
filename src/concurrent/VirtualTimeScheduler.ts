@@ -23,6 +23,7 @@ import {
   SchedulerTaskLike_continuation,
   SchedulerTaskLike_dueTime,
   SchedulerTaskLike_id,
+  SchedulerTask_comparator,
 } from "../concurrent/__private__.js";
 import { Optional, isSome, none } from "../functions.js";
 import {
@@ -48,11 +49,6 @@ interface Signature {
     readonly maxMicroTaskTicks?: number;
   }): VirtualTimeSchedulerLike;
 }
-
-const comparator = (a: SchedulerTaskLike, b: SchedulerTaskLike) => {
-  const diff = a[SchedulerTaskLike_dueTime] - b[SchedulerTaskLike_dueTime];
-  return diff !== 0 ? diff : a[SchedulerTaskLike_id] - b[SchedulerTaskLike_id];
-};
 
 const VirtualTimeScheduler_maxMicroTaskTicks = Symbol(
   "VirtualTimeScheduler_maxMicroTaskTicks",
@@ -90,7 +86,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         init(ContinuationSchedulerMixin, instance, 1);
 
         instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
-        instance[VirtualTimeScheduler_queue] = PriorityQueue.create(comparator);
+        instance[VirtualTimeScheduler_queue] = PriorityQueue.create(
+          SchedulerTask_comparator,
+        );
 
         return instance;
       },
@@ -120,7 +118,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
             ((queue = this[VirtualTimeScheduler_queue]),
             queue[QueueableLike_count] > 0)
           ) {
-            this[VirtualTimeScheduler_queue] = PriorityQueue.create(comparator);
+            this[VirtualTimeScheduler_queue] = PriorityQueue.create(
+              SchedulerTask_comparator,
+            );
 
             const currentTime = this[SchedulerLike_now];
 

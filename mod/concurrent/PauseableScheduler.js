@@ -5,7 +5,7 @@ import { createInstanceFactory, include, init, mix, props, unsafeCast, } from ".
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../collections.js";
 import MutableEnumeratorMixin from "../collections/__mixins__/MutableEnumeratorMixin.js";
 import { ContinuationContextLike_yield, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../concurrent.js";
-import { SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTaskLike_id, } from "../concurrent/__private__.js";
+import { SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTaskLike_id, SchedulerTask_comparator, } from "../concurrent/__private__.js";
 import { StoreLike_value } from "../events.js";
 import * as WritableStore from "../events/WritableStore.js";
 import { isNone, isSome, none } from "../functions.js";
@@ -24,16 +24,6 @@ export const create = /*@PURE__*/ (() => {
     const PauseableScheduler_taskIDCounter = Symbol("PauseableScheduler_taskIDCounter");
     const PauseableScheduler_initialTime = Symbol("PauseableScheduler_initialTime");
     const PauseableScheduler_resumedTime = Symbol("PauseableScheduler_resumedTime");
-    const delayedComparator = (a, b) => {
-        let diff = 0;
-        diff =
-            diff !== 0
-                ? diff
-                : a[SchedulerTaskLike_dueTime] - b[SchedulerTaskLike_dueTime];
-        diff =
-            diff !== 0 ? diff : b[SchedulerTaskLike_id] - a[SchedulerTaskLike_id];
-        return diff;
-    };
     const peek = (instance) => {
         const { [PauseableScheduler_delayed]: delayed, [PauseableScheduler_queue]: queue, } = instance;
         const now = instance[SchedulerLike_now];
@@ -100,8 +90,7 @@ export const create = /*@PURE__*/ (() => {
         init(ContinuationSchedulerMixin, instance, host[SchedulerLike_maxYieldInterval]);
         init(MutableEnumeratorMixin(), instance);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
-        instance[PauseableScheduler_delayed] =
-            PriorityQueue.create(delayedComparator);
+        instance[PauseableScheduler_delayed] = PriorityQueue.create(SchedulerTask_comparator);
         instance[PauseableScheduler_queue] = IndexedQueue.create();
         instance[PauseableScheduler_hostScheduler] = host;
         instance[PauseableScheduler_initialTime] = host[SchedulerLike_now];

@@ -36,6 +36,7 @@ import {
   SchedulerTaskLike_continuation,
   SchedulerTaskLike_dueTime,
   SchedulerTaskLike_id,
+  SchedulerTask_comparator,
 } from "../concurrent/__private__.js";
 import { StoreLike_value, WritableStoreLike } from "../events.js";
 import * as WritableStore from "../events/WritableStore.js";
@@ -98,17 +99,6 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     [PauseableScheduler_taskIDCounter]: number;
     [PauseableScheduler_initialTime]: number;
     [PauseableScheduler_resumedTime]: number;
-  };
-
-  const delayedComparator = (a: SchedulerTaskLike, b: SchedulerTaskLike) => {
-    let diff = 0;
-    diff =
-      diff !== 0
-        ? diff
-        : a[SchedulerTaskLike_dueTime] - b[SchedulerTaskLike_dueTime];
-    diff =
-      diff !== 0 ? diff : b[SchedulerTaskLike_id] - a[SchedulerTaskLike_id];
-    return diff;
   };
 
   const peek = (
@@ -240,8 +230,9 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         init(MutableEnumeratorMixin<SchedulerTaskLike>(), instance);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
 
-        instance[PauseableScheduler_delayed] =
-          PriorityQueue.create(delayedComparator);
+        instance[PauseableScheduler_delayed] = PriorityQueue.create(
+          SchedulerTask_comparator,
+        );
         instance[PauseableScheduler_queue] = IndexedQueue.create();
         instance[PauseableScheduler_hostScheduler] = host;
 

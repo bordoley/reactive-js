@@ -7,3 +7,4 @@ export interface SchedulerTaskLike {
     [SchedulerTaskLike_dueTime]: number;
     [SchedulerTaskLike_id]: number;
 }
+export declare const SchedulerTask_comparator: (a: SchedulerTaskLike, b: SchedulerTaskLike) => number;
