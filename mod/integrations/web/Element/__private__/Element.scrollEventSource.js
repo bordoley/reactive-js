@@ -54,6 +54,6 @@ const Element_scrollEventSource = () => element => {
         };
         return { x, y, time: now };
     };
-    return pipe(EventSource.merge(pipe(element, Element_eventSource("scroll")), Element_windowResizeEventSource()), EventSource.scan(eventHandler, createInitialScrollValue));
+    return pipe(element, Element_eventSource("scroll"), EventSource.mergeWith(Element_windowResizeEventSource()), EventSource.scan(eventHandler, createInitialScrollValue));
 };
 export default Element_scrollEventSource;

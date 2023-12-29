@@ -33,7 +33,7 @@ const Element_resizeEventSource: Element.Signature["resizeEventSource"] =
         resizeObserver ??
         (() => newInstance(ResizeObserver, resizeObserverCallback))();
 
-      const publisher =
+      return (
         publishers.get(element) ??
         (() => {
           const publisher = pipe(
@@ -55,9 +55,8 @@ const Element_resizeEventSource: Element.Signature["resizeEventSource"] =
           resizeObserver.observe(element, options);
 
           return publisher;
-        })();
-
-      return publisher;
+        })()
+      );
     };
   })();
 

@@ -6,7 +6,8 @@ import {
   ObservableLike_observe,
   ObserverLike,
   ReplayObservableLike,
-  ReplayObservableLike_buffer,
+  ReplayObservableLike_count,
+  ReplayObservableLike_get,
 } from "../../concurrent.js";
 import { none, returns } from "../../functions.js";
 
@@ -41,11 +42,17 @@ const DelegatingReplayObservableMixin: <T>() => Mixin1<
         [ObservableLike_isPure]: true as const,
         [ObservableLike_isRunnable]: false as const,
 
-        get [ReplayObservableLike_buffer]() {
+        get [ReplayObservableLike_count]() {
           unsafeCast<TProperties>(this);
           return this[DelegatingReplayObservableMixin_delegate][
-            ReplayObservableLike_buffer
+            ReplayObservableLike_count
           ];
+        },
+
+        [ReplayObservableLike_get](this: TProperties, index: number) {
+          return this[DelegatingReplayObservableMixin_delegate][
+            ReplayObservableLike_get
+          ](index);
         },
 
         [ObservableLike_observe](this: TProperties, observer: ObserverLike<T>) {

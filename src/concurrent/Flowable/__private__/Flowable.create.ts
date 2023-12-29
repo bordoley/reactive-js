@@ -20,7 +20,8 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,
-  ReplayObservableLike_buffer,
+  ReplayObservableLike_count,
+  ReplayObservableLike_get,
   SchedulerLike,
   StreamLike,
   StreamableLike_stream,
@@ -70,7 +71,9 @@ const PauseableObservable_create: <T>(
       function PauseableObservable(
         instance: Omit<
           PauseableObservableLike<T>,
-          keyof DisposableLike | typeof ReplayObservableLike_buffer
+          | keyof DisposableLike
+          | typeof ReplayObservableLike_count
+          | typeof ReplayObservableLike_get
         > &
           TProperties,
         op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>,

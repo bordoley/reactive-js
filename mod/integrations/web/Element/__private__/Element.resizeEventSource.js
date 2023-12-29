@@ -21,7 +21,7 @@ const Element_resizeEventSource =
         resizeObserver =
             resizeObserver ??
                 (() => newInstance(ResizeObserver, resizeObserverCallback))();
-        const publisher = publishers.get(element) ??
+        return (publishers.get(element) ??
             (() => {
                 const publisher = pipe(Publisher.createRefCounted(), Disposable.onDisposed(() => {
                     resizeObserver?.unobserve(element);
@@ -35,8 +35,7 @@ const Element_resizeEventSource =
                 publishers.set(element, publisher);
                 resizeObserver.observe(element, options);
                 return publisher;
-            })();
-        return publisher;
+            })());
     };
 })();
 export default Element_resizeEventSource;

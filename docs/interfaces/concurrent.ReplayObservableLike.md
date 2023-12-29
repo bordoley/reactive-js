@@ -30,10 +30,30 @@ A stateful ObservableLike resource.
 
 ### Properties
 
-- [[ReplayObservableLike\_buffer]](concurrent.ReplayObservableLike.md#[replayobservablelike_buffer])
+- [[ReplayObservableLike\_count]](concurrent.ReplayObservableLike.md#[replayobservablelike_count])
+
+### Methods
+
+- [[ReplayObservableLike\_get]](concurrent.ReplayObservableLike.md#[replayobservablelike_get])
 
 ## Properties
 
-### [ReplayObservableLike\_buffer]
+### [ReplayObservableLike\_count]
 
-• `Readonly` **[ReplayObservableLike\_buffer]**: readonly `T`[]
+• `Readonly` **[ReplayObservableLike\_count]**: `number`
+
+## Methods
+
+### [ReplayObservableLike\_get]
+
+▸ **[ReplayObservableLike_get]**(`index`): `T`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `index` | `number` |
+
+#### Returns
+
+`T`

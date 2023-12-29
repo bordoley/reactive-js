@@ -2,10 +2,10 @@
 
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
-import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, ReplayObservableLike_buffer, SubjectLike_observerCount, } from "../../../concurrent.js";
+import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, ReplayObservableLike_count, ReplayObservableLike_get, SubjectLike_observerCount, } from "../../../concurrent.js";
 import { EventListenerLike_isErrorSafe, SinkLike_notify, } from "../../../events.js";
 import { error, isSome, newInstance, none, pipe } from "../../../functions.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, IndexedQueueLike_get, QueueableLike_count, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
@@ -42,9 +42,12 @@ const Subject_create = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[Subject_observers].size;
         },
-        get [ReplayObservableLike_buffer]() {
+        get [ReplayObservableLike_count]() {
             unsafeCast(this);
-            return pipe(this[Subject_buffer], IndexedQueue.toReadonlyArray());
+            return this[Subject_buffer][QueueableLike_count];
+        },
+        [ReplayObservableLike_get](index) {
+            return this[Subject_buffer][IndexedQueueLike_get](index);
         },
         [SinkLike_notify](next) {
             if (this[DisposableLike_isDisposed]) {
@@ -75,10 +78,9 @@ const Subject_create = /*@__PURE__*/ (() => {
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
-            const buffer = this[ReplayObservableLike_buffer];
-            const count = buffer.length;
+            const count = this[ReplayObservableLike_count];
             for (let i = 0; i < count; i++) {
-                const next = buffer[i];
+                const next = this[ReplayObservableLike_get](i);
                 observer[QueueableLike_enqueue](next);
             }
             if (this[DisposableLike_isDisposed]) {

@@ -22,7 +22,8 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   ReplayObservableLike,
-  ReplayObservableLike_buffer,
+  ReplayObservableLike_count,
+  ReplayObservableLike_get,
   StreamOf,
   StreamableLike,
   StreamableLike_stream,
@@ -350,10 +351,13 @@ export const useObserve: Signature["useObserve"] = <T>(
     ],
   );
 
-  const buffer = (observable as Optional<ReplayObservableLike<T>>)?.[
-    ReplayObservableLike_buffer
-  ];
-  const defaultValue = buffer?.[0];
+  const hasDefaultValue =
+    ((observable as Optional<ReplayObservableLike<T>>)?.[
+      ReplayObservableLike_count
+    ] ?? 0) > 0;
+  const defaultValue = hasDefaultValue
+    ? (observable as ReplayObservableLike<T>)[ReplayObservableLike_get](0)
+    : none;
 
   return isSome(error) ? raiseError<T>(error) : state ?? defaultValue;
 };

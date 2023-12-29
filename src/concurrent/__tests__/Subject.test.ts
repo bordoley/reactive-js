@@ -10,7 +10,7 @@ import {
 import * as Enumerable from "../../collections/Enumerable.js";
 import {
   ObservableLike_observe,
-  ReplayObservableLike_buffer,
+  ReplayObservableLike_get,
   SchedulerLike_schedule,
   SubjectLike_observerCount,
   VirtualTimeSchedulerLike_run,
@@ -46,7 +46,8 @@ testModule(
         subject[SinkLike_notify](v);
       }
 
-      pipe(subject[ReplayObservableLike_buffer], expectArrayEquals([3, 4]));
+      pipe(subject[ReplayObservableLike_get](0), expectEquals(3));
+      pipe(subject[ReplayObservableLike_get](1), expectEquals(4));
 
       subject[DisposableLike_dispose]();
 
@@ -170,7 +171,8 @@ testModule(
         subject[SinkLike_notify](v);
       }
 
-      pipe(subject[ReplayObservableLike_buffer], expectArrayEquals([3, 4]));
+      pipe(subject[ReplayObservableLike_get](0), expectEquals(3));
+      pipe(subject[ReplayObservableLike_get](1), expectEquals(4));
     }),
   ),
 );

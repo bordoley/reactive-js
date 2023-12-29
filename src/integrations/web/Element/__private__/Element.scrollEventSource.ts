@@ -71,10 +71,9 @@ const Element_scrollEventSource: Element.Signature["scrollEventSource"] =
     };
 
     return pipe(
-      EventSource.merge(
-        pipe(element, Element_eventSource("scroll")),
-        Element_windowResizeEventSource(),
-      ),
+      element,
+      Element_eventSource("scroll"),
+      EventSource.mergeWith(Element_windowResizeEventSource()),
       EventSource.scan(eventHandler, createInitialScrollValue),
     );
   };

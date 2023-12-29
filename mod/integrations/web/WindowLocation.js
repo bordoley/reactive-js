@@ -1,8 +1,8 @@
 /// <reference types="./WindowLocation.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { pick } from "../../computations.js";
-import { ObservableLike_observe, ReplayObservableLike_buffer, StreamLike_scheduler, StreamableLike_stream, } from "../../concurrent.js";
+import { ObservableLike_observe, ReplayObservableLike_get, StreamLike_scheduler, StreamableLike_stream, } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as Stream from "../../concurrent/Stream.js";
 import * as Streamable from "../../concurrent/Streamable.js";
@@ -63,9 +63,9 @@ export const subscribe = /*@__PURE__*/ (() => {
         [WindowLocation_delegate]: none,
         [WindowLocationLike_canGoBack]: none,
     }), {
-        get [ReplayObservableLike_buffer]() {
-            unsafeCast(this);
-            return this[WindowLocation_delegate][ReplayObservableLike_buffer].map(location => location.uri);
+        [ReplayObservableLike_get](index) {
+            return this[WindowLocation_delegate][ReplayObservableLike_get](index)
+                .uri;
         },
         [WindowLocationLike_push](stateOrUpdater) {
             this[WindowLocation_delegate][QueueableLike_enqueue]((prevState) => {

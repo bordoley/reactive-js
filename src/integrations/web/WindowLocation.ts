@@ -4,14 +4,13 @@ import {
   init,
   mix,
   props,
-  unsafeCast,
 } from "../../__internal__/mixins.js";
 import { pick } from "../../computations.js";
 import {
   DeferredObservableLike,
   ObservableLike_observe,
   ObserverLike,
-  ReplayObservableLike_buffer,
+  ReplayObservableLike_get,
   SchedulerLike,
   StreamLike,
   StreamLike_scheduler,
@@ -160,7 +159,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
           | typeof WindowLocationLike_push
           | typeof WindowLocationLike_replace
           | typeof ObservableLike_observe
-          | typeof ReplayObservableLike_buffer
+          | typeof ReplayObservableLike_get
         > &
           TProperties,
         delegate: StreamLike<Updater<TState>, TState> & DisposableLike,
@@ -191,11 +190,9 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
         [WindowLocationLike_canGoBack]: none,
       }),
       {
-        get [ReplayObservableLike_buffer]() {
-          unsafeCast<TProperties>(this);
-          return this[WindowLocation_delegate][ReplayObservableLike_buffer].map(
-            location => location.uri,
-          );
+        [ReplayObservableLike_get](this: TProperties, index: number) {
+          return this[WindowLocation_delegate][ReplayObservableLike_get](index)
+            .uri;
         },
 
         [WindowLocationLike_push](

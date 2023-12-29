@@ -278,9 +278,9 @@ export interface MulticastObservableLike<T = unknown>
   readonly [ObservableLike_isRunnable]: false;
 }
 
-export const ReplayObservableLike_buffer = Symbol(
-  "ReplayObservableLike_buffer",
-);
+export const ReplayObservableLike_get = Symbol("ReplayObservableLike_get");
+
+export const ReplayObservableLike_count = Symbol("ReplayObservableLike_count");
 
 /**
  * A stateful ObservableLike resource.
@@ -289,7 +289,9 @@ export const ReplayObservableLike_buffer = Symbol(
  */
 export interface ReplayObservableLike<T = unknown>
   extends MulticastObservableLike<T> {
-  readonly [ReplayObservableLike_buffer]: ReadonlyArray<T>;
+  readonly [ReplayObservableLike_count]: number;
+
+  [ReplayObservableLike_get](index: number): T;
 }
 
 export const SubjectLike_observerCount = Symbol("SubjectLike_observerCount");

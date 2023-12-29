@@ -15,7 +15,8 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
-  ReplayObservableLike_buffer,
+  ReplayObservableLike_count,
+  ReplayObservableLike_get,
   SubjectLike,
   SubjectLike_observerCount,
 } from "../../../concurrent.js";
@@ -29,6 +30,8 @@ import {
   DisposableLike_error,
   DisposableLike_isDisposed,
   IndexedQueueLike,
+  IndexedQueueLike_get,
+  QueueableLike_count,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -56,7 +59,8 @@ const Subject_create: Subject.Signature["create"] = /*@__PURE__*/ (<T>() => {
           | typeof ObservableLike_isPure
           | typeof ObservableLike_isRunnable
           | typeof SubjectLike_observerCount
-          | typeof ReplayObservableLike_buffer
+          | typeof ReplayObservableLike_count
+          | typeof ReplayObservableLike_get
           | typeof EventListenerLike_isErrorSafe
           | typeof SinkLike_notify
         > &
@@ -101,9 +105,13 @@ const Subject_create: Subject.Signature["create"] = /*@__PURE__*/ (<T>() => {
           return this[Subject_observers].size;
         },
 
-        get [ReplayObservableLike_buffer]() {
+        get [ReplayObservableLike_count]() {
           unsafeCast<TProperties>(this);
-          return pipe(this[Subject_buffer], IndexedQueue.toReadonlyArray<T>());
+          return this[Subject_buffer][QueueableLike_count];
+        },
+
+        [ReplayObservableLike_get](this: TProperties, index: number) {
+          return this[Subject_buffer][IndexedQueueLike_get](index);
         },
 
         [SinkLike_notify](this: TProperties & SubjectLike<T>, next: T) {
@@ -148,11 +156,10 @@ const Subject_create: Subject.Signature["create"] = /*@__PURE__*/ (<T>() => {
           // The idea here is that an onSubscribe function may
           // call next from unscheduled sources such as event handlers.
           // So we marshall those events back to the scheduler.
-          const buffer = this[ReplayObservableLike_buffer];
-          const count = buffer.length;
+          const count = this[ReplayObservableLike_count];
 
           for (let i = 0; i < count; i++) {
-            const next = buffer[i];
+            const next = this[ReplayObservableLike_get](i);
             observer[QueueableLike_enqueue](next);
           }
 

@@ -51,7 +51,8 @@
 - [PauseableLike\_isPaused](concurrent.md#pauseablelike_ispaused)
 - [PauseableLike\_pause](concurrent.md#pauseablelike_pause)
 - [PauseableLike\_resume](concurrent.md#pauseablelike_resume)
-- [ReplayObservableLike\_buffer](concurrent.md#replayobservablelike_buffer)
+- [ReplayObservableLike\_count](concurrent.md#replayobservablelike_count)
+- [ReplayObservableLike\_get](concurrent.md#replayobservablelike_get)
 - [SchedulerLike\_inContinuation](concurrent.md#schedulerlike_incontinuation)
 - [SchedulerLike\_maxYieldInterval](concurrent.md#schedulerlike_maxyieldinterval)
 - [SchedulerLike\_now](concurrent.md#schedulerlike_now)
@@ -161,9 +162,15 @@ ___
 
 ___
 
-### ReplayObservableLike\_buffer
+### ReplayObservableLike\_count
 
-• `Const` **ReplayObservableLike\_buffer**: unique `symbol`
+• `Const` **ReplayObservableLike\_count**: unique `symbol`
+
+___
+
+### ReplayObservableLike\_get
+
+• `Const` **ReplayObservableLike\_get**: unique `symbol`
 
 ___
 
