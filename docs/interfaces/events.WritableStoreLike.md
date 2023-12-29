@@ -14,6 +14,8 @@
 
 - [`StoreLike`](events.StoreLike.md)<`T`\>
 
+- [`DisposableLike`](utils.DisposableLike.md)
+
   ↳ **`WritableStoreLike`**
 
 ## Table of contents

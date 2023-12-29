@@ -4,29 +4,15 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [WritableStoreModule](../interfaces/events_WritableStore.WritableStoreModule.md)
-
-### Type Aliases
-
-- [Signature](events_WritableStore.md#signature)
-
 ### Functions
 
 - [create](events_WritableStore.md#create)
-
-## Type Aliases
-
-### Signature
-
-Ƭ **Signature**: [`WritableStoreModule`](../interfaces/events_WritableStore.WritableStoreModule.md)
 
 ## Functions
 
 ### create
 
-▸ **create**<`T`\>(`initialValue`): [`WritableStoreLike`](../interfaces/events.WritableStoreLike.md)<`T`\> & [`DisposableLike`](../interfaces/utils.DisposableLike.md)
+▸ **create**<`T`\>(`initialValue`): [`WritableStoreLike`](../interfaces/events.WritableStoreLike.md)<`T`\>
 
 #### Type parameters
 
@@ -42,4 +28,4 @@
 
 #### Returns
 
-[`WritableStoreLike`](../interfaces/events.WritableStoreLike.md)<`T`\> & [`DisposableLike`](../interfaces/utils.DisposableLike.md)
+[`WritableStoreLike`](../interfaces/events.WritableStoreLike.md)<`T`\>

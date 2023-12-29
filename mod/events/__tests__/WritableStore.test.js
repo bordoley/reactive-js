@@ -19,4 +19,3 @@ testModule("WritableStore", test("create", () => {
     store[DisposableLike_dispose]();
     expectTrue(store[DisposableLike_isDisposed]);
 }));
-((_) => { })(WritableStore);

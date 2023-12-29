@@ -16,6 +16,8 @@
 
   ↳ [`SinkLike`](events.SinkLike.md)
 
+  ↳ [`WritableStoreLike`](events.WritableStoreLike.md)
+
   ↳ [`SerialDisposableLike`](utils.SerialDisposableLike.md)
 
 ## Table of contents

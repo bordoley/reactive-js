@@ -37,5 +37,3 @@ testModule(
     expectTrue(store[DisposableLike_isDisposed]);
   }),
 );
-
-((_: WritableStore.Signature) => {})(WritableStore);

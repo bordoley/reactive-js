@@ -48,6 +48,6 @@ export interface StoreLike<T = unknown> extends EventSourceLike<T> {
 /**
  * @noInheritDoc
  */
-export interface WritableStoreLike<T = unknown> extends StoreLike<T> {
+export interface WritableStoreLike<T = unknown> extends StoreLike<T>, DisposableLike {
     [StoreLike_value]: T;
 }
