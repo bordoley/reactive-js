@@ -45,7 +45,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TReq`\>, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\> |
+| `op` | [`Function1`](functions.md#function1)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TReq`\>, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\> |
 
 #### Returns
 

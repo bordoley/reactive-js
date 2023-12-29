@@ -4,7 +4,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, StreamableLike_stream, } from "../../../concurrent.js";
 import { isSome, none, pipe, raiseIf, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Observable_multicast from "../../Observable/__private__/Observable.multicast.js";
+import * as Observable from "../../Observable.js";
 import DelegatingDispatcherMixin from "../../__mixins__/DelegatingDispatcherMixin.js";
 import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 const Stream_create = /*@__PURE__*/ (() => {
@@ -16,7 +16,7 @@ const Stream_create = /*@__PURE__*/ (() => {
             [DispatchedObservableLike_dispatcher]: none,
         }), {
             [ObservableLike_isDeferred]: true,
-            [ObservableLike_isPure]: false,
+            [ObservableLike_isPure]: true,
             [ObservableLike_isRunnable]: false,
             [ObservableLike_observe](observer) {
                 raiseIf(isSome(this[DispatchedObservableLike_dispatcher]), "DispatchedObservable already subscribed to");
@@ -26,7 +26,7 @@ const Stream_create = /*@__PURE__*/ (() => {
     })();
     return createInstanceFactory(mix(include(DelegatingDispatcherMixin(), DelegatingMulticastObservableMixin()), function StreamMixin(instance, op, scheduler, multicastOptions) {
         const dispatchedObservable = DispatchedObservable_create();
-        const delegate = pipe(dispatchedObservable, op, Observable_multicast(scheduler, multicastOptions));
+        const delegate = pipe(dispatchedObservable, op, Observable.multicast(scheduler, multicastOptions));
         init(DelegatingDispatcherMixin(), instance, dispatchedObservable[DispatchedObservableLike_dispatcher]);
         init(DelegatingMulticastObservableMixin(), instance, delegate);
         pipe(delegate, Disposable.addTo(instance));

@@ -1,5 +1,5 @@
 import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
-import { CacheLike, DeferredObservableLike, DeferredObservableWithSideEffectsLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
+import { CacheLike, DeferredObservableLike, PureDeferredObservableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
 import { EventSourceLike } from "../events.js";
 import { Equality, Factory, Function1, Optional, Updater } from "../functions.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
@@ -10,7 +10,7 @@ import { Animation } from "./Observable.js";
 export interface StreamableModule {
     /**
      */
-    create<TReq, T>(op: Function1<DeferredObservableWithSideEffectsLike<TReq>, DeferredObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
+    create<TReq, T>(op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
     createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
         readonly mode: "switching";
         readonly scheduler?: SchedulerLike;

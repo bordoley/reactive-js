@@ -8,13 +8,13 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   DeferredObservableLike,
-  DeferredObservableWithSideEffectsLike,
   DispatcherLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
+  PureDeferredObservableLike,
   SchedulerLike,
   StreamLike,
   StreamableLike_stream,
@@ -33,16 +33,13 @@ import {
   QueueableLike_backpressureStrategy,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Observable_multicast from "../../Observable/__private__/Observable.multicast.js";
+import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 import DelegatingDispatcherMixin from "../../__mixins__/DelegatingDispatcherMixin.js";
 import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 
 const Stream_create: <TReq, T>(
-  op: Function1<
-    DeferredObservableWithSideEffectsLike<TReq>,
-    DeferredObservableLike<T>
-  >,
+  op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -54,8 +51,7 @@ const Stream_create: <TReq, T>(
     "DispatchedObservableLike_dispatcher",
   );
 
-  interface DispatchedObservableLike<T>
-    extends DeferredObservableWithSideEffectsLike<T> {
+  interface DispatchedObservableLike<T> extends PureDeferredObservableLike<T> {
     [DispatchedObservableLike_dispatcher]: Optional<DispatcherLike<T>>;
   }
 
@@ -78,7 +74,7 @@ const Stream_create: <TReq, T>(
         }),
         {
           [ObservableLike_isDeferred]: true as const,
-          [ObservableLike_isPure]: false as const,
+          [ObservableLike_isPure]: true as const,
           [ObservableLike_isRunnable]: false as const,
 
           [ObservableLike_observe](
@@ -106,7 +102,7 @@ const Stream_create: <TReq, T>(
       function StreamMixin(
         instance: unknown,
         op: Function1<
-          DeferredObservableWithSideEffectsLike<TReq>,
+          PureDeferredObservableLike<TReq>,
           DeferredObservableLike<T>
         >,
         scheduler: SchedulerLike,
@@ -121,7 +117,7 @@ const Stream_create: <TReq, T>(
         const delegate = pipe(
           dispatchedObservable,
           op,
-          Observable_multicast<T>(scheduler, multicastOptions),
+          Observable.multicast<T>(scheduler, multicastOptions),
         );
 
         init(
@@ -140,10 +136,7 @@ const Stream_create: <TReq, T>(
 })();
 
 const Streamable_create: Streamable.Signature["create"] = <TReq, T>(
-  op: Function1<
-    DeferredObservableWithSideEffectsLike<TReq>,
-    DeferredObservableLike<T>
-  >,
+  op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>,
 ) => ({
   [StreamableLike_stream]: (scheduler, options) =>
     Stream_create<TReq, T>(op, scheduler, options),

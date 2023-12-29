@@ -2,7 +2,7 @@ import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
 import {
   CacheLike,
   DeferredObservableLike,
-  DeferredObservableWithSideEffectsLike,
+  PureDeferredObservableLike,
   SchedulerLike,
   StreamLike,
   StreamableLike,
@@ -32,10 +32,7 @@ export interface StreamableModule {
   /**
    */
   create<TReq, T>(
-    op: Function1<
-      DeferredObservableWithSideEffectsLike<TReq>,
-      DeferredObservableLike<T>
-    >,
+    op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
 
   createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(

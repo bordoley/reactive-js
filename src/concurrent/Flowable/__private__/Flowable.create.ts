@@ -7,7 +7,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   DeferredObservableLike,
-  DeferredObservableWithSideEffectsLike,
   FlowableLike,
   FlowableLike_flow,
   ObservableLike,
@@ -16,6 +15,7 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,
+  PureDeferredObservableLike,
   SchedulerLike,
   StreamLike,
   StreamableLike_stream,
@@ -72,9 +72,7 @@ const PauseableObservable_create: <T>(
           replay?: number;
         },
       ): PauseableObservableLike<T> {
-        const liftedOp = (
-          mode: DeferredObservableWithSideEffectsLike<boolean>,
-        ) =>
+        const liftedOp = (mode: PureDeferredObservableLike<boolean>) =>
           Observable.create(observer => {
             const pauseableScheduler = pipe(
               observer,

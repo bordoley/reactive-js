@@ -33,7 +33,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](../modules/functions.md#function1)<[`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`TReq`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\> |
+| `op` | [`Function1`](../modules/functions.md#function1)<[`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`TReq`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\> |
 
 #### Returns
 
