@@ -2582,6 +2582,28 @@ testModule(
         VirtualTimeScheduler.create,
       )(vts => pipe(Observable.empty(), Observable.multicast(vts))),
     ),
+    test("shared observable zipped with itself, auto disposing", () => {
+      const scheduler = VirtualTimeScheduler.create();
+      const shared = pipe(
+        [1, 2, 3],
+        Observable.fromReadonlyArray({ delay: 1 }),
+        Observable.forEach(ignore),
+        Observable.multicast(scheduler, { replay: 1, autoDispose: true }),
+      );
+
+      expectIsMulticastObservable(shared);
+
+      let result: number[] = [];
+      pipe(
+        Observable.zipLatest(shared, shared),
+        Observable.map<Tuple2<number, number>, number>(([a, b]) => a + b),
+        Observable.forEach<number>(bind(Array.prototype.push, result)),
+        Observable.subscribe(scheduler),
+      );
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+      pipe(result, expectArrayEquals([2, 4, 6]));
+    }),
   ),
   describe("never", testIsMulticastObservable(Observable.never())),
   describe(
@@ -2852,36 +2874,6 @@ testModule(
       Observable.scanMany(() => Observable.empty(), returns(none), {
         innerType: DeferredObservableWithSideEffectsType,
       }),
-    ),
-  ),
-  describe(
-    "share",
-    test("shared observable zipped with itself", () => {
-      const scheduler = VirtualTimeScheduler.create();
-      const shared = pipe(
-        [1, 2, 3],
-        Observable.fromReadonlyArray({ delay: 1 }),
-        Observable.forEach(ignore),
-        Observable.share(scheduler, { replay: 1 }),
-      );
-
-      expectIsMulticastObservable(shared);
-
-      let result: number[] = [];
-      pipe(
-        Observable.zipLatest(shared, shared),
-        Observable.map<Tuple2<number, number>, number>(([a, b]) => a + b),
-        Observable.forEach<number>(bind(Array.prototype.push, result)),
-        Observable.subscribe(scheduler),
-      );
-
-      scheduler[VirtualTimeSchedulerLike_run]();
-      pipe(result, expectArrayEquals([2, 4, 6]));
-    }),
-    testIsMulticastObservable(
-      Disposable.using<VirtualTimeSchedulerLike, MulticastObservableLike>(
-        VirtualTimeScheduler.create,
-      )(vts => pipe(Observable.empty(), Observable.share(vts))),
     ),
   ),
   describe("skipFirst", PureObservableOperatorTests(Observable.skipFirst())),

@@ -106,7 +106,6 @@ import Observable_retry from "./Observable/__private__/Observable.retry.js";
 import Observable_run from "./Observable/__private__/Observable.run.js";
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
 import Observable_scanMany from "./Observable/__private__/Observable.scanMany.js";
-import Observable_share from "./Observable/__private__/Observable.share.js";
 import Observable_skipFirst from "./Observable/__private__/Observable.skipFirst.js";
 import Observable_startWith from "./Observable/__private__/Observable.startWith.js";
 import Observable_subscribe from "./Observable/__private__/Observable.subscribe.js";
@@ -1146,6 +1145,7 @@ export interface ObservableModule {
   multicast<T>(
     scheduler: SchedulerLike,
     options?: {
+      readonly autoDispose?: boolean;
       readonly replay?: number;
       readonly capacity?: number;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -1226,17 +1226,6 @@ export interface ObservableModule {
       readonly innerType: typeof DeferredObservableWithSideEffectsType;
     },
   ): Function1<ObservableLike<T>, DeferredObservableWithSideEffectsLike<TAcc>>;
-
-  /**
-   */
-  share<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly replay?: number;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): Function1<DeferredObservableLike<T>, MulticastObservableLike<T>>;
 
   skipFirst<T>(options?: {
     readonly count?: number;
@@ -1768,7 +1757,6 @@ export const retry: Signature["retry"] = Observable_retry;
 export const run: Signature["run"] = Observable_run;
 export const scan: Signature["scan"] = Observable_scan;
 export const scanMany: Signature["scanMany"] = Observable_scanMany;
-export const share: Signature["share"] = Observable_share;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
 export const startWith: Signature["startWith"] = Observable_startWith;
 export const subscribe: Signature["subscribe"] = Observable_subscribe;

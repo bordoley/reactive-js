@@ -359,6 +359,7 @@ export interface ObservableModule {
     mergeWith<T>(snd: PureObservableLike<T>, ...tail: readonly PureObservableLike<T>[]): PureMulticastingObservableOperator<T, T>;
     mergeWith<T>(snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): Function1<ObservableLike<T>, DeferredObservableWithSideEffectsLike<T>>;
     multicast<T>(scheduler: SchedulerLike, options?: {
+        readonly autoDispose?: boolean;
         readonly replay?: number;
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -391,13 +392,6 @@ export interface ObservableModule {
     scanMany<T, TAcc>(scanner: Function2<TAcc, T, DeferredObservableLike<TAcc>>, initialValue: Factory<TAcc>, options: {
         readonly innerType: typeof DeferredObservableWithSideEffectsType;
     }): Function1<ObservableLike<T>, DeferredObservableWithSideEffectsLike<TAcc>>;
-    /**
-     */
-    share<T>(scheduler: SchedulerLike, options?: {
-        readonly replay?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-        readonly capacity?: number;
-    }): Function1<DeferredObservableLike<T>, MulticastObservableLike<T>>;
     skipFirst<T>(options?: {
         readonly count?: number;
     }): PureObservableOperator<T, T>;
@@ -573,7 +567,6 @@ export declare const retry: Signature["retry"];
 export declare const run: Signature["run"];
 export declare const scan: Signature["scan"];
 export declare const scanMany: Signature["scanMany"];
-export declare const share: Signature["share"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const startWith: Signature["startWith"];
 export declare const subscribe: Signature["subscribe"];

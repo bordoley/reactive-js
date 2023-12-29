@@ -516,7 +516,15 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     innerType: Observable.RunnableWithSideEffectsType,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.mergeMap(_ => pipe(Observable.empty(), Observable.forEach(ignore)), {
     innerType: Observable.DeferredObservableWithSideEffectsType,
-}))), describe("mergeWith", PureObservableOperatorTests(Observable.mergeWith(Observable.empty())), ObservableOperatorWithSideEffectsTests(Observable.mergeWith(pipe(Observable.empty(), Observable.forEach(ignore)))), PureDeferringObservableOperatorTests(Disposable.using(VirtualTimeScheduler.create)(vts => Observable.mergeWith(pipe(Observable.empty(), Observable.subscribeOn(vts))))), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.mergeWith(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), Observable.forEach(ignore))))), describe("multicast", testIsMulticastObservable(Disposable.using(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.multicast(vts))))), describe("never", testIsMulticastObservable(Observable.never())), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
+}))), describe("mergeWith", PureObservableOperatorTests(Observable.mergeWith(Observable.empty())), ObservableOperatorWithSideEffectsTests(Observable.mergeWith(pipe(Observable.empty(), Observable.forEach(ignore)))), PureDeferringObservableOperatorTests(Disposable.using(VirtualTimeScheduler.create)(vts => Observable.mergeWith(pipe(Observable.empty(), Observable.subscribeOn(vts))))), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.mergeWith(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), Observable.forEach(ignore))))), describe("multicast", testIsMulticastObservable(Disposable.using(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.multicast(vts)))), test("shared observable zipped with itself, auto disposing", () => {
+    const scheduler = VirtualTimeScheduler.create();
+    const shared = pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forEach(ignore), Observable.multicast(scheduler, { replay: 1, autoDispose: true }));
+    expectIsMulticastObservable(shared);
+    let result = [];
+    pipe(Observable.zipLatest(shared, shared), Observable.map(([a, b]) => a + b), Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    pipe(result, expectArrayEquals([2, 4, 6]));
+})), describe("never", testIsMulticastObservable(Observable.never())), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
     const scheduler = VirtualTimeScheduler.create();
     const disp = mockFn();
     const f = mockFn(disp);
@@ -564,15 +572,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     innerType: RunnableWithSideEffectsType,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.scanMany(() => Observable.empty(), returns(none), {
     innerType: DeferredObservableWithSideEffectsType,
-}))), describe("share", test("shared observable zipped with itself", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const shared = pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forEach(ignore), Observable.share(scheduler, { replay: 1 }));
-    expectIsMulticastObservable(shared);
-    let result = [];
-    pipe(Observable.zipLatest(shared, shared), Observable.map(([a, b]) => a + b), Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
-    scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(result, expectArrayEquals([2, 4, 6]));
-}), testIsMulticastObservable(Disposable.using(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.share(vts))))), describe("skipFirst", PureObservableOperatorTests(Observable.skipFirst())), describe("startWith", test("appends the additional values to the start of the container", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.startWith(2, 3, 4), Observable.toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1]))), PureObservableOperatorTests(Observable.startWith(1, 2, 3))), describe("subscribeOn", PureDeferringObservableOperatorTests(Disposable.using(VirtualTimeScheduler.create)(Observable.subscribeOn))), describe("switchAll", test("with empty source", pipeLazy(Observable.empty(), Observable.switchAll({
+}))), describe("skipFirst", PureObservableOperatorTests(Observable.skipFirst())), describe("startWith", test("appends the additional values to the start of the container", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.startWith(2, 3, 4), Observable.toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1]))), PureObservableOperatorTests(Observable.startWith(1, 2, 3))), describe("subscribeOn", PureDeferringObservableOperatorTests(Disposable.using(VirtualTimeScheduler.create)(Observable.subscribeOn))), describe("switchAll", test("with empty source", pipeLazy(Observable.empty(), Observable.switchAll({
     innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([]))), PureObservableOperatorTests(Observable.switchAll()), PureDeferringObservableOperatorTests(Observable.switchAll({
     innerType: Observable.PureDeferredObservableType,

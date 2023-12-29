@@ -8,14 +8,14 @@ import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_isDeferred from "./Observable.isDeferred.js";
 import Observable_mergeMany from "./Observable.mergeMany.js";
-import Observable_share from "./Observable.share.js";
+import Observable_multicast from "./Observable.multicast.js";
 const Observable_forkMerge = ((...ops) => (obs) => {
     const mapped = pipe(ops, ReadonlyArray.map(op => op(obs)));
     return Observable_allArePure(mapped)
         ? Observable_mergeMany(mapped)
         : Observable_createWithConfig(observer => {
             const src = Observable_isDeferred(obs)
-                ? pipe(obs, Observable_share(observer))
+                ? pipe(obs, Observable_multicast(observer, { autoDispose: true }))
                 : obs;
             pipe(ops, ReadonlyArray.map(op => op(src)), Observable_mergeMany, invoke(ObservableLike_observe, observer));
         }, {

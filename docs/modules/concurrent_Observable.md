@@ -95,7 +95,6 @@
 - [run](concurrent_Observable.md#run)
 - [scan](concurrent_Observable.md#scan)
 - [scanMany](concurrent_Observable.md#scanmany)
-- [share](concurrent_Observable.md#share)
 - [skipFirst](concurrent_Observable.md#skipfirst)
 - [startWith](concurrent_Observable.md#startwith)
 - [subscribe](concurrent_Observable.md#subscribe)
@@ -3501,6 +3500,7 @@ ___
 | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) |
 | `options?` | `Object` |
+| `options.autoDispose?` | `boolean` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.replay?` | `number` |
@@ -3856,32 +3856,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TAcc`\>\>
-
-___
-
-### share
-
-▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.replay?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>\>
 
 ___
 
