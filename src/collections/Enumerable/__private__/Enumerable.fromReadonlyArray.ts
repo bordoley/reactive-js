@@ -1,7 +1,7 @@
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
 import { pipe } from "../../../functions.js";
 import type * as Enumerable from "../../Enumerable.js";
-import Enumerable_fromIteratorFactory from "../../Enumerable/__private__/Enumerable.fromIteratorFactory.js";
+import Enumerable_fromIteratorFactory from "./Enumerable.fromIteratorFactory.js";
 
 const Enumerable_fromReadonlyArray: Enumerable.Signature["fromReadonlyArray"] =
   <T>(options?: { count?: number; start?: number }) =>
