@@ -11,11 +11,7 @@ import {
   FlowableLike,
   FlowableLike_flow,
   ObservableLike,
-  ObservableLike_isDeferred,
-  ObservableLike_isPure,
-  ObservableLike_isRunnable,
   ObservableLike_observe,
-  ObserverLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -63,7 +59,10 @@ const PauseableObservable_create: <T>(
         DelegatingMulticastObservableMixin(),
       ),
       function PauseableObservable(
-        instance: Omit<PauseableObservableLike<T>, keyof DisposableLike> &
+        instance: Pick<
+          PauseableObservableLike<T>,
+          typeof PauseableLike_pause | typeof PauseableLike_resume
+        > &
           TProperties,
         op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>,
         scheduler: SchedulerLike,
@@ -135,21 +134,6 @@ const PauseableObservable_create: <T>(
         [PauseableLike_isPaused]: none,
       }),
       {
-        [ObservableLike_isDeferred]: false as const,
-        [ObservableLike_isPure]: true as const,
-        [ObservableLike_isRunnable]: false as const,
-
-        [ObservableLike_observe](
-          this: DelegatingDisposableLike<
-            StreamLike<boolean, T> & DisposableLike
-          >,
-          observer: ObserverLike<T>,
-        ) {
-          this[DelegatingDisposableLike_delegate][ObservableLike_observe](
-            observer,
-          );
-        },
-
         [PauseableLike_pause](
           this: DelegatingDisposableLike<
             StreamLike<boolean, T> & DisposableLike

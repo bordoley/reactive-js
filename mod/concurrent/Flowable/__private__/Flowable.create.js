@@ -1,7 +1,7 @@
 /// <reference types="./Flowable.create.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { FlowableLike_flow, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, StreamableLike_stream, } from "../../../concurrent.js";
+import { FlowableLike_flow, ObservableLike_observe, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, StreamableLike_stream, } from "../../../concurrent.js";
 import { StoreLike_value } from "../../../events.js";
 import * as WritableStore from "../../../events/WritableStore.js";
 import { invoke, none, pipe } from "../../../functions.js";
@@ -42,12 +42,6 @@ const PauseableObservable_create = /*@__PURE__*/ (() => {
     }, props({
         [PauseableLike_isPaused]: none,
     }), {
-        [ObservableLike_isDeferred]: false,
-        [ObservableLike_isPure]: true,
-        [ObservableLike_isRunnable]: false,
-        [ObservableLike_observe](observer) {
-            this[DelegatingDisposableLike_delegate][ObservableLike_observe](observer);
-        },
         [PauseableLike_pause]() {
             this[DelegatingDisposableLike_delegate][QueueableLike_enqueue](true);
         },
