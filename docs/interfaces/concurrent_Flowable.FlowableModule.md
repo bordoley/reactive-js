@@ -29,7 +29,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`boolean`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\> |
+| `op` | [`Function1`](../modules/functions.md#function1)<[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`boolean`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\> |
 
 #### Returns
 

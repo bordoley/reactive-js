@@ -1,10 +1,10 @@
-import { DeferredObservableLike, DispatcherLike, FlowableLike, ObservableLike, RunnableLike } from "../concurrent.js";
+import { DeferredObservableLike, DispatcherLike, FlowableLike, MulticastObservableLike, RunnableLike } from "../concurrent.js";
 import { Function1 } from "../functions.js";
 /**
  * @noInheritDoc
  */
 export interface FlowableModule {
-    create<T>(op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>): FlowableLike<T>;
+    create<T>(op: Function1<MulticastObservableLike<boolean>, DeferredObservableLike<T>>): FlowableLike<T>;
     fromAsyncIterable<T>(): Function1<AsyncIterable<T>, FlowableLike<T>>;
     fromRunnable<T>(): Function1<RunnableLike<T>, FlowableLike<T>>;
     sinkInto<T>(sink: DispatcherLike<T>): Function1<FlowableLike<T>, DeferredObservableLike<void>>;

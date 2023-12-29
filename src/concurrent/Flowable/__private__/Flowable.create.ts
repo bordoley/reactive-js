@@ -9,7 +9,7 @@ import {
   DeferredObservableLike,
   FlowableLike,
   FlowableLike_flow,
-  ObservableLike,
+  MulticastObservableLike,
   ObservableLike_observe,
   PauseableLike_isPaused,
   PauseableLike_pause,
@@ -41,7 +41,7 @@ import * as Streamable from "../../Streamable.js";
 import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 
 const PauseableObservable_create: <T>(
-  op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>,
+  op: Function1<MulticastObservableLike<boolean>, DeferredObservableLike<T>>,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -64,7 +64,10 @@ const PauseableObservable_create: <T>(
           typeof PauseableLike_pause | typeof PauseableLike_resume
         > &
           TProperties,
-        op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>,
+        op: Function1<
+          MulticastObservableLike<boolean>,
+          DeferredObservableLike<T>
+        >,
         scheduler: SchedulerLike,
         multicastOptions?: {
           capacity?: number;
@@ -153,7 +156,7 @@ const PauseableObservable_create: <T>(
 })();
 
 const Flowable_create: Flowable.Signature["create"] = <T>(
-  op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>,
+  op: Function1<MulticastObservableLike<boolean>, DeferredObservableLike<T>>,
 ): FlowableLike<T> => ({
   [FlowableLike_flow]: (scheduler, options) =>
     PauseableObservable_create(op, scheduler, options),
