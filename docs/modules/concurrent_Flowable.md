@@ -16,6 +16,7 @@
 
 - [create](concurrent_Flowable.md#create)
 - [fromAsyncIterable](concurrent_Flowable.md#fromasynciterable)
+- [fromRunnable](concurrent_Flowable.md#fromrunnable)
 - [sinkInto](concurrent_Flowable.md#sinkinto)
 
 ## Type Aliases
@@ -61,6 +62,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>\>
+
+___
+
+### fromRunnable
+
+▸ **fromRunnable**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>\>
 
 ___
 

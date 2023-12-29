@@ -26,21 +26,17 @@ import {
   DispatcherLike,
   DispatcherLikeEvent_completed,
   DispatcherLike_complete,
-  FlowableLike_flow,
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
-  PauseableLike_pause,
-  PauseableLike_resume,
   PureDeferredObservableLike,
   PureRunnableLike,
   RunnableLike,
   RunnableWithSideEffectsLike,
   SchedulerLike,
   SchedulerLike_now,
-  SchedulerLike_schedule,
   StreamableLike_stream,
   VirtualTimeSchedulerLike,
   VirtualTimeSchedulerLike_run,
@@ -60,7 +56,6 @@ import {
   ignore,
   increment,
   incrementBy,
-  invoke,
   isSome,
   lessThan,
   newInstance,
@@ -1535,90 +1530,6 @@ testModule(
     ObservableOperatorWithSideEffectsTests(
       Observable.flatMapIterable(returns([])),
     ),
-  ),
-  describe(
-    "flow",
-    test("a source with delay", () => {
-      const scheduler = VirtualTimeScheduler.create();
-
-      const generateObservable = pipe(
-        Enumerable.generate(increment, returns(-1)),
-        Observable.fromEnumerable({ delay: 1, delayStart: true }),
-        Observable.flow(),
-        invoke(FlowableLike_flow, scheduler),
-      );
-
-      generateObservable[PauseableLike_resume](),
-        scheduler[SchedulerLike_schedule](
-          () => generateObservable[PauseableLike_pause](),
-          {
-            delay: 2,
-          },
-        );
-
-      scheduler[SchedulerLike_schedule](
-        () => generateObservable[PauseableLike_resume](),
-        {
-          delay: 4,
-        },
-      );
-
-      scheduler[SchedulerLike_schedule](
-        () => generateObservable[DisposableLike_dispose](),
-        {
-          delay: 6,
-        },
-      );
-
-      const f = mockFn();
-      const subscription = pipe(
-        generateObservable,
-        Observable.forEach((x: number) => {
-          f(x);
-        }),
-        Observable.subscribe(scheduler),
-      );
-
-      scheduler[VirtualTimeSchedulerLike_run]();
-
-      pipe(f, expectToHaveBeenCalledTimes(2));
-      pipe(f.calls.flat(), expectArrayEquals([0, 1]));
-
-      pipe(subscription[DisposableLike_isDisposed], expectTrue);
-    }),
-    test("flow a generating source", () => {
-      const scheduler = VirtualTimeScheduler.create();
-
-      const flowed = pipe(
-        [0, 1, 2],
-        Observable.fromReadonlyArray(),
-        Observable.flow(),
-        invoke(FlowableLike_flow, scheduler),
-        Disposable.addTo(scheduler),
-      );
-
-      scheduler[SchedulerLike_schedule](() => flowed[PauseableLike_resume](), {
-        delay: 2,
-      });
-
-      const f = mockFn();
-      const subscription = pipe(
-        flowed,
-        Observable.withCurrentTime<unknown, Tuple2<number, any>>(tuple),
-        Observable.forEach(([_, v]: Tuple2<number, any>) => {
-          f(v);
-        }),
-        Observable.subscribe(scheduler),
-        Disposable.addTo(scheduler),
-      );
-
-      scheduler[VirtualTimeSchedulerLike_run]();
-
-      pipe(f, expectToHaveBeenCalledTimes(3));
-      pipe(f.calls.flat(), expectArrayEquals([0, 1, 2]));
-
-      pipe(subscription[DisposableLike_isDisposed], expectTrue);
-    }),
   ),
   describe(
     "forEach",

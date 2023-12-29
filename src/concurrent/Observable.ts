@@ -8,7 +8,6 @@ import {
   DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
   DispatcherLike,
-  FlowableLike,
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
@@ -76,7 +75,6 @@ import Observable_exhaustMap from "./Observable/__private__/Observable.exhaustMa
 import Observable_firstAsync from "./Observable/__private__/Observable.firstAsync.js";
 import Observable_flatMapAsync from "./Observable/__private__/Observable.flatMapAsync.js";
 import Observable_flatMapIterable from "./Observable/__private__/Observable.flatMapIterable.js";
-import Observable_flow from "./Observable/__private__/Observable.flow.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
 import Observable_forkMerge from "./Observable/__private__/Observable.forkMerge.js";
 import Observable_fromAsyncFactory from "./Observable/__private__/Observable.fromAsyncFactory.js";
@@ -916,8 +914,6 @@ export interface ObservableModule {
     selector: Function1<TA, Iterable<TB>>,
   ): ObservableOperatorWithSideEffects<TA, TB>;
 
-  flow<T>(): Function1<RunnableLike<T>, FlowableLike<T>>;
-
   forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
 
   forkMerge<TObservableIn extends ObservableLike, T>(
@@ -1735,7 +1731,6 @@ export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
 export const flatMapAsync: Signature["flatMapAsync"] = Observable_flatMapAsync;
 export const flatMapIterable: Signature["flatMapIterable"] =
   Observable_flatMapIterable;
-export const flow: Signature["flow"] = Observable_flow;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const forkMerge: Signature["forkMerge"] = Observable_forkMerge;
 export const fromAsyncFactory: Signature["fromAsyncFactory"] =

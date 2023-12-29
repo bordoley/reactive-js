@@ -39,7 +39,6 @@
 - [firstAsync](concurrent_Observable.ObservableModule.md#firstasync)
 - [flatMapAsync](concurrent_Observable.ObservableModule.md#flatmapasync)
 - [flatMapIterable](concurrent_Observable.ObservableModule.md#flatmapiterable)
-- [flow](concurrent_Observable.ObservableModule.md#flow)
 - [forEach](concurrent_Observable.ObservableModule.md#foreach)
 - [forkMerge](concurrent_Observable.ObservableModule.md#forkmerge)
 - [fromAsyncFactory](concurrent_Observable.ObservableModule.md#fromasyncfactory)
@@ -2307,22 +2306,6 @@ ___
 #### Returns
 
 [`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`TA`, `TB`\>
-
-___
-
-### flow
-
-▸ **flow**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>, [`FlowableLike`](concurrent.FlowableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>, [`FlowableLike`](concurrent.FlowableLike.md)<`T`\>\>
 
 ___
 

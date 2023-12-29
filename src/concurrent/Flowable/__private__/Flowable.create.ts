@@ -41,16 +41,9 @@ import DelegatingDisposableMixin, {
   DelegatingDisposableLike_delegate,
 } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Flowable from "../../Flowable.js";
-import Observable_create from "../../Observable/__private__/Observable.create.js";
-import Observable_distinctUntilChanged from "../../Observable/__private__/Observable.distinctUntilChanged.js";
-import Observable_forEach from "../../Observable/__private__/Observable.forEach.js";
-import Observable_fromIterable from "../../Observable/__private__/Observable.fromIterable.js";
-import Observable_mergeWith from "../../Observable/__private__/Observable.mergeWith.js";
-import Observable_multicast from "../../Observable/__private__/Observable.multicast.js";
-import Observable_subscribe from "../../Observable/__private__/Observable.subscribe.js";
-import Observable_subscribeOn from "../../Observable/__private__/Observable.subscribeOn.js";
+import * as Observable from "../../Observable.js";
 import * as PauseableScheduler from "../../PauseableScheduler.js";
-import Streamable_create from "../../Streamable/__private__/Streamable.create.js";
+import * as Streamable from "../../Streamable.js";
 import DelegatingReplayObservableMixin from "../../__mixins__/DelegatingReplayObservableMixin.js";
 
 const PauseableObservable_create: <T>(
@@ -87,7 +80,7 @@ const PauseableObservable_create: <T>(
         const liftedOp = (
           mode: DeferredObservableWithSideEffectsLike<boolean>,
         ) =>
-          Observable_create(observer => {
+          Observable.create(observer => {
             const pauseableScheduler = pipe(
               observer,
               PauseableScheduler.create,
@@ -96,12 +89,12 @@ const PauseableObservable_create: <T>(
 
             const multicastedMode = pipe(
               mode,
-              Observable_mergeWith<boolean>(
+              Observable.mergeWith<boolean>(
                 // Initialize to paused state
-                pipe([true], Observable_fromIterable()),
+                pipe(true, Observable.fromValue()),
               ),
-              Observable_distinctUntilChanged<boolean>(),
-              Observable_multicast(observer, {
+              Observable.distinctUntilChanged<boolean>(),
+              Observable.multicast(observer, {
                 replay: 1,
                 capacity: 1,
                 backpressureStrategy: "drop-oldest",
@@ -111,7 +104,7 @@ const PauseableObservable_create: <T>(
 
             pipe(
               multicastedMode,
-              Observable_forEach((isPaused: boolean) => {
+              Observable.forEach((isPaused: boolean) => {
                 instance[PauseableLike_isPaused][StoreLike_value] = isPaused;
 
                 if (isPaused) {
@@ -120,19 +113,19 @@ const PauseableObservable_create: <T>(
                   pauseableScheduler[PauseableLike_resume]();
                 }
               }),
-              Observable_subscribe(observer),
+              Observable.subscribe(observer),
               Disposable.addTo(observer),
             );
 
             pipe(
               multicastedMode,
               op,
-              Observable_subscribeOn(pauseableScheduler),
+              Observable.subscribeOn(pauseableScheduler),
               invoke(ObservableLike_observe, observer),
             );
           });
 
-        const stream = Streamable_create<boolean, T>(liftedOp)[
+        const stream = Streamable.create<boolean, T>(liftedOp)[
           StreamableLike_stream
         ](scheduler, multicastOptions);
         init(DelegatingDisposableMixin(), instance, stream);

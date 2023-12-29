@@ -30,7 +30,6 @@ import Observable_exhaustMap from "./Observable/__private__/Observable.exhaustMa
 import Observable_firstAsync from "./Observable/__private__/Observable.firstAsync.js";
 import Observable_flatMapAsync from "./Observable/__private__/Observable.flatMapAsync.js";
 import Observable_flatMapIterable from "./Observable/__private__/Observable.flatMapIterable.js";
-import Observable_flow from "./Observable/__private__/Observable.flow.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
 import Observable_forkMerge from "./Observable/__private__/Observable.forkMerge.js";
 import Observable_fromAsyncFactory from "./Observable/__private__/Observable.fromAsyncFactory.js";
@@ -131,7 +130,6 @@ export const exhaustMap = Observable_exhaustMap;
 export const firstAsync = Observable_firstAsync;
 export const flatMapAsync = Observable_flatMapAsync;
 export const flatMapIterable = Observable_flatMapIterable;
-export const flow = Observable_flow;
 export const forEach = Observable_forEach;
 export const forkMerge = Observable_forkMerge;
 export const fromAsyncFactory = Observable_fromAsyncFactory;

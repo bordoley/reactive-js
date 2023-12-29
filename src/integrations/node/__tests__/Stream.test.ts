@@ -13,6 +13,7 @@ import {
   PauseableLike_resume,
   SchedulerLike,
 } from "../../../concurrent.js";
+import * as Flowable from "../../../concurrent/Flowable.js";
 import * as HostScheduler from "../../../concurrent/HostScheduler.js";
 import * as Observable from "../../../concurrent/Observable.js";
 import {
@@ -23,7 +24,6 @@ import {
   pipe,
   returns,
 } from "../../../functions.js";
-
 import { DisposableLike } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as NodeStream from "../Stream.js";
@@ -53,7 +53,7 @@ testModule(
             Observable.fromReadonlyArray(),
             Observable.keep(x => x !== "xyz"),
             Observable.map(bindMethod(encoder, "encode")),
-            Observable.flow(),
+            Flowable.fromRunnable(),
             NodeStream.sinkInto(writable),
             Observable.lastAsync(scheduler),
           );
@@ -88,7 +88,7 @@ testModule(
             Observable.fromReadonlyArray(),
             Observable.keep(x => x !== "xyz"),
             Observable.map(bindMethod(encoder, "encode")),
-            Observable.flow(),
+            Flowable.fromRunnable(),
             NodeStream.sinkInto(factory),
             Observable.lastAsync(scheduler),
           );
@@ -117,7 +117,7 @@ testModule(
           const promise = pipe(
             [encoder.encode("abc"), encoder.encode("defg")],
             Observable.fromReadonlyArray(),
-            Observable.flow(),
+            Flowable.fromRunnable(),
             NodeStream.sinkInto(writable),
             Observable.lastAsync(scheduler),
           );
@@ -153,7 +153,7 @@ testModule(
           await pipe(
             [encoder.encode("abc"), encoder.encode("defg")],
             Observable.fromReadonlyArray(),
-            Observable.flow(),
+            Flowable.fromRunnable(),
             NodeStream.sinkInto(compressionPipeline),
             Observable.lastAsync(scheduler),
           );

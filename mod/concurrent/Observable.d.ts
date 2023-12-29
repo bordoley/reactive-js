@@ -1,6 +1,6 @@
 import { EnumerableLike } from "../collections.js";
 import { Computation, Computation_T, Computation_type } from "../computations.js";
-import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, FlowableLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureRunnableLike, ReplayObservableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
+import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureRunnableLike, ReplayObservableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
 import { EventSourceLike, StoreLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9 } from "../functions.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
@@ -247,7 +247,6 @@ export interface ObservableModule {
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     flatMapAsync<TA, TB>(f: Function2<TA, AbortSignal, Promise<TB>>): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
     flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): ObservableOperatorWithSideEffects<TA, TB>;
-    flow<T>(): Function1<RunnableLike<T>, FlowableLike<T>>;
     forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
     forkMerge<TObservableIn extends ObservableLike, T>(fst: Function1<TObservableIn, PureRunnableLike<T>>, snd: Function1<TObservableIn, PureRunnableLike<T>>, ...tail: readonly Function1<TObservableIn, PureRunnableLike<T>>[]): Function1<TObservableIn, PureRunnableLike<T>>;
     forkMerge<TObservableIn extends ObservableLike, T>(fst: Function1<TObservableIn, PureDeferredObservableLike<T>>, snd: Function1<TObservableIn, PureDeferredObservableLike<T>>, ...tail: readonly Function1<TObservableIn, PureDeferredObservableLike<T>>[]): Function1<TObservableIn, PureDeferredObservableLike<T>>;
@@ -542,7 +541,6 @@ export declare const exhaustMap: Signature["exhaustMap"];
 export declare const firstAsync: Signature["firstAsync"];
 export declare const flatMapAsync: Signature["flatMapAsync"];
 export declare const flatMapIterable: Signature["flatMapIterable"];
-export declare const flow: Signature["flow"];
 export declare const forEach: Signature["forEach"];
 export declare const forkMerge: Signature["forkMerge"];
 export declare const fromAsyncFactory: Signature["fromAsyncFactory"];

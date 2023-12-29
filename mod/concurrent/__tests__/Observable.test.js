@@ -5,11 +5,11 @@ import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import { keepType, mapTo } from "../../computations.js";
 import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
-import { DispatcherLikeEvent_completed, DispatcherLike_complete, FlowableLike_flow, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
+import { DispatcherLikeEvent_completed, DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, SchedulerLike_now, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import { SinkLike_notify, StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
-import { alwaysTrue, arrayEquality, bind, bindMethod, error, ignore, increment, incrementBy, invoke, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
+import { alwaysTrue, arrayEquality, bind, bindMethod, error, ignore, increment, incrementBy, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
@@ -341,42 +341,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     yield 1;
     yield 2;
     yield 3;
-}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), ObservableOperatorWithSideEffectsTests(Observable.flatMapIterable(returns([])))), describe("flow", test("a source with delay", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const generateObservable = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Observable.flow(), invoke(FlowableLike_flow, scheduler));
-    generateObservable[PauseableLike_resume](),
-        scheduler[SchedulerLike_schedule](() => generateObservable[PauseableLike_pause](), {
-            delay: 2,
-        });
-    scheduler[SchedulerLike_schedule](() => generateObservable[PauseableLike_resume](), {
-        delay: 4,
-    });
-    scheduler[SchedulerLike_schedule](() => generateObservable[DisposableLike_dispose](), {
-        delay: 6,
-    });
-    const f = mockFn();
-    const subscription = pipe(generateObservable, Observable.forEach((x) => {
-        f(x);
-    }), Observable.subscribe(scheduler));
-    scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(f, expectToHaveBeenCalledTimes(2));
-    pipe(f.calls.flat(), expectArrayEquals([0, 1]));
-    pipe(subscription[DisposableLike_isDisposed], expectTrue);
-}), test("flow a generating source", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const flowed = pipe([0, 1, 2], Observable.fromReadonlyArray(), Observable.flow(), invoke(FlowableLike_flow, scheduler), Disposable.addTo(scheduler));
-    scheduler[SchedulerLike_schedule](() => flowed[PauseableLike_resume](), {
-        delay: 2,
-    });
-    const f = mockFn();
-    const subscription = pipe(flowed, Observable.withCurrentTime(tuple), Observable.forEach(([_, v]) => {
-        f(v);
-    }), Observable.subscribe(scheduler), Disposable.addTo(scheduler));
-    scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(f, expectToHaveBeenCalledTimes(3));
-    pipe(f.calls.flat(), expectArrayEquals([0, 1, 2]));
-    pipe(subscription[DisposableLike_isDisposed], expectTrue);
-})), describe("forEach", test("invokes the effect for each notified value", () => {
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), ObservableOperatorWithSideEffectsTests(Observable.flatMapIterable(returns([])))), describe("forEach", test("invokes the effect for each notified value", () => {
     const result = [];
     pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.forEach((x) => {
         result.push(x + 10);

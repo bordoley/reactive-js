@@ -10,20 +10,20 @@ import { bindMethod, error, pipe } from "../../../functions.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Flowable from "../../Flowable.js";
-import Observable_create from "../../Observable/__private__/Observable.create.js";
-import Observable_forEach from "../../Observable/__private__/Observable.forEach.js";
-import Observable_subscribeWithConfig from "../../Observable/__private__/Observable.subscribeWithConfig.js";
+import * as Observable from "../../Observable.js";
 import Flowable_create from "./Flowable.create.js";
 
 const Flowable_fromAsyncIterable: Flowable.Signature["fromAsyncIterable"] =
   <T>() =>
   (iterable: AsyncIterable<T>) =>
     Flowable_create<T>((modeObs: ObservableLike<boolean>) =>
-      Observable_create((observer: ObserverLike<T>) => {
+      Observable.create((observer: ObserverLike<T>) => {
         const iterator = iterable[Symbol.asyncIterator]();
         const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
 
@@ -67,7 +67,7 @@ const Flowable_fromAsyncIterable: Flowable.Signature["fromAsyncIterable"] =
 
         pipe(
           modeObs,
-          Observable_forEach((mode: boolean) => {
+          Observable.forEach((mode: boolean) => {
             const wasPaused = isPaused;
             isPaused = mode;
 
@@ -78,7 +78,10 @@ const Flowable_fromAsyncIterable: Flowable.Signature["fromAsyncIterable"] =
               );
             }
           }),
-          Observable_subscribeWithConfig(observer, observer),
+          Observable.subscribe(observer, {
+            backpressureStrategy: observer[QueueableLike_backpressureStrategy],
+            capacity: observer[QueueableLike_capacity],
+          }),
           Disposable.addTo(observer),
           Disposable.onComplete(bindMethod(observer, DispatcherLike_complete)),
         );

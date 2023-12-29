@@ -1,9 +1,10 @@
 /// <reference types="./Flowable.test.d.ts" />
 
-import { describe, expectArrayEquals, expectToThrowAsync, test, testAsync, testModule, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectToHaveBeenCalledTimes, expectToThrowAsync, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
-import { FlowableLike_flow, PauseableLike_resume, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
-import { bind, error, increment, invoke, pipe, pipeLazy, returns, } from "../../functions.js";
+import { FlowableLike_flow, PauseableLike_pause, PauseableLike_resume, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
+import { bind, error, increment, invoke, pipe, pipeLazy, returns, tuple, } from "../../functions.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Flowable from "../Flowable.js";
 import * as HostScheduler from "../HostScheduler.js";
@@ -36,9 +37,44 @@ testModule("Flowable", describe("fromAsyncIterable", testAsync("infinite immedia
     })(), Flowable.fromAsyncIterable(), invoke(FlowableLike_flow, scheduler, { capacity: 1 }));
     stream[PauseableLike_resume]();
     await pipe(stream, Observable.lastAsync(scheduler));
-}), expectToThrowAsync))), describe("sinkInto", test("sinking a pauseable observable into a stream with backpressure", () => {
+}), expectToThrowAsync))), describe("fromRunnable", test("a source with delay", () => {
     const scheduler = VirtualTimeScheduler.create();
-    const src = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Observable.takeFirst({ count: 5 }), Observable.flow());
+    const generateObservable = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Flowable.fromRunnable(), invoke(FlowableLike_flow, scheduler));
+    generateObservable[PauseableLike_resume](),
+        scheduler[SchedulerLike_schedule](() => generateObservable[PauseableLike_pause](), {
+            delay: 2,
+        });
+    scheduler[SchedulerLike_schedule](() => generateObservable[PauseableLike_resume](), {
+        delay: 4,
+    });
+    scheduler[SchedulerLike_schedule](() => generateObservable[DisposableLike_dispose](), {
+        delay: 6,
+    });
+    const f = mockFn();
+    const subscription = pipe(generateObservable, Observable.forEach((x) => {
+        f(x);
+    }), Observable.subscribe(scheduler));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    pipe(f, expectToHaveBeenCalledTimes(2));
+    pipe(f.calls.flat(), expectArrayEquals([0, 1]));
+    pipe(subscription[DisposableLike_isDisposed], expectTrue);
+}), test("flow a generating source", () => {
+    const scheduler = VirtualTimeScheduler.create();
+    const flowed = pipe([0, 1, 2], Observable.fromReadonlyArray(), Flowable.fromRunnable(), invoke(FlowableLike_flow, scheduler), Disposable.addTo(scheduler));
+    scheduler[SchedulerLike_schedule](() => flowed[PauseableLike_resume](), {
+        delay: 2,
+    });
+    const f = mockFn();
+    const subscription = pipe(flowed, Observable.withCurrentTime(tuple), Observable.forEach(([_, v]) => {
+        f(v);
+    }), Observable.subscribe(scheduler), Disposable.addTo(scheduler));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    pipe(f, expectToHaveBeenCalledTimes(3));
+    pipe(f.calls.flat(), expectArrayEquals([0, 1, 2]));
+    pipe(subscription[DisposableLike_isDisposed], expectTrue);
+})), describe("sinkInto", test("sinking a pauseable observable into a stream with backpressure", () => {
+    const scheduler = VirtualTimeScheduler.create();
+    const src = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Observable.takeFirst({ count: 5 }), Flowable.fromRunnable());
     const dest = Streamable.identity()[StreamableLike_stream](scheduler, {
         backpressureStrategy: "throw",
         capacity: 1,

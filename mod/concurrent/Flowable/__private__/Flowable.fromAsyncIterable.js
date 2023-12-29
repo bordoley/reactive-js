@@ -2,13 +2,11 @@
 
 import { DispatcherLike_complete, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { bindMethod, error, pipe } from "../../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Observable_create from "../../Observable/__private__/Observable.create.js";
-import Observable_forEach from "../../Observable/__private__/Observable.forEach.js";
-import Observable_subscribeWithConfig from "../../Observable/__private__/Observable.subscribeWithConfig.js";
+import * as Observable from "../../Observable.js";
 import Flowable_create from "./Flowable.create.js";
-const Flowable_fromAsyncIterable = () => (iterable) => Flowable_create((modeObs) => Observable_create((observer) => {
+const Flowable_fromAsyncIterable = () => (iterable) => Flowable_create((modeObs) => Observable.create((observer) => {
     const iterator = iterable[Symbol.asyncIterator]();
     const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
     let isPaused = true;
@@ -41,12 +39,15 @@ const Flowable_fromAsyncIterable = () => (iterable) => Flowable_create((modeObs)
             pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
         }
     };
-    pipe(modeObs, Observable_forEach((mode) => {
+    pipe(modeObs, Observable.forEach((mode) => {
         const wasPaused = isPaused;
         isPaused = mode;
         if (!isPaused && wasPaused) {
             pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
         }
-    }), Observable_subscribeWithConfig(observer, observer), Disposable.addTo(observer), Disposable.onComplete(bindMethod(observer, DispatcherLike_complete)));
+    }), Observable.subscribe(observer, {
+        backpressureStrategy: observer[QueueableLike_backpressureStrategy],
+        capacity: observer[QueueableLike_capacity],
+    }), Disposable.addTo(observer), Disposable.onComplete(bindMethod(observer, DispatcherLike_complete)));
 }));
 export default Flowable_fromAsyncIterable;
