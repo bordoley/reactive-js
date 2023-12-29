@@ -8,6 +8,9 @@ import {
 import { pick } from "../../computations.js";
 import {
   DeferredObservableLike,
+  ObservableLike_isDeferred,
+  ObservableLike_isPure,
+  ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
   SchedulerLike,
@@ -19,7 +22,6 @@ import * as Observable from "../../concurrent/Observable.js";
 import { ObservableComputation } from "../../concurrent/Observable.js";
 import * as Stream from "../../concurrent/Stream.js";
 import * as Streamable from "../../concurrent/Streamable.js";
-import DelegatingStreamMixin from "../../concurrent/__mixins__/DelegatingStreamMixin.js";
 import { StoreLike_value, WritableStoreLike } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
@@ -46,6 +48,7 @@ import {
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
+import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   WindowLocationLike,
   WindowLocationLike_canGoBack,
@@ -150,19 +153,12 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
 
   const createWindowLocationObservable = createInstanceFactory(
     mix(
-      include(DelegatingStreamMixin()),
+      include(DelegatingDisposableMixin()),
       function WindowLocationStream(
-        instance: Pick<
-          WindowLocationLike,
-          | typeof WindowLocationLike_goBack
-          | typeof WindowLocationLike_push
-          | typeof WindowLocationLike_replace
-          | typeof ObservableLike_observe
-        > &
-          TProperties,
+        instance: WindowLocationLike & TProperties,
         delegate: StreamLike<Updater<TState>, TState> & DisposableLike,
       ): WindowLocationLike & DisposableLike {
-        init(DelegatingStreamMixin(), instance, delegate);
+        init(DelegatingDisposableMixin(), instance, delegate);
 
         instance[WindowLocation_delegate] = delegate;
 
@@ -177,7 +173,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
             instance[WindowLocationLike_canGoBack][StoreLike_value] =
               counter > 0;
           }),
-          Observable.subscribe(instance[StreamLike_scheduler]),
+          Observable.subscribe(delegate[StreamLike_scheduler]),
           Disposable.addTo(instance),
         );
 
@@ -188,6 +184,10 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
         [WindowLocationLike_canGoBack]: none,
       }),
       {
+        [ObservableLike_isDeferred]: false as const,
+        [ObservableLike_isRunnable]: false as const,
+        [ObservableLike_isPure]: true as const,
+
         [WindowLocationLike_push](
           this: TProperties,
           stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
