@@ -11,12 +11,6 @@
 | `TKey` | `unknown` |
 | `T` | `unknown` |
 
-## Hierarchy
-
-- [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>
-
-  ↳ **`DictionaryLike`**
-
 ## Table of contents
 
 ### Properties

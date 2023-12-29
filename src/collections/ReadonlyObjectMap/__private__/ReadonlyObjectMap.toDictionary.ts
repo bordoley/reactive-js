@@ -9,19 +9,15 @@ import {
 } from "../../../collections.js";
 import { Optional, newInstance, pipe } from "../../../functions.js";
 import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
-import EnumerableIterable from "../../__classes__/EnumerableIterable.js";
 import ReadonlyObjectMap_keys from "./ReadonlyObjectMap.keys.js";
 
 class ReadonlyObjectMapDictionary<T, TKey extends ReadonlyObjectMap.TKeyBase>
-  extends EnumerableIterable<T>
   implements DictionaryLike<TKey, T>
 {
   readonly [DictionaryLike_keys]: EnumerableLike<TKey>;
   readonly d: ReadonlyObjectMapLike<TKey, T>;
 
   constructor(delegate: ReadonlyObjectMapLike<TKey, T>) {
-    super();
-
     this.d = delegate;
     this[DictionaryLike_keys] = pipe(delegate, ReadonlyObjectMap_keys());
   }
@@ -35,15 +31,6 @@ class ReadonlyObjectMapDictionary<T, TKey extends ReadonlyObjectMap.TKeyBase>
       }
     }
     return cnt;
-  }
-
-  *[Symbol.iterator]() {
-    const delegate = this.d;
-    for (const key in delegate) {
-      if (Obj.hasOwn(delegate, key)) {
-        yield delegate[key] as T;
-      }
-    }
   }
 
   [DictionaryLike_get](index: TKey): Optional<T> {

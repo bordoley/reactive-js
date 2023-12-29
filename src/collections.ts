@@ -68,8 +68,7 @@ export const DictionaryLike_keys = Symbol("DictionaryLike_keys");
 /**
  * @noInheritDoc
  */
-export interface DictionaryLike<TKey = unknown, T = unknown>
-  extends EnumerableLike<T> {
+export interface DictionaryLike<TKey = unknown, T = unknown> {
   readonly [DictionaryLike_count]: number;
 
   readonly [DictionaryLike_keys]: EnumerableLike<TKey>;

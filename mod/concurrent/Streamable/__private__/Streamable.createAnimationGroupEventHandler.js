@@ -1,7 +1,7 @@
 /// <reference types="./Streamable.createAnimationGroupEventHandler.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
-import { DictionaryLike_count, DictionaryLike_get, DictionaryLike_keys, EnumerableLike_enumerate, } from "../../../collections.js";
+import { DictionaryLike_count, DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
 import * as Enumerable from "../../../collections/Enumerable.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { StreamableLike_stream, } from "../../../concurrent.js";
@@ -39,12 +39,6 @@ const Streamable_createAnimationGroupEventHandlerStream =
         get [DictionaryLike_keys]() {
             unsafeCast(this);
             return pipe(this[AnimationEventHandlerStream_delegate], ReadonlyObjectMap.keys());
-        },
-        [EnumerableLike_enumerate]() {
-            return pipe(this[AnimationEventHandlerStream_delegate], ReadonlyObjectMap.values())[EnumerableLike_enumerate]();
-        },
-        [Symbol.iterator]() {
-            return this[AnimationEventHandlerStream_delegate][Symbol.iterator]();
         },
         [DictionaryLike_get](index) {
             return this[AnimationEventHandlerStream_delegate][index];

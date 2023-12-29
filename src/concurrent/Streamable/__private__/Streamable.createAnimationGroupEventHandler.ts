@@ -12,7 +12,6 @@ import {
   DictionaryLike_get,
   DictionaryLike_keys,
   EnumerableLike,
-  EnumerableLike_enumerate,
   ReadonlyObjectMapLike,
 } from "../../../collections.js";
 import * as Enumerable from "../../../collections/Enumerable.js";
@@ -95,10 +94,7 @@ const Streamable_createAnimationGroupEventHandlerStream: <
           instance: TProperties &
             Pick<
               DictionaryLike<TKey, EventSourceLike<T>>,
-              | typeof DictionaryLike_keys
-              | typeof DictionaryLike_get
-              | typeof EnumerableLike_enumerate
-              | typeof Symbol.iterator
+              typeof DictionaryLike_keys | typeof DictionaryLike_get
             >,
           animationGroup: ReadonlyObjectMapLike<
             TKey,
@@ -199,19 +195,6 @@ const Streamable_createAnimationGroupEventHandlerStream: <
               this[AnimationEventHandlerStream_delegate],
               ReadonlyObjectMap.keys(),
             );
-          },
-
-          [EnumerableLike_enumerate](this: TProperties) {
-            return pipe(
-              this[AnimationEventHandlerStream_delegate],
-              ReadonlyObjectMap.values(),
-            )[EnumerableLike_enumerate]();
-          },
-
-          [Symbol.iterator]() {
-            return this[AnimationEventHandlerStream_delegate][
-              Symbol.iterator
-            ]();
           },
 
           [DictionaryLike_get](

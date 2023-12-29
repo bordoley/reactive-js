@@ -1,7 +1,31 @@
 /// <reference types="./Enumerable.fromIteratorFactory.d.ts" />
 
-import { pipe, returns } from "../../../functions.js";
-import Enumerator_fromIterator from "../../Enumerator/__private__/Enumerator.fromIterator.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../collections.js";
+import { none, returns } from "../../../functions.js";
+import MutableEnumeratorMixin, { MutableEnumeratorLike_reset, } from "../../__mixins__/MutableEnumeratorMixin.js";
 import Enumerable_create from "./Enumerable.create.js";
-const Enumerable_fromIteratorFactory = /*@__PURE__*/ (() => returns((f) => Enumerable_create(() => pipe(f(), Enumerator_fromIterator()))))();
+const Enumerable_fromIteratorFactory = /*@__PURE__*/ (() => {
+    const IteratorEnumerator_iterator = Symbol("IteratorEnumerator_iterator");
+    const createEnumerator = createInstanceFactory(mix(include(MutableEnumeratorMixin()), function IteratorEnumerator(instance, iterator) {
+        init(MutableEnumeratorMixin(), instance);
+        instance[IteratorEnumerator_iterator] = iterator;
+        return instance;
+    }, props({
+        [IteratorEnumerator_iterator]: none,
+    }), {
+        [EnumeratorLike_move]() {
+            if (this[MutableEnumeratorLike_reset]()) {
+                return false;
+            }
+            const next = this[IteratorEnumerator_iterator].next();
+            if (!next.done) {
+                this[EnumeratorLike_current] = next.value;
+            }
+            this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
+            return this[EnumeratorLike_hasCurrent];
+        },
+    }));
+    return returns((f) => Enumerable_create(() => createEnumerator(f())));
+})();
 export default Enumerable_fromIteratorFactory;

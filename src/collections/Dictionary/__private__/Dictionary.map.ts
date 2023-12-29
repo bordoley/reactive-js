@@ -4,9 +4,6 @@ import {
   DictionaryLike_get,
   DictionaryLike_keys,
   EnumerableLike,
-  EnumerableLike_enumerate,
-  EnumeratorLike_current,
-  EnumeratorLike_move,
 } from "../../../collections.js";
 import {
   Function2,
@@ -16,16 +13,12 @@ import {
   none,
 } from "../../../functions.js";
 import type * as Dictionary from "../../Dictionary.js";
-import EnumerableIterable from "../../__classes__/EnumerableIterable.js";
 
 const MappingDictionary_delegate = Symbol("MappingDictionary_delegate");
 
 const MappingDictionary_selector = Symbol("MappingDictionary_selector");
 
-class MappingDictionary<T, TKey, TIn>
-  extends EnumerableIterable<T>
-  implements DictionaryLike<TKey, T>
-{
+class MappingDictionary<T, TKey, TIn> implements DictionaryLike<TKey, T> {
   [MappingDictionary_delegate]: DictionaryLike<TKey, TIn>;
   [MappingDictionary_selector]: Function2<TIn, TKey, T>;
 
@@ -33,8 +26,6 @@ class MappingDictionary<T, TKey, TIn>
     delegate: DictionaryLike<TKey, TIn>,
     mapper: Function2<TIn, TKey, T>,
   ) {
-    super();
-
     this[MappingDictionary_delegate] = delegate;
     this[MappingDictionary_selector] = mapper;
   }
@@ -50,17 +41,6 @@ class MappingDictionary<T, TKey, TIn>
   [DictionaryLike_get](index: TKey): Optional<T> {
     const v = this[MappingDictionary_delegate][DictionaryLike_get](index);
     return isSome(v) ? this[MappingDictionary_selector](v, index) : none;
-  }
-
-  *[Symbol.iterator]() {
-    const enumerator =
-      this[MappingDictionary_delegate][DictionaryLike_keys][
-        EnumerableLike_enumerate
-      ]();
-    while (enumerator[EnumeratorLike_move]()) {
-      const key = enumerator[EnumeratorLike_current];
-      yield this[DictionaryLike_get](key) as T;
-    }
   }
 }
 
