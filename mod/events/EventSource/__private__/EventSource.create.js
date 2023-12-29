@@ -15,7 +15,9 @@ const EventSource_create = /*@__PURE__*/ (() => {
         // the setup function is run, in case the setup function
         // publishes notifications. useful for testing.
         instance[CreateEventSource_createDelegate] = (listener) => {
-            const delegate = pipe(Publisher.createRefCounted(), Disposable.onDisposed(() => {
+            const delegate = pipe(Publisher.create({
+                autoDispose: true,
+            }), Disposable.onDisposed(() => {
                 instance[CreateEventSource_delegate] = none;
             }));
             delegate[EventSourceLike_addEventListener](listener);

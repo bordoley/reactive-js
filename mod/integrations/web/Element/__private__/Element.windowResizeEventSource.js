@@ -10,7 +10,9 @@ const Element_windowResizeEventSource = /*@__PURE__*/ (() => {
     return () => {
         const windowResizeEventSource = windowResizeEventSourceRef ??
             (() => {
-                const windowResizeEventPublisher = pipe(Publisher.createRefCounted(), Disposable.onDisposed(() => {
+                const windowResizeEventPublisher = pipe(Publisher.create({
+                    autoDispose: true,
+                }), Disposable.onDisposed(() => {
                     windowResizeEventSourceRef = none;
                 }));
                 windowResizeEventSourceRef = windowResizeEventPublisher;

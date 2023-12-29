@@ -28,8 +28,9 @@ const Element_intersectionEventSource: Element.Signature["intersectionEventSourc
           const publisher =
             eventPublishers.get(root)?.get(child) ??
             (() => {
-              const publisher =
-                Publisher.createRefCounted<IntersectionObserverEntry>();
+              const publisher = Publisher.create<IntersectionObserverEntry>({
+                autoDispose: true,
+              });
 
               const parentMap =
                 eventPublishers.get(root) ??

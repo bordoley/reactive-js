@@ -21,12 +21,14 @@ const Observable_multicastImpl =
   <T>(
     subjectFactory: Function1<
       Optional<{
+        autoDispose: boolean;
         replay?: number;
       }>,
       SubjectLike<T>
     >,
     scheduler: SchedulerLike,
     options: {
+      readonly autoDispose?: boolean;
       readonly replay?: number;
       readonly capacity?: number;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -37,11 +39,12 @@ const Observable_multicastImpl =
   > =>
   observable => {
     const {
+      autoDispose = false,
       backpressureStrategy = "overflow",
       capacity = MAX_SAFE_INTEGER,
       replay = 0,
     } = options;
-    const subject = subjectFactory({ replay });
+    const subject = subjectFactory({ autoDispose, replay });
 
     pipe(
       observable,

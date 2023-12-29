@@ -15,7 +15,9 @@ const Element_windowScrollEventSource = /*@__PURE__*/ (() => {
       windowScrollEventSourceRef ??
       (() => {
         const windowScrollEventsPublisher = pipe(
-          Publisher.createRefCounted(),
+          Publisher.create({
+            autoDispose: true,
+          }),
           Disposable.onDisposed(() => {
             windowScrollEventSourceRef = none;
           }),

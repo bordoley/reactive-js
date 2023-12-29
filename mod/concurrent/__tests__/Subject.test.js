@@ -1,6 +1,6 @@
 /// <reference types="./Subject.test.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, expectIsSome, expectTrue, test, testModule, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsSome, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import { ObservableLike_observe, SchedulerLike_schedule, SubjectLike_observerCount, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import { SinkLike_notify } from "../../events.js";
@@ -73,14 +73,19 @@ testModule("Subject", describe("create", test("with replay", () => {
     subject[SinkLike_notify](2);
     subject[SinkLike_notify](3);
     expectIsSome(subscription[DisposableLike_error]);
-}))), describe("createRefCounted", test("with replay", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
-    const subject = Subject.createRefCounted({ replay: 2 });
+})), test("with autoDispose", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
+    const subject = Subject.create({
+        autoDispose: true,
+        replay: 2,
+    });
     for (const v of [1, 2, 3, 4]) {
         subject[SinkLike_notify](v);
     }
     const result = [];
-    pipe(subject, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(vts));
+    const subscription = pipe(subject, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(vts));
     vts[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([3, 4]));
+    expectFalse(subject[DisposableLike_isDisposed]);
+    subscription[DisposableLike_dispose]();
+    expectTrue(subject[DisposableLike_isDisposed]);
 }))));
-((_) => { })(Subject);

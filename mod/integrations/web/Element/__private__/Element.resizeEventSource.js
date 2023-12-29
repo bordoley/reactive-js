@@ -23,7 +23,9 @@ const Element_resizeEventSource =
                 (() => newInstance(ResizeObserver, resizeObserverCallback))();
         return (publishers.get(element) ??
             (() => {
-                const publisher = pipe(Publisher.createRefCounted(), Disposable.onDisposed(() => {
+                const publisher = pipe(Publisher.create({
+                    autoDispose: true,
+                }), Disposable.onDisposed(() => {
                     resizeObserver?.unobserve(element);
                     publishers.delete(element);
                     if (publishers.size > 0) {

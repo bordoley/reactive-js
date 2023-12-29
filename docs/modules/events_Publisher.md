@@ -4,30 +4,15 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [PublisherModule](../interfaces/events_Publisher.PublisherModule.md)
-
-### Type Aliases
-
-- [Signature](events_Publisher.md#signature)
-
 ### Functions
 
 - [create](events_Publisher.md#create)
-- [createRefCounted](events_Publisher.md#createrefcounted)
-
-## Type Aliases
-
-### Signature
-
-Ƭ **Signature**: [`PublisherModule`](../interfaces/events_Publisher.PublisherModule.md)
 
 ## Functions
 
 ### create
 
-▸ **create**<`T`\>(): [`PublisherLike`](../interfaces/events.PublisherLike.md)<`T`\>
+▸ **create**<`T`\>(`options?`): [`PublisherLike`](../interfaces/events.PublisherLike.md)<`T`\>
 
 #### Type parameters
 
@@ -35,21 +20,12 @@
 | :------ |
 | `T` |
 
-#### Returns
+#### Parameters
 
-[`PublisherLike`](../interfaces/events.PublisherLike.md)<`T`\>
-
-___
-
-### createRefCounted
-
-▸ **createRefCounted**<`T`\>(): [`PublisherLike`](../interfaces/events.PublisherLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.autoDispose?` | `boolean` |
 
 #### Returns
 

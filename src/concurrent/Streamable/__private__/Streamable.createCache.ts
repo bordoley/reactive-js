@@ -288,7 +288,8 @@ const createCacheStream: <T>(
           return (
             subscriptions.get(key) ??
             (() => {
-              const subject = Subject.createRefCounted<T>({
+              const subject = Subject.create<T>({
+                autoDispose: true,
                 replay: 1,
               });
               subscriptions.set(key, subject);

@@ -91,7 +91,8 @@ const createCacheStream = /*@__PURE__*/ (() => {
             const { scheduleCleanup, store, subscriptions, delegate } = this;
             return (subscriptions.get(key) ??
                 (() => {
-                    const subject = Subject.createRefCounted({
+                    const subject = Subject.create({
+                        autoDispose: true,
                         replay: 1,
                     });
                     subscriptions.set(key, subject);

@@ -16,24 +16,24 @@ const DelegatingMulticastObservableMixin: <T>() => Mixin1<
   T,
   TReplayObservable extends MulticastObservableLike<T> = MulticastObservableLike<T>,
 >() => {
-  const DelegatingReplayObservableMixin_delegate = Symbol(
-    "DelegatingReplayObservableMixin_delegate",
+  const DelegatingMulticastObservableMixin_delegate = Symbol(
+    "DelegatingMulticastObservableMixin_delegate",
   );
   type TProperties = {
-    [DelegatingReplayObservableMixin_delegate]: TReplayObservable;
+    [DelegatingMulticastObservableMixin_delegate]: TReplayObservable;
   };
   return returns(
     mix(
-      function DelegatingReplayObservableMixin(
+      function DelegatingMulticastObservableMixin(
         instance: MulticastObservableLike<T> & TProperties,
         delegate: TReplayObservable,
       ): MulticastObservableLike<T> {
-        instance[DelegatingReplayObservableMixin_delegate] = delegate;
+        instance[DelegatingMulticastObservableMixin_delegate] = delegate;
 
         return instance;
       },
       props<TProperties>({
-        [DelegatingReplayObservableMixin_delegate]: none,
+        [DelegatingMulticastObservableMixin_delegate]: none,
       }),
       {
         [ObservableLike_isDeferred]: false as const,
@@ -41,7 +41,7 @@ const DelegatingMulticastObservableMixin: <T>() => Mixin1<
         [ObservableLike_isRunnable]: false as const,
 
         [ObservableLike_observe](this: TProperties, observer: ObserverLike<T>) {
-          this[DelegatingReplayObservableMixin_delegate][
+          this[DelegatingMulticastObservableMixin_delegate][
             ObservableLike_observe
           ](observer);
         },

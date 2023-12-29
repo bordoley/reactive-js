@@ -56,7 +56,9 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
           listener: EventListenerLike<T>,
         ) => {
           const delegate = pipe(
-            Publisher.createRefCounted<T>(),
+            Publisher.create<T>({
+              autoDispose: true,
+            }),
             Disposable.onDisposed(() => {
               instance[CreateEventSource_delegate] = none;
             }),

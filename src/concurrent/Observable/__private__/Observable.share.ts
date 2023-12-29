@@ -14,6 +14,10 @@ const Observable_share: Observable.Signature["share"] = <T>(
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
   },
-) => Observable_multicastImpl<T>(Subject.createRefCounted, scheduler, options);
+) =>
+  Observable_multicastImpl<T>(Subject.create, scheduler, {
+    ...options,
+    autoDispose: true,
+  });
 
 export default Observable_share;

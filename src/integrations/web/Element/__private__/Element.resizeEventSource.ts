@@ -37,7 +37,9 @@ const Element_resizeEventSource: Element.Signature["resizeEventSource"] =
         publishers.get(element) ??
         (() => {
           const publisher = pipe(
-            Publisher.createRefCounted<ResizeObserverEntry>(),
+            Publisher.create<ResizeObserverEntry>({
+              autoDispose: true,
+            }),
             Disposable.onDisposed(() => {
               resizeObserver?.unobserve(element);
               publishers.delete(element);

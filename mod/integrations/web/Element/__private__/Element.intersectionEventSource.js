@@ -12,7 +12,9 @@ const Element_intersectionEventSource =
     return (root = document) => child => EventSource.create(listener => {
         const publisher = eventPublishers.get(root)?.get(child) ??
             (() => {
-                const publisher = Publisher.createRefCounted();
+                const publisher = Publisher.create({
+                    autoDispose: true,
+                });
                 const parentMap = eventPublishers.get(root) ??
                     (() => {
                         const parentMap = newInstance(Map);

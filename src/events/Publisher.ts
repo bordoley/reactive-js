@@ -1,22 +1,128 @@
-import { PublisherLike } from "../events.js";
-import Publisher_create from "./Publisher/__private__/Publisher.create.js";
-import Publisher_createRefCounted from "./Publisher/__private__/Publisher.createRefCounted.js";
+import {
+  Mutable,
+  createInstanceFactory,
+  include,
+  init,
+  mix,
+  props,
+  unsafeCast,
+} from "../__internal__/mixins.js";
+import {
+  EventListenerLike,
+  EventListenerLike_isErrorSafe,
+  EventSourceLike_addEventListener,
+  PublisherLike,
+  PublisherLike_listenerCount,
+  SinkLike_notify,
+} from "../events.js";
+import { error, newInstance, none, pipe } from "../functions.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed } from "../utils.js";
+import * as Disposable from "../utils/Disposable.js";
+import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 
-/**
- * @noInheritDoc
- */
-export interface PublisherModule {
-  /**
-   */
-  create<T>(): PublisherLike<T>;
+export const create: <T>(options?: {
+  readonly autoDispose?: boolean;
+}) => PublisherLike<T> = /*@__PURE__*/ (<T>() => {
+  const Publisher_autoDispose = Symbol("Publisher_autoDispose");
+  const Publisher_listeners = Symbol("Publisher_listeners");
 
-  /**
-   */
-  createRefCounted<T>(): PublisherLike<T>;
-}
+  type TProperties = {
+    readonly [Publisher_autoDispose]: boolean;
+    readonly [Publisher_listeners]: Set<EventListenerLike<T>>;
+  };
+  const createPublisher = createInstanceFactory(
+    mix(
+      include(DisposableMixin),
+      function EventPublisher(
+        instance: Pick<
+          PublisherLike<T>,
+          | typeof EventSourceLike_addEventListener
+          | typeof EventListenerLike_isErrorSafe
+          | typeof SinkLike_notify
+          | typeof PublisherLike_listenerCount
+        > &
+          Mutable<TProperties>,
+        autoDispose: boolean,
+      ): PublisherLike<T> {
+        init(DisposableMixin, instance);
 
-export type Signature = PublisherModule;
+        instance[Publisher_listeners] =
+          newInstance<Set<EventListenerLike>>(Set);
 
-export const create: Signature["create"] = Publisher_create;
-export const createRefCounted: Signature["createRefCounted"] =
-  Publisher_createRefCounted;
+        instance[Publisher_autoDispose] = autoDispose;
+
+        pipe(
+          instance,
+          Disposable.onDisposed(e => {
+            for (const listener of instance[Publisher_listeners]) {
+              listener[DisposableLike_dispose](e);
+            }
+          }),
+        );
+
+        return instance;
+      },
+      props<TProperties>({
+        [Publisher_autoDispose]: false,
+        [Publisher_listeners]: none,
+      }),
+      {
+        [EventListenerLike_isErrorSafe]: true as const,
+
+        get [PublisherLike_listenerCount]() {
+          unsafeCast<TProperties>(this);
+          return this[Publisher_listeners].size;
+        },
+
+        [SinkLike_notify](this: TProperties & PublisherLike<T>, next: T) {
+          if (this[DisposableLike_isDisposed]) {
+            return;
+          }
+
+          for (const listener of this[Publisher_listeners]) {
+            try {
+              listener[SinkLike_notify](next);
+            } catch (e) {
+              listener[DisposableLike_dispose](error(e));
+            }
+          }
+        },
+
+        [EventSourceLike_addEventListener](
+          this: TProperties & PublisherLike<T>,
+          listener: EventListenerLike<T>,
+        ) {
+          pipe(this, Disposable.add(listener, { ignoreChildErrors: true }));
+
+          if (this[DisposableLike_isDisposed]) {
+            return;
+          }
+
+          const listeners = this[Publisher_listeners];
+
+          if (listeners.has(listener)) {
+            return;
+          }
+
+          listeners.add(listener);
+          pipe(
+            listener,
+            Disposable.onDisposed(_ => {
+              listeners.delete(listener);
+
+              if (
+                this[Publisher_autoDispose] &&
+                this[PublisherLike_listenerCount] === 0
+              ) {
+                this[DisposableLike_dispose]();
+              }
+            }),
+          );
+        },
+      },
+    ),
+  );
+
+  return (options?: { readonly autoDispose?: boolean }) =>
+    createPublisher(options?.autoDispose ?? false);
+})();

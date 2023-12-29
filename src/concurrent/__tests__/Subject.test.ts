@@ -2,6 +2,7 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
+  expectFalse,
   expectIsSome,
   expectTrue,
   test,
@@ -158,19 +159,19 @@ testModule(
         expectIsSome(subscription[DisposableLike_error]);
       }),
     ),
-  ),
-  describe(
-    "createRefCounted",
     test(
-      "with replay",
+      "with autoDispose",
       Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
-        const subject = Subject.createRefCounted<number>({ replay: 2 });
+        const subject = Subject.create<number>({
+          autoDispose: true,
+          replay: 2,
+        });
         for (const v of [1, 2, 3, 4]) {
           subject[SinkLike_notify](v);
         }
 
         const result: number[] = [];
-        pipe(
+        const subscription = pipe(
           subject,
           Observable.forEach(bind(Array.prototype.push, result)),
           Observable.subscribe(vts),
@@ -179,9 +180,11 @@ testModule(
         vts[VirtualTimeSchedulerLike_run]();
 
         pipe(result, expectArrayEquals([3, 4]));
+
+        expectFalse(subject[DisposableLike_isDisposed]);
+        subscription[DisposableLike_dispose]();
+        expectTrue(subject[DisposableLike_isDisposed]);
       }),
     ),
   ),
 );
-
-((_: Subject.Signature) => {})(Subject);
