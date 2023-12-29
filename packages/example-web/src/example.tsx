@@ -68,6 +68,7 @@ import {
   EnumerableLike_enumerate,
 } from "@reactive-js/core/collections";
 import * as Enumerable from "@reactive-js/core/collections/Enumerable";
+import * as Flowable from "@reactive-js/core/concurrent/Flowable";
 
 const AnimatedBox = ({
   animation,
@@ -226,7 +227,7 @@ const Counter = () => {
             query: `v=${value}`,
           })),
         ),
-        Observable.flow(),
+        Flowable.fromRunnable(),
         invoke(FlowableLike_flow, ReactScheduler.get()),
       ),
     [history.replace, counterInitialValue],
