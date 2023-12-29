@@ -1,6 +1,6 @@
 import { EnumerableLike } from "../collections.js";
 import { Computation, Computation_T, Computation_type } from "../computations.js";
-import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureRunnableLike, ReplayObservableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
+import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
 import { EventSourceLike, StoreLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9 } from "../functions.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
@@ -362,7 +362,7 @@ export interface ObservableModule {
         readonly replay?: number;
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): Function1<DeferredObservableLike<T>, ReplayObservableLike<T> & DisposableLike>;
+    }): Function1<DeferredObservableLike<T>, MulticastObservableLike<T> & DisposableLike>;
     never<T>(): MulticastObservableLike<T>;
     onSubscribe<T>(f: Factory<DisposableLike>): ObservableOperatorWithSideEffects<T, T>;
     onSubscribe<T>(f: Factory<SideEffect1<Optional<Error>>>): ObservableOperatorWithSideEffects<T, T>;
@@ -397,7 +397,7 @@ export interface ObservableModule {
         readonly replay?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
-    }): Function1<DeferredObservableLike<T>, ReplayObservableLike<T>>;
+    }): Function1<DeferredObservableLike<T>, MulticastObservableLike<T>>;
     skipFirst<T>(options?: {
         readonly count?: number;
     }): PureObservableOperator<T, T>;

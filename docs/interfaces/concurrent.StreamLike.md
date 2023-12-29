@@ -17,7 +17,7 @@ Represents a duplex stream
 
 - [`DispatcherLike`](concurrent.DispatcherLike.md)<`TReq`\>
 
-- [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\>
+- [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>
 
   ↳ **`StreamLike`**
 

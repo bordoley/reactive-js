@@ -7,13 +7,13 @@ import { pipe } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import DelegatingReplayObservableMixin from "../../__mixins__/DelegatingReplayObservableMixin.js";
+import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 import Subject_create from "./Subject.create.js";
 const Subject_createRefCounted = 
 /*@__PURE__*/ (() => {
-    const createRefCountedSubjectInstance = createInstanceFactory(mix(include(DelegatingDisposableMixin(), DelegatingReplayObservableMixin()), function RefCountedSubject(instance, delegate) {
+    const createRefCountedSubjectInstance = createInstanceFactory(mix(include(DelegatingDisposableMixin(), DelegatingMulticastObservableMixin()), function RefCountedSubject(instance, delegate) {
         init(DelegatingDisposableMixin(), instance, delegate);
-        init(DelegatingReplayObservableMixin(), instance, delegate);
+        init(DelegatingMulticastObservableMixin(), instance, delegate);
         return instance;
     }, props(), {
         get [SubjectLike_observerCount]() {

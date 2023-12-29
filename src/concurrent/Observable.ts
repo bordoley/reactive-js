@@ -17,7 +17,6 @@ import {
   PureDeferredObservableLike,
   PureObservableLike,
   PureRunnableLike,
-  ReplayObservableLike,
   RunnableLike,
   RunnableWithSideEffectsLike,
   SchedulerLike,
@@ -1153,7 +1152,7 @@ export interface ObservableModule {
     },
   ): Function1<
     DeferredObservableLike<T>,
-    ReplayObservableLike<T> & DisposableLike
+    MulticastObservableLike<T> & DisposableLike
   >;
 
   never<T>(): MulticastObservableLike<T>;
@@ -1237,7 +1236,7 @@ export interface ObservableModule {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): Function1<DeferredObservableLike<T>, ReplayObservableLike<T>>;
+  ): Function1<DeferredObservableLike<T>, MulticastObservableLike<T>>;
 
   skipFirst<T>(options?: {
     readonly count?: number;

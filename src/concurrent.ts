@@ -273,29 +273,13 @@ export interface MulticastObservableLike<T = unknown>
   readonly [ObservableLike_isRunnable]: false;
 }
 
-export const ReplayObservableLike_get = Symbol("ReplayObservableLike_get");
-
-export const ReplayObservableLike_count = Symbol("ReplayObservableLike_count");
-
-/**
- * A stateful ObservableLike resource.
- *
- * @noInheritDoc
- */
-export interface ReplayObservableLike<T = unknown>
-  extends MulticastObservableLike<T> {
-  readonly [ReplayObservableLike_count]: number;
-
-  [ReplayObservableLike_get](index: number): T;
-}
-
 export const SubjectLike_observerCount = Symbol("SubjectLike_observerCount");
 
 /**
  * @noInheritDoc
  */
 export interface SubjectLike<T = unknown>
-  extends ReplayObservableLike<T>,
+  extends MulticastObservableLike<T>,
     ErrorSafeEventListenerLike<T> {
   readonly [SubjectLike_observerCount]: number;
 }
@@ -304,7 +288,7 @@ export interface SubjectLike<T = unknown>
  * @noInheritDoc
  */
 export interface PauseableObservableLike<T = unknown>
-  extends ReplayObservableLike<T>,
+  extends MulticastObservableLike<T>,
     PauseableLike {}
 
 export const FlowableLike_flow = Symbol("FlowableLike_flow");
@@ -330,7 +314,7 @@ export interface FlowableLike<T> {
  */
 export interface StreamLike<TReq, T>
   extends DispatcherLike<TReq>,
-    ReplayObservableLike<T> {}
+    MulticastObservableLike<T> {}
 
 export const StreamableLike_stream = Symbol("StreamableLike_stream");
 

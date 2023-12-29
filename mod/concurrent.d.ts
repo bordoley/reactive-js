@@ -199,28 +199,17 @@ export interface MulticastObservableLike<T = unknown> extends PureObservableLike
     readonly [ObservableLike_isDeferred]: false;
     readonly [ObservableLike_isRunnable]: false;
 }
-export declare const ReplayObservableLike_get: unique symbol;
-export declare const ReplayObservableLike_count: unique symbol;
-/**
- * A stateful ObservableLike resource.
- *
- * @noInheritDoc
- */
-export interface ReplayObservableLike<T = unknown> extends MulticastObservableLike<T> {
-    readonly [ReplayObservableLike_count]: number;
-    [ReplayObservableLike_get](index: number): T;
-}
 export declare const SubjectLike_observerCount: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface SubjectLike<T = unknown> extends ReplayObservableLike<T>, ErrorSafeEventListenerLike<T> {
+export interface SubjectLike<T = unknown> extends MulticastObservableLike<T>, ErrorSafeEventListenerLike<T> {
     readonly [SubjectLike_observerCount]: number;
 }
 /**
  * @noInheritDoc
  */
-export interface PauseableObservableLike<T = unknown> extends ReplayObservableLike<T>, PauseableLike {
+export interface PauseableObservableLike<T = unknown> extends MulticastObservableLike<T>, PauseableLike {
 }
 export declare const FlowableLike_flow: unique symbol;
 /**
@@ -238,7 +227,7 @@ export interface FlowableLike<T> {
  *
  * @noInheritDoc
  */
-export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, ReplayObservableLike<T> {
+export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableLike<T> {
 }
 export declare const StreamableLike_stream: unique symbol;
 /**

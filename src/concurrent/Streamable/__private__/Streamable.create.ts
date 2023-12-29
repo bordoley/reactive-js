@@ -36,7 +36,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import Observable_multicast from "../../Observable/__private__/Observable.multicast.js";
 import type * as Streamable from "../../Streamable.js";
 import DelegatingDispatcherMixin from "../../__mixins__/DelegatingDispatcherMixin.js";
-import DelegatingReplayObservableMixin from "../../__mixins__/DelegatingReplayObservableMixin.js";
+import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 
 const Stream_create: <TReq, T>(
   op: Function1<
@@ -101,7 +101,7 @@ const Stream_create: <TReq, T>(
     mix(
       include(
         DelegatingDispatcherMixin(),
-        DelegatingReplayObservableMixin<T>(),
+        DelegatingMulticastObservableMixin<T>(),
       ),
       function StreamMixin(
         instance: unknown,
@@ -129,7 +129,7 @@ const Stream_create: <TReq, T>(
           instance,
           dispatchedObservable[DispatchedObservableLike_dispatcher],
         );
-        init(DelegatingReplayObservableMixin<T>(), instance, delegate);
+        init(DelegatingMulticastObservableMixin<T>(), instance, delegate);
 
         pipe(delegate, Disposable.addTo(instance));
 

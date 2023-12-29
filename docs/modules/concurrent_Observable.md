@@ -3487,7 +3487,7 @@ ___
 
 ### multicast
 
-▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](../interfaces/concurrent.ReplayObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -3507,7 +3507,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](../interfaces/concurrent.ReplayObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 ___
 
@@ -3861,7 +3861,7 @@ ___
 
 ### share
 
-▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](../interfaces/concurrent.ReplayObservableLike.md)<`T`\>\>
+▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3881,7 +3881,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](../interfaces/concurrent.ReplayObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>\>
 
 ___
 

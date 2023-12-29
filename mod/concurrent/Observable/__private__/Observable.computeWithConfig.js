@@ -1,6 +1,6 @@
 /// <reference types="./Observable.computeWithConfig.d.ts" />
 
-import { ObservableLike_isDeferred, ObservableLike_isRunnable, ReplayObservableLike_count, ReplayObservableLike_get, SchedulerLike_schedule, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isRunnable, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseIf, raiseWithDebugMessage, } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
@@ -138,17 +138,11 @@ class ComputeContext {
                             : scheduledComputationSubscription;
                 }
             }), Observable_subscribeWithConfig(observer, observer), Disposable.addTo(observer), Disposable.onComplete(this[ComputeContext_cleanup]));
-            const hasDefaultValue = (observable?.[ReplayObservableLike_count] ?? 0) > 0;
-            const defaultValue = hasDefaultValue
-                ? observable[ReplayObservableLike_get](0)
-                : none;
             effect[AwaitOrObserveEffect_observable] = observable;
             effect[AwaitOrObserveEffect_subscription] = subscription;
-            effect[AwaitOrObserveEffect_value] = defaultValue;
-            effect[AwaitOrObserveEffect_hasValue] = hasDefaultValue;
-            return shouldAwait && !hasDefaultValue
-                ? raiseError(awaiting)
-                : defaultValue;
+            effect[AwaitOrObserveEffect_value] = none;
+            effect[AwaitOrObserveEffect_hasValue] = false;
+            return shouldAwait ? raiseError(awaiting) : none;
         }
     }
     [ComputeContext_constant](value, ...args) {

@@ -16,7 +16,11 @@
 
   ↳ **`MulticastObservableLike`**
 
-  ↳↳ [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)
+  ↳↳ [`SubjectLike`](concurrent.SubjectLike.md)
+
+  ↳↳ [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)
+
+  ↳↳ [`StreamLike`](concurrent.StreamLike.md)
 
   ↳↳ [`WindowLocationLike`](integrations_web.WindowLocationLike.md)
 

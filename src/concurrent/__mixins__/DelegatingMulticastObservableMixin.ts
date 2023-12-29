@@ -1,22 +1,20 @@
-import { Mixin1, mix, props, unsafeCast } from "../../__internal__/mixins.js";
+import { Mixin1, mix, props } from "../../__internal__/mixins.js";
 import {
+  MulticastObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
-  ReplayObservableLike,
-  ReplayObservableLike_count,
-  ReplayObservableLike_get,
 } from "../../concurrent.js";
 import { none, returns } from "../../functions.js";
 
-const DelegatingReplayObservableMixin: <T>() => Mixin1<
-  ReplayObservableLike<T>,
-  ReplayObservableLike<T>
+const DelegatingMulticastObservableMixin: <T>() => Mixin1<
+  MulticastObservableLike<T>,
+  MulticastObservableLike<T>
 > = /*@__PURE__*/ (<
   T,
-  TReplayObservable extends ReplayObservableLike<T> = ReplayObservableLike<T>,
+  TReplayObservable extends MulticastObservableLike<T> = MulticastObservableLike<T>,
 >() => {
   const DelegatingReplayObservableMixin_delegate = Symbol(
     "DelegatingReplayObservableMixin_delegate",
@@ -27,9 +25,9 @@ const DelegatingReplayObservableMixin: <T>() => Mixin1<
   return returns(
     mix(
       function DelegatingReplayObservableMixin(
-        instance: ReplayObservableLike<T> & TProperties,
+        instance: MulticastObservableLike<T> & TProperties,
         delegate: TReplayObservable,
-      ): ReplayObservableLike<T> {
+      ): MulticastObservableLike<T> {
         instance[DelegatingReplayObservableMixin_delegate] = delegate;
 
         return instance;
@@ -42,19 +40,6 @@ const DelegatingReplayObservableMixin: <T>() => Mixin1<
         [ObservableLike_isPure]: true as const,
         [ObservableLike_isRunnable]: false as const,
 
-        get [ReplayObservableLike_count]() {
-          unsafeCast<TProperties>(this);
-          return this[DelegatingReplayObservableMixin_delegate][
-            ReplayObservableLike_count
-          ];
-        },
-
-        [ReplayObservableLike_get](this: TProperties, index: number) {
-          return this[DelegatingReplayObservableMixin_delegate][
-            ReplayObservableLike_get
-          ](index);
-        },
-
         [ObservableLike_observe](this: TProperties, observer: ObserverLike<T>) {
           this[DelegatingReplayObservableMixin_delegate][
             ObservableLike_observe
@@ -65,4 +50,4 @@ const DelegatingReplayObservableMixin: <T>() => Mixin1<
   );
 })();
 
-export default DelegatingReplayObservableMixin;
+export default DelegatingMulticastObservableMixin;

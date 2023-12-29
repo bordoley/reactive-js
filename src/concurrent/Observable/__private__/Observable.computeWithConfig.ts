@@ -5,9 +5,6 @@ import {
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
-  ReplayObservableLike,
-  ReplayObservableLike_count,
-  ReplayObservableLike_get,
   RunnableWithSideEffectsLike,
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
@@ -307,22 +304,12 @@ class ComputeContext {
         Disposable.onComplete(this[ComputeContext_cleanup]),
       );
 
-      const hasDefaultValue =
-        ((observable as Optional<ReplayObservableLike<T>>)?.[
-          ReplayObservableLike_count
-        ] ?? 0) > 0;
-      const defaultValue = hasDefaultValue
-        ? (observable as ReplayObservableLike<T>)[ReplayObservableLike_get](0)
-        : none;
-
       effect[AwaitOrObserveEffect_observable] = observable;
       effect[AwaitOrObserveEffect_subscription] = subscription;
-      effect[AwaitOrObserveEffect_value] = defaultValue;
-      effect[AwaitOrObserveEffect_hasValue] = hasDefaultValue;
+      effect[AwaitOrObserveEffect_value] = none;
+      effect[AwaitOrObserveEffect_hasValue] = false;
 
-      return shouldAwait && !hasDefaultValue
-        ? raiseError(awaiting)
-        : defaultValue;
+      return shouldAwait ? raiseError(awaiting) : none;
     }
   }
 

@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\>
+- [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>
 
 - [`PauseableLike`](concurrent.PauseableLike.md)
 

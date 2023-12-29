@@ -3,9 +3,9 @@
 import { include, init, mix } from "../../__internal__/mixins.js";
 import { returns } from "../../functions.js";
 import DelegatingDispatcherMixin from "./DelegatingDispatcherMixin.js";
-import DelegatingReplayObservableMixin from "./DelegatingReplayObservableMixin.js";
-const DelegatingStreamMixin = /*@__PURE__*/ (() => returns(mix(include(DelegatingDispatcherMixin(), DelegatingReplayObservableMixin()), function DelegatingStreamMixin(instance, delegate) {
-    init(DelegatingReplayObservableMixin(), instance, delegate);
+import DelegatingMulticastObservableMixin from "./DelegatingMulticastObservableMixin.js";
+const DelegatingStreamMixin = /*@__PURE__*/ (() => returns(mix(include(DelegatingDispatcherMixin(), DelegatingMulticastObservableMixin()), function DelegatingStreamMixin(instance, delegate) {
+    init(DelegatingMulticastObservableMixin(), instance, delegate);
     init(DelegatingDispatcherMixin(), instance, delegate);
     return instance;
 })))();

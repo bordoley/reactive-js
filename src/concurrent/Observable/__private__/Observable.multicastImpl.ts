@@ -1,7 +1,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
   DeferredObservableLike,
-  ReplayObservableLike,
+  MulticastObservableLike,
   SchedulerLike,
   SubjectLike,
 } from "../../../concurrent.js";
@@ -33,7 +33,7 @@ const Observable_multicastImpl =
     } = {},
   ): Function1<
     DeferredObservableLike<T>,
-    ReplayObservableLike<T> & DisposableLike
+    MulticastObservableLike<T> & DisposableLike
   > =>
   observable => {
     const {

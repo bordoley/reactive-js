@@ -15,8 +15,6 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
-  ReplayObservableLike_count,
-  ReplayObservableLike_get,
   SubjectLike,
   SubjectLike_observerCount,
 } from "../../../concurrent.js";
@@ -59,8 +57,6 @@ const Subject_create: Subject.Signature["create"] = /*@__PURE__*/ (<T>() => {
           | typeof ObservableLike_isPure
           | typeof ObservableLike_isRunnable
           | typeof SubjectLike_observerCount
-          | typeof ReplayObservableLike_count
-          | typeof ReplayObservableLike_get
           | typeof EventListenerLike_isErrorSafe
           | typeof SinkLike_notify
         > &
@@ -105,15 +101,6 @@ const Subject_create: Subject.Signature["create"] = /*@__PURE__*/ (<T>() => {
           return this[Subject_observers].size;
         },
 
-        get [ReplayObservableLike_count]() {
-          unsafeCast<TProperties>(this);
-          return this[Subject_buffer][QueueableLike_count];
-        },
-
-        [ReplayObservableLike_get](this: TProperties, index: number) {
-          return this[Subject_buffer][IndexedQueueLike_get](index);
-        },
-
         [SinkLike_notify](this: TProperties & SubjectLike<T>, next: T) {
           if (this[DisposableLike_isDisposed]) {
             return;
@@ -156,10 +143,11 @@ const Subject_create: Subject.Signature["create"] = /*@__PURE__*/ (<T>() => {
           // The idea here is that an onSubscribe function may
           // call next from unscheduled sources such as event handlers.
           // So we marshall those events back to the scheduler.
-          const count = this[ReplayObservableLike_count];
+          const buffer = this[Subject_buffer];
+          const count = buffer[QueueableLike_count];
 
           for (let i = 0; i < count; i++) {
-            const next = this[ReplayObservableLike_get](i);
+            const next = buffer[IndexedQueueLike_get](i);
             observer[QueueableLike_enqueue](next);
           }
 

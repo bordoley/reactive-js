@@ -11,9 +11,9 @@ import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from ".
 import * as Observable from "../../Observable.js";
 import * as PauseableScheduler from "../../PauseableScheduler.js";
 import * as Streamable from "../../Streamable.js";
-import DelegatingReplayObservableMixin from "../../__mixins__/DelegatingReplayObservableMixin.js";
+import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 const PauseableObservable_create = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(DelegatingDisposableMixin(), DelegatingReplayObservableMixin()), function PauseableObservable(instance, op, scheduler, multicastOptions) {
+    return createInstanceFactory(mix(include(DelegatingDisposableMixin(), DelegatingMulticastObservableMixin()), function PauseableObservable(instance, op, scheduler, multicastOptions) {
         const liftedOp = (mode) => Observable.create(observer => {
             const pauseableScheduler = pipe(observer, PauseableScheduler.create, Disposable.addTo(observer));
             const multicastedMode = pipe(mode, Observable.mergeWith(
@@ -36,7 +36,7 @@ const PauseableObservable_create = /*@__PURE__*/ (() => {
         });
         const stream = Streamable.create(liftedOp)[StreamableLike_stream](scheduler, multicastOptions);
         init(DelegatingDisposableMixin(), instance, stream);
-        init(DelegatingReplayObservableMixin(), instance, stream);
+        init(DelegatingMulticastObservableMixin(), instance, stream);
         instance[PauseableLike_isPaused] = WritableStore.create(true);
         return instance;
     }, props({

@@ -2,7 +2,7 @@
 
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
-import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, ReplayObservableLike_count, ReplayObservableLike_get, SubjectLike_observerCount, } from "../../../concurrent.js";
+import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, SubjectLike_observerCount, } from "../../../concurrent.js";
 import { EventListenerLike_isErrorSafe, SinkLike_notify, } from "../../../events.js";
 import { error, isSome, newInstance, none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, IndexedQueueLike_get, QueueableLike_count, QueueableLike_enqueue, } from "../../../utils.js";
@@ -42,13 +42,6 @@ const Subject_create = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[Subject_observers].size;
         },
-        get [ReplayObservableLike_count]() {
-            unsafeCast(this);
-            return this[Subject_buffer][QueueableLike_count];
-        },
-        [ReplayObservableLike_get](index) {
-            return this[Subject_buffer][IndexedQueueLike_get](index);
-        },
         [SinkLike_notify](next) {
             if (this[DisposableLike_isDisposed]) {
                 return;
@@ -78,9 +71,10 @@ const Subject_create = /*@__PURE__*/ (() => {
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
-            const count = this[ReplayObservableLike_count];
+            const buffer = this[Subject_buffer];
+            const count = buffer[QueueableLike_count];
             for (let i = 0; i < count; i++) {
-                const next = this[ReplayObservableLike_get](i);
+                const next = buffer[IndexedQueueLike_get](i);
                 observer[QueueableLike_enqueue](next);
             }
             if (this[DisposableLike_isDisposed]) {

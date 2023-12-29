@@ -24,7 +24,7 @@ import DelegatingDisposableMixin, {
   DelegatingDisposableLike_delegate,
 } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Subject from "../../Subject.js";
-import DelegatingReplayObservableMixin from "../../__mixins__/DelegatingReplayObservableMixin.js";
+import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 import Subject_create from "./Subject.create.js";
 
 const Subject_createRefCounted: Subject.Signature["createRefCounted"] =
@@ -33,7 +33,7 @@ const Subject_createRefCounted: Subject.Signature["createRefCounted"] =
       mix(
         include(
           DelegatingDisposableMixin<SubjectLike<T>>(),
-          DelegatingReplayObservableMixin(),
+          DelegatingMulticastObservableMixin(),
         ),
         function RefCountedSubject(
           instance: Pick<
@@ -46,7 +46,7 @@ const Subject_createRefCounted: Subject.Signature["createRefCounted"] =
           delegate: SubjectLike<T>,
         ): SubjectLike<T> {
           init(DelegatingDisposableMixin<SubjectLike<T>>(), instance, delegate);
-          init(DelegatingReplayObservableMixin<T>(), instance, delegate);
+          init(DelegatingMulticastObservableMixin<T>(), instance, delegate);
 
           return instance;
         },

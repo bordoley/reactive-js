@@ -21,7 +21,6 @@
 - [PureDeferredObservableLike](../interfaces/concurrent.PureDeferredObservableLike.md)
 - [PureObservableLike](../interfaces/concurrent.PureObservableLike.md)
 - [PureRunnableLike](../interfaces/concurrent.PureRunnableLike.md)
-- [ReplayObservableLike](../interfaces/concurrent.ReplayObservableLike.md)
 - [RunnableLike](../interfaces/concurrent.RunnableLike.md)
 - [RunnableWithSideEffectsLike](../interfaces/concurrent.RunnableWithSideEffectsLike.md)
 - [SchedulerLike](../interfaces/concurrent.SchedulerLike.md)
@@ -50,8 +49,6 @@
 - [PauseableLike\_isPaused](concurrent.md#pauseablelike_ispaused)
 - [PauseableLike\_pause](concurrent.md#pauseablelike_pause)
 - [PauseableLike\_resume](concurrent.md#pauseablelike_resume)
-- [ReplayObservableLike\_count](concurrent.md#replayobservablelike_count)
-- [ReplayObservableLike\_get](concurrent.md#replayobservablelike_get)
 - [SchedulerLike\_inContinuation](concurrent.md#schedulerlike_incontinuation)
 - [SchedulerLike\_maxYieldInterval](concurrent.md#schedulerlike_maxyieldinterval)
 - [SchedulerLike\_now](concurrent.md#schedulerlike_now)
@@ -157,18 +154,6 @@ ___
 ### PauseableLike\_resume
 
 • `Const` **PauseableLike\_resume**: unique `symbol`
-
-___
-
-### ReplayObservableLike\_count
-
-• `Const` **ReplayObservableLike\_count**: unique `symbol`
-
-___
-
-### ReplayObservableLike\_get
-
-• `Const` **ReplayObservableLike\_get**: unique `symbol`
 
 ___
 

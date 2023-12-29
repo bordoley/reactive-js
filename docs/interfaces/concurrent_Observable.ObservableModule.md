@@ -3288,7 +3288,7 @@ ___
 
 ### multicast
 
-▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\> & [`DisposableLike`](utils.DisposableLike.md)\>
+▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> & [`DisposableLike`](utils.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -3308,7 +3308,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\> & [`DisposableLike`](utils.DisposableLike.md)\>
+[`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> & [`DisposableLike`](utils.DisposableLike.md)\>
 
 ___
 
@@ -3662,7 +3662,7 @@ ___
 
 ### share
 
-▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\>\>
+▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3682,7 +3682,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
 
 ___
 

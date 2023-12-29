@@ -20,8 +20,6 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,
-  ReplayObservableLike_count,
-  ReplayObservableLike_get,
   SchedulerLike,
   StreamLike,
   StreamableLike_stream,
@@ -44,7 +42,7 @@ import type * as Flowable from "../../Flowable.js";
 import * as Observable from "../../Observable.js";
 import * as PauseableScheduler from "../../PauseableScheduler.js";
 import * as Streamable from "../../Streamable.js";
-import DelegatingReplayObservableMixin from "../../__mixins__/DelegatingReplayObservableMixin.js";
+import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 
 const PauseableObservable_create: <T>(
   op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>,
@@ -60,14 +58,12 @@ const PauseableObservable_create: <T>(
 
   return createInstanceFactory(
     mix(
-      include(DelegatingDisposableMixin(), DelegatingReplayObservableMixin()),
+      include(
+        DelegatingDisposableMixin(),
+        DelegatingMulticastObservableMixin(),
+      ),
       function PauseableObservable(
-        instance: Omit<
-          PauseableObservableLike<T>,
-          | keyof DisposableLike
-          | typeof ReplayObservableLike_count
-          | typeof ReplayObservableLike_get
-        > &
+        instance: Omit<PauseableObservableLike<T>, keyof DisposableLike> &
           TProperties,
         op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>,
         scheduler: SchedulerLike,
@@ -129,7 +125,7 @@ const PauseableObservable_create: <T>(
           StreamableLike_stream
         ](scheduler, multicastOptions);
         init(DelegatingDisposableMixin(), instance, stream);
-        init(DelegatingReplayObservableMixin<T>(), instance, stream);
+        init(DelegatingMulticastObservableMixin<T>(), instance, stream);
 
         instance[PauseableLike_isPaused] = WritableStore.create(true);
 
