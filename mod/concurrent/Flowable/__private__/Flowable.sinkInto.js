@@ -1,0 +1,26 @@
+/// <reference types="./Flowable.sinkInto.d.ts" />
+
+import { DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, FlowableLike_flow, PauseableLike_pause, PauseableLike_resume, } from "../../../concurrent.js";
+import * as EventSource from "../../../events/EventSource.js";
+import { pipe } from "../../../functions.js";
+import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../utils.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import * as Observable from "../../Observable.js";
+const Flowable_sinkInto = (sink) => (flowable) => Observable.create(observer => {
+    const flowed = pipe(flowable[FlowableLike_flow](observer, {
+        backpressureStrategy: observer[QueueableLike_backpressureStrategy],
+        capacity: observer[QueueableLike_capacity],
+    }), Disposable.addTo(observer));
+    pipe(sink, EventSource.addEventHandler(ev => {
+        if (ev === DispatcherLikeEvent_capacityExceeded ||
+            ev === DispatcherLikeEvent_completed) {
+            flowed[PauseableLike_pause]();
+        }
+        else if (ev === DispatcherLikeEvent_ready) {
+            flowed[PauseableLike_resume]();
+        }
+    }), Disposable.addTo(observer));
+    pipe(flowed, Observable.dispatchTo(sink), Observable.subscribe(observer), Disposable.addTo(observer));
+    flowed[PauseableLike_resume]();
+});
+export default Flowable_sinkInto;

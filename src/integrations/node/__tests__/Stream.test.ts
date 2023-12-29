@@ -54,8 +54,6 @@ testModule(
             Observable.keep(x => x !== "xyz"),
             Observable.map(bindMethod(encoder, "encode")),
             Observable.flow(),
-            invoke(FlowableLike_flow, scheduler),
-            Disposable.addTo(scheduler),
             NodeStream.sinkInto(writable),
             Observable.lastAsync(scheduler),
           );
@@ -91,8 +89,6 @@ testModule(
             Observable.keep(x => x !== "xyz"),
             Observable.map(bindMethod(encoder, "encode")),
             Observable.flow(),
-            invoke(FlowableLike_flow, scheduler),
-            Disposable.addTo(scheduler),
             NodeStream.sinkInto(factory),
             Observable.lastAsync(scheduler),
           );
@@ -122,8 +118,6 @@ testModule(
             [encoder.encode("abc"), encoder.encode("defg")],
             Observable.fromReadonlyArray(),
             Observable.flow(),
-            invoke(FlowableLike_flow, scheduler),
-            Disposable.addTo(scheduler),
             NodeStream.sinkInto(writable),
             Observable.lastAsync(scheduler),
           );
@@ -160,8 +154,6 @@ testModule(
             [encoder.encode("abc"), encoder.encode("defg")],
             Observable.fromReadonlyArray(),
             Observable.flow(),
-            invoke(FlowableLike_flow, scheduler),
-            Disposable.addTo(scheduler),
             NodeStream.sinkInto(compressionPipeline),
             Observable.lastAsync(scheduler),
           );

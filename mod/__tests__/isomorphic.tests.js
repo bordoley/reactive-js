@@ -13,7 +13,6 @@ import "../collections/__tests__/ReadonlyObjectMap.test.js";
 import "../concurrent/__tests__/Flowable.test.js";
 import "../concurrent/__tests__/HostScheduler.test.js";
 import "../concurrent/__tests__/Observable.test.js";
-import "../concurrent/__tests__/PauseableObservable.test.js";
 import "../concurrent/__tests__/Stream.test.js";
 import "../concurrent/__tests__/Streamable.test.js";
 import "../concurrent/__tests__/Subject.test.js";

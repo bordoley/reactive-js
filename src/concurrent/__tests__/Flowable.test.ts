@@ -2,19 +2,33 @@ import {
   describe,
   expectArrayEquals,
   expectToThrowAsync,
+  test,
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
+import * as Enumerable from "../../collections/Enumerable.js";
 import {
   FlowableLike_flow,
   PauseableLike_resume,
   SchedulerLike,
+  StreamableLike_stream,
+  VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
-import { error, invoke, pipe, pipeLazy } from "../../functions.js";
+import {
+  bind,
+  error,
+  increment,
+  invoke,
+  pipe,
+  pipeLazy,
+  returns,
+} from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Flowable from "../Flowable.js";
 import * as HostScheduler from "../HostScheduler.js";
 import * as Observable from "../Observable.js";
+import * as Streamable from "../Streamable.js";
+import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
 testModule(
   "Flowable",
@@ -93,6 +107,40 @@ testModule(
         expectToThrowAsync,
       ),
     ),
+  ),
+  describe(
+    "sinkInto",
+    test("sinking a pauseable observable into a stream with backpressure", () => {
+      const scheduler = VirtualTimeScheduler.create();
+
+      const src = pipe(
+        Enumerable.generate(increment, returns(-1)),
+        Observable.fromEnumerable({ delay: 1, delayStart: true }),
+        Observable.takeFirst<number>({ count: 5 }),
+        Observable.flow(),
+      );
+
+      const dest = Streamable.identity<number>()[StreamableLike_stream](
+        scheduler,
+        {
+          backpressureStrategy: "throw",
+          capacity: 1,
+        },
+      );
+
+      pipe(src, Flowable.sinkInto(dest), Observable.subscribe(scheduler));
+
+      const result: number[] = [];
+      pipe(
+        dest,
+        Observable.forEach<number>(bind(Array.prototype.push, result)),
+        Observable.subscribe(scheduler),
+      );
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
+    }),
   ),
 );
 

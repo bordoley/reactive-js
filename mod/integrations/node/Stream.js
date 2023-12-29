@@ -1,10 +1,10 @@
 /// <reference types="./Stream.d.ts" />
 
-import { DispatcherLike_complete, PauseableLike_pause, PauseableLike_resume, } from "../../concurrent.js";
+import { DispatcherLike_complete, FlowableLike_flow, PauseableLike_pause, PauseableLike_resume, } from "../../concurrent.js";
 import * as Flowable from "../../concurrent/Flowable.js";
 import * as Observable from "../../concurrent/Observable.js";
 import { bindMethod, ignore, isFunction, pipe, } from "../../functions.js";
-import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../utils.js";
+import { DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 const disposeStream = (stream) => () => {
     stream.removeAllListeners();
@@ -52,17 +52,21 @@ export const sinkInto = (factory) => flowable => Observable.create(observer => {
     const writable = isFunction(factory)
         ? pipe(factory(), addToDisposable(observer), addDisposable(observer))
         : pipe(factory, addDisposable(observer));
-    pipe(flowable, Observable.forEach((ev) => {
+    const flowed = pipe(flowable[FlowableLike_flow](observer, {
+        backpressureStrategy: observer[QueueableLike_backpressureStrategy],
+        capacity: observer[QueueableLike_capacity],
+    }), Disposable.addTo(observer));
+    pipe(flowed, Observable.forEach((ev) => {
         // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
         // node throws a type Error regarding expecting a Buffer, though the docs
         // say a UInt8Array should be accepted. Need to file a bug.
         if (!writable.write(Buffer.from(ev))) {
-            flowable[PauseableLike_pause]();
+            flowed[PauseableLike_pause]();
         }
     }), Observable.subscribe(observer), Disposable.onComplete(bindMethod(writable, "end")), Disposable.addTo(observer));
-    const onDrain = bindMethod(flowable, PauseableLike_resume);
+    const onDrain = bindMethod(flowed, PauseableLike_resume);
     const onFinish = bindMethod(observer, DisposableLike_dispose);
     writable.on("drain", onDrain);
     writable.on("finish", onFinish);
-    flowable[PauseableLike_resume]();
+    flowed[PauseableLike_resume]();
 });

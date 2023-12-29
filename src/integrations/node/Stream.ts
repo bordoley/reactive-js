@@ -3,9 +3,9 @@ import {
   DeferredObservableWithSideEffectsLike,
   DispatcherLike_complete,
   FlowableLike,
+  FlowableLike_flow,
   PauseableLike_pause,
   PauseableLike_resume,
-  PauseableObservableLike,
 } from "../../concurrent.js";
 import * as Flowable from "../../concurrent/Flowable.js";
 import * as Observable from "../../concurrent/Observable.js";
@@ -20,6 +20,8 @@ import {
 import {
   DisposableLike,
   DisposableLike_dispose,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -30,7 +32,7 @@ interface NodeStreamModule {
   sinkInto(
     factory: Writable | Factory<Writable>,
   ): Function1<
-    PauseableObservableLike<Uint8Array>,
+    FlowableLike<Uint8Array>,
     DeferredObservableWithSideEffectsLike<void>
   >;
 }
@@ -122,7 +124,7 @@ export const sinkInto: Signature["sinkInto"] =
   (
     factory: Writable | Factory<Writable>,
   ): Function1<
-    PauseableObservableLike<Uint8Array>,
+    FlowableLike<Uint8Array>,
     DeferredObservableWithSideEffectsLike<void>
   > =>
   flowable =>
@@ -131,14 +133,22 @@ export const sinkInto: Signature["sinkInto"] =
         ? pipe(factory(), addToDisposable(observer), addDisposable(observer))
         : pipe(factory, addDisposable(observer));
 
+      const flowed = pipe(
+        flowable[FlowableLike_flow](observer, {
+          backpressureStrategy: observer[QueueableLike_backpressureStrategy],
+          capacity: observer[QueueableLike_capacity],
+        }),
+        Disposable.addTo(observer),
+      );
+
       pipe(
-        flowable,
+        flowed,
         Observable.forEach((ev: Uint8Array) => {
           // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
           // node throws a type Error regarding expecting a Buffer, though the docs
           // say a UInt8Array should be accepted. Need to file a bug.
           if (!writable.write(Buffer.from(ev))) {
-            flowable[PauseableLike_pause]();
+            flowed[PauseableLike_pause]();
           }
         }),
         Observable.subscribe(observer),
@@ -146,11 +156,11 @@ export const sinkInto: Signature["sinkInto"] =
         Disposable.addTo(observer),
       );
 
-      const onDrain = bindMethod(flowable, PauseableLike_resume);
+      const onDrain = bindMethod(flowed, PauseableLike_resume);
       const onFinish = bindMethod(observer, DisposableLike_dispose);
 
       writable.on("drain", onDrain);
       writable.on("finish", onFinish);
 
-      flowable[PauseableLike_resume]();
+      flowed[PauseableLike_resume]();
     });

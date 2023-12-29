@@ -3,20 +3,33 @@ import {
   DispatcherLikeEvent_capacityExceeded,
   DispatcherLikeEvent_completed,
   DispatcherLikeEvent_ready,
+  FlowableLike,
+  FlowableLike_flow,
   PauseableLike_pause,
   PauseableLike_resume,
-  PauseableObservableLike,
 } from "../../../concurrent.js";
 import * as EventSource from "../../../events/EventSource.js";
 import { pipe } from "../../../functions.js";
+import {
+  QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
+} from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import type * as Flowable from "../../Flowable.js";
 import * as Observable from "../../Observable.js";
-import type * as PauseableObservable from "../../PauseableObservable.js";
 
-const PauseableObservable_sinkInto: PauseableObservable.Signature["sinkInto"] =
+const Flowable_sinkInto: Flowable.Signature["sinkInto"] =
   <T>(sink: DispatcherLike<T>) =>
-  (pauseableObservable: PauseableObservableLike<T>) =>
+  (flowable: FlowableLike<T>) =>
     Observable.create(observer => {
+      const flowed = pipe(
+        flowable[FlowableLike_flow](observer, {
+          backpressureStrategy: observer[QueueableLike_backpressureStrategy],
+          capacity: observer[QueueableLike_capacity],
+        }),
+        Disposable.addTo(observer),
+      );
+
       pipe(
         sink,
         EventSource.addEventHandler(ev => {
@@ -24,22 +37,22 @@ const PauseableObservable_sinkInto: PauseableObservable.Signature["sinkInto"] =
             ev === DispatcherLikeEvent_capacityExceeded ||
             ev === DispatcherLikeEvent_completed
           ) {
-            pauseableObservable[PauseableLike_pause]();
+            flowed[PauseableLike_pause]();
           } else if (ev === DispatcherLikeEvent_ready) {
-            pauseableObservable[PauseableLike_resume]();
+            flowed[PauseableLike_resume]();
           }
         }),
         Disposable.addTo(observer),
       );
 
       pipe(
-        pauseableObservable,
+        flowed,
         Observable.dispatchTo(sink),
         Observable.subscribe(observer),
         Disposable.addTo(observer),
       );
 
-      pauseableObservable[PauseableLike_resume]();
+      flowed[PauseableLike_resume]();
     });
 
-export default PauseableObservable_sinkInto;
+export default Flowable_sinkInto;
