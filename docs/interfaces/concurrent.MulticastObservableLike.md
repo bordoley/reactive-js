@@ -18,6 +18,8 @@
 
   ↳↳ [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)
 
+  ↳↳ [`WindowLocationLike`](integrations_web.WindowLocationLike.md)
+
 ## Table of contents
 
 ### Properties

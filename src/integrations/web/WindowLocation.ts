@@ -10,7 +10,6 @@ import {
   DeferredObservableLike,
   ObservableLike_observe,
   ObserverLike,
-  ReplayObservableLike_get,
   SchedulerLike,
   StreamLike,
   StreamLike_scheduler,
@@ -159,7 +158,6 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
           | typeof WindowLocationLike_push
           | typeof WindowLocationLike_replace
           | typeof ObservableLike_observe
-          | typeof ReplayObservableLike_get
         > &
           TProperties,
         delegate: StreamLike<Updater<TState>, TState> & DisposableLike,
@@ -190,11 +188,6 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
         [WindowLocationLike_canGoBack]: none,
       }),
       {
-        [ReplayObservableLike_get](this: TProperties, index: number) {
-          return this[WindowLocation_delegate][ReplayObservableLike_get](index)
-            .uri;
-        },
-
         [WindowLocationLike_push](
           this: TProperties,
           stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,

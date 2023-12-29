@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<[`WindowLocationURI`](integrations_web.WindowLocationURI.md)\>
+- [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`WindowLocationURI`](integrations_web.WindowLocationURI.md)\>
 
   ↳ **`WindowLocationLike`**
 

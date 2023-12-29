@@ -1,5 +1,5 @@
 import { ReadonlyObjectMapLike } from "../collections.js";
-import { ReplayObservableLike } from "../concurrent.js";
+import { MulticastObservableLike } from "../concurrent.js";
 import { StoreLike } from "../events.js";
 import { Updater } from "../functions.js";
 
@@ -27,7 +27,7 @@ export const WindowLocationLike_replace = Symbol("WindowLocationLike_replace");
  * @noInheritDoc
  */
 export interface WindowLocationLike
-  extends ReplayObservableLike<WindowLocationURI> {
+  extends MulticastObservableLike<WindowLocationURI> {
   readonly [WindowLocationLike_canGoBack]: StoreLike<boolean>;
 
   [WindowLocationLike_goBack](): void;
