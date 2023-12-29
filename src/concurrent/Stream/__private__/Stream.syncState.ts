@@ -3,9 +3,7 @@ import {
   ObservableLike,
   RunnableLike,
   RunnableWithSideEffectsLike,
-  SchedulerLike,
   StreamLike,
-  StreamLike_scheduler,
 } from "../../../concurrent.js";
 import {
   Tuple2,
@@ -14,10 +12,6 @@ import {
   identity,
   pipe,
 } from "../../../functions.js";
-import {
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-} from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import type * as Stream from "../../Stream.js";
 
@@ -37,17 +31,12 @@ const Stream_syncState: Stream.Signature["syncState"] = <T>(
     | RunnableLike<Updater<T>>,
   options?: {
     readonly throttleDuration?: number;
-    readonly capacity?: number;
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly scheduler?: SchedulerLike;
   },
 ) => {
   const throttleDuration = options?.throttleDuration ?? 0;
 
-  return (stateStore: StreamLike<Updater<T>, T>) => {
-    const scheduler = options?.scheduler ?? stateStore[StreamLike_scheduler];
-
-    return pipe(
+  return (stateStore: StreamLike<Updater<T>, T>) =>
+    pipe(
       stateStore,
       Observable.forkMerge(
         compose(
@@ -68,12 +57,8 @@ const Stream_syncState: Stream.Signature["syncState"] = <T>(
         ),
       ),
       Observable.dispatchTo<Updater<T>>(stateStore),
-      Observable.subscribe(scheduler, {
-        backpressureStrategy: options?.backpressureStrategy,
-        capacity: options?.capacity,
-      }),
+      Observable.ignoreElements(),
     );
-  };
 };
 
 export default Stream_syncState;

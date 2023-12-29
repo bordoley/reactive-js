@@ -15,7 +15,7 @@ const Subject_createRefCounted =
         init(DelegatingDisposableMixin(), instance, delegate);
         init(DelegatingReplayObservableMixin(), instance, delegate);
         return instance;
-    }, props({}), {
+    }, props(), {
         get [SubjectLike_observerCount]() {
             unsafeCast(this);
             return this[DelegatingDisposableLike_delegate][SubjectLike_observerCount];

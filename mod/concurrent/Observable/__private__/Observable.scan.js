@@ -1,6 +1,6 @@
 /// <reference types="./Observable.scan.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { createInstanceFactory, include, init, mix, } from "../../../__internal__/mixins.js";
 import ScanSinkMixin from "../../../events/__mixins__/ScanSinkMixin.js";
 import { partial, pipe } from "../../../functions.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
@@ -11,7 +11,7 @@ const Observer_createScanObserver = /*@__PURE__*/ (() => {
         init(ScanSinkMixin(), instance, delegate, reducer, initialValue);
         init(ObserverMixin(), instance, delegate, delegate);
         return instance;
-    }, props({}))));
+    })));
 })();
 const Observable_scan = (reducer, initialValue) => pipe((Observer_createScanObserver), partial(reducer, initialValue), Observable_liftPure);
 export default Observable_scan;

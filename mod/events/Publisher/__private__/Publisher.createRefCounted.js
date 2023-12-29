@@ -12,7 +12,7 @@ const Publisher_createRefCounted =
     const createRefCountedEventPublisherInstance = createInstanceFactory(mix(include(DelegatingDisposableMixin()), function RefCountedEventPublisher(instance, delegate) {
         init(DelegatingDisposableMixin(), instance, delegate);
         return instance;
-    }, props({}), {
+    }, props(), {
         [EventListenerLike_isErrorSafe]: true,
         get [PublisherLike_listenerCount]() {
             unsafeCast(this);

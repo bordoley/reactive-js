@@ -17,7 +17,6 @@ import {
   ObserverLike,
   SchedulerLike,
   StreamLike,
-  StreamLike_scheduler,
   StreamableLike_stream,
 } from "../../../concurrent.js";
 import {
@@ -98,10 +97,6 @@ const Stream_create: <TReq, T>(
     );
   })();
 
-  type TProperties = {
-    [StreamLike_scheduler]: SchedulerLike;
-  };
-
   return createInstanceFactory(
     mix(
       include(
@@ -109,7 +104,7 @@ const Stream_create: <TReq, T>(
         DelegatingReplayObservableMixin<T>(),
       ),
       function StreamMixin(
-        instance: TProperties,
+        instance: unknown,
         op: Function1<
           DeferredObservableWithSideEffectsLike<TReq>,
           DeferredObservableLike<T>
@@ -121,8 +116,6 @@ const Stream_create: <TReq, T>(
           backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         },
       ): StreamLike<TReq, T> & DisposableLike {
-        instance[StreamLike_scheduler] = scheduler;
-
         const dispatchedObservable = DispatchedObservable_create<TReq>();
 
         const delegate = pipe(
@@ -142,10 +135,6 @@ const Stream_create: <TReq, T>(
 
         return instance;
       },
-      props<TProperties>({
-        [StreamLike_scheduler]: none,
-      }),
-      {},
     ),
   );
 })();

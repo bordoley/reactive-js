@@ -10,7 +10,7 @@ const EventSource_takeWhile =
     const createTakeWhileEventListener = (() => createInstanceFactory(mix(include(TakeWhileSinkMixin()), function TakeWhileEventListener(instance, delegate, predicate, inclusive) {
         init(TakeWhileSinkMixin(), instance, delegate, predicate, inclusive);
         return instance;
-    }, props({}), {
+    }, props(), {
         [EventListenerLike_isErrorSafe]: false,
     })))();
     return (predicate, options = {}) => pipe((createTakeWhileEventListener), partial(predicate, options.inclusive), EventSource_lift);

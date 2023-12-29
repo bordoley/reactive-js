@@ -46,7 +46,7 @@ const EventSource_buffer: EventSource.Signature["buffer"] =
 
             return instance;
           },
-          props({}),
+          props(),
           {
             [EventListenerLike_isErrorSafe]: false,
           },

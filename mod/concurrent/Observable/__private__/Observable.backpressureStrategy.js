@@ -11,7 +11,7 @@ const Observer_createBackpressureObserver = /*@__PURE__*/ (() => createInstanceF
     init(DelegatingDisposableMixin(), instance, delegate);
     init(ObserverMixin(), instance, delegate, config);
     return instance;
-}, props({}), {
+}, props(), {
     [SinkLike_notify](next) {
         this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
     },

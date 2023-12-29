@@ -47,7 +47,7 @@ const Publisher_createRefCounted: Publisher.Signature["createRefCounted"] =
 
           return instance;
         },
-        props({}),
+        props(),
         {
           [EventListenerLike_isErrorSafe]: true as const,
 

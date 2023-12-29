@@ -11,7 +11,7 @@ const CurrentTimeSchedulerMixin: Mixin<
     ): Pick<SchedulerLike, typeof SchedulerLike_now> {
       return instance;
     },
-    props({}),
+    props(),
     {
       get [SchedulerLike_now]() {
         return CurrentTime.now();

@@ -1,16 +1,6 @@
-import {
-  Mixin1,
-  include,
-  init,
-  mix,
-  props,
-} from "../../__internal__/mixins.js";
-import {
-  SchedulerLike,
-  StreamLike,
-  StreamLike_scheduler,
-} from "../../concurrent.js";
-import { none, returns } from "../../functions.js";
+import { Mixin1, include, init, mix } from "../../__internal__/mixins.js";
+import { StreamLike } from "../../concurrent.js";
+import { returns } from "../../functions.js";
 import { DisposableLike } from "../../utils.js";
 import DelegatingDispatcherMixin from "./DelegatingDispatcherMixin.js";
 import DelegatingReplayObservableMixin from "./DelegatingReplayObservableMixin.js";
@@ -18,34 +8,23 @@ import DelegatingReplayObservableMixin from "./DelegatingReplayObservableMixin.j
 const DelegatingStreamMixin: <TReq, T>() => Mixin1<
   StreamLike<TReq, T> & DisposableLike,
   StreamLike<TReq, T> & DisposableLike
-> = /*@__PURE__*/ (<TReq, T>() => {
-  type TProperties = {
-    [StreamLike_scheduler]: SchedulerLike;
-  };
-  return returns(
+> = /*@__PURE__*/ (<TReq, T>() =>
+  returns(
     mix(
       include(
         DelegatingDispatcherMixin(),
         DelegatingReplayObservableMixin<StreamLike<TReq, T>>(),
       ),
       function DelegatingStreamMixin(
-        instance: Pick<StreamLike<TReq, T>, typeof StreamLike_scheduler> &
-          TProperties,
+        instance: unknown,
         delegate: StreamLike<TReq, T> & DisposableLike,
       ): StreamLike<TReq, T> & DisposableLike {
         init(DelegatingReplayObservableMixin<T>(), instance, delegate);
         init(DelegatingDispatcherMixin(), instance, delegate);
 
-        instance[StreamLike_scheduler] = delegate[StreamLike_scheduler];
-
         return instance;
       },
-      props<TProperties>({
-        [StreamLike_scheduler]: none,
-      }),
-      {},
     ),
-  );
-})();
+  ))();
 
 export default DelegatingStreamMixin;

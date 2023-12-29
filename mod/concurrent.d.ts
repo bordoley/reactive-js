@@ -241,14 +241,12 @@ export interface FlowableLike<T> {
         readonly replay?: number;
     }): PauseableObservableLike<T>;
 }
-export declare const StreamLike_scheduler: unique symbol;
 /**
  * Represents a duplex stream
  *
  * @noInheritDoc
  */
 export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, ReplayObservableLike<T> {
-    readonly [StreamLike_scheduler]: SchedulerLike;
 }
 export declare const StreamableLike_stream: unique symbol;
 /**

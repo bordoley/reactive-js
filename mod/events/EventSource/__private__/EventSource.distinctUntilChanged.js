@@ -10,7 +10,7 @@ const EventSource_distinctUntilChanged =
     const createDistinctUntilChangedEventListener = (() => createInstanceFactory(mix(include(DistinctUntilChangedSinkMixin()), function distinctUntilChangedEventListener(instance, delegate, equality) {
         init(DistinctUntilChangedSinkMixin(), instance, delegate, equality);
         return instance;
-    }, props({}), {
+    }, props(), {
         [EventListenerLike_isErrorSafe]: false,
     })))();
     return (options = {}) => {

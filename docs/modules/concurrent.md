@@ -59,7 +59,6 @@
 - [SchedulerLike\_requestYield](concurrent.md#schedulerlike_requestyield)
 - [SchedulerLike\_schedule](concurrent.md#schedulerlike_schedule)
 - [SchedulerLike\_shouldYield](concurrent.md#schedulerlike_shouldyield)
-- [StreamLike\_scheduler](concurrent.md#streamlike_scheduler)
 - [StreamableLike\_stream](concurrent.md#streamablelike_stream)
 - [SubjectLike\_observerCount](concurrent.md#subjectlike_observercount)
 - [VirtualTimeSchedulerLike\_run](concurrent.md#virtualtimeschedulerlike_run)
@@ -207,12 +206,6 @@ ___
 ### SchedulerLike\_shouldYield
 
 • `Const` **SchedulerLike\_shouldYield**: unique `symbol`
-
-___
-
-### StreamLike\_scheduler
-
-• `Const` **StreamLike\_scheduler**: unique `symbol`
 
 ___
 

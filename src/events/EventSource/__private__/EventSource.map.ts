@@ -34,7 +34,7 @@ const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (() => {
 
           return instance;
         },
-        props({}),
+        props(),
         {
           [EventListenerLike_isErrorSafe]: false,
         },

@@ -45,7 +45,7 @@ const Observer_createBackpressureObserver: <T>(
 
         return instance;
       },
-      props({}),
+      props(),
       {
         [SinkLike_notify](
           this: DelegatingDisposableLike<ObserverLike<T>>,

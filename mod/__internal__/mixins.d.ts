@@ -79,7 +79,7 @@ interface CreateInstanceFactory {
     createInstanceFactory<TReturn, TA, TB, TC, TD, TE, TF>(mixin: Mixin6<TReturn, TA, TB, TC, TD, TE, TF>): Function6<TA, TB, TC, TD, TE, TF, TReturn>;
 }
 export declare const createInstanceFactory: CreateInstanceFactory["createInstanceFactory"];
-export declare const props: <TProperties>(o: OptionalProperties<TProperties>) => TProperties & {
+export declare const props: <TProperties>(o?: OptionalProperties<TProperties> | undefined) => TProperties & {
     [Mixin_private_initializedProperties]?: true | undefined;
 };
 export declare const getPrototype: <TPrototype extends object>(mixin: PartialMixin<TPrototype>) => TPrototype;

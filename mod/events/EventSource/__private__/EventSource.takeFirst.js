@@ -10,7 +10,7 @@ const EventSource_takeFirst =
     const createTakeFirstEventListener = (() => createInstanceFactory(mix(include(TakeFirstSinkMixin()), function TakeFirstEventListener(instance, delegate, count) {
         init(TakeFirstSinkMixin(), instance, delegate, count);
         return instance;
-    }, props({}), {
+    }, props(), {
         [EventListenerLike_isErrorSafe]: false,
     })))();
     return (options = {}) => pipe((createTakeFirstEventListener), partial(options.count), EventSource_lift);

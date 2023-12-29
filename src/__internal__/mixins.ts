@@ -362,13 +362,13 @@ export const createInstanceFactory: CreateInstanceFactory["createInstanceFactory
       return instance;
     };
   };
-
+const emptyProps = {};
 export const props = <TProperties>(
-  o: OptionalProperties<TProperties>,
+  o?: OptionalProperties<TProperties>,
 ): TProperties & {
   [Mixin_private_initializedProperties]?: true;
 } => {
-  return o as unknown as TProperties & {
+  return (o ?? emptyProps) as unknown as TProperties & {
     [Mixin_private_initializedProperties]?: true;
   };
 };

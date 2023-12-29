@@ -36,7 +36,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(m
     init(CurrentTimeSchedulerMixin, instance);
     init(ContinuationSchedulerMixin, instance, maxYieldInterval);
     return instance;
-}, props({}), {
+}, props(), {
     get [ContinuationSchedulerLike_shouldYield]() {
         return isInputPending();
     },

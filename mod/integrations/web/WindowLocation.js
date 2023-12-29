@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { pick } from "../../computations.js";
-import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, StreamLike_scheduler, StreamableLike_stream, } from "../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, StreamableLike_stream, } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as Stream from "../../concurrent/Stream.js";
 import * as Streamable from "../../concurrent/Streamable.js";
@@ -50,14 +50,14 @@ const createSyncToHistoryStream = (f, scheduler, options) => Streamable.create(c
 })))[StreamableLike_stream](scheduler, options);
 export const subscribe = /*@__PURE__*/ (() => {
     const WindowLocation_delegate = Symbol("WindowLocation_delegate");
-    const createWindowLocationObservable = createInstanceFactory(mix(include(DelegatingDisposableMixin()), function WindowLocationStream(instance, delegate) {
+    const createWindowLocationObservable = createInstanceFactory(mix(include(DelegatingDisposableMixin()), function WindowLocationStream(instance, delegate, scheduler) {
         init(DelegatingDisposableMixin(), instance, delegate);
         instance[WindowLocation_delegate] = delegate;
         instance[WindowLocationLike_canGoBack] = pipe(WritableStore.create(false), Disposable.addTo(instance));
         pipe(delegate, Observable.forEach(({ counter }) => {
             instance[WindowLocationLike_canGoBack][StoreLike_value] =
                 counter > 0;
-        }), Observable.subscribe(delegate[StreamLike_scheduler]), Disposable.addTo(instance));
+        }), Observable.subscribe(scheduler), Disposable.addTo(instance));
         return instance;
     }, props({
         [WindowLocation_delegate]: none,
@@ -129,8 +129,8 @@ export const subscribe = /*@__PURE__*/ (() => {
                 : push
                     ? Observable.enqueue(pushState)
                     : identity, Observable.ignoreElements());
-        }));
-        currentWindowLocationObservable = pipe(locationStream, createWindowLocationObservable, Disposable.add(pushState), Disposable.add(replaceState), Disposable.add(syncState));
+        }), Observable.subscribe(scheduler));
+        currentWindowLocationObservable = pipe(createWindowLocationObservable(locationStream, scheduler), Disposable.add(pushState), Disposable.add(replaceState), Disposable.add(syncState));
         return currentWindowLocationObservable;
     };
 })();

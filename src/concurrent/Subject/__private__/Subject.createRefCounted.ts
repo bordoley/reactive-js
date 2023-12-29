@@ -50,7 +50,7 @@ const Subject_createRefCounted: Subject.Signature["createRefCounted"] =
 
           return instance;
         },
-        props({}),
+        props(),
         {
           get [SubjectLike_observerCount](): number {
             unsafeCast<DelegatingDisposableLike<SubjectLike<T>>>(this);

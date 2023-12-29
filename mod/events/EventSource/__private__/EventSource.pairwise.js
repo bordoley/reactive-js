@@ -9,7 +9,7 @@ const EventSource_pairwise = /*@__PURE__*/ (() => {
     const createPairwiseEventListener = createInstanceFactory(mix(include(PairwiseSinkMixin()), function PairwiseEventListener(instance, delegate) {
         init(PairwiseSinkMixin(), instance, delegate);
         return instance;
-    }, props({}), {
+    }, props(), {
         [EventListenerLike_isErrorSafe]: false,
     }));
     return pipe(createPairwiseEventListener, EventSource_lift, returns);

@@ -3,7 +3,6 @@ import {
   include,
   init,
   mix,
-  props,
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
 import ScanSinkMixin from "../../../events/__mixins__/ScanSinkMixin.js";
@@ -39,7 +38,6 @@ const Observer_createScanObserver: <T, TAcc>(
 
           return instance;
         },
-        props({}),
       ),
     ),
   );

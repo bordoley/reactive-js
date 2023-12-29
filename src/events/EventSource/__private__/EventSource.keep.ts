@@ -34,7 +34,7 @@ const EventSource_keep: EventSource.Signature["keep"] = /*@__PURE__*/ (() => {
 
           return instance;
         },
-        props({}),
+        props(),
         {
           [EventListenerLike_isErrorSafe]: false,
         },

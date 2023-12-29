@@ -9,7 +9,7 @@ const DelegatingObserverMixin = /*@__PURE__*/ (() => returns(mix(include(Observe
     init(ObserverMixin(), instance, delegate, delegate);
     pipe(instance, Disposable.addTo(delegate));
     return instance;
-}, props({}), {
+}, props(), {
     [SinkLike_notify](_) { },
 })))();
 export default DelegatingObserverMixin;

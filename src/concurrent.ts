@@ -328,8 +328,6 @@ export interface FlowableLike<T> {
   ): PauseableObservableLike<T>;
 }
 
-export const StreamLike_scheduler = Symbol("StreamLike_scheduler");
-
 /**
  * Represents a duplex stream
  *
@@ -337,9 +335,7 @@ export const StreamLike_scheduler = Symbol("StreamLike_scheduler");
  */
 export interface StreamLike<TReq, T>
   extends DispatcherLike<TReq>,
-    ReplayObservableLike<T> {
-  readonly [StreamLike_scheduler]: SchedulerLike;
-}
+    ReplayObservableLike<T> {}
 
 export const StreamableLike_stream = Symbol("StreamableLike_stream");
 

@@ -35,7 +35,7 @@ const EventSource_skipFirst: EventSource.Signature["skipFirst"] =
 
             return instance;
           },
-          props({}),
+          props(),
           {
             [EventListenerLike_isErrorSafe]: false,
           },

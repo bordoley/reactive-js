@@ -1,14 +1,9 @@
 import {
   DeferredObservableLike,
-  SchedulerLike,
+  DeferredObservableWithSideEffectsLike,
   StreamLike,
 } from "../concurrent.js";
 import { Function1, Function2, Updater } from "../functions.js";
-import {
-  DisposableLike,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-} from "../utils.js";
 import Stream_syncState from "./Stream/__private__/Stream.syncState.js";
 
 /**
@@ -20,11 +15,11 @@ export interface StreamModule {
     onChange: Function2<T, T, DeferredObservableLike<Updater<T>>>,
     options?: {
       readonly throttleDuration?: number;
-      readonly capacity?: number;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly scheduler?: SchedulerLike;
     },
-  ): Function1<StreamLike<Updater<T>, T>, DisposableLike>;
+  ): Function1<
+    StreamLike<Updater<T>, T>,
+    DeferredObservableWithSideEffectsLike
+  >;
 }
 
 export type Signature = StreamModule;

@@ -9,7 +9,7 @@ const EventSource_map = /*@__PURE__*/ (() => {
     const createMapEventListener = (() => createInstanceFactory(mix(include(MapSinkMixin()), function MapEventListener(instance, delegate, selector) {
         init(MapSinkMixin(), instance, delegate, selector);
         return instance;
-    }, props({}), {
+    }, props(), {
         [EventListenerLike_isErrorSafe]: false,
     })))();
     return (selector) => pipe(createMapEventListener, partial(selector), EventSource_lift);

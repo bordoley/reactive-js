@@ -76,8 +76,9 @@ export const createInstanceFactory = (mixin) => {
         return instance;
     };
 };
+const emptyProps = {};
 export const props = (o) => {
-    return o;
+    return (o ?? emptyProps);
 };
 export const getPrototype = (mixin) => mixin[Mixin_prototype];
 export function unsafeCast(_v) { }

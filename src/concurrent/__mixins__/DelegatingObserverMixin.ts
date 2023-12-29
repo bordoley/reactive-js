@@ -39,7 +39,7 @@ const DelegatingObserverMixin: <T>() => Mixin1<
 
         return instance;
       },
-      props({}),
+      props(),
       {
         [SinkLike_notify](this: ObserverLike, _: T) {},
       },

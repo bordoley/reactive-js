@@ -21,7 +21,7 @@ const EventSource_buffer =
         };
         init(BufferSinkMixin(), instance, delegate, count, onComplete);
         return instance;
-    }, props({}), {
+    }, props(), {
         [EventListenerLike_isErrorSafe]: false,
     })))();
     return (options) => pipe(createBufferEventListener, partial(options?.count), EventSource_lift);

@@ -10,7 +10,7 @@ const EventSource_skipFirst =
     const createSkipFirstEventListener = (() => createInstanceFactory(mix(include(SkipFirstSinkMixin()), function SkipFirstEventListener(instance, delegate, count) {
         init(SkipFirstSinkMixin(), instance, delegate, count);
         return instance;
-    }, props({}), {
+    }, props(), {
         [EventListenerLike_isErrorSafe]: false,
     })))();
     return (options = {}) => pipe((createSkipFirstEventListener), partial(options.count), EventSource_lift);

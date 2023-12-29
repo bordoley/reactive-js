@@ -101,7 +101,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
 
         return instance;
       },
-      props({}),
+      props(),
       {
         get [ContinuationSchedulerLike_shouldYield](): boolean {
           return isInputPending();

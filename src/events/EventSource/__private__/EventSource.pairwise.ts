@@ -31,7 +31,7 @@ const EventSource_pairwise: EventSource.Signature["pairwise"] = /*@__PURE__*/ (<
 
         return instance;
       },
-      props({}),
+      props(),
       {
         [EventListenerLike_isErrorSafe]: false,
       },

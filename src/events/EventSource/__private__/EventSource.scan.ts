@@ -42,7 +42,7 @@ const EventSource_scan: EventSource.Signature["scan"] = /*@__PURE__*/ (() => {
 
           return instance;
         },
-        props({}),
+        props(),
         {
           [EventListenerLike_isErrorSafe]: false,
         },

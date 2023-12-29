@@ -20,23 +20,9 @@ Represents a duplex stream
 
 ## Table of contents
 
-### Properties
-
-- [[StreamLike\_scheduler]](concurrent.CacheLike.md#[streamlike_scheduler])
-
 ### Methods
 
 - [[CacheLike\_get]](concurrent.CacheLike.md#[cachelike_get])
-
-## Properties
-
-### [StreamLike\_scheduler]
-
-• `Readonly` **[StreamLike\_scheduler]**: [`SchedulerLike`](concurrent.SchedulerLike.md)
-
-#### Inherited from
-
-[StreamLike](concurrent.StreamLike.md).[[StreamLike_scheduler]](concurrent.StreamLike.md#[streamlike_scheduler])
 
 ## Methods
 

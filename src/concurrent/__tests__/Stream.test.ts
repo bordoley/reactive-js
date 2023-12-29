@@ -40,6 +40,7 @@ testModule(
           (oldState, newState) =>
             newState !== oldState ? Observable.empty() : Observable.empty(),
         ),
+        Observable.subscribe(vts),
       );
 
       pipe(
@@ -80,6 +81,7 @@ testModule(
           },
           { throttleDuration: 20 },
         ),
+        Observable.subscribe(vts),
       );
 
       pipe(

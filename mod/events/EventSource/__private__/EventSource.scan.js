@@ -9,7 +9,7 @@ const EventSource_scan = /*@__PURE__*/ (() => {
     const createScanEventListener = (() => createInstanceFactory(mix(include(ScanSinkMixin()), function ScanEventListener(instance, delegate, reducer, initialValue) {
         init(ScanSinkMixin(), instance, delegate, reducer, initialValue);
         return instance;
-    }, props({}), {
+    }, props(), {
         [EventListenerLike_isErrorSafe]: false,
     })))();
     return (reducer, initialValue) => pipe((createScanEventListener), partial(reducer, initialValue), EventSource_lift);

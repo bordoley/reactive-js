@@ -40,7 +40,7 @@ const EventSource_distinctUntilChanged: EventSource.Signature["distinctUntilChan
 
             return instance;
           },
-          props({}),
+          props(),
           {
             [EventListenerLike_isErrorSafe]: false,
           },

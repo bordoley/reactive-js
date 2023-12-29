@@ -9,7 +9,7 @@ const EventSource_keep = /*@__PURE__*/ (() => {
     const createKeepEventListener = (() => createInstanceFactory(mix(include(KeepSinkMixin()), function KeepEventListener(instance, delegate, predicate) {
         init(KeepSinkMixin(), instance, delegate, predicate);
         return instance;
-    }, props({}), {
+    }, props(), {
         [EventListenerLike_isErrorSafe]: false,
     })))();
     return (predicate) => pipe(createKeepEventListener, partial(predicate), EventSource_lift);

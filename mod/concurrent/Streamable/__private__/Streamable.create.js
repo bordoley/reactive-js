@@ -1,7 +1,7 @@
 /// <reference types="./Streamable.create.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, StreamLike_scheduler, StreamableLike_stream, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, StreamableLike_stream, } from "../../../concurrent.js";
 import { isSome, none, pipe, raiseIf, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Observable_multicast from "../../Observable/__private__/Observable.multicast.js";
@@ -25,16 +25,13 @@ const Stream_create = /*@__PURE__*/ (() => {
         }));
     })();
     return createInstanceFactory(mix(include(DelegatingDispatcherMixin(), DelegatingReplayObservableMixin()), function StreamMixin(instance, op, scheduler, multicastOptions) {
-        instance[StreamLike_scheduler] = scheduler;
         const dispatchedObservable = DispatchedObservable_create();
         const delegate = pipe(dispatchedObservable, op, Observable_multicast(scheduler, multicastOptions));
         init(DelegatingDispatcherMixin(), instance, dispatchedObservable[DispatchedObservableLike_dispatcher]);
         init(DelegatingReplayObservableMixin(), instance, delegate);
         pipe(delegate, Disposable.addTo(instance));
         return instance;
-    }, props({
-        [StreamLike_scheduler]: none,
-    }), {}));
+    }));
 })();
 const Streamable_create = (op) => ({
     [StreamableLike_stream]: (scheduler, options) => Stream_create(op, scheduler, options),

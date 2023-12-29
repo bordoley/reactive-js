@@ -15,7 +15,6 @@ import {
   ObserverLike,
   SchedulerLike,
   StreamLike,
-  StreamLike_scheduler,
   StreamableLike_stream,
 } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
@@ -157,6 +156,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       function WindowLocationStream(
         instance: WindowLocationLike & TProperties,
         delegate: StreamLike<Updater<TState>, TState> & DisposableLike,
+        scheduler: SchedulerLike,
       ): WindowLocationLike & DisposableLike {
         init(DelegatingDisposableMixin(), instance, delegate);
 
@@ -173,7 +173,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
             instance[WindowLocationLike_canGoBack][StoreLike_value] =
               counter > 0;
           }),
-          Observable.subscribe(delegate[StreamLike_scheduler]),
+          Observable.subscribe(scheduler),
           Disposable.addTo(instance),
         );
 
@@ -339,11 +339,11 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
           );
         },
       ),
+      Observable.subscribe(scheduler),
     );
 
     currentWindowLocationObservable = pipe(
-      locationStream,
-      createWindowLocationObservable,
+      createWindowLocationObservable(locationStream, scheduler),
       Disposable.add(pushState),
       Disposable.add(replaceState),
       Disposable.add(syncState),

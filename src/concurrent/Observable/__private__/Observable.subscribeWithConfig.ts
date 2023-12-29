@@ -3,7 +3,6 @@ import {
   include,
   init,
   mix,
-  props,
 } from "../../../__internal__/mixins.js";
 import {
   ObservableLike,
@@ -43,8 +42,6 @@ const Observer_create: <T>(
 
         return instance;
       },
-      props({}),
-      {},
     ),
   );
 })();

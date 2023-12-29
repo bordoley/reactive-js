@@ -23,6 +23,5 @@ export const ReplayObservableLike_get = Symbol("ReplayObservableLike_get");
 export const ReplayObservableLike_count = Symbol("ReplayObservableLike_count");
 export const SubjectLike_observerCount = Symbol("SubjectLike_observerCount");
 export const FlowableLike_flow = Symbol("FlowableLike_flow");
-export const StreamLike_scheduler = Symbol("StreamLike_scheduler");
 export const StreamableLike_stream = Symbol("StreamableLike_stream");
 export const CacheLike_get = Symbol("CacheLike_get");

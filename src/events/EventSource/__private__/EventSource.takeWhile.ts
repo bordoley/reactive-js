@@ -43,7 +43,7 @@ const EventSource_takeWhile: EventSource.Signature["takeWhile"] =
 
             return instance;
           },
-          props({}),
+          props(),
           {
             [EventListenerLike_isErrorSafe]: false,
           },
