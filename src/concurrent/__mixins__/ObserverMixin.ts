@@ -10,7 +10,6 @@ import {
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
-  DispatcherLikeEventMap,
   DispatcherLikeEvent_capacityExceeded,
   DispatcherLikeEvent_completed,
   DispatcherLikeEvent_ready,
@@ -78,7 +77,9 @@ const ObserverMixin: <T>() => Mixin2<
       ObserverLike<T> &
       IndexedQueueLike<T> &
       LazyInitEventSourceLike<
-        DispatcherLikeEventMap[keyof DispatcherLikeEventMap]
+        | typeof DispatcherLikeEvent_ready
+        | typeof DispatcherLikeEvent_capacityExceeded
+        | typeof DispatcherLikeEvent_completed
       >,
   ) => {
     if (
@@ -220,7 +221,9 @@ const ObserverMixin: <T>() => Mixin2<
             ObserverLike<T> &
             IndexedQueueLike<T> &
             LazyInitEventSourceLike<
-              DispatcherLikeEventMap[keyof DispatcherLikeEventMap]
+              | typeof DispatcherLikeEvent_ready
+              | typeof DispatcherLikeEvent_capacityExceeded
+              | typeof DispatcherLikeEvent_completed
             >,
           next: T,
         ): boolean {
@@ -251,7 +254,9 @@ const ObserverMixin: <T>() => Mixin2<
             ObserverLike<T> &
             IndexedQueueLike<T> &
             LazyInitEventSourceLike<
-              DispatcherLikeEventMap[keyof DispatcherLikeEventMap]
+              | typeof DispatcherLikeEvent_ready
+              | typeof DispatcherLikeEvent_capacityExceeded
+              | typeof DispatcherLikeEvent_completed
             >,
         ) {
           const isCompleted = this[ObserverMixin_isCompleted];

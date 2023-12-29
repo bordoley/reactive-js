@@ -17,7 +17,7 @@ be dispatched from any execution constext.
 
 - [`QueueableLike`](utils.QueueableLike.md)<`T`\>
 
-- [`EventSourceLike`](events.EventSourceLike.md)<[`DispatcherLikeEventMap`](concurrent.DispatcherLikeEventMap.md)[keyof [`DispatcherLikeEventMap`](concurrent.DispatcherLikeEventMap.md)]\>
+- [`EventSourceLike`](events.EventSourceLike.md)<typeof [`DispatcherLikeEvent_ready`](../modules/concurrent.md#dispatcherlikeevent_ready) \| typeof [`DispatcherLikeEvent_capacityExceeded`](../modules/concurrent.md#dispatcherlikeevent_capacityexceeded) \| typeof [`DispatcherLikeEvent_completed`](../modules/concurrent.md#dispatcherlikeevent_completed)\>
 
 - [`DisposableLike`](utils.DisposableLike.md)
 

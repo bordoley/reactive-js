@@ -20,15 +20,6 @@ export const DispatcherLikeEvent_completed = Symbol(
   "DispatcherLikeEvent_completed",
 );
 
-/**
- * @noInheritDoc
- */
-export interface DispatcherLikeEventMap {
-  [DispatcherLikeEvent_ready]: typeof DispatcherLikeEvent_ready;
-  [DispatcherLikeEvent_capacityExceeded]: typeof DispatcherLikeEvent_capacityExceeded;
-  [DispatcherLikeEvent_completed]: typeof DispatcherLikeEvent_completed;
-}
-
 export const DispatcherLike_complete = Symbol("DispatcherLike_complete");
 /**
  * A `QueueableLike` type that consumes enqueued events to
@@ -38,7 +29,11 @@ export const DispatcherLike_complete = Symbol("DispatcherLike_complete");
  */
 export interface DispatcherLike<T = unknown>
   extends QueueableLike<T>,
-    EventSourceLike<DispatcherLikeEventMap[keyof DispatcherLikeEventMap]>,
+    EventSourceLike<
+      | typeof DispatcherLikeEvent_ready
+      | typeof DispatcherLikeEvent_capacityExceeded
+      | typeof DispatcherLikeEvent_completed
+    >,
     DisposableLike {
   /**
    * Communicates to the dispatcher that no more events will be enqueued.

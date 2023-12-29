@@ -11,7 +11,6 @@
 - [DeferredObservableLike](../interfaces/concurrent.DeferredObservableLike.md)
 - [DeferredObservableWithSideEffectsLike](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)
 - [DispatcherLike](../interfaces/concurrent.DispatcherLike.md)
-- [DispatcherLikeEventMap](../interfaces/concurrent.DispatcherLikeEventMap.md)
 - [FlowableLike](../interfaces/concurrent.FlowableLike.md)
 - [MulticastObservableLike](../interfaces/concurrent.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/concurrent.ObservableLike.md)

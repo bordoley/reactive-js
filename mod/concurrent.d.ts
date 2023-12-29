@@ -5,14 +5,6 @@ import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } fro
 export declare const DispatcherLikeEvent_ready: unique symbol;
 export declare const DispatcherLikeEvent_capacityExceeded: unique symbol;
 export declare const DispatcherLikeEvent_completed: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface DispatcherLikeEventMap {
-    [DispatcherLikeEvent_ready]: typeof DispatcherLikeEvent_ready;
-    [DispatcherLikeEvent_capacityExceeded]: typeof DispatcherLikeEvent_capacityExceeded;
-    [DispatcherLikeEvent_completed]: typeof DispatcherLikeEvent_completed;
-}
 export declare const DispatcherLike_complete: unique symbol;
 /**
  * A `QueueableLike` type that consumes enqueued events to
@@ -20,7 +12,7 @@ export declare const DispatcherLike_complete: unique symbol;
  *
  * @noInheritDoc
  */
-export interface DispatcherLike<T = unknown> extends QueueableLike<T>, EventSourceLike<DispatcherLikeEventMap[keyof DispatcherLikeEventMap]>, DisposableLike {
+export interface DispatcherLike<T = unknown> extends QueueableLike<T>, EventSourceLike<typeof DispatcherLikeEvent_ready | typeof DispatcherLikeEvent_capacityExceeded | typeof DispatcherLikeEvent_completed>, DisposableLike {
     /**
      * Communicates to the dispatcher that no more events will be enqueued.
      */

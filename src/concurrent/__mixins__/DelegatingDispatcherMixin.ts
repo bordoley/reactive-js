@@ -8,7 +8,9 @@ import {
 } from "../../__internal__/mixins.js";
 import {
   DispatcherLike,
-  DispatcherLikeEventMap,
+  DispatcherLikeEvent_capacityExceeded,
+  DispatcherLikeEvent_completed,
+  DispatcherLikeEvent_ready,
   DispatcherLike_complete,
 } from "../../concurrent.js";
 import {
@@ -93,7 +95,9 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
         [EventSourceLike_addEventListener](
           this: TProperties,
           listener: EventListenerLike<
-            DispatcherLikeEventMap[keyof DispatcherLikeEventMap]
+            | typeof DispatcherLikeEvent_ready
+            | typeof DispatcherLikeEvent_capacityExceeded
+            | typeof DispatcherLikeEvent_completed
           >,
         ): void {
           this[DelegatingDispatcherMixin_delegate][

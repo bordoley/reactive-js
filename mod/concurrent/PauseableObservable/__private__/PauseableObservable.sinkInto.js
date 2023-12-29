@@ -6,7 +6,7 @@ import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Observable from "../../Observable.js";
 const PauseableObservable_sinkInto = (sink) => (pauseableObservable) => Observable.create(observer => {
-    pipe(sink, EventSource.addEventHandler((ev) => {
+    pipe(sink, EventSource.addEventHandler(ev => {
         if (ev === DispatcherLikeEvent_capacityExceeded ||
             ev === DispatcherLikeEvent_completed) {
             pauseableObservable[PauseableLike_pause]();

@@ -1,6 +1,5 @@
 import {
   DispatcherLike,
-  DispatcherLikeEventMap,
   DispatcherLikeEvent_capacityExceeded,
   DispatcherLikeEvent_completed,
   DispatcherLikeEvent_ready,
@@ -20,18 +19,16 @@ const PauseableObservable_sinkInto: PauseableObservable.Signature["sinkInto"] =
     Observable.create(observer => {
       pipe(
         sink,
-        EventSource.addEventHandler(
-          (ev: DispatcherLikeEventMap[keyof DispatcherLikeEventMap]) => {
-            if (
-              ev === DispatcherLikeEvent_capacityExceeded ||
-              ev === DispatcherLikeEvent_completed
-            ) {
-              pauseableObservable[PauseableLike_pause]();
-            } else if (ev === DispatcherLikeEvent_ready) {
-              pauseableObservable[PauseableLike_resume]();
-            }
-          },
-        ),
+        EventSource.addEventHandler(ev => {
+          if (
+            ev === DispatcherLikeEvent_capacityExceeded ||
+            ev === DispatcherLikeEvent_completed
+          ) {
+            pauseableObservable[PauseableLike_pause]();
+          } else if (ev === DispatcherLikeEvent_ready) {
+            pauseableObservable[PauseableLike_resume]();
+          }
+        }),
         Disposable.addTo(observer),
       );
 
