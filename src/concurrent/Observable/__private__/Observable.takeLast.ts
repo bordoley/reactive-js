@@ -6,13 +6,20 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObservableLike_observe, ObserverLike } from "../../../concurrent.js";
+import {
+  ContinuationContextLike_yield,
+  ObserverLike,
+  SchedulerLike_schedule,
+} from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
-import { invoke, none, partial, pipe } from "../../../functions.js";
+import { none, partial, pipe } from "../../../functions.js";
 import {
   DisposableLike,
+  DisposableLike_dispose,
   IndexedQueueLike,
+  IndexedQueueLike_get,
   QueueLike,
+  QueueableLike_count,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -20,7 +27,6 @@ import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
-import Observable_fromReadonlyArray from "./Observable.fromReadonlyArray.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() => {
@@ -49,12 +55,27 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() => {
         pipe(
           instance,
           Disposable.onComplete(() => {
-            pipe(
-              instance[TakeLastObserver_queue],
-              IndexedQueue.toReadonlyArray(),
-              Observable_fromReadonlyArray(),
-              invoke(ObservableLike_observe, delegate),
-            );
+            const queue = instance[TakeLastObserver_queue];
+            let index = 0;
+            const count = queue[QueueableLike_count];
+
+            if (count === 0) {
+              return;
+            }
+
+            delegate[SchedulerLike_schedule](ctx => {
+              while (index < count) {
+                const v = queue[IndexedQueueLike_get](index);
+                delegate[SinkLike_notify](v);
+
+                index++;
+
+                if (index < count) {
+                  ctx[ContinuationContextLike_yield]();
+                }
+              }
+              delegate[DisposableLike_dispose]();
+            });
           }),
         );
 

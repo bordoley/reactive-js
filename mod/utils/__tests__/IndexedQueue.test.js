@@ -1,6 +1,6 @@
 /// <reference types="./IndexedQueue.test.d.ts" />
 
-import { expectArrayEquals, expectEquals, expectIsNone, expectToThrow, test, testModule, } from "../../__internal__/testing.js";
+import { expectEquals, expectIsNone, expectToThrow, test, testModule, } from "../../__internal__/testing.js";
 import { none, pipe } from "../../functions.js";
 import { IndexedQueueLike_get, IndexedQueueLike_set, QueueLike_dequeue, QueueLike_head, QueueableLike_count, QueueableLike_enqueue, StackLike_head, StackLike_pop, } from "../../utils.js";
 import * as IndexedQueue from "../IndexedQueue.js";
@@ -18,7 +18,6 @@ testModule("IndexedQueue", test("push/pull/count", () => {
         pipe(queue[StackLike_head], expectEquals(i));
     }
     expectToThrow(() => queue[IndexedQueueLike_get](-10));
-    pipe(queue, IndexedQueue.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]));
     for (let i = 0; i < 8; i++) {
         pipe(queue[IndexedQueueLike_get](i), expectEquals(i));
     }

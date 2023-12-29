@@ -1,5 +1,4 @@
 import {
-  expectArrayEquals,
   expectEquals,
   expectIsNone,
   expectToThrow,
@@ -39,12 +38,6 @@ testModule(
     }
 
     expectToThrow(() => queue[IndexedQueueLike_get](-10));
-
-    pipe(
-      queue,
-      IndexedQueue.toReadonlyArray(),
-      expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]),
-    );
 
     for (let i = 0; i < 8; i++) {
       pipe(queue[IndexedQueueLike_get](i), expectEquals(i));
