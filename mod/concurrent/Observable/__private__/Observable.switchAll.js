@@ -25,7 +25,7 @@ const Observer_createSwitchAllObserver = /*@__PURE__*/ (() => {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
         instance[SwitchAllObserver_delegate] = delegate;
-        instance[SwitchAllObserver_currentRef] = pipe(SerialDisposable.create(Disposable.disposed), Disposable.addTo(delegate));
+        instance[SwitchAllObserver_currentRef] = pipe(SerialDisposable.create(), Disposable.addTo(delegate));
         pipe(instance, Disposable.onComplete(bind(onDispose, instance)));
         return instance;
     }, props({

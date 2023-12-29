@@ -31,7 +31,7 @@ const Observer_createThrottleObserver = /*@__PURE__*/ (() => {
         init(DelegatingObserverMixin(), instance, delegate);
         instance[ThrottleObserver_durationFunction] = durationFunction;
         instance[ThrottleObserver_mode] = mode;
-        instance[ThrottleObserver_durationSubscription] = pipe(SerialDisposable.create(Disposable.disposed), Disposable.addTo(delegate));
+        instance[ThrottleObserver_durationSubscription] = pipe(SerialDisposable.create(), Disposable.addTo(delegate));
         instance[ThrottleObserver_onNotify] = (_) => {
             if (instance[ThrottleObserver_hasValue]) {
                 const value = instance[ThrottleObserver_value];

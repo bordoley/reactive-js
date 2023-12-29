@@ -102,7 +102,7 @@ const Observer_createThrottleObserver: <T>(
           instance[ThrottleObserver_mode] = mode;
 
           instance[ThrottleObserver_durationSubscription] = pipe(
-            SerialDisposable.create(Disposable.disposed),
+            SerialDisposable.create(),
             Disposable.addTo(delegate),
           );
 

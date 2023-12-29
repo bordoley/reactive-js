@@ -71,7 +71,7 @@ const Observer_createSwitchAllObserver: <T>(
           instance[SwitchAllObserver_delegate] = delegate;
 
           instance[SwitchAllObserver_currentRef] = pipe(
-            SerialDisposable.create(Disposable.disposed),
+            SerialDisposable.create(),
             Disposable.addTo(delegate),
           );
 
