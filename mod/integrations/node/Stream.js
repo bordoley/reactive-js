@@ -3,7 +3,7 @@
 import { DispatcherLike_complete, FlowableLike_flow, PauseableLike_pause, PauseableLike_resume, } from "../../concurrent.js";
 import * as Flowable from "../../concurrent/Flowable.js";
 import * as Observable from "../../concurrent/Observable.js";
-import { bindMethod, ignore, isFunction, pipe, } from "../../functions.js";
+import { bindMethod, ignore, pipe, } from "../../functions.js";
 import { DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 const disposeStream = (stream) => () => {
@@ -29,11 +29,9 @@ const addToDisposable = (disposable) => stream => {
     stream.on("error", Disposable.toErrorHandler(disposable));
     return stream;
 };
-export const flow = () => factory => Flowable.create(mode => Observable.create(observer => {
+export const toFlowable = () => factory => Flowable.create(mode => Observable.create(observer => {
     const dispatchDisposable = pipe(Disposable.create(), Disposable.onError(Disposable.toErrorHandler(observer)), Disposable.onComplete(bindMethod(observer, DispatcherLike_complete)));
-    const readable = isFunction(factory)
-        ? pipe(factory(), addToDisposable(observer), addDisposable(dispatchDisposable))
-        : pipe(factory, addDisposable(dispatchDisposable));
+    const readable = pipe(factory(), addToDisposable(observer), addDisposable(dispatchDisposable));
     readable.pause();
     pipe(mode, Observable.forEach(isPaused => {
         if (isPaused) {
@@ -48,10 +46,8 @@ export const flow = () => factory => Flowable.create(mode => Observable.create(o
     readable.on("data", onData);
     readable.on("end", onEnd);
 }));
-export const sinkInto = (factory) => flowable => Observable.create(observer => {
-    const writable = isFunction(factory)
-        ? pipe(factory(), addToDisposable(observer), addDisposable(observer))
-        : pipe(factory, addDisposable(observer));
+export const sinkInto = (writable) => flowable => Observable.create(observer => {
+    pipe(writable, addDisposable(observer));
     const flowed = pipe(flowable[FlowableLike_flow](observer, {
         backpressureStrategy: observer[QueueableLike_backpressureStrategy],
         capacity: observer[QueueableLike_capacity],

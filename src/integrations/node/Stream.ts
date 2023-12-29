@@ -14,7 +14,6 @@ import {
   Function1,
   bindMethod,
   ignore,
-  isFunction,
   pipe,
 } from "../../functions.js";
 import {
@@ -27,14 +26,14 @@ import {
 import * as Disposable from "../../utils/Disposable.js";
 
 interface NodeStreamModule {
-  flow(): Function1<Factory<Readable> | Readable, FlowableLike<Uint8Array>>;
-
   sinkInto(
-    factory: Writable | Factory<Writable>,
+    factory: Writable,
   ): Function1<
     FlowableLike<Uint8Array>,
     DeferredObservableWithSideEffectsLike<void>
   >;
+
+  toFlowable(): Function1<Factory<Readable>, FlowableLike<Uint8Array>>;
 }
 
 type Signature = NodeStreamModule;
@@ -80,7 +79,7 @@ const addToDisposable =
     return stream;
   };
 
-export const flow: Signature["flow"] = () => factory =>
+export const toFlowable: Signature["toFlowable"] = () => factory =>
   Flowable.create(mode =>
     Observable.create<Uint8Array>(observer => {
       const dispatchDisposable = pipe(
@@ -89,13 +88,11 @@ export const flow: Signature["flow"] = () => factory =>
         Disposable.onComplete(bindMethod(observer, DispatcherLike_complete)),
       );
 
-      const readable = isFunction(factory)
-        ? pipe(
-            factory(),
-            addToDisposable(observer),
-            addDisposable(dispatchDisposable),
-          )
-        : pipe(factory, addDisposable(dispatchDisposable));
+      const readable = pipe(
+        factory(),
+        addToDisposable(observer),
+        addDisposable(dispatchDisposable),
+      );
 
       readable.pause();
 
@@ -122,16 +119,14 @@ export const flow: Signature["flow"] = () => factory =>
 
 export const sinkInto: Signature["sinkInto"] =
   (
-    factory: Writable | Factory<Writable>,
+    writable: Writable,
   ): Function1<
     FlowableLike<Uint8Array>,
     DeferredObservableWithSideEffectsLike<void>
   > =>
   flowable =>
     Observable.create<void>(observer => {
-      const writable = isFunction(factory)
-        ? pipe(factory(), addToDisposable(observer), addDisposable(observer))
-        : pipe(factory, addDisposable(observer));
+      pipe(writable, addDisposable(observer));
 
       const flowed = pipe(
         flowable[FlowableLike_flow](observer, {

@@ -6,20 +6,10 @@
 
 ### Functions
 
-- [flow](integrations_node_Stream.md#flow)
 - [sinkInto](integrations_node_Stream.md#sinkinto)
+- [toFlowable](integrations_node_Stream.md#toflowable)
 
 ## Functions
-
-### flow
-
-▸ **flow**(): [`Function1`](functions.md#function1)<`Readable` \| [`Factory`](functions.md#factory)<`Readable`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>\>
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`Readable` \| [`Factory`](functions.md#factory)<`Readable`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>\>
-
-___
 
 ### sinkInto
 
@@ -29,8 +19,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | `Writable` \| [`Factory`](functions.md#factory)<`Writable`\> |
+| `factory` | `Writable` |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`void`\>\>
+
+___
+
+### toFlowable
+
+▸ **toFlowable**(): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`Readable`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>\>
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`Readable`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>\>
