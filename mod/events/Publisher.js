@@ -9,11 +9,11 @@ import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const Publisher_autoDispose = Symbol("Publisher_autoDispose");
     const Publisher_listeners = Symbol("Publisher_listeners");
-    const createPublisher = createInstanceFactory(mix(include(DisposableMixin), function EventPublisher(instance, autoDispose) {
+    return createInstanceFactory(mix(include(DisposableMixin), function EventPublisher(instance, options) {
         init(DisposableMixin, instance);
         instance[Publisher_listeners] =
             newInstance(Set);
-        instance[Publisher_autoDispose] = autoDispose;
+        instance[Publisher_autoDispose] = options?.autoDispose ?? false;
         pipe(instance, Disposable.onDisposed(e => {
             for (const listener of instance[Publisher_listeners]) {
                 listener[DisposableLike_dispose](e);
@@ -57,5 +57,4 @@ export const create = /*@__PURE__*/ (() => {
             }));
         },
     }));
-    return (options) => createPublisher(options?.autoDispose ?? false);
 })();

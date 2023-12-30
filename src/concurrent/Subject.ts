@@ -45,7 +45,7 @@ export const create: <T>(options?: {
     readonly [Subject_buffer]: IndexedQueueLike<T>;
   };
 
-  const createSubjectInstance = createInstanceFactory(
+  return createInstanceFactory(
     mix(
       include(DisposableMixin),
       function Subject(
@@ -59,17 +59,21 @@ export const create: <T>(options?: {
           | typeof SinkLike_notify
         > &
           Mutable<TProperties>,
-        replay: number,
-        autoDispose: boolean,
+        options?: {
+          readonly replay?: number;
+          readonly autoDispose?: boolean;
+        },
       ): SubjectLike<T> {
         init(DisposableMixin, instance);
+
+        const replay = clampPositiveInteger(options?.replay ?? 0);
 
         instance[Subject_observers] = newInstance<Set<ObserverLike>>(Set);
         instance[Subject_buffer] = IndexedQueue.create({
           capacity: replay,
           backpressureStrategy: "drop-oldest",
         });
-        instance[Subject_autoDispose] = autoDispose;
+        instance[Subject_autoDispose] = options?.autoDispose ?? false;
 
         pipe(
           instance,
@@ -161,12 +165,4 @@ export const create: <T>(options?: {
       },
     ),
   );
-
-  return (options?: {
-    readonly replay?: number;
-    readonly autoDispose?: boolean;
-  }) => {
-    const replay = clampPositiveInteger(options?.replay ?? 0);
-    return createSubjectInstance(replay, options?.autoDispose ?? false);
-  };
 })();

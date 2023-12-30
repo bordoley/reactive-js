@@ -13,14 +13,15 @@ export const create = /*@__PURE__*/ (() => {
     const Subject_autoDispose = Symbol("Subject_autoDispose");
     const Subject_observers = Symbol("Subject_observers");
     const Subject_buffer = Symbol("Subject_observers");
-    const createSubjectInstance = createInstanceFactory(mix(include(DisposableMixin), function Subject(instance, replay, autoDispose) {
+    return createInstanceFactory(mix(include(DisposableMixin), function Subject(instance, options) {
         init(DisposableMixin, instance);
+        const replay = clampPositiveInteger(options?.replay ?? 0);
         instance[Subject_observers] = newInstance(Set);
         instance[Subject_buffer] = IndexedQueue.create({
             capacity: replay,
             backpressureStrategy: "drop-oldest",
         });
-        instance[Subject_autoDispose] = autoDispose;
+        instance[Subject_autoDispose] = options?.autoDispose ?? false;
         pipe(instance, Disposable.onDisposed(e => {
             for (const observer of instance[Subject_observers]) {
                 if (isSome(e)) {
@@ -85,8 +86,4 @@ export const create = /*@__PURE__*/ (() => {
             }
         },
     }));
-    return (options) => {
-        const replay = clampPositiveInteger(options?.replay ?? 0);
-        return createSubjectInstance(replay, options?.autoDispose ?? false);
-    };
 })();

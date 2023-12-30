@@ -28,7 +28,8 @@ export const create: <T>(options?: {
     readonly [Publisher_autoDispose]: boolean;
     readonly [Publisher_listeners]: Set<EventListenerLike<T>>;
   };
-  const createPublisher = createInstanceFactory(
+
+  return createInstanceFactory(
     mix(
       include(DisposableMixin),
       function EventPublisher(
@@ -39,14 +40,14 @@ export const create: <T>(options?: {
           | typeof SinkLike_notify
         > &
           Mutable<TProperties>,
-        autoDispose: boolean,
+        options?: { readonly autoDispose?: boolean },
       ): PublisherLike<T> {
         init(DisposableMixin, instance);
 
         instance[Publisher_listeners] =
           newInstance<Set<EventListenerLike>>(Set);
 
-        instance[Publisher_autoDispose] = autoDispose;
+        instance[Publisher_autoDispose] = options?.autoDispose ?? false;
 
         pipe(
           instance,
@@ -114,7 +115,4 @@ export const create: <T>(options?: {
       },
     ),
   );
-
-  return (options?: { readonly autoDispose?: boolean }) =>
-    createPublisher(options?.autoDispose ?? false);
 })();
