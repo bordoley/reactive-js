@@ -25,15 +25,21 @@ const Observable_fromAsyncIterable: Observable.Signature["fromAsyncIterable"] =
       const continuation = async () => {
         const startTime = observer[SchedulerLike_now];
 
+        // Initialized to true so that we don't reschedule
+        // unless we enter the loop.
+        let done = true;
+
         try {
           while (
             !observer[DisposableLike_isDisposed] &&
             observer[SchedulerLike_now] - startTime < maxYieldInterval
           ) {
+            done = false;
             const next = await iterator.next();
 
             if (next.done) {
               observer[DispatcherLike_complete]();
+              done = true;
               break;
             } else if (!observer[QueueableLike_enqueue](next.value)) {
               // An async iterable can produce resolved promises which are immediately
@@ -49,10 +55,12 @@ const Observable_fromAsyncIterable: Observable.Signature["fromAsyncIterable"] =
           observer[DisposableLike_dispose](error(e));
         }
 
-        pipe(
-          observer[SchedulerLike_schedule](continuation),
-          Disposable.addTo(observer),
-        );
+        if (!done) {
+          pipe(
+            observer[SchedulerLike_schedule](continuation),
+            Disposable.addTo(observer),
+          );
+        }
       };
 
       pipe(

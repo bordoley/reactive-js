@@ -10,12 +10,17 @@ const Observable_fromAsyncIterable = () => (iterable) => Observable_create((obse
     const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
     const continuation = async () => {
         const startTime = observer[SchedulerLike_now];
+        // Initialized to true so that we don't reschedule
+        // unless we enter the loop.
+        let done = true;
         try {
             while (!observer[DisposableLike_isDisposed] &&
                 observer[SchedulerLike_now] - startTime < maxYieldInterval) {
+                done = false;
                 const next = await iterator.next();
                 if (next.done) {
                     observer[DispatcherLike_complete]();
+                    done = true;
                     break;
                 }
                 else if (!observer[QueueableLike_enqueue](next.value)) {
@@ -32,7 +37,9 @@ const Observable_fromAsyncIterable = () => (iterable) => Observable_create((obse
         catch (e) {
             observer[DisposableLike_dispose](error(e));
         }
-        pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
+        if (!done) {
+            pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
+        }
     };
     pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
 });
