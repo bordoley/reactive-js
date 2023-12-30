@@ -28,7 +28,7 @@ Reactive-JS
 - [events/Publisher](modules/events_Publisher.md)
 - [events/WritableStore](modules/events_WritableStore.md)
 - [functions](modules/functions.md)
-- [integrations/node/Stream](modules/integrations_node_Stream.md)
+- [integrations/node/FlowableStream](modules/integrations_node_FlowableStream.md)
 - [integrations/react](modules/integrations_react.md)
 - [integrations/react/Scheduler](modules/integrations_react_Scheduler.md)
 - [integrations/react/web](modules/integrations_react_web.md)

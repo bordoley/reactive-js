@@ -69,6 +69,7 @@
     "./events/Publisher": "./events/Publisher.js",
     "./events/WritableStore": "./events/WritableStore.js",
     "./functions": "./functions.js",
+    "./integrations/node/FlowableStream": "./integrations/node/FlowableStream.js",
     "./integrations/react": "./integrations/react.js",
     "./integrations/react/Scheduler": "./integrations/react/Scheduler.js",
     "./integrations/react/web": "./integrations/react/web.js",

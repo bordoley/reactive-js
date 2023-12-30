@@ -1,1 +1,1 @@
-import "../integrations/node/__tests__/Stream.test.js";
+import "../integrations/node/__tests__/FlowableStream.test.js";

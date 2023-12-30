@@ -27,18 +27,18 @@ import {
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 
-interface NodeStreamModule {
-  toFlowable(): Function1<Factory<Readable>, FlowableLike<Uint8Array>>;
+interface FlowableStreamModule {
+  create(factory: Factory<Readable>): FlowableLike<Uint8Array>;
 
   writeTo(
-    factory: Writable,
+    writable: Writable,
   ): Function1<
     FlowableLike<Uint8Array>,
     DeferredObservableWithSideEffectsLike<Uint8Array>
   >;
 }
 
-type Signature = NodeStreamModule;
+type Signature = FlowableStreamModule;
 
 type NodeStream = Readable | Writable | Transform;
 
@@ -81,7 +81,7 @@ const addToDisposable =
     return stream;
   };
 
-export const toFlowable: Signature["toFlowable"] = () => factory =>
+export const create: Signature["create"] = factory =>
   Flowable.create(mode =>
     Observable.create<Uint8Array>(observer => {
       const dispatchDisposable = pipe(
