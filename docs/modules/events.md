@@ -18,7 +18,6 @@
 
 - [EventListenerLike\_isErrorSafe](events.md#eventlistenerlike_iserrorsafe)
 - [EventSourceLike\_addEventListener](events.md#eventsourcelike_addeventlistener)
-- [PublisherLike\_listenerCount](events.md#publisherlike_listenercount)
 - [SinkLike\_notify](events.md#sinklike_notify)
 - [StoreLike\_value](events.md#storelike_value)
 
@@ -33,12 +32,6 @@ ___
 ### EventSourceLike\_addEventListener
 
 • `Const` **EventSourceLike\_addEventListener**: unique `symbol`
-
-___
-
-### PublisherLike\_listenerCount
-
-• `Const` **PublisherLike\_listenerCount**: unique `symbol`
 
 ___
 

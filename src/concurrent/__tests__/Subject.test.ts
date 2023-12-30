@@ -12,7 +12,6 @@ import * as Enumerable from "../../collections/Enumerable.js";
 import {
   ObservableLike_observe,
   SchedulerLike_schedule,
-  SubjectLike_observerCount,
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
 import { SinkLike_notify } from "../../events.js";
@@ -63,12 +62,12 @@ testModule(
     test("with multiple observers", () => {
       const scheduler = VirtualTimeScheduler.create();
 
-      const subject = Subject.create();
-      pipe(subject[SubjectLike_observerCount], expectEquals(0));
+      const subject = Subject.create({ autoDispose: true });
+      expectFalse(subject[DisposableLike_isDisposed]);
       const sub1 = pipe(subject, Observable.subscribe(scheduler));
-      pipe(subject[SubjectLike_observerCount], expectEquals(1));
+      expectFalse(subject[DisposableLike_isDisposed]);
       const sub2 = pipe(subject, Observable.subscribe(scheduler));
-      pipe(subject[SubjectLike_observerCount], expectEquals(2));
+      expectFalse(subject[DisposableLike_isDisposed]);
       const sub3 = pipe(
         Observable.create(observer => {
           subject[ObservableLike_observe](observer);
@@ -76,13 +75,13 @@ testModule(
         }),
         Observable.subscribe(scheduler),
       );
-      pipe(subject[SubjectLike_observerCount], expectEquals(3));
+      expectFalse(subject[DisposableLike_isDisposed]);
       sub3[DisposableLike_dispose]();
-      pipe(subject[SubjectLike_observerCount], expectEquals(2));
+      expectFalse(subject[DisposableLike_isDisposed]);
       sub1[DisposableLike_dispose]();
-      pipe(subject[SubjectLike_observerCount], expectEquals(1));
+      expectFalse(subject[DisposableLike_isDisposed]);
       sub2[DisposableLike_dispose]();
-      pipe(subject[SubjectLike_observerCount], expectEquals(0));
+      expectTrue(subject[DisposableLike_isDisposed]);
     }),
     test("notifying a disposed subject", () => {
       const scheduler = VirtualTimeScheduler.create();

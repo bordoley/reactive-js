@@ -273,16 +273,12 @@ export interface MulticastObservableLike<T = unknown>
   readonly [ObservableLike_isRunnable]: false;
 }
 
-export const SubjectLike_observerCount = Symbol("SubjectLike_observerCount");
-
 /**
  * @noInheritDoc
  */
 export interface SubjectLike<T = unknown>
   extends MulticastObservableLike<T>,
-    ErrorSafeEventListenerLike<T> {
-  readonly [SubjectLike_observerCount]: number;
-}
+    ErrorSafeEventListenerLike<T> {}
 
 /**
  * @noInheritDoc

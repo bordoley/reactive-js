@@ -1,7 +1,7 @@
 /// <reference types="./Publisher.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../__internal__/mixins.js";
-import { EventListenerLike_isErrorSafe, EventSourceLike_addEventListener, PublisherLike_listenerCount, SinkLike_notify, } from "../events.js";
+import { createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
+import { EventListenerLike_isErrorSafe, EventSourceLike_addEventListener, SinkLike_notify, } from "../events.js";
 import { error, newInstance, none, pipe } from "../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
@@ -25,10 +25,6 @@ export const create = /*@__PURE__*/ (() => {
         [Publisher_listeners]: none,
     }), {
         [EventListenerLike_isErrorSafe]: true,
-        get [PublisherLike_listenerCount]() {
-            unsafeCast(this);
-            return this[Publisher_listeners].size;
-        },
         [SinkLike_notify](next) {
             if (this[DisposableLike_isDisposed]) {
                 return;
@@ -55,7 +51,7 @@ export const create = /*@__PURE__*/ (() => {
             pipe(listener, Disposable.onDisposed(_ => {
                 listeners.delete(listener);
                 if (this[Publisher_autoDispose] &&
-                    this[PublisherLike_listenerCount] === 0) {
+                    this[Publisher_listeners].size === 0) {
                     this[DisposableLike_dispose]();
                 }
             }));

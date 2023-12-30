@@ -39,7 +39,7 @@
 
 #### Overrides
 
-PureObservableLike.\_\_@ObservableLike\_isDeferred@24519
+PureObservableLike.\_\_@ObservableLike\_isDeferred@24517
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Overrides
 
-PureObservableLike.\_\_@ObservableLike\_isRunnable@24521
+PureObservableLike.\_\_@ObservableLike\_isRunnable@24519

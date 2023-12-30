@@ -56,7 +56,6 @@
 - [SchedulerLike\_schedule](concurrent.md#schedulerlike_schedule)
 - [SchedulerLike\_shouldYield](concurrent.md#schedulerlike_shouldyield)
 - [StreamableLike\_stream](concurrent.md#streamablelike_stream)
-- [SubjectLike\_observerCount](concurrent.md#subjectlike_observercount)
 - [VirtualTimeSchedulerLike\_run](concurrent.md#virtualtimeschedulerlike_run)
 
 ## Type Aliases
@@ -196,12 +195,6 @@ ___
 ### StreamableLike\_stream
 
 • `Const` **StreamableLike\_stream**: unique `symbol`
-
-___
-
-### SubjectLike\_observerCount
-
-• `Const` **SubjectLike\_observerCount**: unique `symbol`
 
 ___
 

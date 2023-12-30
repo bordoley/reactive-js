@@ -6,7 +6,6 @@ import {
   init,
   mix,
   props,
-  unsafeCast,
 } from "../__internal__/mixins.js";
 import {
   DispatcherLike_complete,
@@ -16,7 +15,6 @@ import {
   ObservableLike_observe,
   ObserverLike,
   SubjectLike,
-  SubjectLike_observerCount,
 } from "../concurrent.js";
 import { EventListenerLike_isErrorSafe, SinkLike_notify } from "../events.js";
 import { error, isSome, newInstance, none, pipe } from "../functions.js";
@@ -57,7 +55,6 @@ export const create: <T>(options?: {
           | typeof ObservableLike_isDeferred
           | typeof ObservableLike_isPure
           | typeof ObservableLike_isRunnable
-          | typeof SubjectLike_observerCount
           | typeof EventListenerLike_isErrorSafe
           | typeof SinkLike_notify
         > &
@@ -100,11 +97,6 @@ export const create: <T>(options?: {
         [ObservableLike_isPure]: true as const,
         [ObservableLike_isRunnable]: false as const,
 
-        get [SubjectLike_observerCount]() {
-          unsafeCast<TProperties>(this);
-          return this[Subject_observers].size;
-        },
-
         [SinkLike_notify](this: TProperties & SubjectLike<T>, next: T) {
           if (this[DisposableLike_isDisposed]) {
             return;
@@ -144,7 +136,7 @@ export const create: <T>(options?: {
 
               if (
                 this[Subject_autoDispose] &&
-                this[SubjectLike_observerCount] === 0
+                this[Subject_observers].size === 0
               ) {
                 this[DisposableLike_dispose]();
               }

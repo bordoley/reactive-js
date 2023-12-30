@@ -31,12 +31,10 @@ export declare const EventSourceLike_addEventListener: unique symbol;
 export interface EventSourceLike<T = unknown> {
     [EventSourceLike_addEventListener](listener: EventListenerLike<T>): void;
 }
-export declare const PublisherLike_listenerCount: unique symbol;
 /**
  * @noInheritDoc
  */
 export interface PublisherLike<T = unknown> extends EventSourceLike<T>, ErrorSafeEventListenerLike<T> {
-    readonly [PublisherLike_listenerCount]: number;
 }
 export declare const StoreLike_value: unique symbol;
 /**

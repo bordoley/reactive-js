@@ -19,11 +19,9 @@ import type * as EventSource from "../../EventSource.js";
 
 const EventListener_createInternal: <T>(
   notify: (this: EventListenerLike<T>, a: T) => void,
-  isErrorSafe: boolean,
 ) => EventListenerLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [SinkLike_notify]: SideEffect1<T>;
-    [EventListenerLike_isErrorSafe]: boolean;
   };
 
   return createInstanceFactory(
@@ -36,20 +34,19 @@ const EventListener_createInternal: <T>(
         > &
           Mutable<TProperties>,
         notify: (this: EventListenerLike<T>, a: T) => void,
-        isErrorSafe: boolean,
       ): EventListenerLike<T> {
         init(DisposableMixin, instance);
 
         instance[SinkLike_notify] = notify;
-        instance[EventListenerLike_isErrorSafe] = isErrorSafe;
 
         return instance;
       },
       props<TProperties>({
         [SinkLike_notify]: none,
-        [EventListenerLike_isErrorSafe]: false,
       }),
-      {},
+      {
+        [EventListenerLike_isErrorSafe]: false,
+      },
     ),
   );
 })();
@@ -57,7 +54,7 @@ const EventListener_createInternal: <T>(
 const EventSource_addEventHandler: EventSource.Signature["addEventHandler"] =
   <T>(handler: SideEffect1<T>) =>
   (source: EventSourceLike<T>) => {
-    const eventListener = EventListener_createInternal<T>(handler, false);
+    const eventListener = EventListener_createInternal<T>(handler);
     source[EventSourceLike_addEventListener](eventListener);
     return eventListener;
   };

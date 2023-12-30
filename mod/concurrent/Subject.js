@@ -1,8 +1,8 @@
 /// <reference types="./Subject.d.ts" />
 
 import { clampPositiveInteger } from "../__internal__/math.js";
-import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../__internal__/mixins.js";
-import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, SubjectLike_observerCount, } from "../concurrent.js";
+import { createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
+import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../concurrent.js";
 import { EventListenerLike_isErrorSafe, SinkLike_notify } from "../events.js";
 import { error, isSome, newInstance, none, pipe } from "../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, IndexedQueueLike_get, QueueableLike_count, QueueableLike_enqueue, } from "../utils.js";
@@ -41,10 +41,6 @@ export const create = /*@__PURE__*/ (() => {
         [ObservableLike_isDeferred]: false,
         [ObservableLike_isPure]: true,
         [ObservableLike_isRunnable]: false,
-        get [SubjectLike_observerCount]() {
-            unsafeCast(this);
-            return this[Subject_observers].size;
-        },
         [SinkLike_notify](next) {
             if (this[DisposableLike_isDisposed]) {
                 return;
@@ -71,7 +67,7 @@ export const create = /*@__PURE__*/ (() => {
             pipe(observer, Disposable.onDisposed(_ => {
                 observers.delete(observer);
                 if (this[Subject_autoDispose] &&
-                    this[SubjectLike_observerCount] === 0) {
+                    this[Subject_observers].size === 0) {
                     this[DisposableLike_dispose]();
                 }
             }));

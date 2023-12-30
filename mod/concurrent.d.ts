@@ -199,12 +199,10 @@ export interface MulticastObservableLike<T = unknown> extends PureObservableLike
     readonly [ObservableLike_isDeferred]: false;
     readonly [ObservableLike_isRunnable]: false;
 }
-export declare const SubjectLike_observerCount: unique symbol;
 /**
  * @noInheritDoc
  */
 export interface SubjectLike<T = unknown> extends MulticastObservableLike<T>, ErrorSafeEventListenerLike<T> {
-    readonly [SubjectLike_observerCount]: number;
 }
 /**
  * @noInheritDoc

@@ -5,14 +5,12 @@ import {
   init,
   mix,
   props,
-  unsafeCast,
 } from "../__internal__/mixins.js";
 import {
   EventListenerLike,
   EventListenerLike_isErrorSafe,
   EventSourceLike_addEventListener,
   PublisherLike,
-  PublisherLike_listenerCount,
   SinkLike_notify,
 } from "../events.js";
 import { error, newInstance, none, pipe } from "../functions.js";
@@ -39,7 +37,6 @@ export const create: <T>(options?: {
           | typeof EventSourceLike_addEventListener
           | typeof EventListenerLike_isErrorSafe
           | typeof SinkLike_notify
-          | typeof PublisherLike_listenerCount
         > &
           Mutable<TProperties>,
         autoDispose: boolean,
@@ -68,11 +65,6 @@ export const create: <T>(options?: {
       }),
       {
         [EventListenerLike_isErrorSafe]: true as const,
-
-        get [PublisherLike_listenerCount]() {
-          unsafeCast<TProperties>(this);
-          return this[Publisher_listeners].size;
-        },
 
         [SinkLike_notify](this: TProperties & PublisherLike<T>, next: T) {
           if (this[DisposableLike_isDisposed]) {
@@ -112,7 +104,7 @@ export const create: <T>(options?: {
 
               if (
                 this[Publisher_autoDispose] &&
-                this[PublisherLike_listenerCount] === 0
+                this[Publisher_listeners].size === 0
               ) {
                 this[DisposableLike_dispose]();
               }

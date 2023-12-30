@@ -43,18 +43,12 @@ export interface EventSourceLike<T = unknown> {
   [EventSourceLike_addEventListener](listener: EventListenerLike<T>): void;
 }
 
-export const PublisherLike_listenerCount = Symbol(
-  "PublisherLike_listenerCount",
-);
-
 /**
  * @noInheritDoc
  */
 export interface PublisherLike<T = unknown>
   extends EventSourceLike<T>,
-    ErrorSafeEventListenerLike<T> {
-  readonly [PublisherLike_listenerCount]: number;
-}
+    ErrorSafeEventListenerLike<T> {}
 
 export const StoreLike_value = Symbol("StoreLike_value");
 
