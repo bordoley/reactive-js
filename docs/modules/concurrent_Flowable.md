@@ -15,9 +15,9 @@
 ### Functions
 
 - [create](concurrent_Flowable.md#create)
+- [dispatchTo](concurrent_Flowable.md#dispatchto)
 - [fromAsyncIterable](concurrent_Flowable.md#fromasynciterable)
 - [fromRunnable](concurrent_Flowable.md#fromrunnable)
-- [sinkInto](concurrent_Flowable.md#sinkinto)
 
 ## Type Aliases
 
@@ -46,6 +46,28 @@
 #### Returns
 
 [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>
+
+___
+
+### dispatchTo
+
+▸ **dispatchTo**<`T`\>(`sink`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `sink` | [`DispatcherLike`](../interfaces/concurrent.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
 
 ___
 
@@ -78,25 +100,3 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>\>
-
-___
-
-### sinkInto
-
-▸ **sinkInto**<`T`\>(`sink`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `sink` | [`DispatcherLike`](../interfaces/concurrent.DispatcherLike.md)<`T`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>

@@ -28,14 +28,14 @@ import {
 import * as Disposable from "../../utils/Disposable.js";
 
 interface NodeStreamModule {
-  sinkInto(
+  toFlowable(): Function1<Factory<Readable>, FlowableLike<Uint8Array>>;
+
+  writeTo(
     factory: Writable,
   ): Function1<
     FlowableLike<Uint8Array>,
     DeferredObservableWithSideEffectsLike<Uint8Array>
   >;
-
-  toFlowable(): Function1<Factory<Readable>, FlowableLike<Uint8Array>>;
 }
 
 type Signature = NodeStreamModule;
@@ -119,7 +119,7 @@ export const toFlowable: Signature["toFlowable"] = () => factory =>
     }),
   );
 
-export const sinkInto: Signature["sinkInto"] =
+export const writeTo: Signature["writeTo"] =
   (
     writable: Writable,
   ): Function1<

@@ -19,7 +19,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import type * as Flowable from "../../Flowable.js";
 import * as Observable from "../../Observable.js";
 
-const Flowable_sinkInto: Flowable.Signature["sinkInto"] =
+const Flowable_dispatchTo: Flowable.Signature["dispatchTo"] =
   <T>(sink: DispatcherLike<T>) =>
   (flowable: FlowableLike<T>) =>
     Observable.create<T>(observer => {
@@ -55,4 +55,4 @@ const Flowable_sinkInto: Flowable.Signature["sinkInto"] =
       flowed[PauseableLike_resume]();
     });
 
-export default Flowable_sinkInto;
+export default Flowable_dispatchTo;

@@ -46,7 +46,7 @@ export const toFlowable = () => factory => Flowable.create(mode => Observable.cr
     readable.on("data", onData);
     readable.on("end", onEnd);
 }));
-export const sinkInto = (writable) => flowable => Observable.create(observer => {
+export const writeTo = (writable) => flowable => Observable.create(observer => {
     pipe(writable, addDisposable(observer));
     const flowed = pipe(flowable[FlowableLike_flow](observer, {
         backpressureStrategy: observer[QueueableLike_backpressureStrategy],

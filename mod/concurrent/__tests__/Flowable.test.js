@@ -11,7 +11,20 @@ import * as HostScheduler from "../HostScheduler.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
-testModule("Flowable", describe("fromAsyncIterable", testAsync("infinite immediately resolving iterable", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
+testModule("Flowable", describe("dispatchTo", test("sinking a pauseable observable into a stream with backpressure", () => {
+    const scheduler = VirtualTimeScheduler.create();
+    const src = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Observable.takeFirst({ count: 5 }), Flowable.fromRunnable());
+    const dest = Streamable.identity()[StreamableLike_stream](scheduler, {
+        backpressureStrategy: "throw",
+        capacity: 1,
+    });
+    const sinkIntoSubscription = pipe(src, Flowable.dispatchTo(dest), Observable.subscribe(scheduler));
+    const result = [];
+    pipe(dest, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    expectTrue(sinkIntoSubscription[DisposableLike_isDisposed]);
+    pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
+})), describe("fromAsyncIterable", testAsync("infinite immediately resolving iterable", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
     const stream = pipe((async function* foo() {
         let i = 0;
         while (true) {
@@ -72,18 +85,5 @@ testModule("Flowable", describe("fromAsyncIterable", testAsync("infinite immedia
     pipe(f, expectToHaveBeenCalledTimes(3));
     pipe(f.calls.flat(), expectArrayEquals([0, 1, 2]));
     pipe(subscription[DisposableLike_isDisposed], expectTrue);
-})), describe("sinkInto", test("sinking a pauseable observable into a stream with backpressure", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const src = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Observable.takeFirst({ count: 5 }), Flowable.fromRunnable());
-    const dest = Streamable.identity()[StreamableLike_stream](scheduler, {
-        backpressureStrategy: "throw",
-        capacity: 1,
-    });
-    const sinkIntoSubscription = pipe(src, Flowable.sinkInto(dest), Observable.subscribe(scheduler));
-    const result = [];
-    pipe(dest, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
-    scheduler[VirtualTimeSchedulerLike_run]();
-    expectTrue(sinkIntoSubscription[DisposableLike_isDisposed]);
-    pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
 })));
 ((_) => { })(Flowable);

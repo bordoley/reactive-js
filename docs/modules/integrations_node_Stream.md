@@ -6,14 +6,24 @@
 
 ### Functions
 
-- [sinkInto](integrations_node_Stream.md#sinkinto)
 - [toFlowable](integrations_node_Stream.md#toflowable)
+- [writeTo](integrations_node_Stream.md#writeto)
 
 ## Functions
 
-### sinkInto
+### toFlowable
 
-▸ **sinkInto**(`factory`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`Uint8Array`\>\>
+▸ **toFlowable**(): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`Readable`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>\>
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`Readable`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>\>
+
+___
+
+### writeTo
+
+▸ **writeTo**(`factory`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -24,13 +34,3 @@
 #### Returns
 
 [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`Uint8Array`\>\>
-
-___
-
-### toFlowable
-
-▸ **toFlowable**(): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`Readable`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>\>
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`Readable`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>\>

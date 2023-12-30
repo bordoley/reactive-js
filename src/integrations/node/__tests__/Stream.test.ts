@@ -32,9 +32,9 @@ import * as NodeStream from "../Stream.js";
 testModule(
   "node/Stream",
   describe(
-    "sinkInto",
+    "writeTo",
     testAsync(
-      "sinking to writable",
+      "writeing to writable",
       Disposable.usingAsyncLazy(HostScheduler.create)(
         async (scheduler: SchedulerLike & DisposableLike) => {
           const encoder = newInstance(TextEncoder);
@@ -55,7 +55,7 @@ testModule(
             Observable.keep(x => x !== "xyz"),
             Observable.map(bindMethod(encoder, "encode")),
             Flowable.fromRunnable(),
-            NodeStream.sinkInto(writable),
+            NodeStream.writeTo(writable),
             Observable.lastAsync(scheduler),
           );
 
@@ -85,7 +85,7 @@ testModule(
             [encoder.encode("abc"), encoder.encode("defg")],
             Observable.fromReadonlyArray(),
             Flowable.fromRunnable(),
-            NodeStream.sinkInto(writable),
+            NodeStream.writeTo(writable),
             Observable.lastAsync(scheduler),
           );
 
@@ -121,7 +121,7 @@ testModule(
             [encoder.encode("abc"), encoder.encode("defg")],
             Observable.fromReadonlyArray(),
             Flowable.fromRunnable(),
-            NodeStream.sinkInto(compressionPipeline),
+            NodeStream.writeTo(compressionPipeline),
             Observable.lastAsync(scheduler),
           );
 
@@ -131,7 +131,6 @@ testModule(
       ),
     ),
   ),
-
   describe(
     "toFlowable",
     testAsync("reading from readable", async () => {

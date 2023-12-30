@@ -9,9 +9,9 @@
 ### Methods
 
 - [create](concurrent_Flowable.FlowableModule.md#create)
+- [dispatchTo](concurrent_Flowable.FlowableModule.md#dispatchto)
 - [fromAsyncIterable](concurrent_Flowable.FlowableModule.md#fromasynciterable)
 - [fromRunnable](concurrent_Flowable.FlowableModule.md#fromrunnable)
-- [sinkInto](concurrent_Flowable.FlowableModule.md#sinkinto)
 
 ## Methods
 
@@ -34,6 +34,28 @@
 #### Returns
 
 [`FlowableLike`](concurrent.FlowableLike.md)<`T`\>
+
+___
+
+### dispatchTo
+
+▸ **dispatchTo**<`T`\>(`sink`): [`Function1`](../modules/functions.md#function1)<[`FlowableLike`](concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `sink` | [`DispatcherLike`](concurrent.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`FlowableLike`](concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
 
 ___
 
@@ -66,25 +88,3 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>, [`FlowableLike`](concurrent.FlowableLike.md)<`T`\>\>
-
-___
-
-### sinkInto
-
-▸ **sinkInto**<`T`\>(`sink`): [`Function1`](../modules/functions.md#function1)<[`FlowableLike`](concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `sink` | [`DispatcherLike`](concurrent.DispatcherLike.md)<`T`\> |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`FlowableLike`](concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>
