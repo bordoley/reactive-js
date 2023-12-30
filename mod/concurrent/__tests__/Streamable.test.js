@@ -126,11 +126,11 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
     };
     const persistentStore = {
         load: (_) => pipe({ ...store }, Observable.fromValue()),
-        store: (updates) => pipe(() => {
+        store: (updates) => pipe(Observable.empty(), Observable.onSubscribe(() => {
             pipe(updates, ReadonlyObjectMap.forEach((v, k) => {
                 store[k] = v;
             }));
-        }, Observable.fromFactory()),
+        })),
     };
     const scheduler = VirtualTimeScheduler.create();
     const cache = Streamable.createPersistentCache(persistentStore, {

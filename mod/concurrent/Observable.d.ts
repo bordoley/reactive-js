@@ -260,7 +260,6 @@ export interface ObservableModule {
         readonly delayStart?: boolean;
     }): Function1<EnumerableLike<T>, PureRunnableLike<T>>;
     fromEventSource<T>(): Function1<EventSourceLike<T>, MulticastObservableLike<T>>;
-    fromFactory<T>(): Function1<Factory<T>, PureRunnableLike<T>>;
     fromIterable<T>(options?: {
         readonly delay: number;
         readonly delayStart?: boolean;
@@ -541,7 +540,6 @@ export declare const fromAsyncFactory: Signature["fromAsyncFactory"];
 export declare const fromAsyncIterable: Signature["fromAsyncIterable"];
 export declare const fromEnumerable: Signature["fromEnumerable"];
 export declare const fromEventSource: Signature["fromEventSource"];
-export declare const fromFactory: Signature["fromFactory"];
 export declare const fromIterable: Signature["fromIterable"];
 export declare const fromPromise: Signature["fromPromise"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];

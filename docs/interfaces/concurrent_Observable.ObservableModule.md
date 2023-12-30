@@ -45,7 +45,6 @@
 - [fromAsyncIterable](concurrent_Observable.ObservableModule.md#fromasynciterable)
 - [fromEnumerable](concurrent_Observable.ObservableModule.md#fromenumerable)
 - [fromEventSource](concurrent_Observable.ObservableModule.md#fromeventsource)
-- [fromFactory](concurrent_Observable.ObservableModule.md#fromfactory)
 - [fromIterable](concurrent_Observable.ObservableModule.md#fromiterable)
 - [fromPromise](concurrent_Observable.ObservableModule.md#frompromise)
 - [fromReadonlyArray](concurrent_Observable.ObservableModule.md#fromreadonlyarray)
@@ -2508,22 +2507,6 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](events.EventSourceLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
-
-___
-
-### fromFactory
-
-▸ **fromFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\>
 
 ___
 

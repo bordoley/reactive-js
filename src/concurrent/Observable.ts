@@ -80,7 +80,6 @@ import Observable_fromAsyncFactory from "./Observable/__private__/Observable.fro
 import Observable_fromAsyncIterable from "./Observable/__private__/Observable.fromAsyncIterable.js";
 import Observable_fromEnumerable from "./Observable/__private__/Observable.fromEnumerable.js";
 import Observable_fromEventSource from "./Observable/__private__/Observable.fromEventSource.js";
-import Observable_fromFactory from "./Observable/__private__/Observable.fromFactory.js";
 import Observable_fromIterable from "./Observable/__private__/Observable.fromIterable.js";
 import Observable_fromPromise from "./Observable/__private__/Observable.fromPromise.js";
 import Observable_fromReadonlyArray from "./Observable/__private__/Observable.fromReadonlyArray.js";
@@ -960,8 +959,6 @@ export interface ObservableModule {
     MulticastObservableLike<T>
   >;
 
-  fromFactory<T>(): Function1<Factory<T>, PureRunnableLike<T>>;
-
   fromIterable<T>(options?: {
     readonly delay: number;
     readonly delayStart?: boolean;
@@ -1729,7 +1726,6 @@ export const fromEnumerable: Signature["fromEnumerable"] =
   Observable_fromEnumerable;
 export const fromEventSource: Signature["fromEventSource"] =
   Observable_fromEventSource;
-export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const fromIterable: Signature["fromIterable"] = Observable_fromIterable;
 export const fromPromise: Signature["fromPromise"] = Observable_fromPromise;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =

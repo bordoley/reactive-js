@@ -241,14 +241,17 @@ testModule(
         load: (_: ReadonlySet<string>) =>
           pipe({ ...store }, Observable.fromValue()),
         store: (updates: ReadonlyObjectMapLike<string, number>) =>
-          pipe(() => {
-            pipe(
-              updates,
-              ReadonlyObjectMap.forEach<number, string>((v, k) => {
-                store[k] = v;
-              }),
-            );
-          }, Observable.fromFactory()),
+          pipe(
+            Observable.empty(),
+            Observable.onSubscribe(() => {
+              pipe(
+                updates,
+                ReadonlyObjectMap.forEach<number, string>((v, k) => {
+                  store[k] = v;
+                }),
+              );
+            }),
+          ),
       };
 
       const scheduler = VirtualTimeScheduler.create();

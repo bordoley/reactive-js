@@ -2142,10 +2142,6 @@ testModule(
     ),
   ),
   describe(
-    "fromFactory",
-    testIsPureRunnable(pipe(() => 1, Observable.fromFactory())),
-  ),
-  describe(
     "fromIterable",
     test(
       "with delay",

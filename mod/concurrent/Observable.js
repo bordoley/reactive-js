@@ -36,7 +36,6 @@ import Observable_fromAsyncFactory from "./Observable/__private__/Observable.fro
 import Observable_fromAsyncIterable from "./Observable/__private__/Observable.fromAsyncIterable.js";
 import Observable_fromEnumerable from "./Observable/__private__/Observable.fromEnumerable.js";
 import Observable_fromEventSource from "./Observable/__private__/Observable.fromEventSource.js";
-import Observable_fromFactory from "./Observable/__private__/Observable.fromFactory.js";
 import Observable_fromIterable from "./Observable/__private__/Observable.fromIterable.js";
 import Observable_fromPromise from "./Observable/__private__/Observable.fromPromise.js";
 import Observable_fromReadonlyArray from "./Observable/__private__/Observable.fromReadonlyArray.js";
@@ -135,7 +134,6 @@ export const fromAsyncFactory = Observable_fromAsyncFactory;
 export const fromAsyncIterable = Observable_fromAsyncIterable;
 export const fromEnumerable = Observable_fromEnumerable;
 export const fromEventSource = Observable_fromEventSource;
-export const fromFactory = Observable_fromFactory;
 export const fromIterable = Observable_fromIterable;
 export const fromPromise = Observable_fromPromise;
 export const fromReadonlyArray = Observable_fromReadonlyArray;
