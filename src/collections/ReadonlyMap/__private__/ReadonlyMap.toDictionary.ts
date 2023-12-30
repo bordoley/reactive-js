@@ -1,6 +1,5 @@
 import {
   DictionaryLike,
-  DictionaryLike_count,
   DictionaryLike_get,
   DictionaryLike_keys,
   EnumerableLike,
@@ -18,10 +17,6 @@ class ReadonlyMapDictionary<
 
   constructor(readonly d: ReadonlyMap<TKey, T>) {
     this[DictionaryLike_keys] = pipe(this.d, ReadonlyMap_keys());
-  }
-
-  get [DictionaryLike_count](): number {
-    return this.d.size;
   }
 
   [DictionaryLike_get](index: TKey): Optional<T> {

@@ -42,14 +42,12 @@ export interface EnumerableLike<T = unknown> extends Iterable<T> {
 export type ReadonlyObjectMapLike<TKey extends symbol | string = string, T = unknown> = {
     readonly [P in TKey]?: T;
 };
-export declare const DictionaryLike_count: unique symbol;
 export declare const DictionaryLike_get: unique symbol;
 export declare const DictionaryLike_keys: unique symbol;
 /**
  * @noInheritDoc
  */
 export interface DictionaryLike<TKey = unknown, T = unknown> {
-    readonly [DictionaryLike_count]: number;
     readonly [DictionaryLike_keys]: EnumerableLike<TKey>;
     [DictionaryLike_get](index: TKey): Optional<T>;
 }

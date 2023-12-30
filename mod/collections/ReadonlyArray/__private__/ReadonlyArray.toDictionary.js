@@ -1,15 +1,12 @@
 /// <reference types="./ReadonlyArray.toDictionary.d.ts" />
 
-import { DictionaryLike_count, DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
+import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
 import { newInstance, pipe } from "../../../functions.js";
 import ReadonlyArray_keys from "./ReadonlyArray.keys.js";
 class ReadonlyArrayDictionary {
     d;
     constructor(delegate) {
         this.d = delegate;
-    }
-    get [DictionaryLike_count]() {
-        return this.d.length;
     }
     [DictionaryLike_get](index) {
         return this.d[index];

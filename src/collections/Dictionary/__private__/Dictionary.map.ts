@@ -1,6 +1,5 @@
 import {
   DictionaryLike,
-  DictionaryLike_count,
   DictionaryLike_get,
   DictionaryLike_keys,
   EnumerableLike,
@@ -32,10 +31,6 @@ class MappingDictionary<T, TKey, TIn> implements DictionaryLike<TKey, T> {
 
   get [DictionaryLike_keys](): EnumerableLike<TKey> {
     return this[MappingDictionary_delegate][DictionaryLike_keys];
-  }
-
-  get [DictionaryLike_count](): number {
-    return this[MappingDictionary_delegate][DictionaryLike_count];
   }
 
   [DictionaryLike_get](index: TKey): Optional<T> {

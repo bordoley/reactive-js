@@ -1,7 +1,5 @@
-import * as Obj from "../../../__internal__/Object.js";
 import {
   DictionaryLike,
-  DictionaryLike_count,
   DictionaryLike_get,
   DictionaryLike_keys,
   EnumerableLike,
@@ -20,17 +18,6 @@ class ReadonlyObjectMapDictionary<T, TKey extends ReadonlyObjectMap.TKeyBase>
   constructor(delegate: ReadonlyObjectMapLike<TKey, T>) {
     this.d = delegate;
     this[DictionaryLike_keys] = pipe(delegate, ReadonlyObjectMap_keys());
-  }
-
-  get [DictionaryLike_count](): number {
-    let cnt = 0;
-    const delegate = this.d;
-    for (const key in delegate) {
-      if (Obj.hasOwn(delegate, key)) {
-        cnt++;
-      }
-    }
-    return cnt;
   }
 
   [DictionaryLike_get](index: TKey): Optional<T> {

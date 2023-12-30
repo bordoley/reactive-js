@@ -9,8 +9,8 @@ import {
   Collection,
   CollectionModule,
   CollectionOf,
-  DictionaryLike_count,
   DictionaryLike_get,
+  DictionaryLike_keys,
 } from "../../../collections.js";
 import {
   Function1,
@@ -157,7 +157,12 @@ const CollectionModuleTests = <C extends Collection>(
           m.toDictionary(),
         );
 
-        expectEquals(3)(dict[DictionaryLike_count]);
+        pipe(
+          dict[DictionaryLike_keys],
+          Enumerable.toReadonlyArray(),
+          x => x.length,
+          expectEquals(3),
+        );
       }),
       test("get values", () => {
         const dict = pipe(

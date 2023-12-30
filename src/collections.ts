@@ -61,7 +61,6 @@ export type ReadonlyObjectMapLike<
   T = unknown,
 > = { readonly [P in TKey]?: T };
 
-export const DictionaryLike_count = Symbol("DictionaryLike_count");
 export const DictionaryLike_get = Symbol("DictionaryLike_get");
 export const DictionaryLike_keys = Symbol("DictionaryLike_keys");
 
@@ -69,8 +68,6 @@ export const DictionaryLike_keys = Symbol("DictionaryLike_keys");
  * @noInheritDoc
  */
 export interface DictionaryLike<TKey = unknown, T = unknown> {
-  readonly [DictionaryLike_count]: number;
-
   readonly [DictionaryLike_keys]: EnumerableLike<TKey>;
 
   [DictionaryLike_get](index: TKey): Optional<T>;

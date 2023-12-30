@@ -8,7 +8,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   DictionaryLike,
-  DictionaryLike_count,
   DictionaryLike_get,
   DictionaryLike_keys,
   EnumerableLike,
@@ -32,12 +31,10 @@ import * as Publisher from "../../../events/Publisher.js";
 import {
   Function1,
   Optional,
-  incrementBy,
   isFunction,
   isSome,
   none,
   pipe,
-  returns,
 } from "../../../functions.js";
 import {
   QueueableLike,
@@ -84,7 +81,6 @@ const Streamable_createAnimationGroupEventHandlerStream: <
         TKey,
         EventSourceLike<T>
       >;
-      [DictionaryLike_count]: number;
     };
 
     return createInstanceFactory(
@@ -172,21 +168,12 @@ const Streamable_createAnimationGroupEventHandlerStream: <
           const animationScheduler: SchedulerLike =
             creationOptions?.scheduler ?? scheduler;
 
-          instance[DictionaryLike_count] = pipe(
-            publishers,
-            ReadonlyObjectMap.reduce<unknown, number, string>(
-              incrementBy(1),
-              returns(0),
-            ),
-          );
-
           instance[AnimationEventHandlerStream_delegate] = publishers;
 
           return instance;
         },
         props<TProperties>({
           [AnimationEventHandlerStream_delegate]: none,
-          [DictionaryLike_count]: 0,
         }),
         {
           get [DictionaryLike_keys](): EnumerableLike<TKey> {

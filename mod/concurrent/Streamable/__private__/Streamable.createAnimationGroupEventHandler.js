@@ -1,13 +1,13 @@
 /// <reference types="./Streamable.createAnimationGroupEventHandler.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
-import { DictionaryLike_count, DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
+import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
 import * as Enumerable from "../../../collections/Enumerable.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { StreamableLike_stream, } from "../../../concurrent.js";
 import { SinkLike_notify, } from "../../../events.js";
 import * as Publisher from "../../../events/Publisher.js";
-import { incrementBy, isFunction, isSome, none, pipe, returns, } from "../../../functions.js";
+import { isFunction, isSome, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Observable from "../../Observable.js";
 import DelegatingStreamMixin from "../../__mixins__/DelegatingStreamMixin.js";
@@ -29,12 +29,10 @@ const Streamable_createAnimationGroupEventHandlerStream =
         init(DelegatingStreamMixin(), instance, streamDelegate);
         const publishers = pipe(animationGroup, ReadonlyObjectMap.map(_ => pipe(Publisher.create(), Disposable.addTo(instance))));
         const animationScheduler = creationOptions?.scheduler ?? scheduler;
-        instance[DictionaryLike_count] = pipe(publishers, ReadonlyObjectMap.reduce(incrementBy(1), returns(0)));
         instance[AnimationEventHandlerStream_delegate] = publishers;
         return instance;
     }, props({
         [AnimationEventHandlerStream_delegate]: none,
-        [DictionaryLike_count]: 0,
     }), {
         get [DictionaryLike_keys]() {
             unsafeCast(this);

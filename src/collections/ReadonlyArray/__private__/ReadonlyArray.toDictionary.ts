@@ -1,6 +1,5 @@
 import {
   DictionaryLike,
-  DictionaryLike_count,
   DictionaryLike_get,
   DictionaryLike_keys,
   EnumerableLike,
@@ -16,10 +15,6 @@ class ReadonlyArrayDictionary<T, TKey extends ReadonlyArray.TKeyBase>
 
   constructor(delegate: ReadonlyArray<T>) {
     this.d = delegate;
-  }
-
-  get [DictionaryLike_count](): number {
-    return this.d.length;
   }
 
   [DictionaryLike_get](index: TKey): Optional<T> {

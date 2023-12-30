@@ -25,7 +25,6 @@
 - [Collection\_T](collections.md#collection_t)
 - [Collection\_TKey](collections.md#collection_tkey)
 - [Collection\_type](collections.md#collection_type)
-- [DictionaryLike\_count](collections.md#dictionarylike_count)
 - [DictionaryLike\_get](collections.md#dictionarylike_get)
 - [DictionaryLike\_keys](collections.md#dictionarylike_keys)
 - [EnumerableLike\_enumerate](collections.md#enumerablelike_enumerate)
@@ -109,12 +108,6 @@ ___
 ### Collection\_type
 
 • `Const` **Collection\_type**: unique `symbol`
-
-___
-
-### DictionaryLike\_count
-
-• `Const` **DictionaryLike\_count**: unique `symbol`
 
 ___
 

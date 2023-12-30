@@ -1,6 +1,6 @@
 /// <reference types="./Dictionary.map.d.ts" />
 
-import { DictionaryLike_count, DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
+import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
 import { isSome, newInstance, none, } from "../../../functions.js";
 const MappingDictionary_delegate = Symbol("MappingDictionary_delegate");
 const MappingDictionary_selector = Symbol("MappingDictionary_selector");
@@ -13,9 +13,6 @@ class MappingDictionary {
     }
     get [DictionaryLike_keys]() {
         return this[MappingDictionary_delegate][DictionaryLike_keys];
-    }
-    get [DictionaryLike_count]() {
-        return this[MappingDictionary_delegate][DictionaryLike_count];
     }
     [DictionaryLike_get](index) {
         const v = this[MappingDictionary_delegate][DictionaryLike_get](index);

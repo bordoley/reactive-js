@@ -15,7 +15,6 @@
 
 ### Properties
 
-- [[DictionaryLike\_count]](collections.DictionaryLike.md#[dictionarylike_count])
 - [[DictionaryLike\_keys]](collections.DictionaryLike.md#[dictionarylike_keys])
 
 ### Methods
@@ -23,12 +22,6 @@
 - [[DictionaryLike\_get]](collections.DictionaryLike.md#[dictionarylike_get])
 
 ## Properties
-
-### [DictionaryLike\_count]
-
-• `Readonly` **[DictionaryLike\_count]**: `number`
-
-___
 
 ### [DictionaryLike\_keys]
 
