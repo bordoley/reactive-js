@@ -21,6 +21,7 @@
 - [createPersistentCache](concurrent_Streamable.md#createpersistentcache)
 - [createStateStore](concurrent_Streamable.md#createstatestore)
 - [identity](concurrent_Streamable.md#identity)
+- [syncState](concurrent_Streamable.md#syncstate)
 
 ## Type Aliases
 
@@ -372,3 +373,28 @@ ___
 #### Returns
 
 [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`T`, `T`\>\>
+
+___
+
+### syncState
+
+▸ **syncState**<`T`\>(`onInit`, `onChange`, `options?`): [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>, [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onInit` | [`Function1`](functions.md#function1)<`T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<[`Updater`](functions.md#updater)<`T`\>\>\> |
+| `onChange` | [`Function2`](functions.md#function2)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<[`Updater`](functions.md#updater)<`T`\>\>\> |
+| `options?` | `Object` |
+| `options.throttleDuration?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>, [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>\>

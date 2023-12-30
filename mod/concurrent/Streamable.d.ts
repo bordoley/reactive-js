@@ -1,7 +1,7 @@
 import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
 import { CacheLike, DeferredObservableLike, PureDeferredObservableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
 import { EventSourceLike } from "../events.js";
-import { Equality, Factory, Function1, Optional, Updater } from "../functions.js";
+import { Equality, Factory, Function1, Function2, Optional, Updater } from "../functions.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
 import { Animation } from "./Observable.js";
 /**
@@ -78,6 +78,9 @@ export interface StreamableModule {
     /**
      */
     identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
+    syncState<T>(onInit: Function1<T, DeferredObservableLike<Updater<T>>>, onChange: Function2<T, T, DeferredObservableLike<Updater<T>>>, options?: {
+        readonly throttleDuration?: number;
+    }): Function1<StreamableLike<Updater<T>, T>, StreamableLike<Updater<T>, T>>;
 }
 export type Signature = StreamableModule;
 export declare const create: Signature["create"];
@@ -87,3 +90,4 @@ export declare const createPersistentCache: Signature["createPersistentCache"];
 export declare const createEventHandler: Signature["createEventHandler"];
 export declare const createStateStore: Signature["createStateStore"];
 export declare const identity: Signature["identity"];
+export declare const syncState: Signature["syncState"];

@@ -19,7 +19,6 @@ Reactive-JS
 - [concurrent/Observable](modules/concurrent_Observable.md)
 - [concurrent/Observable/effects](modules/concurrent_Observable_effects.md)
 - [concurrent/PauseableScheduler](modules/concurrent_PauseableScheduler.md)
-- [concurrent/Stream](modules/concurrent_Stream.md)
 - [concurrent/Streamable](modules/concurrent_Streamable.md)
 - [concurrent/Subject](modules/concurrent_Subject.md)
 - [concurrent/VirtualTimeScheduler](modules/concurrent_VirtualTimeScheduler.md)

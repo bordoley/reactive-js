@@ -4,7 +4,6 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { pick } from "../../computations.js";
 import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, StreamableLike_stream, } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
-import * as Stream from "../../concurrent/Stream.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import { StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
@@ -100,12 +99,7 @@ export const subscribe = /*@__PURE__*/ (() => {
             // Initialize the counter to -1 so that the initized start value
             // get pushed through the updater.
             counter: -1,
-        }), { equality: areWindowLocationStatesEqual }), invoke(StreamableLike_stream, scheduler, {
-            replay: 1,
-            capacity: 1,
-            backpressureStrategy: "drop-oldest",
-        }));
-        const syncState = pipe(locationStream, Stream.syncState(state => Observable.defer(
+        }), { equality: areWindowLocationStatesEqual }), Streamable.syncState(state => Observable.defer(
         // Initialize the history state on page load
         pipeLazy(window, Element.eventSource("popstate"), EventSource.map((e) => {
             const { counter, title } = e.state;
@@ -129,8 +123,12 @@ export const subscribe = /*@__PURE__*/ (() => {
                 : push
                     ? Observable.enqueue(pushState)
                     : identity, Observable.ignoreElements());
-        }), Observable.subscribe(scheduler));
-        currentWindowLocationObservable = pipe(createWindowLocationObservable(locationStream, scheduler), Disposable.add(pushState), Disposable.add(replaceState), Disposable.add(syncState));
+        }), invoke(StreamableLike_stream, scheduler, {
+            replay: 1,
+            capacity: 1,
+            backpressureStrategy: "drop-oldest",
+        }));
+        currentWindowLocationObservable = pipe(createWindowLocationObservable(locationStream, scheduler), Disposable.add(pushState), Disposable.add(replaceState));
         return currentWindowLocationObservable;
     };
 })();

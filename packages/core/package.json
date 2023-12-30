@@ -60,7 +60,6 @@
     "./concurrent/Observable": "./concurrent/Observable.js",
     "./concurrent/Observable/effects": "./concurrent/Observable/effects.js",
     "./concurrent/PauseableScheduler": "./concurrent/PauseableScheduler.js",
-    "./concurrent/Stream": "./concurrent/Stream.js",
     "./concurrent/Streamable": "./concurrent/Streamable.js",
     "./concurrent/Subject": "./concurrent/Subject.js",
     "./concurrent/VirtualTimeScheduler": "./concurrent/VirtualTimeScheduler.js",

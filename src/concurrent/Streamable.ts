@@ -12,6 +12,7 @@ import {
   Equality,
   Factory,
   Function1,
+  Function2,
   Optional,
   Updater,
 } from "../functions.js";
@@ -24,6 +25,7 @@ import Streamable_createInMemoryCache from "./Streamable/__private__/Streamable.
 import Streamable_createPersistentCache from "./Streamable/__private__/Streamable.createPersistentCache.js";
 import Streamable_createStateStore from "./Streamable/__private__/Streamable.createStateStore.js";
 import Streamable_identity from "./Streamable/__private__/Streamable.identity.js";
+import Streamable_syncState from "./Streamable/__private__/Streamable.syncState.js";
 
 /**
  * @noInheritDoc
@@ -177,6 +179,14 @@ export interface StreamableModule {
   /**
    */
   identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
+
+  syncState<T>(
+    onInit: Function1<T, DeferredObservableLike<Updater<T>>>,
+    onChange: Function2<T, T, DeferredObservableLike<Updater<T>>>,
+    options?: {
+      readonly throttleDuration?: number;
+    },
+  ): Function1<StreamableLike<Updater<T>, T>, StreamableLike<Updater<T>, T>>;
 }
 
 export type Signature = StreamableModule;
@@ -193,3 +203,4 @@ export const createEventHandler: Signature["createEventHandler"] =
 export const createStateStore: Signature["createStateStore"] =
   Streamable_createStateStore;
 export const identity: Signature["identity"] = Streamable_identity;
+export const syncState: Signature["syncState"] = Streamable_syncState;

@@ -19,7 +19,6 @@ import {
 } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
 import { ObservableComputation } from "../../concurrent/Observable.js";
-import * as Stream from "../../concurrent/Stream.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import { StoreLike_value, WritableStoreLike } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
@@ -276,16 +275,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
         }),
         { equality: areWindowLocationStatesEqual },
       ),
-      invoke(StreamableLike_stream, scheduler, {
-        replay: 1,
-        capacity: 1,
-        backpressureStrategy: "drop-oldest",
-      }),
-    );
-
-    const syncState = pipe(
-      locationStream,
-      Stream.syncState(
+      Streamable.syncState(
         state =>
           Observable.defer(
             // Initialize the history state on page load
@@ -339,14 +329,17 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
           );
         },
       ),
-      Observable.subscribe(scheduler),
+      invoke(StreamableLike_stream, scheduler, {
+        replay: 1,
+        capacity: 1,
+        backpressureStrategy: "drop-oldest",
+      }),
     );
 
     currentWindowLocationObservable = pipe(
       createWindowLocationObservable(locationStream, scheduler),
       Disposable.add(pushState),
       Disposable.add(replaceState),
-      Disposable.add(syncState),
     );
 
     return currentWindowLocationObservable;

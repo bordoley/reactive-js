@@ -15,6 +15,7 @@
 - [createPersistentCache](concurrent_Streamable.StreamableModule.md#createpersistentcache)
 - [createStateStore](concurrent_Streamable.StreamableModule.md#createstatestore)
 - [identity](concurrent_Streamable.StreamableModule.md#identity)
+- [syncState](concurrent_Streamable.StreamableModule.md#syncstate)
 
 ## Methods
 
@@ -360,3 +361,28 @@ ___
 #### Returns
 
 [`StreamableLike`](concurrent.StreamableLike.md)<`T`, `T`, [`StreamLike`](concurrent.StreamLike.md)<`T`, `T`\>\>
+
+___
+
+### syncState
+
+▸ **syncState**<`T`\>(`onInit`, `onChange`, `options?`): [`Function1`](../modules/functions.md#function1)<[`StreamableLike`](concurrent.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`, [`StreamLike`](concurrent.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`\>\>, [`StreamableLike`](concurrent.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`, [`StreamLike`](concurrent.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onInit` | [`Function1`](../modules/functions.md#function1)<`T`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>\>\> |
+| `onChange` | [`Function2`](../modules/functions.md#function2)<`T`, `T`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>\>\> |
+| `options?` | `Object` |
+| `options.throttleDuration?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`StreamableLike`](concurrent.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`, [`StreamLike`](concurrent.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`\>\>, [`StreamableLike`](concurrent.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`, [`StreamLike`](concurrent.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`\>\>\>
