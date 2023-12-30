@@ -20,7 +20,6 @@
 - [create](events_EventSource.md#create)
 - [decodeWithCharset](events_EventSource.md#decodewithcharset)
 - [distinctUntilChanged](events_EventSource.md#distinctuntilchanged)
-- [fromIterable](events_EventSource.md#fromiterable)
 - [fromPromise](events_EventSource.md#frompromise)
 - [fromReadonlyArray](events_EventSource.md#fromreadonlyarray)
 - [keep](events_EventSource.md#keep)
@@ -149,22 +148,6 @@ ___
 #### Returns
 
 [`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
-
-___
-
-### fromIterable
-
-▸ **fromIterable**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
 
 ___
 

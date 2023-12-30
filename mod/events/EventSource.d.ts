@@ -14,7 +14,6 @@ export interface EventSourceComputation extends Computation {
 export interface EventSourceModule extends PureComputationModule<EventSourceComputation> {
     addEventHandler<T>(handler: SideEffect1<T>): Function1<EventSourceLike<T>, DisposableLike>;
     create<T>(setup: SideEffect1<EventListenerLike<T>>): EventSourceLike<T>;
-    fromIterable<T>(): Function1<Iterable<T>, EventSourceLike<T>>;
     fromPromise<T>(): Function1<Promise<T>, EventSourceLike<T>>;
     merge<T>(fst: EventSourceLike<T>, snd: EventSourceLike<T>, ...tail: readonly EventSourceLike<T>[]): EventSourceLike<T>;
     mergeMany<T>(eventSources: readonly EventSourceLike<T>[]): EventSourceLike<T>;
@@ -27,7 +26,6 @@ export declare const buffer: Signature["buffer"];
 export declare const create: Signature["create"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
-export declare const fromIterable: Signature["fromIterable"];
 export declare const fromPromise: Signature["fromPromise"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const keep: Signature["keep"];

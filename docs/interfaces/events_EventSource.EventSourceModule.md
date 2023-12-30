@@ -16,7 +16,6 @@
 
 - [addEventHandler](events_EventSource.EventSourceModule.md#addeventhandler)
 - [create](events_EventSource.EventSourceModule.md#create)
-- [fromIterable](events_EventSource.EventSourceModule.md#fromiterable)
 - [fromPromise](events_EventSource.EventSourceModule.md#frompromise)
 - [merge](events_EventSource.EventSourceModule.md#merge)
 - [mergeMany](events_EventSource.EventSourceModule.md#mergemany)
@@ -66,22 +65,6 @@ ___
 #### Returns
 
 [`EventSourceLike`](events.EventSourceLike.md)<`T`\>
-
-___
-
-### fromIterable
-
-▸ **fromIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
 
 ___
 

@@ -12,7 +12,6 @@ import EventSource_buffer from "./EventSource/__private__/EventSource.buffer.js"
 import EventSource_create from "./EventSource/__private__/EventSource.create.js";
 import EventSource_decodeWithCharset from "./EventSource/__private__/EventSource.decodeWithCharset.js";
 import EventSource_distinctUntilChanged from "./EventSource/__private__/EventSource.distinctUntilChanged.js";
-import EventSource_fromIterable from "./EventSource/__private__/EventSource.fromIterable.js";
 import EventSource_fromPromise from "./EventSource/__private__/EventSource.fromPromise.js";
 import EventSource_fromReadonlyArray from "./EventSource/__private__/EventSource.fromReadonlyArray.js";
 import EventSource_keep from "./EventSource/__private__/EventSource.keep.js";
@@ -45,8 +44,6 @@ export interface EventSourceModule
 
   create<T>(setup: SideEffect1<EventListenerLike<T>>): EventSourceLike<T>;
 
-  fromIterable<T>(): Function1<Iterable<T>, EventSourceLike<T>>;
-
   fromPromise<T>(): Function1<Promise<T>, EventSourceLike<T>>;
 
   merge<T>(
@@ -78,7 +75,6 @@ export const decodeWithCharset: Signature["decodeWithCharset"] =
   EventSource_decodeWithCharset;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   EventSource_distinctUntilChanged;
-export const fromIterable: Signature["fromIterable"] = EventSource_fromIterable;
 export const fromPromise: Signature["fromPromise"] = EventSource_fromPromise;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   EventSource_fromReadonlyArray;

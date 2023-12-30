@@ -51,7 +51,7 @@ testModule(
       "when the event listener throws an error when the source completes with a tail value",
       pipeLazy(
         [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        EventSource.fromIterable(),
+        EventSource.fromReadonlyArray(),
         EventSource.buffer({ count: 2 }),
         EventSource.addEventHandler(x => (x.length !== 2 ? raise() : ignore())),
         pick(DisposableLike_error),
