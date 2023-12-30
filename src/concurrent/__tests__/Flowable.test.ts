@@ -223,7 +223,11 @@ testModule(
         },
       );
 
-      pipe(src, Flowable.sinkInto(dest), Observable.subscribe(scheduler));
+      const sinkIntoSubscription = pipe(
+        src,
+        Flowable.sinkInto(dest),
+        Observable.subscribe(scheduler),
+      );
 
       const result: number[] = [];
       pipe(
@@ -233,6 +237,8 @@ testModule(
       );
 
       scheduler[VirtualTimeSchedulerLike_run]();
+
+      expectTrue(sinkIntoSubscription[DisposableLike_isDisposed]);
 
       pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
     }),

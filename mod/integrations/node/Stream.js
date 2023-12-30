@@ -1,9 +1,9 @@
 /// <reference types="./Stream.d.ts" />
 
-import { DispatcherLike_complete, FlowableLike_flow, PauseableLike_pause, PauseableLike_resume, } from "../../concurrent.js";
+import { DispatcherLike_complete, FlowableLike_flow, ObservableLike_observe, PauseableLike_pause, PauseableLike_resume, } from "../../concurrent.js";
 import * as Flowable from "../../concurrent/Flowable.js";
 import * as Observable from "../../concurrent/Observable.js";
-import { bindMethod, ignore, pipe, } from "../../functions.js";
+import { bindMethod, ignore, invoke, pipe, } from "../../functions.js";
 import { DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 const disposeStream = (stream) => () => {
@@ -59,7 +59,8 @@ export const sinkInto = (writable) => flowable => Observable.create(observer => 
         if (!writable.write(Buffer.from(ev))) {
             flowed[PauseableLike_pause]();
         }
-    }), Observable.subscribe(observer), Disposable.onComplete(bindMethod(writable, "end")), Disposable.addTo(observer));
+    }), invoke(ObservableLike_observe, observer));
+    pipe(observer, Disposable.onComplete(bindMethod(writable, "end")));
     const onDrain = bindMethod(flowed, PauseableLike_resume);
     const onFinish = bindMethod(observer, DisposableLike_dispose);
     writable.on("drain", onDrain);

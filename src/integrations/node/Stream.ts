@@ -4,6 +4,7 @@ import {
   DispatcherLike_complete,
   FlowableLike,
   FlowableLike_flow,
+  ObservableLike_observe,
   PauseableLike_pause,
   PauseableLike_resume,
 } from "../../concurrent.js";
@@ -14,6 +15,7 @@ import {
   Function1,
   bindMethod,
   ignore,
+  invoke,
   pipe,
 } from "../../functions.js";
 import {
@@ -30,7 +32,7 @@ interface NodeStreamModule {
     factory: Writable,
   ): Function1<
     FlowableLike<Uint8Array>,
-    DeferredObservableWithSideEffectsLike<void>
+    DeferredObservableWithSideEffectsLike<Uint8Array>
   >;
 
   toFlowable(): Function1<Factory<Readable>, FlowableLike<Uint8Array>>;
@@ -122,10 +124,10 @@ export const sinkInto: Signature["sinkInto"] =
     writable: Writable,
   ): Function1<
     FlowableLike<Uint8Array>,
-    DeferredObservableWithSideEffectsLike<void>
+    DeferredObservableWithSideEffectsLike<Uint8Array>
   > =>
   flowable =>
-    Observable.create<void>(observer => {
+    Observable.create<Uint8Array>(observer => {
       pipe(writable, addDisposable(observer));
 
       const flowed = pipe(
@@ -146,10 +148,10 @@ export const sinkInto: Signature["sinkInto"] =
             flowed[PauseableLike_pause]();
           }
         }),
-        Observable.subscribe(observer),
-        Disposable.onComplete(bindMethod(writable, "end")),
-        Disposable.addTo(observer),
+        invoke(ObservableLike_observe, observer),
       );
+
+      pipe(observer, Disposable.onComplete(bindMethod(writable, "end")));
 
       const onDrain = bindMethod(flowed, PauseableLike_resume);
       const onFinish = bindMethod(observer, DisposableLike_dispose);

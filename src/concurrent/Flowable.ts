@@ -25,7 +25,7 @@ export interface FlowableModule {
 
   sinkInto<T>(
     sink: DispatcherLike<T>,
-  ): Function1<FlowableLike<T>, DeferredObservableLike<void>>;
+  ): Function1<FlowableLike<T>, DeferredObservableLike<T>>;
 }
 
 export type Signature = FlowableModule;

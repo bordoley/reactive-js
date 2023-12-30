@@ -13,7 +13,7 @@
 
 ### sinkInto
 
-▸ **sinkInto**(`factory`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`void`\>\>
+▸ **sinkInto**(`factory`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -23,7 +23,7 @@
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`void`\>\>
+[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`Uint8Array`\>\>
 
 ___
 

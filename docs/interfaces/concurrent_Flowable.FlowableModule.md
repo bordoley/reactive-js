@@ -71,7 +71,7 @@ ___
 
 ### sinkInto
 
-▸ **sinkInto**<`T`\>(`sink`): [`Function1`](../modules/functions.md#function1)<[`FlowableLike`](concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`void`\>\>
+▸ **sinkInto**<`T`\>(`sink`): [`Function1`](../modules/functions.md#function1)<[`FlowableLike`](concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -87,4 +87,4 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`FlowableLike`](concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`void`\>\>
+[`Function1`](../modules/functions.md#function1)<[`FlowableLike`](concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>

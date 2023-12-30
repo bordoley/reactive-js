@@ -5,11 +5,12 @@ import {
   DispatcherLikeEvent_ready,
   FlowableLike,
   FlowableLike_flow,
+  ObservableLike_observe,
   PauseableLike_pause,
   PauseableLike_resume,
 } from "../../../concurrent.js";
 import * as EventSource from "../../../events/EventSource.js";
-import { pipe } from "../../../functions.js";
+import { invoke, pipe } from "../../../functions.js";
 import {
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
@@ -21,7 +22,7 @@ import * as Observable from "../../Observable.js";
 const Flowable_sinkInto: Flowable.Signature["sinkInto"] =
   <T>(sink: DispatcherLike<T>) =>
   (flowable: FlowableLike<T>) =>
-    Observable.create(observer => {
+    Observable.create<T>(observer => {
       const flowed = pipe(
         flowable[FlowableLike_flow](observer, {
           backpressureStrategy: observer[QueueableLike_backpressureStrategy],
@@ -48,8 +49,7 @@ const Flowable_sinkInto: Flowable.Signature["sinkInto"] =
       pipe(
         flowed,
         Observable.dispatchTo(sink),
-        Observable.subscribe(observer),
-        Disposable.addTo(observer),
+        invoke(ObservableLike_observe, observer),
       );
 
       flowed[PauseableLike_resume]();

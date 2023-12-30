@@ -79,10 +79,11 @@ testModule("Flowable", describe("fromAsyncIterable", testAsync("infinite immedia
         backpressureStrategy: "throw",
         capacity: 1,
     });
-    pipe(src, Flowable.sinkInto(dest), Observable.subscribe(scheduler));
+    const sinkIntoSubscription = pipe(src, Flowable.sinkInto(dest), Observable.subscribe(scheduler));
     const result = [];
     pipe(dest, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();
+    expectTrue(sinkIntoSubscription[DisposableLike_isDisposed]);
     pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
 })));
 ((_) => { })(Flowable);

@@ -8,6 +8,7 @@ import * as Flowable from "../../../concurrent/Flowable.js";
 import * as HostScheduler from "../../../concurrent/HostScheduler.js";
 import * as Observable from "../../../concurrent/Observable.js";
 import { bindMethod, invoke, newInstance, pipe, returns, } from "../../../functions.js";
+import { DisposableLike_isDisposed } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as NodeStream from "../Stream.js";
 testModule("node/Stream", describe("sinkInto", testAsync("sinking to writable", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
@@ -63,9 +64,9 @@ testModule("node/Stream", describe("sinkInto", testAsync("sinking to writable", 
         const readable = Readable.from(generate(), {
             autoDestroy: false,
         });
-        const flowable = pipe(returns(readable), NodeStream.toFlowable(), invoke(FlowableLike_flow, scheduler), Disposable.addTo(scheduler));
-        flowable[PauseableLike_resume]();
-        const acc = await pipe(flowable, Observable.scan((acc, next) => acc + textDecoder.decode(next), returns("")), Observable.lastAsync(scheduler));
+        const flowed = pipe(returns(readable), NodeStream.toFlowable(), invoke(FlowableLike_flow, scheduler), Disposable.addTo(scheduler));
+        flowed[PauseableLike_resume]();
+        const acc = await pipe(flowed, Observable.scan((acc, next) => acc + textDecoder.decode(next), returns("")), Observable.lastAsync(scheduler));
         pipe(acc, expectEquals("abcdefg"));
         expectTrue(readable.destroyed);
     });
@@ -76,10 +77,11 @@ testModule("node/Stream", describe("sinkInto", testAsync("sinking to writable", 
     }
     const textDecoder = newInstance(TextDecoder);
     await Disposable.usingAsync(HostScheduler.create)(async (scheduler) => {
-        const flowable = pipe(() => Readable.from(generate()), NodeStream.toFlowable(), invoke(FlowableLike_flow, scheduler), Disposable.addTo(scheduler));
-        flowable[PauseableLike_resume]();
-        const acc = await pipe(flowable, Observable.scan((acc, next) => acc + textDecoder.decode(next), returns("")), Observable.lastAsync(scheduler));
+        const flowed = pipe(() => Readable.from(generate()), NodeStream.toFlowable(), invoke(FlowableLike_flow, scheduler), Disposable.addTo(scheduler));
+        flowed[PauseableLike_resume]();
+        const acc = await pipe(flowed, Observable.scan((acc, next) => acc + textDecoder.decode(next), returns("")), Observable.lastAsync(scheduler));
         pipe(acc, expectEquals("abcdefg"));
+        expectTrue(flowed[DisposableLike_isDisposed]);
     });
 }), testAsync("reading from readable that throws", async () => {
     const err = newInstance(Error);
@@ -87,10 +89,9 @@ testModule("node/Stream", describe("sinkInto", testAsync("sinking to writable", 
         yield Buffer.from("abc", "utf8");
         throw err;
     }
-    const textDecoder = newInstance(TextDecoder);
     await Disposable.usingAsync(HostScheduler.create)(async (scheduler) => {
-        const flowable = pipe(() => Readable.from(generate()), NodeStream.toFlowable(), invoke(FlowableLike_flow, scheduler), Disposable.addTo(scheduler));
-        flowable[PauseableLike_resume]();
-        await pipe(flowable, Observable.scan((acc, next) => acc + textDecoder.decode(next), returns("")), Observable.lastAsync(scheduler), expectPromiseToThrow);
+        const flowed = pipe(() => Readable.from(generate()), NodeStream.toFlowable(), invoke(FlowableLike_flow, scheduler), Disposable.addTo(scheduler));
+        flowed[PauseableLike_resume]();
+        await pipe(flowed, Observable.lastAsync(scheduler), expectPromiseToThrow);
     });
 })));

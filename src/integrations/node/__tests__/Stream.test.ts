@@ -25,7 +25,7 @@ import {
   pipe,
   returns,
 } from "../../../functions.js";
-import { DisposableLike } from "../../../utils.js";
+import { DisposableLike, DisposableLike_isDisposed } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as NodeStream from "../Stream.js";
 
@@ -196,6 +196,7 @@ testModule(
           Observable.lastAsync<string>(scheduler),
         );
         pipe(acc, expectEquals<Optional<string>>("abcdefg"));
+        expectTrue(flowed[DisposableLike_isDisposed]);
       });
     }),
     testAsync("reading from readable that throws", async () => {
@@ -205,8 +206,6 @@ testModule(
         yield Buffer.from("abc", "utf8");
         throw err;
       }
-
-      const textDecoder = newInstance(TextDecoder);
 
       await Disposable.usingAsync(HostScheduler.create)(async scheduler => {
         const flowed = pipe(
@@ -220,10 +219,6 @@ testModule(
 
         await pipe(
           flowed,
-          Observable.scan<Uint8Array, string>(
-            (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
-            returns(""),
-          ),
           Observable.lastAsync(scheduler),
           expectPromiseToThrow,
         );
