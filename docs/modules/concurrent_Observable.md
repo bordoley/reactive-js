@@ -2530,110 +2530,26 @@ ___
 
 ### forkMerge
 
-▸ **forkMerge**<`TObservableIn`, `T`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<`TObservableIn`, [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>
+▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TIn`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\>
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TObservableIn` | extends [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`unknown`, `TObservableIn`\> |
-| `T` | `T` |
+| Name |
+| :------ |
+| `TIn` |
+| `TOut` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>[] |
+| `fst` | [`Function1`](functions.md#function1)<[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\>, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>\> |
+| `snd` | [`Function1`](functions.md#function1)<[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\>, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>\> |
+| `...tail` | readonly [`Function1`](functions.md#function1)<[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\>, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>\>[] |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TObservableIn`, [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>
-
-▸ **forkMerge**<`TObservableIn`, `T`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<`TObservableIn`, [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TObservableIn` | extends [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`unknown`, `TObservableIn`\> |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>\>[] |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`TObservableIn`, [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>\>
-
-▸ **forkMerge**<`TObservableIn`, `T`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<`TObservableIn`, [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TObservableIn` | extends [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`unknown`, `TObservableIn`\> |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>\>[] |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`TObservableIn`, [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>\>
-
-▸ **forkMerge**<`TObservableIn`, `T`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<`TObservableIn`, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TObservableIn` | extends [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`unknown`, `TObservableIn`\> |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, [`PureObservableLike`](../interfaces/concurrent.PureObservableLike.md)<`T`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, [`PureObservableLike`](../interfaces/concurrent.PureObservableLike.md)<`T`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, [`PureObservableLike`](../interfaces/concurrent.PureObservableLike.md)<`T`\>\>[] |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`TObservableIn`, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>\>
-
-▸ **forkMerge**<`TObservableIn`, `T`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TObservableIn` | extends [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`unknown`, `TObservableIn`\> |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>[] |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`TObservableIn`, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TIn`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>\>
 
 ___
 

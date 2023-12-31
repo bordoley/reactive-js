@@ -3,7 +3,7 @@
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
-import { keepType, mapTo } from "../../computations.js";
+import { keepType } from "../../computations.js";
 import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
 import { DispatcherLikeEvent_completed, DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, SchedulerLike_now, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import { SinkLike_notify, StoreLike_value } from "../../events.js";
@@ -352,55 +352,14 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     pipe(pipeLazy([1, 1], Observable.fromReadonlyArray({ delay: 3 }), Observable.forEach(_ => {
         throw err;
     }), Observable.toReadonlyArray()), expectToThrowError(err));
-}), ObservableOperatorWithSideEffectsTests(Observable.forEach(ignore))), describe("forkMerge", test("with pure src and inner runnables with side-effects", () => {
-    const obs = pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forkMerge(Observable.flatMapIterable(_ => [1, 2]), Observable.flatMapIterable(_ => [3, 4])));
-    pipe(obs, Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]));
-    expectTrue(obs[ObservableLike_isDeferred]);
-    expectTrue(obs[ObservableLike_isRunnable]);
-    expectFalse(obs[ObservableLike_isPure]);
-}), test("runnable with effects src and pure inner runnables", () => {
-    const obs = pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.forEach(ignore), Observable.forkMerge(mapTo(Observable, 1), mapTo(Observable, 2)));
-    pipe(obs, Observable.toReadonlyArray(), expectArrayEquals([1, 2, 1, 2, 1, 2]));
-    expectTrue(obs[ObservableLike_isDeferred]);
-    expectTrue(obs[ObservableLike_isRunnable]);
-    expectFalse(obs[ObservableLike_isPure]);
-}), test("with pure runnable src and pure inner runnables", () => {
-    const obs = pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.forkMerge(mapTo(Observable, 1), mapTo(Observable, 2)));
-    pipe(obs, Observable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2]));
-    expectTrue(obs[ObservableLike_isDeferred]);
-    expectTrue(obs[ObservableLike_isRunnable]);
-    expectTrue(obs[ObservableLike_isPure]);
-}), test("with multicast src and pure inner transforms", () => {
-    const forked = pipe(Subject.create(), Observable.forkMerge(mapTo(Observable, 1), mapTo(Observable, 2)));
-    expectFalse(forked[ObservableLike_isDeferred]);
-    expectFalse(forked[ObservableLike_isRunnable]);
-    expectTrue(forked[ObservableLike_isPure]);
-}), test("with multicast src and deferred inner transforms", () => {
-    const forked = pipe(Subject.create(), Observable.forkMerge(Observable.flatMapAsync(_ => Promise.resolve(1)), Observable.flatMapAsync(_ => Promise.resolve(1)), mapTo(Observable, 2)));
-    expectTrue(forked[ObservableLike_isDeferred]);
-    expectFalse(forked[ObservableLike_isRunnable]);
-    expectFalse(forked[ObservableLike_isPure]);
-}), test("with runnable pure src and deferred transforms", () => {
-    const forked = pipe([], Observable.fromReadonlyArray(), x => x, Observable.forkMerge(Observable.flatMapAsync(_ => Promise.resolve(1)), mapTo(Observable, 2)));
-    expectTrue(forked[ObservableLike_isDeferred]);
-    expectFalse(forked[ObservableLike_isRunnable]);
-    expectFalse(forked[ObservableLike_isPure]);
-}), testAsync("src with side-effects is only subscribed to once", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
+}), ObservableOperatorWithSideEffectsTests(Observable.forEach(ignore))), describe("forkMerge", testAsync("with pure src and inner runnables with side-effects", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
+    await pipeAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forkMerge(Observable.flatMapIterable(_ => [1, 2]), Observable.flatMapIterable(_ => [3, 4])), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]));
+})), testAsync("src with side-effects is only subscribed to once", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
     const sideEffect = mockFn();
     const src = pipe(0, Observable.fromValue(), Observable.forEach(sideEffect));
     await pipeAsync(src, Observable.forkMerge(Observable.flatMapIterable(_ => [1, 2, 3]), Observable.flatMapIterable(_ => [4, 5, 6])), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 5, 6]));
     pipe(sideEffect, expectToHaveBeenCalledTimes(1));
-})), describe("type tests", describe("with PureRunnable inner functions", test("with PureRunnable source", pipeLazy(Observable.empty(), Observable.forkMerge(returns(Observable.empty()), returns(Observable.empty())), expectIsPureRunnable)), test("with RunnableWithSideEffects source", pipeLazy(Observable.empty(), Observable.forEach(ignore), Observable.forkMerge(returns(Observable.empty()), returns(Observable.empty())), expectIsPureRunnable)), test("with DeferredObservableWithSideEffects source", pipeLazy(async () => {
-    throw new Error();
-}, Observable.fromAsyncFactory(), Observable.forkMerge(returns(Observable.empty()), returns(Observable.empty())), expectIsPureRunnable)), test("with MulticastObservable source", pipeLazy(Subject.create(), Observable.forkMerge(returns(Observable.empty()), returns(Observable.empty())), expectIsPureRunnable))), describe("with PureDeferredObservable inner functions", test("with PureRunnable source", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.forkMerge(pipe(Observable.empty(), Observable.subscribeOn(vts), returns), returns(Observable.empty())), expectIsPureDeferredObservable))), test("with RunnableWithSideEffects source", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty(), Observable.forEach(ignore), Observable.forkMerge(pipe(Observable.empty(), Observable.subscribeOn(vts), returns), returns(Observable.empty())), expectIsPureDeferredObservable))), test("with DeferredObservableWithSideEffects source", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(async () => {
-    throw new Error();
-}, Observable.fromAsyncFactory(), Observable.forkMerge(pipe(Observable.empty(), Observable.subscribeOn(vts), returns), returns(Observable.empty())), expectIsPureDeferredObservable))), test("with MulticastObservable source", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Subject.create(), Observable.forkMerge(pipe(Observable.empty(), Observable.subscribeOn(vts), returns), returns(Observable.empty())), expectIsPureDeferredObservable)))), describe("with RunnableWithSideEffects inner functions", test("with PureRunnable source", pipeLazy(Observable.empty(), Observable.forkMerge(pipe(Observable.empty(), Observable.forEach(ignore), returns), returns(Observable.empty())), expectIsRunnableWithSideEffects)), test("with RunnableWithSideEffects source", pipeLazy(Observable.empty(), Observable.forEach(ignore), Observable.forkMerge(pipe(Observable.empty(), Observable.forEach(ignore), returns), returns(Observable.empty())), expectIsRunnableWithSideEffects)), test("with DeferredObservableWithSideEffects source", pipeLazy(async () => {
-    throw new Error();
-}, Observable.fromAsyncFactory(), Observable.forkMerge(pipe(Observable.empty(), Observable.forEach(ignore), returns), returns(Observable.empty())), expectIsRunnableWithSideEffects)), test("with MulticastObservable source", pipeLazy(Subject.create(), Observable.forkMerge(pipe(Observable.empty(), Observable.forEach(ignore), returns), returns(Observable.empty())), expectIsRunnableWithSideEffects))), describe("with PureObservable inner functions", test("with PureRunnable source", pipeLazy(Observable.empty(), Observable.forkMerge(() => Subject.create(), returns(Observable.empty())), expectIsMulticastObservable)), test("with RunnableWithSideEffects source", pipeLazy(Observable.empty(), Observable.forEach(ignore), Observable.forkMerge(() => Subject.create(), returns(Observable.empty())), expectIsMulticastObservable)), test("with DeferredObservableWithSideEffects source", pipeLazy(async () => {
-    throw new Error();
-}, Observable.fromAsyncFactory(), Observable.forkMerge(() => Subject.create(), returns(Observable.empty())), expectIsMulticastObservable)), test("with MulticastObservable source", pipeLazy(Subject.create(), Observable.forkMerge(() => Subject.create(), returns(Observable.empty())), expectIsMulticastObservable))), describe("with mixed inner functions", test("with PureRunnable source", pipeLazy(Observable.empty(), Observable.forkMerge(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), returns), () => Subject.create(), returns(Observable.empty()), pipe(Observable.empty(), Observable.forEach(ignore), returns)), expectIsDeferredObservableWithSideEffects)), test("with RunnableWithSideEffects source", pipeLazy(Observable.empty(), Observable.forEach(ignore), Observable.forkMerge(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), returns), () => Subject.create(), returns(Observable.empty()), pipe(Observable.empty(), Observable.forEach(ignore), returns)), expectIsDeferredObservableWithSideEffects)), test("with DeferredObservableWithSideEffects source", pipeLazy(async () => {
-    throw new Error();
-}, Observable.fromAsyncFactory(), Observable.forkMerge(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), returns), () => Subject.create(), returns(Observable.empty()), pipe(Observable.empty(), Observable.forEach(ignore), returns)), expectIsDeferredObservableWithSideEffects)), test("with MulticastObservable source", pipeLazy(Subject.create(), Observable.forkMerge(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), returns), () => Subject.create(), returns(Observable.empty()), pipe(Observable.empty(), Observable.forEach(ignore), returns)), expectIsDeferredObservableWithSideEffects))))), describe("fromAsyncFactory", testAsync("when promise resolves", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync(async () => {
+}))), describe("fromAsyncFactory", testAsync("when promise resolves", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync(async () => {
     await Promise.resolve(1);
     return 2;
 }, Observable.fromAsyncFactory(), Observable.lastAsync(scheduler), expectEquals(2)))), testAsync("when promise fails with an exception", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipe(pipe(async () => {
