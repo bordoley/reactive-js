@@ -248,6 +248,10 @@ export interface ObservableModule {
     flatMapAsync<TA, TB>(f: Function2<TA, AbortSignal, Promise<TB>>): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
     flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): ObservableOperatorWithSideEffects<TA, TB>;
     forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
+    forkMerge<TIn, TOut>(fst: Function1<MulticastObservableLike<TIn>, PureRunnableLike<TOut>>, snd: Function1<MulticastObservableLike<TIn>, PureRunnableLike<TOut>>, ...tail: readonly Function1<MulticastObservableLike<TIn>, PureRunnableLike<TOut>>[]): <TObservableIn extends ObservableLike<TIn>>(obs: TObservableIn) => TObservableIn extends MulticastObservableLike<TIn> ? PureRunnableLike<TOut> : DeferredObservableWithSideEffectsLike<TOut>;
+    forkMerge<TIn, TOut>(fst: Function1<MulticastObservableLike<TIn>, PureDeferredObservableLike<TOut>>, snd: Function1<MulticastObservableLike<TIn>, PureDeferredObservableLike<TOut>>, ...tail: readonly Function1<MulticastObservableLike<TIn>, PureDeferredObservableLike<TOut>>[]): <TObservableIn extends ObservableLike<TIn>>(obs: TObservableIn) => TObservableIn extends MulticastObservableLike<TIn> ? PureDeferredObservableLike<TOut> : DeferredObservableWithSideEffectsLike<TOut>;
+    forkMerge<TIn, TOut>(fst: Function1<MulticastObservableLike<TIn>, RunnableWithSideEffectsLike<TOut>>, snd: Function1<MulticastObservableLike<TIn>, RunnableWithSideEffectsLike<TOut>>, ...tail: readonly Function1<MulticastObservableLike<TIn>, RunnableWithSideEffectsLike<TOut>>[]): <TObservableIn extends ObservableLike<TIn>>(obs: TObservableIn) => TObservableIn extends MulticastObservableLike<TIn> ? RunnableWithSideEffectsLike<TOut> : DeferredObservableWithSideEffectsLike<TOut>;
+    forkMerge<TIn, TOut>(fst: Function1<MulticastObservableLike<TIn>, PureObservableLike<TOut>>, snd: Function1<MulticastObservableLike<TIn>, PureObservableLike<TOut>>, ...tail: readonly Function1<MulticastObservableLike<TIn>, PureObservableLike<TOut>>[]): <TObservableIn extends ObservableLike<TIn>>(obs: TObservableIn) => TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : DeferredObservableWithSideEffectsLike<TOut>;
     forkMerge<TIn, TOut>(fst: Function1<MulticastObservableLike<TIn>, ObservableLike<TOut>>, snd: Function1<MulticastObservableLike<TIn>, ObservableLike<TOut>>, ...tail: readonly Function1<MulticastObservableLike<TIn>, ObservableLike<TOut>>[]): Function1<ObservableLike<TIn>, DeferredObservableWithSideEffectsLike<TOut>>;
     fromAsyncFactory<T>(): Function1<Function1<AbortSignal, Promise<T>>, DeferredObservableWithSideEffectsLike<T>>;
     fromAsyncIterable<T>(): Function1<AsyncIterable<T>, DeferredObservableWithSideEffectsLike<T>>;
@@ -316,7 +320,7 @@ export interface ObservableModule {
     mergeMany<T>(observables: readonly PureRunnableLike<T>[]): PureRunnableLike<T>;
     mergeMany<T>(observables: readonly PureDeferredObservableLike<T>[]): PureDeferredObservableLike<T>;
     mergeMany<T>(observables: readonly RunnableLike<T>[]): RunnableWithSideEffectsLike<T>;
-    mergeMany<T>(observables: readonly DeferredObservableLike<T>[]): RunnableWithSideEffectsLike<T>;
+    mergeMany<T>(observables: readonly DeferredObservableLike<T>[]): DeferredObservableWithSideEffectsLike<T>;
     mergeMany<T>(observables: readonly PureObservableLike<T>[]): MulticastObservableLike<T>;
     mergeMany<T>(observables: readonly ObservableLike<T>[]): DeferredObservableWithSideEffectsLike<T>;
     mergeMap<TA, TB>(selector: Function1<TA, PureRunnableLike<TB>>, options?: {

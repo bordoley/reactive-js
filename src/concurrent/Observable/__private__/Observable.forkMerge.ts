@@ -12,29 +12,32 @@ import Observable_isDeferred from "./Observable.isDeferred.js";
 import Observable_mergeMany from "./Observable.mergeMany.js";
 import Observable_multicast from "./Observable.multicast.js";
 
-const Observable_forkMerge: Observable.Signature["forkMerge"] =
-  <TIn, TOut>(
+const Observable_forkMerge: Observable.Signature["forkMerge"] = (<TIn, TOut>(
     ...ops: readonly Function1<
       MulticastObservableLike<TIn>,
       ObservableLike<TOut>
     >[]
   ) =>
   (obs: ObservableLike<TIn>) =>
-    Observable_create(observer => {
-      const src = Observable_isDeferred(obs)
-        ? pipe(
+    Observable_isDeferred(obs)
+      ? Observable_create(observer => {
+          const src = pipe(
             obs,
             Observable_multicast(observer, { autoDispose: true }),
             Disposable.addTo(observer),
-          )
-        : (obs as MulticastObservableLike<TIn>);
+          );
 
-      pipe(
-        ops,
-        ReadonlyArray.map(op => op(src)),
-        Observable_mergeMany,
-        invoke(ObservableLike_observe, observer),
-      );
-    });
+          pipe(
+            ops,
+            ReadonlyArray.map(op => op(src)),
+            Observable_mergeMany,
+            invoke(ObservableLike_observe, observer),
+          );
+        })
+      : pipe(
+          ops,
+          ReadonlyArray.map(op => op(obs as MulticastObservableLike<TIn>)),
+          Observable_mergeMany,
+        )) as Observable.Signature["forkMerge"];
 
 export default Observable_forkMerge;

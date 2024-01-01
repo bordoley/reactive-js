@@ -1,5 +1,4 @@
 import {
-  ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
@@ -18,17 +17,13 @@ const Observable_flatMapAsync: Observable.Signature["flatMapAsync"] = <TA, TB>(
       Observable_fromAsyncFactory(),
     );
 
-  return (observable: ObservableLike<TA>) =>
-    pipe(
-      observable,
-      Observable_concatMap(mapper, {
-        innerType: {
-          [ObservableLike_isDeferred]: true,
-          [ObservableLike_isPure]: false,
-          [ObservableLike_isRunnable]: false,
-        },
-      }),
-    );
+  return Observable_concatMap(mapper, {
+    innerType: {
+      [ObservableLike_isDeferred]: true,
+      [ObservableLike_isPure]: false,
+      [ObservableLike_isRunnable]: false,
+    },
+  });
 };
 
 export default Observable_flatMapAsync;

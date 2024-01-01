@@ -914,6 +914,66 @@ export interface ObservableModule {
   forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
 
   forkMerge<TIn, TOut>(
+    fst: Function1<MulticastObservableLike<TIn>, PureRunnableLike<TOut>>,
+    snd: Function1<MulticastObservableLike<TIn>, PureRunnableLike<TOut>>,
+    ...tail: readonly Function1<
+      MulticastObservableLike<TIn>,
+      PureRunnableLike<TOut>
+    >[]
+  ): <TObservableIn extends ObservableLike<TIn>>(
+    obs: TObservableIn,
+  ) => TObservableIn extends MulticastObservableLike<TIn>
+    ? PureRunnableLike<TOut>
+    : DeferredObservableWithSideEffectsLike<TOut>;
+  forkMerge<TIn, TOut>(
+    fst: Function1<
+      MulticastObservableLike<TIn>,
+      PureDeferredObservableLike<TOut>
+    >,
+    snd: Function1<
+      MulticastObservableLike<TIn>,
+      PureDeferredObservableLike<TOut>
+    >,
+    ...tail: readonly Function1<
+      MulticastObservableLike<TIn>,
+      PureDeferredObservableLike<TOut>
+    >[]
+  ): <TObservableIn extends ObservableLike<TIn>>(
+    obs: TObservableIn,
+  ) => TObservableIn extends MulticastObservableLike<TIn>
+    ? PureDeferredObservableLike<TOut>
+    : DeferredObservableWithSideEffectsLike<TOut>;
+  forkMerge<TIn, TOut>(
+    fst: Function1<
+      MulticastObservableLike<TIn>,
+      RunnableWithSideEffectsLike<TOut>
+    >,
+    snd: Function1<
+      MulticastObservableLike<TIn>,
+      RunnableWithSideEffectsLike<TOut>
+    >,
+    ...tail: readonly Function1<
+      MulticastObservableLike<TIn>,
+      RunnableWithSideEffectsLike<TOut>
+    >[]
+  ): <TObservableIn extends ObservableLike<TIn>>(
+    obs: TObservableIn,
+  ) => TObservableIn extends MulticastObservableLike<TIn>
+    ? RunnableWithSideEffectsLike<TOut>
+    : DeferredObservableWithSideEffectsLike<TOut>;
+  forkMerge<TIn, TOut>(
+    fst: Function1<MulticastObservableLike<TIn>, PureObservableLike<TOut>>,
+    snd: Function1<MulticastObservableLike<TIn>, PureObservableLike<TOut>>,
+    ...tail: readonly Function1<
+      MulticastObservableLike<TIn>,
+      PureObservableLike<TOut>
+    >[]
+  ): <TObservableIn extends ObservableLike<TIn>>(
+    obs: TObservableIn,
+  ) => TObservableIn extends MulticastObservableLike<TIn>
+    ? MulticastObservableLike<TOut>
+    : DeferredObservableWithSideEffectsLike<TOut>;
+  forkMerge<TIn, TOut>(
     fst: Function1<MulticastObservableLike<TIn>, ObservableLike<TOut>>,
     snd: Function1<MulticastObservableLike<TIn>, ObservableLike<TOut>>,
     ...tail: readonly Function1<
@@ -1051,7 +1111,7 @@ export interface ObservableModule {
   ): RunnableWithSideEffectsLike<T>;
   mergeMany<T>(
     observables: readonly DeferredObservableLike<T>[],
-  ): RunnableWithSideEffectsLike<T>;
+  ): DeferredObservableWithSideEffectsLike<T>;
   mergeMany<T>(
     observables: readonly PureObservableLike<T>[],
   ): MulticastObservableLike<T>;
