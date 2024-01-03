@@ -24,11 +24,11 @@ import {
   IndexedQueueLike_get,
   IndexedQueueLike_set,
   QueueLike,
+  QueueLike_count,
   QueueLike_dequeue,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
-  QueueableLike_count,
   QueueableLike_enqueue,
   StackLike_pop,
 } from "../../utils.js";
@@ -52,7 +52,7 @@ const PriorityQueueMixin: <T>() => Mixin2<
 
   const siftDown = (queue: TProperties & IndexedQueueLike<T>, item: T) => {
     const compare = queue[PriorityQueueMixin_comparator];
-    const count = queue[QueueableLike_count];
+    const count = queue[QueueLike_count];
 
     for (let index = 0; index < count; ) {
       const leftIndex = (index + 1) * 2 - 1;
@@ -86,7 +86,7 @@ const PriorityQueueMixin: <T>() => Mixin2<
 
   const siftUp = (queue: TProperties & IndexedQueueLike<T>, item: T) => {
     const compare = queue[PriorityQueueMixin_comparator];
-    const count = queue[QueueableLike_count];
+    const count = queue[QueueLike_count];
 
     for (
       let index = count - 1, parentIndex = floor((index - 1) / 2);
@@ -127,7 +127,7 @@ const PriorityQueueMixin: <T>() => Mixin2<
         [QueueLike_dequeue](
           this: TProperties & IndexedQueueLike<T>,
         ): Optional<T> {
-          const count = this[QueueableLike_count];
+          const count = this[QueueLike_count];
 
           if (count === 0) {
             return none;
@@ -152,7 +152,7 @@ const PriorityQueueMixin: <T>() => Mixin2<
           item: T,
         ): boolean {
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
-          const count = this[QueueableLike_count];
+          const count = this[QueueLike_count];
           const capacity = this[QueueableLike_capacity];
 
           if (backpressureStrategy === "drop-latest" && count >= capacity) {

@@ -21,7 +21,6 @@ import { none, returns } from "../../functions.js";
 import {
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
-  QueueableLike_count,
   QueueableLike_enqueue,
 } from "../../utils.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
@@ -49,7 +48,6 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
           | typeof QueueableLike_backpressureStrategy
           | typeof QueueableLike_capacity
           | typeof QueueableLike_enqueue
-          | typeof QueueableLike_count
         > &
           TProperties,
         delegate: DispatcherLike<TReq>,
@@ -63,11 +61,6 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
         [DelegatingDispatcherMixin_delegate]: none,
       }),
       {
-        get [QueueableLike_count]() {
-          unsafeCast<TProperties>(this);
-          return this[DelegatingDispatcherMixin_delegate][QueueableLike_count];
-        },
-
         get [QueueableLike_backpressureStrategy]() {
           unsafeCast<TProperties>(this);
           return this[DelegatingDispatcherMixin_delegate][

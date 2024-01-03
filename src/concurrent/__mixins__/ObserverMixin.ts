@@ -41,11 +41,11 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   IndexedQueueLike,
+  QueueLike_count,
   QueueLike_dequeue,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
-  QueueableLike_count,
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -88,11 +88,11 @@ const ObserverMixin: <T>() => Mixin2<
       const continuation = (ctx: ContinuationContextLike) => {
         unsafeCast<TProperties & ObserverLike<T>>(observer);
 
-        while (observer[QueueableLike_count] > 0) {
+        while (observer[QueueLike_count] > 0) {
           const next = observer[QueueLike_dequeue]() as T;
           observer[SinkLike_notify](next);
 
-          if (observer[QueueableLike_count] > 0) {
+          if (observer[QueueLike_count] > 0) {
             ctx[ContinuationContextLike_yield]();
           }
         }

@@ -24,7 +24,7 @@ import {
   DisposableLike_isDisposed,
   IndexedQueueLike,
   IndexedQueueLike_get,
-  QueueableLike_count,
+  QueueLike_count,
   QueueableLike_enqueue,
 } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
@@ -151,7 +151,7 @@ export const create: <T>(options?: {
           // call next from unscheduled sources such as event handlers.
           // So we marshall those events back to the scheduler.
           const buffer = this[Subject_buffer];
-          const count = buffer[QueueableLike_count];
+          const count = buffer[QueueLike_count];
 
           for (let i = 0; i < count; i++) {
             const next = buffer[IndexedQueueLike_get](i);

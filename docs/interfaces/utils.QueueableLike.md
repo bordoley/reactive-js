@@ -28,7 +28,6 @@ An interface for types that support buffering items with backpressure.
 
 - [[QueueableLike\_backpressureStrategy]](utils.QueueableLike.md#[queueablelike_backpressurestrategy])
 - [[QueueableLike\_capacity]](utils.QueueableLike.md#[queueablelike_capacity])
-- [[QueueableLike\_count]](utils.QueueableLike.md#[queueablelike_count])
 
 ### Methods
 
@@ -49,12 +48,6 @@ ___
 • `Readonly` **[QueueableLike\_capacity]**: `number`
 
 The number of items the queue is capable of efficiently buffering.
-
-___
-
-### [QueueableLike\_count]
-
-• `Readonly` **[QueueableLike\_count]**: `number`
 
 ## Methods
 

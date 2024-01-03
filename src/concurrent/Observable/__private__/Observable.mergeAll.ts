@@ -34,10 +34,10 @@ import {
   DisposableLike_isDisposed,
   IndexedQueueLike,
   QueueLike,
+  QueueLike_count,
   QueueLike_dequeue,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  QueueableLike_count,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -146,9 +146,7 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
               if (delegate[DisposableLike_isDisposed]) {
                 // FIXME: Clear the queue
               } else if (
-                instance[MergeAllObserver_observablesQueue][
-                  QueueableLike_count
-                ] +
+                instance[MergeAllObserver_observablesQueue][QueueLike_count] +
                   instance[MergeAllObserver_activeCount] ===
                 0
               ) {

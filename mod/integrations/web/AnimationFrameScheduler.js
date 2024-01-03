@@ -5,7 +5,7 @@ import { SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, }
 import ContinuationSchedulerMixin, { ContinuationLike_run, ContinuationSchedulerLike_scheduleContinuation, ContinuationSchedulerLike_shouldYield, } from "../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
 import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
 import { bindMethod, invoke, isSome, none, pipe, pipeLazy, } from "../../functions.js";
-import { QueueLike_dequeue, QueueableLike_count, QueueableLike_enqueue, } from "../../utils.js";
+import { QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
 export const create = /*@__PURE__*/ (() => {
@@ -32,9 +32,9 @@ export const create = /*@__PURE__*/ (() => {
                     break;
                 }
             }
-            const jobsCount = workQueue[QueueableLike_count];
+            const jobsCount = workQueue[QueueLike_count];
             const newWorkQueue = instance[AnimationFrameScheduler_rafQueue];
-            const newJobsCount = newWorkQueue[QueueableLike_count];
+            const newJobsCount = newWorkQueue[QueueLike_count];
             if (jobsCount > 0 && newJobsCount === 0) {
                 instance[AnimationFrameScheduler_rafQueue] = workQueue;
             }
@@ -47,7 +47,7 @@ export const create = /*@__PURE__*/ (() => {
                 }
                 instance[AnimationFrameScheduler_rafQueue] = workQueue;
             }
-            const workQueueCount = instance[AnimationFrameScheduler_rafQueue][QueueableLike_count];
+            const workQueueCount = instance[AnimationFrameScheduler_rafQueue][QueueLike_count];
             if (workQueueCount > 0) {
                 requestAnimationFrame(instance[AnimationFrameScheduler_rafCallback]);
             }

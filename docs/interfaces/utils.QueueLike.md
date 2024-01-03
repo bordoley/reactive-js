@@ -22,6 +22,7 @@
 
 ### Properties
 
+- [[QueueLike\_count]](utils.QueueLike.md#[queuelike_count])
 - [[QueueLike\_head]](utils.QueueLike.md#[queuelike_head])
 
 ### Methods
@@ -29,6 +30,12 @@
 - [[QueueLike\_dequeue]](utils.QueueLike.md#[queuelike_dequeue])
 
 ## Properties
+
+### [QueueLike\_count]
+
+• `Readonly` **[QueueLike\_count]**: `number`
+
+___
 
 ### [QueueLike\_head]
 

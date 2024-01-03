@@ -55,7 +55,6 @@ export const QueueableLike_backpressureStrategy = Symbol(
 );
 export const QueueableLike_capacity = Symbol("QueueableLike_capacity");
 export const QueueableLike_enqueue = Symbol("QueueableLike_enqueue");
-export const QueueableLike_count = Symbol("QueueableLike_count");
 
 /**
  * An interface for types that support buffering items with backpressure.
@@ -63,8 +62,6 @@ export const QueueableLike_count = Symbol("QueueableLike_count");
  * @noInheritDoc
  */
 export interface QueueableLike<T = unknown> {
-  readonly [QueueableLike_count]: number;
-
   /**
    * The back pressure strategy utilized by the queue when it is at capacity.
    */
@@ -101,11 +98,14 @@ export interface StackLike<T = unknown> extends QueueableLike<T> {
 
 export const QueueLike_head = Symbol("QueueLike_head");
 export const QueueLike_dequeue = Symbol("QueueLike_dequeue");
+export const QueueLike_count = Symbol("QueueLike_count");
 
 /**
  * @noInheritDoc
  */
 export interface QueueLike<T = unknown> extends QueueableLike<T> {
+  readonly [QueueLike_count]: number;
+
   readonly [QueueLike_head]: Optional<T>;
 
   [QueueLike_dequeue](): Optional<T>;

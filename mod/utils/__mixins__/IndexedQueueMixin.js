@@ -4,7 +4,7 @@ import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { newInstance, none, raiseError, raiseWithDebugMessage, returns, } from "../../functions.js";
-import { BackPressureError, IndexedQueueLike_get, IndexedQueueLike_set, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_count, QueueableLike_enqueue, StackLike_head, StackLike_pop, } from "../../utils.js";
+import { BackPressureError, IndexedQueueLike_get, IndexedQueueLike_set, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, StackLike_head, StackLike_pop, } from "../../utils.js";
 const IndexedQueueMixin = /*@PURE*/ (() => {
     const IndexedQueueMixin_capacityMask = Symbol("IndexedQueueMixin_capacityMask");
     const IndexedQueueMixin_head = Symbol("IndexedQueueMixin_head");
@@ -33,7 +33,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         const values = instance[IndexedQueueMixin_values] ?? [];
         const capacity = values.length;
         const capacityMask = instance[IndexedQueueMixin_capacityMask];
-        const count = instance[QueueableLike_count];
+        const count = instance[QueueLike_count];
         if (head === 0 || (tail === 0 && head < capacity >> 2)) {
             values.length <<= 1;
             instance[IndexedQueueMixin_tail] = count + head;
@@ -50,7 +50,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
     const shrink = (instance) => {
         const values = instance[IndexedQueueMixin_values] ?? [];
         const capacity = values.length;
-        const count = instance[QueueableLike_count];
+        const count = instance[QueueLike_count];
         if (count >= capacity >> 2 || capacity <= 32) {
             return;
         }
@@ -74,7 +74,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         instance[QueueableLike_capacity] = clampPositiveInteger(config?.[QueueableLike_capacity] ?? MAX_SAFE_INTEGER);
         return instance;
     }, props({
-        [QueueableLike_count]: 0,
+        [QueueLike_count]: 0,
         [QueueableLike_backpressureStrategy]: "overflow",
         [QueueableLike_capacity]: MAX_SAFE_INTEGER,
         [IndexedQueueMixin_head]: 0,
@@ -105,7 +105,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
                 values[head] = none;
                 head = (head + 1) & this[IndexedQueueMixin_capacityMask];
                 this[IndexedQueueMixin_head] = head;
-                this[QueueableLike_count]--;
+                this[QueueLike_count]--;
             }
             shrink(this);
             return item;
@@ -120,14 +120,14 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
                 : ((tail =
                     (tail - 1 + capacity) & this[IndexedQueueMixin_capacityMask]),
                     (this[IndexedQueueMixin_tail] = tail),
-                    this[QueueableLike_count]--,
+                    this[QueueLike_count]--,
                     values[tail]);
             values[tail] = none;
             shrink(this);
             return item;
         },
         [IndexedQueueLike_get](index) {
-            const count = this[QueueableLike_count];
+            const count = this[QueueLike_count];
             const capacity = this[IndexedQueueMixin_values]?.length ?? 0;
             const head = this[IndexedQueueMixin_head];
             const values = this[IndexedQueueMixin_values] ?? [];
@@ -141,7 +141,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
             return values[computedIndex];
         },
         [IndexedQueueLike_set](index, value) {
-            const count = this[QueueableLike_count];
+            const count = this[QueueLike_count];
             const capacity = this[IndexedQueueMixin_values]?.length ?? 0;
             const head = this[IndexedQueueMixin_head];
             const values = this[IndexedQueueMixin_values] ?? [];
@@ -158,7 +158,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         },
         [QueueableLike_enqueue](item) {
             const backpressureStrategy = this[QueueableLike_backpressureStrategy];
-            let count = this[QueueableLike_count];
+            let count = this[QueueLike_count];
             const capacity = this[QueueableLike_capacity];
             if (backpressureStrategy === "drop-latest" && count >= capacity) {
                 return false;
@@ -186,11 +186,11 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
             const capacityMask = this[IndexedQueueMixin_capacityMask];
             let tail = this[IndexedQueueMixin_tail];
             values[tail] = item;
-            this[QueueableLike_count]++;
+            this[QueueLike_count]++;
             tail = (tail + 1) & capacityMask;
             this[IndexedQueueMixin_tail] = tail;
             grow(this);
-            return this[QueueableLike_count] < this[QueueableLike_capacity];
+            return this[QueueLike_count] < this[QueueableLike_capacity];
         },
     }));
 })();

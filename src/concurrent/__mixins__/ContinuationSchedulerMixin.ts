@@ -40,8 +40,8 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueLike,
+  QueueLike_count,
   QueueLike_dequeue,
-  QueueableLike_count,
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -427,7 +427,7 @@ const ContinuationSchedulerMixin: Mixin1<
             this[SchedulerLike_now] >
               this[ContinuationSchedulerMixinLike_startTime] +
                 this[SchedulerLike_maxYieldInterval] ||
-            (getActiveContinuation(this)?.[QueueableLike_count] ?? 0) > 0 ||
+            (getActiveContinuation(this)?.[QueueLike_count] ?? 0) > 0 ||
             this[ContinuationSchedulerLike_shouldYield])
         );
       },

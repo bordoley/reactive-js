@@ -30,9 +30,9 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   QueueLike,
+  QueueLike_count,
   QueueLike_dequeue,
   QueueLike_head,
-  QueueableLike_count,
   QueueableLike_enqueue,
 } from "../utils.js";
 import * as PriorityQueue from "../utils/PriorityQueue.js";
@@ -116,7 +116,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           let queue: Optional<QueueLike<SchedulerTaskLike>> = none;
           while (
             ((queue = this[VirtualTimeScheduler_queue]),
-            queue[QueueableLike_count] > 0)
+            queue[QueueLike_count] > 0)
           ) {
             this[VirtualTimeScheduler_queue] = PriorityQueue.create(
               SchedulerTask_comparator,

@@ -32,8 +32,8 @@ import {
 import {
   DisposableLike,
   IndexedQueueLike,
+  QueueLike_count,
   QueueLike_dequeue,
-  QueueableLike_count,
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -96,9 +96,9 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
             }
           }
 
-          const jobsCount = workQueue[QueueableLike_count];
+          const jobsCount = workQueue[QueueLike_count];
           const newWorkQueue = instance[AnimationFrameScheduler_rafQueue];
-          const newJobsCount = newWorkQueue[QueueableLike_count];
+          const newJobsCount = newWorkQueue[QueueLike_count];
 
           if (jobsCount > 0 && newJobsCount === 0) {
             instance[AnimationFrameScheduler_rafQueue] = workQueue;
@@ -113,7 +113,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
           }
 
           const workQueueCount =
-            instance[AnimationFrameScheduler_rafQueue][QueueableLike_count];
+            instance[AnimationFrameScheduler_rafQueue][QueueLike_count];
           if (workQueueCount > 0) {
             requestAnimationFrame(
               instance[AnimationFrameScheduler_rafCallback],

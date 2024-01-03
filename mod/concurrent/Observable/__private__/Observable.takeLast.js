@@ -5,7 +5,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { none, partial, pipe } from "../../../functions.js";
-import { DisposableLike_dispose, IndexedQueueLike_get, QueueableLike_count, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_dispose, IndexedQueueLike_get, QueueLike_count, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
@@ -23,7 +23,7 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (() => {
         pipe(instance, Disposable.onComplete(() => {
             const queue = instance[TakeLastObserver_queue];
             let index = 0;
-            const count = queue[QueueableLike_count];
+            const count = queue[QueueLike_count];
             if (count === 0) {
                 return;
             }

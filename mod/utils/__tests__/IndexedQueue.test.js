@@ -2,7 +2,7 @@
 
 import { expectEquals, expectIsNone, expectToThrow, test, testModule, } from "../../__internal__/testing.js";
 import { none, pipe } from "../../functions.js";
-import { IndexedQueueLike_get, IndexedQueueLike_set, QueueLike_dequeue, QueueLike_head, QueueableLike_count, QueueableLike_enqueue, StackLike_head, StackLike_pop, } from "../../utils.js";
+import { IndexedQueueLike_get, IndexedQueueLike_set, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, StackLike_head, StackLike_pop, } from "../../utils.js";
 import * as IndexedQueue from "../IndexedQueue.js";
 testModule("IndexedQueue", test("push/pull/count", () => {
     const queue = IndexedQueue.create();
@@ -21,7 +21,7 @@ testModule("IndexedQueue", test("push/pull/count", () => {
     for (let i = 0; i < 8; i++) {
         pipe(queue[IndexedQueueLike_get](i), expectEquals(i));
     }
-    pipe(queue[QueueableLike_count], expectEquals(8));
+    pipe(queue[QueueLike_count], expectEquals(8));
     pipe(queue[QueueLike_dequeue](), expectEquals(0));
     pipe(queue[QueueLike_head], expectEquals(1));
     pipe(queue[QueueLike_dequeue](), expectEquals(1));

@@ -5,7 +5,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../__internal
 import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../concurrent.js";
 import { EventListenerLike_isErrorSafe, SinkLike_notify } from "../events.js";
 import { error, isSome, newInstance, none, pipe } from "../functions.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, IndexedQueueLike_get, QueueableLike_count, QueueableLike_enqueue, } from "../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, IndexedQueueLike_get, QueueLike_count, QueueableLike_enqueue, } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as IndexedQueue from "../utils/IndexedQueue.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
@@ -76,7 +76,7 @@ export const create = /*@__PURE__*/ (() => {
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
             const buffer = this[Subject_buffer];
-            const count = buffer[QueueableLike_count];
+            const count = buffer[QueueLike_count];
             for (let i = 0; i < count; i++) {
                 const next = buffer[IndexedQueueLike_get](i);
                 observer[QueueableLike_enqueue](next);

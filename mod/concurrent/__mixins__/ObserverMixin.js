@@ -5,7 +5,7 @@ import { ContinuationContextLike_yield, DispatcherLikeEvent_capacityExceeded, Di
 import { SinkLike_notify } from "../../events.js";
 import LazyInitEventSourceMixin, { LazyInitEventSourceMixin_publisher, } from "../../events/__mixins__/LazyInitEventSourceMixin.js";
 import { call, none, pipe, returns, } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_count, QueueableLike_enqueue, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
 const ObserverMixin = /*@__PURE__*/ (() => {
@@ -16,10 +16,10 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         if (observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]) {
             const continuation = (ctx) => {
                 unsafeCast(observer);
-                while (observer[QueueableLike_count] > 0) {
+                while (observer[QueueLike_count] > 0) {
                     const next = observer[QueueLike_dequeue]();
                     observer[SinkLike_notify](next);
-                    if (observer[QueueableLike_count] > 0) {
+                    if (observer[QueueLike_count] > 0) {
                         ctx[ContinuationContextLike_yield]();
                     }
                 }

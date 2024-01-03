@@ -41,14 +41,12 @@ export interface SerialDisposableLike<TDisposable extends DisposableLike = Dispo
 export declare const QueueableLike_backpressureStrategy: unique symbol;
 export declare const QueueableLike_capacity: unique symbol;
 export declare const QueueableLike_enqueue: unique symbol;
-export declare const QueueableLike_count: unique symbol;
 /**
  * An interface for types that support buffering items with backpressure.
  *
  * @noInheritDoc
  */
 export interface QueueableLike<T = unknown> {
-    readonly [QueueableLike_count]: number;
     /**
      * The back pressure strategy utilized by the queue when it is at capacity.
      */
@@ -76,10 +74,12 @@ export interface StackLike<T = unknown> extends QueueableLike<T> {
 }
 export declare const QueueLike_head: unique symbol;
 export declare const QueueLike_dequeue: unique symbol;
+export declare const QueueLike_count: unique symbol;
 /**
  * @noInheritDoc
  */
 export interface QueueLike<T = unknown> extends QueueableLike<T> {
+    readonly [QueueLike_count]: number;
     readonly [QueueLike_head]: Optional<T>;
     [QueueLike_dequeue](): Optional<T>;
 }

@@ -19,7 +19,7 @@ import {
   IndexedQueueLike,
   IndexedQueueLike_get,
   QueueLike,
-  QueueableLike_count,
+  QueueLike_count,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -57,7 +57,7 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() => {
           Disposable.onComplete(() => {
             const queue = instance[TakeLastObserver_queue];
             let index = 0;
-            const count = queue[QueueableLike_count];
+            const count = queue[QueueLike_count];
 
             if (count === 0) {
               return;

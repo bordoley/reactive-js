@@ -3,14 +3,14 @@
 import { floor } from "../../__internal__/math.js";
 import { getPrototype, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { call, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
-import { BackPressureError, IndexedQueueLike_get, IndexedQueueLike_set, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_count, QueueableLike_enqueue, StackLike_pop, } from "../../utils.js";
+import { BackPressureError, IndexedQueueLike_get, IndexedQueueLike_set, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, StackLike_pop, } from "../../utils.js";
 import IndexedQueueMixin from "./IndexedQueueMixin.js";
 const PriorityQueueMixin = /*@__PURE__*/ (() => {
     const IndexedQueuePrototype = getPrototype(IndexedQueueMixin());
     const PriorityQueueMixin_comparator = Symbol("PriorityQueueMixin_comparator");
     const siftDown = (queue, item) => {
         const compare = queue[PriorityQueueMixin_comparator];
-        const count = queue[QueueableLike_count];
+        const count = queue[QueueLike_count];
         for (let index = 0; index < count;) {
             const leftIndex = (index + 1) * 2 - 1;
             const rightIndex = leftIndex + 1;
@@ -42,7 +42,7 @@ const PriorityQueueMixin = /*@__PURE__*/ (() => {
     };
     const siftUp = (queue, item) => {
         const compare = queue[PriorityQueueMixin_comparator];
-        const count = queue[QueueableLike_count];
+        const count = queue[QueueLike_count];
         for (let index = count - 1, parentIndex = floor((index - 1) / 2); parentIndex >= 0 &&
             parentIndex <= count &&
             compare(queue[IndexedQueueLike_get](parentIndex), item) > 0; index = parentIndex, parentIndex = floor((index - 1) / 2)) {
@@ -59,7 +59,7 @@ const PriorityQueueMixin = /*@__PURE__*/ (() => {
         [PriorityQueueMixin_comparator]: none,
     }), {
         [QueueLike_dequeue]() {
-            const count = this[QueueableLike_count];
+            const count = this[QueueLike_count];
             if (count === 0) {
                 return none;
             }
@@ -76,7 +76,7 @@ const PriorityQueueMixin = /*@__PURE__*/ (() => {
         },
         [QueueableLike_enqueue](item) {
             const backpressureStrategy = this[QueueableLike_backpressureStrategy];
-            const count = this[QueueableLike_count];
+            const count = this[QueueLike_count];
             const capacity = this[QueueableLike_capacity];
             if (backpressureStrategy === "drop-latest" && count >= capacity) {
                 return false;
