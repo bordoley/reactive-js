@@ -16,7 +16,7 @@ testModule("EventSource", PureComputationModuleTests(EventSource, () => (eventSo
         throw subscription[DisposableLike_error];
     }
     return result;
-}), describe("buffer", test("when the event listener throws an error when the source completes with a tail value", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], EventSource.fromReadonlyArray(), EventSource.buffer({ count: 2 }), EventSource.addEventHandler(x => (x.length !== 2 ? raise() : ignore())), pick(DisposableLike_error), expectIsSome))), describe("create", test("when the setup function throws", pipeLazy(EventSource.create(_ => raise()), EventSource.addEventHandler(ignore), pick(DisposableLike_error), expectIsSome))), describe("fromPromise", testAsync("when the promise resolves", async () => {
+}), describe("create", test("when the setup function throws", pipeLazy(EventSource.create(_ => raise()), EventSource.addEventHandler(ignore), pick(DisposableLike_error), expectIsSome))), describe("fromPromise", testAsync("when the promise resolves", async () => {
     const promise = Promise.resolve(1);
     const result = await pipe(promise, EventSource.fromPromise(), EventSource.toReadonlyArrayAsync());
     pipe(result, expectArrayEquals([1]));

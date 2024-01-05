@@ -50,7 +50,9 @@ const measureElement = (element) => {
     };
 };
 const Element_measure = () => (element) => {
-    const store = WritableStore.create(measureElement(element));
+    const store = WritableStore.create(measureElement(element), {
+        equality: areBoundsEqual,
+    });
     const windowResizeEventSource = Element_windowResizeEventSource();
     const windowScrollEventSource = Element_windowScrollEventSource();
     const scrollContainerEventSources = pipe(findScrollContainers(element), ReadonlyArray.map(Element_eventSource("scroll")));
@@ -58,7 +60,7 @@ const Element_measure = () => (element) => {
         windowResizeEventSource,
         windowScrollEventSource,
         ...scrollContainerEventSources,
-    ]), EventSource.map(pipeLazy(element, measureElement)), EventSource.distinctUntilChanged({ equality: areBoundsEqual }), EventSource.addEventHandler(rect => {
+    ]), EventSource.map(pipeLazy(element, measureElement)), EventSource.addEventHandler(rect => {
         store[StoreLike_value] = rect;
     }), Disposable.bindTo(store));
     return store;

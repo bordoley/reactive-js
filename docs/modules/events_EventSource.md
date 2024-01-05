@@ -16,10 +16,7 @@
 ### Functions
 
 - [addEventHandler](events_EventSource.md#addeventhandler)
-- [buffer](events_EventSource.md#buffer)
 - [create](events_EventSource.md#create)
-- [decodeWithCharset](events_EventSource.md#decodewithcharset)
-- [distinctUntilChanged](events_EventSource.md#distinctuntilchanged)
 - [fromPromise](events_EventSource.md#frompromise)
 - [fromReadonlyArray](events_EventSource.md#fromreadonlyarray)
 - [keep](events_EventSource.md#keep)
@@ -27,11 +24,6 @@
 - [merge](events_EventSource.md#merge)
 - [mergeMany](events_EventSource.md#mergemany)
 - [mergeWith](events_EventSource.md#mergewith)
-- [pairwise](events_EventSource.md#pairwise)
-- [scan](events_EventSource.md#scan)
-- [skipFirst](events_EventSource.md#skipfirst)
-- [takeFirst](events_EventSource.md#takefirst)
-- [takeWhile](events_EventSource.md#takewhile)
 - [toReadonlyArrayAsync](events_EventSource.md#toreadonlyarrayasync)
 
 ## Type Aliases
@@ -64,29 +56,6 @@
 
 ___
 
-### buffer
-
-▸ **buffer**<`T`\>(`options?`): [`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, readonly `T`[]\>
-
-___
-
 ### create
 
 ▸ **create**<`T`\>(`setup`): [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>
@@ -106,48 +75,6 @@ ___
 #### Returns
 
 [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>
-
-___
-
-### decodeWithCharset
-
-▸ **decodeWithCharset**(`options?`): [`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `ArrayBuffer`, `string`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.charset?` | `string` |
-| `options.fatal?` | `boolean` |
-| `options.ignoreBOM?` | `boolean` |
-
-#### Returns
-
-[`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `ArrayBuffer`, `string`\>
-
-___
-
-### distinctUntilChanged
-
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
-
-#### Returns
-
-[`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 ___
 
@@ -302,116 +229,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
-
-___
-
-### pairwise
-
-▸ **pairwise**<`T`\>(): [`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>\>
-
-___
-
-### scan
-
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `TAcc`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `TAcc` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
-
-#### Returns
-
-[`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `TAcc`\>
-
-___
-
-### skipFirst
-
-▸ **skipFirst**<`T`\>(`options?`): [`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
-
-___
-
-### takeFirst
-
-▸ **takeFirst**<`T`\>(`options?`): [`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
-
-___
-
-### takeWhile
-
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-| `options?` | `Object` |
-| `options.inclusive?` | `boolean` |
-
-#### Returns
-
-[`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 ___
 

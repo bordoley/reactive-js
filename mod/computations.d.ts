@@ -21,6 +21,14 @@ export type ComputationOperator<C extends Computation, TA, TB> = Function1<Compu
  * @noInheritDoc
  */
 export interface PureComputationModule<C extends Computation> {
+    fromReadonlyArray<T>(options?: {
+        readonly count?: number;
+        readonly start?: number;
+    }): Function1<readonly T[], ComputationOf<C, T>>;
+    keep<T>(predicate: Predicate<T>): ComputationOperator<C, T, T>;
+    map<TA, TB>(selector: Function1<TA, TB>): ComputationOperator<C, TA, TB>;
+}
+export interface PureDeferredComputationModule<C extends Computation> extends PureComputationModule<C> {
     buffer<T>(options?: {
         count?: number;
     }): ComputationOperator<C, T, readonly T[]>;
@@ -32,12 +40,6 @@ export interface PureComputationModule<C extends Computation> {
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): ComputationOperator<C, T, T>;
-    fromReadonlyArray<T>(options?: {
-        readonly count?: number;
-        readonly start?: number;
-    }): Function1<readonly T[], ComputationOf<C, T>>;
-    keep<T>(predicate: Predicate<T>): ComputationOperator<C, T, T>;
-    map<TA, TB>(selector: Function1<TA, TB>): ComputationOperator<C, TA, TB>;
     pairwise<T>(): ComputationOperator<C, T, Tuple2<T, T>>;
     scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ComputationOperator<C, T, TAcc>;
     skipFirst<T>(options?: {

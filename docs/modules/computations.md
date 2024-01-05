@@ -8,6 +8,7 @@
 
 - [Computation](../interfaces/computations.Computation.md)
 - [PureComputationModule](../interfaces/computations.PureComputationModule.md)
+- [PureDeferredComputationModule](../interfaces/computations.PureDeferredComputationModule.md)
 
 ### Type Aliases
 
