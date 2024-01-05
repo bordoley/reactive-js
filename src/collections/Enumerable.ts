@@ -3,7 +3,7 @@ import {
   Computation,
   Computation_T,
   Computation_type,
-  PureComputationModule,
+  PureDeferredComputationModule,
 } from "../computations.js";
 import {
   Factory,
@@ -56,7 +56,7 @@ export interface EnumerableComputation extends Computation {
  * @noInheritDoc
  */
 export interface EnumerableModule
-  extends PureComputationModule<EnumerableComputation> {
+  extends PureDeferredComputationModule<EnumerableComputation> {
   concat<T>(
     fst: EnumerableLike<T>,
     snd: EnumerableLike<T>,

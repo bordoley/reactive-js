@@ -18,8 +18,13 @@ import {
 } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
-import { PureComputationModule, keepType } from "../../computations.js";
+import {
+  PureComputationModule,
+  PureDeferredComputationModule,
+  keepType,
+} from "../../computations.js";
 import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
+import PureDeferredComputationModuleTests from "../../computations/__tests__/fixtures/PureDeferredComputationModuleTests.js";
 import {
   DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
@@ -471,6 +476,10 @@ testModule(
   ),
   PureComputationModuleTests(
     Observable as PureComputationModule<Observable.PureRunnableComputation>,
+    Observable.toReadonlyArray,
+  ),
+  PureDeferredComputationModuleTests(
+    Observable as PureDeferredComputationModule<Observable.PureRunnableComputation>,
     Observable.toReadonlyArray,
   ),
   describe(

@@ -22,10 +22,7 @@ export interface EventSourceModule extends PureComputationModule<EventSourceComp
 }
 export type Signature = EventSourceModule;
 export declare const addEventHandler: Signature["addEventHandler"];
-export declare const buffer: Signature["buffer"];
 export declare const create: Signature["create"];
-export declare const decodeWithCharset: Signature["decodeWithCharset"];
-export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const fromPromise: Signature["fromPromise"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const keep: Signature["keep"];
@@ -33,9 +30,4 @@ export declare const map: Signature["map"];
 export declare const merge: Signature["merge"];
 export declare const mergeMany: Signature["mergeMany"];
 export declare const mergeWith: Signature["mergeWith"];
-export declare const pairwise: Signature["pairwise"];
-export declare const scan: Signature["scan"];
-export declare const skipFirst: Signature["skipFirst"];
-export declare const takeFirst: Signature["takeFirst"];
-export declare const takeWhile: Signature["takeWhile"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];

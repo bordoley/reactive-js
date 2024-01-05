@@ -6,6 +6,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
+import PureDeferredComputationModuleTests from "../../computations/__tests__/fixtures/PureDeferredComputationModuleTests.js";
 import {
   arrayEquality,
   increment,
@@ -20,6 +21,7 @@ import * as ReadonlyArray from "../ReadonlyArray.js";
 testModule(
   "Enumerable",
   PureComputationModuleTests(Enumerable, Enumerable.toReadonlyArray),
+  PureDeferredComputationModuleTests(Enumerable, Enumerable.toReadonlyArray),
   describe(
     "Iterable",
     PureComputationModuleTests(Enumerable, returns(Array.from)),

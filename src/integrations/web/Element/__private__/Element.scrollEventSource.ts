@@ -1,8 +1,10 @@
 import * as CurrentTime from "../../../../__internal__/CurrentTime.js";
 import { MAX_VALUE, MIN_VALUE } from "../../../../__internal__/constants.js";
 import { clamp } from "../../../../__internal__/math.js";
+import { SinkLike_notify } from "../../../../events.js";
 import * as EventSource from "../../../../events/EventSource.js";
 import { pipe } from "../../../../functions.js";
+import * as Disposable from "../../../../utils/Disposable.js";
 import { ScrollValue } from "../../../web.js";
 import type * as Element from "../../Element.js";
 import Element_eventSource from "./Element.eventSource.js";
@@ -30,52 +32,56 @@ const createInitialScrollValue = (): ScrollValue => ({
 });
 
 const Element_scrollEventSource: Element.Signature["scrollEventSource"] =
-  () => element => {
-    const eventHandler = (acc: ScrollValue, ev: Event) => {
-      const {
-        x: prevX,
-        y: prevY,
-        time: prevTime,
-      } = ev.type === "resize" ? createInitialScrollValue() : acc;
+  () => element =>
+    EventSource.create(listener => {
+      let prev = createInitialScrollValue();
 
-      const now = CurrentTime.now();
-      const dt = clamp(0, now - prevTime, MAX_VALUE);
+      pipe(
+        element,
+        Element_eventSource("scroll"),
+        EventSource.mergeWith(Element_windowResizeEventSource()),
+        EventSource.addEventHandler(ev => {
+          const {
+            x: prevX,
+            y: prevY,
+            time: prevTime,
+          } = ev.type === "resize" ? createInitialScrollValue() : prev;
 
-      const xCurrent = element.scrollLeft;
-      const xScrollLength = element.scrollWidth - element.clientWidth;
-      const xVelocity = (xCurrent - prevX.current) / dt;
-      const xAcceleration = dt > 0 ? (xVelocity - prevX.velocity) / dt : 0;
+          const now = CurrentTime.now();
+          const dt = clamp(0, now - prevTime, MAX_VALUE);
 
-      const yCurrent = element.scrollTop;
-      const yScrollLength = element.scrollHeight - element.clientHeight;
-      const yVelocity = (yCurrent - prevY.current) / dt;
-      const yAcceleration = dt > 0 ? (yVelocity - prevY.velocity) / dt : 0;
+          const xCurrent = element.scrollLeft;
+          const xScrollLength = element.scrollWidth - element.clientWidth;
+          const xVelocity = (xCurrent - prevX.current) / dt;
+          const xAcceleration = dt > 0 ? (xVelocity - prevX.velocity) / dt : 0;
 
-      const x = {
-        current: xCurrent,
-        scrollLength: xScrollLength,
-        progress: calcProgress(0, xScrollLength, xCurrent),
-        velocity: xVelocity,
-        acceleration: xAcceleration,
-      };
+          const yCurrent = element.scrollTop;
+          const yScrollLength = element.scrollHeight - element.clientHeight;
+          const yVelocity = (yCurrent - prevY.current) / dt;
+          const yAcceleration = dt > 0 ? (yVelocity - prevY.velocity) / dt : 0;
 
-      const y = {
-        current: yCurrent,
-        scrollLength: yScrollLength,
-        progress: calcProgress(0, yScrollLength, yCurrent),
-        velocity: yVelocity,
-        acceleration: yAcceleration,
-      };
+          const x = {
+            current: xCurrent,
+            scrollLength: xScrollLength,
+            progress: calcProgress(0, xScrollLength, xCurrent),
+            velocity: xVelocity,
+            acceleration: xAcceleration,
+          };
 
-      return { x, y, time: now };
-    };
+          const y = {
+            current: yCurrent,
+            scrollLength: yScrollLength,
+            progress: calcProgress(0, yScrollLength, yCurrent),
+            velocity: yVelocity,
+            acceleration: yAcceleration,
+          };
 
-    return pipe(
-      element,
-      Element_eventSource("scroll"),
-      EventSource.mergeWith(Element_windowResizeEventSource()),
-      EventSource.scan(eventHandler, createInitialScrollValue),
-    );
-  };
+          prev = { x, y, time: now };
+
+          listener[SinkLike_notify](prev);
+        }),
+        Disposable.bindTo(listener),
+      );
+    });
 
 export default Element_scrollEventSource;

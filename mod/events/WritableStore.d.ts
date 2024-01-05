@@ -1,2 +1,5 @@
 import { WritableStoreLike } from "../events.js";
-export declare const create: <T>(initialValue: T) => WritableStoreLike<T>;
+import { Equality } from "../functions.js";
+export declare const create: <T>(initialValue: T, options?: {
+    readonly equality?: Equality<T>;
+}) => WritableStoreLike<T>;

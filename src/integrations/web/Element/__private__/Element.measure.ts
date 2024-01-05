@@ -66,7 +66,9 @@ const measureElement = (element: HTMLElement | SVGElement): Rect => {
 
 const Element_measure: Element.Signature["measure"] =
   () => (element: HTMLElement | SVGElement) => {
-    const store = WritableStore.create(measureElement(element));
+    const store = WritableStore.create(measureElement(element), {
+      equality: areBoundsEqual,
+    });
 
     const windowResizeEventSource = Element_windowResizeEventSource();
     const windowScrollEventSource = Element_windowScrollEventSource();
@@ -82,7 +84,6 @@ const Element_measure: Element.Signature["measure"] =
         ...scrollContainerEventSources,
       ]),
       EventSource.map(pipeLazy(element, measureElement)),
-      EventSource.distinctUntilChanged({ equality: areBoundsEqual }),
       EventSource.addEventHandler<Rect>(rect => {
         store[StoreLike_value] = rect;
       }),
