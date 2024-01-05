@@ -1,12 +1,12 @@
 /// <reference types="./EventSource.test.d.ts" />
 
-import { describe, expectArrayEquals, expectIsSome, expectPromiseToThrow, test, testAsync, testModule, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectIsSome, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
 import { VirtualTimeSchedulerLike_run } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as VirtualTimeScheduler from "../../concurrent/VirtualTimeScheduler.js";
-import { bind, compose, ignore, isSome, newInstance, pick, pipe, pipeLazy, raise, } from "../../functions.js";
+import { bind, compose, ignore, isSome, newInstance, none, pick, pipe, pipeLazy, raise, } from "../../functions.js";
 import { DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 testModule("EventSource", PureComputationModuleTests(EventSource, () => (eventSource) => {
@@ -18,12 +18,21 @@ testModule("EventSource", PureComputationModuleTests(EventSource, () => (eventSo
     return result;
 }), describe("create", test("when the setup function throws", pipeLazy(EventSource.create(_ => raise()), EventSource.addEventHandler(ignore), pick(DisposableLike_error), expectIsSome))), describe("fromPromise", testAsync("when the promise resolves", async () => {
     const promise = Promise.resolve(1);
-    const result = await pipe(promise, EventSource.fromPromise(), EventSource.toReadonlyArrayAsync());
-    pipe(result, expectArrayEquals([1]));
+    let result = none;
+    pipe(promise, EventSource.fromPromise(), EventSource.addEventHandler(e => {
+        result = e;
+    }));
+    await promise;
+    pipe(result, expectEquals(1));
 }), testAsync("when the promise reject", async () => {
     const error = newInstance(Error);
     const promise = Promise.reject(error);
-    await pipe(pipe(promise, EventSource.fromPromise(), EventSource.toReadonlyArrayAsync()), expectPromiseToThrow);
+    const subscription = pipe(promise, EventSource.fromPromise(), EventSource.addEventHandler(ignore));
+    try {
+        await promise;
+    }
+    catch (e) { }
+    pipe(subscription[DisposableLike_error], expectEquals(error));
 })), describe("merge", test("with source that have different delays", () => {
     const vts = VirtualTimeScheduler.create();
     const result = [];

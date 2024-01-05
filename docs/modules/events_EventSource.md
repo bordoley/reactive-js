@@ -24,7 +24,6 @@
 - [merge](events_EventSource.md#merge)
 - [mergeMany](events_EventSource.md#mergemany)
 - [mergeWith](events_EventSource.md#mergewith)
-- [toReadonlyArrayAsync](events_EventSource.md#toreadonlyarrayasync)
 
 ## Type Aliases
 
@@ -229,19 +228,3 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
-
-___
-
-### toReadonlyArrayAsync
-
-▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>

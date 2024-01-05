@@ -1,17 +1,29 @@
-import { clampPositiveInteger } from "../../../__internal__/math.js";
+import { clampPositiveInteger, max } from "../../../__internal__/math.js";
 import {
   createInstanceFactory,
   include,
   init,
   mix,
+  props,
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
-import TakeFirstSinkMixin from "../../../events/__mixins__/TakeFirstSinkMixin.js";
+import { SinkLike_notify } from "../../../events.js";
 import { partial, pipe } from "../../../functions.js";
+import { DisposableLike_dispose } from "../../../utils.js";
+import DelegatingDisposableMixin, {
+  DelegatingDisposableLike,
+  DelegatingDisposableLike_delegate,
+} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
+
+const TakeFirstSinkMixin_count = Symbol("TakeFirstSinkMixin_count");
+
+interface TProperties {
+  [TakeFirstSinkMixin_count]: number;
+}
 
 const Observer_createTakeFirstObserver: <T>(
   delegate: ObserverLike<T>,
@@ -20,16 +32,48 @@ const Observer_createTakeFirstObserver: <T>(
   createInstanceFactory(
     decorateNotifyWithObserverStateAssert(
       mix(
-        include(ObserverMixin(), TakeFirstSinkMixin()),
+        include(DelegatingDisposableMixin<ObserverLike<T>>(), ObserverMixin()),
         function TakeFirstObserver(
-          instance: unknown,
+          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> & TProperties,
           delegate: ObserverLike<T>,
           takeCount: number,
         ): ObserverLike<T> {
-          init(TakeFirstSinkMixin<T>(), instance, delegate, takeCount);
+          init(
+            DelegatingDisposableMixin<ObserverLike<T>>(),
+            instance,
+            delegate,
+          );
           init(ObserverMixin(), instance, delegate, delegate);
 
+          instance[TakeFirstSinkMixin_count] = clampPositiveInteger(
+            takeCount ?? 1,
+          );
+
+          if (takeCount === 0) {
+            instance[DisposableLike_dispose]();
+          }
+
           return instance;
+        },
+        props<TProperties>({
+          [TakeFirstSinkMixin_count]: 0,
+        }),
+        {
+          [SinkLike_notify](
+            this: TProperties &
+              DelegatingDisposableLike<ObserverLike<T>> &
+              ObserverLike<T>,
+            next: T,
+          ) {
+            this[TakeFirstSinkMixin_count] = max(
+              this[TakeFirstSinkMixin_count] - 1,
+              -1,
+            );
+            this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
+            if (this[TakeFirstSinkMixin_count] <= 0) {
+              this[DisposableLike_dispose]();
+            }
+          },
         },
       ),
     ),

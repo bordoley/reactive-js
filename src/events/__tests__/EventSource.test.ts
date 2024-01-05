@@ -1,8 +1,8 @@
 import {
   describe,
   expectArrayEquals,
+  expectEquals,
   expectIsSome,
-  expectPromiseToThrow,
   test,
   testAsync,
   testModule,
@@ -20,6 +20,7 @@ import {
   ignore,
   isSome,
   newInstance,
+  none,
   pick,
   pipe,
   pipeLazy,
@@ -62,24 +63,37 @@ testModule(
     testAsync("when the promise resolves", async () => {
       const promise = Promise.resolve(1);
 
-      const result = await pipe(
+      let result: Optional<number> = none;
+
+      pipe(
         promise,
         EventSource.fromPromise(),
-        EventSource.toReadonlyArrayAsync(),
+        EventSource.addEventHandler(e => {
+          result = e;
+        }),
       );
-      pipe(result, expectArrayEquals<Optional<number>>([1]));
+
+      await promise;
+
+      pipe(result, expectEquals<Optional<number>>(1));
     }),
     testAsync("when the promise reject", async () => {
       const error = newInstance(Error);
       const promise = Promise.reject(error);
 
-      await pipe(
-        pipe(
-          promise,
-          EventSource.fromPromise(),
-          EventSource.toReadonlyArrayAsync(),
-        ),
-        expectPromiseToThrow,
+      const subscription = pipe(
+        promise,
+        EventSource.fromPromise(),
+        EventSource.addEventHandler(ignore),
+      );
+
+      try {
+        await promise;
+      } catch (e) {}
+
+      pipe(
+        subscription[DisposableLike_error],
+        expectEquals<Optional<Error>>(error),
       );
     }),
   ),
