@@ -18,7 +18,6 @@ export interface EventSourceModule extends PureComputationModule<EventSourceComp
     merge<T>(fst: EventSourceLike<T>, snd: EventSourceLike<T>, ...tail: readonly EventSourceLike<T>[]): EventSourceLike<T>;
     mergeMany<T>(eventSources: readonly EventSourceLike<T>[]): EventSourceLike<T>;
     mergeWith<T>(snd: EventSourceLike<T>, ...tail: readonly EventSourceLike<T>[]): Function1<EventSourceLike<T>, EventSourceLike<T>>;
-    toReadonlyArrayAsync<T>(): Function1<EventSourceLike<T>, Promise<ReadonlyArray<T>>>;
 }
 export type Signature = EventSourceModule;
 export declare const addEventHandler: Signature["addEventHandler"];
@@ -30,4 +29,3 @@ export declare const map: Signature["map"];
 export declare const merge: Signature["merge"];
 export declare const mergeMany: Signature["mergeMany"];
 export declare const mergeWith: Signature["mergeWith"];
-export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];

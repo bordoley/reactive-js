@@ -16,7 +16,6 @@ import EventSource_map from "./EventSource/__private__/EventSource.map.js";
 import EventSource_merge from "./EventSource/__private__/EventSource.merge.js";
 import EventSource_mergeMany from "./EventSource/__private__/EventSource.mergeMany.js";
 import EventSource_mergeWith from "./EventSource/__private__/EventSource.mergeWith.js";
-import EventSource_toReadonlyArrayAsync from "./EventSource/__private__/EventSource.toReadonlyArrayAsync.js";
 
 /**
  * @noInheritDoc
@@ -50,11 +49,6 @@ export interface EventSourceModule
     snd: EventSourceLike<T>,
     ...tail: readonly EventSourceLike<T>[]
   ): Function1<EventSourceLike<T>, EventSourceLike<T>>;
-
-  toReadonlyArrayAsync<T>(): Function1<
-    EventSourceLike<T>,
-    Promise<ReadonlyArray<T>>
-  >;
 }
 
 export type Signature = EventSourceModule;
@@ -70,5 +64,3 @@ export const map: Signature["map"] = EventSource_map;
 export const merge: Signature["merge"] = EventSource_merge;
 export const mergeMany: Signature["mergeMany"] = EventSource_mergeMany;
 export const mergeWith: Signature["mergeWith"] = EventSource_mergeWith;
-export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
-  EventSource_toReadonlyArrayAsync;

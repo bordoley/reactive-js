@@ -20,7 +20,6 @@
 - [merge](events_EventSource.EventSourceModule.md#merge)
 - [mergeMany](events_EventSource.EventSourceModule.md#mergemany)
 - [mergeWith](events_EventSource.EventSourceModule.md#mergewith)
-- [toReadonlyArrayAsync](events_EventSource.EventSourceModule.md#toreadonlyarrayasync)
 
 ## Methods
 
@@ -150,19 +149,3 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](events.EventSourceLike.md)<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
-
-___
-
-### toReadonlyArrayAsync
-
-▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](events.EventSourceLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](events.EventSourceLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
