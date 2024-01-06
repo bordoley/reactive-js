@@ -23,7 +23,7 @@ import DelegatingDisposableMixin, {
 import type * as Observable from "../../Observable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const ScanObserver_acc = Symbol("ScanObserver_acc");
 const ScanObserver_reducer = Symbol("ScanObserver_reducer");
@@ -101,7 +101,7 @@ const Observable_scan: Observable.Signature["scan"] = <T, TAcc>(
   pipe(
     Observer_createScanObserver<T, TAcc>,
     partial(reducer, initialValue),
-    Observable_liftPure,
+    Observable_liftPureDeferred,
   );
 
 export default Observable_scan;

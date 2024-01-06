@@ -1,6 +1,7 @@
 import {
   ObservableLike,
   ObservableLike_isDeferred,
+  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   SchedulerLike,
@@ -41,6 +42,8 @@ const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
         ),
       {
         [ObservableLike_isDeferred]: observable[ObservableLike_isDeferred],
+        [ObservableLike_isMulticasted]:
+          observable[ObservableLike_isMulticasted],
         [ObservableLike_isPure]: observable[ObservableLike_isPure],
         [ObservableLike_isRunnable]: false,
       },

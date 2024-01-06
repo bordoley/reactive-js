@@ -1,6 +1,7 @@
 import {
   ObservableLike,
   ObservableLike_isDeferred,
+  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -41,6 +42,7 @@ const Observable_onSubscribe: Observable.Signature["onSubscribe"] = (<T>(
       },
       {
         [ObservableLike_isRunnable]: obs[ObservableLike_isRunnable],
+        [ObservableLike_isMulticasted]: false,
         [ObservableLike_isDeferred]: true,
         [ObservableLike_isPure]: false,
       },

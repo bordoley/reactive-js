@@ -6,7 +6,7 @@ import { none, partial, pipe, strictEquality, } from "../../../functions.js";
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const DistinctUntilChangedObserver_equality = Symbol("DistinctUntilChangedObserver_equality");
 const DistinctUntilChangedObserver_prev = Symbol("DistinctUntilChangedObserver_prev");
 const DistinctUntilChangedObserver_hasValue = Symbol("DistinctUntilChangedObserver_hasValue");
@@ -30,5 +30,5 @@ const Observer_createDistinctUntilChangedObserver = /*@__PURE__*/ (() => createI
         }
     },
 }))))();
-const Observable_distinctUntilChanged = (options) => pipe(Observer_createDistinctUntilChangedObserver, partial(options?.equality ?? strictEquality), Observable_liftPure);
+const Observable_distinctUntilChanged = (options) => pipe(Observer_createDistinctUntilChangedObserver, partial(options?.equality ?? strictEquality), Observable_liftPureDeferred);
 export default Observable_distinctUntilChanged;

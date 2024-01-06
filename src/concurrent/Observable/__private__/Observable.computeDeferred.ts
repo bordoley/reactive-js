@@ -1,5 +1,6 @@
 import {
   ObservableLike_isDeferred,
+  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
 } from "../../../concurrent.js";
@@ -14,7 +15,8 @@ const Observable_computeDeferred: Observable.Signature["computeDeferred"] = <T>(
   Observable_computeWithConfig(
     computation,
     {
-      [ObservableLike_isDeferred]: true as const,
+      [ObservableLike_isDeferred]: true,
+      [ObservableLike_isMulticasted]: false,
       [ObservableLike_isPure]: false,
       [ObservableLike_isRunnable]: false,
     },

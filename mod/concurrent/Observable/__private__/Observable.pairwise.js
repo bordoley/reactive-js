@@ -6,7 +6,7 @@ import { none, tuple } from "../../../functions.js";
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const PairwiseObserver_hasPrev = Symbol("PairwiseObserver_hasPrev");
 const PairwiseObserver_prev = Symbol("PairwiseObserver_prev");
 const Observer_createPairwiseObserver = /*@__PURE__*/ (() => createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DelegatingDisposableMixin(), ObserverMixin()), function PairwiseObserver(instance, delegate) {
@@ -26,5 +26,5 @@ const Observer_createPairwiseObserver = /*@__PURE__*/ (() => createInstanceFacto
         this[PairwiseObserver_prev] = next;
     },
 }))))();
-const Observable_pairwise = () => Observable_liftPure((Observer_createPairwiseObserver));
+const Observable_pairwise = () => Observable_liftPureDeferred((Observer_createPairwiseObserver));
 export default Observable_pairwise;

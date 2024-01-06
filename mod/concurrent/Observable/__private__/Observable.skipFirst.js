@@ -7,7 +7,7 @@ import { partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const SkipFirstObserver_count = Symbol("SkipFirstObserver_count");
 const Observer_createSkipFirstObserver = /*@__PURE__*/ (() => createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DelegatingDisposableMixin(), ObserverMixin()), function SkipFirstObserver(instance, delegate, skipCount) {
     init(DelegatingDisposableMixin(), instance, delegate);
@@ -24,5 +24,5 @@ const Observer_createSkipFirstObserver = /*@__PURE__*/ (() => createInstanceFact
         }
     },
 }))))();
-const Observable_skipFirst = (options = {}) => pipe(Observer_createSkipFirstObserver, partial(clampPositiveInteger(options.count ?? 1)), Observable_liftPure);
+const Observable_skipFirst = (options = {}) => pipe(Observer_createSkipFirstObserver, partial(clampPositiveInteger(options.count ?? 1)), Observable_liftPureDeferred);
 export default Observable_skipFirst;

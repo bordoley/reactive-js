@@ -9,6 +9,7 @@ import {
 import {
   ObservableLike,
   ObservableLike_isDeferred,
+  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
@@ -117,6 +118,7 @@ const Observer_createSwitchAllObserver: <T>(
 const Observable_switchAll: Observable.Signature["switchAll"] = ((options?: {
   readonly innerType?: {
     readonly [ObservableLike_isDeferred]: boolean;
+    readonly [ObservableLike_isMulticasted]: boolean;
     readonly [ObservableLike_isPure]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
   };
@@ -124,6 +126,7 @@ const Observable_switchAll: Observable.Signature["switchAll"] = ((options?: {
   Observable_lift(
     options?.innerType ?? {
       [ObservableLike_isDeferred]: true,
+      [ObservableLike_isMulticasted]: false,
       [ObservableLike_isPure]: true,
       [ObservableLike_isRunnable]: true,
     },

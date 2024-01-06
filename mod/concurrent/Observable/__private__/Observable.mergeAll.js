@@ -3,7 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger, clampPositiveNonZeroInteger, } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { bindMethod, isSome, none, pipe, } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
@@ -83,6 +83,7 @@ const Observer_createMergeAllObserverOperator = /*@__PURE__*/ (() => {
 const Observable_mergeAll = ((options) => Observable_lift({
     ...(options?.innerType ?? {
         [ObservableLike_isDeferred]: true,
+        [ObservableLike_isMulticasted]: false,
         [ObservableLike_isPure]: true,
         [ObservableLike_isRunnable]: true,
     }),

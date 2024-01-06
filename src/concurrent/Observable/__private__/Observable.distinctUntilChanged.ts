@@ -21,7 +21,7 @@ import DelegatingDisposableMixin, {
 import type * as Observable from "../../Observable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const DistinctUntilChangedObserver_equality = Symbol(
   "DistinctUntilChangedObserver_equality",
@@ -99,7 +99,7 @@ const Observable_distinctUntilChanged: Observable.Signature["distinctUntilChange
     pipe(
       Observer_createDistinctUntilChangedObserver,
       partial(options?.equality ?? strictEquality),
-      Observable_liftPure,
+      Observable_liftPureDeferred,
     );
 
 export default Observable_distinctUntilChanged;

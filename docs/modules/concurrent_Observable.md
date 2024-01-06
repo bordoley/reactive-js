@@ -19,10 +19,10 @@
 
 ### Type Aliases
 
+- [AlwaysDeferObservableOperator](concurrent_Observable.md#alwaysdeferobservableoperator)
 - [Animation](concurrent_Observable.md#animation)
 - [ObservableOperatorWithSideEffects](concurrent_Observable.md#observableoperatorwithsideeffects)
-- [PureDeferringObservableOperator](concurrent_Observable.md#puredeferringobservableoperator)
-- [PureMulticastingObservableOperator](concurrent_Observable.md#puremulticastingobservableoperator)
+- [PureDeferredObservableOperator](concurrent_Observable.md#puredeferredobservableoperator)
 - [PureObservableOperator](concurrent_Observable.md#pureobservableoperator)
 - [Signature](concurrent_Observable.md#signature)
 
@@ -116,6 +116,40 @@
 
 ## Type Aliases
 
+### AlwaysDeferObservableOperator
+
+Ƭ **AlwaysDeferObservableOperator**<`TIn`, `TOut`, `TObservableInBase`\>: <TObservableIn\>(`obs`: `TObservableIn`) => `TObservableIn` extends [`PureObservableLike`](../interfaces/concurrent.PureObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TIn` | `TIn` |
+| `TOut` | `TOut` |
+| `TObservableInBase` | [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TIn`\> |
+
+#### Type declaration
+
+▸ <`TObservableIn`\>(`obs`): `TObservableIn` extends [`PureObservableLike`](../interfaces/concurrent.PureObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends `TObservableInBase` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `obs` | `TObservableIn` |
+
+##### Returns
+
+`TObservableIn` extends [`PureObservableLike`](../interfaces/concurrent.PureObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\>
+
+___
+
 ### Animation
 
 Ƭ **Animation**<`T`\>: [`Delay`](../interfaces/concurrent_Observable.Animation.Delay.md) \| [`Loop`](../interfaces/concurrent_Observable.Animation.Loop.md)<`T`\> \| `T` extends `number` ? [`KeyFrame`](../interfaces/concurrent_Observable.Animation.KeyFrame.md) \| [`Spring`](../interfaces/concurrent_Observable.Animation.Spring.md) \| [`Frame`](../interfaces/concurrent_Observable.Animation.Frame.md) & { `selector?`: `never`  } : [`KeyFrame`](../interfaces/concurrent_Observable.Animation.KeyFrame.md) \| [`Spring`](../interfaces/concurrent_Observable.Animation.Spring.md) \| [`Frame`](../interfaces/concurrent_Observable.Animation.Frame.md) & { `selector`: [`Function1`](functions.md#function1)<`number`, `T`\>  }
@@ -161,75 +195,9 @@ ___
 
 ___
 
-### PureDeferringObservableOperator
+### PureDeferredObservableOperator
 
-Ƭ **PureDeferringObservableOperator**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
-
-#### Type declaration
-
-▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>
-
-##### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TObservableIn` | extends [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TIn`\> |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observable` | `TObservableIn` |
-
-##### Returns
-
-`TObservableIn` extends [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>
-
-___
-
-### PureMulticastingObservableOperator
-
-Ƭ **PureMulticastingObservableOperator**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TIn`\> ? [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\> : `TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TIn`\> ? [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
-
-#### Type declaration
-
-▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TIn`\> ? [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\> : `TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TIn`\> ? [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>
-
-##### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TObservableIn` | extends [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TIn`\> |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observable` | `TObservableIn` |
-
-##### Returns
-
-`TObservableIn` extends [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TIn`\> ? [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\> : `TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TIn`\> ? [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>
-
-___
-
-### PureObservableOperator
-
-Ƭ **PureObservableOperator**<`TIn`, `TOut`, `TObservableInBase`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TIn`\> ? [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>
+Ƭ **PureDeferredObservableOperator**<`TIn`, `TOut`, `TObservableInBase`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TIn`\> ? [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>
 
 #### Type parameters
 
@@ -241,13 +209,46 @@ ___
 
 #### Type declaration
 
-▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TIn`\> ? [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>
+▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TIn`\> ? [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>
 
 ##### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `TObservableIn` | extends `TObservableInBase` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | `TObservableIn` |
+
+##### Returns
+
+`TObservableIn` extends [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TIn`\> ? [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>
+
+___
+
+### PureObservableOperator
+
+Ƭ **PureObservableOperator**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TIn`\> ? [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TIn` |
+| `TOut` |
+
+#### Type declaration
+
+▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TIn`\> ? [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TIn`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TIn`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TOut`\>
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TIn`\> |
 
 ##### Parameters
 
@@ -269,25 +270,25 @@ ___
 
 ### DeferredObservableWithSideEffectsType
 
-• `Const` **DeferredObservableWithSideEffectsType**: `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md), typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\>
+• `Const` **DeferredObservableWithSideEffectsType**: `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md), typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\>
 
 ___
 
 ### PureDeferredObservableType
 
-• `Const` **PureDeferredObservableType**: `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md), typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\>
+• `Const` **PureDeferredObservableType**: `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md), typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\>
 
 ___
 
 ### PureRunnableType
 
-• `Const` **PureRunnableType**: `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md), typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\>
+• `Const` **PureRunnableType**: `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md), typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\>
 
 ___
 
 ### RunnableWithSideEffectsType
 
-• `Const` **RunnableWithSideEffectsType**: `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md), typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\>
+• `Const` **RunnableWithSideEffectsType**: `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md), typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\>
 
 ___
 
@@ -321,7 +322,7 @@ ___
 
 ### backpressureStrategy
 
-▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -338,13 +339,13 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ___
 
 ### buffer
 
-▸ **buffer**<`T`\>(`options?`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, readonly `T`[], [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **buffer**<`T`\>(`options?`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, readonly `T`[], [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -361,13 +362,13 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, readonly `T`[], [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, readonly `T`[], [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ___
 
 ### catchError
 
-▸ **catchError**<`T`\>(`onError`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **catchError**<`T`\>(`onError`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -383,7 +384,7 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ___
 
@@ -605,222 +606,6 @@ ___
 
 [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
-
-▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-| `c` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TC`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
-
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-| `c` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TC`\> |
-| `d` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TD`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
-
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-| `c` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TC`\> |
-| `d` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TD`\> |
-| `e` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TE`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
-
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-| `TF` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-| `c` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TC`\> |
-| `d` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TD`\> |
-| `e` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TE`\> |
-| `f` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TF`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
-
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-| `TF` |
-| `TG` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-| `c` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TC`\> |
-| `d` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TD`\> |
-| `e` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TE`\> |
-| `f` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TF`\> |
-| `g` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TG`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
-
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-| `TF` |
-| `TG` |
-| `TH` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-| `c` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TC`\> |
-| `d` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TD`\> |
-| `e` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TE`\> |
-| `f` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TF`\> |
-| `g` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TG`\> |
-| `h` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TH`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
-
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-| `TF` |
-| `TG` |
-| `TH` |
-| `TI` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-| `c` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TC`\> |
-| `d` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TD`\> |
-| `e` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TE`\> |
-| `f` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TF`\> |
-| `g` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TG`\> |
-| `h` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TH`\> |
-| `i` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TI`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
-
 ▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
@@ -1037,7 +822,7 @@ ___
 
 [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -1055,9 +840,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -1077,9 +862,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -1101,9 +886,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -1127,9 +912,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -1155,9 +940,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -1185,9 +970,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -1217,9 +1002,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -1251,7 +1036,7 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 ▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
 
@@ -1645,7 +1430,7 @@ ___
 
 ### concatAll
 
-▸ **concatAll**<`T`\>(): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+▸ **concatAll**<`T`\>(): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -1655,9 +1440,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
-▸ **concatAll**<`T`\>(`options`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+▸ **concatAll**<`T`\>(`options`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -1670,11 +1455,11 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
 ▸ **concatAll**<`T`\>(`options`): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, `T`\>
 
@@ -1689,13 +1474,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
 [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, `T`\>
 
-▸ **concatAll**<`T`\>(`options`): [`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>, `T`\>
+▸ **concatAll**<`T`\>(`options`): [`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -1708,11 +1493,11 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>, `T`\>
+[`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>\>\>
 
 ▸ **concatAll**<`T`\>(`options`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
 
@@ -1727,7 +1512,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
@@ -1809,7 +1594,7 @@ ___
 
 [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>
 
-▸ **concatMany**<`T`\>(`observables`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>
+▸ **concatMany**<`T`\>(`observables`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -1825,7 +1610,7 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>
 
 ▸ **concatMany**<`T`\>(`observables`): [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>
 
@@ -1849,7 +1634,7 @@ ___
 
 ### concatMap
 
-▸ **concatMap**<`TA`, `TB`\>(`selector`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -1866,9 +1651,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
-▸ **concatMap**<`TA`, `TB`\>(`selector`, `options`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+▸ **concatMap**<`TA`, `TB`\>(`selector`, `options`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -1883,11 +1668,11 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 ▸ **concatMap**<`TA`, `TB`\>(`selector`, `options`): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`TA`, `TB`\>
 
@@ -1904,13 +1689,13 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
 [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`TA`, `TB`\>
 
-▸ **concatMap**<`TA`, `TB`\>(`selector`, `options`): [`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`TA`, `TB`\>
+▸ **concatMap**<`TA`, `TB`\>(`selector`, `options`): [`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -1923,13 +1708,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`TA`, `TB`\>
+[`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 ▸ **concatMap**<`TA`, `TB`\>(`selector`, `options`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TB`\>\>
 
@@ -1946,7 +1731,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
@@ -1956,7 +1741,7 @@ ___
 
 ### concatWith
 
-▸ **concatWith**<`T`\>(`snd`, `...tail`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1973,7 +1758,7 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
 
@@ -1994,7 +1779,7 @@ ___
 
 [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
 
-▸ **concatWith**<`T`\>(`snd`, `...tail`): [`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`T`, `T`\>
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -2011,7 +1796,7 @@ ___
 
 #### Returns
 
-[`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`T`, `T`\>
+[`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ▸ **concatWith**<`T`\>(`snd`, `...tail`): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> \| [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
 
@@ -2074,7 +1859,7 @@ ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`options?`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`ArrayBuffer`, `string`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`ArrayBuffer`\>\>
+▸ **decodeWithCharset**(`options?`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`ArrayBuffer`, `string`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`ArrayBuffer`\>\>
 
 #### Parameters
 
@@ -2087,7 +1872,7 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`ArrayBuffer`, `string`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`ArrayBuffer`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`ArrayBuffer`, `string`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`ArrayBuffer`\>\>
 
 ___
 
@@ -2137,7 +1922,7 @@ ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -2154,11 +1939,23 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ___
 
 ### empty
+
+▸ **empty**<`T`\>(): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>
 
 ▸ **empty**<`T`\>(`options?`): [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>
 
@@ -2183,17 +1980,17 @@ ___
 
 ### encodeUtf8
 
-▸ **encodeUtf8**(): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`string`, `Uint8Array`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`string`\>\>
+▸ **encodeUtf8**(): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`string`, `Uint8Array`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`string`\>\>
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`string`, `Uint8Array`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`string`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`string`, `Uint8Array`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`string`\>\>
 
 ___
 
 ### endWith
 
-▸ **endWith**<`T`\>(`value`, `...values`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **endWith**<`T`\>(`value`, `...values`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -2210,7 +2007,7 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ___
 
@@ -2238,7 +2035,7 @@ ___
 
 ### exhaust
 
-▸ **exhaust**<`T`\>(): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+▸ **exhaust**<`T`\>(): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -2248,9 +2045,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
-▸ **exhaust**<`T`\>(`options`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+▸ **exhaust**<`T`\>(`options`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -2263,11 +2060,11 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
 ▸ **exhaust**<`T`\>(`options`): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, `T`\>
 
@@ -2282,13 +2079,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
 [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, `T`\>
 
-▸ **exhaust**<`T`\>(`options`): [`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, `T`\>
+▸ **exhaust**<`T`\>(`options`): [`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -2301,11 +2098,11 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, `T`\>
+[`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>\>\>
 
 ▸ **exhaust**<`T`\>(`options`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
 
@@ -2320,7 +2117,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
@@ -2330,7 +2127,7 @@ ___
 
 ### exhaustMap
 
-▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -2347,9 +2144,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
-▸ **exhaustMap**<`TA`, `TB`\>(`selector`, `options`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`, `options`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -2364,11 +2161,11 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 ▸ **exhaustMap**<`TA`, `TB`\>(`selector`, `options`): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`TA`, `TB`\>
 
@@ -2385,13 +2182,13 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
 [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`TA`, `TB`\>
 
-▸ **exhaustMap**<`TA`, `TB`\>(`selector`, `options`): [`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`TA`, `TB`\>
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`, `options`): [`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -2406,11 +2203,11 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`TA`, `TB`\>
+[`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 ▸ **exhaustMap**<`TA`, `TB`\>(`selector`, `options`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TB`\>\>
 
@@ -2427,7 +2224,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
@@ -2888,7 +2685,7 @@ ___
 
 ### ignoreElements
 
-▸ **ignoreElements**<`T`\>(): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`unknown`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`unknown`\>\>
+▸ **ignoreElements**<`T`\>(): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`unknown`, `T`\>
 
 #### Type parameters
 
@@ -2898,13 +2695,13 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`unknown`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`unknown`\>\>
+[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`unknown`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **keep**<`T`\>(`predicate`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -2920,7 +2717,7 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
 
 ___
 
@@ -2967,7 +2764,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`\>
 
 #### Type parameters
 
@@ -2984,7 +2781,7 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`\>
 
 ___
 
@@ -3062,13 +2859,33 @@ ___
 
 | Name | Type |
 | :------ | :------ |
+| `fst` | [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> |
+| `snd` | [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> |
+| `...tail` | readonly [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>
+
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
 | `fst` | [`PureObservableLike`](../interfaces/concurrent.PureObservableLike.md)<`T`\> |
 | `snd` | [`PureObservableLike`](../interfaces/concurrent.PureObservableLike.md)<`T`\> |
 | `...tail` | readonly [`PureObservableLike`](../interfaces/concurrent.PureObservableLike.md)<`T`\>[] |
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>
 
 ▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>
 
@@ -3094,7 +2911,7 @@ ___
 
 ### mergeAll
 
-▸ **mergeAll**<`T`\>(`options?`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+▸ **mergeAll**<`T`\>(`options?`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -3113,9 +2930,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
-▸ **mergeAll**<`T`\>(`options`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+▸ **mergeAll**<`T`\>(`options`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -3131,11 +2948,11 @@ ___
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
-| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
 ▸ **mergeAll**<`T`\>(`options`): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, `T`\>
 
@@ -3153,13 +2970,13 @@ ___
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
-| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
 [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, `T`\>
 
-▸ **mergeAll**<`T`\>(`options`): [`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>, `T`\>
+▸ **mergeAll**<`T`\>(`options`): [`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -3175,11 +2992,11 @@ ___
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
-| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>, `T`\>
+[`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>\>\>
 
 ▸ **mergeAll**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
 
@@ -3197,7 +3014,7 @@ ___
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
-| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
@@ -3291,11 +3108,29 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `observables` | readonly [`PureObservableLike`](../interfaces/concurrent.PureObservableLike.md)<`T`\>[] |
+| `observables` | readonly [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>[] |
 
 #### Returns
 
 [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>
+
+▸ **mergeMany**<`T`\>(`observables`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly [`PureObservableLike`](../interfaces/concurrent.PureObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>
 
 ▸ **mergeMany**<`T`\>(`observables`): [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>
 
@@ -3319,7 +3154,7 @@ ___
 
 ### mergeMap
 
-▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -3340,9 +3175,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
-▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -3360,11 +3195,11 @@ ___
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
-| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 ▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options`): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`TA`, `TB`\>
 
@@ -3384,13 +3219,13 @@ ___
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
-| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
 [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`TA`, `TB`\>
 
-▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options`): [`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`TA`, `TB`\>
+▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options`): [`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -3408,11 +3243,11 @@ ___
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
-| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`TA`, `TB`\>
+[`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 ▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TB`\>\>
 
@@ -3432,7 +3267,7 @@ ___
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
-| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
@@ -3442,7 +3277,7 @@ ___
 
 ### mergeWith
 
-▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3459,7 +3294,7 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
 
@@ -3480,7 +3315,7 @@ ___
 
 [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
 
-▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`T`, `T`\>
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3497,9 +3332,9 @@ ___
 
 #### Returns
 
-[`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`T`, `T`\>
+[`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
-▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`PureMulticastingObservableOperator`](concurrent_Observable.md#puremulticastingobservableoperator)<`T`, `T`\>
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3516,7 +3351,7 @@ ___
 
 #### Returns
 
-[`PureMulticastingObservableOperator`](concurrent_Observable.md#puremulticastingobservableoperator)<`T`, `T`\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
 
@@ -3642,7 +3477,7 @@ ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **pairwise**<`T`\>(): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3652,7 +3487,7 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ___
 
@@ -3682,7 +3517,7 @@ ___
 
 ### repeat
 
-▸ **repeat**<`T`\>(`predicate`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
+▸ **repeat**<`T`\>(`predicate`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3698,9 +3533,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
 
-▸ **repeat**<`T`\>(`count`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
+▸ **repeat**<`T`\>(`count`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3716,9 +3551,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
 
-▸ **repeat**<`T`\>(): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
+▸ **repeat**<`T`\>(): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3728,13 +3563,13 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
 
 ___
 
 ### retry
 
-▸ **retry**<`T`\>(`shouldRetry?`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
+▸ **retry**<`T`\>(`shouldRetry?`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3750,7 +3585,7 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
 
 ___
 
@@ -3780,7 +3615,7 @@ ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `TAcc`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **scan**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `TAcc`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3798,13 +3633,13 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `TAcc`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `TAcc`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ___
 
 ### scanMany
 
-▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `TAcc`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `TAcc`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3822,9 +3657,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `TAcc`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `TAcc`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
-▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`, `options`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `TAcc`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`, `options`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `TAcc`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3840,11 +3675,11 @@ ___
 | `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TAcc`\>\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `TAcc`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `TAcc`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`, `options`): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `TAcc`\>
 
@@ -3862,13 +3697,13 @@ ___
 | `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TAcc`\>\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
 [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `TAcc`\>
 
-▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`, `options`): [`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`T`, `TAcc`\>
+▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`, `options`): [`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`T`, `TAcc`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3884,11 +3719,11 @@ ___
 | `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TAcc`\>\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`T`, `TAcc`\>
+[`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`T`, `TAcc`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`, `options`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TAcc`\>\>
 
@@ -3906,7 +3741,7 @@ ___
 | `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TAcc`\>\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
@@ -3916,7 +3751,7 @@ ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **skipFirst**<`T`\>(`options?`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3933,13 +3768,13 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ___
 
 ### startWith
 
-▸ **startWith**<`T`\>(`value`, `...values`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **startWith**<`T`\>(`value`, `...values`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3956,7 +3791,7 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ___
 
@@ -3987,7 +3822,7 @@ ___
 
 ### subscribeOn
 
-▸ **subscribeOn**<`T`\>(`scheduler`, `options?`): [`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`T`, `T`\>
+▸ **subscribeOn**<`T`\>(`scheduler`, `options?`): <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -4006,13 +3841,31 @@ ___
 
 #### Returns
 
-[`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`T`, `T`\>
+`fn`
+
+▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`, `TObservableIn`\> |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | `TObservableIn` |
+
+##### Returns
+
+`TObservableIn` extends [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\> ? [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> : `TObservableIn` extends [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>
 
 ___
 
 ### switchAll
 
-▸ **switchAll**<`T`\>(): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+▸ **switchAll**<`T`\>(): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -4022,9 +3875,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
-▸ **switchAll**<`T`\>(`options`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+▸ **switchAll**<`T`\>(`options`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -4037,11 +3890,11 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>\>
 
 ▸ **switchAll**<`T`\>(`options`): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, `T`\>
 
@@ -4056,13 +3909,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
 [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, `T`\>
 
-▸ **switchAll**<`T`\>(`options`): [`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>, `T`\>
+▸ **switchAll**<`T`\>(`options`): [`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -4075,11 +3928,11 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>, `T`\>
+[`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`T`\>\>\>
 
 ▸ **switchAll**<`T`\>(`options`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
 
@@ -4094,7 +3947,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
@@ -4104,7 +3957,7 @@ ___
 
 ### switchMap
 
-▸ **switchMap**<`TA`, `TB`\>(`selector`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+▸ **switchMap**<`TA`, `TB`\>(`selector`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -4121,9 +3974,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
-▸ **switchMap**<`TA`, `TB`\>(`selector`, `options`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+▸ **switchMap**<`TA`, `TB`\>(`selector`, `options`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -4138,11 +3991,11 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 ▸ **switchMap**<`TA`, `TB`\>(`selector`, `options`): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`TA`, `TB`\>
 
@@ -4159,13 +4012,13 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
 [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`TA`, `TB`\>
 
-▸ **switchMap**<`TA`, `TB`\>(`selector`, `options`): [`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`TA`, `TB`\>
+▸ **switchMap**<`TA`, `TB`\>(`selector`, `options`): [`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -4180,11 +4033,11 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
-[`PureDeferringObservableOperator`](concurrent_Observable.md#puredeferringobservableoperator)<`TA`, `TB`\>
+[`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 ▸ **switchMap**<`TA`, `TB`\>(`selector`, `options`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`TB`\>\>
 
@@ -4201,7 +4054,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
+| `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
@@ -4211,7 +4064,7 @@ ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **takeFirst**<`T`\>(`options?`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4228,13 +4081,13 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ___
 
 ### takeLast
 
-▸ **takeLast**<`T`\>(`options?`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **takeLast**<`T`\>(`options?`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4251,13 +4104,13 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ___
 
 ### takeUntil
 
-▸ **takeUntil**<`T`\>(`notifier`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **takeUntil**<`T`\>(`notifier`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4273,7 +4126,7 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ▸ **takeUntil**<`T`\>(`notifier`): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
 
@@ -4311,7 +4164,7 @@ ___
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
 
-▸ **takeUntil**<`T`\>(`notifier`): [`PureMulticastingObservableOperator`](concurrent_Observable.md#puremulticastingobservableoperator)<`T`, `T`\>
+▸ **takeUntil**<`T`\>(`notifier`): [`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4327,13 +4180,13 @@ ___
 
 #### Returns
 
-[`PureMulticastingObservableOperator`](concurrent_Observable.md#puremulticastingobservableoperator)<`T`, `T`\>
+[`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4351,13 +4204,13 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ___
 
 ### throttle
 
-▸ **throttle**<`T`\>(`duration`, `options?`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **throttle**<`T`\>(`duration`, `options?`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4375,13 +4228,13 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ___
 
 ### throwIfEmpty
 
-▸ **throwIfEmpty**<`T`\>(`factory`, `options?`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+▸ **throwIfEmpty**<`T`\>(`factory`, `options?`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4398,7 +4251,7 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>
 
 ___
 
@@ -4494,7 +4347,7 @@ ___
 
 ### withCurrentTime
 
-▸ **withCurrentTime**<`TA`, `TB`\>(`selector`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+▸ **withCurrentTime**<`TA`, `TB`\>(`selector`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -4511,13 +4364,13 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `TB`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 ___
 
 ### withLatestFrom
 
-▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -4536,7 +4389,7 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`TA`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
+[`PureDeferredObservableOperator`](concurrent_Observable.md#puredeferredobservableoperator)<`TA`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 ▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`TA`, `T`\>
 
@@ -4580,7 +4433,7 @@ ___
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
 
-▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`PureMulticastingObservableOperator`](concurrent_Observable.md#puremulticastingobservableoperator)<`TA`, `T`\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`TA`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -4599,7 +4452,7 @@ ___
 
 #### Returns
 
-[`PureMulticastingObservableOperator`](concurrent_Observable.md#puremulticastingobservableoperator)<`TA`, `T`\>
+[`AlwaysDeferObservableOperator`](concurrent_Observable.md#alwaysdeferobservableoperator)<`TA`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`TA`\>\>
 
 ___
 
@@ -4821,222 +4674,6 @@ ___
 
 [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
-
-▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-| `c` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TC`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
-
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-| `c` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TC`\> |
-| `d` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TD`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
-
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-| `c` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TC`\> |
-| `d` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TD`\> |
-| `e` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TE`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
-
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-| `TF` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-| `c` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TC`\> |
-| `d` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TD`\> |
-| `e` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TE`\> |
-| `f` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TF`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
-
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-| `TF` |
-| `TG` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-| `c` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TC`\> |
-| `d` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TD`\> |
-| `e` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TE`\> |
-| `f` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TF`\> |
-| `g` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TG`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
-
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-| `TF` |
-| `TG` |
-| `TH` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-| `c` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TC`\> |
-| `d` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TD`\> |
-| `e` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TE`\> |
-| `f` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TF`\> |
-| `g` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TG`\> |
-| `h` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TH`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
-
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
-| `TF` |
-| `TG` |
-| `TH` |
-| `TI` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TA`\> |
-| `b` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TB`\> |
-| `c` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TC`\> |
-| `d` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TD`\> |
-| `e` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TE`\> |
-| `f` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TF`\> |
-| `g` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TG`\> |
-| `h` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TH`\> |
-| `i` | [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<`TI`\> |
-
-#### Returns
-
-[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
-
 ▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
@@ -5253,7 +4890,7 @@ ___
 
 [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
+▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -5271,9 +4908,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -5293,9 +4930,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -5317,9 +4954,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -5343,9 +4980,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -5371,9 +5008,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -5401,9 +5038,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -5433,9 +5070,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -5467,7 +5104,7 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+[`PureDeferredObservableLike`](../interfaces/concurrent.PureDeferredObservableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 ▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
 

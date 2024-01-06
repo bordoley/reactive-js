@@ -1,5 +1,6 @@
 import {
   ObservableLike_isDeferred,
+  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
@@ -12,6 +13,7 @@ const Observable_createPureRunnableWithSideEffects = <T>(
 ) =>
   Observable_createWithConfig(f, {
     [ObservableLike_isDeferred]: true,
+    [ObservableLike_isMulticasted]: false,
     [ObservableLike_isPure]: false,
     [ObservableLike_isRunnable]: true,
   });

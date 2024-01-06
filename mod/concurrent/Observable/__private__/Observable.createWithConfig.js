@@ -1,31 +1,19 @@
 /// <reference types="./Observable.createWithConfig.d.ts" />
 
-import { __DEV__ } from "../../../__internal__/constants.js";
-import { createInstanceFactory, mix, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
-import { error, none, raiseIf } from "../../../functions.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
+import { error, none } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
+import ObservableMixin from "../../__mixins__/ObservableMixin.js";
 const Observable_createWithConfig = 
 /*@__PURE__*/ (() => {
     const CreateObservable_effect = Symbol("CreateObservable_effect");
-    return createInstanceFactory(mix(function CreateObservable(instance, effect, config) {
+    return createInstanceFactory(mix(include(ObservableMixin), function CreateObservable(instance, effect, config) {
+        init(ObservableMixin, instance, config);
         instance[CreateObservable_effect] = effect;
-        const configRunnable = config[ObservableLike_isRunnable];
-        const configDeferred = config[ObservableLike_isDeferred];
-        const configPure = config[ObservableLike_isPure];
-        if (__DEV__) {
-            raiseIf(configRunnable && !configDeferred, "Attempting to create a non-deferred, runnable observable, which is an illegal state");
-            raiseIf(!configDeferred && !configPure, "Attempting to create a non-deferred, not-pure observable which is an illegal state");
-        }
-        instance[ObservableLike_isRunnable] = configRunnable;
-        instance[ObservableLike_isDeferred] = configDeferred;
-        instance[ObservableLike_isPure] = configPure;
         return instance;
     }, props({
         [CreateObservable_effect]: none,
-        [ObservableLike_isDeferred]: false,
-        [ObservableLike_isPure]: false,
-        [ObservableLike_isRunnable]: false,
     }), {
         [ObservableLike_observe](observer) {
             try {

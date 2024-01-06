@@ -17,7 +17,7 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
   const DecodeWithCharsetObserver_delegate = Symbol(
@@ -102,7 +102,7 @@ const Observable_decodeWithCharset: Observable.Signature["decodeWithCharset"] =
     pipe(
       Observer_createDecodeWithCharsetObserver,
       partial(options?.charset ?? "utf-8", options),
-      Observable_liftPure,
+      Observable_liftPureDeferred,
     );
 
 export default Observable_decodeWithCharset;

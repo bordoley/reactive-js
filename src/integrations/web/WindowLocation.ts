@@ -9,6 +9,7 @@ import { pick } from "../../computations.js";
 import {
   DeferredObservableLike,
   ObservableLike_isDeferred,
+  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -35,7 +36,6 @@ import {
   newInstance,
   none,
   pipe,
-  pipeLazy,
   raiseIf,
   returns,
 } from "../../functions.js";
@@ -184,6 +184,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       }),
       {
         [ObservableLike_isDeferred]: false as const,
+        [ObservableLike_isMulticasted]: true as const,
         [ObservableLike_isRunnable]: false as const,
         [ObservableLike_isPure]: true as const,
 
@@ -277,38 +278,37 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       ),
       Streamable.syncState(
         state =>
-          Observable.defer(
-            // Initialize the history state on page load
-            pipeLazy(
-              window,
-              Element.eventSource<Window, "popstate">("popstate"),
-              EventSource.map((e: PopStateEvent) => {
-                const { counter, title } = e.state as {
-                  counter: number;
-                  title: string;
-                };
+          // Initialize the history state on page load
+          pipe(
+            window,
+            Element.eventSource<Window, "popstate">("popstate"),
+            EventSource.map((e: PopStateEvent) => {
+              const { counter, title } = e.state as {
+                counter: number;
+                title: string;
+              };
 
-                const uri = createWindowLocationURIWithPrototype({
-                  ...getCurrentWindowLocationURI(),
-                  title,
-                });
+              const uri = createWindowLocationURIWithPrototype({
+                ...getCurrentWindowLocationURI(),
+                title,
+              });
 
-                return { counter, replace: true, uri };
-              }),
-              Observable.fromEventSource(),
-              Observable.mergeWith(
-                pipe(
-                  {
-                    counter: 0,
-                    replace: true,
-                    uri: state.uri,
-                  },
-                  Observable.fromValue(),
-                ),
+              return { counter, replace: true, uri };
+            }),
+            Observable.fromEventSource(),
+            Observable.mergeWith(
+              pipe(
+                {
+                  counter: 0,
+                  replace: true,
+                  uri: state.uri,
+                },
+                Observable.fromValue(),
               ),
-              Observable.map<TState, Updater<TState>>(returns),
             ),
+            Observable.map<TState, Updater<TState>>(returns),
           ),
+
         (oldState, state) => {
           const locationChanged = !areURIsEqual(state.uri, oldState.uri);
           const titleChanged = oldState.uri.title !== state.uri.title;

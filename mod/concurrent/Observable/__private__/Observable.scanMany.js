@@ -1,6 +1,6 @@
 /// <reference types="./Observable.scanMany.d.ts" />
 
-import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { bindMethod, invoke, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -16,8 +16,6 @@ const Observable_scanMany = ((scanner, initialValue, options) => {
         [ObservableLike_isRunnable]: true,
     };
     return (observable) => {
-        const isDeferred = innerType[ObservableLike_isDeferred] &&
-            observable[ObservableLike_isDeferred];
         const isPure = innerType[ObservableLike_isPure] && observable[ObservableLike_isPure];
         const isRunnable = innerType[ObservableLike_isRunnable] &&
             observable[ObservableLike_isRunnable];
@@ -26,13 +24,15 @@ const Observable_scanMany = ((scanner, initialValue, options) => {
             pipe(Observable_zipLatest(accFeedbackStream, observable), Observable_switchMap(([acc, next]) => scanner(acc, next), {
                 innerType: {
                     [ObservableLike_isDeferred]: true,
+                    [ObservableLike_isMulticasted]: false,
                     [ObservableLike_isPure]: false,
                     [ObservableLike_isRunnable]: false,
                 },
             }), Observable_forEach(bindMethod(accFeedbackStream, SinkLike_notify)), invoke(ObservableLike_observe, observer));
             accFeedbackStream[SinkLike_notify](initialValue());
         }, {
-            [ObservableLike_isDeferred]: isDeferred || (!isDeferred && !isPure),
+            [ObservableLike_isDeferred]: true,
+            [ObservableLike_isMulticasted]: false,
             [ObservableLike_isPure]: isPure,
             [ObservableLike_isRunnable]: isRunnable,
         });

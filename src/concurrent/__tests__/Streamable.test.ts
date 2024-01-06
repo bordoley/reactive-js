@@ -303,7 +303,9 @@ testModule(
               Observable.takeFirst({ count: 2 }),
             ),
           (oldState, newState) =>
-            newState !== oldState ? Observable.empty() : Observable.empty(),
+            newState !== oldState
+              ? Observable.empty({ delay: 0 })
+              : Observable.empty({ delay: 0 }),
         ),
         invoke(StreamableLike_stream, vts),
       );
@@ -334,12 +336,12 @@ testModule(
       const stream = pipe(
         Streamable.createStateStore(returns(-1)),
         Streamable.syncState(
-          _state => Observable.empty(),
+          _state => Observable.empty({ delay: 1 }),
           (oldState, newState) => {
             updateCnt++;
             return newState !== oldState
-              ? Observable.empty()
-              : Observable.empty();
+              ? Observable.empty({ delay: 1 })
+              : Observable.empty({ delay: 1 });
           },
           { throttleDuration: 20 },
         ),

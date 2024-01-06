@@ -22,7 +22,7 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
   const ThrowIfEmptyObserver_delegate = Symbol("ThrowIfEmptyObserver_delegate");
@@ -90,7 +90,7 @@ const Observable_throwIfEmpty: Observable.Signature["throwIfEmpty"] = (
   pipe(
     Observer_createThrowIfEmptyObserver,
     partial(factory),
-    Observable_liftPure,
+    Observable_liftPureDeferred,
   );
 
 export default Observable_throwIfEmpty;

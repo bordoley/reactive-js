@@ -5,7 +5,14 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObservableLike, ObserverLike } from "../../../concurrent.js";
+import {
+  ObservableLike,
+  ObservableLike_isDeferred,
+  ObservableLike_isMulticasted,
+  ObservableLike_isPure,
+  ObservableLike_isRunnable,
+  ObserverLike,
+} from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import {
   Function2,
@@ -127,7 +134,12 @@ const Observable_withLatestFrom: Observable.Signature["withLatestFrom"] = (<
   pipe(
     Observer_createWithLatestFromObserver,
     partial(other, selector),
-    Observable_lift(other),
+    Observable_lift({
+      [ObservableLike_isDeferred]: true,
+      [ObservableLike_isMulticasted]: false,
+      [ObservableLike_isPure]: other[ObservableLike_isPure],
+      [ObservableLike_isRunnable]: other[ObservableLike_isRunnable],
+    }),
   )) as Observable.Signature["withLatestFrom"];
 
 export default Observable_withLatestFrom;
