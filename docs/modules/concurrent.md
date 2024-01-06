@@ -43,6 +43,7 @@
 - [DispatcherLike\_complete](concurrent.md#dispatcherlike_complete)
 - [FlowableLike\_flow](concurrent.md#flowablelike_flow)
 - [ObservableLike\_isDeferred](concurrent.md#observablelike_isdeferred)
+- [ObservableLike\_isMulticasted](concurrent.md#observablelike_ismulticasted)
 - [ObservableLike\_isPure](concurrent.md#observablelike_ispure)
 - [ObservableLike\_isRunnable](concurrent.md#observablelike_isrunnable)
 - [ObservableLike\_observe](concurrent.md#observablelike_observe)
@@ -117,6 +118,12 @@ ___
 ### ObservableLike\_isDeferred
 
 • `Const` **ObservableLike\_isDeferred**: unique `symbol`
+
+___
+
+### ObservableLike\_isMulticasted
+
+• `Const` **ObservableLike\_isMulticasted**: unique `symbol`
 
 ___
 

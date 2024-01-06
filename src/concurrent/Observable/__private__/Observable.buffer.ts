@@ -19,7 +19,7 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const BufferObserver_delegate = Symbol("BufferObserver_delegate");
 const BufferObserver_buffer = Symbol("BufferObserver_buffer");
@@ -103,7 +103,7 @@ const Observable_buffer: Observable.Signature["buffer"] = <T>(options?: {
   pipe(
     Observer_createBufferObserver<T>,
     partial(options?.count),
-    Observable_liftPure,
+    Observable_liftPureDeferred,
   );
 
 export default Observable_buffer;

@@ -11,7 +11,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const BufferObserver_delegate = Symbol("BufferObserver_delegate");
 const BufferObserver_buffer = Symbol("BufferObserver_buffer");
 const BufferObserver_count = Symbol("BufferingLike_count");
@@ -48,5 +48,5 @@ const Observer_createBufferObserver = /*@__PURE__*/ (() => createInstanceFactory
         }
     },
 }))))();
-const Observable_buffer = (options) => pipe((Observer_createBufferObserver), partial(options?.count), Observable_liftPure);
+const Observable_buffer = (options) => pipe((Observer_createBufferObserver), partial(options?.count), Observable_liftPureDeferred);
 export default Observable_buffer;

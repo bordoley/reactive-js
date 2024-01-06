@@ -1,5 +1,6 @@
 import {
   ObservableLike_isDeferred,
+  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
 } from "../../../concurrent.js";
@@ -20,6 +21,7 @@ const Observable_flatMapAsync: Observable.Signature["flatMapAsync"] = <TA, TB>(
   return Observable_concatMap(mapper, {
     innerType: {
       [ObservableLike_isDeferred]: true,
+      [ObservableLike_isMulticasted]: false,
       [ObservableLike_isPure]: false,
       [ObservableLike_isRunnable]: false,
     },

@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
@@ -10,7 +10,6 @@ import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
-import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
@@ -72,11 +71,11 @@ const Observable_latest = /*@__PURE__*/ (() => {
                 observable[ObservableLike_observe](innerObserver);
             }
         };
-        const isDeferred = Observable_allAreDeferred(observables);
         const isPure = Observable_allArePure(observables);
         const isRunnable = Observable_allAreRunnable(observables);
         return Observable_createWithConfig(onSubscribe, {
-            [ObservableLike_isDeferred]: isDeferred || (!isDeferred && !isPure && !isRunnable),
+            [ObservableLike_isDeferred]: true,
+            [ObservableLike_isMulticasted]: false,
             [ObservableLike_isPure]: isPure,
             [ObservableLike_isRunnable]: isRunnable,
         });

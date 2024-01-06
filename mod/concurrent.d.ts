@@ -119,6 +119,7 @@ export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {
 export interface ObserverLike<T = unknown> extends DispatcherLike<T>, SinkLike<T>, SchedulerLike {
 }
 export declare const ObservableLike_isDeferred: unique symbol;
+export declare const ObservableLike_isMulticasted: unique symbol;
 export declare const ObservableLike_isPure: unique symbol;
 export declare const ObservableLike_isRunnable: unique symbol;
 export declare const ObservableLike_observe: unique symbol;
@@ -130,6 +131,10 @@ export interface ObservableLike<T = unknown> {
      * Indicates if the `ObservableLike` is deferred, ie. cold.
      */
     readonly [ObservableLike_isDeferred]: boolean;
+    /**
+     * Indicates if the `ObservableLike` is multicasted, ie. hot.
+     */
+    readonly [ObservableLike_isMulticasted]: boolean;
     /**
      * Indicates if subscribing to the `ObservableLike` is free of side-effects
      */
@@ -151,6 +156,7 @@ export interface ObservableLike<T = unknown> {
  */
 export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
     readonly [ObservableLike_isDeferred]: true;
+    readonly [ObservableLike_isMulticasted]: false;
 }
 /**
  * @noInheritDoc
@@ -168,6 +174,7 @@ export interface PureObservableLike<T = unknown> extends ObservableLike<T> {
  * @noInheritDoc
  */
 export interface PureDeferredObservableLike<T = unknown> extends DeferredObservableLike<T>, PureObservableLike<T> {
+    readonly [ObservableLike_isMulticasted]: false;
     readonly [ObservableLike_isPure]: true;
     readonly [ObservableLike_isDeferred]: true;
 }
@@ -197,6 +204,7 @@ export interface RunnableWithSideEffectsLike<T = unknown> extends RunnableLike<T
  */
 export interface MulticastObservableLike<T = unknown> extends PureObservableLike<T> {
     readonly [ObservableLike_isDeferred]: false;
+    readonly [ObservableLike_isMulticasted]: true;
     readonly [ObservableLike_isRunnable]: false;
 }
 /**

@@ -1,4 +1,4 @@
-import { DeferredObservableWithSideEffectsLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, RunnableWithSideEffectsLike } from "../../../concurrent.js";
+import { DeferredObservableWithSideEffectsLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, RunnableWithSideEffectsLike } from "../../../concurrent.js";
 import { Factory, Optional } from "../../../functions.js";
 import { DisposableLike } from "../../../utils.js";
 type EffectsMode = "batched" | "combine-latest";
@@ -79,10 +79,10 @@ declare class ComputeContext {
 }
 export declare const assertCurrentContext: () => ComputeContext;
 interface ObservableComputeWithConfig {
-    computeWithConfig<T>(computation: Factory<T>, config: Pick<RunnableWithSideEffectsLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>, options?: {
+    computeWithConfig<T>(computation: Factory<T>, config: Pick<RunnableWithSideEffectsLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isMulticasted | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>, options?: {
         readonly mode?: "batched" | "combine-latest";
     }): RunnableWithSideEffectsLike<T>;
-    computeWithConfig<T>(computation: Factory<T>, config: Pick<DeferredObservableWithSideEffectsLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>, options?: {
+    computeWithConfig<T>(computation: Factory<T>, config: Pick<DeferredObservableWithSideEffectsLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isMulticasted | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>, options?: {
         readonly mode?: "batched" | "combine-latest";
     }): DeferredObservableWithSideEffectsLike<T>;
 }

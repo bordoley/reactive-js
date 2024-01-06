@@ -27,7 +27,7 @@ import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() => {
   const TakeLastObserver_queue = Symbol("TakeLastObserver_queue");
@@ -102,7 +102,7 @@ const Observable_takeLast: Observable.Signature["takeLast"] = (
   pipe(
     Observer_createTakeLastObserver,
     partial(clampPositiveInteger(options.count ?? 1)),
-    Observable_liftPure,
+    Observable_liftPureDeferred,
   );
 
 export default Observable_takeLast;

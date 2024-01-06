@@ -2,7 +2,7 @@
 
 import { clampPositiveInteger } from "../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
-import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../concurrent.js";
+import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../concurrent.js";
 import { EventListenerLike_isErrorSafe, SinkLike_notify } from "../events.js";
 import { error, isSome, newInstance, none, pipe } from "../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, IndexedQueueLike_get, QueueLike_count, QueueableLike_enqueue, } from "../utils.js";
@@ -40,6 +40,7 @@ export const create = /*@__PURE__*/ (() => {
     }), {
         [EventListenerLike_isErrorSafe]: true,
         [ObservableLike_isDeferred]: false,
+        [ObservableLike_isMulticasted]: true,
         [ObservableLike_isPure]: true,
         [ObservableLike_isRunnable]: false,
         [SinkLike_notify](next) {

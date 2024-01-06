@@ -1,7 +1,7 @@
 /// <reference types="./Streamable.create.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, StreamableLike_stream, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, StreamableLike_stream, } from "../../../concurrent.js";
 import { isSome, none, pipe, raiseIf, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Observable from "../../Observable.js";
@@ -16,6 +16,7 @@ const Stream_create = /*@__PURE__*/ (() => {
             [DispatchedObservableLike_dispatcher]: none,
         }), {
             [ObservableLike_isDeferred]: true,
+            [ObservableLike_isMulticasted]: false,
             [ObservableLike_isPure]: true,
             [ObservableLike_isRunnable]: false,
             [ObservableLike_observe](observer) {

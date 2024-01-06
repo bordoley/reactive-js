@@ -152,7 +152,9 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
     pipe(result1, expectArrayEquals([1, 4]));
 })), describe("syncState", test("without throttling", () => {
     const vts = VirtualTimeScheduler.create();
-    const stream = pipe(Streamable.createStateStore(returns(-1)), Streamable.syncState(state => pipe(Enumerable.range(state + 10), Observable.fromEnumerable({ delay: 10 }), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (oldState, newState) => newState !== oldState ? Observable.empty() : Observable.empty()), invoke(StreamableLike_stream, vts));
+    const stream = pipe(Streamable.createStateStore(returns(-1)), Streamable.syncState(state => pipe(Enumerable.range(state + 10), Observable.fromEnumerable({ delay: 10 }), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (oldState, newState) => newState !== oldState
+        ? Observable.empty({ delay: 0 })
+        : Observable.empty({ delay: 0 })), invoke(StreamableLike_stream, vts));
     pipe((x) => x + 2, Observable.fromValue({ delay: 5 }), Observable.enqueue(stream), Observable.subscribe(vts));
     const result = [];
     pipe(stream, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(vts));
@@ -161,11 +163,11 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
 }), test("with throttling", () => {
     const vts = VirtualTimeScheduler.create();
     let updateCnt = 0;
-    const stream = pipe(Streamable.createStateStore(returns(-1)), Streamable.syncState(_state => Observable.empty(), (oldState, newState) => {
+    const stream = pipe(Streamable.createStateStore(returns(-1)), Streamable.syncState(_state => Observable.empty({ delay: 1 }), (oldState, newState) => {
         updateCnt++;
         return newState !== oldState
-            ? Observable.empty()
-            : Observable.empty();
+            ? Observable.empty({ delay: 1 })
+            : Observable.empty({ delay: 1 });
     }, { throttleDuration: 20 }), invoke(StreamableLike_stream, vts));
     pipe((x) => x + 2, Observable.fromValue({ delay: 1 }), Observable.repeat(19), Observable.enqueue(stream), Observable.subscribe(vts));
     vts[VirtualTimeSchedulerLike_run]();

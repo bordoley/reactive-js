@@ -9,7 +9,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
     const DecodeWithCharsetObserver_delegate = Symbol("DecodeWithCharsetObserver_delegate");
     const DecodeWithCharsetObserver_textDecoder = Symbol("DecodeWithCharsetObserver_textDecoder");
@@ -46,5 +46,5 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         },
     })));
 })();
-const Observable_decodeWithCharset = options => pipe(Observer_createDecodeWithCharsetObserver, partial(options?.charset ?? "utf-8", options), Observable_liftPure);
+const Observable_decodeWithCharset = options => pipe(Observer_createDecodeWithCharsetObserver, partial(options?.charset ?? "utf-8", options), Observable_liftPureDeferred);
 export default Observable_decodeWithCharset;

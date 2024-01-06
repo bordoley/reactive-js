@@ -16,7 +16,7 @@ import DelegatingDisposableMixin, {
 import type * as Observable from "../../Observable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const Observer_createWithCurrentTimeObserver: <TA, TB>(
   delegate: ObserverLike<TB>,
@@ -82,7 +82,7 @@ const Observable_withCurrentTime: Observable.Signature["withCurrentTime"] = <
   pipe(
     Observer_createWithCurrentTimeObserver,
     partial(selector),
-    Observable_liftPure,
+    Observable_liftPureDeferred,
   );
 
 export default Observable_withCurrentTime;

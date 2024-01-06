@@ -4,7 +4,7 @@ import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const Observable_catchError: Observable.Signature["catchError"] =
   /*@__PURE__*/ (<T>() => {
@@ -24,7 +24,7 @@ const Observable_catchError: Observable.Signature["catchError"] =
         );
 
     return (errorHandler: SideEffect1<Error>) =>
-      Observable_liftPure(createCatchErrorObserver(errorHandler));
+      Observable_liftPureDeferred(createCatchErrorObserver(errorHandler));
   })();
 
 export default Observable_catchError;

@@ -29,6 +29,7 @@
 ### Properties
 
 - [[ObservableLike\_isDeferred]](concurrent.MulticastObservableLike.md#[observablelike_isdeferred])
+- [[ObservableLike\_isMulticasted]](concurrent.MulticastObservableLike.md#[observablelike_ismulticasted])
 - [[ObservableLike\_isRunnable]](concurrent.MulticastObservableLike.md#[observablelike_isrunnable])
 
 ## Properties
@@ -43,10 +44,20 @@ PureObservableLike.\_\_@ObservableLike\_isDeferred@24519
 
 ___
 
+### [ObservableLike\_isMulticasted]
+
+• `Readonly` **[ObservableLike\_isMulticasted]**: ``true``
+
+#### Overrides
+
+PureObservableLike.\_\_@ObservableLike\_isMulticasted@24520
+
+___
+
 ### [ObservableLike\_isRunnable]
 
 • `Readonly` **[ObservableLike\_isRunnable]**: ``false``
 
 #### Overrides
 
-PureObservableLike.\_\_@ObservableLike\_isRunnable@24521
+PureObservableLike.\_\_@ObservableLike\_isRunnable@24522

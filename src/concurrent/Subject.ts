@@ -10,6 +10,7 @@ import {
 import {
   DispatcherLike_complete,
   ObservableLike_isDeferred,
+  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -53,6 +54,7 @@ export const create: <T>(options?: {
           SubjectLike<T>,
           | typeof ObservableLike_observe
           | typeof ObservableLike_isDeferred
+          | typeof ObservableLike_isMulticasted
           | typeof ObservableLike_isPure
           | typeof ObservableLike_isRunnable
           | typeof EventListenerLike_isErrorSafe
@@ -98,6 +100,7 @@ export const create: <T>(options?: {
       {
         [EventListenerLike_isErrorSafe]: true as const,
         [ObservableLike_isDeferred]: false as const,
+        [ObservableLike_isMulticasted]: true as const,
         [ObservableLike_isPure]: true as const,
         [ObservableLike_isRunnable]: false as const,
 

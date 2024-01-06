@@ -36,7 +36,7 @@ import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_fromValue from "./Observable.fromValue.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 const Observer_createThrottleObserver: <T>(
@@ -185,7 +185,7 @@ const Observable_throttle: Observable.Signature["throttle"] = (
   return pipe(
     Observer_createThrottleObserver,
     partial(durationObservable, mode),
-    Observable_liftPure,
+    Observable_liftPureDeferred,
   );
 };
 

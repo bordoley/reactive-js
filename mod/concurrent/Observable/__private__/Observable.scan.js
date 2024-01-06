@@ -7,7 +7,7 @@ import { DisposableLike_dispose } from "../../../utils.js";
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const ScanObserver_acc = Symbol("ScanObserver_acc");
 const ScanObserver_reducer = Symbol("ScanObserver_reducer");
 const Observer_createScanObserver = /*@__PURE__*/ (() => {
@@ -34,5 +34,5 @@ const Observer_createScanObserver = /*@__PURE__*/ (() => {
         },
     })));
 })();
-const Observable_scan = (reducer, initialValue) => pipe((Observer_createScanObserver), partial(reducer, initialValue), Observable_liftPure);
+const Observable_scan = (reducer, initialValue) => pipe((Observer_createScanObserver), partial(reducer, initialValue), Observable_liftPureDeferred);
 export default Observable_scan;

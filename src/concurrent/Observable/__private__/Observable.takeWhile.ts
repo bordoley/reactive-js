@@ -16,7 +16,7 @@ import DelegatingDisposableMixin, {
 import type * as Observable from "../../Observable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const TakeWhileObserver_inclusive = Symbol("TakeWhileObserver_inclusive");
 const TakeWhileObserver_predicate = Symbol("TakeWhileObserver_predicate");
@@ -87,7 +87,7 @@ const Observable_takeWhile: Observable.Signature["takeWhile"] = <T>(
   pipe(
     Observer_createTakeWhileObserver,
     partial(predicate, options?.inclusive ?? false),
-    Observable_liftPure,
+    Observable_liftPureDeferred,
   );
 
 export default Observable_takeWhile;

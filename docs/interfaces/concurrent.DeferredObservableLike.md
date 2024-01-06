@@ -27,6 +27,7 @@
 ### Properties
 
 - [[ObservableLike\_isDeferred]](concurrent.DeferredObservableLike.md#[observablelike_isdeferred])
+- [[ObservableLike\_isMulticasted]](concurrent.DeferredObservableLike.md#[observablelike_ismulticasted])
 
 ## Properties
 
@@ -39,3 +40,15 @@ Indicates if the `ObservableLike` is deferred, ie. cold.
 #### Overrides
 
 [ObservableLike](concurrent.ObservableLike.md).[[ObservableLike_isDeferred]](concurrent.ObservableLike.md#[observablelike_isdeferred])
+
+___
+
+### [ObservableLike\_isMulticasted]
+
+• `Readonly` **[ObservableLike\_isMulticasted]**: ``false``
+
+Indicates if the `ObservableLike` is multicasted, ie. hot.
+
+#### Overrides
+
+[ObservableLike](concurrent.ObservableLike.md).[[ObservableLike_isMulticasted]](concurrent.ObservableLike.md#[observablelike_ismulticasted])

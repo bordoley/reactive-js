@@ -19,7 +19,7 @@ import DelegatingDisposableMixin, {
 } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const Observer_createBackpressureObserver: <T>(
   delegate: ObserverLike<T>,
@@ -68,7 +68,7 @@ const Observable_backpressureStrategy: Observable.Signature["backpressureStrateg
         [QueueableLike_backpressureStrategy]: backpressureStrategy,
         [QueueableLike_capacity]: capacity,
       }),
-      Observable_liftPure<T, T>,
+      Observable_liftPureDeferred<T, T>,
     );
 
 export default Observable_backpressureStrategy;
