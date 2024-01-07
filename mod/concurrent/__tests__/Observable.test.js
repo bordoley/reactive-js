@@ -4,8 +4,9 @@ import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, e
 import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import { keepType, } from "../../computations.js";
-import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
-import PureDeferredComputationModuleTests from "../../computations/__tests__/fixtures/PureDeferredComputationModuleTests.js";
+import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
+import PureStatefulComputationModuleTests from "../../computations/__tests__/fixtures/PureStatefulComputationModuleTests.js";
+import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
 import { DispatcherLikeEvent_completed, DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, SchedulerLike_now, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import { SinkLike_notify, StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
@@ -76,7 +77,7 @@ const AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests = (op) => desc
 }, Observable.fromAsyncFactory(), op, expectIsDeferredObservableWithSideEffects)), test("with MulticastObservableLike", pipeLazy(new Promise(ignore), Observable.fromPromise(), op, expectIsDeferredObservableWithSideEffects)));
 testModule("Observable", describe("effects", test("calling an effect from outside a computation expression throws", () => {
     expectToThrow(() => __constant(0));
-})), PureComputationModuleTests(Observable, Observable.toReadonlyArray), PureDeferredComputationModuleTests(Observable, Observable.toReadonlyArray), describe("animate", test("keyframing from 0 to 10 over a during of 10, repeating one", Disposable.usingLazy(() => VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }))(vts => {
+})), DeferredComputationModuleTests(Observable, Observable.toReadonlyArray), PureStatelesssComputationModuleTests(Observable, Observable.fromReadonlyArray, Observable.toReadonlyArray), PureStatefulComputationModuleTests(Observable, Observable.toReadonlyArray), describe("animate", test("keyframing from 0 to 10 over a during of 10, repeating one", Disposable.usingLazy(() => VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }))(vts => {
     const result = [];
     pipe(Observable.animate({
         type: "loop",

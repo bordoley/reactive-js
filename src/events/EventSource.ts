@@ -10,7 +10,6 @@ import { DisposableLike } from "../utils.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource/__private__/EventSource.create.js";
 import EventSource_fromPromise from "./EventSource/__private__/EventSource.fromPromise.js";
-import EventSource_fromReadonlyArray from "./EventSource/__private__/EventSource.fromReadonlyArray.js";
 import EventSource_keep from "./EventSource/__private__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__private__/EventSource.map.js";
 import EventSource_merge from "./EventSource/__private__/EventSource.merge.js";
@@ -57,8 +56,6 @@ export const addEventHandler: Signature["addEventHandler"] =
   EventSource_addEventHandler;
 export const create: Signature["create"] = EventSource_create;
 export const fromPromise: Signature["fromPromise"] = EventSource_fromPromise;
-export const fromReadonlyArray: Signature["fromReadonlyArray"] =
-  EventSource_fromReadonlyArray;
 export const keep: Signature["keep"] = EventSource_keep;
 export const map: Signature["map"] = EventSource_map;
 export const merge: Signature["merge"] = EventSource_merge;

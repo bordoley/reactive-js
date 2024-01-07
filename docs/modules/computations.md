@@ -7,6 +7,7 @@
 ### Interfaces
 
 - [Computation](../interfaces/computations.Computation.md)
+- [DeferredComputationModule](../interfaces/computations.DeferredComputationModule.md)
 - [PureStatefulComputationModule](../interfaces/computations.PureStatefulComputationModule.md)
 - [PureStatelessComputationModule](../interfaces/computations.PureStatelessComputationModule.md)
 

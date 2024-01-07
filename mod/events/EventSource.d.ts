@@ -23,7 +23,6 @@ export type Signature = EventSourceModule;
 export declare const addEventHandler: Signature["addEventHandler"];
 export declare const create: Signature["create"];
 export declare const fromPromise: Signature["fromPromise"];
-export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const keep: Signature["keep"];
 export declare const map: Signature["map"];
 export declare const merge: Signature["merge"];

@@ -3,7 +3,9 @@ import {
   Computation,
   Computation_T,
   Computation_type,
+  DeferredComputationModule,
   PureStatefulComputationModule,
+  PureStatelessComputationModule,
 } from "../computations.js";
 import {
   Factory,
@@ -56,7 +58,9 @@ export interface EnumerableComputation extends Computation {
  * @noInheritDoc
  */
 export interface EnumerableModule
-  extends PureStatefulComputationModule<EnumerableComputation> {
+  extends DeferredComputationModule<EnumerableComputation>,
+    PureStatelessComputationModule<EnumerableComputation>,
+    PureStatefulComputationModule<EnumerableComputation> {
   concat<T>(
     fst: EnumerableLike<T>,
     snd: EnumerableLike<T>,

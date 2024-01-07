@@ -1,5 +1,5 @@
 import { EnumerableLike } from "../collections.js";
-import { Computation, Computation_T, Computation_type, PureStatefulComputationModule } from "../computations.js";
+import { Computation, Computation_T, Computation_type, DeferredComputationModule, PureStatefulComputationModule, PureStatelessComputationModule } from "../computations.js";
 import { Factory, Function1, Predicate, Reducer, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9, Updater } from "../functions.js";
 /**
  * @noInheritDoc
@@ -10,7 +10,7 @@ export interface EnumerableComputation extends Computation {
 /**
  * @noInheritDoc
  */
-export interface EnumerableModule extends PureStatefulComputationModule<EnumerableComputation> {
+export interface EnumerableModule extends DeferredComputationModule<EnumerableComputation>, PureStatelessComputationModule<EnumerableComputation>, PureStatefulComputationModule<EnumerableComputation> {
     concat<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     concatMany<T>(enumerables: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     /**

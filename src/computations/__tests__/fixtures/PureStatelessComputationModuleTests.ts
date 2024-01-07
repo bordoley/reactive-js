@@ -17,67 +17,20 @@ import {
   pipeLazy,
 } from "../../../functions.js";
 
-const PureComputationModuleTests = <C extends Computation>(
+const PureStatelessComputationModuleTests = <C extends Computation>(
   m: PureStatelessComputationModule<C>,
+  fromReadonlyArray: <T>() => Function1<ReadonlyArray<T>, ComputationOf<C, T>>,
   toReadonlyArray: <T>() => Function1<ComputationOf<C, T>, ReadonlyArray<T>>,
 ) =>
   describe(
     "PureStatelessComputationModule",
-    describe(
-      "fromReadonlyArray",
-      test(
-        "starting at index greater than 0",
-        pipeLazy(
-          [1, 2, 3, 4],
-          m.fromReadonlyArray({ start: 1 }),
-          toReadonlyArray(),
-          expectArrayEquals([2, 3, 4]),
-        ),
-      ),
-      test(
-        "starting at index greater than 0 with count",
-        pipeLazy(
-          [1, 2, 3, 4],
-          m.fromReadonlyArray({ start: 1, count: 2 }),
-          toReadonlyArray(),
-          expectArrayEquals([2, 3]),
-        ),
-      ),
-      test(
-        "starting at index greater than 0 with count exceeding the length",
-        pipeLazy(
-          [1, 2, 3, 4],
-          m.fromReadonlyArray({ start: 1, count: 10 }),
-          toReadonlyArray(),
-          expectArrayEquals([2, 3, 4]),
-        ),
-      ),
-      test(
-        "negative count",
-        pipeLazy(
-          [1, 2, 3, 4],
-          m.fromReadonlyArray({ count: -2 }),
-          toReadonlyArray(),
-          expectArrayEquals([4, 3]),
-        ),
-      ),
-      test(
-        "starting at index greater than 0 with negative count",
-        pipeLazy(
-          [1, 2, 3, 4],
-          m.fromReadonlyArray({ start: 2, count: -2 }),
-          toReadonlyArray(),
-          expectArrayEquals([3, 2]),
-        ),
-      ),
-    ),
     describe(
       "keep",
       test(
         "keeps only values greater than 5",
         pipeLazy(
           [4, 8, 10, 7],
-          m.fromReadonlyArray(),
+          fromReadonlyArray(),
           m.keep(greaterThan(5)),
           toReadonlyArray(),
           expectArrayEquals([8, 10, 7]),
@@ -92,7 +45,7 @@ const PureComputationModuleTests = <C extends Computation>(
         pipe(
           pipeLazy(
             [1, 1],
-            m.fromReadonlyArray(),
+            fromReadonlyArray(),
             m.keep(predicate),
             toReadonlyArray(),
           ),
@@ -108,7 +61,7 @@ const PureComputationModuleTests = <C extends Computation>(
 
         pipeLazy(
           [1, 2, 3],
-          m.fromReadonlyArray(),
+          fromReadonlyArray(),
           m.map(increment),
           toReadonlyArray(),
           expectArrayEquals([2, 3, 4]),
@@ -123,7 +76,7 @@ const PureComputationModuleTests = <C extends Computation>(
         pipe(
           pipeLazy(
             [1, 1],
-            m.fromReadonlyArray(),
+            fromReadonlyArray(),
             m.map(selector),
             toReadonlyArray(),
           ),
@@ -134,4 +87,4 @@ const PureComputationModuleTests = <C extends Computation>(
     ),
   );
 
-export default PureComputationModuleTests;
+export default PureStatelessComputationModuleTests;

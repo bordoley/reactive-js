@@ -19,12 +19,14 @@ import {
 import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import {
+  DeferredComputationModule,
   PureStatefulComputationModule,
   PureStatelessComputationModule,
   keepType,
 } from "../../computations.js";
-import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
-import PureDeferredComputationModuleTests from "../../computations/__tests__/fixtures/PureDeferredComputationModuleTests.js";
+import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
+import PureStatefulComputationModuleTests from "../../computations/__tests__/fixtures/PureStatefulComputationModuleTests.js";
+import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
 import {
   DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
@@ -479,12 +481,18 @@ testModule(
       expectToThrow(() => __constant(0));
     }),
   ),
-  PureComputationModuleTests(
-    Observable as PureStatelessComputationModule<Observable.PureRunnableComputation>,
+  DeferredComputationModuleTests(
+    Observable as DeferredComputationModule<Observable.PureRunnableComputation>,
     Observable.toReadonlyArray,
   ),
-  PureDeferredComputationModuleTests(
-    Observable as PureStatefulComputationModule<Observable.PureRunnableComputation>,
+  PureStatelesssComputationModuleTests(
+    Observable as PureStatelessComputationModule<Observable.PureRunnableComputation>,
+    Observable.fromReadonlyArray,
+    Observable.toReadonlyArray,
+  ),
+  PureStatefulComputationModuleTests(
+    Observable as PureStatefulComputationModule<Observable.PureRunnableComputation> &
+      DeferredComputationModule<Observable.PureRunnableComputation>,
     Observable.toReadonlyArray,
   ),
   describe(

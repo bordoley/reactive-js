@@ -18,7 +18,6 @@
 - [addEventHandler](events_EventSource.md#addeventhandler)
 - [create](events_EventSource.md#create)
 - [fromPromise](events_EventSource.md#frompromise)
-- [fromReadonlyArray](events_EventSource.md#fromreadonlyarray)
 - [keep](events_EventSource.md#keep)
 - [map](events_EventSource.md#map)
 - [merge](events_EventSource.md#merge)
@@ -90,30 +89,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`Promise`<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
-
-___
-
-### fromReadonlyArray
-
-▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
 
 ___
 

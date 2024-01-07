@@ -17,18 +17,17 @@ export type ComputationOf<C extends Computation, T> = C extends {
     readonly _T: () => T;
 };
 export type ComputationOperator<C extends Computation, TA, TB> = Function1<ComputationOf<C, TA>, ComputationOf<C, TB>>;
-/**
- * @noInheritDoc
- */
-export interface PureStatelessComputationModule<C extends Computation> {
+export interface DeferredComputationModule<C extends Computation> {
     fromReadonlyArray<T>(options?: {
         readonly count?: number;
         readonly start?: number;
     }): Function1<readonly T[], ComputationOf<C, T>>;
+}
+export interface PureStatelessComputationModule<C extends Computation> {
     keep<T>(predicate: Predicate<T>): ComputationOperator<C, T, T>;
     map<TA, TB>(selector: Function1<TA, TB>): ComputationOperator<C, TA, TB>;
 }
-export interface PureStatefulComputationModule<C extends Computation> extends PureStatelessComputationModule<C> {
+export interface PureStatefulComputationModule<C extends Computation> {
     buffer<T>(options?: {
         count?: number;
     }): ComputationOperator<C, T, readonly T[]>;

@@ -12,11 +12,9 @@
 
 ## Hierarchy
 
-- [`PureStatelessComputationModule`](computations.PureStatelessComputationModule.md)<`C`\>
+- **`PureStatefulComputationModule`**
 
-  ↳ **`PureStatefulComputationModule`**
-
-  ↳↳ [`EnumerableModule`](collections_Enumerable.EnumerableModule.md)
+  ↳ [`EnumerableModule`](collections_Enumerable.EnumerableModule.md)
 
 ## Table of contents
 
@@ -25,9 +23,6 @@
 - [buffer](computations.PureStatefulComputationModule.md#buffer)
 - [decodeWithCharset](computations.PureStatefulComputationModule.md#decodewithcharset)
 - [distinctUntilChanged](computations.PureStatefulComputationModule.md#distinctuntilchanged)
-- [fromReadonlyArray](computations.PureStatefulComputationModule.md#fromreadonlyarray)
-- [keep](computations.PureStatefulComputationModule.md#keep)
-- [map](computations.PureStatefulComputationModule.md#map)
 - [pairwise](computations.PureStatefulComputationModule.md#pairwise)
 - [scan](computations.PureStatefulComputationModule.md#scan)
 - [skipFirst](computations.PureStatefulComputationModule.md#skipfirst)
@@ -98,87 +93,6 @@ ___
 #### Returns
 
 [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`\>
-
-___
-
-### fromReadonlyArray
-
-▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ComputationOf`](../modules/computations.md#computationof)<`C`, `T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ComputationOf`](../modules/computations.md#computationof)<`C`, `T`\>\>
-
-#### Inherited from
-
-[PureStatelessComputationModule](computations.PureStatelessComputationModule.md).[fromReadonlyArray](computations.PureStatelessComputationModule.md#fromreadonlyarray)
-
-___
-
-### keep
-
-▸ **keep**<`T`\>(`predicate`): [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> |
-
-#### Returns
-
-[`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`\>
-
-#### Inherited from
-
-[PureStatelessComputationModule](computations.PureStatelessComputationModule.md).[keep](computations.PureStatelessComputationModule.md#keep)
-
-___
-
-### map
-
-▸ **map**<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `TB`\> |
-
-#### Returns
-
-[`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `TA`, `TB`\>
-
-#### Inherited from
-
-[PureStatelessComputationModule](computations.PureStatelessComputationModule.md).[map](computations.PureStatelessComputationModule.md#map)
 
 ___
 

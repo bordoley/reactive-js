@@ -14,7 +14,7 @@
 
 - **`PureStatelessComputationModule`**
 
-  ↳ [`PureStatefulComputationModule`](computations.PureStatefulComputationModule.md)
+  ↳ [`EnumerableModule`](collections_Enumerable.EnumerableModule.md)
 
   ↳ [`EventSourceModule`](events_EventSource.EventSourceModule.md)
 
@@ -22,35 +22,10 @@
 
 ### Methods
 
-- [fromReadonlyArray](computations.PureStatelessComputationModule.md#fromreadonlyarray)
 - [keep](computations.PureStatelessComputationModule.md#keep)
 - [map](computations.PureStatelessComputationModule.md#map)
 
 ## Methods
-
-### fromReadonlyArray
-
-▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ComputationOf`](../modules/computations.md#computationof)<`C`, `T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ComputationOf`](../modules/computations.md#computationof)<`C`, `T`\>\>
-
-___
 
 ### keep
 

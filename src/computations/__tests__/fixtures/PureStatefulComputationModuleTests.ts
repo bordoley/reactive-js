@@ -8,6 +8,7 @@ import {
 import {
   Computation,
   ComputationOf,
+  DeferredComputationModule,
   PureStatefulComputationModule,
 } from "../../../computations.js";
 import * as Observable from "../../../concurrent/Observable.js";
@@ -23,8 +24,8 @@ import {
   tuple,
 } from "../../../functions.js";
 
-const PureDeferredComputationModuleTests = <C extends Computation>(
-  m: PureStatefulComputationModule<C>,
+const PureStatefulComputationModuleTests = <C extends Computation>(
+  m: PureStatefulComputationModule<C> & DeferredComputationModule<C>,
   toReadonlyArray: <T>() => Function1<ComputationOf<C, T>, ReadonlyArray<T>>,
 ) =>
   describe(
@@ -431,4 +432,4 @@ const PureDeferredComputationModuleTests = <C extends Computation>(
     ),
   );
 
-export default PureDeferredComputationModuleTests;
+export default PureStatefulComputationModuleTests;

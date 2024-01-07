@@ -8,11 +8,11 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
-import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
+import PureStatelessComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
 import { VirtualTimeSchedulerLike_run } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as VirtualTimeScheduler from "../../concurrent/VirtualTimeScheduler.js";
-import { EventSourceLike } from "../../events.js";
+import { EventSourceLike, SinkLike_notify } from "../../events.js";
 import {
   Optional,
   bind,
@@ -26,26 +26,36 @@ import {
   pipeLazy,
   raise,
 } from "../../functions.js";
-import { DisposableLike_error } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 
 testModule(
   "EventSource",
-  PureComputationModuleTests(EventSource, <
-    T,
-  >() => (eventSource: EventSourceLike<T>) => {
-    const result: T[] = [];
-    const subscription = pipe(
-      eventSource,
-      EventSource.addEventHandler(bind(Array.prototype.push, result)),
-    );
+  PureStatelessComputationModuleTests(
+    EventSource,
+    <T>() =>
+      (arr: readonly T[]) =>
+        EventSource.create<T>(listener => {
+          for (let i = 0; i < arr.length; i++) {
+            listener[SinkLike_notify](arr[i]);
+          }
+          listener[DisposableLike_dispose]();
+        }),
+    <T>() =>
+      (eventSource: EventSourceLike<T>) => {
+        const result: T[] = [];
+        const subscription = pipe(
+          eventSource,
+          EventSource.addEventHandler(bind(Array.prototype.push, result)),
+        );
 
-    if (isSome(subscription[DisposableLike_error])) {
-      throw subscription[DisposableLike_error];
-    }
+        if (isSome(subscription[DisposableLike_error])) {
+          throw subscription[DisposableLike_error];
+        }
 
-    return result;
-  }),
+        return result;
+      },
+  ),
   describe(
     "create",
     test(
