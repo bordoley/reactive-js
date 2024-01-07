@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`PureComputationModule`](computations.PureComputationModule.md)<[`EventSourceComputation`](events_EventSource.EventSourceComputation.md)\>
+- [`PureStatelessComputationModule`](computations.PureStatelessComputationModule.md)<[`EventSourceComputation`](events_EventSource.EventSourceComputation.md)\>
 
   ↳ **`EventSourceModule`**
 

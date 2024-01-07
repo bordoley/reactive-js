@@ -20,7 +20,7 @@ export type ComputationOperator<C extends Computation, TA, TB> = Function1<Compu
 /**
  * @noInheritDoc
  */
-export interface PureComputationModule<C extends Computation> {
+export interface PureStatelessComputationModule<C extends Computation> {
     fromReadonlyArray<T>(options?: {
         readonly count?: number;
         readonly start?: number;
@@ -28,7 +28,7 @@ export interface PureComputationModule<C extends Computation> {
     keep<T>(predicate: Predicate<T>): ComputationOperator<C, T, T>;
     map<TA, TB>(selector: Function1<TA, TB>): ComputationOperator<C, TA, TB>;
 }
-export interface PureDeferredComputationModule<C extends Computation> extends PureComputationModule<C> {
+export interface PureStatefulComputationModule<C extends Computation> extends PureStatelessComputationModule<C> {
     buffer<T>(options?: {
         count?: number;
     }): ComputationOperator<C, T, readonly T[]>;
@@ -53,11 +53,11 @@ export interface PureDeferredComputationModule<C extends Computation> extends Pu
     }): ComputationOperator<C, T, T>;
 }
 interface Signature {
-    keepType<C extends Computation, TA, TB extends TA>(m: Pick<PureComputationModule<C>, "keep">, predicate: TypePredicate<TA, TB>): ComputationOperator<C, TA, TB>;
-    mapTo<C extends Computation, T>(m: Pick<PureComputationModule<C>, "map">, value: T): ComputationOperator<C, unknown, T>;
-    pick<C extends Computation, T, TKeyOfT extends keyof T>(m: Pick<PureComputationModule<C>, "map">, key: TKeyOfT): ComputationOperator<C, T, T[TKeyOfT]>;
-    pick<C extends Computation, T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(m: Pick<PureComputationModule<C>, "map">, keyA: TKeyOfTA, keyB: TKeyOfTB): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB]>;
-    pick<C extends Computation, T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA], TKeyOfTC extends keyof T[TKeyOfTA][TKeyOfTB]>(m: Pick<PureComputationModule<C>, "map">, keyA: TKeyOfTA, keyB: TKeyOfTB, keyC: TKeyOfTC): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
+    keepType<C extends Computation, TA, TB extends TA>(m: Pick<PureStatelessComputationModule<C>, "keep">, predicate: TypePredicate<TA, TB>): ComputationOperator<C, TA, TB>;
+    mapTo<C extends Computation, T>(m: Pick<PureStatelessComputationModule<C>, "map">, value: T): ComputationOperator<C, unknown, T>;
+    pick<C extends Computation, T, TKeyOfT extends keyof T>(m: Pick<PureStatelessComputationModule<C>, "map">, key: TKeyOfT): ComputationOperator<C, T, T[TKeyOfT]>;
+    pick<C extends Computation, T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(m: Pick<PureStatelessComputationModule<C>, "map">, keyA: TKeyOfTA, keyB: TKeyOfTB): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB]>;
+    pick<C extends Computation, T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA], TKeyOfTC extends keyof T[TKeyOfTA][TKeyOfTB]>(m: Pick<PureStatelessComputationModule<C>, "map">, keyA: TKeyOfTA, keyB: TKeyOfTB, keyC: TKeyOfTC): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
 }
 export declare const keepType: Signature["keepType"];
 export declare const mapTo: Signature["mapTo"];

@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`PureDeferredComputationModule`](computations.PureDeferredComputationModule.md)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md)\>
+- [`PureStatefulComputationModule`](computations.PureStatefulComputationModule.md)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md)\>
 
   ↳ **`EnumerableModule`**
 

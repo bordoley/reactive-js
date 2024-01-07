@@ -3,7 +3,7 @@
 import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, } from "../../../__internal__/testing.js";
 import * as Observable from "../../../concurrent/Observable.js";
 import { alwaysTrue, arrayEquality, lessThan, pipe, pipeLazy, returns, tuple, } from "../../../functions.js";
-const PureDeferredComputationModuleTests = (m, toReadonlyArray) => describe("PureDeferredComputationModule", describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ count: 3 }), toReadonlyArray(), expectArrayEquals([
+const PureDeferredComputationModuleTests = (m, toReadonlyArray) => describe("PureStatefulComputationModule", describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ count: 3 }), toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],
     [7, 8, 9],

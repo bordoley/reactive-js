@@ -18,8 +18,8 @@ import {
 import { Function1, bindMethod, none, pipeUnsafe } from "../../../functions.js";
 import type {
   ObservableOperatorWithSideEffects,
-  PureDeferredObservableOperator,
-  PureObservableOperator,
+  PureStatefulObservableOperator,
+  PureStatelessObservableOperator,
 } from "../../Observable.js";
 import ObservableMixin from "../../__mixins__/ObservableMixin.js";
 
@@ -109,7 +109,7 @@ interface ObservableLift {
     [ObservableLike_isRunnable]: true;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => PureObservableOperator<TA, TB>;
+  ) => PureStatelessObservableOperator<TA, TB>;
 
   lift(options: {
     [ObservableLike_isDeferred]: true;
@@ -118,7 +118,7 @@ interface ObservableLift {
     [ObservableLike_isRunnable]: true;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => PureDeferredObservableOperator<TA, TB>;
+  ) => PureStatefulObservableOperator<TA, TB>;
 
   lift(options: {
     [ObservableLike_isDeferred]: true;

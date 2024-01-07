@@ -7,8 +7,8 @@
 ### Interfaces
 
 - [Computation](../interfaces/computations.Computation.md)
-- [PureComputationModule](../interfaces/computations.PureComputationModule.md)
-- [PureDeferredComputationModule](../interfaces/computations.PureDeferredComputationModule.md)
+- [PureStatefulComputationModule](../interfaces/computations.PureStatefulComputationModule.md)
+- [PureStatelessComputationModule](../interfaces/computations.PureStatelessComputationModule.md)
 
 ### Type Aliases
 
@@ -83,7 +83,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | `Pick`<[`PureComputationModule`](../interfaces/computations.PureComputationModule.md)<`C`\>, ``"keep"``\> |
+| `m` | `Pick`<[`PureStatelessComputationModule`](../interfaces/computations.PureStatelessComputationModule.md)<`C`\>, ``"keep"``\> |
 | `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
 
 #### Returns
@@ -107,7 +107,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | `Pick`<[`PureComputationModule`](../interfaces/computations.PureComputationModule.md)<`C`\>, ``"map"``\> |
+| `m` | `Pick`<[`PureStatelessComputationModule`](../interfaces/computations.PureStatelessComputationModule.md)<`C`\>, ``"map"``\> |
 | `value` | `T` |
 
 #### Returns
@@ -132,7 +132,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | `Pick`<[`PureComputationModule`](../interfaces/computations.PureComputationModule.md)<`C`\>, ``"map"``\> |
+| `m` | `Pick`<[`PureStatelessComputationModule`](../interfaces/computations.PureStatelessComputationModule.md)<`C`\>, ``"map"``\> |
 | `key` | `TKeyOfT` |
 
 #### Returns
@@ -154,7 +154,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | `Pick`<[`PureComputationModule`](../interfaces/computations.PureComputationModule.md)<`C`\>, ``"map"``\> |
+| `m` | `Pick`<[`PureStatelessComputationModule`](../interfaces/computations.PureStatelessComputationModule.md)<`C`\>, ``"map"``\> |
 | `keyA` | `TKeyOfTA` |
 | `keyB` | `TKeyOfTB` |
 
@@ -178,7 +178,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | `Pick`<[`PureComputationModule`](../interfaces/computations.PureComputationModule.md)<`C`\>, ``"map"``\> |
+| `m` | `Pick`<[`PureStatelessComputationModule`](../interfaces/computations.PureStatelessComputationModule.md)<`C`\>, ``"map"``\> |
 | `keyA` | `TKeyOfTA` |
 | `keyB` | `TKeyOfTB` |
 | `keyC` | `TKeyOfTC` |

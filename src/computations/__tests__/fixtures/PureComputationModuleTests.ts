@@ -7,7 +7,7 @@ import {
 import {
   Computation,
   ComputationOf,
-  PureComputationModule,
+  PureStatelessComputationModule,
 } from "../../../computations.js";
 import {
   Function1,
@@ -18,11 +18,11 @@ import {
 } from "../../../functions.js";
 
 const PureComputationModuleTests = <C extends Computation>(
-  m: PureComputationModule<C>,
+  m: PureStatelessComputationModule<C>,
   toReadonlyArray: <T>() => Function1<ComputationOf<C, T>, ReadonlyArray<T>>,
 ) =>
   describe(
-    "PureComputationModule",
+    "PureStatelessComputationModule",
     describe(
       "fromReadonlyArray",
       test(

@@ -1,19 +1,19 @@
 import { DeferredObservableWithSideEffectsLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike } from "../../../concurrent.js";
 import { Function1 } from "../../../functions.js";
-import type { ObservableOperatorWithSideEffects, PureDeferredObservableOperator, PureObservableOperator } from "../../Observable.js";
+import type { ObservableOperatorWithSideEffects, PureStatefulObservableOperator, PureStatelessObservableOperator } from "../../Observable.js";
 interface ObservableLift {
     lift(options: {
         [ObservableLike_isDeferred]: true;
         [ObservableLike_isMulticasted]: true;
         [ObservableLike_isPure]: true;
         [ObservableLike_isRunnable]: true;
-    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => PureObservableOperator<TA, TB>;
+    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => PureStatelessObservableOperator<TA, TB>;
     lift(options: {
         [ObservableLike_isDeferred]: true;
         [ObservableLike_isMulticasted]: false;
         [ObservableLike_isPure]: true;
         [ObservableLike_isRunnable]: true;
-    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => PureDeferredObservableOperator<TA, TB>;
+    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => PureStatefulObservableOperator<TA, TB>;
     lift(options: {
         [ObservableLike_isDeferred]: true;
         [ObservableLike_isMulticasted]: false;
