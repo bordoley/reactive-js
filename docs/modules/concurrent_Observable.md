@@ -12,9 +12,9 @@
 
 - [DeferredObservableWithSideEffectsComputation](../interfaces/concurrent_Observable.DeferredObservableWithSideEffectsComputation.md)
 - [MulticastObservableComputation](../interfaces/concurrent_Observable.MulticastObservableComputation.md)
-- [ObservableComputation](../interfaces/concurrent_Observable.ObservableComputation.md)
 - [ObservableModule](../interfaces/concurrent_Observable.ObservableModule.md)
 - [PureRunnableComputation](../interfaces/concurrent_Observable.PureRunnableComputation.md)
+- [PuredDeferredObservableComputation](../interfaces/concurrent_Observable.PuredDeferredObservableComputation.md)
 - [RunnableWithSideEffectsComputation](../interfaces/concurrent_Observable.RunnableWithSideEffectsComputation.md)
 
 ### Type Aliases

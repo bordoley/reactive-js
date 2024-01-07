@@ -15,12 +15,6 @@ export declare const DeferredObservableWithSideEffectsType: Pick<DeferredObserva
 /**
  * @noInheritDoc
  */
-export interface ObservableComputation extends Computation {
-    readonly [Computation_type]?: ObservableLike<this[typeof Computation_T]>;
-}
-/**
- * @noInheritDoc
- */
 export interface PureRunnableComputation extends Computation {
     readonly [Computation_type]?: PureRunnableLike<this[typeof Computation_T]>;
 }
@@ -29,6 +23,12 @@ export interface PureRunnableComputation extends Computation {
  */
 export interface RunnableWithSideEffectsComputation extends Computation {
     readonly [Computation_type]?: RunnableWithSideEffectsLike<this[typeof Computation_T]>;
+}
+/**
+ * @noInheritDoc
+ */
+export interface PuredDeferredObservableComputation extends Computation {
+    readonly [Computation_type]?: PureDeferredObservableLike<this[typeof Computation_T]>;
 }
 /**
  * @noInheritDoc

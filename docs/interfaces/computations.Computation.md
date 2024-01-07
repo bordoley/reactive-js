@@ -10,11 +10,11 @@
 
   ↳ [`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md)
 
-  ↳ [`ObservableComputation`](concurrent_Observable.ObservableComputation.md)
-
   ↳ [`PureRunnableComputation`](concurrent_Observable.PureRunnableComputation.md)
 
   ↳ [`RunnableWithSideEffectsComputation`](concurrent_Observable.RunnableWithSideEffectsComputation.md)
+
+  ↳ [`PuredDeferredObservableComputation`](concurrent_Observable.PuredDeferredObservableComputation.md)
 
   ↳ [`DeferredObservableWithSideEffectsComputation`](concurrent_Observable.DeferredObservableWithSideEffectsComputation.md)
 

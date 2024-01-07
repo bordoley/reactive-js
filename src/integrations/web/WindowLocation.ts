@@ -19,7 +19,6 @@ import {
   StreamableLike_stream,
 } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
-import { ObservableComputation } from "../../concurrent/Observable.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import { StoreLike_value, WritableStoreLike } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
@@ -232,7 +231,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
         ): void {
           pipe(
             this[WindowLocation_delegate],
-            pick<ObservableComputation, TState, "uri">(
+            pick<Observable.MulticastObservableComputation, TState, "uri">(
               { map: Observable.map },
               "uri",
             ),
