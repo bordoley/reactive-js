@@ -3072,10 +3072,3 @@ testModule(
 );
 
 ((_: Observable.Signature) => {})(Observable);
-
-console.log(
-  pipe(
-    Observable.empty({ delay: 10 }),
-    Observable.withLatestFrom(Observable.empty({ delay: 10 }), returns),
-  ),
-);

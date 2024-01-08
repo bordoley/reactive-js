@@ -591,4 +591,3 @@ Observable.takeLast({ count: 0 }), Observable.toReadonlyArray(), expectArrayEqua
     throw new Error();
 }, Observable.fromAsyncFactory()), Observable.empty({ delay: 1 }), pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore))))));
 ((_) => { })(Observable);
-console.log(pipe(Observable.empty({ delay: 10 }), Observable.withLatestFrom(Observable.empty({ delay: 10 }), returns)));
