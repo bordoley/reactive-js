@@ -89,14 +89,14 @@ const IndexedQueueMixin: <T>() => Mixin1<
     const head = instance[IndexedQueueMixin_head];
     const tail = instance[IndexedQueueMixin_tail];
 
-    if (tail !== head && tail !== 0) {
-      return;
-    }
-
+    const count = instance[QueueLike_count];
     const values = instance[IndexedQueueMixin_values];
     const capacity = values.length;
     const capacityMask = instance[IndexedQueueMixin_capacityMask];
-    const count = instance[QueueLike_count];
+
+    if (count < capacity >> 1 || (tail !== head && tail !== 0)) {
+      return;
+    }
 
     if (head === 0 || (tail === 0 && head < capacity >> 2)) {
       values.length <<= 1;

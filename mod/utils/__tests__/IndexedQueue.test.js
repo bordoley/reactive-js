@@ -4,7 +4,31 @@ import { expectEquals, expectIsNone, expectToThrow, test, testModule, } from "..
 import { none, pipe } from "../../functions.js";
 import { IndexedQueueLike_get, IndexedQueueLike_set, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, StackLike_head, StackLike_pop, } from "../../utils.js";
 import * as IndexedQueue from "../IndexedQueue.js";
-testModule("IndexedQueue", test("push/pull/count", () => {
+testModule("IndexedQueue", test("get/set", () => {
+    const queue = IndexedQueue.create();
+    for (let i = 0; i < 30; i++) {
+        queue[QueueableLike_enqueue](i);
+    }
+    for (let i = 0; i < 20; i++) {
+        queue[QueueLike_dequeue]();
+    }
+    for (let i = 0; i < 4; i++) {
+        queue[QueueableLike_enqueue](i + 30);
+    }
+    for (let i = 0; i < queue[QueueLike_count]; i++) {
+        queue[IndexedQueueLike_set](i, i);
+        const v = queue[IndexedQueueLike_get](i);
+        pipe(v, expectEquals(i));
+    }
+    for (let i = 0; i < 20; i++) {
+        queue[QueueableLike_enqueue](i + 34);
+    }
+    for (let i = 0; i < queue[QueueLike_count]; i++) {
+        queue[IndexedQueueLike_set](i, i);
+        const v = queue[IndexedQueueLike_get](i);
+        pipe(v, expectEquals(i));
+    }
+}), test("push/pull/count", () => {
     const queue = IndexedQueue.create();
     pipe(queue[StackLike_head], expectIsNone);
     pipe(queue[StackLike_pop](), expectIsNone);
