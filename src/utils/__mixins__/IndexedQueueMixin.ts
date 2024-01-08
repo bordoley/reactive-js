@@ -58,7 +58,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
     [IndexedQueueMixin_head]: number;
     [IndexedQueueMixin_tail]: number;
     [IndexedQueueMixin_capacityMask]: number;
-    [IndexedQueueMixin_values]: Optional<Optional<T>[]>;
+    [IndexedQueueMixin_values]: Optional<T>[];
   };
 
   const copyArray = (
@@ -93,7 +93,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
       return;
     }
 
-    const values = instance[IndexedQueueMixin_values] ?? [];
+    const values = instance[IndexedQueueMixin_values];
     const capacity = values.length;
     const capacityMask = instance[IndexedQueueMixin_capacityMask];
     const count = instance[QueueLike_count];
@@ -114,7 +114,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
   };
 
   const shrink = (instance: TProperties) => {
-    const values = instance[IndexedQueueMixin_values] ?? [];
+    const values = instance[IndexedQueueMixin_values];
     const capacity = values.length;
     const count = instance[QueueLike_count];
 
@@ -157,6 +157,13 @@ const IndexedQueueMixin: <T>() => Mixin1<
         instance[QueueableLike_capacity] = clampPositiveInteger(
           config?.[QueueableLike_capacity] ?? MAX_SAFE_INTEGER,
         );
+
+        instance[IndexedQueueMixin_capacityMask] = 31;
+        instance[IndexedQueueMixin_values] = newInstance<
+          Array<Optional<T>>,
+          number
+        >(Array, 32);
+
         return instance;
       },
       props<TProperties>({
@@ -172,7 +179,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
         get [QueueLike_head]() {
           unsafeCast<TProperties>(this);
           const head = this[IndexedQueueMixin_head];
-          const values = this[IndexedQueueMixin_values] ?? [];
+          const values = this[IndexedQueueMixin_values];
 
           return head === this[IndexedQueueMixin_tail] ? none : values[head];
         },
@@ -181,7 +188,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
           unsafeCast<TProperties>(this);
           const head = this[IndexedQueueMixin_head];
           const tail = this[IndexedQueueMixin_tail];
-          const values = this[IndexedQueueMixin_values] ?? [];
+          const values = this[IndexedQueueMixin_values];
           const index = tail > 0 ? tail - 1 : values.length - 1;
 
           return head === tail ? none : values[index];
@@ -189,7 +196,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
 
         [QueueLike_dequeue](this: TProperties & IndexedQueueLike<T>) {
           const tail = this[IndexedQueueMixin_tail];
-          const values = this[IndexedQueueMixin_values] ?? [];
+          const values = this[IndexedQueueMixin_values];
 
           let head = this[IndexedQueueMixin_head];
 
@@ -209,7 +216,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
 
         [StackLike_pop](this: TProperties & IndexedQueueLike<T>): Optional<T> {
           const head = this[IndexedQueueMixin_head];
-          const values = this[IndexedQueueMixin_values] ?? [];
+          const values = this[IndexedQueueMixin_values];
           const capacity = values.length;
 
           let tail = this[IndexedQueueMixin_tail];
@@ -235,9 +242,9 @@ const IndexedQueueMixin: <T>() => Mixin1<
           index: number,
         ): T {
           const count = this[QueueLike_count];
-          const capacity = this[IndexedQueueMixin_values]?.length ?? 0;
+          const capacity = this[IndexedQueueMixin_values].length;
           const head = this[IndexedQueueMixin_head];
-          const values = this[IndexedQueueMixin_values] ?? [];
+          const values = this[IndexedQueueMixin_values];
 
           const headOffsetIndex = index + head;
           const tailOffsetIndex = headOffsetIndex - capacity;
@@ -258,9 +265,9 @@ const IndexedQueueMixin: <T>() => Mixin1<
           value: T,
         ): T {
           const count = this[QueueLike_count];
-          const capacity = this[IndexedQueueMixin_values]?.length ?? 0;
+          const capacity = this[IndexedQueueMixin_values].length;
           const head = this[IndexedQueueMixin_head];
-          const values = this[IndexedQueueMixin_values] ?? [];
+          const values = this[IndexedQueueMixin_values];
 
           const headOffsetIndex = index + head;
           const tailOffsetIndex = headOffsetIndex - capacity;
@@ -308,14 +315,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
             );
           }
 
-          const values =
-            this[IndexedQueueMixin_values] ??
-            ((this[IndexedQueueMixin_capacityMask] = 31),
-            (this[IndexedQueueMixin_values] = newInstance<
-              Array<Optional<T>>,
-              number
-            >(Array, 32)),
-            this[IndexedQueueMixin_values]);
+          const values = this[IndexedQueueMixin_values];
 
           const capacityMask = this[IndexedQueueMixin_capacityMask];
 

@@ -30,7 +30,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         if (tail !== head && tail !== 0) {
             return;
         }
-        const values = instance[IndexedQueueMixin_values] ?? [];
+        const values = instance[IndexedQueueMixin_values];
         const capacity = values.length;
         const capacityMask = instance[IndexedQueueMixin_capacityMask];
         const count = instance[QueueLike_count];
@@ -48,7 +48,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         instance[IndexedQueueMixin_capacityMask] = (capacityMask << 1) | 1;
     };
     const shrink = (instance) => {
-        const values = instance[IndexedQueueMixin_values] ?? [];
+        const values = instance[IndexedQueueMixin_values];
         const capacity = values.length;
         const count = instance[QueueLike_count];
         if (count >= capacity >> 2 || capacity <= 32) {
@@ -72,6 +72,8 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         instance[QueueableLike_backpressureStrategy] =
             config?.[QueueableLike_backpressureStrategy] ?? "overflow";
         instance[QueueableLike_capacity] = clampPositiveInteger(config?.[QueueableLike_capacity] ?? MAX_SAFE_INTEGER);
+        instance[IndexedQueueMixin_capacityMask] = 31;
+        instance[IndexedQueueMixin_values] = newInstance(Array, 32);
         return instance;
     }, props({
         [QueueLike_count]: 0,
@@ -85,20 +87,20 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         get [QueueLike_head]() {
             unsafeCast(this);
             const head = this[IndexedQueueMixin_head];
-            const values = this[IndexedQueueMixin_values] ?? [];
+            const values = this[IndexedQueueMixin_values];
             return head === this[IndexedQueueMixin_tail] ? none : values[head];
         },
         get [StackLike_head]() {
             unsafeCast(this);
             const head = this[IndexedQueueMixin_head];
             const tail = this[IndexedQueueMixin_tail];
-            const values = this[IndexedQueueMixin_values] ?? [];
+            const values = this[IndexedQueueMixin_values];
             const index = tail > 0 ? tail - 1 : values.length - 1;
             return head === tail ? none : values[index];
         },
         [QueueLike_dequeue]() {
             const tail = this[IndexedQueueMixin_tail];
-            const values = this[IndexedQueueMixin_values] ?? [];
+            const values = this[IndexedQueueMixin_values];
             let head = this[IndexedQueueMixin_head];
             const item = head === tail ? none : values[head];
             if (head !== tail) {
@@ -112,7 +114,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         },
         [StackLike_pop]() {
             const head = this[IndexedQueueMixin_head];
-            const values = this[IndexedQueueMixin_values] ?? [];
+            const values = this[IndexedQueueMixin_values];
             const capacity = values.length;
             let tail = this[IndexedQueueMixin_tail];
             const item = head === tail
@@ -128,9 +130,9 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         },
         [IndexedQueueLike_get](index) {
             const count = this[QueueLike_count];
-            const capacity = this[IndexedQueueMixin_values]?.length ?? 0;
+            const capacity = this[IndexedQueueMixin_values].length;
             const head = this[IndexedQueueMixin_head];
-            const values = this[IndexedQueueMixin_values] ?? [];
+            const values = this[IndexedQueueMixin_values];
             const headOffsetIndex = index + head;
             const tailOffsetIndex = headOffsetIndex - capacity;
             const computedIndex = index < 0 || index >= count
@@ -142,9 +144,9 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         },
         [IndexedQueueLike_set](index, value) {
             const count = this[QueueLike_count];
-            const capacity = this[IndexedQueueMixin_values]?.length ?? 0;
+            const capacity = this[IndexedQueueMixin_values].length;
             const head = this[IndexedQueueMixin_head];
-            const values = this[IndexedQueueMixin_values] ?? [];
+            const values = this[IndexedQueueMixin_values];
             const headOffsetIndex = index + head;
             const tailOffsetIndex = headOffsetIndex - capacity;
             const computedIndex = index < 0 || index >= count
@@ -179,10 +181,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
             else if (backpressureStrategy === "throw" && count >= capacity) {
                 raiseError(newInstance(BackPressureError, capacity, backpressureStrategy));
             }
-            const values = this[IndexedQueueMixin_values] ??
-                ((this[IndexedQueueMixin_capacityMask] = 31),
-                    (this[IndexedQueueMixin_values] = newInstance(Array, 32)),
-                    this[IndexedQueueMixin_values]);
+            const values = this[IndexedQueueMixin_values];
             const capacityMask = this[IndexedQueueMixin_capacityMask];
             let tail = this[IndexedQueueMixin_tail];
             values[tail] = item;
