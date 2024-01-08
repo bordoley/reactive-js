@@ -18,7 +18,6 @@ import {
   Updater,
   identity,
   isFunction,
-  isSome,
   none,
   pipe,
   pipeSomeLazy,
@@ -143,9 +142,7 @@ export const useWindowLocation: Signature["useWindowLocation"] = () => {
   const push = useCallback(
     (action: Updater<WindowLocationURI> | WindowLocationURI) => {
       const windowLocationStream = stableWindowLocationRef.current;
-      return isSome(windowLocationStream)
-        ? windowLocationStream[WindowLocationLike_push](action)
-        : false;
+      return windowLocationStream?.[WindowLocationLike_push](action) ?? false;
     },
     [stableWindowLocationRef],
   );
@@ -153,18 +150,16 @@ export const useWindowLocation: Signature["useWindowLocation"] = () => {
   const replace = useCallback(
     (action: Updater<WindowLocationURI> | WindowLocationURI) => {
       const windowLocationStream = stableWindowLocationRef.current;
-      return isSome(windowLocationStream)
-        ? windowLocationStream[WindowLocationLike_replace](action)
-        : false;
+      return (
+        windowLocationStream?.[WindowLocationLike_replace](action) ?? false
+      );
     },
     [stableWindowLocationRef],
   );
 
   const goBack = useCallback(() => {
     const windowLocationStream = stableWindowLocationRef.current;
-    return isSome(windowLocationStream)
-      ? windowLocationStream[WindowLocationLike_goBack]()
-      : false;
+    return windowLocationStream?.[WindowLocationLike_goBack]() ?? false;
   }, [stableWindowLocationRef]);
 
   const canGoBack =

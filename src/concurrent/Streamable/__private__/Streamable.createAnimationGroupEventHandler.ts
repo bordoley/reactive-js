@@ -32,7 +32,6 @@ import {
   Function1,
   Optional,
   isFunction,
-  isSome,
   none,
   pipe,
 } from "../../../functions.js";
@@ -131,9 +130,7 @@ const Streamable_createAnimationGroupEventHandlerStream: <
                     ),
                     Observable.forEach((value: T) => {
                       const publisher = publishers[key];
-                      if (isSome(publisher)) {
-                        publisher[SinkLike_notify](value);
-                      }
+                      publisher?.[SinkLike_notify](value);
                     }),
                     Observable.ignoreElements<T>(),
                   ),

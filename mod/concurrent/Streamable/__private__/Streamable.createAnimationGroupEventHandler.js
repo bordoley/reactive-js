@@ -7,7 +7,7 @@ import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { StreamableLike_stream, } from "../../../concurrent.js";
 import { SinkLike_notify, } from "../../../events.js";
 import * as Publisher from "../../../events/Publisher.js";
-import { isFunction, isSome, none, pipe, } from "../../../functions.js";
+import { isFunction, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Observable from "../../Observable.js";
 import DelegatingStreamMixin from "../../__mixins__/DelegatingStreamMixin.js";
@@ -19,9 +19,7 @@ const Streamable_createAnimationGroupEventHandlerStream =
         const streamDelegate = Streamable_createEventHandler((event) => {
             const observables = pipe(animationGroup, ReadonlyObjectMap.map((factory, key) => pipe(Observable.animate(isFunction(factory) ? factory(event) : factory), Observable.forEach((value) => {
                 const publisher = publishers[key];
-                if (isSome(publisher)) {
-                    publisher[SinkLike_notify](value);
-                }
+                publisher?.[SinkLike_notify](value);
             }), Observable.ignoreElements())));
             const deferredAnimatedObservables = pipe(observables, ReadonlyObjectMap.values(), Enumerable.map(Observable.subscribeOn(animationScheduler)), Enumerable.toReadonlyArray());
             return Observable.mergeMany(deferredAnimatedObservables);

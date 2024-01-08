@@ -166,9 +166,7 @@ export const createComponent: Signature["createComponent"] = <TProps>(
     );
 
     useEffect(() => {
-      if (isSome(propsSubject)) {
-        propsSubject[SinkLike_notify](props);
-      }
+      propsSubject?.[SinkLike_notify](props);
     }, [propsSubject, props]);
 
     return (
@@ -191,17 +189,12 @@ export const useDispatcher: Signature["useDispatcher"] = <TReq>(
 
   const enqueue = useCallback(
     (req: TReq) =>
-      isSome(stableDispatcherRef.current)
-        ? stableDispatcherRef.current[QueueableLike_enqueue](req)
-        : true,
+      stableDispatcherRef?.current?.[QueueableLike_enqueue](req) ?? true,
     [stableDispatcherRef],
   );
 
   const complete = useCallback(
-    () =>
-      isSome(stableDispatcherRef.current)
-        ? stableDispatcherRef.current[DispatcherLike_complete]()
-        : none,
+    () => stableDispatcherRef?.current?.[DispatcherLike_complete](),
     [stableDispatcherRef],
   );
 
@@ -361,18 +354,12 @@ export const usePauseable: Signature["usePauseable"] = (
   }, [pauseable]);
 
   const pause = useCallback(
-    () =>
-      isSome(stablePauseableRef.current)
-        ? stablePauseableRef.current[PauseableLike_pause]()
-        : none,
+    () => stablePauseableRef?.current?.[PauseableLike_pause](),
     [stablePauseableRef],
   );
 
   const resume = useCallback(
-    () =>
-      isSome(stablePauseableRef.current)
-        ? stablePauseableRef.current[PauseableLike_resume]()
-        : none,
+    () => stablePauseableRef?.current?.[PauseableLike_resume](),
     [stablePauseableRef],
   );
 
