@@ -51,6 +51,72 @@ testModule(
   describe(
     "createAnimationGroupEventHandler",
     test(
+      "blocking mode",
+      Disposable.usingLazy(() =>
+        VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }),
+      )(vts => {
+        const stream = Streamable.createAnimationGroupEventHandler<
+          string,
+          number
+        >(
+          {
+            a: { type: "keyframe", duration: 500, from: 0, to: 1 },
+          },
+          { mode: "blocking" },
+        )[StreamableLike_stream](vts);
+
+        pipe(stream, Dictionary.keySet(), invoke("has", "a"), expectTrue);
+
+        let result = 0;
+
+        pipeSome(
+          stream[DictionaryLike_get]("a"),
+          EventSource.addEventHandler(ev => {
+            result = ev;
+          }),
+        );
+
+        stream[QueueableLike_enqueue]();
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        pipe(result, expectEquals(1));
+      }),
+    ),
+    test(
+      "queueing mode",
+      Disposable.usingLazy(() =>
+        VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }),
+      )(vts => {
+        const stream = Streamable.createAnimationGroupEventHandler<
+          string,
+          number
+        >(
+          {
+            a: { type: "keyframe", duration: 500, from: 0, to: 1 },
+          },
+          { mode: "queueing" },
+        )[StreamableLike_stream](vts);
+
+        pipe(stream, Dictionary.keySet(), invoke("has", "a"), expectTrue);
+
+        let result = 0;
+
+        pipeSome(
+          stream[DictionaryLike_get]("a"),
+          EventSource.addEventHandler(ev => {
+            result = ev;
+          }),
+        );
+
+        stream[QueueableLike_enqueue]();
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        pipe(result, expectEquals(1));
+      }),
+    ),
+    test(
       "switching mode",
       Disposable.usingLazy(() =>
         VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }),
