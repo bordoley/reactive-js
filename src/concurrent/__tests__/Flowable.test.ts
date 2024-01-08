@@ -1,6 +1,7 @@
 import {
   describe,
   expectArrayEquals,
+  expectEquals,
   expectToHaveBeenCalledTimes,
   expectToThrowAsync,
   expectTrue,
@@ -20,11 +21,13 @@ import {
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
 import {
+  Optional,
   Tuple2,
   bind,
   error,
   increment,
   invoke,
+  newInstance,
   pipe,
   pipeLazy,
   returns,
@@ -32,6 +35,7 @@ import {
 } from "../../functions.js";
 import {
   DisposableLike_dispose,
+  DisposableLike_error,
   DisposableLike_isDisposed,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -242,6 +246,27 @@ testModule(
 
       pipe(subscription[DisposableLike_isDisposed], expectTrue);
     }),
+    test(
+      "when the source throws",
+      Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
+        const error = newInstance(Error);
+
+        const flowed = pipe(
+          Observable.throws({ raise: () => error }),
+          Flowable.fromRunnable(),
+          invoke(FlowableLike_flow, vts),
+          Disposable.addTo(vts),
+        );
+        flowed[PauseableLike_resume]();
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        pipe(
+          flowed[DisposableLike_error],
+          expectEquals<Optional<Error>>(error),
+        );
+      }),
+    ),
   ),
 );
 

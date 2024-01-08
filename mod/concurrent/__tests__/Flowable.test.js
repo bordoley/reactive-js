@@ -1,10 +1,10 @@
 /// <reference types="./Flowable.test.d.ts" />
 
-import { describe, expectArrayEquals, expectToHaveBeenCalledTimes, expectToThrowAsync, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectToHaveBeenCalledTimes, expectToThrowAsync, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import { FlowableLike_flow, PauseableLike_pause, PauseableLike_resume, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
-import { bind, error, increment, invoke, pipe, pipeLazy, returns, tuple, } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../utils.js";
+import { bind, error, increment, invoke, newInstance, pipe, pipeLazy, returns, tuple, } from "../../functions.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Flowable from "../Flowable.js";
 import * as HostScheduler from "../HostScheduler.js";
@@ -85,5 +85,11 @@ testModule("Flowable", describe("dispatchTo", test("sinking a pauseable observab
     pipe(f, expectToHaveBeenCalledTimes(3));
     pipe(f.calls.flat(), expectArrayEquals([0, 1, 2]));
     pipe(subscription[DisposableLike_isDisposed], expectTrue);
-})));
+}), test("when the source throws", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
+    const error = newInstance(Error);
+    const flowed = pipe(Observable.throws({ raise: () => error }), Flowable.fromRunnable(), invoke(FlowableLike_flow, vts), Disposable.addTo(vts));
+    flowed[PauseableLike_resume]();
+    vts[VirtualTimeSchedulerLike_run]();
+    pipe(flowed[DisposableLike_error], expectEquals(error));
+}))));
 ((_) => { })(Flowable);
