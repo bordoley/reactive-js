@@ -10,7 +10,7 @@ import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNoti
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const TakeWhileObserver_inclusive = Symbol("TakeWhileObserver_inclusive");
 const TakeWhileObserver_predicate = Symbol("TakeWhileObserver_predicate");
-const Observer_createTakeWhileObserver = /*@__PURE__*/ (() => createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DelegatingDisposableMixin(), ObserverMixin()), function TakeWhileObserver(instance, delegate, predicate, inclusive) {
+const createTakeWhileObserver = /*@__PURE__*/ (() => createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DelegatingDisposableMixin(), ObserverMixin()), function TakeWhileObserver(instance, delegate, predicate, inclusive) {
     init(DelegatingDisposableMixin(), instance, delegate);
     init(ObserverMixin(), instance, delegate, delegate);
     instance[TakeWhileObserver_predicate] = predicate;
@@ -30,5 +30,5 @@ const Observer_createTakeWhileObserver = /*@__PURE__*/ (() => createInstanceFact
         }
     },
 }))))();
-const Observable_takeWhile = (predicate, options = {}) => pipe(Observer_createTakeWhileObserver, partial(predicate, options?.inclusive ?? false), Observable_liftPureDeferred);
+const Observable_takeWhile = (predicate, options = {}) => pipe(createTakeWhileObserver, partial(predicate, options?.inclusive), Observable_liftPureDeferred);
 export default Observable_takeWhile;

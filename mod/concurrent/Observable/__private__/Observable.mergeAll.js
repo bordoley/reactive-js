@@ -15,7 +15,7 @@ import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNoti
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
-const Observer_createMergeAllObserverOperator = /*@__PURE__*/ (() => {
+const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
     const MergeAllObserver_activeCount = Symbol("MergeAllObserver_activeCount");
     const MergeAllObserver_concurrency = Symbol("MergeAllObserver_concurrency");
     const MergeAllObserver_delegate = Symbol("MergeAllObserver_delegate");
@@ -87,5 +87,5 @@ const Observable_mergeAll = ((options) => Observable_lift({
         [ObservableLike_isPure]: true,
         [ObservableLike_isRunnable]: true,
     }),
-})(Observer_createMergeAllObserverOperator(options)));
+})(createMergeAllObserverOperator(options)));
 export default Observable_mergeAll;

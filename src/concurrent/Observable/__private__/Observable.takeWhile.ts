@@ -26,10 +26,10 @@ interface TProperties<T> {
   [TakeWhileObserver_predicate]: Predicate<T>;
 }
 
-const Observer_createTakeWhileObserver: <T>(
+const createTakeWhileObserver: <T>(
   delegate: ObserverLike<T>,
   predicate: Predicate<T>,
-  inclusive: boolean,
+  inclusive?: boolean,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     decorateNotifyWithObserverStateAssert(
@@ -40,7 +40,7 @@ const Observer_createTakeWhileObserver: <T>(
             TProperties<T>,
           delegate: ObserverLike<T>,
           predicate: Predicate<T>,
-          inclusive: boolean,
+          inclusive?: boolean,
         ): ObserverLike<T> {
           init(
             DelegatingDisposableMixin<ObserverLike<T>>(),
@@ -85,8 +85,8 @@ const Observable_takeWhile: Observable.Signature["takeWhile"] = <T>(
   options: { readonly inclusive?: boolean } = {},
 ) =>
   pipe(
-    Observer_createTakeWhileObserver,
-    partial(predicate, options?.inclusive ?? false),
+    createTakeWhileObserver,
+    partial(predicate, options?.inclusive),
     Observable_liftPureDeferred,
   );
 

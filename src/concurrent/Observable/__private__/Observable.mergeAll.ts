@@ -51,7 +51,7 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-const Observer_createMergeAllObserverOperator: <T>(options?: {
+const createMergeAllObserverOperator: <T>(options?: {
   readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   readonly capacity?: number;
   readonly concurrency?: number;
@@ -230,7 +230,7 @@ const Observable_mergeAll: Observable.Signature["mergeAll"] = ((options?: {
       [ObservableLike_isRunnable]: true,
     }),
   })(
-    Observer_createMergeAllObserverOperator(options),
+    createMergeAllObserverOperator(options),
   )) as Observable.Signature["mergeAll"];
 
 export default Observable_mergeAll;

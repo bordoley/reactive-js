@@ -25,7 +25,7 @@ interface TProperties<T> {
   [PairwiseObserver_prev]: T;
 }
 
-const Observer_createPairwiseObserver: <T>(
+const createPairwiseObserver: <T>(
   delegate: ObserverLike<Tuple2<T, T>>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
@@ -77,8 +77,6 @@ const Observer_createPairwiseObserver: <T>(
   ))();
 
 const Observable_pairwise: Observable.Signature["pairwise"] = <T>() =>
-  Observable_liftPureDeferred<T, Tuple2<T, T>>(
-    Observer_createPairwiseObserver<T>,
-  );
+  Observable_liftPureDeferred<T, Tuple2<T, T>>(createPairwiseObserver<T>);
 
 export default Observable_pairwise;

@@ -113,6 +113,14 @@ testModule(
         expectArrayEquals([3, 2]),
       ),
     ),
+    test(
+      "copying the full array",
+      pipeLazy(
+        [1, 2, 3, 4],
+        ReadonlyArray.slice({ start: 0 }),
+        expectArrayEquals([1, 2, 3, 4]),
+      ),
+    ),
   ),
   describe(
     "values",

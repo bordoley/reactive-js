@@ -7,7 +7,7 @@ import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from ".
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
-const Observer_createForEachObserver = /*@__PURE__*/ (() => {
+const createForEachObserver = /*@__PURE__*/ (() => {
     const ForEachObserver_effect = Symbol("ForEachObserver_effect");
     return createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(ObserverMixin(), DelegatingDisposableMixin()), function ForEachObserver(instance, delegate, effect) {
         init(DelegatingDisposableMixin(), instance, delegate);
@@ -23,5 +23,5 @@ const Observer_createForEachObserver = /*@__PURE__*/ (() => {
         },
     })));
 })();
-const Observable_forEach = (effect) => pipe((Observer_createForEachObserver), partial(effect), Observable_liftWithSideEffects);
+const Observable_forEach = (effect) => pipe((createForEachObserver), partial(effect), Observable_liftWithSideEffects);
 export default Observable_forEach;

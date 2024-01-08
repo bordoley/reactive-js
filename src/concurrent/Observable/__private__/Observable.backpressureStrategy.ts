@@ -21,7 +21,7 @@ import type * as Observable from "../../Observable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
-const Observer_createBackpressureObserver: <T>(
+const createBackpressureObserver: <T>(
   delegate: ObserverLike<T>,
   config: Pick<
     QueueableLike,
@@ -63,7 +63,7 @@ const Observable_backpressureStrategy: Observable.Signature["backpressureStrateg
     backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
   ) =>
     pipe(
-      Observer_createBackpressureObserver<T>,
+      createBackpressureObserver<T>,
       partial({
         [QueueableLike_backpressureStrategy]: backpressureStrategy,
         [QueueableLike_capacity]: capacity,

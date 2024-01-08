@@ -39,7 +39,7 @@ import Observable_fromValue from "./Observable.fromValue.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-const Observer_createThrottleObserver: <T>(
+const createThrottleObserver: <T>(
   delegate: ObserverLike<T>,
   durationFunction: Function1<T, ObservableLike>,
   mode: "first" | "last" | "interval",
@@ -183,7 +183,7 @@ const Observable_throttle: Observable.Signature["throttle"] = (
   );
 
   return pipe(
-    Observer_createThrottleObserver,
+    createThrottleObserver,
     partial(durationObservable, mode),
     Observable_liftPureDeferred,
   );

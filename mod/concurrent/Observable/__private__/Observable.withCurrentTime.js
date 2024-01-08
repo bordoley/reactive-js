@@ -8,7 +8,7 @@ import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from ".
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-const Observer_createWithCurrentTimeObserver = /*@__PURE__*/ (() => {
+const createWithCurrentTimeObserver = /*@__PURE__*/ (() => {
     const WithCurrentTimeObserver_selector = Symbol("WithCurrentTimeObserver_selector");
     return createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(ObserverMixin(), DelegatingDisposableMixin()), function WithCurrentTimeObserver(instance, delegate, selector) {
         init(DelegatingDisposableMixin(), instance, delegate);
@@ -25,5 +25,5 @@ const Observer_createWithCurrentTimeObserver = /*@__PURE__*/ (() => {
         },
     })));
 })();
-const Observable_withCurrentTime = (selector) => pipe(Observer_createWithCurrentTimeObserver, partial(selector), Observable_liftPureDeferred);
+const Observable_withCurrentTime = (selector) => pipe(createWithCurrentTimeObserver, partial(selector), Observable_liftPureDeferred);
 export default Observable_withCurrentTime;

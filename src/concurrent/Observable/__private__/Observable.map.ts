@@ -12,7 +12,7 @@ import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
-const Observer_createMapObserver: <TA, TB>(
+const createMapObserver: <TA, TB>(
   delegate: ObserverLike<TB>,
   selector: Function1<TA, TB>,
 ) => ObserverLike<TA> = /*@__PURE__*/ (<TA, TB>() =>
@@ -36,11 +36,6 @@ const Observer_createMapObserver: <TA, TB>(
 
 const Observable_map: Observable.Signature["map"] = <TA, TB>(
   selector: Function1<TA, TB>,
-) =>
-  pipe(
-    Observer_createMapObserver<TA, TB>,
-    partial(selector),
-    Observable_liftPure,
-  );
+) => pipe(createMapObserver<TA, TB>, partial(selector), Observable_liftPure);
 
 export default Observable_map;

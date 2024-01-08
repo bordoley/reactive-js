@@ -9,7 +9,7 @@ import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNoti
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const PairwiseObserver_hasPrev = Symbol("PairwiseObserver_hasPrev");
 const PairwiseObserver_prev = Symbol("PairwiseObserver_prev");
-const Observer_createPairwiseObserver = /*@__PURE__*/ (() => createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DelegatingDisposableMixin(), ObserverMixin()), function PairwiseObserver(instance, delegate) {
+const createPairwiseObserver = /*@__PURE__*/ (() => createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DelegatingDisposableMixin(), ObserverMixin()), function PairwiseObserver(instance, delegate) {
     init(DelegatingDisposableMixin(), instance, delegate);
     init(ObserverMixin(), instance, delegate, delegate);
     return instance;
@@ -26,5 +26,5 @@ const Observer_createPairwiseObserver = /*@__PURE__*/ (() => createInstanceFacto
         this[PairwiseObserver_prev] = next;
     },
 }))))();
-const Observable_pairwise = () => Observable_liftPureDeferred((Observer_createPairwiseObserver));
+const Observable_pairwise = () => Observable_liftPureDeferred((createPairwiseObserver));
 export default Observable_pairwise;

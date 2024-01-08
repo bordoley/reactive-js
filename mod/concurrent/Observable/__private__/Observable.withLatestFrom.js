@@ -12,7 +12,7 @@ import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNoti
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
-const Observer_createWithLatestFromObserver = /*@__PURE__*/ (() => {
+const createWithLatestFromObserver = /*@__PURE__*/ (() => {
     const WithLatestFromObserver_hasLatest = Symbol("WithLatestFromObserver_hasLatest");
     const WithLatestFromObserver_otherLatest = Symbol("WithLatestFromObserver_otherLatest");
     const WithLatestFromObserver_selector = Symbol("WithLatestFromObserver_selector");
@@ -43,7 +43,7 @@ const Observer_createWithLatestFromObserver = /*@__PURE__*/ (() => {
         },
     })));
 })();
-const Observable_withLatestFrom = ((other, selector) => pipe(Observer_createWithLatestFromObserver, partial(other, selector), Observable_lift({
+const Observable_withLatestFrom = ((other, selector) => pipe(createWithLatestFromObserver, partial(other, selector), Observable_lift({
     [ObservableLike_isDeferred]: true,
     [ObservableLike_isMulticasted]: false,
     [ObservableLike_isPure]: other[ObservableLike_isPure],

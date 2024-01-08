@@ -19,7 +19,7 @@ import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
-const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
+const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
   const DecodeWithCharsetObserver_delegate = Symbol(
     "DecodeWithCharsetObserver_delegate",
   );
@@ -100,7 +100,7 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
 const Observable_decodeWithCharset: Observable.Signature["decodeWithCharset"] =
   options =>
     pipe(
-      Observer_createDecodeWithCharsetObserver,
+      createDecodeWithCharsetObserver,
       partial(options?.charset ?? "utf-8", options),
       Observable_liftPureDeferred,
     );

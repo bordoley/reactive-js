@@ -24,9 +24,9 @@ interface TProperties {
   [SkipFirstObserver_count]: number;
 }
 
-const Observer_createSkipFirstObserver: <T>(
+const createSkipFirstObserver: <T>(
   delegate: ObserverLike<T>,
-  count: number,
+  count?: number,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     decorateNotifyWithObserverStateAssert(
@@ -35,7 +35,7 @@ const Observer_createSkipFirstObserver: <T>(
         function SkipFirstObserver(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify> & TProperties,
           delegate: ObserverLike<T>,
-          skipCount: number,
+          skipCount?: number,
         ): ObserverLike<T> {
           init(
             DelegatingDisposableMixin<ObserverLike<T>>(),
@@ -73,12 +73,12 @@ const Observer_createSkipFirstObserver: <T>(
     ),
   ))();
 
-const Observable_skipFirst: Observable.Signature["skipFirst"] = (
-  options: { readonly count?: number } = {},
-) =>
+const Observable_skipFirst: Observable.Signature["skipFirst"] = (options?: {
+  readonly count?: number;
+}) =>
   pipe(
-    Observer_createSkipFirstObserver,
-    partial(clampPositiveInteger(options.count ?? 1)),
+    createSkipFirstObserver,
+    partial(options?.count),
     Observable_liftPureDeferred,
   );
 export default Observable_skipFirst;

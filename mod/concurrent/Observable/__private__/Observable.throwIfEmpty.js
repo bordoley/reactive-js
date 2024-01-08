@@ -9,7 +9,7 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
+const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
     const ThrowIfEmptyObserver_delegate = Symbol("ThrowIfEmptyObserver_delegate");
     const ThrowIfEmptyObserver_isEmpty = Symbol("ThrowIfEmptyObserver_isEmpty");
     return createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function ThrowIfEmptyObserver(instance, delegate, factory) {
@@ -39,5 +39,5 @@ const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
         },
     })));
 })();
-const Observable_throwIfEmpty = (factory) => pipe(Observer_createThrowIfEmptyObserver, partial(factory), Observable_liftPureDeferred);
+const Observable_throwIfEmpty = (factory) => pipe(createThrowIfEmptyObserver, partial(factory), Observable_liftPureDeferred);
 export default Observable_throwIfEmpty;

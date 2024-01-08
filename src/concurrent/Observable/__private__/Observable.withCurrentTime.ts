@@ -18,7 +18,7 @@ import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
-const Observer_createWithCurrentTimeObserver: <TA, TB>(
+const createWithCurrentTimeObserver: <TA, TB>(
   delegate: ObserverLike<TB>,
   selector: Function2<number, TA, TB>,
 ) => ObserverLike<TA> = /*@__PURE__*/ (<TA, TB>() => {
@@ -80,7 +80,7 @@ const Observable_withCurrentTime: Observable.Signature["withCurrentTime"] = <
   selector: Function2<number, TA, TB>,
 ) =>
   pipe(
-    Observer_createWithCurrentTimeObserver,
+    createWithCurrentTimeObserver,
     partial(selector),
     Observable_liftPureDeferred,
   );

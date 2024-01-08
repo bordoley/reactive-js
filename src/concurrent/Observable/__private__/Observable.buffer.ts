@@ -31,7 +31,7 @@ interface TProps<T> {
   [BufferObserver_count]: number;
 }
 
-const Observer_createBufferObserver: <T>(
+const createBufferObserver: <T>(
   delegate: ObserverLike<readonly T[]>,
   count: Optional<number>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
@@ -101,7 +101,7 @@ const Observable_buffer: Observable.Signature["buffer"] = <T>(options?: {
   count?: number;
 }) =>
   pipe(
-    Observer_createBufferObserver<T>,
+    createBufferObserver<T>,
     partial(options?.count),
     Observable_liftPureDeferred,
   );

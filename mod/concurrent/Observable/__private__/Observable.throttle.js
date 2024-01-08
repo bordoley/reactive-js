@@ -14,7 +14,7 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_fromValue from "./Observable.fromValue.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
-const Observer_createThrottleObserver = /*@__PURE__*/ (() => {
+const createThrottleObserver = /*@__PURE__*/ (() => {
     const ThrottleObserver_value = Symbol("ThrottleObserver_value");
     const ThrottleObserver_hasValue = Symbol("ThrottleObserver_hasValue");
     const ThrottleObserver_durationSubscription = Symbol("ThrottleObserver_durationSubscription");
@@ -77,6 +77,6 @@ const Observer_createThrottleObserver = /*@__PURE__*/ (() => {
 const Observable_throttle = (duration, options = {}) => {
     const { mode = "interval" } = options;
     const durationObservable = pipeLazy(none, Observable_fromValue({ delay: duration }));
-    return pipe(Observer_createThrottleObserver, partial(durationObservable, mode), Observable_liftPureDeferred);
+    return pipe(createThrottleObserver, partial(durationObservable, mode), Observable_liftPureDeferred);
 };
 export default Observable_throttle;

@@ -9,7 +9,7 @@ import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const SkipFirstObserver_count = Symbol("SkipFirstObserver_count");
-const Observer_createSkipFirstObserver = /*@__PURE__*/ (() => createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DelegatingDisposableMixin(), ObserverMixin()), function SkipFirstObserver(instance, delegate, skipCount) {
+const createSkipFirstObserver = /*@__PURE__*/ (() => createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DelegatingDisposableMixin(), ObserverMixin()), function SkipFirstObserver(instance, delegate, skipCount) {
     init(DelegatingDisposableMixin(), instance, delegate);
     init(ObserverMixin(), instance, delegate, delegate);
     instance[SkipFirstObserver_count] = clampPositiveInteger(skipCount ?? 1);
@@ -24,5 +24,5 @@ const Observer_createSkipFirstObserver = /*@__PURE__*/ (() => createInstanceFact
         }
     },
 }))))();
-const Observable_skipFirst = (options = {}) => pipe(Observer_createSkipFirstObserver, partial(clampPositiveInteger(options.count ?? 1)), Observable_liftPureDeferred);
+const Observable_skipFirst = (options) => pipe(createSkipFirstObserver, partial(options?.count), Observable_liftPureDeferred);
 export default Observable_skipFirst;

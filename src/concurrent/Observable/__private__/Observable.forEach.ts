@@ -17,7 +17,7 @@ import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 
-const Observer_createForEachObserver: <T>(
+const createForEachObserver: <T>(
   delegate: ObserverLike<T>,
   effect: SideEffect1<T>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
@@ -69,7 +69,7 @@ const Observable_forEach: Observable.Signature["forEach"] = <T>(
   effect: SideEffect1<T>,
 ) =>
   pipe(
-    Observer_createForEachObserver<T>,
+    createForEachObserver<T>,
     partial(effect),
     Observable_liftWithSideEffects,
   );

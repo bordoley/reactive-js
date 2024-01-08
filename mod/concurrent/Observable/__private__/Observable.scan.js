@@ -10,7 +10,7 @@ import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNoti
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const ScanObserver_acc = Symbol("ScanObserver_acc");
 const ScanObserver_reducer = Symbol("ScanObserver_reducer");
-const Observer_createScanObserver = /*@__PURE__*/ (() => {
+const createScanObserver = /*@__PURE__*/ (() => {
     return createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DelegatingDisposableMixin(), ObserverMixin()), function ScanObserver(instance, delegate, reducer, initialValue) {
         init(DelegatingDisposableMixin(), instance, delegate);
         init(ObserverMixin(), instance, delegate, delegate);
@@ -34,5 +34,5 @@ const Observer_createScanObserver = /*@__PURE__*/ (() => {
         },
     })));
 })();
-const Observable_scan = (reducer, initialValue) => pipe((Observer_createScanObserver), partial(reducer, initialValue), Observable_liftPureDeferred);
+const Observable_scan = (reducer, initialValue) => pipe((createScanObserver), partial(reducer, initialValue), Observable_liftPureDeferred);
 export default Observable_scan;

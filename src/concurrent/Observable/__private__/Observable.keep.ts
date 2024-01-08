@@ -12,7 +12,7 @@ import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
-const Observer_createKeepObserver: <T>(
+const createKeepObserver: <T>(
   delegate: ObserverLike<T>,
   predicate: Predicate<T>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
@@ -36,7 +36,6 @@ const Observer_createKeepObserver: <T>(
 
 const Observable_keep: Observable.Signature["keep"] = <T>(
   predicate: Predicate<T>,
-) =>
-  pipe(Observer_createKeepObserver<T>, partial(predicate), Observable_liftPure);
+) => pipe(createKeepObserver<T>, partial(predicate), Observable_liftPure);
 
 export default Observable_keep;

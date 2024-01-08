@@ -37,7 +37,7 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-const Observer_createWithLatestFromObserver: <TA, TB, T>(
+const createWithLatestFromObserver: <TA, TB, T>(
   delegate: ObserverLike<T>,
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
@@ -132,7 +132,7 @@ const Observable_withLatestFrom: Observable.Signature["withLatestFrom"] = (<
   selector: Function2<TA, TB, T>,
 ) =>
   pipe(
-    Observer_createWithLatestFromObserver,
+    createWithLatestFromObserver,
     partial(other, selector),
     Observable_lift({
       [ObservableLike_isDeferred]: true,

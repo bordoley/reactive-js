@@ -18,7 +18,7 @@ import {
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 
-const Observer_create: <T>(
+const createObserver: <T>(
   scheduler: SchedulerLike,
   config: Pick<
     QueueableLike,
@@ -55,7 +55,7 @@ const Observable_subscribeWithConfig =
     >,
   ) =>
   (observable: ObservableLike) => {
-    const observer = Observer_create(scheduler, config);
+    const observer = createObserver(scheduler, config);
     observable[ObservableLike_observe](observer);
     return observer;
   };

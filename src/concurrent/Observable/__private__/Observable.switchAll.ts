@@ -33,7 +33,7 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-const Observer_createSwitchAllObserver: <T>(
+const createSwitchAllObserver: <T>(
   o: ObserverLike<T>,
 ) => ObserverLike<ObservableLike<T>> = /*@__PURE__*/ (<T>() => {
   const SwitchAllObserver_currentRef = Symbol("SwitchAllObserver_currentRef");
@@ -130,6 +130,6 @@ const Observable_switchAll: Observable.Signature["switchAll"] = ((options?: {
       [ObservableLike_isPure]: true,
       [ObservableLike_isRunnable]: true,
     },
-  )(Observer_createSwitchAllObserver)) as Observable.Signature["switchAll"];
+  )(createSwitchAllObserver)) as Observable.Signature["switchAll"];
 
 export default Observable_switchAll;

@@ -29,7 +29,7 @@ import type * as Observable from "../../Observable.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
-const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() => {
+const createTakeLastObserver = /*@__PURE__*/ (<T>() => {
   const TakeLastObserver_queue = Symbol("TakeLastObserver_queue");
 
   type TProperties = {
@@ -100,7 +100,7 @@ const Observable_takeLast: Observable.Signature["takeLast"] = (
   options: { readonly count?: number } = {},
 ) =>
   pipe(
-    Observer_createTakeLastObserver,
+    createTakeLastObserver,
     partial(clampPositiveInteger(options.count ?? 1)),
     Observable_liftPureDeferred,
   );

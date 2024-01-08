@@ -25,9 +25,9 @@ interface TProperties {
   [TakeFirstSinkMixin_count]: number;
 }
 
-const Observer_createTakeFirstObserver: <T>(
+const createTakeFirstObserver: <T>(
   delegate: ObserverLike<T>,
-  count: number,
+  count?: number,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     decorateNotifyWithObserverStateAssert(
@@ -36,7 +36,7 @@ const Observer_createTakeFirstObserver: <T>(
         function TakeFirstObserver(
           instance: Pick<ObserverLike<T>, typeof SinkLike_notify> & TProperties,
           delegate: ObserverLike<T>,
-          takeCount: number,
+          takeCount?: number,
         ): ObserverLike<T> {
           init(
             DelegatingDisposableMixin<ObserverLike<T>>(),
@@ -79,12 +79,12 @@ const Observer_createTakeFirstObserver: <T>(
     ),
   ))();
 
-const Observable_takeFirst: Observable.Signature["takeFirst"] = (
-  options: { readonly count?: number } = {},
-) =>
+const Observable_takeFirst: Observable.Signature["takeFirst"] = (options?: {
+  readonly count?: number;
+}) =>
   pipe(
-    Observer_createTakeFirstObserver,
-    partial(clampPositiveInteger(options.count ?? 1)),
+    createTakeFirstObserver,
+    partial(options?.count),
     Observable_liftPureDeferred,
   );
 

@@ -7,7 +7,7 @@ import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-const Observer_createBackpressureObserver = /*@__PURE__*/ (() => createInstanceFactory(mix(include(ObserverMixin(), DelegatingDisposableMixin()), function EnqueueObserver(instance, delegate, config) {
+const createBackpressureObserver = /*@__PURE__*/ (() => createInstanceFactory(mix(include(ObserverMixin(), DelegatingDisposableMixin()), function EnqueueObserver(instance, delegate, config) {
     init(DelegatingDisposableMixin(), instance, delegate);
     init(ObserverMixin(), instance, delegate, config);
     return instance;
@@ -16,7 +16,7 @@ const Observer_createBackpressureObserver = /*@__PURE__*/ (() => createInstanceF
         this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
     },
 })))();
-const Observable_backpressureStrategy = (capacity, backpressureStrategy) => pipe((Observer_createBackpressureObserver), partial({
+const Observable_backpressureStrategy = (capacity, backpressureStrategy) => pipe((createBackpressureObserver), partial({
     [QueueableLike_backpressureStrategy]: backpressureStrategy,
     [QueueableLike_capacity]: capacity,
 }), (Observable_liftPureDeferred));

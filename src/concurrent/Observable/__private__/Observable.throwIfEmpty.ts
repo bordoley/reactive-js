@@ -24,7 +24,7 @@ import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
-const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
+const createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
   const ThrowIfEmptyObserver_delegate = Symbol("ThrowIfEmptyObserver_delegate");
   const ThrowIfEmptyObserver_isEmpty = Symbol("ThrowIfEmptyObserver_isEmpty");
 
@@ -88,7 +88,7 @@ const Observable_throwIfEmpty: Observable.Signature["throwIfEmpty"] = (
   factory: Factory<unknown>,
 ) =>
   pipe(
-    Observer_createThrowIfEmptyObserver,
+    createThrowIfEmptyObserver,
     partial(factory),
     Observable_liftPureDeferred,
   );

@@ -13,7 +13,7 @@ import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNoti
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
-const Observer_createSwitchAllObserver = /*@__PURE__*/ (() => {
+const createSwitchAllObserver = /*@__PURE__*/ (() => {
     const SwitchAllObserver_currentRef = Symbol("SwitchAllObserver_currentRef");
     const SwitchAllObserver_delegate = Symbol("SwitchAllObserver_delegate");
     function onDispose() {
@@ -47,5 +47,5 @@ const Observable_switchAll = ((options) => Observable_lift(options?.innerType ??
     [ObservableLike_isMulticasted]: false,
     [ObservableLike_isPure]: true,
     [ObservableLike_isRunnable]: true,
-})(Observer_createSwitchAllObserver));
+})(createSwitchAllObserver));
 export default Observable_switchAll;

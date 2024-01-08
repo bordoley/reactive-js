@@ -10,7 +10,7 @@ import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const DistinctUntilChangedObserver_equality = Symbol("DistinctUntilChangedObserver_equality");
 const DistinctUntilChangedObserver_prev = Symbol("DistinctUntilChangedObserver_prev");
 const DistinctUntilChangedObserver_hasValue = Symbol("DistinctUntilChangedObserver_hasValue");
-const Observer_createDistinctUntilChangedObserver = /*@__PURE__*/ (() => createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(ObserverMixin(), DelegatingDisposableMixin()), function DistinctUntilChangedObserver(instance, delegate, equality) {
+const createDistinctUntilChangedObserver = /*@__PURE__*/ (() => createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(ObserverMixin(), DelegatingDisposableMixin()), function DistinctUntilChangedObserver(instance, delegate, equality) {
     init(DelegatingDisposableMixin(), instance, delegate);
     init(ObserverMixin(), instance, delegate, delegate);
     instance[DistinctUntilChangedObserver_equality] = equality;
@@ -30,5 +30,5 @@ const Observer_createDistinctUntilChangedObserver = /*@__PURE__*/ (() => createI
         }
     },
 }))))();
-const Observable_distinctUntilChanged = (options) => pipe(Observer_createDistinctUntilChangedObserver, partial(options?.equality ?? strictEquality), Observable_liftPureDeferred);
+const Observable_distinctUntilChanged = (options) => pipe(createDistinctUntilChangedObserver, partial(options?.equality ?? strictEquality), Observable_liftPureDeferred);
 export default Observable_distinctUntilChanged;

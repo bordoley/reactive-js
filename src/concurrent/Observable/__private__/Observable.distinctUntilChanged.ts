@@ -39,7 +39,7 @@ interface TProps<T> {
   [DistinctUntilChangedObserver_hasValue]: boolean;
 }
 
-const Observer_createDistinctUntilChangedObserver: <T>(
+const createDistinctUntilChangedObserver: <T>(
   delegate: ObserverLike<T>,
   equality: Equality<T>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
@@ -97,7 +97,7 @@ const Observer_createDistinctUntilChangedObserver: <T>(
 const Observable_distinctUntilChanged: Observable.Signature["distinctUntilChanged"] =
   <T>(options?: { readonly equality?: Equality<T> }) =>
     pipe(
-      Observer_createDistinctUntilChangedObserver,
+      createDistinctUntilChangedObserver,
       partial(options?.equality ?? strictEquality),
       Observable_liftPureDeferred,
     );
