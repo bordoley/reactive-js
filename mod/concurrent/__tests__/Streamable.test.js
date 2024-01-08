@@ -1,17 +1,32 @@
 /// <reference types="./Streamable.test.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, test, testModule, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectTrue, test, testModule, } from "../../__internal__/testing.js";
+import { DictionaryLike_get, } from "../../collections.js";
+import * as Dictionary from "../../collections/Dictionary.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { CacheLike_get, DispatcherLike_complete, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
-import { bind, bindMethod, invoke, none, pipe, returns, tuple, } from "../../functions.js";
+import * as EventSource from "../../events/EventSource.js";
+import { bind, bindMethod, invoke, none, pipe, pipeSome, returns, tuple, } from "../../functions.js";
 import { DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
-testModule("Streamable", describe("stateStore", test("createStateStore", () => {
+testModule("Streamable", describe("createAnimationGroupEventHandler", test("switching mode", Disposable.usingLazy(() => VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }))(vts => {
+    const stream = Streamable.createAnimationGroupEventHandler({
+        a: { type: "keyframe", duration: 500, from: 0, to: 1 },
+    }, { mode: "switching" })[StreamableLike_stream](vts);
+    pipe(stream, Dictionary.keySet(), invoke("has", "a"), expectTrue);
+    let result = 0;
+    pipeSome(stream[DictionaryLike_get]("a"), EventSource.addEventHandler(ev => {
+        result = ev;
+    }));
+    stream[QueueableLike_enqueue]();
+    vts[VirtualTimeSchedulerLike_run]();
+    pipe(result, expectEquals(1));
+}))), describe("stateStore", test("createStateStore", () => {
     const scheduler = VirtualTimeScheduler.create();
     const streamable = Streamable.createStateStore(returns(1));
     const stateStream = streamable[StreamableLike_stream](scheduler, {
