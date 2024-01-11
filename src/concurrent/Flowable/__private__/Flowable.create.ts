@@ -85,7 +85,7 @@ const PauseableObservable_create: <T>(
 
             const multicastedMode = pipe(
               mode,
-              Observable.mergeWith<boolean>(
+              Observable.mergeWith(
                 // Initialize to paused state
                 pipe(true, Observable.fromValue()),
               ),

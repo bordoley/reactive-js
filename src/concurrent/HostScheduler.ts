@@ -11,6 +11,7 @@ import { DisposableLike, DisposableLike_dispose } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
 import ContinuationSchedulerMixin, {
   ContinuationLike,
+  ContinuationLike_dueTime,
   ContinuationLike_run,
   ContinuationSchedulerLike,
   ContinuationSchedulerLike_scheduleContinuation,
@@ -43,7 +44,10 @@ const supportsIsInputPending = /*@__PURE__*/ (() =>
 const isInputPending = (): boolean =>
   supportsIsInputPending && (navigator.scheduling?.isInputPending() ?? false);
 
-const scheduleImmediateWithSetImmediate = (continuation: ContinuationLike) => {
+const scheduleImmediateWithSetImmediate = (
+  scheduler: ContinuationSchedulerLike,
+  continuation: ContinuationLike,
+) => {
   const disposable = pipe(
     Disposable.create(),
     Disposable.addTo(continuation),
@@ -51,12 +55,17 @@ const scheduleImmediateWithSetImmediate = (continuation: ContinuationLike) => {
   );
   const immmediate: ReturnType<typeof setImmediate> = setImmediate(
     runContinuation,
+    scheduler,
     continuation,
     disposable,
   );
 };
 
-const scheduleDelayed = (continuation: ContinuationLike, delay: number) => {
+const scheduleDelayed = (
+  scheduler: ContinuationSchedulerLike,
+  continuation: ContinuationLike,
+  delay: number,
+) => {
   const disposable = pipe(
     Disposable.create(),
     Disposable.addTo(continuation),
@@ -66,26 +75,40 @@ const scheduleDelayed = (continuation: ContinuationLike, delay: number) => {
   const timeout: ReturnType<typeof setTimeout> = setTimeout(
     runContinuation,
     delay,
+    scheduler,
     continuation,
     disposable,
   );
 };
 
-const scheduleImmediate = (continuation: ContinuationLike) => {
+const scheduleImmediate = (
+  scheduler: ContinuationSchedulerLike,
+  continuation: ContinuationLike,
+) => {
   if (supportsSetImmediate) {
-    scheduleImmediateWithSetImmediate(continuation);
+    scheduleImmediateWithSetImmediate(scheduler, continuation);
   } else {
-    scheduleDelayed(continuation, 0);
+    scheduleDelayed(scheduler, continuation, 0);
   }
 };
 
 const runContinuation = (
+  scheduler: ContinuationSchedulerLike,
   continuation: ContinuationLike,
   immmediateOrTimerDisposable: DisposableLike,
 ) => {
   // clear the immediateOrTimer disposable
   immmediateOrTimerDisposable[DisposableLike_dispose]();
-  continuation[ContinuationLike_run]();
+  const dueTime = continuation[ContinuationLike_dueTime];
+  const now = scheduler[SchedulerLike_now];
+
+  // Occasionally the setTimeout will run delayed continuations early,
+  // so reschedule in this case.
+  if (now >= dueTime) {
+    continuation[ContinuationLike_run]();
+  } else {
+    scheduler[ContinuationSchedulerLike_scheduleContinuation](continuation);
+  }
 };
 
 const createHostSchedulerInstance = /*@__PURE__*/ (() =>
@@ -110,12 +133,17 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
         [ContinuationSchedulerLike_scheduleContinuation](
           this: ContinuationSchedulerLike,
           continuation: ContinuationLike,
-          delay: number,
         ) {
-          if (delay > 0) {
-            scheduleDelayed(continuation, delay);
+          const now = this[SchedulerLike_now];
+          const dueTime = continuation[ContinuationLike_dueTime];
+          const delay = dueTime - now;
+
+          // setTimeout has min delay of 4 ms. So don't bother scheduling 
+          // delayed continuations is the intended delay is less than a 1 ms.
+          if (delay > 1) {
+            scheduleDelayed(this, continuation, delay);
           } else {
-            scheduleImmediate(continuation);
+            scheduleImmediate(this, continuation);
           }
         },
       },

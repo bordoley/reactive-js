@@ -17,19 +17,11 @@ import {
   PauseableLike_resume,
   PauseableSchedulerLike,
   SchedulerLike,
-  SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../concurrent.js";
-import {
-  SchedulerTaskLike,
-  SchedulerTaskLike_continuation,
-  SchedulerTaskLike_dueTime,
-  SchedulerTaskLike_id,
-  SchedulerTask_comparator,
-} from "../concurrent/__private__.js";
 import { StoreLike_value, WritableStoreLike } from "../events.js";
 import * as WritableStore from "../events/WritableStore.js";
 import { Optional, SideEffect1, isNone, isSome, none } from "../functions.js";
@@ -49,6 +41,8 @@ import * as PriorityQueue from "../utils/PriorityQueue.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
 import ContinuationSchedulerMixin, {
   ContinuationLike,
+  ContinuationLike_comparator,
+  ContinuationLike_dueTime,
   ContinuationLike_run,
   ContinuationSchedulerLike,
   ContinuationSchedulerLike_scheduleContinuation,
@@ -75,9 +69,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   const PauseableScheduler_immediateQueue = Symbol(
     "PauseableScheduler_immediateQueue",
   );
-  const PauseableScheduler_taskIDCounter = Symbol(
-    "PauseableScheduler_taskIDCounter",
-  );
+
   const PauseableScheduler_pausedTime = Symbol("PauseableScheduler_pausedTime");
   const PauseableScheduler_timeDrift = Symbol("PauseableScheduler_timeDrift");
   const PauseableScheduler_activeContinuation = Symbol(
@@ -89,62 +81,59 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     readonly [PauseableScheduler_hostScheduler]: SchedulerLike;
     readonly [PauseableScheduler_hostSchedulerContinuation]: SideEffect1<ContinuationContextLike>;
     [PauseableScheduler_hostSchedulerContinuationDueTime]: number;
-    readonly [PauseableScheduler_delayedQueue]: QueueLike<SchedulerTaskLike>;
-    readonly [PauseableScheduler_immediateQueue]: QueueLike<SchedulerTaskLike>;
-    [PauseableScheduler_taskIDCounter]: number;
+    readonly [PauseableScheduler_delayedQueue]: QueueLike<ContinuationLike>;
+    readonly [PauseableScheduler_immediateQueue]: QueueLike<ContinuationLike>;
     [PauseableScheduler_pausedTime]: number;
     [PauseableScheduler_timeDrift]: number;
-    [PauseableScheduler_activeContinuation]: Optional<SchedulerTaskLike>;
+    [PauseableScheduler_activeContinuation]: Optional<ContinuationLike>;
   };
 
   const peek = (
     instance: TProperties & ContinuationSchedulerLike,
     now: number,
-  ): Optional<SchedulerTaskLike> => {
+  ): Optional<ContinuationLike> => {
     const delayedQueue = instance[PauseableScheduler_delayedQueue];
     const immediateQueue = instance[PauseableScheduler_immediateQueue];
 
-    let task: Optional<SchedulerTaskLike> = none;
+    let continuation: Optional<ContinuationLike> = none;
     while (true) {
-      task = delayedQueue[QueueLike_head];
+      continuation = delayedQueue[QueueLike_head];
 
-      if (isNone(task)) {
+      if (isNone(continuation)) {
         break;
       }
 
-      const taskIsDispose =
-        task[SchedulerTaskLike_continuation][DisposableLike_isDisposed];
-      const taskDueTime = task[SchedulerTaskLike_dueTime];
+      const continuationIsDispose = continuation[DisposableLike_isDisposed];
+      const continuationDueTime = continuation[ContinuationLike_dueTime];
 
-      if (taskDueTime > now && !taskIsDispose) {
+      if (continuationDueTime > now && !continuationIsDispose) {
         break;
       }
 
       delayedQueue[QueueLike_dequeue]();
 
-      if (!taskIsDispose) {
-        immediateQueue[QueueableLike_enqueue](task);
+      if (!continuationIsDispose) {
+        immediateQueue[QueueableLike_enqueue](continuation);
       }
     }
 
     while (true) {
-      task = immediateQueue[QueueLike_head];
+      continuation = immediateQueue[QueueLike_head];
 
-      if (isNone(task)) {
+      if (isNone(continuation)) {
         break;
       }
 
-      const taskIsDispose =
-        task[SchedulerTaskLike_continuation][DisposableLike_isDisposed];
+      const continuationIsDispose = continuation[DisposableLike_isDisposed];
 
-      if (!taskIsDispose) {
+      if (!continuationIsDispose) {
         break;
       }
 
       immediateQueue[QueueLike_dequeue]();
     }
 
-    return task ?? delayedQueue[QueueLike_head];
+    return continuation ?? delayedQueue[QueueLike_head];
   };
 
   const scheduleOnHost = (
@@ -158,18 +147,19 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       !instance[SerialDisposableLike_current][DisposableLike_isDisposed];
     const hostSchedulerContinuationDueTime =
       instance[PauseableScheduler_hostSchedulerContinuationDueTime];
-    const nextTask = peek(instance, now);
-    const nextTaskDueTime = nextTask?.[SchedulerTaskLike_dueTime] ?? MAX_VALUE;
+    const nextContinuation = peek(instance, now);
+    const nextContinuationDueTime =
+      nextContinuation?.[ContinuationLike_dueTime] ?? MAX_VALUE;
     const hasActiveContinuation = isSome(
       instance[PauseableScheduler_activeContinuation],
     );
     const isPaused = instance[PauseableLike_isPaused][StoreLike_value];
     const hostContinuationAlreadyScheduled =
       hostSchedulerContinuationIsScheduled &&
-      hostSchedulerContinuationDueTime <= nextTaskDueTime;
+      hostSchedulerContinuationDueTime <= nextContinuationDueTime;
 
     if (
-      isNone(nextTask) ||
+      isNone(nextContinuation) ||
       hasActiveContinuation ||
       hostContinuationAlreadyScheduled ||
       isPaused
@@ -177,7 +167,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       return;
     }
 
-    const dueTime = nextTask[SchedulerTaskLike_dueTime];
+    const dueTime = nextContinuation[ContinuationLike_dueTime];
     const delay = clampPositiveInteger(dueTime - now);
 
     instance[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
@@ -207,7 +197,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         init(SerialDisposableMixin(), instance, Disposable.disposed);
 
         instance[PauseableScheduler_delayedQueue] = PriorityQueue.create(
-          SchedulerTask_comparator,
+          ContinuationLike_comparator,
         );
         instance[PauseableScheduler_immediateQueue] = IndexedQueue.create();
         instance[PauseableScheduler_hostScheduler] = host;
@@ -223,26 +213,25 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           while (!instance[DisposableLike_isDisposed]) {
             const now = instance[SchedulerLike_now];
 
-            const nextTaskToRun = peek(instance, now);
+            const nextContinuationToRun = peek(instance, now);
 
-            if (isNone(nextTaskToRun)) {
+            if (isNone(nextContinuationToRun)) {
               break;
             }
 
-            const dueTime = nextTaskToRun[SchedulerTaskLike_dueTime];
+            const dueTime = nextContinuationToRun[ContinuationLike_dueTime];
             const delay = dueTime - now;
 
             if (delay > 0) {
               instance[PauseableScheduler_hostSchedulerContinuationDueTime] =
                 now + delay;
             } else {
-              const taskToRun =
+              const continuation =
                 instance[PauseableScheduler_immediateQueue][
                   QueueLike_dequeue
                 ]();
-              const continuation = taskToRun?.[SchedulerTaskLike_continuation];
 
-              instance[PauseableScheduler_activeContinuation] = taskToRun;
+              instance[PauseableScheduler_activeContinuation] = continuation;
               continuation?.[ContinuationLike_run]();
               instance[PauseableScheduler_activeContinuation] = none;
             }
@@ -260,7 +249,6 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         [PauseableScheduler_hostSchedulerContinuationDueTime]: 0,
         [PauseableScheduler_delayedQueue]: none,
         [PauseableScheduler_immediateQueue]: none,
-        [PauseableScheduler_taskIDCounter]: 0,
         [PauseableScheduler_pausedTime]: 0,
         [PauseableScheduler_timeDrift]: 0,
         [PauseableScheduler_activeContinuation]: none,
@@ -282,14 +270,15 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           unsafeCast<TProperties & DisposableLike & SchedulerLike>(this);
 
           const now = this[SchedulerLike_now];
-          const nextTask = peek(this, now);
+          const nextContinuation = peek(this, now);
 
           return (
             !isSome(this[PauseableScheduler_activeContinuation]) ||
             this[PauseableLike_isPaused][StoreLike_value] ||
-            (isSome(nextTask) &&
-              this[PauseableScheduler_activeContinuation] !== nextTask &&
-              nextTask[SchedulerTaskLike_dueTime] <= now) ||
+            (isSome(nextContinuation) &&
+              this[PauseableScheduler_activeContinuation] !==
+                nextContinuation &&
+              nextContinuation[ContinuationLike_dueTime] <= now) ||
             this[PauseableScheduler_hostScheduler][SchedulerLike_shouldYield]
           );
         },
@@ -318,33 +307,16 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
             ContinuationSchedulerLike &
             SchedulerLike,
           continuation: ContinuationLike,
-          delay: number,
         ) {
           const now = this[SchedulerLike_now];
-          const dueTime = now + delay;
-
-          const task =
-            this[SchedulerLike_inContinuation] &&
-            isSome(this[PauseableScheduler_activeContinuation]) &&
-            this[PauseableScheduler_activeContinuation][
-              SchedulerTaskLike_continuation
-            ] === continuation &&
-            delay <= 0
-              ? this[PauseableScheduler_activeContinuation]
-              : {
-                  [SchedulerTaskLike_id]: this[
-                    PauseableScheduler_taskIDCounter
-                  ]++,
-                  [SchedulerTaskLike_continuation]: continuation,
-                  [SchedulerTaskLike_dueTime]: dueTime,
-                };
+          const dueTime = continuation[ContinuationLike_dueTime];
 
           const {
             [PauseableScheduler_delayedQueue]: delayed,
             [PauseableScheduler_immediateQueue]: queue,
           } = this;
           const targetQueue = dueTime > now ? delayed : queue;
-          targetQueue[QueueableLike_enqueue](task);
+          targetQueue[QueueableLike_enqueue](continuation);
 
           scheduleOnHost(this);
         },

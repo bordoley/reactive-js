@@ -15,9 +15,8 @@ import * as EventSource from "@reactive-js/core/events/EventSource";
 import * as Streamable from "@reactive-js/core/concurrent/Streamable";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
-import { EventSourceLike } from "@reactive-js/core/events";
+import { EventListenerLike_notify, EventSourceLike } from "@reactive-js/core/events";
 import * as Publisher from "@reactive-js/core/events/Publisher";
-import { SinkLike_notify } from "@reactive-js/core/events";
 import { DictionaryLike_get } from "@reactive-js/core/collections";
 
 const AnimatedCircle = ({
@@ -106,7 +105,7 @@ const ScrollApp = () => {
       const pos = y.progress;
       const velocity = y.velocity;
 
-      publishedAnimation?.[SinkLike_notify](pos);
+      publishedAnimation?.[EventListenerLike_notify](pos);
 
       if (pos === 1 && Math.abs(velocity) > 0.5) {
         // FIXME: To make this really right, we should measure the velocity
@@ -129,7 +128,7 @@ const ScrollApp = () => {
     pipeSomeLazy(
       springAnimation,
       EventSource.addEventHandler(v =>
-        publishedAnimation?.[SinkLike_notify](v),
+        publishedAnimation?.[EventListenerLike_notify](v),
       ),
     ),
     [springAnimation, publishedAnimation],

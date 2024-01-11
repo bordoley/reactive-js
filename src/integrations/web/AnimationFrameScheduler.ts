@@ -13,6 +13,7 @@ import {
 } from "../../concurrent.js";
 import ContinuationSchedulerMixin, {
   ContinuationLike,
+  ContinuationLike_dueTime,
   ContinuationLike_run,
   ContinuationSchedulerLike,
   ContinuationSchedulerLike_scheduleContinuation,
@@ -138,8 +139,11 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
         [ContinuationSchedulerLike_scheduleContinuation](
           this: ContinuationSchedulerLike & TProperties,
           continuation: ContinuationLike,
-          delay: number,
         ) {
+          const now = this[SchedulerLike_now];
+          const dueTime = continuation[ContinuationLike_dueTime];
+          const delay = dueTime - now;
+
           // The frame time is 16 ms at 60 fps so just ignore the delay
           // if its not more than a frame.
           if (delay > 16) {
@@ -152,7 +156,6 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
                   invoke(
                     ContinuationSchedulerLike_scheduleContinuation,
                     continuation,
-                    0,
                   ),
                 ),
                 { delay },

@@ -15,6 +15,7 @@ import {
 import { SchedulerLike, SchedulerLike_now } from "../../concurrent.js";
 import ContinuationSchedulerMixin, {
   ContinuationLike,
+  ContinuationLike_dueTime,
   ContinuationLike_run,
   ContinuationSchedulerLike,
   ContinuationSchedulerLike_scheduleContinuation,
@@ -61,12 +62,15 @@ const createReactScheduler = /*@__PURE__*/ (() => {
         [ContinuationSchedulerLike_scheduleContinuation](
           this: ContinuationSchedulerLike & TProperties,
           continuation: ContinuationLike,
-          delay: number,
         ) {
           const callback = () => {
             callbackNodeDisposable[DisposableLike_dispose]();
             continuation[ContinuationLike_run]();
           };
+
+          const now = this[SchedulerLike_now];
+          const dueTime = continuation[ContinuationLike_dueTime];
+          const delay = dueTime - now;
 
           const callbackNode = unstable_scheduleCallback(
             this.priority,

@@ -18,13 +18,6 @@ import {
   VirtualTimeSchedulerLike,
   VirtualTimeSchedulerLike_run,
 } from "../concurrent.js";
-import {
-  SchedulerTaskLike,
-  SchedulerTaskLike_continuation,
-  SchedulerTaskLike_dueTime,
-  SchedulerTaskLike_id,
-  SchedulerTask_comparator,
-} from "../concurrent/__private__.js";
 import { Optional, isSome, none } from "../functions.js";
 import {
   DisposableLike,
@@ -38,6 +31,8 @@ import {
 import * as PriorityQueue from "../utils/PriorityQueue.js";
 import ContinuationSchedulerMixin, {
   ContinuationLike,
+  ContinuationLike_comparator,
+  ContinuationLike_dueTime,
   ContinuationLike_run,
   ContinuationSchedulerLike,
   ContinuationSchedulerLike_scheduleContinuation,
@@ -56,9 +51,6 @@ const VirtualTimeScheduler_maxMicroTaskTicks = Symbol(
 const VirtualTimeScheduler_microTaskTicks = Symbol(
   "VirtualTimeScheduler_microTaskTicks",
 );
-const VirtualTimeScheduler_taskIDCount = Symbol(
-  "VirtualTimeScheduler_taskIDCount",
-);
 
 const VirtualTimeScheduler_queue = Symbol("VirtualTimeScheduler_queue");
 
@@ -66,8 +58,7 @@ type TProperties = {
   [SchedulerLike_now]: number;
   readonly [VirtualTimeScheduler_maxMicroTaskTicks]: number;
   [VirtualTimeScheduler_microTaskTicks]: number;
-  [VirtualTimeScheduler_taskIDCount]: number;
-  [VirtualTimeScheduler_queue]: QueueLike<SchedulerTaskLike>;
+  [VirtualTimeScheduler_queue]: QueueLike<ContinuationLike>;
 };
 
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
@@ -87,7 +78,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
 
         instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
         instance[VirtualTimeScheduler_queue] = PriorityQueue.create(
-          SchedulerTask_comparator,
+          ContinuationLike_comparator,
         );
 
         return instance;
@@ -96,7 +87,6 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         [SchedulerLike_now]: 0,
         [VirtualTimeScheduler_maxMicroTaskTicks]: MAX_SAFE_INTEGER,
         [VirtualTimeScheduler_microTaskTicks]: 0,
-        [VirtualTimeScheduler_taskIDCount]: 0,
         [VirtualTimeScheduler_queue]: none,
       }),
       {
@@ -113,36 +103,46 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         [VirtualTimeSchedulerLike_run](
           this: TProperties & ContinuationSchedulerLike & DisposableLike,
         ) {
-          let queue: Optional<QueueLike<SchedulerTaskLike>> = none;
+          let queue: Optional<QueueLike<ContinuationLike>> = none;
           while (
             ((queue = this[VirtualTimeScheduler_queue]),
             queue[QueueLike_count] > 0)
           ) {
             this[VirtualTimeScheduler_queue] = PriorityQueue.create(
-              SchedulerTask_comparator,
+              ContinuationLike_comparator,
             );
 
             const currentTime = this[SchedulerLike_now];
 
-            let task: Optional<SchedulerTaskLike> = none;
+            let continuation: Optional<ContinuationLike> = none;
 
-            while (((task = queue[QueueLike_dequeue]()), isSome(task))) {
-              if (task[SchedulerTaskLike_dueTime] > currentTime) {
+            while (
+              ((continuation = queue[QueueLike_dequeue]()),
+              isSome(continuation))
+            ) {
+              if (continuation[ContinuationLike_dueTime] > currentTime) {
                 // copy the task and all other remaining tasks back to the scheduler queue
 
-                this[VirtualTimeScheduler_queue][QueueableLike_enqueue](task);
-                while (((task = queue[QueueLike_dequeue]()), isSome(task))) {
-                  this[VirtualTimeScheduler_queue][QueueableLike_enqueue](task);
+                this[VirtualTimeScheduler_queue][QueueableLike_enqueue](
+                  continuation,
+                );
+                while (
+                  ((continuation = queue[QueueLike_dequeue]()),
+                  isSome(continuation))
+                ) {
+                  this[VirtualTimeScheduler_queue][QueueableLike_enqueue](
+                    continuation,
+                  );
                 }
               } else {
                 this[VirtualTimeScheduler_microTaskTicks] = 0;
-                task[SchedulerTaskLike_continuation][ContinuationLike_run]();
+                continuation[ContinuationLike_run]();
               }
             }
 
             const queueHeadDueTime =
               this[VirtualTimeScheduler_queue][QueueLike_head]?.[
-                SchedulerTaskLike_dueTime
+                ContinuationLike_dueTime
               ] ?? MIN_SAFE_INTEGER;
 
             this[SchedulerLike_now] = max(queueHeadDueTime, currentTime + 1);
@@ -151,15 +151,10 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           this[DisposableLike_dispose]();
         },
         [ContinuationSchedulerLike_scheduleContinuation](
-          this: TProperties & QueueLike<SchedulerTaskLike> & SchedulerLike,
+          this: TProperties & QueueLike<ContinuationLike> & SchedulerLike,
           continuation: ContinuationLike,
-          delay: number,
         ) {
-          this[VirtualTimeScheduler_queue][QueueableLike_enqueue]({
-            [SchedulerTaskLike_id]: this[VirtualTimeScheduler_taskIDCount]++,
-            [SchedulerTaskLike_dueTime]: this[SchedulerLike_now] + delay,
-            [SchedulerTaskLike_continuation]: continuation,
-          });
+          this[VirtualTimeScheduler_queue][QueueableLike_enqueue](continuation);
         },
       },
     ),
