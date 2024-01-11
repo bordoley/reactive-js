@@ -6,13 +6,13 @@ import PureStatelessComputationModuleTests from "../../computations/__tests__/fi
 import { VirtualTimeSchedulerLike_run } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as VirtualTimeScheduler from "../../concurrent/VirtualTimeScheduler.js";
-import { SinkLike_notify } from "../../events.js";
+import { EventListenerLike_notify } from "../../events.js";
 import { bind, compose, ignore, isSome, newInstance, none, pick, pipe, pipeLazy, raise, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 testModule("EventSource", PureStatelessComputationModuleTests(EventSource, () => (arr) => EventSource.create(listener => {
     for (let i = 0; i < arr.length; i++) {
-        listener[SinkLike_notify](arr[i]);
+        listener[EventListenerLike_notify](arr[i]);
     }
     listener[DisposableLike_dispose]();
 }), () => (eventSource) => {

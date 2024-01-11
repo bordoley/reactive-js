@@ -1,8 +1,7 @@
 /// <reference types="./Observable.withLatestFrom.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -34,11 +33,11 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
         [WithLatestFromObserver_otherLatest]: none,
         [WithLatestFromObserver_selector]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             if (!this[DisposableLike_isDisposed] &&
                 this[WithLatestFromObserver_hasLatest]) {
                 const result = this[WithLatestFromObserver_selector](next, this[WithLatestFromObserver_otherLatest]);
-                this[DelegatingDisposableLike_delegate][SinkLike_notify](result);
+                this[DelegatingDisposableLike_delegate][ObserverLike_notify](result);
             }
         },
     })));

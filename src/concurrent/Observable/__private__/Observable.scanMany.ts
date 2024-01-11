@@ -7,7 +7,7 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
 } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { EventListenerLike_notify } from "../../../events.js";
 import {
   Factory,
   Function2,
@@ -64,11 +64,13 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
               [ObservableLike_isRunnable]: false,
             },
           }),
-          Observable_forEach(bindMethod(accFeedbackStream, SinkLike_notify)),
+          Observable_forEach(
+            bindMethod(accFeedbackStream, EventListenerLike_notify),
+          ),
           invoke(ObservableLike_observe, observer),
         );
 
-        accFeedbackStream[SinkLike_notify](initialValue());
+        accFeedbackStream[EventListenerLike_notify](initialValue());
       },
       {
         [ObservableLike_isDeferred]: true,

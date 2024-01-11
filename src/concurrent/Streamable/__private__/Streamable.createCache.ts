@@ -22,7 +22,7 @@ import {
   StreamableLike_stream,
   SubjectLike,
 } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { EventListenerLike_notify } from "../../../events.js";
 import {
   Function1,
   Optional,
@@ -235,14 +235,14 @@ const createCacheStream: <T>(
                     instance.store.set(key, v);
                   }
 
-                  const observable = instance.subscriptions.get(key);
+                  const subject = instance.subscriptions.get(key);
 
                   // We want to publish none, when the cache does not have the value
                   // when initially subscribing to the key.
                   const shouldPublish = isNone(v) || oldValue !== v;
 
-                  if (isSome(observable) && shouldPublish) {
-                    observable[SinkLike_notify](v);
+                  if (isSome(subject) && shouldPublish) {
+                    subject[EventListenerLike_notify](v);
                     return;
                   }
 
@@ -306,7 +306,7 @@ const createCacheStream: <T>(
               const initialValue = store.get(key);
 
               if (isSome(initialValue)) {
-                subject[SinkLike_notify](initialValue);
+                subject[EventListenerLike_notify](initialValue);
               } else {
                 // Try to load the value from the persistence store
                 delegate[QueueableLike_enqueue]({

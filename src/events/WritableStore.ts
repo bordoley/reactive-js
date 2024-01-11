@@ -7,7 +7,7 @@ import {
   unsafeCast,
 } from "../__internal__/mixins.js";
 import {
-  SinkLike_notify,
+  EventListenerLike_notify,
   StoreLike_value,
   WritableStoreLike,
 } from "../events.js";
@@ -65,7 +65,9 @@ export const create: <T>(
 
           if (!this[WritableStore_equality](this.v, value)) {
             this.v = value;
-            this[LazyInitEventSourceMixin_publisher]?.[SinkLike_notify](value);
+            this[LazyInitEventSourceMixin_publisher]?.[
+              EventListenerLike_notify
+            ](value);
           }
         },
       },

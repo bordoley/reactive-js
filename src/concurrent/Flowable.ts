@@ -21,7 +21,7 @@ export interface FlowableModule {
   ): FlowableLike<T>;
 
   dispatchTo<T>(
-    sink: DispatcherLike<T>,
+    dispatcher: DispatcherLike<T>,
   ): Function1<FlowableLike<T>, DeferredObservableWithSideEffectsLike<T>>;
 
   fromAsyncIterable<T>(): Function1<AsyncIterable<T>, FlowableLike<T>>;

@@ -6,8 +6,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObserverLike } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObserverLike, ObserverLike_notify } from "../../../concurrent.js";
 import { partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin, {
   DelegatingDisposableLike,
@@ -33,7 +32,8 @@ const createSkipFirstObserver: <T>(
       mix(
         include(DelegatingDisposableMixin<ObserverLike<T>>(), ObserverMixin()),
         function SkipFirstObserver(
-          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> & TProperties,
+          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+            TProperties,
           delegate: ObserverLike<T>,
           skipCount?: number,
         ): ObserverLike<T> {
@@ -54,7 +54,7 @@ const createSkipFirstObserver: <T>(
           [SkipFirstObserver_count]: 0,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TProperties &
               DelegatingDisposableLike<ObserverLike<T>> &
               ObserverLike<T>,
@@ -65,7 +65,9 @@ const createSkipFirstObserver: <T>(
               -1,
             );
             if (this[SkipFirstObserver_count] < 0) {
-              this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
+              this[DelegatingDisposableLike_delegate][ObserverLike_notify](
+                next,
+              );
             }
           },
         },

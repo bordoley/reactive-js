@@ -49,7 +49,7 @@ import {
   VirtualTimeSchedulerLike,
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
-import { SinkLike_notify, StoreLike_value } from "../../events.js";
+import { EventListenerLike_notify, StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
 import {
@@ -825,7 +825,7 @@ testModule(
       "awaiting a Multicast Observable",
       Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => {
         const subject = Subject.create<number>({ replay: 2 });
-        subject[SinkLike_notify](1);
+        subject[EventListenerLike_notify](1);
 
         return pipeAsync(
           Observable.computeDeferred(() => {

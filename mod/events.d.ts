@@ -1,22 +1,17 @@
 import { DisposableLike } from "./utils.js";
-export declare const SinkLike_notify: unique symbol;
+export declare const EventListenerLike_isErrorSafe: unique symbol;
+export declare const EventListenerLike_notify: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface SinkLike<T = unknown> extends DisposableLike {
+export interface EventListenerLike<T = unknown> extends DisposableLike {
+    readonly [EventListenerLike_isErrorSafe]: boolean;
     /**
-     * Notifies the sink of the next notification produced by the source.
+     * Notifies the EventListener of the next notification produced by the source.
      *
      * @param next - The next notification value.
      */
-    [SinkLike_notify](event: T): void;
-}
-export declare const EventListenerLike_isErrorSafe: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface EventListenerLike<T = unknown> extends SinkLike<T> {
-    readonly [EventListenerLike_isErrorSafe]: boolean;
+    [EventListenerLike_notify](event: T): void;
 }
 /**
  * @noInheritDoc

@@ -1,7 +1,7 @@
 /// <reference types="./Observable.throwIfEmpty.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObserverLike_notify } from "../../../concurrent.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -33,9 +33,9 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
         [ThrowIfEmptyObserver_delegate]: none,
         [ThrowIfEmptyObserver_isEmpty]: true,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             this[ThrowIfEmptyObserver_isEmpty] = false;
-            this[ThrowIfEmptyObserver_delegate][SinkLike_notify](next);
+            this[ThrowIfEmptyObserver_delegate][ObserverLike_notify](next);
         },
     })));
 })();

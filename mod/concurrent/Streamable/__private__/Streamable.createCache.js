@@ -4,7 +4,7 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { CacheLike_get, ContinuationContextLike_yield, SchedulerLike_schedule, StreamableLike_stream, } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { EventListenerLike_notify } from "../../../events.js";
 import { bindMethod, compose, identity, invoke, isNone, isSome, none, pipe, tuple, } from "../../../functions.js";
 import { DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -64,12 +64,12 @@ const createCacheStream = /*@__PURE__*/ (() => {
             else {
                 instance.store.set(key, v);
             }
-            const observable = instance.subscriptions.get(key);
+            const subject = instance.subscriptions.get(key);
             // We want to publish none, when the cache does not have the value
             // when initially subscribing to the key.
             const shouldPublish = isNone(v) || oldValue !== v;
-            if (isSome(observable) && shouldPublish) {
-                observable[SinkLike_notify](v);
+            if (isSome(subject) && shouldPublish) {
+                subject[EventListenerLike_notify](v);
                 return;
             }
             instance.scheduleCleanup(key);
@@ -102,7 +102,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
                     }), Disposable.addTo(this, { ignoreChildErrors: true }));
                     const initialValue = store.get(key);
                     if (isSome(initialValue)) {
-                        subject[SinkLike_notify](initialValue);
+                        subject[EventListenerLike_notify](initialValue);
                     }
                     else {
                         // Try to load the value from the persistence store

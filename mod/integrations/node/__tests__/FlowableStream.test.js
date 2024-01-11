@@ -62,7 +62,7 @@ testModule("FlowableStream", describe("create", testAsync("reading from readable
     expectFalse(writable.destroyed);
     pipe(data, expectEquals("abcdefg"));
     writable.destroy();
-})), testAsync("sinking to writable that throws", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
+})), testAsync("writing to writable that throws", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
     const err = newInstance(Error);
     const writable = newInstance(Writable, {
         autoDestroy: true,
@@ -73,7 +73,7 @@ testModule("FlowableStream", describe("create", testAsync("reading from readable
     });
     await pipe(["abc", "defg"], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Flowable.fromRunnable(), FlowableStream.writeTo(writable), Observable.lastAsync(scheduler), expectPromiseToThrow);
     pipe(writable.destroyed, expectEquals(true));
-})), testAsync("sinking to writable with pipeline", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
+})), testAsync("writing to writable with pipeline", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
     let data = "";
     const writable = newInstance(Writable, {
         autoDestroy: true,

@@ -1,7 +1,7 @@
 import {
+  EventListenerLike_notify,
   EventSourceLike_addEventListener,
   PublisherLike,
-  SinkLike_notify,
 } from "../../../../events.js";
 import * as EventSource from "../../../../events/EventSource.js";
 import * as Publisher from "../../../../events/Publisher.js";
@@ -56,7 +56,7 @@ const Element_intersectionEventSource: Element.Signature["intersectionEventSourc
                         continue;
                       }
 
-                      listener[SinkLike_notify](entry);
+                      listener[EventListenerLike_notify](entry);
                     }
                   };
 

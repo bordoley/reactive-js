@@ -47,6 +47,7 @@
 - [ObservableLike\_isPure](concurrent.md#observablelike_ispure)
 - [ObservableLike\_isRunnable](concurrent.md#observablelike_isrunnable)
 - [ObservableLike\_observe](concurrent.md#observablelike_observe)
+- [ObserverLike\_notify](concurrent.md#observerlike_notify)
 - [PauseableLike\_isPaused](concurrent.md#pauseablelike_ispaused)
 - [PauseableLike\_pause](concurrent.md#pauseablelike_pause)
 - [PauseableLike\_resume](concurrent.md#pauseablelike_resume)
@@ -142,6 +143,12 @@ ___
 ### ObservableLike\_observe
 
 • `Const` **ObservableLike\_observe**: unique `symbol`
+
+___
+
+### ObserverLike\_notify
+
+• `Const` **ObserverLike\_notify**: unique `symbol`
 
 ___
 

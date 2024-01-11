@@ -1,7 +1,6 @@
 /// <reference types="./Observable.fromIterable.d.ts" />
 
-import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ContinuationContextLike_yield, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { error, isSome, none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -20,7 +19,7 @@ const Observable_fromIterable = (options) => (iterable) => Observable_createPure
                 observer[DisposableLike_dispose](error(e));
             }
             if (isSome(next) && !next.done) {
-                observer[SinkLike_notify](next.value);
+                observer[ObserverLike_notify](next.value);
                 ctx[ContinuationContextLike_yield](delay);
             }
             else {

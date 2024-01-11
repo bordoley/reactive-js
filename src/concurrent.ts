@@ -2,7 +2,6 @@ import { ReadonlyObjectMapLike } from "./collections.js";
 import {
   ErrorSafeEventListenerLike,
   EventSourceLike,
-  SinkLike,
   StoreLike,
 } from "./events.js";
 import { Function1, Optional, SideEffect1 } from "./functions.js";
@@ -162,6 +161,7 @@ export interface VirtualTimeSchedulerLike
  */
 export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {}
 
+export const ObserverLike_notify = Symbol("ObserverLike_notify");
 /**
  * A consumer of push-based notifications.
  *
@@ -169,8 +169,14 @@ export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {}
  */
 export interface ObserverLike<T = unknown>
   extends DispatcherLike<T>,
-    SinkLike<T>,
-    SchedulerLike {}
+    SchedulerLike {
+  /**
+   * Notifies the observer of the next notification produced by the source.
+   *
+   * @param next - The next notification value.
+   */
+  [ObserverLike_notify](event: T): void;
+}
 
 export const ObservableLike_isDeferred = Symbol("ObservableLike_isDeferred");
 export const ObservableLike_isMulticasted = Symbol(

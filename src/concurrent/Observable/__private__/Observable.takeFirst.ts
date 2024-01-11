@@ -6,8 +6,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObserverLike } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObserverLike, ObserverLike_notify } from "../../../concurrent.js";
 import { partial, pipe } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import DelegatingDisposableMixin, {
@@ -19,10 +18,10 @@ import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
-const TakeFirstSinkMixin_count = Symbol("TakeFirstSinkMixin_count");
+const TakeFirstObserver_count = Symbol("TakeFirstObserver_count");
 
 interface TProperties {
-  [TakeFirstSinkMixin_count]: number;
+  [TakeFirstObserver_count]: number;
 }
 
 const createTakeFirstObserver: <T>(
@@ -34,7 +33,8 @@ const createTakeFirstObserver: <T>(
       mix(
         include(DelegatingDisposableMixin<ObserverLike<T>>(), ObserverMixin()),
         function TakeFirstObserver(
-          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> & TProperties,
+          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+            TProperties,
           delegate: ObserverLike<T>,
           takeCount?: number,
         ): ObserverLike<T> {
@@ -45,7 +45,7 @@ const createTakeFirstObserver: <T>(
           );
           init(ObserverMixin(), instance, delegate, delegate);
 
-          instance[TakeFirstSinkMixin_count] = clampPositiveInteger(
+          instance[TakeFirstObserver_count] = clampPositiveInteger(
             takeCount ?? 1,
           );
 
@@ -56,21 +56,21 @@ const createTakeFirstObserver: <T>(
           return instance;
         },
         props<TProperties>({
-          [TakeFirstSinkMixin_count]: 0,
+          [TakeFirstObserver_count]: 0,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TProperties &
               DelegatingDisposableLike<ObserverLike<T>> &
               ObserverLike<T>,
             next: T,
           ) {
-            this[TakeFirstSinkMixin_count] = max(
-              this[TakeFirstSinkMixin_count] - 1,
+            this[TakeFirstObserver_count] = max(
+              this[TakeFirstObserver_count] - 1,
               -1,
             );
-            this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
-            if (this[TakeFirstSinkMixin_count] <= 0) {
+            this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
+            if (this[TakeFirstObserver_count] <= 0) {
               this[DisposableLike_dispose]();
             }
           },

@@ -8,7 +8,7 @@ import DeferredComputationModuleTests from "../../computations/__tests__/fixture
 import PureStatefulComputationModuleTests from "../../computations/__tests__/fixtures/PureStatefulComputationModuleTests.js";
 import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
 import { DispatcherLikeEvent_completed, DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, SchedulerLike_now, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
-import { SinkLike_notify, StoreLike_value } from "../../events.js";
+import { EventListenerLike_notify, StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
 import { alwaysTrue, arrayEquality, bind, bindMethod, error, ignore, increment, incrementBy, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
@@ -184,7 +184,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
     return result;
 }), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler), x => x ?? [], expectArrayEquals([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8])))), testAsync("awaiting a Multicast Observable", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => {
     const subject = Subject.create({ replay: 2 });
-    subject[SinkLike_notify](1);
+    subject[EventListenerLike_notify](1);
     return pipeAsync(Observable.computeDeferred(() => {
         const result = __await(subject);
         __do(bindMethod(subject, DisposableLike_dispose));

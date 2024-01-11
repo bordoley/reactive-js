@@ -8,35 +8,67 @@ import {
 import {
   EventListenerLike,
   EventListenerLike_isErrorSafe,
+  EventListenerLike_notify,
 } from "../../../events.js";
-import { Predicate, partial, pipe } from "../../../functions.js";
+import { Predicate, none, partial, pipe } from "../../../functions.js";
+import DelegatingDisposableMixin, {
+  DelegatingDisposableLike,
+  DelegatingDisposableLike_delegate,
+} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as EventSource from "../../EventSource.js";
-import KeepSinkMixin from "../../__mixins__/KeepSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_keep: EventSource.Signature["keep"] = /*@__PURE__*/ (() => {
+  const KeepEventListener_predicate = Symbol("KeepEventListener_predicate");
+
+  interface TProperties<T> {
+    [KeepEventListener_predicate]: Predicate<T>;
+  }
+
   const createKeepEventListener: <T>(
     delegate: EventListenerLike<T>,
     predicate: Predicate<T>,
   ) => EventListenerLike<T> = (<T>() =>
     createInstanceFactory(
       mix(
-        include(KeepSinkMixin()),
+        include(DelegatingDisposableMixin<EventListenerLike<T>>()),
         function KeepEventListener(
           instance: Pick<
             EventListenerLike<T>,
-            typeof EventListenerLike_isErrorSafe
-          >,
+            | typeof EventListenerLike_isErrorSafe
+            | typeof EventListenerLike_notify
+          > &
+            TProperties<T>,
           delegate: EventListenerLike<T>,
           predicate: Predicate<T>,
         ): EventListenerLike<T> {
-          init(KeepSinkMixin<T>(), instance, delegate, predicate);
+          init(
+            DelegatingDisposableMixin<EventListenerLike<T>>(),
+            instance,
+            delegate,
+          );
+          instance[KeepEventListener_predicate] = predicate;
 
           return instance;
         },
-        props(),
+        props<TProperties<T>>({
+          [KeepEventListener_predicate]: none,
+        }),
         {
           [EventListenerLike_isErrorSafe]: false,
+
+          [EventListenerLike_notify](
+            this: TProperties<T> &
+              DelegatingDisposableLike<EventListenerLike<T>> &
+              EventListenerLike<T>,
+            next: T,
+          ) {
+            if (this[KeepEventListener_predicate](next)) {
+              this[DelegatingDisposableLike_delegate][EventListenerLike_notify](
+                next,
+              );
+            }
+          },
         },
       ),
     ))();

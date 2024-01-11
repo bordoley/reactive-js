@@ -28,8 +28,8 @@ import {
 import * as Observable from "../concurrent/Observable.js";
 import * as Subject from "../concurrent/Subject.js";
 import {
+  EventListenerLike_notify,
   EventSourceLike,
-  SinkLike_notify,
   StoreLike_value,
 } from "../events.js";
 import * as EventSource from "../events/EventSource.js";
@@ -166,7 +166,7 @@ export const createComponent: Signature["createComponent"] = <TProps>(
     );
 
     useEffect(() => {
-      propsSubject?.[SinkLike_notify](props);
+      propsSubject?.[EventListenerLike_notify](props);
     }, [propsSubject, props]);
 
     return (

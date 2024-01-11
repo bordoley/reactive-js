@@ -15,6 +15,7 @@ export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
 export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
 export const ContinuationContextLike_yield = Symbol("ContinuationContextLike_yield");
 export const VirtualTimeSchedulerLike_run = Symbol("VirtualTimeSchedulerLike_run");
+export const ObserverLike_notify = Symbol("ObserverLike_notify");
 export const ObservableLike_isDeferred = Symbol("ObservableLike_isDeferred");
 export const ObservableLike_isMulticasted = Symbol("ObservableLike_isMulticasted");
 export const ObservableLike_isPure = Symbol("ObservableLike_isPure");

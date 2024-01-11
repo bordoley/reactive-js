@@ -1,4 +1,4 @@
-import { PublisherLike, SinkLike_notify } from "../../../../events.js";
+import { EventListenerLike_notify, PublisherLike } from "../../../../events.js";
 import * as Publisher from "../../../../events/Publisher.js";
 import {
   Optional,
@@ -24,7 +24,7 @@ const Element_resizeEventSource: Element.Signature["resizeEventSource"] =
           continue;
         }
 
-        publisher[SinkLike_notify](entry);
+        publisher[EventListenerLike_notify](entry);
       }
     };
 

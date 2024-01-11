@@ -9,9 +9,9 @@ import {
 import {
   ContinuationContextLike_yield,
   ObserverLike,
+  ObserverLike_notify,
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
 import { none, partial, pipe } from "../../../functions.js";
 import {
   DisposableLike,
@@ -40,7 +40,8 @@ const createTakeLastObserver = /*@__PURE__*/ (<T>() => {
     mix(
       include(DisposableMixin, DelegatingObserverMixin()),
       function TakeLastObserver(
-        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> & TProperties,
+        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+          TProperties,
         delegate: ObserverLike<T>,
         takeLastCount: number,
       ): ObserverLike<T> {
@@ -66,7 +67,7 @@ const createTakeLastObserver = /*@__PURE__*/ (<T>() => {
             delegate[SchedulerLike_schedule](ctx => {
               while (index < count) {
                 const v = queue[IndexedQueueLike_get](index);
-                delegate[SinkLike_notify](v);
+                delegate[ObserverLike_notify](v);
 
                 index++;
 
@@ -85,7 +86,7 @@ const createTakeLastObserver = /*@__PURE__*/ (<T>() => {
         [TakeLastObserver_queue]: none,
       }),
       {
-        [SinkLike_notify](
+        [ObserverLike_notify](
           this: TProperties & DisposableLike & QueueLike<T>,
           next: T,
         ) {

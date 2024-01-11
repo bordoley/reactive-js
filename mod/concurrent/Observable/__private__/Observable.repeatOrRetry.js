@@ -1,6 +1,6 @@
 /// <reference types="./Observable.repeatOrRetry.d.ts" />
 
-import { SinkLike_notify } from "../../../events.js";
+import { ObserverLike_notify, } from "../../../concurrent.js";
 import { bindMethod, error, isSome, partial, pipe, } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -25,7 +25,7 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
             }
             else {
                 count++;
-                pipe(observable, Observable_forEach(bindMethod(delegate, SinkLike_notify)), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(delegate, { ignoreChildErrors: true }), Disposable.onDisposed(doOnDispose));
+                pipe(observable, Observable_forEach(bindMethod(delegate, ObserverLike_notify)), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(delegate, { ignoreChildErrors: true }), Disposable.onDisposed(doOnDispose));
             }
         };
         return pipe(Observer_createWithDelegate(delegate), Disposable.addTo(delegate, { ignoreChildErrors: true }), Disposable.onDisposed(doOnDispose));

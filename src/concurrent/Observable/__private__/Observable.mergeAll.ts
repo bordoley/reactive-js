@@ -19,8 +19,8 @@ import {
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
+  ObserverLike_notify,
 } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
 import {
   Function1,
   Optional,
@@ -86,7 +86,7 @@ const createMergeAllObserverOperator: <T>(options?: {
     pipe(
       nextObs,
       Observable_forEach(
-        bindMethod(observer[MergeAllObserver_delegate], SinkLike_notify),
+        bindMethod(observer[MergeAllObserver_delegate], ObserverLike_notify),
       ),
       Observable_subscribeWithConfig(
         observer[MergeAllObserver_delegate],
@@ -107,7 +107,7 @@ const createMergeAllObserverOperator: <T>(options?: {
         function MergeAllObserver(
           instance: Pick<
             ObserverLike<DeferredObservableWithSideEffectsLike<T>>,
-            typeof SinkLike_notify
+            typeof ObserverLike_notify
           > &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
@@ -166,7 +166,7 @@ const createMergeAllObserverOperator: <T>(options?: {
           [MergeAllObserver_observablesQueue]: none,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TProperties &
               ObserverLike<DeferredObservableWithSideEffectsLike<T>> &
               QueueLike<DeferredObservableWithSideEffectsLike<T>>,

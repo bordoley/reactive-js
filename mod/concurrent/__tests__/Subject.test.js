@@ -3,7 +3,7 @@
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsSome, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import { ObservableLike_observe, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
-import { SinkLike_notify } from "../../events.js";
+import { EventListenerLike_notify } from "../../events.js";
 import { bind, bindMethod, increment, pipe, returns, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -14,7 +14,7 @@ testModule("Subject", describe("create", test("with replay", () => {
     const scheduler = VirtualTimeScheduler.create();
     const subject = Subject.create({ replay: 2 });
     for (const v of [1, 2, 3, 4]) {
-        subject[SinkLike_notify](v);
+        subject[EventListenerLike_notify](v);
     }
     subject[DisposableLike_dispose]();
     const result = [];
@@ -45,7 +45,7 @@ testModule("Subject", describe("create", test("with replay", () => {
     const subject = Subject.create();
     const result = [];
     const subjectSubscription = pipe(subject, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
-    const generateSubscription = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 3, delayStart: true }), Observable.forEach(bindMethod(subject, SinkLike_notify)), Observable.subscribe(scheduler));
+    const generateSubscription = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 3, delayStart: true }), Observable.forEach(bindMethod(subject, EventListenerLike_notify)), Observable.subscribe(scheduler));
     scheduler[SchedulerLike_schedule](() => {
         subject[DisposableLike_dispose]();
     }, { delay: 7 });
@@ -69,9 +69,9 @@ testModule("Subject", describe("create", test("with replay", () => {
         backpressureStrategy: "throw",
         capacity: 1,
     }));
-    subject[SinkLike_notify](1);
-    subject[SinkLike_notify](2);
-    subject[SinkLike_notify](3);
+    subject[EventListenerLike_notify](1);
+    subject[EventListenerLike_notify](2);
+    subject[EventListenerLike_notify](3);
     expectIsSome(subscription[DisposableLike_error]);
 })), test("with autoDispose", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
     const subject = Subject.create({
@@ -79,7 +79,7 @@ testModule("Subject", describe("create", test("with replay", () => {
         replay: 2,
     });
     for (const v of [1, 2, 3, 4]) {
-        subject[SinkLike_notify](v);
+        subject[EventListenerLike_notify](v);
     }
     const result = [];
     const subscription = pipe(subject, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(vts));

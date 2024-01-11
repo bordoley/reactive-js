@@ -1,5 +1,5 @@
 import { ReadonlyObjectMapLike } from "./collections.js";
-import { ErrorSafeEventListenerLike, EventSourceLike, SinkLike, StoreLike } from "./events.js";
+import { ErrorSafeEventListenerLike, EventSourceLike, StoreLike } from "./events.js";
 import { Function1, Optional, SideEffect1 } from "./functions.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "./utils.js";
 export declare const DispatcherLikeEvent_ready: unique symbol;
@@ -111,12 +111,19 @@ export interface VirtualTimeSchedulerLike extends SchedulerLike, DisposableLike 
  */
 export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {
 }
+export declare const ObserverLike_notify: unique symbol;
 /**
  * A consumer of push-based notifications.
  *
  * @noInheritDoc
  */
-export interface ObserverLike<T = unknown> extends DispatcherLike<T>, SinkLike<T>, SchedulerLike {
+export interface ObserverLike<T = unknown> extends DispatcherLike<T>, SchedulerLike {
+    /**
+     * Notifies the observer of the next notification produced by the source.
+     *
+     * @param next - The next notification value.
+     */
+    [ObserverLike_notify](event: T): void;
 }
 export declare const ObservableLike_isDeferred: unique symbol;
 export declare const ObservableLike_isMulticasted: unique symbol;

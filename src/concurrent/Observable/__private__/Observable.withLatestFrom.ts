@@ -12,8 +12,8 @@ import {
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
+  ObserverLike_notify,
 } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
 import {
   Function2,
   Optional,
@@ -62,7 +62,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
       mix(
         include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<T>>()),
         function WithLatestFromObserver(
-          instance: Pick<ObserverLike<TA>, typeof SinkLike_notify> &
+          instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
             TProperties,
           delegate: ObserverLike<T>,
           other: ObservableLike<TB>,
@@ -100,7 +100,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
           [WithLatestFromObserver_selector]: none,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TProperties &
               ObserverLike<TA> &
               DelegatingDisposableLike<ObserverLike<T>>,
@@ -114,7 +114,9 @@ const createWithLatestFromObserver: <TA, TB, T>(
                 next,
                 this[WithLatestFromObserver_otherLatest] as TB,
               );
-              this[DelegatingDisposableLike_delegate][SinkLike_notify](result);
+              this[DelegatingDisposableLike_delegate][ObserverLike_notify](
+                result,
+              );
             }
           },
         },

@@ -49,7 +49,7 @@ testModule(
   "Flowable",
   describe(
     "dispatchTo",
-    test("sinking a pauseable observable into a stream with backpressure", () => {
+    test("dispatching a pauseable observable into a stream with backpressure", () => {
       const scheduler = VirtualTimeScheduler.create();
 
       const src = pipe(
@@ -67,7 +67,7 @@ testModule(
         },
       );
 
-      const sinkIntoSubscription = pipe(
+      const dispatchToSubscription = pipe(
         src,
         Flowable.dispatchTo(dest),
         Observable.subscribe(scheduler),
@@ -82,7 +82,7 @@ testModule(
 
       scheduler[VirtualTimeSchedulerLike_run]();
 
-      expectTrue(sinkIntoSubscription[DisposableLike_isDisposed]);
+      expectTrue(dispatchToSubscription[DisposableLike_isDisposed]);
 
       pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
     }),

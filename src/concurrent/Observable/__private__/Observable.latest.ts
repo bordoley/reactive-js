@@ -15,8 +15,8 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
+  ObserverLike_notify,
 } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
 import { none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -73,7 +73,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
       mix(
         include(DisposableMixin, DelegatingObserverMixin()),
         function LatestObserver(
-          instance: Pick<ObserverLike, typeof SinkLike_notify> &
+          instance: Pick<ObserverLike, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           ctx: LatestCtx,
           delegate: ObserverLike,
@@ -91,7 +91,10 @@ const Observable_latest = /*@__PURE__*/ (() => {
           [LatestObserver_ctx]: none,
         }),
         {
-          [SinkLike_notify](this: TProperties & ObserverLike, next: unknown) {
+          [ObserverLike_notify](
+            this: TProperties & ObserverLike,
+            next: unknown,
+          ) {
             const { [LatestObserver_ctx]: ctx } = this;
             this[LatestObserver_latest] = next;
             this[LatestObserver_ready] = true;
@@ -106,7 +109,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
                 observers,
                 ReadonlyArray.map(observer => observer[LatestObserver_latest]),
               );
-              ctx[LatestCtx_delegate][SinkLike_notify](result);
+              ctx[LatestCtx_delegate][ObserverLike_notify](result);
 
               if (mode === zipMode) {
                 for (const sub of observers) {

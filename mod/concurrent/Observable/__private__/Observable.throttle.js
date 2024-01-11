@@ -1,8 +1,7 @@
 /// <reference types="./Observable.throttle.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DispatcherLike_complete, } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { DispatcherLike_complete, ObserverLike_notify, } from "../../../concurrent.js";
 import { isSome, none, partial, pipe, pipeLazy, } from "../../../functions.js";
 import { DisposableLike_isDisposed, QueueableLike_enqueue, SerialDisposableLike_current, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -37,7 +36,7 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
                 const value = instance[ThrottleObserver_value];
                 instance[ThrottleObserver_value] = none;
                 instance[ThrottleObserver_hasValue] = false;
-                delegate[SinkLike_notify](value);
+                delegate[ObserverLike_notify](value);
                 setupDurationSubscription(instance, value);
             }
         };
@@ -60,7 +59,7 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
         [ThrottleObserver_mode]: "interval",
         [ThrottleObserver_onNotify]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             this[ThrottleObserver_value] = next;
             this[ThrottleObserver_hasValue] = true;
             const durationSubscriptionDisposableIsDisposed = this[ThrottleObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed];

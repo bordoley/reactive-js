@@ -3,8 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DispatcherLike_complete } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { DispatcherLike_complete, ObserverLike_notify, } from "../../../concurrent.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -38,13 +37,13 @@ const createBufferObserver = /*@__PURE__*/ (() => createInstanceFactory(decorate
     [BufferObserver_buffer]: none,
     [BufferObserver_count]: 0,
 }), {
-    [SinkLike_notify](next) {
+    [ObserverLike_notify](next) {
         const { [BufferObserver_buffer]: buffer, [BufferObserver_count]: count, } = this;
         buffer.push(next);
         if (buffer.length === count) {
             const buffer = this[BufferObserver_buffer];
             this[BufferObserver_buffer] = [];
-            this[BufferObserver_delegate][SinkLike_notify](buffer);
+            this[BufferObserver_delegate][ObserverLike_notify](buffer);
         }
     },
 }))))();

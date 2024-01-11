@@ -9,9 +9,9 @@ import {
 import {
   EventListenerLike,
   EventListenerLike_isErrorSafe,
+  EventListenerLike_notify,
   EventSourceLike_addEventListener,
   PublisherLike,
-  SinkLike_notify,
 } from "../events.js";
 import { error, newInstance, none, pipe } from "../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed } from "../utils.js";
@@ -37,7 +37,7 @@ export const create: <T>(options?: {
           PublisherLike<T>,
           | typeof EventSourceLike_addEventListener
           | typeof EventListenerLike_isErrorSafe
-          | typeof SinkLike_notify
+          | typeof EventListenerLike_notify
         > &
           Mutable<TProperties>,
         options?: { readonly autoDispose?: boolean },
@@ -67,14 +67,17 @@ export const create: <T>(options?: {
       {
         [EventListenerLike_isErrorSafe]: true as const,
 
-        [SinkLike_notify](this: TProperties & PublisherLike<T>, next: T) {
+        [EventListenerLike_notify](
+          this: TProperties & PublisherLike<T>,
+          next: T,
+        ) {
           if (this[DisposableLike_isDisposed]) {
             return;
           }
 
           for (const listener of this[Publisher_listeners]) {
             try {
-              listener[SinkLike_notify](next);
+              listener[EventListenerLike_notify](next);
             } catch (e) {
               listener[DisposableLike_dispose](error(e));
             }

@@ -1,6 +1,6 @@
 /// <reference types="./EventSource.mergeMany.d.ts" />
 
-import { SinkLike_notify } from "../../../events.js";
+import { EventListenerLike_notify } from "../../../events.js";
 import { bindMethod, pipe } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -9,7 +9,7 @@ import EventSource_create from "./EventSource.create.js";
 const EventSource_mergeMany = (eventSources) => EventSource_create(listener => {
     const count = eventSources.length;
     let completed = 0;
-    const eventHandler = bindMethod(listener, SinkLike_notify);
+    const eventHandler = bindMethod(listener, EventListenerLike_notify);
     for (const eventSource of eventSources) {
         pipe(eventSource, EventSource_addEventHandler(eventHandler), Disposable.addTo(listener), Disposable.onComplete(() => {
             completed++;

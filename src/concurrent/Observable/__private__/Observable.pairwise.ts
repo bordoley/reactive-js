@@ -5,8 +5,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObserverLike } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObserverLike, ObserverLike_notify } from "../../../concurrent.js";
 import { Tuple2, none, tuple } from "../../../functions.js";
 import DelegatingDisposableMixin, {
   DelegatingDisposableLike,
@@ -54,7 +53,7 @@ const createPairwiseObserver: <T>(
           [PairwiseObserver_hasPrev]: false,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TProperties<T> &
               DelegatingDisposableLike<ObserverLike<Tuple2<T, T>>> &
               ObserverLike<T>,
@@ -63,7 +62,7 @@ const createPairwiseObserver: <T>(
             const prev = this[PairwiseObserver_prev];
 
             if (this[PairwiseObserver_hasPrev]) {
-              this[DelegatingDisposableLike_delegate][SinkLike_notify](
+              this[DelegatingDisposableLike_delegate][ObserverLike_notify](
                 tuple(prev, next),
               );
             }

@@ -15,6 +15,7 @@ import {
   DispatcherLikeEvent_ready,
   DispatcherLike_complete,
   ObserverLike,
+  ObserverLike_notify,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -23,7 +24,7 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../concurrent.js";
-import { SinkLike_notify } from "../../events.js";
+import { EventListenerLike_notify } from "../../events.js";
 import LazyInitEventSourceMixin, {
   LazyInitEventSourceLike,
   LazyInitEventSourceMixin_publisher,
@@ -90,7 +91,7 @@ const ObserverMixin: <T>() => Mixin2<
 
         while (observer[QueueLike_count] > 0) {
           const next = observer[QueueLike_dequeue]() as T;
-          observer[SinkLike_notify](next);
+          observer[ObserverLike_notify](next);
 
           if (observer[QueueLike_count] > 0) {
             ctx[ContinuationContextLike_yield]();
@@ -100,9 +101,9 @@ const ObserverMixin: <T>() => Mixin2<
         if (observer[ObserverMixin_isCompleted]) {
           observer[DisposableLike_dispose]();
         } else {
-          observer[LazyInitEventSourceMixin_publisher]?.[SinkLike_notify](
-            DispatcherLikeEvent_ready,
-          );
+          observer[LazyInitEventSourceMixin_publisher]?.[
+            EventListenerLike_notify
+          ](DispatcherLikeEvent_ready);
         }
       };
 
@@ -122,7 +123,7 @@ const ObserverMixin: <T>() => Mixin2<
           SchedulerLike &
           Pick<
             ObserverLike<T>,
-            | typeof SinkLike_notify
+            | typeof ObserverLike_notify
             | typeof DispatcherLike_complete
             | typeof QueueableLike_enqueue
           > &
@@ -138,7 +139,7 @@ const ObserverMixin: <T>() => Mixin2<
       SchedulerLike &
         Pick<
           ObserverLike<T>,
-          | typeof SinkLike_notify
+          | typeof ObserverLike_notify
           | typeof DispatcherLike_complete
           | typeof QueueableLike_enqueue
         >,
@@ -150,7 +151,7 @@ const ObserverMixin: <T>() => Mixin2<
           DisposableLike &
           Pick<
             ObserverLike<T>,
-            | typeof SinkLike_notify
+            | typeof ObserverLike_notify
             | typeof DispatcherLike_complete
             | typeof QueueableLike_enqueue
           > &
@@ -238,9 +239,9 @@ const ObserverMixin: <T>() => Mixin2<
             );
 
             if (!result) {
-              this[LazyInitEventSourceMixin_publisher]?.[SinkLike_notify](
-                DispatcherLikeEvent_capacityExceeded,
-              );
+              this[LazyInitEventSourceMixin_publisher]?.[
+                EventListenerLike_notify
+              ](DispatcherLikeEvent_capacityExceeded);
             }
 
             scheduleDrainQueue(this);
@@ -263,9 +264,9 @@ const ObserverMixin: <T>() => Mixin2<
           this[ObserverMixin_isCompleted] = true;
 
           if (!isCompleted) {
-            this[LazyInitEventSourceMixin_publisher]?.[SinkLike_notify](
-              DispatcherLikeEvent_completed,
-            );
+            this[LazyInitEventSourceMixin_publisher]?.[
+              EventListenerLike_notify
+            ](DispatcherLikeEvent_completed);
           }
 
           if (
@@ -278,7 +279,7 @@ const ObserverMixin: <T>() => Mixin2<
           }
         },
 
-        [SinkLike_notify](this: ObserverLike, _: T) {},
+        [ObserverLike_notify](this: ObserverLike, _: T) {},
       },
     ),
   );

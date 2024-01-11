@@ -1,7 +1,7 @@
 /// <reference types="./Observable.scanMany.d.ts" />
 
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { EventListenerLike_notify } from "../../../events.js";
 import { bindMethod, invoke, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Subject from "../../Subject.js";
@@ -28,8 +28,8 @@ const Observable_scanMany = ((scanner, initialValue, options) => {
                     [ObservableLike_isPure]: false,
                     [ObservableLike_isRunnable]: false,
                 },
-            }), Observable_forEach(bindMethod(accFeedbackStream, SinkLike_notify)), invoke(ObservableLike_observe, observer));
-            accFeedbackStream[SinkLike_notify](initialValue());
+            }), Observable_forEach(bindMethod(accFeedbackStream, EventListenerLike_notify)), invoke(ObservableLike_observe, observer));
+            accFeedbackStream[EventListenerLike_notify](initialValue());
         }, {
             [ObservableLike_isDeferred]: true,
             [ObservableLike_isMulticasted]: false,

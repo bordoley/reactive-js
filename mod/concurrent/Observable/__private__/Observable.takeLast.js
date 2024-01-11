@@ -2,8 +2,7 @@
 
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ContinuationContextLike_yield, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, IndexedQueueLike_get, QueueLike_count, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -30,7 +29,7 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
             delegate[SchedulerLike_schedule](ctx => {
                 while (index < count) {
                     const v = queue[IndexedQueueLike_get](index);
-                    delegate[SinkLike_notify](v);
+                    delegate[ObserverLike_notify](v);
                     index++;
                     if (index < count) {
                         ctx[ContinuationContextLike_yield]();
@@ -43,7 +42,7 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
     }, props({
         [TakeLastObserver_queue]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             this[TakeLastObserver_queue][QueueableLike_enqueue](next);
         },
     }));

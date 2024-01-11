@@ -6,8 +6,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObserverLike } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObserverLike, ObserverLike_notify } from "../../../concurrent.js";
 import {
   Factory,
   Optional,
@@ -38,7 +37,7 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
       mix(
         include(DisposableMixin, DelegatingObserverMixin<T>()),
         function ThrowIfEmptyObserver(
-          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
           factory: Factory<unknown>,
@@ -71,12 +70,12 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
           [ThrowIfEmptyObserver_isEmpty]: true,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TProperties & DisposableLike & ObserverLike<T>,
             next: T,
           ) {
             this[ThrowIfEmptyObserver_isEmpty] = false;
-            this[ThrowIfEmptyObserver_delegate][SinkLike_notify](next);
+            this[ThrowIfEmptyObserver_delegate][ObserverLike_notify](next);
           },
         },
       ),

@@ -10,8 +10,8 @@ import {
   DispatcherLike_complete,
   ObservableLike,
   ObserverLike,
+  ObserverLike_notify,
 } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
 import {
   Function1,
   Optional,
@@ -88,7 +88,7 @@ const createThrottleObserver: <T>(
       mix(
         include(DisposableMixin, DelegatingObserverMixin()),
         function ThrottleObserver(
-          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
           durationFunction: Function1<T, ObservableLike>,
@@ -112,7 +112,7 @@ const createThrottleObserver: <T>(
               instance[ThrottleObserver_value] = none;
               instance[ThrottleObserver_hasValue] = false;
 
-              delegate[SinkLike_notify](value);
+              delegate[ObserverLike_notify](value);
 
               setupDurationSubscription(instance, value);
             }
@@ -147,7 +147,7 @@ const createThrottleObserver: <T>(
           [ThrottleObserver_onNotify]: none,
         }),
         {
-          [SinkLike_notify](this: ObserverLike<T> & TProperties, next: T) {
+          [ObserverLike_notify](this: ObserverLike<T> & TProperties, next: T) {
             this[ThrottleObserver_value] = next;
             this[ThrottleObserver_hasValue] = true;
 

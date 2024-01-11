@@ -155,7 +155,7 @@ testModule(
       ),
     ),
     testAsync(
-      "sinking to writable that throws",
+      "writing to writable that throws",
       Disposable.usingAsyncLazy(HostScheduler.create)(
         async (scheduler: SchedulerLike & DisposableLike) => {
           const err = newInstance(Error);
@@ -183,7 +183,7 @@ testModule(
       ),
     ),
     testAsync(
-      "sinking to writable with pipeline",
+      "writing to writable with pipeline",
       Disposable.usingAsyncLazy(HostScheduler.create)(
         async (scheduler: SchedulerLike & DisposableLike) => {
           let data = "";

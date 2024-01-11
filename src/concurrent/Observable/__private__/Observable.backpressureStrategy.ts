@@ -5,8 +5,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObserverLike } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObserverLike, ObserverLike_notify } from "../../../concurrent.js";
 import { partial, pipe } from "../../../functions.js";
 import {
   QueueableLike,
@@ -32,7 +31,7 @@ const createBackpressureObserver: <T>(
     mix(
       include(ObserverMixin<T>(), DelegatingDisposableMixin<ObserverLike<T>>()),
       function EnqueueObserver(
-        instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
+        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
         delegate: ObserverLike<T>,
         config: Pick<
           QueueableLike,
@@ -47,11 +46,11 @@ const createBackpressureObserver: <T>(
       },
       props(),
       {
-        [SinkLike_notify](
+        [ObserverLike_notify](
           this: DelegatingDisposableLike<ObserverLike<T>>,
           next: T,
         ) {
-          this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
+          this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
         },
       },
     ),

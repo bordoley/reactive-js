@@ -5,7 +5,7 @@ import { Function1 } from "../functions.js";
  */
 export interface FlowableModule {
     create<T>(op: Function1<MulticastObservableLike<boolean>, DeferredObservableLike<T>>): FlowableLike<T>;
-    dispatchTo<T>(sink: DispatcherLike<T>): Function1<FlowableLike<T>, DeferredObservableWithSideEffectsLike<T>>;
+    dispatchTo<T>(dispatcher: DispatcherLike<T>): Function1<FlowableLike<T>, DeferredObservableWithSideEffectsLike<T>>;
     fromAsyncIterable<T>(): Function1<AsyncIterable<T>, FlowableLike<T>>;
     fromRunnable<T>(): Function1<RunnableLike<T>, FlowableLike<T>>;
 }

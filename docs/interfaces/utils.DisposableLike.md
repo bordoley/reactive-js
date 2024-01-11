@@ -14,7 +14,7 @@
 
   ↳ [`VirtualTimeSchedulerLike`](concurrent.VirtualTimeSchedulerLike.md)
 
-  ↳ [`SinkLike`](events.SinkLike.md)
+  ↳ [`EventListenerLike`](events.EventListenerLike.md)
 
   ↳ [`WritableStoreLike`](events.WritableStoreLike.md)
 

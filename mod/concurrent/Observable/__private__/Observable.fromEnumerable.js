@@ -1,8 +1,7 @@
 /// <reference types="./Observable.fromEnumerable.d.ts" />
 
 import { EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_move, } from "../../../collections.js";
-import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ContinuationContextLike_yield, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -14,7 +13,7 @@ const Observable_fromEnumerable = (options) => (enumerable) => Observable_create
         while (!observer[DisposableLike_isDisposed] &&
             enumerator[EnumeratorLike_move]()) {
             const next = enumerator[EnumeratorLike_current];
-            observer[SinkLike_notify](next);
+            observer[ObserverLike_notify](next);
             ctx[ContinuationContextLike_yield](delay);
         }
         observer[DisposableLike_dispose]();

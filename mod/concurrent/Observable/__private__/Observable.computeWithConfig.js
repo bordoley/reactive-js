@@ -1,7 +1,6 @@
 /// <reference types="./Observable.computeWithConfig.d.ts" />
 
-import { ObservableLike_isDeferred, ObservableLike_isRunnable, SchedulerLike_schedule, } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseIf, raiseWithDebugMessage, } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -241,7 +240,7 @@ const Observable_computeWithConfig = ((computation, config, { mode = "batched" }
             (combineLatestModeShouldNotify || mode === "batched");
         const shouldDispose = !hasOutstandingEffects || hasError;
         if (shouldNotify) {
-            observer[SinkLike_notify](result);
+            observer[ObserverLike_notify](result);
         }
         if (shouldDispose) {
             observer[DisposableLike_dispose](err);

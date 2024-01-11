@@ -3,8 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger, clampPositiveNonZeroInteger, } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
 import { bindMethod, isSome, none, pipe, } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -23,7 +22,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
     const MergeAllObserver_observablesQueue = Symbol("MergeAllObserver_observablesQueue");
     const subscribeToObservable = (observer, nextObs) => {
         observer[MergeAllObserver_activeCount]++;
-        pipe(nextObs, Observable_forEach(bindMethod(observer[MergeAllObserver_delegate], SinkLike_notify)), Observable_subscribeWithConfig(observer[MergeAllObserver_delegate], observer), Disposable.addTo(observer[MergeAllObserver_delegate]), Disposable.onComplete(observer[MergeAllObserver_onDispose]));
+        pipe(nextObs, Observable_forEach(bindMethod(observer[MergeAllObserver_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(observer[MergeAllObserver_delegate], observer), Disposable.addTo(observer[MergeAllObserver_delegate]), Disposable.onComplete(observer[MergeAllObserver_onDispose]));
     };
     const createMergeAllObserver = createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
         init(DisposableMixin, instance);
@@ -64,7 +63,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         [MergeAllObserver_onDispose]: none,
         [MergeAllObserver_observablesQueue]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             if (this[MergeAllObserver_activeCount] <
                 this[MergeAllObserver_concurrency]) {
                 subscribeToObservable(this, next);

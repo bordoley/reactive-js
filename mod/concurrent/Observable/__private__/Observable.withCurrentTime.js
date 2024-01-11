@@ -1,8 +1,7 @@
 /// <reference types="./Observable.withCurrentTime.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { SchedulerLike_now } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObserverLike_notify, SchedulerLike_now, } from "../../../concurrent.js";
 import { none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
@@ -18,10 +17,10 @@ const createWithCurrentTimeObserver = /*@__PURE__*/ (() => {
     }, props({
         [WithCurrentTimeObserver_selector]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             const currentTime = this[SchedulerLike_now];
             const mapped = this[WithCurrentTimeObserver_selector](currentTime, next);
-            this[DelegatingDisposableLike_delegate][SinkLike_notify](mapped);
+            this[DelegatingDisposableLike_delegate][ObserverLike_notify](mapped);
         },
     })));
 })();

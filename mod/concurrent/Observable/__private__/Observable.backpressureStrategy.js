@@ -1,7 +1,7 @@
 /// <reference types="./Observable.backpressureStrategy.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObserverLike_notify } from "../../../concurrent.js";
 import { partial, pipe } from "../../../functions.js";
 import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../utils.js";
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
@@ -12,8 +12,8 @@ const createBackpressureObserver = /*@__PURE__*/ (() => createInstanceFactory(mi
     init(ObserverMixin(), instance, delegate, config);
     return instance;
 }, props(), {
-    [SinkLike_notify](next) {
-        this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
+    [ObserverLike_notify](next) {
+        this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
     },
 })))();
 const Observable_backpressureStrategy = (capacity, backpressureStrategy) => pipe((createBackpressureObserver), partial({

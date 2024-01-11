@@ -1,8 +1,7 @@
 /// <reference types="./Observable.switchAll.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
 import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, SerialDisposableLike_current, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -32,9 +31,9 @@ const createSwitchAllObserver = /*@__PURE__*/ (() => {
         [SwitchAllObserver_currentRef]: none,
         [SwitchAllObserver_delegate]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             this[SwitchAllObserver_currentRef][SerialDisposableLike_current] =
-                pipe(next, Observable_forEach(bindMethod(this[SwitchAllObserver_delegate], SinkLike_notify)), Observable_subscribeWithConfig(this[SwitchAllObserver_delegate], this), Disposable.addTo(this[SwitchAllObserver_delegate]), Disposable.onComplete(() => {
+                pipe(next, Observable_forEach(bindMethod(this[SwitchAllObserver_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(this[SwitchAllObserver_delegate], this), Disposable.addTo(this[SwitchAllObserver_delegate]), Disposable.onComplete(() => {
                     if (this[DisposableLike_isDisposed]) {
                         this[SwitchAllObserver_delegate][DisposableLike_dispose]();
                     }

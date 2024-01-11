@@ -1,6 +1,6 @@
 /// <reference types="./Element.resizeEventSource.d.ts" />
 
-import { SinkLike_notify } from "../../../../events.js";
+import { EventListenerLike_notify } from "../../../../events.js";
 import * as Publisher from "../../../../events/Publisher.js";
 import { isNone, newInstance, none, pipe, } from "../../../../functions.js";
 import * as Disposable from "../../../../utils/Disposable.js";
@@ -14,7 +14,7 @@ const Element_resizeEventSource =
             if (isNone(publisher)) {
                 continue;
             }
-            publisher[SinkLike_notify](entry);
+            publisher[EventListenerLike_notify](entry);
         }
     };
     return options => element => {

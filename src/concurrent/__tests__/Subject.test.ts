@@ -14,7 +14,7 @@ import {
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
-import { SinkLike_notify } from "../../events.js";
+import { EventListenerLike_notify } from "../../events.js";
 import {
   Optional,
   bind,
@@ -42,7 +42,7 @@ testModule(
 
       const subject = Subject.create<number>({ replay: 2 });
       for (const v of [1, 2, 3, 4]) {
-        subject[SinkLike_notify](v);
+        subject[EventListenerLike_notify](v);
       }
 
       subject[DisposableLike_dispose]();
@@ -98,7 +98,7 @@ testModule(
       const generateSubscription = pipe(
         Enumerable.generate(increment, returns(-1)),
         Observable.fromEnumerable({ delay: 3, delayStart: true }),
-        Observable.forEach(bindMethod(subject, SinkLike_notify)),
+        Observable.forEach(bindMethod(subject, EventListenerLike_notify)),
         Observable.subscribe(scheduler),
       );
 
@@ -151,9 +151,9 @@ testModule(
           }),
         );
 
-        subject[SinkLike_notify](1);
-        subject[SinkLike_notify](2);
-        subject[SinkLike_notify](3);
+        subject[EventListenerLike_notify](1);
+        subject[EventListenerLike_notify](2);
+        subject[EventListenerLike_notify](3);
 
         expectIsSome(subscription[DisposableLike_error]);
       }),
@@ -166,7 +166,7 @@ testModule(
           replay: 2,
         });
         for (const v of [1, 2, 3, 4]) {
-          subject[SinkLike_notify](v);
+          subject[EventListenerLike_notify](v);
         }
 
         const result: number[] = [];

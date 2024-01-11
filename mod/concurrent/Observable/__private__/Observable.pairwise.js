@@ -1,7 +1,7 @@
 /// <reference types="./Observable.pairwise.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObserverLike_notify } from "../../../concurrent.js";
 import { none, tuple } from "../../../functions.js";
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
@@ -17,10 +17,10 @@ const createPairwiseObserver = /*@__PURE__*/ (() => createInstanceFactory(decora
     [PairwiseObserver_prev]: none,
     [PairwiseObserver_hasPrev]: false,
 }), {
-    [SinkLike_notify](next) {
+    [ObserverLike_notify](next) {
         const prev = this[PairwiseObserver_prev];
         if (this[PairwiseObserver_hasPrev]) {
-            this[DelegatingDisposableLike_delegate][SinkLike_notify](tuple(prev, next));
+            this[DelegatingDisposableLike_delegate][ObserverLike_notify](tuple(prev, next));
         }
         this[PairwiseObserver_hasPrev] = true;
         this[PairwiseObserver_prev] = next;

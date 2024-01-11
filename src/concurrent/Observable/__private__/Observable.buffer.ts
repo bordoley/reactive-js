@@ -7,8 +7,11 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { DispatcherLike_complete, ObserverLike } from "../../../concurrent.js";
-import { SinkLike, SinkLike_notify } from "../../../events.js";
+import {
+  DispatcherLike_complete,
+  ObserverLike,
+  ObserverLike_notify,
+} from "../../../concurrent.js";
 import { Optional, none, partial, pipe } from "../../../functions.js";
 import {
   DisposableLike_dispose,
@@ -26,7 +29,7 @@ const BufferObserver_buffer = Symbol("BufferObserver_buffer");
 const BufferObserver_count = Symbol("BufferingLike_count");
 
 interface TProps<T> {
-  [BufferObserver_delegate]: SinkLike<readonly T[]>;
+  [BufferObserver_delegate]: ObserverLike<readonly T[]>;
   [BufferObserver_buffer]: T[];
   [BufferObserver_count]: number;
 }
@@ -40,7 +43,8 @@ const createBufferObserver: <T>(
       mix(
         include(DisposableMixin, ObserverMixin()),
         function BufferObserver(
-          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> & TProps<T>,
+          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+            TProps<T>,
           delegate: ObserverLike<readonly T[]>,
           count?: number,
         ): ObserverLike<T> {
@@ -77,7 +81,7 @@ const createBufferObserver: <T>(
           [BufferObserver_count]: 0,
         }),
         {
-          [SinkLike_notify](this: TProps<T> & SinkLike<T>, next: T) {
+          [ObserverLike_notify](this: TProps<T> & ObserverLike<T>, next: T) {
             const {
               [BufferObserver_buffer]: buffer,
               [BufferObserver_count]: count,
@@ -89,7 +93,7 @@ const createBufferObserver: <T>(
               const buffer = this[BufferObserver_buffer];
               this[BufferObserver_buffer] = [];
 
-              this[BufferObserver_delegate][SinkLike_notify](buffer);
+              this[BufferObserver_delegate][ObserverLike_notify](buffer);
             }
           },
         },

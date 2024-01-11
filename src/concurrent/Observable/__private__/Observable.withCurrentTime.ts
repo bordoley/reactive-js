@@ -6,8 +6,11 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObserverLike, SchedulerLike_now } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import {
+  ObserverLike,
+  ObserverLike_notify,
+  SchedulerLike_now,
+} from "../../../concurrent.js";
 import { Function2, none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin, {
   DelegatingDisposableLike,
@@ -35,7 +38,7 @@ const createWithCurrentTimeObserver: <TA, TB>(
       mix(
         include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<TB>>()),
         function WithCurrentTimeObserver(
-          instance: Pick<ObserverLike<TA>, typeof SinkLike_notify> &
+          instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<TB>,
           selector: Function2<number, TA, TB>,
@@ -54,7 +57,7 @@ const createWithCurrentTimeObserver: <TA, TB>(
           [WithCurrentTimeObserver_selector]: none,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TProperties &
               DelegatingDisposableLike<ObserverLike<TB>> &
               ObserverLike<TA>,
@@ -65,7 +68,9 @@ const createWithCurrentTimeObserver: <TA, TB>(
               currentTime,
               next,
             );
-            this[DelegatingDisposableLike_delegate][SinkLike_notify](mapped);
+            this[DelegatingDisposableLike_delegate][ObserverLike_notify](
+              mapped,
+            );
           },
         },
       ),

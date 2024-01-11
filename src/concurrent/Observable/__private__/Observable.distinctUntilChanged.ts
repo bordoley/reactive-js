@@ -5,8 +5,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObserverLike } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObserverLike, ObserverLike_notify } from "../../../concurrent.js";
 import {
   Equality,
   none,
@@ -48,7 +47,8 @@ const createDistinctUntilChangedObserver: <T>(
       mix(
         include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<T>>()),
         function DistinctUntilChangedObserver(
-          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> & TProps<T>,
+          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+            TProps<T>,
           delegate: ObserverLike<T>,
           equality: Equality<T>,
         ): ObserverLike<T> {
@@ -70,7 +70,7 @@ const createDistinctUntilChangedObserver: <T>(
           [DistinctUntilChangedObserver_hasValue]: false,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TProps<T> &
               ObserverLike<T> &
               DelegatingDisposableLike<ObserverLike<T>>,
@@ -86,7 +86,9 @@ const createDistinctUntilChangedObserver: <T>(
             if (shouldEmit) {
               this[DistinctUntilChangedObserver_prev] = next;
               this[DistinctUntilChangedObserver_hasValue] = true;
-              this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
+              this[DelegatingDisposableLike_delegate][ObserverLike_notify](
+                next,
+              );
             }
           },
         },

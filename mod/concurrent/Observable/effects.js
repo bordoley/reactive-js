@@ -1,7 +1,6 @@
 /// <reference types="./effects.d.ts" />
 
-import { ObservableLike_isRunnable, SchedulerLike_schedule, StreamableLike_stream, } from "../../concurrent.js";
-import { SinkLike_notify } from "../../events.js";
+import { ObservableLike_isRunnable, ObserverLike_notify, SchedulerLike_schedule, StreamableLike_stream, } from "../../concurrent.js";
 import { bindMethod, isSome, none, pipe, } from "../../functions.js";
 import { DisposableLike_dispose, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -29,7 +28,7 @@ export const __do = /*@__PURE__*/ (() => {
     const deferSideEffect = (create, f, ...args) => create(observer => {
         const callback = () => {
             f(...args);
-            observer[SinkLike_notify](none);
+            observer[ObserverLike_notify](none);
             observer[DisposableLike_dispose]();
         };
         pipe(observer[SchedulerLike_schedule](callback), Disposable.addTo(observer));

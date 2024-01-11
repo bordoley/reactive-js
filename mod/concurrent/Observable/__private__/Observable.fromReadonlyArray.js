@@ -1,8 +1,7 @@
 /// <reference types="./Observable.fromReadonlyArray.d.ts" />
 
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
-import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ContinuationContextLike_yield, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -13,7 +12,7 @@ const Observable_fromReadonlyArray = (options) => (arr) => Observable_createPure
     const continuation = (ctx) => {
         while (!observer[DisposableLike_isDisposed] && count !== 0) {
             const next = arr[start];
-            observer[SinkLike_notify](next);
+            observer[ObserverLike_notify](next);
             count > 0 ? (start++, count--) : (start--, count++);
             ctx[ContinuationContextLike_yield](delay);
         }

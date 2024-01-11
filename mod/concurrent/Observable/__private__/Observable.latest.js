@@ -2,8 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../concurrent.js";
 import { none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -39,7 +38,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         [LatestObserver_latest]: none,
         [LatestObserver_ctx]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             const { [LatestObserver_ctx]: ctx } = this;
             this[LatestObserver_latest] = next;
             this[LatestObserver_ready] = true;
@@ -47,7 +46,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
             const isReady = observers.every(x => x[LatestObserver_ready]);
             if (isReady) {
                 const result = pipe(observers, ReadonlyArray.map(observer => observer[LatestObserver_latest]));
-                ctx[LatestCtx_delegate][SinkLike_notify](result);
+                ctx[LatestCtx_delegate][ObserverLike_notify](result);
                 if (mode === zipMode) {
                     for (const sub of observers) {
                         sub[LatestObserver_ready] = false;

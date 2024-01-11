@@ -9,9 +9,9 @@ import {
 import {
   EventListenerLike,
   EventListenerLike_isErrorSafe,
+  EventListenerLike_notify,
   EventSourceLike,
   EventSourceLike_addEventListener,
-  SinkLike_notify,
 } from "../../../events.js";
 import { SideEffect1, none } from "../../../functions.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
@@ -21,7 +21,7 @@ const EventListener_createInternal: <T>(
   notify: (this: EventListenerLike<T>, a: T) => void,
 ) => EventListenerLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [SinkLike_notify]: SideEffect1<T>;
+    [EventListenerLike_notify]: SideEffect1<T>;
   };
 
   return createInstanceFactory(
@@ -37,12 +37,12 @@ const EventListener_createInternal: <T>(
       ): EventListenerLike<T> {
         init(DisposableMixin, instance);
 
-        instance[SinkLike_notify] = notify;
+        instance[EventListenerLike_notify] = notify;
 
         return instance;
       },
       props<TProperties>({
-        [SinkLike_notify]: none,
+        [EventListenerLike_notify]: none,
       }),
       {
         [EventListenerLike_isErrorSafe]: false,

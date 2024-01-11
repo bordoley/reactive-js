@@ -1,8 +1,7 @@
 /// <reference types="./Observable.decodeWithCharset.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DispatcherLike_complete } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { DispatcherLike_complete, ObserverLike_notify, } from "../../../concurrent.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -36,12 +35,12 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         [DecodeWithCharsetObserver_delegate]: none,
         [DecodeWithCharsetObserver_textDecoder]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             const data = this[DecodeWithCharsetObserver_textDecoder].decode(next, {
                 stream: true,
             });
             if (data.length > 0) {
-                this[DecodeWithCharsetObserver_delegate][SinkLike_notify](data);
+                this[DecodeWithCharsetObserver_delegate][ObserverLike_notify](data);
             }
         },
     })));

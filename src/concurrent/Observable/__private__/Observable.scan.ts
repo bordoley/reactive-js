@@ -5,8 +5,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObserverLike } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObserverLike, ObserverLike_notify } from "../../../concurrent.js";
 import {
   Factory,
   Reducer,
@@ -46,7 +45,7 @@ const createScanObserver: <T, TAcc>(
           ObserverMixin(),
         ),
         function ScanObserver(
-          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             TProperties<T, TAcc>,
           delegate: ObserverLike<TAcc>,
           reducer: Reducer<T, TAcc>,
@@ -75,7 +74,7 @@ const createScanObserver: <T, TAcc>(
           [ScanObserver_reducer]: none,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TProperties<T, TAcc> &
               DelegatingDisposableLike<ObserverLike<TAcc>> &
               ObserverLike<T>,
@@ -86,7 +85,9 @@ const createScanObserver: <T, TAcc>(
               next,
             );
             this[ScanObserver_acc] = nextAcc;
-            this[DelegatingDisposableLike_delegate][SinkLike_notify](nextAcc);
+            this[DelegatingDisposableLike_delegate][ObserverLike_notify](
+              nextAcc,
+            );
           },
         },
       ),

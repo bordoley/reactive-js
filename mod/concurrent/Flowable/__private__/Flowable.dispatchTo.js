@@ -6,12 +6,12 @@ import { invoke, pipe } from "../../../functions.js";
 import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Observable from "../../Observable.js";
-const Flowable_dispatchTo = (sink) => (flowable) => Observable.create(observer => {
+const Flowable_dispatchTo = (dispatcher) => (flowable) => Observable.create(observer => {
     const flowed = pipe(flowable[FlowableLike_flow](observer, {
         backpressureStrategy: observer[QueueableLike_backpressureStrategy],
         capacity: observer[QueueableLike_capacity],
     }), Disposable.addTo(observer));
-    pipe(sink, EventSource.addEventHandler(ev => {
+    pipe(dispatcher, EventSource.addEventHandler(ev => {
         if (ev === DispatcherLikeEvent_capacityExceeded ||
             ev === DispatcherLikeEvent_completed) {
             flowed[PauseableLike_pause]();
@@ -20,7 +20,7 @@ const Flowable_dispatchTo = (sink) => (flowable) => Observable.create(observer =
             flowed[PauseableLike_resume]();
         }
     }), Disposable.addTo(observer));
-    pipe(flowed, Observable.dispatchTo(sink), invoke(ObservableLike_observe, observer));
+    pipe(flowed, Observable.dispatchTo(dispatcher), invoke(ObservableLike_observe, observer));
     flowed[PauseableLike_resume]();
 });
 export default Flowable_dispatchTo;

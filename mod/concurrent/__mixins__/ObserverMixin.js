@@ -1,8 +1,8 @@
 /// <reference types="./ObserverMixin.d.ts" />
 
 import { getPrototype, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
-import { ContinuationContextLike_yield, DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
-import { SinkLike_notify } from "../../events.js";
+import { ContinuationContextLike_yield, DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, ObserverLike_notify, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
+import { EventListenerLike_notify } from "../../events.js";
 import LazyInitEventSourceMixin, { LazyInitEventSourceMixin_publisher, } from "../../events/__mixins__/LazyInitEventSourceMixin.js";
 import { call, none, pipe, returns, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
@@ -18,7 +18,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
                 unsafeCast(observer);
                 while (observer[QueueLike_count] > 0) {
                     const next = observer[QueueLike_dequeue]();
-                    observer[SinkLike_notify](next);
+                    observer[ObserverLike_notify](next);
                     if (observer[QueueLike_count] > 0) {
                         ctx[ContinuationContextLike_yield]();
                     }
@@ -27,7 +27,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
                     observer[DisposableLike_dispose]();
                 }
                 else {
-                    observer[LazyInitEventSourceMixin_publisher]?.[SinkLike_notify](DispatcherLikeEvent_ready);
+                    observer[LazyInitEventSourceMixin_publisher]?.[EventListenerLike_notify](DispatcherLikeEvent_ready);
                 }
             };
             observer[ObserverMixin_dispatchSubscription] = pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
@@ -71,7 +71,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
                 !this[DisposableLike_isDisposed]) {
                 const result = call(indexedQueueProtoype[QueueableLike_enqueue], this, next);
                 if (!result) {
-                    this[LazyInitEventSourceMixin_publisher]?.[SinkLike_notify](DispatcherLikeEvent_capacityExceeded);
+                    this[LazyInitEventSourceMixin_publisher]?.[EventListenerLike_notify](DispatcherLikeEvent_capacityExceeded);
                 }
                 scheduleDrainQueue(this);
                 return result;
@@ -82,14 +82,14 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             const isCompleted = this[ObserverMixin_isCompleted];
             this[ObserverMixin_isCompleted] = true;
             if (!isCompleted) {
-                this[LazyInitEventSourceMixin_publisher]?.[SinkLike_notify](DispatcherLikeEvent_completed);
+                this[LazyInitEventSourceMixin_publisher]?.[EventListenerLike_notify](DispatcherLikeEvent_completed);
             }
             if (this[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed] &&
                 !isCompleted) {
                 this[DisposableLike_dispose]();
             }
         },
-        [SinkLike_notify](_) { },
+        [ObserverLike_notify](_) { },
     }));
 })();
 export default ObserverMixin;

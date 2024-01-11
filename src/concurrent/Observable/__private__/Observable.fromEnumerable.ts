@@ -8,9 +8,9 @@ import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   ObserverLike,
+  ObserverLike_notify,
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
 import { none, pipe } from "../../../functions.js";
 import {
   DisposableLike_dispose,
@@ -34,7 +34,7 @@ const Observable_fromEnumerable: Observable.Signature["fromEnumerable"] =
           enumerator[EnumeratorLike_move]()
         ) {
           const next = enumerator[EnumeratorLike_current];
-          observer[SinkLike_notify](next);
+          observer[ObserverLike_notify](next);
           ctx[ContinuationContextLike_yield](delay);
         }
         observer[DisposableLike_dispose]();

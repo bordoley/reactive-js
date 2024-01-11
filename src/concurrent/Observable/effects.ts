@@ -2,6 +2,7 @@ import {
   ObservableLike,
   ObservableLike_isRunnable,
   ObserverLike,
+  ObserverLike_notify,
   SchedulerLike,
   SchedulerLike_schedule,
   StreamLike,
@@ -9,7 +10,6 @@ import {
   StreamableLike,
   StreamableLike_stream,
 } from "../../concurrent.js";
-import { SinkLike_notify } from "../../events.js";
 import {
   Equality,
   Factory,
@@ -145,7 +145,7 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
     create(observer => {
       const callback = () => {
         f(...args);
-        observer[SinkLike_notify](none);
+        observer[ObserverLike_notify](none);
         observer[DisposableLike_dispose]();
       };
 

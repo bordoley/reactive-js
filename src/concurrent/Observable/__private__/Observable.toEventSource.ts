@@ -1,5 +1,5 @@
 import { ObservableLike, SchedulerLike } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { EventListenerLike_notify } from "../../../events.js";
 import * as EventSource from "../../../events/EventSource.js";
 import { bindMethod, pipe } from "../../../functions.js";
 import {
@@ -23,7 +23,7 @@ const Observable_toEventSource: Observable.Signature["toEventSource"] =
     EventSource.create<T>(listener =>
       pipe(
         obs,
-        Observable_forEach(bindMethod(listener, SinkLike_notify)),
+        Observable_forEach(bindMethod(listener, EventListenerLike_notify)),
         Observable_subscribe(scheduler, options),
         Disposable.bindTo(listener),
       ),

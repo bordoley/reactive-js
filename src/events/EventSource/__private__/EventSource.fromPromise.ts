@@ -1,4 +1,4 @@
-import { SinkLike_notify } from "../../../events.js";
+import { EventListenerLike_notify } from "../../../events.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -13,7 +13,7 @@ const EventSource_fromPromise: EventSource.Signature["fromPromise"] =
     EventSource_create<T>(listener => {
       promise.then(next => {
         if (!listener[DisposableLike_isDisposed]) {
-          listener[SinkLike_notify](next);
+          listener[EventListenerLike_notify](next);
           listener[DisposableLike_dispose]();
         }
       }, Disposable.toErrorHandler(listener));

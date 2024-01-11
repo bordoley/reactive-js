@@ -1,7 +1,7 @@
 /// <reference types="./Publisher.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
-import { EventListenerLike_isErrorSafe, EventSourceLike_addEventListener, SinkLike_notify, } from "../events.js";
+import { EventListenerLike_isErrorSafe, EventListenerLike_notify, EventSourceLike_addEventListener, } from "../events.js";
 import { error, newInstance, none, pipe } from "../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
@@ -25,13 +25,13 @@ export const create = /*@__PURE__*/ (() => {
         [Publisher_listeners]: none,
     }), {
         [EventListenerLike_isErrorSafe]: true,
-        [SinkLike_notify](next) {
+        [EventListenerLike_notify](next) {
             if (this[DisposableLike_isDisposed]) {
                 return;
             }
             for (const listener of this[Publisher_listeners]) {
                 try {
-                    listener[SinkLike_notify](next);
+                    listener[EventListenerLike_notify](next);
                 }
                 catch (e) {
                     listener[DisposableLike_dispose](error(e));

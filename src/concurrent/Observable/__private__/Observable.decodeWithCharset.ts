@@ -5,8 +5,11 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { DispatcherLike_complete, ObserverLike } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import {
+  DispatcherLike_complete,
+  ObserverLike,
+  ObserverLike_notify,
+} from "../../../concurrent.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
 import {
   DisposableLike_dispose,
@@ -37,7 +40,10 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
       mix(
         include(DisposableMixin, DelegatingObserverMixin<ArrayBuffer>()),
         function DecodeWithCharsetObserver(
-          instance: Pick<ObserverLike<ArrayBuffer>, typeof SinkLike_notify> &
+          instance: Pick<
+            ObserverLike<ArrayBuffer>,
+            typeof ObserverLike_notify
+          > &
             TProperties,
           delegate: ObserverLike<string>,
           charset: string,
@@ -77,7 +83,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
           [DecodeWithCharsetObserver_textDecoder]: none,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TProperties & ObserverLike<ArrayBuffer>,
             next: ArrayBuffer,
           ) {
@@ -88,7 +94,9 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
               },
             );
             if (data.length > 0) {
-              this[DecodeWithCharsetObserver_delegate][SinkLike_notify](data);
+              this[DecodeWithCharsetObserver_delegate][ObserverLike_notify](
+                data,
+              );
             }
           },
         },

@@ -5,8 +5,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObserverLike } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObserverLike, ObserverLike_notify } from "../../../concurrent.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import DelegatingDisposableMixin, {
@@ -36,7 +35,7 @@ const createTakeWhileObserver: <T>(
       mix(
         include(DelegatingDisposableMixin<ObserverLike<T>>(), ObserverMixin()),
         function TakeWhileObserver(
-          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             TProperties<T>,
           delegate: ObserverLike<T>,
           predicate: Predicate<T>,
@@ -59,7 +58,7 @@ const createTakeWhileObserver: <T>(
           [TakeWhileObserver_inclusive]: none,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TProperties<T> &
               DelegatingDisposableLike<ObserverLike<T>> &
               ObserverLike<T>,
@@ -68,7 +67,9 @@ const createTakeWhileObserver: <T>(
             const satisfiesPredicate = this[TakeWhileObserver_predicate](next);
 
             if (satisfiesPredicate || this[TakeWhileObserver_inclusive]) {
-              this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
+              this[DelegatingDisposableLike_delegate][ObserverLike_notify](
+                next,
+              );
             }
 
             if (!satisfiesPredicate) {

@@ -17,7 +17,10 @@ import {
   ObserverLike,
   SubjectLike,
 } from "../concurrent.js";
-import { EventListenerLike_isErrorSafe, SinkLike_notify } from "../events.js";
+import {
+  EventListenerLike_isErrorSafe,
+  EventListenerLike_notify,
+} from "../events.js";
 import { error, isSome, newInstance, none, pipe } from "../functions.js";
 import {
   DisposableLike_dispose,
@@ -58,7 +61,7 @@ export const create: <T>(options?: {
           | typeof ObservableLike_isPure
           | typeof ObservableLike_isRunnable
           | typeof EventListenerLike_isErrorSafe
-          | typeof SinkLike_notify
+          | typeof EventListenerLike_notify
         > &
           Mutable<TProperties>,
         options?: {
@@ -104,7 +107,10 @@ export const create: <T>(options?: {
         [ObservableLike_isPure]: true as const,
         [ObservableLike_isRunnable]: false as const,
 
-        [SinkLike_notify](this: TProperties & SubjectLike<T>, next: T) {
+        [EventListenerLike_notify](
+          this: TProperties & SubjectLike<T>,
+          next: T,
+        ) {
           if (this[DisposableLike_isDisposed]) {
             return;
           }

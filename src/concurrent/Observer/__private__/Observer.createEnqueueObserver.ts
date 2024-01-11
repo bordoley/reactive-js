@@ -8,9 +8,9 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   ObserverLike,
+  ObserverLike_notify,
   SchedulerLike_requestYield,
 } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
 import { none } from "../../../functions.js";
 import { QueueableLike, QueueableLike_enqueue } from "../../../utils.js";
 import DelegatingDisposableMixin, {
@@ -35,7 +35,7 @@ const Observer_createEnqueueObserver: <T>(
       mix(
         include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<T>>()),
         function EnqueueObserver(
-          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
           queue: QueueableLike<T>,
@@ -54,7 +54,7 @@ const Observer_createEnqueueObserver: <T>(
           [EnqueueObserver_queue]: none,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TProperties &
               DelegatingDisposableLike<ObserverLike<T>> &
               ObserverLike<T>,
@@ -63,7 +63,7 @@ const Observer_createEnqueueObserver: <T>(
             if (!this[EnqueueObserver_queue][QueueableLike_enqueue](next)) {
               this[SchedulerLike_requestYield]();
             }
-            this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
+            this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
           },
         },
       ),

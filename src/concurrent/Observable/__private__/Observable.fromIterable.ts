@@ -2,9 +2,9 @@ import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   ObserverLike,
+  ObserverLike_notify,
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
 import { Optional, error, isSome, none, pipe } from "../../../functions.js";
 import {
   DisposableLike_dispose,
@@ -35,7 +35,7 @@ const Observable_fromIterable: Observable.Signature["fromIterable"] =
             }
 
             if (isSome(next) && !next.done) {
-              observer[SinkLike_notify](next.value);
+              observer[ObserverLike_notify](next.value);
               ctx[ContinuationContextLike_yield](delay);
             } else {
               observer[DisposableLike_dispose]();

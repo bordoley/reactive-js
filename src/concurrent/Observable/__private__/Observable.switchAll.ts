@@ -13,8 +13,8 @@ import {
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
+  ObserverLike_notify,
 } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
 import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import {
   DisposableLike,
@@ -61,7 +61,7 @@ const createSwitchAllObserver: <T>(
         function SwitchAllObserver(
           instance: Pick<
             ObserverLike<ObservableLike<T>>,
-            typeof SinkLike_notify
+            typeof ObserverLike_notify
           > &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
@@ -85,7 +85,7 @@ const createSwitchAllObserver: <T>(
           [SwitchAllObserver_delegate]: none,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TProperties &
               ObserverLike<ObservableLike<T>> &
               SerialDisposableLike,
@@ -95,7 +95,10 @@ const createSwitchAllObserver: <T>(
               pipe(
                 next,
                 Observable_forEach(
-                  bindMethod(this[SwitchAllObserver_delegate], SinkLike_notify),
+                  bindMethod(
+                    this[SwitchAllObserver_delegate],
+                    ObserverLike_notify,
+                  ),
                 ),
                 Observable_subscribeWithConfig(
                   this[SwitchAllObserver_delegate],

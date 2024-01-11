@@ -23,9 +23,9 @@ import {
   StreamableLike_stream,
 } from "../../../concurrent.js";
 import {
+  EventListenerLike_notify,
   EventSourceLike,
   PublisherLike,
-  SinkLike_notify,
 } from "../../../events.js";
 import * as Publisher from "../../../events/Publisher.js";
 import {
@@ -130,7 +130,7 @@ const Streamable_createAnimationGroupEventHandlerStream: <
                     ),
                     Observable.forEach((value: T) => {
                       const publisher = publishers[key];
-                      publisher?.[SinkLike_notify](value);
+                      publisher?.[EventListenerLike_notify](value);
                     }),
                     Observable.ignoreElements<T>(),
                   ),

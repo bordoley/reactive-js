@@ -1,7 +1,7 @@
 /// <reference types="./Observable.scan.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { SinkLike_notify } from "../../../events.js";
+import { ObserverLike_notify } from "../../../concurrent.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
@@ -27,10 +27,10 @@ const createScanObserver = /*@__PURE__*/ (() => {
         [ScanObserver_acc]: none,
         [ScanObserver_reducer]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             const nextAcc = this[ScanObserver_reducer](this[ScanObserver_acc], next);
             this[ScanObserver_acc] = nextAcc;
-            this[DelegatingDisposableLike_delegate][SinkLike_notify](nextAcc);
+            this[DelegatingDisposableLike_delegate][ObserverLike_notify](nextAcc);
         },
     })));
 })();

@@ -1,7 +1,7 @@
 /// <reference types="./DelegatingObserverMixin.d.ts" />
 
 import { include, init, mix, props, } from "../../__internal__/mixins.js";
-import { SinkLike_notify } from "../../events.js";
+import { ObserverLike_notify } from "../../concurrent.js";
 import { pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import ObserverMixin from "./ObserverMixin.js";
@@ -10,6 +10,6 @@ const DelegatingObserverMixin = /*@__PURE__*/ (() => returns(mix(include(Observe
     pipe(instance, Disposable.addTo(delegate));
     return instance;
 }, props(), {
-    [SinkLike_notify](_) { },
+    [ObserverLike_notify](_) { },
 })))();
 export default DelegatingObserverMixin;

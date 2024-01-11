@@ -3,9 +3,9 @@ import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   ObserverLike,
+  ObserverLike_notify,
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
 import { none, pipe } from "../../../functions.js";
 import {
   DisposableLike_dispose,
@@ -31,7 +31,7 @@ const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
       const continuation = (ctx: ContinuationContextLike) => {
         while (!observer[DisposableLike_isDisposed] && count !== 0) {
           const next = arr[start];
-          observer[SinkLike_notify](next);
+          observer[ObserverLike_notify](next);
 
           count > 0 ? (start++, count--) : (start--, count++);
 

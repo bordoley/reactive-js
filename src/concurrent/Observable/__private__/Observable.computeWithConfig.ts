@@ -6,10 +6,10 @@ import {
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
+  ObserverLike_notify,
   RunnableWithSideEffectsLike,
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
 import {
   Factory,
   Optional,
@@ -505,7 +505,7 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
         const shouldDispose = !hasOutstandingEffects || hasError;
 
         if (shouldNotify) {
-          observer[SinkLike_notify](result as T);
+          observer[ObserverLike_notify](result as T);
         }
 
         if (shouldDispose) {

@@ -2,8 +2,8 @@ import {
   DeferredObservableLike,
   ObservableLike,
   ObserverLike,
+  ObserverLike_notify,
 } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
 import {
   bindMethod,
   error,
@@ -49,7 +49,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
 
         pipe(
           observable,
-          Observable_forEach(bindMethod(delegate, SinkLike_notify)),
+          Observable_forEach(bindMethod(delegate, ObserverLike_notify)),
           Observable_subscribeWithConfig(delegate, delegate),
           Disposable.addTo(delegate, { ignoreChildErrors: true }),
           Disposable.onDisposed(doOnDispose),

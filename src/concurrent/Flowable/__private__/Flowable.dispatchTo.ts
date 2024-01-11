@@ -20,7 +20,7 @@ import type * as Flowable from "../../Flowable.js";
 import * as Observable from "../../Observable.js";
 
 const Flowable_dispatchTo: Flowable.Signature["dispatchTo"] =
-  <T>(sink: DispatcherLike<T>) =>
+  <T>(dispatcher: DispatcherLike<T>) =>
   (flowable: FlowableLike<T>) =>
     Observable.create<T>(observer => {
       const flowed = pipe(
@@ -32,7 +32,7 @@ const Flowable_dispatchTo: Flowable.Signature["dispatchTo"] =
       );
 
       pipe(
-        sink,
+        dispatcher,
         EventSource.addEventHandler(ev => {
           if (
             ev === DispatcherLikeEvent_capacityExceeded ||
@@ -48,7 +48,7 @@ const Flowable_dispatchTo: Flowable.Signature["dispatchTo"] =
 
       pipe(
         flowed,
-        Observable.dispatchTo(sink),
+        Observable.dispatchTo(dispatcher),
         invoke(ObservableLike_observe, observer),
       );
 

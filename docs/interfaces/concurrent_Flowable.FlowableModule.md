@@ -39,7 +39,7 @@ ___
 
 ### dispatchTo
 
-▸ **dispatchTo**<`T`\>(`sink`): [`Function1`](../modules/functions.md#function1)<[`FlowableLike`](concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`Function1`](../modules/functions.md#function1)<[`FlowableLike`](concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -51,7 +51,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `sink` | [`DispatcherLike`](concurrent.DispatcherLike.md)<`T`\> |
+| `dispatcher` | [`DispatcherLike`](concurrent.DispatcherLike.md)<`T`\> |
 
 #### Returns
 

@@ -1,6 +1,6 @@
 /// <reference types="./Element.intersectionEventSource.d.ts" />
 
-import { EventSourceLike_addEventListener, SinkLike_notify, } from "../../../../events.js";
+import { EventListenerLike_notify, EventSourceLike_addEventListener, } from "../../../../events.js";
 import * as EventSource from "../../../../events/EventSource.js";
 import * as Publisher from "../../../../events/Publisher.js";
 import { isNone, newInstance, pipe } from "../../../../functions.js";
@@ -31,7 +31,7 @@ const Element_intersectionEventSource =
                                 if (isNone(listener)) {
                                     continue;
                                 }
-                                listener[SinkLike_notify](entry);
+                                listener[EventListenerLike_notify](entry);
                             }
                         };
                         const intersectionObserver = newInstance(IntersectionObserver, cb, { root });

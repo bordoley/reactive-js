@@ -1,5 +1,5 @@
 import { SchedulerLike } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../events.js";
+import { EventListenerLike_notify } from "../../../events.js";
 import { bindMethod, pipe } from "../../../functions.js";
 import {
   QueueableLike,
@@ -26,7 +26,7 @@ const Observable_multicast: Observable.Signature["multicast"] =
 
     pipe(
       observable,
-      Observable_forEach(bindMethod(subject, SinkLike_notify)),
+      Observable_forEach(bindMethod(subject, EventListenerLike_notify)),
       Observable_subscribe(scheduler, options),
       Disposable.bindTo(subject),
     );
