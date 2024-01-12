@@ -10,5 +10,6 @@ testModule("HostScheduler", testAsync("delayed continuation", Disposable.usingAs
     const start = scheduler[SchedulerLike_now];
     await pipe(Observable.empty({ delay: 20 }), Observable.firstAsync(scheduler));
     const end = scheduler[SchedulerLike_now];
+    console.log(end - start);
     expectTrue(end - start >= 20);
 })));

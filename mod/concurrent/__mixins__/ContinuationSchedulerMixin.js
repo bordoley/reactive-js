@@ -10,13 +10,18 @@ import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
 export const ContinuationLike_run = Symbol("ContinuationLike_run");
+export const ContinuationLike_dueTime = Symbol("ContinuationLike_dueTime");
+export const ContinuationLike_id = Symbol("ContinuationLike_id");
+export const ContinuationLike_comparator = (a, b) => {
+    const diff = a[ContinuationLike_dueTime] - b[ContinuationLike_dueTime];
+    return diff !== 0 ? diff : a[ContinuationLike_id] - b[ContinuationLike_id];
+};
 export const ContinuationSchedulerLike_shouldYield = Symbol("ContinuationSchedulerLike_shouldYield");
 export const ContinuationSchedulerLike_scheduleContinuation = Symbol("ContinuationSchedulerLike_scheduleContinuation");
 const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
     const ContinuationSchedulerMixinLike_currentContinuation = Symbol("ContinuationSchedulerMixinLike_currentContinuation");
-    const ContinuationSchedulerMixinLike_yieldRequested = Symbol("ContinuationSchedulerMixinLike_yieldRequested");
-    const ContinuationSchedulerMixinLike_startTime = Symbol("ContinuationSchedulerMixinLike_startTime");
     const ContinuationSchedulerMixinLike_schedule = Symbol("ContinuationSchedulerMixinLike_schedule");
+    const ContinuationSchedulerMixinLike_nextTaskID = Symbol("ContinuationSchedulerMixinLike_nextTaskID");
     const QueueableContinuationLike_parent = Symbol("QueueableContinuationLike_parent");
     const QueueableContinuationLike_activeChild = Symbol("QueueableContinuationLike_activeChild");
     const QueueableContinuationLike_effect = Symbol("QueueableContinuationLike_effect");
@@ -105,6 +110,11 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
             if (isSome(yieldError) && !thiz[DisposableLike_isDisposed]) {
                 if (yieldError.delay > 0) {
                     rescheduleChildrenOnParentOrScheduler(thiz);
+                    // Bump the taskID so that the yielded with delay continuation is run
+                    // at a lower relative priority to other previously scheduled continuations
+                    // with the same due time.
+                    thiz[ContinuationLike_id] =
+                        scheduler[ContinuationSchedulerMixinLike_nextTaskID];
                     scheduler[ContinuationSchedulerMixinLike_schedule](thiz, yieldError);
                 }
                 else {
@@ -119,6 +129,8 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
         return createInstanceFactory(mix(include(DisposableMixin, IndexedQueueMixin()), function Continuation(instance, scheduler, effect) {
             init(DisposableMixin, instance);
             init(IndexedQueueMixin(), instance, none);
+            instance[ContinuationLike_id] =
+                scheduler[ContinuationSchedulerMixinLike_nextTaskID];
             instance[QueueableContinuationLike_scheduler] = scheduler;
             instance[QueueableContinuationLike_effect] = effect;
             pipe(instance, Disposable.onDisposed(pipeLazy(instance, rescheduleChildrenOnParentOrScheduler)));
@@ -128,16 +140,14 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
             [QueueableContinuationLike_parent]: none,
             [QueueableContinuationLike_scheduler]: none,
             [QueueableContinuationLike_effect]: none,
+            [ContinuationLike_dueTime]: 0,
+            [ContinuationLike_id]: 0,
         }), {
             [ContinuationLike_run]() {
                 const scheduler = this[QueueableContinuationLike_scheduler];
-                scheduler[ContinuationSchedulerMixinLike_startTime] =
-                    this[SchedulerLike_now];
                 scheduler[ContinuationSchedulerMixinLike_currentContinuation] =
                     this;
-                scheduler[ContinuationSchedulerMixinLike_yieldRequested] = false;
                 runContinuation(this);
-                scheduler[ContinuationSchedulerMixinLike_yieldRequested] = false;
                 scheduler[ContinuationSchedulerMixinLike_currentContinuation] =
                     none;
             },
@@ -156,7 +166,7 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
         }));
     })();
     const getActiveContinuation = (instance) => {
-        let parent = instance[ContinuationSchedulerMixinLike_currentContinuation];
+        let parent = instance[ContinuationSchedulerMixin_currentContinuation];
         let activeChild = parent?.[QueueableContinuationLike_activeChild];
         while (isSome(activeChild) && activeChild !== parent) {
             parent = activeChild;
@@ -164,6 +174,10 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
         }
         return parent;
     };
+    const ContinuationSchedulerMixin_currentContinuation = Symbol("ContinuationSchedulerMixin_currentContinuation");
+    const ContinuationSchedulerMixin_startTime = Symbol("ContinuationSchedulerMixin_startTime");
+    const ContinuationSchedulerMixin_taskIDCounter = Symbol("ContinuationSchedulerMixin_taskIDCounter");
+    const ContinuationSchedulerMixin_yieldRequested = Symbol("ContinuationSchedulerMixin_yieldRequested");
     return mix(include(DisposableMixin), function ContinuationSchedulerMixin(instance, maxYieldInterval) {
         init(DisposableMixin, instance);
         instance[SchedulerLike_maxYieldInterval] =
@@ -171,35 +185,53 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
         return instance;
     }, props({
         [SchedulerLike_maxYieldInterval]: MAX_SAFE_INTEGER,
-        [ContinuationSchedulerMixinLike_currentContinuation]: none,
-        [ContinuationSchedulerMixinLike_yieldRequested]: false,
-        [ContinuationSchedulerMixinLike_startTime]: 0,
+        [ContinuationSchedulerMixin_currentContinuation]: none,
+        [ContinuationSchedulerMixin_yieldRequested]: false,
+        [ContinuationSchedulerMixin_startTime]: 0,
+        [ContinuationSchedulerMixin_taskIDCounter]: 0,
     }), {
+        get [ContinuationSchedulerMixinLike_currentContinuation]() {
+            unsafeCast(this);
+            return this[ContinuationSchedulerMixin_currentContinuation];
+        },
+        set [ContinuationSchedulerMixinLike_currentContinuation](continuation) {
+            unsafeCast(this);
+            this[ContinuationSchedulerMixin_currentContinuation] = continuation;
+            this[ContinuationSchedulerMixin_startTime] = this[SchedulerLike_now];
+            this[ContinuationSchedulerMixin_yieldRequested] = false;
+        },
+        get [ContinuationSchedulerMixinLike_nextTaskID]() {
+            unsafeCast(this);
+            return this[ContinuationSchedulerMixin_taskIDCounter]++;
+        },
         get [SchedulerLike_inContinuation]() {
             unsafeCast(this);
-            const currentContinuation = this[ContinuationSchedulerMixinLike_currentContinuation];
+            const currentContinuation = this[ContinuationSchedulerMixin_currentContinuation];
             return isSome(currentContinuation);
         },
         get [SchedulerLike_shouldYield]() {
             unsafeCast(this);
             const inContinuation = this[SchedulerLike_inContinuation];
             const isDisposed = this[DisposableLike_isDisposed];
-            const yieldRequested = this[ContinuationSchedulerMixinLike_yieldRequested];
+            const yieldRequested = this[ContinuationSchedulerMixin_yieldRequested];
             return (inContinuation &&
                 (isDisposed ||
                     yieldRequested ||
                     //exceededMaxYieldInterval
                     this[SchedulerLike_now] >
-                        this[ContinuationSchedulerMixinLike_startTime] +
+                        this[ContinuationSchedulerMixin_startTime] +
                             this[SchedulerLike_maxYieldInterval] ||
                     (getActiveContinuation(this)?.[QueueLike_count] ?? 0) > 0 ||
                     this[ContinuationSchedulerLike_shouldYield]));
         },
         [SchedulerLike_requestYield]() {
-            this[ContinuationSchedulerMixinLike_yieldRequested] = true;
+            this[ContinuationSchedulerMixin_yieldRequested] = true;
         },
         [ContinuationSchedulerMixinLike_schedule](continuation, options) {
             const delay = clampPositiveInteger(options?.delay ?? 0);
+            const now = this[SchedulerLike_now];
+            const dueTime = now + delay;
+            continuation[ContinuationLike_dueTime] = dueTime;
             if (continuation[DisposableLike_isDisposed]) {
                 return;
             }
@@ -214,7 +246,7 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
                 // children because it will be disposed.
                 continuation[QueueableContinuationLike_parent] === activeContinuation) {
                 continuation[QueueableContinuationLike_parent] = none;
-                this[ContinuationSchedulerLike_scheduleContinuation](continuation, delay);
+                this[ContinuationSchedulerLike_scheduleContinuation](continuation);
             }
             else {
                 activeContinuation[QueueableLike_enqueue](continuation);

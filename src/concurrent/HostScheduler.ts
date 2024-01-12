@@ -138,7 +138,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
           const dueTime = continuation[ContinuationLike_dueTime];
           const delay = dueTime - now;
 
-          // setTimeout has min delay of 4 ms. So don't bother scheduling 
+          // setTimeout has min delay of 4 ms. So don't bother scheduling
           // delayed continuations is the intended delay is less than a 1 ms.
           if (delay > 1) {
             scheduleDelayed(this, continuation, delay);

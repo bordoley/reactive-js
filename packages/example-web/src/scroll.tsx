@@ -15,7 +15,10 @@ import * as EventSource from "@reactive-js/core/events/EventSource";
 import * as Streamable from "@reactive-js/core/concurrent/Streamable";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
-import { EventListenerLike_notify, EventSourceLike } from "@reactive-js/core/events";
+import {
+  EventListenerLike_notify,
+  EventSourceLike,
+} from "@reactive-js/core/events";
 import * as Publisher from "@reactive-js/core/events/Publisher";
 import { DictionaryLike_get } from "@reactive-js/core/collections";
 

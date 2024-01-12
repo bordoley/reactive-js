@@ -1,36 +1,46 @@
 /// <reference types="./HostScheduler.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
+import { SchedulerLike_now } from "../concurrent.js";
 import { none, pipe } from "../functions.js";
 import { DisposableLike_dispose } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
-import ContinuationSchedulerMixin, { ContinuationLike_run, ContinuationSchedulerLike_scheduleContinuation, ContinuationSchedulerLike_shouldYield, } from "./__mixins__/ContinuationSchedulerMixin.js";
+import ContinuationSchedulerMixin, { ContinuationLike_dueTime, ContinuationLike_run, ContinuationSchedulerLike_scheduleContinuation, ContinuationSchedulerLike_shouldYield, } from "./__mixins__/ContinuationSchedulerMixin.js";
 import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
 const supportsSetImmediate = typeof setImmediate === "function";
 const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
     navigator.scheduling !== none &&
     navigator.scheduling.isInputPending !== none)();
 const isInputPending = () => supportsIsInputPending && (navigator.scheduling?.isInputPending() ?? false);
-const scheduleImmediateWithSetImmediate = (continuation) => {
+const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
     const disposable = pipe(Disposable.create(), Disposable.addTo(continuation), Disposable.onDisposed(() => clearImmediate(immmediate)));
-    const immmediate = setImmediate(runContinuation, continuation, disposable);
+    const immmediate = setImmediate(runContinuation, scheduler, continuation, disposable);
 };
-const scheduleDelayed = (continuation, delay) => {
+const scheduleDelayed = (scheduler, continuation, delay) => {
     const disposable = pipe(Disposable.create(), Disposable.addTo(continuation), Disposable.onDisposed(_ => clearTimeout(timeout)));
-    const timeout = setTimeout(runContinuation, delay, continuation, disposable);
+    const timeout = setTimeout(runContinuation, delay, scheduler, continuation, disposable);
 };
-const scheduleImmediate = (continuation) => {
+const scheduleImmediate = (scheduler, continuation) => {
     if (supportsSetImmediate) {
-        scheduleImmediateWithSetImmediate(continuation);
+        scheduleImmediateWithSetImmediate(scheduler, continuation);
     }
     else {
-        scheduleDelayed(continuation, 0);
+        scheduleDelayed(scheduler, continuation, 0);
     }
 };
-const runContinuation = (continuation, immmediateOrTimerDisposable) => {
+const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) => {
     // clear the immediateOrTimer disposable
     immmediateOrTimerDisposable[DisposableLike_dispose]();
-    continuation[ContinuationLike_run]();
+    const dueTime = continuation[ContinuationLike_dueTime];
+    const now = scheduler[SchedulerLike_now];
+    // Occasionally the setTimeout will run delayed continuations early,
+    // so reschedule in this case.
+    if (now >= dueTime) {
+        continuation[ContinuationLike_run]();
+    }
+    else {
+        scheduler[ContinuationSchedulerLike_scheduleContinuation](continuation);
+    }
 };
 const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(CurrentTimeSchedulerMixin, ContinuationSchedulerMixin), function HostScheduler(instance, maxYieldInterval) {
     init(CurrentTimeSchedulerMixin, instance);
@@ -40,12 +50,17 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(m
     get [ContinuationSchedulerLike_shouldYield]() {
         return isInputPending();
     },
-    [ContinuationSchedulerLike_scheduleContinuation](continuation, delay) {
-        if (delay > 0) {
-            scheduleDelayed(continuation, delay);
+    [ContinuationSchedulerLike_scheduleContinuation](continuation) {
+        const now = this[SchedulerLike_now];
+        const dueTime = continuation[ContinuationLike_dueTime];
+        const delay = dueTime - now;
+        // setTimeout has min delay of 4 ms. So don't bother scheduling
+        // delayed continuations is the intended delay is less than a 1 ms.
+        if (delay > 1) {
+            scheduleDelayed(this, continuation, delay);
         }
         else {
-            scheduleImmediate(continuation);
+            scheduleImmediate(this, continuation);
         }
     },
 })))();

@@ -258,7 +258,8 @@ const ContinuationSchedulerMixin: Mixin1<
           // Bump the taskID so that the yielded with delay continuation is run
           // at a lower relative priority to other previously scheduled continuations
           // with the same due time.
-          thiz[ContinuationLike_id] = scheduler[ContinuationSchedulerMixinLike_nextTaskID];
+          thiz[ContinuationLike_id] =
+            scheduler[ContinuationSchedulerMixinLike_nextTaskID];
           scheduler[ContinuationSchedulerMixinLike_schedule](thiz, yieldError);
         } else {
           rescheduleContinuation(thiz);
