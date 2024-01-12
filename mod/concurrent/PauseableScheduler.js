@@ -3,7 +3,7 @@
 import { MAX_VALUE } from "../__internal__/constants.js";
 import { clampPositiveInteger } from "../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../__internal__/mixins.js";
-import { ContinuationContextLike_yield, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../concurrent.js";
+import { ContinuationContextLike_yield, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../concurrent.js";
 import { StoreLike_value } from "../events.js";
 import * as WritableStore from "../events/WritableStore.js";
 import { isNone, isSome, none } from "../functions.js";
@@ -62,12 +62,12 @@ export const create = /*@PURE__*/ (() => {
         const hostSchedulerContinuationDueTime = instance[PauseableScheduler_hostSchedulerContinuationDueTime];
         const nextContinuation = peek(instance, now);
         const nextContinuationDueTime = nextContinuation?.[ContinuationLike_dueTime] ?? MAX_VALUE;
-        const hasActiveContinuation = isSome(instance[PauseableScheduler_activeContinuation]);
+        const inContinuation = instance[SchedulerLike_inContinuation];
         const isPaused = instance[PauseableLike_isPaused][StoreLike_value];
         const hostContinuationAlreadyScheduled = hostSchedulerContinuationIsScheduled &&
             hostSchedulerContinuationDueTime <= nextContinuationDueTime;
         if (isNone(nextContinuation) ||
-            hasActiveContinuation ||
+            inContinuation ||
             hostContinuationAlreadyScheduled ||
             isPaused) {
             return;
@@ -97,7 +97,7 @@ export const create = /*@PURE__*/ (() => {
                 const delay = dueTime - now;
                 if (delay > 0) {
                     instance[PauseableScheduler_hostSchedulerContinuationDueTime] =
-                        now + delay;
+                        dueTime;
                 }
                 else {
                     const continuation = instance[PauseableScheduler_immediateQueue][QueueLike_dequeue]();
@@ -133,8 +133,7 @@ export const create = /*@PURE__*/ (() => {
             unsafeCast(this);
             const now = this[SchedulerLike_now];
             const nextContinuation = peek(this, now);
-            return (!isSome(this[PauseableScheduler_activeContinuation]) ||
-                this[PauseableLike_isPaused][StoreLike_value] ||
+            return (this[PauseableLike_isPaused][StoreLike_value] ||
                 (isSome(nextContinuation) &&
                     this[PauseableScheduler_activeContinuation] !==
                         nextContinuation &&
@@ -157,8 +156,9 @@ export const create = /*@PURE__*/ (() => {
         [ContinuationSchedulerLike_scheduleContinuation](continuation) {
             const now = this[SchedulerLike_now];
             const dueTime = continuation[ContinuationLike_dueTime];
-            const { [PauseableScheduler_delayedQueue]: delayed, [PauseableScheduler_immediateQueue]: queue, } = this;
-            const targetQueue = dueTime > now ? delayed : queue;
+            const targetQueue = dueTime > now
+                ? this[PauseableScheduler_delayedQueue]
+                : this[PauseableScheduler_immediateQueue];
             targetQueue[QueueableLike_enqueue](continuation);
             scheduleOnHost(this);
         },
