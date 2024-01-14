@@ -23,7 +23,6 @@ import {
   SchedulerLike_shouldYield,
 } from "../../concurrent.js";
 import {
-  Function2,
   Optional,
   SideEffect1,
   call,
@@ -84,7 +83,7 @@ export interface ContinuationSchedulerLike
 }
 
 const ContinuationSchedulerMixin: Mixin1<
-  SchedulerLike & DisposableLike & ContinuationSchedulerLike,
+  SchedulerLike & DisposableLike,
   number,
   ContinuationSchedulerLike
 > = /*@__PURE__*/ (() => {
@@ -395,16 +394,7 @@ const ContinuationSchedulerMixin: Mixin1<
   };
 
   return mix<
-    ContinuationSchedulerLike,
-    Function2<
-      Omit<
-        ContinuationSchedulerMixinLike,
-        keyof DisposableLike | typeof SchedulerLike_maxYieldInterval
-      > &
-        Mutable<TSchedulerProperties>,
-      number,
-      ContinuationSchedulerLike & SchedulerLike & DisposableLike
-    >,
+    SchedulerLike & DisposableLike,
     TSchedulerProperties,
     Omit<
       ContinuationSchedulerMixinLike,
@@ -413,7 +403,8 @@ const ContinuationSchedulerMixin: Mixin1<
       | keyof ContinuationSchedulerLike
       | keyof TSchedulerProperties
     >,
-    ContinuationSchedulerLike & SchedulerLike & DisposableLike
+    ContinuationSchedulerLike & SchedulerLike & DisposableLike,
+    number
   >(
     include(DisposableMixin),
     function ContinuationSchedulerMixin(
@@ -423,7 +414,7 @@ const ContinuationSchedulerMixin: Mixin1<
       > &
         TSchedulerProperties,
       maxYieldInterval: number,
-    ): ContinuationSchedulerLike & SchedulerLike & DisposableLike {
+    ): SchedulerLike & DisposableLike {
       init(DisposableMixin, instance);
 
       instance[SchedulerLike_maxYieldInterval] =

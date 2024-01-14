@@ -12,7 +12,6 @@ import {
   WritableStoreLike,
 } from "../events.js";
 import { Equality, none, strictEquality } from "../functions.js";
-import { DisposableLike } from "../utils.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import LazyInitEventSourceMixin, {
   LazyInitEventSourceLike,
@@ -42,7 +41,7 @@ export const create: <T>(
         options?: {
           readonly equality?: Equality<T>;
         },
-      ): WritableStoreLike<T> & DisposableLike {
+      ): WritableStoreLike<T> {
         init(DisposableMixin, instance);
         init(LazyInitEventSourceMixin(), instance);
 

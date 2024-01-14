@@ -4,8 +4,8 @@ import { getPrototype, include, init, mix, props, unsafeCast, } from "../../__in
 import { ContinuationContextLike_yield, DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, ObserverLike_notify, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import { EventListenerLike_notify } from "../../events.js";
 import LazyInitEventSourceMixin, { LazyInitEventSourceLike_publisher, } from "../../events/__mixins__/LazyInitEventSourceMixin.js";
-import { call, none, pipe, returns, } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
+import { call, none, pipe, returns } from "../../functions.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
 const ObserverMixin = /*@__PURE__*/ (() => {

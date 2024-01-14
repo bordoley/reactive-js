@@ -5,7 +5,7 @@ import {
   EventSourceLike_addEventListener,
   PublisherLike,
 } from "../../events.js";
-import { Function1, Optional, none, pipe, returns } from "../../functions.js";
+import { Optional, none, pipe, returns } from "../../functions.js";
 import { DisposableLike } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Publisher from "../Publisher.js";
@@ -32,11 +32,7 @@ const LazyInitEventSourceMixin: <T>() => Mixin<
   return returns(
     mix<
       LazyInitEventSourceLike<T>,
-      Function1<
-        EventSourceLike<T> & TProperties & DisposableLike,
-        LazyInitEventSourceLike<T> & DisposableLike
-      >,
-      ReturnType<typeof props<TProperties>>,
+      TProperties,
       EventSourceLike<T>,
       DisposableLike
     >(

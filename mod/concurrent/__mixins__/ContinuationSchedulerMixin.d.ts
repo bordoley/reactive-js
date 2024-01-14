@@ -16,5 +16,5 @@ export interface ContinuationSchedulerLike extends Pick<SchedulerLike, typeof Sc
     readonly [ContinuationSchedulerLike_shouldYield]: boolean;
     [ContinuationSchedulerLike_scheduleContinuation](continuation: ContinuationLike): void;
 }
-declare const ContinuationSchedulerMixin: Mixin1<SchedulerLike & DisposableLike & ContinuationSchedulerLike, number, ContinuationSchedulerLike>;
+declare const ContinuationSchedulerMixin: Mixin1<SchedulerLike & DisposableLike, number, ContinuationSchedulerLike>;
 export default ContinuationSchedulerMixin;

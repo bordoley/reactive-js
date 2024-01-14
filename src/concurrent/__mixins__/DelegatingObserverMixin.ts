@@ -6,7 +6,7 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import { ObserverLike, ObserverLike_notify } from "../../concurrent.js";
-import { Function2, pipe, returns } from "../../functions.js";
+import { pipe, returns } from "../../functions.js";
 import { DisposableLike } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import ObserverMixin from "./ObserverMixin.js";
@@ -19,14 +19,10 @@ const DelegatingObserverMixin: <T>() => Mixin1<
   returns(
     mix<
       ObserverLike<T>,
-      Function2<
-        DisposableLike & Pick<ObserverLike<T>, typeof ObserverLike_notify>,
-        ObserverLike,
-        ObserverLike<T>
-      >,
       object,
       Pick<ObserverLike<T>, typeof ObserverLike_notify>,
-      DisposableLike
+      DisposableLike,
+      ObserverLike<T>
     >(
       include(ObserverMixin<T>()),
       function DelegatingObserverMixin(

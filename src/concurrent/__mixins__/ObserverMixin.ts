@@ -29,14 +29,7 @@ import LazyInitEventSourceMixin, {
   LazyInitEventSourceLike,
   LazyInitEventSourceLike_publisher,
 } from "../../events/__mixins__/LazyInitEventSourceMixin.js";
-import {
-  Function3,
-  SideEffect1,
-  call,
-  none,
-  pipe,
-  returns,
-} from "../../functions.js";
+import { SideEffect1, call, none, pipe, returns } from "../../functions.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -55,10 +48,10 @@ import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
 const ObserverMixin: <T>() => Mixin2<
   ObserverLike<T>,
   SchedulerLike,
-  {
-    readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly [QueueableLike_capacity]: number;
-  },
+  Pick<
+    QueueableLike,
+    typeof QueueableLike_capacity | typeof QueueableLike_backpressureStrategy
+  >,
   DisposableLike
 > = /*@__PURE__*/ (<T>() => {
   const ObserverMixin_isCompleted = Symbol("ObserverMixin_isCompleted");
@@ -119,23 +112,6 @@ const ObserverMixin: <T>() => Mixin2<
   return returns(
     mix<
       ObserverLike<T>,
-      Function3<
-        DisposableLike &
-          SchedulerLike &
-          Pick<
-            ObserverLike<T>,
-            | typeof ObserverLike_notify
-            | typeof DispatcherLike_complete
-            | typeof QueueableLike_enqueue
-          > &
-          TProperties,
-        ObserverLike,
-        {
-          readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
-          readonly [QueueableLike_capacity]: number;
-        },
-        ObserverLike<T>
-      >,
       TProperties,
       SchedulerLike &
         Pick<
@@ -144,7 +120,13 @@ const ObserverMixin: <T>() => Mixin2<
           | typeof DispatcherLike_complete
           | typeof QueueableLike_enqueue
         >,
-      DisposableLike
+      DisposableLike,
+      SchedulerLike,
+      Pick<
+        QueueableLike,
+        | typeof QueueableLike_capacity
+        | typeof QueueableLike_backpressureStrategy
+      >
     >(
       include(IndexedQueueMixin(), LazyInitEventSourceMixin()),
       function ObserverMixin(
