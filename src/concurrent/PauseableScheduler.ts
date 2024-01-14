@@ -40,15 +40,18 @@ import * as Disposable from "../utils/Disposable.js";
 import * as IndexedQueue from "../utils/IndexedQueue.js";
 import * as PriorityQueue from "../utils/PriorityQueue.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
-import ContinuationSchedulerMixin, {
+import {
   ContinuationLike,
-  ContinuationLike_comparator,
   ContinuationLike_dueTime,
   ContinuationLike_run,
+} from "./__internal__/Continuation.js";
+import * as Continuation from "./__internal__/Continuation.js";
+import {
   ContinuationSchedulerLike,
-  ContinuationSchedulerLike_scheduleContinuation,
+  ContinuationSchedulerLike_schedule,
   ContinuationSchedulerLike_shouldYield,
-} from "./__mixins__/ContinuationSchedulerMixin.js";
+} from "./__internal__/ContinuationScheduler.js";
+import SchedulerMixin from "./__mixins__/SchedulerMixin.js";
 
 interface Signature {
   create(hostScheduler: SchedulerLike): PauseableSchedulerLike;
@@ -181,7 +184,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
   return createInstanceFactory(
     mix(
-      include(ContinuationSchedulerMixin, SerialDisposableMixin()),
+      include(SchedulerMixin, SerialDisposableMixin()),
       function PauseableScheduler(
         instance: Pick<
           PauseableSchedulerLike,
@@ -191,15 +194,11 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           Mutable<TProperties>,
         host: SchedulerLike,
       ): PauseableSchedulerLike {
-        init(
-          ContinuationSchedulerMixin,
-          instance,
-          host[SchedulerLike_maxYieldInterval],
-        );
+        init(SchedulerMixin, instance, host[SchedulerLike_maxYieldInterval]);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
 
         instance[PauseableScheduler_delayedQueue] = PriorityQueue.create(
-          ContinuationLike_comparator,
+          Continuation.compare,
         );
         instance[PauseableScheduler_immediateQueue] = IndexedQueue.create();
         instance[PauseableScheduler_hostScheduler] = host;
@@ -305,7 +304,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           this[PauseableLike_isPaused][StoreLike_value] = false;
           scheduleOnHost(this);
         },
-        [ContinuationSchedulerLike_scheduleContinuation](
+        [ContinuationSchedulerLike_schedule](
           this: TProperties &
             SerialDisposableLike &
             ContinuationSchedulerLike &

@@ -3,13 +3,15 @@
 import { unstable_NormalPriority, unstable_cancelCallback, unstable_now, unstable_scheduleCallback, unstable_shouldYield, } from "scheduler";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { SchedulerLike_now } from "../../concurrent.js";
-import ContinuationSchedulerMixin, { ContinuationLike_dueTime, ContinuationLike_run, ContinuationSchedulerLike_scheduleContinuation, ContinuationSchedulerLike_shouldYield, } from "../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
+import { ContinuationLike_dueTime, ContinuationLike_run, } from "../../concurrent/__internal__/Continuation.js";
+import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "../../concurrent/__internal__/ContinuationScheduler.js";
+import SchedulerMixin from "../../concurrent/__mixins__/SchedulerMixin.js";
 import { newInstance, none, pipe, pipeLazy } from "../../functions.js";
 import { DisposableLike_dispose } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 const createReactScheduler = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(ContinuationSchedulerMixin), function ReactPriorityScheduler(instance, priority) {
-        init(ContinuationSchedulerMixin, instance, 300);
+    return createInstanceFactory(mix(include(SchedulerMixin), function ReactPriorityScheduler(instance, priority) {
+        init(SchedulerMixin, instance, 300);
         instance.priority = priority;
         return instance;
     }, props({
@@ -21,7 +23,7 @@ const createReactScheduler = /*@__PURE__*/ (() => {
         get [ContinuationSchedulerLike_shouldYield]() {
             return unstable_shouldYield();
         },
-        [ContinuationSchedulerLike_scheduleContinuation](continuation) {
+        [ContinuationSchedulerLike_schedule](continuation) {
             const callback = () => {
                 callbackNodeDisposable[DisposableLike_dispose]();
                 continuation[ContinuationLike_run]();

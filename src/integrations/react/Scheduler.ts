@@ -13,14 +13,17 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import { SchedulerLike, SchedulerLike_now } from "../../concurrent.js";
-import ContinuationSchedulerMixin, {
+import {
   ContinuationLike,
   ContinuationLike_dueTime,
   ContinuationLike_run,
+} from "../../concurrent/__internal__/Continuation.js";
+import {
   ContinuationSchedulerLike,
-  ContinuationSchedulerLike_scheduleContinuation,
+  ContinuationSchedulerLike_schedule,
   ContinuationSchedulerLike_shouldYield,
-} from "../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
+} from "../../concurrent/__internal__/ContinuationScheduler.js";
+import SchedulerMixin from "../../concurrent/__mixins__/SchedulerMixin.js";
 import { newInstance, none, pipe, pipeLazy } from "../../functions.js";
 import { DisposableLike, DisposableLike_dispose } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -38,12 +41,12 @@ const createReactScheduler = /*@__PURE__*/ (() => {
 
   return createInstanceFactory(
     mix(
-      include(ContinuationSchedulerMixin),
+      include(SchedulerMixin),
       function ReactPriorityScheduler(
         instance: ContinuationSchedulerLike & TProperties,
         priority: 1 | 2 | 3 | 4 | 5,
       ): SchedulerLike & DisposableLike {
-        init(ContinuationSchedulerMixin, instance, 300);
+        init(SchedulerMixin, instance, 300);
         instance.priority = priority;
         return instance;
       },
@@ -59,7 +62,7 @@ const createReactScheduler = /*@__PURE__*/ (() => {
           return unstable_shouldYield();
         },
 
-        [ContinuationSchedulerLike_scheduleContinuation](
+        [ContinuationSchedulerLike_schedule](
           this: ContinuationSchedulerLike & TProperties,
           continuation: ContinuationLike,
         ) {

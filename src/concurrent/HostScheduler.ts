@@ -9,15 +9,18 @@ import { SchedulerLike, SchedulerLike_now } from "../concurrent.js";
 import { Optional, none, pipe } from "../functions.js";
 import { DisposableLike, DisposableLike_dispose } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
-import ContinuationSchedulerMixin, {
+import {
   ContinuationLike,
   ContinuationLike_dueTime,
   ContinuationLike_run,
+} from "./__internal__/Continuation.js";
+import {
   ContinuationSchedulerLike,
-  ContinuationSchedulerLike_scheduleContinuation,
+  ContinuationSchedulerLike_schedule,
   ContinuationSchedulerLike_shouldYield,
-} from "./__mixins__/ContinuationSchedulerMixin.js";
+} from "./__internal__/ContinuationScheduler.js";
 import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
+import SchedulerMixin from "./__mixins__/SchedulerMixin.js";
 
 /**
  * @noInheritDoc
@@ -107,20 +110,20 @@ const runContinuation = (
   if (now >= dueTime) {
     continuation[ContinuationLike_run]();
   } else {
-    scheduler[ContinuationSchedulerLike_scheduleContinuation](continuation);
+    scheduler[ContinuationSchedulerLike_schedule](continuation);
   }
 };
 
 const createHostSchedulerInstance = /*@__PURE__*/ (() =>
   createInstanceFactory(
     mix(
-      include(CurrentTimeSchedulerMixin, ContinuationSchedulerMixin),
+      include(CurrentTimeSchedulerMixin, SchedulerMixin),
       function HostScheduler(
         instance: Omit<ContinuationSchedulerLike, typeof SchedulerLike_now>,
         maxYieldInterval: number,
       ): SchedulerLike & DisposableLike {
         init(CurrentTimeSchedulerMixin, instance);
-        init(ContinuationSchedulerMixin, instance, maxYieldInterval);
+        init(SchedulerMixin, instance, maxYieldInterval);
 
         return instance;
       },
@@ -130,7 +133,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
           return isInputPending();
         },
 
-        [ContinuationSchedulerLike_scheduleContinuation](
+        [ContinuationSchedulerLike_schedule](
           this: ContinuationSchedulerLike,
           continuation: ContinuationLike,
         ) {

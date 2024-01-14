@@ -12,7 +12,10 @@ import * as Disposable from "../utils/Disposable.js";
 import * as IndexedQueue from "../utils/IndexedQueue.js";
 import * as PriorityQueue from "../utils/PriorityQueue.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
-import ContinuationSchedulerMixin, { ContinuationLike_comparator, ContinuationLike_dueTime, ContinuationLike_run, ContinuationSchedulerLike_scheduleContinuation, ContinuationSchedulerLike_shouldYield, } from "./__mixins__/ContinuationSchedulerMixin.js";
+import { ContinuationLike_dueTime, ContinuationLike_run, } from "./__internal__/Continuation.js";
+import * as Continuation from "./__internal__/Continuation.js";
+import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "./__internal__/ContinuationScheduler.js";
+import SchedulerMixin from "./__mixins__/SchedulerMixin.js";
 export const create = /*@PURE__*/ (() => {
     const PauseableScheduler_hostScheduler = Symbol("PauseableScheduler_hostScheduler");
     const PauseableScheduler_hostSchedulerContinuation = Symbol("PauseableScheduler_hostSchedulerContinuation");
@@ -77,10 +80,10 @@ export const create = /*@PURE__*/ (() => {
         instance[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
         instance[SerialDisposableLike_current] = hostScheduler[SchedulerLike_schedule](hostSchedulerContinuation, { delay });
     };
-    return createInstanceFactory(mix(include(ContinuationSchedulerMixin, SerialDisposableMixin()), function PauseableScheduler(instance, host) {
-        init(ContinuationSchedulerMixin, instance, host[SchedulerLike_maxYieldInterval]);
+    return createInstanceFactory(mix(include(SchedulerMixin, SerialDisposableMixin()), function PauseableScheduler(instance, host) {
+        init(SchedulerMixin, instance, host[SchedulerLike_maxYieldInterval]);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
-        instance[PauseableScheduler_delayedQueue] = PriorityQueue.create(ContinuationLike_comparator);
+        instance[PauseableScheduler_delayedQueue] = PriorityQueue.create(Continuation.compare);
         instance[PauseableScheduler_immediateQueue] = IndexedQueue.create();
         instance[PauseableScheduler_hostScheduler] = host;
         instance[PauseableScheduler_pausedTime] = host[SchedulerLike_now];
@@ -153,7 +156,7 @@ export const create = /*@PURE__*/ (() => {
             this[PauseableLike_isPaused][StoreLike_value] = false;
             scheduleOnHost(this);
         },
-        [ContinuationSchedulerLike_scheduleContinuation](continuation) {
+        [ContinuationSchedulerLike_schedule](continuation) {
             const now = this[SchedulerLike_now];
             const dueTime = continuation[ContinuationLike_dueTime];
             const targetQueue = dueTime > now

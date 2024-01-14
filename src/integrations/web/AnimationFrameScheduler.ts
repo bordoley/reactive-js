@@ -11,15 +11,18 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../concurrent.js";
-import ContinuationSchedulerMixin, {
+import {
   ContinuationLike,
   ContinuationLike_dueTime,
   ContinuationLike_run,
+} from "../../concurrent/__internal__/Continuation.js";
+import {
   ContinuationSchedulerLike,
-  ContinuationSchedulerLike_scheduleContinuation,
+  ContinuationSchedulerLike_schedule,
   ContinuationSchedulerLike_shouldYield,
-} from "../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
+} from "../../concurrent/__internal__/ContinuationScheduler.js";
 import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
+import SchedulerMixin from "../../concurrent/__mixins__/SchedulerMixin.js";
 import {
   Optional,
   SideEffect,
@@ -67,14 +70,14 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
 
   return createInstanceFactory(
     mix(
-      include(CurrentTimeSchedulerMixin, ContinuationSchedulerMixin),
+      include(CurrentTimeSchedulerMixin, SchedulerMixin),
       function AnimationFrameScheduler(
         instance: Omit<ContinuationSchedulerLike, typeof SchedulerLike_now> &
           TProperties,
         hostScheduler: SchedulerLike,
       ): SchedulerLike & DisposableLike {
         init(CurrentTimeSchedulerMixin, instance);
-        init(ContinuationSchedulerMixin, instance, 5);
+        init(SchedulerMixin, instance, 5);
 
         instance[AnimationFrameScheduler_host] = hostScheduler;
         instance[AnimationFrameScheduler_rafQueue] =
@@ -136,7 +139,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
         [ContinuationSchedulerLike_shouldYield]: true,
         [SchedulerLike_shouldYield]: true,
 
-        [ContinuationSchedulerLike_scheduleContinuation](
+        [ContinuationSchedulerLike_schedule](
           this: ContinuationSchedulerLike & TProperties,
           continuation: ContinuationLike,
         ) {
@@ -153,10 +156,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
                 SchedulerLike_schedule,
                 pipeLazy(
                   this,
-                  invoke(
-                    ContinuationSchedulerLike_scheduleContinuation,
-                    continuation,
-                  ),
+                  invoke(ContinuationSchedulerLike_schedule, continuation),
                 ),
                 { delay },
               ),

@@ -29,15 +29,18 @@ import {
   QueueableLike_enqueue,
 } from "../utils.js";
 import * as PriorityQueue from "../utils/PriorityQueue.js";
-import ContinuationSchedulerMixin, {
+import {
   ContinuationLike,
-  ContinuationLike_comparator,
   ContinuationLike_dueTime,
   ContinuationLike_run,
+} from "./__internal__/Continuation.js";
+import * as Continuation from "./__internal__/Continuation.js";
+import {
   ContinuationSchedulerLike,
-  ContinuationSchedulerLike_scheduleContinuation,
+  ContinuationSchedulerLike_schedule,
   ContinuationSchedulerLike_shouldYield,
-} from "./__mixins__/ContinuationSchedulerMixin.js";
+} from "./__internal__/ContinuationScheduler.js";
+import SchedulerMixin from "./__mixins__/SchedulerMixin.js";
 
 interface Signature {
   create(options?: {
@@ -64,7 +67,7 @@ type TProperties = {
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
   createInstanceFactory(
     mix(
-      include(ContinuationSchedulerMixin),
+      include(SchedulerMixin),
       function VirtualTimeScheduler(
         instance: Pick<
           VirtualTimeSchedulerLike,
@@ -74,11 +77,11 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           ContinuationSchedulerLike,
         maxMicroTaskTicks: number,
       ): VirtualTimeSchedulerLike {
-        init(ContinuationSchedulerMixin, instance, 1);
+        init(SchedulerMixin, instance, 1);
 
         instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
         instance[VirtualTimeScheduler_queue] = PriorityQueue.create(
-          ContinuationLike_comparator,
+          Continuation.compare,
         );
 
         return instance;
@@ -109,7 +112,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
             queue[QueueLike_count] > 0)
           ) {
             this[VirtualTimeScheduler_queue] = PriorityQueue.create(
-              ContinuationLike_comparator,
+              Continuation.compare,
             );
 
             const currentTime = this[SchedulerLike_now];
@@ -150,7 +153,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
 
           this[DisposableLike_dispose]();
         },
-        [ContinuationSchedulerLike_scheduleContinuation](
+        [ContinuationSchedulerLike_schedule](
           this: TProperties & QueueLike<ContinuationLike> & SchedulerLike,
           continuation: ContinuationLike,
         ) {

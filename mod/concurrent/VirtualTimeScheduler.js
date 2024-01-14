@@ -7,14 +7,17 @@ import { SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../concurrent.
 import { isSome, none } from "../functions.js";
 import { DisposableLike_dispose, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, } from "../utils.js";
 import * as PriorityQueue from "../utils/PriorityQueue.js";
-import ContinuationSchedulerMixin, { ContinuationLike_comparator, ContinuationLike_dueTime, ContinuationLike_run, ContinuationSchedulerLike_scheduleContinuation, ContinuationSchedulerLike_shouldYield, } from "./__mixins__/ContinuationSchedulerMixin.js";
+import { ContinuationLike_dueTime, ContinuationLike_run, } from "./__internal__/Continuation.js";
+import * as Continuation from "./__internal__/Continuation.js";
+import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "./__internal__/ContinuationScheduler.js";
+import SchedulerMixin from "./__mixins__/SchedulerMixin.js";
 const VirtualTimeScheduler_maxMicroTaskTicks = Symbol("VirtualTimeScheduler_maxMicroTaskTicks");
 const VirtualTimeScheduler_microTaskTicks = Symbol("VirtualTimeScheduler_microTaskTicks");
 const VirtualTimeScheduler_queue = Symbol("VirtualTimeScheduler_queue");
-const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(ContinuationSchedulerMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
-    init(ContinuationSchedulerMixin, instance, 1);
+const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(SchedulerMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
+    init(SchedulerMixin, instance, 1);
     instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
-    instance[VirtualTimeScheduler_queue] = PriorityQueue.create(ContinuationLike_comparator);
+    instance[VirtualTimeScheduler_queue] = PriorityQueue.create(Continuation.compare);
     return instance;
 }, props({
     [SchedulerLike_now]: 0,
@@ -32,7 +35,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFa
         let queue = none;
         while (((queue = this[VirtualTimeScheduler_queue]),
             queue[QueueLike_count] > 0)) {
-            this[VirtualTimeScheduler_queue] = PriorityQueue.create(ContinuationLike_comparator);
+            this[VirtualTimeScheduler_queue] = PriorityQueue.create(Continuation.compare);
             const currentTime = this[SchedulerLike_now];
             let continuation = none;
             while (((continuation = queue[QueueLike_dequeue]()),
@@ -55,7 +58,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFa
         }
         this[DisposableLike_dispose]();
     },
-    [ContinuationSchedulerLike_scheduleContinuation](continuation) {
+    [ContinuationSchedulerLike_schedule](continuation) {
         this[VirtualTimeScheduler_queue][QueueableLike_enqueue](continuation);
     },
 })))();
