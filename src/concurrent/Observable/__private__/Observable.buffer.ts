@@ -48,7 +48,7 @@ const createBufferObserver: <T>(
           delegate: ObserverLike<readonly T[]>,
           count?: number,
         ): ObserverLike<T> {
-          init(DisposableMixin, instance, delegate);
+          init(DisposableMixin, instance);
           init(ObserverMixin(), instance, delegate, delegate);
 
           instance[BufferObserver_delegate] = delegate;

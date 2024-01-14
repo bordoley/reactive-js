@@ -15,7 +15,7 @@ const BufferObserver_delegate = Symbol("BufferObserver_delegate");
 const BufferObserver_buffer = Symbol("BufferObserver_buffer");
 const BufferObserver_count = Symbol("BufferingLike_count");
 const createBufferObserver = /*@__PURE__*/ (() => createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, ObserverMixin()), function BufferObserver(instance, delegate, count) {
-    init(DisposableMixin, instance, delegate);
+    init(DisposableMixin, instance);
     init(ObserverMixin(), instance, delegate, delegate);
     instance[BufferObserver_delegate] = delegate;
     instance[BufferObserver_count] = clampPositiveNonZeroInteger(count ?? MAX_SAFE_INTEGER);

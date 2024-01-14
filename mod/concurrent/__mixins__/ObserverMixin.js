@@ -3,7 +3,7 @@
 import { getPrototype, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { ContinuationContextLike_yield, DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, ObserverLike_notify, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import { EventListenerLike_notify } from "../../events.js";
-import LazyInitEventSourceMixin, { LazyInitEventSourceMixin_publisher, } from "../../events/__mixins__/LazyInitEventSourceMixin.js";
+import LazyInitEventSourceMixin, { LazyInitEventSourceLike_publisher, } from "../../events/__mixins__/LazyInitEventSourceMixin.js";
 import { call, none, pipe, returns, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -27,7 +27,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
                     observer[DisposableLike_dispose]();
                 }
                 else {
-                    observer[LazyInitEventSourceMixin_publisher]?.[EventListenerLike_notify](DispatcherLikeEvent_ready);
+                    observer[LazyInitEventSourceLike_publisher]?.[EventListenerLike_notify](DispatcherLikeEvent_ready);
                 }
             };
             observer[ObserverMixin_dispatchSubscription] = pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
@@ -71,7 +71,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
                 !this[DisposableLike_isDisposed]) {
                 const result = call(indexedQueueProtoype[QueueableLike_enqueue], this, next);
                 if (!result) {
-                    this[LazyInitEventSourceMixin_publisher]?.[EventListenerLike_notify](DispatcherLikeEvent_capacityExceeded);
+                    this[LazyInitEventSourceLike_publisher]?.[EventListenerLike_notify](DispatcherLikeEvent_capacityExceeded);
                 }
                 scheduleDrainQueue(this);
                 return result;
@@ -82,7 +82,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             const isCompleted = this[ObserverMixin_isCompleted];
             this[ObserverMixin_isCompleted] = true;
             if (!isCompleted) {
-                this[LazyInitEventSourceMixin_publisher]?.[EventListenerLike_notify](DispatcherLikeEvent_completed);
+                this[LazyInitEventSourceLike_publisher]?.[EventListenerLike_notify](DispatcherLikeEvent_completed);
             }
             if (this[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed] &&
                 !isCompleted) {

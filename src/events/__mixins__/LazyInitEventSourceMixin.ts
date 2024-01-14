@@ -10,27 +10,28 @@ import { DisposableLike } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Publisher from "../Publisher.js";
 
-export const LazyInitEventSourceMixin_publisher = Symbol(
-  "LazyInitEventSourceMixin_publisher",
+export const LazyInitEventSourceLike_publisher = Symbol(
+  "LazyInitEventSourceLike_publisher",
 );
 
 /**
  * @noInheritDoc
  */
 export interface LazyInitEventSourceLike<T> extends EventSourceLike<T> {
-  readonly [LazyInitEventSourceMixin_publisher]: Optional<EventListenerLike<T>>;
+  readonly [LazyInitEventSourceLike_publisher]: Optional<EventListenerLike<T>>;
 }
 
 const LazyInitEventSourceMixin: <T>() => Mixin<
-  LazyInitEventSourceLike<T> & DisposableLike,
+  LazyInitEventSourceLike<T>,
   DisposableLike
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [LazyInitEventSourceMixin_publisher]: Optional<PublisherLike<T>>;
+    [LazyInitEventSourceLike_publisher]: Optional<PublisherLike<T>>;
   };
 
   return returns(
     mix<
+      LazyInitEventSourceLike<T>,
       Function1<
         EventSourceLike<T> & TProperties & DisposableLike,
         LazyInitEventSourceLike<T> & DisposableLike
@@ -45,21 +46,21 @@ const LazyInitEventSourceMixin: <T>() => Mixin<
         return instance;
       },
       props<TProperties>({
-        [LazyInitEventSourceMixin_publisher]: none,
+        [LazyInitEventSourceLike_publisher]: none,
       }),
       {
         [EventSourceLike_addEventListener](
-          this: TProperties & DisposableLike,
+          this: EventSourceLike<T> & TProperties & DisposableLike,
           listener: EventListenerLike<T>,
         ): void {
           const publisher =
-            this[LazyInitEventSourceMixin_publisher] ??
+            this[LazyInitEventSourceLike_publisher] ??
             (() => {
               const publisher = pipe(
                 Publisher.create(),
                 Disposable.addTo(this),
               );
-              this[LazyInitEventSourceMixin_publisher] = publisher;
+              this[LazyInitEventSourceLike_publisher] = publisher;
               return publisher;
             })();
 

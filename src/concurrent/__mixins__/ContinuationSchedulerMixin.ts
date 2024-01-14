@@ -395,6 +395,7 @@ const ContinuationSchedulerMixin: Mixin1<
   };
 
   return mix<
+    ContinuationSchedulerLike,
     Function2<
       Omit<
         ContinuationSchedulerMixinLike,
@@ -404,7 +405,7 @@ const ContinuationSchedulerMixin: Mixin1<
       number,
       ContinuationSchedulerLike & SchedulerLike & DisposableLike
     >,
-    ReturnType<typeof props<TSchedulerProperties>>,
+    TSchedulerProperties,
     Omit<
       ContinuationSchedulerMixinLike,
       | keyof DisposableLike

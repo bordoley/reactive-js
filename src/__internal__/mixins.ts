@@ -34,51 +34,53 @@ export type PartialMixin<TPrototype extends object = object> = {
   [Mixin_prototype]: TPrototype;
 };
 
-export interface MixinAny<TReturn extends TInstance, TInstance = unknown>
-  extends PartialMixin {
-  [Mixin_init]: (instance: TInstance, ...args: readonly any[]) => TReturn;
+export interface MixinAny<TReturn, TInstance = unknown> extends PartialMixin {
+  [Mixin_init]: (
+    instance: TInstance,
+    ...args: readonly any[]
+  ) => TReturn & TInstance;
 }
 
 export interface Mixin<
-  TReturn extends TInstance,
+  TReturn,
   TInstance = unknown,
   TPrototype extends object = object,
 > extends PartialMixin<TPrototype> {
-  [Mixin_init](instance: TInstance): TReturn;
+  [Mixin_init](instance: TInstance): TReturn & TInstance;
 }
 
 export interface Mixin1<
-  TReturn extends TInstance,
+  TReturn,
   TA,
   TInstance = unknown,
   TPrototype extends object = object,
 > extends PartialMixin<TPrototype> {
-  [Mixin_init](instance: TInstance, a: TA): TReturn;
+  [Mixin_init](instance: TInstance, a: TA): TReturn & TInstance;
 }
 
 export interface Mixin2<
-  TReturn extends TInstance,
+  TReturn,
   TA,
   TB,
   TInstance = unknown,
   TPrototype extends object = object,
 > extends PartialMixin<TPrototype> {
-  [Mixin_init](instance: TInstance, a: TA, b: TB): TReturn;
+  [Mixin_init](instance: TInstance, a: TA, b: TB): TReturn & TInstance;
 }
 
 export interface Mixin3<
-  TReturn extends TInstance,
+  TReturn,
   TA,
   TB,
   TC,
   TInstance = unknown,
   TPrototype extends object = object,
 > extends PartialMixin<TPrototype> {
-  [Mixin_init](instance: TInstance, a: TA, b: TB, c: TC): TReturn;
+  [Mixin_init](instance: TInstance, a: TA, b: TB, c: TC): TReturn & TInstance;
 }
 
 export interface Mixin4<
-  TReturn extends TInstance,
+  TReturn,
   TA,
   TB,
   TC,
@@ -86,10 +88,16 @@ export interface Mixin4<
   TInstance = unknown,
   TPrototype extends object = object,
 > extends PartialMixin<TPrototype> {
-  [Mixin_init](instance: TInstance, a: TA, b: TB, c: TC, d: TD): TReturn;
+  [Mixin_init](
+    instance: TInstance,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+  ): TReturn & TInstance;
 }
 export interface Mixin5<
-  TReturn extends TInstance,
+  TReturn,
   TA,
   TB,
   TC,
@@ -98,10 +106,17 @@ export interface Mixin5<
   TInstance = unknown,
   TPrototype extends object = object,
 > extends PartialMixin<TPrototype> {
-  [Mixin_init](instance: TInstance, a: TA, b: TB, c: TC, d: TD, e: TE): TReturn;
+  [Mixin_init](
+    instance: TInstance,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+  ): TReturn & TInstance;
 }
 export interface Mixin6<
-  TReturn extends TInstance,
+  TReturn,
   TA,
   TB,
   TC,
@@ -119,7 +134,7 @@ export interface Mixin6<
     d: TD,
     e: TE,
     f: TF,
-  ): TReturn;
+  ): TReturn & TInstance;
 }
 
 function initUnsafe<TReturn>(
@@ -132,42 +147,42 @@ function initUnsafe<TReturn>(
 }
 
 interface Init {
-  init<TReturn extends TInstance, TInstance>(
+  init<TReturn, TInstance>(
     mixin: Mixin<TReturn, TInstance>,
     instance: TInstance,
-  ): asserts instance is TReturn;
+  ): asserts instance is TInstance & TReturn;
 
-  init<TReturn extends TInstance, TA, TInstance>(
+  init<TReturn, TA, TInstance>(
     mixin: Mixin1<TReturn, TA, TInstance>,
     instance: TInstance,
     a: TA,
-  ): asserts instance is TReturn;
+  ): asserts instance is TInstance & TReturn;
 
-  init<TReturn extends TInstance, TA, TB, TInstance>(
+  init<TReturn, TA, TB, TInstance>(
     mixin: Mixin2<TReturn, TA, TB, TInstance>,
     instance: TInstance,
     a: TA,
     b: TB,
-  ): asserts instance is TReturn;
+  ): asserts instance is TInstance & TReturn;
 
-  init<TReturn extends TInstance, TA, TB, TC, TInstance>(
+  init<TReturn, TA, TB, TC, TInstance>(
     mixin: Mixin3<TReturn, TA, TB, TC, TInstance>,
     instance: TInstance,
     a: TA,
     b: TB,
     c: TC,
-  ): asserts instance is TReturn;
+  ): asserts instance is TInstance & TReturn;
 
-  init<TReturn extends TInstance, TA, TB, TC, TD, TInstance>(
+  init<TReturn, TA, TB, TC, TD, TInstance>(
     mixin: Mixin4<TReturn, TA, TB, TC, TD, TInstance>,
     instance: TInstance,
     a: TA,
     b: TB,
     c: TC,
     d: TD,
-  ): asserts instance is TReturn;
+  ): asserts instance is TInstance & TReturn;
 
-  init<TReturn extends TInstance, TA, TB, TC, TD, TE, TInstance>(
+  init<TReturn, TA, TB, TC, TD, TE, TInstance>(
     mixin: Mixin5<TReturn, TA, TB, TC, TD, TE, TInstance>,
     instance: TInstance,
     a: TA,
@@ -175,9 +190,9 @@ interface Init {
     c: TC,
     d: TD,
     e: TE,
-  ): asserts instance is TReturn;
+  ): asserts instance is TInstance & TReturn;
 
-  init<TReturn extends TInstance, TA, TB, TC, TD, TE, TF, TInstance>(
+  init<TReturn, TA, TB, TC, TD, TE, TF, TInstance>(
     mixin: Mixin6<TReturn, TA, TB, TC, TD, TE, TF, TInstance>,
     instance: TInstance,
     a: TA,
@@ -186,7 +201,7 @@ interface Init {
     d: TD,
     e: TE,
     f: TF,
-  ): asserts instance is TReturn;
+  ): asserts instance is TInstance & TReturn;
 }
 export const init: Init["init"] = initUnsafe;
 
@@ -222,44 +237,50 @@ export const include: (
 
 interface Mix {
   mix<
+    TReturn,
     TInit extends (
       instance: TPrototype & Mutable<TProperties> & TInstance,
       ...args: readonly any[]
-    ) => unknown,
-    TProperties extends {
-      [Mixin_private_initializedProperties]?: true;
-    },
+    ) => TReturn & TInstance,
+    TProperties,
     TPrototype extends object,
     TInstance = unknown,
   >(
     init: TInit,
-    properties: TProperties,
+    properties: TProperties & {
+      [Mixin_private_initializedProperties]?: true;
+    },
     prototype: TPrototype,
   ): PartialMixin<TPrototype> & {
     [Mixin_init]: typeof init;
   };
 
   mix<
+    TReturn,
     TInit extends (
       instance: TPrototype & Mutable<TProperties> & TInstance,
       ...args: readonly any[]
-    ) => unknown,
-    TProperties extends {
-      [Mixin_private_initializedProperties]?: true;
-    },
+    ) => TReturn & TInstance,
+    TProperties,
     TPrototype extends object,
     TInstance = unknown,
   >(
     parent: PartialMixin,
     init: TInit,
-    properties: TProperties,
+    properties: TProperties & {
+      [Mixin_private_initializedProperties]?: true;
+    },
     prototype: TPrototype,
   ): PartialMixin<TPrototype> & {
     [Mixin_init]: TInit;
   };
 
   mix<
-    TInit extends (instance: TInstance, ...args: readonly any[]) => unknown,
+    TReturn,
+    TInit extends (
+      instance: TInstance,
+      ...args: readonly any[]
+    ) => TReturn & TInstance,
     TInstance = unknown,
   >(
     parent: PartialMixin,
@@ -269,18 +290,19 @@ interface Mix {
   };
 
   mix<
+    TReturn,
     TInit extends (
       instance: TInstance & Mutable<TProperties>,
       ...args: readonly any[]
-    ) => unknown,
-    TProperties extends {
-      [Mixin_private_initializedProperties]?: true;
-    },
+    ) => TReturn & TInstance,
+    TProperties,
     TInstance = unknown,
   >(
     parent: PartialMixin,
     init: TInit,
-    properties: TProperties,
+    properties: TProperties & {
+      [Mixin_private_initializedProperties]?: true;
+    },
   ): PartialMixin & {
     [Mixin_init]: TInit;
   };

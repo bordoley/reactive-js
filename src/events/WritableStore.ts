@@ -16,7 +16,7 @@ import { DisposableLike } from "../utils.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import LazyInitEventSourceMixin, {
   LazyInitEventSourceLike,
-  LazyInitEventSourceMixin_publisher,
+  LazyInitEventSourceLike_publisher,
 } from "./__mixins__/LazyInitEventSourceMixin.js";
 
 export const create: <T>(
@@ -65,9 +65,9 @@ export const create: <T>(
 
           if (!this[WritableStore_equality](this.v, value)) {
             this.v = value;
-            this[LazyInitEventSourceMixin_publisher]?.[
-              EventListenerLike_notify
-            ](value);
+            this[LazyInitEventSourceLike_publisher]?.[EventListenerLike_notify](
+              value,
+            );
           }
         },
       },

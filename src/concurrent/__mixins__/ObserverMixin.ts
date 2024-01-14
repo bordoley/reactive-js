@@ -27,7 +27,7 @@ import {
 import { EventListenerLike_notify } from "../../events.js";
 import LazyInitEventSourceMixin, {
   LazyInitEventSourceLike,
-  LazyInitEventSourceMixin_publisher,
+  LazyInitEventSourceLike_publisher,
 } from "../../events/__mixins__/LazyInitEventSourceMixin.js";
 import {
   Function3,
@@ -101,7 +101,7 @@ const ObserverMixin: <T>() => Mixin2<
         if (observer[ObserverMixin_isCompleted]) {
           observer[DisposableLike_dispose]();
         } else {
-          observer[LazyInitEventSourceMixin_publisher]?.[
+          observer[LazyInitEventSourceLike_publisher]?.[
             EventListenerLike_notify
           ](DispatcherLikeEvent_ready);
         }
@@ -118,6 +118,7 @@ const ObserverMixin: <T>() => Mixin2<
 
   return returns(
     mix<
+      ObserverLike<T>,
       Function3<
         DisposableLike &
           SchedulerLike &
@@ -135,7 +136,7 @@ const ObserverMixin: <T>() => Mixin2<
         },
         ObserverLike<T>
       >,
-      ReturnType<typeof props<TProperties>>,
+      TProperties,
       SchedulerLike &
         Pick<
           ObserverLike<T>,
@@ -239,7 +240,7 @@ const ObserverMixin: <T>() => Mixin2<
             );
 
             if (!result) {
-              this[LazyInitEventSourceMixin_publisher]?.[
+              this[LazyInitEventSourceLike_publisher]?.[
                 EventListenerLike_notify
               ](DispatcherLikeEvent_capacityExceeded);
             }
@@ -264,9 +265,9 @@ const ObserverMixin: <T>() => Mixin2<
           this[ObserverMixin_isCompleted] = true;
 
           if (!isCompleted) {
-            this[LazyInitEventSourceMixin_publisher]?.[
-              EventListenerLike_notify
-            ](DispatcherLikeEvent_completed);
+            this[LazyInitEventSourceLike_publisher]?.[EventListenerLike_notify](
+              DispatcherLikeEvent_completed,
+            );
           }
 
           if (

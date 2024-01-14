@@ -18,6 +18,7 @@ const DelegatingObserverMixin: <T>() => Mixin1<
 > = /*@__PURE__*/ (<T>() =>
   returns(
     mix<
+      ObserverLike<T>,
       Function2<
         DisposableLike & Pick<ObserverLike<T>, typeof ObserverLike_notify>,
         ObserverLike,
