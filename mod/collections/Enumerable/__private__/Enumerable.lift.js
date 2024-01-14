@@ -1,13 +1,14 @@
 /// <reference types="./Enumerable.lift.d.ts" />
 
-import { createInstanceFactory, mix, props, } from "../../../__internal__/mixins.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { EnumerableLike_enumerate, } from "../../../collections.js";
 import { none, pipeUnsafe } from "../../../functions.js";
-import EnumerableIterablePrototypeBase from "../../__mixins__/EnumerableIterablePrototypeBase.js";
+import EnumerableIterableMixin from "../../__mixins__/EnumerableIterableMixin.js";
 const LiftedEnumerable_source = Symbol("LiftedEnumerable_source");
 const LiftedEnumerable_ops = Symbol("LiftedEnumerable_ops");
 const createLiftedEnumerable = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(function LiftedEnumerable(instance, source, ops) {
+    return createInstanceFactory(mix(include(EnumerableIterableMixin()), function LiftedEnumerable(instance, source, ops) {
+        init(EnumerableIterableMixin(), instance);
         instance[LiftedEnumerable_source] = source;
         instance[LiftedEnumerable_ops] = ops;
         return instance;
@@ -15,7 +16,6 @@ const createLiftedEnumerable = /*@__PURE__*/ (() => {
         [LiftedEnumerable_source]: none,
         [LiftedEnumerable_ops]: none,
     }), {
-        ...EnumerableIterablePrototypeBase(),
         [EnumerableLike_enumerate]() {
             return pipeUnsafe(this[LiftedEnumerable_source][EnumerableLike_enumerate](), ...this[LiftedEnumerable_ops]);
         },

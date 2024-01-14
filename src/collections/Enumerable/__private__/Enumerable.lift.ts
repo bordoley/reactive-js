@@ -1,5 +1,7 @@
 import {
   createInstanceFactory,
+  include,
+  init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
@@ -9,7 +11,7 @@ import {
   EnumeratorLike,
 } from "../../../collections.js";
 import { Function1, none, pipeUnsafe } from "../../../functions.js";
-import EnumerableIterablePrototypeBase from "../../__mixins__/EnumerableIterablePrototypeBase.js";
+import EnumerableIterableMixin from "../../__mixins__/EnumerableIterableMixin.js";
 
 const LiftedEnumerable_source = Symbol("LiftedEnumerable_source");
 const LiftedEnumerable_ops = Symbol("LiftedEnumerable_ops");
@@ -26,24 +28,25 @@ const createLiftedEnumerable: <TIn, TOut>(
   };
   return createInstanceFactory(
     mix(
+      include(EnumerableIterableMixin()),
       function LiftedEnumerable(
-        instance: TProperties & EnumerableLike<TOut>,
-
+        instance: TProperties &
+          Pick<EnumerableLike<TOut>, typeof EnumerableLike_enumerate>,
         source: EnumerableLike<TIn>,
         ops: readonly Function1<EnumeratorLike<any>, EnumeratorLike<any>>[],
       ): EnumerableLike<TOut> {
+        init(EnumerableIterableMixin<TOut>(), instance);
+
         instance[LiftedEnumerable_source] = source;
         instance[LiftedEnumerable_ops] = ops;
 
-        return instance as EnumerableLike<TOut>;
+        return instance;
       },
       props<TProperties>({
         [LiftedEnumerable_source]: none,
         [LiftedEnumerable_ops]: none,
       }),
       {
-        ...EnumerableIterablePrototypeBase<TOut>(),
-
         [EnumerableLike_enumerate](
           this: TProperties & EnumerableLike<TIn>,
         ): EnumeratorLike<TOut> {
