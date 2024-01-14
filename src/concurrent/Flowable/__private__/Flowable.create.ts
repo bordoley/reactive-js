@@ -24,7 +24,6 @@ import { StoreLike_value, WritableStoreLike } from "../../../events.js";
 import * as WritableStore from "../../../events/WritableStore.js";
 import { Function1, invoke, none, pipe } from "../../../functions.js";
 import {
-  DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
@@ -136,17 +135,13 @@ const PauseableObservable_create: <T>(
       }),
       {
         [PauseableLike_pause](
-          this: DelegatingDisposableLike<
-            StreamLike<boolean, T> & DisposableLike
-          >,
+          this: DelegatingDisposableLike<StreamLike<boolean, T>>,
         ) {
           this[DelegatingDisposableLike_delegate][QueueableLike_enqueue](true);
         },
 
         [PauseableLike_resume](
-          this: DelegatingDisposableLike<
-            StreamLike<boolean, T> & DisposableLike
-          >,
+          this: DelegatingDisposableLike<StreamLike<boolean, T>>,
         ) {
           this[DelegatingDisposableLike_delegate][QueueableLike_enqueue](false);
         },

@@ -29,7 +29,6 @@ import {
   raiseIf,
 } from "../../../functions.js";
 import {
-  DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../utils.js";
@@ -47,7 +46,7 @@ const Stream_create: <TReq, T>(
     readonly replay?: number;
     readonly capacity?: number;
   },
-) => StreamLike<TReq, T> & DisposableLike = /*@__PURE__*/ (<TReq, T>() => {
+) => StreamLike<TReq, T> = /*@__PURE__*/ (<TReq, T>() => {
   const DispatchedObservableLike_dispatcher = Symbol(
     "DispatchedObservableLike_dispatcher",
   );
@@ -80,7 +79,7 @@ const Stream_create: <TReq, T>(
           [ObservableLike_isRunnable]: false as const,
 
           [ObservableLike_observe](
-            this: TProperties & DispatchedObservableLike<T> & DisposableLike,
+            this: TProperties & DispatchedObservableLike<T>,
             observer: ObserverLike<T>,
           ) {
             raiseIf(
@@ -113,7 +112,7 @@ const Stream_create: <TReq, T>(
           capacity?: number;
           backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         },
-      ): StreamLike<TReq, T> & DisposableLike {
+      ): StreamLike<TReq, T> {
         const dispatchedObservable = DispatchedObservable_create<TReq>();
 
         const delegate = pipe(

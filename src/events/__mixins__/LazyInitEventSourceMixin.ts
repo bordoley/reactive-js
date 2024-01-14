@@ -38,7 +38,7 @@ const LazyInitEventSourceMixin: <T>() => Mixin<
     >(
       function LazyInitEventSourceMixin(
         instance: EventSourceLike<T> & TProperties & DisposableLike,
-      ): LazyInitEventSourceLike<T> & DisposableLike {
+      ): LazyInitEventSourceLike<T> {
         return instance;
       },
       props<TProperties>({

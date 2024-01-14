@@ -153,7 +153,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       include(DelegatingDisposableMixin()),
       function WindowLocationStream(
         instance: WindowLocationLike & TProperties,
-        delegate: StreamLike<Updater<TState>, TState> & DisposableLike,
+        delegate: StreamLike<Updater<TState>, TState>,
         scheduler: SchedulerLike,
       ): WindowLocationLike & DisposableLike {
         init(DelegatingDisposableMixin(), instance, delegate);
