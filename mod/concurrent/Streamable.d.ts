@@ -11,29 +11,29 @@ export interface StreamableModule {
     /**
      */
     create<TReq, T>(op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
-    createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
+    createAnimationGroupEventHandler<TEvent, TKey extends string, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
         readonly mode: "switching";
         readonly scheduler?: SchedulerLike;
     }): StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
-    createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
+    createAnimationGroupEventHandler<TEvent, TKey extends string, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
         readonly mode: "blocking";
         readonly scheduler?: SchedulerLike;
     }): StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
-    createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
+    createAnimationGroupEventHandler<TEvent, TKey extends string, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
         readonly mode: "queueing";
         readonly scheduler?: SchedulerLike;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
-    createAnimationGroupEventHandler<TKey extends string | symbol, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
+    createAnimationGroupEventHandler<TKey extends string, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
         readonly mode: "switching";
         readonly scheduler?: SchedulerLike;
     }): StreamableLike<void, boolean, StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
-    createAnimationGroupEventHandler<TKey extends string | symbol, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
+    createAnimationGroupEventHandler<TKey extends string, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
         readonly mode: "blocking";
         readonly scheduler?: SchedulerLike;
     }): StreamableLike<void, boolean, StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
-    createAnimationGroupEventHandler<TKey extends string | symbol, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
+    createAnimationGroupEventHandler<TKey extends string, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
         readonly mode: "queueing";
         readonly scheduler?: SchedulerLike;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `symbol` \| `string` = `symbol` \| `string` |
+| `TKey` | extends `string` = `string` |
 
 ## Hierarchy
 

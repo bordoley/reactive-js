@@ -3,7 +3,7 @@ import { ReadonlyObjectMapLike } from "../../../collections.js";
 import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 
 const ReadonlyObjectMap_union: ReadonlyObjectMap.Signature["union"] =
-  <TKey extends string | symbol, T>(m2: ReadonlyObjectMapLike<TKey, T>) =>
+  <TKey extends string, T>(m2: ReadonlyObjectMapLike<TKey, T>) =>
   (m1: ReadonlyObjectMapLike<TKey, T>) => {
     const result: Record<TKey, T> = Obj.create(null);
 

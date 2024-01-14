@@ -48,7 +48,7 @@ import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
 
 const Streamable_createAnimationGroupEventHandlerStream: <
   TEvent,
-  TKey extends string | symbol,
+  TKey extends string,
   T,
 >(
   animationGroup: ReadonlyObjectMapLike<
@@ -70,7 +70,7 @@ const Streamable_createAnimationGroupEventHandlerStream: <
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   }>,
 ) => StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>> =
-  /*@__PURE__*/ (<TEvent, TKey extends string | symbol, T>() => {
+  /*@__PURE__*/ (<TEvent, TKey extends string, T>() => {
     const AnimationEventHandlerStream_delegate = Symbol(
       "AnimationEventHandlerStream_delegate",
     );
@@ -193,7 +193,7 @@ const Streamable_createAnimationGroupEventHandlerStream: <
   })();
 
 const Streamable_createAnimationGroupEventHandler: Streamable.Signature["createAnimationGroupEventHandler"] =
-  (<TEvent, TKey extends string | symbol, T>(
+  (<TEvent, TKey extends string, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       | Function1<TEvent, Animation<T> | readonly Animation<T>[]>

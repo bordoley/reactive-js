@@ -37,7 +37,7 @@ export interface StreamableModule {
     op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
 
-  createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(
+  createAnimationGroupEventHandler<TEvent, TKey extends string, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Function1<TEvent, Animation<T> | readonly Animation<T>[]>
@@ -48,7 +48,7 @@ export interface StreamableModule {
     boolean,
     StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
   >;
-  createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(
+  createAnimationGroupEventHandler<TEvent, TKey extends string, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Function1<TEvent, Animation<T> | readonly Animation<T>[]>
@@ -59,7 +59,7 @@ export interface StreamableModule {
     boolean,
     StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
   >;
-  createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(
+  createAnimationGroupEventHandler<TEvent, TKey extends string, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Function1<TEvent, Animation<T> | readonly Animation<T>[]>
@@ -76,7 +76,7 @@ export interface StreamableModule {
     StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
   >;
 
-  createAnimationGroupEventHandler<TKey extends string | symbol, T>(
+  createAnimationGroupEventHandler<TKey extends string, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Animation<T> | readonly Animation<T>[]
@@ -87,7 +87,7 @@ export interface StreamableModule {
     boolean,
     StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
   >;
-  createAnimationGroupEventHandler<TKey extends string | symbol, T>(
+  createAnimationGroupEventHandler<TKey extends string, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Animation<T> | readonly Animation<T>[]
@@ -98,7 +98,7 @@ export interface StreamableModule {
     boolean,
     StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
   >;
-  createAnimationGroupEventHandler<TKey extends string | symbol, T>(
+  createAnimationGroupEventHandler<TKey extends string, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Animation<T> | readonly Animation<T>[]

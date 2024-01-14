@@ -56,10 +56,9 @@ export interface EnumerableLike<T = unknown> extends Iterable<T> {
 /**
  * @noInheritDoc
  */
-export type ReadonlyObjectMapLike<
-  TKey extends symbol | string = string,
-  T = unknown,
-> = { readonly [P in TKey]?: T };
+export type ReadonlyObjectMapLike<TKey extends string = string, T = unknown> = {
+  readonly [P in TKey]?: T;
+};
 
 export const DictionaryLike_get = Symbol("DictionaryLike_get");
 export const DictionaryLike_keys = Symbol("DictionaryLike_keys");

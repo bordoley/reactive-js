@@ -88,7 +88,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `symbol` \| `string` = `string` |
+| `TKey` | extends `string` = `string` |
 | `T` | `unknown` |
 
 ## Variables

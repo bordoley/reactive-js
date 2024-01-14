@@ -2,7 +2,7 @@ import { Collection, Collection_T, Collection_TKey, Collection_type, DictionaryC
 /**
  * @noInheritDoc
  */
-export interface ReadonlyObjectMapCollection<TKey extends symbol | string = symbol | string> extends Collection<TKey> {
+export interface ReadonlyObjectMapCollection<TKey extends string = string> extends Collection<TKey> {
     readonly [Collection_type]?: ReadonlyObjectMapLike<NonNullable<this[typeof Collection_TKey]>, this[typeof Collection_T]>;
     readonly [Collection_TKey]?: TKey;
 }
