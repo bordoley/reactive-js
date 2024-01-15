@@ -1,6 +1,6 @@
 /// <reference types="./Streamable.createAnimationGroupEventHandler.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, unsafeCast, } from "../../../__internal__/mixins.js";
 import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
 import * as Enumerable from "../../../collections/Enumerable.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
@@ -15,7 +15,7 @@ import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
 const Streamable_createAnimationGroupEventHandlerStream = 
 /*@__PURE__*/ (() => {
     const AnimationEventHandlerStream_delegate = Symbol("AnimationEventHandlerStream_delegate");
-    return createInstanceFactory(mix(include(DelegatingStreamMixin()), function AnimationEventHandlerStream(instance, animationGroup, creationOptions, scheduler, streamOptions) {
+    return mixInstanceFactory(include(DelegatingStreamMixin()), function AnimationEventHandlerStream(instance, animationGroup, creationOptions, scheduler, streamOptions) {
         const streamDelegate = Streamable_createEventHandler((event) => {
             const observables = pipe(animationGroup, ReadonlyObjectMap.map((factory, key) => pipe(Observable.animate(isFunction(factory) ? factory(event) : factory), Observable.forEach((value) => {
                 const publisher = publishers[key];
@@ -39,7 +39,7 @@ const Streamable_createAnimationGroupEventHandlerStream =
         [DictionaryLike_get](index) {
             return this[AnimationEventHandlerStream_delegate][index];
         },
-    }));
+    });
 })();
 const Streamable_createAnimationGroupEventHandler = ((animationGroup, createOptions) => ({
     [StreamableLike_stream]: (scheduler, options) => Streamable_createAnimationGroupEventHandlerStream(animationGroup, createOptions, scheduler, options),

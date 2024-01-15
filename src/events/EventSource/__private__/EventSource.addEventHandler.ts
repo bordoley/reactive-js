@@ -1,9 +1,8 @@
 import {
   Mutable,
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -24,30 +23,25 @@ const EventListener_createInternal: <T>(
     [EventListenerLike_notify]: SideEffect1<T>;
   };
 
-  return createInstanceFactory(
-    mix(
-      include(DisposableMixin),
-      function EventListener(
-        instance: Pick<
-          EventListenerLike,
-          typeof EventListenerLike_isErrorSafe
-        > &
-          Mutable<TProperties>,
-        notify: (this: EventListenerLike<T>, a: T) => void,
-      ): EventListenerLike<T> {
-        init(DisposableMixin, instance);
+  return mixInstanceFactory(
+    include(DisposableMixin),
+    function EventListener(
+      instance: Pick<EventListenerLike, typeof EventListenerLike_isErrorSafe> &
+        Mutable<TProperties>,
+      notify: (this: EventListenerLike<T>, a: T) => void,
+    ): EventListenerLike<T> {
+      init(DisposableMixin, instance);
 
-        instance[EventListenerLike_notify] = notify;
+      instance[EventListenerLike_notify] = notify;
 
-        return instance;
-      },
-      props<TProperties>({
-        [EventListenerLike_notify]: none,
-      }),
-      {
-        [EventListenerLike_isErrorSafe]: false,
-      },
-    ),
+      return instance;
+    },
+    props<TProperties>({
+      [EventListenerLike_notify]: none,
+    }),
+    {
+      [EventListenerLike_isErrorSafe]: false,
+    },
   );
 })();
 

@@ -1,9 +1,8 @@
 import {
   Mutable,
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
   unsafeCast,
 } from "../../../__internal__/mixins.js";
@@ -30,65 +29,63 @@ const Enumerable_keep: Enumerable.Signature["keep"] = /*@__PURE__*/ (<T>() => {
     [EnumeratorLike_isCompleted]: boolean;
   }
 
-  const createKeepEnumerator = createInstanceFactory(
-    mix(
-      include(DelegatingEnumeratorMixin<T>()),
-      function KeepEnumerator(
-        instance: TProperties<T> & EnumeratorLike<T>,
-        delegate: EnumeratorLike<T>,
-        predicate: Predicate<T>,
-      ): EnumeratorLike<T> {
-        init(DelegatingEnumeratorMixin<T>(), instance, delegate);
+  const createKeepEnumerator = mixInstanceFactory(
+    include(DelegatingEnumeratorMixin<T>()),
+    function KeepEnumerator(
+      instance: TProperties<T> & EnumeratorLike<T>,
+      delegate: EnumeratorLike<T>,
+      predicate: Predicate<T>,
+    ): EnumeratorLike<T> {
+      init(DelegatingEnumeratorMixin<T>(), instance, delegate);
 
-        instance[KeepEnumerator_predicate] = predicate;
+      instance[KeepEnumerator_predicate] = predicate;
 
-        return instance;
+      return instance;
+    },
+    props<
+      TProperties<T> &
+        Pick<EnumeratorLike<T>, typeof EnumeratorLike_isCompleted>
+    >({
+      [KeepEnumerator_predicate]: none,
+      [EnumeratorLike_isCompleted]: false,
+    }),
+    {
+      get [EnumeratorLike_current]() {
+        unsafeCast<DelegatingEnumeratorMixinLike<T>>(this);
+        return this[DelegatingEnumeratorMixinLike_delegate][
+          EnumeratorLike_current
+        ];
       },
-      props<
-        TProperties<T> &
-          Pick<EnumeratorLike<T>, typeof EnumeratorLike_isCompleted>
-      >({
-        [KeepEnumerator_predicate]: none,
-        [EnumeratorLike_isCompleted]: false,
-      }),
-      {
-        get [EnumeratorLike_current]() {
-          unsafeCast<DelegatingEnumeratorMixinLike<T>>(this);
-          return this[DelegatingEnumeratorMixinLike_delegate][
-            EnumeratorLike_current
-          ];
-        },
 
-        get [EnumeratorLike_hasCurrent]() {
-          unsafeCast<DelegatingEnumeratorMixinLike<T>>(this);
-          return this[DelegatingEnumeratorMixinLike_delegate][
-            EnumeratorLike_hasCurrent
-          ];
-        },
-
-        [EnumeratorLike_move](
-          this: TProperties<T> &
-            Mutable<EnumeratorLike<T>> &
-            DelegatingEnumeratorMixinLike<T>,
-        ): boolean {
-          if (this[EnumeratorLike_isCompleted]) {
-            return false;
-          }
-
-          const delegate = this[DelegatingEnumeratorMixinLike_delegate];
-          const predicate = this[KeepEnumerator_predicate];
-
-          while (
-            delegate[EnumeratorLike_move]() &&
-            !predicate(this[EnumeratorLike_current])
-          ) {}
-
-          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
-
-          return this[EnumeratorLike_hasCurrent];
-        },
+      get [EnumeratorLike_hasCurrent]() {
+        unsafeCast<DelegatingEnumeratorMixinLike<T>>(this);
+        return this[DelegatingEnumeratorMixinLike_delegate][
+          EnumeratorLike_hasCurrent
+        ];
       },
-    ),
+
+      [EnumeratorLike_move](
+        this: TProperties<T> &
+          Mutable<EnumeratorLike<T>> &
+          DelegatingEnumeratorMixinLike<T>,
+      ): boolean {
+        if (this[EnumeratorLike_isCompleted]) {
+          return false;
+        }
+
+        const delegate = this[DelegatingEnumeratorMixinLike_delegate];
+        const predicate = this[KeepEnumerator_predicate];
+
+        while (
+          delegate[EnumeratorLike_move]() &&
+          !predicate(this[EnumeratorLike_current])
+        ) {}
+
+        this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
+
+        return this[EnumeratorLike_hasCurrent];
+      },
+    },
   );
 
   return (predicate: Predicate<T>) =>

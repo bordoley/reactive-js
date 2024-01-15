@@ -1,9 +1,8 @@
 import {
   Mutable,
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -99,38 +98,36 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
       readonly [CreateObservable_effect]: SideEffect1<ObserverLike>;
     };
 
-    return createInstanceFactory(
-      mix(
-        include(ObservableMixin),
-        function CreateObservable(
-          instance: Pick<ObservableLike, typeof ObservableLike_observe> &
-            Mutable<TProperties>,
-          effect: SideEffect1<ObserverLike>,
-          config: {
-            readonly [ObservableLike_isDeferred]: boolean;
-            readonly [ObservableLike_isMulticasted]: boolean;
-            readonly [ObservableLike_isPure]: boolean;
-            readonly [ObservableLike_isRunnable]: boolean;
-          },
-        ): ObservableLike {
-          init(ObservableMixin, instance, config);
-          instance[CreateObservable_effect] = effect;
+    return mixInstanceFactory(
+      include(ObservableMixin),
+      function CreateObservable(
+        instance: Pick<ObservableLike, typeof ObservableLike_observe> &
+          Mutable<TProperties>,
+        effect: SideEffect1<ObserverLike>,
+        config: {
+          readonly [ObservableLike_isDeferred]: boolean;
+          readonly [ObservableLike_isMulticasted]: boolean;
+          readonly [ObservableLike_isPure]: boolean;
+          readonly [ObservableLike_isRunnable]: boolean;
+        },
+      ): ObservableLike {
+        init(ObservableMixin, instance, config);
+        instance[CreateObservable_effect] = effect;
 
-          return instance;
+        return instance;
+      },
+      props<TProperties>({
+        [CreateObservable_effect]: none,
+      }),
+      {
+        [ObservableLike_observe](this: TProperties, observer: ObserverLike) {
+          try {
+            this[CreateObservable_effect](observer);
+          } catch (e) {
+            observer[DisposableLike_dispose](error(e));
+          }
         },
-        props<TProperties>({
-          [CreateObservable_effect]: none,
-        }),
-        {
-          [ObservableLike_observe](this: TProperties, observer: ObserverLike) {
-            try {
-              this[CreateObservable_effect](observer);
-            } catch (e) {
-              observer[DisposableLike_dispose](error(e));
-            }
-          },
-        },
-      ),
+      },
     ) as ObservableCreateWithConfig["createWithConfig"];
   })();
 

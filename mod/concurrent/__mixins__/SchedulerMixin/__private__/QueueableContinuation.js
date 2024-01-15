@@ -1,7 +1,7 @@
 /// <reference types="./QueueableContinuation.d.ts" />
 
 import { __DEV__ } from "../../../../__internal__/constants.js";
-import { createInstanceFactory, include, init, mix, props, } from "../../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../../../../__internal__/mixins.js";
 import { ContinuationContextLike_yield, SchedulerLike_now, SchedulerLike_shouldYield, } from "../../../../concurrent.js";
 import { error, isSome, newInstance, none, pipe, pipeLazy, raiseIf, } from "../../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../../utils.js";
@@ -109,7 +109,7 @@ export const create = /*@__PURE__*/ (() => {
             thiz[DisposableLike_dispose](err);
         }
     };
-    return createInstanceFactory(mix(include(DisposableMixin, IndexedQueueMixin()), function QueueableContinuation(instance, scheduler, effect, dueTime) {
+    return mixInstanceFactory(include(DisposableMixin, IndexedQueueMixin()), function QueueableContinuation(instance, scheduler, effect, dueTime) {
         init(DisposableMixin, instance);
         init(IndexedQueueMixin(), instance, none);
         instance[ContinuationLike_dueTime] = dueTime;
@@ -149,5 +149,5 @@ export const create = /*@__PURE__*/ (() => {
                 throw newInstance(ContinuationYieldError, delay);
             }
         },
-    }));
+    });
 })();

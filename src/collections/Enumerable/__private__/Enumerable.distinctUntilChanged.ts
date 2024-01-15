@@ -1,9 +1,8 @@
 import {
   Mutable,
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
   unsafeCast,
 } from "../../../__internal__/mixins.js";
@@ -48,76 +47,74 @@ const Enumerable_distinctUntilChanged: Enumerable.Signature["distinctUntilChange
       [EnumeratorLike_isCompleted]: boolean;
     }
 
-    const createDistinctUntilChangedEnumerator = createInstanceFactory(
-      mix(
-        include(DelegatingEnumeratorMixin<T>()),
-        function DistinctUntilChangedEnumerator(
-          instance: TProperties<T> & EnumeratorLike<T>,
-          delegate: EnumeratorLike<T>,
-          equality: Optional<Equality<T>>,
-        ): EnumeratorLike<T> {
-          init(DelegatingEnumeratorMixin<T>(), instance, delegate);
+    const createDistinctUntilChangedEnumerator = mixInstanceFactory(
+      include(DelegatingEnumeratorMixin<T>()),
+      function DistinctUntilChangedEnumerator(
+        instance: TProperties<T> & EnumeratorLike<T>,
+        delegate: EnumeratorLike<T>,
+        equality: Optional<Equality<T>>,
+      ): EnumeratorLike<T> {
+        init(DelegatingEnumeratorMixin<T>(), instance, delegate);
 
-          instance[DistinctUntilChangedEnumerator_equality] =
-            equality ?? strictEquality;
+        instance[DistinctUntilChangedEnumerator_equality] =
+          equality ?? strictEquality;
 
-          return instance;
+        return instance;
+      },
+      props<
+        TProperties<T> &
+          Pick<EnumeratorLike<T>, typeof EnumeratorLike_isCompleted>
+      >({
+        [DistinctUntilChangedEnumerator_equality]: none,
+        [DistinctUntilChangedEnumerator_hasValue]: false,
+        [DistinctUntilChangedEnumerator_prev]: none,
+        [EnumeratorLike_isCompleted]: false,
+      }),
+      {
+        get [EnumeratorLike_current]() {
+          unsafeCast<DelegatingEnumeratorMixinLike<T>>(this);
+          return this[DelegatingEnumeratorMixinLike_delegate][
+            EnumeratorLike_current
+          ];
         },
-        props<
-          TProperties<T> &
-            Pick<EnumeratorLike<T>, typeof EnumeratorLike_isCompleted>
-        >({
-          [DistinctUntilChangedEnumerator_equality]: none,
-          [DistinctUntilChangedEnumerator_hasValue]: false,
-          [DistinctUntilChangedEnumerator_prev]: none,
-          [EnumeratorLike_isCompleted]: false,
-        }),
-        {
-          get [EnumeratorLike_current]() {
-            unsafeCast<DelegatingEnumeratorMixinLike<T>>(this);
-            return this[DelegatingEnumeratorMixinLike_delegate][
-              EnumeratorLike_current
-            ];
-          },
 
-          get [EnumeratorLike_hasCurrent]() {
-            unsafeCast<DelegatingEnumeratorMixinLike<T>>(this);
-            return this[DelegatingEnumeratorMixinLike_delegate][
-              EnumeratorLike_hasCurrent
-            ];
-          },
-
-          [EnumeratorLike_move](
-            this: Mutable<EnumeratorLike<T>> &
-              DelegatingEnumeratorMixinLike<T> &
-              TProperties<T>,
-          ): boolean {
-            if (this[EnumeratorLike_isCompleted]) {
-              return false;
-            }
-
-            const delegate = this[DelegatingEnumeratorMixinLike_delegate];
-            const equality = this[DistinctUntilChangedEnumerator_equality];
-
-            while (delegate[EnumeratorLike_move]()) {
-              const next = delegate[EnumeratorLike_current];
-
-              if (
-                !this[DistinctUntilChangedEnumerator_hasValue] ||
-                !equality(this[DistinctUntilChangedEnumerator_prev], next)
-              ) {
-                this[DistinctUntilChangedEnumerator_prev] = next;
-                this[DistinctUntilChangedEnumerator_hasValue] = true;
-                break;
-              }
-            }
-
-            this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
-
-            return this[EnumeratorLike_hasCurrent];
-          },
+        get [EnumeratorLike_hasCurrent]() {
+          unsafeCast<DelegatingEnumeratorMixinLike<T>>(this);
+          return this[DelegatingEnumeratorMixinLike_delegate][
+            EnumeratorLike_hasCurrent
+          ];
         },
-      ),
+
+        [EnumeratorLike_move](
+          this: Mutable<EnumeratorLike<T>> &
+            DelegatingEnumeratorMixinLike<T> &
+            TProperties<T>,
+        ): boolean {
+          if (this[EnumeratorLike_isCompleted]) {
+            return false;
+          }
+
+          const delegate = this[DelegatingEnumeratorMixinLike_delegate];
+          const equality = this[DistinctUntilChangedEnumerator_equality];
+
+          while (delegate[EnumeratorLike_move]()) {
+            const next = delegate[EnumeratorLike_current];
+
+            if (
+              !this[DistinctUntilChangedEnumerator_hasValue] ||
+              !equality(this[DistinctUntilChangedEnumerator_prev], next)
+            ) {
+              this[DistinctUntilChangedEnumerator_prev] = next;
+              this[DistinctUntilChangedEnumerator_hasValue] = true;
+              break;
+            }
+          }
+
+          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
+
+          return this[EnumeratorLike_hasCurrent];
+        },
+      },
     );
 
     return (options?: { equality?: Equality<T> }) =>

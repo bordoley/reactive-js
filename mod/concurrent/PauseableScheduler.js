@@ -2,7 +2,7 @@
 
 import { MAX_VALUE } from "../__internal__/constants.js";
 import { clampPositiveInteger } from "../__internal__/math.js";
-import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
 import { ContinuationContextLike_yield, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../concurrent.js";
 import { StoreLike_value } from "../events.js";
 import * as WritableStore from "../events/WritableStore.js";
@@ -58,7 +58,7 @@ export const create = /*@PURE__*/ (() => {
         instance[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
         instance[SerialDisposableLike_current] = hostScheduler[SchedulerLike_schedule](hostSchedulerContinuation, { delay });
     };
-    return createInstanceFactory(mix(include(SchedulerMixin, SerialDisposableMixin()), function PauseableScheduler(instance, host) {
+    return mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin()), function PauseableScheduler(instance, host) {
         init(SchedulerMixin, instance, host[SchedulerLike_maxYieldInterval]);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
         instance[PauseableScheduler_queue] = PriorityQueue.create(Continuation.compare);
@@ -114,8 +114,7 @@ export const create = /*@PURE__*/ (() => {
             const nextContinuation = peek(this);
             return (this[PauseableLike_isPaused][StoreLike_value] ||
                 (isSome(nextContinuation) &&
-                    this[PauseableScheduler_activeContinuation] !==
-                        nextContinuation &&
+                    this[PauseableScheduler_activeContinuation] !== nextContinuation &&
                     nextContinuation[ContinuationLike_dueTime] <= now) ||
                 this[PauseableScheduler_hostScheduler][SchedulerLike_shouldYield]);
         },
@@ -136,5 +135,5 @@ export const create = /*@PURE__*/ (() => {
             this[PauseableScheduler_queue][QueueableLike_enqueue](continuation);
             scheduleOnHost(this);
         },
-    }));
+    });
 })();

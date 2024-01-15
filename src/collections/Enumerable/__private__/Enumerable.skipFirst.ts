@@ -1,10 +1,9 @@
 import { clampPositiveInteger, max } from "../../../__internal__/math.js";
 import {
   Mutable,
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
   unsafeCast,
 } from "../../../__internal__/mixins.js";
@@ -32,71 +31,69 @@ const Enumerable_skipFirst: Enumerable.Signature["skipFirst"] = /*@__PURE__*/ (<
     [SkipFirstEnumerator_count]: number;
   }
 
-  const createSkipFirstEnumerator = createInstanceFactory(
-    mix(
-      include(DelegatingEnumeratorMixin<T>()),
-      function SkipFirstEnumerator(
-        instance: EnumeratorLike<T> & TProperties,
-        delegate: EnumeratorLike<T>,
-        skipCount: Optional<number>,
-      ): EnumeratorLike<T> {
-        init(DelegatingEnumeratorMixin<T>(), instance, delegate);
+  const createSkipFirstEnumerator = mixInstanceFactory(
+    include(DelegatingEnumeratorMixin<T>()),
+    function SkipFirstEnumerator(
+      instance: EnumeratorLike<T> & TProperties,
+      delegate: EnumeratorLike<T>,
+      skipCount: Optional<number>,
+    ): EnumeratorLike<T> {
+      init(DelegatingEnumeratorMixin<T>(), instance, delegate);
 
-        instance[SkipFirstEnumerator_count] = clampPositiveInteger(
-          skipCount ?? 1,
-        );
+      instance[SkipFirstEnumerator_count] = clampPositiveInteger(
+        skipCount ?? 1,
+      );
 
-        return instance;
+      return instance;
+    },
+    props<
+      TProperties & Pick<EnumeratorLike<T>, typeof EnumeratorLike_isCompleted>
+    >({
+      [SkipFirstEnumerator_count]: 0,
+      [EnumeratorLike_isCompleted]: false,
+    }),
+    {
+      get [EnumeratorLike_current]() {
+        unsafeCast<DelegatingEnumeratorMixinLike<T>>(this);
+        return this[DelegatingEnumeratorMixinLike_delegate][
+          EnumeratorLike_current
+        ];
       },
-      props<
-        TProperties & Pick<EnumeratorLike<T>, typeof EnumeratorLike_isCompleted>
-      >({
-        [SkipFirstEnumerator_count]: 0,
-        [EnumeratorLike_isCompleted]: false,
-      }),
-      {
-        get [EnumeratorLike_current]() {
-          unsafeCast<DelegatingEnumeratorMixinLike<T>>(this);
-          return this[DelegatingEnumeratorMixinLike_delegate][
-            EnumeratorLike_current
-          ];
-        },
 
-        get [EnumeratorLike_hasCurrent]() {
-          unsafeCast<DelegatingEnumeratorMixinLike<T>>(this);
-          return this[DelegatingEnumeratorMixinLike_delegate][
-            EnumeratorLike_hasCurrent
-          ];
-        },
-
-        [EnumeratorLike_move](
-          this: TProperties &
-            Mutable<EnumeratorLike<T>> &
-            DelegatingEnumeratorMixinLike<T>,
-        ): boolean {
-          if (this[EnumeratorLike_isCompleted]) {
-            return false;
-          }
-
-          const delegate = this[DelegatingEnumeratorMixinLike_delegate];
-
-          while (delegate[EnumeratorLike_move]()) {
-            this[SkipFirstEnumerator_count] = max(
-              this[SkipFirstEnumerator_count] - 1,
-              -1,
-            );
-
-            if (this[SkipFirstEnumerator_count] < 0) {
-              break;
-            }
-          }
-
-          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
-
-          return this[EnumeratorLike_hasCurrent];
-        },
+      get [EnumeratorLike_hasCurrent]() {
+        unsafeCast<DelegatingEnumeratorMixinLike<T>>(this);
+        return this[DelegatingEnumeratorMixinLike_delegate][
+          EnumeratorLike_hasCurrent
+        ];
       },
-    ),
+
+      [EnumeratorLike_move](
+        this: TProperties &
+          Mutable<EnumeratorLike<T>> &
+          DelegatingEnumeratorMixinLike<T>,
+      ): boolean {
+        if (this[EnumeratorLike_isCompleted]) {
+          return false;
+        }
+
+        const delegate = this[DelegatingEnumeratorMixinLike_delegate];
+
+        while (delegate[EnumeratorLike_move]()) {
+          this[SkipFirstEnumerator_count] = max(
+            this[SkipFirstEnumerator_count] - 1,
+            -1,
+          );
+
+          if (this[SkipFirstEnumerator_count] < 0) {
+            break;
+          }
+        }
+
+        this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
+
+        return this[EnumeratorLike_hasCurrent];
+      },
+    },
   );
 
   return (options: { readonly count?: number } = {}) =>

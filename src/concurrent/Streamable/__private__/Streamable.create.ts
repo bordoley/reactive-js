@@ -1,9 +1,8 @@
 import {
   Mutable,
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -62,77 +61,73 @@ const Stream_create: <TReq, T>(
       [DispatchedObservableLike_dispatcher]: Optional<DispatcherLike<T>>;
     };
 
-    return createInstanceFactory(
-      mix(
-        function DispatchedObservable(
-          instance: DispatchedObservableLike<T> & Mutable<TProperties>,
-        ): DispatchedObservableLike<T> {
-          return instance;
-        },
-        props<TProperties>({
-          [DispatchedObservableLike_dispatcher]: none,
-        }),
-        {
-          [ObservableLike_isDeferred]: true as const,
-          [ObservableLike_isMulticasted]: false as const,
-          [ObservableLike_isPure]: true as const,
-          [ObservableLike_isRunnable]: false as const,
+    return mixInstanceFactory(
+      function DispatchedObservable(
+        instance: DispatchedObservableLike<T> & Mutable<TProperties>,
+      ): DispatchedObservableLike<T> {
+        return instance;
+      },
+      props<TProperties>({
+        [DispatchedObservableLike_dispatcher]: none,
+      }),
+      {
+        [ObservableLike_isDeferred]: true as const,
+        [ObservableLike_isMulticasted]: false as const,
+        [ObservableLike_isPure]: true as const,
+        [ObservableLike_isRunnable]: false as const,
 
-          [ObservableLike_observe](
-            this: TProperties & DispatchedObservableLike<T>,
-            observer: ObserverLike<T>,
-          ) {
-            raiseIf(
-              isSome(this[DispatchedObservableLike_dispatcher]),
-              "DispatchedObservable already subscribed to",
-            );
+        [ObservableLike_observe](
+          this: TProperties & DispatchedObservableLike<T>,
+          observer: ObserverLike<T>,
+        ) {
+          raiseIf(
+            isSome(this[DispatchedObservableLike_dispatcher]),
+            "DispatchedObservable already subscribed to",
+          );
 
-            this[DispatchedObservableLike_dispatcher] = observer;
-          },
+          this[DispatchedObservableLike_dispatcher] = observer;
         },
-      ),
+      },
     );
   })();
 
-  return createInstanceFactory(
-    mix(
-      include(
-        DelegatingDispatcherMixin(),
-        DelegatingMulticastObservableMixin<T>(),
-      ),
-      function StreamMixin(
-        instance: unknown,
-        op: Function1<
-          PureDeferredObservableLike<TReq>,
-          DeferredObservableLike<T>
-        >,
-        scheduler: SchedulerLike,
-        multicastOptions?: {
-          replay?: number;
-          capacity?: number;
-          backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-        },
-      ): StreamLike<TReq, T> {
-        const dispatchedObservable = DispatchedObservable_create<TReq>();
-
-        const delegate = pipe(
-          dispatchedObservable,
-          op,
-          Observable.multicast<T>(scheduler, multicastOptions),
-        );
-
-        init(
-          DelegatingDispatcherMixin<TReq>(),
-          instance,
-          dispatchedObservable[DispatchedObservableLike_dispatcher],
-        );
-        init(DelegatingMulticastObservableMixin<T>(), instance, delegate);
-
-        pipe(delegate, Disposable.addTo(instance));
-
-        return instance;
-      },
+  return mixInstanceFactory(
+    include(
+      DelegatingDispatcherMixin(),
+      DelegatingMulticastObservableMixin<T>(),
     ),
+    function StreamMixin(
+      instance: unknown,
+      op: Function1<
+        PureDeferredObservableLike<TReq>,
+        DeferredObservableLike<T>
+      >,
+      scheduler: SchedulerLike,
+      multicastOptions?: {
+        replay?: number;
+        capacity?: number;
+        backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      },
+    ): StreamLike<TReq, T> {
+      const dispatchedObservable = DispatchedObservable_create<TReq>();
+
+      const delegate = pipe(
+        dispatchedObservable,
+        op,
+        Observable.multicast<T>(scheduler, multicastOptions),
+      );
+
+      init(
+        DelegatingDispatcherMixin<TReq>(),
+        instance,
+        dispatchedObservable[DispatchedObservableLike_dispatcher],
+      );
+      init(DelegatingMulticastObservableMixin<T>(), instance, delegate);
+
+      pipe(delegate, Disposable.addTo(instance));
+
+      return instance;
+    },
   );
 })();
 

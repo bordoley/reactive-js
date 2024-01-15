@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -26,37 +25,35 @@ const createLiftedEnumerable: <TIn, TOut>(
       Function1<EnumeratorLike<any>, EnumeratorLike<any>>
     >;
   };
-  return createInstanceFactory(
-    mix(
-      include(EnumerableIterableMixin()),
-      function LiftedEnumerable(
-        instance: TProperties &
-          Pick<EnumerableLike<TOut>, typeof EnumerableLike_enumerate>,
-        source: EnumerableLike<TIn>,
-        ops: readonly Function1<EnumeratorLike<any>, EnumeratorLike<any>>[],
-      ): EnumerableLike<TOut> {
-        init(EnumerableIterableMixin<TOut>(), instance);
+  return mixInstanceFactory(
+    include(EnumerableIterableMixin()),
+    function LiftedEnumerable(
+      instance: TProperties &
+        Pick<EnumerableLike<TOut>, typeof EnumerableLike_enumerate>,
+      source: EnumerableLike<TIn>,
+      ops: readonly Function1<EnumeratorLike<any>, EnumeratorLike<any>>[],
+    ): EnumerableLike<TOut> {
+      init(EnumerableIterableMixin<TOut>(), instance);
 
-        instance[LiftedEnumerable_source] = source;
-        instance[LiftedEnumerable_ops] = ops;
+      instance[LiftedEnumerable_source] = source;
+      instance[LiftedEnumerable_ops] = ops;
 
-        return instance;
+      return instance;
+    },
+    props<TProperties>({
+      [LiftedEnumerable_source]: none,
+      [LiftedEnumerable_ops]: none,
+    }),
+    {
+      [EnumerableLike_enumerate](
+        this: TProperties & EnumerableLike<TIn>,
+      ): EnumeratorLike<TOut> {
+        return pipeUnsafe(
+          this[LiftedEnumerable_source][EnumerableLike_enumerate](),
+          ...this[LiftedEnumerable_ops],
+        );
       },
-      props<TProperties>({
-        [LiftedEnumerable_source]: none,
-        [LiftedEnumerable_ops]: none,
-      }),
-      {
-        [EnumerableLike_enumerate](
-          this: TProperties & EnumerableLike<TIn>,
-        ): EnumeratorLike<TOut> {
-          return pipeUnsafe(
-            this[LiftedEnumerable_source][EnumerableLike_enumerate](),
-            ...this[LiftedEnumerable_ops],
-          );
-        },
-      },
-    ),
+    },
   );
 })();
 

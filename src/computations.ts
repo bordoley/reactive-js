@@ -89,7 +89,7 @@ export interface PureStatefulComputationModule<C extends Computation> {
 }
 
 interface Signature {
-  keepType<C extends Computation, TA, TB extends TA>(
+  keepType<C extends Computation, TA, TB>(
     m: Pick<PureStatelessComputationModule<C>, "keep">,
     predicate: TypePredicate<TA, TB>,
   ): ComputationOperator<C, TA, TB>;
@@ -127,11 +127,7 @@ interface Signature {
   ): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
 }
 
-export const keepType: Signature["keepType"] = (<
-  C extends Computation,
-  TA,
-  TB extends TA,
->(
+export const keepType: Signature["keepType"] = (<C extends Computation, TA, TB>(
   m: Pick<PureStatelessComputationModule<C>, "keep">,
   predicate: TypePredicate<TA, TB>,
 ) => m.keep(predicate)) as Signature["keepType"];

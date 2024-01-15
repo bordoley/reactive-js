@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
   unsafeCast,
 } from "../../../__internal__/mixins.js";
@@ -82,113 +81,111 @@ const Streamable_createAnimationGroupEventHandlerStream: <
       >;
     };
 
-    return createInstanceFactory(
-      mix(
-        include(DelegatingStreamMixin<TEvent, boolean>()),
-        function AnimationEventHandlerStream(
-          instance: TProperties &
-            Pick<
-              DictionaryLike<TKey, EventSourceLike<T>>,
-              typeof DictionaryLike_keys | typeof DictionaryLike_get
-            >,
-          animationGroup: ReadonlyObjectMapLike<
-            TKey,
-            | Function1<TEvent, Animation<T> | readonly Animation<T>[]>
-            | (Animation<T> | readonly Animation<T>[])
+    return mixInstanceFactory(
+      include(DelegatingStreamMixin<TEvent, boolean>()),
+      function AnimationEventHandlerStream(
+        instance: TProperties &
+          Pick<
+            DictionaryLike<TKey, EventSourceLike<T>>,
+            typeof DictionaryLike_keys | typeof DictionaryLike_get
           >,
-          creationOptions: {
-            readonly mode: "switching" | "blocking" | "queueing";
-            readonly scheduler?: SchedulerLike;
-            readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-            readonly capacity?: number;
-          },
-          scheduler: SchedulerLike,
-          streamOptions: Optional<{
-            readonly replay?: number;
-            readonly capacity?: number;
-            readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-          }>,
-        ): StreamLike<TEvent, boolean> &
-          DictionaryLike<TKey, EventSourceLike<T>> {
-          const streamDelegate = Streamable_createEventHandler(
-            (event: TEvent) => {
-              const observables: ReadonlyObjectMapLike<
-                string,
-                RunnableWithSideEffectsLike<T>
-              > = pipe(
-                animationGroup,
-                ReadonlyObjectMap.map<
-                  | Function1<TEvent, Animation<T> | readonly Animation<T>[]>
-                  | Animation<T>
-                  | readonly Animation<T>[],
-                  RunnableWithSideEffectsLike<T>,
-                  string
-                >((factory, key: string) =>
-                  pipe(
-                    Observable.animate<T>(
-                      isFunction(factory) ? factory(event) : factory,
-                    ),
-                    Observable.forEach((value: T) => {
-                      const publisher = publishers[key];
-                      publisher?.[EventListenerLike_notify](value);
-                    }),
-                    Observable.ignoreElements<T>(),
+        animationGroup: ReadonlyObjectMapLike<
+          TKey,
+          | Function1<TEvent, Animation<T> | readonly Animation<T>[]>
+          | (Animation<T> | readonly Animation<T>[])
+        >,
+        creationOptions: {
+          readonly mode: "switching" | "blocking" | "queueing";
+          readonly scheduler?: SchedulerLike;
+          readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+          readonly capacity?: number;
+        },
+        scheduler: SchedulerLike,
+        streamOptions: Optional<{
+          readonly replay?: number;
+          readonly capacity?: number;
+          readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        }>,
+      ): StreamLike<TEvent, boolean> &
+        DictionaryLike<TKey, EventSourceLike<T>> {
+        const streamDelegate = Streamable_createEventHandler(
+          (event: TEvent) => {
+            const observables: ReadonlyObjectMapLike<
+              string,
+              RunnableWithSideEffectsLike<T>
+            > = pipe(
+              animationGroup,
+              ReadonlyObjectMap.map<
+                | Function1<TEvent, Animation<T> | readonly Animation<T>[]>
+                | Animation<T>
+                | readonly Animation<T>[],
+                RunnableWithSideEffectsLike<T>,
+                string
+              >((factory, key: string) =>
+                pipe(
+                  Observable.animate<T>(
+                    isFunction(factory) ? factory(event) : factory,
                   ),
+                  Observable.forEach((value: T) => {
+                    const publisher = publishers[key];
+                    publisher?.[EventListenerLike_notify](value);
+                  }),
+                  Observable.ignoreElements<T>(),
                 ),
-              );
-
-              const deferredAnimatedObservables = pipe(
-                observables,
-                ReadonlyObjectMap.values(),
-                Enumerable.map(Observable.subscribeOn(animationScheduler)),
-                Enumerable.toReadonlyArray(),
-              );
-
-              return Observable.mergeMany(deferredAnimatedObservables);
-            },
-            creationOptions as any,
-          )[StreamableLike_stream](scheduler, streamOptions);
-
-          init(
-            DelegatingStreamMixin<TEvent, boolean>(),
-            instance,
-            streamDelegate,
-          );
-
-          const publishers = pipe(
-            animationGroup,
-            ReadonlyObjectMap.map<unknown, PublisherLike<T>, string>(_ =>
-              pipe(Publisher.create<T>(), Disposable.addTo(instance)),
-            ),
-          );
-
-          const animationScheduler: SchedulerLike =
-            creationOptions?.scheduler ?? scheduler;
-
-          instance[AnimationEventHandlerStream_delegate] = publishers;
-
-          return instance;
-        },
-        props<TProperties>({
-          [AnimationEventHandlerStream_delegate]: none,
-        }),
-        {
-          get [DictionaryLike_keys](): EnumerableLike<TKey> {
-            unsafeCast<TProperties>(this);
-            return pipe(
-              this[AnimationEventHandlerStream_delegate],
-              ReadonlyObjectMap.keys(),
+              ),
             );
-          },
 
-          [DictionaryLike_get](
-            this: TProperties,
-            index: TKey,
-          ): Optional<EventSourceLike<T>> {
-            return this[AnimationEventHandlerStream_delegate][index];
+            const deferredAnimatedObservables = pipe(
+              observables,
+              ReadonlyObjectMap.values(),
+              Enumerable.map(Observable.subscribeOn(animationScheduler)),
+              Enumerable.toReadonlyArray(),
+            );
+
+            return Observable.mergeMany(deferredAnimatedObservables);
           },
+          creationOptions as any,
+        )[StreamableLike_stream](scheduler, streamOptions);
+
+        init(
+          DelegatingStreamMixin<TEvent, boolean>(),
+          instance,
+          streamDelegate,
+        );
+
+        const publishers = pipe(
+          animationGroup,
+          ReadonlyObjectMap.map<unknown, PublisherLike<T>, string>(_ =>
+            pipe(Publisher.create<T>(), Disposable.addTo(instance)),
+          ),
+        );
+
+        const animationScheduler: SchedulerLike =
+          creationOptions?.scheduler ?? scheduler;
+
+        instance[AnimationEventHandlerStream_delegate] = publishers;
+
+        return instance;
+      },
+      props<TProperties>({
+        [AnimationEventHandlerStream_delegate]: none,
+      }),
+      {
+        get [DictionaryLike_keys](): EnumerableLike<TKey> {
+          unsafeCast<TProperties>(this);
+          return pipe(
+            this[AnimationEventHandlerStream_delegate],
+            ReadonlyObjectMap.keys(),
+          );
         },
-      ),
+
+        [DictionaryLike_get](
+          this: TProperties,
+          index: TKey,
+        ): Optional<EventSourceLike<T>> {
+          return this[AnimationEventHandlerStream_delegate][index];
+        },
+      },
     );
   })();
 

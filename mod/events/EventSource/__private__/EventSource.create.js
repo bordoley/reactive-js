@@ -1,6 +1,6 @@
 /// <reference types="./EventSource.create.d.ts" />
 
-import { createInstanceFactory, mix, props, } from "../../../__internal__/mixins.js";
+import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
 import { EventSourceLike_addEventListener, } from "../../../events.js";
 import { error, none, pipe, } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
@@ -9,7 +9,7 @@ import * as Publisher from "../../Publisher.js";
 const CreateEventSource_delegate = Symbol("CreateEventSource_delegate");
 const CreateEventSource_createDelegate = Symbol("CreateEventSource_createDelegate");
 const EventSource_create = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(function CreateEventSource(instance, setup) {
+    return mixInstanceFactory(function CreateEventSource(instance, setup) {
         // Pass in the initial listener to the setup function
         // so that we can connect it to the publisher before
         // the setup function is run, in case the setup function
@@ -40,6 +40,6 @@ const EventSource_create = /*@__PURE__*/ (() => {
                 this[CreateEventSource_createDelegate](listener);
             delegate[EventSourceLike_addEventListener](listener);
         },
-    }));
+    });
 })();
 export default EventSource_create;

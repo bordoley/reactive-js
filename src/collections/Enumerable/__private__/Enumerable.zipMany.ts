@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -45,44 +44,42 @@ const Enumerator_zipMany = /*@__PURE__*/ (() => {
     return allHaveCurrent(enumerators);
   };
 
-  return createInstanceFactory(
-    mix(
-      include(MutableEnumeratorMixin()),
-      function ZipEnumerator(
-        instance: TProperties &
-          Pick<EnumeratorLike<readonly unknown[]>, typeof EnumeratorLike_move>,
-        enumerators: readonly EnumeratorLike<unknown>[],
-      ): EnumeratorLike<readonly unknown[]> {
-        init(MutableEnumeratorMixin<readonly unknown[]>(), instance);
-        instance[ZipEnumerator_enumerators] = enumerators;
+  return mixInstanceFactory(
+    include(MutableEnumeratorMixin()),
+    function ZipEnumerator(
+      instance: TProperties &
+        Pick<EnumeratorLike<readonly unknown[]>, typeof EnumeratorLike_move>,
+      enumerators: readonly EnumeratorLike<unknown>[],
+    ): EnumeratorLike<readonly unknown[]> {
+      init(MutableEnumeratorMixin<readonly unknown[]>(), instance);
+      instance[ZipEnumerator_enumerators] = enumerators;
 
-        return instance;
+      return instance;
+    },
+    props<TProperties>({
+      [ZipEnumerator_enumerators]: none,
+    }),
+    {
+      [EnumeratorLike_move](
+        this: MutableEnumeratorLike<readonly unknown[]> & TProperties,
+      ): boolean {
+        if (this[MutableEnumeratorLike_reset]()) {
+          return false;
+        }
+
+        const enumerators = this[ZipEnumerator_enumerators];
+
+        if (moveAll(enumerators)) {
+          const next = enumerators.map(Enumerator_getCurrent);
+
+          this[EnumeratorLike_current] = next;
+        }
+
+        this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
+
+        return this[EnumeratorLike_hasCurrent];
       },
-      props<TProperties>({
-        [ZipEnumerator_enumerators]: none,
-      }),
-      {
-        [EnumeratorLike_move](
-          this: MutableEnumeratorLike<readonly unknown[]> & TProperties,
-        ): boolean {
-          if (this[MutableEnumeratorLike_reset]()) {
-            return false;
-          }
-
-          const enumerators = this[ZipEnumerator_enumerators];
-
-          if (moveAll(enumerators)) {
-            const next = enumerators.map(Enumerator_getCurrent);
-
-            this[EnumeratorLike_current] = next;
-          }
-
-          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
-
-          return this[EnumeratorLike_hasCurrent];
-        },
-      },
-    ),
+    },
   );
 })();
 

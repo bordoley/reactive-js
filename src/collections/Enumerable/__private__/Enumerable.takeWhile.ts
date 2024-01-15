@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -39,61 +38,58 @@ const Enumerable_takeWhile: Enumerable.Signature["takeWhile"] = /*@__PURE__*/ (<
     [TakeWhileEnumerator_predicate]: Predicate<T>;
   }
 
-  const createTakeWhileEnumerator = createInstanceFactory(
-    mix(
-      include(MutableEnumeratorMixin()),
-      function TakeWhileEnumerator(
-        instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
-          TProperties<T>,
-        delegate: EnumeratorLike<T>,
-        predicate: Predicate<T>,
-        inclusive: Optional<boolean>,
-      ): EnumeratorLike<T> {
-        init(MutableEnumeratorMixin<T>(), instance);
+  const createTakeWhileEnumerator = mixInstanceFactory(
+    include(MutableEnumeratorMixin()),
+    function TakeWhileEnumerator(
+      instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
+        TProperties<T>,
+      delegate: EnumeratorLike<T>,
+      predicate: Predicate<T>,
+      inclusive: Optional<boolean>,
+    ): EnumeratorLike<T> {
+      init(MutableEnumeratorMixin<T>(), instance);
 
-        instance[TakeWhileEnumerator_delegate] = delegate;
-        instance[TakeWhileEnumerator_inclusive] = inclusive ?? false;
-        instance[TakeWhileEnumerator_predicate] = predicate;
+      instance[TakeWhileEnumerator_delegate] = delegate;
+      instance[TakeWhileEnumerator_inclusive] = inclusive ?? false;
+      instance[TakeWhileEnumerator_predicate] = predicate;
 
-        return instance;
-      },
-      props<TProperties<T>>({
-        [TakeWhileEnumerator_delegate]: none,
-        [TakeWhileEnumerator_inclusive]: false,
-        [TakeWhileEnumerator_predicate]: none,
-      }),
-      {
-        [EnumeratorLike_move](
-          this: TProperties<T> & MutableEnumeratorLike<T>,
-        ): boolean {
-          if (this[MutableEnumeratorLike_reset]()) {
-            return false;
+      return instance;
+    },
+    props<TProperties<T>>({
+      [TakeWhileEnumerator_delegate]: none,
+      [TakeWhileEnumerator_inclusive]: false,
+      [TakeWhileEnumerator_predicate]: none,
+    }),
+    {
+      [EnumeratorLike_move](
+        this: TProperties<T> & MutableEnumeratorLike<T>,
+      ): boolean {
+        if (this[MutableEnumeratorLike_reset]()) {
+          return false;
+        }
+
+        const delegate = this[TakeWhileEnumerator_delegate];
+
+        if (
+          !this[EnumeratorLike_isCompleted] &&
+          delegate[EnumeratorLike_move]()
+        ) {
+          const next = delegate[EnumeratorLike_current];
+
+          const satisfiesPredicate = this[TakeWhileEnumerator_predicate](next);
+
+          if (satisfiesPredicate || this[TakeWhileEnumerator_inclusive]) {
+            this[EnumeratorLike_current] = next;
           }
 
-          const delegate = this[TakeWhileEnumerator_delegate];
+          this[EnumeratorLike_isCompleted] = !satisfiesPredicate;
+        } else {
+          this[EnumeratorLike_isCompleted] = true;
+        }
 
-          if (
-            !this[EnumeratorLike_isCompleted] &&
-            delegate[EnumeratorLike_move]()
-          ) {
-            const next = delegate[EnumeratorLike_current];
-
-            const satisfiesPredicate =
-              this[TakeWhileEnumerator_predicate](next);
-
-            if (satisfiesPredicate || this[TakeWhileEnumerator_inclusive]) {
-              this[EnumeratorLike_current] = next;
-            }
-
-            this[EnumeratorLike_isCompleted] = !satisfiesPredicate;
-          } else {
-            this[EnumeratorLike_isCompleted] = true;
-          }
-
-          return this[EnumeratorLike_hasCurrent];
-        },
+        return this[EnumeratorLike_hasCurrent];
       },
-    ),
+    },
   );
 
   return (

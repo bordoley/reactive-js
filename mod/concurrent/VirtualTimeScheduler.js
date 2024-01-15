@@ -2,7 +2,7 @@
 
 import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, } from "../__internal__/constants.js";
 import { clampPositiveNonZeroInteger, max } from "../__internal__/math.js";
-import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
 import { SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../concurrent.js";
 import { isSome, none } from "../functions.js";
 import { DisposableLike_dispose, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, } from "../utils.js";
@@ -14,7 +14,7 @@ import SchedulerMixin from "./__mixins__/SchedulerMixin.js";
 const VirtualTimeScheduler_maxMicroTaskTicks = Symbol("VirtualTimeScheduler_maxMicroTaskTicks");
 const VirtualTimeScheduler_microTaskTicks = Symbol("VirtualTimeScheduler_microTaskTicks");
 const VirtualTimeScheduler_queue = Symbol("VirtualTimeScheduler_queue");
-const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(SchedulerMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
+const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFactory(include(SchedulerMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
     init(SchedulerMixin, instance, 1);
     instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
     instance[VirtualTimeScheduler_queue] = PriorityQueue.create(Continuation.compare);
@@ -38,8 +38,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFa
             this[VirtualTimeScheduler_queue] = PriorityQueue.create(Continuation.compare);
             const currentTime = this[SchedulerLike_now];
             let continuation = none;
-            while (((continuation = queue[QueueLike_dequeue]()),
-                isSome(continuation))) {
+            while (((continuation = queue[QueueLike_dequeue]()), isSome(continuation))) {
                 if (continuation[ContinuationLike_dueTime] > currentTime) {
                     // copy the task and all other remaining tasks back to the scheduler queue
                     this[VirtualTimeScheduler_queue][QueueableLike_enqueue](continuation);
@@ -61,7 +60,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFa
     [ContinuationSchedulerLike_schedule](continuation) {
         this[VirtualTimeScheduler_queue][QueueableLike_enqueue](continuation);
     },
-})))();
+}))();
 export const create = (options = {}) => {
     const maxMicroTaskTicks = clampPositiveNonZeroInteger(options?.maxMicroTaskTicks ?? MAX_SAFE_INTEGER);
     return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);

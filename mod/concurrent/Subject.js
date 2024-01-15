@@ -1,7 +1,7 @@
 /// <reference types="./Subject.d.ts" />
 
 import { clampPositiveInteger } from "../__internal__/math.js";
-import { createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../concurrent.js";
 import { EventListenerLike_isErrorSafe, EventListenerLike_notify, } from "../events.js";
 import { error, isSome, newInstance, none, pipe } from "../functions.js";
@@ -13,7 +13,7 @@ export const create = /*@__PURE__*/ (() => {
     const Subject_autoDispose = Symbol("Subject_autoDispose");
     const Subject_observers = Symbol("Subject_observers");
     const Subject_buffer = Symbol("Subject_observers");
-    return createInstanceFactory(mix(include(DisposableMixin), function Subject(instance, options) {
+    return mixInstanceFactory(include(DisposableMixin), function Subject(instance, options) {
         init(DisposableMixin, instance);
         const replay = clampPositiveInteger(options?.replay ?? 0);
         instance[Subject_observers] = newInstance(Set);
@@ -86,5 +86,5 @@ export const create = /*@__PURE__*/ (() => {
                 observer[DispatcherLike_complete]();
             }
         },
-    }));
+    });
 })();

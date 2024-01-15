@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../__internal__/mixins.js";
 import { SchedulerLike, SchedulerLike_now } from "../concurrent.js";
@@ -114,41 +113,39 @@ const runContinuation = (
 };
 
 const createHostSchedulerInstance = /*@__PURE__*/ (() =>
-  createInstanceFactory(
-    mix(
-      include(CurrentTimeSchedulerMixin),
-      function HostScheduler(
-        instance: Omit<ContinuationSchedulerLike, typeof SchedulerLike_now>,
-        maxYieldInterval: number,
-      ): SchedulerLike & DisposableLike {
-        init(CurrentTimeSchedulerMixin, instance, maxYieldInterval);
+  mixInstanceFactory(
+    include(CurrentTimeSchedulerMixin),
+    function HostScheduler(
+      instance: Omit<ContinuationSchedulerLike, typeof SchedulerLike_now>,
+      maxYieldInterval: number,
+    ): SchedulerLike & DisposableLike {
+      init(CurrentTimeSchedulerMixin, instance, maxYieldInterval);
 
-        return instance;
+      return instance;
+    },
+    props(),
+    {
+      get [ContinuationSchedulerLike_shouldYield](): boolean {
+        return isInputPending();
       },
-      props(),
-      {
-        get [ContinuationSchedulerLike_shouldYield](): boolean {
-          return isInputPending();
-        },
 
-        [ContinuationSchedulerLike_schedule](
-          this: ContinuationSchedulerLike,
-          continuation: ContinuationLike,
-        ) {
-          const now = this[SchedulerLike_now];
-          const dueTime = continuation[ContinuationLike_dueTime];
-          const delay = dueTime - now;
+      [ContinuationSchedulerLike_schedule](
+        this: ContinuationSchedulerLike,
+        continuation: ContinuationLike,
+      ) {
+        const now = this[SchedulerLike_now];
+        const dueTime = continuation[ContinuationLike_dueTime];
+        const delay = dueTime - now;
 
-          // setTimeout has min delay of 4 ms. So don't bother scheduling
-          // delayed continuations is the intended delay is less than a 1 ms.
-          if (delay > 1) {
-            scheduleDelayed(this, continuation, delay);
-          } else {
-            scheduleImmediate(this, continuation);
-          }
-        },
+        // setTimeout has min delay of 4 ms. So don't bother scheduling
+        // delayed continuations is the intended delay is less than a 1 ms.
+        if (delay > 1) {
+          scheduleDelayed(this, continuation, delay);
+        } else {
+          scheduleImmediate(this, continuation);
+        }
       },
-    ),
+    },
   ))();
 
 export const create: Signature["create"] = (

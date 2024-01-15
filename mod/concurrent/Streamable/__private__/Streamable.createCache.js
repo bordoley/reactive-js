@@ -1,7 +1,7 @@
 /// <reference types="./Streamable.createCache.d.ts" />
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { CacheLike_get, ContinuationContextLike_yield, SchedulerLike_schedule, StreamableLike_stream, } from "../../../concurrent.js";
 import { EventListenerLike_notify } from "../../../events.js";
@@ -14,7 +14,7 @@ import * as Subject from "../../Subject.js";
 import DelegatingStreamMixin from "../../__mixins__/DelegatingStreamMixin.js";
 import Streamable_create from "./Streamable.create.js";
 const createCacheStream = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(DelegatingStreamMixin()), function CacheStream(instance, scheduler, options, capacity, cleanupScheduler, persistentStore) {
+    return mixInstanceFactory(include(DelegatingStreamMixin()), function CacheStream(instance, scheduler, options, capacity, cleanupScheduler, persistentStore) {
         instance.store = new Map();
         instance.subscriptions = new Map();
         const cleanupQueue = IndexedQueue.create();
@@ -113,7 +113,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
                     return subject;
                 })());
         },
-    }));
+    });
 })();
 const Streamable_createCache = (persistentStore, options = {}) => ({
     [StreamableLike_stream]: (scheduler, streamOptions) => createCacheStream(scheduler, streamOptions, options.capacity ?? MAX_SAFE_INTEGER, options.cleanupScheduler ?? scheduler, persistentStore),

@@ -1,9 +1,8 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import { ReadonlyObjectMapLike } from "../../../collections.js";
@@ -83,243 +82,237 @@ const createCacheStream: <T>(
     subscriptions: Map<string, SubjectLike<Optional<T>>>;
   };
 
-  return createInstanceFactory(
-    mix(
-      include(
+  return mixInstanceFactory(
+    include(
+      DelegatingStreamMixin<
+        ReadonlyObjectMapLike<string, Function1<Optional<T>, T>>,
+        never
+      >(),
+    ),
+    function CacheStream(
+      instance: TProperties<T> & Pick<CacheLike<T>, typeof CacheLike_get>,
+      scheduler: SchedulerLike,
+      options: Optional<{
+        readonly replay?: number;
+        readonly capacity?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      }>,
+      capacity: number,
+      cleanupScheduler: SchedulerLike,
+      persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
+    ): CacheLike<T> {
+      instance.store = new Map();
+      instance.subscriptions = new Map();
+
+      const cleanupQueue = IndexedQueue.create<string>();
+
+      const cleanupContinuation = (ctx: ContinuationContextLike) => {
+        const { store, subscriptions } = instance;
+
+        while (store.size > capacity) {
+          const key = cleanupQueue[QueueLike_dequeue]();
+          if (isNone(key)) {
+            break;
+          }
+
+          if (!subscriptions.has(key)) {
+            store.delete(key);
+          }
+          ctx[ContinuationContextLike_yield]();
+        }
+      };
+
+      let cleanupJob = Disposable.disposed;
+
+      instance.scheduleCleanup = (key: string) => {
+        if (isNone(instance.store.get(key))) {
+          return;
+        }
+
+        cleanupQueue[QueueableLike_enqueue](key);
+
+        if (!cleanupJob[DisposableLike_isDisposed]) {
+          return;
+        }
+
+        cleanupJob =
+          cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
+      };
+
+      const delegate = pipe(
+        Streamable_create<
+          ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
+          never
+        >(
+          compose(
+            Observable.map(
+              (
+                updaters: ReadonlyObjectMapLike<
+                  string,
+                  Function1<Optional<T>, Optional<T>>
+                >,
+              ) =>
+                tuple(
+                  updaters,
+                  pipe(
+                    updaters,
+                    ReadonlyObjectMap.map(
+                      (_, k: string) => instance.store.get(k) as T,
+                    ),
+                  ),
+                ),
+            ),
+            isSome(persistentStore)
+              ? Observable.concatMap(
+                  next => {
+                    const [updaters, values] = next;
+                    const keys = pipe(
+                      values,
+                      ReadonlyObjectMap.keep<unknown, string>(isNone),
+                      ReadonlyObjectMap.keySet<string>(),
+                    );
+
+                    return keys.size > 0
+                      ? pipe(
+                          persistentStore.load(keys),
+                          Observable.map(
+                            (
+                              persistedValues: ReadonlyObjectMapLike<
+                                string,
+                                Optional<T>
+                              >,
+                            ) =>
+                              tuple(
+                                updaters,
+                                pipe(
+                                  values,
+                                  ReadonlyObjectMap.union(persistedValues),
+                                ),
+                              ),
+                          ),
+                        )
+                      : pipe(next, Observable.fromValue());
+                  },
+                  {
+                    innerType: Observable.DeferredObservableWithSideEffectsType,
+                  },
+                )
+              : (identity as Function1<
+                  DeferredObservableLike,
+                  DeferredObservableLike
+                >),
+            Observable.map(
+              ([updaters, values]: Tuple2<
+                ReadonlyObjectMapLike<
+                  string,
+                  Function1<Optional<T>, Optional<T>>
+                >,
+                ReadonlyObjectMapLike<string, Optional<T>>
+              >) =>
+                pipe(
+                  updaters,
+                  ReadonlyObjectMap.map(
+                    (updater: Function1<Optional<T>, Optional<T>>, k: string) =>
+                      // This could be the cached value or the value
+                      // loaded from a persistent store.
+                      updater(values[k]),
+                  ),
+                ),
+            ),
+            Observable.forEach(
+              ReadonlyObjectMap.forEach((v: T, key: string) => {
+                const oldValue = instance.store.get(key);
+
+                if (isNone(v)) {
+                  instance.store.delete(key);
+                } else {
+                  instance.store.set(key, v);
+                }
+
+                const subject = instance.subscriptions.get(key);
+
+                // We want to publish none, when the cache does not have the value
+                // when initially subscribing to the key.
+                const shouldPublish = isNone(v) || oldValue !== v;
+
+                if (isSome(subject) && shouldPublish) {
+                  subject[EventListenerLike_notify](v);
+                  return;
+                }
+
+                instance.scheduleCleanup(key);
+              }),
+            ),
+            isSome(persistentStore)
+              ? Observable.concatMap(bindMethod(persistentStore, "store"), {
+                  innerType: Observable.DeferredObservableWithSideEffectsType,
+                })
+              : Observable.ignoreElements(),
+          ),
+        ),
+        invoke(StreamableLike_stream, scheduler, options),
+      );
+
+      init(
         DelegatingStreamMixin<
           ReadonlyObjectMapLike<string, Function1<Optional<T>, T>>,
           never
         >(),
-      ),
-      function CacheStream(
-        instance: TProperties<T> & Pick<CacheLike<T>, typeof CacheLike_get>,
-        scheduler: SchedulerLike,
-        options: Optional<{
-          readonly replay?: number;
-          readonly capacity?: number;
-          readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-        }>,
-        capacity: number,
-        cleanupScheduler: SchedulerLike,
-        persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
-      ): CacheLike<T> {
-        instance.store = new Map();
-        instance.subscriptions = new Map();
+        instance,
+        delegate,
+      );
 
-        const cleanupQueue = IndexedQueue.create<string>();
+      instance.delegate = delegate;
 
-        const cleanupContinuation = (ctx: ContinuationContextLike) => {
-          const { store, subscriptions } = instance;
+      return instance;
+    },
+    props<TProperties<T>>({
+      delegate: none,
+      scheduleCleanup: none,
+      store: none,
+      subscriptions: none,
+    }),
+    {
+      [CacheLike_get](
+        this: TProperties<T> & DisposableLike,
+        key: string,
+      ): ObservableLike<T> {
+        const { scheduleCleanup, store, subscriptions, delegate } = this;
 
-          while (store.size > capacity) {
-            const key = cleanupQueue[QueueLike_dequeue]();
-            if (isNone(key)) {
-              break;
-            }
+        return (
+          subscriptions.get(key) ??
+          (() => {
+            const subject = Subject.create<T>({
+              autoDispose: true,
+              replay: 1,
+            });
+            subscriptions.set(key, subject);
 
-            if (!subscriptions.has(key)) {
-              store.delete(key);
-            }
-            ctx[ContinuationContextLike_yield]();
-          }
-        };
+            pipe(
+              subject,
+              Disposable.onDisposed(_ => {
+                subscriptions.delete(key);
+                scheduleCleanup(key);
+              }),
+              Disposable.addTo(this, { ignoreChildErrors: true }),
+            );
 
-        let cleanupJob = Disposable.disposed;
+            const initialValue = store.get(key);
 
-        instance.scheduleCleanup = (key: string) => {
-          if (isNone(instance.store.get(key))) {
-            return;
-          }
-
-          cleanupQueue[QueueableLike_enqueue](key);
-
-          if (!cleanupJob[DisposableLike_isDisposed]) {
-            return;
-          }
-
-          cleanupJob =
-            cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
-        };
-
-        const delegate = pipe(
-          Streamable_create<
-            ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
-            never
-          >(
-            compose(
-              Observable.map(
-                (
-                  updaters: ReadonlyObjectMapLike<
-                    string,
-                    Function1<Optional<T>, Optional<T>>
-                  >,
-                ) =>
-                  tuple(
-                    updaters,
-                    pipe(
-                      updaters,
-                      ReadonlyObjectMap.map(
-                        (_, k: string) => instance.store.get(k) as T,
-                      ),
-                    ),
-                  ),
-              ),
-              isSome(persistentStore)
-                ? Observable.concatMap(
-                    next => {
-                      const [updaters, values] = next;
-                      const keys = pipe(
-                        values,
-                        ReadonlyObjectMap.keep<unknown, string>(isNone),
-                        ReadonlyObjectMap.keySet<string>(),
-                      );
-
-                      return keys.size > 0
-                        ? pipe(
-                            persistentStore.load(keys),
-                            Observable.map(
-                              (
-                                persistedValues: ReadonlyObjectMapLike<
-                                  string,
-                                  Optional<T>
-                                >,
-                              ) =>
-                                tuple(
-                                  updaters,
-                                  pipe(
-                                    values,
-                                    ReadonlyObjectMap.union(persistedValues),
-                                  ),
-                                ),
-                            ),
-                          )
-                        : pipe(next, Observable.fromValue());
-                    },
-                    {
-                      innerType:
-                        Observable.DeferredObservableWithSideEffectsType,
-                    },
-                  )
-                : (identity as Function1<
-                    DeferredObservableLike,
-                    DeferredObservableLike
-                  >),
-              Observable.map(
-                ([updaters, values]: Tuple2<
-                  ReadonlyObjectMapLike<
-                    string,
-                    Function1<Optional<T>, Optional<T>>
-                  >,
-                  ReadonlyObjectMapLike<string, Optional<T>>
-                >) =>
-                  pipe(
-                    updaters,
-                    ReadonlyObjectMap.map(
-                      (
-                        updater: Function1<Optional<T>, Optional<T>>,
-                        k: string,
-                      ) =>
-                        // This could be the cached value or the value
-                        // loaded from a persistent store.
-                        updater(values[k]),
-                    ),
-                  ),
-              ),
-              Observable.forEach(
-                ReadonlyObjectMap.forEach((v: T, key: string) => {
-                  const oldValue = instance.store.get(key);
-
-                  if (isNone(v)) {
-                    instance.store.delete(key);
-                  } else {
-                    instance.store.set(key, v);
-                  }
-
-                  const subject = instance.subscriptions.get(key);
-
-                  // We want to publish none, when the cache does not have the value
-                  // when initially subscribing to the key.
-                  const shouldPublish = isNone(v) || oldValue !== v;
-
-                  if (isSome(subject) && shouldPublish) {
-                    subject[EventListenerLike_notify](v);
-                    return;
-                  }
-
-                  instance.scheduleCleanup(key);
-                }),
-              ),
-              isSome(persistentStore)
-                ? Observable.concatMap(bindMethod(persistentStore, "store"), {
-                    innerType: Observable.DeferredObservableWithSideEffectsType,
-                  })
-                : Observable.ignoreElements(),
-            ),
-          ),
-          invoke(StreamableLike_stream, scheduler, options),
-        );
-
-        init(
-          DelegatingStreamMixin<
-            ReadonlyObjectMapLike<string, Function1<Optional<T>, T>>,
-            never
-          >(),
-          instance,
-          delegate,
-        );
-
-        instance.delegate = delegate;
-
-        return instance;
-      },
-      props<TProperties<T>>({
-        delegate: none,
-        scheduleCleanup: none,
-        store: none,
-        subscriptions: none,
-      }),
-      {
-        [CacheLike_get](
-          this: TProperties<T> & DisposableLike,
-          key: string,
-        ): ObservableLike<T> {
-          const { scheduleCleanup, store, subscriptions, delegate } = this;
-
-          return (
-            subscriptions.get(key) ??
-            (() => {
-              const subject = Subject.create<T>({
-                autoDispose: true,
-                replay: 1,
+            if (isSome(initialValue)) {
+              subject[EventListenerLike_notify](initialValue);
+            } else {
+              // Try to load the value from the persistence store
+              delegate[QueueableLike_enqueue]({
+                [key]: identity,
               });
-              subscriptions.set(key, subject);
+            }
 
-              pipe(
-                subject,
-                Disposable.onDisposed(_ => {
-                  subscriptions.delete(key);
-                  scheduleCleanup(key);
-                }),
-                Disposable.addTo(this, { ignoreChildErrors: true }),
-              );
-
-              const initialValue = store.get(key);
-
-              if (isSome(initialValue)) {
-                subject[EventListenerLike_notify](initialValue);
-              } else {
-                // Try to load the value from the persistence store
-                delegate[QueueableLike_enqueue]({
-                  [key]: identity,
-                });
-              }
-
-              return subject;
-            })()
-          );
-        },
+            return subject;
+          })()
+        );
       },
-    ),
+    },
   );
 })();
 

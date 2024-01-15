@@ -1,7 +1,6 @@
 import {
   Mutable,
-  createInstanceFactory,
-  mix,
+  mixInstanceFactory,
   props,
   unsafeCast,
 } from "../../../__internal__/mixins.js";
@@ -33,64 +32,62 @@ const Enumerator_concatAll: <T>() => Function1<
   EnumeratorLike<T>
 > = /*@__PURE__*/ (<T>() =>
   returns(
-    createInstanceFactory(
-      mix(
-        function ConcatAllEnumerator(
-          instance: EnumeratorLike<T> & TProperties<T>,
-          delegate: EnumeratorLike<EnumeratorLike<T>>,
-        ): EnumeratorLike<T> {
-          instance[ConcatAllEnumerator_delegate] = delegate;
-          instance[ConcatAllEnumerator_inner] =
-            Enumerable_empty<T>()[EnumerableLike_enumerate]();
+    mixInstanceFactory(
+      function ConcatAllEnumerator(
+        instance: EnumeratorLike<T> & TProperties<T>,
+        delegate: EnumeratorLike<EnumeratorLike<T>>,
+      ): EnumeratorLike<T> {
+        instance[ConcatAllEnumerator_delegate] = delegate;
+        instance[ConcatAllEnumerator_inner] =
+          Enumerable_empty<T>()[EnumerableLike_enumerate]();
 
-          return instance;
+        return instance;
+      },
+      props<
+        TProperties<T> &
+          Pick<EnumeratorLike<T>, typeof EnumeratorLike_isCompleted>
+      >({
+        [ConcatAllEnumerator_inner]: none,
+        [ConcatAllEnumerator_delegate]: none,
+        [EnumeratorLike_isCompleted]: false,
+      }),
+      {
+        get [EnumeratorLike_current]() {
+          unsafeCast<TProperties<T>>(this);
+          return this[ConcatAllEnumerator_inner][EnumeratorLike_current];
         },
-        props<
-          TProperties<T> &
-            Pick<EnumeratorLike<T>, typeof EnumeratorLike_isCompleted>
-        >({
-          [ConcatAllEnumerator_inner]: none,
-          [ConcatAllEnumerator_delegate]: none,
-          [EnumeratorLike_isCompleted]: false,
-        }),
-        {
-          get [EnumeratorLike_current]() {
-            unsafeCast<TProperties<T>>(this);
-            return this[ConcatAllEnumerator_inner][EnumeratorLike_current];
-          },
 
-          get [EnumeratorLike_hasCurrent]() {
-            unsafeCast<TProperties<T>>(this);
-            return this[ConcatAllEnumerator_inner][EnumeratorLike_hasCurrent];
-          },
-
-          [EnumeratorLike_move](
-            this: TProperties<T> & Mutable<EnumeratorLike<T>>,
-          ): boolean {
-            if (this[EnumeratorLike_isCompleted]) {
-              return false;
-            }
-
-            const delegate = this[ConcatAllEnumerator_delegate];
-            let inner = this[ConcatAllEnumerator_inner];
-
-            while (!inner[EnumeratorLike_move]()) {
-              if (delegate[EnumeratorLike_move]()) {
-                inner = delegate[EnumeratorLike_current];
-                this[ConcatAllEnumerator_inner] = inner;
-              } else {
-                inner = Enumerable_empty<T>()[EnumerableLike_enumerate]();
-                this[ConcatAllEnumerator_inner] = inner;
-                break;
-              }
-            }
-
-            this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
-
-            return this[EnumeratorLike_hasCurrent];
-          },
+        get [EnumeratorLike_hasCurrent]() {
+          unsafeCast<TProperties<T>>(this);
+          return this[ConcatAllEnumerator_inner][EnumeratorLike_hasCurrent];
         },
-      ),
+
+        [EnumeratorLike_move](
+          this: TProperties<T> & Mutable<EnumeratorLike<T>>,
+        ): boolean {
+          if (this[EnumeratorLike_isCompleted]) {
+            return false;
+          }
+
+          const delegate = this[ConcatAllEnumerator_delegate];
+          let inner = this[ConcatAllEnumerator_inner];
+
+          while (!inner[EnumeratorLike_move]()) {
+            if (delegate[EnumeratorLike_move]()) {
+              inner = delegate[EnumeratorLike_current];
+              this[ConcatAllEnumerator_inner] = inner;
+            } else {
+              inner = Enumerable_empty<T>()[EnumerableLike_enumerate]();
+              this[ConcatAllEnumerator_inner] = inner;
+              break;
+            }
+          }
+
+          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
+
+          return this[EnumeratorLike_hasCurrent];
+        },
+      },
     ),
   ))();
 

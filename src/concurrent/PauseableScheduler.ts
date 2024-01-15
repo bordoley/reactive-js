@@ -2,10 +2,9 @@ import { MAX_VALUE } from "../__internal__/constants.js";
 import { clampPositiveInteger } from "../__internal__/math.js";
 import {
   Mutable,
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
   unsafeCast,
 } from "../__internal__/mixins.js";
@@ -146,135 +145,132 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     ](hostSchedulerContinuation, { delay });
   };
 
-  return createInstanceFactory(
-    mix(
-      include(SchedulerMixin, SerialDisposableMixin()),
-      function PauseableScheduler(
-        instance: Pick<
-          PauseableSchedulerLike,
-          typeof PauseableLike_pause | typeof PauseableLike_resume
-        > &
-          ContinuationSchedulerLike &
-          Mutable<TProperties>,
-        host: SchedulerLike,
-      ): PauseableSchedulerLike {
-        init(SchedulerMixin, instance, host[SchedulerLike_maxYieldInterval]);
-        init(SerialDisposableMixin(), instance, Disposable.disposed);
+  return mixInstanceFactory(
+    include(SchedulerMixin, SerialDisposableMixin()),
+    function PauseableScheduler(
+      instance: Pick<
+        PauseableSchedulerLike,
+        typeof PauseableLike_pause | typeof PauseableLike_resume
+      > &
+        ContinuationSchedulerLike &
+        Mutable<TProperties>,
+      host: SchedulerLike,
+    ): PauseableSchedulerLike {
+      init(SchedulerMixin, instance, host[SchedulerLike_maxYieldInterval]);
+      init(SerialDisposableMixin(), instance, Disposable.disposed);
 
-        instance[PauseableScheduler_queue] = PriorityQueue.create(
-          Continuation.compare,
-        );
-        instance[PauseableScheduler_hostScheduler] = host;
+      instance[PauseableScheduler_queue] = PriorityQueue.create(
+        Continuation.compare,
+      );
+      instance[PauseableScheduler_hostScheduler] = host;
 
-        instance[PauseableScheduler_pausedTime] = host[SchedulerLike_now];
-        instance[PauseableScheduler_timeDrift] = 0;
+      instance[PauseableScheduler_pausedTime] = host[SchedulerLike_now];
+      instance[PauseableScheduler_timeDrift] = 0;
 
-        instance[PauseableLike_isPaused] = WritableStore.create(true);
+      instance[PauseableLike_isPaused] = WritableStore.create(true);
 
-        instance[PauseableScheduler_hostSchedulerContinuation] = (
-          ctx: ContinuationContextLike,
-        ) => {
-          while (!instance[DisposableLike_isDisposed]) {
-            const nextContinuationToRun = peek(instance);
+      instance[PauseableScheduler_hostSchedulerContinuation] = (
+        ctx: ContinuationContextLike,
+      ) => {
+        while (!instance[DisposableLike_isDisposed]) {
+          const nextContinuationToRun = peek(instance);
 
-            if (isNone(nextContinuationToRun)) {
-              break;
-            }
-
-            const dueTime = nextContinuationToRun[ContinuationLike_dueTime];
-            const now = instance[SchedulerLike_now];
-            const delay = dueTime - now;
-
-            if (delay > 0) {
-              instance[PauseableScheduler_hostSchedulerContinuationDueTime] =
-                dueTime;
-            } else {
-              const continuation =
-                instance[PauseableScheduler_queue][QueueLike_dequeue]();
-
-              instance[PauseableScheduler_activeContinuation] = continuation;
-              continuation?.[ContinuationLike_run]();
-              instance[PauseableScheduler_activeContinuation] = none;
-            }
-
-            ctx[ContinuationContextLike_yield](clampPositiveInteger(delay));
+          if (isNone(nextContinuationToRun)) {
+            break;
           }
-        };
 
-        return instance;
+          const dueTime = nextContinuationToRun[ContinuationLike_dueTime];
+          const now = instance[SchedulerLike_now];
+          const delay = dueTime - now;
+
+          if (delay > 0) {
+            instance[PauseableScheduler_hostSchedulerContinuationDueTime] =
+              dueTime;
+          } else {
+            const continuation =
+              instance[PauseableScheduler_queue][QueueLike_dequeue]();
+
+            instance[PauseableScheduler_activeContinuation] = continuation;
+            continuation?.[ContinuationLike_run]();
+            instance[PauseableScheduler_activeContinuation] = none;
+          }
+
+          ctx[ContinuationContextLike_yield](clampPositiveInteger(delay));
+        }
+      };
+
+      return instance;
+    },
+    props<TProperties>({
+      [PauseableLike_isPaused]: none,
+      [PauseableScheduler_hostScheduler]: none,
+      [PauseableScheduler_hostSchedulerContinuation]: none,
+      [PauseableScheduler_hostSchedulerContinuationDueTime]: 0,
+      [PauseableScheduler_queue]: none,
+      [PauseableScheduler_pausedTime]: 0,
+      [PauseableScheduler_timeDrift]: 0,
+      [PauseableScheduler_activeContinuation]: none,
+    }),
+    {
+      get [SchedulerLike_now](): number {
+        unsafeCast<TProperties>(this);
+        const hostNow =
+          this[PauseableScheduler_hostScheduler][SchedulerLike_now];
+        const isPaused = this[PauseableLike_isPaused][StoreLike_value];
+        const pausedTime =
+          this[PauseableScheduler_pausedTime] -
+          this[PauseableScheduler_timeDrift];
+        const activeTime = hostNow - this[PauseableScheduler_timeDrift];
+
+        return isPaused ? pausedTime : activeTime;
       },
-      props<TProperties>({
-        [PauseableLike_isPaused]: none,
-        [PauseableScheduler_hostScheduler]: none,
-        [PauseableScheduler_hostSchedulerContinuation]: none,
-        [PauseableScheduler_hostSchedulerContinuationDueTime]: 0,
-        [PauseableScheduler_queue]: none,
-        [PauseableScheduler_pausedTime]: 0,
-        [PauseableScheduler_timeDrift]: 0,
-        [PauseableScheduler_activeContinuation]: none,
-      }),
-      {
-        get [SchedulerLike_now](): number {
-          unsafeCast<TProperties>(this);
-          const hostNow =
-            this[PauseableScheduler_hostScheduler][SchedulerLike_now];
-          const isPaused = this[PauseableLike_isPaused][StoreLike_value];
-          const pausedTime =
-            this[PauseableScheduler_pausedTime] -
-            this[PauseableScheduler_timeDrift];
-          const activeTime = hostNow - this[PauseableScheduler_timeDrift];
+      get [ContinuationSchedulerLike_shouldYield](): boolean {
+        unsafeCast<TProperties & DisposableLike & SchedulerLike>(this);
 
-          return isPaused ? pausedTime : activeTime;
-        },
-        get [ContinuationSchedulerLike_shouldYield](): boolean {
-          unsafeCast<TProperties & DisposableLike & SchedulerLike>(this);
+        const now = this[SchedulerLike_now];
+        const nextContinuation = peek(this);
 
-          const now = this[SchedulerLike_now];
-          const nextContinuation = peek(this);
-
-          return (
-            this[PauseableLike_isPaused][StoreLike_value] ||
-            (isSome(nextContinuation) &&
-              this[PauseableScheduler_activeContinuation] !==
-                nextContinuation &&
-              nextContinuation[ContinuationLike_dueTime] <= now) ||
-            this[PauseableScheduler_hostScheduler][SchedulerLike_shouldYield]
-          );
-        },
-        [PauseableLike_pause](
-          this: TProperties & SerialDisposableLike & ContinuationSchedulerLike,
-        ) {
-          const hostNow =
-            this[PauseableScheduler_hostScheduler][SchedulerLike_now];
-          this[PauseableScheduler_pausedTime] = hostNow;
-          this[SerialDisposableLike_current] = Disposable.disposed;
-          this[PauseableLike_isPaused][StoreLike_value] = true;
-        },
-        [PauseableLike_resume](
-          this: TProperties &
-            SerialDisposableLike &
-            ContinuationSchedulerLike &
-            SchedulerLike,
-        ) {
-          const hostNow =
-            this[PauseableScheduler_hostScheduler][SchedulerLike_now];
-          this[PauseableScheduler_timeDrift] +=
-            hostNow - this[PauseableScheduler_pausedTime];
-          this[PauseableLike_isPaused][StoreLike_value] = false;
-          scheduleOnHost(this);
-        },
-        [ContinuationSchedulerLike_schedule](
-          this: TProperties &
-            SerialDisposableLike &
-            ContinuationSchedulerLike &
-            SchedulerLike,
-          continuation: ContinuationLike,
-        ) {
-          this[PauseableScheduler_queue][QueueableLike_enqueue](continuation);
-
-          scheduleOnHost(this);
-        },
+        return (
+          this[PauseableLike_isPaused][StoreLike_value] ||
+          (isSome(nextContinuation) &&
+            this[PauseableScheduler_activeContinuation] !== nextContinuation &&
+            nextContinuation[ContinuationLike_dueTime] <= now) ||
+          this[PauseableScheduler_hostScheduler][SchedulerLike_shouldYield]
+        );
       },
-    ),
+      [PauseableLike_pause](
+        this: TProperties & SerialDisposableLike & ContinuationSchedulerLike,
+      ) {
+        const hostNow =
+          this[PauseableScheduler_hostScheduler][SchedulerLike_now];
+        this[PauseableScheduler_pausedTime] = hostNow;
+        this[SerialDisposableLike_current] = Disposable.disposed;
+        this[PauseableLike_isPaused][StoreLike_value] = true;
+      },
+      [PauseableLike_resume](
+        this: TProperties &
+          SerialDisposableLike &
+          ContinuationSchedulerLike &
+          SchedulerLike,
+      ) {
+        const hostNow =
+          this[PauseableScheduler_hostScheduler][SchedulerLike_now];
+        this[PauseableScheduler_timeDrift] +=
+          hostNow - this[PauseableScheduler_pausedTime];
+        this[PauseableLike_isPaused][StoreLike_value] = false;
+        scheduleOnHost(this);
+      },
+      [ContinuationSchedulerLike_schedule](
+        this: TProperties &
+          SerialDisposableLike &
+          ContinuationSchedulerLike &
+          SchedulerLike,
+        continuation: ContinuationLike,
+      ) {
+        this[PauseableScheduler_queue][QueueableLike_enqueue](continuation);
+
+        scheduleOnHost(this);
+      },
+    },
   );
 })();

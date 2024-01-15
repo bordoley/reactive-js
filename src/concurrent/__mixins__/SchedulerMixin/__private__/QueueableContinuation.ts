@@ -1,10 +1,9 @@
 import { __DEV__ } from "../../../../__internal__/constants.js";
 import {
   Mutable,
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../../__internal__/mixins.js";
 import {
@@ -212,94 +211,92 @@ export const create: (
     }
   };
 
-  return createInstanceFactory(
-    mix(
-      include(DisposableMixin, IndexedQueueMixin<QueueableContinuationLike>()),
-      function QueueableContinuation(
-        instance: Pick<QueueableContinuationLike, typeof ContinuationLike_run> &
+  return mixInstanceFactory(
+    include(DisposableMixin, IndexedQueueMixin<QueueableContinuationLike>()),
+    function QueueableContinuation(
+      instance: Pick<QueueableContinuationLike, typeof ContinuationLike_run> &
+        ContinuationContextLike &
+        Mutable<TProperties>,
+      scheduler: QueueableContinuationSchedulerLike,
+      effect: SideEffect1<ContinuationContextLike>,
+      dueTime: number,
+    ): QueueableContinuationLike & ContinuationContextLike {
+      init(DisposableMixin, instance);
+
+      init(IndexedQueueMixin<QueueableContinuationLike>(), instance, none);
+
+      instance[ContinuationLike_dueTime] = dueTime;
+
+      instance[ContinuationLike_id] =
+        scheduler[QueueableContinuationSchedulerLike_nextTaskID];
+
+      instance[QueueableContinuation_scheduler] = scheduler;
+      instance[QueueableContinuation_effect] = effect;
+
+      pipe(
+        instance,
+        Disposable.onDisposed(
+          pipeLazy(instance, rescheduleChildrenOnParentOrScheduler),
+        ),
+      );
+
+      return instance;
+    },
+    props<TProperties>({
+      [QueueableContinuationLike_parent]: none,
+      [QueueableContinuation_scheduler]: none,
+      [QueueableContinuation_effect]: none,
+      [ContinuationLike_dueTime]: 0,
+      [ContinuationLike_id]: 0,
+    }),
+    {
+      [ContinuationLike_run](
+        this: QueueableContinuationLike &
+          QueueLike<QueueableContinuationLike> &
           ContinuationContextLike &
-          Mutable<TProperties>,
-        scheduler: QueueableContinuationSchedulerLike,
-        effect: SideEffect1<ContinuationContextLike>,
-        dueTime: number,
-      ): QueueableContinuationLike & ContinuationContextLike {
-        init(DisposableMixin, instance);
+          TProperties &
+          SchedulerLike,
+      ): void {
+        if (this[DisposableLike_isDisposed]) {
+          return;
+        }
 
-        init(IndexedQueueMixin<QueueableContinuationLike>(), instance, none);
+        const scheduler = this[QueueableContinuation_scheduler];
 
-        instance[ContinuationLike_dueTime] = dueTime;
+        const oldCurrentContinuation =
+          scheduler[QueueableContinuationSchedulerLike_currentContinuation];
 
-        instance[ContinuationLike_id] =
-          scheduler[QueueableContinuationSchedulerLike_nextTaskID];
+        scheduler[QueueableContinuationSchedulerLike_currentContinuation] =
+          this;
 
-        instance[QueueableContinuation_scheduler] = scheduler;
-        instance[QueueableContinuation_effect] = effect;
+        runContinuation(this);
 
-        pipe(
-          instance,
-          Disposable.onDisposed(
-            pipeLazy(instance, rescheduleChildrenOnParentOrScheduler),
-          ),
-        );
-
-        return instance;
+        scheduler[QueueableContinuationSchedulerLike_currentContinuation] =
+          oldCurrentContinuation;
       },
-      props<TProperties>({
-        [QueueableContinuationLike_parent]: none,
-        [QueueableContinuation_scheduler]: none,
-        [QueueableContinuation_effect]: none,
-        [ContinuationLike_dueTime]: 0,
-        [ContinuationLike_id]: 0,
-      }),
-      {
-        [ContinuationLike_run](
-          this: QueueableContinuationLike &
-            QueueLike<QueueableContinuationLike> &
-            ContinuationContextLike &
-            TProperties &
-            SchedulerLike,
-        ): void {
-          if (this[DisposableLike_isDisposed]) {
-            return;
-          }
 
-          const scheduler = this[QueueableContinuation_scheduler];
+      [ContinuationContextLike_yield](
+        this: QueueableContinuationLike & TProperties,
+        delay = 0,
+      ): void {
+        const scheduler = this[QueueableContinuation_scheduler];
 
-          const oldCurrentContinuation =
+        if (__DEV__) {
+          const currentContinuation =
             scheduler[QueueableContinuationSchedulerLike_currentContinuation];
 
-          scheduler[QueueableContinuationSchedulerLike_currentContinuation] =
-            this;
+          raiseIf(
+            currentContinuation !== this,
+            "Attempted to invoke yield outside of a continuation's run context",
+          );
+        }
 
-          runContinuation(this);
+        const shouldYield = delay > 0 || scheduler[SchedulerLike_shouldYield];
 
-          scheduler[QueueableContinuationSchedulerLike_currentContinuation] =
-            oldCurrentContinuation;
-        },
-
-        [ContinuationContextLike_yield](
-          this: QueueableContinuationLike & TProperties,
-          delay = 0,
-        ): void {
-          const scheduler = this[QueueableContinuation_scheduler];
-
-          if (__DEV__) {
-            const currentContinuation =
-              scheduler[QueueableContinuationSchedulerLike_currentContinuation];
-
-            raiseIf(
-              currentContinuation !== this,
-              "Attempted to invoke yield outside of a continuation's run context",
-            );
-          }
-
-          const shouldYield = delay > 0 || scheduler[SchedulerLike_shouldYield];
-
-          if (shouldYield) {
-            throw newInstance(ContinuationYieldError, delay);
-          }
-        },
+        if (shouldYield) {
+          throw newInstance(ContinuationYieldError, delay);
+        }
       },
-    ),
+    },
   );
 })();

@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -34,55 +33,53 @@ const Enumerable_scan: Enumerable.Signature["scan"] = /*@__PURE__*/ (<
     [ScanEnumerator_reducer]: Reducer<T, TAcc>;
   }
 
-  const createScanEnumerator = createInstanceFactory(
-    mix(
-      include(MutableEnumeratorMixin()),
-      function ScanEnumerator(
-        instance: Pick<EnumeratorLike<TAcc>, typeof EnumeratorLike_move> &
-          TProperties<T, TAcc>,
-        delegate: EnumeratorLike<T>,
-        reducer: Reducer<T, TAcc>,
-        initialValue: Factory<TAcc>,
-      ): EnumeratorLike<TAcc> {
-        init(MutableEnumeratorMixin<TAcc>(), instance);
+  const createScanEnumerator = mixInstanceFactory(
+    include(MutableEnumeratorMixin()),
+    function ScanEnumerator(
+      instance: Pick<EnumeratorLike<TAcc>, typeof EnumeratorLike_move> &
+        TProperties<T, TAcc>,
+      delegate: EnumeratorLike<T>,
+      reducer: Reducer<T, TAcc>,
+      initialValue: Factory<TAcc>,
+    ): EnumeratorLike<TAcc> {
+      init(MutableEnumeratorMixin<TAcc>(), instance);
 
-        instance[ScanEnumerator_reducer] = reducer;
-        instance[ScanEnumerator_acc] = initialValue();
-        instance[ScanEnumerator_delegate] = delegate;
+      instance[ScanEnumerator_reducer] = reducer;
+      instance[ScanEnumerator_acc] = initialValue();
+      instance[ScanEnumerator_delegate] = delegate;
 
-        return instance;
+      return instance;
+    },
+    props<TProperties<T, TAcc>>({
+      [ScanEnumerator_acc]: none,
+      [ScanEnumerator_delegate]: none,
+      [ScanEnumerator_reducer]: none,
+    }),
+    {
+      [EnumeratorLike_move](
+        this: TProperties<T, TAcc> & MutableEnumeratorLike<TAcc>,
+      ): boolean {
+        if (this[MutableEnumeratorLike_reset]()) {
+          return false;
+        }
+
+        const delegate = this[ScanEnumerator_delegate];
+        const delegateHasCurrent = delegate[EnumeratorLike_move]();
+
+        if (delegateHasCurrent) {
+          this[ScanEnumerator_acc] = this[ScanEnumerator_reducer](
+            this[ScanEnumerator_acc],
+            delegate[EnumeratorLike_current],
+          );
+
+          this[EnumeratorLike_current] = this[ScanEnumerator_acc];
+        }
+
+        this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
+
+        return this[EnumeratorLike_hasCurrent];
       },
-      props<TProperties<T, TAcc>>({
-        [ScanEnumerator_acc]: none,
-        [ScanEnumerator_delegate]: none,
-        [ScanEnumerator_reducer]: none,
-      }),
-      {
-        [EnumeratorLike_move](
-          this: TProperties<T, TAcc> & MutableEnumeratorLike<TAcc>,
-        ): boolean {
-          if (this[MutableEnumeratorLike_reset]()) {
-            return false;
-          }
-
-          const delegate = this[ScanEnumerator_delegate];
-          const delegateHasCurrent = delegate[EnumeratorLike_move]();
-
-          if (delegateHasCurrent) {
-            this[ScanEnumerator_acc] = this[ScanEnumerator_reducer](
-              this[ScanEnumerator_acc],
-              delegate[EnumeratorLike_current],
-            );
-
-            this[EnumeratorLike_current] = this[ScanEnumerator_acc];
-          }
-
-          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
-
-          return this[EnumeratorLike_hasCurrent];
-        },
-      },
-    ),
+    },
   );
 
   return (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>

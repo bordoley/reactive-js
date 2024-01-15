@@ -2,10 +2,9 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import {
   Mutable,
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
   unsafeCast,
 } from "../../../__internal__/mixins.js";
@@ -38,68 +37,66 @@ const Enumerable_buffer: Enumerable.Signature["buffer"] = /*@__PURE__*/ (<
     [EnumeratorLike_isCompleted]: boolean;
   }
 
-  const createBufferEnumerator = createInstanceFactory(
-    mix(
-      include(DelegatingEnumeratorMixin<T>()),
-      function BufferEnumerator(
-        instance: TProperties<T> & EnumeratorLike<readonly T[]>,
-        delegate: EnumeratorLike<T>,
-        count: Optional<number>,
-      ): EnumeratorLike<readonly T[]> {
-        init(DelegatingEnumeratorMixin<T>(), instance, delegate);
+  const createBufferEnumerator = mixInstanceFactory(
+    include(DelegatingEnumeratorMixin<T>()),
+    function BufferEnumerator(
+      instance: TProperties<T> & EnumeratorLike<readonly T[]>,
+      delegate: EnumeratorLike<T>,
+      count: Optional<number>,
+    ): EnumeratorLike<readonly T[]> {
+      init(DelegatingEnumeratorMixin<T>(), instance, delegate);
 
-        instance[BufferEnumerator_count] = clampPositiveNonZeroInteger(
-          count ?? MAX_SAFE_INTEGER,
-        );
+      instance[BufferEnumerator_count] = clampPositiveNonZeroInteger(
+        count ?? MAX_SAFE_INTEGER,
+      );
 
-        return instance;
+      return instance;
+    },
+    props<
+      TProperties<T> & {
+        [EnumeratorLike_hasCurrent]: boolean;
+        [EnumeratorLike_isCompleted]: boolean;
+      }
+    >({
+      [BufferEnumerator_buffer]: none,
+      [BufferEnumerator_count]: 0,
+      [EnumeratorLike_hasCurrent]: false,
+      [EnumeratorLike_isCompleted]: false,
+    }),
+    {
+      get [EnumeratorLike_current]() {
+        unsafeCast<TProperties<T>>(this);
+        return this[BufferEnumerator_buffer];
       },
-      props<
-        TProperties<T> & {
-          [EnumeratorLike_hasCurrent]: boolean;
-          [EnumeratorLike_isCompleted]: boolean;
+
+      [EnumeratorLike_move](
+        this: TProperties<T> &
+          Mutable<EnumeratorLike<T>> &
+          DelegatingEnumeratorMixinLike<T>,
+      ): boolean {
+        if (this[EnumeratorLike_isCompleted]) {
+          return false;
         }
-      >({
-        [BufferEnumerator_buffer]: none,
-        [BufferEnumerator_count]: 0,
-        [EnumeratorLike_hasCurrent]: false,
-        [EnumeratorLike_isCompleted]: false,
-      }),
-      {
-        get [EnumeratorLike_current]() {
-          unsafeCast<TProperties<T>>(this);
-          return this[BufferEnumerator_buffer];
-        },
 
-        [EnumeratorLike_move](
-          this: TProperties<T> &
-            Mutable<EnumeratorLike<T>> &
-            DelegatingEnumeratorMixinLike<T>,
-        ): boolean {
-          if (this[EnumeratorLike_isCompleted]) {
-            return false;
+        const delegate = this[DelegatingEnumeratorMixinLike_delegate];
+        const buffer: T[] = [];
+        this[BufferEnumerator_buffer] = buffer;
+        this[EnumeratorLike_hasCurrent] = false;
+
+        while (delegate[EnumeratorLike_move]()) {
+          this[EnumeratorLike_hasCurrent] = true;
+          buffer.push(delegate[EnumeratorLike_current]);
+
+          if (buffer.length >= this[BufferEnumerator_count]) {
+            break;
           }
+        }
 
-          const delegate = this[DelegatingEnumeratorMixinLike_delegate];
-          const buffer: T[] = [];
-          this[BufferEnumerator_buffer] = buffer;
-          this[EnumeratorLike_hasCurrent] = false;
+        this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
 
-          while (delegate[EnumeratorLike_move]()) {
-            this[EnumeratorLike_hasCurrent] = true;
-            buffer.push(delegate[EnumeratorLike_current]);
-
-            if (buffer.length >= this[BufferEnumerator_count]) {
-              break;
-            }
-          }
-
-          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
-
-          return this[EnumeratorLike_hasCurrent];
-        },
+        return this[EnumeratorLike_hasCurrent];
       },
-    ),
+    },
   );
 
   return (options?: { count?: number }) =>

@@ -1,6 +1,6 @@
 /// <reference types="./Enumerable.pairwise.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { EnumeratorLike_current, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../collections.js";
 import { none, pipe, returns, tuple } from "../../../functions.js";
 import DelegatingEnumeratorMixin, { DelegatingEnumeratorMixinLike_delegate, } from "../../__mixins__/DelegatingEnumeratorMixin.js";
@@ -9,7 +9,7 @@ import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_pairwise = /*@__PURE__*/ (() => {
     const PairwiseEnumerator_hasPrev = Symbol("PairwiseEnumerator_hasPrev");
     const PairwiseEnumerator_prev = Symbol("PairwiseEnumerator_prev");
-    const createPairwiseEnumerator = createInstanceFactory(mix(include(MutableEnumeratorMixin(), DelegatingEnumeratorMixin()), function PairwiseEnumerator(instance, delegate) {
+    const createPairwiseEnumerator = mixInstanceFactory(include(MutableEnumeratorMixin(), DelegatingEnumeratorMixin()), function PairwiseEnumerator(instance, delegate) {
         init(MutableEnumeratorMixin(), instance);
         init(DelegatingEnumeratorMixin(), instance, delegate);
         return instance;
@@ -39,7 +39,7 @@ const Enumerable_pairwise = /*@__PURE__*/ (() => {
                 return false;
             }
         },
-    }));
+    });
     return pipe(createPairwiseEnumerator, Enumerable_lift, returns);
 })();
 export default Enumerable_pairwise;

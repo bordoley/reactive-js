@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -55,49 +54,41 @@ const createLiftedObservable: <TA, TB>(
     >[];
   };
 
-  return createInstanceFactory(
-    mix(
-      include(ObservableMixin),
-      function LiftedObservable(
-        instance: TProperties &
-          Pick<ObservableLike<TB>, typeof ObservableLike_observe>,
-        source: ObservableLike<TA>,
-        ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
-        config: Pick<
-          ObservableLike,
-          | typeof ObservableLike_isDeferred
-          | typeof ObservableLike_isMulticasted
-          | typeof ObservableLike_isPure
-          | typeof ObservableLike_isRunnable
-        >,
-      ): LiftedObservableLike<TA, TB> {
-        init(ObservableMixin, instance, config);
+  return mixInstanceFactory(
+    include(ObservableMixin),
+    function LiftedObservable(
+      instance: TProperties &
+        Pick<ObservableLike<TB>, typeof ObservableLike_observe>,
+      source: ObservableLike<TA>,
+      ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
+      config: Pick<
+        ObservableLike,
+        | typeof ObservableLike_isDeferred
+        | typeof ObservableLike_isMulticasted
+        | typeof ObservableLike_isPure
+        | typeof ObservableLike_isRunnable
+      >,
+    ): LiftedObservableLike<TA, TB> {
+      init(ObservableMixin, instance, config);
 
-        instance[LiftedObservableLike_source] = source;
-        instance[LiftedObservableLike_operators] = ops;
+      instance[LiftedObservableLike_source] = source;
+      instance[LiftedObservableLike_operators] = ops;
 
-        return instance;
+      return instance;
+    },
+    props<TProperties>({
+      [LiftedObservableLike_source]: none,
+      [LiftedObservableLike_operators]: none,
+    }),
+    {
+      [ObservableLike_observe](this: TProperties, observer: ObserverLike<TB>) {
+        pipeUnsafe(
+          observer,
+          ...this[LiftedObservableLike_operators],
+          bindMethod(this[LiftedObservableLike_source], ObservableLike_observe),
+        );
       },
-      props<TProperties>({
-        [LiftedObservableLike_source]: none,
-        [LiftedObservableLike_operators]: none,
-      }),
-      {
-        [ObservableLike_observe](
-          this: TProperties,
-          observer: ObserverLike<TB>,
-        ) {
-          pipeUnsafe(
-            observer,
-            ...this[LiftedObservableLike_operators],
-            bindMethod(
-              this[LiftedObservableLike_source],
-              ObservableLike_observe,
-            ),
-          );
-        },
-      },
-    ),
+    },
   );
 })();
 

@@ -1,6 +1,6 @@
 /// <reference types="./Enumerable.repeat.d.ts" />
 
-import { createInstanceFactory, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
+import { mixInstanceFactory, props, unsafeCast, } from "../../../__internal__/mixins.js";
 import { EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../collections.js";
 import { alwaysFalse, alwaysTrue, isNone, isNumber, none, } from "../../../functions.js";
 import Enumerable_create from "./Enumerable.create.js";
@@ -9,7 +9,7 @@ const Enumerable_repeat = /*@__PURE__*/ (() => {
     const RepeatEnumerator_enumerable = Symbol("RepeatEnumerator_enumerable");
     const RepeatEnumerator_inner = Symbol("RepeatEnumerator_inner");
     const RepeatEnumerator_predicate = Symbol("RepeatEnumerator_predicate");
-    const createRepeatEnumerator = createInstanceFactory(mix(function RepeatEnumerator(instance, enumerable, shouldRepeat) {
+    const createRepeatEnumerator = mixInstanceFactory(function RepeatEnumerator(instance, enumerable, shouldRepeat) {
         instance[RepeatEnumerator_enumerable] = enumerable;
         instance[RepeatEnumerator_inner] = none;
         instance[RepeatEnumerator_predicate] = shouldRepeat;
@@ -47,7 +47,7 @@ const Enumerable_repeat = /*@__PURE__*/ (() => {
             }
             return this[EnumeratorLike_hasCurrent];
         },
-    }));
+    });
     return (countOrPredicate) => (enumerable) => {
         const predicate = isNone(countOrPredicate)
             ? alwaysTrue

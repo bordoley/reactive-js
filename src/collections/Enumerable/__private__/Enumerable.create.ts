@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -20,22 +19,20 @@ const Enumerable_create: <T>(
     [EnumerableLike_enumerate]: Factory<EnumeratorLike<T>>;
   };
 
-  return createInstanceFactory(
-    mix(
-      include(EnumerableIterableMixin()),
-      function CreateEnumerable(
-        instance: TProperties,
-        enumerate: Factory<EnumeratorLike<T>>,
-      ): EnumerableLike<T> {
-        init(EnumerableIterableMixin<T>(), instance);
-        instance[EnumerableLike_enumerate] = enumerate;
+  return mixInstanceFactory(
+    include(EnumerableIterableMixin()),
+    function CreateEnumerable(
+      instance: TProperties,
+      enumerate: Factory<EnumeratorLike<T>>,
+    ): EnumerableLike<T> {
+      init(EnumerableIterableMixin<T>(), instance);
+      instance[EnumerableLike_enumerate] = enumerate;
 
-        return instance;
-      },
-      props<TProperties>({
-        [EnumerableLike_enumerate]: none,
-      }),
-    ),
+      return instance;
+    },
+    props<TProperties>({
+      [EnumerableLike_enumerate]: none,
+    }),
   );
 })();
 

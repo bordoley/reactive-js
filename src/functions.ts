@@ -191,7 +191,7 @@ export type Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI> = readonly [
  *
  * @returns `true` if v is an instance of type `TB`, otherwise false.
  */
-export type TypePredicate<TA, TB extends TA> = (v: TA) => v is TB;
+export type TypePredicate<TA, TB> = (v: TA) => v is TA & TB;
 
 /**
  * Computes a new value of type `T` from the previous value of type `T`.

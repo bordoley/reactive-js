@@ -1,6 +1,6 @@
 /// <reference types="./Flowable.create.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { FlowableLike_flow, ObservableLike_observe, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, StreamableLike_stream, } from "../../../concurrent.js";
 import { StoreLike_value } from "../../../events.js";
 import * as WritableStore from "../../../events/WritableStore.js";
@@ -13,7 +13,7 @@ import * as PauseableScheduler from "../../PauseableScheduler.js";
 import * as Streamable from "../../Streamable.js";
 import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 const PauseableObservable_create = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(DelegatingDisposableMixin(), DelegatingMulticastObservableMixin()), function PauseableObservable(instance, op, scheduler, multicastOptions) {
+    return mixInstanceFactory(include(DelegatingDisposableMixin(), DelegatingMulticastObservableMixin()), function PauseableObservable(instance, op, scheduler, multicastOptions) {
         const liftedOp = (mode) => Observable.create(observer => {
             const pauseableScheduler = pipe(observer, PauseableScheduler.create, Disposable.addTo(observer));
             const multicastedMode = pipe(mode, Observable.mergeWith(
@@ -48,7 +48,7 @@ const PauseableObservable_create = /*@__PURE__*/ (() => {
         [PauseableLike_resume]() {
             this[DelegatingDisposableLike_delegate][QueueableLike_enqueue](false);
         },
-    }));
+    });
 })();
 const Flowable_create = (op) => ({
     [FlowableLike_flow]: (scheduler, options) => PauseableObservable_create(op, scheduler, options),

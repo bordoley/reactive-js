@@ -17,6 +17,7 @@ import {
 } from "../../../utils.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 
 const createObserver: <T>(
   scheduler: SchedulerLike,
@@ -26,22 +27,24 @@ const createObserver: <T>(
   >,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
   return createInstanceFactory(
-    mix(
-      include(DisposableMixin, ObserverMixin<T>()),
-      function SubscribeObserver(
-        instance: unknown,
-        scheduler: SchedulerLike,
-        config: Pick<
-          QueueableLike,
-          | typeof QueueableLike_capacity
-          | typeof QueueableLike_backpressureStrategy
-        >,
-      ): ObserverLike<T> {
-        init(DisposableMixin, instance);
-        init(ObserverMixin(), instance, scheduler, config);
+    decorateNotifyWithObserverStateAssert(
+      mix(
+        include(DisposableMixin, ObserverMixin<T>()),
+        function SubscribeObserver(
+          instance: unknown,
+          scheduler: SchedulerLike,
+          config: Pick<
+            QueueableLike,
+            | typeof QueueableLike_capacity
+            | typeof QueueableLike_backpressureStrategy
+          >,
+        ): ObserverLike<T> {
+          init(DisposableMixin, instance);
+          init(ObserverMixin(), instance, scheduler, config);
 
-        return instance;
-      },
+          return instance;
+        },
+      ),
     ),
   );
 })();

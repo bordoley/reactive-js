@@ -9,10 +9,11 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createTakeLastObserver = /*@__PURE__*/ (() => {
     const TakeLastObserver_queue = Symbol("TakeLastObserver_queue");
-    return createInstanceFactory(mix(include(DisposableMixin, DelegatingObserverMixin()), function TakeLastObserver(instance, delegate, takeLastCount) {
+    return createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function TakeLastObserver(instance, delegate, takeLastCount) {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
         instance[TakeLastObserver_queue] = IndexedQueue.create({
@@ -45,7 +46,7 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
         [ObserverLike_notify](next) {
             this[TakeLastObserver_queue][QueueableLike_enqueue](next);
         },
-    }));
+    })));
 })();
 const Observable_takeLast = (options = {}) => pipe(createTakeLastObserver, partial(clampPositiveInteger(options.count ?? 1)), Observable_liftPureDeferred);
 export default Observable_takeLast;

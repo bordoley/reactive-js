@@ -1029,18 +1029,18 @@ ___
 
 ### TypePredicate
 
-Ƭ **TypePredicate**<`TA`, `TB`\>: (`v`: `TA`) => v is TB
+Ƭ **TypePredicate**<`TA`, `TB`\>: (`v`: `TA`) => v is TA & TB
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | extends `TA` |
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
 
 #### Type declaration
 
-▸ (`v`): v is TB
+▸ (`v`): v is TA & TB
 
 A type guard function that performs a runtime check
 guaranteeing `v` is of type `TB`.
@@ -1053,7 +1053,7 @@ guaranteeing `v` is of type `TB`.
 
 ##### Returns
 
-v is TB
+v is TA & TB
 
 `true` if v is an instance of type `TB`, otherwise false.
 

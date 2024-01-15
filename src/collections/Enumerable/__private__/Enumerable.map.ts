@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -31,49 +30,47 @@ const Enumerable_map: Enumerable.Signature["map"] = /*@__PURE__*/ (<
     [MapEnumerator_delegate]: EnumeratorLike<TA>;
     [MapEnumerator_selector]: Function1<TA, TB>;
   }
-  const createMapEnumerator = createInstanceFactory(
-    mix(
-      include(MutableEnumeratorMixin()),
-      function MapEnumerator(
-        instance: Pick<EnumeratorLike<TB>, typeof EnumeratorLike_move> &
-          TProperties<TA, TB>,
-        delegate: EnumeratorLike<TA>,
-        mapper: Function1<TA, TB>,
-      ): EnumeratorLike<TB> {
-        init(MutableEnumeratorMixin<TB>(), instance);
+  const createMapEnumerator = mixInstanceFactory(
+    include(MutableEnumeratorMixin()),
+    function MapEnumerator(
+      instance: Pick<EnumeratorLike<TB>, typeof EnumeratorLike_move> &
+        TProperties<TA, TB>,
+      delegate: EnumeratorLike<TA>,
+      mapper: Function1<TA, TB>,
+    ): EnumeratorLike<TB> {
+      init(MutableEnumeratorMixin<TB>(), instance);
 
-        instance[MapEnumerator_delegate] = delegate;
-        instance[MapEnumerator_selector] = mapper;
+      instance[MapEnumerator_delegate] = delegate;
+      instance[MapEnumerator_selector] = mapper;
 
-        return instance;
+      return instance;
+    },
+    props<TProperties<TA, TB>>({
+      [MapEnumerator_delegate]: none,
+      [MapEnumerator_selector]: none,
+    }),
+    {
+      [EnumeratorLike_move](
+        this: TProperties<TA, TB> & MutableEnumeratorLike<TB>,
+      ): boolean {
+        if (this[MutableEnumeratorLike_reset]()) {
+          return false;
+        }
+
+        const delegate = this[MapEnumerator_delegate];
+        const delegateHasCurrent = delegate[EnumeratorLike_move]();
+
+        if (delegateHasCurrent) {
+          this[EnumeratorLike_current] = this[MapEnumerator_selector](
+            delegate[EnumeratorLike_current],
+          );
+        }
+
+        this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
+
+        return this[EnumeratorLike_hasCurrent];
       },
-      props<TProperties<TA, TB>>({
-        [MapEnumerator_delegate]: none,
-        [MapEnumerator_selector]: none,
-      }),
-      {
-        [EnumeratorLike_move](
-          this: TProperties<TA, TB> & MutableEnumeratorLike<TB>,
-        ): boolean {
-          if (this[MutableEnumeratorLike_reset]()) {
-            return false;
-          }
-
-          const delegate = this[MapEnumerator_delegate];
-          const delegateHasCurrent = delegate[EnumeratorLike_move]();
-
-          if (delegateHasCurrent) {
-            this[EnumeratorLike_current] = this[MapEnumerator_selector](
-              delegate[EnumeratorLike_current],
-            );
-          }
-
-          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
-
-          return this[EnumeratorLike_hasCurrent];
-        },
-      },
-    ),
+    },
   );
 
   return (selector: Function1<TA, TB>) =>

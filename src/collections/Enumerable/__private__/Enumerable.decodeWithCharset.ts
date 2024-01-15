@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -40,73 +39,71 @@ const Enumerable_decodeWithCharset: Enumerable.Signature["decodeWithCharset"] =
       [DecodeWithCharsetEnumerator_textDecoder]: TextDecoder;
     }
 
-    const createDecodeWithCharsetEnumerator = createInstanceFactory(
-      mix(
-        include(MutableEnumeratorMixin()),
-        function DecodeWithCharsetEnumerator(
-          instance: Pick<EnumeratorLike<string>, typeof EnumeratorLike_move> &
-            TProperties,
-          delegate: EnumeratorLike<ArrayBuffer>,
-          charset: Optional<string>,
-          options?: {
-            fatal?: boolean;
-            ignoreBOM?: boolean;
-          },
-        ): EnumeratorLike<string> {
-          init(MutableEnumeratorMixin<string>(), instance);
-
-          const textDecoder = newInstance(
-            TextDecoder,
-            charset ?? "utf-8",
-            options,
-          );
-          instance[DecodeWithCharsetEnumerator_textDecoder] = textDecoder;
-          instance[DecodeWithCharsetEnumerator_delegate] = delegate;
-
-          return instance;
+    const createDecodeWithCharsetEnumerator = mixInstanceFactory(
+      include(MutableEnumeratorMixin()),
+      function DecodeWithCharsetEnumerator(
+        instance: Pick<EnumeratorLike<string>, typeof EnumeratorLike_move> &
+          TProperties,
+        delegate: EnumeratorLike<ArrayBuffer>,
+        charset: Optional<string>,
+        options?: {
+          fatal?: boolean;
+          ignoreBOM?: boolean;
         },
-        props<TProperties>({
-          [DecodeWithCharsetEnumerator_delegate]: none,
-          [DecodeWithCharsetEnumerator_textDecoder]: none,
-        }),
-        {
-          [EnumeratorLike_move](
-            this: TProperties & MutableEnumeratorLike<string>,
-          ): boolean {
-            if (this[MutableEnumeratorLike_reset]()) {
-              return false;
+      ): EnumeratorLike<string> {
+        init(MutableEnumeratorMixin<string>(), instance);
+
+        const textDecoder = newInstance(
+          TextDecoder,
+          charset ?? "utf-8",
+          options,
+        );
+        instance[DecodeWithCharsetEnumerator_textDecoder] = textDecoder;
+        instance[DecodeWithCharsetEnumerator_delegate] = delegate;
+
+        return instance;
+      },
+      props<TProperties>({
+        [DecodeWithCharsetEnumerator_delegate]: none,
+        [DecodeWithCharsetEnumerator_textDecoder]: none,
+      }),
+      {
+        [EnumeratorLike_move](
+          this: TProperties & MutableEnumeratorLike<string>,
+        ): boolean {
+          if (this[MutableEnumeratorLike_reset]()) {
+            return false;
+          }
+
+          const delegate = this[DecodeWithCharsetEnumerator_delegate];
+          const decoder = this[DecodeWithCharsetEnumerator_textDecoder];
+
+          while (delegate[EnumeratorLike_move]()) {
+            const data = decoder.decode(delegate[EnumeratorLike_current], {
+              stream: true,
+            });
+
+            if (data.length > 0) {
+              this[EnumeratorLike_current] = data;
+              break;
             }
+          }
 
-            const delegate = this[DecodeWithCharsetEnumerator_delegate];
-            const decoder = this[DecodeWithCharsetEnumerator_textDecoder];
+          if (!this[EnumeratorLike_hasCurrent]) {
+            const data = decoder.decode(new Uint8Array([]), {
+              stream: false,
+            });
 
-            while (delegate[EnumeratorLike_move]()) {
-              const data = decoder.decode(delegate[EnumeratorLike_current], {
-                stream: true,
-              });
-
-              if (data.length > 0) {
-                this[EnumeratorLike_current] = data;
-                break;
-              }
+            if (data.length > 0) {
+              this[EnumeratorLike_current] = data;
             }
+          }
 
-            if (!this[EnumeratorLike_hasCurrent]) {
-              const data = decoder.decode(new Uint8Array([]), {
-                stream: false,
-              });
+          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
 
-              if (data.length > 0) {
-                this[EnumeratorLike_current] = data;
-              }
-            }
-
-            this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
-
-            return this[EnumeratorLike_hasCurrent];
-          },
+          return this[EnumeratorLike_hasCurrent];
         },
-      ),
+      },
     );
 
     return options =>

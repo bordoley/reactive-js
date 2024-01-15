@@ -52,7 +52,7 @@ export interface PureStatefulComputationModule<C extends Computation> {
     }): ComputationOperator<C, T, T>;
 }
 interface Signature {
-    keepType<C extends Computation, TA, TB extends TA>(m: Pick<PureStatelessComputationModule<C>, "keep">, predicate: TypePredicate<TA, TB>): ComputationOperator<C, TA, TB>;
+    keepType<C extends Computation, TA, TB>(m: Pick<PureStatelessComputationModule<C>, "keep">, predicate: TypePredicate<TA, TB>): ComputationOperator<C, TA, TB>;
     mapTo<C extends Computation, T>(m: Pick<PureStatelessComputationModule<C>, "map">, value: T): ComputationOperator<C, unknown, T>;
     pick<C extends Computation, T, TKeyOfT extends keyof T>(m: Pick<PureStatelessComputationModule<C>, "map">, key: TKeyOfT): ComputationOperator<C, T, T[TKeyOfT]>;
     pick<C extends Computation, T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(m: Pick<PureStatelessComputationModule<C>, "map">, keyA: TKeyOfTA, keyB: TKeyOfTB): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB]>;

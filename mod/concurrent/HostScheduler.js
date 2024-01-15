@@ -1,6 +1,6 @@
 /// <reference types="./HostScheduler.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { SchedulerLike_now } from "../concurrent.js";
 import { none, pipe } from "../functions.js";
 import { DisposableLike_dispose } from "../utils.js";
@@ -43,7 +43,7 @@ const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) =
         scheduler[ContinuationSchedulerLike_schedule](continuation);
     }
 };
-const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(CurrentTimeSchedulerMixin), function HostScheduler(instance, maxYieldInterval) {
+const createHostSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFactory(include(CurrentTimeSchedulerMixin), function HostScheduler(instance, maxYieldInterval) {
     init(CurrentTimeSchedulerMixin, instance, maxYieldInterval);
     return instance;
 }, props(), {
@@ -63,7 +63,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(m
             scheduleImmediate(this, continuation);
         }
     },
-})))();
+}))();
 export const create = (options = {}) => {
     const { maxYieldInterval = 300 } = options;
     return createHostSchedulerInstance(maxYieldInterval);

@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -51,102 +50,97 @@ const PauseableObservable_create: <T>(
     [PauseableLike_isPaused]: WritableStoreLike<boolean>;
   };
 
-  return createInstanceFactory(
-    mix(
-      include(
-        DelegatingDisposableMixin(),
-        DelegatingMulticastObservableMixin(),
-      ),
-      function PauseableObservable(
-        instance: Pick<
-          PauseableObservableLike<T>,
-          typeof PauseableLike_pause | typeof PauseableLike_resume
-        > &
-          TProperties,
-        op: Function1<
-          MulticastObservableLike<boolean>,
-          DeferredObservableLike<T>
-        >,
-        scheduler: SchedulerLike,
-        multicastOptions?: {
-          capacity?: number;
-          backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-          replay?: number;
-        },
-      ): PauseableObservableLike<T> {
-        const liftedOp = (mode: PureDeferredObservableLike<boolean>) =>
-          Observable.create(observer => {
-            const pauseableScheduler = pipe(
-              observer,
-              PauseableScheduler.create,
-              Disposable.addTo(observer),
-            );
-
-            const multicastedMode = pipe(
-              mode,
-              Observable.mergeWith(
-                // Initialize to paused state
-                pipe(true, Observable.fromValue()),
-              ),
-              Observable.distinctUntilChanged<boolean>(),
-              Observable.multicast(observer, {
-                replay: 1,
-                capacity: 1,
-                backpressureStrategy: "drop-oldest",
-              }),
-              Disposable.addTo(observer),
-            );
-
-            pipe(
-              multicastedMode,
-              Observable.forEach((isPaused: boolean) => {
-                instance[PauseableLike_isPaused][StoreLike_value] = isPaused;
-
-                if (isPaused) {
-                  pauseableScheduler[PauseableLike_pause]();
-                } else {
-                  pauseableScheduler[PauseableLike_resume]();
-                }
-              }),
-              Observable.subscribe(observer),
-              Disposable.addTo(observer),
-            );
-
-            pipe(
-              multicastedMode,
-              op,
-              Observable.subscribeOn(pauseableScheduler),
-              invoke(ObservableLike_observe, observer),
-            );
-          });
-
-        const stream = Streamable.create<boolean, T>(liftedOp)[
-          StreamableLike_stream
-        ](scheduler, multicastOptions);
-        init(DelegatingDisposableMixin(), instance, stream);
-        init(DelegatingMulticastObservableMixin<T>(), instance, stream);
-
-        instance[PauseableLike_isPaused] = WritableStore.create(true);
-
-        return instance;
+  return mixInstanceFactory(
+    include(DelegatingDisposableMixin(), DelegatingMulticastObservableMixin()),
+    function PauseableObservable(
+      instance: Pick<
+        PauseableObservableLike<T>,
+        typeof PauseableLike_pause | typeof PauseableLike_resume
+      > &
+        TProperties,
+      op: Function1<
+        MulticastObservableLike<boolean>,
+        DeferredObservableLike<T>
+      >,
+      scheduler: SchedulerLike,
+      multicastOptions?: {
+        capacity?: number;
+        backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        replay?: number;
       },
-      props<TProperties>({
-        [PauseableLike_isPaused]: none,
-      }),
-      {
-        [PauseableLike_pause](
-          this: DelegatingDisposableLike<StreamLike<boolean, T>>,
-        ) {
-          this[DelegatingDisposableLike_delegate][QueueableLike_enqueue](true);
-        },
+    ): PauseableObservableLike<T> {
+      const liftedOp = (mode: PureDeferredObservableLike<boolean>) =>
+        Observable.create(observer => {
+          const pauseableScheduler = pipe(
+            observer,
+            PauseableScheduler.create,
+            Disposable.addTo(observer),
+          );
 
-        [PauseableLike_resume](
-          this: DelegatingDisposableLike<StreamLike<boolean, T>>,
-        ) {
-          this[DelegatingDisposableLike_delegate][QueueableLike_enqueue](false);
-        },
+          const multicastedMode = pipe(
+            mode,
+            Observable.mergeWith(
+              // Initialize to paused state
+              pipe(true, Observable.fromValue()),
+            ),
+            Observable.distinctUntilChanged<boolean>(),
+            Observable.multicast(observer, {
+              replay: 1,
+              capacity: 1,
+              backpressureStrategy: "drop-oldest",
+            }),
+            Disposable.addTo(observer),
+          );
+
+          pipe(
+            multicastedMode,
+            Observable.forEach((isPaused: boolean) => {
+              instance[PauseableLike_isPaused][StoreLike_value] = isPaused;
+
+              if (isPaused) {
+                pauseableScheduler[PauseableLike_pause]();
+              } else {
+                pauseableScheduler[PauseableLike_resume]();
+              }
+            }),
+            Observable.subscribe(observer),
+            Disposable.addTo(observer),
+          );
+
+          pipe(
+            multicastedMode,
+            op,
+            Observable.subscribeOn(pauseableScheduler),
+            invoke(ObservableLike_observe, observer),
+          );
+        });
+
+      const stream = Streamable.create<boolean, T>(liftedOp)[
+        StreamableLike_stream
+      ](scheduler, multicastOptions);
+      init(DelegatingDisposableMixin(), instance, stream);
+      init(DelegatingMulticastObservableMixin<T>(), instance, stream);
+
+      instance[PauseableLike_isPaused] = WritableStore.create(true);
+
+      return instance;
+    },
+    props<TProperties>({
+      [PauseableLike_isPaused]: none,
+    }),
+    {
+      [PauseableLike_pause](
+        this: DelegatingDisposableLike<StreamLike<boolean, T>>,
+      ) {
+        this[DelegatingDisposableLike_delegate][QueueableLike_enqueue](true);
       },
-    ),
+
+      [PauseableLike_resume](
+        this: DelegatingDisposableLike<StreamLike<boolean, T>>,
+      ) {
+        this[DelegatingDisposableLike_delegate][QueueableLike_enqueue](false);
+      },
+    },
   );
 })();
 

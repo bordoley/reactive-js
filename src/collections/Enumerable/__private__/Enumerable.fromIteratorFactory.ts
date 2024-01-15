@@ -1,9 +1,8 @@
 import {
   Mutable,
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -31,41 +30,39 @@ const Enumerable_fromIteratorFactory: <T>() => Function1<
     [IteratorEnumerator_iterator]: Iterator<T>;
   };
 
-  const createEnumerator = createInstanceFactory(
-    mix(
-      include(MutableEnumeratorMixin<T>()),
-      function IteratorEnumerator(
-        instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
-          Mutable<TIteratorEnumeratorProperties>,
-        iterator: Iterator<T>,
-      ): EnumeratorLike<T> {
-        init(MutableEnumeratorMixin<T>(), instance);
-        instance[IteratorEnumerator_iterator] = iterator;
+  const createEnumerator = mixInstanceFactory(
+    include(MutableEnumeratorMixin<T>()),
+    function IteratorEnumerator(
+      instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
+        Mutable<TIteratorEnumeratorProperties>,
+      iterator: Iterator<T>,
+    ): EnumeratorLike<T> {
+      init(MutableEnumeratorMixin<T>(), instance);
+      instance[IteratorEnumerator_iterator] = iterator;
 
-        return instance;
+      return instance;
+    },
+    props<TIteratorEnumeratorProperties>({
+      [IteratorEnumerator_iterator]: none,
+    }),
+    {
+      [EnumeratorLike_move](
+        this: TIteratorEnumeratorProperties & MutableEnumeratorLike<T>,
+      ) {
+        if (this[MutableEnumeratorLike_reset]()) {
+          return false;
+        }
+
+        const next = this[IteratorEnumerator_iterator].next();
+        if (!next.done) {
+          this[EnumeratorLike_current] = next.value;
+        }
+
+        this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
+
+        return this[EnumeratorLike_hasCurrent];
       },
-      props<TIteratorEnumeratorProperties>({
-        [IteratorEnumerator_iterator]: none,
-      }),
-      {
-        [EnumeratorLike_move](
-          this: TIteratorEnumeratorProperties & MutableEnumeratorLike<T>,
-        ) {
-          if (this[MutableEnumeratorLike_reset]()) {
-            return false;
-          }
-
-          const next = this[IteratorEnumerator_iterator].next();
-          if (!next.done) {
-            this[EnumeratorLike_current] = next.value;
-          }
-
-          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
-
-          return this[EnumeratorLike_hasCurrent];
-        },
-      },
-    ),
+    },
   );
 
   return returns((f: Factory<Iterator<T>>) =>

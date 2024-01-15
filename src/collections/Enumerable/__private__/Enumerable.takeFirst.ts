@@ -1,9 +1,8 @@
 import { clampPositiveInteger, max } from "../../../__internal__/math.js";
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -34,57 +33,55 @@ const Enumerable_takeFirst: Enumerable.Signature["takeFirst"] = /*@__PURE__*/ (<
     [TakeFirstEnumerator_count]: number;
   }
 
-  const createTakeFirstEnumerator = createInstanceFactory(
-    mix(
-      include(MutableEnumeratorMixin(), DelegatingEnumeratorMixin<T>()),
-      function TakeFirstEnumerator(
-        instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
-          TProperties,
-        delegate: EnumeratorLike<T>,
-        takeCount: Optional<number>,
-      ): EnumeratorLike<T> {
-        init(MutableEnumeratorMixin<T>(), instance);
-        init(DelegatingEnumeratorMixin<T>(), instance, delegate);
+  const createTakeFirstEnumerator = mixInstanceFactory(
+    include(MutableEnumeratorMixin(), DelegatingEnumeratorMixin<T>()),
+    function TakeFirstEnumerator(
+      instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
+        TProperties,
+      delegate: EnumeratorLike<T>,
+      takeCount: Optional<number>,
+    ): EnumeratorLike<T> {
+      init(MutableEnumeratorMixin<T>(), instance);
+      init(DelegatingEnumeratorMixin<T>(), instance, delegate);
 
-        instance[TakeFirstEnumerator_count] = clampPositiveInteger(
-          takeCount ?? 1,
+      instance[TakeFirstEnumerator_count] = clampPositiveInteger(
+        takeCount ?? 1,
+      );
+
+      return instance;
+    },
+    props<TProperties>({
+      [TakeFirstEnumerator_count]: 0,
+    }),
+    {
+      [EnumeratorLike_move](
+        this: TProperties &
+          MutableEnumeratorLike<T> &
+          DelegatingEnumeratorMixinLike<T>,
+      ): boolean {
+        if (this[MutableEnumeratorLike_reset]()) {
+          return false;
+        }
+
+        this[TakeFirstEnumerator_count] = max(
+          this[TakeFirstEnumerator_count] - 1,
+          -1,
         );
 
-        return instance;
+        const delegate = this[DelegatingEnumeratorMixinLike_delegate];
+
+        if (
+          this[TakeFirstEnumerator_count] >= 0 &&
+          delegate[EnumeratorLike_move]()
+        ) {
+          this[EnumeratorLike_current] = delegate[EnumeratorLike_current];
+        }
+
+        this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
+
+        return this[EnumeratorLike_hasCurrent];
       },
-      props<TProperties>({
-        [TakeFirstEnumerator_count]: 0,
-      }),
-      {
-        [EnumeratorLike_move](
-          this: TProperties &
-            MutableEnumeratorLike<T> &
-            DelegatingEnumeratorMixinLike<T>,
-        ): boolean {
-          if (this[MutableEnumeratorLike_reset]()) {
-            return false;
-          }
-
-          this[TakeFirstEnumerator_count] = max(
-            this[TakeFirstEnumerator_count] - 1,
-            -1,
-          );
-
-          const delegate = this[DelegatingEnumeratorMixinLike_delegate];
-
-          if (
-            this[TakeFirstEnumerator_count] >= 0 &&
-            delegate[EnumeratorLike_move]()
-          ) {
-            this[EnumeratorLike_current] = delegate[EnumeratorLike_current];
-          }
-
-          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
-
-          return this[EnumeratorLike_hasCurrent];
-        },
-      },
-    ),
+    },
   );
   return (options: { readonly count?: number } = {}) =>
     pipe(createTakeFirstEnumerator, partial(options.count), Enumerable_lift);

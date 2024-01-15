@@ -1,13 +1,13 @@
 /// <reference types="./Observable.lift.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
 import { bindMethod, none, pipeUnsafe } from "../../../functions.js";
 import ObservableMixin from "../../__mixins__/ObservableMixin.js";
 const LiftedObservableLike_source = Symbol("LiftedObservableMixin_source");
 const LiftedObservableLike_operators = Symbol("LiftedObservableMixin_operators");
 const createLiftedObservable = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(ObservableMixin), function LiftedObservable(instance, source, ops, config) {
+    return mixInstanceFactory(include(ObservableMixin), function LiftedObservable(instance, source, ops, config) {
         init(ObservableMixin, instance, config);
         instance[LiftedObservableLike_source] = source;
         instance[LiftedObservableLike_operators] = ops;
@@ -19,7 +19,7 @@ const createLiftedObservable = /*@__PURE__*/ (() => {
         [ObservableLike_observe](observer) {
             pipeUnsafe(observer, ...this[LiftedObservableLike_operators], bindMethod(this[LiftedObservableLike_source], ObservableLike_observe));
         },
-    }));
+    });
 })();
 const Observable_lift = ((config) => (operator) => (source) => {
     const sourceSource = source[LiftedObservableLike_source] ?? source;

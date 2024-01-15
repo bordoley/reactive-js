@@ -1,6 +1,6 @@
 /// <reference types="./Enumerable.zipMany.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../collections.js";
 import { invoke, none, pipeLazy } from "../../../functions.js";
 import MutableEnumeratorMixin, { MutableEnumeratorLike_reset, } from "../../__mixins__/MutableEnumeratorMixin.js";
@@ -16,7 +16,7 @@ const Enumerator_zipMany = /*@__PURE__*/ (() => {
         }
         return allHaveCurrent(enumerators);
     };
-    return createInstanceFactory(mix(include(MutableEnumeratorMixin()), function ZipEnumerator(instance, enumerators) {
+    return mixInstanceFactory(include(MutableEnumeratorMixin()), function ZipEnumerator(instance, enumerators) {
         init(MutableEnumeratorMixin(), instance);
         instance[ZipEnumerator_enumerators] = enumerators;
         return instance;
@@ -35,7 +35,7 @@ const Enumerator_zipMany = /*@__PURE__*/ (() => {
             this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
             return this[EnumeratorLike_hasCurrent];
         },
-    }));
+    });
 })();
 const Enumerable_zipMany = (observables) => Enumerable_create(pipeLazy(observables.map(invoke(EnumerableLike_enumerate)), Enumerator_zipMany));
 export default Enumerable_zipMany;

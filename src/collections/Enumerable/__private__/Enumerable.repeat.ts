@@ -1,6 +1,5 @@
 import {
-  createInstanceFactory,
-  mix,
+  mixInstanceFactory,
   props,
   unsafeCast,
 } from "../../../__internal__/mixins.js";
@@ -41,63 +40,61 @@ const Enumerable_repeat: Enumerable.Signature["repeat"] = /*@__PURE__*/ (<
     [EnumeratorLike_isCompleted]: boolean;
   };
 
-  const createRepeatEnumerator = createInstanceFactory(
-    mix(
-      function RepeatEnumerator(
-        instance: EnumeratorLike<T> & TProperties,
-        enumerable: EnumerableLike<T>,
-        shouldRepeat: Predicate<number>,
-      ): EnumeratorLike<T> {
-        instance[RepeatEnumerator_enumerable] = enumerable;
+  const createRepeatEnumerator = mixInstanceFactory(
+    function RepeatEnumerator(
+      instance: EnumeratorLike<T> & TProperties,
+      enumerable: EnumerableLike<T>,
+      shouldRepeat: Predicate<number>,
+    ): EnumeratorLike<T> {
+      instance[RepeatEnumerator_enumerable] = enumerable;
 
-        instance[RepeatEnumerator_inner] = none;
-        instance[RepeatEnumerator_predicate] = shouldRepeat;
+      instance[RepeatEnumerator_inner] = none;
+      instance[RepeatEnumerator_predicate] = shouldRepeat;
 
-        return instance;
+      return instance;
+    },
+    props<TProperties>({
+      [RepeatEnumerator_inner]: none,
+      [RepeatEnumerator_predicate]: alwaysFalse,
+      [RepeatEnumerator_count]: 0,
+      [RepeatEnumerator_enumerable]: none,
+      [EnumeratorLike_isCompleted]: false,
+    }),
+    {
+      get [EnumeratorLike_current]() {
+        unsafeCast<TProperties>(this);
+        return this[RepeatEnumerator_inner]?.[EnumeratorLike_current] as T;
       },
-      props<TProperties>({
-        [RepeatEnumerator_inner]: none,
-        [RepeatEnumerator_predicate]: alwaysFalse,
-        [RepeatEnumerator_count]: 0,
-        [RepeatEnumerator_enumerable]: none,
-        [EnumeratorLike_isCompleted]: false,
-      }),
-      {
-        get [EnumeratorLike_current]() {
-          unsafeCast<TProperties>(this);
-          return this[RepeatEnumerator_inner]?.[EnumeratorLike_current] as T;
-        },
 
-        get [EnumeratorLike_hasCurrent]() {
-          unsafeCast<TProperties>(this);
-          return (
-            this[RepeatEnumerator_inner]?.[EnumeratorLike_hasCurrent] ?? false
-          );
-        },
+      get [EnumeratorLike_hasCurrent]() {
+        unsafeCast<TProperties>(this);
+        return (
+          this[RepeatEnumerator_inner]?.[EnumeratorLike_hasCurrent] ?? false
+        );
+      },
 
-        [EnumeratorLike_move](this: TProperties & EnumeratorLike<T>): boolean {
-          let inner = this[RepeatEnumerator_inner];
+      [EnumeratorLike_move](this: TProperties & EnumeratorLike<T>): boolean {
+        let inner = this[RepeatEnumerator_inner];
 
-          while (!(inner?.[EnumeratorLike_move]() ?? false)) {
-            const cnt = this[RepeatEnumerator_count];
+        while (!(inner?.[EnumeratorLike_move]() ?? false)) {
+          const cnt = this[RepeatEnumerator_count];
 
-            this[EnumeratorLike_isCompleted] =
-              cnt !== 0 && !this[RepeatEnumerator_predicate](cnt);
+          this[EnumeratorLike_isCompleted] =
+            cnt !== 0 && !this[RepeatEnumerator_predicate](cnt);
 
-            if (!this[EnumeratorLike_isCompleted]) {
-              this[RepeatEnumerator_count]++;
-              inner = this[RepeatEnumerator_inner] =
-                this[RepeatEnumerator_enumerable][EnumerableLike_enumerate]();
-            } else {
-              this[RepeatEnumerator_inner] = none;
-              break;
-            }
+          if (!this[EnumeratorLike_isCompleted]) {
+            this[RepeatEnumerator_count]++;
+            inner = this[RepeatEnumerator_inner] =
+              this[RepeatEnumerator_enumerable][EnumerableLike_enumerate]();
+          } else {
+            this[RepeatEnumerator_inner] = none;
+            break;
           }
+        }
 
-          return this[EnumeratorLike_hasCurrent];
-        },
+        return this[EnumeratorLike_hasCurrent];
       },
-    ),
+    },
   );
 
   return (countOrPredicate: Optional<number | Predicate<number>>) =>
