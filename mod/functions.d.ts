@@ -258,7 +258,6 @@ interface FunctionsModule {
     raise<T>(e?: unknown): T;
     raiseError<T>(e: Error): T;
     raiseIf(condition: boolean, message: string): void;
-    raiseWithDebugMessage<T>(message: string): T;
     returns<T>(v: T): (..._args: unknown[]) => T;
     strictEquality<T>(a: T, b: T): boolean;
     tuple<TA>(a: TA): Tuple1<TA>;
@@ -440,10 +439,6 @@ export declare const raise: Signature["raise"];
  * Throws an error with the provided message is the condition is true.
  */
 export declare const raiseIf: Signature["raiseIf"];
-/**
- * Throws a javascript error using the provided message.
- */
-export declare const raiseWithDebugMessage: Signature["raiseWithDebugMessage"];
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */

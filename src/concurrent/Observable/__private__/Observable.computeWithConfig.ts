@@ -1,3 +1,4 @@
+import { __DEV__ } from "../../../__internal__/constants.js";
 import {
   DeferredObservableWithSideEffectsLike,
   ObservableLike,
@@ -23,7 +24,6 @@ import {
   pipe,
   raiseError,
   raiseIf,
-  raiseWithDebugMessage,
 } from "../../../functions.js";
 import {
   DisposableLike,
@@ -183,13 +183,11 @@ const validateComputeEffect: ValidateComputeEffect["validateComputeEffect"] = ((
             [MemoOrUsingEffect_args]: [],
             [MemoOrUsingEffect_value]: Disposable.disposed,
           }
-        : type === Constant
-        ? {
+        : {
             [ComputeEffect_type]: type,
             [ConstantEffect_value]: none,
             [ConstantEffect_args]: [],
-          }
-        : raiseWithDebugMessage("invalid effect type");
+          };
 
     if (isSome(effect)) {
       effects[index] = newEffect;
@@ -378,12 +376,16 @@ class ComputeContext {
 
 let currentCtx: Optional<ComputeContext> = none;
 
-export const assertCurrentContext = (): ComputeContext =>
-  isNone(currentCtx)
-    ? raiseWithDebugMessage(
-        "effect must be called within a computational expression",
-      )
-    : currentCtx;
+export const assertCurrentContext = (): ComputeContext => {
+  if (__DEV__) {
+    raiseIf(
+      isNone(currentCtx),
+      "effect must be called within a computational expression",
+    );
+  }
+
+  return currentCtx as ComputeContext;
+};
 
 interface ObservableComputeWithConfig {
   computeWithConfig<T>(

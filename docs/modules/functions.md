@@ -100,7 +100,6 @@
 - [raise](functions.md#raise)
 - [raiseError](functions.md#raiseerror)
 - [raiseIf](functions.md#raiseif)
-- [raiseWithDebugMessage](functions.md#raisewithdebugmessage)
 - [returns](functions.md#returns)
 - [strictEquality](functions.md#strictequality)
 - [tuple](functions.md#tuple)
@@ -5005,30 +5004,6 @@ Throws an error with the provided message is the condition is true.
 #### Returns
 
 `void`
-
-___
-
-### raiseWithDebugMessage
-
-▸ **raiseWithDebugMessage**<`T`\>(`message`): `T`
-
-Throws a javascript error using the provided message.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `message` | `string` |
-
-#### Returns
-
-`T`
 
 ___
 

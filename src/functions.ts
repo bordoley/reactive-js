@@ -1146,8 +1146,6 @@ interface FunctionsModule {
 
   raiseIf(condition: boolean, message: string): void;
 
-  raiseWithDebugMessage<T>(message: string): T;
-
   returns<T>(v: T): (..._args: unknown[]) => T;
 
   strictEquality<T>(a: T, b: T): boolean;
@@ -1655,16 +1653,9 @@ export const raiseIf: Signature["raiseIf"] = (
   message: string,
 ) => {
   if (condition) {
-    raiseWithDebugMessage(__DEV__ ? message : "");
+    raiseError(error(__DEV__ ? message : none));
   }
 };
-
-/**
- * Throws a javascript error using the provided message.
- */
-export const raiseWithDebugMessage: Signature["raiseWithDebugMessage"] = (
-  message: string,
-) => raiseError(error(__DEV__ ? message : none));
 
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.

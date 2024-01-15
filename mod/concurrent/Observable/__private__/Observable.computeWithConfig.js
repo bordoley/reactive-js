@@ -1,7 +1,8 @@
 /// <reference types="./Observable.computeWithConfig.d.ts" />
 
+import { __DEV__ } from "../../../__internal__/constants.js";
 import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
-import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseIf, raiseWithDebugMessage, } from "../../../functions.js";
+import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseIf, } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
@@ -69,13 +70,11 @@ const validateComputeEffect = ((ctx, type) => {
                         [MemoOrUsingEffect_args]: [],
                         [MemoOrUsingEffect_value]: Disposable.disposed,
                     }
-                    : type === Constant
-                        ? {
-                            [ComputeEffect_type]: type,
-                            [ConstantEffect_value]: none,
-                            [ConstantEffect_args]: [],
-                        }
-                        : raiseWithDebugMessage("invalid effect type");
+                    : {
+                        [ComputeEffect_type]: type,
+                        [ConstantEffect_value]: none,
+                        [ConstantEffect_args]: [],
+                    };
         if (isSome(effect)) {
             effects[index] = newEffect;
         }
@@ -180,9 +179,12 @@ class ComputeContext {
     }
 }
 let currentCtx = none;
-export const assertCurrentContext = () => isNone(currentCtx)
-    ? raiseWithDebugMessage("effect must be called within a computational expression")
-    : currentCtx;
+export const assertCurrentContext = () => {
+    if (__DEV__) {
+        raiseIf(isNone(currentCtx), "effect must be called within a computational expression");
+    }
+    return currentCtx;
+};
 const Observable_computeWithConfig = ((computation, config, { mode = "batched" } = {}) => Observable_createWithConfig((observer) => {
     const runComputation = () => {
         let result = none;

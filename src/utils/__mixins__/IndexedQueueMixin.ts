@@ -12,7 +12,7 @@ import {
   newInstance,
   none,
   raiseError,
-  raiseWithDebugMessage,
+  raiseIf,
   returns,
 } from "../../functions.js";
 import {
@@ -59,6 +59,22 @@ const IndexedQueueMixin: <T>() => Mixin1<
     [IndexedQueueMixin_tail]: number;
     [IndexedQueueMixin_capacityMask]: number;
     [IndexedQueueMixin_values]: Optional<T>[];
+  };
+
+  const computeIndex = (
+    thiz: TProperties & IndexedQueueLike<T>,
+    index: number,
+  ) => {
+    const count = thiz[QueueLike_count];
+
+    raiseIf(index < 0 || index >= count, "index out of range");
+
+    const capacity = thiz[IndexedQueueMixin_values].length;
+    const head = thiz[IndexedQueueMixin_head];
+    const headOffsetIndex = index + head;
+    const tailOffsetIndex = headOffsetIndex - capacity;
+
+    return headOffsetIndex < capacity ? headOffsetIndex : tailOffsetIndex;
   };
 
   const copyArray = (
@@ -241,22 +257,8 @@ const IndexedQueueMixin: <T>() => Mixin1<
           this: TProperties & IndexedQueueLike<T>,
           index: number,
         ): T {
-          const count = this[QueueLike_count];
-          const capacity = this[IndexedQueueMixin_values].length;
-          const head = this[IndexedQueueMixin_head];
-          const values = this[IndexedQueueMixin_values];
-
-          const headOffsetIndex = index + head;
-          const tailOffsetIndex = headOffsetIndex - capacity;
-
-          const computedIndex =
-            index < 0 || index >= count
-              ? raiseWithDebugMessage<number>("index out of range")
-              : headOffsetIndex < capacity
-              ? headOffsetIndex
-              : tailOffsetIndex;
-
-          return values[computedIndex] as T;
+          const computedIndex = computeIndex(this, index);
+          return this[IndexedQueueMixin_values][computedIndex] as T;
         },
 
         [IndexedQueueLike_set](
@@ -264,21 +266,8 @@ const IndexedQueueMixin: <T>() => Mixin1<
           index: number,
           value: T,
         ): T {
-          const count = this[QueueLike_count];
-          const capacity = this[IndexedQueueMixin_values].length;
-          const head = this[IndexedQueueMixin_head];
           const values = this[IndexedQueueMixin_values];
-
-          const headOffsetIndex = index + head;
-          const tailOffsetIndex = headOffsetIndex - capacity;
-
-          const computedIndex =
-            index < 0 || index >= count
-              ? raiseWithDebugMessage<number>("index out of range")
-              : headOffsetIndex < capacity
-              ? headOffsetIndex
-              : tailOffsetIndex;
-
+          const computedIndex = computeIndex(this, index);
           const oldValue = values[computedIndex] as T;
 
           values[computedIndex] = value;

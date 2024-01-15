@@ -290,13 +290,9 @@ export const raise = (e) => raiseError(error(e));
  */
 export const raiseIf = (condition, message) => {
     if (condition) {
-        raiseWithDebugMessage(__DEV__ ? message : "");
+        raiseError(error(__DEV__ ? message : none));
     }
 };
-/**
- * Throws a javascript error using the provided message.
- */
-export const raiseWithDebugMessage = (message) => raiseError(error(__DEV__ ? message : none));
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */

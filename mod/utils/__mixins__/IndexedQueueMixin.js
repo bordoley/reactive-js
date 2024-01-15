@@ -3,13 +3,22 @@
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
-import { newInstance, none, raiseError, raiseWithDebugMessage, returns, } from "../../functions.js";
+import { newInstance, none, raiseError, raiseIf, returns, } from "../../functions.js";
 import { BackPressureError, IndexedQueueLike_get, IndexedQueueLike_set, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, StackLike_head, StackLike_pop, } from "../../utils.js";
 const IndexedQueueMixin = /*@PURE*/ (() => {
     const IndexedQueueMixin_capacityMask = Symbol("IndexedQueueMixin_capacityMask");
     const IndexedQueueMixin_head = Symbol("IndexedQueueMixin_head");
     const IndexedQueueMixin_tail = Symbol("IndexedQueueMixin_tail");
     const IndexedQueueMixin_values = Symbol("IndexedQueueMixin_values");
+    const computeIndex = (thiz, index) => {
+        const count = thiz[QueueLike_count];
+        raiseIf(index < 0 || index >= count, "index out of range");
+        const capacity = thiz[IndexedQueueMixin_values].length;
+        const head = thiz[IndexedQueueMixin_head];
+        const headOffsetIndex = index + head;
+        const tailOffsetIndex = headOffsetIndex - capacity;
+        return headOffsetIndex < capacity ? headOffsetIndex : tailOffsetIndex;
+    };
     const copyArray = (src, head, tail, size) => {
         const capacity = src.length;
         const dest = newInstance(Array, size);
@@ -129,31 +138,12 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
             return item;
         },
         [IndexedQueueLike_get](index) {
-            const count = this[QueueLike_count];
-            const capacity = this[IndexedQueueMixin_values].length;
-            const head = this[IndexedQueueMixin_head];
-            const values = this[IndexedQueueMixin_values];
-            const headOffsetIndex = index + head;
-            const tailOffsetIndex = headOffsetIndex - capacity;
-            const computedIndex = index < 0 || index >= count
-                ? raiseWithDebugMessage("index out of range")
-                : headOffsetIndex < capacity
-                    ? headOffsetIndex
-                    : tailOffsetIndex;
-            return values[computedIndex];
+            const computedIndex = computeIndex(this, index);
+            return this[IndexedQueueMixin_values][computedIndex];
         },
         [IndexedQueueLike_set](index, value) {
-            const count = this[QueueLike_count];
-            const capacity = this[IndexedQueueMixin_values].length;
-            const head = this[IndexedQueueMixin_head];
             const values = this[IndexedQueueMixin_values];
-            const headOffsetIndex = index + head;
-            const tailOffsetIndex = headOffsetIndex - capacity;
-            const computedIndex = index < 0 || index >= count
-                ? raiseWithDebugMessage("index out of range")
-                : headOffsetIndex < capacity
-                    ? headOffsetIndex
-                    : tailOffsetIndex;
+            const computedIndex = computeIndex(this, index);
             const oldValue = values[computedIndex];
             values[computedIndex] = value;
             return oldValue;
