@@ -5,7 +5,6 @@ import { SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, }
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "../../concurrent/__internal__/Continuation.js";
 import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "../../concurrent/__internal__/ContinuationScheduler.js";
 import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
-import SchedulerMixin from "../../concurrent/__mixins__/SchedulerMixin.js";
 import { bindMethod, invoke, isSome, none, pipe, pipeLazy, } from "../../functions.js";
 import { QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -15,9 +14,8 @@ export const create = /*@__PURE__*/ (() => {
     const AnimationFrameScheduler_rafCallback = Symbol("AnimationFrameScheduler_rafCallback");
     const AnimationFrameScheduler_rafQueue = Symbol("AnimationFrameScheduler_rafQueue");
     const AnimationFrameScheduler_rafIsRunning = Symbol("AnimationFrameScheduler_rafIsRunning");
-    return createInstanceFactory(mix(include(CurrentTimeSchedulerMixin, SchedulerMixin), function AnimationFrameScheduler(instance, hostScheduler) {
-        init(CurrentTimeSchedulerMixin, instance);
-        init(SchedulerMixin, instance, 5);
+    return createInstanceFactory(mix(include(CurrentTimeSchedulerMixin), function AnimationFrameScheduler(instance, hostScheduler) {
+        init(CurrentTimeSchedulerMixin, instance, 5);
         instance[AnimationFrameScheduler_host] = hostScheduler;
         instance[AnimationFrameScheduler_rafQueue] =
             IndexedQueue.create();

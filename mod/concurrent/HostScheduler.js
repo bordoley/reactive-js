@@ -8,7 +8,6 @@ import * as Disposable from "../utils/Disposable.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "./__internal__/Continuation.js";
 import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "./__internal__/ContinuationScheduler.js";
 import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
-import SchedulerMixin from "./__mixins__/SchedulerMixin.js";
 const supportsSetImmediate = typeof setImmediate === "function";
 const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
     navigator.scheduling !== none &&
@@ -44,9 +43,8 @@ const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) =
         scheduler[ContinuationSchedulerLike_schedule](continuation);
     }
 };
-const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(CurrentTimeSchedulerMixin, SchedulerMixin), function HostScheduler(instance, maxYieldInterval) {
-    init(CurrentTimeSchedulerMixin, instance);
-    init(SchedulerMixin, instance, maxYieldInterval);
+const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(CurrentTimeSchedulerMixin), function HostScheduler(instance, maxYieldInterval) {
+    init(CurrentTimeSchedulerMixin, instance, maxYieldInterval);
     return instance;
 }, props(), {
     get [ContinuationSchedulerLike_shouldYield]() {

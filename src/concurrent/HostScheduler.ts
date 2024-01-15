@@ -20,7 +20,6 @@ import {
   ContinuationSchedulerLike_shouldYield,
 } from "./__internal__/ContinuationScheduler.js";
 import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
-import SchedulerMixin from "./__mixins__/SchedulerMixin.js";
 
 /**
  * @noInheritDoc
@@ -117,13 +116,12 @@ const runContinuation = (
 const createHostSchedulerInstance = /*@__PURE__*/ (() =>
   createInstanceFactory(
     mix(
-      include(CurrentTimeSchedulerMixin, SchedulerMixin),
+      include(CurrentTimeSchedulerMixin),
       function HostScheduler(
         instance: Omit<ContinuationSchedulerLike, typeof SchedulerLike_now>,
         maxYieldInterval: number,
       ): SchedulerLike & DisposableLike {
-        init(CurrentTimeSchedulerMixin, instance);
-        init(SchedulerMixin, instance, maxYieldInterval);
+        init(CurrentTimeSchedulerMixin, instance, maxYieldInterval);
 
         return instance;
       },
