@@ -5,7 +5,7 @@ import { SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, }
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "../../concurrent/__internal__/Continuation.js";
 import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "../../concurrent/__internal__/ContinuationScheduler.js";
 import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
-import { bindMethod, invoke, isSome, none, pipe, pipeLazy, } from "../../functions.js";
+import { invoke, isSome, none, pipe, pipeLazy, } from "../../functions.js";
 import { QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
@@ -17,38 +17,39 @@ export const create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(CurrentTimeSchedulerMixin), function AnimationFrameScheduler(instance, hostScheduler) {
         init(CurrentTimeSchedulerMixin, instance, 5);
         instance[AnimationFrameScheduler_host] = hostScheduler;
-        instance[AnimationFrameScheduler_rafQueue] =
-            IndexedQueue.create();
+        instance[AnimationFrameScheduler_rafQueue] = IndexedQueue.create();
         instance[AnimationFrameScheduler_rafIsRunning] = false;
         instance[AnimationFrameScheduler_rafCallback] = () => {
             const startTime = instance[SchedulerLike_now];
             const workQueue = instance[AnimationFrameScheduler_rafQueue];
             instance[AnimationFrameScheduler_rafQueue] = IndexedQueue.create();
-            let job = none;
-            while (((job = workQueue[QueueLike_dequeue]()), isSome(job))) {
-                job();
+            let continuation = none;
+            while (((continuation = workQueue[QueueLike_dequeue]()),
+                isSome(continuation))) {
+                continuation[ContinuationLike_run]();
                 const elapsedTime = instance[SchedulerLike_now] - startTime;
                 if (elapsedTime > 5 /*ms*/) {
                     break;
                 }
             }
-            const jobsCount = workQueue[QueueLike_count];
+            const continuationsCount = workQueue[QueueLike_count];
             const newWorkQueue = instance[AnimationFrameScheduler_rafQueue];
-            const newJobsCount = newWorkQueue[QueueLike_count];
-            if (jobsCount > 0 && newJobsCount === 0) {
+            const newContinuationsCount = newWorkQueue[QueueLike_count];
+            if (continuationsCount > 0 && newContinuationsCount === 0) {
                 instance[AnimationFrameScheduler_rafQueue] = workQueue;
             }
-            else if (jobsCount > 0) {
+            else if (continuationsCount > 0) {
                 // Merge the job queues copying the newly enqueued jobs
                 // onto the original queue.
-                let job = none;
-                while (((job = newWorkQueue[QueueLike_dequeue]()), isSome(job))) {
-                    workQueue[QueueableLike_enqueue](job);
+                let continuation = none;
+                while (((continuation = newWorkQueue[QueueLike_dequeue]()),
+                    isSome(continuation))) {
+                    workQueue[QueueableLike_enqueue](continuation);
                 }
                 instance[AnimationFrameScheduler_rafQueue] = workQueue;
             }
-            const workQueueCount = instance[AnimationFrameScheduler_rafQueue][QueueLike_count];
-            if (workQueueCount > 0) {
+            const continuationsQueueCount = instance[AnimationFrameScheduler_rafQueue][QueueLike_count];
+            if (continuationsQueueCount > 0) {
                 requestAnimationFrame(instance[AnimationFrameScheduler_rafCallback]);
             }
             else {
@@ -74,7 +75,7 @@ export const create = /*@__PURE__*/ (() => {
                 pipe(this[AnimationFrameScheduler_host], invoke(SchedulerLike_schedule, pipeLazy(this, invoke(ContinuationSchedulerLike_schedule, continuation)), { delay }), Disposable.addTo(continuation));
             }
             else {
-                this[AnimationFrameScheduler_rafQueue][QueueableLike_enqueue](bindMethod(continuation, ContinuationLike_run));
+                this[AnimationFrameScheduler_rafQueue][QueueableLike_enqueue](continuation);
                 if (!this[AnimationFrameScheduler_rafIsRunning]) {
                     this[AnimationFrameScheduler_rafIsRunning] = true;
                     requestAnimationFrame(this[AnimationFrameScheduler_rafCallback]);
