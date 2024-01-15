@@ -147,9 +147,9 @@ const SchedulerMixin: Mixin1<
           this,
         );
 
-        const inContinuation = this[SchedulerLike_inContinuation];
-
         if (__DEV__) {
+          const inContinuation = this[SchedulerLike_inContinuation];
+
           raiseIf(
             !inContinuation,
             "shouldYield may only be called from within a scheduler continuation",
@@ -158,21 +158,22 @@ const SchedulerMixin: Mixin1<
 
         const isDisposed = this[DisposableLike_isDisposed];
         const yieldRequested = this[SchedulerMixin_yieldRequested];
+        const exceededMaxYieldInterval =
+          this[SchedulerLike_now] >
+          this[SchedulerMixin_startTime] + this[SchedulerLike_maxYieldInterval];
+        const currentContinuationHasScheduledChildren =
+          (
+            this[
+              QueueableContinuationSchedulerLike_currentContinuation
+            ] as QueueableContinuationLike
+          )[QueueLike_count] > 0;
 
         return (
-          inContinuation &&
-          (isDisposed ||
-            yieldRequested ||
-            //exceededMaxYieldInterval
-            this[SchedulerLike_now] >
-              this[SchedulerMixin_startTime] +
-                this[SchedulerLike_maxYieldInterval] ||
-            (
-              this[
-                QueueableContinuationSchedulerLike_currentContinuation
-              ] as QueueableContinuationLike
-            )[QueueLike_count] > 0 ||
-            this[ContinuationSchedulerLike_shouldYield])
+          isDisposed ||
+          yieldRequested ||
+          exceededMaxYieldInterval ||
+          currentContinuationHasScheduledChildren ||
+          this[ContinuationSchedulerLike_shouldYield]
         );
       },
 
