@@ -1,6 +1,6 @@
 /// <reference types="./mixins.d.ts" />
 
-import { isFunction, } from "../functions.js";
+import { isFunction, raiseIf, } from "../functions.js";
 import * as Obj from "./Object.js";
 import { __DEV__ } from "./constants.js";
 export const Mixin_init = /*@__PURE__*/ Symbol("Mixin_init");
@@ -9,6 +9,11 @@ export const Mixin_properties = /*@__PURE__*/ Symbol("Mixin_properties");
 export const Mixin_prototype = /*@__PURE__*/ Symbol("Mixin_prototype");
 function initUnsafe(mixin, instance, ...args) {
     const f = mixin[Mixin_init];
+    if (__DEV__) {
+        for (const key of Reflect.ownKeys(mixin[Mixin_properties])) {
+            raiseIf(!Obj.hasOwn(instance, key), `Failed to include ${mixin[Mixin_init].name}.`);
+        }
+    }
     f(instance, ...args);
 }
 export const init = initUnsafe;

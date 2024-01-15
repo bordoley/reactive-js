@@ -7,6 +7,7 @@ import {
   Function5,
   Optional,
   isFunction,
+  raiseIf,
 } from "../functions.js";
 import * as Obj from "./Object.js";
 import { __DEV__ } from "./constants.js";
@@ -101,10 +102,20 @@ export interface Mixin5<
 
 function initUnsafe<TReturn>(
   mixin: MixinAny<TReturn>,
-  instance: unknown,
+  instance: object,
   ...args: readonly unknown[]
-): asserts instance is TReturn {
+): asserts instance is TReturn & object {
   const f = mixin[Mixin_init];
+
+  if (__DEV__) {
+    for (const key of Reflect.ownKeys(mixin[Mixin_properties])) {
+      raiseIf(
+        !Obj.hasOwn(instance as object, key),
+        `Failed to include ${mixin[Mixin_init].name}.`,
+      );
+    }
+  }
+
   f(instance, ...args);
 }
 
@@ -699,7 +710,7 @@ export const createInstanceFactory: CreateInstanceFactory["createInstanceFactory
     const prototype = Obj.create(Obj.prototype, prototypeDescription);
 
     return (...args: readonly any[]) => {
-      const instance: unknown = Obj.create(prototype, propertyDescription);
+      const instance: object = Obj.create(prototype, propertyDescription);
       initUnsafe(mixin, instance, ...args);
       return instance;
     };

@@ -9,17 +9,17 @@ import * as Disposable from "../../../../utils/Disposable.js";
 import DisposableMixin from "../../../../utils/__mixins__/DisposableMixin.js";
 import IndexedQueueMixin from "../../../../utils/__mixins__/IndexedQueueMixin.js";
 import { ContinuationLike_dueTime, ContinuationLike_id, ContinuationLike_run, } from "../../../__internal__/Continuation.js";
+export const QueueableContinuationLike_parent = Symbol("QueueableContinuationLike_parent");
 export const QueueableContinuationSchedulerLike_schedule = Symbol("QueueableContinuationSchedulerLike_schedule");
 export const QueueableContinuationSchedulerLike_nextTaskID = Symbol("QueueableContinuationSchedulerLike_nextTaskID");
 export const QueueableContinuationSchedulerLike_currentContinuation = Symbol("QueueableContinuationSchedulerLike_currentContinuation");
-export const QueueableContinuationLike_parent = Symbol("QueueableContinuationLike_parent");
-class ContinuationYieldError {
-    delay;
-    constructor(delay) {
-        this.delay = delay;
-    }
-}
 export const create = /*@__PURE__*/ (() => {
+    class ContinuationYieldError {
+        delay;
+        constructor(delay) {
+            this.delay = delay;
+        }
+    }
     const QueueableContinuation_effect = Symbol("QueueableContinuation_effect");
     const QueueableContinuation_scheduler = Symbol("QueueableContinuation_scheduler");
     const findNearestNonDisposedParent = (continuation) => {

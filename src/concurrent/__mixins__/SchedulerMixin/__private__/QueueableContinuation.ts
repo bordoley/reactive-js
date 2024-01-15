@@ -42,6 +42,16 @@ import {
   ContinuationLike_run,
 } from "../../../__internal__/Continuation.js";
 
+export const QueueableContinuationLike_parent = Symbol(
+  "QueueableContinuationLike_parent",
+);
+
+export interface QueueableContinuationLike
+  extends ContinuationLike,
+    QueueLike<QueueableContinuationLike> {
+  [QueueableContinuationLike_parent]: Optional<QueueableContinuationLike>;
+}
+
 export const QueueableContinuationSchedulerLike_schedule = Symbol(
   "QueueableContinuationSchedulerLike_schedule",
 );
@@ -68,25 +78,15 @@ export interface QueueableContinuationSchedulerLike
   ): void;
 }
 
-export const QueueableContinuationLike_parent = Symbol(
-  "QueueableContinuationLike_parent",
-);
-
-export interface QueueableContinuationLike
-  extends ContinuationLike,
-    QueueLike<QueueableContinuationLike> {
-  [QueueableContinuationLike_parent]: Optional<QueueableContinuationLike>;
-}
-
-class ContinuationYieldError {
-  constructor(readonly delay: number) {}
-}
-
 export const create: (
   scheduler: QueueableContinuationSchedulerLike,
   effect: SideEffect1<ContinuationContextLike>,
-  delay: number,
+  dueTime: number,
 ) => QueueableContinuationLike = /*@__PURE__*/ (() => {
+  class ContinuationYieldError {
+    constructor(readonly delay: number) {}
+  }
+
   const QueueableContinuation_effect = Symbol("QueueableContinuation_effect");
 
   const QueueableContinuation_scheduler = Symbol(
