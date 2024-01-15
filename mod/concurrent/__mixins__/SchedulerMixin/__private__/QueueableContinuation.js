@@ -36,7 +36,6 @@ export const create = /*@__PURE__*/ (() => {
             parent[QueueableLike_enqueue](continuation);
         }
         else {
-            continuation[QueueableContinuationLike_parent] = none;
             scheduler[QueueableContinuationSchedulerLike_schedule](continuation);
         }
     };
@@ -55,7 +54,6 @@ export const create = /*@__PURE__*/ (() => {
             let head = none;
             while (((head = continuation[QueueLike_dequeue]()), isSome(head))) {
                 if (!head[DisposableLike_isDisposed]) {
-                    head[QueueableContinuationLike_parent] = none;
                     scheduler[QueueableContinuationSchedulerLike_schedule](head);
                 }
             }
@@ -68,6 +66,7 @@ export const create = /*@__PURE__*/ (() => {
         while (((head = thiz[QueueLike_dequeue]()), isSome(head))) {
             head[QueueableContinuationLike_parent] = thiz;
             head[ContinuationLike_run]();
+            head[QueueableContinuationLike_parent] = none;
             if (scheduler[SchedulerLike_shouldYield] &&
                 !thiz[DisposableLike_isDisposed]) {
                 rescheduleContinuation(thiz);
@@ -99,7 +98,6 @@ export const create = /*@__PURE__*/ (() => {
                 thiz[ContinuationLike_id] =
                     scheduler[QueueableContinuationSchedulerLike_nextTaskID];
                 thiz[ContinuationLike_dueTime] = scheduler[SchedulerLike_now] + delay;
-                thiz[QueueableContinuationLike_parent] = none;
                 rescheduleChildrenOnParentOrScheduler(thiz);
                 scheduler[QueueableContinuationSchedulerLike_schedule](thiz);
             }

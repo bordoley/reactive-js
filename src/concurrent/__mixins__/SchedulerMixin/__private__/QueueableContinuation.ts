@@ -120,7 +120,6 @@ export const create: (
     if (isSome(parent)) {
       parent[QueueableLike_enqueue](continuation);
     } else {
-      continuation[QueueableContinuationLike_parent] = none;
       scheduler[QueueableContinuationSchedulerLike_schedule](continuation);
     }
   };
@@ -142,7 +141,6 @@ export const create: (
       let head: Optional<QueueableContinuationLike> = none;
       while (((head = continuation[QueueLike_dequeue]()), isSome(head))) {
         if (!head[DisposableLike_isDisposed]) {
-          head[QueueableContinuationLike_parent] = none;
           scheduler[QueueableContinuationSchedulerLike_schedule](head);
         }
       }
@@ -163,6 +161,7 @@ export const create: (
     while (((head = thiz[QueueLike_dequeue]()), isSome(head))) {
       head[QueueableContinuationLike_parent] = thiz;
       head[ContinuationLike_run]();
+      head[QueueableContinuationLike_parent] = none;
 
       if (
         scheduler[SchedulerLike_shouldYield] &&
@@ -201,7 +200,6 @@ export const create: (
           scheduler[QueueableContinuationSchedulerLike_nextTaskID];
 
         thiz[ContinuationLike_dueTime] = scheduler[SchedulerLike_now] + delay;
-        thiz[QueueableContinuationLike_parent] = none;
 
         rescheduleChildrenOnParentOrScheduler(thiz);
 
