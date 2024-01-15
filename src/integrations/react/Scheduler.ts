@@ -6,10 +6,9 @@ import {
   unstable_shouldYield,
 } from "scheduler";
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../__internal__/mixins.js";
 import { SchedulerLike, SchedulerLike_now } from "../../concurrent.js";
@@ -39,58 +38,56 @@ const createReactScheduler = /*@__PURE__*/ (() => {
     priority: 1 | 2 | 3 | 4 | 5;
   };
 
-  return createInstanceFactory(
-    mix(
-      include(SchedulerMixin),
-      function ReactPriorityScheduler(
-        instance: ContinuationSchedulerLike & TProperties,
-        priority: 1 | 2 | 3 | 4 | 5,
-      ): SchedulerLike & DisposableLike {
-        init(SchedulerMixin, instance, 300);
-        instance.priority = priority;
-        return instance;
+  return mixInstanceFactory(
+    include(SchedulerMixin),
+    function ReactPriorityScheduler(
+      instance: ContinuationSchedulerLike & TProperties,
+      priority: 1 | 2 | 3 | 4 | 5,
+    ): SchedulerLike & DisposableLike {
+      init(SchedulerMixin, instance, 300);
+      instance.priority = priority;
+      return instance;
+    },
+    props<TProperties>({
+      priority: 3,
+    }),
+    {
+      get [SchedulerLike_now](): number {
+        return unstable_now();
       },
-      props<TProperties>({
-        priority: 3,
-      }),
-      {
-        get [SchedulerLike_now](): number {
-          return unstable_now();
-        },
 
-        get [ContinuationSchedulerLike_shouldYield](): boolean {
-          return unstable_shouldYield();
-        },
-
-        [ContinuationSchedulerLike_schedule](
-          this: ContinuationSchedulerLike & TProperties,
-          continuation: ContinuationLike,
-        ) {
-          const callback = () => {
-            callbackNodeDisposable[DisposableLike_dispose]();
-            continuation[ContinuationLike_run]();
-          };
-
-          const now = this[SchedulerLike_now];
-          const dueTime = continuation[ContinuationLike_dueTime];
-          const delay = dueTime - now;
-
-          const callbackNode = unstable_scheduleCallback(
-            this.priority,
-            callback,
-            delay > 0 ? { delay } : none,
-          );
-
-          const callbackNodeDisposable = pipe(
-            Disposable.create(),
-            Disposable.onDisposed(
-              pipeLazy(callbackNode, unstable_cancelCallback),
-            ),
-            Disposable.addTo(continuation),
-          );
-        },
+      get [ContinuationSchedulerLike_shouldYield](): boolean {
+        return unstable_shouldYield();
       },
-    ),
+
+      [ContinuationSchedulerLike_schedule](
+        this: ContinuationSchedulerLike & TProperties,
+        continuation: ContinuationLike,
+      ) {
+        const callback = () => {
+          callbackNodeDisposable[DisposableLike_dispose]();
+          continuation[ContinuationLike_run]();
+        };
+
+        const now = this[SchedulerLike_now];
+        const dueTime = continuation[ContinuationLike_dueTime];
+        const delay = dueTime - now;
+
+        const callbackNode = unstable_scheduleCallback(
+          this.priority,
+          callback,
+          delay > 0 ? { delay } : none,
+        );
+
+        const callbackNodeDisposable = pipe(
+          Disposable.create(),
+          Disposable.onDisposed(
+            pipeLazy(callbackNode, unstable_cancelCallback),
+          ),
+          Disposable.addTo(continuation),
+        );
+      },
+    },
   );
 })();
 

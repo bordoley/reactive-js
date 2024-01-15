@@ -1,6 +1,6 @@
 /// <reference types="./WindowLocation.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import { pick } from "../../computations.js";
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, StreamableLike_stream, } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
@@ -49,13 +49,12 @@ const createSyncToHistoryStream = (f, scheduler, options) => Streamable.create(c
 })))[StreamableLike_stream](scheduler, options);
 export const subscribe = /*@__PURE__*/ (() => {
     const WindowLocation_delegate = Symbol("WindowLocation_delegate");
-    const createWindowLocationObservable = createInstanceFactory(mix(include(DelegatingDisposableMixin()), function WindowLocationStream(instance, delegate, scheduler) {
+    const createWindowLocationObservable = mixInstanceFactory(include(DelegatingDisposableMixin()), function WindowLocationStream(instance, delegate, scheduler) {
         init(DelegatingDisposableMixin(), instance, delegate);
         instance[WindowLocation_delegate] = delegate;
         instance[WindowLocationLike_canGoBack] = pipe(WritableStore.create(false), Disposable.addTo(instance));
         pipe(delegate, Observable.forEach(({ counter }) => {
-            instance[WindowLocationLike_canGoBack][StoreLike_value] =
-                counter > 0;
+            instance[WindowLocationLike_canGoBack][StoreLike_value] = counter > 0;
         }), Observable.subscribe(scheduler), Disposable.addTo(instance));
         return instance;
     }, props({
@@ -88,7 +87,7 @@ export const subscribe = /*@__PURE__*/ (() => {
         [ObservableLike_observe](observer) {
             pipe(this[WindowLocation_delegate], pick({ map: Observable.map }, "uri"), invoke(ObservableLike_observe, observer));
         },
-    }));
+    });
     let currentWindowLocationObservable = none;
     return (scheduler) => {
         raiseIf(isSome(currentWindowLocationObservable), "Cannot stream more than once");

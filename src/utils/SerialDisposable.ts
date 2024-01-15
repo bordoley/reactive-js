@@ -1,9 +1,4 @@
-import {
-  createInstanceFactory,
-  include,
-  init,
-  mix,
-} from "../__internal__/mixins.js";
+import { include, init, mixInstanceFactory } from "../__internal__/mixins.js";
 import { DisposableLike, SerialDisposableLike } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import DisposableMixin from "./__mixins__/DisposableMixin.js";
@@ -21,16 +16,14 @@ type Signature = SerialDisposableModule;
 export const create: Signature["create"] = /*@__PURE__*/ (<
   TDisposable extends DisposableLike,
 >() =>
-  createInstanceFactory(
-    mix(
-      include(DisposableMixin, SerialDisposableMixin<TDisposable>()),
-      function SerialDisposable(
-        instance: unknown,
-        initialValue: TDisposable = Disposable.disposed as TDisposable,
-      ): SerialDisposableLike<TDisposable> {
-        init(DisposableMixin, instance);
-        init(SerialDisposableMixin<TDisposable>(), instance, initialValue);
-        return instance;
-      },
-    ),
+  mixInstanceFactory(
+    include(DisposableMixin, SerialDisposableMixin<TDisposable>()),
+    function SerialDisposable(
+      instance: unknown,
+      initialValue: TDisposable = Disposable.disposed as TDisposable,
+    ): SerialDisposableLike<TDisposable> {
+      init(DisposableMixin, instance);
+      init(SerialDisposableMixin<TDisposable>(), instance, initialValue);
+      return instance;
+    },
   ))();

@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -29,47 +28,44 @@ const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (() => {
     delegate: EventListenerLike<TB>,
     predicate: Function1<TA, TB>,
   ) => EventListenerLike<TA> = (<TA, TB>() =>
-    createInstanceFactory(
-      mix(
-        include(DelegatingDisposableMixin<EventListenerLike<TB>>()),
-        function MapEventListener(
-          instance: Pick<
+    mixInstanceFactory(
+      include(DelegatingDisposableMixin<EventListenerLike<TB>>()),
+      function MapEventListener(
+        instance: Pick<
+          EventListenerLike<TA>,
+          typeof EventListenerLike_notify | typeof EventListenerLike_isErrorSafe
+        > &
+          TProperties<TA, TB>,
+        delegate: EventListenerLike<TB>,
+        selector: Function1<TA, TB>,
+      ): EventListenerLike<TA> {
+        init(
+          DelegatingDisposableMixin<EventListenerLike<TB>>(),
+          instance,
+          delegate,
+        );
+        instance[MapEventListener_selector] = selector;
+
+        return instance;
+      },
+      props<TProperties<TA, TB>>({
+        [MapEventListener_selector]: none,
+      }),
+      {
+        [EventListenerLike_isErrorSafe]: false,
+
+        [EventListenerLike_notify](
+          this: TProperties<TA, TB> &
+            DelegatingDisposableLike<EventListenerLike<TB>> &
             EventListenerLike<TA>,
-            | typeof EventListenerLike_notify
-            | typeof EventListenerLike_isErrorSafe
-          > &
-            TProperties<TA, TB>,
-          delegate: EventListenerLike<TB>,
-          selector: Function1<TA, TB>,
-        ): EventListenerLike<TA> {
-          init(
-            DelegatingDisposableMixin<EventListenerLike<TB>>(),
-            instance,
-            delegate,
+          next: TA,
+        ) {
+          const mapped = this[MapEventListener_selector](next);
+          this[DelegatingDisposableLike_delegate][EventListenerLike_notify](
+            mapped,
           );
-          instance[MapEventListener_selector] = selector;
-
-          return instance;
         },
-        props<TProperties<TA, TB>>({
-          [MapEventListener_selector]: none,
-        }),
-        {
-          [EventListenerLike_isErrorSafe]: false,
-
-          [EventListenerLike_notify](
-            this: TProperties<TA, TB> &
-              DelegatingDisposableLike<EventListenerLike<TB>> &
-              EventListenerLike<TA>,
-            next: TA,
-          ) {
-            const mapped = this[MapEventListener_selector](next);
-            this[DelegatingDisposableLike_delegate][EventListenerLike_notify](
-              mapped,
-            );
-          },
-        },
-      ),
+      },
     ))();
 
   return <TA, TB>(selector: Function1<TA, TB>) =>

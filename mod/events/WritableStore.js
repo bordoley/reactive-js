@@ -1,13 +1,13 @@
 /// <reference types="./WritableStore.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
 import { EventListenerLike_notify, StoreLike_value, } from "../events.js";
 import { none, strictEquality } from "../functions.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import LazyInitEventSourceMixin, { LazyInitEventSourceLike_publisher, } from "./__mixins__/LazyInitEventSourceMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const WritableStore_equality = Symbol("WritableStore_equality");
-    return createInstanceFactory(mix(include(LazyInitEventSourceMixin(), DisposableMixin), function WritableStore(instance, initialValue, options) {
+    return mixInstanceFactory(include(LazyInitEventSourceMixin(), DisposableMixin), function WritableStore(instance, initialValue, options) {
         init(DisposableMixin, instance);
         init(LazyInitEventSourceMixin(), instance);
         instance.v = initialValue;
@@ -28,5 +28,5 @@ export const create = /*@__PURE__*/ (() => {
                 this[LazyInitEventSourceLike_publisher]?.[EventListenerLike_notify](value);
             }
         },
-    }));
+    });
 })();

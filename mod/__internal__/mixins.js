@@ -81,6 +81,7 @@ export const createInstanceFactory = (mixin) => {
         return instance;
     };
 };
+export const mixInstanceFactory = ((initOrParent, propertiesOrInit, prototypeOrParent, nothingOrPrototype) => createInstanceFactory(mix(initOrParent, propertiesOrInit, prototypeOrParent, nothingOrPrototype)));
 const emptyProps = {};
 export const props = (o) => {
     return (o ?? emptyProps);

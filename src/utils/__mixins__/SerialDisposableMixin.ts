@@ -14,28 +14,37 @@ import {
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 
-const SerialDisposableMixin_current = Symbol("SerialDisposableMixin_current");
-
 const SerialDisposableMixin: <TDisposable extends DisposableLike>() => Mixin1<
   SerialDisposableLike<TDisposable>,
-  TDisposable
+  TDisposable,
+  DisposableLike
 > = /*@__PURE__*/ (<TDisposable extends DisposableLike>() => {
+  const SerialDisposableMixin_current = Symbol("SerialDisposableMixin_current");
+
   type TProperties = {
     [SerialDisposableMixin_current]: TDisposable;
   };
 
   return pipe(
-    mix(
+    mix<
+      SerialDisposableLike<TDisposable>,
+      TProperties,
+      Pick<
+        SerialDisposableLike<TDisposable>,
+        typeof SerialDisposableLike_current
+      >,
+      DisposableLike,
+      TDisposable
+    >(
       function SerialDisposableMixin(
         instance: Pick<
           SerialDisposableLike<TDisposable>,
           typeof SerialDisposableLike_current
         > &
+          DisposableLike &
           Mutable<TProperties>,
         defaultValue: TDisposable,
       ): SerialDisposableLike<TDisposable> {
-        unsafeCast<DisposableLike>(instance);
-
         instance[SerialDisposableMixin_current] = defaultValue;
         pipe(instance, Disposable.add(defaultValue));
 

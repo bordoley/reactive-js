@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../__internal__/mixins.js";
 import { pick } from "../../computations.js";
@@ -148,98 +147,95 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
     [WindowLocationLike_canGoBack]: WritableStoreLike<boolean>;
   };
 
-  const createWindowLocationObservable = createInstanceFactory(
-    mix(
-      include(DelegatingDisposableMixin()),
-      function WindowLocationStream(
-        instance: WindowLocationLike & TProperties,
-        delegate: StreamLike<Updater<TState>, TState>,
-        scheduler: SchedulerLike,
-      ): WindowLocationLike & DisposableLike {
-        init(DelegatingDisposableMixin(), instance, delegate);
+  const createWindowLocationObservable = mixInstanceFactory(
+    include(DelegatingDisposableMixin()),
+    function WindowLocationStream(
+      instance: WindowLocationLike & TProperties,
+      delegate: StreamLike<Updater<TState>, TState>,
+      scheduler: SchedulerLike,
+    ): WindowLocationLike & DisposableLike {
+      init(DelegatingDisposableMixin(), instance, delegate);
 
-        instance[WindowLocation_delegate] = delegate;
+      instance[WindowLocation_delegate] = delegate;
 
-        instance[WindowLocationLike_canGoBack] = pipe(
-          WritableStore.create(false),
-          Disposable.addTo(instance),
+      instance[WindowLocationLike_canGoBack] = pipe(
+        WritableStore.create(false),
+        Disposable.addTo(instance),
+      );
+
+      pipe(
+        delegate,
+        Observable.forEach<TState>(({ counter }) => {
+          instance[WindowLocationLike_canGoBack][StoreLike_value] = counter > 0;
+        }),
+        Observable.subscribe(scheduler),
+        Disposable.addTo(instance),
+      );
+
+      return instance;
+    },
+    props<TProperties>({
+      [WindowLocation_delegate]: none,
+      [WindowLocationLike_canGoBack]: none,
+    }),
+    {
+      [ObservableLike_isDeferred]: false as const,
+      [ObservableLike_isMulticasted]: true as const,
+      [ObservableLike_isRunnable]: false as const,
+      [ObservableLike_isPure]: true as const,
+
+      [WindowLocationLike_push](
+        this: TProperties,
+        stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
+      ) {
+        this[WindowLocation_delegate][QueueableLike_enqueue](
+          (prevState: TState) => {
+            const uri = createWindowLocationURIWithPrototype(
+              isFunction(stateOrUpdater)
+                ? stateOrUpdater(prevState.uri)
+                : stateOrUpdater,
+            );
+
+            return { uri, replace: false, counter: prevState.counter + 1 };
+          },
         );
+      },
 
+      [WindowLocationLike_replace](
+        this: TProperties,
+        stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
+      ) {
+        this[WindowLocation_delegate][QueueableLike_enqueue](
+          (prevState: TState) => {
+            const uri = createWindowLocationURIWithPrototype(
+              isFunction(stateOrUpdater)
+                ? stateOrUpdater(prevState.uri)
+                : stateOrUpdater,
+            );
+
+            return { uri, replace: true, counter: prevState.counter };
+          },
+        );
+      },
+
+      [WindowLocationLike_goBack](this: WindowLocationLike): void {
+        history.back();
+      },
+
+      [ObservableLike_observe](
+        this: TProperties,
+        observer: ObserverLike<WindowLocationURI>,
+      ): void {
         pipe(
-          delegate,
-          Observable.forEach<TState>(({ counter }) => {
-            instance[WindowLocationLike_canGoBack][StoreLike_value] =
-              counter > 0;
-          }),
-          Observable.subscribe(scheduler),
-          Disposable.addTo(instance),
+          this[WindowLocation_delegate],
+          pick<Observable.MulticastObservableComputation, TState, "uri">(
+            { map: Observable.map },
+            "uri",
+          ),
+          invoke(ObservableLike_observe, observer),
         );
-
-        return instance;
       },
-      props<TProperties>({
-        [WindowLocation_delegate]: none,
-        [WindowLocationLike_canGoBack]: none,
-      }),
-      {
-        [ObservableLike_isDeferred]: false as const,
-        [ObservableLike_isMulticasted]: true as const,
-        [ObservableLike_isRunnable]: false as const,
-        [ObservableLike_isPure]: true as const,
-
-        [WindowLocationLike_push](
-          this: TProperties,
-          stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
-        ) {
-          this[WindowLocation_delegate][QueueableLike_enqueue](
-            (prevState: TState) => {
-              const uri = createWindowLocationURIWithPrototype(
-                isFunction(stateOrUpdater)
-                  ? stateOrUpdater(prevState.uri)
-                  : stateOrUpdater,
-              );
-
-              return { uri, replace: false, counter: prevState.counter + 1 };
-            },
-          );
-        },
-
-        [WindowLocationLike_replace](
-          this: TProperties,
-          stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
-        ) {
-          this[WindowLocation_delegate][QueueableLike_enqueue](
-            (prevState: TState) => {
-              const uri = createWindowLocationURIWithPrototype(
-                isFunction(stateOrUpdater)
-                  ? stateOrUpdater(prevState.uri)
-                  : stateOrUpdater,
-              );
-
-              return { uri, replace: true, counter: prevState.counter };
-            },
-          );
-        },
-
-        [WindowLocationLike_goBack](this: WindowLocationLike): void {
-          history.back();
-        },
-
-        [ObservableLike_observe](
-          this: TProperties,
-          observer: ObserverLike<WindowLocationURI>,
-        ): void {
-          pipe(
-            this[WindowLocation_delegate],
-            pick<Observable.MulticastObservableComputation, TState, "uri">(
-              { map: Observable.map },
-              "uri",
-            ),
-            invoke(ObservableLike_observe, observer),
-          );
-        },
-      },
-    ),
+    },
   );
 
   let currentWindowLocationObservable: Optional<

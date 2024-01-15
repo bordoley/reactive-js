@@ -1,8 +1,4 @@
-import {
-  createInstanceFactory,
-  mix,
-  props,
-} from "../../../__internal__/mixins.js";
+import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
 import {
   EventListenerLike,
   EventSourceLike,
@@ -24,42 +20,37 @@ const createLiftedEventSource: <TIn, TOut>(
       EventListenerLike<any>
     >[];
   };
-  return createInstanceFactory(
-    mix(
-      function LiftedEventSource(
-        instance: TProperties &
-          Pick<EventSourceLike, typeof EventSourceLike_addEventListener>,
-        source: EventSourceLike<TIn>,
-        ops: readonly Function1<
-          EventListenerLike<any>,
-          EventListenerLike<any>
-        >[],
-      ) {
-        instance[LiftedEventSource_source] = source;
-        instance[LiftedEventSource_operators] = ops;
+  return mixInstanceFactory(
+    function LiftedEventSource(
+      instance: TProperties &
+        Pick<EventSourceLike, typeof EventSourceLike_addEventListener>,
+      source: EventSourceLike<TIn>,
+      ops: readonly Function1<EventListenerLike<any>, EventListenerLike<any>>[],
+    ) {
+      instance[LiftedEventSource_source] = source;
+      instance[LiftedEventSource_operators] = ops;
 
-        return instance;
+      return instance;
+    },
+    props<TProperties>({
+      [LiftedEventSource_source]: none,
+      [LiftedEventSource_operators]: none,
+    }),
+    {
+      [EventSourceLike_addEventListener](
+        this: TProperties,
+        listener: EventListenerLike<TOut>,
+      ) {
+        pipeUnsafe(
+          listener,
+          ...this[LiftedEventSource_operators],
+          bindMethod(
+            this[LiftedEventSource_source],
+            EventSourceLike_addEventListener,
+          ),
+        );
       },
-      props<TProperties>({
-        [LiftedEventSource_source]: none,
-        [LiftedEventSource_operators]: none,
-      }),
-      {
-        [EventSourceLike_addEventListener](
-          this: TProperties,
-          listener: EventListenerLike<TOut>,
-        ) {
-          pipeUnsafe(
-            listener,
-            ...this[LiftedEventSource_operators],
-            bindMethod(
-              this[LiftedEventSource_source],
-              EventSourceLike_addEventListener,
-            ),
-          );
-        },
-      },
-    ),
+    },
   );
 })();
 

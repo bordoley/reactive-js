@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
   unsafeCast,
 } from "../__internal__/mixins.js";
@@ -30,46 +29,44 @@ export const create: <T>(
     [WritableStore_equality]: Equality<T>;
     v: T;
   };
-  return createInstanceFactory(
-    mix(
-      include(LazyInitEventSourceMixin(), DisposableMixin),
-      function WritableStore(
-        instance: {
-          [StoreLike_value]: T;
-        } & TProperties,
-        initialValue: T,
-        options?: {
-          readonly equality?: Equality<T>;
-        },
-      ): WritableStoreLike<T> {
-        init(DisposableMixin, instance);
-        init(LazyInitEventSourceMixin(), instance);
-
-        instance.v = initialValue;
-        instance[WritableStore_equality] = options?.equality ?? strictEquality;
-
-        return instance;
+  return mixInstanceFactory(
+    include(LazyInitEventSourceMixin(), DisposableMixin),
+    function WritableStore(
+      instance: {
+        [StoreLike_value]: T;
+      } & TProperties,
+      initialValue: T,
+      options?: {
+        readonly equality?: Equality<T>;
       },
-      props<TProperties>({
-        [WritableStore_equality]: none,
-        v: none,
-      }),
-      {
-        get [StoreLike_value]() {
-          unsafeCast<TProperties>(this);
-          return this.v;
-        },
-        set [StoreLike_value](value: T) {
-          unsafeCast<TProperties & LazyInitEventSourceLike<T>>(this);
+    ): WritableStoreLike<T> {
+      init(DisposableMixin, instance);
+      init(LazyInitEventSourceMixin(), instance);
 
-          if (!this[WritableStore_equality](this.v, value)) {
-            this.v = value;
-            this[LazyInitEventSourceLike_publisher]?.[EventListenerLike_notify](
-              value,
-            );
-          }
-        },
+      instance.v = initialValue;
+      instance[WritableStore_equality] = options?.equality ?? strictEquality;
+
+      return instance;
+    },
+    props<TProperties>({
+      [WritableStore_equality]: none,
+      v: none,
+    }),
+    {
+      get [StoreLike_value]() {
+        unsafeCast<TProperties>(this);
+        return this.v;
       },
-    ),
+      set [StoreLike_value](value: T) {
+        unsafeCast<TProperties & LazyInitEventSourceLike<T>>(this);
+
+        if (!this[WritableStore_equality](this.v, value)) {
+          this.v = value;
+          this[LazyInitEventSourceLike_publisher]?.[EventListenerLike_notify](
+            value,
+          );
+        }
+      },
+    },
   );
 })();

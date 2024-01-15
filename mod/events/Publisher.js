@@ -1,6 +1,6 @@
 /// <reference types="./Publisher.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { EventListenerLike_isErrorSafe, EventListenerLike_notify, EventSourceLike_addEventListener, } from "../events.js";
 import { error, newInstance, none, pipe } from "../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed } from "../utils.js";
@@ -9,10 +9,9 @@ import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const Publisher_autoDispose = Symbol("Publisher_autoDispose");
     const Publisher_listeners = Symbol("Publisher_listeners");
-    return createInstanceFactory(mix(include(DisposableMixin), function EventPublisher(instance, options) {
+    return mixInstanceFactory(include(DisposableMixin), function EventPublisher(instance, options) {
         init(DisposableMixin, instance);
-        instance[Publisher_listeners] =
-            newInstance(Set);
+        instance[Publisher_listeners] = newInstance(Set);
         instance[Publisher_autoDispose] = options?.autoDispose ?? false;
         pipe(instance, Disposable.onDisposed(e => {
             for (const listener of instance[Publisher_listeners]) {
@@ -56,5 +55,5 @@ export const create = /*@__PURE__*/ (() => {
                 }
             }));
         },
-    }));
+    });
 })();

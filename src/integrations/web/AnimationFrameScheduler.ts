@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../__internal__/mixins.js";
 import {
@@ -65,116 +64,112 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
     [AnimationFrameScheduler_rafIsRunning]: boolean;
   };
 
-  return createInstanceFactory(
-    mix(
-      include(CurrentTimeSchedulerMixin),
-      function AnimationFrameScheduler(
-        instance: Omit<ContinuationSchedulerLike, typeof SchedulerLike_now> &
-          TProperties,
-        hostScheduler: SchedulerLike,
-      ): SchedulerLike & DisposableLike {
-        init(CurrentTimeSchedulerMixin, instance, 5);
+  return mixInstanceFactory(
+    include(CurrentTimeSchedulerMixin),
+    function AnimationFrameScheduler(
+      instance: Omit<ContinuationSchedulerLike, typeof SchedulerLike_now> &
+        TProperties,
+      hostScheduler: SchedulerLike,
+    ): SchedulerLike & DisposableLike {
+      init(CurrentTimeSchedulerMixin, instance, 5);
 
-        instance[AnimationFrameScheduler_host] = hostScheduler;
+      instance[AnimationFrameScheduler_host] = hostScheduler;
+      instance[AnimationFrameScheduler_rafQueue] = IndexedQueue.create();
+      instance[AnimationFrameScheduler_rafIsRunning] = false;
+
+      instance[AnimationFrameScheduler_rafCallback] = () => {
+        const startTime = instance[SchedulerLike_now];
+        const workQueue = instance[AnimationFrameScheduler_rafQueue];
+
         instance[AnimationFrameScheduler_rafQueue] = IndexedQueue.create();
-        instance[AnimationFrameScheduler_rafIsRunning] = false;
 
-        instance[AnimationFrameScheduler_rafCallback] = () => {
-          const startTime = instance[SchedulerLike_now];
-          const workQueue = instance[AnimationFrameScheduler_rafQueue];
+        let continuation: Optional<ContinuationLike> = none;
+        while (
+          ((continuation = workQueue[QueueLike_dequeue]()),
+          isSome(continuation))
+        ) {
+          continuation[ContinuationLike_run]();
 
-          instance[AnimationFrameScheduler_rafQueue] = IndexedQueue.create();
+          const elapsedTime = instance[SchedulerLike_now] - startTime;
+          if (elapsedTime > 5 /*ms*/) {
+            break;
+          }
+        }
 
+        const continuationsCount = workQueue[QueueLike_count];
+        const newWorkQueue = instance[AnimationFrameScheduler_rafQueue];
+        const newContinuationsCount = newWorkQueue[QueueLike_count];
+
+        if (continuationsCount > 0 && newContinuationsCount === 0) {
+          instance[AnimationFrameScheduler_rafQueue] = workQueue;
+        } else if (continuationsCount > 0) {
+          // Merge the job queues copying the newly enqueued jobs
+          // onto the original queue.
           let continuation: Optional<ContinuationLike> = none;
           while (
-            ((continuation = workQueue[QueueLike_dequeue]()),
+            ((continuation = newWorkQueue[QueueLike_dequeue]()),
             isSome(continuation))
           ) {
-            continuation[ContinuationLike_run]();
-
-            const elapsedTime = instance[SchedulerLike_now] - startTime;
-            if (elapsedTime > 5 /*ms*/) {
-              break;
-            }
+            workQueue[QueueableLike_enqueue](continuation);
           }
+          instance[AnimationFrameScheduler_rafQueue] = workQueue;
+        }
 
-          const continuationsCount = workQueue[QueueLike_count];
-          const newWorkQueue = instance[AnimationFrameScheduler_rafQueue];
-          const newContinuationsCount = newWorkQueue[QueueLike_count];
+        const continuationsQueueCount =
+          instance[AnimationFrameScheduler_rafQueue][QueueLike_count];
+        if (continuationsQueueCount > 0) {
+          requestAnimationFrame(instance[AnimationFrameScheduler_rafCallback]);
+        } else {
+          instance[AnimationFrameScheduler_rafIsRunning] = false;
+        }
+      };
 
-          if (continuationsCount > 0 && newContinuationsCount === 0) {
-            instance[AnimationFrameScheduler_rafQueue] = workQueue;
-          } else if (continuationsCount > 0) {
-            // Merge the job queues copying the newly enqueued jobs
-            // onto the original queue.
-            let continuation: Optional<ContinuationLike> = none;
-            while (
-              ((continuation = newWorkQueue[QueueLike_dequeue]()),
-              isSome(continuation))
-            ) {
-              workQueue[QueueableLike_enqueue](continuation);
-            }
-            instance[AnimationFrameScheduler_rafQueue] = workQueue;
-          }
+      return instance;
+    },
+    props<TProperties>({
+      [AnimationFrameScheduler_host]: none,
+      [AnimationFrameScheduler_rafCallback]: none,
+      [AnimationFrameScheduler_rafQueue]: none,
+      [AnimationFrameScheduler_rafIsRunning]: false,
+    }),
+    {
+      [ContinuationSchedulerLike_shouldYield]: true,
+      [SchedulerLike_shouldYield]: true,
 
-          const continuationsQueueCount =
-            instance[AnimationFrameScheduler_rafQueue][QueueLike_count];
-          if (continuationsQueueCount > 0) {
-            requestAnimationFrame(
-              instance[AnimationFrameScheduler_rafCallback],
-            );
-          } else {
-            instance[AnimationFrameScheduler_rafIsRunning] = false;
-          }
-        };
+      [ContinuationSchedulerLike_schedule](
+        this: ContinuationSchedulerLike & TProperties,
+        continuation: ContinuationLike,
+      ) {
+        const now = this[SchedulerLike_now];
+        const dueTime = continuation[ContinuationLike_dueTime];
+        const delay = dueTime - now;
 
-        return instance;
-      },
-      props<TProperties>({
-        [AnimationFrameScheduler_host]: none,
-        [AnimationFrameScheduler_rafCallback]: none,
-        [AnimationFrameScheduler_rafQueue]: none,
-        [AnimationFrameScheduler_rafIsRunning]: false,
-      }),
-      {
-        [ContinuationSchedulerLike_shouldYield]: true,
-        [SchedulerLike_shouldYield]: true,
-
-        [ContinuationSchedulerLike_schedule](
-          this: ContinuationSchedulerLike & TProperties,
-          continuation: ContinuationLike,
-        ) {
-          const now = this[SchedulerLike_now];
-          const dueTime = continuation[ContinuationLike_dueTime];
-          const delay = dueTime - now;
-
-          // The frame time is 16 ms at 60 fps so just ignore the delay
-          // if its not more than a frame.
-          if (delay > 16) {
-            pipe(
-              this[AnimationFrameScheduler_host],
-              invoke(
-                SchedulerLike_schedule,
-                pipeLazy(
-                  this,
-                  invoke(ContinuationSchedulerLike_schedule, continuation),
-                ),
-                { delay },
+        // The frame time is 16 ms at 60 fps so just ignore the delay
+        // if its not more than a frame.
+        if (delay > 16) {
+          pipe(
+            this[AnimationFrameScheduler_host],
+            invoke(
+              SchedulerLike_schedule,
+              pipeLazy(
+                this,
+                invoke(ContinuationSchedulerLike_schedule, continuation),
               ),
-              Disposable.addTo(continuation),
-            );
-          } else {
-            this[AnimationFrameScheduler_rafQueue][QueueableLike_enqueue](
-              continuation,
-            );
+              { delay },
+            ),
+            Disposable.addTo(continuation),
+          );
+        } else {
+          this[AnimationFrameScheduler_rafQueue][QueueableLike_enqueue](
+            continuation,
+          );
 
-            if (!this[AnimationFrameScheduler_rafIsRunning]) {
-              this[AnimationFrameScheduler_rafIsRunning] = true;
-              requestAnimationFrame(this[AnimationFrameScheduler_rafCallback]);
-            }
+          if (!this[AnimationFrameScheduler_rafIsRunning]) {
+            this[AnimationFrameScheduler_rafIsRunning] = true;
+            requestAnimationFrame(this[AnimationFrameScheduler_rafCallback]);
           }
-        },
+        }
       },
-    ),
+    },
   );
 })();
