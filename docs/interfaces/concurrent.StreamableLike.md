@@ -46,7 +46,7 @@ Subscribe to the Streamable.
 | :------ | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) | The scheduler to subscribe to the stream with. |
 | `options?` | `Object` |  |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` | - |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) | - |
 | `options.capacity?` | `number` | The capacity of the stream's request queue. |
 | `options.replay?` | `number` | The number of items to buffer for replay when an observer subscribes to the stream. |
 

@@ -38,7 +38,7 @@ export declare const __currentScheduler: () => SchedulerLike;
 export declare const __stream: <TStreamable extends StreamableLike<unknown, unknown, StreamLike<unknown, unknown>>>(streamable: TStreamable, { replay, backpressureStrategy, capacity, scheduler, }?: {
     readonly replay?: number | undefined;
     readonly scheduler?: SchedulerLike | undefined;
-    readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
+    readonly backpressureStrategy?: import("../../utils.js").BackpressureStrategy | undefined;
     readonly capacity?: number | undefined;
 }) => ReturnType<TStreamable[typeof StreamableLike_stream]>;
 export declare const __state: <T>(initialState: () => T, options?: {

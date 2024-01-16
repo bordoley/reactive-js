@@ -4,7 +4,7 @@ import { Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/constants.js
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { newInstance, none, raiseError, raiseIf, returns, } from "../../functions.js";
-import { BackPressureError, IndexedQueueLike_get, IndexedQueueLike_set, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, StackLike_head, StackLike_pop, } from "../../utils.js";
+import { BackPressureError, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, IndexedQueueLike_get, IndexedQueueLike_set, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, StackLike_head, StackLike_pop, ThrowBackpressureStrategy, } from "../../utils.js";
 const IndexedQueueMixin = /*@PURE*/ (() => {
     const IndexedQueueMixin_capacityMask = Symbol("IndexedQueueMixin_capacityMask");
     const IndexedQueueMixin_head = Symbol("IndexedQueueMixin_head");
@@ -79,14 +79,15 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
     };
     return returns(mix(function IndexedQueueMixin(instance, config) {
         instance[QueueableLike_backpressureStrategy] =
-            config?.[QueueableLike_backpressureStrategy] ?? "overflow";
+            config?.[QueueableLike_backpressureStrategy] ??
+                OverflowBackpressureStrategy;
         instance[QueueableLike_capacity] = clampPositiveInteger(config?.[QueueableLike_capacity] ?? MAX_SAFE_INTEGER);
         instance[IndexedQueueMixin_capacityMask] = 31;
         instance[IndexedQueueMixin_values] = newInstance(Array, 32);
         return instance;
     }, props({
         [QueueLike_count]: 0,
-        [QueueableLike_backpressureStrategy]: "overflow",
+        [QueueableLike_backpressureStrategy]: OverflowBackpressureStrategy,
         [QueueableLike_capacity]: MAX_SAFE_INTEGER,
         [IndexedQueueMixin_head]: 0,
         [IndexedQueueMixin_tail]: 0,
@@ -152,10 +153,11 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
             const backpressureStrategy = this[QueueableLike_backpressureStrategy];
             let count = this[QueueLike_count];
             const capacity = this[QueueableLike_capacity];
-            if (backpressureStrategy === "drop-latest" && count >= capacity) {
+            if (backpressureStrategy === DropLatestBackpressureStrategy &&
+                count >= capacity) {
                 return false;
             }
-            else if (backpressureStrategy === "drop-oldest" &&
+            else if (backpressureStrategy === DropOldestBackpressureStrategy &&
                 count >= capacity) {
                 if (capacity > 0) {
                     // We want to pop off the oldest value first, before enqueueing
@@ -168,7 +170,8 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
                     return false;
                 }
             }
-            else if (backpressureStrategy === "throw" && count >= capacity) {
+            else if (backpressureStrategy === ThrowBackpressureStrategy &&
+                count >= capacity) {
                 raiseError(newInstance(BackPressureError, capacity, backpressureStrategy));
             }
             const values = this[IndexedQueueMixin_values];

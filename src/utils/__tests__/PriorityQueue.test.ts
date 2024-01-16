@@ -9,10 +9,13 @@ import {
 } from "../../__internal__/testing.js";
 import { Optional, newInstance, pipe } from "../../functions.js";
 import {
+  DropLatestBackpressureStrategy,
+  DropOldestBackpressureStrategy,
   QueueLike_count,
   QueueLike_dequeue,
   QueueLike_head,
   QueueableLike_enqueue,
+  ThrowBackpressureStrategy,
 } from "../../utils.js";
 import * as PriorityQueue from "../PriorityQueue.js";
 
@@ -65,7 +68,7 @@ testModule(
 
     const queue = PriorityQueue.create(compare, {
       capacity: 1,
-      backpressureStrategy: "drop-latest",
+      backpressureStrategy: DropLatestBackpressureStrategy,
     });
 
     queue[QueueableLike_enqueue](0);
@@ -79,7 +82,7 @@ testModule(
 
     const queue = PriorityQueue.create(compare, {
       capacity: 1,
-      backpressureStrategy: "drop-oldest",
+      backpressureStrategy: DropOldestBackpressureStrategy,
     });
 
     queue[QueueableLike_enqueue](0);
@@ -93,7 +96,7 @@ testModule(
 
     const queue = PriorityQueue.create(compare, {
       capacity: 1,
-      backpressureStrategy: "throw",
+      backpressureStrategy: ThrowBackpressureStrategy,
     });
 
     queue[QueueableLike_enqueue](0);

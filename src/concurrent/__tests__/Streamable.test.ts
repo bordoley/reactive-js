@@ -38,6 +38,7 @@ import {
 } from "../../functions.js";
 import {
   DisposableLike_dispose,
+  DropLatestBackpressureStrategy,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
@@ -158,13 +159,13 @@ testModule(
       const streamable = Streamable.createStateStore(returns(1));
       const stateStream = streamable[StreamableLike_stream](scheduler, {
         capacity: 20,
-        backpressureStrategy: "drop-latest",
+        backpressureStrategy: DropLatestBackpressureStrategy,
       });
 
       pipe(stateStream[QueueableLike_capacity], expectEquals(20));
       pipe(
         stateStream[QueueableLike_backpressureStrategy],
-        expectEquals("drop-latest"),
+        expectEquals(DropLatestBackpressureStrategy),
       );
 
       stateStream[QueueableLike_enqueue](returns(2));

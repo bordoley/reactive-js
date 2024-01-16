@@ -5,7 +5,7 @@ import { describe, expectArrayEquals, expectEquals, expectToHaveBeenCalledTimes,
 import * as Enumerable from "../../collections/Enumerable.js";
 import { FlowableLike_flow, PauseableLike_pause, PauseableLike_resume, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import { bind, error, increment, invoke, newInstance, pipe, pipeLazy, returns, tuple, } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Flowable from "../Flowable.js";
 import * as HostScheduler from "../HostScheduler.js";
@@ -16,7 +16,7 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
     const scheduler = VirtualTimeScheduler.create();
     const src = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Observable.takeFirst({ count: 5 }), Flowable.fromRunnable());
     const dest = Streamable.identity()[StreamableLike_stream](scheduler, {
-        backpressureStrategy: "throw",
+        backpressureStrategy: ThrowBackpressureStrategy,
         capacity: 1,
     });
     const dispatchToSubscription = pipe(src, Flowable.dispatchTo(dest), Observable.subscribe(scheduler));

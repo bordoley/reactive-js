@@ -13,7 +13,7 @@ import { EventListenerLike_notify, StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
 import { alwaysTrue, arrayEquality, bind, bindMethod, error, ignore, increment, incrementBy, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, OverflowBackpressureStrategy, QueueableLike_enqueue, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
 import * as HostScheduler from "../HostScheduler.js";
@@ -128,18 +128,18 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         for (let i = 0; i < 10; i++) {
             observer[QueueableLike_enqueue](i);
         }
-    }), Observable.backpressureStrategy(1, "throw"), Observable.toReadonlyArrayAsync(scheduler)));
+    }), Observable.backpressureStrategy(1, ThrowBackpressureStrategy), Observable.toReadonlyArrayAsync(scheduler)));
 })), testAsync("with a drop latest backpressure strategy", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => pipeAsync(Observable.create(observer => {
     for (let i = 0; i < 10; i++) {
         observer[QueueableLike_enqueue](i);
     }
     observer[DispatcherLike_complete]();
-}), Observable.backpressureStrategy(1, "drop-latest"), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([0])))), testAsync("with a drop-oldest latest backpressure strategy", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => pipeAsync(Observable.create(observer => {
+}), Observable.backpressureStrategy(1, DropLatestBackpressureStrategy), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([0])))), testAsync("with a drop-oldest latest backpressure strategy", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => pipeAsync(Observable.create(observer => {
     for (let i = 0; i < 10; i++) {
         observer[QueueableLike_enqueue](i);
     }
     observer[DispatcherLike_complete]();
-}), Observable.backpressureStrategy(1, "drop-oldest"), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([9])))), test("it passes through notifications", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.backpressureStrategy(1, "drop-latest"), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), PureStatefulObservableOperator(Observable.backpressureStrategy(10, "drop-latest"))), describe("buffer", PureStatefulObservableOperator(Observable.buffer())), describe("catchError", test("when the source throws", () => {
+}), Observable.backpressureStrategy(1, DropOldestBackpressureStrategy), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([9])))), test("it passes through notifications", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.backpressureStrategy(1, DropLatestBackpressureStrategy), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), PureStatefulObservableOperator(Observable.backpressureStrategy(10, DropLatestBackpressureStrategy))), describe("buffer", PureStatefulObservableOperator(Observable.buffer())), describe("catchError", test("when the source throws", () => {
     const e1 = "e1";
     let result = none;
     pipe(Observable.throws({ raise: () => e1 }), Observable.catchError((e) => {
@@ -289,13 +289,13 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
 // Only delayed scheduled continuations increment the clock
 expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)), describe("debug", ObservableOperatorWithSideEffectsTests(Observable.debug())), describe("decodeWithCharset", PureStatefulObservableOperator(Observable.decodeWithCharset())), describe("defer", testAsync("defering a promise converted to an Observable", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync(Observable.defer(() => pipe(Promise.resolve(1), Observable.fromPromise())), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1])))), testIsPureDeferredObservable(Observable.defer(Subject.create))), describe("dispatchTo", test("when backpressure exception is thrown", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
     const stream = Streamable.identity()[StreamableLike_stream](vts, {
-        backpressureStrategy: "throw",
+        backpressureStrategy: ThrowBackpressureStrategy,
         capacity: 1,
     });
     expectToThrow(pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Observable.run()));
 })), test("when completed successfully", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
     const stream = Streamable.identity()[StreamableLike_stream](vts, {
-        backpressureStrategy: "overflow",
+        backpressureStrategy: OverflowBackpressureStrategy,
         capacity: 1,
     });
     let completed = false;
@@ -308,7 +308,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     expectTrue(completed);
 })), test("when completed successfully from delayed source", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
     const stream = Streamable.identity()[StreamableLike_stream](vts, {
-        backpressureStrategy: "overflow",
+        backpressureStrategy: OverflowBackpressureStrategy,
         capacity: 1,
     });
     let completed = false;

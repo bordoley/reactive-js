@@ -41,6 +41,11 @@ export interface SerialDisposableLike<TDisposable extends DisposableLike = Dispo
 export declare const QueueableLike_backpressureStrategy: unique symbol;
 export declare const QueueableLike_capacity: unique symbol;
 export declare const QueueableLike_enqueue: unique symbol;
+export declare const DropLatestBackpressureStrategy = "drop-latest";
+export declare const DropOldestBackpressureStrategy = "drop-oldest";
+export declare const OverflowBackpressureStrategy = "overflow";
+export declare const ThrowBackpressureStrategy = "throw";
+export type BackpressureStrategy = typeof DropLatestBackpressureStrategy | typeof DropOldestBackpressureStrategy | typeof OverflowBackpressureStrategy | typeof ThrowBackpressureStrategy;
 /**
  * An interface for types that support buffering items with backpressure.
  *
@@ -50,7 +55,7 @@ export interface QueueableLike<T = unknown> {
     /**
      * The back pressure strategy utilized by the queue when it is at capacity.
      */
-    readonly [QueueableLike_backpressureStrategy]: "drop-latest" | "drop-oldest" | "overflow" | "throw";
+    readonly [QueueableLike_backpressureStrategy]: BackpressureStrategy;
     /**
      * The number of items the queue is capable of efficiently buffering.
      */

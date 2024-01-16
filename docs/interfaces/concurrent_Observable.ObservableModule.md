@@ -135,7 +135,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `capacity` | `number` |
-| `backpressureStrategy` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `backpressureStrategy` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 
 #### Returns
 
@@ -2048,7 +2048,7 @@ ___
 | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
 | `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 
 #### Returns
@@ -2576,7 +2576,7 @@ ___
 | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
 | `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 
 #### Returns
@@ -2763,7 +2763,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
 
@@ -2784,7 +2784,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
 | `options.innerType` | `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](../modules/concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
@@ -2806,7 +2806,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
 | `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](../modules/concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
@@ -2828,7 +2828,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
 | `options.innerType` | `Pick`<[`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](../modules/concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
@@ -2850,7 +2850,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
 | `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](../modules/concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
@@ -3008,7 +3008,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\> |
 | `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
 
@@ -3031,7 +3031,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
 | `options.innerType` | `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](../modules/concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
@@ -3055,7 +3055,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
 | `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](../modules/concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
@@ -3079,7 +3079,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
 | `options.innerType` | `Pick`<[`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](../modules/concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
@@ -3103,7 +3103,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
 | `options.innerType` | `Pick`<[`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](../modules/concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
@@ -3230,7 +3230,7 @@ ___
 | `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.autoDispose?` | `boolean` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.replay?` | `number` |
 
@@ -3443,7 +3443,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.backpressureStrategy` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 
 #### Returns
@@ -3650,7 +3650,7 @@ ___
 | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
 | `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 
 #### Returns
@@ -3675,7 +3675,7 @@ ___
 | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
 | `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 
 #### Returns
@@ -4134,7 +4134,7 @@ ___
 | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
 | `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 
 #### Returns
@@ -4175,7 +4175,7 @@ ___
 | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
 | `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 
 #### Returns

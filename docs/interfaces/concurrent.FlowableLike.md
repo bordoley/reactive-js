@@ -28,7 +28,7 @@
 | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
 | `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.replay?` | `number` |
 

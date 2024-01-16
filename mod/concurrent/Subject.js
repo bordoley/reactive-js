@@ -6,7 +6,7 @@ import { include, init, mixInstanceFactory, props, } from "../__internal__/mixin
 import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../concurrent.js";
 import { EventListenerLike_isErrorSafe, EventListenerLike_notify, } from "../events.js";
 import { error, isSome, newInstance, none, pipe } from "../functions.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, IndexedQueueLike_get, QueueLike_count, QueueableLike_enqueue, } from "../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, IndexedQueueLike_get, QueueLike_count, QueueableLike_enqueue, } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as IndexedQueue from "../utils/IndexedQueue.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
@@ -20,7 +20,7 @@ export const create = /*@__PURE__*/ (() => {
         instance[Subject_observers] = newInstance(Set);
         instance[Subject_buffer] = IndexedQueue.create({
             capacity: replay,
-            backpressureStrategy: "drop-oldest",
+            backpressureStrategy: DropOldestBackpressureStrategy,
         });
         instance[Subject_autoDispose] = options?.autoDispose ?? false;
         pipe(instance, Disposable.onDisposed(e => {

@@ -5,7 +5,7 @@ import {
   props,
 } from "../__internal__/mixins.js";
 import { SchedulerLike, SchedulerLike_now } from "../concurrent.js";
-import { Optional, none, pipe } from "../functions.js";
+import { Optional, isSome, pipe } from "../functions.js";
 import { DisposableLike, DisposableLike_dispose } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
 import {
@@ -39,8 +39,8 @@ const supportsSetImmediate = typeof setImmediate === "function";
 
 const supportsIsInputPending = /*@__PURE__*/ (() =>
   typeof navigator === "object" &&
-  navigator.scheduling !== none &&
-  navigator.scheduling.isInputPending !== none)();
+  isSome(navigator.scheduling) &&
+  isSome(navigator.scheduling.isInputPending))();
 
 const isInputPending = (): boolean =>
   supportsIsInputPending && (navigator.scheduling?.isInputPending() ?? false);

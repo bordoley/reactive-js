@@ -10,7 +10,7 @@ import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { CacheLike_get, DispatcherLike_complete, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import { bind, bindMethod, invoke, none, pipe, pipeSome, returns, tuple, } from "../../functions.js";
-import { DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
+import { DisposableLike_dispose, DropLatestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
@@ -56,10 +56,10 @@ testModule("Streamable", describe("createAnimationGroupEventHandler", test("bloc
     const streamable = Streamable.createStateStore(returns(1));
     const stateStream = streamable[StreamableLike_stream](scheduler, {
         capacity: 20,
-        backpressureStrategy: "drop-latest",
+        backpressureStrategy: DropLatestBackpressureStrategy,
     });
     pipe(stateStream[QueueableLike_capacity], expectEquals(20));
-    pipe(stateStream[QueueableLike_backpressureStrategy], expectEquals("drop-latest"));
+    pipe(stateStream[QueueableLike_backpressureStrategy], expectEquals(DropLatestBackpressureStrategy));
     stateStream[QueueableLike_enqueue](returns(2));
     stateStream[QueueableLike_enqueue](returns(3));
     stateStream[DispatcherLike_complete]();

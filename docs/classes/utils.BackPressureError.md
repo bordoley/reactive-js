@@ -32,7 +32,7 @@
 | Name | Type |
 | :------ | :------ |
 | `capacity` | `number` |
-| `backpressureStrategy` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `backpressureStrategy` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 
 #### Overrides
 
@@ -42,7 +42,7 @@ Error.constructor
 
 ### [QueueableLike\_backpressureStrategy]
 
-• `Readonly` **[QueueableLike\_backpressureStrategy]**: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"``
+• `Readonly` **[QueueableLike\_backpressureStrategy]**: [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy)
 
 ___
 

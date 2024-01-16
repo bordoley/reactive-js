@@ -3,7 +3,7 @@
 import { floor } from "../../__internal__/math.js";
 import { getPrototype, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { call, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
-import { BackPressureError, IndexedQueueLike_get, IndexedQueueLike_set, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, StackLike_pop, } from "../../utils.js";
+import { BackPressureError, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, IndexedQueueLike_get, IndexedQueueLike_set, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, StackLike_pop, ThrowBackpressureStrategy, } from "../../utils.js";
 import IndexedQueueMixin from "./IndexedQueueMixin.js";
 const PriorityQueueMixin = /*@__PURE__*/ (() => {
     const IndexedQueuePrototype = getPrototype(IndexedQueueMixin());
@@ -78,14 +78,16 @@ const PriorityQueueMixin = /*@__PURE__*/ (() => {
             const backpressureStrategy = this[QueueableLike_backpressureStrategy];
             const count = this[QueueLike_count];
             const capacity = this[QueueableLike_capacity];
-            if (backpressureStrategy === "drop-latest" && count >= capacity) {
+            if (backpressureStrategy === DropLatestBackpressureStrategy &&
+                count >= capacity) {
                 return false;
             }
-            else if (backpressureStrategy === "drop-oldest" &&
+            else if (backpressureStrategy === DropOldestBackpressureStrategy &&
                 count >= capacity) {
                 this[QueueLike_dequeue]();
             }
-            else if (backpressureStrategy === "throw" && count >= capacity) {
+            else if (backpressureStrategy === ThrowBackpressureStrategy &&
+                count >= capacity) {
                 raiseError(newInstance(BackPressureError, capacity, backpressureStrategy));
             }
             const result = call(IndexedQueuePrototype[QueueableLike_enqueue], this, item);

@@ -5,7 +5,7 @@ import { FlowableLike_flow, ObservableLike_observe, PauseableLike_isPaused, Paus
 import { StoreLike_value } from "../../../events.js";
 import * as WritableStore from "../../../events/WritableStore.js";
 import { invoke, none, pipe } from "../../../functions.js";
-import { QueueableLike_enqueue, } from "../../../utils.js";
+import { DropOldestBackpressureStrategy, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import * as Observable from "../../Observable.js";
@@ -21,7 +21,7 @@ const PauseableObservable_create = /*@__PURE__*/ (() => {
             pipe(true, Observable.fromValue())), Observable.distinctUntilChanged(), Observable.multicast(observer, {
                 replay: 1,
                 capacity: 1,
-                backpressureStrategy: "drop-oldest",
+                backpressureStrategy: DropOldestBackpressureStrategy,
             }), Disposable.addTo(observer));
             pipe(multicastedMode, Observable.forEach((isPaused) => {
                 instance[PauseableLike_isPaused][StoreLike_value] = isPaused;

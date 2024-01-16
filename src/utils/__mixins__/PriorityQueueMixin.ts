@@ -20,6 +20,8 @@ import {
 } from "../../functions.js";
 import {
   BackPressureError,
+  DropLatestBackpressureStrategy,
+  DropOldestBackpressureStrategy,
   IndexedQueueLike,
   IndexedQueueLike_get,
   IndexedQueueLike_set,
@@ -31,6 +33,7 @@ import {
   QueueableLike_capacity,
   QueueableLike_enqueue,
   StackLike_pop,
+  ThrowBackpressureStrategy,
 } from "../../utils.js";
 import IndexedQueueMixin from "./IndexedQueueMixin.js";
 
@@ -155,14 +158,20 @@ const PriorityQueueMixin: <T>() => Mixin2<
           const count = this[QueueLike_count];
           const capacity = this[QueueableLike_capacity];
 
-          if (backpressureStrategy === "drop-latest" && count >= capacity) {
+          if (
+            backpressureStrategy === DropLatestBackpressureStrategy &&
+            count >= capacity
+          ) {
             return false;
           } else if (
-            backpressureStrategy === "drop-oldest" &&
+            backpressureStrategy === DropOldestBackpressureStrategy &&
             count >= capacity
           ) {
             this[QueueLike_dequeue]();
-          } else if (backpressureStrategy === "throw" && count >= capacity) {
+          } else if (
+            backpressureStrategy === ThrowBackpressureStrategy &&
+            count >= capacity
+          ) {
             raiseError(
               newInstance(BackPressureError, capacity, backpressureStrategy),
             );

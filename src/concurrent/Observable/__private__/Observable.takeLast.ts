@@ -16,6 +16,7 @@ import { none, partial, pipe } from "../../../functions.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
+  DropOldestBackpressureStrategy,
   IndexedQueueLike,
   IndexedQueueLike_get,
   QueueLike,
@@ -52,7 +53,7 @@ const createTakeLastObserver = /*@__PURE__*/ (<T>() => {
 
           instance[TakeLastObserver_queue] = IndexedQueue.create({
             capacity: takeLastCount,
-            backpressureStrategy: "drop-oldest",
+            backpressureStrategy: DropOldestBackpressureStrategy,
           });
 
           pipe(

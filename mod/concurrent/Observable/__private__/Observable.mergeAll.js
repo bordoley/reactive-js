@@ -5,7 +5,7 @@ import { clampPositiveInteger, clampPositiveNonZeroInteger, } from "../../../__i
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
 import { bindMethod, isSome, none, pipe, } from "../../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
@@ -76,7 +76,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
     return (options = {}) => {
         const concurrency = clampPositiveNonZeroInteger(options.concurrency ?? MAX_SAFE_INTEGER);
         const capacity = clampPositiveInteger(options.capacity ?? MAX_SAFE_INTEGER);
-        return (observer) => createMergeAllObserver(observer, capacity, options.backpressureStrategy ?? "overflow", concurrency);
+        return (observer) => createMergeAllObserver(observer, capacity, options.backpressureStrategy ?? OverflowBackpressureStrategy, concurrency);
     };
 })();
 const Observable_mergeAll = ((options) => Observable_lift({

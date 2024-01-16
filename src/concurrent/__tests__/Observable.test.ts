@@ -81,7 +81,11 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  DropLatestBackpressureStrategy,
+  DropOldestBackpressureStrategy,
+  OverflowBackpressureStrategy,
   QueueableLike_enqueue,
+  ThrowBackpressureStrategy,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
@@ -595,7 +599,7 @@ testModule(
                 observer[QueueableLike_enqueue](i);
               }
             }),
-            Observable.backpressureStrategy(1, "throw"),
+            Observable.backpressureStrategy(1, ThrowBackpressureStrategy),
             Observable.toReadonlyArrayAsync<number>(scheduler),
           ),
         );
@@ -611,7 +615,7 @@ testModule(
             }
             observer[DispatcherLike_complete]();
           }),
-          Observable.backpressureStrategy(1, "drop-latest"),
+          Observable.backpressureStrategy(1, DropLatestBackpressureStrategy),
           Observable.toReadonlyArrayAsync<number>(scheduler),
           expectArrayEquals([0]),
         ),
@@ -627,7 +631,7 @@ testModule(
             }
             observer[DispatcherLike_complete]();
           }),
-          Observable.backpressureStrategy(1, "drop-oldest"),
+          Observable.backpressureStrategy(1, DropOldestBackpressureStrategy),
           Observable.toReadonlyArrayAsync<number>(scheduler),
           expectArrayEquals([9]),
         ),
@@ -638,13 +642,13 @@ testModule(
       pipeLazy(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
-        Observable.backpressureStrategy(1, "drop-latest"),
+        Observable.backpressureStrategy(1, DropLatestBackpressureStrategy),
         Observable.toReadonlyArray<number>(),
         expectArrayEquals([1, 2, 3]),
       ),
     ),
     PureStatefulObservableOperator(
-      Observable.backpressureStrategy(10, "drop-latest"),
+      Observable.backpressureStrategy(10, DropLatestBackpressureStrategy),
     ),
   ),
   describe("buffer", PureStatefulObservableOperator(Observable.buffer())),
@@ -1294,7 +1298,7 @@ testModule(
       "when backpressure exception is thrown",
       Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
         const stream = Streamable.identity()[StreamableLike_stream](vts, {
-          backpressureStrategy: "throw",
+          backpressureStrategy: ThrowBackpressureStrategy,
           capacity: 1,
         });
 
@@ -1312,7 +1316,7 @@ testModule(
       "when completed successfully",
       Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
         const stream = Streamable.identity()[StreamableLike_stream](vts, {
-          backpressureStrategy: "overflow",
+          backpressureStrategy: OverflowBackpressureStrategy,
           capacity: 1,
         });
 
@@ -1341,7 +1345,7 @@ testModule(
       "when completed successfully from delayed source",
       Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
         const stream = Streamable.identity()[StreamableLike_stream](vts, {
-          backpressureStrategy: "overflow",
+          backpressureStrategy: OverflowBackpressureStrategy,
           capacity: 1,
         });
 

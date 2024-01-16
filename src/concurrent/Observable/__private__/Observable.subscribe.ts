@@ -1,5 +1,6 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
+  OverflowBackpressureStrategy,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../utils.js";
@@ -13,7 +14,7 @@ const Observable_subscribe: Observable.Signature["subscribe"] = (
   Observable_subscribeWithConfig(scheduler, {
     [QueueableLike_capacity]: options?.capacity ?? MAX_SAFE_INTEGER,
     [QueueableLike_backpressureStrategy]:
-      options?.backpressureStrategy ?? "overflow",
+      options?.backpressureStrategy ?? OverflowBackpressureStrategy,
   });
 
 export default Observable_subscribe;

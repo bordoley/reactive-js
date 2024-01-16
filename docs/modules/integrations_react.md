@@ -33,7 +33,7 @@
 | :------ | :------ |
 | `fn` | [`Function1`](functions.md#function1)<[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TProps`\>, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\>\> |
 | `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 
@@ -178,7 +178,7 @@ ___
 | :------ | :------ |
 | `observable` | [`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\> |
 | `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 
@@ -201,7 +201,7 @@ ___
 | `factory` | [`Factory`](functions.md#factory)<[`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 
@@ -249,7 +249,7 @@ ___
 | :------ | :------ |
 | `streamable` | `TStreamable` |
 | `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 | `options.replay?` | `number` |
@@ -273,7 +273,7 @@ ___
 | `factory` | [`Factory`](functions.md#factory)<`TStreamable`\> |
 | `dep` | readonly `unknown`[] |
 | `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 | `options.replay?` | `number` |

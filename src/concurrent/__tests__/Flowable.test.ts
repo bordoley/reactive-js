@@ -38,6 +38,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  ThrowBackpressureStrategy,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Flowable from "../Flowable.js";
@@ -63,7 +64,7 @@ testModule(
       const dest = Streamable.identity<number>()[StreamableLike_stream](
         scheduler,
         {
-          backpressureStrategy: "throw",
+          backpressureStrategy: ThrowBackpressureStrategy,
           capacity: 1,
         },
       );

@@ -2,7 +2,7 @@
 
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { SchedulerLike_now } from "../concurrent.js";
-import { none, pipe } from "../functions.js";
+import { isSome, pipe } from "../functions.js";
 import { DisposableLike_dispose } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "./__internal__/Continuation.js";
@@ -10,8 +10,8 @@ import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYie
 import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
 const supportsSetImmediate = typeof setImmediate === "function";
 const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
-    navigator.scheduling !== none &&
-    navigator.scheduling.isInputPending !== none)();
+    isSome(navigator.scheduling) &&
+    isSome(navigator.scheduling.isInputPending))();
 const isInputPending = () => supportsIsInputPending && (navigator.scheduling?.isInputPending() ?? false);
 const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
     const disposable = pipe(Disposable.create(), Disposable.addTo(continuation), Disposable.onDisposed(() => clearImmediate(immmediate)));

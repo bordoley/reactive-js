@@ -6,7 +6,7 @@ import * as Enumerable from "../../collections/Enumerable.js";
 import { ObservableLike_observe, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import { EventListenerLike_notify } from "../../events.js";
 import { bind, bindMethod, increment, pipe, returns, } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
 import * as Subject from "../Subject.js";
@@ -67,7 +67,7 @@ testModule("Subject", describe("create", test("with replay", () => {
 }), test("notifing an observer that throws an exception on overflow", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
     const subject = Subject.create();
     const subscription = pipe(subject, Observable.subscribe(vts, {
-        backpressureStrategy: "throw",
+        backpressureStrategy: ThrowBackpressureStrategy,
         capacity: 1,
     }));
     subject[EventListenerLike_notify](1);

@@ -23,6 +23,7 @@ import { StoreLike_value, WritableStoreLike } from "../../../events.js";
 import * as WritableStore from "../../../events/WritableStore.js";
 import { Function1, invoke, none, pipe } from "../../../functions.js";
 import {
+  DropOldestBackpressureStrategy,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
@@ -87,7 +88,7 @@ const PauseableObservable_create: <T>(
             Observable.multicast(observer, {
               replay: 1,
               capacity: 1,
-              backpressureStrategy: "drop-oldest",
+              backpressureStrategy: DropOldestBackpressureStrategy,
             }),
             Disposable.addTo(observer),
           );

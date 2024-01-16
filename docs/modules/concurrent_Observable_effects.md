@@ -496,7 +496,7 @@ ___
 | :------ | :------ |
 | `streamable` | `TStreamable` |
 | `«destructured»` | `Object` |
-| › `backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| › `backpressureStrategy?` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
 | › `capacity?` | `number` |
 | › `replay?` | `number` |
 | › `scheduler?` | [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) |

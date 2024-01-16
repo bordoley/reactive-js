@@ -20,9 +20,12 @@ import {
 } from "../../functions.js";
 import {
   BackPressureError,
+  DropLatestBackpressureStrategy,
+  DropOldestBackpressureStrategy,
   IndexedQueueLike,
   IndexedQueueLike_get,
   IndexedQueueLike_set,
+  OverflowBackpressureStrategy,
   QueueLike_count,
   QueueLike_dequeue,
   QueueLike_head,
@@ -32,6 +35,7 @@ import {
   QueueableLike_enqueue,
   StackLike_head,
   StackLike_pop,
+  ThrowBackpressureStrategy,
 } from "../../utils.js";
 
 const IndexedQueueMixin: <T>() => Mixin1<
@@ -172,7 +176,8 @@ const IndexedQueueMixin: <T>() => Mixin1<
         },
       ): IndexedQueueLike<T> {
         instance[QueueableLike_backpressureStrategy] =
-          config?.[QueueableLike_backpressureStrategy] ?? "overflow";
+          config?.[QueueableLike_backpressureStrategy] ??
+          OverflowBackpressureStrategy;
         instance[QueueableLike_capacity] = clampPositiveInteger(
           config?.[QueueableLike_capacity] ?? MAX_SAFE_INTEGER,
         );
@@ -187,7 +192,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
       },
       props<TProperties>({
         [QueueLike_count]: 0,
-        [QueueableLike_backpressureStrategy]: "overflow",
+        [QueueableLike_backpressureStrategy]: OverflowBackpressureStrategy,
         [QueueableLike_capacity]: MAX_SAFE_INTEGER,
         [IndexedQueueMixin_head]: 0,
         [IndexedQueueMixin_tail]: 0,
@@ -286,10 +291,13 @@ const IndexedQueueMixin: <T>() => Mixin1<
           let count = this[QueueLike_count];
           const capacity = this[QueueableLike_capacity];
 
-          if (backpressureStrategy === "drop-latest" && count >= capacity) {
+          if (
+            backpressureStrategy === DropLatestBackpressureStrategy &&
+            count >= capacity
+          ) {
             return false;
           } else if (
-            backpressureStrategy === "drop-oldest" &&
+            backpressureStrategy === DropOldestBackpressureStrategy &&
             count >= capacity
           ) {
             if (capacity > 0) {
@@ -301,7 +309,10 @@ const IndexedQueueMixin: <T>() => Mixin1<
               // to pushing an item onto the queue
               return false;
             }
-          } else if (backpressureStrategy === "throw" && count >= capacity) {
+          } else if (
+            backpressureStrategy === ThrowBackpressureStrategy &&
+            count >= capacity
+          ) {
             raiseError(
               newInstance(BackPressureError, capacity, backpressureStrategy),
             );

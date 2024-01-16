@@ -4,7 +4,7 @@ import { Array_length, Array_push } from "../../__internal__/constants.js";
 import { floor, random } from "../../__internal__/math.js";
 import { expectArrayEquals, expectEquals, expectToThrow, test, testModule, } from "../../__internal__/testing.js";
 import { newInstance, pipe } from "../../functions.js";
-import { QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, } from "../../utils.js";
+import { DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as PriorityQueue from "../PriorityQueue.js";
 const createPriorityQueue = /*@__PURE__*/ (() => {
     const compare = (a, b) => a - b;
@@ -42,7 +42,7 @@ testModule("PriorityQueue", test("push", () => {
     const compare = (a, b) => a - b;
     const queue = PriorityQueue.create(compare, {
         capacity: 1,
-        backpressureStrategy: "drop-latest",
+        backpressureStrategy: DropLatestBackpressureStrategy,
     });
     queue[QueueableLike_enqueue](0);
     queue[QueueableLike_enqueue](1);
@@ -52,7 +52,7 @@ testModule("PriorityQueue", test("push", () => {
     const compare = (a, b) => a - b;
     const queue = PriorityQueue.create(compare, {
         capacity: 1,
-        backpressureStrategy: "drop-oldest",
+        backpressureStrategy: DropOldestBackpressureStrategy,
     });
     queue[QueueableLike_enqueue](0);
     queue[QueueableLike_enqueue](1);
@@ -62,7 +62,7 @@ testModule("PriorityQueue", test("push", () => {
     const compare = (a, b) => a - b;
     const queue = PriorityQueue.create(compare, {
         capacity: 1,
-        backpressureStrategy: "throw",
+        backpressureStrategy: ThrowBackpressureStrategy,
     });
     queue[QueueableLike_enqueue](0);
     expectToThrow(() => {

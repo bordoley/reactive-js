@@ -41,6 +41,7 @@ import {
 } from "../../functions.js";
 import {
   DisposableLike,
+  DropOldestBackpressureStrategy,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
@@ -250,13 +251,13 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
     const replaceState = createSyncToHistoryStream(
       bindMethod(history, "replaceState"),
       scheduler,
-      { backpressureStrategy: "drop-oldest", capacity: 1 },
+      { backpressureStrategy: DropOldestBackpressureStrategy, capacity: 1 },
     );
 
     const pushState = createSyncToHistoryStream(
       bindMethod(history, "pushState"),
       scheduler,
-      { backpressureStrategy: "drop-oldest", capacity: 1 },
+      { backpressureStrategy: DropOldestBackpressureStrategy, capacity: 1 },
     );
 
     const locationStream = pipe(
@@ -326,7 +327,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       invoke(StreamableLike_stream, scheduler, {
         replay: 1,
         capacity: 1,
-        backpressureStrategy: "drop-oldest",
+        backpressureStrategy: DropOldestBackpressureStrategy,
       }),
     );
 

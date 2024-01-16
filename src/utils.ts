@@ -56,6 +56,17 @@ export const QueueableLike_backpressureStrategy = Symbol(
 export const QueueableLike_capacity = Symbol("QueueableLike_capacity");
 export const QueueableLike_enqueue = Symbol("QueueableLike_enqueue");
 
+export const DropLatestBackpressureStrategy = "drop-latest";
+export const DropOldestBackpressureStrategy = "drop-oldest";
+export const OverflowBackpressureStrategy = "overflow";
+export const ThrowBackpressureStrategy = "throw";
+
+export type BackpressureStrategy =
+  | typeof DropLatestBackpressureStrategy
+  | typeof DropOldestBackpressureStrategy
+  | typeof OverflowBackpressureStrategy
+  | typeof ThrowBackpressureStrategy;
+
 /**
  * An interface for types that support buffering items with backpressure.
  *
@@ -65,11 +76,7 @@ export interface QueueableLike<T = unknown> {
   /**
    * The back pressure strategy utilized by the queue when it is at capacity.
    */
-  readonly [QueueableLike_backpressureStrategy]:
-    | "drop-latest"
-    | "drop-oldest"
-    | "overflow"
-    | "throw";
+  readonly [QueueableLike_backpressureStrategy]: BackpressureStrategy;
 
   /**
    * The number of items the queue is capable of efficiently buffering.

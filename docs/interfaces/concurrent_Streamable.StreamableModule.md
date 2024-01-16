@@ -106,7 +106,7 @@ ___
 | :------ | :------ |
 | `animationGroup` | [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`TKey`, [`Function1`](../modules/functions.md#function1)<`TEvent`, [`Animation`](../modules/concurrent_Observable.md#animation)<`T`\> \| readonly [`Animation`](../modules/concurrent_Observable.md#animation)<`T`\>[]\>\> |
 | `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.mode` | ``"queueing"`` |
 | `options.scheduler?` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
@@ -174,7 +174,7 @@ ___
 | :------ | :------ |
 | `animationGroup` | [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`TKey`, [`Animation`](../modules/concurrent_Observable.md#animation)<`T`\> \| readonly [`Animation`](../modules/concurrent_Observable.md#animation)<`T`\>[]\> |
 | `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.mode` | ``"queueing"`` |
 | `options.scheduler?` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
@@ -241,7 +241,7 @@ ___
 | :------ | :------ |
 | `op` | [`Function1`](../modules/functions.md#function1)<`TEventType`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`unknown`\>\> |
 | `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 | `options.mode` | ``"queueing"`` |
 

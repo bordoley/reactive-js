@@ -28,6 +28,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  ThrowBackpressureStrategy,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
@@ -147,7 +148,7 @@ testModule(
         const subscription = pipe(
           subject,
           Observable.subscribe(vts, {
-            backpressureStrategy: "throw",
+            backpressureStrategy: ThrowBackpressureStrategy,
             capacity: 1,
           }),
         );

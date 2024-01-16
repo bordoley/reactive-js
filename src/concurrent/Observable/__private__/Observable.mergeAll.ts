@@ -34,6 +34,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   IndexedQueueLike,
+  OverflowBackpressureStrategy,
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
@@ -205,7 +206,7 @@ const createMergeAllObserverOperator: <T>(options?: {
       createMergeAllObserver(
         observer,
         capacity,
-        options.backpressureStrategy ?? "overflow",
+        options.backpressureStrategy ?? OverflowBackpressureStrategy,
         concurrency,
       );
   };

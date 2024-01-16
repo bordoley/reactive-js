@@ -31,6 +31,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  DropOldestBackpressureStrategy,
   IndexedQueueLike,
   IndexedQueueLike_get,
   QueueLike_count,
@@ -80,7 +81,7 @@ export const create: <T>(options?: {
       instance[Subject_observers] = newInstance<Set<ObserverLike>>(Set);
       instance[Subject_buffer] = IndexedQueue.create({
         capacity: replay,
-        backpressureStrategy: "drop-oldest",
+        backpressureStrategy: DropOldestBackpressureStrategy,
       });
       instance[Subject_autoDispose] = options?.autoDispose ?? false;
 

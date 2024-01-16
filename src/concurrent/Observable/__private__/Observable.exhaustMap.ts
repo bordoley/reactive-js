@@ -5,6 +5,7 @@ import {
   PureRunnableLike,
 } from "../../../concurrent.js";
 import { Function1, pipe } from "../../../functions.js";
+import { DropLatestBackpressureStrategy } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_mergeMap from "./Observable.mergeMap.js";
 
@@ -24,7 +25,7 @@ const Observable_exhaustMap: Observable.Signature["exhaustMap"] = (<TA, TB>(
       Observable_mergeMap(selector, {
         ...(options ?? {}),
         capacity: 0,
-        backpressureStrategy: "drop-latest",
+        backpressureStrategy: DropLatestBackpressureStrategy,
         concurrency: 1,
       }),
     )) as Observable.Signature["exhaustMap"];

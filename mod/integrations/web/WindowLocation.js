@@ -11,7 +11,7 @@ import { StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
 import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, raiseIf, returns, } from "../../functions.js";
-import { QueueableLike_enqueue, } from "../../utils.js";
+import { DropOldestBackpressureStrategy, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { WindowLocationLike_canGoBack, WindowLocationLike_goBack, WindowLocationLike_push, WindowLocationLike_replace, } from "../web.js";
@@ -93,8 +93,8 @@ export const subscribe = /*@__PURE__*/ (() => {
     let currentWindowLocationObservable = none;
     return (scheduler) => {
         raiseIf(isSome(currentWindowLocationObservable), "Cannot stream more than once");
-        const replaceState = createSyncToHistoryStream(bindMethod(history, "replaceState"), scheduler, { backpressureStrategy: "drop-oldest", capacity: 1 });
-        const pushState = createSyncToHistoryStream(bindMethod(history, "pushState"), scheduler, { backpressureStrategy: "drop-oldest", capacity: 1 });
+        const replaceState = createSyncToHistoryStream(bindMethod(history, "replaceState"), scheduler, { backpressureStrategy: DropOldestBackpressureStrategy, capacity: 1 });
+        const pushState = createSyncToHistoryStream(bindMethod(history, "pushState"), scheduler, { backpressureStrategy: DropOldestBackpressureStrategy, capacity: 1 });
         const locationStream = pipe(Streamable.createStateStore(() => ({
             replace: true,
             uri: getCurrentWindowLocationURI(),
@@ -128,7 +128,7 @@ export const subscribe = /*@__PURE__*/ (() => {
         }), invoke(StreamableLike_stream, scheduler, {
             replay: 1,
             capacity: 1,
-            backpressureStrategy: "drop-oldest",
+            backpressureStrategy: DropOldestBackpressureStrategy,
         }));
         currentWindowLocationObservable = pipe(createWindowLocationObservable(locationStream, scheduler), Disposable.add(pushState), Disposable.add(replaceState));
         return currentWindowLocationObservable;

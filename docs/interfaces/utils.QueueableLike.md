@@ -37,7 +37,7 @@ An interface for types that support buffering items with backpressure.
 
 ### [QueueableLike\_backpressureStrategy]
 
-• `Readonly` **[QueueableLike\_backpressureStrategy]**: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"``
+• `Readonly` **[QueueableLike\_backpressureStrategy]**: [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy)
 
 The back pressure strategy utilized by the queue when it is at capacity.
 

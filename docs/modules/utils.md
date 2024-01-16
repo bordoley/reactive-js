@@ -17,14 +17,21 @@
 - [SerialDisposableLike](../interfaces/utils.SerialDisposableLike.md)
 - [StackLike](../interfaces/utils.StackLike.md)
 
+### Type Aliases
+
+- [BackpressureStrategy](utils.md#backpressurestrategy)
+
 ### Variables
 
 - [DisposableLike\_add](utils.md#disposablelike_add)
 - [DisposableLike\_dispose](utils.md#disposablelike_dispose)
 - [DisposableLike\_error](utils.md#disposablelike_error)
 - [DisposableLike\_isDisposed](utils.md#disposablelike_isdisposed)
+- [DropLatestBackpressureStrategy](utils.md#droplatestbackpressurestrategy)
+- [DropOldestBackpressureStrategy](utils.md#dropoldestbackpressurestrategy)
 - [IndexedQueueLike\_get](utils.md#indexedqueuelike_get)
 - [IndexedQueueLike\_set](utils.md#indexedqueuelike_set)
+- [OverflowBackpressureStrategy](utils.md#overflowbackpressurestrategy)
 - [QueueLike\_count](utils.md#queuelike_count)
 - [QueueLike\_dequeue](utils.md#queuelike_dequeue)
 - [QueueLike\_head](utils.md#queuelike_head)
@@ -34,6 +41,13 @@
 - [SerialDisposableLike\_current](utils.md#serialdisposablelike_current)
 - [StackLike\_head](utils.md#stacklike_head)
 - [StackLike\_pop](utils.md#stacklike_pop)
+- [ThrowBackpressureStrategy](utils.md#throwbackpressurestrategy)
+
+## Type Aliases
+
+### BackpressureStrategy
+
+Ƭ **BackpressureStrategy**: typeof [`DropLatestBackpressureStrategy`](utils.md#droplatestbackpressurestrategy) \| typeof [`DropOldestBackpressureStrategy`](utils.md#dropoldestbackpressurestrategy) \| typeof [`OverflowBackpressureStrategy`](utils.md#overflowbackpressurestrategy) \| typeof [`ThrowBackpressureStrategy`](utils.md#throwbackpressurestrategy)
 
 ## Variables
 
@@ -61,6 +75,18 @@ ___
 
 ___
 
+### DropLatestBackpressureStrategy
+
+• `Const` **DropLatestBackpressureStrategy**: ``"drop-latest"``
+
+___
+
+### DropOldestBackpressureStrategy
+
+• `Const` **DropOldestBackpressureStrategy**: ``"drop-oldest"``
+
+___
+
 ### IndexedQueueLike\_get
 
 • `Const` **IndexedQueueLike\_get**: unique `symbol`
@@ -70,6 +96,12 @@ ___
 ### IndexedQueueLike\_set
 
 • `Const` **IndexedQueueLike\_set**: unique `symbol`
+
+___
+
+### OverflowBackpressureStrategy
+
+• `Const` **OverflowBackpressureStrategy**: ``"overflow"``
 
 ___
 
@@ -124,3 +156,9 @@ ___
 ### StackLike\_pop
 
 • `Const` **StackLike\_pop**: unique `symbol`
+
+___
+
+### ThrowBackpressureStrategy
+
+• `Const` **ThrowBackpressureStrategy**: ``"throw"``
