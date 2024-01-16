@@ -1,3 +1,4 @@
+import { Array_push } from "../../__internal__/constants.js";
 import {
   describe,
   expectArrayEquals,
@@ -174,7 +175,7 @@ testModule(
 
       pipe(
         stateStream,
-        Observable.forEach<number>(bind(Array.prototype.push, result)),
+        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
         Observable.subscribe(scheduler),
       );
 
@@ -199,7 +200,7 @@ testModule(
           tuple(2, () => {
             pipe(
               cache[CacheLike_get]("abc"),
-              Observable.forEach(bindMethod(result, "push")),
+              Observable.forEach(bindMethod(result, Array_push)),
               Observable.subscribe(scheduler),
             );
           }),
@@ -235,7 +236,7 @@ testModule(
           tuple(2, () => {
             pipe(
               cache[CacheLike_get]("abc"),
-              Observable.forEach(bindMethod(result, "push")),
+              Observable.forEach(bindMethod(result, Array_push)),
               Observable.subscribe(scheduler),
             );
           }),
@@ -267,7 +268,7 @@ testModule(
       const result1: number[] = [];
       const abcSubscription1 = pipe(
         cache[CacheLike_get]("abc"),
-        Observable.forEach(bindMethod(result1, "push")),
+        Observable.forEach(bindMethod(result1, Array_push)),
         Observable.subscribe(scheduler),
       );
 
@@ -285,7 +286,7 @@ testModule(
           tuple(2, () => {
             abcSubscription2 = pipe(
               cache[CacheLike_get]("abc"),
-              Observable.forEach(bindMethod(result2, "push")),
+              Observable.forEach(bindMethod(result2, Array_push)),
               Observable.subscribe(scheduler),
             );
           }),
@@ -311,7 +312,7 @@ testModule(
           tuple(8, () => {
             abcSubscription3 = pipe(
               cache[CacheLike_get]("abc"),
-              Observable.forEach(bindMethod(result3, "push")),
+              Observable.forEach(bindMethod(result3, Array_push)),
               Observable.subscribe(scheduler),
             );
           }),
@@ -372,7 +373,7 @@ testModule(
       const result1: number[] = [];
       pipe(
         cache[CacheLike_get]("abc"),
-        Observable.forEach(bindMethod(result1, "push")),
+        Observable.forEach(bindMethod(result1, Array_push)),
         Observable.subscribe(scheduler),
       );
 
@@ -429,7 +430,7 @@ testModule(
       const result: number[] = [];
       pipe(
         stream,
-        Observable.forEach(bind(Array.prototype.push, result)),
+        Observable.forEach(bind(Array.prototype[Array_push], result)),
         Observable.subscribe(vts),
       );
 

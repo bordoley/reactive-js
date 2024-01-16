@@ -1,6 +1,6 @@
 /// <reference types="./Observable.computeWithConfig.d.ts" />
 
-import { __DEV__ } from "../../../__internal__/constants.js";
+import { Array_length, Array_push, __DEV__, } from "../../../__internal__/constants.js";
 import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseIf, } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
@@ -79,7 +79,7 @@ const validateComputeEffect = ((ctx, type) => {
             effects[index] = newEffect;
         }
         else {
-            effects.push(newEffect);
+            effects[Array_push](newEffect);
         }
         return newEffect;
     }
@@ -201,8 +201,8 @@ const Observable_computeWithConfig = ((computation, config, { mode = "batched" }
             }
         }
         const { [ComputeContext_effects]: effects } = ctx;
-        if (effects.length > ctx[ComputeContext_index]) {
-            const effectsLength = effects.length;
+        if (effects[Array_length] > ctx[ComputeContext_index]) {
+            const effectsLength = effects[Array_length];
             for (let i = ctx[ComputeContext_index]; i < effectsLength; i++) {
                 const effect = ctx[ComputeContext_effects][i];
                 if (effect[ComputeEffect_type] === Await ||
@@ -211,10 +211,10 @@ const Observable_computeWithConfig = ((computation, config, { mode = "batched" }
                 }
             }
         }
-        ctx[ComputeContext_effects].length = ctx[ComputeContext_index];
+        ctx[ComputeContext_effects][Array_length] = ctx[ComputeContext_index];
         currentCtx = none;
         ctx[ComputeContext_index] = 0;
-        const effectsLength = effects.length;
+        const effectsLength = effects[Array_length];
         // Inline this for perf
         let allObserveEffectsHaveValues = true;
         let hasOutstandingEffects = false;

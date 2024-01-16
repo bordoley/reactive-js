@@ -1,5 +1,6 @@
 /// <reference types="./Enumerable.fromIteratorFactory.d.ts" />
 
+import { Iterator_done, Iterator_next, Iterator_value, } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../collections.js";
 import { none, returns } from "../../../functions.js";
@@ -18,9 +19,9 @@ const Enumerable_fromIteratorFactory = /*@__PURE__*/ (() => {
             if (this[MutableEnumeratorLike_reset]()) {
                 return false;
             }
-            const next = this[IteratorEnumerator_iterator].next();
-            if (!next.done) {
-                this[EnumeratorLike_current] = next.value;
+            const next = this[IteratorEnumerator_iterator][Iterator_next]();
+            if (!next[Iterator_done]) {
+                this[EnumeratorLike_current] = next[Iterator_value];
             }
             this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
             return this[EnumeratorLike_hasCurrent];

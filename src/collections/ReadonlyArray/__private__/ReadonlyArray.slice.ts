@@ -1,3 +1,4 @@
+import { Array_length } from "../../../__internal__/constants.js";
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
 import type * as ReadonlyArray from "../../ReadonlyArray.js";
 
@@ -5,7 +6,7 @@ const ReadonlyArray_slice: ReadonlyArray.Signature["slice"] =
   <T>(options?: { count?: number; start?: number }) =>
   (arr: readonly T[]) => {
     const { start, count } = parseArrayBounds(arr, options);
-    return start === 0 && count === arr.length
+    return start === 0 && count === arr[Array_length]
       ? arr
       : count >= 0
       ? arr.slice(start, count + start)

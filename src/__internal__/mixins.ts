@@ -10,7 +10,7 @@ import {
   raiseIf,
 } from "../functions.js";
 import * as Obj from "./Object.js";
-import { __DEV__ } from "./constants.js";
+import { Array_length, __DEV__ } from "./constants.js";
 
 export const Mixin_init = /*@__PURE__*/ Symbol("Mixin_init");
 export const Mixin_private_initializedProperties = /*@__PURE__*/ Symbol(
@@ -1092,7 +1092,7 @@ export const init: Signature["init"] = initUnsafe;
 export const include: Signature["include"] = (
   ...mixins: readonly PartialMixin[]
 ) => {
-  const { length } = mixins;
+  const length = mixins[Array_length];
   if (length == 1) {
     return mixins[0];
   } else {

@@ -1,4 +1,4 @@
-import { MAX_SAFE_INTEGER } from "./constants.js";
+import { Array_length, MAX_SAFE_INTEGER } from "./constants.js";
 import { abs, clamp, min } from "./math.js";
 
 const parseArrayBounds = (
@@ -8,7 +8,7 @@ const parseArrayBounds = (
     readonly count?: number;
   },
 ) => {
-  const valuesLength = array.length;
+  const valuesLength = array[Array_length];
   const { start: startOption, count: countOption = MAX_SAFE_INTEGER } =
     options ?? {};
 

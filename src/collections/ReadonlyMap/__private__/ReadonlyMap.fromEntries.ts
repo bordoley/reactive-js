@@ -1,3 +1,4 @@
+import { Map_set } from "../../../__internal__/constants.js";
 import {
   EnumerableLike,
   EnumerableLike_enumerate,
@@ -15,7 +16,7 @@ const ReadonlyMap_fromEntries: ReadonlyMap.Signature["fromEntries"] =
 
     while (entries[EnumeratorLike_move]()) {
       const [key, value] = entries[EnumeratorLike_current];
-      map.set(key, value);
+      map[Map_set](key, value);
     }
 
     return map;

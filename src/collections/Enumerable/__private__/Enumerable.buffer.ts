@@ -1,4 +1,8 @@
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import {
+  Array_length,
+  Array_push,
+  MAX_SAFE_INTEGER,
+} from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import {
   Mutable,
@@ -85,9 +89,9 @@ const Enumerable_buffer: Enumerable.Signature["buffer"] = /*@__PURE__*/ (<
 
         while (delegate[EnumeratorLike_move]()) {
           this[EnumeratorLike_hasCurrent] = true;
-          buffer.push(delegate[EnumeratorLike_current]);
+          buffer[Array_push](delegate[EnumeratorLike_current]);
 
-          if (buffer.length >= this[BufferEnumerator_count]) {
+          if (buffer[Array_length] >= this[BufferEnumerator_count]) {
             break;
           }
         }

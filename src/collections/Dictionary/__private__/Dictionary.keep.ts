@@ -1,3 +1,4 @@
+import { Map_set } from "../../../__internal__/constants.js";
 import {
   DictionaryLike,
   DictionaryLike_get,
@@ -23,7 +24,7 @@ const Dictionary_keep: Dictionary.Signature["keep"] =
       const value = dict[DictionaryLike_get](key) as T;
 
       if (predicate(value, key)) {
-        resultMap.set(key, value);
+        resultMap[Map_set](key, value);
       }
     }
 

@@ -1,6 +1,6 @@
 /// <reference types="./Enumerable.buffer.d.ts" />
 
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import { Array_length, Array_push, MAX_SAFE_INTEGER, } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../../../__internal__/mixins.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../collections.js";
@@ -34,8 +34,8 @@ const Enumerable_buffer = /*@__PURE__*/ (() => {
             this[EnumeratorLike_hasCurrent] = false;
             while (delegate[EnumeratorLike_move]()) {
                 this[EnumeratorLike_hasCurrent] = true;
-                buffer.push(delegate[EnumeratorLike_current]);
-                if (buffer.length >= this[BufferEnumerator_count]) {
+                buffer[Array_push](delegate[EnumeratorLike_current]);
+                if (buffer[Array_length] >= this[BufferEnumerator_count]) {
                     break;
                 }
             }

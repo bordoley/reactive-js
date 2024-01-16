@@ -1,3 +1,4 @@
+import { Array_length } from "../../../__internal__/constants.js";
 import { EventListenerLike_notify, EventSourceLike } from "../../../events.js";
 import { bindMethod, pipe } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
@@ -11,7 +12,7 @@ const EventSource_mergeMany: EventSource.Signature["mergeMany"] = <T>(
   eventSources: readonly EventSourceLike<T>[],
 ): EventSourceLike<T> =>
   EventSource_create(listener => {
-    const count = eventSources.length;
+    const count = eventSources[Array_length];
     let completed = 0;
 
     const eventHandler = bindMethod(listener, EventListenerLike_notify);

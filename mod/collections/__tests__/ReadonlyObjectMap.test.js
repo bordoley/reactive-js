@@ -1,5 +1,6 @@
 /// <reference types="./ReadonlyObjectMap.test.d.ts" />
 
+import { Array_length, Set_size } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectIsNone, test, testModule, } from "../../__internal__/testing.js";
 import { DictionaryLike_get, DictionaryLike_keys } from "../../collections.js";
 import { arrayEquality, none, pipe, pipeLazy, returns, tuple, } from "../../functions.js";
@@ -13,11 +14,11 @@ testModule("ReadonlyObjectMap", DictionaryCollectionModuleTests(ReadonlyObjectMa
     valuesEquality: arrayEquality(),
 })))), describe("keySet", test("returns a keyset with all the keys", () => {
     const keys = pipe([tuple("0", "b"), tuple("1", none), tuple("2", "v")], ReadonlyArray.values(), ReadonlyObjectMap.fromEntries(), ReadonlyObjectMap.keySet());
-    pipe(keys.size, expectEquals(3));
+    pipe(keys[Set_size], expectEquals(3));
     pipe(Array.from(keys), expectArrayEquals(["0", "1", "2"]));
 })), describe("map", test("mapping every value to its key", pipeLazy([tuple("0", "b"), tuple("1", "d"), tuple("2", "f")], ReadonlyArray.values(), ReadonlyObjectMap.fromEntries(), ReadonlyObjectMap.map((_, key) => key), ReadonlyObjectMap.values(), Enumerable.toReadonlyArray(), expectArrayEquals(["0", "1", "2"])))), describe("reduce", test("summing the keys", pipeLazy([tuple("0", "a"), tuple("1", "B"), tuple("2", "c")], ReadonlyArray.values(), ReadonlyObjectMap.fromEntries(), ReadonlyObjectMap.reduce((acc, value, _) => acc + value, returns("")), expectEquals("aBc")))), describe("toDictionary", test("count", () => {
     const dict = pipe([tuple("0", "b"), tuple("1", none), tuple("2", "v")], ReadonlyArray.values(), ReadonlyObjectMap.fromEntries(), ReadonlyObjectMap.toDictionary());
-    pipe(dict[DictionaryLike_keys], Enumerable.toReadonlyArray(), x => x.length, expectEquals(3));
+    pipe(dict[DictionaryLike_keys], Enumerable.toReadonlyArray(), x => x[Array_length], expectEquals(3));
 }), test("get values", () => {
     const dict = pipe([tuple("0", "b"), tuple("1", none), tuple("2", "v")], ReadonlyArray.values(), ReadonlyObjectMap.fromEntries(), ReadonlyObjectMap.toDictionary());
     pipe(dict, Dictionary.values(), Enumerable.toReadonlyArray(), expectArrayEquals(["b", none, "v"]));

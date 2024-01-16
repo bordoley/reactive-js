@@ -1,5 +1,6 @@
 /// <reference types="./WindowLocation.d.ts" />
 
+import { Array_length } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import { pick } from "../../computations.js";
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, StreamableLike_stream, } from "../../concurrent.js";
@@ -18,9 +19,9 @@ const { history, location } = window;
 const windowLocationPrototype = {
     toString() {
         const { path, query, fragment } = this;
-        let uri = path.length === 0 ? "" : !path.startsWith("/") ? `/${path}` : path;
-        uri = query.length > 0 ? `${uri}?${query}` : uri;
-        uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
+        let uri = path[Array_length] === 0 ? "" : !path.startsWith("/") ? `/${path}` : path;
+        uri = query[Array_length] > 0 ? `${uri}?${query}` : uri;
+        uri = fragment[Array_length] > 0 ? `${uri}#${fragment}` : uri;
         const base = newInstance(URL, location.href);
         return String(newInstance(URL, base.origin + uri));
     },

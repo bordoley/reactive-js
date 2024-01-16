@@ -1,4 +1,10 @@
 import {
+  Map_delete,
+  Map_get,
+  Map_set,
+  Map_size,
+} from "../../../../__internal__/constants.js";
+import {
   EventListenerLike_notify,
   EventSourceLike_addEventListener,
   PublisherLike,
@@ -26,31 +32,32 @@ const Element_intersectionEventSource: Element.Signature["intersectionEventSourc
       child =>
         EventSource.create(listener => {
           const publisher =
-            eventPublishers.get(root)?.get(child) ??
+            eventPublishers[Map_get](root)?.[Map_get](child) ??
             (() => {
               const publisher = Publisher.create<IntersectionObserverEntry>({
                 autoDispose: true,
               });
 
               const parentMap =
-                eventPublishers.get(root) ??
+                eventPublishers[Map_get](root) ??
                 (() => {
                   const parentMap =
                     newInstance<
                       Map<Element, PublisherLike<IntersectionObserverEntry>>
                     >(Map);
-                  eventPublishers.set(root, parentMap);
+                  eventPublishers[Map_set](root, parentMap);
                   return parentMap;
                 })();
-              parentMap.set(child, publisher);
+              parentMap[Map_set](child, publisher);
 
               const intersectionObserver =
-                intersectionObservers.get(root) ??
+                intersectionObservers[Map_get](root) ??
                 (() => {
                   const cb = (entries: IntersectionObserverEntry[]) => {
                     for (const entry of entries) {
                       const { target } = entry;
-                      const listener = eventPublishers.get(root)?.get(target);
+                      const listener =
+                        eventPublishers[Map_get](root)?.[Map_get](target);
 
                       if (isNone(listener)) {
                         continue;
@@ -65,7 +72,7 @@ const Element_intersectionEventSource: Element.Signature["intersectionEventSourc
                     cb,
                     { root },
                   );
-                  intersectionObservers.set(root, intersectionObserver);
+                  intersectionObservers[Map_set](root, intersectionObserver);
                   return intersectionObserver;
                 })();
               intersectionObserver.observe(child);
@@ -73,19 +80,20 @@ const Element_intersectionEventSource: Element.Signature["intersectionEventSourc
               return pipe(
                 publisher,
                 Disposable.onDisposed(() => {
-                  const intersectionObserver = intersectionObservers.get(root);
+                  const intersectionObserver =
+                    intersectionObservers[Map_get](root);
                   intersectionObserver?.unobserve(child);
 
-                  const childToPublisherMap = eventPublishers.get(root);
-                  childToPublisherMap?.delete(child);
+                  const childToPublisherMap = eventPublishers[Map_get](root);
+                  childToPublisherMap?.[Map_delete](child);
 
-                  if ((childToPublisherMap?.size ?? 0) > 0) {
+                  if ((childToPublisherMap?.[Map_size] ?? 0) > 0) {
                     return;
                   }
 
-                  eventPublishers.delete(root);
+                  eventPublishers[Map_delete](root);
                   intersectionObserver?.disconnect();
-                  intersectionObservers.delete(root);
+                  intersectionObservers[Map_delete](root);
                 }),
               );
             })();

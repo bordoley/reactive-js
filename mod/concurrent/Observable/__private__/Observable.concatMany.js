@@ -1,5 +1,6 @@
 /// <reference types="./Observable.concatMany.d.ts" />
 
+import { Array_length } from "../../../__internal__/constants.js";
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
 import { bindMethod, pipe } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
@@ -11,7 +12,7 @@ import Observable_createWithConfig from "./Observable.createWithConfig.js";
 const Observable_concatMany = 
 /*@__PURE__*/ (() => {
     const createConcatObserver = (delegate, observables, next) => pipe(Observer_createWithDelegate(delegate), Disposable.addTo(delegate), Disposable.onComplete(() => {
-        if (next < observables.length) {
+        if (next < observables[Array_length]) {
             observables[next][ObservableLike_observe](createConcatObserver(delegate, observables, next + 1));
         }
         else {

@@ -1,4 +1,9 @@
 import {
+  Iterator_done,
+  Iterator_next,
+  Iterator_value,
+} from "../../../__internal__/constants.js";
+import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   ObserverLike,
@@ -28,14 +33,14 @@ const Observable_fromIterable: Observable.Signature["fromIterable"] =
             let next: Optional<IteratorResult<T, any>> = none;
 
             try {
-              next = iterator.next();
+              next = iterator[Iterator_next]();
             } catch (e) {
               // Catch any errors thrown by the iterator
               observer[DisposableLike_dispose](error(e));
             }
 
-            if (isSome(next) && !next.done) {
-              observer[ObserverLike_notify](next.value);
+            if (isSome(next) && !next[Iterator_done]) {
+              observer[ObserverLike_notify](next[Iterator_value]);
               ctx[ContinuationContextLike_yield](delay);
             } else {
               observer[DisposableLike_dispose]();

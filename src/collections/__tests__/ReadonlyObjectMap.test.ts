@@ -1,3 +1,4 @@
+import { Array_length, Set_size } from "../../__internal__/constants.js";
 import {
   describe,
   expectArrayEquals,
@@ -65,7 +66,7 @@ testModule(
         ReadonlyObjectMap.keySet(),
       );
 
-      pipe(keys.size, expectEquals(3));
+      pipe(keys[Set_size], expectEquals(3));
       pipe(Array.from(keys), expectArrayEquals(["0", "1", "2"]));
     }),
   ),
@@ -114,7 +115,7 @@ testModule(
       pipe(
         dict[DictionaryLike_keys],
         Enumerable.toReadonlyArray(),
-        x => x.length,
+        x => x[Array_length],
         expectEquals(3),
       );
     }),

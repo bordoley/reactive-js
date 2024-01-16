@@ -1,4 +1,7 @@
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
+import {
+  Array_length,
+  MAX_SAFE_INTEGER,
+} from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import {
   Mixin1,
@@ -69,7 +72,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
 
     raiseIf(index < 0 || index >= count, "index out of range");
 
-    const capacity = thiz[IndexedQueueMixin_values].length;
+    const capacity = thiz[IndexedQueueMixin_values][Array_length];
     const head = thiz[IndexedQueueMixin_head];
     const headOffsetIndex = index + head;
     const tailOffsetIndex = headOffsetIndex - capacity;
@@ -83,7 +86,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
     tail: number,
     size: number,
   ) => {
-    const capacity = src.length;
+    const capacity = src[Array_length];
 
     const dest = newInstance<Array<Optional<T>>, number>(Array, size);
     let k = 0;
@@ -107,7 +110,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
 
     const count = instance[QueueLike_count];
     const values = instance[IndexedQueueMixin_values];
-    const capacity = values.length;
+    const capacity = values[Array_length];
     const capacityMask = instance[IndexedQueueMixin_capacityMask];
 
     if (count < capacity >> 1 || (tail !== head && tail !== 0)) {
@@ -115,7 +118,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
     }
 
     if (head === 0 || (tail === 0 && head < capacity >> 2)) {
-      values.length <<= 1;
+      values[Array_length] <<= 1;
       instance[IndexedQueueMixin_tail] = count + head;
     } else {
       const newCapacity = capacity << 1;
@@ -131,7 +134,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
 
   const shrink = (instance: TProperties) => {
     const values = instance[IndexedQueueMixin_values];
-    const capacity = values.length;
+    const capacity = values[Array_length];
     const count = instance[QueueLike_count];
 
     if (count >= capacity >> 2 || capacity <= 32) {
@@ -143,7 +146,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
     const newCapacity = capacity >> 1;
 
     if (tail >= head && tail < newCapacity) {
-      values.length >>= 1;
+      values[Array_length] >>= 1;
     } else {
       const newList = copyArray(values, head, tail, newCapacity);
 
@@ -205,7 +208,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
           const head = this[IndexedQueueMixin_head];
           const tail = this[IndexedQueueMixin_tail];
           const values = this[IndexedQueueMixin_values];
-          const index = tail > 0 ? tail - 1 : values.length - 1;
+          const index = tail > 0 ? tail - 1 : values[Array_length] - 1;
 
           return head === tail ? none : values[index];
         },
@@ -233,7 +236,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
         [StackLike_pop](this: TProperties & IndexedQueueLike<T>): Optional<T> {
           const head = this[IndexedQueueMixin_head];
           const values = this[IndexedQueueMixin_values];
-          const capacity = values.length;
+          const capacity = values[Array_length];
 
           let tail = this[IndexedQueueMixin_tail];
 

@@ -1,5 +1,6 @@
 /// <reference types="./Disposable.test.d.ts" />
 
+import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectToHaveBeenCalledTimes, expectTrue, mockFn, test, testModule, } from "../../__internal__/testing.js";
 import { error, newInstance, none, pipe, pipeLazy, raise, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
@@ -19,7 +20,7 @@ testModule("Disposable", describe("add", test("disposes child disposable when di
     const parent = Disposable.create();
     const child = Disposable.create();
     pipe(parent, Disposable.add(child));
-    const e = new Error();
+    const e = newInstance(Error);
     child[DisposableLike_dispose](e);
     pipe(parent[DisposableLike_error], expectEquals(e));
 })), describe("addTo", test("ignores when it is added to itself", () => {
@@ -98,8 +99,8 @@ testModule("Disposable", describe("add", test("disposes child disposable when di
 })), describe("using", test("with multiple disposable factories", () => {
     const disposables = [];
     Disposable.using(Disposable.create, Disposable.create)((d1, d2) => {
-        disposables.push(d1);
-        disposables.push(d2);
+        disposables[Array_push](d1);
+        disposables[Array_push](d2);
         expectFalse(d1[DisposableLike_isDisposed]);
         expectFalse(d2[DisposableLike_isDisposed]);
     });

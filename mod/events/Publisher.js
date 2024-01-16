@@ -1,5 +1,6 @@
 /// <reference types="./Publisher.d.ts" />
 
+import { Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { EventListenerLike_isErrorSafe, EventListenerLike_notify, EventSourceLike_addEventListener, } from "../events.js";
 import { error, newInstance, none, pipe } from "../functions.js";
@@ -43,14 +44,14 @@ export const create = /*@__PURE__*/ (() => {
                 return;
             }
             const listeners = this[Publisher_listeners];
-            if (listeners.has(listener)) {
+            if (listeners[Set_has](listener)) {
                 return;
             }
-            listeners.add(listener);
+            listeners[Set_add](listener);
             pipe(listener, Disposable.onDisposed(_ => {
-                listeners.delete(listener);
+                listeners[Set_delete](listener);
                 if (this[Publisher_autoDispose] &&
-                    this[Publisher_listeners].size === 0) {
+                    this[Publisher_listeners][Set_size] === 0) {
                     this[DisposableLike_dispose]();
                 }
             }));

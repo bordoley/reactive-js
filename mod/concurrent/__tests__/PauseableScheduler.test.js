@@ -1,5 +1,6 @@
 /// <reference types="./PauseableScheduler.test.d.ts" />
 
+import { Array_push } from "../../__internal__/constants.js";
 import { expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
 import { PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import { pipe } from "../../functions.js";
@@ -11,16 +12,16 @@ testModule("PauseableScheduler", test("with disposed continuations", Disposable.
     const scheduler = PauseableScheduler.create(vts);
     let result = [];
     scheduler[SchedulerLike_schedule](() => {
-        result.push(0);
+        result[Array_push](0);
     });
     const s1 = scheduler[SchedulerLike_schedule](() => {
-        result.push(1);
+        result[Array_push](1);
     });
     const s2 = scheduler[SchedulerLike_schedule](() => {
-        result.push(2);
+        result[Array_push](2);
     });
     scheduler[SchedulerLike_schedule](() => {
-        result.push(3);
+        result[Array_push](3);
     });
     scheduler[PauseableLike_resume]();
     s1[DisposableLike_dispose]();
@@ -31,10 +32,10 @@ testModule("PauseableScheduler", test("with disposed continuations", Disposable.
     const scheduler = PauseableScheduler.create(vts);
     let result = [];
     scheduler[SchedulerLike_schedule](() => {
-        result.push(scheduler[SchedulerLike_now]);
+        result[Array_push](scheduler[SchedulerLike_now]);
     }, { delay: 3 });
     scheduler[SchedulerLike_schedule](() => {
-        result.push(scheduler[SchedulerLike_now]);
+        result[Array_push](scheduler[SchedulerLike_now]);
     }, { delay: 5 });
     scheduler[PauseableLike_resume]();
     vts[VirtualTimeSchedulerLike_run]();

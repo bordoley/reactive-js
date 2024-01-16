@@ -1,3 +1,4 @@
+import { Array_push } from "../../__internal__/constants.js";
 import {
   describe,
   expectArrayEquals,
@@ -76,7 +77,7 @@ testModule(
       const result: number[] = [];
       pipe(
         dest,
-        Observable.forEach<number>(bind(Array.prototype.push, result)),
+        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
         Observable.subscribe(scheduler),
       );
 

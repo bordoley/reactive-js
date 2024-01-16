@@ -1,5 +1,6 @@
 /// <reference types="./CollectionModuleTests.d.ts" />
 
+import { Set_size } from "../../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectIsNone, test, } from "../../../__internal__/testing.js";
 import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
 import { arrayEquality, greaterThan, none, pipe, pipeLazy, returns, tuple, } from "../../../functions.js";
@@ -20,7 +21,7 @@ const CollectionModuleTests = (m, fromReadonlyArray) => describe("CollectionModu
     pipe(keys, expectArrayEquals([0, 1, 2]));
 })), describe("keySet", test("returns a keyset with all the keys", () => {
     const keys = pipe(["b", none, "v"], fromReadonlyArray(), m.keySet());
-    pipe(keys.size, expectEquals(3));
+    pipe(keys[Set_size], expectEquals(3));
     pipe(Array.from(keys), expectArrayEquals([0, 1, 2]));
 })), describe("map", test("mapping every value to its key", pipeLazy(["b", "d", "f"], fromReadonlyArray(), m.map((_, key) => key), m.values(), Enumerable.toReadonlyArray(), expectArrayEquals([0, 1, 2])))), describe("reduce", test("summing the keys", pipeLazy(["a", "B", "c"], fromReadonlyArray(), m.reduce((acc, _, key) => acc + key, returns(0)), expectEquals(3)))), describe("toDictionary", test("count", () => {
     const dict = pipe(["b", none, "v"], fromReadonlyArray(), m.toDictionary());

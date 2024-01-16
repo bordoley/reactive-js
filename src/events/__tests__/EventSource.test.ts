@@ -1,3 +1,4 @@
+import { Array_length, Array_push } from "../../__internal__/constants.js";
 import {
   describe,
   expectArrayEquals,
@@ -36,7 +37,7 @@ testModule(
     <T>() =>
       (arr: readonly T[]) =>
         EventSource.create<T>(listener => {
-          for (let i = 0; i < arr.length; i++) {
+          for (let i = 0; i < arr[Array_length]; i++) {
             listener[EventListenerLike_notify](arr[i]);
           }
           listener[DisposableLike_dispose]();
@@ -46,7 +47,9 @@ testModule(
         const result: T[] = [];
         const subscription = pipe(
           eventSource,
-          EventSource.addEventHandler(bind(Array.prototype.push, result)),
+          EventSource.addEventHandler(
+            bind(Array.prototype[Array_push], result),
+          ),
         );
 
         if (isSome(subscription[DisposableLike_error])) {
@@ -129,7 +132,7 @@ testModule(
 
       pipe(
         EventSource.merge(ev1, ev2, ev3),
-        EventSource.addEventHandler(bind(Array.prototype.push, result)),
+        EventSource.addEventHandler(bind(Array.prototype[Array_push], result)),
       );
 
       vts[VirtualTimeSchedulerLike_run]();
@@ -159,7 +162,7 @@ testModule(
       pipe(
         ev1,
         EventSource.mergeWith(ev2),
-        EventSource.addEventHandler(bind(Array.prototype.push, result)),
+        EventSource.addEventHandler(bind(Array.prototype[Array_push], result)),
       );
 
       vts[VirtualTimeSchedulerLike_run]();

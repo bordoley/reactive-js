@@ -1,3 +1,4 @@
+import { Array_push } from "../../__internal__/constants.js";
 import {
   expectArrayEquals,
   test,
@@ -20,15 +21,15 @@ testModule(
     const result: number[] = [];
 
     scheduler[SchedulerLike_schedule](() => {
-      result.push(0);
+      result[Array_push](0);
     });
 
     scheduler[SchedulerLike_schedule](() => {
-      result.push(1);
+      result[Array_push](1);
     });
 
     scheduler[SchedulerLike_schedule](() => {
-      result.push(2);
+      result[Array_push](2);
     });
 
     scheduler[VirtualTimeSchedulerLike_run]();
@@ -45,7 +46,7 @@ testModule(
     let i = 0;
     scheduler[SchedulerLike_schedule](ctx => {
       while (i < 10) {
-        result.push(i);
+        result[Array_push](i);
         i++;
         ctx[ContinuationContextLike_yield]();
       }
@@ -67,12 +68,12 @@ testModule(
       let j = 100;
 
       while (i <= 4) {
-        result.push(i);
+        result[Array_push](i);
         i++;
 
         scheduler[SchedulerLike_schedule]((ctx: ContinuationContextLike) => {
           while (j < 102) {
-            result.push(j);
+            result[Array_push](j);
             j++;
             ctx[ContinuationContextLike_yield]();
           }
@@ -102,7 +103,7 @@ testModule(
       let j = 0;
       scheduler[SchedulerLike_schedule]((ctx: ContinuationContextLike) => {
         while (j < 4) {
-          result.push(j);
+          result[Array_push](j);
           j++;
           ctx[ContinuationContextLike_yield]();
         }
@@ -125,12 +126,12 @@ testModule(
       let j = 100;
 
       while (i < 4) {
-        result.push(i);
+        result[Array_push](i);
         i++;
 
         scheduler[SchedulerLike_schedule]((ctx: ContinuationContextLike) => {
           while (j < 102) {
-            result.push(j);
+            result[Array_push](j);
             j++;
             ctx[ContinuationContextLike_yield]();
           }

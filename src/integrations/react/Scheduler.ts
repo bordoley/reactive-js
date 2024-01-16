@@ -5,6 +5,7 @@ import {
   unstable_scheduleCallback,
   unstable_shouldYield,
 } from "scheduler";
+import { Map_get, Map_set } from "../../__internal__/constants.js";
 import {
   include,
   init,
@@ -95,10 +96,10 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
   const schedulerCache: Map<1 | 2 | 3 | 4 | 5, SchedulerLike> =
     newInstance<Map<1 | 2 | 3 | 4 | 5, SchedulerLike>>(Map);
   return (priority = unstable_NormalPriority) =>
-    schedulerCache.get(priority) ??
+    schedulerCache[Map_get](priority) ??
     (() => {
       const scheduler = createReactScheduler(priority);
-      schedulerCache.set(priority, scheduler);
+      schedulerCache[Map_set](priority, scheduler);
       return scheduler;
     })();
 })();

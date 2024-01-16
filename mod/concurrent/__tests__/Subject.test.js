@@ -1,5 +1,6 @@
 /// <reference types="./Subject.test.d.ts" />
 
+import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsSome, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import { ObservableLike_observe, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
@@ -18,7 +19,7 @@ testModule("Subject", describe("create", test("with replay", () => {
     }
     subject[DisposableLike_dispose]();
     const result = [];
-    pipe(subject, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
+    pipe(subject, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([3, 4]));
 }), test("with multiple observers", () => {
@@ -44,7 +45,7 @@ testModule("Subject", describe("create", test("with replay", () => {
     const scheduler = VirtualTimeScheduler.create();
     const subject = Subject.create();
     const result = [];
-    const subjectSubscription = pipe(subject, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
+    const subjectSubscription = pipe(subject, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(scheduler));
     const generateSubscription = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 3, delayStart: true }), Observable.forEach(bindMethod(subject, EventListenerLike_notify)), Observable.subscribe(scheduler));
     scheduler[SchedulerLike_schedule](() => {
         subject[DisposableLike_dispose]();
@@ -82,7 +83,7 @@ testModule("Subject", describe("create", test("with replay", () => {
         subject[EventListenerLike_notify](v);
     }
     const result = [];
-    const subscription = pipe(subject, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(vts));
+    const subscription = pipe(subject, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(vts));
     vts[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([3, 4]));
     expectFalse(subject[DisposableLike_isDisposed]);

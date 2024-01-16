@@ -1,5 +1,6 @@
 /// <reference types="./Observable.latest.d.ts" />
 
+import { Array_every, Array_length, Array_push, } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../concurrent.js";
@@ -21,7 +22,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
     const onCompleted = (instance) => () => {
         instance[LatestCtx_completedCount]++;
         if (instance[LatestCtx_completedCount] ===
-            instance[LatestCtx_observers].length) {
+            instance[LatestCtx_observers][Array_length]) {
             instance[LatestCtx_delegate][DisposableLike_dispose]();
         }
     };
@@ -43,7 +44,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
             this[LatestObserver_latest] = next;
             this[LatestObserver_ready] = true;
             const { [LatestCtx_mode]: mode, [LatestCtx_observers]: observers } = ctx;
-            const isReady = observers.every(x => x[LatestObserver_ready]);
+            const isReady = observers[Array_every](x => x[LatestObserver_ready]);
             if (isReady) {
                 const result = pipe(observers, ReadonlyArray.map(observer => observer[LatestObserver_latest]));
                 ctx[LatestCtx_delegate][ObserverLike_notify](result);
@@ -66,7 +67,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
             };
             for (const observable of observables) {
                 const innerObserver = pipe(createLatestObserver(ctx, delegate), Disposable.onComplete(onCompleted(ctx)));
-                ctx[LatestCtx_observers].push(innerObserver);
+                ctx[LatestCtx_observers][Array_push](innerObserver);
                 observable[ObservableLike_observe](innerObserver);
             }
         };

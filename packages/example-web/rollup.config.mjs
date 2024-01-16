@@ -30,13 +30,12 @@ export default [
         preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify("production"),
       }),
-      /*
       terser({
         compress: {
           unsafe: true,
           unsafe_symbols: true,
         },
-      }),*/
+      }),
     ],
   },
 
@@ -112,6 +111,16 @@ export default [
         browser: true,
         dedupe: ["svelte"],
       }),
+      replace({
+        preventAssignment: true,
+        "process.env.NODE_ENV": JSON.stringify("production"),
+      }),
+      terser({
+        compress: {
+          unsafe: true,
+          unsafe_symbols: true,
+        },
+      }),
     ],
   },
   {
@@ -134,6 +143,12 @@ export default [
       replace({
         preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify("production"),
+      }),
+      terser({
+        compress: {
+          unsafe: true,
+          unsafe_symbols: true,
+        },
       }),
     ],
   },

@@ -1,9 +1,9 @@
 /// <reference types="./parseArrayBounds.d.ts" />
 
-import { MAX_SAFE_INTEGER } from "./constants.js";
+import { Array_length, MAX_SAFE_INTEGER } from "./constants.js";
 import { abs, clamp, min } from "./math.js";
 const parseArrayBounds = (array, options) => {
-    const valuesLength = array.length;
+    const valuesLength = array[Array_length];
     const { start: startOption, count: countOption = MAX_SAFE_INTEGER } = options ?? {};
     const start = countOption >= 0
         ? clamp(0, startOption ?? 0, valuesLength)

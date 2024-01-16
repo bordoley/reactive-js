@@ -1,5 +1,6 @@
 /// <reference types="./Element.measure.d.ts" />
 
+import { Array_every } from "../../../../__internal__/constants.js";
 import * as ReadonlyArray from "../../../../collections/ReadonlyArray.js";
 import { StoreLike_value } from "../../../../events.js";
 import * as EventSource from "../../../../events/EventSource.js";
@@ -19,7 +20,7 @@ const keys = [
     "width",
     "height",
 ];
-const areBoundsEqual = (a, b) => keys.every(key => a[key] === b[key]);
+const areBoundsEqual = (a, b) => keys[Array_every](key => a[key] === b[key]);
 const findScrollContainers = (element) => {
     const { overflow, overflowX, overflowY } = window.getComputedStyle(element);
     const result = element !== document.body &&

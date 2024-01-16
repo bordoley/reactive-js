@@ -1,4 +1,9 @@
 import {
+  Array_every,
+  Array_length,
+  Array_push,
+} from "../../../__internal__/constants.js";
+import {
   Mutable,
   createInstanceFactory,
   include,
@@ -48,7 +53,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
 
     if (
       instance[LatestCtx_completedCount] ===
-      instance[LatestCtx_observers].length
+      instance[LatestCtx_observers][Array_length]
     ) {
       instance[LatestCtx_delegate][DisposableLike_dispose]();
     }
@@ -102,7 +107,9 @@ const Observable_latest = /*@__PURE__*/ (() => {
             const { [LatestCtx_mode]: mode, [LatestCtx_observers]: observers } =
               ctx;
 
-            const isReady = observers.every(x => x[LatestObserver_ready]);
+            const isReady = observers[Array_every](
+              x => x[LatestObserver_ready],
+            );
 
             if (isReady) {
               const result = pipe(
@@ -142,7 +149,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
           Disposable.onComplete(onCompleted(ctx)),
         );
 
-        ctx[LatestCtx_observers].push(innerObserver);
+        ctx[LatestCtx_observers][Array_push](innerObserver);
         observable[ObservableLike_observe](innerObserver);
       }
     };

@@ -1,4 +1,5 @@
-import { Function2 } from "../../../functions.js";
+import { Map_set } from "../../../__internal__/constants.js";
+import { Function2, newInstance } from "../../../functions.js";
 import type * as ReadonlyMap from "../../ReadonlyMap.js";
 
 const ReadonlyMap_map: ReadonlyMap.Signature["map"] =
@@ -6,10 +7,10 @@ const ReadonlyMap_map: ReadonlyMap.Signature["map"] =
     selector: Function2<TA, TKey, TB>,
   ) =>
   (map: ReadonlyMap<TKey, TA>): ReadonlyMap<TKey, TB> => {
-    const result = new Map<TKey, TB>();
+    const result = newInstance<Map<TKey, TB>>(Map);
 
     for (let [key, value] of map) {
-      result.set(key, selector(value, key));
+      result[Map_set](key, selector(value, key));
     }
 
     return result;

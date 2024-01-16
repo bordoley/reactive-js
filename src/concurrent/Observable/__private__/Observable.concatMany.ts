@@ -1,3 +1,4 @@
+import { Array_length } from "../../../__internal__/constants.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
@@ -27,7 +28,7 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
         Observer_createWithDelegate(delegate),
         Disposable.addTo(delegate),
         Disposable.onComplete(() => {
-          if (next < observables.length) {
+          if (next < observables[Array_length]) {
             observables[next][ObservableLike_observe](
               createConcatObserver(delegate, observables, next + 1),
             );

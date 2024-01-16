@@ -1,5 +1,6 @@
 /// <reference types="./Observable.decodeWithCharset.d.ts" />
 
+import { Array_length } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DispatcherLike_complete, ObserverLike_notify, } from "../../../concurrent.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
@@ -19,10 +20,10 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         const textDecoder = newInstance(TextDecoder, charset, options);
         instance[DecodeWithCharsetObserver_textDecoder] = textDecoder;
         pipe(instance, Disposable.onComplete(() => {
-            const data = textDecoder.decode(new Uint8Array([]), {
+            const data = textDecoder.decode(newInstance(Uint8Array, []), {
                 stream: false,
             });
-            if (data.length > 0) {
+            if (data[Array_length] > 0) {
                 delegate[QueueableLike_enqueue](data);
                 delegate[DispatcherLike_complete]();
             }
@@ -39,7 +40,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
             const data = this[DecodeWithCharsetObserver_textDecoder].decode(next, {
                 stream: true,
             });
-            if (data.length > 0) {
+            if (data[Array_length] > 0) {
                 this[DecodeWithCharsetObserver_delegate][ObserverLike_notify](data);
             }
         },

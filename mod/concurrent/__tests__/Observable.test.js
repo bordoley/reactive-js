@@ -1,5 +1,6 @@
 /// <reference types="./Observable.test.d.ts" />
 
+import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
@@ -87,7 +88,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
             from: 0,
             to: 10,
         },
-    }), Observable.takeFirst({ count: 20 }), Observable.forEach(bind(result.push, result)), Observable.subscribe(vts));
+    }), Observable.takeFirst({ count: 20 }), Observable.forEach(bind(result[Array_push], result)), Observable.subscribe(vts));
     vts[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 1, 2, 3, 4, 5, 6, 7, 8,
@@ -107,7 +108,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
             type: "frame",
             value: 1,
         },
-    ]), Observable.forEach(bind(result.push, result)), Observable.subscribe(vts));
+    ]), Observable.forEach(bind(result[Array_push], result)), Observable.subscribe(vts));
     vts[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([0, 1]));
 })), testAsync("test with spring", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
@@ -201,7 +202,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         const obs3 = __memo(fromValueWithDelay, 30, 7);
         const result3 = __await(obs3);
         return result1 + result2 + result3;
-    }), Observable.takeLast(), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
+    }), Observable.takeLast(), Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.run());
     pipe(result, expectArrayEquals([22]));
 }), test("combined-latest mode", () => {
     const result = [];
@@ -211,7 +212,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         const v = __await(oneTwoThreeDelayed);
         const next = __memo(createOneTwoThree, v);
         return __await(next);
-    }, { mode: "combine-latest" }), keepType(Observable, isSome), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
+    }, { mode: "combine-latest" }), keepType(Observable, isSome), Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.run());
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }), test("when compute function throws", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
     const error = newInstance(Error);
@@ -357,7 +358,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), ObservableOperatorWithSideEffectsTests(Observable.flatMapIterable(returns([])))), describe("forEach", test("invokes the effect for each notified value", () => {
     const result = [];
     pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.forEach((x) => {
-        result.push(x + 10);
+        result[Array_push](x + 10);
     }), Observable.run()),
         pipe(result, expectArrayEquals([11, 12, 13]));
 }), test("when the effect function throws", () => {
@@ -416,7 +417,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     const store = WritableStore.create(-1);
     const scheduler = VirtualTimeScheduler.create();
     const result = [];
-    pipe(store, Observable.fromStore(), Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
+    pipe(store, Observable.fromStore(), Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(scheduler));
     pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 3 }), Observable.takeFirst({ count: 3 }), Observable.forEach(x => {
         store[StoreLike_value] = x;
     }), Observable.subscribe(scheduler));
@@ -484,7 +485,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     const shared = pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forEach(ignore), Observable.multicast(scheduler, { replay: 1, autoDispose: true }));
     expectIsMulticastObservable(shared);
     let result = [];
-    pipe(Observable.zipLatest(shared, shared), Observable.map(([a, b]) => a + b), Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
+    pipe(Observable.zipLatest(shared, shared), Observable.map(([a, b]) => a + b), Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([2, 4, 6]));
 })), describe("never", testIsMulticastObservable(Observable.never())), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
@@ -581,7 +582,7 @@ Observable.takeLast({ count: 0 }), Observable.toReadonlyArray(), expectArrayEqua
 }), test("when source is not empty", pipeLazy([1], Observable.fromReadonlyArray(), Observable.throwIfEmpty(returns(none)), Observable.toReadonlyArray(), expectArrayEquals([1]))), test("when source is not empty with delay", pipeLazy([1], Observable.fromReadonlyArray({ delay: 1 }), Observable.throwIfEmpty(returns(none)), Observable.toReadonlyArray(), expectArrayEquals([1]))), PureStatefulObservableOperator(Observable.throwIfEmpty(() => newInstance(Error)))), describe("toEventSource", test("when the source completes without error", () => {
     const result = [];
     const scheduler = VirtualTimeScheduler.create();
-    pipe([0, 1, 2], Observable.fromReadonlyArray(), Observable.toEventSource(scheduler), EventSource.addEventHandler(bind(Array.prototype.push, result)));
+    pipe([0, 1, 2], Observable.fromReadonlyArray(), Observable.toEventSource(scheduler), EventSource.addEventHandler(bind(Array.prototype[Array_push], result)));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([0, 1, 2]));
 })), describe("toReadonlyArrayAsync", testAsync("with pure delayed source", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 3 }), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3])))), testAsync("with empty non-runnable source", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync(EventSource.create(l => l[DisposableLike_dispose]()), Observable.fromEventSource(), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([]))))), describe("withCurrentTime", PureStatefulObservableOperator(Observable.withCurrentTime(returns))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.withLatestFrom(pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })), (tuple)), Observable.toReadonlyArray(), expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], { valuesEquality: arrayEquality() }))), test("when latest produces no values", pipeLazy([0], Observable.fromReadonlyArray({ delay: 1 }), Observable.withLatestFrom(Observable.empty({ delay: 0 }), returns(1)), Observable.toReadonlyArray(), expectArrayEquals([]))), test("when latest throws", () => {

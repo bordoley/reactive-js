@@ -1,5 +1,6 @@
 /// <reference types="./Flowable.test.d.ts" />
 
+import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectToHaveBeenCalledTimes, expectToThrowAsync, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import { FlowableLike_flow, PauseableLike_pause, PauseableLike_resume, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
@@ -20,7 +21,7 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
     });
     const dispatchToSubscription = pipe(src, Flowable.dispatchTo(dest), Observable.subscribe(scheduler));
     const result = [];
-    pipe(dest, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
+    pipe(dest, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();
     expectTrue(dispatchToSubscription[DisposableLike_isDisposed]);
     pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));

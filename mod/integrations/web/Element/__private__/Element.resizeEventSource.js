@@ -1,5 +1,6 @@
 /// <reference types="./Element.resizeEventSource.d.ts" />
 
+import { Map_delete, Map_get, Map_set, Map_size, } from "../../../../__internal__/constants.js";
 import { EventListenerLike_notify } from "../../../../events.js";
 import * as Publisher from "../../../../events/Publisher.js";
 import { isNone, newInstance, none, pipe, } from "../../../../functions.js";
@@ -10,7 +11,7 @@ const Element_resizeEventSource =
     let resizeObserver = none;
     const resizeObserverCallback = (entries) => {
         for (const entry of entries) {
-            const publisher = publishers.get(entry.target);
+            const publisher = publishers[Map_get](entry.target);
             if (isNone(publisher)) {
                 continue;
             }
@@ -21,20 +22,20 @@ const Element_resizeEventSource =
         resizeObserver =
             resizeObserver ??
                 (() => newInstance(ResizeObserver, resizeObserverCallback))();
-        return (publishers.get(element) ??
+        return (publishers[Map_get](element) ??
             (() => {
                 const publisher = pipe(Publisher.create({
                     autoDispose: true,
                 }), Disposable.onDisposed(() => {
                     resizeObserver?.unobserve(element);
-                    publishers.delete(element);
-                    if (publishers.size > 0) {
+                    publishers[Map_delete](element);
+                    if (publishers[Map_size] > 0) {
                         return;
                     }
                     resizeObserver?.disconnect();
                     resizeObserver = none;
                 }));
-                publishers.set(element, publisher);
+                publishers[Map_set](element, publisher);
                 resizeObserver.observe(element, options);
                 return publisher;
             })());

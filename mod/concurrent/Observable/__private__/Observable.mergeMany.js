@@ -1,5 +1,6 @@
 /// <reference types="./Observable.mergeMany.d.ts" />
 
+import { Array_length } from "../../../__internal__/constants.js";
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
 import { bindMethod, pipe } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
@@ -11,7 +12,7 @@ import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 const Observable_mergeMany = ((observables) => {
     const onSubscribe = (observer) => {
-        const count = observables.length;
+        const count = observables[Array_length];
         let completed = 0;
         for (const observable of observables) {
             pipe(Observer_createWithDelegate(observer), Disposable.addTo(observer), Disposable.onComplete(() => {

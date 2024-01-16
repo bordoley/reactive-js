@@ -1,4 +1,4 @@
-import { __DEV__ } from "../../../__internal__/constants.js";
+import { Array_push, __DEV__ } from "../../../__internal__/constants.js";
 import {
   EnumerableLike,
   EnumerableLike_enumerate,
@@ -31,7 +31,7 @@ const Enumerable_toReadonlyArray: Enumerable.Signature["toReadonlyArray"] =
           "EnumeratorLike_hasCurrent returned false after EnumeratorLike_move returned true",
         );
       }
-      result.push(enumerator[EnumeratorLike_current]);
+      result[Array_push](enumerator[EnumeratorLike_current]);
     }
 
     if (__DEV__) {

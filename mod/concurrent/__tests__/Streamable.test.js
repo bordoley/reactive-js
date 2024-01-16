@@ -1,5 +1,6 @@
 /// <reference types="./Streamable.test.d.ts" />
 
+import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import { DictionaryLike_get, } from "../../collections.js";
 import * as Dictionary from "../../collections/Dictionary.js";
@@ -63,7 +64,7 @@ testModule("Streamable", describe("createAnimationGroupEventHandler", test("bloc
     stateStream[QueueableLike_enqueue](returns(3));
     stateStream[DispatcherLike_complete]();
     let result = [];
-    pipe(stateStream, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
+    pipe(stateStream, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([1, 2, 3]));
 })), describe("createInMemoryCache", test("it publishes none on subscribe when the key is missing", () => {
@@ -72,7 +73,7 @@ testModule("Streamable", describe("createAnimationGroupEventHandler", test("bloc
     const result = [];
     pipe([
         tuple(2, () => {
-            pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result, "push")), Observable.subscribe(scheduler));
+            pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(scheduler));
         }),
     ], ReadonlyArray.forEach(([time, f]) => {
         scheduler[SchedulerLike_schedule](f, { delay: time });
@@ -91,7 +92,7 @@ testModule("Streamable", describe("createAnimationGroupEventHandler", test("bloc
             cache[QueueableLike_enqueue]({ abc: _ => none });
         }),
         tuple(2, () => {
-            pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result, "push")), Observable.subscribe(scheduler));
+            pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(scheduler));
         }),
         tuple(3, () => {
             cache[QueueableLike_enqueue]({ abc: _ => 2 });
@@ -108,7 +109,7 @@ testModule("Streamable", describe("createAnimationGroupEventHandler", test("bloc
     const scheduler = VirtualTimeScheduler.create();
     const cache = Streamable.createInMemoryCache({ capacity: 1 })[StreamableLike_stream](scheduler);
     const result1 = [];
-    const abcSubscription1 = pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result1, "push")), Observable.subscribe(scheduler));
+    const abcSubscription1 = pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result1, Array_push)), Observable.subscribe(scheduler));
     const result2 = [];
     let abcSubscription2 = Disposable.disposed;
     const result3 = [];
@@ -118,7 +119,7 @@ testModule("Streamable", describe("createAnimationGroupEventHandler", test("bloc
             cache[QueueableLike_enqueue]({ abc: _ => 1 });
         }),
         tuple(2, () => {
-            abcSubscription2 = pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result2, "push")), Observable.subscribe(scheduler));
+            abcSubscription2 = pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result2, Array_push)), Observable.subscribe(scheduler));
         }),
         tuple(3, () => {
             cache[QueueableLike_enqueue]({ abc: _ => 2 });
@@ -139,7 +140,7 @@ testModule("Streamable", describe("createAnimationGroupEventHandler", test("bloc
             cache[QueueableLike_enqueue]({ abc: _ => 3 });
         }),
         tuple(8, () => {
-            abcSubscription3 = pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result3, "push")), Observable.subscribe(scheduler));
+            abcSubscription3 = pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result3, Array_push)), Observable.subscribe(scheduler));
         }),
         tuple(9, () => {
             abcSubscription3[DisposableLike_dispose]();
@@ -176,7 +177,7 @@ testModule("Streamable", describe("createAnimationGroupEventHandler", test("bloc
         capacity: 1,
     })[StreamableLike_stream](scheduler);
     const result1 = [];
-    pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result1, "push")), Observable.subscribe(scheduler));
+    pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result1, Array_push)), Observable.subscribe(scheduler));
     pipe([
         [
             2,
@@ -196,7 +197,7 @@ testModule("Streamable", describe("createAnimationGroupEventHandler", test("bloc
         : Observable.empty({ delay: 0 })), invoke(StreamableLike_stream, vts));
     pipe((x) => x + 2, Observable.fromValue({ delay: 5 }), Observable.enqueue(stream), Observable.subscribe(vts));
     const result = [];
-    pipe(stream, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(vts));
+    pipe(stream, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(vts));
     vts[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([-1, 9, 11, 10]));
 }), test("with throttling", () => {

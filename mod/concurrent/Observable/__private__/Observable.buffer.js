@@ -1,6 +1,6 @@
 /// <reference types="./Observable.buffer.d.ts" />
 
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import { Array_length, Array_push, MAX_SAFE_INTEGER, } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DispatcherLike_complete, ObserverLike_notify, } from "../../../concurrent.js";
@@ -23,7 +23,7 @@ const createBufferObserver = /*@__PURE__*/ (() => createInstanceFactory(decorate
     pipe(instance, Disposable.addTo(delegate), Disposable.onComplete(() => {
         const { [BufferObserver_buffer]: buffer } = instance;
         instance[BufferObserver_buffer] = [];
-        if (buffer.length > 0) {
+        if (buffer[Array_length] > 0) {
             delegate[QueueableLike_enqueue](buffer);
             delegate[DispatcherLike_complete]();
         }
@@ -39,8 +39,8 @@ const createBufferObserver = /*@__PURE__*/ (() => createInstanceFactory(decorate
 }), {
     [ObserverLike_notify](next) {
         const { [BufferObserver_buffer]: buffer, [BufferObserver_count]: count, } = this;
-        buffer.push(next);
-        if (buffer.length === count) {
+        buffer[Array_push](next);
+        if (buffer[Array_length] === count) {
             const buffer = this[BufferObserver_buffer];
             this[BufferObserver_buffer] = [];
             this[BufferObserver_delegate][ObserverLike_notify](buffer);

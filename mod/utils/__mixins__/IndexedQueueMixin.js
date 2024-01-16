@@ -1,6 +1,6 @@
 /// <reference types="./IndexedQueueMixin.d.ts" />
 
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
+import { Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { newInstance, none, raiseError, raiseIf, returns, } from "../../functions.js";
@@ -13,14 +13,14 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
     const computeIndex = (thiz, index) => {
         const count = thiz[QueueLike_count];
         raiseIf(index < 0 || index >= count, "index out of range");
-        const capacity = thiz[IndexedQueueMixin_values].length;
+        const capacity = thiz[IndexedQueueMixin_values][Array_length];
         const head = thiz[IndexedQueueMixin_head];
         const headOffsetIndex = index + head;
         const tailOffsetIndex = headOffsetIndex - capacity;
         return headOffsetIndex < capacity ? headOffsetIndex : tailOffsetIndex;
     };
     const copyArray = (src, head, tail, size) => {
-        const capacity = src.length;
+        const capacity = src[Array_length];
         const dest = newInstance(Array, size);
         let k = 0;
         let bound = head >= tail ? capacity : tail;
@@ -38,13 +38,13 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         const tail = instance[IndexedQueueMixin_tail];
         const count = instance[QueueLike_count];
         const values = instance[IndexedQueueMixin_values];
-        const capacity = values.length;
+        const capacity = values[Array_length];
         const capacityMask = instance[IndexedQueueMixin_capacityMask];
         if (count < capacity >> 1 || (tail !== head && tail !== 0)) {
             return;
         }
         if (head === 0 || (tail === 0 && head < capacity >> 2)) {
-            values.length <<= 1;
+            values[Array_length] <<= 1;
             instance[IndexedQueueMixin_tail] = count + head;
         }
         else {
@@ -58,7 +58,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
     };
     const shrink = (instance) => {
         const values = instance[IndexedQueueMixin_values];
-        const capacity = values.length;
+        const capacity = values[Array_length];
         const count = instance[QueueLike_count];
         if (count >= capacity >> 2 || capacity <= 32) {
             return;
@@ -67,7 +67,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         const tail = instance[IndexedQueueMixin_tail];
         const newCapacity = capacity >> 1;
         if (tail >= head && tail < newCapacity) {
-            values.length >>= 1;
+            values[Array_length] >>= 1;
         }
         else {
             const newList = copyArray(values, head, tail, newCapacity);
@@ -104,7 +104,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
             const head = this[IndexedQueueMixin_head];
             const tail = this[IndexedQueueMixin_tail];
             const values = this[IndexedQueueMixin_values];
-            const index = tail > 0 ? tail - 1 : values.length - 1;
+            const index = tail > 0 ? tail - 1 : values[Array_length] - 1;
             return head === tail ? none : values[index];
         },
         [QueueLike_dequeue]() {
@@ -124,7 +124,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
         [StackLike_pop]() {
             const head = this[IndexedQueueMixin_head];
             const values = this[IndexedQueueMixin_values];
-            const capacity = values.length;
+            const capacity = values[Array_length];
             let tail = this[IndexedQueueMixin_tail];
             const item = head === tail
                 ? none

@@ -1,7 +1,7 @@
 /// <reference types="./testing.d.ts" />
 
 import { arrayEquality, ignore, isNone, isSome, none, pipeLazy, raise, strictEquality, } from "../functions.js";
-import { __DENO__ } from "./constants.js";
+import { Array_length, Array_push, __DENO__ } from "./constants.js";
 export const DescribeType = 1;
 export const TestType = 2;
 export const TestAsyncType = 3;
@@ -115,14 +115,14 @@ export const expectIsSome = (v) => {
 export const mockFn = (retval) => {
     const calls = [];
     const cb = (...args) => {
-        calls.push(args);
+        calls[Array_push](args);
         return retval;
     };
     cb.calls = calls;
     return cb;
 };
 export const expectToHaveBeenCalledTimes = (times) => (fn) => {
-    const { length } = fn.calls;
+    const length = fn.calls[Array_length];
     if (length !== times) {
         raise(`expected fn to be called ${times} times, but was only called ${length} times.`);
     }

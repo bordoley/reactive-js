@@ -1,4 +1,9 @@
 import {
+  Iterator_done,
+  Iterator_next,
+  Iterator_value,
+} from "../../../__internal__/constants.js";
+import {
   DispatcherLike_complete,
   ObservableLike,
   ObserverLike,
@@ -38,12 +43,14 @@ const Flowable_fromAsyncIterable: Flowable.Signature["fromAsyncIterable"] =
               !isPaused &&
               observer[SchedulerLike_now] - startTime < maxYieldInterval
             ) {
-              const next = await iterator.next();
+              const next = await iterator[Iterator_next]();
 
-              if (next.done) {
+              if (next[Iterator_done]) {
                 observer[DispatcherLike_complete]();
                 break;
-              } else if (!observer[QueueableLike_enqueue](next.value)) {
+              } else if (
+                !observer[QueueableLike_enqueue](next[Iterator_value])
+              ) {
                 // An async iterable can produce resolved promises which are immediately
                 // scheduled on the microtask queue. This prevents the observer's scheduler
                 // from running and draining dispatched events.

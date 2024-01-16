@@ -1,3 +1,4 @@
+import { Map_get } from "../../../__internal__/constants.js";
 import {
   DictionaryLike,
   DictionaryLike_get,
@@ -20,7 +21,7 @@ class ReadonlyMapDictionary<
   }
 
   [DictionaryLike_get](index: TKey): Optional<T> {
-    return this.d.get(index);
+    return this.d[Map_get](index);
   }
 }
 

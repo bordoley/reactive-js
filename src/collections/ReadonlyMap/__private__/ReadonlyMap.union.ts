@@ -1,3 +1,4 @@
+import { Map_set } from "../../../__internal__/constants.js";
 import { newInstance } from "../../../functions.js";
 import type * as ReadonlyMap from "../../ReadonlyMap.js";
 
@@ -7,11 +8,11 @@ const ReadonlyMap_union: ReadonlyMap.Signature["union"] =
     const result: Map<TKey, T> = newInstance<Map<TKey, T>>(Map);
 
     for (let [key, value] of m1) {
-      result.set(key, value);
+      result[Map_set](key, value);
     }
 
     for (let [key, value] of m2) {
-      result.set(key, value);
+      result[Map_set](key, value);
     }
 
     return result;

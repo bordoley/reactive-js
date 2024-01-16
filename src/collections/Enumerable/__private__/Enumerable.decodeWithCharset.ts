@@ -1,3 +1,4 @@
+import { Array_length } from "../../../__internal__/constants.js";
 import {
   include,
   init,
@@ -83,18 +84,18 @@ const Enumerable_decodeWithCharset: Enumerable.Signature["decodeWithCharset"] =
               stream: true,
             });
 
-            if (data.length > 0) {
+            if (data[Array_length] > 0) {
               this[EnumeratorLike_current] = data;
               break;
             }
           }
 
           if (!this[EnumeratorLike_hasCurrent]) {
-            const data = decoder.decode(new Uint8Array([]), {
+            const data = decoder.decode(newInstance(Uint8Array, []), {
               stream: false,
             });
 
-            if (data.length > 0) {
+            if (data[Array_length] > 0) {
               this[EnumeratorLike_current] = data;
             }
           }

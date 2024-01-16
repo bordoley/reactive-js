@@ -1,3 +1,4 @@
+import { Array_length } from "../../__internal__/constants.js";
 import {
   include,
   init,
@@ -67,9 +68,9 @@ const windowLocationPrototype = {
   toString(this: WindowLocationURI) {
     const { path, query, fragment } = this;
     let uri =
-      path.length === 0 ? "" : !path.startsWith("/") ? `/${path}` : path;
-    uri = query.length > 0 ? `${uri}?${query}` : uri;
-    uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
+      path[Array_length] === 0 ? "" : !path.startsWith("/") ? `/${path}` : path;
+    uri = query[Array_length] > 0 ? `${uri}?${query}` : uri;
+    uri = fragment[Array_length] > 0 ? `${uri}#${fragment}` : uri;
 
     const base = newInstance(URL, location.href);
     return String(newInstance(URL, base.origin + uri));

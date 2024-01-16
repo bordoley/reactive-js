@@ -1,3 +1,4 @@
+import { Array_length } from "../../__internal__/constants.js";
 import {
   describe,
   expectArrayEquals,
@@ -35,7 +36,7 @@ testModule(
       pipe(
         mapped[DictionaryLike_keys],
         Enumerable.toReadonlyArray(),
-        x => x.length,
+        x => x[Array_length],
         expectEquals(3),
       );
       pipe(mapped[DictionaryLike_get](0), expectEquals<Optional<number>>(0));

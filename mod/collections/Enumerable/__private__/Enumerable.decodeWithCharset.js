@@ -1,5 +1,6 @@
 /// <reference types="./Enumerable.decodeWithCharset.d.ts" />
 
+import { Array_length } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../collections.js";
 import { newInstance, none, partial, pipe, } from "../../../functions.js";
@@ -29,16 +30,16 @@ const Enumerable_decodeWithCharset =
                 const data = decoder.decode(delegate[EnumeratorLike_current], {
                     stream: true,
                 });
-                if (data.length > 0) {
+                if (data[Array_length] > 0) {
                     this[EnumeratorLike_current] = data;
                     break;
                 }
             }
             if (!this[EnumeratorLike_hasCurrent]) {
-                const data = decoder.decode(new Uint8Array([]), {
+                const data = decoder.decode(newInstance(Uint8Array, []), {
                     stream: false,
                 });
-                if (data.length > 0) {
+                if (data[Array_length] > 0) {
                     this[EnumeratorLike_current] = data;
                 }
             }

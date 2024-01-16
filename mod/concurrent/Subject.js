@@ -1,5 +1,6 @@
 /// <reference types="./Subject.d.ts" />
 
+import { Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
 import { clampPositiveInteger } from "../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../concurrent.js";
@@ -62,14 +63,14 @@ export const create = /*@__PURE__*/ (() => {
             if (isSome(this[DisposableLike_error])) {
                 observer[DisposableLike_dispose](this[DisposableLike_error]);
             }
-            if (observers.has(observer)) {
+            if (observers[Set_has](observer)) {
                 return;
             }
-            observers.add(observer);
+            observers[Set_add](observer);
             pipe(observer, Disposable.onDisposed(_ => {
-                observers.delete(observer);
+                observers[Set_delete](observer);
                 if (this[Subject_autoDispose] &&
-                    this[Subject_observers].size === 0) {
+                    this[Subject_observers][Set_size] === 0) {
                     this[DisposableLike_dispose]();
                 }
             }));

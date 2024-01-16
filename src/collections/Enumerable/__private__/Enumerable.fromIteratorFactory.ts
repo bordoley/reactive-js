@@ -1,4 +1,9 @@
 import {
+  Iterator_done,
+  Iterator_next,
+  Iterator_value,
+} from "../../../__internal__/constants.js";
+import {
   Mutable,
   include,
   init,
@@ -53,9 +58,9 @@ const Enumerable_fromIteratorFactory: <T>() => Function1<
           return false;
         }
 
-        const next = this[IteratorEnumerator_iterator].next();
-        if (!next.done) {
-          this[EnumeratorLike_current] = next.value;
+        const next = this[IteratorEnumerator_iterator][Iterator_next]();
+        if (!next[Iterator_done]) {
+          this[EnumeratorLike_current] = next[Iterator_value];
         }
 
         this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];

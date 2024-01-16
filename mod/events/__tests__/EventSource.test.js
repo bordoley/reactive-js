@@ -1,5 +1,6 @@
 /// <reference types="./EventSource.test.d.ts" />
 
+import { Array_length, Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectIsSome, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import PureStatelessComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
@@ -11,13 +12,13 @@ import { bind, compose, ignore, isSome, newInstance, none, pick, pipe, pipeLazy,
 import { DisposableLike_dispose, DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 testModule("EventSource", PureStatelessComputationModuleTests(EventSource, () => (arr) => EventSource.create(listener => {
-    for (let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr[Array_length]; i++) {
         listener[EventListenerLike_notify](arr[i]);
     }
     listener[DisposableLike_dispose]();
 }), () => (eventSource) => {
     const result = [];
-    const subscription = pipe(eventSource, EventSource.addEventHandler(bind(Array.prototype.push, result)));
+    const subscription = pipe(eventSource, EventSource.addEventHandler(bind(Array.prototype[Array_push], result)));
     if (isSome(subscription[DisposableLike_error])) {
         throw subscription[DisposableLike_error];
     }
@@ -47,7 +48,7 @@ testModule("EventSource", PureStatelessComputationModuleTests(EventSource, () =>
         [2, 5, 8],
         [3, 6, 9],
     ], ReadonlyArray.map(compose(Observable.fromReadonlyArray({ delay: 3 }), Observable.toEventSource(vts))));
-    pipe(EventSource.merge(ev1, ev2, ev3), EventSource.addEventHandler(bind(Array.prototype.push, result)));
+    pipe(EventSource.merge(ev1, ev2, ev3), EventSource.addEventHandler(bind(Array.prototype[Array_push], result)));
     vts[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]));
 })), describe("mergeWith", test("with source that have different delays", () => {
@@ -57,7 +58,7 @@ testModule("EventSource", PureStatelessComputationModuleTests(EventSource, () =>
         [1, 3, 5],
         [2, 4, 6],
     ], ReadonlyArray.map(compose(Observable.fromReadonlyArray({ delay: 3 }), Observable.toEventSource(vts))));
-    pipe(ev1, EventSource.mergeWith(ev2), EventSource.addEventHandler(bind(Array.prototype.push, result)));
+    pipe(ev1, EventSource.mergeWith(ev2), EventSource.addEventHandler(bind(Array.prototype[Array_push], result)));
     vts[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
 })));

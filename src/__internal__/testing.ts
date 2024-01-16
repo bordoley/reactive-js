@@ -14,7 +14,7 @@ import {
   raise,
   strictEquality,
 } from "../functions.js";
-import { __DENO__ } from "./constants.js";
+import { Array_length, Array_push, __DENO__ } from "./constants.js";
 
 export const DescribeType = 1;
 export const TestType = 2;
@@ -214,7 +214,7 @@ type MockFunction = {
 export const mockFn = (retval?: unknown): MockFunction => {
   const calls: ReadonlyArray<unknown>[] = [];
   const cb = (...args: readonly unknown[]) => {
-    calls.push(args);
+    calls[Array_push](args);
     return retval;
   };
   cb.calls = calls;
@@ -224,7 +224,7 @@ export const mockFn = (retval?: unknown): MockFunction => {
 
 export const expectToHaveBeenCalledTimes =
   (times: number) => (fn: MockFunction) => {
-    const { length } = fn.calls;
+    const length = fn.calls[Array_length];
     if (length !== times) {
       raise(
         `expected fn to be called ${times} times, but was only called ${length} times.`,

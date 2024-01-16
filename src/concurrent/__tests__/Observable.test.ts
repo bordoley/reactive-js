@@ -1,3 +1,4 @@
+import { Array_push } from "../../__internal__/constants.js";
 import {
   describe,
   expectArrayEquals,
@@ -514,7 +515,7 @@ testModule(
             },
           }),
           Observable.takeFirst({ count: 20 }),
-          Observable.forEach(bind(result.push, result)),
+          Observable.forEach(bind(result[Array_push], result)),
           Observable.subscribe(vts),
         );
 
@@ -549,7 +550,7 @@ testModule(
               value: 1,
             },
           ]),
-          Observable.forEach(bind(result.push, result)),
+          Observable.forEach(bind(result[Array_push], result)),
           Observable.subscribe(vts),
         );
 
@@ -864,7 +865,7 @@ testModule(
           return result1 + result2 + result3;
         }),
         Observable.takeLast<number>(),
-        Observable.forEach<number>(bind(Array.prototype.push, result)),
+        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
         Observable.run(),
       );
 
@@ -893,7 +894,7 @@ testModule(
           Optional<number>,
           number
         >(Observable, isSome),
-        Observable.forEach<number>(bind(Array.prototype.push, result)),
+        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
         Observable.run(),
       );
 
@@ -1580,7 +1581,7 @@ testModule(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
         Observable.forEach((x: number) => {
-          result.push(x + 10);
+          result[Array_push](x + 10);
         }),
         Observable.run(),
       ),
@@ -1876,7 +1877,7 @@ testModule(
       pipe(
         store,
         Observable.fromStore(),
-        Observable.forEach<number>(bind(Array.prototype.push, result)),
+        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
         Observable.subscribe(scheduler),
       );
 
@@ -2237,7 +2238,7 @@ testModule(
       pipe(
         Observable.zipLatest(shared, shared),
         Observable.map<Tuple2<number, number>, number>(([a, b]) => a + b),
-        Observable.forEach<number>(bind(Array.prototype.push, result)),
+        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
         Observable.subscribe(scheduler),
       );
 
@@ -2907,7 +2908,7 @@ testModule(
         [0, 1, 2],
         Observable.fromReadonlyArray(),
         Observable.toEventSource(scheduler),
-        EventSource.addEventHandler(bind(Array.prototype.push, result)),
+        EventSource.addEventHandler(bind(Array.prototype[Array_push], result)),
       );
 
       scheduler[VirtualTimeSchedulerLike_run]();

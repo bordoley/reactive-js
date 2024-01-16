@@ -1,4 +1,13 @@
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import {
+  MAX_SAFE_INTEGER,
+  Map_delete,
+  Map_get,
+  Map_set,
+  Map_size,
+  Set_delete,
+  Set_has,
+  Set_size,
+} from "../../../__internal__/constants.js";
 import {
   include,
   init,
@@ -33,6 +42,7 @@ import {
   invoke,
   isNone,
   isSome,
+  newInstance,
   none,
   pipe,
   tuple,
@@ -72,14 +82,19 @@ const createCacheStream: <T>(
   cleanupScheduler: SchedulerLike,
   persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
 ) => CacheLike<T> = /*@__PURE__*/ (<T>() => {
+  const CacheStream_delegate = Symbol("CacheStream_delegate");
+  const CacheStream_scheduleCleanup = Symbol("CacheStream_scheduleCleanup");
+  const CacheStream_store = Symbol("CacheStream_store");
+  const CacheStream_subscriptions = Symbol("CacheStream_subscriptions");
+
   type TProperties<T> = {
-    delegate: StreamLike<
+    [CacheStream_delegate]: StreamLike<
       ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
       never
     >;
-    scheduleCleanup: SideEffect1<string>;
-    store: Map<string, T>;
-    subscriptions: Map<string, SubjectLike<Optional<T>>>;
+    [CacheStream_scheduleCleanup]: SideEffect1<string>;
+    [CacheStream_store]: Map<string, T>;
+    [CacheStream_subscriptions]: Map<string, SubjectLike<Optional<T>>>;
   };
 
   return mixInstanceFactory(
@@ -101,22 +116,26 @@ const createCacheStream: <T>(
       cleanupScheduler: SchedulerLike,
       persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
     ): CacheLike<T> {
-      instance.store = new Map();
-      instance.subscriptions = new Map();
+      instance[CacheStream_store] = newInstance<Map<string, T>>(Map);
+      instance[CacheStream_subscriptions] =
+        newInstance<Map<string, SubjectLike<Optional<T>>>>(Map);
 
       const cleanupQueue = IndexedQueue.create<string>();
 
       const cleanupContinuation = (ctx: ContinuationContextLike) => {
-        const { store, subscriptions } = instance;
+        const {
+          [CacheStream_store]: store,
+          [CacheStream_subscriptions]: subscriptions,
+        } = instance;
 
-        while (store.size > capacity) {
+        while (store[Map_size] > capacity) {
           const key = cleanupQueue[QueueLike_dequeue]();
           if (isNone(key)) {
             break;
           }
 
-          if (!subscriptions.has(key)) {
-            store.delete(key);
+          if (!subscriptions[Set_has](key)) {
+            store[Set_delete](key);
           }
           ctx[ContinuationContextLike_yield]();
         }
@@ -124,8 +143,8 @@ const createCacheStream: <T>(
 
       let cleanupJob = Disposable.disposed;
 
-      instance.scheduleCleanup = (key: string) => {
-        if (isNone(instance.store.get(key))) {
+      instance[CacheStream_scheduleCleanup] = (key: string) => {
+        if (isNone(instance[CacheStream_store][Map_get](key))) {
           return;
         }
 
@@ -157,7 +176,8 @@ const createCacheStream: <T>(
                   pipe(
                     updaters,
                     ReadonlyObjectMap.map(
-                      (_, k: string) => instance.store.get(k) as T,
+                      (_, k: string) =>
+                        instance[CacheStream_store][Map_get](k) as T,
                     ),
                   ),
                 ),
@@ -172,7 +192,7 @@ const createCacheStream: <T>(
                       ReadonlyObjectMap.keySet<string>(),
                     );
 
-                    return keys.size > 0
+                    return keys[Set_size] > 0
                       ? pipe(
                           persistentStore.load(keys),
                           Observable.map(
@@ -221,15 +241,16 @@ const createCacheStream: <T>(
             ),
             Observable.forEach(
               ReadonlyObjectMap.forEach((v: T, key: string) => {
-                const oldValue = instance.store.get(key);
+                const oldValue = instance[CacheStream_store][Map_get](key);
 
                 if (isNone(v)) {
-                  instance.store.delete(key);
+                  instance[CacheStream_store][Map_delete](key);
                 } else {
-                  instance.store.set(key, v);
+                  instance[CacheStream_store][Map_set](key, v);
                 }
 
-                const subject = instance.subscriptions.get(key);
+                const subject =
+                  instance[CacheStream_subscriptions][Map_get](key);
 
                 // We want to publish none, when the cache does not have the value
                 // when initially subscribing to the key.
@@ -240,7 +261,7 @@ const createCacheStream: <T>(
                   return;
                 }
 
-                instance.scheduleCleanup(key);
+                instance[CacheStream_scheduleCleanup](key);
               }),
             ),
             isSome(persistentStore)
@@ -262,42 +283,47 @@ const createCacheStream: <T>(
         delegate,
       );
 
-      instance.delegate = delegate;
+      instance[CacheStream_delegate] = delegate;
 
       return instance;
     },
     props<TProperties<T>>({
-      delegate: none,
-      scheduleCleanup: none,
-      store: none,
-      subscriptions: none,
+      [CacheStream_delegate]: none,
+      [CacheStream_scheduleCleanup]: none,
+      [CacheStream_store]: none,
+      [CacheStream_subscriptions]: none,
     }),
     {
       [CacheLike_get](
         this: TProperties<T> & DisposableLike,
         key: string,
       ): ObservableLike<T> {
-        const { scheduleCleanup, store, subscriptions, delegate } = this;
+        const {
+          [CacheStream_scheduleCleanup]: scheduleCleanup,
+          [CacheStream_store]: store,
+          [CacheStream_subscriptions]: subscriptions,
+          [CacheStream_delegate]: delegate,
+        } = this;
 
         return (
-          subscriptions.get(key) ??
+          subscriptions[Map_get](key) ??
           (() => {
             const subject = Subject.create<T>({
               autoDispose: true,
               replay: 1,
             });
-            subscriptions.set(key, subject);
+            subscriptions[Map_set](key, subject);
 
             pipe(
               subject,
               Disposable.onDisposed(_ => {
-                subscriptions.delete(key);
+                subscriptions[Map_delete](key);
                 scheduleCleanup(key);
               }),
               Disposable.addTo(this, { ignoreChildErrors: true }),
             );
 
-            const initialValue = store.get(key);
+            const initialValue = store[Map_get](key);
 
             if (isSome(initialValue)) {
               subject[EventListenerLike_notify](initialValue);

@@ -1,3 +1,9 @@
+import {
+  Map_delete,
+  Map_get,
+  Map_set,
+  Map_size,
+} from "../../../../__internal__/constants.js";
 import { EventListenerLike_notify, PublisherLike } from "../../../../events.js";
 import * as Publisher from "../../../../events/Publisher.js";
 import {
@@ -18,7 +24,7 @@ const Element_resizeEventSource: Element.Signature["resizeEventSource"] =
 
     const resizeObserverCallback = (entries: ResizeObserverEntry[]) => {
       for (const entry of entries) {
-        const publisher = publishers.get(entry.target);
+        const publisher = publishers[Map_get](entry.target);
 
         if (isNone(publisher)) {
           continue;
@@ -34,7 +40,7 @@ const Element_resizeEventSource: Element.Signature["resizeEventSource"] =
         (() => newInstance(ResizeObserver, resizeObserverCallback))();
 
       return (
-        publishers.get(element) ??
+        publishers[Map_get](element) ??
         (() => {
           const publisher = pipe(
             Publisher.create<ResizeObserverEntry>({
@@ -42,9 +48,9 @@ const Element_resizeEventSource: Element.Signature["resizeEventSource"] =
             }),
             Disposable.onDisposed(() => {
               resizeObserver?.unobserve(element);
-              publishers.delete(element);
+              publishers[Map_delete](element);
 
-              if (publishers.size > 0) {
+              if (publishers[Map_size] > 0) {
                 return;
               }
 
@@ -53,7 +59,7 @@ const Element_resizeEventSource: Element.Signature["resizeEventSource"] =
             }),
           );
 
-          publishers.set(element, publisher);
+          publishers[Map_set](element, publisher);
           resizeObserver.observe(element, options);
 
           return publisher;

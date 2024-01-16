@@ -1,5 +1,6 @@
 /// <reference types="./Observable.fromAsyncIterable.d.ts" />
 
+import { Iterator_done, Iterator_next, Iterator_value, } from "../../../__internal__/constants.js";
 import { DispatcherLike_complete, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { error, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../utils.js";
@@ -17,13 +18,13 @@ const Observable_fromAsyncIterable = () => (iterable) => Observable_create((obse
             while (!observer[DisposableLike_isDisposed] &&
                 observer[SchedulerLike_now] - startTime < maxYieldInterval) {
                 done = false;
-                const next = await iterator.next();
-                if (next.done) {
+                const next = await iterator[Iterator_next]();
+                if (next[Iterator_done]) {
                     observer[DispatcherLike_complete]();
                     done = true;
                     break;
                 }
-                else if (!observer[QueueableLike_enqueue](next.value)) {
+                else if (!observer[QueueableLike_enqueue](next[Iterator_value])) {
                     // An async iterable can produce resolved promises which are immediately
                     // scheduled on the microtask queue. This prevents the observer's scheduler
                     // from running and draining dispatched events.

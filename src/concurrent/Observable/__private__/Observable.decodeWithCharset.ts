@@ -1,3 +1,4 @@
+import { Array_length } from "../../../__internal__/constants.js";
 import {
   createInstanceFactory,
   include,
@@ -63,11 +64,11 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
           pipe(
             instance,
             Disposable.onComplete(() => {
-              const data = textDecoder.decode(new Uint8Array([]), {
+              const data = textDecoder.decode(newInstance(Uint8Array, []), {
                 stream: false,
               });
 
-              if (data.length > 0) {
+              if (data[Array_length] > 0) {
                 delegate[QueueableLike_enqueue](data);
                 delegate[DispatcherLike_complete]();
               } else {
@@ -93,7 +94,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
                 stream: true,
               },
             );
-            if (data.length > 0) {
+            if (data[Array_length] > 0) {
               this[DecodeWithCharsetObserver_delegate][ObserverLike_notify](
                 data,
               );

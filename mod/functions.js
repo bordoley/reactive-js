@@ -1,6 +1,6 @@
 /// <reference types="./functions.d.ts" />
 
-import { __DEV__ } from "./__internal__/constants.js";
+import { Array_every, Array_length, __DEV__, } from "./__internal__/constants.js";
 /**
  * A function that always returns `false`.
  */
@@ -10,11 +10,11 @@ export const alwaysFalse = () => false;
  */
 export const alwaysTrue = () => true;
 const arrayStrictEquality = (a, b) => {
-    const { length } = a;
+    const length = a[Array_length];
     if (a === b) {
         return true;
     }
-    if (length !== b.length) {
+    if (length !== b[Array_length]) {
         return false;
     }
     for (let i = 0; i < length; i++) {
@@ -31,7 +31,8 @@ const arrayStrictEquality = (a, b) => {
 export const arrayEquality = (valuesEquality = strictEquality) => valuesEquality === strictEquality
     ? arrayStrictEquality
     : (a, b) => a === b ||
-        (a.length === b.length && a.every((v, i) => valuesEquality(b[i], v)));
+        (a[Array_length] === b[Array_length] &&
+            a[Array_every]((v, i) => valuesEquality(b[i], v)));
 /**
  * Creates a new function that, when called, calls `f` with its
  * this keyword set to the provided value.
@@ -172,7 +173,7 @@ export const pickUnsafe = (k1, k2, k3, ...keys) =>
     result = result[k1];
     result = k2 !== none ? result[k2] : result;
     result = k3 !== none ? result[k3] : result;
-    const length = keys.length;
+    const length = keys[Array_length];
     if (length > 0) {
         for (const key of keys) {
             result = result[key];
@@ -190,7 +191,7 @@ export const pick = pickUnsafe;
  */
 export const pipeUnsafe = ((source, op1, op2, op3, op4, op5, op6, op7, ...operators) => {
     let acc = source;
-    const { length } = operators;
+    const length = operators[Array_length];
     acc = op1(acc);
     acc = op2 !== none ? op2(acc) : acc;
     acc = op3 !== none ? op3(acc) : acc;
@@ -214,7 +215,7 @@ export const pipe = pipeUnsafe;
  */
 export const pipeAsync = async (source, ...operators) => {
     let acc = source;
-    const { length } = operators;
+    const length = operators[Array_length];
     for (let i = 0; i < length; i++) {
         const result = operators[i](acc);
         if (isPromise(result)) {
@@ -236,7 +237,7 @@ export const pipeLazy = (source, ...operators) => () => pipeUnsafe(source, ...op
  */
 export const pipeLazyAsync = (source, ...operators) => async () => {
     let acc = source;
-    const { length } = operators;
+    const length = operators[Array_length];
     for (let i = 0; i < length; i++) {
         const result = operators[i](acc);
         if (isPromise(result)) {

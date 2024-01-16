@@ -1,3 +1,4 @@
+import { Array_length, Array_push } from "../../__internal__/constants.js";
 import { floor, random } from "../../__internal__/math.js";
 import {
   expectArrayEquals,
@@ -48,13 +49,13 @@ testModule(
   test("push", () => {
     const queue = createPriorityQueue();
     const shuffledArray = makeShuffledArray(100);
-    for (let i = 0; i < shuffledArray.length; i++) {
+    for (let i = 0; i < shuffledArray[Array_length]; i++) {
       queue[QueueableLike_enqueue](shuffledArray[i]);
     }
 
     const acc: number[] = [];
     while (queue[QueueLike_count] > 0) {
-      acc.push(queue[QueueLike_dequeue]() as number);
+      acc[Array_push](queue[QueueLike_dequeue]() as number);
     }
 
     pipe(acc, expectArrayEquals(makeSortedArray(100)));

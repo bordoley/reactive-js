@@ -1,3 +1,4 @@
+import { Array_every, Array_map } from "../../../__internal__/constants.js";
 import {
   include,
   init,
@@ -34,7 +35,7 @@ const Enumerator_zipMany = /*@__PURE__*/ (() => {
     enumerator[EnumeratorLike_hasCurrent];
 
   const allHaveCurrent = (enumerators: readonly EnumeratorLike[]) =>
-    enumerators.every(Enumerator_hasCurrent);
+    enumerators[Array_every](Enumerator_hasCurrent);
 
   const moveAll = (enumerators: readonly EnumeratorLike[]) => {
     for (const enumerator of enumerators) {
@@ -70,7 +71,7 @@ const Enumerator_zipMany = /*@__PURE__*/ (() => {
         const enumerators = this[ZipEnumerator_enumerators];
 
         if (moveAll(enumerators)) {
-          const next = enumerators.map(Enumerator_getCurrent);
+          const next = enumerators[Array_map](Enumerator_getCurrent);
 
           this[EnumeratorLike_current] = next;
         }
@@ -83,10 +84,10 @@ const Enumerator_zipMany = /*@__PURE__*/ (() => {
   );
 })();
 
-const Enumerable_zipMany = (observables: readonly EnumerableLike<unknown>[]) =>
+const Enumerable_zipMany = (enumerables: readonly EnumerableLike<unknown>[]) =>
   Enumerable_create(
     pipeLazy(
-      observables.map(invoke(EnumerableLike_enumerate)),
+      enumerables[Array_map](invoke(EnumerableLike_enumerate)),
       Enumerator_zipMany,
     ),
   );

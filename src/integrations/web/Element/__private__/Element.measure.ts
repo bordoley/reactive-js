@@ -1,3 +1,4 @@
+import { Array_every } from "../../../../__internal__/constants.js";
 import * as ReadonlyArray from "../../../../collections/ReadonlyArray.js";
 import { StoreLike_value } from "../../../../events.js";
 import * as EventSource from "../../../../events/EventSource.js";
@@ -21,7 +22,7 @@ const keys: (keyof Rect)[] = [
   "height",
 ];
 const areBoundsEqual = (a: Rect, b: Rect) =>
-  keys.every(key => a[key] === b[key]);
+  keys[Array_every](key => a[key] === b[key]);
 
 const findScrollContainers = (
   element: HTMLElement | SVGElement,

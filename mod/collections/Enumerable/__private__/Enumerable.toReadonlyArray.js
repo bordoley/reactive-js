@@ -1,6 +1,6 @@
 /// <reference types="./Enumerable.toReadonlyArray.d.ts" />
 
-import { __DEV__ } from "../../../__internal__/constants.js";
+import { Array_push, __DEV__ } from "../../../__internal__/constants.js";
 import { EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../collections.js";
 import { raiseIf } from "../../../functions.js";
 const Enumerable_toReadonlyArray = () => (enumerable) => {
@@ -13,7 +13,7 @@ const Enumerable_toReadonlyArray = () => (enumerable) => {
         if (__DEV__) {
             raiseIf(!enumerator[EnumeratorLike_hasCurrent], "EnumeratorLike_hasCurrent returned false after EnumeratorLike_move returned true");
         }
-        result.push(enumerator[EnumeratorLike_current]);
+        result[Array_push](enumerator[EnumeratorLike_current]);
     }
     if (__DEV__) {
         raiseIf(!enumerator[EnumeratorLike_isCompleted], "EnumeratorLike_move returned false, but Enumerator is not completed");

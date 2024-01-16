@@ -1,3 +1,4 @@
+import { Set_add } from "../../../__internal__/constants.js";
 import {
   DictionaryLike,
   DictionaryLike_keys,
@@ -15,7 +16,7 @@ const Dictionary_keySet: Dictionary.Signature["keySet"] =
     const keys = dict[DictionaryLike_keys][EnumerableLike_enumerate]();
 
     while (keys[EnumeratorLike_move]()) {
-      result.add(keys[EnumeratorLike_current]);
+      result[Set_add](keys[EnumeratorLike_current]);
     }
     return result;
   };

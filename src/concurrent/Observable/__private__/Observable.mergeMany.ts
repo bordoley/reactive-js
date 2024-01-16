@@ -1,3 +1,4 @@
+import { Array_length } from "../../../__internal__/constants.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
@@ -21,7 +22,7 @@ const Observable_mergeMany: Observable.Signature["mergeMany"] = (<T>(
   observables: readonly ObservableLike<T>[],
 ): ObservableLike<T> => {
   const onSubscribe = (observer: ObserverLike<T>) => {
-    const count = observables.length;
+    const count = observables[Array_length];
     let completed = 0;
 
     for (const observable of observables) {

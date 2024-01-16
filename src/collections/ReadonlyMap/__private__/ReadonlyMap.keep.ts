@@ -1,3 +1,4 @@
+import { Map_set } from "../../../__internal__/constants.js";
 import { Function2, newInstance } from "../../../functions.js";
 import type * as ReadonlyMap from "../../ReadonlyMap.js";
 
@@ -10,7 +11,7 @@ const ReadonlyMap_keep: ReadonlyMap.Signature["keep"] =
 
     for (let [key, value] of map) {
       if (predicate(value, key)) {
-        result.set(key, value);
+        result[Map_set](key, value);
       }
     }
 

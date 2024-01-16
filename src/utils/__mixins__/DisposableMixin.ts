@@ -1,3 +1,4 @@
+import { Set_add, Set_delete, Set_has } from "../../__internal__/constants.js";
 import { Mixin, Mutable, mix, props } from "../../__internal__/mixins.js";
 import {
   Optional,
@@ -72,7 +73,7 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
         const disposables = this[DisposableMixin_disposables];
 
         for (const disposable of disposables) {
-          disposables.delete(disposable);
+          disposables[Set_delete](disposable);
           doDispose(this, disposable);
         }
       }
@@ -87,12 +88,12 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
         return;
       } else if (this[DisposableLike_isDisposed]) {
         doDispose(this, disposable);
-      } else if (!disposables.has(disposable)) {
-        disposables.add(disposable);
+      } else if (!disposables[Set_has](disposable)) {
+        disposables[Set_add](disposable);
 
         if (!isFunction(disposable)) {
           disposable[DisposableLike_add](_ => {
-            disposables.delete(disposable);
+            disposables[Set_delete](disposable);
           });
         }
       }

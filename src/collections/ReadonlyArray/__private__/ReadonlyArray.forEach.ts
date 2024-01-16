@@ -1,3 +1,4 @@
+import { Array_length } from "../../../__internal__/constants.js";
 import { SideEffect1, SideEffect2 } from "../../../functions.js";
 import type * as ReadonlyArray from "../../ReadonlyArray.js";
 
@@ -6,7 +7,7 @@ const ReadonlyArray_forEach: ReadonlyArray.Signature["forEach"] =
     effect: SideEffect2<T, TKey>,
   ): SideEffect1<ReadonlyArray<T>> =>
   array => {
-    for (let i = 0; i < array.length; i++) {
+    for (let i = 0; i < array[Array_length]; i++) {
       effect(array[i], i as TKey);
     }
   };

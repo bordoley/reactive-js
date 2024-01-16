@@ -1,5 +1,6 @@
 /// <reference types="./PriorityQueue.test.d.ts" />
 
+import { Array_length, Array_push } from "../../__internal__/constants.js";
 import { floor, random } from "../../__internal__/math.js";
 import { expectArrayEquals, expectEquals, expectToThrow, test, testModule, } from "../../__internal__/testing.js";
 import { newInstance, pipe } from "../../functions.js";
@@ -29,12 +30,12 @@ const makeShuffledArray = (n) => {
 testModule("PriorityQueue", test("push", () => {
     const queue = createPriorityQueue();
     const shuffledArray = makeShuffledArray(100);
-    for (let i = 0; i < shuffledArray.length; i++) {
+    for (let i = 0; i < shuffledArray[Array_length]; i++) {
         queue[QueueableLike_enqueue](shuffledArray[i]);
     }
     const acc = [];
     while (queue[QueueLike_count] > 0) {
-        acc.push(queue[QueueLike_dequeue]());
+        acc[Array_push](queue[QueueLike_dequeue]());
     }
     pipe(acc, expectArrayEquals(makeSortedArray(100)));
 }), test("drop-latest backpressure", () => {

@@ -1,6 +1,7 @@
 /// <reference types="./Scheduler.d.ts" />
 
 import { unstable_NormalPriority, unstable_cancelCallback, unstable_now, unstable_scheduleCallback, unstable_shouldYield, } from "scheduler";
+import { Map_get, Map_set } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import { SchedulerLike_now } from "../../concurrent.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "../../concurrent/__internal__/Continuation.js";
@@ -38,10 +39,10 @@ const createReactScheduler = /*@__PURE__*/ (() => {
 })();
 export const get = /*@__PURE__*/ (() => {
     const schedulerCache = newInstance(Map);
-    return (priority = unstable_NormalPriority) => schedulerCache.get(priority) ??
+    return (priority = unstable_NormalPriority) => schedulerCache[Map_get](priority) ??
         (() => {
             const scheduler = createReactScheduler(priority);
-            schedulerCache.set(priority, scheduler);
+            schedulerCache[Map_set](priority, scheduler);
             return scheduler;
         })();
 })();

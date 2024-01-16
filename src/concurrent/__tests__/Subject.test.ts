@@ -1,3 +1,4 @@
+import { Array_push } from "../../__internal__/constants.js";
 import {
   describe,
   expectArrayEquals,
@@ -50,7 +51,7 @@ testModule(
       const result: number[] = [];
       pipe(
         subject,
-        Observable.forEach(bind(Array.prototype.push, result)),
+        Observable.forEach(bind(Array.prototype[Array_push], result)),
         Observable.subscribe(scheduler),
       );
 
@@ -91,7 +92,7 @@ testModule(
 
       const subjectSubscription = pipe(
         subject,
-        Observable.forEach<number>(bind(Array.prototype.push, result)),
+        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
         Observable.subscribe(scheduler),
       );
 
@@ -172,7 +173,7 @@ testModule(
         const result: number[] = [];
         const subscription = pipe(
           subject,
-          Observable.forEach(bind(Array.prototype.push, result)),
+          Observable.forEach(bind(Array.prototype[Array_push], result)),
           Observable.subscribe(vts),
         );
 

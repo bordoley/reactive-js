@@ -1,4 +1,8 @@
-import { __DEV__ } from "../../../__internal__/constants.js";
+import {
+  Array_length,
+  Array_push,
+  __DEV__,
+} from "../../../__internal__/constants.js";
 import {
   DeferredObservableWithSideEffectsLike,
   ObservableLike,
@@ -192,7 +196,7 @@ const validateComputeEffect: ValidateComputeEffect["validateComputeEffect"] = ((
     if (isSome(effect)) {
       effects[index] = newEffect;
     } else {
-      effects.push(newEffect);
+      effects[Array_push](newEffect);
     }
     return newEffect;
   }
@@ -442,8 +446,8 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
 
         const { [ComputeContext_effects]: effects } = ctx;
 
-        if (effects.length > ctx[ComputeContext_index]) {
-          const effectsLength = effects.length;
+        if (effects[Array_length] > ctx[ComputeContext_index]) {
+          const effectsLength = effects[Array_length];
 
           for (let i = ctx[ComputeContext_index]; i < effectsLength; i++) {
             const effect = ctx[ComputeContext_effects][i];
@@ -458,11 +462,11 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
             }
           }
         }
-        ctx[ComputeContext_effects].length = ctx[ComputeContext_index];
+        ctx[ComputeContext_effects][Array_length] = ctx[ComputeContext_index];
         currentCtx = none;
         ctx[ComputeContext_index] = 0;
 
-        const effectsLength = effects.length;
+        const effectsLength = effects[Array_length];
 
         // Inline this for perf
         let allObserveEffectsHaveValues = true;

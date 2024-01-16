@@ -1,3 +1,4 @@
+import { Array_push } from "../../__internal__/constants.js";
 import {
   describe,
   expectArrayEquals,
@@ -55,7 +56,7 @@ testModule(
 
       pipe(parent, Disposable.add(child));
 
-      const e = new Error();
+      const e = newInstance(Error);
       child[DisposableLike_dispose](e);
 
       pipe(parent[DisposableLike_error], expectEquals<Optional<Error>>(e));
@@ -211,8 +212,8 @@ testModule(
         Disposable.create,
         Disposable.create,
       )((d1, d2) => {
-        disposables.push(d1);
-        disposables.push(d2);
+        disposables[Array_push](d1);
+        disposables[Array_push](d2);
 
         expectFalse(d1[DisposableLike_isDisposed]);
         expectFalse(d2[DisposableLike_isDisposed]);

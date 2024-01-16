@@ -1,4 +1,8 @@
-import { __DEV__ } from "./__internal__/constants.js";
+import {
+  Array_every,
+  Array_length,
+  __DEV__,
+} from "./__internal__/constants.js";
 
 /**
  * Compare two values to determine their relative ordering.
@@ -1184,13 +1188,13 @@ export const alwaysFalse: Signature["alwaysFalse"] = () => false;
 export const alwaysTrue: Signature["alwaysTrue"] = () => true;
 
 const arrayStrictEquality = <T>(a: readonly T[], b: readonly T[]) => {
-  const { length } = a;
+  const length = a[Array_length];
 
   if (a === b) {
     return true;
   }
 
-  if (length !== b.length) {
+  if (length !== b[Array_length]) {
     return false;
   }
 
@@ -1214,7 +1218,8 @@ export const arrayEquality: Signature["arrayEquality"] = <T>(
     ? arrayStrictEquality
     : (a: readonly T[], b: readonly T[]) =>
         a === b ||
-        (a.length === b.length && a.every((v, i) => valuesEquality(b[i], v)));
+        (a[Array_length] === b[Array_length] &&
+          a[Array_every]((v, i) => valuesEquality(b[i], v)));
 
 /**
  * Creates a new function that, when called, calls `f` with its
@@ -1481,7 +1486,7 @@ export const pickUnsafe: Signature["pickUnsafe"] =
     result = k2 !== none ? result[k2] : result;
     result = k3 !== none ? result[k3] : result;
 
-    const length = keys.length;
+    const length = keys[Array_length];
     if (length > 0) {
       for (const key of keys) {
         result = result[key];
@@ -1511,7 +1516,7 @@ export const pipeUnsafe: Signature["pipeUnsafe"] = ((
   ...operators: Function1<any, any>[]
 ): unknown => {
   let acc = source;
-  const { length } = operators;
+  const length = operators[Array_length];
 
   acc = op1(acc);
   acc = op2 !== none ? op2(acc) : acc;
@@ -1543,7 +1548,7 @@ export const pipeAsync: Signature["pipeAsync"] = async (
   ...operators: Function1<unknown, unknown | Promise<unknown>>[]
 ) => {
   let acc = source;
-  const { length } = operators;
+  const length = operators[Array_length];
   for (let i = 0; i < length; i++) {
     const result = operators[i](acc);
 
@@ -1579,7 +1584,7 @@ export const pipeLazyAsync: Signature["pipeLazyAsync"] =
   ) =>
   async () => {
     let acc = source;
-    const { length } = operators;
+    const length = operators[Array_length];
     for (let i = 0; i < length; i++) {
       const result = operators[i](acc);
 

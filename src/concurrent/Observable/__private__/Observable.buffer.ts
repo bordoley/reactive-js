@@ -1,4 +1,8 @@
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import {
+  Array_length,
+  Array_push,
+  MAX_SAFE_INTEGER,
+} from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import {
   createInstanceFactory,
@@ -64,7 +68,7 @@ const createBufferObserver: <T>(
               const { [BufferObserver_buffer]: buffer } = instance;
               instance[BufferObserver_buffer] = [];
 
-              if (buffer.length > 0) {
+              if (buffer[Array_length] > 0) {
                 delegate[QueueableLike_enqueue](buffer);
                 delegate[DispatcherLike_complete]();
               } else {
@@ -87,9 +91,9 @@ const createBufferObserver: <T>(
               [BufferObserver_count]: count,
             } = this;
 
-            buffer.push(next);
+            buffer[Array_push](next);
 
-            if (buffer.length === count) {
+            if (buffer[Array_length] === count) {
               const buffer = this[BufferObserver_buffer];
               this[BufferObserver_buffer] = [];
 
