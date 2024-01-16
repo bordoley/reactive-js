@@ -1,6 +1,6 @@
 /// <reference types="./functions.d.ts" />
 
-import { Array_every, Array_length, __DEV__, } from "./__internal__/constants.js";
+import { Array_every, Array_length, __DEV__, none as constants_none, typeofObject, } from "./__internal__/constants.js";
 /**
  * A function that always returns `false`.
  */
@@ -137,7 +137,7 @@ export const isNumber = (n) => typeof n === "number";
  * Predicate that returns `true` if `x` is an odd number, otherwise `false`.
  */
 export const isOdd = (x) => x % 2 !== 0;
-export const isObject = (o) => typeof o === "object";
+export const isObject = (o) => typeof o === typeofObject;
 const isPromise = (v) => v instanceof Promise || Promise.resolve(v) === v;
 /**
  * Returns true if `option` is not `none`.
@@ -161,7 +161,7 @@ export const newInstance = (Constructor, ...args) => new Constructor(...args);
 /**
  * An alias for undefined.
  */
-export const none = undefined;
+export const none = constants_none;
 export const partial = (...args) => (f) => (arg0) => f(arg0, ...args);
 /**
  * Type-unsafe variant of `pick`.

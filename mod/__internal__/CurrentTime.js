@@ -1,11 +1,15 @@
 /// <reference types="./CurrentTime.d.ts" />
 
 import { bindMethod, isFunction } from "../functions.js";
+import { Global_process, globalObject } from "./constants.js";
 export const now = /*@__PURE__*/ (() => {
     const Clock_now = "now";
     const Process_hrtime = "hrtime";
-    const supportsPerformanceNow = typeof performance === "object" && isFunction(performance[Clock_now]);
-    const supportsProcessHRTime = typeof process === "object" && isFunction(process[Process_hrtime]);
+    const Global_performance = "performance";
+    const performance = globalObject[Global_performance];
+    const process = globalObject[Global_process];
+    const supportsPerformanceNow = isFunction(performance?.[Clock_now]);
+    const supportsProcessHRTime = isFunction(process?.[Process_hrtime]);
     if (supportsPerformanceNow) {
         return bindMethod(performance, Clock_now);
     }

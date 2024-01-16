@@ -1,21 +1,24 @@
 export const { MAX_SAFE_INTEGER, MAX_VALUE, MIN_SAFE_INTEGER, MIN_VALUE } =
   Number;
 
-const process =
-  typeof global === "object"
-    ? global.process
-    : {
-        env: {
-          NODE_ENV: "development",
-        },
-      };
-export const __DEV__ = process.env.NODE_ENV !== "production";
+export const none = undefined;
 
-declare const Deno: {
-  test(name: string, f: () => void): void;
+export const typeofObject = "object";
+
+export const globalObject: any =
+  typeof window === typeofObject ? window : global;
+
+export const Global_process = "process";
+
+const process = globalObject[Global_process] ?? {
+  env: {
+    NODE_ENV: "development",
+  },
 };
 
-export const __DENO__ = typeof Deno === "object";
+export const __DEV__ = process.env.NODE_ENV !== "production";
+
+export const __DENO__ = globalObject.Deno !== none;
 
 export const Array_every = "every";
 export const Array_length = "length";

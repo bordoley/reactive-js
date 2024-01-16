@@ -1,1 +1,1 @@
-export declare const now: () => number;
+export declare const now: any;

@@ -1,3 +1,4 @@
+import { globalObject } from "../__internal__/constants.js";
 import {
   include,
   init,
@@ -5,7 +6,7 @@ import {
   props,
 } from "../__internal__/mixins.js";
 import { SchedulerLike, SchedulerLike_now } from "../concurrent.js";
-import { Optional, isSome, pipe } from "../functions.js";
+import { Optional, isObject, isSome, pipe } from "../functions.js";
 import { DisposableLike, DisposableLike_dispose } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
 import {
@@ -38,7 +39,7 @@ declare const navigator: {
 const supportsSetImmediate = typeof setImmediate === "function";
 
 const supportsIsInputPending = /*@__PURE__*/ (() =>
-  typeof navigator === "object" &&
+  isObject(globalObject.navigator) &&
   isSome(navigator.scheduling) &&
   isSome(navigator.scheduling.isInputPending))();
 

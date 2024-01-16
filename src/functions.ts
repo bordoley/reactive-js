@@ -2,6 +2,8 @@ import {
   Array_every,
   Array_length,
   __DEV__,
+  none as constants_none,
+  typeofObject,
 } from "./__internal__/constants.js";
 
 /**
@@ -1415,7 +1417,7 @@ export const isNumber: Signature["isNumber"] = (n: unknown): n is number =>
 export const isOdd: Signature["isOdd"] = (x: number) => x % 2 !== 0;
 
 export const isObject: Signature["isObject"] = (o: unknown): o is object =>
-  typeof o === "object";
+  typeof o === typeofObject;
 
 const isPromise: Signature["isPromise"] = (v: unknown): v is Promise<unknown> =>
   v instanceof Promise || Promise.resolve(v) === v;
@@ -1460,7 +1462,7 @@ export const newInstance: Signature["newInstance"] = (
 /**
  * An alias for undefined.
  */
-export const none: Signature["none"] = undefined;
+export const none: Signature["none"] = constants_none;
 
 export const partial: Signature["partial"] =
   (...args: readonly unknown[]) =>

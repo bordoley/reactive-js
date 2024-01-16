@@ -1,4 +1,8 @@
 export declare const MAX_SAFE_INTEGER: number, MAX_VALUE: number, MIN_SAFE_INTEGER: number, MIN_VALUE: number;
+export declare const none: undefined;
+export declare const typeofObject = "object";
+export declare const globalObject: any;
+export declare const Global_process = "process";
 export declare const __DEV__: boolean;
 export declare const __DENO__: boolean;
 export declare const Array_every = "every";
