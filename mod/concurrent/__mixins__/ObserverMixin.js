@@ -15,7 +15,6 @@ const ObserverMixin = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (observer) => {
         if (observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]) {
             const continuation = (ctx) => {
-                unsafeCast(observer);
                 while (observer[QueueLike_count] > 0) {
                     const next = observer[QueueLike_dequeue]();
                     observer[ObserverLike_notify](next);

@@ -80,8 +80,6 @@ const ObserverMixin: <T>() => Mixin2<
       observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]
     ) {
       const continuation = (ctx: ContinuationContextLike) => {
-        unsafeCast<TProperties & ObserverLike<T>>(observer);
-
         while (observer[QueueLike_count] > 0) {
           const next = observer[QueueLike_dequeue]() as T;
           observer[ObserverLike_notify](next);
