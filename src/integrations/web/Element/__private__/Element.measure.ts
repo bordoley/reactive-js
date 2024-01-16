@@ -29,15 +29,17 @@ const findScrollContainers = (
 ): (HTMLElement | SVGElement)[] => {
   const { overflow, overflowX, overflowY } = window.getComputedStyle(element);
 
+  const { body } = document;
+
   const result =
-    element !== document.body &&
+    element !== body &&
     [overflow, overflowX, overflowY].some(
       prop => prop === "auto" || prop === "scroll",
     )
       ? [element]
       : [];
 
-  return element !== document.body && element.parentElement != null
+  return element !== body && element.parentElement != null
     ? [...result, ...findScrollContainers(element.parentElement)]
     : result;
 };

@@ -1,5 +1,6 @@
 /// <reference types="./WindowLocation.d.ts" />
 
+import * as Obj from "../../__internal__/Object.js";
 import { Array_length } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import { pick } from "../../computations.js";
@@ -28,7 +29,7 @@ const windowLocationPrototype = {
 };
 const createWindowLocationURIWithPrototype = (uri) => uri.toString === windowLocationPrototype.toString
     ? uri
-    : Object.create(windowLocationPrototype, Object.getOwnPropertyDescriptors(uri));
+    : Obj.create(windowLocationPrototype, Obj.getOwnPropertyDescriptors(uri));
 const getCurrentWindowLocationURI = () => {
     const { pathname: path, search: query, hash: fragment, } = newInstance(URL, location.href);
     return createWindowLocationURIWithPrototype({
