@@ -16,7 +16,7 @@ import {
   Optional,
   Updater,
 } from "../functions.js";
-import { QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
+import { BackpressureStrategy } from "../utils.js";
 import { Animation } from "./Observable.js";
 import Streamable_create from "./Streamable/__private__/Streamable.create.js";
 import Streamable_createAnimationGroupEventHandler from "./Streamable/__private__/Streamable.createAnimationGroupEventHandler.js";
@@ -67,7 +67,7 @@ export interface StreamableModule {
     options: {
       readonly mode: "queueing";
       readonly scheduler?: SchedulerLike;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     },
   ): StreamableLike<
@@ -106,7 +106,7 @@ export interface StreamableModule {
     options: {
       readonly mode: "queueing";
       readonly scheduler?: SchedulerLike;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     },
   ): StreamableLike<
@@ -127,7 +127,7 @@ export interface StreamableModule {
     op: Function1<TEventType, DeferredObservableLike>,
     options: {
       readonly mode: "queueing";
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     },
   ): StreamableLike<TEventType, boolean>;

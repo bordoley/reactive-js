@@ -34,10 +34,9 @@ import {
   pipe,
 } from "../../functions.js";
 import {
+  BackpressureStrategy,
   DisposableLike,
   DisposableLike_dispose,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
@@ -237,9 +236,7 @@ export const __stream = /*@__PURE__*/ (() => {
     scheduler: SchedulerLike,
     replay: Optional<number>,
     capacity: Optional<number>,
-    backpressureStrategy: Optional<
-      QueueableLike[typeof QueueableLike_backpressureStrategy]
-    >,
+    backpressureStrategy: Optional<BackpressureStrategy>,
   ): StreamOf<TStreamable> =>
     streamable[StreamableLike_stream](scheduler, {
       replay,
@@ -257,7 +254,7 @@ export const __stream = /*@__PURE__*/ (() => {
     }: {
       readonly replay?: number;
       readonly scheduler?: SchedulerLike;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     } = {},
   ): StreamOf<TStreamable> => {

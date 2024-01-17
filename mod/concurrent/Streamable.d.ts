@@ -2,7 +2,7 @@ import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
 import { CacheLike, DeferredObservableLike, PureDeferredObservableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
 import { EventSourceLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Updater } from "../functions.js";
-import { QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
+import { BackpressureStrategy } from "../utils.js";
 import { Animation } from "./Observable.js";
 /**
  * @noInheritDoc
@@ -22,7 +22,7 @@ export interface StreamableModule {
     createAnimationGroupEventHandler<TEvent, TKey extends string, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
         readonly mode: "queueing";
         readonly scheduler?: SchedulerLike;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
     createAnimationGroupEventHandler<TKey extends string, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
@@ -36,7 +36,7 @@ export interface StreamableModule {
     createAnimationGroupEventHandler<TKey extends string, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
         readonly mode: "queueing";
         readonly scheduler?: SchedulerLike;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): StreamableLike<void, boolean, StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
     createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>, options: {
@@ -47,7 +47,7 @@ export interface StreamableModule {
     }): StreamableLike<TEventType, boolean>;
     createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>, options: {
         readonly mode: "queueing";
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): StreamableLike<TEventType, boolean>;
     createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>): StreamableLike<TEventType, boolean>;

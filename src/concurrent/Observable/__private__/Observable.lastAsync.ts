@@ -1,9 +1,6 @@
 import { ObservableLike, SchedulerLike } from "../../../concurrent.js";
 import { Optional, newInstance, none, pipe } from "../../../functions.js";
-import {
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-} from "../../../utils.js";
+import { BackpressureStrategy } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -14,7 +11,7 @@ const Observable_lastAsync: Observable.Signature["lastAsync"] =
     scheduler: SchedulerLike,
     options?: {
       readonly capacity?: number;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
     },
   ) =>
   async (observable: ObservableLike<T>) => {

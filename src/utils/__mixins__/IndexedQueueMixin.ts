@@ -20,6 +20,7 @@ import {
 } from "../../functions.js";
 import {
   BackPressureError,
+  BackpressureStrategy,
   DropLatestBackpressureStrategy,
   DropOldestBackpressureStrategy,
   IndexedQueueLike,
@@ -29,7 +30,6 @@ import {
   QueueLike_count,
   QueueLike_dequeue,
   QueueLike_head,
-  QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
@@ -41,7 +41,7 @@ import {
 const IndexedQueueMixin: <T>() => Mixin1<
   IndexedQueueLike<T>,
   Optional<{
-    readonly [QueueableLike_backpressureStrategy]?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly [QueueableLike_backpressureStrategy]?: BackpressureStrategy;
     readonly [QueueableLike_capacity]?: number;
   }>,
   unknown,
@@ -60,7 +60,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
   const IndexedQueueMixin_values = Symbol("IndexedQueueMixin_values");
   type TProperties = {
     [QueueLike_count]: number;
-    readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly [QueueableLike_backpressureStrategy]: BackpressureStrategy;
     readonly [QueueableLike_capacity]: number;
     [IndexedQueueMixin_head]: number;
     [IndexedQueueMixin_tail]: number;
@@ -171,7 +171,7 @@ const IndexedQueueMixin: <T>() => Mixin1<
         > &
           Mutable<TProperties>,
         config?: {
-          readonly [QueueableLike_backpressureStrategy]?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+          readonly [QueueableLike_backpressureStrategy]?: BackpressureStrategy;
           readonly [QueueableLike_capacity]?: number;
         },
       ): IndexedQueueLike<T> {

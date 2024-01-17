@@ -34,10 +34,7 @@ import {
   none,
   pipe,
 } from "../../../functions.js";
-import {
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-} from "../../../utils.js";
+import { BackpressureStrategy } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type { Animation } from "../../Observable.js";
 import * as Observable from "../../Observable.js";
@@ -59,14 +56,14 @@ const Streamable_createAnimationGroupEventHandlerStream: <
   creationOptions: {
     readonly mode: "switching" | "blocking" | "queueing";
     readonly schedule?: SchedulerLike;
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
   },
   scheduler: SchedulerLike,
   streamOptions: Optional<{
     readonly replay?: number;
     readonly capacity?: number;
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly backpressureStrategy?: BackpressureStrategy;
   }>,
 ) => StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>> =
   /*@__PURE__*/ (<TEvent, TKey extends string, T>() => {
@@ -97,14 +94,14 @@ const Streamable_createAnimationGroupEventHandlerStream: <
         creationOptions: {
           readonly mode: "switching" | "blocking" | "queueing";
           readonly scheduler?: SchedulerLike;
-          readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+          readonly backpressureStrategy?: BackpressureStrategy;
           readonly capacity?: number;
         },
         scheduler: SchedulerLike,
         streamOptions: Optional<{
           readonly replay?: number;
           readonly capacity?: number;
-          readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+          readonly backpressureStrategy?: BackpressureStrategy;
         }>,
       ): StreamLike<TEvent, boolean> &
         DictionaryLike<TKey, EventSourceLike<T>> {
@@ -200,7 +197,7 @@ const Streamable_createAnimationGroupEventHandler: Streamable.Signature["createA
     createOptions: {
       readonly mode: "queueing" | "blocking" | "switching";
       readonly scheduler?: SchedulerLike;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     },
   ): StreamableLike<

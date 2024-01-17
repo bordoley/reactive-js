@@ -9,6 +9,8 @@ import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+export const BatchedComputeMode = "batched";
+export const CombineLatestComputeMode = "combine-latest";
 const Memo = 1;
 const Await = 2;
 const Observe = 3;
@@ -125,7 +127,7 @@ class ComputeContext {
             const subscription = pipe(observable, Observable_forEach((next) => {
                 effect[AwaitOrObserveEffect_value] = next;
                 effect[AwaitOrObserveEffect_hasValue] = true;
-                if (this[ComputeContext_mode] === "combine-latest") {
+                if (this[ComputeContext_mode] === CombineLatestComputeMode) {
                     runComputation();
                 }
                 else {
@@ -185,7 +187,7 @@ export const assertCurrentContext = () => {
     }
     return currentCtx;
 };
-const Observable_computeWithConfig = ((computation, config, { mode = "batched" } = {}) => Observable_createWithConfig((observer) => {
+const Observable_computeWithConfig = ((computation, config, { mode = BatchedComputeMode, } = {}) => Observable_createWithConfig((observer) => {
     const runComputation = () => {
         let result = none;
         let err = none;
@@ -233,13 +235,13 @@ const Observable_computeWithConfig = ((computation, config, { mode = "batched" }
                 break;
             }
         }
-        const combineLatestModeShouldNotify = mode === "combine-latest" &&
+        const combineLatestModeShouldNotify = mode === CombineLatestComputeMode &&
             allObserveEffectsHaveValues &&
             hasOutstandingEffects;
         const hasError = isSome(err);
         const shouldNotify = !hasError &&
             !isAwaiting &&
-            (combineLatestModeShouldNotify || mode === "batched");
+            (combineLatestModeShouldNotify || mode === BatchedComputeMode);
         const shouldDispose = !hasOutstandingEffects || hasError;
         if (shouldNotify) {
             observer[ObserverLike_notify](result);

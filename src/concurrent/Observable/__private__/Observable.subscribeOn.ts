@@ -8,7 +8,7 @@ import {
 } from "../../../concurrent.js";
 import { pipe } from "../../../functions.js";
 import {
-  QueueableLike,
+  BackpressureStrategy,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../utils.js";
@@ -21,7 +21,7 @@ import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js"
 const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
     scheduler: SchedulerLike,
     options?: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     },
   ) =>

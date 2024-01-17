@@ -20,6 +20,7 @@ import {
 } from "../../functions.js";
 import {
   BackPressureError,
+  BackpressureStrategy,
   DropLatestBackpressureStrategy,
   DropOldestBackpressureStrategy,
   IndexedQueueLike,
@@ -28,7 +29,6 @@ import {
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
-  QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
@@ -41,7 +41,7 @@ const PriorityQueueMixin: <T>() => Mixin2<
   QueueLike<T>,
   Comparator<T>,
   Optional<{
-    readonly [QueueableLike_backpressureStrategy]?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly [QueueableLike_backpressureStrategy]?: BackpressureStrategy;
     readonly [QueueableLike_capacity]?: number;
   }>
 > = /*@__PURE__*/ (<T>() => {
@@ -115,7 +115,7 @@ const PriorityQueueMixin: <T>() => Mixin2<
           Mutable<TProperties>,
         comparator: Comparator<T>,
         config?: {
-          readonly [QueueableLike_backpressureStrategy]?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+          readonly [QueueableLike_backpressureStrategy]?: BackpressureStrategy;
           readonly [QueueableLike_capacity]?: number;
         },
       ): QueueLike<T> {

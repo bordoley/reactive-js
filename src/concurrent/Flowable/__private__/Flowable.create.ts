@@ -23,9 +23,8 @@ import { StoreLike_value, WritableStoreLike } from "../../../events.js";
 import * as WritableStore from "../../../events/WritableStore.js";
 import { Function1, invoke, none, pipe } from "../../../functions.js";
 import {
+  BackpressureStrategy,
   DropOldestBackpressureStrategy,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -43,7 +42,7 @@ const PauseableObservable_create: <T>(
   op: Function1<MulticastObservableLike<boolean>, DeferredObservableLike<T>>,
   scheduler: SchedulerLike,
   options?: {
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
   },
 ) => PauseableObservableLike<T> = /*@__PURE__*/ (<T>() => {
@@ -66,7 +65,7 @@ const PauseableObservable_create: <T>(
       scheduler: SchedulerLike,
       multicastOptions?: {
         capacity?: number;
-        backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        backpressureStrategy?: BackpressureStrategy;
         replay?: number;
       },
     ): PauseableObservableLike<T> {

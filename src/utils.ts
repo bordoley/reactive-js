@@ -136,12 +136,9 @@ export interface IndexedQueueLike<T = unknown>
  */
 export class BackPressureError extends Error {
   readonly [QueueableLike_capacity]: number;
-  readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
+  readonly [QueueableLike_backpressureStrategy]: BackpressureStrategy;
 
-  constructor(
-    capacity: number,
-    backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
-  ) {
+  constructor(capacity: number, backpressureStrategy: BackpressureStrategy) {
     super();
     this[QueueableLike_capacity] = capacity;
     this[QueueableLike_backpressureStrategy] = backpressureStrategy;

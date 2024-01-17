@@ -1,4 +1,5 @@
 import { Equality, Factory, Function1, Optional, Predicate, SideEffect } from "../functions.js";
+export declare const __DENO__: boolean;
 export declare const DescribeType = 1;
 export declare const TestType = 2;
 export declare const TestAsyncType = 3;

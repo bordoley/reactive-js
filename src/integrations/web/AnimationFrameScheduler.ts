@@ -44,6 +44,7 @@ interface Signature {
 }
 
 export const create: Signature["create"] = /*@__PURE__*/ (() => {
+  const raf = requestAnimationFrame;
   const AnimationFrameScheduler_host = Symbol("AnimationFrameScheduler_host");
   const AnimationFrameScheduler_rafCallback = Symbol(
     "AnimationFrameScheduler_rafCallback",
@@ -118,7 +119,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
         const continuationsQueueCount =
           instance[AnimationFrameScheduler_rafQueue][QueueLike_count];
         if (continuationsQueueCount > 0) {
-          requestAnimationFrame(instance[AnimationFrameScheduler_rafCallback]);
+          raf(instance[AnimationFrameScheduler_rafCallback]);
         } else {
           instance[AnimationFrameScheduler_rafIsRunning] = false;
         }
@@ -166,7 +167,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
 
           if (!this[AnimationFrameScheduler_rafIsRunning]) {
             this[AnimationFrameScheduler_rafIsRunning] = true;
-            requestAnimationFrame(this[AnimationFrameScheduler_rafCallback]);
+            raf(this[AnimationFrameScheduler_rafCallback]);
           }
         }
       },

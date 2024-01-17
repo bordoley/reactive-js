@@ -35,12 +35,14 @@ import {
   DisposableLike_isDisposed,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import type * as Observable from "../../Observable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-type EffectsMode = "batched" | "combine-latest";
+export const BatchedComputeMode = "batched";
+export const CombineLatestComputeMode = "combine-latest";
 
 const Memo = 1;
 const Await = 2;
@@ -218,7 +220,7 @@ class ComputeContext {
   private [ComputeContext_scheduledComputationSubscription]: DisposableLike =
     Disposable.disposed;
   private readonly [ComputeContext_runComputation]: () => void;
-  private readonly [ComputeContext_mode]: EffectsMode;
+  private readonly [ComputeContext_mode]: Observable.ComputeMode;
   private readonly [ComputeContext_cleanup] = () => {
     const { [ComputeContext_effects]: effects } = this;
 
@@ -243,7 +245,7 @@ class ComputeContext {
   constructor(
     observer: ObserverLike,
     runComputation: () => void,
-    mode: EffectsMode,
+    mode: Observable.ComputeMode,
     config: Pick<
       ObservableLike,
       typeof ObservableLike_isDeferred | typeof ObservableLike_isRunnable
@@ -285,7 +287,7 @@ class ComputeContext {
           effect[AwaitOrObserveEffect_value] = next;
           effect[AwaitOrObserveEffect_hasValue] = true;
 
-          if (this[ComputeContext_mode] === "combine-latest") {
+          if (this[ComputeContext_mode] === CombineLatestComputeMode) {
             runComputation();
           } else {
             let {
@@ -401,7 +403,7 @@ interface ObservableComputeWithConfig {
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
-    options?: { readonly mode?: "batched" | "combine-latest" },
+    options?: { readonly mode?: Observable.ComputeMode },
   ): RunnableWithSideEffectsLike<T>;
   computeWithConfig<T>(
     computation: Factory<T>,
@@ -412,7 +414,7 @@ interface ObservableComputeWithConfig {
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
-    options?: { readonly mode?: "batched" | "combine-latest" },
+    options?: { readonly mode?: Observable.ComputeMode },
   ): DeferredObservableWithSideEffectsLike<T>;
 }
 
@@ -426,7 +428,9 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
-    { mode = "batched" }: { readonly mode?: "batched" | "combine-latest" } = {},
+    {
+      mode = BatchedComputeMode,
+    }: { readonly mode?: Observable.ComputeMode } = {},
   ) =>
     Observable_createWithConfig<T>((observer: ObserverLike<T>) => {
       const runComputation = () => {
@@ -497,7 +501,7 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
         }
 
         const combineLatestModeShouldNotify =
-          mode === "combine-latest" &&
+          mode === CombineLatestComputeMode &&
           allObserveEffectsHaveValues &&
           hasOutstandingEffects;
 
@@ -506,7 +510,7 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
         const shouldNotify =
           !hasError &&
           !isAwaiting &&
-          (combineLatestModeShouldNotify || mode === "batched");
+          (combineLatestModeShouldNotify || mode === BatchedComputeMode);
 
         const shouldDispose = !hasOutstandingEffects || hasError;
 

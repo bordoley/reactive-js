@@ -1,7 +1,9 @@
 import { DeferredObservableWithSideEffectsLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, RunnableWithSideEffectsLike } from "../../../concurrent.js";
 import { Factory, Optional } from "../../../functions.js";
 import { DisposableLike } from "../../../utils.js";
-type EffectsMode = "batched" | "combine-latest";
+import type * as Observable from "../../Observable.js";
+export declare const BatchedComputeMode = "batched";
+export declare const CombineLatestComputeMode = "combine-latest";
 declare const Memo = 1;
 declare const Await = 2;
 declare const Observe = 3;
@@ -71,7 +73,7 @@ declare class ComputeContext {
     private readonly [ComputeContext_runComputation];
     private readonly [ComputeContext_mode];
     private readonly [ComputeContext_cleanup];
-    constructor(observer: ObserverLike, runComputation: () => void, mode: EffectsMode, config: Pick<ObservableLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isRunnable>);
+    constructor(observer: ObserverLike, runComputation: () => void, mode: Observable.ComputeMode, config: Pick<ObservableLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isRunnable>);
     [ComputeContext_awaitOrObserve]<T>(observable: ObservableLike<T>, shouldAwait: boolean): Optional<T>;
     [ComputeContext_constant]<T>(value: T, ...args: unknown[]): T;
     [ComputeContext_memoOrUse]<T>(shouldUse: false, f: (...args: any[]) => T, ...args: unknown[]): T;
@@ -80,10 +82,10 @@ declare class ComputeContext {
 export declare const assertCurrentContext: () => ComputeContext;
 interface ObservableComputeWithConfig {
     computeWithConfig<T>(computation: Factory<T>, config: Pick<RunnableWithSideEffectsLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isMulticasted | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>, options?: {
-        readonly mode?: "batched" | "combine-latest";
+        readonly mode?: Observable.ComputeMode;
     }): RunnableWithSideEffectsLike<T>;
     computeWithConfig<T>(computation: Factory<T>, config: Pick<DeferredObservableWithSideEffectsLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isMulticasted | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>, options?: {
-        readonly mode?: "batched" | "combine-latest";
+        readonly mode?: Observable.ComputeMode;
     }): DeferredObservableWithSideEffectsLike<T>;
 }
 declare const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConfig"];

@@ -1,7 +1,8 @@
 /// <reference types="./testing.d.ts" />
 
 import { arrayEquality, ignore, isNone, isSome, none, pipeLazy, raise, strictEquality, } from "../functions.js";
-import { Array_length, Array_push, __DENO__ } from "./constants.js";
+import { Array_length, Array_push, globalObject } from "./constants.js";
+export const __DENO__ = isSome(globalObject.Deno);
 export const DescribeType = 1;
 export const TestType = 2;
 export const TestAsyncType = 3;

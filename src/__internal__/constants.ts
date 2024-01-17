@@ -1,14 +1,32 @@
 export const { MAX_SAFE_INTEGER, MAX_VALUE, MIN_SAFE_INTEGER, MIN_VALUE } =
   Number;
 
-export const none = undefined;
-
 export const typeofObject = "object";
-
-export const globalObject: any =
-  typeof window === typeofObject ? window : global;
-
 export const Global_process = "process";
+
+type GlobalObject = {
+  navigator?: {
+    scheduling?: {
+      isInputPending?: () => boolean;
+    };
+  };
+  performance?: {
+    now: () => number;
+  };
+  process?: {
+    env: { [key in string]?: unknown };
+    hrtime?: () => [number, number];
+  };
+  Deno?: unknown;
+  setImmediate?: <TArgs extends any[]>(
+    callback: (...args: TArgs) => void,
+    ...args: TArgs
+  ) => NodeJS.Immediate;
+};
+
+export const globalObject: GlobalObject = (
+  typeof window === typeofObject ? window : global
+) as GlobalObject;
 
 const process = globalObject[Global_process] ?? {
   env: {
@@ -17,8 +35,6 @@ const process = globalObject[Global_process] ?? {
 };
 
 export const __DEV__ = process.env.NODE_ENV !== "production";
-
-export const __DENO__ = globalObject.Deno !== none;
 
 export const Array_every = "every";
 export const Array_length = "length";

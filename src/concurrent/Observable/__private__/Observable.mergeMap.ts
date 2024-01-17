@@ -5,10 +5,7 @@ import {
   PureRunnableLike,
 } from "../../../concurrent.js";
 import { Function1, pipe } from "../../../functions.js";
-import {
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-} from "../../../utils.js";
+import { BackpressureStrategy } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_map from "./Observable.map.js";
 import Observable_mergeAll from "./Observable.mergeAll.js";
@@ -21,7 +18,7 @@ const Observable_mergeMap: Observable.Signature["mergeMap"] = (<TA, TB>(
         readonly [ObservableLike_isPure]?: boolean;
         readonly [ObservableLike_isRunnable]?: boolean;
       };
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
       readonly concurrency?: number;
     },

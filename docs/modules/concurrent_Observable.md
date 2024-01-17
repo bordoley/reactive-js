@@ -20,18 +20,25 @@
 ### Type Aliases
 
 - [Animation](concurrent_Observable.md#animation)
+- [ComputeMode](concurrent_Observable.md#computemode)
 - [DeferringObservableOperator](concurrent_Observable.md#deferringobservableoperator)
 - [ObservableOperatorWithSideEffects](concurrent_Observable.md#observableoperatorwithsideeffects)
 - [PureStatefulObservableOperator](concurrent_Observable.md#purestatefulobservableoperator)
 - [PureStatelessObservableOperator](concurrent_Observable.md#purestatelessobservableoperator)
 - [Signature](concurrent_Observable.md#signature)
+- [ThrottleMode](concurrent_Observable.md#throttlemode)
 
 ### Variables
 
+- [BatchedComputeMode](concurrent_Observable.md#batchedcomputemode)
+- [CombineLatestComputeMode](concurrent_Observable.md#combinelatestcomputemode)
 - [DeferredObservableWithSideEffectsType](concurrent_Observable.md#deferredobservablewithsideeffectstype)
 - [PureDeferredObservableType](concurrent_Observable.md#puredeferredobservabletype)
 - [PureRunnableType](concurrent_Observable.md#purerunnabletype)
 - [RunnableWithSideEffectsType](concurrent_Observable.md#runnablewithsideeffectstype)
+- [ThrottleFirstMode](concurrent_Observable.md#throttlefirstmode)
+- [ThrottleIntervalMode](concurrent_Observable.md#throttleintervalmode)
+- [ThrottleLastMode](concurrent_Observable.md#throttlelastmode)
 - [currentTime](concurrent_Observable.md#currenttime)
 
 ### Functions
@@ -125,6 +132,12 @@
 | Name | Type |
 | :------ | :------ |
 | `T` | `number` |
+
+___
+
+### ComputeMode
+
+Ƭ **ComputeMode**: typeof [`BatchedComputeMode`](concurrent_Observable.md#batchedcomputemode) \| typeof [`CombineLatestComputeMode`](concurrent_Observable.md#combinelatestcomputemode)
 
 ___
 
@@ -266,7 +279,25 @@ ___
 
 Ƭ **Signature**: [`ObservableModule`](../interfaces/concurrent_Observable.ObservableModule.md)
 
+___
+
+### ThrottleMode
+
+Ƭ **ThrottleMode**: typeof [`ThrottleFirstMode`](concurrent_Observable.md#throttlefirstmode) \| typeof [`ThrottleLastMode`](concurrent_Observable.md#throttlelastmode) \| typeof [`ThrottleIntervalMode`](concurrent_Observable.md#throttleintervalmode)
+
 ## Variables
+
+### BatchedComputeMode
+
+• `Const` **BatchedComputeMode**: ``"batched"``
+
+___
+
+### CombineLatestComputeMode
+
+• `Const` **CombineLatestComputeMode**: ``"combine-latest"``
+
+___
 
 ### DeferredObservableWithSideEffectsType
 
@@ -289,6 +320,24 @@ ___
 ### RunnableWithSideEffectsType
 
 • `Const` **RunnableWithSideEffectsType**: `Pick`<[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md), typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isMulticasted`](concurrent.md#observablelike_ismulticasted) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](concurrent.md#observablelike_isrunnable)\>
+
+___
+
+### ThrottleFirstMode
+
+• `Const` **ThrottleFirstMode**: ``"first"``
+
+___
+
+### ThrottleIntervalMode
+
+• `Const` **ThrottleIntervalMode**: ``"interval"``
+
+___
+
+### ThrottleLastMode
+
+• `Const` **ThrottleLastMode**: ``"last"``
 
 ___
 
@@ -1272,7 +1321,7 @@ ___
 | :------ | :------ |
 | `computation` | [`Factory`](functions.md#factory)<`T`\> |
 | `options?` | `Object` |
-| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+| `options.mode?` | [`ComputeMode`](concurrent_Observable.md#computemode) |
 
 #### Returns
 
@@ -1296,7 +1345,7 @@ ___
 | :------ | :------ |
 | `computation` | [`Factory`](functions.md#factory)<`T`\> |
 | `options?` | `Object` |
-| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+| `options.mode?` | [`ComputeMode`](concurrent_Observable.md#computemode) |
 
 #### Returns
 
@@ -4263,7 +4312,7 @@ ___
 | :------ | :------ |
 | `duration` | `number` |
 | `options?` | `Object` |
-| `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` |
+| `options.mode?` | [`ThrottleMode`](concurrent_Observable.md#throttlemode) |
 
 #### Returns
 

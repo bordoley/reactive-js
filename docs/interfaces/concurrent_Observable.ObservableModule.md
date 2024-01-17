@@ -1072,7 +1072,7 @@ ___
 | :------ | :------ |
 | `computation` | [`Factory`](../modules/functions.md#factory)<`T`\> |
 | `options?` | `Object` |
-| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+| `options.mode?` | [`ComputeMode`](../modules/concurrent_Observable.md#computemode) |
 
 #### Returns
 
@@ -1096,7 +1096,7 @@ ___
 | :------ | :------ |
 | `computation` | [`Factory`](../modules/functions.md#factory)<`T`\> |
 | `options?` | `Object` |
-| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+| `options.mode?` | [`ComputeMode`](../modules/concurrent_Observable.md#computemode) |
 
 #### Returns
 
@@ -4063,7 +4063,7 @@ ___
 | :------ | :------ |
 | `duration` | `number` |
 | `options?` | `Object` |
-| `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` |
+| `options.mode?` | [`ThrottleMode`](../modules/concurrent_Observable.md#throttlemode) |
 
 #### Returns
 

@@ -1,8 +1,8 @@
 import { createInstanceFactory } from "../__internal__/mixins.js";
 import { Comparator } from "../functions.js";
 import {
+  BackpressureStrategy,
   QueueLike,
-  QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../utils.js";
@@ -12,7 +12,7 @@ export const create: <T>(
   comparator: Comparator<T>,
   options?: {
     capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    backpressureStrategy?: BackpressureStrategy;
   },
 ) => QueueLike<T> = /*@__PURE__*/ (() => {
   const createPriorityQueue = createInstanceFactory(PriorityQueueMixin());
@@ -21,7 +21,7 @@ export const create: <T>(
     comparator: Comparator<T>,
     options?: {
       capacity?: number;
-      backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      backpressureStrategy?: BackpressureStrategy;
     },
   ) =>
     createPriorityQueue(comparator as Comparator<unknown>, {

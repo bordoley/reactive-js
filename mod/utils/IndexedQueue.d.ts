@@ -1,5 +1,5 @@
-import { IndexedQueueLike, QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
+import { BackpressureStrategy, IndexedQueueLike } from "../utils.js";
 export declare const create: <T>(options?: {
     capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    backpressureStrategy?: BackpressureStrategy;
 }) => IndexedQueueLike<T>;

@@ -48,10 +48,9 @@ import {
   raiseError,
 } from "../functions.js";
 import {
+  BackpressureStrategy,
   DisposableLike,
   DisposableLike_dispose,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
@@ -65,7 +64,7 @@ interface ReactModule {
     >,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     },
   ): ComponentType<TProps>;
@@ -104,7 +103,7 @@ interface ReactModule {
     observable: Optional<ObservableLike<T>>,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     },
   ): Optional<T>;
@@ -113,7 +112,7 @@ interface ReactModule {
     deps: readonly unknown[],
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     },
   ): Optional<T>;
@@ -132,7 +131,7 @@ interface ReactModule {
     streamable: TStreamable,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
       readonly replay?: number;
     },
@@ -142,7 +141,7 @@ interface ReactModule {
     dep: readonly unknown[],
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
       readonly replay?: number;
     },
@@ -155,7 +154,7 @@ export const createComponent: Signature["createComponent"] = <TProps>(
   fn: Function1<MulticastObservableLike<TProps>, ObservableLike<ReactElement>>,
   options: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
   } = {},
 ) => {
@@ -295,13 +294,13 @@ export const useObserve: Signature["useObserve"] = <T>(
   optionsOrDeps:
     | Optional<{
         readonly priority?: 1 | 2 | 3 | 4 | 5;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
       }>
     | readonly unknown[],
   optionsOrNone?: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
   },
 ) => {
@@ -317,7 +316,7 @@ export const useObserve: Signature["useObserve"] = <T>(
       ? optionsOrNone
       : (optionsOrDeps as Optional<{
           readonly priority?: 1 | 2 | 3 | 4 | 5;
-          readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+          readonly backpressureStrategy?: BackpressureStrategy;
           readonly capacity?: number;
         }>)) ?? {};
 
@@ -382,14 +381,14 @@ export const useStream: Signature["useStream"] = <
   optionsOrDeps:
     | Optional<{
         readonly priority?: 1 | 2 | 3 | 4 | 5;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly replay?: number;
       }>
     | readonly unknown[],
   optionsOrNone?: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
     readonly replay?: number;
   },
@@ -407,7 +406,7 @@ export const useStream: Signature["useStream"] = <
     ? optionsOrNone
     : (optionsOrDeps as Optional<{
         readonly priority?: 1 | 2 | 3 | 4 | 5;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly replay?: number;
       }>)) ?? {};

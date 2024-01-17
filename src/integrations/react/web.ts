@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import * as React from "react";
+import type * as React from "react";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { EventSourceLike, StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";

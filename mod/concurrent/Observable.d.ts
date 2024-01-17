@@ -3,7 +3,7 @@ import { Computation, Computation_T, Computation_type } from "../computations.js
 import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
 import { EventSourceLike, StoreLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9 } from "../functions.js";
-import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
+import { BackpressureStrategy, DisposableLike, QueueableLike } from "../utils.js";
 export type PureStatelessObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends PureRunnableLike<TIn> ? PureRunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends PureDeferredObservableLike<TIn> ? PureDeferredObservableLike<TOut> : TObservableIn extends DeferredObservableWithSideEffectsLike<TIn> ? DeferredObservableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
 export type PureStatefulObservableOperator<TIn, TOut, TObservableInBase = ObservableLike<TIn>> = <TObservableIn extends TObservableInBase>(observable: TObservableIn) => TObservableIn extends PureRunnableLike<TIn> ? PureRunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends PureDeferredObservableLike<TIn> ? PureDeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? PureDeferredObservableLike<TOut> : TObservableIn extends DeferredObservableWithSideEffectsLike<TIn> ? DeferredObservableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : ObservableLike<TOut>;
 export type DeferringObservableOperator<TIn, TOut, TObservableInBase = ObservableLike<TIn>> = <TObservableIn extends TObservableInBase>(obs: TObservableIn) => TObservableIn extends PureObservableLike<TIn> ? PureDeferredObservableLike<TOut> : DeferredObservableWithSideEffectsLike<TOut>;
@@ -92,12 +92,19 @@ export type Animation<T = number> = Animation.Delay | Animation.Loop<T> | (T ext
 } : (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
     readonly selector: Function1<number, T>;
 });
+export declare const BatchedComputeMode = "batched";
+export declare const CombineLatestComputeMode = "combine-latest";
+export type ComputeMode = typeof BatchedComputeMode | typeof CombineLatestComputeMode;
+export declare const ThrottleFirstMode = "first";
+export declare const ThrottleLastMode = "last";
+export declare const ThrottleIntervalMode = "interval";
+export type ThrottleMode = typeof ThrottleFirstMode | typeof ThrottleLastMode | typeof ThrottleIntervalMode;
 /**
  * @noInheritDoc
  */
 export interface ObservableModule {
     animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): PureRunnableLike<T>;
-    backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): PureStatefulObservableOperator<T, T>;
+    backpressureStrategy<T>(capacity: number, backpressureStrategy: BackpressureStrategy): PureStatefulObservableOperator<T, T>;
     buffer<T>(options?: {
         readonly count?: number;
     }): PureStatefulObservableOperator<T, readonly T[]>;
@@ -135,10 +142,10 @@ export interface ObservableModule {
     combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): DeferredObservableWithSideEffectsLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
     combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): DeferredObservableWithSideEffectsLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
     computeDeferred<T>(computation: Factory<T>, options?: {
-        readonly mode?: "batched" | "combine-latest";
+        readonly mode?: ComputeMode;
     }): DeferredObservableWithSideEffectsLike<T>;
     computeRunnable<T>(computation: Factory<T>, options?: {
-        readonly mode?: "batched" | "combine-latest";
+        readonly mode?: ComputeMode;
     }): RunnableWithSideEffectsLike<T>;
     concat<T>(fst: PureRunnableLike<T>, snd: PureRunnableLike<T>, ...tail: readonly PureRunnableLike<T>[]): PureRunnableLike<T>;
     concat<T>(fst: PureDeferredObservableLike<T>, snd: PureDeferredObservableLike<T>, ...tail: readonly PureDeferredObservableLike<T>[]): PureDeferredObservableLike<T>;
@@ -236,7 +243,7 @@ export interface ObservableModule {
     }): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
     firstAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     flatMapAsync<TA, TB>(f: Function2<TA, AbortSignal, Promise<TB>>): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
     flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): ObservableOperatorWithSideEffects<TA, TB>;
@@ -273,7 +280,7 @@ export interface ObservableModule {
     keep<T>(predicate: Predicate<T>): PureStatelessObservableOperator<T, T>;
     lastAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     log<T>(): ObservableOperatorWithSideEffects<T, T>;
     map<TA, TB>(selector: Function1<TA, TB>): PureStatelessObservableOperator<TA, TB>;
@@ -284,31 +291,31 @@ export interface ObservableModule {
     merge<T>(fst: PureObservableLike<T>, snd: PureObservableLike<T>, ...tail: readonly PureObservableLike<T>[]): PureDeferredObservableLike<T>;
     merge<T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): DeferredObservableWithSideEffectsLike<T>;
     mergeAll<T>(options?: {
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): PureStatefulObservableOperator<PureRunnableLike<T>, T>;
     mergeAll<T>(options: {
         readonly innerType: typeof PureRunnableType;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): PureStatefulObservableOperator<PureRunnableLike<T>, T>;
     mergeAll<T>(options: {
         readonly innerType: typeof RunnableWithSideEffectsType;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): ObservableOperatorWithSideEffects<RunnableLike<T>, T>;
     mergeAll<T>(options: {
         readonly innerType: typeof PureDeferredObservableType;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): DeferringObservableOperator<PureDeferredObservableLike<T>, T>;
     mergeAll<T>(options?: {
         readonly innerType: typeof DeferredObservableWithSideEffectsType;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): Function1<ObservableLike<DeferredObservableLike<T>>, DeferredObservableWithSideEffectsLike<T>>;
@@ -320,31 +327,31 @@ export interface ObservableModule {
     mergeMany<T>(observables: readonly PureObservableLike<T>[]): PureDeferredObservableLike<T>;
     mergeMany<T>(observables: readonly ObservableLike<T>[]): DeferredObservableWithSideEffectsLike<T>;
     mergeMap<TA, TB>(selector: Function1<TA, PureRunnableLike<TB>>, options?: {
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): PureStatefulObservableOperator<TA, TB>;
     mergeMap<TA, TB>(selector: Function1<TA, PureRunnableLike<TB>>, options: {
         readonly innerType: typeof PureRunnableType;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): PureStatefulObservableOperator<TA, TB>;
     mergeMap<TA, TB>(selector: Function1<TA, RunnableLike<TB>>, options: {
         readonly innerType: typeof RunnableWithSideEffectsType;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): ObservableOperatorWithSideEffects<TA, TB>;
     mergeMap<TA, TB>(selector: Function1<TA, PureDeferredObservableLike<TB>>, options: {
         readonly innerType: typeof PureDeferredObservableType;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): DeferringObservableOperator<TA, TB>;
     mergeMap<TA, TB>(selector: Function1<TA, DeferredObservableLike<TB>>, options: {
         readonly innerType: typeof DeferredObservableWithSideEffectsType;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
@@ -357,7 +364,7 @@ export interface ObservableModule {
         readonly autoDispose?: boolean;
         readonly replay?: number;
         readonly capacity?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
     }): Function1<DeferredObservableLike<T>, MulticastObservableLike<T> & DisposableLike>;
     never<T>(): MulticastObservableLike<T>;
     onSubscribe<T>(f: Factory<DisposableLike>): ObservableOperatorWithSideEffects<T, T>;
@@ -370,7 +377,7 @@ export interface ObservableModule {
     repeat<T>(): PureStatefulObservableOperator<T, T, DeferredObservableLike<T>>;
     retry<T>(shouldRetry?: (count: number, error: Error) => boolean): PureStatefulObservableOperator<T, T, DeferredObservableLike<T>>;
     run<T>(options?: {
-        readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy: BackpressureStrategy;
         readonly capacity?: number;
     }): SideEffect1<RunnableLike<T>>;
     scan<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): PureStatefulObservableOperator<T, TAcc>;
@@ -392,11 +399,11 @@ export interface ObservableModule {
     }): PureStatefulObservableOperator<T, T>;
     startWith<T>(value: T, ...values: readonly T[]): PureStatefulObservableOperator<T, T>;
     subscribe<T>(scheduler: SchedulerLike, options?: {
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, DisposableLike>;
     subscribeOn<T>(scheduler: SchedulerLike, options?: {
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): <TObservableIn extends ObservableLike<T>>(observable: TObservableIn) => TObservableIn extends PureDeferredObservableLike<T> ? PureDeferredObservableLike<T> : TObservableIn extends MulticastObservableLike<T> ? MulticastObservableLike<T> : TObservableIn extends RunnableWithSideEffectsLike<T> ? DeferredObservableWithSideEffectsLike<T> : TObservableIn extends DeferredObservableWithSideEffectsLike<T> ? DeferredObservableWithSideEffectsLike<T> : TObservableIn extends DeferredObservableLike<T> ? DeferredObservableLike<T> : ObservableLike<T>;
     switchAll<T>(): PureStatefulObservableOperator<PureRunnableLike<T>, T>;
@@ -439,7 +446,7 @@ export interface ObservableModule {
         readonly inclusive?: boolean;
     }): PureStatefulObservableOperator<T, T>;
     throttle<T>(duration: number, options?: {
-        readonly mode?: "first" | "last" | "interval";
+        readonly mode?: ThrottleMode;
     }): PureStatefulObservableOperator<T, T>;
     throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): PureStatefulObservableOperator<T, T>;
     throws<T>(options?: {
@@ -447,12 +454,12 @@ export interface ObservableModule {
         readonly delay?: number;
     }): PureRunnableLike<T>;
     toEventSource<T>(scheduler: SchedulerLike, options?: {
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, EventSourceLike<T>>;
     toReadonlyArray<T>(): Function1<RunnableLike<T>, ReadonlyArray<T>>;
     toReadonlyArrayAsync<T>(scheduler: SchedulerLike, options?: {
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): PureStatefulObservableOperator<TA, TB>;

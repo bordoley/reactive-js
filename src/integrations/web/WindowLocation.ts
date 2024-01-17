@@ -40,10 +40,9 @@ import {
   returns,
 } from "../../functions.js";
 import {
+  BackpressureStrategy,
   DisposableLike,
   DropOldestBackpressureStrategy,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -124,7 +123,7 @@ const createSyncToHistoryStream = (
   options: {
     readonly replay?: number;
     readonly capacity?: number;
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly backpressureStrategy?: BackpressureStrategy;
   },
 ) =>
   Streamable.create<TState, TState>(

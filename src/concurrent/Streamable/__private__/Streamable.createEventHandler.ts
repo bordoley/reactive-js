@@ -1,9 +1,6 @@
 import { DeferredObservableLike, StreamableLike } from "../../../concurrent.js";
 import { Function1, compose, pipe } from "../../../functions.js";
-import {
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-} from "../../../utils.js";
+import { BackpressureStrategy } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 import Streamable_create from "./Streamable.create.js";
@@ -13,7 +10,7 @@ const Streamable_createEventHandler: Streamable.Signature["createEventHandler"] 
     op: Function1<TEventType, DeferredObservableLike<unknown>>,
     options: {
       readonly mode?: "switching" | "blocking" | "queueing";
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     } = {},
   ): StreamableLike<TEventType, unknown> => {

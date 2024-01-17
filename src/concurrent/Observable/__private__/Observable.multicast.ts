@@ -1,10 +1,7 @@
 import { SchedulerLike } from "../../../concurrent.js";
 import { EventListenerLike_notify } from "../../../events.js";
 import { bindMethod, pipe } from "../../../functions.js";
-import {
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-} from "../../../utils.js";
+import { BackpressureStrategy } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import * as Subject from "../../Subject.js";
@@ -18,7 +15,7 @@ const Observable_multicast: Observable.Signature["multicast"] =
       readonly autoDispose?: boolean;
       readonly replay?: number;
       readonly capacity?: number;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
     } = {},
   ) =>
   observable => {

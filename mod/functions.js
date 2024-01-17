@@ -1,6 +1,6 @@
 /// <reference types="./functions.d.ts" />
 
-import { Array_every, Array_length, __DEV__, none as constants_none, typeofObject, } from "./__internal__/constants.js";
+import { Array_every, Array_length, __DEV__, typeofObject, } from "./__internal__/constants.js";
 /**
  * A function that always returns `false`.
  */
@@ -161,7 +161,7 @@ export const newInstance = (Constructor, ...args) => new Constructor(...args);
 /**
  * An alias for undefined.
  */
-export const none = constants_none;
+export const none = undefined;
 export const partial = (...args) => (f) => (arg0) => f(arg0, ...args);
 /**
  * Type-unsafe variant of `pick`.

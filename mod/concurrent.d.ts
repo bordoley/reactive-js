@@ -1,7 +1,7 @@
 import { ReadonlyObjectMapLike } from "./collections.js";
 import { ErrorSafeEventListenerLike, EventSourceLike, StoreLike } from "./events.js";
 import { Function1, Optional, SideEffect1 } from "./functions.js";
-import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "./utils.js";
+import { BackpressureStrategy, DisposableLike, QueueableLike } from "./utils.js";
 export declare const DispatcherLikeEvent_ready: unique symbol;
 export declare const DispatcherLikeEvent_capacityExceeded: unique symbol;
 export declare const DispatcherLikeEvent_completed: unique symbol;
@@ -230,7 +230,7 @@ export declare const FlowableLike_flow: unique symbol;
  */
 export interface FlowableLike<T> {
     [FlowableLike_flow](scheduler: SchedulerLike, options?: {
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly replay?: number;
     }): PauseableObservableLike<T>;
@@ -269,7 +269,7 @@ export interface StreamableLike<TReq = unknown, T = unknown, TStream extends Str
          * The capacity of the stream's request queue.
          */
         readonly capacity?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
     }): TStream;
 }
 export type StreamOf<TStreamable extends StreamableLike> = ReturnType<TStreamable[typeof StreamableLike_stream]>;

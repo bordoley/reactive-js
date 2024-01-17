@@ -9,17 +9,13 @@ import {
   none,
   pipe,
 } from "../functions.js";
-import {
-  DisposableLike_dispose,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-} from "../utils.js";
+import { BackpressureStrategy, DisposableLike_dispose } from "../utils.js";
 
 interface SvelteModule {
   subscribe<T>(
     scheduler: SchedulerLike,
     options?: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     },
   ): Function1<
@@ -37,7 +33,7 @@ class ObservableSvelteStore<T> {
     private readonly observable: ObservableLike<T>,
     private readonly scheduler: SchedulerLike,
     private readonly options: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     },
   ) {}
@@ -61,7 +57,7 @@ export const subscribe: Signature["subscribe"] =
   (
     scheduler: SchedulerLike,
     options: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     } = {},
   ) =>

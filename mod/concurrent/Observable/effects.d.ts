@@ -1,6 +1,6 @@
 import { ObservableLike, SchedulerLike, StreamLike, StreamOf, StreamableLike, StreamableLike_stream } from "../../concurrent.js";
 import { Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Optional, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater } from "../../functions.js";
-import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../../utils.js";
+import { BackpressureStrategy, DisposableLike } from "../../utils.js";
 interface __Memo {
     __memo<T>(fn: Factory<T>): T;
     __memo<TA, T>(fn: Function1<TA, T>, a: TA): T;
@@ -38,7 +38,7 @@ export declare const __currentScheduler: () => SchedulerLike;
 export declare const __stream: <TStreamable extends StreamableLike<unknown, unknown, StreamLike<unknown, unknown>>>(streamable: TStreamable, { replay, backpressureStrategy, capacity, scheduler, }?: {
     readonly replay?: number | undefined;
     readonly scheduler?: SchedulerLike | undefined;
-    readonly backpressureStrategy?: import("../../utils.js").BackpressureStrategy | undefined;
+    readonly backpressureStrategy?: BackpressureStrategy | undefined;
     readonly capacity?: number | undefined;
 }) => ReturnType<TStreamable[typeof StreamableLike_stream]>;
 export declare const __state: <T>(initialState: () => T, options?: {

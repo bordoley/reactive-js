@@ -9,6 +9,7 @@ import Observable_catchError from "./Observable/__private__/Observable.catchErro
 import Observable_combineLatest from "./Observable/__private__/Observable.combineLatest.js";
 import Observable_computeDeferred from "./Observable/__private__/Observable.computeDeferred.js";
 import Observable_computeRunnable from "./Observable/__private__/Observable.computeRunnable.js";
+import { BatchedComputeMode as ObservableCompute_BatchedComputeMode, CombineLatestComputeMode as ObservableCompute_CombineLatestComputeMode, } from "./Observable/__private__/Observable.computeWithConfig.js";
 import Observable_concat from "./Observable/__private__/Observable.concat.js";
 import Observable_concatAll from "./Observable/__private__/Observable.concatAll.js";
 import Observable_concatMany from "./Observable/__private__/Observable.concatMany.js";
@@ -71,7 +72,7 @@ import Observable_takeFirst from "./Observable/__private__/Observable.takeFirst.
 import Observable_takeLast from "./Observable/__private__/Observable.takeLast.js";
 import Observable_takeUntil from "./Observable/__private__/Observable.takeUntil.js";
 import Observable_takeWhile from "./Observable/__private__/Observable.takeWhile.js";
-import Observable_throttle from "./Observable/__private__/Observable.throttle.js";
+import Observable_throttle, { ThrottleFirstMode as ObservableThrottle_ThrottleFirstMode, ThrottleIntervalMode as ObservableThrottle_ThrottleIntervalMode, ThrottleLastMode as ObservableThrottle_ThrottleLastMode, } from "./Observable/__private__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
 import Observable_throws from "./Observable/__private__/Observable.throws.js";
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
@@ -104,6 +105,11 @@ export const DeferredObservableWithSideEffectsType = {
     [ObservableLike_isPure]: false,
     [ObservableLike_isRunnable]: false,
 };
+export const BatchedComputeMode = ObservableCompute_BatchedComputeMode;
+export const CombineLatestComputeMode = ObservableCompute_CombineLatestComputeMode;
+export const ThrottleFirstMode = ObservableThrottle_ThrottleFirstMode;
+export const ThrottleLastMode = ObservableThrottle_ThrottleLastMode;
+export const ThrottleIntervalMode = ObservableThrottle_ThrottleIntervalMode;
 export const animate = Observable_animate;
 export const backpressureStrategy = Observable_backpressureStrategy;
 export const buffer = Observable_buffer;

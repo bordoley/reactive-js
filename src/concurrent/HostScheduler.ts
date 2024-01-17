@@ -6,7 +6,7 @@ import {
   props,
 } from "../__internal__/mixins.js";
 import { SchedulerLike, SchedulerLike_now } from "../concurrent.js";
-import { Optional, isObject, isSome, pipe } from "../functions.js";
+import { isSome, pipe } from "../functions.js";
 import { DisposableLike, DisposableLike_dispose } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
 import {
@@ -30,39 +30,6 @@ interface Signature {
   }): SchedulerLike & DisposableLike;
 }
 
-declare const navigator: {
-  scheduling: Optional<{
-    isInputPending(): boolean;
-  }>;
-};
-
-const supportsSetImmediate = typeof setImmediate === "function";
-
-const supportsIsInputPending = /*@__PURE__*/ (() =>
-  isObject(globalObject.navigator) &&
-  isSome(navigator.scheduling) &&
-  isSome(navigator.scheduling.isInputPending))();
-
-const isInputPending = (): boolean =>
-  supportsIsInputPending && (navigator.scheduling?.isInputPending() ?? false);
-
-const scheduleImmediateWithSetImmediate = (
-  scheduler: ContinuationSchedulerLike,
-  continuation: ContinuationLike,
-) => {
-  const disposable = pipe(
-    Disposable.create(),
-    Disposable.addTo(continuation),
-    Disposable.onDisposed(() => clearImmediate(immmediate)),
-  );
-  const immmediate: ReturnType<typeof setImmediate> = setImmediate(
-    runContinuation,
-    scheduler,
-    continuation,
-    disposable,
-  );
-};
-
 const scheduleDelayed = (
   scheduler: ContinuationSchedulerLike,
   continuation: ContinuationLike,
@@ -83,12 +50,24 @@ const scheduleDelayed = (
   );
 };
 
+const { setImmediate } = globalObject;
+
 const scheduleImmediate = (
   scheduler: ContinuationSchedulerLike,
   continuation: ContinuationLike,
 ) => {
-  if (supportsSetImmediate) {
-    scheduleImmediateWithSetImmediate(scheduler, continuation);
+  if (isSome(setImmediate)) {
+    const disposable = pipe(
+      Disposable.create(),
+      Disposable.addTo(continuation),
+      Disposable.onDisposed(() => clearImmediate(immmediate)),
+    );
+    const immmediate: ReturnType<typeof setImmediate> = setImmediate(
+      runContinuation,
+      scheduler,
+      continuation,
+      disposable,
+    );
   } else {
     scheduleDelayed(scheduler, continuation, 0);
   }
@@ -127,7 +106,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
     props(),
     {
       get [ContinuationSchedulerLike_shouldYield](): boolean {
-        return isInputPending();
+        return globalObject?.navigator?.scheduling?.isInputPending?.() ?? false;
       },
 
       [ContinuationSchedulerLike_schedule](

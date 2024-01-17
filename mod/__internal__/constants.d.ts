@@ -1,10 +1,27 @@
+/// <reference types="node" resolution-mode="require"/>
 export declare const MAX_SAFE_INTEGER: number, MAX_VALUE: number, MIN_SAFE_INTEGER: number, MIN_VALUE: number;
-export declare const none: undefined;
 export declare const typeofObject = "object";
-export declare const globalObject: any;
 export declare const Global_process = "process";
+type GlobalObject = {
+    navigator?: {
+        scheduling?: {
+            isInputPending?: () => boolean;
+        };
+    };
+    performance?: {
+        now: () => number;
+    };
+    process?: {
+        env: {
+            [key in string]?: unknown;
+        };
+        hrtime?: () => [number, number];
+    };
+    Deno?: unknown;
+    setImmediate?: <TArgs extends any[]>(callback: (...args: TArgs) => void, ...args: TArgs) => NodeJS.Immediate;
+};
+export declare const globalObject: GlobalObject;
 export declare const __DEV__: boolean;
-export declare const __DENO__: boolean;
 export declare const Array_every = "every";
 export declare const Array_length = "length";
 export declare const Array_map = "map";
@@ -20,3 +37,4 @@ export declare const Set_add = "add";
 export declare const Set_delete = "delete";
 export declare const Set_has = "has";
 export declare const Set_size = "size";
+export {};

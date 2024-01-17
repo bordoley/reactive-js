@@ -27,10 +27,7 @@ import {
   pipe,
   raiseIf,
 } from "../../../functions.js";
-import {
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-} from "../../../utils.js";
+import { BackpressureStrategy } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
@@ -41,7 +38,7 @@ const Stream_create: <TReq, T>(
   op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>,
   scheduler: SchedulerLike,
   options?: {
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly backpressureStrategy?: BackpressureStrategy;
     readonly replay?: number;
     readonly capacity?: number;
   },
@@ -106,7 +103,7 @@ const Stream_create: <TReq, T>(
       multicastOptions?: {
         replay?: number;
         capacity?: number;
-        backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        backpressureStrategy?: BackpressureStrategy;
       },
     ): StreamLike<TReq, T> {
       const dispatchedObservable = DispatchedObservable_create<TReq>();

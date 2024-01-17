@@ -48,11 +48,10 @@ import {
   tuple,
 } from "../../../functions.js";
 import {
+  BackpressureStrategy,
   DisposableLike,
   DisposableLike_isDisposed,
   QueueLike_dequeue,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -76,7 +75,7 @@ const createCacheStream: <T>(
   options: Optional<{
     readonly replay?: number;
     readonly capacity?: number;
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly backpressureStrategy?: BackpressureStrategy;
   }>,
   capacity: number,
   cleanupScheduler: SchedulerLike,
@@ -110,7 +109,7 @@ const createCacheStream: <T>(
       options: Optional<{
         readonly replay?: number;
         readonly capacity?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
       }>,
       capacity: number,
       cleanupScheduler: SchedulerLike,

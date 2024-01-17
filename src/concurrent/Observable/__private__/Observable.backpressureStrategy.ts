@@ -7,6 +7,7 @@ import {
 import { ObserverLike, ObserverLike_notify } from "../../../concurrent.js";
 import { partial, pipe } from "../../../functions.js";
 import {
+  BackpressureStrategy,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
@@ -54,10 +55,7 @@ const createBackpressureObserver: <T>(
   ))();
 
 const Observable_backpressureStrategy: Observable.Signature["backpressureStrategy"] =
-  <T>(
-    capacity: number,
-    backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
-  ) =>
+  <T>(capacity: number, backpressureStrategy: BackpressureStrategy) =>
     pipe(
       createBackpressureObserver<T>,
       partial({

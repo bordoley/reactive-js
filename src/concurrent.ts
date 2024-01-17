@@ -6,9 +6,9 @@ import {
 } from "./events.js";
 import { Function1, Optional, SideEffect1 } from "./functions.js";
 import {
+  BackpressureStrategy,
   DisposableLike,
   QueueableLike,
-  QueueableLike_backpressureStrategy,
 } from "./utils.js";
 
 export const DispatcherLikeEvent_ready = Symbol("DispatcherLikeEvent_ready");
@@ -313,7 +313,7 @@ export interface FlowableLike<T> {
   [FlowableLike_flow](
     scheduler: SchedulerLike,
     options?: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
       readonly replay?: number;
     },
@@ -365,7 +365,7 @@ export interface StreamableLike<
        */
       readonly capacity?: number;
 
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
     },
   ): TStream;
 }

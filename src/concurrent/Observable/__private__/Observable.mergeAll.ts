@@ -31,6 +31,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
+  BackpressureStrategy,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   IndexedQueueLike,
@@ -38,8 +39,6 @@ import {
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -53,7 +52,7 @@ import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 const createMergeAllObserverOperator: <T>(options?: {
-  readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+  readonly backpressureStrategy?: BackpressureStrategy;
   readonly capacity?: number;
   readonly concurrency?: number;
 }) => Function1<
@@ -113,7 +112,7 @@ const createMergeAllObserverOperator: <T>(options?: {
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
           capacity: number,
-          backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
+          backpressureStrategy: BackpressureStrategy,
           concurrency: number,
         ): ObserverLike<ObservableLike<T>> {
           init(DisposableMixin, instance);
@@ -191,7 +190,7 @@ const createMergeAllObserverOperator: <T>(options?: {
 
   return (
     options: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
       readonly concurrency?: number;
     } = {},
@@ -219,7 +218,7 @@ const Observable_mergeAll: Observable.Signature["mergeAll"] = ((options?: {
     readonly [ObservableLike_isPure]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
   };
-  readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+  readonly backpressureStrategy?: BackpressureStrategy;
   readonly capacity?: number;
   readonly concurrency?: number;
 }) =>

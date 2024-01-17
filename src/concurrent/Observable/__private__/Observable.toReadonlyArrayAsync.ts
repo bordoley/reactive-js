@@ -1,9 +1,6 @@
 import { ObservableLike, SchedulerLike } from "../../../concurrent.js";
 import { pipe, pipeAsync } from "../../../functions.js";
-import {
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-} from "../../../utils.js";
+import { BackpressureStrategy } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_buffer from "./Observable.buffer.js";
 import Observable_firstAsync from "./Observable.firstAsync.js";
@@ -16,7 +13,7 @@ const Observable_toReadonlyArrayAsync: Observable.Signature["toReadonlyArrayAsyn
       scheduler: SchedulerLike,
       options?: {
         readonly capacity?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly backpressureStrategy?: BackpressureStrategy;
       },
     ) =>
     async (observable: ObservableLike<T>): Promise<ReadonlyArray<T>> => {

@@ -1,9 +1,6 @@
 import { ObservableLike, SchedulerLike } from "../../../concurrent.js";
 import { pipe } from "../../../functions.js";
-import {
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-} from "../../../utils.js";
+import { BackpressureStrategy } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_lastAsync from "./Observable.lastAsync.js";
 import Observable_takeFirst from "./Observable.takeFirst.js";
@@ -13,7 +10,7 @@ const Observable_firstAsync: Observable.Signature["firstAsync"] =
     scheduler: SchedulerLike,
     options?: {
       readonly capacity?: number;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly backpressureStrategy?: BackpressureStrategy;
     },
   ) =>
   (observable: ObservableLike<T>) =>

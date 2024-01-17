@@ -39,10 +39,14 @@ import Observable_fromValue from "./Observable.fromValue.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
+export const ThrottleFirstMode = "first";
+export const ThrottleLastMode = "last";
+export const ThrottleIntervalMode = "interval";
+
 const createThrottleObserver: <T>(
   delegate: ObserverLike<T>,
   durationFunction: Function1<T, ObservableLike>,
-  mode: "first" | "last" | "interval",
+  mode: Observable.ThrottleMode,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
   const ThrottleObserver_value = Symbol("ThrottleObserver_value");
   const ThrottleObserver_hasValue = Symbol("ThrottleObserver_hasValue");
@@ -61,7 +65,7 @@ const createThrottleObserver: <T>(
     [ThrottleObserver_hasValue]: boolean;
     readonly [ThrottleObserver_durationSubscription]: SerialDisposableLike;
     readonly [ThrottleObserver_durationFunction]: Function1<T, ObservableLike>;
-    readonly [ThrottleObserver_mode]: "first" | "last" | "interval";
+    readonly [ThrottleObserver_mode]: Observable.ThrottleMode;
     readonly [ThrottleObserver_onNotify]: SideEffect;
     [ThrottleObserver_delegate]: ObserverLike<T>;
   };
@@ -92,7 +96,7 @@ const createThrottleObserver: <T>(
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
           durationFunction: Function1<T, ObservableLike>,
-          mode: "first" | "last" | "interval",
+          mode: Observable.ThrottleMode,
         ): ObserverLike<T> {
           init(DisposableMixin, instance);
           instance[ThrottleObserver_delegate] = delegate;
@@ -122,7 +126,7 @@ const createThrottleObserver: <T>(
             instance,
             Disposable.onComplete(() => {
               if (
-                instance[ThrottleObserver_mode] !== "first" &&
+                instance[ThrottleObserver_mode] !== ThrottleFirstMode &&
                 instance[ThrottleObserver_hasValue] &&
                 !delegate[DisposableLike_isDisposed] &&
                 isSome(instance[ThrottleObserver_value])
@@ -143,7 +147,7 @@ const createThrottleObserver: <T>(
           [ThrottleObserver_delegate]: none,
           [ThrottleObserver_durationSubscription]: none,
           [ThrottleObserver_durationFunction]: none,
-          [ThrottleObserver_mode]: "interval",
+          [ThrottleObserver_mode]: ThrottleIntervalMode,
           [ThrottleObserver_onNotify]: none,
         }),
         {
@@ -158,7 +162,7 @@ const createThrottleObserver: <T>(
 
             if (
               durationSubscriptionDisposableIsDisposed &&
-              this[ThrottleObserver_mode] !== "last"
+              this[ThrottleObserver_mode] !== ThrottleLastMode
             ) {
               this[ThrottleObserver_onNotify]();
             } else if (durationSubscriptionDisposableIsDisposed) {
@@ -173,9 +177,9 @@ const createThrottleObserver: <T>(
 
 const Observable_throttle: Observable.Signature["throttle"] = (
   duration: number,
-  options: { readonly mode?: "first" | "last" | "interval" } = {},
+  options: { readonly mode?: Observable.ThrottleMode } = {},
 ) => {
-  const { mode = "interval" } = options;
+  const { mode = ThrottleIntervalMode } = options;
 
   const durationObservable = pipeLazy(
     none,
