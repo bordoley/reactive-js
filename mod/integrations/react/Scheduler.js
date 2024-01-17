@@ -1,7 +1,7 @@
 /// <reference types="./Scheduler.d.ts" />
 
 import { unstable_NormalPriority, unstable_cancelCallback, unstable_now, unstable_scheduleCallback, unstable_shouldYield, } from "scheduler";
-import { Map_get, Map_set } from "../../__internal__/constants.js";
+import { Map, Map_get, Map_set } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import { SchedulerLike_now } from "../../concurrent.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "../../concurrent/__internal__/Continuation.js";

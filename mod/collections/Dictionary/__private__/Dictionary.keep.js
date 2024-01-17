@@ -1,6 +1,6 @@
 /// <reference types="./Dictionary.keep.d.ts" />
 
-import { Map_set } from "../../../__internal__/constants.js";
+import { Map, Map_set } from "../../../__internal__/constants.js";
 import { DictionaryLike_get, DictionaryLike_keys, EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_move, } from "../../../collections.js";
 import { newInstance, pipe } from "../../../functions.js";
 import * as ReadonlyMap from "../../ReadonlyMap.js";

@@ -1,6 +1,6 @@
 /// <reference types="./IndexedQueueMixin.d.ts" />
 
-import { Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/constants.js";
+import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { newInstance, none, raiseError, raiseIf, returns, } from "../../functions.js";

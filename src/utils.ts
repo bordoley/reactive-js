@@ -1,3 +1,4 @@
+import { Error } from "./__internal__/constants.js";
 import { Optional, SideEffect1 } from "./functions.js";
 
 export const DisposableLike_add = Symbol("DisposableLike_add");

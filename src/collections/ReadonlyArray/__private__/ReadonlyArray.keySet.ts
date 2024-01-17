@@ -1,4 +1,4 @@
-import { Array_length, Set_add } from "../../../__internal__/constants.js";
+import { Array_length, Set, Set_add } from "../../../__internal__/constants.js";
 import { newInstance } from "../../../functions.js";
 import type * as ReadonlyArray from "./../../ReadonlyArray.js";
 

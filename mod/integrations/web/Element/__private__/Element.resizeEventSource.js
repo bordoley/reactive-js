@@ -1,6 +1,6 @@
 /// <reference types="./Element.resizeEventSource.d.ts" />
 
-import { Map_delete, Map_get, Map_set, Map_size, } from "../../../../__internal__/constants.js";
+import { Map, Map_delete, Map_get, Map_set, Map_size, } from "../../../../__internal__/constants.js";
 import { EventListenerLike_notify } from "../../../../events.js";
 import * as Publisher from "../../../../events/Publisher.js";
 import { isNone, newInstance, none, pipe, } from "../../../../functions.js";

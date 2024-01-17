@@ -5,7 +5,7 @@ import {
   unstable_scheduleCallback,
   unstable_shouldYield,
 } from "scheduler";
-import { Map_get, Map_set } from "../../__internal__/constants.js";
+import { Map, Map_get, Map_set } from "../../__internal__/constants.js";
 import {
   include,
   init,

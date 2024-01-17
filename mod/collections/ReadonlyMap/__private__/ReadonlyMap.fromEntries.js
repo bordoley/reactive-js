@@ -1,6 +1,6 @@
 /// <reference types="./ReadonlyMap.fromEntries.d.ts" />
 
-import { Map_set } from "../../../__internal__/constants.js";
+import { Map, Map_set } from "../../../__internal__/constants.js";
 import { EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_move, } from "../../../collections.js";
 import { newInstance } from "../../../functions.js";
 const ReadonlyMap_fromEntries = () => (enumerable) => {

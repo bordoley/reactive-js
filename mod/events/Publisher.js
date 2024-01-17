@@ -1,6 +1,6 @@
 /// <reference types="./Publisher.d.ts" />
 
-import { Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
+import { Set, Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { EventListenerLike_isErrorSafe, EventListenerLike_notify, EventSourceLike_addEventListener, } from "../events.js";
 import { error, newInstance, none, pipe } from "../functions.js";

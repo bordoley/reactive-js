@@ -1,6 +1,6 @@
 /// <reference types="./Dictionary.keySet.d.ts" />
 
-import { Set_add } from "../../../__internal__/constants.js";
+import { Set, Set_add } from "../../../__internal__/constants.js";
 import { DictionaryLike_keys, EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_move, } from "../../../collections.js";
 import { newInstance } from "../../../functions.js";
 const Dictionary_keySet = () => (dict) => {

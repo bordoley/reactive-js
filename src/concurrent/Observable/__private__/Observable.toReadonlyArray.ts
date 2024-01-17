@@ -1,4 +1,4 @@
-import { Array_push } from "../../../__internal__/constants.js";
+import { Array, Array_push } from "../../../__internal__/constants.js";
 import { RunnableLike } from "../../../concurrent.js";
 import { Function1, bind, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";

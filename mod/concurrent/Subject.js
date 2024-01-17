@@ -1,6 +1,6 @@
 /// <reference types="./Subject.d.ts" />
 
-import { Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
+import { Set, Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
 import { clampPositiveInteger } from "../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../concurrent.js";

@@ -1,4 +1,9 @@
-import { Set_add, Set_delete, Set_has } from "../../__internal__/constants.js";
+import {
+  Set,
+  Set_add,
+  Set_delete,
+  Set_has,
+} from "../../__internal__/constants.js";
 import { Mixin, Mutable, mix, props } from "../../__internal__/mixins.js";
 import {
   Optional,

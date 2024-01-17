@@ -1,6 +1,6 @@
 /// <reference types="./Streamable.createCache.d.ts" />
 
-import { MAX_SAFE_INTEGER, Map_delete, Map_get, Map_set, Map_size, Set_delete, Set_has, Set_size, } from "../../../__internal__/constants.js";
+import { MAX_SAFE_INTEGER, Map, Map_delete, Map_get, Map_set, Map_size, Set_delete, Set_has, Set_size, } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { CacheLike_get, ContinuationContextLike_yield, SchedulerLike_schedule, StreamableLike_stream, } from "../../../concurrent.js";

@@ -4,6 +4,10 @@ export const { MAX_SAFE_INTEGER, MAX_VALUE, MIN_SAFE_INTEGER, MIN_VALUE } = Numb
 export const typeofObject = "object";
 export const Global_process = "process";
 export const globalObject = (typeof window === typeofObject ? window : global);
+export const Array = globalObject.Array;
+export const Error = globalObject.Error;
+export const Map = globalObject.Map;
+export const Set = globalObject.Set;
 const process = globalObject[Global_process] ?? {
     env: {
         NODE_ENV: "development",

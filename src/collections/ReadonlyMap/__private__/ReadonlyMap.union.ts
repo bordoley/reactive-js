@@ -1,4 +1,4 @@
-import { Map_set } from "../../../__internal__/constants.js";
+import { Map, Map_set } from "../../../__internal__/constants.js";
 import { newInstance } from "../../../functions.js";
 import type * as ReadonlyMap from "../../ReadonlyMap.js";
 

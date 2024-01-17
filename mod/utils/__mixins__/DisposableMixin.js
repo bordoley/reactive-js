@@ -1,6 +1,6 @@
 /// <reference types="./DisposableMixin.d.ts" />
 
-import { Set_add, Set_delete, Set_has } from "../../__internal__/constants.js";
+import { Set, Set_add, Set_delete, Set_has, } from "../../__internal__/constants.js";
 import { mix, props } from "../../__internal__/mixins.js";
 import { isFunction, newInstance, none, } from "../../functions.js";
 import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";

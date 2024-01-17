@@ -1,6 +1,6 @@
 /// <reference types="./functions.d.ts" />
 
-import { Array_every, Array_length, __DEV__, typeofObject, } from "./__internal__/constants.js";
+import { Array, Array_every, Array_length, Error, __DEV__, typeofObject, } from "./__internal__/constants.js";
 /**
  * A function that always returns `false`.
  */

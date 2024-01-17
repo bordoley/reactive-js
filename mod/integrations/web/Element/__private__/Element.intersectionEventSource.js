@@ -1,6 +1,6 @@
 /// <reference types="./Element.intersectionEventSource.d.ts" />
 
-import { Map_delete, Map_get, Map_set, Map_size, } from "../../../../__internal__/constants.js";
+import { Map, Map_delete, Map_get, Map_set, Map_size, } from "../../../../__internal__/constants.js";
 import { EventListenerLike_notify, EventSourceLike_addEventListener, } from "../../../../events.js";
 import * as EventSource from "../../../../events/EventSource.js";
 import * as Publisher from "../../../../events/Publisher.js";

@@ -1,5 +1,5 @@
 import * as Obj from "../../../__internal__/Object.js";
-import { Set_add } from "../../../__internal__/constants.js";
+import { Set, Set_add } from "../../../__internal__/constants.js";
 import { ReadonlyObjectMapLike } from "../../../collections.js";
 import { newInstance } from "../../../functions.js";
 import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";

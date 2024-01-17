@@ -1,6 +1,6 @@
 /// <reference types="./ReadonlyArray.keySet.d.ts" />
 
-import { Array_length, Set_add } from "../../../__internal__/constants.js";
+import { Array_length, Set, Set_add } from "../../../__internal__/constants.js";
 import { newInstance } from "../../../functions.js";
 const ReadonlyArray_keySet = () => (arr) => {
     const result = newInstance((Set));

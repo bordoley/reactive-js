@@ -17,16 +17,26 @@ type GlobalObject = {
     env: { [key in string]?: unknown };
     hrtime?: () => [number, number];
   };
-  Deno?: unknown;
   setImmediate?: <TArgs extends any[]>(
     callback: (...args: TArgs) => void,
     ...args: TArgs
   ) => NodeJS.Immediate;
+
+  Array: typeof globalThis.Array;
+  Deno?: unknown;
+  Error: typeof globalThis.Error;
+  Map: typeof globalThis.Map;
+  Set: typeof globalThis.Set;
 };
 
 export const globalObject: GlobalObject = (
   typeof window === typeofObject ? window : global
 ) as GlobalObject;
+
+export const Array = globalObject.Array;
+export const Error = globalObject.Error;
+export const Map = globalObject.Map;
+export const Set = globalObject.Set;
 
 const process = globalObject[Global_process] ?? {
   env: {

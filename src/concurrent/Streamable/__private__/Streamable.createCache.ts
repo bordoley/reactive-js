@@ -1,5 +1,6 @@
 import {
   MAX_SAFE_INTEGER,
+  Map,
   Map_delete,
   Map_get,
   Map_set,
