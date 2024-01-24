@@ -36,11 +36,13 @@ import {
   IndexedQueueLike,
   IndexedQueueLike_get,
   QueueLike_count,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
-import * as IndexedQueue from "../utils/IndexedQueue.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
+import IndexedQueueMixin from "../utils/__mixins__/IndexedQueueMixin.js";
 
 export const create: <T>(options?: {
   readonly replay?: number;
@@ -48,16 +50,14 @@ export const create: <T>(options?: {
 }) => SubjectLike<T> = /*@__PURE__*/ (<T>() => {
   const Subject_autoDispose = Symbol("Subject_autoDispose");
   const Subject_observers = Symbol("Subject_observers");
-  const Subject_buffer = Symbol("Subject_observers");
 
   type TProperties = {
     readonly [Subject_autoDispose]: boolean;
     readonly [Subject_observers]: Set<ObserverLike<T>>;
-    readonly [Subject_buffer]: IndexedQueueLike<T>;
   };
 
   return mixInstanceFactory(
-    include(DisposableMixin),
+    include(DisposableMixin, IndexedQueueMixin()),
     function Subject(
       instance: Pick<
         SubjectLike<T>,
@@ -75,15 +75,15 @@ export const create: <T>(options?: {
         readonly autoDispose?: boolean;
       },
     ): SubjectLike<T> {
-      init(DisposableMixin, instance);
-
       const replay = clampPositiveInteger(options?.replay ?? 0);
 
-      instance[Subject_observers] = newInstance<Set<ObserverLike>>(Set);
-      instance[Subject_buffer] = IndexedQueue.create({
-        capacity: replay,
-        backpressureStrategy: DropOldestBackpressureStrategy,
+      init(DisposableMixin, instance);
+      init(IndexedQueueMixin<T>(), instance, {
+        [QueueableLike_backpressureStrategy]: DropOldestBackpressureStrategy,
+        [QueueableLike_capacity]: replay,
       });
+
+      instance[Subject_observers] = newInstance<Set<ObserverLike>>(Set);
       instance[Subject_autoDispose] = options?.autoDispose ?? false;
 
       pipe(
@@ -104,7 +104,6 @@ export const create: <T>(options?: {
     props<TProperties>({
       [Subject_autoDispose]: false,
       [Subject_observers]: none,
-      [Subject_buffer]: none,
     }),
     {
       [EventListenerLike_isErrorSafe]: true as const,
@@ -113,12 +112,15 @@ export const create: <T>(options?: {
       [ObservableLike_isPure]: true as const,
       [ObservableLike_isRunnable]: false as const,
 
-      [EventListenerLike_notify](this: TProperties & SubjectLike<T>, next: T) {
+      [EventListenerLike_notify](
+        this: TProperties & SubjectLike<T> & IndexedQueueLike<T>,
+        next: T,
+      ) {
         if (this[DisposableLike_isDisposed]) {
           return;
         }
 
-        this[Subject_buffer][QueueableLike_enqueue](next);
+        this[QueueableLike_enqueue](next);
 
         for (const observer of this[Subject_observers]) {
           try {
@@ -130,7 +132,7 @@ export const create: <T>(options?: {
       },
 
       [ObservableLike_observe](
-        this: TProperties & SubjectLike<T>,
+        this: TProperties & SubjectLike<T> & IndexedQueueLike<T>,
         observer: ObserverLike<T>,
       ) {
         const { [Subject_observers]: observers } = this;
@@ -162,11 +164,10 @@ export const create: <T>(options?: {
         // The idea here is that an onSubscribe function may
         // call next from unscheduled sources such as event handlers.
         // So we marshall those events back to the scheduler.
-        const buffer = this[Subject_buffer];
-        const count = buffer[QueueLike_count];
+        const count = this[QueueLike_count];
 
         for (let i = 0; i < count; i++) {
-          const next = buffer[IndexedQueueLike_get](i);
+          const next = this[IndexedQueueLike_get](i);
           observer[QueueableLike_enqueue](next);
         }
 
