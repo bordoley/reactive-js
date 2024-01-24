@@ -70,7 +70,7 @@ ___
 
 ### keepType
 
-▸ **keepType**<`C`, `TA`, `TB`\>(`m`, `predicate`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\>
+▸ **keepType**<`C`, `TA`, `TB`\>(`keep`, `predicate`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -84,7 +84,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | `Pick`<[`PureStatelessComputationModule`](../interfaces/computations.PureStatelessComputationModule.md)<`C`\>, ``"keep"``\> |
+| `keep` | <T\>(`predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`\> |
 | `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
 
 #### Returns
@@ -95,7 +95,7 @@ ___
 
 ### mapTo
 
-▸ **mapTo**<`C`, `T`\>(`m`, `value`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `unknown`, `T`\>
+▸ **mapTo**<`C`, `T`\>(`map`, `value`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `unknown`, `T`\>
 
 #### Type parameters
 
@@ -108,7 +108,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | `Pick`<[`PureStatelessComputationModule`](../interfaces/computations.PureStatelessComputationModule.md)<`C`\>, ``"map"``\> |
+| `map` | <TA, TB\>(`selector`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\> |
 | `value` | `T` |
 
 #### Returns
@@ -119,7 +119,7 @@ ___
 
 ### pick
 
-▸ **pick**<`C`, `T`, `TKeyOfT`\>(`m`, `key`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfT`]\>
+▸ **pick**<`C`, `T`, `TKeyOfT`\>(`map`, `key`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfT`]\>
 
 #### Type parameters
 
@@ -133,14 +133,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | `Pick`<[`PureStatelessComputationModule`](../interfaces/computations.PureStatelessComputationModule.md)<`C`\>, ``"map"``\> |
+| `map` | <TA, TB\>(`selector`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\> |
 | `key` | `TKeyOfT` |
 
 #### Returns
 
 [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfT`]\>
 
-▸ **pick**<`C`, `T`, `TKeyOfTA`, `TKeyOfTB`\>(`m`, `keyA`, `keyB`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`]\>
+▸ **pick**<`C`, `T`, `TKeyOfTA`, `TKeyOfTB`\>(`map`, `keyA`, `keyB`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`]\>
 
 #### Type parameters
 
@@ -155,7 +155,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | `Pick`<[`PureStatelessComputationModule`](../interfaces/computations.PureStatelessComputationModule.md)<`C`\>, ``"map"``\> |
+| `map` | <TA, TB\>(`selector`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\> |
 | `keyA` | `TKeyOfTA` |
 | `keyB` | `TKeyOfTB` |
 
@@ -163,7 +163,7 @@ ___
 
 [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`]\>
 
-▸ **pick**<`C`, `T`, `TKeyOfTA`, `TKeyOfTB`, `TKeyOfTC`\>(`m`, `keyA`, `keyB`, `keyC`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`][`TKeyOfTC`]\>
+▸ **pick**<`C`, `T`, `TKeyOfTA`, `TKeyOfTB`, `TKeyOfTC`\>(`map`, `keyA`, `keyB`, `keyC`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`][`TKeyOfTC`]\>
 
 #### Type parameters
 
@@ -179,7 +179,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | `Pick`<[`PureStatelessComputationModule`](../interfaces/computations.PureStatelessComputationModule.md)<`C`\>, ``"map"``\> |
+| `map` | <TA, TB\>(`selector`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\> |
 | `keyA` | `TKeyOfTA` |
 | `keyB` | `TKeyOfTB` |
 | `keyC` | `TKeyOfTC` |

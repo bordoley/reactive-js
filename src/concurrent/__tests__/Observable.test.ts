@@ -897,7 +897,7 @@ testModule(
           Observable.RunnableWithSideEffectsComputation,
           Optional<number>,
           number
-        >(Observable, isSome),
+        >(Observable.keep, isSome),
         Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
         Observable.run(),
       );

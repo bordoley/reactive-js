@@ -52,11 +52,11 @@ export interface PureStatefulComputationModule<C extends Computation> {
     }): ComputationOperator<C, T, T>;
 }
 interface Signature {
-    keepType<C extends Computation, TA, TB>(m: Pick<PureStatelessComputationModule<C>, "keep">, predicate: TypePredicate<TA, TB>): ComputationOperator<C, TA, TB>;
-    mapTo<C extends Computation, T>(m: Pick<PureStatelessComputationModule<C>, "map">, value: T): ComputationOperator<C, unknown, T>;
-    pick<C extends Computation, T, TKeyOfT extends keyof T>(m: Pick<PureStatelessComputationModule<C>, "map">, key: TKeyOfT): ComputationOperator<C, T, T[TKeyOfT]>;
-    pick<C extends Computation, T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(m: Pick<PureStatelessComputationModule<C>, "map">, keyA: TKeyOfTA, keyB: TKeyOfTB): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB]>;
-    pick<C extends Computation, T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA], TKeyOfTC extends keyof T[TKeyOfTA][TKeyOfTB]>(m: Pick<PureStatelessComputationModule<C>, "map">, keyA: TKeyOfTA, keyB: TKeyOfTB, keyC: TKeyOfTC): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
+    keepType<C extends Computation, TA, TB>(keep: PureStatelessComputationModule<C>["keep"], predicate: TypePredicate<TA, TB>): ComputationOperator<C, TA, TB>;
+    mapTo<C extends Computation, T>(map: PureStatelessComputationModule<C>["map"], value: T): ComputationOperator<C, unknown, T>;
+    pick<C extends Computation, T, TKeyOfT extends keyof T>(map: PureStatelessComputationModule<C>["map"], key: TKeyOfT): ComputationOperator<C, T, T[TKeyOfT]>;
+    pick<C extends Computation, T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(map: PureStatelessComputationModule<C>["map"], keyA: TKeyOfTA, keyB: TKeyOfTB): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB]>;
+    pick<C extends Computation, T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA], TKeyOfTC extends keyof T[TKeyOfTA][TKeyOfTB]>(map: PureStatelessComputationModule<C>["map"], keyA: TKeyOfTA, keyB: TKeyOfTB, keyC: TKeyOfTC): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
 }
 export declare const keepType: Signature["keepType"];
 export declare const mapTo: Signature["mapTo"];

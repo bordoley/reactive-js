@@ -47,7 +47,7 @@ const Observable_spring = (options?: {
       returns(tuple(MAX_VALUE, 0, 0)),
     ),
     pick<Observable.PureRunnableComputation, Tuple3<number, number, number>, 2>(
-      { map: Observable_map },
+      Observable_map,
       2,
     ),
     Observable_takeWhile(isNotEqualTo(1), {

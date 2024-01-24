@@ -23,7 +23,7 @@ const IntersectionApp = () => {
       endOfPageRef,
       WebElement.intersectionEventSource(document),
       pick<EventSourceComputation, IntersectionObserverEntry, "isIntersecting">(
-        { map: EventSource.map },
+        EventSource.map,
         "isIntersecting",
       ),
       EventSource.keep(isTrue),

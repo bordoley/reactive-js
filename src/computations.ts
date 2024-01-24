@@ -90,17 +90,17 @@ export interface PureStatefulComputationModule<C extends Computation> {
 
 interface Signature {
   keepType<C extends Computation, TA, TB>(
-    m: Pick<PureStatelessComputationModule<C>, "keep">,
+    keep: PureStatelessComputationModule<C>["keep"],
     predicate: TypePredicate<TA, TB>,
   ): ComputationOperator<C, TA, TB>;
 
   mapTo<C extends Computation, T>(
-    m: Pick<PureStatelessComputationModule<C>, "map">,
+    map: PureStatelessComputationModule<C>["map"],
     value: T,
   ): ComputationOperator<C, unknown, T>;
 
   pick<C extends Computation, T, TKeyOfT extends keyof T>(
-    m: Pick<PureStatelessComputationModule<C>, "map">,
+    map: PureStatelessComputationModule<C>["map"],
     key: TKeyOfT,
   ): ComputationOperator<C, T, T[TKeyOfT]>;
   pick<
@@ -109,7 +109,7 @@ interface Signature {
     TKeyOfTA extends keyof T,
     TKeyOfTB extends keyof T[TKeyOfTA],
   >(
-    m: Pick<PureStatelessComputationModule<C>, "map">,
+    map: PureStatelessComputationModule<C>["map"],
     keyA: TKeyOfTA,
     keyB: TKeyOfTB,
   ): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB]>;
@@ -120,7 +120,7 @@ interface Signature {
     TKeyOfTB extends keyof T[TKeyOfTA],
     TKeyOfTC extends keyof T[TKeyOfTA][TKeyOfTB],
   >(
-    m: Pick<PureStatelessComputationModule<C>, "map">,
+    map: PureStatelessComputationModule<C>["map"],
     keyA: TKeyOfTA,
     keyB: TKeyOfTB,
     keyC: TKeyOfTC,
@@ -128,16 +128,16 @@ interface Signature {
 }
 
 export const keepType: Signature["keepType"] = (<C extends Computation, TA, TB>(
-  m: Pick<PureStatelessComputationModule<C>, "keep">,
+  keep: PureStatelessComputationModule<C>["keep"],
   predicate: TypePredicate<TA, TB>,
-) => m.keep(predicate)) as Signature["keepType"];
+) => keep(predicate)) as Signature["keepType"];
 
 export const mapTo: Signature["mapTo"] = <C extends Computation, T>(
-  m: Pick<PureStatelessComputationModule<C>, "map">,
+  map: PureStatelessComputationModule<C>["map"],
   v: T,
-) => m.map(returns(v));
+) => map(returns(v));
 
 export const pick: Signature["pick"] = <C extends Computation>(
-  m: Pick<PureStatelessComputationModule<C>, "map">,
+  map: PureStatelessComputationModule<C>["map"],
   ...keys: (string | number | symbol)[]
-) => m.map(pickUnsafe(...keys));
+) => map(pickUnsafe(...keys));

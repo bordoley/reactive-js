@@ -228,7 +228,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
         pipe(
           this[WindowLocation_delegate],
           pick<Observable.MulticastObservableComputation, TState, "uri">(
-            { map: Observable.map },
+            Observable.map,
             "uri",
           ),
           invoke(ObservableLike_observe, observer),

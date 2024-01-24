@@ -27,7 +27,7 @@ testModule(
         ["b", none, "v"],
         ReadonlyArray.values(),
         keepType<Enumerable.EnumerableComputation, Optional<string>, string>(
-          Enumerable,
+          Enumerable.keep,
           isSome,
         ),
         Enumerable.toReadonlyArray(),
@@ -46,7 +46,7 @@ testModule(
           ["e", "f"],
         ],
         ReadonlyArray.values(),
-        mapTo<Enumerable.EnumerableComputation, number>(Enumerable, 2),
+        mapTo<Enumerable.EnumerableComputation, number>(Enumerable.map, 2),
         Enumerable.toReadonlyArray(),
         expectArrayEquals([2, 2, 2]),
       ),
@@ -72,7 +72,7 @@ testModule(
           { [keyA]: { [keyB]: string } },
           typeof keyA,
           typeof keyB
-        >(Enumerable, keyA, keyB),
+        >(Enumerable.map, keyA, keyB),
         Enumerable.toReadonlyArray<string>(),
         expectArrayEquals<string>(["value"]),
       );
@@ -92,7 +92,7 @@ testModule(
           { keyA: { keyB: string } },
           "keyA",
           "keyB"
-        >(Enumerable, "keyA", "keyB"),
+        >(Enumerable.map, "keyA", "keyB"),
         Enumerable.toReadonlyArray<string>(),
         expectArrayEquals<string>(["value"]),
       );
@@ -107,7 +107,7 @@ testModule(
           Enumerable.EnumerableComputation,
           Tuple6<number, number, number, number, number, number>,
           number
-        >(Enumerable, 3),
+        >(Enumerable.map, 3),
         Enumerable.toReadonlyArray<number>(),
         expectArrayEquals<number>([4]),
       );

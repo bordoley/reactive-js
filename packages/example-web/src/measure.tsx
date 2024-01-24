@@ -81,7 +81,7 @@ const Measure = () => {
           equality: (a, b) => a.width === b.width,
         }),
         pick<Observable.PuredDeferredObservableComputation, Rect, "width">(
-          { map: Observable.map },
+          Observable.map,
           "width",
         ),
         Observable.forkMerge(
