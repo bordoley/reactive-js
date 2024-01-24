@@ -893,11 +893,9 @@ testModule(
           },
           { mode: "combine-latest" },
         ),
-        keepType<
-          Observable.RunnableWithSideEffectsComputation,
-          Optional<number>,
-          number
-        >(Observable.keep, isSome),
+        keepType<Observable.RunnableWithSideEffectsComputation>(
+          Observable.keep,
+        )(isSome),
         Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
         Observable.run(),
       );

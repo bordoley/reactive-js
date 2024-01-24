@@ -87,7 +87,7 @@ export const subscribe = /*@__PURE__*/ (() => {
             history.back();
         },
         [ObservableLike_observe](observer) {
-            pipe(this[WindowLocation_delegate], pick(Observable.map, "uri"), invoke(ObservableLike_observe, observer));
+            pipe(this[WindowLocation_delegate], pick(Observable.map)("uri"), invoke(ObservableLike_observe, observer));
         },
     });
     let currentWindowLocationObservable = none;

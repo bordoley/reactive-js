@@ -7,15 +7,7 @@ import {
 import * as Enumerable from "../collections/Enumerable.js";
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import { keepType, mapTo, pick } from "../computations.js";
-import {
-  Optional,
-  Tuple6,
-  isSome,
-  none,
-  pipe,
-  pipeLazy,
-  tuple,
-} from "../functions.js";
+import { Optional, isSome, none, pipe, pipeLazy, tuple } from "../functions.js";
 
 testModule(
   "computations",
@@ -26,10 +18,7 @@ testModule(
       pipeLazy(
         ["b", none, "v"],
         ReadonlyArray.values(),
-        keepType<Enumerable.EnumerableComputation, Optional<string>, string>(
-          Enumerable.keep,
-          isSome,
-        ),
+        keepType(Enumerable.keep)<Optional<string>, string>(isSome),
         Enumerable.toReadonlyArray(),
         expectArrayEquals(["b", "v"]),
       ),
@@ -46,7 +35,7 @@ testModule(
           ["e", "f"],
         ],
         ReadonlyArray.values(),
-        mapTo<Enumerable.EnumerableComputation, number>(Enumerable.map, 2),
+        mapTo(Enumerable.map)(2),
         Enumerable.toReadonlyArray(),
         expectArrayEquals([2, 2, 2]),
       ),
@@ -67,12 +56,7 @@ testModule(
       pipe(
         [obj],
         ReadonlyArray.values(),
-        pick<
-          Enumerable.EnumerableComputation,
-          { [keyA]: { [keyB]: string } },
-          typeof keyA,
-          typeof keyB
-        >(Enumerable.map, keyA, keyB),
+        pick(Enumerable.map)(keyA, keyB),
         Enumerable.toReadonlyArray<string>(),
         expectArrayEquals<string>(["value"]),
       );
@@ -87,12 +71,7 @@ testModule(
       pipe(
         [obj],
         ReadonlyArray.values(),
-        pick<
-          Enumerable.EnumerableComputation,
-          { keyA: { keyB: string } },
-          "keyA",
-          "keyB"
-        >(Enumerable.map, "keyA", "keyB"),
+        pick(Enumerable.map)("keyA", "keyB"),
         Enumerable.toReadonlyArray<string>(),
         expectArrayEquals<string>(["value"]),
       );
@@ -103,11 +82,7 @@ testModule(
       pipe(
         [obj],
         ReadonlyArray.values(),
-        pick<
-          Enumerable.EnumerableComputation,
-          Tuple6<number, number, number, number, number, number>,
-          number
-        >(Enumerable.map, 3),
+        pick(Enumerable.map)(3),
         Enumerable.toReadonlyArray<number>(),
         expectArrayEquals<number>([4]),
       );

@@ -80,8 +80,7 @@ const Measure = () => {
         Observable.distinctUntilChanged<Rect>({
           equality: (a, b) => a.width === b.width,
         }),
-        pick<Observable.PuredDeferredObservableComputation, Rect, "width">(
-          Observable.map,
+        pick<Observable.PuredDeferredObservableComputation>(Observable.map)(
           "width",
         ),
         Observable.forkMerge(

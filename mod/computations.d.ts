@@ -51,12 +51,15 @@ export interface PureStatefulComputationModule<C extends Computation> {
         readonly inclusive?: boolean;
     }): ComputationOperator<C, T, T>;
 }
+export interface Pick<C extends Computation> {
+    <T, TKeyOfT extends keyof T>(key: TKeyOfT): ComputationOperator<C, T, T[TKeyOfT]>;
+    <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(keyA: TKeyOfTA, keyB: TKeyOfTB): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB]>;
+    <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA], TKeyOfTC extends keyof T[TKeyOfTA][TKeyOfTB]>(keyA: TKeyOfTA, keyB: TKeyOfTB, keyC: TKeyOfTC): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
+}
 interface Signature {
-    keepType<C extends Computation, TA, TB>(keep: PureStatelessComputationModule<C>["keep"], predicate: TypePredicate<TA, TB>): ComputationOperator<C, TA, TB>;
-    mapTo<C extends Computation, T>(map: PureStatelessComputationModule<C>["map"], value: T): ComputationOperator<C, unknown, T>;
-    pick<C extends Computation, T, TKeyOfT extends keyof T>(map: PureStatelessComputationModule<C>["map"], key: TKeyOfT): ComputationOperator<C, T, T[TKeyOfT]>;
-    pick<C extends Computation, T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(map: PureStatelessComputationModule<C>["map"], keyA: TKeyOfTA, keyB: TKeyOfTB): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB]>;
-    pick<C extends Computation, T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA], TKeyOfTC extends keyof T[TKeyOfTA][TKeyOfTB]>(map: PureStatelessComputationModule<C>["map"], keyA: TKeyOfTA, keyB: TKeyOfTB, keyC: TKeyOfTC): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
+    keepType<C extends Computation>(keep: PureStatelessComputationModule<C>["keep"]): <TA, TB>(predicate: TypePredicate<TA, TB>) => ComputationOperator<C, TA, TB>;
+    mapTo<C extends Computation>(map: PureStatelessComputationModule<C>["map"]): <T>(value: T) => ComputationOperator<C, unknown, T>;
+    pick<C extends Computation>(map: PureStatelessComputationModule<C>["map"]): Pick<C>;
 }
 export declare const keepType: Signature["keepType"];
 export declare const mapTo: Signature["mapTo"];

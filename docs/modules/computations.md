@@ -8,6 +8,7 @@
 
 - [Computation](../interfaces/computations.Computation.md)
 - [DeferredComputationModule](../interfaces/computations.DeferredComputationModule.md)
+- [Pick](../interfaces/computations.Pick.md)
 - [PureStatefulComputationModule](../interfaces/computations.PureStatefulComputationModule.md)
 - [PureStatelessComputationModule](../interfaces/computations.PureStatelessComputationModule.md)
 
@@ -70,24 +71,40 @@ ___
 
 ### keepType
 
-▸ **keepType**<`C`, `TA`, `TB`\>(`keep`, `predicate`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\>
+▸ **keepType**<`C`\>(`keep`): <TA, TB\>(`predicate`: [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\>) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`Computation`](../interfaces/computations.Computation.md) |
-| `TA` | `TA` |
-| `TB` | `TB` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `keep` | <T\>(`predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`\> |
-| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
 
 #### Returns
+
+`fn`
+
+▸ <`TA`, `TB`\>(`predicate`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
+
+##### Returns
 
 [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\>
 
@@ -95,23 +112,39 @@ ___
 
 ### mapTo
 
-▸ **mapTo**<`C`, `T`\>(`map`, `value`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `unknown`, `T`\>
+▸ **mapTo**<`C`\>(`map`): <T\>(`value`: `T`) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `unknown`, `T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`Computation`](../interfaces/computations.Computation.md) |
-| `T` | `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `map` | <TA, TB\>(`selector`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\> |
-| `value` | `T` |
 
 #### Returns
+
+`fn`
+
+▸ <`T`\>(`value`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `unknown`, `T`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+
+##### Returns
 
 [`ComputationOperator`](computations.md#computationoperator)<`C`, `unknown`, `T`\>
 
@@ -119,71 +152,20 @@ ___
 
 ### pick
 
-▸ **pick**<`C`, `T`, `TKeyOfT`\>(`map`, `key`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfT`]\>
+▸ **pick**<`C`\>(`map`): [`Pick`](../interfaces/computations.Pick.md)<`C`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`Computation`](../interfaces/computations.Computation.md) |
-| `T` | `T` |
-| `TKeyOfT` | extends `string` \| `number` \| `symbol` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `map` | <TA, TB\>(`selector`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\> |
-| `key` | `TKeyOfT` |
 
 #### Returns
 
-[`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfT`]\>
-
-▸ **pick**<`C`, `T`, `TKeyOfTA`, `TKeyOfTB`\>(`map`, `keyA`, `keyB`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`]\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`Computation`](../interfaces/computations.Computation.md) |
-| `T` | `T` |
-| `TKeyOfTA` | extends `string` \| `number` \| `symbol` |
-| `TKeyOfTB` | extends `string` \| `number` \| `symbol` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `map` | <TA, TB\>(`selector`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\> |
-| `keyA` | `TKeyOfTA` |
-| `keyB` | `TKeyOfTB` |
-
-#### Returns
-
-[`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`]\>
-
-▸ **pick**<`C`, `T`, `TKeyOfTA`, `TKeyOfTB`, `TKeyOfTC`\>(`map`, `keyA`, `keyB`, `keyC`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`][`TKeyOfTC`]\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`Computation`](../interfaces/computations.Computation.md) |
-| `T` | `T` |
-| `TKeyOfTA` | extends `string` \| `number` \| `symbol` |
-| `TKeyOfTB` | extends `string` \| `number` \| `symbol` |
-| `TKeyOfTC` | extends `string` \| `number` \| `symbol` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `map` | <TA, TB\>(`selector`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\> |
-| `keyA` | `TKeyOfTA` |
-| `keyB` | `TKeyOfTB` |
-| `keyC` | `TKeyOfTC` |
-
-#### Returns
-
-[`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`][`TKeyOfTC`]\>
+[`Pick`](../interfaces/computations.Pick.md)<`C`\>

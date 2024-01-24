@@ -212,7 +212,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         const v = __await(oneTwoThreeDelayed);
         const next = __memo(createOneTwoThree, v);
         return __await(next);
-    }, { mode: "combine-latest" }), keepType(Observable.keep, isSome), Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.run());
+    }, { mode: "combine-latest" }), keepType(Observable.keep)(isSome), Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.run());
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }), test("when compute function throws", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
     const error = newInstance(Error);

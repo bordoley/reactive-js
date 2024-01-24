@@ -34,10 +34,7 @@ const Observable_keyFrame = (
       const next = elapsed > duration ? 1 : easing(elapsed / duration);
       return tuple(startTime, next);
     }, returns(tuple(MAX_VALUE, 0))),
-    pick<Observable.PureRunnableComputation, Tuple2<unknown, number>, 1>(
-      Observable_map,
-      1,
-    ),
+    pick<Observable.PureRunnableComputation>(Observable_map)(1),
     Observable_takeWhile(isNotEqualTo(1), {
       inclusive: true,
     }),

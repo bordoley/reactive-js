@@ -15,7 +15,7 @@ const Observable_keyFrame = (duration, options) => {
         const elapsed = now - startTime;
         const next = elapsed > duration ? 1 : easing(elapsed / duration);
         return tuple(startTime, next);
-    }, returns(tuple(MAX_VALUE, 0))), pick(Observable_map, 1), Observable_takeWhile(isNotEqualTo(1), {
+    }, returns(tuple(MAX_VALUE, 0))), pick(Observable_map)(1), Observable_takeWhile(isNotEqualTo(1), {
         inclusive: true,
     }));
 };
