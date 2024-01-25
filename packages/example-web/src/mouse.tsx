@@ -4,10 +4,9 @@ import * as Observable from "@reactive-js/core/concurrent/Observable";
 import { useDisposable } from "@reactive-js/core/integrations/react";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
 import {
-  isSome,
-  none,
   pipe,
   pipeLazy,
+  pipeSomeLazy,
   returns,
 } from "@reactive-js/core/functions";
 import {
@@ -35,34 +34,33 @@ const Root = () => {
   );
 
   const spring = useMemo(
-    () =>
-      isSome(animationScheduler)
-        ? pipe(
-            window,
-            WebElement.eventSource<Window, "mousemove">("mousemove"),
-            EventSource.map(ev => ({ x: ev.clientX, y: ev.clientY })),
-            Observable.fromEventSource(),
-            Observable.throttle(300, { mode: "interval" }),
-            Observable.scanMany((prev: Point, next: Point) => {
-              const diffX = next.x - prev.x;
-              const diffY = next.y - prev.y;
+    pipeSomeLazy(animationScheduler, animationScheduler =>
+      pipe(
+        window,
+        WebElement.eventSource<Window, "mousemove">("mousemove"),
+        EventSource.map(ev => ({ x: ev.clientX, y: ev.clientY })),
+        Observable.fromEventSource(),
+        Observable.throttle(300, { mode: "interval" }),
+        Observable.scanMany((prev: Point, next: Point) => {
+          const diffX = next.x - prev.x;
+          const diffY = next.y - prev.y;
 
-              return Observable.animate({
-                type: "spring",
-                stiffness: 0.01,
-                damping: 0.1,
-                precision: 0.001,
-                from: 0,
-                to: 1,
-                selector: (v: number) => ({
-                  x: prev.x + diffX * v,
-                  y: prev.y + diffY * v,
-                }),
-              });
-            }, returns({ x: 0, y: 0 })),
-            Observable.toEventSource(animationScheduler),
-          )
-        : none,
+          return Observable.animate({
+            type: "spring",
+            stiffness: 0.01,
+            damping: 0.1,
+            precision: 0.001,
+            from: 0,
+            to: 1,
+            selector: (v: number) => ({
+              x: prev.x + diffX * v,
+              y: prev.y + diffY * v,
+            }),
+          });
+        }, returns({ x: 0, y: 0 })),
+        Observable.toEventSource(animationScheduler),
+      ),
+    ),
     [animationScheduler],
   );
 

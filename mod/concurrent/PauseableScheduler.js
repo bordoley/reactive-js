@@ -9,7 +9,7 @@ import * as WritableStore from "../events/WritableStore.js";
 import { isNone, isSome, none } from "../functions.js";
 import { DisposableLike_isDisposed, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, SerialDisposableLike_current, } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
-import * as PriorityQueue from "../utils/PriorityQueue.js";
+import PriorityQueueMixin from "../utils/__mixins__/PriorityQueueMixin.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "./__internal__/Continuation.js";
 import * as Continuation from "./__internal__/Continuation.js";
@@ -19,19 +19,17 @@ export const create = /*@PURE__*/ (() => {
     const PauseableScheduler_hostScheduler = Symbol("PauseableScheduler_hostScheduler");
     const PauseableScheduler_hostSchedulerContinuation = Symbol("PauseableScheduler_hostSchedulerContinuation");
     const PauseableScheduler_hostSchedulerContinuationDueTime = Symbol("PauseableScheduler_hostSchedulerContinuationDueTime");
-    const PauseableScheduler_queue = Symbol("PauseableScheduler_queue");
     const PauseableScheduler_pausedTime = Symbol("PauseableScheduler_pausedTime");
     const PauseableScheduler_timeDrift = Symbol("PauseableScheduler_timeDrift");
     const PauseableScheduler_activeContinuation = Symbol("PauseableScheduler_activeContinuation");
     const peek = (instance) => {
-        const queue = instance[PauseableScheduler_queue];
         let continuation = none;
         while (true) {
-            continuation = queue[QueueLike_head];
+            continuation = instance[QueueLike_head];
             if (isNone(continuation) || !continuation[DisposableLike_isDisposed]) {
                 break;
             }
-            queue[QueueLike_dequeue]();
+            instance[QueueLike_dequeue]();
         }
         return continuation;
     };
@@ -58,10 +56,10 @@ export const create = /*@PURE__*/ (() => {
         instance[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
         instance[SerialDisposableLike_current] = hostScheduler[SchedulerLike_schedule](hostSchedulerContinuation, { delay });
     };
-    return mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin()), function PauseableScheduler(instance, host) {
+    return mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), PriorityQueueMixin()), function PauseableScheduler(instance, host) {
         init(SchedulerMixin, instance, host[SchedulerLike_maxYieldInterval]);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
-        instance[PauseableScheduler_queue] = PriorityQueue.create(Continuation.compare);
+        init(PriorityQueueMixin(), instance, Continuation.compare, none);
         instance[PauseableScheduler_hostScheduler] = host;
         instance[PauseableScheduler_pausedTime] = host[SchedulerLike_now];
         instance[PauseableScheduler_timeDrift] = 0;
@@ -80,7 +78,7 @@ export const create = /*@PURE__*/ (() => {
                         dueTime;
                 }
                 else {
-                    const continuation = instance[PauseableScheduler_queue][QueueLike_dequeue]();
+                    const continuation = instance[QueueLike_dequeue]();
                     instance[PauseableScheduler_activeContinuation] = continuation;
                     continuation?.[ContinuationLike_run]();
                     instance[PauseableScheduler_activeContinuation] = none;
@@ -94,7 +92,6 @@ export const create = /*@PURE__*/ (() => {
         [PauseableScheduler_hostScheduler]: none,
         [PauseableScheduler_hostSchedulerContinuation]: none,
         [PauseableScheduler_hostSchedulerContinuationDueTime]: 0,
-        [PauseableScheduler_queue]: none,
         [PauseableScheduler_pausedTime]: 0,
         [PauseableScheduler_timeDrift]: 0,
         [PauseableScheduler_activeContinuation]: none,
@@ -132,7 +129,7 @@ export const create = /*@PURE__*/ (() => {
             scheduleOnHost(this);
         },
         [ContinuationSchedulerLike_schedule](continuation) {
-            this[PauseableScheduler_queue][QueueableLike_enqueue](continuation);
+            this[QueueableLike_enqueue](continuation);
             scheduleOnHost(this);
         },
     });
