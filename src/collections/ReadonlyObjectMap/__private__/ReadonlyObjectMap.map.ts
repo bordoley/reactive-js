@@ -12,7 +12,7 @@ const ReadonlyObjectMap_map: ReadonlyObjectMap.Signature["map"] =
     selector: Function2<TA, TKey, TB>,
   ) =>
   (obj: ReadonlyObjectMapLike<TKey, TA>): ReadonlyObjectMapLike<TKey, TB> => {
-    const result: Record<TKey, TB> = Obj.create(null);
+    const result = Obj.createObjectMap<TKey, TB>();
 
     for (const key in obj) {
       if (Obj.hasOwn(obj, key)) {

@@ -1,3 +1,4 @@
+import { nullObject } from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import {
   __constant,
@@ -53,7 +54,7 @@ const animateHtmlElement = <T>(
   selector: (ev: T) => CSSStyleMapLike,
 ): DisposableLike =>
   // Just in case a caller sets it to null instead of undefined
-  element != null
+  element != nullObject
     ? pipe(
         animation,
         EventSource.addEventHandler(

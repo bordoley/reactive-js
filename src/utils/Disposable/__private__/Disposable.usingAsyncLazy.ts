@@ -7,7 +7,7 @@ const Disposable_usingAsyncLazy: Disposable.Signature["usingAsyncLazy"] =
   (
     ...factories: readonly Factory<DisposableLike>[]
   ): Function1<
-    (...args: DisposableLike[]) => unknown,
+    (...args: DisposableLike[]) => Promise<unknown>,
     Factory<Promise<unknown>>
   > =>
   f =>

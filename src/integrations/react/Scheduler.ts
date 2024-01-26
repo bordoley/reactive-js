@@ -35,8 +35,10 @@ interface ReactSchedulerModule {
 type Signature = ReactSchedulerModule;
 
 const createReactScheduler = /*@__PURE__*/ (() => {
+  const ReactScheduler_priority = Symbol("ReactScheduler_priority");
+
   type TProperties = {
-    priority: 1 | 2 | 3 | 4 | 5;
+    [ReactScheduler_priority]: 1 | 2 | 3 | 4 | 5;
   };
 
   return mixInstanceFactory(
@@ -46,11 +48,11 @@ const createReactScheduler = /*@__PURE__*/ (() => {
       priority: 1 | 2 | 3 | 4 | 5,
     ): SchedulerLike & DisposableLike {
       init(SchedulerMixin, instance, 300);
-      instance.priority = priority;
+      instance[ReactScheduler_priority] = priority;
       return instance;
     },
     props<TProperties>({
-      priority: 3,
+      [ReactScheduler_priority]: 3,
     }),
     {
       get [SchedulerLike_now](): number {
@@ -75,7 +77,7 @@ const createReactScheduler = /*@__PURE__*/ (() => {
         const delay = dueTime - now;
 
         const callbackNode = unstable_scheduleCallback(
-          this.priority,
+          this[ReactScheduler_priority],
           callback,
           delay > 0 ? { delay } : none,
         );

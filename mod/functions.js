@@ -1,6 +1,6 @@
 /// <reference types="./functions.d.ts" />
 
-import { Array, Array_every, Array_length, Error, __DEV__, typeofObject, } from "./__internal__/constants.js";
+import { Array, Array_every, Array_length, Error, Number, String, __DEV__, nullObject, typeofObject, } from "./__internal__/constants.js";
 /**
  * A function that always returns `false`.
  */
@@ -132,7 +132,8 @@ export const isFunction = (f) => typeof f === "function" || f instanceof Functio
  * Returns true if `option` is `none`.
  */
 export const isNone = (option) => option === none;
-export const isNumber = (n) => typeof n === "number";
+export const isNull = (v) => v === nullObject;
+export const isNumber = (n) => Number(n) === n || n instanceof Number;
 /**
  * Predicate that returns `true` if `x` is an odd number, otherwise `false`.
  */
@@ -143,7 +144,7 @@ const isPromise = (v) => v instanceof Promise || Promise.resolve(v) === v;
  * Returns true if `option` is not `none`.
  */
 export const isSome = (option) => option !== none;
-export const isString = (s) => typeof s === "string" || s instanceof String;
+export const isString = (s) => String(s) === s || s instanceof String;
 export const isTrue = (v) => v;
 export const greaterThan = (v) => (x) => x > v;
 export const lessThan = (v) => (x) => x < v;

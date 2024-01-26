@@ -7,24 +7,25 @@ import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import LazyInitEventSourceMixin, { LazyInitEventSourceLike_publisher, } from "./__mixins__/LazyInitEventSourceMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const WritableStore_equality = Symbol("WritableStore_equality");
+    const WritableStore_value = Symbol("WritableStore_value");
     return mixInstanceFactory(include(LazyInitEventSourceMixin(), DisposableMixin), function WritableStore(instance, initialValue, options) {
         init(DisposableMixin, instance);
         init(LazyInitEventSourceMixin(), instance);
-        instance.v = initialValue;
+        instance[WritableStore_value] = initialValue;
         instance[WritableStore_equality] = options?.equality ?? strictEquality;
         return instance;
     }, props({
         [WritableStore_equality]: none,
-        v: none,
+        [WritableStore_value]: none,
     }), {
         get [StoreLike_value]() {
             unsafeCast(this);
-            return this.v;
+            return this[WritableStore_value];
         },
         set [StoreLike_value](value) {
             unsafeCast(this);
-            if (!this[WritableStore_equality](this.v, value)) {
-                this.v = value;
+            if (!this[WritableStore_equality](this[WritableStore_value], value)) {
+                this[WritableStore_value] = value;
                 this[LazyInitEventSourceLike_publisher]?.[EventListenerLike_notify](value);
             }
         },

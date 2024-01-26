@@ -40,12 +40,14 @@ import * as Disposable from "../../utils/Disposable.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
 
 interface Signature {
-  create(hostScheduler: SchedulerLike): SchedulerLike & DisposableLike;
+  create(delayScheduler: SchedulerLike): SchedulerLike & DisposableLike;
 }
 
 export const create: Signature["create"] = /*@__PURE__*/ (() => {
   const raf = requestAnimationFrame;
-  const AnimationFrameScheduler_host = Symbol("AnimationFrameScheduler_host");
+  const AnimationFrameScheduler_delayScheduler = Symbol(
+    "AnimationFrameScheduler_delayScheduler",
+  );
   const AnimationFrameScheduler_rafCallback = Symbol(
     "AnimationFrameScheduler_rafCallback",
   );
@@ -59,7 +61,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
   );
 
   type TProperties = {
-    [AnimationFrameScheduler_host]: SchedulerLike;
+    [AnimationFrameScheduler_delayScheduler]: SchedulerLike;
     [AnimationFrameScheduler_rafCallback]: () => void;
     [AnimationFrameScheduler_rafQueue]: IndexedQueueLike<ContinuationLike>;
     [AnimationFrameScheduler_rafIsRunning]: boolean;
@@ -74,7 +76,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
     ): SchedulerLike & DisposableLike {
       init(CurrentTimeSchedulerMixin, instance, 5);
 
-      instance[AnimationFrameScheduler_host] = hostScheduler;
+      instance[AnimationFrameScheduler_delayScheduler] = hostScheduler;
       instance[AnimationFrameScheduler_rafQueue] = IndexedQueue.create();
       instance[AnimationFrameScheduler_rafIsRunning] = false;
 
@@ -128,7 +130,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
       return instance;
     },
     props<TProperties>({
-      [AnimationFrameScheduler_host]: none,
+      [AnimationFrameScheduler_delayScheduler]: none,
       [AnimationFrameScheduler_rafCallback]: none,
       [AnimationFrameScheduler_rafQueue]: none,
       [AnimationFrameScheduler_rafIsRunning]: false,
@@ -149,7 +151,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
         // if its not more than a frame.
         if (delay > 16) {
           pipe(
-            this[AnimationFrameScheduler_host],
+            this[AnimationFrameScheduler_delayScheduler],
             invoke(
               SchedulerLike_schedule,
               pipeLazy(

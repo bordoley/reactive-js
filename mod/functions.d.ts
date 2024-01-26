@@ -159,6 +159,7 @@ interface FunctionsModule {
         readonly equality?: Equality<T>;
     }): Predicate<T>;
     isNumber(n: unknown): n is number;
+    isNull(n: unknown): n is null;
     isObject(o: unknown): o is object;
     readonly isOdd: Predicate<number>;
     isPromise(v: unknown): v is Promise<unknown>;
@@ -357,6 +358,7 @@ export declare const isFunction: Signature["isFunction"];
  * Returns true if `option` is `none`.
  */
 export declare const isNone: Signature["isNone"];
+export declare const isNull: Signature["isNull"];
 export declare const isNumber: Signature["isNumber"];
 /**
  * Predicate that returns `true` if `x` is an odd number, otherwise `false`.

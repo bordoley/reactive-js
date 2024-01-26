@@ -1,5 +1,6 @@
 /// <reference types="./effects.d.ts" />
 
+import { nullObject } from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { __constant, __memo, __observe, __state, __using, } from "../../concurrent/Observable/effects.js";
 import * as EventSource from "../../events/EventSource.js";
@@ -10,7 +11,7 @@ const returnsNone = returns(none);
 const makeRefSetter = (dispatcher) => ele => dispatcher[QueueableLike_enqueue](returns(ele));
 const animateHtmlElement = (element, animation, selector) => 
 // Just in case a caller sets it to null instead of undefined
-element != null
+element != nullObject
     ? pipe(animation, EventSource.addEventHandler(compose(selector, ReadonlyObjectMap.forEach((v, key) => {
         element.style[key] = v ?? "";
     }))))

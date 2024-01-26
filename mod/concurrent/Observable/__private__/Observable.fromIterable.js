@@ -1,6 +1,6 @@
 /// <reference types="./Observable.fromIterable.d.ts" />
 
-import { Iterator_done, Iterator_next, Iterator_value, } from "../../../__internal__/constants.js";
+import { Iterator_done, Iterator_next, Iterator_value, Symbol, } from "../../../__internal__/constants.js";
 import { ContinuationContextLike_yield, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { error, isSome, none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";

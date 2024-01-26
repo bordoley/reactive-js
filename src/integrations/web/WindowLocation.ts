@@ -1,5 +1,5 @@
 import * as Obj from "../../__internal__/Object.js";
-import { Array_length } from "../../__internal__/constants.js";
+import { Array_length, String } from "../../__internal__/constants.js";
 import {
   include,
   init,

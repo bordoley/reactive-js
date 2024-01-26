@@ -1,3 +1,4 @@
+import { Symbol } from "../../__internal__/constants.js";
 import { Mixin, mix, props } from "../../__internal__/mixins.js";
 import {
   EnumerableLike,

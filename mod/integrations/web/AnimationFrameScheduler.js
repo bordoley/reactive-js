@@ -11,13 +11,13 @@ import * as Disposable from "../../utils/Disposable.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
 export const create = /*@__PURE__*/ (() => {
     const raf = requestAnimationFrame;
-    const AnimationFrameScheduler_host = Symbol("AnimationFrameScheduler_host");
+    const AnimationFrameScheduler_delayScheduler = Symbol("AnimationFrameScheduler_delayScheduler");
     const AnimationFrameScheduler_rafCallback = Symbol("AnimationFrameScheduler_rafCallback");
     const AnimationFrameScheduler_rafQueue = Symbol("AnimationFrameScheduler_rafQueue");
     const AnimationFrameScheduler_rafIsRunning = Symbol("AnimationFrameScheduler_rafIsRunning");
     return mixInstanceFactory(include(CurrentTimeSchedulerMixin), function AnimationFrameScheduler(instance, hostScheduler) {
         init(CurrentTimeSchedulerMixin, instance, 5);
-        instance[AnimationFrameScheduler_host] = hostScheduler;
+        instance[AnimationFrameScheduler_delayScheduler] = hostScheduler;
         instance[AnimationFrameScheduler_rafQueue] = IndexedQueue.create();
         instance[AnimationFrameScheduler_rafIsRunning] = false;
         instance[AnimationFrameScheduler_rafCallback] = () => {
@@ -59,7 +59,7 @@ export const create = /*@__PURE__*/ (() => {
         };
         return instance;
     }, props({
-        [AnimationFrameScheduler_host]: none,
+        [AnimationFrameScheduler_delayScheduler]: none,
         [AnimationFrameScheduler_rafCallback]: none,
         [AnimationFrameScheduler_rafQueue]: none,
         [AnimationFrameScheduler_rafIsRunning]: false,
@@ -73,7 +73,7 @@ export const create = /*@__PURE__*/ (() => {
             // The frame time is 16 ms at 60 fps so just ignore the delay
             // if its not more than a frame.
             if (delay > 16) {
-                pipe(this[AnimationFrameScheduler_host], invoke(SchedulerLike_schedule, pipeLazy(this, invoke(ContinuationSchedulerLike_schedule, continuation)), { delay }), Disposable.addTo(continuation));
+                pipe(this[AnimationFrameScheduler_delayScheduler], invoke(SchedulerLike_schedule, pipeLazy(this, invoke(ContinuationSchedulerLike_schedule, continuation)), { delay }), Disposable.addTo(continuation));
             }
             else {
                 this[AnimationFrameScheduler_rafQueue][QueueableLike_enqueue](continuation);

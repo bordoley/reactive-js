@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { nullObject } from "../__internal__/constants.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -170,7 +171,7 @@ export const createComponent: Signature["createComponent"] = <TProps>(
 
     return (
       useObserve(pipeSomeLazy(propsSubject, fn), [propsSubject], options) ??
-      null
+      nullObject
     );
   };
 

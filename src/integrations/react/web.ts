@@ -8,6 +8,7 @@ import {
   useState,
 } from "react";
 import type * as React from "react";
+import { nullObject } from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { EventSourceLike, StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
@@ -18,6 +19,7 @@ import {
   Updater,
   identity,
   isFunction,
+  isNull,
   none,
   pipe,
   pipeSomeLazy,
@@ -84,7 +86,7 @@ export const useAnimate: Signature["useAnimate"] = <
   selector?: Function1<T, CSSStyleMapLike>,
   deps?: readonly unknown[],
 ) => {
-  const ref = useRef<TElement>(null);
+  const ref = useRef<TElement>(nullObject);
 
   const memoizedSelector = isFunction(selector)
     ? useCallback(selector, deps ?? [])
@@ -95,7 +97,7 @@ export const useAnimate: Signature["useAnimate"] = <
       animation,
       EventSource.addEventHandler(v => {
         const element = ref.current;
-        if (element != null) {
+        if (!isNull(element)) {
           pipe(
             memoizedSelector(v),
             ReadonlyObjectMap.forEach<string, keyof CSSStyleMapLike>(

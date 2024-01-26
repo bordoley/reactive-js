@@ -1,7 +1,7 @@
 /// <reference types="./WindowLocation.d.ts" />
 
 import * as Obj from "../../__internal__/Object.js";
-import { Array_length } from "../../__internal__/constants.js";
+import { Array_length, String } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import { pick } from "../../computations.js";
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, StreamableLike_stream, } from "../../concurrent.js";

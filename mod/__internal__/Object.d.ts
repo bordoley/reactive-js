@@ -6,3 +6,6 @@ declare const create: {
 }, prototype: Object;
 export { create, getOwnPropertyDescriptors, prototype };
 export declare const hasOwn: (obj: object, key: PropertyKey) => boolean;
+export declare const createObjectMap: <TKey extends string = string, T = unknown>() => {
+    [P in TKey]?: T;
+};

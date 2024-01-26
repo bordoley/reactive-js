@@ -3,7 +3,7 @@ import { Factory, pipe } from "../../../functions.js";
 import { DisposableLike, DisposableLike_dispose } from "../../../utils.js";
 
 const Disposable_usingAsyncImpl = async (
-  f: (...args: DisposableLike[]) => unknown,
+  f: (...args: DisposableLike[]) => Promise<unknown>,
   factories: readonly Factory<DisposableLike>[],
 ): Promise<unknown> => {
   const disposables = pipe(

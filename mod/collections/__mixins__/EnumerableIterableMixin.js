@@ -1,5 +1,6 @@
 /// <reference types="./EnumerableIterableMixin.d.ts" />
 
+import { Symbol } from "../../__internal__/constants.js";
 import { mix, props } from "../../__internal__/mixins.js";
 import { EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_move, } from "../../collections.js";
 import { returns } from "../../functions.js";

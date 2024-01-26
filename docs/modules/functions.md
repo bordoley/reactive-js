@@ -76,6 +76,7 @@
 - [isFunction](functions.md#isfunction)
 - [isNone](functions.md#isnone)
 - [isNotEqualTo](functions.md#isnotequalto)
+- [isNull](functions.md#isnull)
 - [isNumber](functions.md#isnumber)
 - [isObject](functions.md#isobject)
 - [isOdd](functions.md#isodd)
@@ -2004,6 +2005,22 @@ ___
 #### Returns
 
 [`Predicate`](functions.md#predicate)<`T`\>
+
+___
+
+### isNull
+
+▸ **isNull**(`n`): n is null
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `n` | `unknown` |
+
+#### Returns
+
+n is null
 
 ___
 

@@ -5,7 +5,7 @@ import * as ReadonlyArray from "../../../../collections/ReadonlyArray.js";
 import { StoreLike_value } from "../../../../events.js";
 import * as EventSource from "../../../../events/EventSource.js";
 import * as WritableStore from "../../../../events/WritableStore.js";
-import { pipe, pipeLazy } from "../../../../functions.js";
+import { isNull, pipe, pipeLazy } from "../../../../functions.js";
 import * as Disposable from "../../../../utils/Disposable.js";
 import Element_eventSource from "./Element.eventSource.js";
 import Element_windowResizeEventSource from "./Element.windowResizeEventSource.js";
@@ -28,7 +28,7 @@ const findScrollContainers = (element) => {
         [overflow, overflowX, overflowY].some(prop => prop === "auto" || prop === "scroll")
         ? [element]
         : [];
-    return element !== body && element.parentElement != null
+    return element !== body && !isNull(element.parentElement)
         ? [...result, ...findScrollContainers(element.parentElement)]
         : result;
 };

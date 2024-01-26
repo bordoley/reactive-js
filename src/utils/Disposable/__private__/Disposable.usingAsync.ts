@@ -5,7 +5,10 @@ import Disposable_usingAsyncImpl from "./Disposable.usingAsyncImpl.js";
 
 const Disposable_usingAsync: Disposable.Signature["usingAsync"] = ((
     ...factories: readonly Factory<DisposableLike>[]
-  ): Function1<(...args: DisposableLike[]) => unknown, Promise<unknown>> =>
+  ): Function1<
+    (...args: DisposableLike[]) => Promise<unknown>,
+    Promise<unknown>
+  > =>
   f =>
     Disposable_usingAsyncImpl(
       f,

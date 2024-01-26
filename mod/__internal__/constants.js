@@ -1,13 +1,16 @@
 /// <reference types="./constants.d.ts" />
 
-export const { MAX_SAFE_INTEGER, MAX_VALUE, MIN_SAFE_INTEGER, MIN_VALUE } = Number;
 export const typeofObject = "object";
 export const Global_process = "process";
 export const globalObject = (typeof window === typeofObject ? window : global);
 export const Array = globalObject.Array;
 export const Error = globalObject.Error;
 export const Map = globalObject.Map;
+export const Number = globalObject.Number;
 export const Set = globalObject.Set;
+export const String = globalObject.String;
+export const Symbol = globalObject.Symbol;
+export const { MAX_SAFE_INTEGER, MAX_VALUE, MIN_SAFE_INTEGER, MIN_VALUE } = Number;
 const process = globalObject[Global_process] ?? {
     env: {
         NODE_ENV: "development",
@@ -29,3 +32,4 @@ export const Set_add = "add";
 export const Set_delete = Map_delete;
 export const Set_has = "has";
 export const Set_size = Map_size;
+export const nullObject = null;

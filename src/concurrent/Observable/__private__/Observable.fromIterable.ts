@@ -2,6 +2,7 @@ import {
   Iterator_done,
   Iterator_next,
   Iterator_value,
+  Symbol,
 } from "../../../__internal__/constants.js";
 import {
   ContinuationContextLike,

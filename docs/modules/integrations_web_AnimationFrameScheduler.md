@@ -12,13 +12,13 @@
 
 ### create
 
-▸ **create**(`hostScheduler`): [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) & [`DisposableLike`](../interfaces/utils.DisposableLike.md)
+▸ **create**(`delayScheduler`): [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) & [`DisposableLike`](../interfaces/utils.DisposableLike.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `hostScheduler` | [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) |
+| `delayScheduler` | [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) |
 
 #### Returns
 

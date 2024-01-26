@@ -13,7 +13,7 @@ const ReadonlyObjectMap_fromEntries: ReadonlyObjectMap.Signature["fromEntries"] 
     <T, TKey extends ReadonlyObjectMap.TKeyBase>() =>
     (enumerable: EnumerableLike<Tuple2<TKey, T>>) => {
       const entries = enumerable[EnumerableLike_enumerate]();
-      const result: Record<TKey, T> = Obj.create(null);
+      const result = Obj.createObjectMap<TKey, T>();
 
       while (entries[EnumeratorLike_move]()) {
         const [key, value] = entries[EnumeratorLike_current];

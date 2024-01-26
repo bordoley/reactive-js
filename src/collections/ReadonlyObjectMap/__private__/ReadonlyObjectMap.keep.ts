@@ -11,7 +11,7 @@ const ReadonlyObjectMap_keep: ReadonlyObjectMap.Signature["keep"] =
     ReadonlyObjectMapLike<TKey, T>
   > =>
   (obj: ReadonlyObjectMapLike<TKey, T>): ReadonlyObjectMapLike<TKey, T> => {
-    const result: Record<TKey, T> = Obj.create(null);
+    const result = Obj.createObjectMap<TKey, T>();
 
     for (const key in obj) {
       if (Obj.hasOwn(obj, key)) {

@@ -3,7 +3,10 @@ import {
   Array_every,
   Array_length,
   Error,
+  Number,
+  String,
   __DEV__,
+  nullObject,
   typeofObject,
 } from "./__internal__/constants.js";
 
@@ -387,6 +390,8 @@ interface FunctionsModule {
   ): Predicate<T>;
 
   isNumber(n: unknown): n is number;
+
+  isNull(n: unknown): n is null;
 
   isObject(o: unknown): o is object;
 
@@ -1409,8 +1414,11 @@ export const isNone: Signature["isNone"] = <T>(
   option: Optional<T>,
 ): option is undefined => option === none;
 
+export const isNull: Signature["isNull"] = (v: unknown): v is null =>
+  v === nullObject;
+
 export const isNumber: Signature["isNumber"] = (n: unknown): n is number =>
-  typeof n === "number";
+  Number(n) === n || n instanceof Number;
 
 /**
  * Predicate that returns `true` if `x` is an odd number, otherwise `false`.
@@ -1431,7 +1439,7 @@ export const isSome: Signature["isSome"] = <T>(
 ): option is T => option !== none;
 
 export const isString: Signature["isString"] = (s: unknown): s is string =>
-  typeof s === "string" || s instanceof String;
+  String(s) === s || s instanceof String;
 
 export const isTrue: Signature["isTrue"] = (v: boolean): v is true => v;
 

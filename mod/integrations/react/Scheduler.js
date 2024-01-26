@@ -11,12 +11,13 @@ import { newInstance, none, pipe, pipeLazy } from "../../functions.js";
 import { DisposableLike_dispose } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 const createReactScheduler = /*@__PURE__*/ (() => {
+    const ReactScheduler_priority = Symbol("ReactScheduler_priority");
     return mixInstanceFactory(include(SchedulerMixin), function ReactPriorityScheduler(instance, priority) {
         init(SchedulerMixin, instance, 300);
-        instance.priority = priority;
+        instance[ReactScheduler_priority] = priority;
         return instance;
     }, props({
-        priority: 3,
+        [ReactScheduler_priority]: 3,
     }), {
         get [SchedulerLike_now]() {
             return unstable_now();
@@ -32,7 +33,7 @@ const createReactScheduler = /*@__PURE__*/ (() => {
             const now = this[SchedulerLike_now];
             const dueTime = continuation[ContinuationLike_dueTime];
             const delay = dueTime - now;
-            const callbackNode = unstable_scheduleCallback(this.priority, callback, delay > 0 ? { delay } : none);
+            const callbackNode = unstable_scheduleCallback(this[ReactScheduler_priority], callback, delay > 0 ? { delay } : none);
             const callbackNodeDisposable = pipe(Disposable.create(), Disposable.onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)), Disposable.addTo(continuation));
         },
     });
