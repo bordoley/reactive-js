@@ -295,6 +295,7 @@ export const raiseIf = (condition, message) => {
         raiseError(error(__DEV__ ? message : none));
     }
 };
+export const raiseIfNone = (v, message) => raiseIf(isNone(v), message);
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */

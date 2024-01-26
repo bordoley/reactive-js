@@ -6,13 +6,12 @@ export const __DENO__ = isSome(globalObject.Deno);
 export const DescribeType = 1;
 export const TestType = 2;
 export const TestAsyncType = 3;
-const createDescribe = (name, ...tests) => ({
+export const describe = (name, ...tests) => ({
     type: DescribeType,
     name,
     tests,
 });
-export { createDescribe as describe };
-const createTest = (name, f) => ({
+export const test = (name, f) => ({
     type: TestType,
     name,
     f: (ctx) => () => {
@@ -20,9 +19,8 @@ const createTest = (name, f) => ({
         f();
     },
 });
-export const testPredicateExpectingTrue = (input, predicate) => createTest(`returns true when input is ${input}`, pipeLazy(input, predicate, expectTrue));
-export const testPredicateExpectingFalse = (input, predicate) => createTest(`returns false when input is ${input}`, pipeLazy(input, predicate, expectFalse));
-export { createTest as test };
+export const testPredicateExpectingTrue = (input, predicate) => test(`returns true when input is ${input}`, pipeLazy(input, predicate, expectTrue));
+export const testPredicateExpectingFalse = (input, predicate) => test(`returns false when input is ${input}`, pipeLazy(input, predicate, expectFalse));
 export const testAsync = (name, f) => ({
     type: TestAsyncType,
     name,
@@ -153,7 +151,7 @@ const createTests = (testGroup, parents) => {
             forEachCreateTests();
         }
         else {
-            describe(testGroup.name, () => {
+            globalObject.describe?.(testGroup.name, () => {
                 forEachCreateTests();
             });
         }
@@ -161,13 +159,13 @@ const createTests = (testGroup, parents) => {
     else {
         const name = path.join(":");
         if (__DENO__) {
-            Deno.test(name, testGroup.f(name));
+            globalObject.Deno?.test(name, testGroup.f(name));
         }
         else {
-            test(testGroup.name, testGroup.f(name));
+            globalObject.test?.(testGroup.name, testGroup.f(name));
         }
     }
 };
 export const testModule = (name, ...testGroups) => {
-    createTests(createDescribe(name, ...testGroups), []);
+    createTests(describe(name, ...testGroups), []);
 };

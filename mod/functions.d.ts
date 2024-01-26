@@ -259,6 +259,7 @@ interface FunctionsModule {
     raise<T>(e?: unknown): T;
     raiseError<T>(e: Error): T;
     raiseIf(condition: boolean, message: string): void;
+    raiseIfNone<T>(v: Optional<T>, message: string): asserts v is T;
     returns<T>(v: T): (..._args: unknown[]) => T;
     strictEquality<T>(a: T, b: T): boolean;
     tuple<TA>(a: TA): Tuple1<TA>;
@@ -441,6 +442,7 @@ export declare const raise: Signature["raise"];
  * Throws an error with the provided message is the condition is true.
  */
 export declare const raiseIf: Signature["raiseIf"];
+export declare const raiseIfNone: Signature["raiseIfNone"];
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */

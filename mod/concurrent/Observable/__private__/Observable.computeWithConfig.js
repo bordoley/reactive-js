@@ -113,8 +113,10 @@ class ComputeContext {
         this[ComputeContext_observableConfig] = config;
     }
     [ComputeContext_awaitOrObserve](observable, shouldAwait) {
-        raiseIf(this[ComputeContext_observableConfig][ObservableLike_isRunnable] &&
-            !observable[ObservableLike_isRunnable], "cannot observe a non-runnable observable in a Runnable computation");
+        if (__DEV__) {
+            raiseIf(this[ComputeContext_observableConfig][ObservableLike_isRunnable] &&
+                !observable[ObservableLike_isRunnable], "cannot observe a non-runnable observable in a Runnable computation");
+        }
         const effect = shouldAwait
             ? validateComputeEffect(this, Await)
             : validateComputeEffect(this, Observe);

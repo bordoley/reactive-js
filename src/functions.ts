@@ -1158,6 +1158,8 @@ interface FunctionsModule {
 
   raiseIf(condition: boolean, message: string): void;
 
+  raiseIfNone<T>(v: Optional<T>, message: string): asserts v is T;
+
   returns<T>(v: T): (..._args: unknown[]) => T;
 
   strictEquality<T>(a: T, b: T): boolean;
@@ -1672,6 +1674,11 @@ export const raiseIf: Signature["raiseIf"] = (
     raiseError(error(__DEV__ ? message : none));
   }
 };
+
+export const raiseIfNone: Signature["raiseIfNone"] = <T>(
+  v: Optional<T>,
+  message: string,
+): asserts v is T => raiseIf(isNone(v), message);
 
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.

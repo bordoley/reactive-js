@@ -10,13 +10,13 @@ import { ContinuationLike_dueTime, ContinuationLike_run, } from "./__internal__/
 import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "./__internal__/ContinuationScheduler.js";
 import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
 const scheduleDelayed = (scheduler, continuation, delay) => {
-    const disposable = pipe(Disposable.create(), Disposable.addTo(continuation), Disposable.onDisposed(_ => clearTimeout(timeout)));
-    const timeout = setTimeout(runContinuation, delay, scheduler, continuation, disposable);
+    const disposable = pipe(Disposable.create(), Disposable.addTo(continuation), Disposable.onDisposed(_ => globalObject.clearTimeout(timeout)));
+    const timeout = globalObject.setTimeout(runContinuation, delay, scheduler, continuation, disposable);
 };
-const { setImmediate } = globalObject;
 const scheduleImmediate = (scheduler, continuation) => {
+    const { setImmediate } = globalObject;
     if (isSome(setImmediate)) {
-        const disposable = pipe(Disposable.create(), Disposable.addTo(continuation), Disposable.onDisposed(() => clearImmediate(immmediate)));
+        const disposable = pipe(Disposable.create(), Disposable.addTo(continuation), Disposable.onDisposed(() => globalObject.clearImmediate(immmediate)));
         const immmediate = setImmediate(runContinuation, scheduler, continuation, disposable);
     }
     else {

@@ -38,10 +38,10 @@ const scheduleDelayed = (
   const disposable = pipe(
     Disposable.create(),
     Disposable.addTo(continuation),
-    Disposable.onDisposed(_ => clearTimeout(timeout)),
+    Disposable.onDisposed(_ => globalObject.clearTimeout(timeout)),
   );
 
-  const timeout: ReturnType<typeof setTimeout> = setTimeout(
+  const timeout: ReturnType<typeof setTimeout> = globalObject.setTimeout(
     runContinuation,
     delay,
     scheduler,
@@ -50,17 +50,16 @@ const scheduleDelayed = (
   );
 };
 
-const { setImmediate } = globalObject;
-
 const scheduleImmediate = (
   scheduler: ContinuationSchedulerLike,
   continuation: ContinuationLike,
 ) => {
+  const { setImmediate } = globalObject;
   if (isSome(setImmediate)) {
     const disposable = pipe(
       Disposable.create(),
       Disposable.addTo(continuation),
-      Disposable.onDisposed(() => clearImmediate(immmediate)),
+      Disposable.onDisposed(() => globalObject.clearImmediate(immmediate)),
     );
     const immmediate: ReturnType<typeof setImmediate> = setImmediate(
       runContinuation,

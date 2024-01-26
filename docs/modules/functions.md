@@ -101,6 +101,7 @@
 - [raise](functions.md#raise)
 - [raiseError](functions.md#raiseerror)
 - [raiseIf](functions.md#raiseif)
+- [raiseIfNone](functions.md#raiseifnone)
 - [returns](functions.md#returns)
 - [strictEquality](functions.md#strictequality)
 - [tuple](functions.md#tuple)
@@ -5021,6 +5022,29 @@ Throws an error with the provided message is the condition is true.
 #### Returns
 
 `void`
+
+___
+
+### raiseIfNone
+
+▸ **raiseIfNone**<`T`\>(`v`, `message`): asserts v is T
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | [`Optional`](functions.md#optional)<`T`\> |
+| `message` | `string` |
+
+#### Returns
+
+asserts v is T
 
 ___
 

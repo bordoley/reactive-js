@@ -1,3 +1,4 @@
+import { globalObject } from "../../__internal__/constants.js";
 import {
   include,
   init,
@@ -28,6 +29,7 @@ import {
   none,
   pipe,
   pipeLazy,
+  raiseIfNone,
 } from "../../functions.js";
 import {
   DisposableLike,
@@ -44,7 +46,12 @@ interface Signature {
 }
 
 export const create: Signature["create"] = /*@__PURE__*/ (() => {
-  const raf = requestAnimationFrame;
+  const raf = globalObject.requestAnimationFrame;
+  raiseIfNone(
+    raf,
+    "requestAnimationFrame is not defined in the current environment",
+  );
+
   const AnimationFrameScheduler_delayScheduler = Symbol(
     "AnimationFrameScheduler_delayScheduler",
   );

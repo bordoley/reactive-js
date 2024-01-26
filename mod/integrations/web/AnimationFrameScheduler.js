@@ -1,16 +1,18 @@
 /// <reference types="./AnimationFrameScheduler.d.ts" />
 
+import { globalObject } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import { SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "../../concurrent/__internal__/Continuation.js";
 import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "../../concurrent/__internal__/ContinuationScheduler.js";
 import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
-import { invoke, isSome, none, pipe, pipeLazy, } from "../../functions.js";
+import { invoke, isSome, none, pipe, pipeLazy, raiseIfNone, } from "../../functions.js";
 import { QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
 export const create = /*@__PURE__*/ (() => {
-    const raf = requestAnimationFrame;
+    const raf = globalObject.requestAnimationFrame;
+    raiseIfNone(raf, "requestAnimationFrame is not defined in the current environment");
     const AnimationFrameScheduler_delayScheduler = Symbol("AnimationFrameScheduler_delayScheduler");
     const AnimationFrameScheduler_rafCallback = Symbol("AnimationFrameScheduler_rafCallback");
     const AnimationFrameScheduler_rafQueue = Symbol("AnimationFrameScheduler_rafQueue");
