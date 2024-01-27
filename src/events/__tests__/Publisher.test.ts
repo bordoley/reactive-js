@@ -1,5 +1,6 @@
 import {
   describe,
+  expectArrayEquals,
   expectEquals,
   expectFalse,
   expectIsNone,
@@ -7,7 +8,15 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { Optional, ignore, newInstance, pipe } from "../../functions.js";
+import { EventListenerLike_notify } from "../../events.js";
+import {
+  Optional,
+  ignore,
+  newInstance,
+  none,
+  pipe,
+  raiseError,
+} from "../../functions.js";
 import {
   DisposableLike_dispose,
   DisposableLike_error,
@@ -39,6 +48,39 @@ testModule(
 
       expectTrue(subscription[DisposableLike_isDisposed]);
       expectTrue(publisher[DisposableLike_isDisposed]);
+    }),
+    test("when a listener throws an exception", () => {
+      const e = newInstance(Error);
+      const publisher = Publisher.create({ autoDispose: true });
+      const subscription = pipe(
+        publisher,
+        EventSource.addEventHandler(_ => {
+          raiseError(e);
+        }),
+      );
+      publisher[EventListenerLike_notify](none);
+
+      pipe(
+        subscription[DisposableLike_error],
+        expectEquals<Optional<Error>>(e),
+      );
+    }),
+    test("notifying after the publisher is disposed", () => {
+      const publisher = Publisher.create<number>({ autoDispose: true });
+
+      const result: number[] = [];
+      pipe(
+        publisher,
+        EventSource.addEventHandler(v => {
+          result.push(v);
+        }),
+      );
+      publisher[EventListenerLike_notify](1);
+      publisher[EventListenerLike_notify](2);
+      publisher[DisposableLike_dispose]();
+      publisher[EventListenerLike_notify](3);
+
+      pipe(result, expectArrayEquals([1, 2]));
     }),
   ),
 );
