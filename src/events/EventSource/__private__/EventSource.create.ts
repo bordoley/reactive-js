@@ -6,7 +6,6 @@ import {
   PublisherLike,
 } from "../../../events.js";
 import {
-  Function1,
   Optional,
   SideEffect1,
   error,
@@ -18,20 +17,15 @@ import * as Disposable from "../../../utils/Disposable.js";
 import type * as EventSource from "../../EventSource.js";
 import * as Publisher from "../../Publisher.js";
 
-const CreateEventSource_delegate = Symbol("CreateEventSource_delegate");
-const CreateEventSource_createDelegate = Symbol(
-  "CreateEventSource_createDelegate",
-);
-
 const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
   T,
 >() => {
+  const CreateEventSource_delegate = Symbol("CreateEventSource_delegate");
+  const CreateEventSource_setup = Symbol("CreateEventSource_setup");
+
   type TProperties = {
     [CreateEventSource_delegate]: Optional<PublisherLike<T>>;
-    [CreateEventSource_createDelegate]: Function1<
-      EventListenerLike<T>,
-      PublisherLike<T>
-    >;
+    [CreateEventSource_setup]: SideEffect1<EventListenerLike<T>>;
   };
 
   return mixInstanceFactory(
@@ -43,39 +37,16 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
         TProperties,
       setup: SideEffect1<EventListenerLike<T>>,
     ): EventSourceLike<T> {
+      instance[CreateEventSource_setup] = setup;
       // Pass in the initial listener to the setup function
       // so that we can connect it to the publisher before
       // the setup function is run, in case the setup function
       // publishes notifications. useful for testing.
-      instance[CreateEventSource_createDelegate] = (
-        listener: EventListenerLike<T>,
-      ) => {
-        const delegate = pipe(
-          Publisher.create<T>({
-            autoDispose: true,
-          }),
-          Disposable.onDisposed(() => {
-            instance[CreateEventSource_delegate] = none;
-          }),
-        );
-
-        delegate[EventSourceLike_addEventListener](listener);
-
-        instance[CreateEventSource_delegate] = delegate;
-        try {
-          setup(delegate);
-        } catch (e) {
-          delegate[DisposableLike_dispose](error(e));
-        }
-
-        return delegate;
-      };
-
       return instance;
     },
     props<TProperties>({
       [CreateEventSource_delegate]: none,
-      [CreateEventSource_createDelegate]: none,
+      [CreateEventSource_setup]: none,
     }),
     {
       [EventSourceLike_addEventListener](
@@ -84,7 +55,25 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
       ) {
         const delegate =
           this[CreateEventSource_delegate] ??
-          this[CreateEventSource_createDelegate](listener);
+          (() => {
+            const delegate = pipe(
+              Publisher.create<T>({
+                autoDispose: true,
+              }),
+              Disposable.onDisposed(() => {
+                this[CreateEventSource_delegate] = none;
+              }),
+            );
+
+            this[CreateEventSource_delegate] = delegate;
+            try {
+              this[CreateEventSource_setup](delegate);
+            } catch (e) {
+              delegate[DisposableLike_dispose](error(e));
+            }
+
+            return delegate;
+          })();
 
         delegate[EventSourceLike_addEventListener](listener);
       },

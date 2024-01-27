@@ -13,7 +13,12 @@ import PureStatelessComputationModuleTests from "../../computations/__tests__/fi
 import { VirtualTimeSchedulerLike_run } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as VirtualTimeScheduler from "../../concurrent/VirtualTimeScheduler.js";
-import { EventListenerLike_notify, EventSourceLike } from "../../events.js";
+import {
+  EventListenerLike,
+  EventListenerLike_notify,
+  EventSourceLike,
+  EventSourceLike_addEventListener,
+} from "../../events.js";
 import {
   Optional,
   bind,
@@ -35,13 +40,14 @@ testModule(
   PureStatelessComputationModuleTests(
     EventSource,
     <T>() =>
-      (arr: readonly T[]) =>
-        EventSource.create<T>(listener => {
+      (arr: readonly T[]) => ({
+        [EventSourceLike_addEventListener](listener: EventListenerLike<T>) {
           for (let i = 0; i < arr[Array_length]; i++) {
             listener[EventListenerLike_notify](arr[i]);
           }
           listener[DisposableLike_dispose]();
-        }),
+        },
+      }),
     <T>() =>
       (eventSource: EventSourceLike<T>) => {
         const result: T[] = [];
