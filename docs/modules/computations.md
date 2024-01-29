@@ -27,6 +27,7 @@
 - [keepType](computations.md#keeptype)
 - [mapTo](computations.md#mapto)
 - [pick](computations.md#pick)
+- [sequence](computations.md#sequence)
 
 ## Type Aliases
 
@@ -169,3 +170,37 @@ ___
 #### Returns
 
 [`Pick`](../interfaces/computations.Pick.md)<`C`\>
+
+___
+
+### sequence
+
+▸ **sequence**<`C`\>(`generate`): (`start`: `number`) => [`ComputationOf`](computations.md#computationof)<`C`, `number`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`Computation`](../interfaces/computations.Computation.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generate` | <T\>(`generator`: [`Updater`](functions.md#updater)<`T`\>, `initialValue`: [`Factory`](functions.md#factory)<`T`\>) => [`ComputationOf`](computations.md#computationof)<`C`, `T`\> |
+
+#### Returns
+
+`fn`
+
+▸ (`start`): [`ComputationOf`](computations.md#computationof)<`C`, `number`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `start` | `number` |
+
+##### Returns
+
+[`ComputationOf`](computations.md#computationof)<`C`, `number`\>

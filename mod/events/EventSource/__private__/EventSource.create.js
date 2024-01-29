@@ -11,10 +11,6 @@ const EventSource_create = /*@__PURE__*/ (() => {
     const CreateEventSource_setup = Symbol("CreateEventSource_setup");
     return mixInstanceFactory(function CreateEventSource(instance, setup) {
         instance[CreateEventSource_setup] = setup;
-        // Pass in the initial listener to the setup function
-        // so that we can connect it to the publisher before
-        // the setup function is run, in case the setup function
-        // publishes notifications. useful for testing.
         return instance;
     }, props({
         [CreateEventSource_delegate]: none,

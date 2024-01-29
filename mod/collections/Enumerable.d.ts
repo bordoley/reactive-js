@@ -25,9 +25,6 @@ export interface EnumerableModule extends DeferredComputationModule<EnumerableCo
     concatWith<T>(snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): Function1<EnumerableLike<T>, EnumerableLike<T>>;
     empty<T>(): EnumerableLike<T>;
     generate<T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableLike<T>;
-    range(start: number, options?: {
-        readonly count?: number;
-    }): EnumerableLike<number>;
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<EnumerableLike<T>, TAcc>;
     repeat<T>(predicate: Predicate<number>): Function1<EnumerableLike<T>, EnumerableLike<T>>;
     repeat<T>(count: number): Function1<EnumerableLike<T>, EnumerableLike<T>>;
@@ -65,7 +62,6 @@ export declare const generate: Signature["generate"];
 export declare const keep: Signature["keep"];
 export declare const map: Signature["map"];
 export declare const pairwise: Signature["pairwise"];
-export declare const range: Signature["range"];
 export declare const reduce: Signature["reduce"];
 export declare const repeat: Signature["repeat"];
 export declare const scan: Signature["scan"];

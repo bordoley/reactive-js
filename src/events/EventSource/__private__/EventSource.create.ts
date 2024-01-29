@@ -38,10 +38,6 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
       setup: SideEffect1<EventListenerLike<T>>,
     ): EventSourceLike<T> {
       instance[CreateEventSource_setup] = setup;
-      // Pass in the initial listener to the setup function
-      // so that we can connect it to the publisher before
-      // the setup function is run, in case the setup function
-      // publishes notifications. useful for testing.
       return instance;
     },
     props<TProperties>({

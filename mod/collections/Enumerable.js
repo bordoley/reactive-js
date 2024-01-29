@@ -15,7 +15,6 @@ import Enumerable_generate from "./Enumerable/__private__/Enumerable.generate.js
 import Enumerable_keep from "./Enumerable/__private__/Enumerable.keep.js";
 import Enumerable_map from "./Enumerable/__private__/Enumerable.map.js";
 import Enumerable_pairwise from "./Enumerable/__private__/Enumerable.pairwise.js";
-import Enumerable_range from "./Enumerable/__private__/Enumerable.range.js";
 import Enumerable_reduce from "./Enumerable/__private__/Enumerable.reduce.js";
 import Enumerable_repeat from "./Enumerable/__private__/Enumerable.repeat.js";
 import Enumerable_scan from "./Enumerable/__private__/Enumerable.scan.js";
@@ -39,7 +38,6 @@ export const generate = Enumerable_generate;
 export const keep = Enumerable_keep;
 export const map = Enumerable_map;
 export const pairwise = Enumerable_pairwise;
-export const range = Enumerable_range;
 export const reduce = Enumerable_reduce;
 export const repeat = Enumerable_repeat;
 export const scan = Enumerable_scan;

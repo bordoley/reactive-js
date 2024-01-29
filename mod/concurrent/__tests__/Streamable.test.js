@@ -4,9 +4,9 @@ import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import { DictionaryLike_get, } from "../../collections.js";
 import * as Dictionary from "../../collections/Dictionary.js";
-import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
+import { sequence } from "../../computations.js";
 import { CacheLike_get, DispatcherLike_complete, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import { bind, bindMethod, invoke, none, pipe, pipeSome, returns, tuple, } from "../../functions.js";
@@ -192,7 +192,7 @@ testModule("Streamable", describe("createAnimationGroupEventHandler", test("bloc
     pipe(result1, expectArrayEquals([1, 4]));
 })), describe("syncState", test("without throttling", () => {
     const vts = VirtualTimeScheduler.create();
-    const stream = pipe(Streamable.createStateStore(returns(-1)), Streamable.syncState(state => pipe(Enumerable.range(state + 10), Observable.fromEnumerable({ delay: 10 }), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (oldState, newState) => newState !== oldState
+    const stream = pipe(Streamable.createStateStore(returns(-1)), Streamable.syncState(state => pipe(sequence(Observable.generate)(state + 10), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (oldState, newState) => newState !== oldState
         ? Observable.empty({ delay: 0 })
         : Observable.empty({ delay: 0 })), invoke(StreamableLike_stream, vts));
     pipe((x) => x + 2, Observable.fromValue({ delay: 5 }), Observable.enqueue(stream), Observable.subscribe(vts));

@@ -6,6 +6,8 @@ import {
   Reducer,
   Tuple2,
   TypePredicate,
+  Updater,
+  increment,
   pickUnsafe,
   returns,
 } from "./functions.js";
@@ -44,6 +46,11 @@ export interface DeferredComputationModule<C extends Computation> {
     readonly count?: number;
     readonly start?: number;
   }): Function1<readonly T[], ComputationOf<C, T>>;
+
+  generate<T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+  ): ComputationOf<C, T>;
 }
 
 export interface PureStatelessComputationModule<C extends Computation> {
@@ -124,6 +131,10 @@ interface Signature {
   pick<C extends Computation>(
     map: PureStatelessComputationModule<C>["map"],
   ): Pick<C>;
+
+  sequence<C extends Computation>(
+    generate: DeferredComputationModule<C>["generate"],
+  ): (start: number) => ComputationOf<C, number>;
 }
 
 export const keepType: Signature["keepType"] = (<C extends Computation>(
@@ -142,3 +153,8 @@ export const pick: Signature["pick"] = (<C extends Computation>(
   ) =>
   (...keys: (string | number | symbol)[]) =>
     map(pickUnsafe(...keys))) as Signature["pick"];
+
+export const sequence: Signature["sequence"] =
+  <C extends Computation>(generate: DeferredComputationModule<C>["generate"]) =>
+  (start: number) =>
+    generate<number>(increment, returns(start - 1));

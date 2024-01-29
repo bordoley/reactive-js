@@ -41,6 +41,7 @@ import {
   Tuple7,
   Tuple8,
   Tuple9,
+  Updater,
 } from "../functions.js";
 import {
   BackpressureStrategy,
@@ -90,6 +91,7 @@ import Observable_fromPromise from "./Observable/__private__/Observable.fromProm
 import Observable_fromReadonlyArray from "./Observable/__private__/Observable.fromReadonlyArray.js";
 import Observable_fromStore from "./Observable/__private__/Observable.fromStore.js";
 import Observable_fromValue from "./Observable/__private__/Observable.fromValue.js";
+import Observable_generate from "./Observable/__private__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__private__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
 import Observable_lastAsync from "./Observable/__private__/Observable.lastAsync.js";
@@ -1007,6 +1009,15 @@ export interface ObservableModule {
     readonly delay: number;
   }): Function1<T, PureRunnableLike<T>>;
 
+  generate<T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+    options?: {
+      readonly delay?: number;
+      readonly delayStart?: boolean;
+    },
+  ): PureRunnableLike<T>;
+
   ignoreElements<T>(): PureStatelessObservableOperator<unknown, T>;
 
   keep<T>(predicate: Predicate<T>): PureStatelessObservableOperator<T, T>;
@@ -1726,6 +1737,7 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   Observable_fromReadonlyArray;
 export const fromStore: Signature["fromStore"] = Observable_fromStore;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;
+export const generate: Signature["generate"] = Observable_generate;
 export const ignoreElements: Signature["ignoreElements"] =
   Observable_ignoreElements;
 export const keep: Signature["keep"] = Observable_keep;

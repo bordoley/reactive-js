@@ -42,6 +42,7 @@ import Observable_fromPromise from "./Observable/__private__/Observable.fromProm
 import Observable_fromReadonlyArray from "./Observable/__private__/Observable.fromReadonlyArray.js";
 import Observable_fromStore from "./Observable/__private__/Observable.fromStore.js";
 import Observable_fromValue from "./Observable/__private__/Observable.fromValue.js";
+import Observable_generate from "./Observable/__private__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__private__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
 import Observable_lastAsync from "./Observable/__private__/Observable.lastAsync.js";
@@ -149,6 +150,7 @@ export const fromPromise = Observable_fromPromise;
 export const fromReadonlyArray = Observable_fromReadonlyArray;
 export const fromStore = Observable_fromStore;
 export const fromValue = Observable_fromValue;
+export const generate = Observable_generate;
 export const ignoreElements = Observable_ignoreElements;
 export const keep = Observable_keep;
 export const lastAsync = Observable_lastAsync;

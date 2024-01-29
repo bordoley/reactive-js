@@ -29,7 +29,6 @@
 - [keep](collections_Enumerable.md#keep)
 - [map](collections_Enumerable.md#map)
 - [pairwise](collections_Enumerable.md#pairwise)
-- [range](collections_Enumerable.md#range)
 - [reduce](collections_Enumerable.md#reduce)
 - [repeat](collections_Enumerable.md#repeat)
 - [scan](collections_Enumerable.md#scan)
@@ -345,24 +344,6 @@ ___
 #### Returns
 
 [`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>\>
-
-___
-
-### range
-
-▸ **range**(`start`, `options?`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`number`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `start` | `number` |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`number`\>
 
 ___
 

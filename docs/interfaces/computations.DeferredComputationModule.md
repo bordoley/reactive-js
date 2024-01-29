@@ -21,6 +21,7 @@
 ### Methods
 
 - [fromReadonlyArray](computations.DeferredComputationModule.md#fromreadonlyarray)
+- [generate](computations.DeferredComputationModule.md#generate)
 
 ## Methods
 
@@ -45,3 +46,26 @@
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ComputationOf`](../modules/computations.md#computationof)<`C`, `T`\>\>
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`ComputationOf`](../modules/computations.md#computationof)<`C`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`ComputationOf`](../modules/computations.md#computationof)<`C`, `T`\>

@@ -12,9 +12,9 @@ import {
   ReadonlyObjectMapLike,
 } from "../../collections.js";
 import * as Dictionary from "../../collections/Dictionary.js";
-import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
+import { sequence } from "../../computations.js";
 import {
   CacheLike_get,
   DispatcherLike_complete,
@@ -408,8 +408,9 @@ testModule(
         Streamable.syncState(
           state =>
             pipe(
-              Enumerable.range(state + 10),
-              Observable.fromEnumerable({ delay: 10 }),
+              sequence<Observable.PureRunnableComputation>(Observable.generate)(
+                state + 10,
+              ),
               Observable.map(x => (_: number) => x),
               Observable.takeFirst({ count: 2 }),
             ),

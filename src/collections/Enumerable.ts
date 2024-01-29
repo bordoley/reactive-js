@@ -36,7 +36,6 @@ import Enumerable_generate from "./Enumerable/__private__/Enumerable.generate.js
 import Enumerable_keep from "./Enumerable/__private__/Enumerable.keep.js";
 import Enumerable_map from "./Enumerable/__private__/Enumerable.map.js";
 import Enumerable_pairwise from "./Enumerable/__private__/Enumerable.pairwise.js";
-import Enumerable_range from "./Enumerable/__private__/Enumerable.range.js";
 import Enumerable_reduce from "./Enumerable/__private__/Enumerable.reduce.js";
 import Enumerable_repeat from "./Enumerable/__private__/Enumerable.repeat.js";
 import Enumerable_scan from "./Enumerable/__private__/Enumerable.scan.js";
@@ -96,11 +95,6 @@ export interface EnumerableModule
     generator: Updater<T>,
     initialValue: Factory<T>,
   ): EnumerableLike<T>;
-
-  range(
-    start: number,
-    options?: { readonly count?: number },
-  ): EnumerableLike<number>;
 
   reduce<T, TAcc>(
     reducer: Reducer<T, TAcc>,
@@ -261,7 +255,6 @@ export const generate: Signature["generate"] = Enumerable_generate;
 export const keep: Signature["keep"] = Enumerable_keep;
 export const map: Signature["map"] = Enumerable_map;
 export const pairwise: Signature["pairwise"] = Enumerable_pairwise;
-export const range: Signature["range"] = Enumerable_range;
 export const reduce: Signature["reduce"] = Enumerable_reduce;
 export const repeat: Signature["repeat"] = Enumerable_repeat;
 export const scan: Signature["scan"] = Enumerable_scan;

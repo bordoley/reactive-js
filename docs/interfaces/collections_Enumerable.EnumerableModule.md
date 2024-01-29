@@ -25,7 +25,6 @@
 - [concatWith](collections_Enumerable.EnumerableModule.md#concatwith)
 - [empty](collections_Enumerable.EnumerableModule.md#empty)
 - [generate](collections_Enumerable.EnumerableModule.md#generate)
-- [range](collections_Enumerable.EnumerableModule.md#range)
 - [reduce](collections_Enumerable.EnumerableModule.md#reduce)
 - [repeat](collections_Enumerable.EnumerableModule.md#repeat)
 - [toReadonlyArray](collections_Enumerable.EnumerableModule.md#toreadonlyarray)
@@ -182,23 +181,9 @@ ___
 
 [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>
 
-___
+#### Overrides
 
-### range
-
-▸ **range**(`start`, `options?`): [`EnumerableLike`](collections.EnumerableLike.md)<`number`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `start` | `number` |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`EnumerableLike`](collections.EnumerableLike.md)<`number`\>
+[DeferredComputationModule](computations.DeferredComputationModule.md).[generate](computations.DeferredComputationModule.md#generate)
 
 ___
 

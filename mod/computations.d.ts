@@ -1,4 +1,4 @@
-import { Equality, Factory, Function1, Predicate, Reducer, Tuple2, TypePredicate } from "./functions.js";
+import { Equality, Factory, Function1, Predicate, Reducer, Tuple2, TypePredicate, Updater } from "./functions.js";
 export declare const Computation_T: unique symbol;
 export declare const Computation_type: unique symbol;
 /**
@@ -22,6 +22,7 @@ export interface DeferredComputationModule<C extends Computation> {
         readonly count?: number;
         readonly start?: number;
     }): Function1<readonly T[], ComputationOf<C, T>>;
+    generate<T>(generator: Updater<T>, initialValue: Factory<T>): ComputationOf<C, T>;
 }
 export interface PureStatelessComputationModule<C extends Computation> {
     keep<T>(predicate: Predicate<T>): ComputationOperator<C, T, T>;
@@ -60,8 +61,10 @@ interface Signature {
     keepType<C extends Computation>(keep: PureStatelessComputationModule<C>["keep"]): <TA, TB>(predicate: TypePredicate<TA, TB>) => ComputationOperator<C, TA, TB>;
     mapTo<C extends Computation>(map: PureStatelessComputationModule<C>["map"]): <T>(value: T) => ComputationOperator<C, unknown, T>;
     pick<C extends Computation>(map: PureStatelessComputationModule<C>["map"]): Pick<C>;
+    sequence<C extends Computation>(generate: DeferredComputationModule<C>["generate"]): (start: number) => ComputationOf<C, number>;
 }
 export declare const keepType: Signature["keepType"];
 export declare const mapTo: Signature["mapTo"];
 export declare const pick: Signature["pick"];
+export declare const sequence: Signature["sequence"];
 export {};

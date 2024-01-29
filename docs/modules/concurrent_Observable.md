@@ -81,6 +81,7 @@
 - [fromReadonlyArray](concurrent_Observable.md#fromreadonlyarray)
 - [fromStore](concurrent_Observable.md#fromstore)
 - [fromValue](concurrent_Observable.md#fromvalue)
+- [generate](concurrent_Observable.md#generate)
 - [ignoreElements](concurrent_Observable.md#ignoreelements)
 - [keep](concurrent_Observable.md#keep)
 - [lastAsync](concurrent_Observable.md#lastasync)
@@ -2768,6 +2769,32 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`T`, [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>
 
 ___
 
