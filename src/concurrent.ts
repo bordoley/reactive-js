@@ -20,6 +20,8 @@ export const DispatcherLikeEvent_completed = Symbol(
 );
 
 export const DispatcherLike_complete = Symbol("DispatcherLike_complete");
+export const DispatcherLike_isCompleted = Symbol("DispatcherLike_isCompleted");
+
 /**
  * A `QueueableLike` type that consumes enqueued events to
  * be dispatched from any execution constext.
@@ -34,6 +36,8 @@ export interface DispatcherLike<T = unknown>
       | typeof DispatcherLikeEvent_completed
     >,
     DisposableLike {
+  readonly [DispatcherLike_isCompleted]: boolean;
+
   /**
    * Communicates to the dispatcher that no more events will be enqueued.
    */

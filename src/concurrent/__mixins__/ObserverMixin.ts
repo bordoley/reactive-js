@@ -14,6 +14,7 @@ import {
   DispatcherLikeEvent_completed,
   DispatcherLikeEvent_ready,
   DispatcherLike_complete,
+  DispatcherLike_isCompleted,
   ObserverLike,
   ObserverLike_notify,
   SchedulerLike,
@@ -54,14 +55,13 @@ const ObserverMixin: <T>() => Mixin2<
   >,
   DisposableLike
 > = /*@__PURE__*/ (<T>() => {
-  const ObserverMixin_isCompleted = Symbol("ObserverMixin_isCompleted");
   const ObserverMixin_dispatchSubscription = Symbol(
     "ObserverMixin_dispatchSubscription",
   );
   const ObserverMixin_scheduler = Symbol("ObserverMixin_scheduler");
 
   type TProperties = {
-    [ObserverMixin_isCompleted]: boolean;
+    [DispatcherLike_isCompleted]: boolean;
     [ObserverMixin_dispatchSubscription]: DisposableLike;
     [ObserverMixin_scheduler]: SchedulerLike;
   };
@@ -89,7 +89,7 @@ const ObserverMixin: <T>() => Mixin2<
           }
         }
 
-        if (observer[ObserverMixin_isCompleted]) {
+        if (observer[DispatcherLike_isCompleted]) {
           observer[DisposableLike_dispose]();
         } else {
           observer[LazyInitEventSourceLike_publisher]?.[
@@ -153,7 +153,7 @@ const ObserverMixin: <T>() => Mixin2<
         return instance;
       },
       props<TProperties>({
-        [ObserverMixin_isCompleted]: false,
+        [DispatcherLike_isCompleted]: false,
         [ObserverMixin_dispatchSubscription]: Disposable.disposed,
         [ObserverMixin_scheduler]: none,
       }),
@@ -210,7 +210,7 @@ const ObserverMixin: <T>() => Mixin2<
           next: T,
         ): boolean {
           if (
-            !this[ObserverMixin_isCompleted] &&
+            !this[DispatcherLike_isCompleted] &&
             !this[DisposableLike_isDisposed]
           ) {
             const result = call(
@@ -241,8 +241,8 @@ const ObserverMixin: <T>() => Mixin2<
               | typeof DispatcherLikeEvent_completed
             >,
         ) {
-          const isCompleted = this[ObserverMixin_isCompleted];
-          this[ObserverMixin_isCompleted] = true;
+          const isCompleted = this[DispatcherLike_isCompleted];
+          this[DispatcherLike_isCompleted] = true;
 
           if (!isCompleted) {
             this[LazyInitEventSourceLike_publisher]?.[EventListenerLike_notify](

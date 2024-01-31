@@ -12,6 +12,7 @@ import {
   DispatcherLikeEvent_completed,
   DispatcherLikeEvent_ready,
   DispatcherLike_complete,
+  DispatcherLike_isCompleted,
 } from "../../concurrent.js";
 import {
   EventListenerLike,
@@ -44,6 +45,7 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
         instance: Pick<
           DispatcherLike,
           | typeof DispatcherLike_complete
+          | typeof DispatcherLike_isCompleted
           | typeof EventSourceLike_addEventListener
           | typeof QueueableLike_backpressureStrategy
           | typeof QueueableLike_capacity
@@ -61,6 +63,13 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
         [DelegatingDispatcherMixin_delegate]: none,
       }),
       {
+        get [DispatcherLike_isCompleted]() {
+          unsafeCast<TProperties>(this);
+          return this[DelegatingDispatcherMixin_delegate][
+            DispatcherLike_isCompleted
+          ];
+        },
+
         get [QueueableLike_backpressureStrategy]() {
           unsafeCast<TProperties>(this);
           return this[DelegatingDispatcherMixin_delegate][

@@ -41,6 +41,7 @@
 - [DispatcherLikeEvent\_completed](concurrent.md#dispatcherlikeevent_completed)
 - [DispatcherLikeEvent\_ready](concurrent.md#dispatcherlikeevent_ready)
 - [DispatcherLike\_complete](concurrent.md#dispatcherlike_complete)
+- [DispatcherLike\_isCompleted](concurrent.md#dispatcherlike_iscompleted)
 - [FlowableLike\_flow](concurrent.md#flowablelike_flow)
 - [ObservableLike\_isDeferred](concurrent.md#observablelike_isdeferred)
 - [ObservableLike\_isMulticasted](concurrent.md#observablelike_ismulticasted)
@@ -107,6 +108,12 @@ ___
 ### DispatcherLike\_complete
 
 • `Const` **DispatcherLike\_complete**: unique `symbol`
+
+___
+
+### DispatcherLike\_isCompleted
+
+• `Const` **DispatcherLike\_isCompleted**: unique `symbol`
 
 ___
 

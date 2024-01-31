@@ -6,6 +6,7 @@ export declare const DispatcherLikeEvent_ready: unique symbol;
 export declare const DispatcherLikeEvent_capacityExceeded: unique symbol;
 export declare const DispatcherLikeEvent_completed: unique symbol;
 export declare const DispatcherLike_complete: unique symbol;
+export declare const DispatcherLike_isCompleted: unique symbol;
 /**
  * A `QueueableLike` type that consumes enqueued events to
  * be dispatched from any execution constext.
@@ -13,6 +14,7 @@ export declare const DispatcherLike_complete: unique symbol;
  * @noInheritDoc
  */
 export interface DispatcherLike<T = unknown> extends QueueableLike<T>, EventSourceLike<typeof DispatcherLikeEvent_ready | typeof DispatcherLikeEvent_capacityExceeded | typeof DispatcherLikeEvent_completed>, DisposableLike {
+    readonly [DispatcherLike_isCompleted]: boolean;
     /**
      * Communicates to the dispatcher that no more events will be enqueued.
      */

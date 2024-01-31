@@ -29,9 +29,19 @@ be dispatched from any execution constext.
 
 ## Table of contents
 
+### Properties
+
+- [[DispatcherLike\_isCompleted]](concurrent.DispatcherLike.md#[dispatcherlike_iscompleted])
+
 ### Methods
 
 - [[DispatcherLike\_complete]](concurrent.DispatcherLike.md#[dispatcherlike_complete])
+
+## Properties
+
+### [DispatcherLike\_isCompleted]
+
+• `Readonly` **[DispatcherLike\_isCompleted]**: `boolean`
 
 ## Methods
 

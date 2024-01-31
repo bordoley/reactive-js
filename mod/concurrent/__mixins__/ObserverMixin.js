@@ -1,7 +1,7 @@
 /// <reference types="./ObserverMixin.d.ts" />
 
 import { getPrototype, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
-import { ContinuationContextLike_yield, DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, ObserverLike_notify, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
+import { ContinuationContextLike_yield, DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, DispatcherLike_isCompleted, ObserverLike_notify, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import { EventListenerLike_notify } from "../../events.js";
 import LazyInitEventSourceMixin, { LazyInitEventSourceLike_publisher, } from "../../events/__mixins__/LazyInitEventSourceMixin.js";
 import { call, none, pipe, returns } from "../../functions.js";
@@ -9,7 +9,6 @@ import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, Que
 import * as Disposable from "../../utils/Disposable.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
 const ObserverMixin = /*@__PURE__*/ (() => {
-    const ObserverMixin_isCompleted = Symbol("ObserverMixin_isCompleted");
     const ObserverMixin_dispatchSubscription = Symbol("ObserverMixin_dispatchSubscription");
     const ObserverMixin_scheduler = Symbol("ObserverMixin_scheduler");
     const scheduleDrainQueue = (observer) => {
@@ -22,7 +21,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
                         ctx[ContinuationContextLike_yield]();
                     }
                 }
-                if (observer[ObserverMixin_isCompleted]) {
+                if (observer[DispatcherLike_isCompleted]) {
                     observer[DisposableLike_dispose]();
                 }
                 else {
@@ -39,7 +38,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         instance[ObserverMixin_scheduler] = scheduler;
         return instance;
     }, props({
-        [ObserverMixin_isCompleted]: false,
+        [DispatcherLike_isCompleted]: false,
         [ObserverMixin_dispatchSubscription]: Disposable.disposed,
         [ObserverMixin_scheduler]: none,
     }), {
@@ -66,7 +65,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             return pipe(this[ObserverMixin_scheduler][SchedulerLike_schedule](continuation, options), Disposable.addTo(this, { ignoreChildErrors: true }));
         },
         [QueueableLike_enqueue](next) {
-            if (!this[ObserverMixin_isCompleted] &&
+            if (!this[DispatcherLike_isCompleted] &&
                 !this[DisposableLike_isDisposed]) {
                 const result = call(indexedQueueProtoype[QueueableLike_enqueue], this, next);
                 if (!result) {
@@ -78,8 +77,8 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             return true;
         },
         [DispatcherLike_complete]() {
-            const isCompleted = this[ObserverMixin_isCompleted];
-            this[ObserverMixin_isCompleted] = true;
+            const isCompleted = this[DispatcherLike_isCompleted];
+            this[DispatcherLike_isCompleted] = true;
             if (!isCompleted) {
                 this[LazyInitEventSourceLike_publisher]?.[EventListenerLike_notify](DispatcherLikeEvent_completed);
             }

@@ -4,6 +4,7 @@ export const DispatcherLikeEvent_ready = Symbol("DispatcherLikeEvent_ready");
 export const DispatcherLikeEvent_capacityExceeded = Symbol("DispatcherLikeEvent_capacityExceeded");
 export const DispatcherLikeEvent_completed = Symbol("DispatcherLikeEvent_completed");
 export const DispatcherLike_complete = Symbol("DispatcherLike_complete");
+export const DispatcherLike_isCompleted = Symbol("DispatcherLike_isCompleted");
 export const PauseableLike_isPaused = Symbol("PauseableLike_isPaused");
 export const PauseableLike_pause = Symbol("PauseableLike_pause");
 export const PauseableLike_resume = Symbol("PauseableLike_resume");
