@@ -6,10 +6,7 @@ import {
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
 import { Factory, Updater, none, pipe } from "../../../functions.js";
-import {
-  DisposableLike_dispose,
-  DisposableLike_isDisposed,
-} from "../../../utils.js";
+import { DisposableLike_isDisposed } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createPureRunnable from "./Observable.createPureRunnable.js";
@@ -34,7 +31,6 @@ const Observable_generate: Observable.Signature["generate"] = <T>(
 
         ctx[ContinuationContextLike_yield](delay);
       }
-      observer[DisposableLike_dispose]();
     };
 
     pipe(
