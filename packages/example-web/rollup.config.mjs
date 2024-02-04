@@ -32,7 +32,10 @@ export default [
       }),
       terser({
         compress: {
+          ecma: 2015,
+          passes: 2,
           unsafe: true,
+          unsafe_arrows: true,
           unsafe_symbols: true,
         },
       }),
@@ -62,7 +65,10 @@ export default [
       }),
       terser({
         compress: {
+          ecma: 2015,
+          passes: 2,
           unsafe: true,
+          unsafe_arrows: true,
           unsafe_symbols: true,
         },
       }),
@@ -92,7 +98,10 @@ export default [
       }),
       terser({
         compress: {
+          ecma: 2015,
+          passes: 2,
           unsafe: true,
+          unsafe_arrows: true,
           unsafe_symbols: true,
         },
       }),
@@ -117,7 +126,10 @@ export default [
       }),
       terser({
         compress: {
+          ecma: 2015,
+          passes: 2,
           unsafe: true,
+          unsafe_arrows: true,
           unsafe_symbols: true,
         },
       }),
@@ -146,7 +158,10 @@ export default [
       }),
       terser({
         compress: {
+          ecma: 2015,
+          passes: 2,
           unsafe: true,
+          unsafe_arrows: true,
           unsafe_symbols: true,
         },
       }),

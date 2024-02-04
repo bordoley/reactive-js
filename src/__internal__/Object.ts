@@ -1,9 +1,9 @@
 import { call } from "../functions.js";
-import { nullObject } from "./constants.js";
+import { Obj, nullObject } from "./constants.js";
 
-const { create, getOwnPropertyDescriptors, prototype } = Object;
-
-export { create, getOwnPropertyDescriptors, prototype };
+export const create = Obj.create;
+export const getOwnPropertyDescriptors = Obj.getOwnPropertyDescriptors;
+export const prototype = Obj.prototype;
 
 export const hasOwn = (obj: object, key: PropertyKey): boolean =>
   call(prototype.hasOwnProperty, obj, key);

@@ -31,7 +31,9 @@ type GlobalObject = {
   };
   Error: typeof globalThis.Error;
   Map: typeof globalThis.Map;
+  Math: typeof globalThis.Math;
   Number: typeof globalThis.Number;
+  Object: typeof globalThis.Object;
   Set: typeof globalThis.Set;
   String: typeof globalThis.String;
   Symbol: typeof globalThis.Symbol;
@@ -45,13 +47,17 @@ export const globalObject: GlobalObject = (
 export const Array = globalObject.Array;
 export const Error = globalObject.Error;
 export const Map = globalObject.Map;
+export const Math = globalObject.Math;
 export const Number = globalObject.Number;
+export const Obj = globalObject.Object;
 export const Set = globalObject.Set;
 export const String = globalObject.String;
 export const Symbol = globalObject.Symbol;
 
-export const { MAX_SAFE_INTEGER, MAX_VALUE, MIN_SAFE_INTEGER, MIN_VALUE } =
-  Number;
+export const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER;
+export const MAX_VALUE = Number.MAX_VALUE;
+export const MIN_SAFE_INTEGER = Number.MIN_SAFE_INTEGER;
+export const MIN_VALUE = Number.MIN_VALUE;
 
 const process = globalObject[Global_process] ?? {
   env: {

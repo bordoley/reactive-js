@@ -1,6 +1,10 @@
-import { MAX_SAFE_INTEGER } from "./constants.js";
+import { MAX_SAFE_INTEGER, Math } from "./constants.js";
 
-export const { abs, floor, max, min, random } = Math;
+export const abs = Math.abs;
+export const floor = Math.floor;
+export const max = Math.max;
+export const min = Math.min;
+export const random = Math.random;
 
 export const clamp = (min: number, v: number, max: number): number =>
   v > max ? max : v < min ? min : v;
