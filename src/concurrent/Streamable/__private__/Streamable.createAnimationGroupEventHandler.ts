@@ -144,21 +144,21 @@ const Streamable_createAnimationGroupEventHandlerStream: <
           creationOptions as any,
         )[StreamableLike_stream](scheduler, streamOptions);
 
-        init(
-          DelegatingStreamMixin<TEvent, boolean>(),
-          instance,
-          streamDelegate,
-        );
-
         const publishers = pipe(
           animationGroup,
           ReadonlyObjectMap.map<unknown, PublisherLike<T>, string>(_ =>
-            pipe(Publisher.create<T>(), Disposable.addTo(instance)),
+            pipe(Publisher.create<T>(), Disposable.addTo(streamDelegate)),
           ),
         );
 
         const animationScheduler: SchedulerLike =
           creationOptions?.scheduler ?? scheduler;
+
+        init(
+          DelegatingStreamMixin<TEvent, boolean>(),
+          instance,
+          streamDelegate,
+        );
 
         instance[AnimationEventHandlerStream_delegate] = publishers;
 

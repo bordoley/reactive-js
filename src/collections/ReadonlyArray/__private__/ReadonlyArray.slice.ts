@@ -5,7 +5,7 @@ import type * as ReadonlyArray from "../../ReadonlyArray.js";
 const ReadonlyArray_slice: ReadonlyArray.Signature["slice"] =
   <T>(options?: { count?: number; start?: number }) =>
   (arr: readonly T[]) => {
-    const { start, count } = parseArrayBounds(arr, options);
+    const [start, count] = parseArrayBounds(arr, options);
     return start === 0 && count === arr[Array_length]
       ? arr
       : count >= 0

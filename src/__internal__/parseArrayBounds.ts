@@ -22,7 +22,7 @@ const parseArrayBounds = (
       ? clamp(0, countOption, valuesLength - start)
       : -min(abs(countOption), start + 1);
 
-  return { start, count };
+  return [start, count];
 };
 
 export default parseArrayBounds;

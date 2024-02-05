@@ -8,7 +8,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import Observable_createPureRunnable from "./Observable.createPureRunnable.js";
 const Observable_fromReadonlyArray = (options) => (arr) => Observable_createPureRunnable((observer) => {
     const { delay = 0, delayStart = false } = options ?? {};
-    let { start, count } = parseArrayBounds(arr, options);
+    let [start, count] = parseArrayBounds(arr, options);
     const continuation = (ctx) => {
         while (!observer[DisposableLike_isDisposed] && count !== 0) {
             const next = arr[start];

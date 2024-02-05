@@ -1,8 +1,5 @@
 declare const parseArrayBounds: (array: readonly unknown[], options?: {
     readonly start?: number;
     readonly count?: number;
-}) => {
-    start: number;
-    count: number;
-};
+}) => number[];
 export default parseArrayBounds;

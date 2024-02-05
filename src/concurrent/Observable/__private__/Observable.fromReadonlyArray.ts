@@ -26,7 +26,7 @@ const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
     Observable_createPureRunnable((observer: ObserverLike<T>) => {
       const { delay = 0, delayStart = false } = options ?? {};
 
-      let { start, count } = parseArrayBounds(arr, options);
+      let [start, count] = parseArrayBounds(arr, options);
 
       const continuation = (ctx: ContinuationContextLike) => {
         while (!observer[DisposableLike_isDisposed] && count !== 0) {

@@ -16,8 +16,7 @@ const createScanObserver = /*@__PURE__*/ (() => {
         init(ObserverMixin(), instance, delegate, delegate);
         instance[ScanObserver_reducer] = reducer;
         try {
-            const acc = initialValue();
-            instance[ScanObserver_acc] = acc;
+            instance[ScanObserver_acc] = initialValue();
         }
         catch (e) {
             instance[DisposableLike_dispose](error(e));

@@ -11,7 +11,7 @@ const ReadonlyArray_entries: ReadonlyArray.Signature["entries"] =
   }) =>
   (arr: readonly T[]) =>
     pipe(function* () {
-      let { start, count } = parseArrayBounds(arr, options);
+      let [start, count] = parseArrayBounds(arr, options);
 
       for (; count !== 0; count > 0 ? (start++, count--) : (start--, count++)) {
         yield tuple(start as TKey, arr[start]);

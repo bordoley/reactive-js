@@ -7,7 +7,7 @@ const Enumerable_fromReadonlyArray: Enumerable.Signature["fromReadonlyArray"] =
   <T>(options?: { count?: number; start?: number }) =>
   (arr: readonly T[]) =>
     pipe(function* (): Iterator<T> {
-      let { start, count } = parseArrayBounds(arr, options);
+      let [start, count] = parseArrayBounds(arr, options);
 
       for (; count !== 0; count > 0 ? (start++, count--) : (start--, count++)) {
         yield arr[start];

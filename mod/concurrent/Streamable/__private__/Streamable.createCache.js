@@ -70,6 +70,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
             })
             : Observable.ignoreElements())), invoke(StreamableLike_stream, scheduler, options));
         let cleanupJob = Disposable.disposed;
+        instance[CacheStream_delegate] = delegate;
         instance[CacheStream_store] = store;
         instance[CacheStream_subscriptions] = subscriptions;
         instance[CacheStream_scheduleCleanup] = (key) => {
@@ -84,7 +85,6 @@ const createCacheStream = /*@__PURE__*/ (() => {
                 cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
         };
         init(DelegatingStreamMixin(), instance, delegate);
-        instance[CacheStream_delegate] = delegate;
         return instance;
     }, props({
         [CacheStream_delegate]: none,

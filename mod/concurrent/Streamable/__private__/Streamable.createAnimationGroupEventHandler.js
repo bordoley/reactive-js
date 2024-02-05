@@ -24,9 +24,9 @@ const Streamable_createAnimationGroupEventHandlerStream =
             const deferredAnimatedObservables = pipe(observables, ReadonlyObjectMap.values(), Enumerable.map(Observable.subscribeOn(animationScheduler)), Enumerable.toReadonlyArray());
             return Observable.mergeMany(deferredAnimatedObservables);
         }, creationOptions)[StreamableLike_stream](scheduler, streamOptions);
-        init(DelegatingStreamMixin(), instance, streamDelegate);
-        const publishers = pipe(animationGroup, ReadonlyObjectMap.map(_ => pipe(Publisher.create(), Disposable.addTo(instance))));
+        const publishers = pipe(animationGroup, ReadonlyObjectMap.map(_ => pipe(Publisher.create(), Disposable.addTo(streamDelegate))));
         const animationScheduler = creationOptions?.scheduler ?? scheduler;
+        init(DelegatingStreamMixin(), instance, streamDelegate);
         instance[AnimationEventHandlerStream_delegate] = publishers;
         return instance;
     }, props({

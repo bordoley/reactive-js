@@ -253,9 +253,9 @@ const createCacheStream: <T>(
 
       let cleanupJob = Disposable.disposed;
 
+      instance[CacheStream_delegate] = delegate;
       instance[CacheStream_store] = store;
       instance[CacheStream_subscriptions] = subscriptions;
-
       instance[CacheStream_scheduleCleanup] = (key: string) => {
         if (isNone(instance[CacheStream_store][Map_get](key))) {
           return;
@@ -279,8 +279,6 @@ const createCacheStream: <T>(
         instance,
         delegate,
       );
-
-      instance[CacheStream_delegate] = delegate;
 
       return instance;
     },
