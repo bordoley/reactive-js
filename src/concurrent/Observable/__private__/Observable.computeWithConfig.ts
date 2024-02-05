@@ -151,57 +151,54 @@ const validateComputeEffect: ValidateComputeEffect["validateComputeEffect"] = ((
 ): ComputeEffect => {
   const effects = ctx[ComputeContext_effects];
   const index = ctx[ComputeContext_index];
-  const effect = effects[index];
+  const effect: Optional<ComputeEffect> = effects[index];
+  const newEffect: ComputeEffect =
+    isSome(effect) && effect[ComputeEffect_type] === type
+      ? effect
+      : type === Memo
+      ? {
+          [ComputeEffect_type]: type,
+          [MemoOrUsingEffect_func]: ignore,
+          [MemoOrUsingEffect_args]: [],
+          [MemoOrUsingEffect_value]: none,
+        }
+      : type === Await || type === Observe
+      ? {
+          [ComputeEffect_type]: type,
+          [AwaitOrObserveEffect_observable]: Observable_empty(),
+          [AwaitOrObserveEffect_subscription]: Disposable.disposed,
+          [AwaitOrObserveEffect_value]: none,
+          [AwaitOrObserveEffect_hasValue]: false,
+        }
+      : type === Using
+      ? {
+          [ComputeEffect_type]: type,
+          [MemoOrUsingEffect_func]: ignore,
+          [MemoOrUsingEffect_args]: [],
+          [MemoOrUsingEffect_value]: Disposable.disposed,
+        }
+      : {
+          [ComputeEffect_type]: type,
+          [ConstantEffect_value]: none,
+          [ConstantEffect_args]: [],
+        };
 
   ctx[ComputeContext_index]++;
 
-  if (isSome(effect) && effect[ComputeEffect_type] === type) {
-    return effect;
-  } else {
+  if (isSome(effect) && newEffect !== effect) {
     if (
-      isSome(effect) &&
-      (effect[ComputeEffect_type] === Await ||
-        effect[ComputeEffect_type] === Observe)
+      effect[ComputeEffect_type] === Await ||
+      effect[ComputeEffect_type] === Observe
     ) {
       effect[AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
     }
 
-    const newEffect: ComputeEffect =
-      type === Memo
-        ? {
-            [ComputeEffect_type]: type,
-            [MemoOrUsingEffect_func]: ignore,
-            [MemoOrUsingEffect_args]: [],
-            [MemoOrUsingEffect_value]: none,
-          }
-        : type === Await || type === Observe
-        ? {
-            [ComputeEffect_type]: type,
-            [AwaitOrObserveEffect_observable]: Observable_empty(),
-            [AwaitOrObserveEffect_subscription]: Disposable.disposed,
-            [AwaitOrObserveEffect_value]: none,
-            [AwaitOrObserveEffect_hasValue]: false,
-          }
-        : type === Using
-        ? {
-            [ComputeEffect_type]: type,
-            [MemoOrUsingEffect_func]: ignore,
-            [MemoOrUsingEffect_args]: [],
-            [MemoOrUsingEffect_value]: Disposable.disposed,
-          }
-        : {
-            [ComputeEffect_type]: type,
-            [ConstantEffect_value]: none,
-            [ConstantEffect_args]: [],
-          };
-
-    if (isSome(effect)) {
-      effects[index] = newEffect;
-    } else {
-      effects[Array_push](newEffect);
-    }
-    return newEffect;
+    effects[index] = newEffect;
+  } else if (isNone(effect)) {
+    effects[Array_push](newEffect);
   }
+
+  return newEffect;
 }) as ValidateComputeEffect["validateComputeEffect"];
 
 const arrayStrictEquality = arrayEquality();
@@ -273,15 +270,15 @@ class ComputeContext {
       ? validateComputeEffect(this, Await)
       : validateComputeEffect(this, Observe);
 
+    const observer = this[ComputeContext_observer];
+    const runComputation = this[ComputeContext_runComputation];
+
     if (effect[AwaitOrObserveEffect_observable] === observable) {
       return effect[AwaitOrObserveEffect_value] as Optional<T>;
     } else {
       effect[AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
 
-      const observer = this[ComputeContext_observer];
-      const runComputation = this[ComputeContext_runComputation];
-
-      const subscription = pipe(
+      effect[AwaitOrObserveEffect_subscription] = pipe(
         observable,
         Observable_forEach((next: T) => {
           effect[AwaitOrObserveEffect_value] = next;
@@ -308,7 +305,6 @@ class ComputeContext {
       );
 
       effect[AwaitOrObserveEffect_observable] = observable;
-      effect[AwaitOrObserveEffect_subscription] = subscription;
       effect[AwaitOrObserveEffect_value] = none;
       effect[AwaitOrObserveEffect_hasValue] = false;
 
