@@ -46,12 +46,6 @@ interface Signature {
 }
 
 export const create: Signature["create"] = /*@__PURE__*/ (() => {
-  const raf = globalObject.requestAnimationFrame;
-  raiseIfNone(
-    raf,
-    "requestAnimationFrame is not defined in the current environment",
-  );
-
   const AnimationFrameScheduler_delayScheduler = Symbol(
     "AnimationFrameScheduler_delayScheduler",
   );
@@ -65,6 +59,13 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
 
   const AnimationFrameScheduler_rafIsRunning = Symbol(
     "AnimationFrameScheduler_rafIsRunning",
+  );
+
+  const raf = globalObject.requestAnimationFrame;
+
+  raiseIfNone(
+    raf,
+    "requestAnimationFrame is not defined in the current environment",
   );
 
   type TProperties = {

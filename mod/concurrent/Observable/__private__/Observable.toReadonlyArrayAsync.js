@@ -1,5 +1,6 @@
 /// <reference types="./Observable.toReadonlyArrayAsync.d.ts" />
 
+import { Promise } from "../../../__internal__/constants.js";
 import { pipe, pipeAsync } from "../../../functions.js";
 import Observable_buffer from "./Observable.buffer.js";
 import Observable_firstAsync from "./Observable.firstAsync.js";

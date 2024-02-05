@@ -57,7 +57,7 @@ export const create = /*@__PURE__*/ (() => {
             }
         },
         [ObservableLike_observe](observer) {
-            const { [Subject_observers]: observers } = this;
+            const observers = this[Subject_observers];
             if (isSome(this[DisposableLike_error])) {
                 observer[DisposableLike_dispose](this[DisposableLike_error]);
             }

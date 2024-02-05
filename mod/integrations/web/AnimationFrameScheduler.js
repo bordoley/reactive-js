@@ -11,12 +11,12 @@ import { QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../.
 import * as Disposable from "../../utils/Disposable.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
 export const create = /*@__PURE__*/ (() => {
-    const raf = globalObject.requestAnimationFrame;
-    raiseIfNone(raf, "requestAnimationFrame is not defined in the current environment");
     const AnimationFrameScheduler_delayScheduler = Symbol("AnimationFrameScheduler_delayScheduler");
     const AnimationFrameScheduler_rafCallback = Symbol("AnimationFrameScheduler_rafCallback");
     const AnimationFrameScheduler_rafQueue = Symbol("AnimationFrameScheduler_rafQueue");
     const AnimationFrameScheduler_rafIsRunning = Symbol("AnimationFrameScheduler_rafIsRunning");
+    const raf = globalObject.requestAnimationFrame;
+    raiseIfNone(raf, "requestAnimationFrame is not defined in the current environment");
     return mixInstanceFactory(include(CurrentTimeSchedulerMixin), function AnimationFrameScheduler(instance, hostScheduler) {
         init(CurrentTimeSchedulerMixin, instance, 5);
         instance[AnimationFrameScheduler_delayScheduler] = hostScheduler;

@@ -38,9 +38,10 @@ const MemoOrUsingEffect_args = Symbol("MemoOrUsingEffect_args");
 const MemoOrUsingEffect_func = Symbol("MemoOrUsingEffect_func");
 const MemoOrUsingEffect_value = Symbol("MemoOrUsingEffect_value");
 const validateComputeEffect = ((ctx, type) => {
-    const { [ComputeContext_effects]: effects, [ComputeContext_index]: index } = ctx;
-    ctx[ComputeContext_index]++;
+    const effects = ctx[ComputeContext_effects];
+    const index = ctx[ComputeContext_index];
     const effect = effects[index];
+    ctx[ComputeContext_index]++;
     if (isSome(effect) && effect[ComputeEffect_type] === type) {
         return effect;
     }
@@ -97,7 +98,7 @@ class ComputeContext {
     [ComputeContext_runComputation];
     [ComputeContext_mode];
     [ComputeContext_cleanup] = () => {
-        const { [ComputeContext_effects]: effects } = this;
+        const effects = this[ComputeContext_effects];
         const hasOutstandingEffects = effects.findIndex(effect => (effect[ComputeEffect_type] === Await ||
             effect[ComputeEffect_type] === Observe) &&
             !effect[AwaitOrObserveEffect_subscription][DisposableLike_isDisposed]) >= 0;
@@ -125,7 +126,8 @@ class ComputeContext {
         }
         else {
             effect[AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
-            const { [ComputeContext_observer]: observer, [ComputeContext_runComputation]: runComputation, } = this;
+            const observer = this[ComputeContext_observer];
+            const runComputation = this[ComputeContext_runComputation];
             const subscription = pipe(observable, Observable_forEach((next) => {
                 effect[AwaitOrObserveEffect_value] = next;
                 effect[AwaitOrObserveEffect_hasValue] = true;
@@ -133,7 +135,7 @@ class ComputeContext {
                     runComputation();
                 }
                 else {
-                    let { [ComputeContext_scheduledComputationSubscription]: scheduledComputationSubscription, } = this;
+                    const scheduledComputationSubscription = this[ComputeContext_scheduledComputationSubscription];
                     this[ComputeContext_scheduledComputationSubscription] =
                         scheduledComputationSubscription[DisposableLike_isDisposed]
                             ? pipe(observer[SchedulerLike_schedule](runComputation), Disposable.addTo(observer))
@@ -204,7 +206,7 @@ const Observable_computeWithConfig = ((computation, config, { mode = BatchedComp
                 err = error(e);
             }
         }
-        const { [ComputeContext_effects]: effects } = ctx;
+        const effects = ctx[ComputeContext_effects];
         if (effects[Array_length] > ctx[ComputeContext_index]) {
             const effectsLength = effects[Array_length];
             for (let i = ctx[ComputeContext_index]; i < effectsLength; i++) {
@@ -224,7 +226,7 @@ const Observable_computeWithConfig = ((computation, config, { mode = BatchedComp
         let hasOutstandingEffects = false;
         for (let i = 0; i < effectsLength; i++) {
             const effect = effects[i];
-            const { [ComputeEffect_type]: type } = effect;
+            const type = effect[ComputeEffect_type];
             if ((type === Await || type === Observe) &&
                 !effect[AwaitOrObserveEffect_hasValue]) {
                 allObserveEffectsHaveValues = false;

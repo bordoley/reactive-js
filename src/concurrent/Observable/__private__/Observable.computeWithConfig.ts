@@ -149,11 +149,11 @@ const validateComputeEffect: ValidateComputeEffect["validateComputeEffect"] = ((
   ctx: ComputeContext,
   type: ComputeEffectType,
 ): ComputeEffect => {
-  const { [ComputeContext_effects]: effects, [ComputeContext_index]: index } =
-    ctx;
-  ctx[ComputeContext_index]++;
-
+  const effects = ctx[ComputeContext_effects];
+  const index = ctx[ComputeContext_index];
   const effect = effects[index];
+
+  ctx[ComputeContext_index]++;
 
   if (isSome(effect) && effect[ComputeEffect_type] === type) {
     return effect;
@@ -222,7 +222,7 @@ class ComputeContext {
   private readonly [ComputeContext_runComputation]: () => void;
   private readonly [ComputeContext_mode]: Observable.ComputeMode;
   private readonly [ComputeContext_cleanup] = () => {
-    const { [ComputeContext_effects]: effects } = this;
+    const effects = this[ComputeContext_effects];
 
     const hasOutstandingEffects =
       effects.findIndex(
@@ -278,10 +278,8 @@ class ComputeContext {
     } else {
       effect[AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
 
-      const {
-        [ComputeContext_observer]: observer,
-        [ComputeContext_runComputation]: runComputation,
-      } = this;
+      const observer = this[ComputeContext_observer];
+      const runComputation = this[ComputeContext_runComputation];
 
       const subscription = pipe(
         observable,
@@ -292,10 +290,8 @@ class ComputeContext {
           if (this[ComputeContext_mode] === CombineLatestComputeMode) {
             runComputation();
           } else {
-            let {
-              [ComputeContext_scheduledComputationSubscription]:
-                scheduledComputationSubscription,
-            } = this;
+            const scheduledComputationSubscription =
+              this[ComputeContext_scheduledComputationSubscription];
 
             this[ComputeContext_scheduledComputationSubscription] =
               scheduledComputationSubscription[DisposableLike_isDisposed]
@@ -450,7 +446,7 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
           }
         }
 
-        const { [ComputeContext_effects]: effects } = ctx;
+        const effects = ctx[ComputeContext_effects];
 
         if (effects[Array_length] > ctx[ComputeContext_index]) {
           const effectsLength = effects[Array_length];
@@ -479,7 +475,7 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
         let hasOutstandingEffects = false;
         for (let i = 0; i < effectsLength; i++) {
           const effect = effects[i];
-          const { [ComputeEffect_type]: type } = effect;
+          const type = effect[ComputeEffect_type];
 
           if (
             (type === Await || type === Observe) &&

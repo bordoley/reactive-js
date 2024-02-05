@@ -19,12 +19,10 @@ const createCacheStream = /*@__PURE__*/ (() => {
     const CacheStream_store = Symbol("CacheStream_store");
     const CacheStream_subscriptions = Symbol("CacheStream_subscriptions");
     return mixInstanceFactory(include(DelegatingStreamMixin()), function CacheStream(instance, scheduler, options, capacity, cleanupScheduler, persistentStore) {
-        instance[CacheStream_store] = newInstance(Map);
-        instance[CacheStream_subscriptions] =
-            newInstance(Map);
+        const store = newInstance(Map);
+        const subscriptions = newInstance(Map);
         const cleanupQueue = IndexedQueue.create();
         const cleanupContinuation = (ctx) => {
-            const { [CacheStream_store]: store, [CacheStream_subscriptions]: subscriptions, } = instance;
             while (store[Map_size] > capacity) {
                 const key = cleanupQueue[QueueLike_dequeue]();
                 if (isNone(key)) {
@@ -35,18 +33,6 @@ const createCacheStream = /*@__PURE__*/ (() => {
                 }
                 ctx[ContinuationContextLike_yield]();
             }
-        };
-        let cleanupJob = Disposable.disposed;
-        instance[CacheStream_scheduleCleanup] = (key) => {
-            if (isNone(instance[CacheStream_store][Map_get](key))) {
-                return;
-            }
-            cleanupQueue[QueueableLike_enqueue](key);
-            if (!cleanupJob[DisposableLike_isDisposed]) {
-                return;
-            }
-            cleanupJob =
-                cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
         };
         const delegate = pipe(Streamable_create(compose(Observable.map((updaters) => tuple(updaters, pipe(updaters, ReadonlyObjectMap.map((_, k) => instance[CacheStream_store][Map_get](k))))), isSome(persistentStore)
             ? Observable.concatMap(next => {
@@ -83,6 +69,20 @@ const createCacheStream = /*@__PURE__*/ (() => {
                 innerType: Observable.DeferredObservableWithSideEffectsType,
             })
             : Observable.ignoreElements())), invoke(StreamableLike_stream, scheduler, options));
+        let cleanupJob = Disposable.disposed;
+        instance[CacheStream_store] = store;
+        instance[CacheStream_subscriptions] = subscriptions;
+        instance[CacheStream_scheduleCleanup] = (key) => {
+            if (isNone(instance[CacheStream_store][Map_get](key))) {
+                return;
+            }
+            cleanupQueue[QueueableLike_enqueue](key);
+            if (!cleanupJob[DisposableLike_isDisposed]) {
+                return;
+            }
+            cleanupJob =
+                cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
+        };
         init(DelegatingStreamMixin(), instance, delegate);
         instance[CacheStream_delegate] = delegate;
         return instance;

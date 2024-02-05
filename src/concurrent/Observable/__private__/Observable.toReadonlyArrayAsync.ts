@@ -1,3 +1,4 @@
+import { Promise } from "../../../__internal__/constants.js";
 import { ObservableLike, SchedulerLike } from "../../../concurrent.js";
 import { pipe, pipeAsync } from "../../../functions.js";
 import { BackpressureStrategy } from "../../../utils.js";

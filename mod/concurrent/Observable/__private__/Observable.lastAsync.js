@@ -1,5 +1,6 @@
 /// <reference types="./Observable.lastAsync.d.ts" />
 
+import { Promise } from "../../../__internal__/constants.js";
 import { newInstance, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Observable_forEach from "./Observable.forEach.js";

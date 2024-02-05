@@ -73,14 +73,13 @@ const IndexedQueueMixin: <T>() => Mixin1<
     thiz: TProperties & IndexedQueueLike<T>,
     index: number,
   ) => {
-    const count = thiz[QueueLike_count];
-
-    raiseIf(index < 0 || index >= count, "index out of range");
-
     const capacity = thiz[IndexedQueueMixin_values][Array_length];
     const head = thiz[IndexedQueueMixin_head];
     const headOffsetIndex = index + head;
     const tailOffsetIndex = headOffsetIndex - capacity;
+    const count = thiz[QueueLike_count];
+
+    raiseIf(index < 0 || index >= count, "index out of range");
 
     return headOffsetIndex < capacity ? headOffsetIndex : tailOffsetIndex;
   };
@@ -141,15 +140,13 @@ const IndexedQueueMixin: <T>() => Mixin1<
     const values = instance[IndexedQueueMixin_values];
     const capacity = values[Array_length];
     const count = instance[QueueLike_count];
-
-    if (count >= capacity >> 2 || capacity <= 32) {
-      return;
-    }
-
     const head = instance[IndexedQueueMixin_head];
     const tail = instance[IndexedQueueMixin_tail];
     const newCapacity = capacity >> 1;
 
+    if (count >= capacity >> 2 || capacity <= 32) {
+      return;
+    }
     if (tail >= head && tail < newCapacity) {
       values[Array_length] >>= 1;
     } else {
@@ -289,8 +286,8 @@ const IndexedQueueMixin: <T>() => Mixin1<
           item: T,
         ): boolean {
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
-          let count = this[QueueLike_count];
           const capacity = this[QueueableLike_capacity];
+          const count = this[QueueLike_count];
 
           if (
             backpressureStrategy === DropLatestBackpressureStrategy &&

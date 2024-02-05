@@ -65,7 +65,7 @@ const createBufferObserver: <T>(
             instance,
             Disposable.addTo(delegate),
             Disposable.onComplete(() => {
-              const { [BufferObserver_buffer]: buffer } = instance;
+              const buffer = instance[BufferObserver_buffer];
               instance[BufferObserver_buffer] = [];
 
               if (buffer[Array_length] > 0) {
@@ -86,17 +86,13 @@ const createBufferObserver: <T>(
         }),
         {
           [ObserverLike_notify](this: TProps<T> & ObserverLike<T>, next: T) {
-            const {
-              [BufferObserver_buffer]: buffer,
-              [BufferObserver_count]: count,
-            } = this;
+            const buffer = this[BufferObserver_buffer];
+            const count = this[BufferObserver_count];
 
             buffer[Array_push](next);
 
             if (buffer[Array_length] === count) {
-              const buffer = this[BufferObserver_buffer];
               this[BufferObserver_buffer] = [];
-
               this[BufferObserver_delegate][ObserverLike_notify](buffer);
             }
           },

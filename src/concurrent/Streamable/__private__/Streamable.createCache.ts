@@ -116,18 +116,12 @@ const createCacheStream: <T>(
       cleanupScheduler: SchedulerLike,
       persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
     ): CacheLike<T> {
-      instance[CacheStream_store] = newInstance<Map<string, T>>(Map);
-      instance[CacheStream_subscriptions] =
+      const store = newInstance<Map<string, T>>(Map);
+      const subscriptions =
         newInstance<Map<string, SubjectLike<Optional<T>>>>(Map);
-
       const cleanupQueue = IndexedQueue.create<string>();
 
       const cleanupContinuation = (ctx: ContinuationContextLike) => {
-        const {
-          [CacheStream_store]: store,
-          [CacheStream_subscriptions]: subscriptions,
-        } = instance;
-
         while (store[Map_size] > capacity) {
           const key = cleanupQueue[QueueLike_dequeue]();
           if (isNone(key)) {
@@ -139,23 +133,6 @@ const createCacheStream: <T>(
           }
           ctx[ContinuationContextLike_yield]();
         }
-      };
-
-      let cleanupJob = Disposable.disposed;
-
-      instance[CacheStream_scheduleCleanup] = (key: string) => {
-        if (isNone(instance[CacheStream_store][Map_get](key))) {
-          return;
-        }
-
-        cleanupQueue[QueueableLike_enqueue](key);
-
-        if (!cleanupJob[DisposableLike_isDisposed]) {
-          return;
-        }
-
-        cleanupJob =
-          cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
       };
 
       const delegate = pipe(
@@ -273,6 +250,26 @@ const createCacheStream: <T>(
         ),
         invoke(StreamableLike_stream, scheduler, options),
       );
+
+      let cleanupJob = Disposable.disposed;
+
+      instance[CacheStream_store] = store;
+      instance[CacheStream_subscriptions] = subscriptions;
+
+      instance[CacheStream_scheduleCleanup] = (key: string) => {
+        if (isNone(instance[CacheStream_store][Map_get](key))) {
+          return;
+        }
+
+        cleanupQueue[QueueableLike_enqueue](key);
+
+        if (!cleanupJob[DisposableLike_isDisposed]) {
+          return;
+        }
+
+        cleanupJob =
+          cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
+      };
 
       init(
         DelegatingStreamMixin<

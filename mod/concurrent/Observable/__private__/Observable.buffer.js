@@ -21,7 +21,7 @@ const createBufferObserver = /*@__PURE__*/ (() => createInstanceFactory(decorate
     instance[BufferObserver_count] = clampPositiveNonZeroInteger(count ?? MAX_SAFE_INTEGER);
     instance[BufferObserver_buffer] = [];
     pipe(instance, Disposable.addTo(delegate), Disposable.onComplete(() => {
-        const { [BufferObserver_buffer]: buffer } = instance;
+        const buffer = instance[BufferObserver_buffer];
         instance[BufferObserver_buffer] = [];
         if (buffer[Array_length] > 0) {
             delegate[QueueableLike_enqueue](buffer);
@@ -38,10 +38,10 @@ const createBufferObserver = /*@__PURE__*/ (() => createInstanceFactory(decorate
     [BufferObserver_count]: 0,
 }), {
     [ObserverLike_notify](next) {
-        const { [BufferObserver_buffer]: buffer, [BufferObserver_count]: count, } = this;
+        const buffer = this[BufferObserver_buffer];
+        const count = this[BufferObserver_count];
         buffer[Array_push](next);
         if (buffer[Array_length] === count) {
-            const buffer = this[BufferObserver_buffer];
             this[BufferObserver_buffer] = [];
             this[BufferObserver_delegate][ObserverLike_notify](buffer);
         }

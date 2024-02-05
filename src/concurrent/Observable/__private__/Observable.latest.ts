@@ -100,12 +100,12 @@ const Observable_latest = /*@__PURE__*/ (() => {
             this: TProperties & ObserverLike,
             next: unknown,
           ) {
-            const { [LatestObserver_ctx]: ctx } = this;
+            const ctx = this[LatestObserver_ctx];
+            const mode = ctx[LatestCtx_mode];
+            const observers = ctx[LatestCtx_observers];
+
             this[LatestObserver_latest] = next;
             this[LatestObserver_ready] = true;
-
-            const { [LatestCtx_mode]: mode, [LatestCtx_observers]: observers } =
-              ctx;
 
             const isReady = observers[Array_every](
               x => x[LatestObserver_ready],

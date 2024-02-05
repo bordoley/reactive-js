@@ -30,10 +30,12 @@ type GlobalObject = {
     test(name: string, f: () => void): void;
   };
   Error: typeof globalThis.Error;
+  Function: typeof globalThis.Function;
   Map: typeof globalThis.Map;
   Math: typeof globalThis.Math;
   Number: typeof globalThis.Number;
   Object: typeof globalThis.Object;
+  Promise: typeof globalThis.Promise;
   Set: typeof globalThis.Set;
   String: typeof globalThis.String;
   Symbol: typeof globalThis.Symbol;
@@ -46,10 +48,12 @@ export const globalObject: GlobalObject = (
 
 export const Array = globalObject.Array;
 export const Error = globalObject.Error;
+export const Function = globalObject.Function;
 export const Map = globalObject.Map;
 export const Math = globalObject.Math;
 export const Number = globalObject.Number;
 export const Obj = globalObject.Object;
+export const Promise = globalObject.Promise;
 export const Set = globalObject.Set;
 export const String = globalObject.String;
 export const Symbol = globalObject.Symbol;

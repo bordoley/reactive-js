@@ -135,7 +135,7 @@ export const create: <T>(options?: {
         this: TProperties & SubjectLike<T> & IndexedQueueLike<T>,
         observer: ObserverLike<T>,
       ) {
-        const { [Subject_observers]: observers } = this;
+        const observers = this[Subject_observers];
 
         if (isSome(this[DisposableLike_error])) {
           observer[DisposableLike_dispose](this[DisposableLike_error]);
