@@ -108,7 +108,7 @@ const AnimationGroup = () => {
 
   const animationStream = useStream(
     () =>
-      Streamable.createAnimationGroupEventHandler<string, number>(
+      Streamable.animationGroupEventHandler<string, number>(
         {
           a: {
             type: "loop",
@@ -160,7 +160,7 @@ const AnimationGroup = () => {
 };
 
 const Cache = () => {
-  const cache = useStream(() => Streamable.createInMemoryCache<string>(), []);
+  const cache = useStream(() => Streamable.inMemoryCache<string>(), []);
 
   const values = cache?.[CacheLike_get]("a");
   const value = useObserve(values) ?? "";
@@ -290,7 +290,7 @@ const RxComponent = createComponent(
     const createAnimationGroupEventHandler = (
       animationFrameScheduler: SchedulerLike,
     ) =>
-      Streamable.createAnimationGroupEventHandler<
+      Streamable.animationGroupEventHandler<
         "animate" | "cancel",
         string,
         CSSStyleMapLike

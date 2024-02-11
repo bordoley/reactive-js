@@ -118,7 +118,7 @@ export const Wordle = () => {
 
   const animationGroup = useStream(
     () =>
-      Streamable.createAnimationGroupEventHandler<
+      Streamable.animationGroupEventHandler<
         boolean,
         string,
         { direction: boolean; value: number }

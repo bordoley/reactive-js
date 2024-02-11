@@ -35,7 +35,7 @@ const Measure = () => {
 
   const animationGroup = useStream(
     () =>
-      Streamable.createAnimationGroupEventHandler<
+      Streamable.animationGroupEventHandler<
         {
           prevWidth?: number;
           width: number;

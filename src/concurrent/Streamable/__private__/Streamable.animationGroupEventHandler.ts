@@ -40,7 +40,7 @@ import type { Animation } from "../../Observable.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 import DelegatingStreamMixin from "../../__mixins__/DelegatingStreamMixin.js";
-import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
+import Streamable_createEventHandler from "./Streamable.eventHandler.js";
 
 const Streamable_createAnimationGroupEventHandlerStream: <
   TEvent,
@@ -186,7 +186,7 @@ const Streamable_createAnimationGroupEventHandlerStream: <
     );
   })();
 
-const Streamable_createAnimationGroupEventHandler: Streamable.Signature["createAnimationGroupEventHandler"] =
+const Streamable_animationGroupEventHandler: Streamable.Signature["animationGroupEventHandler"] =
   (<TEvent, TKey extends string, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
@@ -212,6 +212,6 @@ const Streamable_createAnimationGroupEventHandler: Streamable.Signature["createA
         scheduler,
         options,
       ),
-  })) as Streamable.Signature["createAnimationGroupEventHandler"];
+  })) as Streamable.Signature["animationGroupEventHandler"];
 
-export default Streamable_createAnimationGroupEventHandler;
+export default Streamable_animationGroupEventHandler;

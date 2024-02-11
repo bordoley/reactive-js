@@ -68,7 +68,7 @@ export const __state = /*@__PURE__*/ (() => {
     return (initialState, options = {}) => {
         const { equality } = options;
         const optionsMemo = __memo(createStateOptions, equality);
-        const streamable = __memo(Streamable.createStateStore, initialState, optionsMemo);
+        const streamable = __memo(Streamable.stateStore, initialState, optionsMemo);
         return __stream(streamable, options);
     };
 })();

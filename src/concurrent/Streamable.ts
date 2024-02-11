@@ -14,116 +14,122 @@ import {
   Function1,
   Function2,
   Optional,
+  Reducer,
   Updater,
 } from "../functions.js";
 import { BackpressureStrategy } from "../utils.js";
 import { Animation } from "./Observable.js";
+import Streamable_actionReducer from "./Streamable/__private__/Streamable.actionReducer.js";
+import Streamable_animationGroupEventHandler from "./Streamable/__private__/Streamable.animationGroupEventHandler.js";
 import Streamable_create from "./Streamable/__private__/Streamable.create.js";
-import Streamable_createAnimationGroupEventHandler from "./Streamable/__private__/Streamable.createAnimationGroupEventHandler.js";
-import Streamable_createEventHandler from "./Streamable/__private__/Streamable.createEventHandler.js";
-import Streamable_createInMemoryCache from "./Streamable/__private__/Streamable.createInMemoryCache.js";
-import Streamable_createPersistentCache from "./Streamable/__private__/Streamable.createPersistentCache.js";
-import Streamable_createStateStore from "./Streamable/__private__/Streamable.createStateStore.js";
+import Streamable_eventHandler from "./Streamable/__private__/Streamable.eventHandler.js";
 import Streamable_identity from "./Streamable/__private__/Streamable.identity.js";
+import Streamable_inMemoryCache from "./Streamable/__private__/Streamable.inMemoryCache.js";
+import Streamable_persistentCache from "./Streamable/__private__/Streamable.persistentCache.js";
+import Streamable_stateStore from "./Streamable/__private__/Streamable.stateStore.js";
 import Streamable_syncState from "./Streamable/__private__/Streamable.syncState.js";
 
 /**
  * @noInheritDoc
  */
 export interface StreamableModule {
-  /**
-   */
+  actionReducer<TAction, T>(
+    reducer: Reducer<TAction, T>,
+    initialState: Factory<T>,
+    options?: { readonly equality?: Equality<T> },
+  ): StreamableLike<TAction, T>;
+
+  animationGroupEventHandler<TEvent, TKey extends string, T>(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Function1<TEvent, Animation<T> | readonly Animation<T>[]>
+    >,
+    options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
+  ): StreamableLike<
+    TEvent,
+    boolean,
+    StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
+  >;
+  animationGroupEventHandler<TEvent, TKey extends string, T>(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Function1<TEvent, Animation<T> | readonly Animation<T>[]>
+    >,
+    options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
+  ): StreamableLike<
+    TEvent,
+    boolean,
+    StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
+  >;
+  animationGroupEventHandler<TEvent, TKey extends string, T>(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Function1<TEvent, Animation<T> | readonly Animation<T>[]>
+    >,
+    options: {
+      readonly mode: "queueing";
+      readonly scheduler?: SchedulerLike;
+      readonly backpressureStrategy?: BackpressureStrategy;
+      readonly capacity?: number;
+    },
+  ): StreamableLike<
+    TEvent,
+    boolean,
+    StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
+  >;
+
+  animationGroupEventHandler<TKey extends string, T>(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Animation<T> | readonly Animation<T>[]
+    >,
+    options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
+  ): StreamableLike<
+    void,
+    boolean,
+    StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
+  >;
+  animationGroupEventHandler<TKey extends string, T>(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Animation<T> | readonly Animation<T>[]
+    >,
+    options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
+  ): StreamableLike<
+    void,
+    boolean,
+    StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
+  >;
+  animationGroupEventHandler<TKey extends string, T>(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Animation<T> | readonly Animation<T>[]
+    >,
+    options: {
+      readonly mode: "queueing";
+      readonly scheduler?: SchedulerLike;
+      readonly backpressureStrategy?: BackpressureStrategy;
+      readonly capacity?: number;
+    },
+  ): StreamableLike<
+    void,
+    boolean,
+    StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
+  >;
+
   create<TReq, T>(
     op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
 
-  createAnimationGroupEventHandler<TEvent, TKey extends string, T>(
-    animationGroup: ReadonlyObjectMapLike<
-      TKey,
-      Function1<TEvent, Animation<T> | readonly Animation<T>[]>
-    >,
-    options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
-  ): StreamableLike<
-    TEvent,
-    boolean,
-    StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
-  >;
-  createAnimationGroupEventHandler<TEvent, TKey extends string, T>(
-    animationGroup: ReadonlyObjectMapLike<
-      TKey,
-      Function1<TEvent, Animation<T> | readonly Animation<T>[]>
-    >,
-    options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
-  ): StreamableLike<
-    TEvent,
-    boolean,
-    StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
-  >;
-  createAnimationGroupEventHandler<TEvent, TKey extends string, T>(
-    animationGroup: ReadonlyObjectMapLike<
-      TKey,
-      Function1<TEvent, Animation<T> | readonly Animation<T>[]>
-    >,
-    options: {
-      readonly mode: "queueing";
-      readonly scheduler?: SchedulerLike;
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-    },
-  ): StreamableLike<
-    TEvent,
-    boolean,
-    StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
-  >;
-
-  createAnimationGroupEventHandler<TKey extends string, T>(
-    animationGroup: ReadonlyObjectMapLike<
-      TKey,
-      Animation<T> | readonly Animation<T>[]
-    >,
-    options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
-  ): StreamableLike<
-    void,
-    boolean,
-    StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
-  >;
-  createAnimationGroupEventHandler<TKey extends string, T>(
-    animationGroup: ReadonlyObjectMapLike<
-      TKey,
-      Animation<T> | readonly Animation<T>[]
-    >,
-    options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
-  ): StreamableLike<
-    void,
-    boolean,
-    StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
-  >;
-  createAnimationGroupEventHandler<TKey extends string, T>(
-    animationGroup: ReadonlyObjectMapLike<
-      TKey,
-      Animation<T> | readonly Animation<T>[]
-    >,
-    options: {
-      readonly mode: "queueing";
-      readonly scheduler?: SchedulerLike;
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-    },
-  ): StreamableLike<
-    void,
-    boolean,
-    StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
-  >;
-
-  createEventHandler<TEventType>(
+  eventHandler<TEventType>(
     op: Function1<TEventType, DeferredObservableLike>,
     options: { readonly mode: "switching" },
   ): StreamableLike<TEventType, boolean>;
-  createEventHandler<TEventType>(
+  eventHandler<TEventType>(
     op: Function1<TEventType, DeferredObservableLike>,
     options: { readonly mode: "blocking" },
   ): StreamableLike<TEventType, boolean>;
-  createEventHandler<TEventType>(
+  eventHandler<TEventType>(
     op: Function1<TEventType, DeferredObservableLike>,
     options: {
       readonly mode: "queueing";
@@ -131,11 +137,13 @@ export interface StreamableModule {
       readonly capacity?: number;
     },
   ): StreamableLike<TEventType, boolean>;
-  createEventHandler<TEventType>(
+  eventHandler<TEventType>(
     op: Function1<TEventType, DeferredObservableLike>,
   ): StreamableLike<TEventType, boolean>;
 
-  createInMemoryCache<T>(options?: {
+  identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
+
+  inMemoryCache<T>(options?: {
     readonly capacity?: number;
     readonly cleanupScheduler?: SchedulerLike;
   }): StreamableLike<
@@ -144,7 +152,7 @@ export interface StreamableModule {
     CacheLike<T>
   >;
 
-  createPersistentCache<T>(
+  persistentCache<T>(
     persistentStore: {
       load(
         keys: ReadonlySet<string>,
@@ -171,14 +179,10 @@ export interface StreamableModule {
    * if a state value is distinct from the previous one.
    *
    */
-  createStateStore<T>(
+  stateStore<T>(
     initialState: Factory<T>,
     options?: { readonly equality?: Equality<T> },
   ): StreamableLike<Updater<T>, T>;
-
-  /**
-   */
-  identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
 
   syncState<T>(
     onInit: Function1<T, DeferredObservableLike<Updater<T>>>,
@@ -192,15 +196,15 @@ export interface StreamableModule {
 export type Signature = StreamableModule;
 
 export const create: Signature["create"] = Streamable_create;
-export const createAnimationGroupEventHandler: Signature["createAnimationGroupEventHandler"] =
-  Streamable_createAnimationGroupEventHandler;
-export const createInMemoryCache: Signature["createInMemoryCache"] =
-  Streamable_createInMemoryCache;
-export const createPersistentCache: Signature["createPersistentCache"] =
-  Streamable_createPersistentCache;
-export const createEventHandler: Signature["createEventHandler"] =
-  Streamable_createEventHandler;
-export const createStateStore: Signature["createStateStore"] =
-  Streamable_createStateStore;
+export const actionReducer: Signature["actionReducer"] =
+  Streamable_actionReducer;
+export const animationGroupEventHandler: Signature["animationGroupEventHandler"] =
+  Streamable_animationGroupEventHandler;
+export const eventHandler: Signature["eventHandler"] = Streamable_eventHandler;
 export const identity: Signature["identity"] = Streamable_identity;
+export const inMemoryCache: Signature["inMemoryCache"] =
+  Streamable_inMemoryCache;
+export const persistentCache: Signature["persistentCache"] =
+  Streamable_persistentCache;
+export const stateStore: Signature["stateStore"] = Streamable_stateStore;
 export const syncState: Signature["syncState"] = Streamable_syncState;

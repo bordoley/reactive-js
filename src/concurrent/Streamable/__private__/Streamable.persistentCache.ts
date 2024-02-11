@@ -1,8 +1,8 @@
 import { DeferredObservableLike, SchedulerLike } from "../../../concurrent.js";
 import { Optional } from "../../../functions.js";
-import Streamable_createCache from "./Streamable.createCache.js";
+import Streamable_cache from "./Streamable.cache.js";
 
-const Streamable_createPersistentCache = <T>(
+const Streamable_persistentCache = <T>(
   persistentStore: {
     load(
       keys: ReadonlySet<string>,
@@ -13,7 +13,7 @@ const Streamable_createPersistentCache = <T>(
     readonly capacity?: number;
     readonly cleanupScheduler?: SchedulerLike;
   } = {},
-): ReturnType<typeof Streamable_createCache<T>> =>
-  Streamable_createCache<T>(persistentStore, options);
+): ReturnType<typeof Streamable_cache<T>> =>
+  Streamable_cache<T>(persistentStore, options);
 
-export default Streamable_createPersistentCache;
+export default Streamable_persistentCache;

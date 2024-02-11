@@ -53,16 +53,13 @@ import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 testModule(
   "Streamable",
   describe(
-    "createAnimationGroupEventHandler",
+    "animationGroupEventHandler",
     test(
       "blocking mode",
       Disposable.usingLazy(() =>
         VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }),
       )(vts => {
-        const stream = Streamable.createAnimationGroupEventHandler<
-          string,
-          number
-        >(
+        const stream = Streamable.animationGroupEventHandler<string, number>(
           {
             a: { type: "keyframe", duration: 500, from: 0, to: 1 },
           },
@@ -97,10 +94,7 @@ testModule(
       Disposable.usingLazy(() =>
         VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }),
       )(vts => {
-        const stream = Streamable.createAnimationGroupEventHandler<
-          string,
-          number
-        >(
+        const stream = Streamable.animationGroupEventHandler<string, number>(
           {
             a: { type: "keyframe", duration: 500, from: 0, to: 1 },
           },
@@ -135,10 +129,7 @@ testModule(
       Disposable.usingLazy(() =>
         VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }),
       )(vts => {
-        const stream = Streamable.createAnimationGroupEventHandler<
-          string,
-          number
-        >(
+        const stream = Streamable.animationGroupEventHandler<string, number>(
           {
             a: { type: "keyframe", duration: 500, from: 0, to: 1 },
           },
@@ -170,44 +161,11 @@ testModule(
     ),
   ),
   describe(
-    "stateStore",
-    test("createStateStore", () => {
-      const scheduler = VirtualTimeScheduler.create();
-      const streamable = Streamable.createStateStore(returns(1));
-      const stateStream = streamable[StreamableLike_stream](scheduler, {
-        capacity: 20,
-        backpressureStrategy: DropLatestBackpressureStrategy,
-      });
-
-      pipe(stateStream[QueueableLike_capacity], expectEquals(20));
-      pipe(
-        stateStream[QueueableLike_backpressureStrategy],
-        expectEquals(DropLatestBackpressureStrategy),
-      );
-
-      stateStream[QueueableLike_enqueue](returns(2));
-      stateStream[QueueableLike_enqueue](returns(3));
-      stateStream[DispatcherLike_complete]();
-
-      let result: number[] = [];
-
-      pipe(
-        stateStream,
-        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
-        Observable.subscribe(scheduler),
-      );
-
-      scheduler[VirtualTimeSchedulerLike_run]();
-
-      pipe(result, expectArrayEquals([1, 2, 3]));
-    }),
-  ),
-  describe(
-    "createInMemoryCache",
+    "inMemoryCache",
     test("it publishes none on subscribe when the key is missing", () => {
       const scheduler = VirtualTimeScheduler.create();
 
-      const cache = Streamable.createInMemoryCache<number>({ capacity: 1 })[
+      const cache = Streamable.inMemoryCache<number>({ capacity: 1 })[
         StreamableLike_stream
       ](scheduler);
 
@@ -235,7 +193,7 @@ testModule(
     test("explicitly deleting a key", () => {
       const scheduler = VirtualTimeScheduler.create();
 
-      const cache = Streamable.createInMemoryCache<number>({ capacity: 1 })[
+      const cache = Streamable.inMemoryCache<number>({ capacity: 1 })[
         StreamableLike_stream
       ](scheduler);
 
@@ -279,7 +237,7 @@ testModule(
     test("integration test", () => {
       const scheduler = VirtualTimeScheduler.create();
 
-      const cache = Streamable.createInMemoryCache<number>({ capacity: 1 })[
+      const cache = Streamable.inMemoryCache<number>({ capacity: 1 })[
         StreamableLike_stream
       ](scheduler);
 
@@ -358,7 +316,7 @@ testModule(
     }),
   ),
   describe(
-    "createPersistentCache",
+    "persistentCache",
     test("integration test", () => {
       const store: Record<string, number> = {
         abc: 1,
@@ -384,7 +342,7 @@ testModule(
 
       const scheduler = VirtualTimeScheduler.create();
 
-      const cache = Streamable.createPersistentCache<number>(persistentStore, {
+      const cache = Streamable.persistentCache<number>(persistentStore, {
         capacity: 1,
       })[StreamableLike_stream](scheduler);
 
@@ -416,12 +374,45 @@ testModule(
     }),
   ),
   describe(
+    "stateStore",
+    test("stateStore", () => {
+      const scheduler = VirtualTimeScheduler.create();
+      const streamable = Streamable.stateStore(returns(1));
+      const stateStream = streamable[StreamableLike_stream](scheduler, {
+        capacity: 20,
+        backpressureStrategy: DropLatestBackpressureStrategy,
+      });
+
+      pipe(stateStream[QueueableLike_capacity], expectEquals(20));
+      pipe(
+        stateStream[QueueableLike_backpressureStrategy],
+        expectEquals(DropLatestBackpressureStrategy),
+      );
+
+      stateStream[QueueableLike_enqueue](returns(2));
+      stateStream[QueueableLike_enqueue](returns(3));
+      stateStream[DispatcherLike_complete]();
+
+      let result: number[] = [];
+
+      pipe(
+        stateStream,
+        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
+        Observable.subscribe(scheduler),
+      );
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      pipe(result, expectArrayEquals([1, 2, 3]));
+    }),
+  ),
+  describe(
     "syncState",
     test("without throttling", () => {
       const vts = VirtualTimeScheduler.create();
 
       const stream = pipe(
-        Streamable.createStateStore(returns(-1)),
+        Streamable.stateStore(returns(-1)),
         Streamable.syncState(
           state =>
             pipe(
@@ -463,7 +454,7 @@ testModule(
       let updateCnt = 0;
 
       const stream = pipe(
-        Streamable.createStateStore(returns(-1)),
+        Streamable.stateStore(returns(-1)),
         Streamable.syncState(
           _state => Observable.empty({ delay: 1 }),
           (oldState, newState) => {

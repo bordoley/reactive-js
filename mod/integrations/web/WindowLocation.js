@@ -95,7 +95,7 @@ export const subscribe = /*@__PURE__*/ (() => {
         raiseIf(isSome(currentWindowLocationObservable), "Cannot stream more than once");
         const replaceState = createSyncToHistoryStream(bindMethod(history, "replaceState"), scheduler, { backpressureStrategy: DropOldestBackpressureStrategy, capacity: 1 });
         const pushState = createSyncToHistoryStream(bindMethod(history, "pushState"), scheduler, { backpressureStrategy: DropOldestBackpressureStrategy, capacity: 1 });
-        const locationStream = pipe(Streamable.createStateStore(() => ({
+        const locationStream = pipe(Streamable.stateStore(() => ({
             replace: true,
             uri: getCurrentWindowLocationURI(),
             // Initialize the counter to -1 so that the initized start value

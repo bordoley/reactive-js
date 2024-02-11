@@ -60,7 +60,7 @@ const ScrollApp = () => {
 
   const animationGroup = useStream(
     () =>
-      Streamable.createAnimationGroupEventHandler<boolean, string, number>(
+      Streamable.animationGroupEventHandler<boolean, string, number>(
         {
           spring: direction =>
             direction

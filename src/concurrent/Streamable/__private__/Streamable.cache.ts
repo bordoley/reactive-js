@@ -72,7 +72,7 @@ interface ReactiveCachePersistentStorageLike<T> {
   ): DeferredObservableLike<void>;
 }
 
-const createCacheStream: <T>(
+const cacheStream: <T>(
   scheduler: SchedulerLike,
   options: Optional<{
     readonly replay?: number;
@@ -340,7 +340,7 @@ const createCacheStream: <T>(
   );
 })();
 
-const Streamable_createCache = <T>(
+const Streamable_cache = <T>(
   persistentStore: Optional<{
     load(
       keys: ReadonlySet<string>,
@@ -359,7 +359,7 @@ const Streamable_createCache = <T>(
   CacheLike<T>
 > => ({
   [StreamableLike_stream]: (scheduler, streamOptions) =>
-    createCacheStream(
+    cacheStream(
       scheduler,
       streamOptions,
       options.capacity ?? MAX_SAFE_INTEGER,
@@ -368,4 +368,4 @@ const Streamable_createCache = <T>(
     ),
 });
 
-export default Streamable_createCache;
+export default Streamable_cache;

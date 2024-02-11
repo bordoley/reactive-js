@@ -259,7 +259,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
     );
 
     const locationStream = pipe(
-      Streamable.createStateStore(
+      Streamable.stateStore(
         () => ({
           replace: true,
           uri: getCurrentWindowLocationURI(),

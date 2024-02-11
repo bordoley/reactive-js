@@ -285,14 +285,7 @@ export const __state = /*@__PURE__*/ (() => {
   ): StreamLike<Updater<T>, T> => {
     const { equality } = options;
     const optionsMemo = __memo(createStateOptions, equality);
-    const streamable = __memo(
-      Streamable.createStateStore as <T>(
-        initialState: Factory<T>,
-        options?: { readonly equality?: Equality<T> },
-      ) => StreamableLike<Updater<T>, T>,
-      initialState,
-      optionsMemo,
-    );
+    const streamable = __memo(Streamable.stateStore, initialState, optionsMemo);
     return __stream(streamable, options) as StreamLike<Updater<T>, T>;
   };
 })();
