@@ -33,6 +33,10 @@
 - [EnumeratorLike\_isCompleted](collections.md#enumeratorlike_iscompleted)
 - [EnumeratorLike\_move](collections.md#enumeratorlike_move)
 
+### Functions
+
+- [keySet](collections.md#keyset)
+
 ## Type Aliases
 
 ### CollectionOf
@@ -150,3 +154,43 @@ ___
 ### EnumeratorLike\_move
 
 • `Const` **EnumeratorLike\_move**: unique `symbol`
+
+## Functions
+
+### keySet
+
+▸ **keySet**<`C`\>(`keys`): <TKey_1\>(`collection`: [`CollectionOf`](collections.md#collectionof)<`C`, `unknown`, `TKey_1`\>) => `ReadonlySet`<`TKey_1`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`Collection`](../interfaces/collections.Collection.md)<`unknown`, `C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keys` | <TKey\>() => [`Function1`](functions.md#function1)<[`CollectionOf`](collections.md#collectionof)<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TKey`\>\> |
+
+#### Returns
+
+`fn`
+
+▸ <`TKey_1`\>(`collection`): `ReadonlySet`<`TKey_1`\>
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey_1` | extends `Object` = [`KeyOf`](collections.md#keyof)<`C`\> |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `collection` | [`CollectionOf`](collections.md#collectionof)<`C`, `unknown`, `TKey_1`\> |
+
+##### Returns
+
+`ReadonlySet`<`TKey_1`\>

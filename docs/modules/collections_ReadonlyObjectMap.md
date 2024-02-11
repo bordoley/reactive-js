@@ -20,7 +20,6 @@
 - [forEach](collections_ReadonlyObjectMap.md#foreach)
 - [fromEntries](collections_ReadonlyObjectMap.md#fromentries)
 - [keep](collections_ReadonlyObjectMap.md#keep)
-- [keySet](collections_ReadonlyObjectMap.md#keyset)
 - [keys](collections_ReadonlyObjectMap.md#keys)
 - [map](collections_ReadonlyObjectMap.md#map)
 - [reduce](collections_ReadonlyObjectMap.md#reduce)
@@ -139,22 +138,6 @@ ___
 #### Returns
 
 [`CollectionOperator`](collections.md#collectionoperator)<[`ReadonlyObjectMapCollection`](../interfaces/collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)<`string`\>, `T`, `T`, `TKey`\>
-
-___
-
-### keySet
-
-▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](collections.md#readonlyobjectmaplike)<`string` & `TKey`, `unknown`\>, `ReadonlySet`<`TKey`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `string` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](collections.md#readonlyobjectmaplike)<`string` & `TKey`, `unknown`\>, `ReadonlySet`<`TKey`\>\>
 
 ___
 

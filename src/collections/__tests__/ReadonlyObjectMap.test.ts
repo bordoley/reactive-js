@@ -1,4 +1,4 @@
-import { Array_length, Set_size } from "../../__internal__/constants.js";
+import { Array_length } from "../../__internal__/constants.js";
 import {
   describe,
   expectArrayEquals,
@@ -55,20 +55,6 @@ testModule(
         }),
       ),
     ),
-  ),
-  describe(
-    "keySet",
-    test("returns a keyset with all the keys", () => {
-      const keys: ReadonlySet<string> = pipe(
-        [tuple("0", "b"), tuple("1", none), tuple("2", "v")],
-        ReadonlyArray.values<Tuple2<string, Optional<string>>>(),
-        ReadonlyObjectMap.fromEntries(),
-        ReadonlyObjectMap.keySet(),
-      );
-
-      pipe(keys[Set_size], expectEquals(3));
-      pipe(Array.from(keys), expectArrayEquals(["0", "1", "2"]));
-    }),
   ),
   describe(
     "map",

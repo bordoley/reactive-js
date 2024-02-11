@@ -1,4 +1,4 @@
-import type { Factory, Function1, Function2, Function3, Optional, SideEffect1, SideEffect2, Tuple2 } from "./functions.js";
+import { type Factory, type Function1, type Function2, type Function3, type Optional, type SideEffect1, type SideEffect2, type Tuple2 } from "./functions.js";
 export declare const EnumeratorLike_current: unique symbol;
 export declare const EnumeratorLike_hasCurrent: unique symbol;
 export declare const EnumeratorLike_isCompleted: unique symbol;
@@ -100,10 +100,6 @@ export interface CollectionModule<C extends Collection> {
      */
     keys<TKey extends KeyOf<C>>(): Function1<CollectionOf<C, unknown, TKey>, EnumerableLike<TKey>>;
     /**
-     *
-     */
-    keySet<TKey extends KeyOf<C>>(): Function1<CollectionOf<C, unknown, TKey>, ReadonlySet<TKey>>;
-    /**
      * Returns a CollectionOperator that applies the `selector` function to each
      * value emitted by the source.
      *
@@ -136,3 +132,4 @@ export interface DictionaryCollectionModule<C extends Collection> extends Collec
     fromEntries<T, TKey extends KeyOf<C>>(): Function1<EnumerableLike<Tuple2<TKey, T>>, CollectionOf<C, T, TKey>>;
     union<TKey extends string | symbol, T>(m2: CollectionOf<C, T, TKey>): Function1<CollectionOf<C, T, TKey>, CollectionOf<C, T, TKey>>;
 }
+export declare const keySet: <C extends Collection<unknown>>(keys: <TKey extends KeyOf<C>>() => Function1<CollectionOf<C, unknown, TKey>, EnumerableLike<TKey>>) => <TKey_1 extends KeyOf<C> = KeyOf<C>>(collection: CollectionOf<C, unknown, TKey_1>) => ReadonlySet<TKey_1>;

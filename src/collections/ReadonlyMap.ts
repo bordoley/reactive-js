@@ -12,7 +12,6 @@ import ReadonlyMap_entries from "./ReadonlyMap/__private__/ReadonlyMap.entries.j
 import ReadonlyMap_forEach from "./ReadonlyMap/__private__/ReadonlyMap.forEach.js";
 import ReadonlyMap_fromEntries from "./ReadonlyMap/__private__/ReadonlyMap.fromEntries.js";
 import ReadonlyMap_keep from "./ReadonlyMap/__private__/ReadonlyMap.keep.js";
-import ReadonlyMap_keySet from "./ReadonlyMap/__private__/ReadonlyMap.keySet.js";
 import ReadonlyMap_keys from "./ReadonlyMap/__private__/ReadonlyMap.keys.js";
 import ReadonlyMap_map from "./ReadonlyMap/__private__/ReadonlyMap.map.js";
 import ReadonlyMap_reduce from "./ReadonlyMap/__private__/ReadonlyMap.reduce.js";
@@ -43,7 +42,6 @@ export const forEach: Signature["forEach"] = ReadonlyMap_forEach;
 export const fromEntries: Signature["fromEntries"] = ReadonlyMap_fromEntries;
 export const keep: Signature["keep"] = ReadonlyMap_keep;
 export const keys: Signature["keys"] = ReadonlyMap_keys;
-export const keySet: Signature["keySet"] = ReadonlyMap_keySet;
 export const map: Signature["map"] = ReadonlyMap_map;
 export const reduce: Signature["reduce"] = ReadonlyMap_reduce;
 export const toDictionary: Signature["toDictionary"] = ReadonlyMap_toDictionary;

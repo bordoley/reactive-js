@@ -35,7 +35,6 @@ export declare const entries: Signature["entries"];
 export declare const forEach: Signature["forEach"];
 export declare const keep: Signature["keep"];
 export declare const keys: Signature["keys"];
-export declare const keySet: Signature["keySet"];
 export declare const map: Signature["map"];
 export declare const reduce: Signature["reduce"];
 export declare const slice: Signature["slice"];

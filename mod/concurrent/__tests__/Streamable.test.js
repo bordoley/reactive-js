@@ -2,7 +2,7 @@
 
 import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectTrue, test, testModule, } from "../../__internal__/testing.js";
-import { DictionaryLike_get, } from "../../collections.js";
+import { DictionaryLike_get, keySet, } from "../../collections.js";
 import * as Dictionary from "../../collections/Dictionary.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
@@ -19,7 +19,7 @@ testModule("Streamable", describe("createAnimationGroupEventHandler", test("bloc
     const stream = Streamable.createAnimationGroupEventHandler({
         a: { type: "keyframe", duration: 500, from: 0, to: 1 },
     }, { mode: "blocking" })[StreamableLike_stream](vts);
-    pipe(stream, Dictionary.keySet(), invoke("has", "a"), expectTrue);
+    pipe(stream, keySet(Dictionary.keys), invoke("has", "a"), expectTrue);
     let result = 0;
     pipeSome(stream[DictionaryLike_get]("a"), EventSource.addEventHandler(ev => {
         result = ev;
@@ -31,7 +31,7 @@ testModule("Streamable", describe("createAnimationGroupEventHandler", test("bloc
     const stream = Streamable.createAnimationGroupEventHandler({
         a: { type: "keyframe", duration: 500, from: 0, to: 1 },
     }, { mode: "queueing" })[StreamableLike_stream](vts);
-    pipe(stream, Dictionary.keySet(), invoke("has", "a"), expectTrue);
+    pipe(stream, keySet(Dictionary.keys), invoke("has", "a"), expectTrue);
     let result = 0;
     pipeSome(stream[DictionaryLike_get]("a"), EventSource.addEventHandler(ev => {
         result = ev;
@@ -43,7 +43,7 @@ testModule("Streamable", describe("createAnimationGroupEventHandler", test("bloc
     const stream = Streamable.createAnimationGroupEventHandler({
         a: { type: "keyframe", duration: 500, from: 0, to: 1 },
     }, { mode: "switching" })[StreamableLike_stream](vts);
-    pipe(stream, Dictionary.keySet(), invoke("has", "a"), expectTrue);
+    pipe(stream, keySet(Dictionary.keys), invoke("has", "a"), expectTrue);
     let result = 0;
     pipeSome(stream[DictionaryLike_get]("a"), EventSource.addEventHandler(ev => {
         result = ev;

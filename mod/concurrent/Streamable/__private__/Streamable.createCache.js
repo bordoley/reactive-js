@@ -2,6 +2,7 @@
 
 import { MAX_SAFE_INTEGER, Map, Map_delete, Map_get, Map_set, Map_size, Set_delete, Set_has, Set_size, } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import { keySet } from "../../../collections.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { CacheLike_get, ContinuationContextLike_yield, SchedulerLike_schedule, StreamableLike_stream, } from "../../../concurrent.js";
 import { EventListenerLike_notify } from "../../../events.js";
@@ -37,7 +38,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
         const delegate = pipe(Streamable_create(compose(Observable.map((updaters) => tuple(updaters, pipe(updaters, ReadonlyObjectMap.map((_, k) => instance[CacheStream_store][Map_get](k))))), isSome(persistentStore)
             ? Observable.concatMap(next => {
                 const [updaters, values] = next;
-                const keys = pipe(values, ReadonlyObjectMap.keep(isNone), ReadonlyObjectMap.keySet());
+                const keys = pipe(values, ReadonlyObjectMap.keep(isNone), keySet(ReadonlyObjectMap.keys));
                 return keys[Set_size] > 0
                     ? pipe(persistentStore.load(keys), Observable.map((persistedValues) => tuple(updaters, pipe(values, ReadonlyObjectMap.union(persistedValues)))))
                     : pipe(next, Observable.fromValue());

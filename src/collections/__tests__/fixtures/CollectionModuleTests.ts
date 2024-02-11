@@ -1,4 +1,3 @@
-import { Set_size } from "../../../__internal__/constants.js";
 import {
   describe,
   expectArrayEquals,
@@ -105,19 +104,6 @@ const CollectionModuleTests = <C extends Collection>(
 
         pipe(keys.length, expectEquals(3));
         pipe(keys, expectArrayEquals([0, 1, 2]));
-      }),
-    ),
-    describe(
-      "keySet",
-      test("returns a keyset with all the keys", () => {
-        const keys = pipe(
-          ["b", none, "v"],
-          fromReadonlyArray<Optional<string>>(),
-          m.keySet(),
-        );
-
-        pipe(keys[Set_size], expectEquals(3));
-        pipe(Array.from(keys), expectArrayEquals([0, 1, 2]));
       }),
     ),
     describe(

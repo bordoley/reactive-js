@@ -6,7 +6,6 @@ import ReadonlyArray_empty from "./ReadonlyArray/__private__/ReadonlyArray.empty
 import ReadonlyArray_entries from "./ReadonlyArray/__private__/ReadonlyArray.entries.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__private__/ReadonlyArray.forEach.js";
 import ReadonlyArray_keep from "./ReadonlyArray/__private__/ReadonlyArray.keep.js";
-import ReadonlyArray_keySet from "./ReadonlyArray/__private__/ReadonlyArray.keySet.js";
 import ReadonlyArray_keys from "./ReadonlyArray/__private__/ReadonlyArray.keys.js";
 import ReadonlyArray_map from "./ReadonlyArray/__private__/ReadonlyArray.map.js";
 import ReadonlyArray_reduce from "./ReadonlyArray/__private__/ReadonlyArray.reduce.js";
@@ -18,7 +17,6 @@ export const entries = ReadonlyArray_entries;
 export const forEach = ReadonlyArray_forEach;
 export const keep = ReadonlyArray_keep;
 export const keys = ReadonlyArray_keys;
-export const keySet = ReadonlyArray_keySet;
 export const map = ReadonlyArray_map;
 export const reduce = ReadonlyArray_reduce;
 export const slice = ReadonlyArray_slice;

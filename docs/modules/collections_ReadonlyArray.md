@@ -20,7 +20,6 @@
 - [entries](collections_ReadonlyArray.md#entries)
 - [forEach](collections_ReadonlyArray.md#foreach)
 - [keep](collections_ReadonlyArray.md#keep)
-- [keySet](collections_ReadonlyArray.md#keyset)
 - [keys](collections_ReadonlyArray.md#keys)
 - [map](collections_ReadonlyArray.md#map)
 - [reduce](collections_ReadonlyArray.md#reduce)
@@ -130,22 +129,6 @@ ___
 #### Returns
 
 [`CollectionOperator`](collections.md#collectionoperator)<[`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md), `T`, `T`, `TKey`\>
-
-___
-
-### keySet
-
-▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<readonly `unknown`[], `ReadonlySet`<`TKey`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `unknown`[], `ReadonlySet`<`TKey`\>\>
 
 ___
 

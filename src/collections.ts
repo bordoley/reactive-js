@@ -1,12 +1,14 @@
-import type {
-  Factory,
-  Function1,
-  Function2,
-  Function3,
-  Optional,
-  SideEffect1,
-  SideEffect2,
-  Tuple2,
+import { Set } from "./__internal__/constants.js";
+import {
+  type Factory,
+  type Function1,
+  type Function2,
+  type Function3,
+  type Optional,
+  type SideEffect1,
+  type SideEffect2,
+  type Tuple2,
+  newInstance,
 } from "./functions.js";
 
 export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
@@ -156,14 +158,6 @@ export interface CollectionModule<C extends Collection> {
   >;
 
   /**
-   *
-   */
-  keySet<TKey extends KeyOf<C>>(): Function1<
-    CollectionOf<C, unknown, TKey>,
-    ReadonlySet<TKey>
-  >;
-
-  /**
    * Returns a CollectionOperator that applies the `selector` function to each
    * value emitted by the source.
    *
@@ -222,3 +216,10 @@ export interface DictionaryCollectionModule<C extends Collection>
     m2: CollectionOf<C, T, TKey>,
   ): Function1<CollectionOf<C, T, TKey>, CollectionOf<C, T, TKey>>;
 }
+
+export const keySet =
+  <C extends Collection>(keys: CollectionModule<C>["keys"]) =>
+  <TKey extends KeyOf<C> = KeyOf<C>>(
+    collection: CollectionOf<C, unknown, TKey>,
+  ): ReadonlySet<TKey> =>
+    newInstance(Set<TKey>, keys<TKey>()(collection));

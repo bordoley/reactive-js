@@ -26,7 +26,6 @@
 - [entries](collections.CollectionModule.md#entries)
 - [forEach](collections.CollectionModule.md#foreach)
 - [keep](collections.CollectionModule.md#keep)
-- [keySet](collections.CollectionModule.md#keyset)
 - [keys](collections.CollectionModule.md#keys)
 - [map](collections.CollectionModule.md#map)
 - [reduce](collections.CollectionModule.md#reduce)
@@ -115,22 +114,6 @@ ___
 #### Returns
 
 [`CollectionOperator`](../modules/collections.md#collectionoperator)<`C`, `T`, `T`, `TKey`\>
-
-___
-
-### keySet
-
-▸ **keySet**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `unknown`, `TKey`\>, `ReadonlySet`<`TKey`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `Object` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `unknown`, `TKey`\>, `ReadonlySet`<`TKey`\>\>
 
 ___
 

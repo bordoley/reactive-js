@@ -20,7 +20,6 @@
 - [forEach](collections_Dictionary.md#foreach)
 - [fromEntries](collections_Dictionary.md#fromentries)
 - [keep](collections_Dictionary.md#keep)
-- [keySet](collections_Dictionary.md#keyset)
 - [keys](collections_Dictionary.md#keys)
 - [map](collections_Dictionary.md#map)
 - [reduce](collections_Dictionary.md#reduce)
@@ -139,22 +138,6 @@ ___
 #### Returns
 
 [`CollectionOperator`](collections.md#collectionoperator)<[`DictionaryCollection`](../interfaces/collections_Dictionary.DictionaryCollection.md)<`unknown`\>, `T`, `T`, `TKey`\>
-
-___
-
-### keySet
-
-▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `Object` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
 
 ___
 

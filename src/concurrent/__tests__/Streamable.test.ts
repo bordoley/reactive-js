@@ -10,8 +10,10 @@ import {
 import {
   DictionaryLike_get,
   ReadonlyObjectMapLike,
+  keySet,
 } from "../../collections.js";
 import * as Dictionary from "../../collections/Dictionary.js";
+import { DictionaryCollection } from "../../collections/Dictionary.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { sequence } from "../../computations.js";
@@ -67,7 +69,12 @@ testModule(
           { mode: "blocking" },
         )[StreamableLike_stream](vts);
 
-        pipe(stream, Dictionary.keySet(), invoke("has", "a"), expectTrue);
+        pipe(
+          stream,
+          keySet<DictionaryCollection>(Dictionary.keys),
+          invoke("has", "a"),
+          expectTrue,
+        );
 
         let result = 0;
 
@@ -100,7 +107,12 @@ testModule(
           { mode: "queueing" },
         )[StreamableLike_stream](vts);
 
-        pipe(stream, Dictionary.keySet(), invoke("has", "a"), expectTrue);
+        pipe(
+          stream,
+          keySet<DictionaryCollection>(Dictionary.keys),
+          invoke("has", "a"),
+          expectTrue,
+        );
 
         let result = 0;
 
@@ -133,7 +145,12 @@ testModule(
           { mode: "switching" },
         )[StreamableLike_stream](vts);
 
-        pipe(stream, Dictionary.keySet(), invoke("has", "a"), expectTrue);
+        pipe(
+          stream,
+          keySet<DictionaryCollection>(Dictionary.keys),
+          invoke("has", "a"),
+          expectTrue,
+        );
 
         let result = 0;
 

@@ -15,8 +15,9 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
-import { ReadonlyObjectMapLike } from "../../../collections.js";
+import { ReadonlyObjectMapLike, keySet } from "../../../collections.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
+import { ReadonlyObjectMapCollection } from "../../../collections/ReadonlyObjectMap.js";
 import {
   CacheLike,
   CacheLike_get,
@@ -166,7 +167,9 @@ const createCacheStream: <T>(
                     const keys = pipe(
                       values,
                       ReadonlyObjectMap.keep<unknown, string>(isNone),
-                      ReadonlyObjectMap.keySet<string>(),
+                      keySet<ReadonlyObjectMapCollection>(
+                        ReadonlyObjectMap.keys,
+                      ),
                     );
 
                     return keys[Set_size] > 0
