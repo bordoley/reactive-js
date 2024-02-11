@@ -5,13 +5,13 @@ import {
   Map_set,
   Map_size,
 } from "../../../../__internal__/constants.js";
+import * as EventSource from "../../../../events/EventSource.js";
+import * as Publisher from "../../../../events/Publisher.js";
 import {
   EventListenerLike_notify,
   EventSourceLike_addEventListener,
   PublisherLike,
 } from "../../../../events.js";
-import * as EventSource from "../../../../events/EventSource.js";
-import * as Publisher from "../../../../events/Publisher.js";
 import { isNone, newInstance, pipe } from "../../../../functions.js";
 import * as Disposable from "../../../../utils/Disposable.js";
 import type * as Element from "../../Element.js";

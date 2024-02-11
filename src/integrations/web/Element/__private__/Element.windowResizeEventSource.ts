@@ -1,8 +1,8 @@
+import * as EventSource from "../../../../events/EventSource.js";
 import {
   EventSourceLike,
   EventSourceLike_addEventListener,
 } from "../../../../events.js";
-import * as EventSource from "../../../../events/EventSource.js";
 import { Optional, invoke, none, pipe } from "../../../../functions.js";
 import * as Disposable from "../../../../utils/Disposable.js";
 import Element_eventSource from "./Element.eventSource.js";

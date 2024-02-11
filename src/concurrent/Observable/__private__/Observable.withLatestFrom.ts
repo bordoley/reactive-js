@@ -21,15 +21,15 @@ import {
   partial,
   pipe,
 } from "../../../functions.js";
-import {
-  DisposableLike_dispose,
-  DisposableLike_isDisposed,
-} from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin, {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
 } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
+} from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";

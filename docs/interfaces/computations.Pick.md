@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [computations](../modules/computations.md) / Pick
 
-# Interface: Pick<C\>
+# Interface: Pick\<C\>
 
 [computations](../modules/computations.md).Pick
 
@@ -14,7 +14,7 @@
 
 ### Pick
 
-▸ **Pick**<`T`, `TKeyOfT`\>(`key`): [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfT`]\>
+▸ **Pick**\<`T`, `TKeyOfT`\>(`key`): [`ComputationOperator`](../modules/computations.md#computationoperator)\<`C`, `T`, `T`[`TKeyOfT`]\>
 
 #### Type parameters
 
@@ -31,11 +31,11 @@
 
 #### Returns
 
-[`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfT`]\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)\<`C`, `T`, `T`[`TKeyOfT`]\>
 
 ### Pick
 
-▸ **Pick**<`T`, `TKeyOfTA`, `TKeyOfTB`\>(`keyA`, `keyB`): [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`]\>
+▸ **Pick**\<`T`, `TKeyOfTA`, `TKeyOfTB`\>(`keyA`, `keyB`): [`ComputationOperator`](../modules/computations.md#computationoperator)\<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`]\>
 
 #### Type parameters
 
@@ -54,11 +54,11 @@
 
 #### Returns
 
-[`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`]\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)\<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`]\>
 
 ### Pick
 
-▸ **Pick**<`T`, `TKeyOfTA`, `TKeyOfTB`, `TKeyOfTC`\>(`keyA`, `keyB`, `keyC`): [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`][`TKeyOfTC`]\>
+▸ **Pick**\<`T`, `TKeyOfTA`, `TKeyOfTB`, `TKeyOfTC`\>(`keyA`, `keyB`, `keyC`): [`ComputationOperator`](../modules/computations.md#computationoperator)\<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`][`TKeyOfTC`]\>
 
 #### Type parameters
 
@@ -79,4 +79,4 @@
 
 #### Returns
 
-[`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`][`TKeyOfTC`]\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)\<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`][`TKeyOfTC`]\>

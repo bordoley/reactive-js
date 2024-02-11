@@ -13,6 +13,8 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_move,
 } from "../collections.js";
+import * as Observable from "../concurrent/Observable.js";
+import * as Subject from "../concurrent/Subject.js";
 import {
   DispatcherLike,
   DispatcherLike_complete,
@@ -26,14 +28,12 @@ import {
   StreamableLike,
   StreamableLike_stream,
 } from "../concurrent.js";
-import * as Observable from "../concurrent/Observable.js";
-import * as Subject from "../concurrent/Subject.js";
+import * as EventSource from "../events/EventSource.js";
 import {
   EventListenerLike_notify,
   EventSourceLike,
   StoreLike_value,
 } from "../events.js";
-import * as EventSource from "../events/EventSource.js";
 import {
   Factory,
   Function1,
@@ -48,13 +48,13 @@ import {
   pipeSomeLazy,
   raiseError,
 } from "../functions.js";
+import * as Disposable from "../utils/Disposable.js";
 import {
   BackpressureStrategy,
   DisposableLike,
   DisposableLike_dispose,
   QueueableLike_enqueue,
 } from "../utils.js";
-import * as Disposable from "../utils/Disposable.js";
 import * as ReactScheduler from "./react/Scheduler.js";
 
 interface ReactModule {

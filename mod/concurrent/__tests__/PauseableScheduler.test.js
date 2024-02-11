@@ -4,8 +4,8 @@ import { Array_push } from "../../__internal__/constants.js";
 import { expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
 import { PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import { pipe } from "../../functions.js";
-import { DisposableLike_dispose } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
+import { DisposableLike_dispose } from "../../utils.js";
 import * as PauseableScheduler from "../PauseableScheduler.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 testModule("PauseableScheduler", test("with disposed continuations", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {

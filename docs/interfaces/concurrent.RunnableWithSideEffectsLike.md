@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / RunnableWithSideEffectsLike
 
-# Interface: RunnableWithSideEffectsLike<T\>
+# Interface: RunnableWithSideEffectsLike\<T\>
 
 [concurrent](../modules/concurrent.md).RunnableWithSideEffectsLike
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>
+- [`RunnableLike`](concurrent.RunnableLike.md)\<`T`\>
 
   ↳ **`RunnableWithSideEffectsLike`**
 
@@ -30,4 +30,4 @@
 
 #### Overrides
 
-RunnableLike.\_\_@ObservableLike\_isPure@43861
+RunnableLike.[ObservableLike\_isPure]

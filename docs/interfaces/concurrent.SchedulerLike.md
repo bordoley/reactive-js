@@ -90,7 +90,7 @@ Schedule a continuation on the Scheduler.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `continuation` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`ContinuationContextLike`](concurrent.ContinuationContextLike.md)\> | The continuation to run on the scheduler. |
+| `continuation` | [`SideEffect1`](../modules/functions.md#sideeffect1)\<[`ContinuationContextLike`](concurrent.ContinuationContextLike.md)\> | The continuation to run on the scheduler. |
 | `options?` | `Object` |  |
 | `options.delay?` | `number` | The amount of time in ms to delay execution of the continuation. |
 

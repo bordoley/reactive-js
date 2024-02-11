@@ -3,8 +3,8 @@
 import { Iterator_done, Iterator_next, Iterator_value, Symbol, } from "../../../__internal__/constants.js";
 import { ContinuationContextLike_yield, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { error, isSome, none, pipe } from "../../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import Observable_createPureRunnableWithSideEffects from "./Observable.createRunnableWithSideEffects.js";
 const Observable_fromIterable = (options) => (iterable) => Observable_createPureRunnableWithSideEffects((observer) => {
     const { delay = 0, delayStart = false } = options ?? {};

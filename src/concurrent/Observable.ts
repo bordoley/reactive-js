@@ -143,18 +143,18 @@ export type PureStatelessObservableOperator<TIn, TOut> = <
 ) => TObservableIn extends PureRunnableLike<TIn>
   ? PureRunnableLike<TOut>
   : TObservableIn extends RunnableWithSideEffectsLike<TIn>
-  ? RunnableWithSideEffectsLike<TOut>
-  : TObservableIn extends RunnableLike<TIn>
-  ? RunnableLike<TOut>
-  : TObservableIn extends PureDeferredObservableLike<TIn>
-  ? PureDeferredObservableLike<TOut>
-  : TObservableIn extends DeferredObservableWithSideEffectsLike<TIn>
-  ? DeferredObservableWithSideEffectsLike<TOut>
-  : TObservableIn extends DeferredObservableLike<TIn>
-  ? DeferredObservableLike<TOut>
-  : TObservableIn extends MulticastObservableLike<TIn>
-  ? MulticastObservableLike<TOut>
-  : ObservableLike<TOut>;
+    ? RunnableWithSideEffectsLike<TOut>
+    : TObservableIn extends RunnableLike<TIn>
+      ? RunnableLike<TOut>
+      : TObservableIn extends PureDeferredObservableLike<TIn>
+        ? PureDeferredObservableLike<TOut>
+        : TObservableIn extends DeferredObservableWithSideEffectsLike<TIn>
+          ? DeferredObservableWithSideEffectsLike<TOut>
+          : TObservableIn extends DeferredObservableLike<TIn>
+            ? DeferredObservableLike<TOut>
+            : TObservableIn extends MulticastObservableLike<TIn>
+              ? MulticastObservableLike<TOut>
+              : ObservableLike<TOut>;
 
 export type PureStatefulObservableOperator<
   TIn,
@@ -165,18 +165,18 @@ export type PureStatefulObservableOperator<
 ) => TObservableIn extends PureRunnableLike<TIn>
   ? PureRunnableLike<TOut>
   : TObservableIn extends RunnableWithSideEffectsLike<TIn>
-  ? RunnableWithSideEffectsLike<TOut>
-  : TObservableIn extends RunnableLike<TIn>
-  ? RunnableLike<TOut>
-  : TObservableIn extends PureDeferredObservableLike<TIn>
-  ? PureDeferredObservableLike<TOut>
-  : TObservableIn extends MulticastObservableLike<TIn>
-  ? PureDeferredObservableLike<TOut>
-  : TObservableIn extends DeferredObservableWithSideEffectsLike<TIn>
-  ? DeferredObservableWithSideEffectsLike<TOut>
-  : TObservableIn extends DeferredObservableLike<TIn>
-  ? DeferredObservableLike<TOut>
-  : ObservableLike<TOut>;
+    ? RunnableWithSideEffectsLike<TOut>
+    : TObservableIn extends RunnableLike<TIn>
+      ? RunnableLike<TOut>
+      : TObservableIn extends PureDeferredObservableLike<TIn>
+        ? PureDeferredObservableLike<TOut>
+        : TObservableIn extends MulticastObservableLike<TIn>
+          ? PureDeferredObservableLike<TOut>
+          : TObservableIn extends DeferredObservableWithSideEffectsLike<TIn>
+            ? DeferredObservableWithSideEffectsLike<TOut>
+            : TObservableIn extends DeferredObservableLike<TIn>
+              ? DeferredObservableLike<TOut>
+              : ObservableLike<TOut>;
 
 export type DeferringObservableOperator<
   TIn,
@@ -195,18 +195,18 @@ export type ObservableOperatorWithSideEffects<TIn, TOut> = <
 ) => TObservableIn extends PureRunnableLike<TIn>
   ? RunnableWithSideEffectsLike<TOut>
   : TObservableIn extends RunnableWithSideEffectsLike<TIn>
-  ? RunnableWithSideEffectsLike<TOut>
-  : TObservableIn extends RunnableLike<TIn>
-  ? RunnableWithSideEffectsLike<TOut>
-  : TObservableIn extends PureDeferredObservableLike<TIn>
-  ? DeferredObservableWithSideEffectsLike<TOut>
-  : TObservableIn extends DeferredObservableWithSideEffectsLike<TIn>
-  ? DeferredObservableWithSideEffectsLike<TOut>
-  : TObservableIn extends DeferredObservableLike<TIn>
-  ? DeferredObservableWithSideEffectsLike<TOut>
-  : TObservableIn extends MulticastObservableLike<TIn>
-  ? DeferredObservableWithSideEffectsLike<TOut>
-  : ObservableLike<TOut>;
+    ? RunnableWithSideEffectsLike<TOut>
+    : TObservableIn extends RunnableLike<TIn>
+      ? RunnableWithSideEffectsLike<TOut>
+      : TObservableIn extends PureDeferredObservableLike<TIn>
+        ? DeferredObservableWithSideEffectsLike<TOut>
+        : TObservableIn extends DeferredObservableWithSideEffectsLike<TIn>
+          ? DeferredObservableWithSideEffectsLike<TOut>
+          : TObservableIn extends DeferredObservableLike<TIn>
+            ? DeferredObservableWithSideEffectsLike<TOut>
+            : TObservableIn extends MulticastObservableLike<TIn>
+              ? DeferredObservableWithSideEffectsLike<TOut>
+              : ObservableLike<TOut>;
 
 export const PureRunnableType: Pick<
   PureRunnableLike,
@@ -1301,14 +1301,14 @@ export interface ObservableModule {
   ) => TObservableIn extends PureDeferredObservableLike<T>
     ? PureDeferredObservableLike<T>
     : TObservableIn extends MulticastObservableLike<T>
-    ? MulticastObservableLike<T>
-    : TObservableIn extends RunnableWithSideEffectsLike<T>
-    ? DeferredObservableWithSideEffectsLike<T>
-    : TObservableIn extends DeferredObservableWithSideEffectsLike<T>
-    ? DeferredObservableWithSideEffectsLike<T>
-    : TObservableIn extends DeferredObservableLike<T>
-    ? DeferredObservableLike<T>
-    : ObservableLike<T>;
+      ? MulticastObservableLike<T>
+      : TObservableIn extends RunnableWithSideEffectsLike<T>
+        ? DeferredObservableWithSideEffectsLike<T>
+        : TObservableIn extends DeferredObservableWithSideEffectsLike<T>
+          ? DeferredObservableWithSideEffectsLike<T>
+          : TObservableIn extends DeferredObservableLike<T>
+            ? DeferredObservableLike<T>
+            : ObservableLike<T>;
 
   switchAll<T>(): PureStatefulObservableOperator<PureRunnableLike<T>, T>;
   switchAll<T>(options: {

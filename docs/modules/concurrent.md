@@ -65,7 +65,7 @@
 
 ### StreamOf
 
-Ƭ **StreamOf**<`TStreamable`\>: `ReturnType`<`TStreamable`[typeof [`StreamableLike_stream`](concurrent.md#streamablelike_stream)]\>
+Ƭ **StreamOf**\<`TStreamable`\>: `ReturnType`\<`TStreamable`[typeof [`StreamableLike_stream`](concurrent.md#streamablelike_stream)]\>
 
 #### Type parameters
 

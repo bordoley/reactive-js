@@ -25,12 +25,14 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../concurrent.js";
-import { EventListenerLike_notify } from "../../events.js";
 import LazyInitEventSourceMixin, {
   LazyInitEventSourceLike,
   LazyInitEventSourceLike_publisher,
 } from "../../events/__mixins__/LazyInitEventSourceMixin.js";
+import { EventListenerLike_notify } from "../../events.js";
 import { SideEffect1, call, none, pipe, returns } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
+import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -43,8 +45,6 @@ import {
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../utils.js";
-import * as Disposable from "../../utils/Disposable.js";
-import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
 
 const ObserverMixin: <T>() => Mixin2<
   ObserverLike<T>,

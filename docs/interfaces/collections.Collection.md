@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [collections](../modules/collections.md) / Collection
 
-# Interface: Collection<TKey\>
+# Interface: Collection\<TKey\>
 
 [collections](../modules/collections.md).Collection
 

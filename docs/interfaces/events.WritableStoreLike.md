@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [events](../modules/events.md) / WritableStoreLike
 
-# Interface: WritableStoreLike<T\>
+# Interface: WritableStoreLike\<T\>
 
 [events](../modules/events.md).WritableStoreLike
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`StoreLike`](events.StoreLike.md)<`T`\>
+- [`StoreLike`](events.StoreLike.md)\<`T`\>
 
 - [`DisposableLike`](utils.DisposableLike.md)
 

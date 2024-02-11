@@ -1,12 +1,12 @@
 /// <reference types="./Streamable.createAnimationGroupEventHandler.d.ts" />
 
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../../../__internal__/mixins.js";
-import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
 import * as Enumerable from "../../../collections/Enumerable.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
+import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
 import { StreamableLike_stream, } from "../../../concurrent.js";
-import { EventListenerLike_notify, } from "../../../events.js";
 import * as Publisher from "../../../events/Publisher.js";
+import { EventListenerLike_notify, } from "../../../events.js";
 import { isFunction, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Observable from "../../Observable.js";

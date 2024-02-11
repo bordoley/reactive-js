@@ -7,8 +7,8 @@ import {
 } from "../../__internal__/mixins.js";
 import { ObserverLike, ObserverLike_notify } from "../../concurrent.js";
 import { pipe, returns } from "../../functions.js";
-import { DisposableLike } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
+import { DisposableLike } from "../../utils.js";
 import ObserverMixin from "./ObserverMixin.js";
 
 const DelegatingObserverMixin: <T>() => Mixin1<

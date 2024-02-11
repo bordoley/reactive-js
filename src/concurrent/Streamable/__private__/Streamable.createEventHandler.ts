@@ -28,28 +28,28 @@ const Streamable_createEventHandler: Streamable.Signature["createEventHandler"] 
               { innerType: Observable.DeferredObservableWithSideEffectsType },
             )
           : mode === "blocking"
-          ? Observable.exhaustMap<TEventType, boolean>(
-              compose(
-                op,
-                Observable.ignoreElements<boolean>(),
-                Observable.startWith<boolean>(true),
-                Observable.endWith<boolean>(false),
+            ? Observable.exhaustMap<TEventType, boolean>(
+                compose(
+                  op,
+                  Observable.ignoreElements<boolean>(),
+                  Observable.startWith<boolean>(true),
+                  Observable.endWith<boolean>(false),
+                ),
+                { innerType: Observable.DeferredObservableWithSideEffectsType },
+              )
+            : Observable.mergeMap<TEventType, boolean>(
+                compose(
+                  op,
+                  Observable.ignoreElements<never>(),
+                  Observable.startWith<boolean>(true),
+                  Observable.endWith<boolean>(false),
+                ),
+                {
+                  ...options,
+                  concurrency: 1,
+                  innerType: Observable.DeferredObservableWithSideEffectsType,
+                },
               ),
-              { innerType: Observable.DeferredObservableWithSideEffectsType },
-            )
-          : Observable.mergeMap<TEventType, boolean>(
-              compose(
-                op,
-                Observable.ignoreElements<never>(),
-                Observable.startWith<boolean>(true),
-                Observable.endWith<boolean>(false),
-              ),
-              {
-                ...options,
-                concurrency: 1,
-                innerType: Observable.DeferredObservableWithSideEffectsType,
-              },
-            ),
         Observable.mergeWith<boolean>(pipe(false, Observable.fromValue())),
       ),
     );

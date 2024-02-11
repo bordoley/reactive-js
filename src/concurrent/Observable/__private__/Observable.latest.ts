@@ -23,9 +23,9 @@ import {
   ObserverLike_notify,
 } from "../../../concurrent.js";
 import { none, pipe } from "../../../functions.js";
-import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_allArePure from "./Observable.allArePure.js";

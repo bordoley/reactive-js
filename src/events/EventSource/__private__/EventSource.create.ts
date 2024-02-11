@@ -12,8 +12,8 @@ import {
   none,
   pipe,
 } from "../../../functions.js";
-import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import type * as EventSource from "../../EventSource.js";
 import * as Publisher from "../../Publisher.js";
 

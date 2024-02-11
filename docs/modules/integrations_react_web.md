@@ -15,7 +15,7 @@
 
 ### WindowLocationProvider
 
-▸ **WindowLocationProvider**(`props`, `context?`): ``null`` \| `ReactElement`<`any`, `any`\>
+▸ **WindowLocationProvider**(`props`, `context?`): `ReactNode`
 
 #### Parameters
 
@@ -28,73 +28,73 @@
 
 #### Returns
 
-``null`` \| `ReactElement`<`any`, `any`\>
+`ReactNode`
 
 ___
 
 ### useAnimate
 
-▸ **useAnimate**<`TElement`\>(`animation`): `Ref`<`TElement`\>
+▸ **useAnimate**\<`TElement`\>(`animation`): `Ref`\<`TElement`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TElement` | extends `HTMLElement`<`TElement`\> |
+| `TElement` | extends `HTMLElement` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animation` | [`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<[`CSSStyleMapLike`](../interfaces/integrations_web.CSSStyleMapLike.md)\>\> |
+| `animation` | [`Optional`](functions.md#optional)\<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<[`CSSStyleMapLike`](../interfaces/integrations_web.CSSStyleMapLike.md)\>\> |
 
 #### Returns
 
-`Ref`<`TElement`\>
+`Ref`\<`TElement`\>
 
-▸ **useAnimate**<`TElement`, `T`\>(`animation`, `selector`, `deps`): `Ref`<`TElement`\>
+▸ **useAnimate**\<`TElement`, `T`\>(`animation`, `selector`, `deps`): `Ref`\<`TElement`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TElement` | extends `HTMLElement`<`TElement`\> |
+| `TElement` | extends `HTMLElement` |
 | `T` | `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animation` | [`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\> |
-| `selector` | [`Function1`](functions.md#function1)<`T`, [`CSSStyleMapLike`](../interfaces/integrations_web.CSSStyleMapLike.md)\> |
+| `animation` | [`Optional`](functions.md#optional)\<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>\> |
+| `selector` | [`Function1`](functions.md#function1)\<`T`, [`CSSStyleMapLike`](../interfaces/integrations_web.CSSStyleMapLike.md)\> |
 | `deps` | readonly `unknown`[] |
 
 #### Returns
 
-`Ref`<`TElement`\>
+`Ref`\<`TElement`\>
 
 ___
 
 ### useScroll
 
-▸ **useScroll**<`TElement`\>(`callback`, `deps`): `Ref`<`TElement`\>
+▸ **useScroll**\<`TElement`\>(`callback`, `deps`): `Ref`\<`TElement`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TElement` | extends `HTMLElement`<`TElement`\> |
+| `TElement` | extends `HTMLElement` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `callback` | [`SideEffect1`](functions.md#sideeffect1)<[`ScrollValue`](../interfaces/integrations_web.ScrollValue.md)\> |
+| `callback` | [`SideEffect1`](functions.md#sideeffect1)\<[`ScrollValue`](../interfaces/integrations_web.ScrollValue.md)\> |
 | `deps` | readonly `unknown`[] |
 
 #### Returns
 
-`Ref`<`TElement`\>
+`Ref`\<`TElement`\>
 
 ___
 
@@ -110,6 +110,6 @@ ___
 | :------ | :------ |
 | `canGoBack` | `boolean` |
 | `goBack` | () => `void` |
-| `push` | [`SideEffect1`](functions.md#sideeffect1)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md) \| [`Updater`](functions.md#updater)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\>\> |
-| `replace` | [`SideEffect1`](functions.md#sideeffect1)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md) \| [`Updater`](functions.md#updater)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\>\> |
-| `uri` | [`Optional`](functions.md#optional)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\> |
+| `push` | [`SideEffect1`](functions.md#sideeffect1)\<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md) \| [`Updater`](functions.md#updater)\<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\>\> |
+| `replace` | [`SideEffect1`](functions.md#sideeffect1)\<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md) \| [`Updater`](functions.md#updater)\<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\>\> |
+| `uri` | [`Optional`](functions.md#optional)\<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\> |

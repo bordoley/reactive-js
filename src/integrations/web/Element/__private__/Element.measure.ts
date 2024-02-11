@@ -1,8 +1,8 @@
 import { Array_every } from "../../../../__internal__/constants.js";
 import * as ReadonlyArray from "../../../../collections/ReadonlyArray.js";
-import { StoreLike_value } from "../../../../events.js";
 import * as EventSource from "../../../../events/EventSource.js";
 import * as WritableStore from "../../../../events/WritableStore.js";
+import { StoreLike_value } from "../../../../events.js";
 import { isNull, pipe, pipeLazy } from "../../../../functions.js";
 import * as Disposable from "../../../../utils/Disposable.js";
 import { Rect } from "../../../web.js";

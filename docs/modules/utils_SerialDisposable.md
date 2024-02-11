@@ -12,13 +12,13 @@
 
 ### create
 
-▸ **create**(): [`SerialDisposableLike`](../interfaces/utils.SerialDisposableLike.md)<[`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **create**(): [`SerialDisposableLike`](../interfaces/utils.SerialDisposableLike.md)\<[`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Returns
 
-[`SerialDisposableLike`](../interfaces/utils.SerialDisposableLike.md)<[`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`SerialDisposableLike`](../interfaces/utils.SerialDisposableLike.md)\<[`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **create**<`TDisposable`\>(`initialValue`): [`SerialDisposableLike`](../interfaces/utils.SerialDisposableLike.md)<`TDisposable`\>
+▸ **create**\<`TDisposable`\>(`initialValue`): [`SerialDisposableLike`](../interfaces/utils.SerialDisposableLike.md)\<`TDisposable`\>
 
 #### Type parameters
 
@@ -34,4 +34,4 @@
 
 #### Returns
 
-[`SerialDisposableLike`](../interfaces/utils.SerialDisposableLike.md)<`TDisposable`\>
+[`SerialDisposableLike`](../interfaces/utils.SerialDisposableLike.md)\<`TDisposable`\>

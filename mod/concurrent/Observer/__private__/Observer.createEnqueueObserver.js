@@ -3,8 +3,8 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { ObserverLike_notify, SchedulerLike_requestYield, } from "../../../concurrent.js";
 import { none } from "../../../functions.js";
-import { QueueableLike_enqueue } from "../../../utils.js";
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { QueueableLike_enqueue } from "../../../utils.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 const Observer_createEnqueueObserver = /*@__PURE__*/ (() => {

@@ -49,7 +49,7 @@
 
 ### buffer
 
-▸ **buffer**<`T`\>(`options?`): [`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, readonly `T`[]\>
+▸ **buffer**\<`T`\>(`options?`): [`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -66,13 +66,13 @@
 
 #### Returns
 
-[`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, readonly `T`[]\>
+[`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, readonly `T`[]\>
 
 ___
 
 ### concat
 
-▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>
+▸ **concat**\<`T`\>(`fst`, `snd`, `...tail`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -84,19 +84,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\> |
-| `snd` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\> |
-| `...tail` | readonly [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>[] |
+| `fst` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\> |
+| `snd` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\> |
+| `...tail` | readonly [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>[] |
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>
+[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>
 
 ___
 
 ### concatAll
 
-▸ **concatAll**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
+▸ **concatAll**\<`T`\>(): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>
 
 Converts a higher-order Container into a first-order
 Container by concatenating the inner sources in order.
@@ -109,13 +109,13 @@ Container by concatenating the inner sources in order.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>
 
 ___
 
 ### concatMany
 
-▸ **concatMany**<`T`\>(`enumerables`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>
+▸ **concatMany**\<`T`\>(`enumerables`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -127,17 +127,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerables` | readonly [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>[] |
+| `enumerables` | readonly [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>[] |
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>
+[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>
 
 ___
 
 ### concatMap
 
-▸ **concatMap**<`TA`, `TB`\>(`selector`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\>\>
+▸ **concatMap**\<`TA`, `TB`\>(`selector`): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\>\>
 
 #### Type parameters
 
@@ -150,17 +150,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)\<`TA`, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\>\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\>\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\>\>
 
 ___
 
 ### concatWith
 
-▸ **concatWith**<`T`\>(`snd`, `...tail`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
+▸ **concatWith**\<`T`\>(`snd`, `...tail`): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -172,18 +172,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `snd` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\> |
-| `...tail` | readonly [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>[] |
+| `snd` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\> |
+| `...tail` | readonly [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>[] |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>
 
 ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`options?`): [`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `ArrayBuffer`, `string`\>
+▸ **decodeWithCharset**(`options?`): [`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -196,13 +196,13 @@ ___
 
 #### Returns
 
-[`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `ArrayBuffer`, `string`\>
+[`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `ArrayBuffer`, `string`\>
 
 ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+▸ **distinctUntilChanged**\<`T`\>(`options?`): [`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -215,17 +215,17 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+| `options.equality?` | [`Equality`](functions.md#equality)\<`T`\> |
 
 #### Returns
 
-[`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+[`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 ___
 
 ### empty
 
-▸ **empty**<`T`\>(): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>
+▸ **empty**\<`T`\>(): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -235,13 +235,13 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>
+[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>
 
 ___
 
 ### fromReadonlyArray
 
-▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
+▸ **fromReadonlyArray**\<`T`\>(`options?`): [`Function1`](functions.md#function1)\<readonly `T`[], [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -259,13 +259,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)\<readonly `T`[], [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>
 
 ___
 
 ### generate
 
-▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>
+▸ **generate**\<`T`\>(`generator`, `initialValue`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -277,18 +277,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+| `generator` | [`Updater`](functions.md#updater)\<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)\<`T`\> |
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>
+[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+▸ **keep**\<`T`\>(`predicate`): [`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -300,17 +300,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+| `predicate` | [`Predicate`](functions.md#predicate)\<`T`\> |
 
 #### Returns
 
-[`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+[`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `TA`, `TB`\>
+▸ **map**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -323,17 +323,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
+| `selector` | [`Function1`](functions.md#function1)\<`TA`, `TB`\> |
 
 #### Returns
 
-[`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `TA`, `TB`\>
+[`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `TA`, `TB`\>
 
 ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>\>
+▸ **pairwise**\<`T`\>(): [`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](functions.md#tuple2)\<`T`, `T`\>\>
 
 #### Type parameters
 
@@ -343,13 +343,13 @@ ___
 
 #### Returns
 
-[`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>\>
+[`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](functions.md#tuple2)\<`T`, `T`\>\>
 
 ___
 
 ### reduce
 
-▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>, `TAcc`\>
+▸ **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>, `TAcc`\>
 
 #### Type parameters
 
@@ -362,18 +362,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+| `reducer` | [`Reducer`](functions.md#reducer)\<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)\<`TAcc`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>, `TAcc`\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>, `TAcc`\>
 
 ___
 
 ### repeat
 
-▸ **repeat**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
+▸ **repeat**\<`T`\>(`predicate`): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -385,13 +385,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
+| `predicate` | [`Predicate`](functions.md#predicate)\<`number`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>
 
-▸ **repeat**<`T`\>(`count`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
+▸ **repeat**\<`T`\>(`count`): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -407,9 +407,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>
 
-▸ **repeat**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
+▸ **repeat**\<`T`\>(): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -419,13 +419,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>
 
 ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `TAcc`\>
+▸ **scan**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -438,18 +438,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+| `scanner` | [`Reducer`](functions.md#reducer)\<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)\<`TAcc`\> |
 
 #### Returns
 
-[`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `TAcc`\>
+[`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `TAcc`\>
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+▸ **skipFirst**\<`T`\>(`options?`): [`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -466,13 +466,13 @@ ___
 
 #### Returns
 
-[`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+[`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+▸ **takeFirst**\<`T`\>(`options?`): [`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -489,13 +489,13 @@ ___
 
 #### Returns
 
-[`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+[`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+▸ **takeWhile**\<`T`\>(`predicate`, `options?`): [`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -507,19 +507,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+| `predicate` | [`Predicate`](functions.md#predicate)\<`T`\> |
 | `options?` | `Object` |
 | `options.inclusive?` | `boolean` |
 
 #### Returns
 
-[`ComputationOperator`](computations.md#computationoperator)<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+[`ComputationOperator`](computations.md#computationoperator)\<[`EnumerableComputation`](../interfaces/collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 ___
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>, readonly `T`[]\>
+▸ **toReadonlyArray**\<`T`\>(): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>, readonly `T`[]\>
 
 #### Type parameters
 
@@ -529,13 +529,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>, readonly `T`[]\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>, readonly `T`[]\>
 
 ___
 
 ### zip
 
-▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
+▸ **zip**\<`TA`, `TB`\>(`a`, `b`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple2`](functions.md#tuple2)\<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -548,14 +548,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\> |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
+| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
+[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple2`](functions.md#tuple2)\<`TA`, `TB`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+▸ **zip**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple3`](functions.md#tuple3)\<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -569,15 +569,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\> |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
-| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TC`\> |
+| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TC`\> |
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple3`](functions.md#tuple3)\<`TA`, `TB`, `TC`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+▸ **zip**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple4`](functions.md#tuple4)\<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -592,16 +592,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\> |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
-| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TC`\> |
-| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TD`\> |
+| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TD`\> |
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple4`](functions.md#tuple4)\<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+▸ **zip**\<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple5`](functions.md#tuple5)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -617,17 +617,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\> |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
-| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TC`\> |
-| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TD`\> |
-| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TE`\> |
+| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TE`\> |
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple5`](functions.md#tuple5)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+▸ **zip**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple6`](functions.md#tuple6)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -644,18 +644,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\> |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
-| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TC`\> |
-| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TD`\> |
-| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TE`\> |
-| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TF`\> |
+| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TF`\> |
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple6`](functions.md#tuple6)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+▸ **zip**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple7`](functions.md#tuple7)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -673,19 +673,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\> |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
-| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TC`\> |
-| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TD`\> |
-| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TE`\> |
-| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TF`\> |
-| `g` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TG`\> |
+| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TG`\> |
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple7`](functions.md#tuple7)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+▸ **zip**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple8`](functions.md#tuple8)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -704,20 +704,20 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\> |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
-| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TC`\> |
-| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TD`\> |
-| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TE`\> |
-| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TF`\> |
-| `g` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TG`\> |
-| `h` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TH`\> |
+| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TG`\> |
+| `h` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TH`\> |
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple8`](functions.md#tuple8)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+▸ **zip**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple9`](functions.md#tuple9)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -737,25 +737,25 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\> |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
-| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TC`\> |
-| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TD`\> |
-| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TE`\> |
-| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TF`\> |
-| `g` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TG`\> |
-| `h` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TH`\> |
-| `i` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TI`\> |
+| `a` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TG`\> |
+| `h` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TH`\> |
+| `i` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TI`\> |
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple9`](functions.md#tuple9)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 ___
 
 ### zipWith
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>\>
+▸ **zipWith**\<`TA`, `TB`\>(`b`): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple2`](functions.md#tuple2)\<`TA`, `TB`\>\>\>
 
 #### Type parameters
 
@@ -768,13 +768,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple2`](functions.md#tuple2)\<`TA`, `TB`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>\>
+▸ **zipWith**\<`TA`, `TB`, `TC`\>(`b`, `c`): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple3`](functions.md#tuple3)\<`TA`, `TB`, `TC`\>\>\>
 
 #### Type parameters
 
@@ -788,14 +788,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
-| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TC`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TC`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple3`](functions.md#tuple3)\<`TA`, `TB`, `TC`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>\>
+▸ **zipWith**\<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple4`](functions.md#tuple4)\<`TA`, `TB`, `TC`, `TD`\>\>\>
 
 #### Type parameters
 
@@ -810,15 +810,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
-| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TC`\> |
-| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TD`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TD`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple4`](functions.md#tuple4)\<`TA`, `TB`, `TC`, `TD`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>\>
+▸ **zipWith**\<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple5`](functions.md#tuple5)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>\>
 
 #### Type parameters
 
@@ -834,16 +834,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
-| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TC`\> |
-| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TD`\> |
-| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TE`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TE`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple5`](functions.md#tuple5)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>\>
+▸ **zipWith**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple6`](functions.md#tuple6)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>\>
 
 #### Type parameters
 
@@ -860,17 +860,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
-| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TC`\> |
-| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TD`\> |
-| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TE`\> |
-| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TF`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TF`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple6`](functions.md#tuple6)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>\>
+▸ **zipWith**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple7`](functions.md#tuple7)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>\>
 
 #### Type parameters
 
@@ -888,18 +888,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
-| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TC`\> |
-| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TD`\> |
-| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TE`\> |
-| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TF`\> |
-| `g` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TG`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TG`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple7`](functions.md#tuple7)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>\>
+▸ **zipWith**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple8`](functions.md#tuple8)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>\>
 
 #### Type parameters
 
@@ -918,19 +918,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
-| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TC`\> |
-| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TD`\> |
-| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TE`\> |
-| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TF`\> |
-| `g` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TG`\> |
-| `h` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TH`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TG`\> |
+| `h` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TH`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple8`](functions.md#tuple8)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>\>
+▸ **zipWith**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple9`](functions.md#tuple9)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>\>
 
 #### Type parameters
 
@@ -950,15 +950,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TB`\> |
-| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TC`\> |
-| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TD`\> |
-| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TE`\> |
-| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TF`\> |
-| `g` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TG`\> |
-| `h` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TH`\> |
-| `i` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TI`\> |
+| `b` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TG`\> |
+| `h` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TH`\> |
+| `i` | [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TI`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TA`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple9`](functions.md#tuple9)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>\>

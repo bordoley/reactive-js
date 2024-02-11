@@ -12,6 +12,7 @@ import {
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
 import { bindMethod, error, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -19,7 +20,6 @@ import {
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../utils.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import type * as Flowable from "../../Flowable.js";
 import * as Observable from "../../Observable.js";
 import Flowable_create from "./Flowable.create.js";

@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [utils](../modules/utils.md) / QueueableLike
 
-# Interface: QueueableLike<T\>
+# Interface: QueueableLike\<T\>
 
 [utils](../modules/utils.md).QueueableLike
 

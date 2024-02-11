@@ -16,6 +16,9 @@ import {
   ObserverLike_notify,
 } from "../../../concurrent.js";
 import { bind, bindMethod, none, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import * as SerialDisposable from "../../../utils/SerialDisposable.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -23,9 +26,6 @@ import {
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../utils.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import * as SerialDisposable from "../../../utils/SerialDisposable.js";
-import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";

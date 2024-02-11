@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / DispatcherLike
 
-# Interface: DispatcherLike<T\>
+# Interface: DispatcherLike\<T\>
 
 [concurrent](../modules/concurrent.md).DispatcherLike
 
@@ -15,9 +15,9 @@ be dispatched from any execution constext.
 
 ## Hierarchy
 
-- [`QueueableLike`](utils.QueueableLike.md)<`T`\>
+- [`QueueableLike`](utils.QueueableLike.md)\<`T`\>
 
-- [`EventSourceLike`](events.EventSourceLike.md)<typeof [`DispatcherLikeEvent_ready`](../modules/concurrent.md#dispatcherlikeevent_ready) \| typeof [`DispatcherLikeEvent_capacityExceeded`](../modules/concurrent.md#dispatcherlikeevent_capacityexceeded) \| typeof [`DispatcherLikeEvent_completed`](../modules/concurrent.md#dispatcherlikeevent_completed)\>
+- [`EventSourceLike`](events.EventSourceLike.md)\<typeof [`DispatcherLikeEvent_ready`](../modules/concurrent.md#dispatcherlikeevent_ready) \| typeof [`DispatcherLikeEvent_capacityExceeded`](../modules/concurrent.md#dispatcherlikeevent_capacityexceeded) \| typeof [`DispatcherLikeEvent_completed`](../modules/concurrent.md#dispatcherlikeevent_completed)\>
 
 - [`DisposableLike`](utils.DisposableLike.md)
 

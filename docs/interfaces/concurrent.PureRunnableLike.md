@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / PureRunnableLike
 
-# Interface: PureRunnableLike<T\>
+# Interface: PureRunnableLike\<T\>
 
 [concurrent](../modules/concurrent.md).PureRunnableLike
 
@@ -12,9 +12,9 @@
 
 ## Hierarchy
 
-- [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>
+- [`RunnableLike`](concurrent.RunnableLike.md)\<`T`\>
 
-- [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`T`\>
+- [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)\<`T`\>
 
   ↳ **`PureRunnableLike`**
 

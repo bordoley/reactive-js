@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / ObserverLike
 
-# Interface: ObserverLike<T\>
+# Interface: ObserverLike\<T\>
 
 [concurrent](../modules/concurrent.md).ObserverLike
 
@@ -14,7 +14,7 @@ A consumer of push-based notifications.
 
 ## Hierarchy
 
-- [`DispatcherLike`](concurrent.DispatcherLike.md)<`T`\>
+- [`DispatcherLike`](concurrent.DispatcherLike.md)\<`T`\>
 
 - [`SchedulerLike`](concurrent.SchedulerLike.md)
 

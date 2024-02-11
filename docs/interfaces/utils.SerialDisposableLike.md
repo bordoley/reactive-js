@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [utils](../modules/utils.md) / SerialDisposableLike
 
-# Interface: SerialDisposableLike<TDisposable\>
+# Interface: SerialDisposableLike\<TDisposable\>
 
 [utils](../modules/utils.md).SerialDisposableLike
 

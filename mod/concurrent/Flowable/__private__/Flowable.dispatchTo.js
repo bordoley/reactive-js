@@ -3,8 +3,8 @@
 import { DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, FlowableLike_flow, ObservableLike_observe, PauseableLike_pause, PauseableLike_resume, } from "../../../concurrent.js";
 import * as EventSource from "../../../events/EventSource.js";
 import { invoke, pipe } from "../../../functions.js";
-import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 const Flowable_dispatchTo = (dispatcher) => (flowable) => Observable.create(observer => {
     const flowed = pipe(flowable[FlowableLike_flow](observer, {

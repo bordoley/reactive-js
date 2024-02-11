@@ -32,19 +32,19 @@
 
 ### Signature
 
-Ƭ **Signature**: [`DictionaryCollectionModule`](../interfaces/collections.DictionaryCollectionModule.md)<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)\>
+Ƭ **Signature**: [`DictionaryCollectionModule`](../interfaces/collections.DictionaryCollectionModule.md)\<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)\>
 
 ___
 
 ### TKeyBase
 
-Ƭ **TKeyBase**: [`KeyOf`](collections.md#keyof)<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)\>
+Ƭ **TKeyBase**: [`KeyOf`](collections.md#keyof)\<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)\>
 
 ## Functions
 
 ### empty
 
-▸ **empty**<`T`, `TKey`\>(): `ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>
+▸ **empty**\<`T`, `TKey`\>(): `ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>
 
 Return an Collection that emits no items.
 
@@ -57,13 +57,13 @@ Return an Collection that emits no items.
 
 #### Returns
 
-`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>
+`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>
 
 ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
+▸ **entries**\<`T`, `TKey`\>(): [`Function1`](functions.md#function1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple2`](functions.md#tuple2)\<`TKey`, `T`\>\>\>
 
 #### Type parameters
 
@@ -74,13 +74,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
+[`Function1`](functions.md#function1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple2`](functions.md#tuple2)\<`TKey`, `T`\>\>\>
 
 ___
 
 ### forEach
 
-▸ **forEach**<`T`, `TKey`\>(`selector`): [`SideEffect1`](functions.md#sideeffect1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>\>
+▸ **forEach**\<`T`, `TKey`\>(`selector`): [`SideEffect1`](functions.md#sideeffect1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>\>
 
 #### Type parameters
 
@@ -93,17 +93,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`SideEffect2`](functions.md#sideeffect2)<`T`, `TKey`\> |
+| `selector` | [`SideEffect2`](functions.md#sideeffect2)\<`T`, `TKey`\> |
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>\>
+[`SideEffect1`](functions.md#sideeffect1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>\>
 
 ___
 
 ### fromEntries
 
-▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>, `ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>\>
+▸ **fromEntries**\<`T`, `TKey`\>(): [`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple2`](functions.md#tuple2)\<`TKey`, `T`\>\>, `ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>\>
 
 #### Type parameters
 
@@ -114,13 +114,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>, `ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>\>
+[`Function1`](functions.md#function1)\<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<[`Tuple2`](functions.md#tuple2)\<`TKey`, `T`\>\>, `ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`CollectionOperator`](collections.md#collectionoperator)<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)<`unknown`\>, `T`, `T`, `TKey`\>
+▸ **keep**\<`T`, `TKey`\>(`predicate`): [`CollectionOperator`](collections.md#collectionoperator)\<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)\<`unknown`\>, `T`, `T`, `TKey`\>
 
 #### Type parameters
 
@@ -133,17 +133,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `predicate` | [`Function2`](functions.md#function2)<`T`, `TKey`, `boolean`\> |
+| `predicate` | [`Function2`](functions.md#function2)\<`T`, `TKey`, `boolean`\> |
 
 #### Returns
 
-[`CollectionOperator`](collections.md#collectionoperator)<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)<`unknown`\>, `T`, `T`, `TKey`\>
+[`CollectionOperator`](collections.md#collectionoperator)\<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)\<`unknown`\>, `T`, `T`, `TKey`\>
 
 ___
 
 ### keys
 
-▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `unknown`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TKey`\>\>
+▸ **keys**\<`TKey`\>(): [`Function1`](functions.md#function1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `unknown`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TKey`\>\>
 
 #### Type parameters
 
@@ -153,24 +153,16 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `unknown`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TKey`\>\>
+[`Function1`](functions.md#function1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `unknown`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TKey`\>\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`CollectionOperator`](collections.md#collectionoperator)<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)<`unknown`\>, `TA`, `TB`, `TKey`\>
+▸ **map**\<`TA`, `TB`, `TKey`\>(`selector`): [`CollectionOperator`](collections.md#collectionoperator)\<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)\<`unknown`\>, `TA`, `TB`, `TKey`\>
 
 Returns a CollectionOperator that applies the `selector` function to each
 value emitted by the source.
-
-**`Typeparam`**
-
-TA - The inner type of the source container
-
-**`Typeparam`**
-
-TB - The inner type of the mapped container
 
 #### Type parameters
 
@@ -184,17 +176,25 @@ TB - The inner type of the mapped container
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `selector` | [`Function2`](functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
+| `selector` | [`Function2`](functions.md#function2)\<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
 
 #### Returns
 
-[`CollectionOperator`](collections.md#collectionoperator)<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)<`unknown`\>, `TA`, `TB`, `TKey`\>
+[`CollectionOperator`](collections.md#collectionoperator)\<[`ReadonlyMapCollection`](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)\<`unknown`\>, `TA`, `TB`, `TKey`\>
+
+**`Typeparam`**
+
+TA - The inner type of the source container
+
+**`Typeparam`**
+
+TB - The inner type of the mapped container
 
 ___
 
 ### reduce
 
-▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, `TAcc`\>
+▸ **reduce**\<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>, `TAcc`\>
 
 #### Type parameters
 
@@ -208,18 +208,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `reducer` | [`Function3`](functions.md#function3)<`TAcc`, `T`, `TKey`, `TAcc`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+| `reducer` | [`Function3`](functions.md#function3)\<`TAcc`, `T`, `TKey`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)\<`TAcc`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, `TAcc`\>
+[`Function1`](functions.md#function1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>, `TAcc`\>
 
 ___
 
 ### toDictionary
 
-▸ **toDictionary**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`TKey`, `T`\>\>
+▸ **toDictionary**\<`T`, `TKey`\>(): [`Function1`](functions.md#function1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>, [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)\<`TKey`, `T`\>\>
 
 #### Type parameters
 
@@ -230,13 +230,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`TKey`, `T`\>\>
+[`Function1`](functions.md#function1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>, [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)\<`TKey`, `T`\>\>
 
 ___
 
 ### toReadonlyMap
 
-▸ **toReadonlyMap**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+▸ **toReadonlyMap**\<`T`, `TKey`\>(): [`Function1`](functions.md#function1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>, `ReadonlyMap`\<`TKey`, `T`\>\>
 
 #### Type parameters
 
@@ -247,13 +247,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+[`Function1`](functions.md#function1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>, `ReadonlyMap`\<`TKey`, `T`\>\>
 
 ___
 
 ### union
 
-▸ **union**<`TKey`, `T`\>(`m2`): [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, `ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>\>
+▸ **union**\<`TKey`, `T`\>(`m2`): [`Function1`](functions.md#function1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>, `ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>\>
 
 #### Type parameters
 
@@ -266,17 +266,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m2` | `ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\> |
+| `m2` | `ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, `ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>\>
+[`Function1`](functions.md#function1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>, `ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>\>
 
 ___
 
 ### values
 
-▸ **values**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
+▸ **values**\<`T`, `TKey`\>(): [`Function1`](functions.md#function1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -287,4 +287,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)\<`ReadonlyMap`\<`NonNullable`\<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`T`\>\>

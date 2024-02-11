@@ -36,7 +36,7 @@
 
 ### [DisposableLike\_error]
 
-• `Readonly` **[DisposableLike\_error]**: [`Optional`](../modules/functions.md#optional)<`Error`\>
+• `Readonly` **[DisposableLike\_error]**: [`Optional`](../modules/functions.md#optional)\<`Error`\>
 
 The error the `Disposable` was disposed with if disposed.
 
@@ -72,7 +72,7 @@ Adds the given `DisposableLike` or teardown function to this container or dispos
 
 | Name | Type |
 | :------ | :------ |
-| `teardown` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`Optional`](../modules/functions.md#optional)<`Error`\>\> |
+| `teardown` | [`SideEffect1`](../modules/functions.md#sideeffect1)\<[`Optional`](../modules/functions.md#optional)\<`Error`\>\> |
 
 #### Returns
 

@@ -12,11 +12,11 @@ import {
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
 import { Optional, error, isSome, none, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
 } from "../../../utils.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createPureRunnableWithSideEffects from "./Observable.createRunnableWithSideEffects.js";
 

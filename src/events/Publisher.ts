@@ -20,9 +20,9 @@ import {
   PublisherLike,
 } from "../events.js";
 import { error, newInstance, none, pipe } from "../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed } from "../utils.js";
 
 export const create: <T>(options?: {
   readonly autoDispose?: boolean;

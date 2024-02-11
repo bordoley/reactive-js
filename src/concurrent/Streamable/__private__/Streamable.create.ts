@@ -27,8 +27,8 @@ import {
   pipe,
   raiseIf,
 } from "../../../functions.js";
-import { BackpressureStrategy } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { BackpressureStrategy } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 import DelegatingDispatcherMixin from "../../__mixins__/DelegatingDispatcherMixin.js";

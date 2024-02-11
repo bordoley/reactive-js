@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / DeferredObservableLike
 
-# Interface: DeferredObservableLike<T\>
+# Interface: DeferredObservableLike\<T\>
 
 [concurrent](../modules/concurrent.md).DeferredObservableLike
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`ObservableLike`](concurrent.ObservableLike.md)<`T`\>
+- [`ObservableLike`](concurrent.ObservableLike.md)\<`T`\>
 
   ↳ **`DeferredObservableLike`**
 

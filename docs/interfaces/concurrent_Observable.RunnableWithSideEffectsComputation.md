@@ -20,7 +20,7 @@
 
 ### [Computation\_type]
 
-• `Optional` `Readonly` **[Computation\_type]**: [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>
+• `Optional` `Readonly` **[Computation\_type]**: [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)\<`unknown`\>
 
 #### Overrides
 

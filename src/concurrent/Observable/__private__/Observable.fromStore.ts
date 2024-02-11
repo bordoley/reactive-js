@@ -1,9 +1,9 @@
 import { DispatcherLike_complete } from "../../../concurrent.js";
-import { StoreLike, StoreLike_value } from "../../../events.js";
 import * as EventSource from "../../../events/EventSource.js";
+import { StoreLike, StoreLike_value } from "../../../events.js";
 import { bindMethod, pipe } from "../../../functions.js";
-import { QueueableLike_enqueue } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { QueueableLike_enqueue } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createMulticast from "./Observable.createMulticast.js";
 

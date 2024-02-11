@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`PureStatelessComputationModule`](computations.PureStatelessComputationModule.md)<[`EventSourceComputation`](events_EventSource.EventSourceComputation.md)\>
+- [`PureStatelessComputationModule`](computations.PureStatelessComputationModule.md)\<[`EventSourceComputation`](events_EventSource.EventSourceComputation.md)\>
 
   ↳ **`EventSourceModule`**
 
@@ -25,7 +25,7 @@
 
 ### addEventHandler
 
-▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](events.EventSourceLike.md)<`T`\>, [`DisposableLike`](utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`T`\>(`handler`): [`Function1`](../modules/functions.md#function1)\<[`EventSourceLike`](events.EventSourceLike.md)\<`T`\>, [`DisposableLike`](utils.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -37,17 +37,17 @@
 
 | Name | Type |
 | :------ | :------ |
-| `handler` | [`SideEffect1`](../modules/functions.md#sideeffect1)<`T`\> |
+| `handler` | [`SideEffect1`](../modules/functions.md#sideeffect1)\<`T`\> |
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](events.EventSourceLike.md)<`T`\>, [`DisposableLike`](utils.DisposableLike.md)\>
+[`Function1`](../modules/functions.md#function1)\<[`EventSourceLike`](events.EventSourceLike.md)\<`T`\>, [`DisposableLike`](utils.DisposableLike.md)\>
 
 ___
 
 ### create
 
-▸ **create**<`T`\>(`setup`): [`EventSourceLike`](events.EventSourceLike.md)<`T`\>
+▸ **create**\<`T`\>(`setup`): [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -59,17 +59,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `setup` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`EventListenerLike`](events.EventListenerLike.md)<`T`\>\> |
+| `setup` | [`SideEffect1`](../modules/functions.md#sideeffect1)\<[`EventListenerLike`](events.EventListenerLike.md)\<`T`\>\> |
 
 #### Returns
 
-[`EventSourceLike`](events.EventSourceLike.md)<`T`\>
+[`EventSourceLike`](events.EventSourceLike.md)\<`T`\>
 
 ___
 
 ### fromPromise
 
-▸ **fromPromise**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
+▸ **fromPromise**\<`T`\>(): [`Function1`](../modules/functions.md#function1)\<`Promise`\<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -79,13 +79,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)\<`Promise`\<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>
 
 ___
 
 ### merge
 
-▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`EventSourceLike`](events.EventSourceLike.md)<`T`\>
+▸ **merge**\<`T`\>(`fst`, `snd`, `...tail`): [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -97,19 +97,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`EventSourceLike`](events.EventSourceLike.md)<`T`\> |
-| `snd` | [`EventSourceLike`](events.EventSourceLike.md)<`T`\> |
-| `...tail` | readonly [`EventSourceLike`](events.EventSourceLike.md)<`T`\>[] |
+| `fst` | [`EventSourceLike`](events.EventSourceLike.md)\<`T`\> |
+| `snd` | [`EventSourceLike`](events.EventSourceLike.md)\<`T`\> |
+| `...tail` | readonly [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>[] |
 
 #### Returns
 
-[`EventSourceLike`](events.EventSourceLike.md)<`T`\>
+[`EventSourceLike`](events.EventSourceLike.md)\<`T`\>
 
 ___
 
 ### mergeMany
 
-▸ **mergeMany**<`T`\>(`eventSources`): [`EventSourceLike`](events.EventSourceLike.md)<`T`\>
+▸ **mergeMany**\<`T`\>(`eventSources`): [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -121,17 +121,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `eventSources` | readonly [`EventSourceLike`](events.EventSourceLike.md)<`T`\>[] |
+| `eventSources` | readonly [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>[] |
 
 #### Returns
 
-[`EventSourceLike`](events.EventSourceLike.md)<`T`\>
+[`EventSourceLike`](events.EventSourceLike.md)\<`T`\>
 
 ___
 
 ### mergeWith
 
-▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](events.EventSourceLike.md)<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
+▸ **mergeWith**\<`T`\>(`snd`, `...tail`): [`Function1`](../modules/functions.md#function1)\<[`EventSourceLike`](events.EventSourceLike.md)\<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -143,9 +143,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `snd` | [`EventSourceLike`](events.EventSourceLike.md)<`T`\> |
-| `...tail` | readonly [`EventSourceLike`](events.EventSourceLike.md)<`T`\>[] |
+| `snd` | [`EventSourceLike`](events.EventSourceLike.md)\<`T`\> |
+| `...tail` | readonly [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>[] |
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](events.EventSourceLike.md)<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)\<[`EventSourceLike`](events.EventSourceLike.md)\<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>

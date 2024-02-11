@@ -4,9 +4,9 @@ import { Set, Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/co
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { EventListenerLike_isErrorSafe, EventListenerLike_notify, EventSourceLike_addEventListener, } from "../events.js";
 import { error, newInstance, none, pipe } from "../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed } from "../utils.js";
 export const create = /*@__PURE__*/ (() => {
     const Publisher_autoDispose = Symbol("Publisher_autoDispose");
     const Publisher_listeners = Symbol("Publisher_listeners");

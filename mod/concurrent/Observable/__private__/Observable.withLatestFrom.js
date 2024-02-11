@@ -3,9 +3,9 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
 import { none, partial, pipe, } from "../../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_forEach from "./Observable.forEach.js";

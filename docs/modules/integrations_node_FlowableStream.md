@@ -13,23 +13,23 @@
 
 ### create
 
-▸ **create**(`factory`): [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>
+▸ **create**(`factory`): [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)\<`Uint8Array`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<`Readable`\> |
+| `factory` | [`Factory`](functions.md#factory)\<`Readable`\> |
 
 #### Returns
 
-[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>
+[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)\<`Uint8Array`\>
 
 ___
 
 ### writeTo
 
-▸ **writeTo**(`writable`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`Uint8Array`\>\>
+▸ **writeTo**(`writable`): [`Function1`](functions.md#function1)\<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)\<`Uint8Array`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)\<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -39,4 +39,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`Uint8Array`\>\>
+[`Function1`](functions.md#function1)\<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)\<`Uint8Array`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)\<`Uint8Array`\>\>

@@ -2,8 +2,8 @@
 
 import { ObserverLike_notify, } from "../../../concurrent.js";
 import { bindMethod, error, isSome, partial, pipe, } from "../../../functions.js";
-import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_liftPure from "./Observable.liftPure.js";

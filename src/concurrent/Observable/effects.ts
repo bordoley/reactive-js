@@ -33,12 +33,12 @@ import {
   none,
   pipe,
 } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
 import {
   BackpressureStrategy,
   DisposableLike,
   DisposableLike_dispose,
 } from "../../utils.js";
-import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import {

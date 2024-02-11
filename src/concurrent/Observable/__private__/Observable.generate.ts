@@ -6,8 +6,8 @@ import {
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
 import { Factory, Updater, none, pipe } from "../../../functions.js";
-import { DisposableLike_isDisposed } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { DisposableLike_isDisposed } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createPureRunnable from "./Observable.createPureRunnable.js";
 

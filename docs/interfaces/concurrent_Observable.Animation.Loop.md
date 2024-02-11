@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent/Observable](../modules/concurrent_Observable.md) / [Animation](../modules/concurrent_Observable.Animation.md) / Loop
 
-# Interface: Loop<T\>
+# Interface: Loop\<T\>
 
 [concurrent/Observable](../modules/concurrent_Observable.md).[Animation](../modules/concurrent_Observable.Animation.md).Loop
 
@@ -22,7 +22,7 @@
 
 ### animation
 
-• `Readonly` **animation**: [`Animation`](../modules/concurrent_Observable.md#animation)<`T`\> \| readonly [`Animation`](../modules/concurrent_Observable.md#animation)<`T`\>[]
+• `Readonly` **animation**: [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\> \| readonly [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\>[]
 
 ___
 

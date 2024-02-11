@@ -1,6 +1,6 @@
 import { Function1, SideEffect1, pipe } from "../../../../functions.js";
-import { DisposableLike } from "../../../../utils.js";
 import * as Disposable from "../../../../utils/Disposable.js";
+import { DisposableLike } from "../../../../utils.js";
 import type * as Element from "../../Element.js";
 
 const Element_addEventHandler: Element.Signature["addEventHandler"] =

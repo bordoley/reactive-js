@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / DeferredObservableWithSideEffectsLike
 
-# Interface: DeferredObservableWithSideEffectsLike<T\>
+# Interface: DeferredObservableWithSideEffectsLike\<T\>
 
 [concurrent](../modules/concurrent.md).DeferredObservableWithSideEffectsLike
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>
+- [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)\<`T`\>
 
   ↳ **`DeferredObservableWithSideEffectsLike`**
 
@@ -31,7 +31,7 @@
 
 #### Overrides
 
-DeferredObservableLike.\_\_@ObservableLike\_isPure@43861
+DeferredObservableLike.[ObservableLike\_isPure]
 
 ___
 
@@ -41,4 +41,4 @@ ___
 
 #### Overrides
 
-DeferredObservableLike.\_\_@ObservableLike\_isRunnable@43862
+DeferredObservableLike.[ObservableLike\_isRunnable]

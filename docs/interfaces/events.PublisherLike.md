@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [events](../modules/events.md) / PublisherLike
 
-# Interface: PublisherLike<T\>
+# Interface: PublisherLike\<T\>
 
 [events](../modules/events.md).PublisherLike
 
@@ -12,8 +12,8 @@
 
 ## Hierarchy
 
-- [`EventSourceLike`](events.EventSourceLike.md)<`T`\>
+- [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>
 
-- [`ErrorSafeEventListenerLike`](events.ErrorSafeEventListenerLike.md)<`T`\>
+- [`ErrorSafeEventListenerLike`](events.ErrorSafeEventListenerLike.md)\<`T`\>
 
   ↳ **`PublisherLike`**

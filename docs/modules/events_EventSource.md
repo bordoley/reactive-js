@@ -34,7 +34,7 @@
 
 ### addEventHandler
 
-▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`T`\>(`handler`): [`Function1`](functions.md#function1)\<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -46,17 +46,17 @@
 
 | Name | Type |
 | :------ | :------ |
-| `handler` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+| `handler` | [`SideEffect1`](functions.md#sideeffect1)\<`T`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 ___
 
 ### create
 
-▸ **create**<`T`\>(`setup`): [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>
+▸ **create**\<`T`\>(`setup`): [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -68,17 +68,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `setup` | [`SideEffect1`](functions.md#sideeffect1)<[`EventListenerLike`](../interfaces/events.EventListenerLike.md)<`T`\>\> |
+| `setup` | [`SideEffect1`](functions.md#sideeffect1)\<[`EventListenerLike`](../interfaces/events.EventListenerLike.md)\<`T`\>\> |
 
 #### Returns
 
-[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>
+[`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>
 
 ___
 
 ### fromPromise
 
-▸ **fromPromise**<`T`\>(): [`Function1`](functions.md#function1)<`Promise`<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
+▸ **fromPromise**\<`T`\>(): [`Function1`](functions.md#function1)\<`Promise`\<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -88,13 +88,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`Promise`<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)\<`Promise`\<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
+▸ **keep**\<`T`\>(`predicate`): [`ComputationOperator`](computations.md#computationoperator)\<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -106,17 +106,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+| `predicate` | [`Predicate`](functions.md#predicate)\<`T`\> |
 
 #### Returns
 
-[`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
+[`ComputationOperator`](computations.md#computationoperator)\<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `TA`, `TB`\>
+▸ **map**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](computations.md#computationoperator)\<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -129,17 +129,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
+| `selector` | [`Function1`](functions.md#function1)\<`TA`, `TB`\> |
 
 #### Returns
 
-[`ComputationOperator`](computations.md#computationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `TA`, `TB`\>
+[`ComputationOperator`](computations.md#computationoperator)\<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `TA`, `TB`\>
 
 ___
 
 ### merge
 
-▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>
+▸ **merge**\<`T`\>(`fst`, `snd`, `...tail`): [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -151,19 +151,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\> |
-| `snd` | [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\> |
-| `...tail` | readonly [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>[] |
+| `fst` | [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\> |
+| `snd` | [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\> |
+| `...tail` | readonly [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>[] |
 
 #### Returns
 
-[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>
+[`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>
 
 ___
 
 ### mergeMany
 
-▸ **mergeMany**<`T`\>(`eventSources`): [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>
+▸ **mergeMany**\<`T`\>(`eventSources`): [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -175,17 +175,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `eventSources` | readonly [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>[] |
+| `eventSources` | readonly [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>[] |
 
 #### Returns
 
-[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>
+[`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>
 
 ___
 
 ### mergeWith
 
-▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
+▸ **mergeWith**\<`T`\>(`snd`, `...tail`): [`Function1`](functions.md#function1)\<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -197,9 +197,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `snd` | [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\> |
-| `...tail` | readonly [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>[] |
+| `snd` | [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\> |
+| `...tail` | readonly [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>[] |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)\<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>\>

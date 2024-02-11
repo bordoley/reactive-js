@@ -20,7 +20,7 @@
 
 ### [Computation\_type]
 
-• `Optional` `Readonly` **[Computation\_type]**: [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[Computation\_type]**: [`PureRunnableLike`](concurrent.PureRunnableLike.md)\<`unknown`\>
 
 #### Overrides
 

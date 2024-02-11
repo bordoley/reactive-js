@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`Collection`](collections.Collection.md)<`number`\>
+- [`Collection`](collections.Collection.md)\<`number`\>
 
   ↳ **`ReadonlyArrayCollection`**
 

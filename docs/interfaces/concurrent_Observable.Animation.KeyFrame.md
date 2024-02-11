@@ -24,7 +24,7 @@ ___
 
 ### easing
 
-• `Optional` `Readonly` **easing**: [`Function1`](../modules/functions.md#function1)<`number`, `number`\>
+• `Optional` `Readonly` **easing**: [`Function1`](../modules/functions.md#function1)\<`number`, `number`\>
 
 ___
 

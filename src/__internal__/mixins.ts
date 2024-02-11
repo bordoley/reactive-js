@@ -107,20 +107,13 @@ export interface MixinDecorator {
 
   <TReturn, TA, TB>(mixin: Mixin2<TReturn, TA, TB>): Mixin2<TReturn, TA, TB>;
 
-  <TReturn, TA, TB, TC>(mixin: Mixin3<TReturn, TA, TB, TC>): Mixin3<
-    TReturn,
-    TA,
-    TB,
-    TC
-  >;
+  <TReturn, TA, TB, TC>(
+    mixin: Mixin3<TReturn, TA, TB, TC>,
+  ): Mixin3<TReturn, TA, TB, TC>;
 
-  <TReturn, TA, TB, TC, TD>(mixin: Mixin4<TReturn, TA, TB, TC, TD>): Mixin4<
-    TReturn,
-    TA,
-    TB,
-    TC,
-    TD
-  >;
+  <TReturn, TA, TB, TC, TD>(
+    mixin: Mixin4<TReturn, TA, TB, TC, TD>,
+  ): Mixin4<TReturn, TA, TB, TC, TD>;
 
   <TReturn, TA, TB, TC, TD, TE>(
     mixin: Mixin5<TReturn, TA, TB, TC, TD, TE>,

@@ -25,7 +25,7 @@
 
 ### constructor
 
-• **new BackPressureError**(`capacity`, `backpressureStrategy`)
+• **new BackPressureError**(`capacity`, `backpressureStrategy`): [`BackPressureError`](utils.BackPressureError.md)
 
 #### Parameters
 
@@ -33,6 +33,10 @@
 | :------ | :------ |
 | `capacity` | `number` |
 | `backpressureStrategy` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
+
+#### Returns
+
+[`BackPressureError`](utils.BackPressureError.md)
 
 #### Overrides
 

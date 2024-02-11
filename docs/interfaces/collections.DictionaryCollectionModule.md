@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [collections](../modules/collections.md) / DictionaryCollectionModule
 
-# Interface: DictionaryCollectionModule<C\>
+# Interface: DictionaryCollectionModule\<C\>
 
 [collections](../modules/collections.md).DictionaryCollectionModule
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`CollectionModule`](collections.CollectionModule.md)<`C`\>
+- [`CollectionModule`](collections.CollectionModule.md)\<`C`\>
 
   ↳ **`DictionaryCollectionModule`**
 
@@ -27,7 +27,7 @@
 
 ### fromEntries
 
-▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>, [`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>\>
+▸ **fromEntries**\<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)\<[`EnumerableLike`](collections.EnumerableLike.md)\<[`Tuple2`](../modules/functions.md#tuple2)\<`TKey`, `T`\>\>, [`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>\>
 
 #### Type parameters
 
@@ -38,13 +38,13 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>, [`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>\>
+[`Function1`](../modules/functions.md#function1)\<[`EnumerableLike`](collections.EnumerableLike.md)\<[`Tuple2`](../modules/functions.md#tuple2)\<`TKey`, `T`\>\>, [`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>\>
 
 ___
 
 ### union
 
-▸ **union**<`TKey`, `T`\>(`m2`): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>\>
+▸ **union**\<`TKey`, `T`\>(`m2`): [`Function1`](../modules/functions.md#function1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>, [`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>\>
 
 #### Type parameters
 
@@ -57,8 +57,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m2` | [`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\> |
+| `m2` | [`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\> |
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>\>
+[`Function1`](../modules/functions.md#function1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>, [`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>\>

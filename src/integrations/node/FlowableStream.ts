@@ -1,4 +1,6 @@
 import { Readable, Transform, Writable } from "stream";
+import * as Flowable from "../../concurrent/Flowable.js";
+import * as Observable from "../../concurrent/Observable.js";
 import {
   DeferredObservableWithSideEffectsLike,
   DispatcherLike_complete,
@@ -8,8 +10,6 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
 } from "../../concurrent.js";
-import * as Flowable from "../../concurrent/Flowable.js";
-import * as Observable from "../../concurrent/Observable.js";
 import {
   Factory,
   Function1,
@@ -18,6 +18,7 @@ import {
   invoke,
   pipe,
 } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -25,7 +26,6 @@ import {
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../utils.js";
-import * as Disposable from "../../utils/Disposable.js";
 
 interface FlowableStreamModule {
   create(factory: Factory<Readable>): FlowableLike<Uint8Array>;

@@ -1,8 +1,8 @@
 import { Array_length } from "../../../__internal__/constants.js";
 import { EventListenerLike_notify, EventSourceLike } from "../../../events.js";
 import { bindMethod, pipe } from "../../../functions.js";
-import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import type * as EventSource from "../../EventSource.js";
 
 import EventSource_addEventHandler from "./EventSource.addEventHandler.js";

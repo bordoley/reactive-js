@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / StreamableLike
 
-# Interface: StreamableLike<TReq, T, TStream\>
+# Interface: StreamableLike\<TReq, T, TStream\>
 
 [concurrent](../modules/concurrent.md).StreamableLike
 
@@ -24,7 +24,7 @@ TStream
 | :------ | :------ |
 | `TReq` | `unknown` |
 | `T` | `unknown` |
-| `TStream` | extends [`StreamLike`](concurrent.StreamLike.md)<`TReq`, `T`\> = [`StreamLike`](concurrent.StreamLike.md)<`TReq`, `T`\> |
+| `TStream` | extends [`StreamLike`](concurrent.StreamLike.md)\<`TReq`, `T`\> = [`StreamLike`](concurrent.StreamLike.md)\<`TReq`, `T`\> |
 
 ## Table of contents
 

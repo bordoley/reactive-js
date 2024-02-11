@@ -20,7 +20,7 @@
 
 ### [Computation\_type]
 
-• `Optional` `Readonly` **[Computation\_type]**: [`EnumerableLike`](collections.EnumerableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[Computation\_type]**: [`EnumerableLike`](collections.EnumerableLike.md)\<`unknown`\>
 
 #### Overrides
 

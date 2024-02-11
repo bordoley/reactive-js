@@ -5,6 +5,8 @@ import {
   props,
   unsafeCast,
 } from "../../../__internal__/mixins.js";
+import * as Enumerable from "../../../collections/Enumerable.js";
+import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import {
   DictionaryLike,
   DictionaryLike_get,
@@ -12,8 +14,6 @@ import {
   EnumerableLike,
   ReadonlyObjectMapLike,
 } from "../../../collections.js";
-import * as Enumerable from "../../../collections/Enumerable.js";
-import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import {
   RunnableWithSideEffectsLike,
   SchedulerLike,
@@ -21,12 +21,12 @@ import {
   StreamableLike,
   StreamableLike_stream,
 } from "../../../concurrent.js";
+import * as Publisher from "../../../events/Publisher.js";
 import {
   EventListenerLike_notify,
   EventSourceLike,
   PublisherLike,
 } from "../../../events.js";
-import * as Publisher from "../../../events/Publisher.js";
 import {
   Function1,
   Optional,
@@ -34,8 +34,8 @@ import {
   none,
   pipe,
 } from "../../../functions.js";
-import { BackpressureStrategy } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { BackpressureStrategy } from "../../../utils.js";
 import type { Animation } from "../../Observable.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";

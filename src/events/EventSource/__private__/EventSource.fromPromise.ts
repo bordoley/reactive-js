@@ -1,9 +1,9 @@
 import { EventListenerLike_notify } from "../../../events.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
 } from "../../../utils.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import type * as EventSource from "../../EventSource.js";
 import EventSource_create from "./EventSource.create.js";
 

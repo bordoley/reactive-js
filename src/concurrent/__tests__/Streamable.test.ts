@@ -7,15 +7,15 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
+import * as Dictionary from "../../collections/Dictionary.js";
+import { DictionaryCollection } from "../../collections/Dictionary.js";
+import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
+import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import {
   DictionaryLike_get,
   ReadonlyObjectMapLike,
   keySet,
 } from "../../collections.js";
-import * as Dictionary from "../../collections/Dictionary.js";
-import { DictionaryCollection } from "../../collections/Dictionary.js";
-import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
-import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { sequence } from "../../computations.js";
 import {
   CacheLike_get,
@@ -38,6 +38,7 @@ import {
   returns,
   tuple,
 } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
 import {
   DisposableLike_dispose,
   DropLatestBackpressureStrategy,
@@ -45,7 +46,6 @@ import {
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../utils.js";
-import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";

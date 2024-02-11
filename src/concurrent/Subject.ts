@@ -28,6 +28,9 @@ import {
   EventListenerLike_notify,
 } from "../events.js";
 import { error, isSome, newInstance, none, pipe } from "../functions.js";
+import * as Disposable from "../utils/Disposable.js";
+import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
+import IndexedQueueMixin from "../utils/__mixins__/IndexedQueueMixin.js";
 import {
   DisposableLike_dispose,
   DisposableLike_error,
@@ -40,9 +43,6 @@ import {
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../utils.js";
-import * as Disposable from "../utils/Disposable.js";
-import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
-import IndexedQueueMixin from "../utils/__mixins__/IndexedQueueMixin.js";
 
 export const create: <T>(options?: {
   readonly replay?: number;

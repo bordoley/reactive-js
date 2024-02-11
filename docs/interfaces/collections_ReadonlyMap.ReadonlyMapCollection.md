@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [collections/ReadonlyMap](../modules/collections_ReadonlyMap.md) / ReadonlyMapCollection
 
-# Interface: ReadonlyMapCollection<TKey\>
+# Interface: ReadonlyMapCollection\<TKey\>
 
 [collections/ReadonlyMap](../modules/collections_ReadonlyMap.md).ReadonlyMapCollection
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`Collection`](collections.Collection.md)<`TKey`\>
+- [`Collection`](collections.Collection.md)\<`TKey`\>
 
   ↳ **`ReadonlyMapCollection`**
 
@@ -37,7 +37,7 @@ ___
 
 ### [Collection\_type]
 
-• `Optional` `Readonly` **[Collection\_type]**: `ReadonlyMap`<`TKey` & {}, `unknown`\>
+• `Optional` `Readonly` **[Collection\_type]**: `ReadonlyMap`\<`TKey` & {}, `unknown`\>
 
 #### Overrides
 

@@ -24,32 +24,41 @@ const parseAnimationConfig = <T = number>(
         Observable_repeat<T>(config.count as number),
       )
     : config.type === "delay"
-    ? Observable_empty<T>({ delay: config.duration })
-    : config.type === "frame" && isSome(config.selector)
-    ? pipe(
-        config.value,
-        Observable_fromValue(),
-        isSome(config.selector)
-          ? Observable_map(config.selector)
-          : (identity as Observable.PureStatelessObservableOperator<number, T>),
-      )
-    : config.type === "frame"
-    ? pipe(
-        config.value,
-        Observable_fromValue(),
-        isSome(config.selector)
-          ? Observable_map(config.selector)
-          : (identity as Observable.PureStatelessObservableOperator<number, T>),
-      )
-    : pipe(
-        config.type === "keyframe"
-          ? Observable_keyFrame(config.duration, config)
-          : Observable_spring(config),
-        Observable_map(scale(config.from, config.to)),
-        isSome(config.selector)
-          ? Observable_map(config.selector)
-          : (identity as Observable.PureStatelessObservableOperator<number, T>),
-      );
+      ? Observable_empty<T>({ delay: config.duration })
+      : config.type === "frame" && isSome(config.selector)
+        ? pipe(
+            config.value,
+            Observable_fromValue(),
+            isSome(config.selector)
+              ? Observable_map(config.selector)
+              : (identity as Observable.PureStatelessObservableOperator<
+                  number,
+                  T
+                >),
+          )
+        : config.type === "frame"
+          ? pipe(
+              config.value,
+              Observable_fromValue(),
+              isSome(config.selector)
+                ? Observable_map(config.selector)
+                : (identity as Observable.PureStatelessObservableOperator<
+                    number,
+                    T
+                  >),
+            )
+          : pipe(
+              config.type === "keyframe"
+                ? Observable_keyFrame(config.duration, config)
+                : Observable_spring(config),
+              Observable_map(scale(config.from, config.to)),
+              isSome(config.selector)
+                ? Observable_map(config.selector)
+                : (identity as Observable.PureStatelessObservableOperator<
+                    number,
+                    T
+                  >),
+            );
 
 const Observable_animate: Observable.Signature["animate"] = <T = number>(
   config: Observable.Animation<T> | readonly Observable.Animation<T>[],

@@ -20,7 +20,7 @@
 
 ### [Computation\_type]
 
-• `Optional` `Readonly` **[Computation\_type]**: [`EventSourceLike`](events.EventSourceLike.md)<`unknown`\>
+• `Optional` `Readonly` **[Computation\_type]**: [`EventSourceLike`](events.EventSourceLike.md)\<`unknown`\>
 
 #### Overrides
 

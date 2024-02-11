@@ -7,8 +7,8 @@ import {
   __state,
   __using,
 } from "../../concurrent/Observable/effects.js";
-import { EventSourceLike } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
+import { EventSourceLike } from "../../events.js";
 import {
   Optional,
   SideEffect1,
@@ -19,12 +19,12 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
 import {
   DisposableLike,
   QueueableLike,
   QueueableLike_enqueue,
 } from "../../utils.js";
-import * as Disposable from "../../utils/Disposable.js";
 import { CSSStyleMapLike } from "../web.js";
 
 interface WebEffectsModule {

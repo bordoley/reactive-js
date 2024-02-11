@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / ObservableLike
 
-# Interface: ObservableLike<T\>
+# Interface: ObservableLike\<T\>
 
 [concurrent](../modules/concurrent.md).ObservableLike
 
@@ -76,7 +76,7 @@ Subscribes the given `ObserverLike` to the `ObservableLike` source.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `observer` | [`ObserverLike`](concurrent.ObserverLike.md)<`T`\> | The observer. |
+| `observer` | [`ObserverLike`](concurrent.ObserverLike.md)\<`T`\> | The observer. |
 
 #### Returns
 

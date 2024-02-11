@@ -110,7 +110,7 @@
 
 ### Comparator
 
-Ƭ **Comparator**<`T`\>: [`Function2`](functions.md#function2)<`T`, `T`, `number`\>
+Ƭ **Comparator**\<`T`\>: [`Function2`](functions.md#function2)\<`T`, `T`, `number`\>
 
 Compare two values to determine their relative ordering.
 
@@ -124,7 +124,9 @@ ___
 
 ### Constructor
 
-Ƭ **Constructor**<`T`\>: () => `T`
+Ƭ **Constructor**\<`T`\>: () => `T`
+
+Constructor function with 0 arguments.
 
 #### Type parameters
 
@@ -134,15 +136,19 @@ ___
 
 #### Type declaration
 
-• ()
+• (): `T`
 
-Constructor function with 0 arguments.
+##### Returns
+
+`T`
 
 ___
 
 ### Constructor1
 
-Ƭ **Constructor1**<`TA`, `T`\>: (`a`: `TA`) => `T`
+Ƭ **Constructor1**\<`TA`, `T`\>: (`a`: `TA`) => `T`
+
+Constructor function with 1 argument.
 
 #### Type parameters
 
@@ -153,9 +159,7 @@ ___
 
 #### Type declaration
 
-• (`a`)
-
-Constructor function with 1 argument.
+• (`a`): `T`
 
 ##### Parameters
 
@@ -163,11 +167,17 @@ Constructor function with 1 argument.
 | :------ | :------ |
 | `a` | `TA` |
 
+##### Returns
+
+`T`
+
 ___
 
 ### Constructor2
 
-Ƭ **Constructor2**<`TA`, `TB`, `T`\>: (`a`: `TA`, `b`: `TB`) => `T`
+Ƭ **Constructor2**\<`TA`, `TB`, `T`\>: (`a`: `TA`, `b`: `TB`) => `T`
+
+Constructor function with 2 arguments.
 
 #### Type parameters
 
@@ -179,9 +189,7 @@ ___
 
 #### Type declaration
 
-• (`a`, `b`)
-
-Constructor function with 2 arguments.
+• (`a`, `b`): `T`
 
 ##### Parameters
 
@@ -190,11 +198,17 @@ Constructor function with 2 arguments.
 | `a` | `TA` |
 | `b` | `TB` |
 
+##### Returns
+
+`T`
+
 ___
 
 ### Constructor3
 
-Ƭ **Constructor3**<`TA`, `TB`, `TC`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`) => `T`
+Ƭ **Constructor3**\<`TA`, `TB`, `TC`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`) => `T`
+
+Constructor function with 3 arguments.
 
 #### Type parameters
 
@@ -207,9 +221,7 @@ ___
 
 #### Type declaration
 
-• (`a`, `b`, `c`)
-
-Constructor function with 3 arguments.
+• (`a`, `b`, `c`): `T`
 
 ##### Parameters
 
@@ -219,11 +231,17 @@ Constructor function with 3 arguments.
 | `b` | `TB` |
 | `c` | `TC` |
 
+##### Returns
+
+`T`
+
 ___
 
 ### Constructor4
 
-Ƭ **Constructor4**<`TA`, `TB`, `TC`, `TD`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`) => `T`
+Ƭ **Constructor4**\<`TA`, `TB`, `TC`, `TD`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`) => `T`
+
+Constructor function with 4 arguments.
 
 #### Type parameters
 
@@ -237,9 +255,7 @@ ___
 
 #### Type declaration
 
-• (`a`, `b`, `c`, `d`)
-
-Constructor function with 4 arguments.
+• (`a`, `b`, `c`, `d`): `T`
 
 ##### Parameters
 
@@ -250,11 +266,15 @@ Constructor function with 4 arguments.
 | `c` | `TC` |
 | `d` | `TD` |
 
+##### Returns
+
+`T`
+
 ___
 
 ### Equality
 
-Ƭ **Equality**<`T`\>: [`Function2`](functions.md#function2)<`T`, `T`, `boolean`\>
+Ƭ **Equality**\<`T`\>: [`Function2`](functions.md#function2)\<`T`, `T`, `boolean`\>
 
 Compare two values for equality.
 
@@ -268,7 +288,9 @@ ___
 
 ### Factory
 
-Ƭ **Factory**<`T`\>: () => `T`
+Ƭ **Factory**\<`T`\>: () => `T`
+
+A function which instantiates new instances of type `T`.
 
 #### Type parameters
 
@@ -280,8 +302,6 @@ ___
 
 ▸ (): `T`
 
-A function which instantiates new instances of type `T`.
-
 ##### Returns
 
 `T`
@@ -290,7 +310,7 @@ ___
 
 ### Function1
 
-Ƭ **Function1**<`TA`, `T`\>: (`a`: `TA`) => `T`
+Ƭ **Function1**\<`TA`, `T`\>: (`a`: `TA`) => `T`
 
 #### Type parameters
 
@@ -317,7 +337,7 @@ ___
 
 ### Function2
 
-Ƭ **Function2**<`TA`, `TB`, `T`\>: (`a`: `TA`, `b`: `TB`) => `T`
+Ƭ **Function2**\<`TA`, `TB`, `T`\>: (`a`: `TA`, `b`: `TB`) => `T`
 
 #### Type parameters
 
@@ -346,7 +366,7 @@ ___
 
 ### Function3
 
-Ƭ **Function3**<`TA`, `TB`, `TC`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`) => `T`
+Ƭ **Function3**\<`TA`, `TB`, `TC`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`) => `T`
 
 #### Type parameters
 
@@ -377,7 +397,7 @@ ___
 
 ### Function4
 
-Ƭ **Function4**<`TA`, `TB`, `TC`, `TD`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`) => `T`
+Ƭ **Function4**\<`TA`, `TB`, `TC`, `TD`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`) => `T`
 
 #### Type parameters
 
@@ -410,7 +430,7 @@ ___
 
 ### Function5
 
-Ƭ **Function5**<`TA`, `TB`, `TC`, `TD`, `TE`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`) => `T`
+Ƭ **Function5**\<`TA`, `TB`, `TC`, `TD`, `TE`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`) => `T`
 
 #### Type parameters
 
@@ -445,7 +465,7 @@ ___
 
 ### Function6
 
-Ƭ **Function6**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`) => `T`
+Ƭ **Function6**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`) => `T`
 
 #### Type parameters
 
@@ -482,7 +502,7 @@ ___
 
 ### Function7
 
-Ƭ **Function7**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`, `g`: `TG`) => `T`
+Ƭ **Function7**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`, `g`: `TG`) => `T`
 
 #### Type parameters
 
@@ -521,7 +541,7 @@ ___
 
 ### Function8
 
-Ƭ **Function8**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`, `g`: `TG`, `h`: `TH`) => `T`
+Ƭ **Function8**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`, `g`: `TG`, `h`: `TH`) => `T`
 
 #### Type parameters
 
@@ -562,7 +582,7 @@ ___
 
 ### Function9
 
-Ƭ **Function9**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`, `g`: `TG`, `h`: `TH`, `i`: `TI`) => `T`
+Ƭ **Function9**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`, `g`: `TG`, `h`: `TH`, `i`: `TI`) => `T`
 
 #### Type parameters
 
@@ -605,7 +625,7 @@ ___
 
 ### Optional
 
-Ƭ **Optional**<`T`\>: `T` \| `undefined`
+Ƭ **Optional**\<`T`\>: `T` \| `undefined`
 
 Represents an unboxed value of type T or undefined.
 
@@ -619,7 +639,7 @@ ___
 
 ### Predicate
 
-Ƭ **Predicate**<`T`\>: [`Function1`](functions.md#function1)<`T`, `boolean`\>
+Ƭ **Predicate**\<`T`\>: [`Function1`](functions.md#function1)\<`T`, `boolean`\>
 
 A one argument predicate function.
 
@@ -633,7 +653,7 @@ ___
 
 ### Reducer
 
-Ƭ **Reducer**<`T`, `TAcc`\>: [`Function2`](functions.md#function2)<`TAcc`, `T`, `TAcc`\>
+Ƭ **Reducer**\<`T`, `TAcc`\>: [`Function2`](functions.md#function2)\<`TAcc`, `T`, `TAcc`\>
 
 A pure function that takes the current accumulator and next value,
 returning the next accumulated value.
@@ -663,7 +683,7 @@ ___
 
 ### SideEffect1
 
-Ƭ **SideEffect1**<`TA`\>: (`a`: `TA`) => `void`
+Ƭ **SideEffect1**\<`TA`\>: (`a`: `TA`) => `void`
 
 #### Type parameters
 
@@ -689,7 +709,7 @@ ___
 
 ### SideEffect2
 
-Ƭ **SideEffect2**<`TA`, `TB`\>: (`a`: `TA`, `b`: `TB`) => `void`
+Ƭ **SideEffect2**\<`TA`, `TB`\>: (`a`: `TA`, `b`: `TB`) => `void`
 
 #### Type parameters
 
@@ -717,7 +737,7 @@ ___
 
 ### SideEffect3
 
-Ƭ **SideEffect3**<`TA`, `TB`, `TC`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`) => `void`
+Ƭ **SideEffect3**\<`TA`, `TB`, `TC`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`) => `void`
 
 #### Type parameters
 
@@ -747,7 +767,7 @@ ___
 
 ### SideEffect4
 
-Ƭ **SideEffect4**<`TA`, `TB`, `TC`, `TD`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`) => `void`
+Ƭ **SideEffect4**\<`TA`, `TB`, `TC`, `TD`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`) => `void`
 
 #### Type parameters
 
@@ -779,7 +799,7 @@ ___
 
 ### SideEffect5
 
-Ƭ **SideEffect5**<`TA`, `TB`, `TC`, `TD`, `TE`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`) => `void`
+Ƭ **SideEffect5**\<`TA`, `TB`, `TC`, `TD`, `TE`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`) => `void`
 
 #### Type parameters
 
@@ -813,7 +833,7 @@ ___
 
 ### SideEffect6
 
-Ƭ **SideEffect6**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`) => `void`
+Ƭ **SideEffect6**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`) => `void`
 
 #### Type parameters
 
@@ -849,7 +869,7 @@ ___
 
 ### SideEffect7
 
-Ƭ **SideEffect7**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`, `g`: `TG`) => `void`
+Ƭ **SideEffect7**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`, `g`: `TG`) => `void`
 
 #### Type parameters
 
@@ -887,7 +907,7 @@ ___
 
 ### Tuple1
 
-Ƭ **Tuple1**<`TA`\>: readonly [`TA`]
+Ƭ **Tuple1**\<`TA`\>: readonly [`TA`]
 
 #### Type parameters
 
@@ -899,7 +919,7 @@ ___
 
 ### Tuple2
 
-Ƭ **Tuple2**<`TA`, `TB`\>: readonly [`TA`, `TB`]
+Ƭ **Tuple2**\<`TA`, `TB`\>: readonly [`TA`, `TB`]
 
 #### Type parameters
 
@@ -912,7 +932,7 @@ ___
 
 ### Tuple3
 
-Ƭ **Tuple3**<`TA`, `TB`, `TC`\>: readonly [`TA`, `TB`, `TC`]
+Ƭ **Tuple3**\<`TA`, `TB`, `TC`\>: readonly [`TA`, `TB`, `TC`]
 
 #### Type parameters
 
@@ -926,7 +946,7 @@ ___
 
 ### Tuple4
 
-Ƭ **Tuple4**<`TA`, `TB`, `TC`, `TD`\>: readonly [`TA`, `TB`, `TC`, `TD`]
+Ƭ **Tuple4**\<`TA`, `TB`, `TC`, `TD`\>: readonly [`TA`, `TB`, `TC`, `TD`]
 
 #### Type parameters
 
@@ -941,7 +961,7 @@ ___
 
 ### Tuple5
 
-Ƭ **Tuple5**<`TA`, `TB`, `TC`, `TD`, `TE`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`]
+Ƭ **Tuple5**\<`TA`, `TB`, `TC`, `TD`, `TE`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`]
 
 #### Type parameters
 
@@ -957,7 +977,7 @@ ___
 
 ### Tuple6
 
-Ƭ **Tuple6**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]
+Ƭ **Tuple6**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]
 
 #### Type parameters
 
@@ -974,7 +994,7 @@ ___
 
 ### Tuple7
 
-Ƭ **Tuple7**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]
+Ƭ **Tuple7**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]
 
 #### Type parameters
 
@@ -992,7 +1012,7 @@ ___
 
 ### Tuple8
 
-Ƭ **Tuple8**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]
+Ƭ **Tuple8**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]
 
 #### Type parameters
 
@@ -1011,7 +1031,7 @@ ___
 
 ### Tuple9
 
-Ƭ **Tuple9**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]
+Ƭ **Tuple9**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]
 
 #### Type parameters
 
@@ -1031,7 +1051,10 @@ ___
 
 ### TypePredicate
 
-Ƭ **TypePredicate**<`TA`, `TB`\>: (`v`: `TA`) => v is TA & TB
+Ƭ **TypePredicate**\<`TA`, `TB`\>: (`v`: `TA`) => v is TA & TB
+
+A type guard function that performs a runtime check
+guaranteeing `v` is of type `TB`.
 
 #### Type parameters
 
@@ -1044,9 +1067,6 @@ ___
 
 ▸ (`v`): v is TA & TB
 
-A type guard function that performs a runtime check
-guaranteeing `v` is of type `TB`.
-
 ##### Parameters
 
 | Name | Type |
@@ -1057,13 +1077,11 @@ guaranteeing `v` is of type `TB`.
 
 v is TA & TB
 
-`true` if v is an instance of type `TB`, otherwise false.
-
 ___
 
 ### Updater
 
-Ƭ **Updater**<`T`\>: [`Function1`](functions.md#function1)<`T`, `T`\>
+Ƭ **Updater**\<`T`\>: [`Function1`](functions.md#function1)\<`T`, `T`\>
 
 Computes a new value of type `T` from the previous value of type `T`.
 
@@ -1121,7 +1139,7 @@ ___
 
 ### arrayEquality
 
-▸ **arrayEquality**<`T`\>(`valuesEquality?`): [`Equality`](functions.md#equality)<readonly `T`[]\>
+▸ **arrayEquality**\<`T`\>(`valuesEquality?`): [`Equality`](functions.md#equality)\<readonly `T`[]\>
 
 Returns an equality function that compares two readonly arrays for equality,
 comparing their values using `valuesEquality`.
@@ -1136,17 +1154,17 @@ comparing their values using `valuesEquality`.
 
 | Name | Type |
 | :------ | :------ |
-| `valuesEquality?` | [`Equality`](functions.md#equality)<`T`\> |
+| `valuesEquality?` | [`Equality`](functions.md#equality)\<`T`\> |
 
 #### Returns
 
-[`Equality`](functions.md#equality)<readonly `T`[]\>
+[`Equality`](functions.md#equality)\<readonly `T`[]\>
 
 ___
 
 ### bind
 
-▸ **bind**<`F`\>(`f`, `thiz`): `F`
+▸ **bind**\<`F`\>(`f`, `thiz`): `F`
 
 Creates a new function that, when called, calls `f` with its
 this keyword set to the provided value.
@@ -1172,7 +1190,7 @@ ___
 
 ### bindMethod
 
-▸ **bindMethod**<`T`, `TKey`\>(`thiz`, `key`): `T`[`TKey`]
+▸ **bindMethod**\<`T`, `TKey`\>(`thiz`, `key`): `T`[`TKey`]
 
 Creates a new function that, when called, invokes the method
 `thiz[key]` with the provided arguments.
@@ -1181,7 +1199,7 @@ Creates a new function that, when called, invokes the method
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `Record`<`TKey`, (...`args`: `any`[]) => `any`\> |
+| `T` | extends `Record`\<`TKey`, (...`args`: `any`[]) => `any`\> |
 | `TKey` | extends `string` \| `number` \| `symbol` |
 
 #### Parameters
@@ -1199,7 +1217,7 @@ ___
 
 ### call
 
-▸ **call**<`TInstance`, `T`\>(`f`, `self`): `T`
+▸ **call**\<`TInstance`, `T`\>(`f`, `self`): `T`
 
 Calls the function `f` with a given self value as this and arguments provided individually.
 
@@ -1221,7 +1239,7 @@ Calls the function `f` with a given self value as this and arguments provided in
 
 `T`
 
-▸ **call**<`TInstance`, `T`, `TA`\>(`f`, `self`, `a`): `T`
+▸ **call**\<`TInstance`, `T`, `TA`\>(`f`, `self`, `a`): `T`
 
 Calls the function `f` with a given self value as this and arguments provided individually.
 
@@ -1245,7 +1263,7 @@ Calls the function `f` with a given self value as this and arguments provided in
 
 `T`
 
-▸ **call**<`TInstance`, `T`, `TA`, `TB`\>(`f`, `self`, `a`, `b`): `T`
+▸ **call**\<`TInstance`, `T`, `TA`, `TB`\>(`f`, `self`, `a`, `b`): `T`
 
 Calls the function `f` with a given self value as this and arguments provided individually.
 
@@ -1275,7 +1293,7 @@ ___
 
 ### compose
 
-▸ **compose**<`T`, `A`, `B`\>(`op1`, `op2`): [`Function1`](functions.md#function1)<`T`, `B`\>
+▸ **compose**\<`T`, `A`, `B`\>(`op1`, `op2`): [`Function1`](functions.md#function1)\<`T`, `B`\>
 
 Composes a series of unary functions.
 
@@ -1291,14 +1309,14 @@ Composes a series of unary functions.
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `B`\>
+[`Function1`](functions.md#function1)\<`T`, `B`\>
 
-▸ **compose**<`T`, `A`, `B`\>(`op1`, `op2`): [`Function1`](functions.md#function1)<`T`, `B`\>
+▸ **compose**\<`T`, `A`, `B`\>(`op1`, `op2`): [`Function1`](functions.md#function1)\<`T`, `B`\>
 
 Composes a series of unary functions.
 
@@ -1314,14 +1332,14 @@ Composes a series of unary functions.
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `B`\>
+[`Function1`](functions.md#function1)\<`T`, `B`\>
 
-▸ **compose**<`T`, `A`, `B`, `C`\>(`op1`, `op2`, `op3`): [`Function1`](functions.md#function1)<`T`, `C`\>
+▸ **compose**\<`T`, `A`, `B`, `C`\>(`op1`, `op2`, `op3`): [`Function1`](functions.md#function1)\<`T`, `C`\>
 
 Composes a series of unary functions.
 
@@ -1338,15 +1356,15 @@ Composes a series of unary functions.
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `C`\>
+[`Function1`](functions.md#function1)\<`T`, `C`\>
 
-▸ **compose**<`T`, `A`, `B`, `C`, `D`\>(`op1`, `op2`, `op3`, `op4`): [`Function1`](functions.md#function1)<`T`, `D`\>
+▸ **compose**\<`T`, `A`, `B`, `C`, `D`\>(`op1`, `op2`, `op3`, `op4`): [`Function1`](functions.md#function1)\<`T`, `D`\>
 
 Composes a series of unary functions.
 
@@ -1364,16 +1382,16 @@ Composes a series of unary functions.
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `D`\>
+[`Function1`](functions.md#function1)\<`T`, `D`\>
 
-▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`\>(`op1`, `op2`, `op3`, `op4`, `op5`): [`Function1`](functions.md#function1)<`T`, `E`\>
+▸ **compose**\<`T`, `A`, `B`, `C`, `D`, `E`\>(`op1`, `op2`, `op3`, `op4`, `op5`): [`Function1`](functions.md#function1)\<`T`, `E`\>
 
 Composes a series of unary functions.
 
@@ -1392,17 +1410,17 @@ Composes a series of unary functions.
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `E`\>
+[`Function1`](functions.md#function1)\<`T`, `E`\>
 
-▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Function1`](functions.md#function1)<`T`, `F`\>
+▸ **compose**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Function1`](functions.md#function1)\<`T`, `F`\>
 
 Composes a series of unary functions.
 
@@ -1422,18 +1440,18 @@ Composes a series of unary functions.
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `F`\>
+[`Function1`](functions.md#function1)\<`T`, `F`\>
 
-▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Function1`](functions.md#function1)<`T`, `G`\>
+▸ **compose**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Function1`](functions.md#function1)\<`T`, `G`\>
 
 Composes a series of unary functions.
 
@@ -1454,19 +1472,19 @@ Composes a series of unary functions.
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `G`\>
+[`Function1`](functions.md#function1)\<`T`, `G`\>
 
-▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Function1`](functions.md#function1)<`T`, `H`\>
+▸ **compose**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Function1`](functions.md#function1)\<`T`, `H`\>
 
 Composes a series of unary functions.
 
@@ -1488,20 +1506,20 @@ Composes a series of unary functions.
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `H`\>
+[`Function1`](functions.md#function1)\<`T`, `H`\>
 
-▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Function1`](functions.md#function1)<`T`, `I`\>
+▸ **compose**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Function1`](functions.md#function1)\<`T`, `I`\>
 
 Composes a series of unary functions.
 
@@ -1524,21 +1542,21 @@ Composes a series of unary functions.
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `I`\>
+[`Function1`](functions.md#function1)\<`T`, `I`\>
 
-▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Function1`](functions.md#function1)<`T`, `J`\>
+▸ **compose**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Function1`](functions.md#function1)\<`T`, `J`\>
 
 Composes a series of unary functions.
 
@@ -1562,22 +1580,22 @@ Composes a series of unary functions.
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `J`\>
+[`Function1`](functions.md#function1)\<`T`, `J`\>
 
-▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Function1`](functions.md#function1)<`T`, `K`\>
+▸ **compose**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Function1`](functions.md#function1)\<`T`, `K`\>
 
 Composes a series of unary functions.
 
@@ -1602,23 +1620,23 @@ Composes a series of unary functions.
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J`\> |
+| `op11` | [`Function1`](functions.md#function1)\<`J`, `K`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `K`\>
+[`Function1`](functions.md#function1)\<`T`, `K`\>
 
-▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Function1`](functions.md#function1)<`T`, `L`\>
+▸ **compose**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Function1`](functions.md#function1)\<`T`, `L`\>
 
 Composes a series of unary functions.
 
@@ -1644,28 +1662,28 @@ Composes a series of unary functions.
 
 | Name | Type |
 | :------ | :------ |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
-| `op12` | [`Function1`](functions.md#function1)<`K`, `L`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J`\> |
+| `op11` | [`Function1`](functions.md#function1)\<`J`, `K`\> |
+| `op12` | [`Function1`](functions.md#function1)\<`K`, `L`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `L`\>
+[`Function1`](functions.md#function1)\<`T`, `L`\>
 
 ___
 
 ### debug
 
-▸ **debug**<`T`\>(`v`): `T`
+▸ **debug**\<`T`\>(`v`): `T`
 
 Invokes the debugger when compiled in dev mode. In production mode,
 is a noop.
@@ -1708,7 +1726,7 @@ ___
 
 ### decrementBy
 
-▸ **decrementBy**(`decr`): [`Updater`](functions.md#updater)<`number`\>
+▸ **decrementBy**(`decr`): [`Updater`](functions.md#updater)\<`number`\>
 
 Returns a function that decrements a number `x` by the value `decr`.
 
@@ -1720,7 +1738,7 @@ Returns a function that decrements a number `x` by the value `decr`.
 
 #### Returns
 
-[`Updater`](functions.md#updater)<`number`\>
+[`Updater`](functions.md#updater)\<`number`\>
 
 ___
 
@@ -1747,7 +1765,7 @@ ___
 
 ### greaterThan
 
-▸ **greaterThan**(`v`): [`Predicate`](functions.md#predicate)<`number`\>
+▸ **greaterThan**(`v`): [`Predicate`](functions.md#predicate)\<`number`\>
 
 #### Parameters
 
@@ -1757,13 +1775,13 @@ ___
 
 #### Returns
 
-[`Predicate`](functions.md#predicate)<`number`\>
+[`Predicate`](functions.md#predicate)\<`number`\>
 
 ___
 
 ### identity
 
-▸ **identity**<`T`\>(`v`): `T`
+▸ **identity**\<`T`\>(`v`): `T`
 
 The identity function.
 
@@ -1789,7 +1807,7 @@ ___
 
 ### identityLazy
 
-▸ **identityLazy**<`T`\>(): [`Updater`](functions.md#updater)<`T`\>
+▸ **identityLazy**\<`T`\>(): [`Updater`](functions.md#updater)\<`T`\>
 
 #### Type parameters
 
@@ -1799,7 +1817,7 @@ ___
 
 #### Returns
 
-[`Updater`](functions.md#updater)<`T`\>
+[`Updater`](functions.md#updater)\<`T`\>
 
 ___
 
@@ -1841,7 +1859,7 @@ ___
 
 ### incrementBy
 
-▸ **incrementBy**(`incr`): [`Updater`](functions.md#updater)<`number`\>
+▸ **incrementBy**(`incr`): [`Updater`](functions.md#updater)\<`number`\>
 
 Returns a function that increments a number `x` by the value `incr`.
 
@@ -1853,13 +1871,13 @@ Returns a function that increments a number `x` by the value `incr`.
 
 #### Returns
 
-[`Updater`](functions.md#updater)<`number`\>
+[`Updater`](functions.md#updater)\<`number`\>
 
 ___
 
 ### invoke
 
-▸ **invoke**<`T`, `TKey`\>(`method`, `...args`): [`Function1`](functions.md#function1)<`T`, `ReturnType`<`T`[`TKey`]\>\>
+▸ **invoke**\<`T`, `TKey`\>(`method`, `...args`): [`Function1`](functions.md#function1)\<`T`, `ReturnType`\<`T`[`TKey`]\>\>
 
 Enables invoking a method on an object as a unary function within
 a pipeline operation.
@@ -1868,7 +1886,7 @@ a pipeline operation.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `Record`<`TKey`, (...`args`: `any`[]) => `any`\> |
+| `T` | extends `Record`\<`TKey`, (...`args`: `any`[]) => `any`\> |
 | `TKey` | extends `string` \| `number` \| `symbol` |
 
 #### Parameters
@@ -1876,17 +1894,17 @@ a pipeline operation.
 | Name | Type |
 | :------ | :------ |
 | `method` | `TKey` |
-| `...args` | `Parameters`<`T`[`TKey`]\> |
+| `...args` | `Parameters`\<`T`[`TKey`]\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `ReturnType`<`T`[`TKey`]\>\>
+[`Function1`](functions.md#function1)\<`T`, `ReturnType`\<`T`[`TKey`]\>\>
 
 ___
 
 ### isEqualTo
 
-▸ **isEqualTo**<`T`\>(`b`, `options?`): [`Predicate`](functions.md#predicate)<`T`\>
+▸ **isEqualTo**\<`T`\>(`b`, `options?`): [`Predicate`](functions.md#predicate)\<`T`\>
 
 Returns a predicate function comparing its argument to `b` using the
 provided `equality` function.
@@ -1903,11 +1921,11 @@ provided `equality` function.
 | :------ | :------ |
 | `b` | `T` |
 | `options?` | `Object` |
-| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+| `options.equality?` | [`Equality`](functions.md#equality)\<`T`\> |
 
 #### Returns
 
-[`Predicate`](functions.md#predicate)<`T`\>
+[`Predicate`](functions.md#predicate)\<`T`\>
 
 ___
 
@@ -1963,7 +1981,7 @@ ___
 
 ### isNone
 
-▸ **isNone**<`T`\>(`option`): option is undefined
+▸ **isNone**\<`T`\>(`option`): option is undefined
 
 Returns true if `option` is `none`.
 
@@ -1977,7 +1995,7 @@ Returns true if `option` is `none`.
 
 | Name | Type |
 | :------ | :------ |
-| `option` | [`Optional`](functions.md#optional)<`T`\> |
+| `option` | [`Optional`](functions.md#optional)\<`T`\> |
 
 #### Returns
 
@@ -1987,7 +2005,7 @@ ___
 
 ### isNotEqualTo
 
-▸ **isNotEqualTo**<`T`\>(`b`, `options?`): [`Predicate`](functions.md#predicate)<`T`\>
+▸ **isNotEqualTo**\<`T`\>(`b`, `options?`): [`Predicate`](functions.md#predicate)\<`T`\>
 
 #### Type parameters
 
@@ -2001,11 +2019,11 @@ ___
 | :------ | :------ |
 | `b` | `T` |
 | `options?` | `Object` |
-| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+| `options.equality?` | [`Equality`](functions.md#equality)\<`T`\> |
 
 #### Returns
 
-[`Predicate`](functions.md#predicate)<`T`\>
+[`Predicate`](functions.md#predicate)\<`T`\>
 
 ___
 
@@ -2077,7 +2095,7 @@ ___
 
 ### isReadonlyArray
 
-▸ **isReadonlyArray**<`T`\>(`o`): o is readonly T[]
+▸ **isReadonlyArray**\<`T`\>(`o`): o is readonly T[]
 
 #### Type parameters
 
@@ -2099,7 +2117,7 @@ ___
 
 ### isSome
 
-▸ **isSome**<`T`\>(`v`): v is T
+▸ **isSome**\<`T`\>(`v`): v is T
 
 Returns true if `option` is not `none`.
 
@@ -2113,7 +2131,7 @@ Returns true if `option` is not `none`.
 
 | Name | Type |
 | :------ | :------ |
-| `v` | [`Optional`](functions.md#optional)<`T`\> |
+| `v` | [`Optional`](functions.md#optional)\<`T`\> |
 
 #### Returns
 
@@ -2155,7 +2173,7 @@ ___
 
 ### lessThan
 
-▸ **lessThan**(`v`): [`Predicate`](functions.md#predicate)<`number`\>
+▸ **lessThan**(`v`): [`Predicate`](functions.md#predicate)\<`number`\>
 
 #### Parameters
 
@@ -2165,13 +2183,13 @@ ___
 
 #### Returns
 
-[`Predicate`](functions.md#predicate)<`number`\>
+[`Predicate`](functions.md#predicate)\<`number`\>
 
 ___
 
 ### log
 
-▸ **log**<`T`\>(`v`): `T`
+▸ **log**\<`T`\>(`v`): `T`
 
 #### Type parameters
 
@@ -2211,7 +2229,7 @@ ___
 
 ### newInstance
 
-▸ **newInstance**<`T`\>(`Constructor`): `T`
+▸ **newInstance**\<`T`\>(`Constructor`): `T`
 
 #### Type parameters
 
@@ -2223,13 +2241,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `Constructor` | [`Constructor`](functions.md#constructor)<`T`\> |
+| `Constructor` | [`Constructor`](functions.md#constructor)\<`T`\> |
 
 #### Returns
 
 `T`
 
-▸ **newInstance**<`T`, `TA`\>(`Constructor`, `a`): `T`
+▸ **newInstance**\<`T`, `TA`\>(`Constructor`, `a`): `T`
 
 #### Type parameters
 
@@ -2242,14 +2260,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `Constructor` | [`Constructor1`](functions.md#constructor1)<`TA`, `T`\> |
+| `Constructor` | [`Constructor1`](functions.md#constructor1)\<`TA`, `T`\> |
 | `a` | `TA` |
 
 #### Returns
 
 `T`
 
-▸ **newInstance**<`T`, `TA`, `TB`\>(`Constructor`, `a`, `b`): `T`
+▸ **newInstance**\<`T`, `TA`, `TB`\>(`Constructor`, `a`, `b`): `T`
 
 #### Type parameters
 
@@ -2263,7 +2281,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `Constructor` | [`Constructor2`](functions.md#constructor2)<`TA`, `TB`, `T`\> |
+| `Constructor` | [`Constructor2`](functions.md#constructor2)\<`TA`, `TB`, `T`\> |
 | `a` | `TA` |
 | `b` | `TB` |
 
@@ -2271,7 +2289,7 @@ ___
 
 `T`
 
-▸ **newInstance**<`T`, `TA`, `TB`, `TC`\>(`Constructor`, `a`, `b`, `c`): `T`
+▸ **newInstance**\<`T`, `TA`, `TB`, `TC`\>(`Constructor`, `a`, `b`, `c`): `T`
 
 #### Type parameters
 
@@ -2286,7 +2304,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `Constructor` | [`Constructor3`](functions.md#constructor3)<`TA`, `TB`, `TC`, `T`\> |
+| `Constructor` | [`Constructor3`](functions.md#constructor3)\<`TA`, `TB`, `TC`, `T`\> |
 | `a` | `TA` |
 | `b` | `TB` |
 | `c` | `TC` |
@@ -2295,7 +2313,7 @@ ___
 
 `T`
 
-▸ **newInstance**<`T`, `TA`, `TB`, `TC`, `TD`\>(`Constructor`, `a`, `b`, `c`, `d`): `T`
+▸ **newInstance**\<`T`, `TA`, `TB`, `TC`, `TD`\>(`Constructor`, `a`, `b`, `c`, `d`): `T`
 
 #### Type parameters
 
@@ -2311,7 +2329,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `Constructor` | [`Constructor4`](functions.md#constructor4)<`TA`, `TB`, `TC`, `TD`, `T`\> |
+| `Constructor` | [`Constructor4`](functions.md#constructor4)\<`TA`, `TB`, `TC`, `TD`, `T`\> |
 | `a` | `TA` |
 | `b` | `TB` |
 | `c` | `TC` |
@@ -2325,7 +2343,7 @@ ___
 
 ### partial
 
-▸ **partial**<`TA`, `TB`, `TOut`\>(`b`): [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TA`, `TB`, `TOut`\>, [`Function1`](functions.md#function1)<`TA`, `TOut`\>\>
+▸ **partial**\<`TA`, `TB`, `TOut`\>(`b`): [`Function1`](functions.md#function1)\<[`Function2`](functions.md#function2)\<`TA`, `TB`, `TOut`\>, [`Function1`](functions.md#function1)\<`TA`, `TOut`\>\>
 
 #### Type parameters
 
@@ -2343,9 +2361,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TA`, `TB`, `TOut`\>, [`Function1`](functions.md#function1)<`TA`, `TOut`\>\>
+[`Function1`](functions.md#function1)\<[`Function2`](functions.md#function2)\<`TA`, `TB`, `TOut`\>, [`Function1`](functions.md#function1)\<`TA`, `TOut`\>\>
 
-▸ **partial**<`TA`, `TB`, `TC`, `TOut`\>(`b`, `c`): [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TA`, `TB`, `TC`, `TOut`\>, [`Function1`](functions.md#function1)<`TA`, `TOut`\>\>
+▸ **partial**\<`TA`, `TB`, `TC`, `TOut`\>(`b`, `c`): [`Function1`](functions.md#function1)\<[`Function3`](functions.md#function3)\<`TA`, `TB`, `TC`, `TOut`\>, [`Function1`](functions.md#function1)\<`TA`, `TOut`\>\>
 
 #### Type parameters
 
@@ -2365,9 +2383,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TA`, `TB`, `TC`, `TOut`\>, [`Function1`](functions.md#function1)<`TA`, `TOut`\>\>
+[`Function1`](functions.md#function1)\<[`Function3`](functions.md#function3)\<`TA`, `TB`, `TC`, `TOut`\>, [`Function1`](functions.md#function1)\<`TA`, `TOut`\>\>
 
-▸ **partial**<`TA`, `TB`, `TC`, `TD`, `TOut`\>(`b`, `c`, `d`): [`Function1`](functions.md#function1)<[`Function4`](functions.md#function4)<`TA`, `TB`, `TC`, `TD`, `TOut`\>, [`Function1`](functions.md#function1)<`TA`, `TOut`\>\>
+▸ **partial**\<`TA`, `TB`, `TC`, `TD`, `TOut`\>(`b`, `c`, `d`): [`Function1`](functions.md#function1)\<[`Function4`](functions.md#function4)\<`TA`, `TB`, `TC`, `TD`, `TOut`\>, [`Function1`](functions.md#function1)\<`TA`, `TOut`\>\>
 
 #### Type parameters
 
@@ -2389,13 +2407,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`Function4`](functions.md#function4)<`TA`, `TB`, `TC`, `TD`, `TOut`\>, [`Function1`](functions.md#function1)<`TA`, `TOut`\>\>
+[`Function1`](functions.md#function1)\<[`Function4`](functions.md#function4)\<`TA`, `TB`, `TC`, `TD`, `TOut`\>, [`Function1`](functions.md#function1)\<`TA`, `TOut`\>\>
 
 ___
 
 ### pick
 
-▸ **pick**<`T`, `TKey`\>(`key`): [`Function1`](functions.md#function1)<`T`, `T`[`TKey`]\>
+▸ **pick**\<`T`, `TKey`\>(`key`): [`Function1`](functions.md#function1)\<`T`, `T`[`TKey`]\>
 
 Returns a function that can be used to pick deeply nested properties
 from an Object.
@@ -2415,9 +2433,9 @@ from an Object.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `T`[`TKey`]\>
+[`Function1`](functions.md#function1)\<`T`, `T`[`TKey`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+▸ **pick**\<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`Function1`](functions.md#function1)\<`T`, `T`[`TKeyA`][`TKeyB`]\>
 
 Returns a function that can be used to pick deeply nested properties
 from an Object.
@@ -2439,9 +2457,9 @@ from an Object.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+[`Function1`](functions.md#function1)\<`T`, `T`[`TKeyA`][`TKeyB`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+▸ **pick**\<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`Function1`](functions.md#function1)\<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 Returns a function that can be used to pick deeply nested properties
 from an Object.
@@ -2465,9 +2483,9 @@ from an Object.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+[`Function1`](functions.md#function1)\<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`, `TKeyD`\>(`keyA`, `keyB`, `keyC`, `keyD`): [`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`][`TKeyD`]\>
+▸ **pick**\<`T`, `TKeyA`, `TKeyB`, `TKeyC`, `TKeyD`\>(`keyA`, `keyB`, `keyC`, `keyD`): [`Function1`](functions.md#function1)\<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`][`TKeyD`]\>
 
 Returns a function that can be used to pick deeply nested properties
 from an Object.
@@ -2493,13 +2511,13 @@ from an Object.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`][`TKeyD`]\>
+[`Function1`](functions.md#function1)\<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`][`TKeyD`]\>
 
 ___
 
 ### pickUnsafe
 
-▸ **pickUnsafe**<`T`\>(`...keys`): [`Function1`](functions.md#function1)<{}, `T`\>
+▸ **pickUnsafe**\<`T`\>(`...keys`): [`Function1`](functions.md#function1)\<{}, `T`\>
 
 Type-unsafe variant of `pick`.
 
@@ -2517,13 +2535,13 @@ Type-unsafe variant of `pick`.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<{}, `T`\>
+[`Function1`](functions.md#function1)\<{}, `T`\>
 
 ___
 
 ### pipe
 
-▸ **pipe**<`T`, `A`\>(`src`, `op1`): `A`
+▸ **pipe**\<`T`, `A`\>(`src`, `op1`): `A`
 
 Pipes `source` through a series of unary functions.
 
@@ -2539,13 +2557,13 @@ Pipes `source` through a series of unary functions.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
 
 #### Returns
 
 `A`
 
-▸ **pipe**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): `B`
+▸ **pipe**\<`T`, `A`, `B`\>(`src`, `op1`, `op2`): `B`
 
 Pipes `source` through a series of unary functions.
 
@@ -2562,14 +2580,14 @@ Pipes `source` through a series of unary functions.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
 
 #### Returns
 
 `B`
 
-▸ **pipe**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): `C`
+▸ **pipe**\<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): `C`
 
 Pipes `source` through a series of unary functions.
 
@@ -2587,15 +2605,15 @@ Pipes `source` through a series of unary functions.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
 
 #### Returns
 
 `C`
 
-▸ **pipe**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): `D`
+▸ **pipe**\<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): `D`
 
 Pipes `source` through a series of unary functions.
 
@@ -2614,16 +2632,16 @@ Pipes `source` through a series of unary functions.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
 
 #### Returns
 
 `D`
 
-▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): `E`
+▸ **pipe**\<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): `E`
 
 Pipes `source` through a series of unary functions.
 
@@ -2643,17 +2661,17 @@ Pipes `source` through a series of unary functions.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
 
 #### Returns
 
 `E`
 
-▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): `F`
+▸ **pipe**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): `F`
 
 Pipes `source` through a series of unary functions.
 
@@ -2674,18 +2692,18 @@ Pipes `source` through a series of unary functions.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
 
 #### Returns
 
 `F`
 
-▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): `G`
+▸ **pipe**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): `G`
 
 Pipes `source` through a series of unary functions.
 
@@ -2707,19 +2725,19 @@ Pipes `source` through a series of unary functions.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
 
 #### Returns
 
 `G`
 
-▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): `H`
+▸ **pipe**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): `H`
 
 Pipes `source` through a series of unary functions.
 
@@ -2742,20 +2760,20 @@ Pipes `source` through a series of unary functions.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
 
 #### Returns
 
 `H`
 
-▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): `I`
+▸ **pipe**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): `I`
 
 Pipes `source` through a series of unary functions.
 
@@ -2779,21 +2797,21 @@ Pipes `source` through a series of unary functions.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
 
 #### Returns
 
 `I`
 
-▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): `J`
+▸ **pipe**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): `J`
 
 Pipes `source` through a series of unary functions.
 
@@ -2818,22 +2836,22 @@ Pipes `source` through a series of unary functions.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J`\> |
 
 #### Returns
 
 `J`
 
-▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): `K`
+▸ **pipe**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): `K`
 
 Pipes `source` through a series of unary functions.
 
@@ -2859,23 +2877,23 @@ Pipes `source` through a series of unary functions.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J`\> |
+| `op11` | [`Function1`](functions.md#function1)\<`J`, `K`\> |
 
 #### Returns
 
 `K`
 
-▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): `L`
+▸ **pipe**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): `L`
 
 Pipes `source` through a series of unary functions.
 
@@ -2902,18 +2920,18 @@ Pipes `source` through a series of unary functions.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
-| `op12` | [`Function1`](functions.md#function1)<`K`, `L`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J`\> |
+| `op11` | [`Function1`](functions.md#function1)\<`J`, `K`\> |
+| `op12` | [`Function1`](functions.md#function1)\<`K`, `L`\> |
 
 #### Returns
 
@@ -2923,7 +2941,7 @@ ___
 
 ### pipeAsync
 
-▸ **pipeAsync**<`T`, `A`\>(`src`, `op1`): `Promise`<`A`\>
+▸ **pipeAsync**\<`T`, `A`\>(`src`, `op1`): `Promise`\<`A`\>
 
 Pipes the source through a series of async operators.
 
@@ -2939,13 +2957,13 @@ Pipes the source through a series of async operators.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
 
 #### Returns
 
-`Promise`<`A`\>
+`Promise`\<`A`\>
 
-▸ **pipeAsync**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): `Promise`<`B`\>
+▸ **pipeAsync**\<`T`, `A`, `B`\>(`src`, `op1`, `op2`): `Promise`\<`B`\>
 
 Pipes the source through a series of async operators.
 
@@ -2962,14 +2980,14 @@ Pipes the source through a series of async operators.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
 
 #### Returns
 
-`Promise`<`B`\>
+`Promise`\<`B`\>
 
-▸ **pipeAsync**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): `Promise`<`C`\>
+▸ **pipeAsync**\<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): `Promise`\<`C`\>
 
 Pipes the source through a series of async operators.
 
@@ -2987,15 +3005,15 @@ Pipes the source through a series of async operators.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
 
 #### Returns
 
-`Promise`<`C`\>
+`Promise`\<`C`\>
 
-▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): `Promise`<`D`\>
+▸ **pipeAsync**\<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): `Promise`\<`D`\>
 
 Pipes the source through a series of async operators.
 
@@ -3014,16 +3032,16 @@ Pipes the source through a series of async operators.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
 
 #### Returns
 
-`Promise`<`D`\>
+`Promise`\<`D`\>
 
-▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): `Promise`<`E`\>
+▸ **pipeAsync**\<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): `Promise`\<`E`\>
 
 Pipes the source through a series of async operators.
 
@@ -3043,17 +3061,17 @@ Pipes the source through a series of async operators.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
 
 #### Returns
 
-`Promise`<`E`\>
+`Promise`\<`E`\>
 
-▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): `Promise`<`F`\>
+▸ **pipeAsync**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): `Promise`\<`F`\>
 
 Pipes the source through a series of async operators.
 
@@ -3074,18 +3092,18 @@ Pipes the source through a series of async operators.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F` \| `Promise`\<`F`\>\> |
 
 #### Returns
 
-`Promise`<`F`\>
+`Promise`\<`F`\>
 
-▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): `Promise`<`G`\>
+▸ **pipeAsync**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): `Promise`\<`G`\>
 
 Pipes the source through a series of async operators.
 
@@ -3107,19 +3125,19 @@ Pipes the source through a series of async operators.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F` \| `Promise`\<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G` \| `Promise`\<`G`\>\> |
 
 #### Returns
 
-`Promise`<`G`\>
+`Promise`\<`G`\>
 
-▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): `Promise`<`H`\>
+▸ **pipeAsync**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): `Promise`\<`H`\>
 
 Pipes the source through a series of async operators.
 
@@ -3142,20 +3160,20 @@ Pipes the source through a series of async operators.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F` \| `Promise`\<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G` \| `Promise`\<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H` \| `Promise`\<`H`\>\> |
 
 #### Returns
 
-`Promise`<`H`\>
+`Promise`\<`H`\>
 
-▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): `Promise`<`I`\>
+▸ **pipeAsync**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): `Promise`\<`I`\>
 
 Pipes the source through a series of async operators.
 
@@ -3179,21 +3197,21 @@ Pipes the source through a series of async operators.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F` \| `Promise`\<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G` \| `Promise`\<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H` \| `Promise`\<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I` \| `Promise`\<`I`\>\> |
 
 #### Returns
 
-`Promise`<`I`\>
+`Promise`\<`I`\>
 
-▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): `Promise`<`J`\>
+▸ **pipeAsync**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): `Promise`\<`J`\>
 
 Pipes the source through a series of async operators.
 
@@ -3218,22 +3236,22 @@ Pipes the source through a series of async operators.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F` \| `Promise`\<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G` \| `Promise`\<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H` \| `Promise`\<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I` \| `Promise`\<`I`\>\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J` \| `Promise`\<`J`\>\> |
 
 #### Returns
 
-`Promise`<`J`\>
+`Promise`\<`J`\>
 
-▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): `Promise`<`K`\>
+▸ **pipeAsync**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): `Promise`\<`K`\>
 
 Pipes the source through a series of async operators.
 
@@ -3259,23 +3277,23 @@ Pipes the source through a series of async operators.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K` \| `Promise`<`K`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F` \| `Promise`\<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G` \| `Promise`\<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H` \| `Promise`\<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I` \| `Promise`\<`I`\>\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J` \| `Promise`\<`J`\>\> |
+| `op11` | [`Function1`](functions.md#function1)\<`J`, `K` \| `Promise`\<`K`\>\> |
 
 #### Returns
 
-`Promise`<`K`\>
+`Promise`\<`K`\>
 
-▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): `Promise`<`L`\>
+▸ **pipeAsync**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): `Promise`\<`L`\>
 
 Pipes the source through a series of async operators.
 
@@ -3302,28 +3320,28 @@ Pipes the source through a series of async operators.
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K` \| `Promise`<`K`\>\> |
-| `op12` | [`Function1`](functions.md#function1)<`K`, `L` \| `Promise`<`L`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F` \| `Promise`\<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G` \| `Promise`\<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H` \| `Promise`\<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I` \| `Promise`\<`I`\>\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J` \| `Promise`\<`J`\>\> |
+| `op11` | [`Function1`](functions.md#function1)\<`J`, `K` \| `Promise`\<`K`\>\> |
+| `op12` | [`Function1`](functions.md#function1)\<`K`, `L` \| `Promise`\<`L`\>\> |
 
 #### Returns
 
-`Promise`<`L`\>
+`Promise`\<`L`\>
 
 ___
 
 ### pipeLazy
 
-▸ **pipeLazy**<`T`, `A`\>(`src`, `op1`): [`Factory`](functions.md#factory)<`A`\>
+▸ **pipeLazy**\<`T`, `A`\>(`src`, `op1`): [`Factory`](functions.md#factory)\<`A`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators.
 
@@ -3339,13 +3357,13 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`A`\>
+[`Factory`](functions.md#factory)\<`A`\>
 
-▸ **pipeLazy**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Factory`](functions.md#factory)<`B`\>
+▸ **pipeLazy**\<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Factory`](functions.md#factory)\<`B`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators.
 
@@ -3362,14 +3380,14 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`B`\>
+[`Factory`](functions.md#factory)\<`B`\>
 
-▸ **pipeLazy**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Factory`](functions.md#factory)<`C`\>
+▸ **pipeLazy**\<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Factory`](functions.md#factory)\<`C`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators.
 
@@ -3387,15 +3405,15 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`C`\>
+[`Factory`](functions.md#factory)\<`C`\>
 
-▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Factory`](functions.md#factory)<`D`\>
+▸ **pipeLazy**\<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Factory`](functions.md#factory)\<`D`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators.
 
@@ -3414,16 +3432,16 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`D`\>
+[`Factory`](functions.md#factory)\<`D`\>
 
-▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Factory`](functions.md#factory)<`E`\>
+▸ **pipeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Factory`](functions.md#factory)\<`E`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators.
 
@@ -3443,17 +3461,17 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`E`\>
+[`Factory`](functions.md#factory)\<`E`\>
 
-▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Factory`](functions.md#factory)<`F`\>
+▸ **pipeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Factory`](functions.md#factory)\<`F`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators.
 
@@ -3474,18 +3492,18 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`F`\>
+[`Factory`](functions.md#factory)\<`F`\>
 
-▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Factory`](functions.md#factory)<`G`\>
+▸ **pipeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Factory`](functions.md#factory)\<`G`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators.
 
@@ -3507,19 +3525,19 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`G`\>
+[`Factory`](functions.md#factory)\<`G`\>
 
-▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Factory`](functions.md#factory)<`H`\>
+▸ **pipeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Factory`](functions.md#factory)\<`H`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators.
 
@@ -3542,20 +3560,20 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`H`\>
+[`Factory`](functions.md#factory)\<`H`\>
 
-▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Factory`](functions.md#factory)<`I`\>
+▸ **pipeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Factory`](functions.md#factory)\<`I`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators.
 
@@ -3579,21 +3597,21 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`I`\>
+[`Factory`](functions.md#factory)\<`I`\>
 
-▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Factory`](functions.md#factory)<`J`\>
+▸ **pipeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Factory`](functions.md#factory)\<`J`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators.
 
@@ -3618,22 +3636,22 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`J`\>
+[`Factory`](functions.md#factory)\<`J`\>
 
-▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Factory`](functions.md#factory)<`K`\>
+▸ **pipeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Factory`](functions.md#factory)\<`K`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators.
 
@@ -3659,23 +3677,23 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J`\> |
+| `op11` | [`Function1`](functions.md#function1)\<`J`, `K`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`K`\>
+[`Factory`](functions.md#factory)\<`K`\>
 
-▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Factory`](functions.md#factory)<`L`\>
+▸ **pipeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Factory`](functions.md#factory)\<`L`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators.
 
@@ -3702,28 +3720,28 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
-| `op12` | [`Function1`](functions.md#function1)<`K`, `L`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J`\> |
+| `op11` | [`Function1`](functions.md#function1)\<`J`, `K`\> |
+| `op12` | [`Function1`](functions.md#function1)\<`K`, `L`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`L`\>
+[`Factory`](functions.md#factory)\<`L`\>
 
 ___
 
 ### pipeLazyAsync
 
-▸ **pipeLazyAsync**<`T`, `A`\>(`src`, `op1`): [`Factory`](functions.md#factory)<`Promise`<`A`\>\>
+▸ **pipeLazyAsync**\<`T`, `A`\>(`src`, `op1`): [`Factory`](functions.md#factory)\<`Promise`\<`A`\>\>
 
 Returns a `Factory` function that pipes the source through
  the provided async function operators.
@@ -3740,13 +3758,13 @@ Returns a `Factory` function that pipes the source through
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`Promise`<`A`\>\>
+[`Factory`](functions.md#factory)\<`Promise`\<`A`\>\>
 
-▸ **pipeLazyAsync**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Factory`](functions.md#factory)<`Promise`<`B`\>\>
+▸ **pipeLazyAsync**\<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Factory`](functions.md#factory)\<`Promise`\<`B`\>\>
 
 Returns a `Factory` function that pipes the source through
  the provided async function operators.
@@ -3764,14 +3782,14 @@ Returns a `Factory` function that pipes the source through
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`Promise`<`B`\>\>
+[`Factory`](functions.md#factory)\<`Promise`\<`B`\>\>
 
-▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Factory`](functions.md#factory)<`Promise`<`C`\>\>
+▸ **pipeLazyAsync**\<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Factory`](functions.md#factory)\<`Promise`\<`C`\>\>
 
 Returns a `Factory` function that pipes the source through
  the provided async function operators.
@@ -3790,15 +3808,15 @@ Returns a `Factory` function that pipes the source through
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`Promise`<`C`\>\>
+[`Factory`](functions.md#factory)\<`Promise`\<`C`\>\>
 
-▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Factory`](functions.md#factory)<`Promise`<`D`\>\>
+▸ **pipeLazyAsync**\<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Factory`](functions.md#factory)\<`Promise`\<`D`\>\>
 
 Returns a `Factory` function that pipes the source through
  the provided async function operators.
@@ -3818,16 +3836,16 @@ Returns a `Factory` function that pipes the source through
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`Promise`<`D`\>\>
+[`Factory`](functions.md#factory)\<`Promise`\<`D`\>\>
 
-▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Factory`](functions.md#factory)<`Promise`<`E`\>\>
+▸ **pipeLazyAsync**\<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Factory`](functions.md#factory)\<`Promise`\<`E`\>\>
 
 Returns a `Factory` function that pipes the source through
  the provided async function operators.
@@ -3848,17 +3866,17 @@ Returns a `Factory` function that pipes the source through
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`Promise`<`E`\>\>
+[`Factory`](functions.md#factory)\<`Promise`\<`E`\>\>
 
-▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Factory`](functions.md#factory)<`Promise`<`F`\>\>
+▸ **pipeLazyAsync**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Factory`](functions.md#factory)\<`Promise`\<`F`\>\>
 
 Returns a `Factory` function that pipes the source through
  the provided async function operators.
@@ -3880,18 +3898,18 @@ Returns a `Factory` function that pipes the source through
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F` \| `Promise`\<`F`\>\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`Promise`<`F`\>\>
+[`Factory`](functions.md#factory)\<`Promise`\<`F`\>\>
 
-▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Factory`](functions.md#factory)<`Promise`<`G`\>\>
+▸ **pipeLazyAsync**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Factory`](functions.md#factory)\<`Promise`\<`G`\>\>
 
 Returns a `Factory` function that pipes the source through
  the provided async function operators.
@@ -3914,19 +3932,19 @@ Returns a `Factory` function that pipes the source through
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F` \| `Promise`\<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G` \| `Promise`\<`G`\>\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`Promise`<`G`\>\>
+[`Factory`](functions.md#factory)\<`Promise`\<`G`\>\>
 
-▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Factory`](functions.md#factory)<`Promise`<`H`\>\>
+▸ **pipeLazyAsync**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Factory`](functions.md#factory)\<`Promise`\<`H`\>\>
 
 Returns a `Factory` function that pipes the source through
  the provided async function operators.
@@ -3950,20 +3968,20 @@ Returns a `Factory` function that pipes the source through
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F` \| `Promise`\<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G` \| `Promise`\<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H` \| `Promise`\<`H`\>\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`Promise`<`H`\>\>
+[`Factory`](functions.md#factory)\<`Promise`\<`H`\>\>
 
-▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Factory`](functions.md#factory)<`Promise`<`I`\>\>
+▸ **pipeLazyAsync**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Factory`](functions.md#factory)\<`Promise`\<`I`\>\>
 
 Returns a `Factory` function that pipes the source through
  the provided async function operators.
@@ -3988,21 +4006,21 @@ Returns a `Factory` function that pipes the source through
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F` \| `Promise`\<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G` \| `Promise`\<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H` \| `Promise`\<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I` \| `Promise`\<`I`\>\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`Promise`<`I`\>\>
+[`Factory`](functions.md#factory)\<`Promise`\<`I`\>\>
 
-▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Factory`](functions.md#factory)<`Promise`<`J`\>\>
+▸ **pipeLazyAsync**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Factory`](functions.md#factory)\<`Promise`\<`J`\>\>
 
 Returns a `Factory` function that pipes the source through
  the provided async function operators.
@@ -4028,22 +4046,22 @@ Returns a `Factory` function that pipes the source through
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F` \| `Promise`\<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G` \| `Promise`\<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H` \| `Promise`\<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I` \| `Promise`\<`I`\>\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J` \| `Promise`\<`J`\>\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`Promise`<`J`\>\>
+[`Factory`](functions.md#factory)\<`Promise`\<`J`\>\>
 
-▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Factory`](functions.md#factory)<`Promise`<`K`\>\>
+▸ **pipeLazyAsync**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Factory`](functions.md#factory)\<`Promise`\<`K`\>\>
 
 Returns a `Factory` function that pipes the source through
  the provided async function operators.
@@ -4070,23 +4088,23 @@ Returns a `Factory` function that pipes the source through
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K` \| `Promise`<`K`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F` \| `Promise`\<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G` \| `Promise`\<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H` \| `Promise`\<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I` \| `Promise`\<`I`\>\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J` \| `Promise`\<`J`\>\> |
+| `op11` | [`Function1`](functions.md#function1)\<`J`, `K` \| `Promise`\<`K`\>\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`Promise`<`K`\>\>
+[`Factory`](functions.md#factory)\<`Promise`\<`K`\>\>
 
-▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Factory`](functions.md#factory)<`Promise`<`L`\>\>
+▸ **pipeLazyAsync**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Factory`](functions.md#factory)\<`Promise`\<`L`\>\>
 
 Returns a `Factory` function that pipes the source through
  the provided async function operators.
@@ -4114,28 +4132,28 @@ Returns a `Factory` function that pipes the source through
 | Name | Type |
 | :------ | :------ |
 | `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K` \| `Promise`<`K`\>\> |
-| `op12` | [`Function1`](functions.md#function1)<`K`, `L` \| `Promise`<`L`\>\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A` \| `Promise`\<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B` \| `Promise`\<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C` \| `Promise`\<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D` \| `Promise`\<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E` \| `Promise`\<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F` \| `Promise`\<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G` \| `Promise`\<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H` \| `Promise`\<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I` \| `Promise`\<`I`\>\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J` \| `Promise`\<`J`\>\> |
+| `op11` | [`Function1`](functions.md#function1)\<`J`, `K` \| `Promise`\<`K`\>\> |
+| `op12` | [`Function1`](functions.md#function1)\<`K`, `L` \| `Promise`\<`L`\>\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`Promise`<`L`\>\>
+[`Factory`](functions.md#factory)\<`Promise`\<`L`\>\>
 
 ___
 
 ### pipeSome
 
-▸ **pipeSome**<`T`, `A`\>(`src`, `op1`): [`Optional`](functions.md#optional)<`A`\>
+▸ **pipeSome**\<`T`, `A`\>(`src`, `op1`): [`Optional`](functions.md#optional)\<`A`\>
 
 Pipes `source` through a series of unary functions if it is not undefined.
 
@@ -4150,14 +4168,14 @@ Pipes `source` through a series of unary functions if it is not undefined.
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`A`\>
+[`Optional`](functions.md#optional)\<`A`\>
 
-▸ **pipeSome**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Optional`](functions.md#optional)<`B`\>
+▸ **pipeSome**\<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Optional`](functions.md#optional)\<`B`\>
 
 Pipes `source` through a series of unary functions if it is not undefined.
 
@@ -4173,15 +4191,15 @@ Pipes `source` through a series of unary functions if it is not undefined.
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`B`\>
+[`Optional`](functions.md#optional)\<`B`\>
 
-▸ **pipeSome**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Optional`](functions.md#optional)<`C`\>
+▸ **pipeSome**\<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Optional`](functions.md#optional)\<`C`\>
 
 Pipes `source` through a series of unary functions if it is not undefined.
 
@@ -4198,16 +4216,16 @@ Pipes `source` through a series of unary functions if it is not undefined.
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`C`\>
+[`Optional`](functions.md#optional)\<`C`\>
 
-▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Optional`](functions.md#optional)<`D`\>
+▸ **pipeSome**\<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Optional`](functions.md#optional)\<`D`\>
 
 Pipes `source` through a series of unary functions if it is not undefined.
 
@@ -4225,17 +4243,17 @@ Pipes `source` through a series of unary functions if it is not undefined.
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`D`\>
+[`Optional`](functions.md#optional)\<`D`\>
 
-▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Optional`](functions.md#optional)<`E`\>
+▸ **pipeSome**\<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Optional`](functions.md#optional)\<`E`\>
 
 Pipes `source` through a series of unary functions if it is not undefined.
 
@@ -4254,18 +4272,18 @@ Pipes `source` through a series of unary functions if it is not undefined.
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`E`\>
+[`Optional`](functions.md#optional)\<`E`\>
 
-▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Optional`](functions.md#optional)<`F`\>
+▸ **pipeSome**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Optional`](functions.md#optional)\<`F`\>
 
 Pipes `source` through a series of unary functions if it is not undefined.
 
@@ -4285,19 +4303,19 @@ Pipes `source` through a series of unary functions if it is not undefined.
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`F`\>
+[`Optional`](functions.md#optional)\<`F`\>
 
-▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Optional`](functions.md#optional)<`G`\>
+▸ **pipeSome**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Optional`](functions.md#optional)\<`G`\>
 
 Pipes `source` through a series of unary functions if it is not undefined.
 
@@ -4318,20 +4336,20 @@ Pipes `source` through a series of unary functions if it is not undefined.
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`G`\>
+[`Optional`](functions.md#optional)\<`G`\>
 
-▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Optional`](functions.md#optional)<`H`\>
+▸ **pipeSome**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Optional`](functions.md#optional)\<`H`\>
 
 Pipes `source` through a series of unary functions if it is not undefined.
 
@@ -4353,21 +4371,21 @@ Pipes `source` through a series of unary functions if it is not undefined.
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`H`\>
+[`Optional`](functions.md#optional)\<`H`\>
 
-▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Optional`](functions.md#optional)<`I`\>
+▸ **pipeSome**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Optional`](functions.md#optional)\<`I`\>
 
 Pipes `source` through a series of unary functions if it is not undefined.
 
@@ -4390,22 +4408,22 @@ Pipes `source` through a series of unary functions if it is not undefined.
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`I`\>
+[`Optional`](functions.md#optional)\<`I`\>
 
-▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Optional`](functions.md#optional)<`J`\>
+▸ **pipeSome**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Optional`](functions.md#optional)\<`J`\>
 
 Pipes `source` through a series of unary functions if it is not undefined.
 
@@ -4429,23 +4447,23 @@ Pipes `source` through a series of unary functions if it is not undefined.
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J`\> |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`J`\>
+[`Optional`](functions.md#optional)\<`J`\>
 
-▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Optional`](functions.md#optional)<`K`\>
+▸ **pipeSome**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Optional`](functions.md#optional)\<`K`\>
 
 Pipes `source` through a series of unary functions if it is not undefined.
 
@@ -4470,24 +4488,24 @@ Pipes `source` through a series of unary functions if it is not undefined.
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J`\> |
+| `op11` | [`Function1`](functions.md#function1)\<`J`, `K`\> |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`K`\>
+[`Optional`](functions.md#optional)\<`K`\>
 
-▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Optional`](functions.md#optional)<`L`\>
+▸ **pipeSome**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Optional`](functions.md#optional)\<`L`\>
 
 Pipes `source` through a series of unary functions if it is not undefined.
 
@@ -4513,29 +4531,29 @@ Pipes `source` through a series of unary functions if it is not undefined.
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
-| `op12` | [`Function1`](functions.md#function1)<`K`, `L`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J`\> |
+| `op11` | [`Function1`](functions.md#function1)\<`J`, `K`\> |
+| `op12` | [`Function1`](functions.md#function1)\<`K`, `L`\> |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`L`\>
+[`Optional`](functions.md#optional)\<`L`\>
 
 ___
 
 ### pipeSomeLazy
 
-▸ **pipeSomeLazy**<`T`, `A`\>(`src`, `op1`): [`Factory`](functions.md#factory)<`A`\>
+▸ **pipeSomeLazy**\<`T`, `A`\>(`src`, `op1`): [`Factory`](functions.md#factory)\<`A`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
 
@@ -4550,14 +4568,14 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`A`\>
+[`Factory`](functions.md#factory)\<`A`\>
 
-▸ **pipeSomeLazy**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Factory`](functions.md#factory)<`B`\>
+▸ **pipeSomeLazy**\<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Factory`](functions.md#factory)\<`B`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
 
@@ -4573,15 +4591,15 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`B`\>
+[`Factory`](functions.md#factory)\<`B`\>
 
-▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Factory`](functions.md#factory)<`C`\>
+▸ **pipeSomeLazy**\<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Factory`](functions.md#factory)\<`C`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
 
@@ -4598,16 +4616,16 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`C`\>
+[`Factory`](functions.md#factory)\<`C`\>
 
-▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Factory`](functions.md#factory)<`D`\>
+▸ **pipeSomeLazy**\<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Factory`](functions.md#factory)\<`D`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
 
@@ -4625,17 +4643,17 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`D`\>
+[`Factory`](functions.md#factory)\<`D`\>
 
-▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Factory`](functions.md#factory)<`E`\>
+▸ **pipeSomeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Factory`](functions.md#factory)\<`E`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
 
@@ -4654,18 +4672,18 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`E`\>
+[`Factory`](functions.md#factory)\<`E`\>
 
-▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Factory`](functions.md#factory)<`F`\>
+▸ **pipeSomeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Factory`](functions.md#factory)\<`F`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
 
@@ -4685,19 +4703,19 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`F`\>
+[`Factory`](functions.md#factory)\<`F`\>
 
-▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Factory`](functions.md#factory)<`G`\>
+▸ **pipeSomeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Factory`](functions.md#factory)\<`G`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
 
@@ -4718,20 +4736,20 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`G`\>
+[`Factory`](functions.md#factory)\<`G`\>
 
-▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Factory`](functions.md#factory)<`H`\>
+▸ **pipeSomeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Factory`](functions.md#factory)\<`H`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
 
@@ -4753,21 +4771,21 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`H`\>
+[`Factory`](functions.md#factory)\<`H`\>
 
-▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Factory`](functions.md#factory)<`I`\>
+▸ **pipeSomeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Factory`](functions.md#factory)\<`I`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
 
@@ -4790,22 +4808,22 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`I`\>
+[`Factory`](functions.md#factory)\<`I`\>
 
-▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Factory`](functions.md#factory)<`J`\>
+▸ **pipeSomeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Factory`](functions.md#factory)\<`J`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
 
@@ -4829,23 +4847,23 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`J`\>
+[`Factory`](functions.md#factory)\<`J`\>
 
-▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Factory`](functions.md#factory)<`K`\>
+▸ **pipeSomeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Factory`](functions.md#factory)\<`K`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
 
@@ -4870,24 +4888,24 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J`\> |
+| `op11` | [`Function1`](functions.md#function1)\<`J`, `K`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`K`\>
+[`Factory`](functions.md#factory)\<`K`\>
 
-▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Factory`](functions.md#factory)<`L`\>
+▸ **pipeSomeLazy**\<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Factory`](functions.md#factory)\<`L`\>
 
 Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
 
@@ -4913,29 +4931,29 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`Optional`](functions.md#optional)<`T`\> |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
-| `op12` | [`Function1`](functions.md#function1)<`K`, `L`\> |
+| `src` | [`Optional`](functions.md#optional)\<`T`\> |
+| `op1` | [`Function1`](functions.md#function1)\<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)\<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)\<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)\<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)\<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)\<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)\<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)\<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)\<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)\<`I`, `J`\> |
+| `op11` | [`Function1`](functions.md#function1)\<`J`, `K`\> |
+| `op12` | [`Function1`](functions.md#function1)\<`K`, `L`\> |
 
 #### Returns
 
-[`Factory`](functions.md#factory)<`L`\>
+[`Factory`](functions.md#factory)\<`L`\>
 
 ___
 
 ### pipeUnsafe
 
-▸ **pipeUnsafe**<`T`\>(`source`, `...operators`): `T`
+▸ **pipeUnsafe**\<`T`\>(`source`, `...operators`): `T`
 
 Pipes `source` through a series of unary functions.
 
@@ -4950,7 +4968,7 @@ Pipes `source` through a series of unary functions.
 | Name | Type |
 | :------ | :------ |
 | `source` | `unknown` |
-| `...operators` | [`Function1`](functions.md#function1)<`any`, `any`\>[] |
+| `...operators` | [`Function1`](functions.md#function1)\<`any`, `any`\>[] |
 
 #### Returns
 
@@ -4960,7 +4978,7 @@ ___
 
 ### raise
 
-▸ **raise**<`T`\>(`e?`): `T`
+▸ **raise**\<`T`\>(`e?`): `T`
 
 Throws an error, wrapping the provided object in a Javascript Error.
 
@@ -4984,7 +5002,7 @@ ___
 
 ### raiseError
 
-▸ **raiseError**<`T`\>(`e`): `T`
+▸ **raiseError**\<`T`\>(`e`): `T`
 
 Throws the provided error.
 
@@ -5027,7 +5045,7 @@ ___
 
 ### raiseIfNone
 
-▸ **raiseIfNone**<`T`\>(`v`, `message`): asserts v is T
+▸ **raiseIfNone**\<`T`\>(`v`, `message`): asserts v is T
 
 #### Type parameters
 
@@ -5039,7 +5057,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `v` | [`Optional`](functions.md#optional)<`T`\> |
+| `v` | [`Optional`](functions.md#optional)\<`T`\> |
 | `message` | `string` |
 
 #### Returns
@@ -5050,7 +5068,7 @@ ___
 
 ### returns
 
-▸ **returns**<`T`\>(`v`): (...`_args`: `unknown`[]) => `T`
+▸ **returns**\<`T`\>(`v`): (...`_args`: `unknown`[]) => `T`
 
 Returns a function that takes an arbitrary number of arguments and always returns `v`.
 
@@ -5086,7 +5104,7 @@ ___
 
 ### strictEquality
 
-▸ **strictEquality**<`T`\>(`a`, `b`): `boolean`
+▸ **strictEquality**\<`T`\>(`a`, `b`): `boolean`
 
 The javascript strict equality function.
 
@@ -5111,7 +5129,7 @@ ___
 
 ### tuple
 
-▸ **tuple**<`TA`\>(`a`): [`Tuple1`](functions.md#tuple1)<`TA`\>
+▸ **tuple**\<`TA`\>(`a`): [`Tuple1`](functions.md#tuple1)\<`TA`\>
 
 Typed function for creating tuple instances.
 
@@ -5129,9 +5147,9 @@ Typed function for creating tuple instances.
 
 #### Returns
 
-[`Tuple1`](functions.md#tuple1)<`TA`\>
+[`Tuple1`](functions.md#tuple1)\<`TA`\>
 
-▸ **tuple**<`TA`, `TB`\>(`a`, `b`): [`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>
+▸ **tuple**\<`TA`, `TB`\>(`a`, `b`): [`Tuple2`](functions.md#tuple2)\<`TA`, `TB`\>
 
 Typed function for creating tuple instances.
 
@@ -5151,9 +5169,9 @@ Typed function for creating tuple instances.
 
 #### Returns
 
-[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>
+[`Tuple2`](functions.md#tuple2)\<`TA`, `TB`\>
 
-▸ **tuple**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>
+▸ **tuple**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Tuple3`](functions.md#tuple3)\<`TA`, `TB`, `TC`\>
 
 Typed function for creating tuple instances.
 
@@ -5175,9 +5193,9 @@ Typed function for creating tuple instances.
 
 #### Returns
 
-[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>
+[`Tuple3`](functions.md#tuple3)\<`TA`, `TB`, `TC`\>
 
-▸ **tuple**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>
+▸ **tuple**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Tuple4`](functions.md#tuple4)\<`TA`, `TB`, `TC`, `TD`\>
 
 Typed function for creating tuple instances.
 
@@ -5201,9 +5219,9 @@ Typed function for creating tuple instances.
 
 #### Returns
 
-[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>
+[`Tuple4`](functions.md#tuple4)\<`TA`, `TB`, `TC`, `TD`\>
 
-▸ **tuple**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>
+▸ **tuple**\<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Tuple5`](functions.md#tuple5)\<`TA`, `TB`, `TC`, `TD`, `TE`\>
 
 Typed function for creating tuple instances.
 
@@ -5229,9 +5247,9 @@ Typed function for creating tuple instances.
 
 #### Returns
 
-[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>
+[`Tuple5`](functions.md#tuple5)\<`TA`, `TB`, `TC`, `TD`, `TE`\>
 
-▸ **tuple**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>
+▸ **tuple**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Tuple6`](functions.md#tuple6)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>
 
 Typed function for creating tuple instances.
 
@@ -5259,4 +5277,4 @@ Typed function for creating tuple instances.
 
 #### Returns
 
-[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>
+[`Tuple6`](functions.md#tuple6)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>

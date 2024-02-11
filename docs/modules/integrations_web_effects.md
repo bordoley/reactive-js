@@ -12,19 +12,19 @@
 
 ### \_\_animate
 
-▸ **__animate**(`animation`): [`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<``null`` \| `HTMLElement`\>\>
+▸ **__animate**(`animation`): [`SideEffect1`](functions.md#sideeffect1)\<[`Optional`](functions.md#optional)\<``null`` \| `HTMLElement`\>\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animation` | [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<[`CSSStyleMapLike`](../interfaces/integrations_web.CSSStyleMapLike.md)\> |
+| `animation` | [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<[`CSSStyleMapLike`](../interfaces/integrations_web.CSSStyleMapLike.md)\> |
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<``null`` \| `HTMLElement`\>\>
+[`SideEffect1`](functions.md#sideeffect1)\<[`Optional`](functions.md#optional)\<``null`` \| `HTMLElement`\>\>
 
-▸ **__animate**<`T`\>(`animation`, `selector`): [`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<``null`` \| `HTMLElement`\>\>
+▸ **__animate**\<`T`\>(`animation`, `selector`): [`SideEffect1`](functions.md#sideeffect1)\<[`Optional`](functions.md#optional)\<``null`` \| `HTMLElement`\>\>
 
 #### Type parameters
 
@@ -36,9 +36,9 @@
 
 | Name | Type |
 | :------ | :------ |
-| `animation` | [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\> |
+| `animation` | [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\> |
 | `selector` | (`ev`: `T`) => [`CSSStyleMapLike`](../interfaces/integrations_web.CSSStyleMapLike.md) |
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<``null`` \| `HTMLElement`\>\>
+[`SideEffect1`](functions.md#sideeffect1)\<[`Optional`](functions.md#optional)\<``null`` \| `HTMLElement`\>\>

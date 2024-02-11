@@ -11,11 +11,11 @@ import {
 } from "../../../concurrent.js";
 import * as EventSource from "../../../events/EventSource.js";
 import { invoke, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import {
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../utils.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import type * as Flowable from "../../Flowable.js";
 import * as Observable from "../../Observable.js";
 

@@ -2,16 +2,16 @@
 
 import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectTrue, test, testModule, } from "../../__internal__/testing.js";
-import { DictionaryLike_get, keySet, } from "../../collections.js";
 import * as Dictionary from "../../collections/Dictionary.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
+import { DictionaryLike_get, keySet, } from "../../collections.js";
 import { sequence } from "../../computations.js";
 import { CacheLike_get, DispatcherLike_complete, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import { bind, bindMethod, invoke, none, pipe, pipeSome, returns, tuple, } from "../../functions.js";
-import { DisposableLike_dispose, DropLatestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
+import { DisposableLike_dispose, DropLatestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";

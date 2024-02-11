@@ -7,12 +7,12 @@ import {
   SchedulerLike,
 } from "../../../concurrent.js";
 import { pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import {
   BackpressureStrategy,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../utils.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_dispatchTo from "./Observable.dispatchTo.js";

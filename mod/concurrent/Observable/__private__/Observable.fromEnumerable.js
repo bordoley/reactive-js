@@ -3,8 +3,8 @@
 import { EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_move, } from "../../../collections.js";
 import { ContinuationContextLike_yield, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { none, pipe } from "../../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import Observable_createPureRunnable from "./Observable.createPureRunnable.js";
 const Observable_fromEnumerable = (options) => (enumerable) => Observable_createPureRunnable((observer) => {
     const { delay = 0, delayStart = false } = options ?? {};

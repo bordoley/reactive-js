@@ -9,8 +9,8 @@ const Observable_repeat: Observable.Signature["repeat"] = /*@__PURE__*/ (() => {
     const repeatPredicate = isNone(predicate)
       ? defaultRepeatPredicate
       : isNumber(predicate)
-      ? (count: number, e?: Error) => isNone(e) && count < predicate
-      : (count: number, e?: Error) => isNone(e) && predicate(count);
+        ? (count: number, e?: Error) => isNone(e) && count < predicate
+        : (count: number, e?: Error) => isNone(e) && predicate(count);
 
     return Observable_repeatOrRetry(repeatPredicate);
   };

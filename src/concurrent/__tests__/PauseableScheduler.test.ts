@@ -11,8 +11,8 @@ import {
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
 import { pipe } from "../../functions.js";
-import { DisposableLike_dispose } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
+import { DisposableLike_dispose } from "../../utils.js";
 import * as PauseableScheduler from "../PauseableScheduler.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 

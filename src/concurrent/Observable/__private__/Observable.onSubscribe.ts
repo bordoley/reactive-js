@@ -17,8 +17,8 @@ import {
   none,
   pipe,
 } from "../../../functions.js";
-import { DisposableLike } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { DisposableLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 
@@ -36,8 +36,8 @@ const Observable_onSubscribe: Observable.Signature["onSubscribe"] = (<T>(
           isFunction(disposable)
             ? Disposable.onDisposed(disposable)
             : isSome(disposable)
-            ? Disposable.add(disposable)
-            : identity,
+              ? Disposable.add(disposable)
+              : identity,
         );
       },
       {

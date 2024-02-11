@@ -12,7 +12,7 @@
 
 ### subscribe
 
-▸ **subscribe**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>, { `subscribe`: (`callback`: (`next`: [`Optional`](functions.md#optional)<`T`\>) => `void`) => [`Factory`](functions.md#factory)<`void`\>  }\>
+▸ **subscribe**\<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)\<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)\<`T`\>, \{ `subscribe`: (`callback`: (`next`: [`Optional`](functions.md#optional)\<`T`\>) => `void`) => [`Factory`](functions.md#factory)\<`void`\>  }\>
 
 #### Type parameters
 
@@ -31,4 +31,4 @@
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>, { `subscribe`: (`callback`: (`next`: [`Optional`](functions.md#optional)<`T`\>) => `void`) => [`Factory`](functions.md#factory)<`void`\>  }\>
+[`Function1`](functions.md#function1)\<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)\<`T`\>, \{ `subscribe`: (`callback`: (`next`: [`Optional`](functions.md#optional)\<`T`\>) => `void`) => [`Factory`](functions.md#factory)\<`void`\>  }\>

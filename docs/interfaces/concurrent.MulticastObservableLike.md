@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / MulticastObservableLike
 
-# Interface: MulticastObservableLike<T\>
+# Interface: MulticastObservableLike\<T\>
 
 [concurrent](../modules/concurrent.md).MulticastObservableLike
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`PureObservableLike`](concurrent.PureObservableLike.md)<`T`\>
+- [`PureObservableLike`](concurrent.PureObservableLike.md)\<`T`\>
 
   ↳ **`MulticastObservableLike`**
 
@@ -40,7 +40,7 @@
 
 #### Overrides
 
-PureObservableLike.\_\_@ObservableLike\_isDeferred@43859
+PureObservableLike.[ObservableLike\_isDeferred]
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 #### Overrides
 
-PureObservableLike.\_\_@ObservableLike\_isMulticasted@43860
+PureObservableLike.[ObservableLike\_isMulticasted]
 
 ___
 
@@ -60,4 +60,4 @@ ___
 
 #### Overrides
 
-PureObservableLike.\_\_@ObservableLike\_isRunnable@43862
+PureObservableLike.[ObservableLike\_isRunnable]

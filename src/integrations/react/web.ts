@@ -10,8 +10,8 @@ import {
 import type * as React from "react";
 import { nullObject } from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
-import { EventSourceLike, StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
+import { EventSourceLike, StoreLike_value } from "../../events.js";
 import {
   Function1,
   Optional,
@@ -25,6 +25,7 @@ import {
   pipeSomeLazy,
 } from "../../functions.js";
 import { useDisposable, useListen, useObserve } from "../react.js";
+import * as WebElement from "../web/Element.js";
 import {
   CSSStyleMapLike,
   ScrollValue,
@@ -35,7 +36,6 @@ import {
   WindowLocationLike_replace,
   WindowLocationURI,
 } from "../web.js";
-import * as WebElement from "../web/Element.js";
 
 interface ReactWebModule {
   readonly WindowLocationProvider: React.FunctionComponent<{

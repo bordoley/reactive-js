@@ -49,7 +49,8 @@ export interface ReadonlyArrayModule
    */
   values<
     T,
-    TKey extends KeyOf<ReadonlyArrayCollection> = KeyOf<ReadonlyArrayCollection>,
+    TKey extends
+      KeyOf<ReadonlyArrayCollection> = KeyOf<ReadonlyArrayCollection>,
   >(options?: {
     readonly count?: number;
     readonly start?: number;

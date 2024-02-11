@@ -3,8 +3,8 @@ import {
   VirtualTimeSchedulerLike_run,
 } from "../../../concurrent.js";
 import { pipe } from "../../../functions.js";
-import { BackpressureStrategy } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { BackpressureStrategy } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import * as VirtualTimeScheduler from "../../VirtualTimeScheduler.js";
 

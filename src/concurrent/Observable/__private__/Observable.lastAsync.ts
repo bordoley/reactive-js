@@ -1,8 +1,8 @@
 import { Promise } from "../../../__internal__/constants.js";
 import { ObservableLike, SchedulerLike } from "../../../concurrent.js";
 import { Optional, newInstance, none, pipe } from "../../../functions.js";
-import { BackpressureStrategy } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { BackpressureStrategy } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";

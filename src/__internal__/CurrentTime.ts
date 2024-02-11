@@ -9,9 +9,9 @@ export const now = /*@__PURE__*/ (() => {
   return isSome(performance)
     ? bindMethod(performance, Clock_now)
     : isFunction(hrtime)
-    ? () => {
-        const hr = hrtime();
-        return hr[0] * 1000 + hr[1] / 1e6;
-      }
-    : bindMethod(Date, Clock_now);
+      ? () => {
+          const hr = hrtime();
+          return hr[0] * 1000 + hr[1] / 1e6;
+        }
+      : bindMethod(Date, Clock_now);
 })();

@@ -21,5 +21,6 @@
   "markedOptions": {
     "mangle": false
   },
-  "tsconfig": "tsconfig.typedoc.json"
+  "tsconfig": "tsconfig.typedoc.json",
+  "plugin": ["typedoc-plugin-markdown", "typedoc-plugin-no-inherit"]
 }

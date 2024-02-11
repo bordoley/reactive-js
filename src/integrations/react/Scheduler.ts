@@ -12,7 +12,6 @@ import {
   mixInstanceFactory,
   props,
 } from "../../__internal__/mixins.js";
-import { SchedulerLike, SchedulerLike_now } from "../../concurrent.js";
 import {
   ContinuationLike,
   ContinuationLike_dueTime,
@@ -24,9 +23,10 @@ import {
   ContinuationSchedulerLike_shouldYield,
 } from "../../concurrent/__internal__/ContinuationScheduler.js";
 import SchedulerMixin from "../../concurrent/__mixins__/SchedulerMixin.js";
+import { SchedulerLike, SchedulerLike_now } from "../../concurrent.js";
 import { newInstance, none, pipe, pipeLazy } from "../../functions.js";
-import { DisposableLike, DisposableLike_dispose } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
+import { DisposableLike, DisposableLike_dispose } from "../../utils.js";
 
 interface ReactSchedulerModule {
   get(priority?: 1 | 2 | 3 | 4 | 5): SchedulerLike;

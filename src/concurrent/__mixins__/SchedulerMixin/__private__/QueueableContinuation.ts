@@ -24,6 +24,9 @@ import {
   pipeLazy,
   raiseIf,
 } from "../../../../functions.js";
+import * as Disposable from "../../../../utils/Disposable.js";
+import DisposableMixin from "../../../../utils/__mixins__/DisposableMixin.js";
+import IndexedQueueMixin from "../../../../utils/__mixins__/IndexedQueueMixin.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -31,9 +34,6 @@ import {
   QueueLike_dequeue,
   QueueableLike_enqueue,
 } from "../../../../utils.js";
-import * as Disposable from "../../../../utils/Disposable.js";
-import DisposableMixin from "../../../../utils/__mixins__/DisposableMixin.js";
-import IndexedQueueMixin from "../../../../utils/__mixins__/IndexedQueueMixin.js";
 import {
   ContinuationLike,
   ContinuationLike_dueTime,

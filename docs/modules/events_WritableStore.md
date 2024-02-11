@@ -12,7 +12,7 @@
 
 ### create
 
-▸ **create**<`T`\>(`initialValue`, `options?`): [`WritableStoreLike`](../interfaces/events.WritableStoreLike.md)<`T`\>
+▸ **create**\<`T`\>(`initialValue`, `options?`): [`WritableStoreLike`](../interfaces/events.WritableStoreLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -26,8 +26,8 @@
 | :------ | :------ |
 | `initialValue` | `T` |
 | `options?` | `Object` |
-| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+| `options.equality?` | [`Equality`](functions.md#equality)\<`T`\> |
 
 #### Returns
 
-[`WritableStoreLike`](../interfaces/events.WritableStoreLike.md)<`T`\>
+[`WritableStoreLike`](../interfaces/events.WritableStoreLike.md)\<`T`\>

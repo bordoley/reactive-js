@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [events](../modules/events.md) / EventSourceLike
 
-# Interface: EventSourceLike<T\>
+# Interface: EventSourceLike\<T\>
 
 [events](../modules/events.md).EventSourceLike
 
@@ -36,7 +36,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `listener` | [`EventListenerLike`](events.EventListenerLike.md)<`T`\> |
+| `listener` | [`EventListenerLike`](events.EventListenerLike.md)\<`T`\> |
 
 #### Returns
 

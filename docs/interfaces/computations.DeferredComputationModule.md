@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [computations](../modules/computations.md) / DeferredComputationModule
 
-# Interface: DeferredComputationModule<C\>
+# Interface: DeferredComputationModule\<C\>
 
 [computations](../modules/computations.md).DeferredComputationModule
 
@@ -27,7 +27,7 @@
 
 ### fromReadonlyArray
 
-▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ComputationOf`](../modules/computations.md#computationof)<`C`, `T`\>\>
+▸ **fromReadonlyArray**\<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)\<readonly `T`[], [`ComputationOf`](../modules/computations.md#computationof)\<`C`, `T`\>\>
 
 #### Type parameters
 
@@ -45,13 +45,13 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ComputationOf`](../modules/computations.md#computationof)<`C`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)\<readonly `T`[], [`ComputationOf`](../modules/computations.md#computationof)\<`C`, `T`\>\>
 
 ___
 
 ### generate
 
-▸ **generate**<`T`\>(`generator`, `initialValue`): [`ComputationOf`](../modules/computations.md#computationof)<`C`, `T`\>
+▸ **generate**\<`T`\>(`generator`, `initialValue`): [`ComputationOf`](../modules/computations.md#computationof)\<`C`, `T`\>
 
 #### Type parameters
 
@@ -63,9 +63,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> |
-| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+| `generator` | [`Updater`](../modules/functions.md#updater)\<`T`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)\<`T`\> |
 
 #### Returns
 
-[`ComputationOf`](../modules/computations.md#computationof)<`C`, `T`\>
+[`ComputationOf`](../modules/computations.md#computationof)\<`C`, `T`\>

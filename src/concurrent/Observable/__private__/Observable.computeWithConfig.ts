@@ -29,12 +29,12 @@ import {
   raiseError,
   raiseIf,
 } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
 } from "../../../utils.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
@@ -156,32 +156,32 @@ const validateComputeEffect: ValidateComputeEffect["validateComputeEffect"] = ((
     isSome(effect) && effect[ComputeEffect_type] === type
       ? effect
       : type === Memo
-      ? {
-          [ComputeEffect_type]: type,
-          [MemoOrUsingEffect_func]: ignore,
-          [MemoOrUsingEffect_args]: [],
-          [MemoOrUsingEffect_value]: none,
-        }
-      : type === Await || type === Observe
-      ? {
-          [ComputeEffect_type]: type,
-          [AwaitOrObserveEffect_observable]: Observable_empty(),
-          [AwaitOrObserveEffect_subscription]: Disposable.disposed,
-          [AwaitOrObserveEffect_value]: none,
-          [AwaitOrObserveEffect_hasValue]: false,
-        }
-      : type === Using
-      ? {
-          [ComputeEffect_type]: type,
-          [MemoOrUsingEffect_func]: ignore,
-          [MemoOrUsingEffect_args]: [],
-          [MemoOrUsingEffect_value]: Disposable.disposed,
-        }
-      : {
-          [ComputeEffect_type]: type,
-          [ConstantEffect_value]: none,
-          [ConstantEffect_args]: [],
-        };
+        ? {
+            [ComputeEffect_type]: type,
+            [MemoOrUsingEffect_func]: ignore,
+            [MemoOrUsingEffect_args]: [],
+            [MemoOrUsingEffect_value]: none,
+          }
+        : type === Await || type === Observe
+          ? {
+              [ComputeEffect_type]: type,
+              [AwaitOrObserveEffect_observable]: Observable_empty(),
+              [AwaitOrObserveEffect_subscription]: Disposable.disposed,
+              [AwaitOrObserveEffect_value]: none,
+              [AwaitOrObserveEffect_hasValue]: false,
+            }
+          : type === Using
+            ? {
+                [ComputeEffect_type]: type,
+                [MemoOrUsingEffect_func]: ignore,
+                [MemoOrUsingEffect_args]: [],
+                [MemoOrUsingEffect_value]: Disposable.disposed,
+              }
+            : {
+                [ComputeEffect_type]: type,
+                [ConstantEffect_value]: none,
+                [ConstantEffect_args]: [],
+              };
 
   ctx[ComputeContext_index]++;
 

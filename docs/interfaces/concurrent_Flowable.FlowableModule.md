@@ -17,7 +17,7 @@
 
 ### create
 
-▸ **create**<`T`\>(`op`): [`FlowableLike`](concurrent.FlowableLike.md)<`T`\>
+▸ **create**\<`T`\>(`op`): [`FlowableLike`](concurrent.FlowableLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -29,17 +29,17 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](../modules/functions.md#function1)<[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`boolean`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\> |
+| `op` | [`Function1`](../modules/functions.md#function1)\<[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)\<`boolean`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)\<`T`\>\> |
 
 #### Returns
 
-[`FlowableLike`](concurrent.FlowableLike.md)<`T`\>
+[`FlowableLike`](concurrent.FlowableLike.md)\<`T`\>
 
 ___
 
 ### dispatchTo
 
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`Function1`](../modules/functions.md#function1)<[`FlowableLike`](concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
+▸ **dispatchTo**\<`T`\>(`dispatcher`): [`Function1`](../modules/functions.md#function1)\<[`FlowableLike`](concurrent.FlowableLike.md)\<`T`\>, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -51,17 +51,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](concurrent.DispatcherLike.md)<`T`\> |
+| `dispatcher` | [`DispatcherLike`](concurrent.DispatcherLike.md)\<`T`\> |
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`FlowableLike`](concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)\<[`FlowableLike`](concurrent.FlowableLike.md)\<`T`\>, [`DeferredObservableWithSideEffectsLike`](concurrent.DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
 
 ___
 
 ### fromAsyncIterable
 
-▸ **fromAsyncIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`FlowableLike`](concurrent.FlowableLike.md)<`T`\>\>
+▸ **fromAsyncIterable**\<`T`\>(): [`Function1`](../modules/functions.md#function1)\<`AsyncIterable`\<`T`\>, [`FlowableLike`](concurrent.FlowableLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -71,13 +71,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`FlowableLike`](concurrent.FlowableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)\<`AsyncIterable`\<`T`\>, [`FlowableLike`](concurrent.FlowableLike.md)\<`T`\>\>
 
 ___
 
 ### fromRunnable
 
-▸ **fromRunnable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>, [`FlowableLike`](concurrent.FlowableLike.md)<`T`\>\>
+▸ **fromRunnable**\<`T`\>(): [`Function1`](../modules/functions.md#function1)\<[`RunnableLike`](concurrent.RunnableLike.md)\<`T`\>, [`FlowableLike`](concurrent.FlowableLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -87,4 +87,4 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>, [`FlowableLike`](concurrent.FlowableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)\<[`RunnableLike`](concurrent.RunnableLike.md)\<`T`\>, [`FlowableLike`](concurrent.FlowableLike.md)\<`T`\>\>

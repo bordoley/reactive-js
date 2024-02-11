@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / PureDeferredObservableLike
 
-# Interface: PureDeferredObservableLike<T\>
+# Interface: PureDeferredObservableLike\<T\>
 
 [concurrent](../modules/concurrent.md).PureDeferredObservableLike
 
@@ -12,9 +12,9 @@
 
 ## Hierarchy
 
-- [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>
+- [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)\<`T`\>
 
-- [`PureObservableLike`](concurrent.PureObservableLike.md)<`T`\>
+- [`PureObservableLike`](concurrent.PureObservableLike.md)\<`T`\>
 
   ↳ **`PureDeferredObservableLike`**
 

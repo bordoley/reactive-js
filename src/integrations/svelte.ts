@@ -1,5 +1,5 @@
-import { ObservableLike, SchedulerLike } from "../concurrent.js";
 import * as Observable from "../concurrent/Observable.js";
+import { ObservableLike, SchedulerLike } from "../concurrent.js";
 import {
   Factory,
   Function1,

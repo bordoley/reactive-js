@@ -22,9 +22,12 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../concurrent.js";
-import { StoreLike_value, WritableStoreLike } from "../events.js";
 import * as WritableStore from "../events/WritableStore.js";
+import { StoreLike_value, WritableStoreLike } from "../events.js";
 import { Optional, SideEffect1, isNone, isSome, none } from "../functions.js";
+import * as Disposable from "../utils/Disposable.js";
+import PriorityQueueMixin from "../utils/__mixins__/PriorityQueueMixin.js";
+import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
 import {
   DisposableLike,
   DisposableLike_isDisposed,
@@ -35,9 +38,6 @@ import {
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../utils.js";
-import * as Disposable from "../utils/Disposable.js";
-import PriorityQueueMixin from "../utils/__mixins__/PriorityQueueMixin.js";
-import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
 import {
   ContinuationLike,
   ContinuationLike_dueTime,

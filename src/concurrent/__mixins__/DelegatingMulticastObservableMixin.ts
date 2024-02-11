@@ -15,7 +15,8 @@ const DelegatingMulticastObservableMixin: <T>() => Mixin1<
   MulticastObservableLike<T>
 > = /*@__PURE__*/ (<
   T,
-  TReplayObservable extends MulticastObservableLike<T> = MulticastObservableLike<T>,
+  TReplayObservable extends
+    MulticastObservableLike<T> = MulticastObservableLike<T>,
 >() => {
   const DelegatingMulticastObservableMixin_delegate = Symbol(
     "DelegatingMulticastObservableMixin_delegate",

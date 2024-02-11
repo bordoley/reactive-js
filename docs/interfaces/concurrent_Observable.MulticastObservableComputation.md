@@ -20,7 +20,7 @@
 
 ### [Computation\_type]
 
-• `Optional` `Readonly` **[Computation\_type]**: [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[Computation\_type]**: [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)\<`unknown`\>
 
 #### Overrides
 

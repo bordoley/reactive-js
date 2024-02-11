@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [utils](../modules/utils.md) / StackLike
 
-# Interface: StackLike<T\>
+# Interface: StackLike\<T\>
 
 [utils](../modules/utils.md).StackLike
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`QueueableLike`](utils.QueueableLike.md)<`T`\>
+- [`QueueableLike`](utils.QueueableLike.md)\<`T`\>
 
   ↳ **`StackLike`**
 
@@ -32,14 +32,14 @@
 
 ### [StackLike\_head]
 
-• `Readonly` **[StackLike\_head]**: [`Optional`](../modules/functions.md#optional)<`T`\>
+• `Readonly` **[StackLike\_head]**: [`Optional`](../modules/functions.md#optional)\<`T`\>
 
 ## Methods
 
 ### [StackLike\_pop]
 
-▸ **[StackLike_pop]**(): [`Optional`](../modules/functions.md#optional)<`T`\>
+▸ **[StackLike_pop]**(): [`Optional`](../modules/functions.md#optional)\<`T`\>
 
 #### Returns
 
-[`Optional`](../modules/functions.md#optional)<`T`\>
+[`Optional`](../modules/functions.md#optional)\<`T`\>

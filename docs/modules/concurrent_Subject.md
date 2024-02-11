@@ -12,7 +12,7 @@
 
 ### create
 
-▸ **create**<`T`\>(`options?`): [`SubjectLike`](../interfaces/concurrent.SubjectLike.md)<`T`\>
+▸ **create**\<`T`\>(`options?`): [`SubjectLike`](../interfaces/concurrent.SubjectLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -30,4 +30,4 @@
 
 #### Returns
 
-[`SubjectLike`](../interfaces/concurrent.SubjectLike.md)<`T`\>
+[`SubjectLike`](../interfaces/concurrent.SubjectLike.md)\<`T`\>

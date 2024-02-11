@@ -1,9 +1,9 @@
 import { DispatcherLike_complete } from "../../../concurrent.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import {
   DisposableLike_isDisposed,
   QueueableLike_enqueue,
 } from "../../../utils.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createMulticast from "./Observable.createMulticast.js";
 

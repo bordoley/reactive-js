@@ -3,8 +3,8 @@
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
 import { EventSourceLike_addEventListener, } from "../../../events.js";
 import { error, none, pipe, } from "../../../functions.js";
-import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import * as Publisher from "../../Publisher.js";
 const EventSource_create = /*@__PURE__*/ (() => {
     const CreateEventSource_delegate = Symbol("CreateEventSource_delegate");

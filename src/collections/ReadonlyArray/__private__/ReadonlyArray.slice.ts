@@ -9,8 +9,8 @@ const ReadonlyArray_slice: ReadonlyArray.Signature["slice"] =
     return start === 0 && count === arr[Array_length]
       ? arr
       : count >= 0
-      ? arr.slice(start, count + start)
-      : arr.slice(start + count + 1, start + 1).reverse();
+        ? arr.slice(start, count + start)
+        : arr.slice(start + count + 1, start + 1).reverse();
   };
 
 export default ReadonlyArray_slice;

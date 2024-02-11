@@ -12,7 +12,7 @@
 
 ### create
 
-▸ **create**<`T`\>(`options?`): [`PublisherLike`](../interfaces/events.PublisherLike.md)<`T`\>
+▸ **create**\<`T`\>(`options?`): [`PublisherLike`](../interfaces/events.PublisherLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -29,4 +29,4 @@
 
 #### Returns
 
-[`PublisherLike`](../interfaces/events.PublisherLike.md)<`T`\>
+[`PublisherLike`](../interfaces/events.PublisherLike.md)\<`T`\>

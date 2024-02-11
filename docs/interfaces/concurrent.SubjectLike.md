@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / SubjectLike
 
-# Interface: SubjectLike<T\>
+# Interface: SubjectLike\<T\>
 
 [concurrent](../modules/concurrent.md).SubjectLike
 
@@ -12,8 +12,8 @@
 
 ## Hierarchy
 
-- [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>
+- [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)\<`T`\>
 
-- [`ErrorSafeEventListenerLike`](events.ErrorSafeEventListenerLike.md)<`T`\>
+- [`ErrorSafeEventListenerLike`](events.ErrorSafeEventListenerLike.md)\<`T`\>
 
   ↳ **`SubjectLike`**

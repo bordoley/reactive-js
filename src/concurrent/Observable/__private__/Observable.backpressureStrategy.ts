@@ -6,16 +6,16 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ObserverLike, ObserverLike_notify } from "../../../concurrent.js";
 import { partial, pipe } from "../../../functions.js";
+import DelegatingDisposableMixin, {
+  DelegatingDisposableLike,
+  DelegatingDisposableLike_delegate,
+} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   BackpressureStrategy,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../utils.js";
-import DelegatingDisposableMixin, {
-  DelegatingDisposableLike,
-  DelegatingDisposableLike_delegate,
-} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";

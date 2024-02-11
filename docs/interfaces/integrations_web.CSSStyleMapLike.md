@@ -6,6 +6,6 @@
 
 ## Hierarchy
 
-- [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<keyof `Omit`<`CSSStyleDeclaration`, ``"item"`` \| ``"length"`` \| ``"parentRule"`` \| ``"getPropertyPriority"`` \| ``"getPropertyValue"`` \| ``"removeProperty"`` \| ``"setProperty"`` \| `number` \| typeof `Symbol.iterator`\>, `string`\>
+- [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)\<keyof `Omit`\<`CSSStyleDeclaration`, ``"item"`` \| ``"length"`` \| ``"parentRule"`` \| ``"getPropertyPriority"`` \| ``"getPropertyValue"`` \| ``"removeProperty"`` \| ``"setProperty"`` \| `number` \| typeof `Symbol.iterator`\>, `string`\>
 
   ↳ **`CSSStyleMapLike`**

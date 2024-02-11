@@ -18,6 +18,7 @@ import {
   VirtualTimeSchedulerLike_run,
 } from "../concurrent.js";
 import { Optional, isSome, none } from "../functions.js";
+import * as PriorityQueue from "../utils/PriorityQueue.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -27,7 +28,6 @@ import {
   QueueLike_head,
   QueueableLike_enqueue,
 } from "../utils.js";
-import * as PriorityQueue from "../utils/PriorityQueue.js";
 import {
   ContinuationLike,
   ContinuationLike_dueTime,

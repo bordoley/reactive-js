@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`CollectionModule`](collections.CollectionModule.md)<[`ReadonlyArrayCollection`](collections_ReadonlyArray.ReadonlyArrayCollection.md)\>
+- [`CollectionModule`](collections.CollectionModule.md)\<[`ReadonlyArrayCollection`](collections_ReadonlyArray.ReadonlyArrayCollection.md)\>
 
   ↳ **`ReadonlyArrayModule`**
 
@@ -22,7 +22,7 @@
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>\>
+▸ **entries**\<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)\<readonly `T`[], [`EnumerableLike`](collections.EnumerableLike.md)\<[`Tuple2`](../modules/functions.md#tuple2)\<`TKey`, `T`\>\>\>
 
 #### Type parameters
 
@@ -41,7 +41,7 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>\>
+[`Function1`](../modules/functions.md#function1)\<readonly `T`[], [`EnumerableLike`](collections.EnumerableLike.md)\<[`Tuple2`](../modules/functions.md#tuple2)\<`TKey`, `T`\>\>\>
 
 #### Overrides
 
@@ -51,7 +51,7 @@ ___
 
 ### slice
 
-▸ **slice**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
+▸ **slice**\<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)\<readonly `T`[], readonly `T`[]\>
 
 #### Type parameters
 
@@ -69,13 +69,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
+[`Function1`](../modules/functions.md#function1)\<readonly `T`[], readonly `T`[]\>
 
 ___
 
 ### values
 
-▸ **values**<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
+▸ **values**\<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)\<readonly `T`[], [`EnumerableLike`](collections.EnumerableLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -94,7 +94,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)\<readonly `T`[], [`EnumerableLike`](collections.EnumerableLike.md)\<`T`\>\>
 
 #### Overrides
 

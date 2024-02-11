@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [collections/Dictionary](../modules/collections_Dictionary.md) / DictionaryCollection
 
-# Interface: DictionaryCollection<TKey\>
+# Interface: DictionaryCollection\<TKey\>
 
 [collections/Dictionary](../modules/collections_Dictionary.md).DictionaryCollection
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`Collection`](collections.Collection.md)<`TKey`\>
+- [`Collection`](collections.Collection.md)\<`TKey`\>
 
   ↳ **`DictionaryCollection`**
 
@@ -37,7 +37,7 @@ ___
 
 ### [Collection\_type]
 
-• `Optional` `Readonly` **[Collection\_type]**: [`DictionaryLike`](collections.DictionaryLike.md)<`TKey` & {}, `unknown`\>
+• `Optional` `Readonly` **[Collection\_type]**: [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey` & {}, `unknown`\>
 
 #### Overrides
 

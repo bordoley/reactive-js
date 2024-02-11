@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / FlowableLike
 
-# Interface: FlowableLike<T\>
+# Interface: FlowableLike\<T\>
 
 [concurrent](../modules/concurrent.md).FlowableLike
 
@@ -20,7 +20,7 @@
 
 ### [FlowableLike\_flow]
 
-▸ **[FlowableLike_flow]**(`scheduler`, `options?`): [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)<`T`\>
+▸ **[FlowableLike_flow]**(`scheduler`, `options?`): [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)\<`T`\>
 
 #### Parameters
 
@@ -34,4 +34,4 @@
 
 #### Returns
 
-[`PauseableObservableLike`](concurrent.PauseableObservableLike.md)<`T`\>
+[`PauseableObservableLike`](concurrent.PauseableObservableLike.md)\<`T`\>

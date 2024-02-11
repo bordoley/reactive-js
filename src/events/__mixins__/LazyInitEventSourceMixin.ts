@@ -6,8 +6,8 @@ import {
   PublisherLike,
 } from "../../events.js";
 import { Optional, none, pipe, returns } from "../../functions.js";
-import { DisposableLike } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
+import { DisposableLike } from "../../utils.js";
 import * as Publisher from "../Publisher.js";
 
 export const LazyInitEventSourceLike_publisher = Symbol(

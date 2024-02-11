@@ -24,13 +24,13 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
 import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
   ThrowBackpressureStrategy,
 } from "../../utils.js";
-import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";

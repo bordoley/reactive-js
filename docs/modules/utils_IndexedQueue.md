@@ -12,7 +12,7 @@
 
 ### create
 
-▸ **create**<`T`\>(`options?`): [`IndexedQueueLike`](../interfaces/utils.IndexedQueueLike.md)<`T`\>
+▸ **create**\<`T`\>(`options?`): [`IndexedQueueLike`](../interfaces/utils.IndexedQueueLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -30,4 +30,4 @@
 
 #### Returns
 
-[`IndexedQueueLike`](../interfaces/utils.IndexedQueueLike.md)<`T`\>
+[`IndexedQueueLike`](../interfaces/utils.IndexedQueueLike.md)\<`T`\>

@@ -11,8 +11,8 @@ import {
   partial,
   pipe,
 } from "../../../functions.js";
-import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
 import Observable_forEach from "./Observable.forEach.js";

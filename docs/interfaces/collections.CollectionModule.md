@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [collections](../modules/collections.md) / CollectionModule
 
-# Interface: CollectionModule<C\>
+# Interface: CollectionModule\<C\>
 
 [collections](../modules/collections.md).CollectionModule
 
@@ -37,7 +37,7 @@
 
 ### empty
 
-▸ **empty**<`T`, `TKey`\>(): [`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>
+▸ **empty**\<`T`, `TKey`\>(): [`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>
 
 Return an Collection that emits no items.
 
@@ -46,80 +46,80 @@ Return an Collection that emits no items.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)\<`C`\> |
 
 #### Returns
 
-[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>
+[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>
 
 ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>\>
+▸ **entries**\<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)\<[`Tuple2`](../modules/functions.md#tuple2)\<`TKey`, `T`\>\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)\<`C`\> |
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>\>
+[`Function1`](../modules/functions.md#function1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)\<[`Tuple2`](../modules/functions.md#tuple2)\<`TKey`, `T`\>\>\>
 
 ___
 
 ### forEach
 
-▸ **forEach**<`T`, `TKey`\>(`selector`): [`SideEffect1`](../modules/functions.md#sideeffect1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>\>
+▸ **forEach**\<`T`, `TKey`\>(`selector`): [`SideEffect1`](../modules/functions.md#sideeffect1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)\<`C`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`SideEffect2`](../modules/functions.md#sideeffect2)<`T`, `TKey`\> |
+| `selector` | [`SideEffect2`](../modules/functions.md#sideeffect2)\<`T`, `TKey`\> |
 
 #### Returns
 
-[`SideEffect1`](../modules/functions.md#sideeffect1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>\>
+[`SideEffect1`](../modules/functions.md#sideeffect1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`CollectionOperator`](../modules/collections.md#collectionoperator)<`C`, `T`, `T`, `TKey`\>
+▸ **keep**\<`T`, `TKey`\>(`predicate`): [`CollectionOperator`](../modules/collections.md#collectionoperator)\<`C`, `T`, `T`, `TKey`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)\<`C`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `predicate` | [`Function2`](../modules/functions.md#function2)<`T`, `TKey`, `boolean`\> |
+| `predicate` | [`Function2`](../modules/functions.md#function2)\<`T`, `TKey`, `boolean`\> |
 
 #### Returns
 
-[`CollectionOperator`](../modules/collections.md#collectionoperator)<`C`, `T`, `T`, `TKey`\>
+[`CollectionOperator`](../modules/collections.md#collectionoperator)\<`C`, `T`, `T`, `TKey`\>
 
 ___
 
 ### keys
 
-▸ **keys**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`TKey`\>\>
+▸ **keys**\<`TKey`\>(): [`Function1`](../modules/functions.md#function1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)\<`TKey`\>\>
 
 #### Type parameters
 
@@ -129,16 +129,34 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`TKey`\>\>
+[`Function1`](../modules/functions.md#function1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)\<`TKey`\>\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`CollectionOperator`](../modules/collections.md#collectionoperator)<`C`, `TA`, `TB`, `TKey`\>
+▸ **map**\<`TA`, `TB`, `TKey`\>(`selector`): [`CollectionOperator`](../modules/collections.md#collectionoperator)\<`C`, `TA`, `TB`, `TKey`\>
 
 Returns a CollectionOperator that applies the `selector` function to each
 value emitted by the source.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)\<`C`\> |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `selector` | [`Function2`](../modules/functions.md#function2)\<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
+
+#### Returns
+
+[`CollectionOperator`](../modules/collections.md#collectionoperator)\<`C`, `TA`, `TB`, `TKey`\>
 
 **`Typeparam`**
 
@@ -148,29 +166,11 @@ TA - The inner type of the source container
 
 TB - The inner type of the mapped container
 
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
-
-#### Returns
-
-[`CollectionOperator`](../modules/collections.md#collectionoperator)<`C`, `TA`, `TB`, `TKey`\>
-
 ___
 
 ### reduce
 
-▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, `TAcc`\>
+▸ **reduce**\<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>, `TAcc`\>
 
 #### Type parameters
 
@@ -178,24 +178,24 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)\<`C`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `reducer` | [`Function3`](../modules/functions.md#function3)<`TAcc`, `T`, `TKey`, `TAcc`\> |
-| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+| `reducer` | [`Function3`](../modules/functions.md#function3)\<`TAcc`, `T`, `TKey`, `TAcc`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)\<`TAcc`\> |
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, `TAcc`\>
+[`Function1`](../modules/functions.md#function1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>, `TAcc`\>
 
 ___
 
 ### toDictionary
 
-▸ **toDictionary**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, `T`\>\>
+▸ **toDictionary**\<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>, [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, `T`\>\>
 
 #### Type parameters
 
@@ -206,13 +206,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>, [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, `T`\>\>
 
 ___
 
 ### toReadonlyMap
 
-▸ **toReadonlyMap**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+▸ **toReadonlyMap**\<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>, `ReadonlyMap`\<`TKey`, `T`\>\>
 
 #### Type parameters
 
@@ -223,21 +223,21 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>, `ReadonlyMap`\<`TKey`, `T`\>\>
 
 ___
 
 ### values
 
-▸ **values**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
+▸ **values**\<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)\<`T`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)\<`C`\> |
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)\<[`CollectionOf`](../modules/collections.md#collectionof)\<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)\<`T`\>\>

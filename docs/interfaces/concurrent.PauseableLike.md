@@ -29,7 +29,7 @@
 
 ### [PauseableLike\_isPaused]
 
-• `Readonly` **[PauseableLike\_isPaused]**: [`StoreLike`](events.StoreLike.md)<`boolean`\>
+• `Readonly` **[PauseableLike\_isPaused]**: [`StoreLike`](events.StoreLike.md)\<`boolean`\>
 
 Boolean flag indicating if the PauseableLike is currently paused or not.
 

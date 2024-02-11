@@ -27,13 +27,16 @@ const Observable_keyFrame = (
 
   return pipe(
     Observable_currentTime,
-    Observable_scan<number, Tuple2<number, number>>(([startTime, _], now) => {
-      startTime = min(now, startTime);
+    Observable_scan<number, Tuple2<number, number>>(
+      ([startTime, _], now) => {
+        startTime = min(now, startTime);
 
-      const elapsed = now - startTime;
-      const next = elapsed > duration ? 1 : easing(elapsed / duration);
-      return tuple(startTime, next);
-    }, returns(tuple(MAX_VALUE, 0))),
+        const elapsed = now - startTime;
+        const next = elapsed > duration ? 1 : easing(elapsed / duration);
+        return tuple(startTime, next);
+      },
+      returns(tuple(MAX_VALUE, 0)),
+    ),
     pick<Observable.PureRunnableComputation>(Observable_map)(1),
     Observable_takeWhile(isNotEqualTo(1), {
       inclusive: true,

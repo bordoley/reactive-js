@@ -6,12 +6,6 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import {
-  SchedulerLike,
-  SchedulerLike_now,
-  SchedulerLike_schedule,
-  SchedulerLike_shouldYield,
-} from "../../concurrent.js";
-import {
   ContinuationLike,
   ContinuationLike_dueTime,
   ContinuationLike_run,
@@ -23,6 +17,12 @@ import {
 } from "../../concurrent/__internal__/ContinuationScheduler.js";
 import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
 import {
+  SchedulerLike,
+  SchedulerLike_now,
+  SchedulerLike_schedule,
+  SchedulerLike_shouldYield,
+} from "../../concurrent.js";
+import {
   Optional,
   invoke,
   isSome,
@@ -31,6 +31,8 @@ import {
   pipeLazy,
   raiseIfNone,
 } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
+import * as IndexedQueue from "../../utils/IndexedQueue.js";
 import {
   DisposableLike,
   IndexedQueueLike,
@@ -38,8 +40,6 @@ import {
   QueueLike_dequeue,
   QueueableLike_enqueue,
 } from "../../utils.js";
-import * as Disposable from "../../utils/Disposable.js";
-import * as IndexedQueue from "../../utils/IndexedQueue.js";
 
 interface Signature {
   create(delayScheduler: SchedulerLike): SchedulerLike & DisposableLike;

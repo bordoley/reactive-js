@@ -3,8 +3,8 @@
 import { Array_length, Array_push, __DEV__, } from "../../../__internal__/constants.js";
 import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseIf, } from "../../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";

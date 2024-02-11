@@ -12,7 +12,7 @@
 
 ### create
 
-▸ **create**<`T`\>(`comparator`, `options?`): [`QueueLike`](../interfaces/utils.QueueLike.md)<`T`\>
+▸ **create**\<`T`\>(`comparator`, `options?`): [`QueueLike`](../interfaces/utils.QueueLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -24,11 +24,11 @@
 
 | Name | Type |
 | :------ | :------ |
-| `comparator` | [`Comparator`](functions.md#comparator)<`T`\> |
+| `comparator` | [`Comparator`](functions.md#comparator)\<`T`\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
 
 #### Returns
 
-[`QueueLike`](../interfaces/utils.QueueLike.md)<`T`\>
+[`QueueLike`](../interfaces/utils.QueueLike.md)\<`T`\>

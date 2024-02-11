@@ -96,11 +96,9 @@ export interface PureStatefulComputationModule<C extends Computation> {
 }
 
 export interface Pick<C extends Computation> {
-  <T, TKeyOfT extends keyof T>(key: TKeyOfT): ComputationOperator<
-    C,
-    T,
-    T[TKeyOfT]
-  >;
+  <T, TKeyOfT extends keyof T>(
+    key: TKeyOfT,
+  ): ComputationOperator<C, T, T[TKeyOfT]>;
   <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(
     keyA: TKeyOfTA,
     keyB: TKeyOfTB,

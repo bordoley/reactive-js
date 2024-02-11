@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [events](../modules/events.md) / ErrorSafeEventListenerLike
 
-# Interface: ErrorSafeEventListenerLike<T\>
+# Interface: ErrorSafeEventListenerLike\<T\>
 
 [events](../modules/events.md).ErrorSafeEventListenerLike
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`EventListenerLike`](events.EventListenerLike.md)<`T`\>
+- [`EventListenerLike`](events.EventListenerLike.md)\<`T`\>
 
   ↳ **`ErrorSafeEventListenerLike`**
 

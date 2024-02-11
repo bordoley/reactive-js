@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [collections](../modules/collections.md) / EnumeratorLike
 
-# Interface: EnumeratorLike<T\>
+# Interface: EnumeratorLike\<T\>
 
 [collections](../modules/collections.md).EnumeratorLike
 

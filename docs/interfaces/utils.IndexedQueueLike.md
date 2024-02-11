@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [utils](../modules/utils.md) / IndexedQueueLike
 
-# Interface: IndexedQueueLike<T\>
+# Interface: IndexedQueueLike\<T\>
 
 [utils](../modules/utils.md).IndexedQueueLike
 
@@ -12,9 +12,9 @@
 
 ## Hierarchy
 
-- [`QueueLike`](utils.QueueLike.md)<`T`\>
+- [`QueueLike`](utils.QueueLike.md)\<`T`\>
 
-- [`StackLike`](utils.StackLike.md)<`T`\>
+- [`StackLike`](utils.StackLike.md)\<`T`\>
 
   ↳ **`IndexedQueueLike`**
 

@@ -19,7 +19,7 @@
 
 ### createComponent
 
-▸ **createComponent**<`TProps`\>(`fn`, `options?`): `ComponentType`<`TProps`\>
+▸ **createComponent**\<`TProps`\>(`fn`, `options?`): `ComponentType`\<`TProps`\>
 
 #### Type parameters
 
@@ -31,7 +31,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Function1`](functions.md#function1)<[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TProps`\>, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\>\> |
+| `fn` | [`Function1`](functions.md#function1)\<[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)\<`TProps`\>, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)\<`ReactElement`\<`any`, `string` \| `JSXElementConstructor`\<`any`\>\>\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
@@ -39,13 +39,13 @@
 
 #### Returns
 
-`ComponentType`<`TProps`\>
+`ComponentType`\<`TProps`\>
 
 ___
 
 ### useDispatcher
 
-▸ **useDispatcher**<`TReq`\>(`dispatcher`): `Object`
+▸ **useDispatcher**\<`TReq`\>(`dispatcher`): `Object`
 
 #### Type parameters
 
@@ -57,7 +57,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `dispatcher` | [`Optional`](functions.md#optional)<[`DispatcherLike`](../interfaces/concurrent.DispatcherLike.md)<`TReq`\>\> |
+| `dispatcher` | [`Optional`](functions.md#optional)\<[`DispatcherLike`](../interfaces/concurrent.DispatcherLike.md)\<`TReq`\>\> |
 
 #### Returns
 
@@ -66,13 +66,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `complete` | [`SideEffect`](functions.md#sideeffect) |
-| `enqueue` | [`Function1`](functions.md#function1)<`TReq`, `boolean`\> |
+| `enqueue` | [`Function1`](functions.md#function1)\<`TReq`, `boolean`\> |
 
 ___
 
 ### useDisposable
 
-▸ **useDisposable**<`TDisposable`\>(`factory`, `deps`): [`Optional`](functions.md#optional)<`TDisposable`\>
+▸ **useDisposable**\<`TDisposable`\>(`factory`, `deps`): [`Optional`](functions.md#optional)\<`TDisposable`\>
 
 #### Type parameters
 
@@ -84,18 +84,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | () => [`Optional`](functions.md#optional)<`TDisposable`\> |
+| `factory` | () => [`Optional`](functions.md#optional)\<`TDisposable`\> |
 | `deps` | readonly `unknown`[] |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`TDisposable`\>
+[`Optional`](functions.md#optional)\<`TDisposable`\>
 
 ___
 
 ### useEnumerator
 
-▸ **useEnumerator**<`T`\>(`enumerator`): `Object`
+▸ **useEnumerator**\<`T`\>(`enumerator`): `Object`
 
 #### Type parameters
 
@@ -107,7 +107,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerator` | [`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/collections.EnumeratorLike.md)<`T`\>\> |
+| `enumerator` | [`Optional`](functions.md#optional)\<[`EnumeratorLike`](../interfaces/collections.EnumeratorLike.md)\<`T`\>\> |
 
 #### Returns
 
@@ -117,13 +117,13 @@ ___
 | :------ | :------ |
 | `current` | `T` |
 | `hasCurrent` | `boolean` |
-| `move` | [`Factory`](functions.md#factory)<`boolean`\> |
+| `move` | [`Factory`](functions.md#factory)\<`boolean`\> |
 
 ___
 
 ### useListen
 
-▸ **useListen**<`T`\>(`eventSource`): [`Optional`](functions.md#optional)<`T`\>
+▸ **useListen**\<`T`\>(`eventSource`): [`Optional`](functions.md#optional)\<`T`\>
 
 #### Type parameters
 
@@ -135,13 +135,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `eventSource` | [`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\> |
+| `eventSource` | [`Optional`](functions.md#optional)\<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>\> |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`T`\>
+[`Optional`](functions.md#optional)\<`T`\>
 
-▸ **useListen**<`T`\>(`factory`, `deps`): [`Optional`](functions.md#optional)<`T`\>
+▸ **useListen**\<`T`\>(`factory`, `deps`): [`Optional`](functions.md#optional)\<`T`\>
 
 #### Type parameters
 
@@ -153,18 +153,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>\> |
+| `factory` | [`Factory`](functions.md#factory)\<[`Optional`](functions.md#optional)\<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>\>\> |
 | `deps` | readonly `unknown`[] |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`T`\>
+[`Optional`](functions.md#optional)\<`T`\>
 
 ___
 
 ### useObserve
 
-▸ **useObserve**<`T`\>(`observable`, `options?`): [`Optional`](functions.md#optional)<`T`\>
+▸ **useObserve**\<`T`\>(`observable`, `options?`): [`Optional`](functions.md#optional)\<`T`\>
 
 #### Type parameters
 
@@ -176,7 +176,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `observable` | [`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\> |
+| `observable` | [`Optional`](functions.md#optional)\<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)\<`T`\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
@@ -184,9 +184,9 @@ ___
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`T`\>
+[`Optional`](functions.md#optional)\<`T`\>
 
-▸ **useObserve**<`T`\>(`factory`, `deps`, `options?`): [`Optional`](functions.md#optional)<`T`\>
+▸ **useObserve**\<`T`\>(`factory`, `deps`, `options?`): [`Optional`](functions.md#optional)\<`T`\>
 
 #### Type parameters
 
@@ -198,7 +198,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>\>\> |
+| `factory` | [`Factory`](functions.md#factory)\<[`Optional`](functions.md#optional)\<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)\<`T`\>\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
@@ -207,7 +207,7 @@ ___
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`T`\>
+[`Optional`](functions.md#optional)\<`T`\>
 
 ___
 
@@ -219,7 +219,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `pauseable` | [`Optional`](functions.md#optional)<[`PauseableLike`](../interfaces/concurrent.PauseableLike.md)\> |
+| `pauseable` | [`Optional`](functions.md#optional)\<[`PauseableLike`](../interfaces/concurrent.PauseableLike.md)\> |
 
 #### Returns
 
@@ -235,13 +235,13 @@ ___
 
 ### useStream
 
-▸ **useStream**<`TStreamable`\>(`streamable`, `options?`): [`Optional`](functions.md#optional)<`ReturnType`<`TStreamable`[typeof [`StreamableLike_stream`](concurrent.md#streamablelike_stream)]\>\>
+▸ **useStream**\<`TStreamable`\>(`streamable`, `options?`): [`Optional`](functions.md#optional)\<[`StreamOf`](concurrent.md#streamof)\<`TStreamable`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TStreamable` | extends [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`unknown`, `unknown`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`unknown`, `unknown`\>, `TStreamable`\> |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)\<`unknown`, `unknown`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)\<`unknown`, `unknown`\>\> |
 
 #### Parameters
 
@@ -256,21 +256,21 @@ ___
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`ReturnType`<`TStreamable`[typeof [`StreamableLike_stream`](concurrent.md#streamablelike_stream)]\>\>
+[`Optional`](functions.md#optional)\<[`StreamOf`](concurrent.md#streamof)\<`TStreamable`\>\>
 
-▸ **useStream**<`TStreamable`\>(`factory`, `dep`, `options?`): [`Optional`](functions.md#optional)<`ReturnType`<`TStreamable`[typeof [`StreamableLike_stream`](concurrent.md#streamablelike_stream)]\>\>
+▸ **useStream**\<`TStreamable`\>(`factory`, `dep`, `options?`): [`Optional`](functions.md#optional)\<[`StreamOf`](concurrent.md#streamof)\<`TStreamable`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TStreamable` | extends [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`unknown`, `unknown`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`unknown`, `unknown`\>, `TStreamable`\> |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)\<`unknown`, `unknown`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)\<`unknown`, `unknown`\>\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<`TStreamable`\> |
+| `factory` | [`Factory`](functions.md#factory)\<`TStreamable`\> |
 | `dep` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
@@ -280,4 +280,4 @@ ___
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`ReturnType`<`TStreamable`[typeof [`StreamableLike_stream`](concurrent.md#streamablelike_stream)]\>\>
+[`Optional`](functions.md#optional)\<[`StreamOf`](concurrent.md#streamof)\<`TStreamable`\>\>

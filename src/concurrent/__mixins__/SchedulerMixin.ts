@@ -27,14 +27,14 @@ import {
   pipe,
   raiseIf,
 } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
+import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import {
   DisposableLike,
   DisposableLike_isDisposed,
   QueueLike_count,
   QueueableLike_enqueue,
 } from "../../utils.js";
-import * as Disposable from "../../utils/Disposable.js";
-import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import { ContinuationLike_dueTime } from "../__internal__/Continuation.js";
 import {
   ContinuationSchedulerLike,

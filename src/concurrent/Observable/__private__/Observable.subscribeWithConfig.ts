@@ -10,12 +10,12 @@ import {
   ObserverLike,
   SchedulerLike,
 } from "../../../concurrent.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../utils.js";
-import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 

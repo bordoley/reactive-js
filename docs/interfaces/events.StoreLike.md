@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [events](../modules/events.md) / StoreLike
 
-# Interface: StoreLike<T\>
+# Interface: StoreLike\<T\>
 
 [events](../modules/events.md).StoreLike
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`EventSourceLike`](events.EventSourceLike.md)<`T`\>
+- [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>
 
   ↳ **`StoreLike`**
 

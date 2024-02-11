@@ -1,4 +1,4 @@
-import { ObservableLike, SchedulerLike, StreamLike, StreamOf, StreamableLike, StreamableLike_stream } from "../../concurrent.js";
+import { ObservableLike, SchedulerLike, StreamLike, StreamOf, StreamableLike } from "../../concurrent.js";
 import { Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Optional, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater } from "../../functions.js";
 import { BackpressureStrategy, DisposableLike } from "../../utils.js";
 interface __Memo {
@@ -40,7 +40,7 @@ export declare const __stream: <TStreamable extends StreamableLike<unknown, unkn
     readonly scheduler?: SchedulerLike | undefined;
     readonly backpressureStrategy?: BackpressureStrategy | undefined;
     readonly capacity?: number | undefined;
-}) => ReturnType<TStreamable[typeof StreamableLike_stream]>;
+}) => StreamOf<TStreamable>;
 export declare const __state: <T>(initialState: () => T, options?: {
     readonly equality?: Optional<Equality<T>>;
     readonly replay?: number | undefined;

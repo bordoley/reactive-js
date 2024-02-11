@@ -34,13 +34,13 @@ import {
   returns,
   tuple,
 } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
 import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
   ThrowBackpressureStrategy,
 } from "../../utils.js";
-import * as Disposable from "../../utils/Disposable.js";
 import * as Flowable from "../Flowable.js";
 import * as HostScheduler from "../HostScheduler.js";
 import * as Observable from "../Observable.js";

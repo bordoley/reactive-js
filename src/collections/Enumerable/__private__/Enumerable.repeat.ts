@@ -102,8 +102,8 @@ const Enumerable_repeat: Enumerable.Signature["repeat"] = /*@__PURE__*/ (<
       const predicate: Predicate<number> = isNone(countOrPredicate)
         ? alwaysTrue
         : isNumber(countOrPredicate)
-        ? (count: number) => count < countOrPredicate
-        : countOrPredicate;
+          ? (count: number) => count < countOrPredicate
+          : countOrPredicate;
 
       return Enumerable_create(() =>
         createRepeatEnumerator(enumerable, predicate),

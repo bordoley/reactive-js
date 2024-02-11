@@ -19,15 +19,15 @@ import {
 } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
+import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
+import PureStatefulComputationModuleTests from "../../computations/__tests__/fixtures/PureStatefulComputationModuleTests.js";
+import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
 import {
   DeferredComputationModule,
   PureStatefulComputationModule,
   PureStatelessComputationModule,
   keepType,
 } from "../../computations.js";
-import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
-import PureStatefulComputationModuleTests from "../../computations/__tests__/fixtures/PureStatefulComputationModuleTests.js";
-import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
 import {
   DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
@@ -50,9 +50,9 @@ import {
   VirtualTimeSchedulerLike,
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
-import { EventListenerLike_notify, StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
+import { EventListenerLike_notify, StoreLike_value } from "../../events.js";
 import {
   Function1,
   Optional,
@@ -77,6 +77,8 @@ import {
   returns,
   tuple,
 } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
+import * as IndexedQueue from "../../utils/IndexedQueue.js";
 import {
   DisposableLike_dispose,
   DisposableLike_error,
@@ -87,15 +89,7 @@ import {
   QueueableLike_enqueue,
   ThrowBackpressureStrategy,
 } from "../../utils.js";
-import * as Disposable from "../../utils/Disposable.js";
-import * as IndexedQueue from "../../utils/IndexedQueue.js";
 import * as HostScheduler from "../HostScheduler.js";
-import * as Observable from "../Observable.js";
-import {
-  DeferredObservableWithSideEffectsType,
-  PureDeferredObservableType,
-  RunnableWithSideEffectsType,
-} from "../Observable.js";
 import {
   __await,
   __bindMethod,
@@ -106,6 +100,12 @@ import {
   __state,
   __stream,
 } from "../Observable/effects.js";
+import {
+  DeferredObservableWithSideEffectsType,
+  PureDeferredObservableType,
+  RunnableWithSideEffectsType,
+} from "../Observable.js";
+import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";

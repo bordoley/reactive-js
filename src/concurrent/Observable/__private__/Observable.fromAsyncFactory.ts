@@ -1,10 +1,10 @@
 import { DispatcherLike_complete, ObserverLike } from "../../../concurrent.js";
 import { error } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import {
   DisposableLike_dispose,
   QueueableLike_enqueue,
 } from "../../../utils.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_create from "./Observable.create.js";
 

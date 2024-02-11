@@ -41,7 +41,7 @@
 
 ### CollectionOf
 
-Ƭ **CollectionOf**<`C`, `T`, `TKey`\>: `C` extends { `[Collection_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[Collection_TKey]`: `TKey` ; `[Collection_T]`: `T`  }[typeof [`Collection_type`](collections.md#collection_type)]\> : { `_C`: `C` ; `_T`: () => `T` ; `_TKey`: () => `TKey`  }
+Ƭ **CollectionOf**\<`C`, `T`, `TKey`\>: `C` extends \{ `[Collection_type]?`: `unknown`  } ? `NonNullable`\<`C` & \{ `[Collection_TKey]`: `TKey` ; `[Collection_T]`: `T`  }[typeof [`Collection_type`](collections.md#collection_type)]\> : \{ `_C`: `C` ; `_T`: () => `T` ; `_TKey`: () => `TKey`  }
 
 #### Type parameters
 
@@ -49,13 +49,13 @@
 | :------ | :------ |
 | `C` | extends [`Collection`](../interfaces/collections.Collection.md) |
 | `T` | `T` |
-| `TKey` | extends [`KeyOf`](collections.md#keyof)<`C`\> = [`KeyOf`](collections.md#keyof)<`C`\> |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)\<`C`\> = [`KeyOf`](collections.md#keyof)\<`C`\> |
 
 ___
 
 ### CollectionOperator
 
-Ƭ **CollectionOperator**<`C`, `TA`, `TB`, `TKey`\>: [`Function1`](functions.md#function1)<[`CollectionOf`](collections.md#collectionof)<`C`, `TA`, `TKey`\>, [`CollectionOf`](collections.md#collectionof)<`C`, `TB`, `TKey`\>\>
+Ƭ **CollectionOperator**\<`C`, `TA`, `TB`, `TKey`\>: [`Function1`](functions.md#function1)\<[`CollectionOf`](collections.md#collectionof)\<`C`, `TA`, `TKey`\>, [`CollectionOf`](collections.md#collectionof)\<`C`, `TB`, `TKey`\>\>
 
 Utility type for a generic operator function that transforms a Collection's inner value type.
 
@@ -66,13 +66,13 @@ Utility type for a generic operator function that transforms a Collection's inne
 | `C` | extends [`Collection`](../interfaces/collections.Collection.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends [`KeyOf`](collections.md#keyof)<`C`\> = [`KeyOf`](collections.md#keyof)<`C`\> |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)\<`C`\> = [`KeyOf`](collections.md#keyof)\<`C`\> |
 
 ___
 
 ### KeyOf
 
-Ƭ **KeyOf**<`C`\>: `NonNullable`<`C`[typeof [`Collection_TKey`](collections.md#collection_tkey)]\>
+Ƭ **KeyOf**\<`C`\>: `NonNullable`\<`C`[typeof [`Collection_TKey`](collections.md#collection_tkey)]\>
 
 #### Type parameters
 
@@ -84,7 +84,7 @@ ___
 
 ### ReadonlyObjectMapLike
 
-Ƭ **ReadonlyObjectMapLike**<`TKey`, `T`\>: { readonly [P in TKey]?: T }
+Ƭ **ReadonlyObjectMapLike**\<`TKey`, `T`\>: \{ readonly [P in TKey]?: T }
 
 **`No Inherit Doc`**
 
@@ -159,38 +159,38 @@ ___
 
 ### keySet
 
-▸ **keySet**<`C`\>(`keys`): <TKey_1\>(`collection`: [`CollectionOf`](collections.md#collectionof)<`C`, `unknown`, `TKey_1`\>) => `ReadonlySet`<`TKey_1`\>
+▸ **keySet**\<`C`\>(`keys`): \<TKey_1\>(`collection`: [`CollectionOf`](collections.md#collectionof)\<`C`, `unknown`, `TKey_1`\>) => `ReadonlySet`\<`TKey_1`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Collection`](../interfaces/collections.Collection.md)<`unknown`, `C`\> |
+| `C` | extends [`Collection`](../interfaces/collections.Collection.md)\<`unknown`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `keys` | <TKey\>() => [`Function1`](functions.md#function1)<[`CollectionOf`](collections.md#collectionof)<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TKey`\>\> |
+| `keys` | \<TKey\>() => [`Function1`](functions.md#function1)\<[`CollectionOf`](collections.md#collectionof)\<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)\<`TKey`\>\> |
 
 #### Returns
 
 `fn`
 
-▸ <`TKey_1`\>(`collection`): `ReadonlySet`<`TKey_1`\>
+▸ \<`TKey_1`\>(`collection`): `ReadonlySet`\<`TKey_1`\>
 
 ##### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TKey_1` | extends `Object` = [`KeyOf`](collections.md#keyof)<`C`\> |
+| `TKey_1` | extends `Object` = [`KeyOf`](collections.md#keyof)\<`C`\> |
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `collection` | [`CollectionOf`](collections.md#collectionof)<`C`, `unknown`, `TKey_1`\> |
+| `collection` | [`CollectionOf`](collections.md#collectionof)\<`C`, `unknown`, `TKey_1`\> |
 
 ##### Returns
 
-`ReadonlySet`<`TKey_1`\>
+`ReadonlySet`\<`TKey_1`\>

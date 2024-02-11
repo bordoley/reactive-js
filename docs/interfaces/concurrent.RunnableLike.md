@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / RunnableLike
 
-# Interface: RunnableLike<T\>
+# Interface: RunnableLike\<T\>
 
 [concurrent](../modules/concurrent.md).RunnableLike
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>
+- [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)\<`T`\>
 
   ↳ **`RunnableLike`**
 
@@ -34,4 +34,4 @@
 
 #### Overrides
 
-DeferredObservableLike.\_\_@ObservableLike\_isRunnable@43862
+DeferredObservableLike.[ObservableLike\_isRunnable]

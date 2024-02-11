@@ -29,7 +29,7 @@
 
 ### create
 
-▸ **create**<`T`\>(`op`): [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>
+▸ **create**\<`T`\>(`op`): [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)\<`T`\>
 
 #### Type parameters
 
@@ -41,17 +41,17 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`boolean`\>, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\> |
+| `op` | [`Function1`](functions.md#function1)\<[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)\<`boolean`\>, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)\<`T`\>\> |
 
 #### Returns
 
-[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>
+[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)\<`T`\>
 
 ___
 
 ### dispatchTo
 
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
+▸ **dispatchTo**\<`T`\>(`dispatcher`): [`Function1`](functions.md#function1)\<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)\<`T`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -63,17 +63,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](../interfaces/concurrent.DispatcherLike.md)<`T`\> |
+| `dispatcher` | [`DispatcherLike`](../interfaces/concurrent.DispatcherLike.md)\<`T`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)\<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)\<`T`\>, [`DeferredObservableWithSideEffectsLike`](../interfaces/concurrent.DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
 
 ___
 
 ### fromAsyncIterable
 
-▸ **fromAsyncIterable**<`T`\>(): [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>\>
+▸ **fromAsyncIterable**\<`T`\>(): [`Function1`](functions.md#function1)\<`AsyncIterable`\<`T`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -83,13 +83,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)\<`AsyncIterable`\<`T`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)\<`T`\>\>
 
 ___
 
 ### fromRunnable
 
-▸ **fromRunnable**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>\>
+▸ **fromRunnable**\<`T`\>(): [`Function1`](functions.md#function1)\<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)\<`T`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)\<`T`\>\>
 
 #### Type parameters
 
@@ -99,4 +99,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)\<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)\<`T`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)\<`T`\>\>

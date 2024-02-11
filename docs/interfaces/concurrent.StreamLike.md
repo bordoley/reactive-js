@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / StreamLike
 
-# Interface: StreamLike<TReq, T\>
+# Interface: StreamLike\<TReq, T\>
 
 [concurrent](../modules/concurrent.md).StreamLike
 
@@ -15,9 +15,9 @@ Represents a duplex stream
 
 ## Hierarchy
 
-- [`DispatcherLike`](concurrent.DispatcherLike.md)<`TReq`\>
+- [`DispatcherLike`](concurrent.DispatcherLike.md)\<`TReq`\>
 
-- [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>
+- [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)\<`T`\>
 
   ↳ **`StreamLike`**
 

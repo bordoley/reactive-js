@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`WindowLocationURI`](integrations_web.WindowLocationURI.md)\>
+- [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)\<[`WindowLocationURI`](integrations_web.WindowLocationURI.md)\>
 
   ↳ **`WindowLocationLike`**
 
@@ -26,7 +26,7 @@
 
 ### [WindowLocationLike\_canGoBack]
 
-• `Readonly` **[WindowLocationLike\_canGoBack]**: [`StoreLike`](events.StoreLike.md)<`boolean`\>
+• `Readonly` **[WindowLocationLike\_canGoBack]**: [`StoreLike`](events.StoreLike.md)\<`boolean`\>
 
 ## Methods
 
@@ -48,7 +48,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `stateOrUpdater` | [`WindowLocationURI`](integrations_web.WindowLocationURI.md) \| [`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](integrations_web.WindowLocationURI.md)\> |
+| `stateOrUpdater` | [`WindowLocationURI`](integrations_web.WindowLocationURI.md) \| [`Updater`](../modules/functions.md#updater)\<[`WindowLocationURI`](integrations_web.WindowLocationURI.md)\> |
 
 #### Returns
 
@@ -64,7 +64,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `stateOrUpdater` | [`WindowLocationURI`](integrations_web.WindowLocationURI.md) \| [`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](integrations_web.WindowLocationURI.md)\> |
+| `stateOrUpdater` | [`WindowLocationURI`](integrations_web.WindowLocationURI.md) \| [`Updater`](../modules/functions.md#updater)\<[`WindowLocationURI`](integrations_web.WindowLocationURI.md)\> |
 
 #### Returns
 

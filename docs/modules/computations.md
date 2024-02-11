@@ -33,7 +33,7 @@
 
 ### ComputationOf
 
-Ƭ **ComputationOf**<`C`, `T`\>: `C` extends { `[Computation_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[Computation_T]`: `T`  }[typeof [`Computation_type`](computations.md#computation_type)]\> : { `_C`: `C` ; `_T`: () => `T`  }
+Ƭ **ComputationOf**\<`C`, `T`\>: `C` extends \{ `[Computation_type]?`: `unknown`  } ? `NonNullable`\<`C` & \{ `[Computation_T]`: `T`  }[typeof [`Computation_type`](computations.md#computation_type)]\> : \{ `_C`: `C` ; `_T`: () => `T`  }
 
 #### Type parameters
 
@@ -46,7 +46,7 @@ ___
 
 ### ComputationOperator
 
-Ƭ **ComputationOperator**<`C`, `TA`, `TB`\>: [`Function1`](functions.md#function1)<[`ComputationOf`](computations.md#computationof)<`C`, `TA`\>, [`ComputationOf`](computations.md#computationof)<`C`, `TB`\>\>
+Ƭ **ComputationOperator**\<`C`, `TA`, `TB`\>: [`Function1`](functions.md#function1)\<[`ComputationOf`](computations.md#computationof)\<`C`, `TA`\>, [`ComputationOf`](computations.md#computationof)\<`C`, `TB`\>\>
 
 #### Type parameters
 
@@ -72,7 +72,7 @@ ___
 
 ### keepType
 
-▸ **keepType**<`C`\>(`keep`): <TA, TB\>(`predicate`: [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\>) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\>
+▸ **keepType**\<`C`\>(`keep`): \<TA, TB\>(`predicate`: [`TypePredicate`](functions.md#typepredicate)\<`TA`, `TB`\>) => [`ComputationOperator`](computations.md#computationoperator)\<`C`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -84,13 +84,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `keep` | <T\>(`predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`\> |
+| `keep` | \<T\>(`predicate`: [`Predicate`](functions.md#predicate)\<`T`\>) => [`ComputationOperator`](computations.md#computationoperator)\<`C`, `T`, `T`\> |
 
 #### Returns
 
 `fn`
 
-▸ <`TA`, `TB`\>(`predicate`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\>
+▸ \<`TA`, `TB`\>(`predicate`): [`ComputationOperator`](computations.md#computationoperator)\<`C`, `TA`, `TB`\>
 
 ##### Type parameters
 
@@ -103,17 +103,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
+| `predicate` | [`TypePredicate`](functions.md#typepredicate)\<`TA`, `TB`\> |
 
 ##### Returns
 
-[`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\>
+[`ComputationOperator`](computations.md#computationoperator)\<`C`, `TA`, `TB`\>
 
 ___
 
 ### mapTo
 
-▸ **mapTo**<`C`\>(`map`): <T\>(`value`: `T`) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `unknown`, `T`\>
+▸ **mapTo**\<`C`\>(`map`): \<T\>(`value`: `T`) => [`ComputationOperator`](computations.md#computationoperator)\<`C`, `unknown`, `T`\>
 
 #### Type parameters
 
@@ -125,13 +125,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `map` | <TA, TB\>(`selector`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\> |
+| `map` | \<TA, TB\>(`selector`: [`Function1`](functions.md#function1)\<`TA`, `TB`\>) => [`ComputationOperator`](computations.md#computationoperator)\<`C`, `TA`, `TB`\> |
 
 #### Returns
 
 `fn`
 
-▸ <`T`\>(`value`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `unknown`, `T`\>
+▸ \<`T`\>(`value`): [`ComputationOperator`](computations.md#computationoperator)\<`C`, `unknown`, `T`\>
 
 ##### Type parameters
 
@@ -147,13 +147,13 @@ ___
 
 ##### Returns
 
-[`ComputationOperator`](computations.md#computationoperator)<`C`, `unknown`, `T`\>
+[`ComputationOperator`](computations.md#computationoperator)\<`C`, `unknown`, `T`\>
 
 ___
 
 ### pick
 
-▸ **pick**<`C`\>(`map`): [`Pick`](../interfaces/computations.Pick.md)<`C`\>
+▸ **pick**\<`C`\>(`map`): [`Pick`](../interfaces/computations.Pick.md)\<`C`\>
 
 #### Type parameters
 
@@ -165,17 +165,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `map` | <TA, TB\>(`selector`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\> |
+| `map` | \<TA, TB\>(`selector`: [`Function1`](functions.md#function1)\<`TA`, `TB`\>) => [`ComputationOperator`](computations.md#computationoperator)\<`C`, `TA`, `TB`\> |
 
 #### Returns
 
-[`Pick`](../interfaces/computations.Pick.md)<`C`\>
+[`Pick`](../interfaces/computations.Pick.md)\<`C`\>
 
 ___
 
 ### sequence
 
-▸ **sequence**<`C`\>(`generate`): (`start`: `number`) => [`ComputationOf`](computations.md#computationof)<`C`, `number`\>
+▸ **sequence**\<`C`\>(`generate`): (`start`: `number`) => [`ComputationOf`](computations.md#computationof)\<`C`, `number`\>
 
 #### Type parameters
 
@@ -187,13 +187,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `generate` | <T\>(`generator`: [`Updater`](functions.md#updater)<`T`\>, `initialValue`: [`Factory`](functions.md#factory)<`T`\>) => [`ComputationOf`](computations.md#computationof)<`C`, `T`\> |
+| `generate` | \<T\>(`generator`: [`Updater`](functions.md#updater)\<`T`\>, `initialValue`: [`Factory`](functions.md#factory)\<`T`\>) => [`ComputationOf`](computations.md#computationof)\<`C`, `T`\> |
 
 #### Returns
 
 `fn`
 
-▸ (`start`): [`ComputationOf`](computations.md#computationof)<`C`, `number`\>
+▸ (`start`): [`ComputationOf`](computations.md#computationof)\<`C`, `number`\>
 
 ##### Parameters
 
@@ -203,4 +203,4 @@ ___
 
 ##### Returns
 
-[`ComputationOf`](computations.md#computationof)<`C`, `number`\>
+[`ComputationOf`](computations.md#computationof)\<`C`, `number`\>

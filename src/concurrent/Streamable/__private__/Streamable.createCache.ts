@@ -15,9 +15,9 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
-import { ReadonlyObjectMapLike, keySet } from "../../../collections.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { ReadonlyObjectMapCollection } from "../../../collections/ReadonlyObjectMap.js";
+import { ReadonlyObjectMapLike, keySet } from "../../../collections.js";
 import {
   CacheLike,
   CacheLike_get,
@@ -49,6 +49,8 @@ import {
   pipe,
   tuple,
 } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import {
   BackpressureStrategy,
   DisposableLike,
@@ -56,8 +58,6 @@ import {
   QueueLike_dequeue,
   QueueableLike_enqueue,
 } from "../../../utils.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import * as Observable from "../../Observable.js";
 import * as Subject from "../../Subject.js";
 import DelegatingStreamMixin from "../../__mixins__/DelegatingStreamMixin.js";

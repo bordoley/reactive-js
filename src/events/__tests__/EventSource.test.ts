@@ -10,9 +10,9 @@ import {
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import PureStatelessComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
-import { VirtualTimeSchedulerLike_run } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as VirtualTimeScheduler from "../../concurrent/VirtualTimeScheduler.js";
+import { VirtualTimeSchedulerLike_run } from "../../concurrent.js";
 import {
   EventListenerLike,
   EventListenerLike_notify,

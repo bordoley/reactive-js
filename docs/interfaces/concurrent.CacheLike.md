@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / CacheLike
 
-# Interface: CacheLike<T\>
+# Interface: CacheLike\<T\>
 
 [concurrent](../modules/concurrent.md).CacheLike
 
@@ -14,7 +14,7 @@ Represents a duplex stream
 
 ## Hierarchy
 
-- [`StreamLike`](concurrent.StreamLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`\>
+- [`StreamLike`](concurrent.StreamLike.md)\<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)\<`string`, [`Function1`](../modules/functions.md#function1)\<[`Optional`](../modules/functions.md#optional)\<`T`\>, [`Optional`](../modules/functions.md#optional)\<`T`\>\>\>, `never`\>
 
   ↳ **`CacheLike`**
 
@@ -28,7 +28,7 @@ Represents a duplex stream
 
 ### [CacheLike\_get]
 
-▸ **[CacheLike_get]**(`index`): [`ObservableLike`](concurrent.ObservableLike.md)<`T`\>
+▸ **[CacheLike_get]**(`index`): [`ObservableLike`](concurrent.ObservableLike.md)\<`T`\>
 
 #### Parameters
 
@@ -38,4 +38,4 @@ Represents a duplex stream
 
 #### Returns
 
-[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>
+[`ObservableLike`](concurrent.ObservableLike.md)\<`T`\>

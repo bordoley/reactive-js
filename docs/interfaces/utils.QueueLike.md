@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [utils](../modules/utils.md) / QueueLike
 
-# Interface: QueueLike<T\>
+# Interface: QueueLike\<T\>
 
 [utils](../modules/utils.md).QueueLike
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`QueueableLike`](utils.QueueableLike.md)<`T`\>
+- [`QueueableLike`](utils.QueueableLike.md)\<`T`\>
 
   ↳ **`QueueLike`**
 
@@ -39,14 +39,14 @@ ___
 
 ### [QueueLike\_head]
 
-• `Readonly` **[QueueLike\_head]**: [`Optional`](../modules/functions.md#optional)<`T`\>
+• `Readonly` **[QueueLike\_head]**: [`Optional`](../modules/functions.md#optional)\<`T`\>
 
 ## Methods
 
 ### [QueueLike\_dequeue]
 
-▸ **[QueueLike_dequeue]**(): [`Optional`](../modules/functions.md#optional)<`T`\>
+▸ **[QueueLike_dequeue]**(): [`Optional`](../modules/functions.md#optional)\<`T`\>
 
 #### Returns
 
-[`Optional`](../modules/functions.md#optional)<`T`\>
+[`Optional`](../modules/functions.md#optional)\<`T`\>

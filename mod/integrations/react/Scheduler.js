@@ -3,13 +3,13 @@
 import { unstable_NormalPriority, unstable_cancelCallback, unstable_now, unstable_scheduleCallback, unstable_shouldYield, } from "scheduler";
 import { Map, Map_get, Map_set } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
-import { SchedulerLike_now } from "../../concurrent.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "../../concurrent/__internal__/Continuation.js";
 import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "../../concurrent/__internal__/ContinuationScheduler.js";
 import SchedulerMixin from "../../concurrent/__mixins__/SchedulerMixin.js";
+import { SchedulerLike_now } from "../../concurrent.js";
 import { newInstance, none, pipe, pipeLazy } from "../../functions.js";
-import { DisposableLike_dispose } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
+import { DisposableLike_dispose } from "../../utils.js";
 const createReactScheduler = /*@__PURE__*/ (() => {
     const ReactScheduler_priority = Symbol("ReactScheduler_priority");
     return mixInstanceFactory(include(SchedulerMixin), function ReactPriorityScheduler(instance, priority) {

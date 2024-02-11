@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [collections](../modules/collections.md) / DictionaryLike
 
-# Interface: DictionaryLike<TKey, T\>
+# Interface: DictionaryLike\<TKey, T\>
 
 [collections](../modules/collections.md).DictionaryLike
 
@@ -25,13 +25,13 @@
 
 ### [DictionaryLike\_keys]
 
-• `Readonly` **[DictionaryLike\_keys]**: [`EnumerableLike`](collections.EnumerableLike.md)<`TKey`\>
+• `Readonly` **[DictionaryLike\_keys]**: [`EnumerableLike`](collections.EnumerableLike.md)\<`TKey`\>
 
 ## Methods
 
 ### [DictionaryLike\_get]
 
-▸ **[DictionaryLike_get]**(`index`): [`Optional`](../modules/functions.md#optional)<`T`\>
+▸ **[DictionaryLike_get]**(`index`): [`Optional`](../modules/functions.md#optional)\<`T`\>
 
 #### Parameters
 
@@ -41,4 +41,4 @@
 
 #### Returns
 
-[`Optional`](../modules/functions.md#optional)<`T`\>
+[`Optional`](../modules/functions.md#optional)\<`T`\>

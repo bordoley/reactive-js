@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [concurrent](../modules/concurrent.md) / PureObservableLike
 
-# Interface: PureObservableLike<T\>
+# Interface: PureObservableLike\<T\>
 
 [concurrent](../modules/concurrent.md).PureObservableLike
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`ObservableLike`](concurrent.ObservableLike.md)<`T`\>
+- [`ObservableLike`](concurrent.ObservableLike.md)\<`T`\>
 
   ↳ **`PureObservableLike`**
 

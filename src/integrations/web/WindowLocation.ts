@@ -7,6 +7,8 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import { pick } from "../../computations.js";
+import * as Observable from "../../concurrent/Observable.js";
+import * as Streamable from "../../concurrent/Streamable.js";
 import {
   DeferredObservableLike,
   ObservableLike_isDeferred,
@@ -19,11 +21,9 @@ import {
   StreamLike,
   StreamableLike_stream,
 } from "../../concurrent.js";
-import * as Observable from "../../concurrent/Observable.js";
-import * as Streamable from "../../concurrent/Streamable.js";
-import { StoreLike_value, WritableStoreLike } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
+import { StoreLike_value, WritableStoreLike } from "../../events.js";
 import {
   Optional,
   Updater,
@@ -39,14 +39,14 @@ import {
   raiseIf,
   returns,
 } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
+import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   BackpressureStrategy,
   DisposableLike,
   DropOldestBackpressureStrategy,
   QueueableLike_enqueue,
 } from "../../utils.js";
-import * as Disposable from "../../utils/Disposable.js";
-import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   WindowLocationLike,
   WindowLocationLike_canGoBack,
@@ -316,8 +316,8 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
             replace
               ? Observable.enqueue(replaceState)
               : push
-              ? Observable.enqueue(pushState)
-              : identity<DeferredObservableLike>,
+                ? Observable.enqueue(pushState)
+                : identity<DeferredObservableLike>,
             Observable.ignoreElements(),
           );
         },

@@ -1,7 +1,7 @@
 /// <reference types="./Element.windowScrollEventSource.d.ts" />
 
-import { EventSourceLike_addEventListener, } from "../../../../events.js";
 import * as EventSource from "../../../../events/EventSource.js";
+import { EventSourceLike_addEventListener, } from "../../../../events.js";
 import { invoke, none, pipe } from "../../../../functions.js";
 import * as Disposable from "../../../../utils/Disposable.js";
 import Element_eventSource from "./Element.eventSource.js";

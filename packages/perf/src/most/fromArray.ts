@@ -2,7 +2,10 @@ import { asap } from "@most/scheduler";
 
 class FromArrayTask<T> {
   private active = true;
-  constructor(private array: readonly T[], private sink: any) {}
+  constructor(
+    private array: readonly T[],
+    private sink: any,
+  ) {}
 
   run(t: any) {
     for (let i = 0, l = this.array.length; i < l && this.active; ++i) {

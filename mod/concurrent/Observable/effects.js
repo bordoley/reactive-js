@@ -2,8 +2,8 @@
 
 import { ObservableLike_isRunnable, ObserverLike_notify, SchedulerLike_schedule, StreamableLike_stream, } from "../../concurrent.js";
 import { bindMethod, isSome, none, pipe, } from "../../functions.js";
-import { DisposableLike_dispose, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
+import { DisposableLike_dispose, } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import { ComputeContext_awaitOrObserve, ComputeContext_constant, ComputeContext_memoOrUse, ComputeContext_observableConfig, ComputeContext_observer, assertCurrentContext, } from "./__private__/Observable.computeWithConfig.js";

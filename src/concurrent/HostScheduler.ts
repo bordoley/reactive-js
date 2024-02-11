@@ -7,8 +7,8 @@ import {
 } from "../__internal__/mixins.js";
 import { SchedulerLike, SchedulerLike_now } from "../concurrent.js";
 import { isSome, pipe } from "../functions.js";
-import { DisposableLike, DisposableLike_dispose } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
+import { DisposableLike, DisposableLike_dispose } from "../utils.js";
 import {
   ContinuationLike,
   ContinuationLike_dueTime,

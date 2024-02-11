@@ -1,7 +1,7 @@
 /// <reference types="./Observable.toEventSource.d.ts" />
 
-import { EventListenerLike_notify } from "../../../events.js";
 import * as EventSource from "../../../events/EventSource.js";
+import { EventListenerLike_notify } from "../../../events.js";
 import { bindMethod, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Observable_forEach from "./Observable.forEach.js";

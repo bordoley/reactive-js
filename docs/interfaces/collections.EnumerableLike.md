@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [collections](../modules/collections.md) / EnumerableLike
 
-# Interface: EnumerableLike<T\>
+# Interface: EnumerableLike\<T\>
 
 [collections](../modules/collections.md).EnumerableLike
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- `Iterable`<`T`\>
+- `Iterable`\<`T`\>
 
   ↳ **`EnumerableLike`**
 
@@ -26,8 +26,8 @@
 
 ### [EnumerableLike\_enumerate]
 
-▸ **[EnumerableLike_enumerate]**(): [`EnumeratorLike`](collections.EnumeratorLike.md)<`T`\>
+▸ **[EnumerableLike_enumerate]**(): [`EnumeratorLike`](collections.EnumeratorLike.md)\<`T`\>
 
 #### Returns
 
-[`EnumeratorLike`](collections.EnumeratorLike.md)<`T`\>
+[`EnumeratorLike`](collections.EnumeratorLike.md)\<`T`\>

@@ -3,8 +3,8 @@
 import { Array_length } from "../../../__internal__/constants.js";
 import { EventListenerLike_notify } from "../../../events.js";
 import { bindMethod, pipe } from "../../../functions.js";
-import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import EventSource_addEventHandler from "./EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource.create.js";
 const EventSource_mergeMany = (eventSources) => EventSource_create(listener => {

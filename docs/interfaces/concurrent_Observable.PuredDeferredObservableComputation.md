@@ -20,7 +20,7 @@
 
 ### [Computation\_type]
 
-• `Optional` `Readonly` **[Computation\_type]**: [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[Computation\_type]**: [`PureDeferredObservableLike`](concurrent.PureDeferredObservableLike.md)\<`unknown`\>
 
 #### Overrides
 

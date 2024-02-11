@@ -33,13 +33,13 @@
 
 ### addEventHandler
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `AbortSignal`<`TEventTarget`\> |
+| `TEventTarget` | extends `AbortSignal` |
 | `K` | extends ``"abort"`` |
 
 #### Parameters
@@ -47,22 +47,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`AbortSignalEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`AbortSignalEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `Animation`<`TEventTarget`\> |
+| `TEventTarget` | extends `Animation` |
 | `K` | extends keyof `AnimationEventMap` |
 
 #### Parameters
@@ -70,16 +70,16 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`AnimationEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`AnimationEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -93,22 +93,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`AbstractWorkerEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`AbstractWorkerEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `AudioScheduledSourceNode`<`TEventTarget`\> |
+| `TEventTarget` | extends `AudioScheduledSourceNode` |
 | `K` | extends ``"ended"`` |
 
 #### Parameters
@@ -116,22 +116,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`AudioScheduledSourceNodeEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`AudioScheduledSourceNodeEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `BaseAudioContext`<`TEventTarget`\> |
+| `TEventTarget` | extends `BaseAudioContext` |
 | `K` | extends ``"statechange"`` |
 
 #### Parameters
@@ -139,22 +139,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`BaseAudioContextEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`BaseAudioContextEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `AudioWorkletNode`<`TEventTarget`\> |
+| `TEventTarget` | extends `AudioWorkletNode` |
 | `K` | extends ``"processorerror"`` |
 
 #### Parameters
@@ -162,22 +162,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`AudioWorkletNodeEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`AudioWorkletNodeEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `BroadcastChannel`<`TEventTarget`\> |
+| `TEventTarget` | extends `BroadcastChannel` |
 | `K` | extends keyof `BroadcastChannelEventMap` |
 
 #### Parameters
@@ -185,22 +185,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`BroadcastChannelEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`BroadcastChannelEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `Document`<`TEventTarget`\> |
+| `TEventTarget` | extends `Document` |
 | `K` | extends keyof `DocumentEventMap` |
 
 #### Parameters
@@ -208,22 +208,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`DocumentEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`DocumentEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `Element`<`TEventTarget`\> |
+| `TEventTarget` | extends `Element` |
 | `K` | extends keyof `ElementEventMap` |
 
 #### Parameters
@@ -231,22 +231,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`ElementEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`ElementEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MediaStreamTrack`<`TEventTarget`\> |
+| `TEventTarget` | extends `MediaStreamTrack` |
 | `K` | extends keyof `MediaStreamTrackEventMap` |
 
 #### Parameters
@@ -254,22 +254,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`MediaStreamTrackEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`MediaStreamTrackEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `EventSource`<`TEventTarget`\> |
+| `TEventTarget` | extends `EventSource` |
 | `K` | extends keyof `EventSourceEventMap` |
 
 #### Parameters
@@ -277,22 +277,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`EventSourceEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`EventSourceEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `FileReader`<`TEventTarget`\> |
+| `TEventTarget` | extends `FileReader` |
 | `K` | extends keyof `FileReaderEventMap` |
 
 #### Parameters
@@ -300,22 +300,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`FileReaderEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`FileReaderEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `FontFaceSet`<`TEventTarget`\> |
+| `TEventTarget` | extends `FontFaceSet` |
 | `K` | extends keyof `FontFaceSetEventMap` |
 
 #### Parameters
@@ -323,16 +323,16 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`FontFaceSetEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`FontFaceSetEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -346,22 +346,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`GlobalEventHandlersEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`GlobalEventHandlersEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `IDBDatabase`<`TEventTarget`\> |
+| `TEventTarget` | extends `IDBDatabase` |
 | `K` | extends keyof `IDBDatabaseEventMap` |
 
 #### Parameters
@@ -369,22 +369,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`IDBDatabaseEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`IDBDatabaseEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `HTMLBodyElement`<`TEventTarget`\> |
+| `TEventTarget` | extends `HTMLBodyElement` |
 | `K` | extends keyof `HTMLBodyElementEventMap` |
 
 #### Parameters
@@ -392,22 +392,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`HTMLBodyElementEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`HTMLBodyElementEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `HTMLElement`<`TEventTarget`\> |
+| `TEventTarget` | extends `HTMLElement` |
 | `K` | extends keyof `HTMLElementEventMap` |
 
 #### Parameters
@@ -415,22 +415,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`HTMLElementEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`HTMLElementEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `HTMLMediaElement`<`TEventTarget`\> |
+| `TEventTarget` | extends `HTMLMediaElement` |
 | `K` | extends keyof `HTMLMediaElementEventMap` |
 
 #### Parameters
@@ -438,22 +438,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`HTMLMediaElementEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`HTMLMediaElementEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `HTMLVideoElement`<`TEventTarget`\> |
+| `TEventTarget` | extends `HTMLVideoElement` |
 | `K` | extends keyof `HTMLVideoElementEventMap` |
 
 #### Parameters
@@ -461,22 +461,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`HTMLVideoElementEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`HTMLVideoElementEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `IDBOpenDBRequest`<`TEventTarget`\> |
+| `TEventTarget` | extends `IDBOpenDBRequest` |
 | `K` | extends keyof `IDBOpenDBRequestEventMap` |
 
 #### Parameters
@@ -484,22 +484,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`IDBOpenDBRequestEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`IDBOpenDBRequestEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`, `TDBObject`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`, `TDBObject`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `IDBRequest`<`TDBObject`, `TEventTarget`\> |
+| `TEventTarget` | extends `IDBRequest`\<`TDBObject`\> |
 | `K` | extends keyof `IDBRequestEventMap` |
 | `TDBObject` | `any` |
 
@@ -508,22 +508,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`IDBRequestEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`IDBRequestEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `IDBTransaction`<`TEventTarget`\> |
+| `TEventTarget` | extends `IDBTransaction` |
 | `K` | extends keyof `IDBTransactionEventMap` |
 
 #### Parameters
@@ -531,22 +531,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`IDBTransactionEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`IDBTransactionEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MathMLElement`<`TEventTarget`\> |
+| `TEventTarget` | extends `MathMLElement` |
 | `K` | extends keyof `MathMLElementEventMap` |
 
 #### Parameters
@@ -554,22 +554,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`MathMLElementEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`MathMLElementEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MediaDevices`<`TEventTarget`\> |
+| `TEventTarget` | extends `MediaDevices` |
 | `K` | extends ``"devicechange"`` |
 
 #### Parameters
@@ -577,22 +577,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`MediaDevicesEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`MediaDevicesEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MediaKeySession`<`TEventTarget`\> |
+| `TEventTarget` | extends `MediaKeySession` |
 | `K` | extends keyof `MediaKeySessionEventMap` |
 
 #### Parameters
@@ -600,22 +600,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`MediaKeySessionEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`MediaKeySessionEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MediaQueryList`<`TEventTarget`\> |
+| `TEventTarget` | extends `MediaQueryList` |
 | `K` | extends ``"change"`` |
 
 #### Parameters
@@ -623,22 +623,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`MediaQueryListEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`MediaQueryListEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MediaRecorder`<`TEventTarget`\> |
+| `TEventTarget` | extends `MediaRecorder` |
 | `K` | extends keyof `MediaRecorderEventMap` |
 
 #### Parameters
@@ -646,16 +646,16 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`MediaRecorderEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`MediaRecorderEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -669,22 +669,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`MediaSourceEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`MediaSourceEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MediaStream`<`TEventTarget`\> |
+| `TEventTarget` | extends `MediaStream` |
 | `K` | extends keyof `MediaStreamEventMap` |
 
 #### Parameters
@@ -692,22 +692,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`MediaStreamEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`MediaStreamEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MessagePort`<`TEventTarget`\> |
+| `TEventTarget` | extends `MessagePort` |
 | `K` | extends keyof `MessagePortEventMap` |
 
 #### Parameters
@@ -715,22 +715,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`MessagePortEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`MessagePortEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `Notification`<`TEventTarget`\> |
+| `TEventTarget` | extends `Notification` |
 | `K` | extends keyof `NotificationEventMap` |
 
 #### Parameters
@@ -738,22 +738,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`NotificationEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`NotificationEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `OfflineAudioContext`<`TEventTarget`\> |
+| `TEventTarget` | extends `OfflineAudioContext` |
 | `K` | extends keyof `OfflineAudioContextEventMap` |
 
 #### Parameters
@@ -761,22 +761,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`OfflineAudioContextEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`OfflineAudioContextEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `OffscreenCanvas`<`TEventTarget`\> |
+| `TEventTarget` | extends `OffscreenCanvas` |
 | `K` | extends keyof `OffscreenCanvasEventMap` |
 
 #### Parameters
@@ -784,22 +784,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`OffscreenCanvasEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`OffscreenCanvasEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `PaymentRequest`<`TEventTarget`\> |
+| `TEventTarget` | extends `PaymentRequest` |
 | `K` | extends ``"paymentmethodchange"`` |
 
 #### Parameters
@@ -807,22 +807,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`PaymentRequestEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`PaymentRequestEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `Performance`<`TEventTarget`\> |
+| `TEventTarget` | extends `Performance` |
 | `K` | extends ``"resourcetimingbufferfull"`` |
 
 #### Parameters
@@ -830,22 +830,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`PerformanceEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`PerformanceEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `PermissionStatus`<`TEventTarget`\> |
+| `TEventTarget` | extends `PermissionStatus` |
 | `K` | extends ``"change"`` |
 
 #### Parameters
@@ -853,22 +853,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`PermissionStatusEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`PermissionStatusEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `PictureInPictureWindow`<`TEventTarget`\> |
+| `TEventTarget` | extends `PictureInPictureWindow` |
 | `K` | extends ``"resize"`` |
 
 #### Parameters
@@ -876,22 +876,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`PictureInPictureWindowEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`PictureInPictureWindowEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `RTCDTMFSender`<`TEventTarget`\> |
+| `TEventTarget` | extends `RTCDTMFSender` |
 | `K` | extends ``"tonechange"`` |
 
 #### Parameters
@@ -899,22 +899,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`RTCDTMFSenderEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`RTCDTMFSenderEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `RTCDataChannel`<`TEventTarget`\> |
+| `TEventTarget` | extends `RTCDataChannel` |
 | `K` | extends keyof `RTCDataChannelEventMap` |
 
 #### Parameters
@@ -922,22 +922,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`RTCDataChannelEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`RTCDataChannelEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `RTCDtlsTransport`<`TEventTarget`\> |
+| `TEventTarget` | extends `RTCDtlsTransport` |
 | `K` | extends keyof `RTCDtlsTransportEventMap` |
 
 #### Parameters
@@ -945,22 +945,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`RTCDtlsTransportEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`RTCDtlsTransportEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `RTCIceTransport`<`TEventTarget`\> |
+| `TEventTarget` | extends `RTCIceTransport` |
 | `K` | extends keyof `RTCIceTransportEventMap` |
 
 #### Parameters
@@ -968,22 +968,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`RTCIceTransportEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`RTCIceTransportEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `RTCPeerConnection`<`TEventTarget`\> |
+| `TEventTarget` | extends `RTCPeerConnection` |
 | `K` | extends keyof `RTCPeerConnectionEventMap` |
 
 #### Parameters
@@ -991,22 +991,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`RTCPeerConnectionEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`RTCPeerConnectionEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `RTCSctpTransport`<`TEventTarget`\> |
+| `TEventTarget` | extends `RTCSctpTransport` |
 | `K` | extends ``"statechange"`` |
 
 #### Parameters
@@ -1014,22 +1014,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`RTCSctpTransportEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`RTCSctpTransportEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `RemotePlayback`<`TEventTarget`\> |
+| `TEventTarget` | extends `RemotePlayback` |
 | `K` | extends keyof `RemotePlaybackEventMap` |
 
 #### Parameters
@@ -1037,22 +1037,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`RemotePlaybackEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`RemotePlaybackEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `SVGSVGElement`<`TEventTarget`\> |
+| `TEventTarget` | extends `SVGSVGElement` |
 | `K` | extends keyof `SVGSVGElementEventMap` |
 
 #### Parameters
@@ -1060,22 +1060,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`SVGSVGElementEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`SVGSVGElementEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `ScreenOrientation`<`TEventTarget`\> |
+| `TEventTarget` | extends `ScreenOrientation` |
 | `K` | extends ``"change"`` |
 
 #### Parameters
@@ -1083,22 +1083,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`ScreenOrientationEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`ScreenOrientationEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `ServiceWorker`<`TEventTarget`\> |
+| `TEventTarget` | extends `ServiceWorker` |
 | `K` | extends keyof `ServiceWorkerEventMap` |
 
 #### Parameters
@@ -1106,22 +1106,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`ServiceWorkerEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`ServiceWorkerEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `ServiceWorkerContainer`<`TEventTarget`\> |
+| `TEventTarget` | extends `ServiceWorkerContainer` |
 | `K` | extends keyof `ServiceWorkerContainerEventMap` |
 
 #### Parameters
@@ -1129,22 +1129,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`ServiceWorkerContainerEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`ServiceWorkerContainerEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `ServiceWorkerRegistration`<`TEventTarget`\> |
+| `TEventTarget` | extends `ServiceWorkerRegistration` |
 | `K` | extends ``"updatefound"`` |
 
 #### Parameters
@@ -1152,22 +1152,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`ServiceWorkerRegistrationEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`ServiceWorkerRegistrationEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `ShadowRoot`<`TEventTarget`\> |
+| `TEventTarget` | extends `ShadowRoot` |
 | `K` | extends ``"slotchange"`` |
 
 #### Parameters
@@ -1175,22 +1175,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`ShadowRootEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`ShadowRootEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `SourceBuffer`<`TEventTarget`\> |
+| `TEventTarget` | extends `SourceBuffer` |
 | `K` | extends keyof `SourceBufferEventMap` |
 
 #### Parameters
@@ -1198,22 +1198,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`SourceBufferEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`SourceBufferEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `SourceBufferList`<`TEventTarget`\> |
+| `TEventTarget` | extends `SourceBufferList` |
 | `K` | extends keyof `SourceBufferListEventMap` |
 
 #### Parameters
@@ -1221,22 +1221,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`SourceBufferListEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`SourceBufferListEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `SpeechSynthesis`<`TEventTarget`\> |
+| `TEventTarget` | extends `SpeechSynthesis` |
 | `K` | extends ``"voiceschanged"`` |
 
 #### Parameters
@@ -1244,22 +1244,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`SpeechSynthesisEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`SpeechSynthesisEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `SpeechSynthesisUtterance`<`TEventTarget`\> |
+| `TEventTarget` | extends `SpeechSynthesisUtterance` |
 | `K` | extends keyof `SpeechSynthesisUtteranceEventMap` |
 
 #### Parameters
@@ -1267,22 +1267,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`SpeechSynthesisUtteranceEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`SpeechSynthesisUtteranceEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `SVGElement`<`TEventTarget`\> |
+| `TEventTarget` | extends `SVGElement` |
 | `K` | extends keyof `SVGElementEventMap` |
 
 #### Parameters
@@ -1290,22 +1290,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`SVGElementEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`SVGElementEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `TextTrack`<`TEventTarget`\> |
+| `TEventTarget` | extends `TextTrack` |
 | `K` | extends ``"cuechange"`` |
 
 #### Parameters
@@ -1313,22 +1313,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`TextTrackEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`TextTrackEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `TextTrackCue`<`TEventTarget`\> |
+| `TEventTarget` | extends `TextTrackCue` |
 | `K` | extends keyof `TextTrackCueEventMap` |
 
 #### Parameters
@@ -1336,22 +1336,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`TextTrackCueEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`TextTrackCueEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `TextTrackList`<`TEventTarget`\> |
+| `TEventTarget` | extends `TextTrackList` |
 | `K` | extends keyof `TextTrackListEventMap` |
 
 #### Parameters
@@ -1359,22 +1359,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`TextTrackListEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`TextTrackListEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `VisualViewport`<`TEventTarget`\> |
+| `TEventTarget` | extends `VisualViewport` |
 | `K` | extends keyof `VisualViewportEventMap` |
 
 #### Parameters
@@ -1382,22 +1382,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`VisualViewportEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`VisualViewportEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `WebSocket`<`TEventTarget`\> |
+| `TEventTarget` | extends `WebSocket` |
 | `K` | extends keyof `WebSocketEventMap` |
 
 #### Parameters
@@ -1405,22 +1405,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`WebSocketEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`WebSocketEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`, `T`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`, `T`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `Window`<`TEventTarget`\> |
+| `TEventTarget` | extends `Window` |
 | `K` | extends keyof `WindowEventMap` |
 | `T` | `T` |
 
@@ -1429,22 +1429,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`WindowEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`WindowEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`, `T`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`, `T`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `Worker`<`TEventTarget`\> |
+| `TEventTarget` | extends `Worker` |
 | `K` | extends keyof `WorkerEventMap` |
 | `T` | `T` |
 
@@ -1453,22 +1453,22 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`WorkerEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`WorkerEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
-▸ **addEventHandler**<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addEventHandler**\<`TEventTarget`, `K`\>(`eventName`, `eventHandler`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `XMLHttpRequestEventTarget`<`TEventTarget`\> |
+| `TEventTarget` | extends `XMLHttpRequestEventTarget` |
 | `K` | extends keyof `XMLHttpRequestEventTargetEventMap` |
 
 #### Parameters
@@ -1476,71 +1476,71 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)<`XMLHttpRequestEventTargetEventMap`[`K`]\> |
+| `eventHandler` | [`SideEffect1`](functions.md#sideeffect1)\<`XMLHttpRequestEventTargetEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 ___
 
 ### addResizeHandler
 
-▸ **addResizeHandler**<`TElement`\>(`handler`, `options?`): [`Function1`](functions.md#function1)<`TElement`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addResizeHandler**\<`TElement`\>(`handler`, `options?`): [`Function1`](functions.md#function1)\<`TElement`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TElement` | extends `Element`<`TElement`\> |
+| `TElement` | extends `Element` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `handler` | [`SideEffect1`](functions.md#sideeffect1)<`ResizeObserverEntry`\> |
+| `handler` | [`SideEffect1`](functions.md#sideeffect1)\<`ResizeObserverEntry`\> |
 | `options?` | `ResizeObserverOptions` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TElement`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TElement`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 ___
 
 ### addScrollHandler
 
-▸ **addScrollHandler**<`TElement`\>(`handler`): [`Function1`](functions.md#function1)<`TElement`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **addScrollHandler**\<`TElement`\>(`handler`): [`Function1`](functions.md#function1)\<`TElement`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TElement` | extends `HTMLElement`<`TElement`\> |
+| `TElement` | extends `HTMLElement` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `handler` | [`SideEffect1`](functions.md#sideeffect1)<[`ScrollValue`](../interfaces/integrations_web.ScrollValue.md)\> |
+| `handler` | [`SideEffect1`](functions.md#sideeffect1)\<[`ScrollValue`](../interfaces/integrations_web.ScrollValue.md)\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TElement`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TElement`, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 ___
 
 ### eventSource
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`AbortSignalEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`AbortSignalEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `AbortSignal`<`TEventTarget`\> |
+| `TEventTarget` | extends `AbortSignal` |
 | `K` | extends ``"abort"`` |
 
 #### Parameters
@@ -1554,15 +1554,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`AbortSignalEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`AbortSignalEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`AnimationEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`AnimationEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `Animation`<`TEventTarget`\> |
+| `TEventTarget` | extends `Animation` |
 | `K` | extends keyof `AnimationEventMap` |
 
 #### Parameters
@@ -1576,9 +1576,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`AnimationEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`AnimationEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`AbstractWorkerEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`AbstractWorkerEventMap`[`K`]\>\>
 
 #### Type parameters
 
@@ -1598,15 +1598,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`AbstractWorkerEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`AbstractWorkerEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`AudioScheduledSourceNodeEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`AudioScheduledSourceNodeEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `AudioScheduledSourceNode`<`TEventTarget`\> |
+| `TEventTarget` | extends `AudioScheduledSourceNode` |
 | `K` | extends ``"ended"`` |
 
 #### Parameters
@@ -1620,15 +1620,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`AudioScheduledSourceNodeEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`AudioScheduledSourceNodeEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`BaseAudioContextEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`BaseAudioContextEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `BaseAudioContext`<`TEventTarget`\> |
+| `TEventTarget` | extends `BaseAudioContext` |
 | `K` | extends ``"statechange"`` |
 
 #### Parameters
@@ -1642,15 +1642,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`BaseAudioContextEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`BaseAudioContextEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`AudioWorkletNodeEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`AudioWorkletNodeEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `AudioWorkletNode`<`TEventTarget`\> |
+| `TEventTarget` | extends `AudioWorkletNode` |
 | `K` | extends ``"processorerror"`` |
 
 #### Parameters
@@ -1664,15 +1664,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`AudioWorkletNodeEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`AudioWorkletNodeEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`BroadcastChannelEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`BroadcastChannelEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `BroadcastChannel`<`TEventTarget`\> |
+| `TEventTarget` | extends `BroadcastChannel` |
 | `K` | extends keyof `BroadcastChannelEventMap` |
 
 #### Parameters
@@ -1686,15 +1686,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`BroadcastChannelEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`BroadcastChannelEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`DocumentEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`DocumentEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `Document`<`TEventTarget`\> |
+| `TEventTarget` | extends `Document` |
 | `K` | extends keyof `DocumentEventMap` |
 
 #### Parameters
@@ -1708,15 +1708,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`DocumentEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`DocumentEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`ElementEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`ElementEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `Element`<`TEventTarget`\> |
+| `TEventTarget` | extends `Element` |
 | `K` | extends keyof `ElementEventMap` |
 
 #### Parameters
@@ -1730,15 +1730,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`ElementEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`ElementEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MediaStreamTrackEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MediaStreamTrackEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MediaStreamTrack`<`TEventTarget`\> |
+| `TEventTarget` | extends `MediaStreamTrack` |
 | `K` | extends keyof `MediaStreamTrackEventMap` |
 
 #### Parameters
@@ -1752,15 +1752,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MediaStreamTrackEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MediaStreamTrackEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`EventSourceEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`EventSourceEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`unknown`, `TEventTarget`\> |
+| `TEventTarget` | extends [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`unknown`\> |
 | `K` | extends keyof `EventSourceEventMap` |
 
 #### Parameters
@@ -1774,15 +1774,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`EventSourceEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`EventSourceEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`FileReaderEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`FileReaderEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `FileReader`<`TEventTarget`\> |
+| `TEventTarget` | extends `FileReader` |
 | `K` | extends keyof `FileReaderEventMap` |
 
 #### Parameters
@@ -1796,15 +1796,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`FileReaderEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`FileReaderEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`FontFaceSetEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`FontFaceSetEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `FontFaceSet`<`TEventTarget`\> |
+| `TEventTarget` | extends `FontFaceSet` |
 | `K` | extends keyof `FontFaceSetEventMap` |
 
 #### Parameters
@@ -1818,9 +1818,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`FontFaceSetEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`FontFaceSetEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`GlobalEventHandlersEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`GlobalEventHandlersEventMap`[`K`]\>\>
 
 #### Type parameters
 
@@ -1840,15 +1840,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`GlobalEventHandlersEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`GlobalEventHandlersEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`IDBDatabaseEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`IDBDatabaseEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `IDBDatabase`<`TEventTarget`\> |
+| `TEventTarget` | extends `IDBDatabase` |
 | `K` | extends keyof `IDBDatabaseEventMap` |
 
 #### Parameters
@@ -1862,15 +1862,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`IDBDatabaseEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`IDBDatabaseEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`HTMLBodyElementEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`HTMLBodyElementEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `HTMLBodyElement`<`TEventTarget`\> |
+| `TEventTarget` | extends `HTMLBodyElement` |
 | `K` | extends keyof `HTMLBodyElementEventMap` |
 
 #### Parameters
@@ -1884,15 +1884,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`HTMLBodyElementEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`HTMLBodyElementEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`HTMLElementEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`HTMLElementEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `HTMLElement`<`TEventTarget`\> |
+| `TEventTarget` | extends `HTMLElement` |
 | `K` | extends keyof `HTMLElementEventMap` |
 
 #### Parameters
@@ -1906,15 +1906,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`HTMLElementEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`HTMLElementEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`HTMLMediaElementEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`HTMLMediaElementEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `HTMLMediaElement`<`TEventTarget`\> |
+| `TEventTarget` | extends `HTMLMediaElement` |
 | `K` | extends keyof `HTMLMediaElementEventMap` |
 
 #### Parameters
@@ -1928,15 +1928,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`HTMLMediaElementEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`HTMLMediaElementEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`HTMLVideoElementEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`HTMLVideoElementEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `HTMLVideoElement`<`TEventTarget`\> |
+| `TEventTarget` | extends `HTMLVideoElement` |
 | `K` | extends keyof `HTMLVideoElementEventMap` |
 
 #### Parameters
@@ -1950,15 +1950,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`HTMLVideoElementEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`HTMLVideoElementEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`IDBOpenDBRequestEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`IDBOpenDBRequestEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `IDBOpenDBRequest`<`TEventTarget`\> |
+| `TEventTarget` | extends `IDBOpenDBRequest` |
 | `K` | extends keyof `IDBOpenDBRequestEventMap` |
 
 #### Parameters
@@ -1972,15 +1972,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`IDBOpenDBRequestEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`IDBOpenDBRequestEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`, `TDBObject`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`IDBRequestEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`, `TDBObject`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`IDBRequestEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `IDBRequest`<`TDBObject`, `TEventTarget`\> |
+| `TEventTarget` | extends `IDBRequest`\<`TDBObject`\> |
 | `K` | extends keyof `IDBRequestEventMap` |
 | `TDBObject` | `any` |
 
@@ -1995,15 +1995,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`IDBRequestEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`IDBRequestEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`IDBTransactionEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`IDBTransactionEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `IDBTransaction`<`TEventTarget`\> |
+| `TEventTarget` | extends `IDBTransaction` |
 | `K` | extends keyof `IDBTransactionEventMap` |
 
 #### Parameters
@@ -2017,15 +2017,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`IDBTransactionEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`IDBTransactionEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MathMLElementEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MathMLElementEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MathMLElement`<`TEventTarget`\> |
+| `TEventTarget` | extends `MathMLElement` |
 | `K` | extends keyof `MathMLElementEventMap` |
 
 #### Parameters
@@ -2039,15 +2039,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MathMLElementEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MathMLElementEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MediaDevicesEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MediaDevicesEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MediaDevices`<`TEventTarget`\> |
+| `TEventTarget` | extends `MediaDevices` |
 | `K` | extends ``"devicechange"`` |
 
 #### Parameters
@@ -2061,15 +2061,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MediaDevicesEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MediaDevicesEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MediaKeySessionEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MediaKeySessionEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MediaKeySession`<`TEventTarget`\> |
+| `TEventTarget` | extends `MediaKeySession` |
 | `K` | extends keyof `MediaKeySessionEventMap` |
 
 #### Parameters
@@ -2083,15 +2083,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MediaKeySessionEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MediaKeySessionEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MediaQueryListEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MediaQueryListEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MediaQueryList`<`TEventTarget`\> |
+| `TEventTarget` | extends `MediaQueryList` |
 | `K` | extends ``"change"`` |
 
 #### Parameters
@@ -2105,15 +2105,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MediaQueryListEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MediaQueryListEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MediaRecorderEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MediaRecorderEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MediaRecorder`<`TEventTarget`\> |
+| `TEventTarget` | extends `MediaRecorder` |
 | `K` | extends keyof `MediaRecorderEventMap` |
 
 #### Parameters
@@ -2127,9 +2127,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MediaRecorderEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MediaRecorderEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MediaSourceEventMap`\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MediaSourceEventMap`\>\>
 
 #### Type parameters
 
@@ -2149,15 +2149,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MediaSourceEventMap`\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MediaSourceEventMap`\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MediaStreamEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MediaStreamEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MediaStream`<`TEventTarget`\> |
+| `TEventTarget` | extends `MediaStream` |
 | `K` | extends keyof `MediaStreamEventMap` |
 
 #### Parameters
@@ -2171,15 +2171,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MediaStreamEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MediaStreamEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MessagePortEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MessagePortEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `MessagePort`<`TEventTarget`\> |
+| `TEventTarget` | extends `MessagePort` |
 | `K` | extends keyof `MessagePortEventMap` |
 
 #### Parameters
@@ -2193,15 +2193,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`MessagePortEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`MessagePortEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`NotificationEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`NotificationEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `Notification`<`TEventTarget`\> |
+| `TEventTarget` | extends `Notification` |
 | `K` | extends keyof `NotificationEventMap` |
 
 #### Parameters
@@ -2215,15 +2215,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`NotificationEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`NotificationEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`OfflineAudioContextEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`OfflineAudioContextEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `OfflineAudioContext`<`TEventTarget`\> |
+| `TEventTarget` | extends `OfflineAudioContext` |
 | `K` | extends keyof `OfflineAudioContextEventMap` |
 
 #### Parameters
@@ -2237,15 +2237,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`OfflineAudioContextEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`OfflineAudioContextEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`OffscreenCanvasEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`OffscreenCanvasEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `OffscreenCanvas`<`TEventTarget`\> |
+| `TEventTarget` | extends `OffscreenCanvas` |
 | `K` | extends keyof `OffscreenCanvasEventMap` |
 
 #### Parameters
@@ -2259,15 +2259,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`OffscreenCanvasEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`OffscreenCanvasEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`PaymentRequestEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`PaymentRequestEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `PaymentRequest`<`TEventTarget`\> |
+| `TEventTarget` | extends `PaymentRequest` |
 | `K` | extends ``"paymentmethodchange"`` |
 
 #### Parameters
@@ -2281,15 +2281,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`PaymentRequestEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`PaymentRequestEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`PerformanceEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`PerformanceEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `Performance`<`TEventTarget`\> |
+| `TEventTarget` | extends `Performance` |
 | `K` | extends ``"resourcetimingbufferfull"`` |
 
 #### Parameters
@@ -2303,15 +2303,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`PerformanceEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`PerformanceEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`PermissionStatusEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`PermissionStatusEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `PermissionStatus`<`TEventTarget`\> |
+| `TEventTarget` | extends `PermissionStatus` |
 | `K` | extends ``"change"`` |
 
 #### Parameters
@@ -2325,15 +2325,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`PermissionStatusEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`PermissionStatusEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `eventListener`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`PictureInPictureWindowEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `eventListener`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`PictureInPictureWindowEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `PictureInPictureWindow`<`TEventTarget`\> |
+| `TEventTarget` | extends `PictureInPictureWindow` |
 | `K` | extends ``"resize"`` |
 
 #### Parameters
@@ -2341,22 +2341,22 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/events.ErrorSafeEventListenerLike.md)<`PictureInPictureWindowEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/events.ErrorSafeEventListenerLike.md)\<`PictureInPictureWindowEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`PictureInPictureWindowEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`PictureInPictureWindowEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`RTCDTMFSenderEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`RTCDTMFSenderEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `RTCDTMFSender`<`TEventTarget`\> |
+| `TEventTarget` | extends `RTCDTMFSender` |
 | `K` | extends ``"tonechange"`` |
 
 #### Parameters
@@ -2370,15 +2370,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`RTCDTMFSenderEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`RTCDTMFSenderEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`RTCDataChannelEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`RTCDataChannelEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `RTCDataChannel`<`TEventTarget`\> |
+| `TEventTarget` | extends `RTCDataChannel` |
 | `K` | extends keyof `RTCDataChannelEventMap` |
 
 #### Parameters
@@ -2392,15 +2392,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`RTCDataChannelEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`RTCDataChannelEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`RTCDtlsTransportEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`RTCDtlsTransportEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `RTCDtlsTransport`<`TEventTarget`\> |
+| `TEventTarget` | extends `RTCDtlsTransport` |
 | `K` | extends keyof `RTCDtlsTransportEventMap` |
 
 #### Parameters
@@ -2414,15 +2414,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`RTCDtlsTransportEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`RTCDtlsTransportEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`RTCIceTransportEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`RTCIceTransportEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `RTCIceTransport`<`TEventTarget`\> |
+| `TEventTarget` | extends `RTCIceTransport` |
 | `K` | extends keyof `RTCIceTransportEventMap` |
 
 #### Parameters
@@ -2436,15 +2436,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`RTCIceTransportEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`RTCIceTransportEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`RTCPeerConnectionEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`RTCPeerConnectionEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `RTCPeerConnection`<`TEventTarget`\> |
+| `TEventTarget` | extends `RTCPeerConnection` |
 | `K` | extends keyof `RTCPeerConnectionEventMap` |
 
 #### Parameters
@@ -2458,15 +2458,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`RTCPeerConnectionEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`RTCPeerConnectionEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`RTCSctpTransportEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`RTCSctpTransportEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `RTCSctpTransport`<`TEventTarget`\> |
+| `TEventTarget` | extends `RTCSctpTransport` |
 | `K` | extends ``"statechange"`` |
 
 #### Parameters
@@ -2480,15 +2480,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`RTCSctpTransportEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`RTCSctpTransportEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`RemotePlaybackEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`RemotePlaybackEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `RemotePlayback`<`TEventTarget`\> |
+| `TEventTarget` | extends `RemotePlayback` |
 | `K` | extends keyof `RemotePlaybackEventMap` |
 
 #### Parameters
@@ -2502,15 +2502,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`RemotePlaybackEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`RemotePlaybackEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`SVGSVGElementEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`SVGSVGElementEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `SVGSVGElement`<`TEventTarget`\> |
+| `TEventTarget` | extends `SVGSVGElement` |
 | `K` | extends keyof `SVGSVGElementEventMap` |
 
 #### Parameters
@@ -2524,15 +2524,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`SVGSVGElementEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`SVGSVGElementEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`ScreenOrientationEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`ScreenOrientationEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `ScreenOrientation`<`TEventTarget`\> |
+| `TEventTarget` | extends `ScreenOrientation` |
 | `K` | extends ``"change"`` |
 
 #### Parameters
@@ -2546,15 +2546,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`ScreenOrientationEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`ScreenOrientationEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`ServiceWorkerEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`ServiceWorkerEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `ServiceWorker`<`TEventTarget`\> |
+| `TEventTarget` | extends `ServiceWorker` |
 | `K` | extends keyof `ServiceWorkerEventMap` |
 
 #### Parameters
@@ -2568,15 +2568,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`ServiceWorkerEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`ServiceWorkerEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `eventListener`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`ServiceWorkerContainerEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `eventListener`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`ServiceWorkerContainerEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `ServiceWorkerContainer`<`TEventTarget`\> |
+| `TEventTarget` | extends `ServiceWorkerContainer` |
 | `K` | extends keyof `ServiceWorkerContainerEventMap` |
 
 #### Parameters
@@ -2584,22 +2584,22 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/events.ErrorSafeEventListenerLike.md)<`ServiceWorkerContainerEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/events.ErrorSafeEventListenerLike.md)\<`ServiceWorkerContainerEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`ServiceWorkerContainerEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`ServiceWorkerContainerEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `eventListener`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`ServiceWorkerRegistrationEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `eventListener`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`ServiceWorkerRegistrationEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `ServiceWorkerRegistration`<`TEventTarget`\> |
+| `TEventTarget` | extends `ServiceWorkerRegistration` |
 | `K` | extends ``"updatefound"`` |
 
 #### Parameters
@@ -2607,22 +2607,22 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/events.ErrorSafeEventListenerLike.md)<`ServiceWorkerRegistrationEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/events.ErrorSafeEventListenerLike.md)\<`ServiceWorkerRegistrationEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`ServiceWorkerRegistrationEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`ServiceWorkerRegistrationEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`ShadowRootEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`ShadowRootEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `ShadowRoot`<`TEventTarget`\> |
+| `TEventTarget` | extends `ShadowRoot` |
 | `K` | extends ``"slotchange"`` |
 
 #### Parameters
@@ -2636,15 +2636,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`ShadowRootEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`ShadowRootEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`SourceBufferEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`SourceBufferEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `SourceBuffer`<`TEventTarget`\> |
+| `TEventTarget` | extends `SourceBuffer` |
 | `K` | extends keyof `SourceBufferEventMap` |
 
 #### Parameters
@@ -2658,15 +2658,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`SourceBufferEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`SourceBufferEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`SourceBufferListEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`SourceBufferListEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `SourceBufferList`<`TEventTarget`\> |
+| `TEventTarget` | extends `SourceBufferList` |
 | `K` | extends keyof `SourceBufferListEventMap` |
 
 #### Parameters
@@ -2680,15 +2680,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`SourceBufferListEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`SourceBufferListEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`SpeechSynthesisEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`SpeechSynthesisEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `SpeechSynthesis`<`TEventTarget`\> |
+| `TEventTarget` | extends `SpeechSynthesis` |
 | `K` | extends ``"voiceschanged"`` |
 
 #### Parameters
@@ -2702,15 +2702,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`SpeechSynthesisEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`SpeechSynthesisEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `eventListener`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`SpeechSynthesisUtteranceEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `eventListener`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`SpeechSynthesisUtteranceEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `SpeechSynthesisUtterance`<`TEventTarget`\> |
+| `TEventTarget` | extends `SpeechSynthesisUtterance` |
 | `K` | extends keyof `SpeechSynthesisUtteranceEventMap` |
 
 #### Parameters
@@ -2718,22 +2718,22 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/events.ErrorSafeEventListenerLike.md)<`SpeechSynthesisUtteranceEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/events.ErrorSafeEventListenerLike.md)\<`SpeechSynthesisUtteranceEventMap`[`K`]\> |
 | `options?` | `Object` |
 | `options.capture?` | `boolean` |
 | `options.passive?` | `boolean` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`SpeechSynthesisUtteranceEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`SpeechSynthesisUtteranceEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`SVGElementEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`SVGElementEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `SVGElement`<`TEventTarget`\> |
+| `TEventTarget` | extends `SVGElement` |
 | `K` | extends keyof `SVGElementEventMap` |
 
 #### Parameters
@@ -2747,15 +2747,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`SVGElementEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`SVGElementEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`TextTrackEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`TextTrackEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `TextTrack`<`TEventTarget`\> |
+| `TEventTarget` | extends `TextTrack` |
 | `K` | extends ``"cuechange"`` |
 
 #### Parameters
@@ -2769,15 +2769,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`TextTrackEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`TextTrackEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`TextTrackCueEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`TextTrackCueEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `TextTrackCue`<`TEventTarget`\> |
+| `TEventTarget` | extends `TextTrackCue` |
 | `K` | extends keyof `TextTrackCueEventMap` |
 
 #### Parameters
@@ -2791,15 +2791,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`TextTrackCueEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`TextTrackCueEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`TextTrackListEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`TextTrackListEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `TextTrackList`<`TEventTarget`\> |
+| `TEventTarget` | extends `TextTrackList` |
 | `K` | extends keyof `TextTrackListEventMap` |
 
 #### Parameters
@@ -2813,15 +2813,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`TextTrackListEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`TextTrackListEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`VisualViewportEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`VisualViewportEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `VisualViewport`<`TEventTarget`\> |
+| `TEventTarget` | extends `VisualViewport` |
 | `K` | extends keyof `VisualViewportEventMap` |
 
 #### Parameters
@@ -2835,15 +2835,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`VisualViewportEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`VisualViewportEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`WebSocketEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`WebSocketEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `WebSocket`<`TEventTarget`\> |
+| `TEventTarget` | extends `WebSocket` |
 | `K` | extends keyof `WebSocketEventMap` |
 
 #### Parameters
@@ -2857,15 +2857,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`WebSocketEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`WebSocketEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`WindowEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`WindowEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `Window`<`TEventTarget`\> |
+| `TEventTarget` | extends `Window` |
 | `K` | extends keyof `WindowEventMap` |
 
 #### Parameters
@@ -2879,15 +2879,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`WindowEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`WindowEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`WorkerEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`WorkerEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `Worker`<`TEventTarget`\> |
+| `TEventTarget` | extends `Worker` |
 | `K` | extends keyof `WorkerEventMap` |
 
 #### Parameters
@@ -2901,15 +2901,15 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`WorkerEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`WorkerEventMap`[`K`]\>\>
 
-▸ **eventSource**<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`XMLHttpRequestEventTargetEventMap`[`K`]\>\>
+▸ **eventSource**\<`TEventTarget`, `K`\>(`eventName`, `options?`): [`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`XMLHttpRequestEventTargetEventMap`[`K`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `XMLHttpRequestEventTarget`<`TEventTarget`\> |
+| `TEventTarget` | extends `XMLHttpRequestEventTarget` |
 | `K` | extends keyof `XMLHttpRequestEventTargetEventMap` |
 
 #### Parameters
@@ -2923,13 +2923,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`XMLHttpRequestEventTargetEventMap`[`K`]\>\>
+[`Function1`](functions.md#function1)\<`TEventTarget`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`XMLHttpRequestEventTargetEventMap`[`K`]\>\>
 
 ___
 
 ### intersectionEventSource
 
-▸ **intersectionEventSource**(`parent?`): [`Function1`](functions.md#function1)<`Element`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`IntersectionObserverEntry`\>\>
+▸ **intersectionEventSource**(`parent?`): [`Function1`](functions.md#function1)\<`Element`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`IntersectionObserverEntry`\>\>
 
 #### Parameters
 
@@ -2939,13 +2939,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`Element`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`IntersectionObserverEntry`\>\>
+[`Function1`](functions.md#function1)\<`Element`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`IntersectionObserverEntry`\>\>
 
 ___
 
 ### measure
 
-▸ **measure**<`TElement`\>(): [`Function1`](functions.md#function1)<`TElement`, [`StoreLike`](../interfaces/events.StoreLike.md)<[`Rect`](../interfaces/integrations_web.Rect.md)\> & [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+▸ **measure**\<`TElement`\>(): [`Function1`](functions.md#function1)\<`TElement`, [`StoreLike`](../interfaces/events.StoreLike.md)\<[`Rect`](../interfaces/integrations_web.Rect.md)\> & [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -2955,19 +2955,19 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TElement`, [`StoreLike`](../interfaces/events.StoreLike.md)<[`Rect`](../interfaces/integrations_web.Rect.md)\> & [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)\<`TElement`, [`StoreLike`](../interfaces/events.StoreLike.md)\<[`Rect`](../interfaces/integrations_web.Rect.md)\> & [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
 
 ___
 
 ### resizeEventSource
 
-▸ **resizeEventSource**<`TElement`\>(`options?`): [`Function1`](functions.md#function1)<`TElement`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`ResizeObserverEntry`\>\>
+▸ **resizeEventSource**\<`TElement`\>(`options?`): [`Function1`](functions.md#function1)\<`TElement`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`ResizeObserverEntry`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TElement` | extends `Element`<`TElement`\> |
+| `TElement` | extends `Element` |
 
 #### Parameters
 
@@ -2977,20 +2977,20 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TElement`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`ResizeObserverEntry`\>\>
+[`Function1`](functions.md#function1)\<`TElement`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`ResizeObserverEntry`\>\>
 
 ___
 
 ### scrollEventSource
 
-▸ **scrollEventSource**<`TElement`\>(): [`Function1`](functions.md#function1)<`TElement`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<[`ScrollValue`](../interfaces/integrations_web.ScrollValue.md)\>\>
+▸ **scrollEventSource**\<`TElement`\>(): [`Function1`](functions.md#function1)\<`TElement`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<[`ScrollValue`](../interfaces/integrations_web.ScrollValue.md)\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TElement` | extends `HTMLElement`<`TElement`\> |
+| `TElement` | extends `HTMLElement` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TElement`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<[`ScrollValue`](../interfaces/integrations_web.ScrollValue.md)\>\>
+[`Function1`](functions.md#function1)\<`TElement`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<[`ScrollValue`](../interfaces/integrations_web.ScrollValue.md)\>\>
