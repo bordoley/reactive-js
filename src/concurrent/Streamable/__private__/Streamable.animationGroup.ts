@@ -15,8 +15,8 @@ import {
   ReadonlyObjectMapLike,
 } from "../../../collections.js";
 import {
+  DeferredObservableLike,
   PureRunnableLike,
-  RunnableWithSideEffectsLike,
   SchedulerLike,
   StreamLike,
   StreamableLike,
@@ -99,37 +99,29 @@ const Streamable_createAnimationGroupStream: <TEvent, TKey extends string, T>(
       ): StreamLike<TEvent, boolean> &
         DictionaryLike<TKey, EventSourceLike<T>> {
         const streamDelegate = Streamable_createEventHandler(
-          (event: TEvent) => {
-            const observables: ReadonlyObjectMapLike<
-              string,
-              RunnableWithSideEffectsLike<T>
-            > = pipe(
-              animationGroup,
-              ReadonlyObjectMap.map<
-                Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
-                RunnableWithSideEffectsLike<T>,
-                string
-              >((factory, key: string) =>
-                pipe(
-                  isFunction(factory) ? factory(event) : factory,
-                  Observable.forEach((value: T) => {
-                    const publisher = publishers[key];
-                    publisher?.[EventListenerLike_notify](value);
-                  }),
-                  Observable.ignoreElements<T>(),
+          (event: TEvent) =>
+            Observable.mergeMany(
+              pipe(
+                animationGroup,
+                ReadonlyObjectMap.map<
+                  Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
+                  DeferredObservableLike<T>,
+                  string
+                >((factory, key: string) =>
+                  pipe(
+                    isFunction(factory) ? factory(event) : factory,
+                    Observable.forEach((value: T) => {
+                      const publisher = publishers[key];
+                      publisher?.[EventListenerLike_notify](value);
+                    }),
+                    Observable.ignoreElements<T>(),
+                    Observable.subscribeOn(animationScheduler),
+                  ),
                 ),
+                ReadonlyObjectMap.values(),
+                Enumerable.toReadonlyArray<DeferredObservableLike<T>>(),
               ),
-            );
-
-            const deferredAnimatedObservables = pipe(
-              observables,
-              ReadonlyObjectMap.values(),
-              Enumerable.map(Observable.subscribeOn(animationScheduler)),
-              Enumerable.toReadonlyArray(),
-            );
-
-            return Observable.mergeMany(deferredAnimatedObservables);
-          },
+            ),
           creationOptions as any,
         )[StreamableLike_stream](scheduler, streamOptions);
 

@@ -16,14 +16,10 @@ const Streamable_createAnimationGroupStream =
 /*@__PURE__*/ (() => {
     const AnimationGroupStream_eventSources = Symbol("AnimationGroupStream_delegate");
     return mixInstanceFactory(include(DelegatingStreamMixin()), function AnimationGroupStream(instance, animationGroup, creationOptions, scheduler, streamOptions) {
-        const streamDelegate = Streamable_createEventHandler((event) => {
-            const observables = pipe(animationGroup, ReadonlyObjectMap.map((factory, key) => pipe(isFunction(factory) ? factory(event) : factory, Observable.forEach((value) => {
-                const publisher = publishers[key];
-                publisher?.[EventListenerLike_notify](value);
-            }), Observable.ignoreElements())));
-            const deferredAnimatedObservables = pipe(observables, ReadonlyObjectMap.values(), Enumerable.map(Observable.subscribeOn(animationScheduler)), Enumerable.toReadonlyArray());
-            return Observable.mergeMany(deferredAnimatedObservables);
-        }, creationOptions)[StreamableLike_stream](scheduler, streamOptions);
+        const streamDelegate = Streamable_createEventHandler((event) => Observable.mergeMany(pipe(animationGroup, ReadonlyObjectMap.map((factory, key) => pipe(isFunction(factory) ? factory(event) : factory, Observable.forEach((value) => {
+            const publisher = publishers[key];
+            publisher?.[EventListenerLike_notify](value);
+        }), Observable.ignoreElements(), Observable.subscribeOn(animationScheduler))), ReadonlyObjectMap.values(), Enumerable.toReadonlyArray())), creationOptions)[StreamableLike_stream](scheduler, streamOptions);
         const publishers = pipe(animationGroup, ReadonlyObjectMap.map(_ => pipe(Publisher.create(), Disposable.addTo(streamDelegate))));
         const animationScheduler = creationOptions?.scheduler ?? scheduler;
         init(DelegatingStreamMixin(), instance, streamDelegate);

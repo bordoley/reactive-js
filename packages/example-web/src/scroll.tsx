@@ -70,19 +70,17 @@ const ScrollApp = () => {
       Streamable.animationGroup<number, boolean>(
         {
           spring: (direction: boolean) =>
-            Observable.concat(
-              pipe(
+            pipe(
+              Observable.concat(
                 Observable.spring({ precision: 0.1 }),
-                direction
-                  ? Observable.map(scale(1, 1.2))
-                  : Observable.map(scale(0, -0.01)),
+                pipe(
+                  Observable.spring({ precision: 0.1 }),
+                  Observable.map(scale(1, 0)),
+                ),
               ),
-              pipe(
-                Observable.spring({ precision: 0.1 }),
-                direction
-                  ? Observable.map(scale(1.2, 1))
-                  : Observable.map(scale(-0.01, 0)),
-              ),
+              direction
+                ? Observable.map(scale(1, 1.2))
+                : Observable.map(scale(0, -0.01)),
             ),
         },
         { mode: "switching", scheduler: animationScheduler },
