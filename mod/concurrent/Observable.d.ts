@@ -42,56 +42,6 @@ export interface DeferredObservableWithSideEffectsComputation extends Computatio
 export interface MulticastObservableComputation extends Computation {
     readonly [Computation_type]?: MulticastObservableLike<this[typeof Computation_T]>;
 }
-export declare namespace Animation {
-    /**
-     * @noInheritDoc
-     */
-    interface Delay {
-        readonly type: "delay";
-        readonly duration: number;
-    }
-    /**
-     * @noInheritDoc
-     */
-    interface KeyFrame {
-        readonly type: "keyframe";
-        readonly from: number;
-        readonly to: number;
-        readonly duration: number;
-        readonly easing?: Function1<number, number>;
-    }
-    /**
-     * @noInheritDoc
-     */
-    interface Frame {
-        readonly type: "frame";
-        readonly value: number;
-    }
-    /**
-     * @noInheritDoc
-     */
-    interface Loop<T> {
-        readonly type: "loop";
-        readonly animation: Animation<T> | readonly Animation<T>[];
-        readonly count?: number;
-    }
-    /**
-     * @noInheritDoc
-     */
-    interface Spring {
-        readonly type: "spring";
-        readonly from: number;
-        readonly to: number;
-        readonly stiffness?: number;
-        readonly damping?: number;
-        readonly precision?: number;
-    }
-}
-export type Animation<T = number> = Animation.Delay | Animation.Loop<T> | (T extends number ? (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
-    readonly selector?: never;
-} : (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
-    readonly selector: Function1<number, T>;
-});
 export declare const BatchedComputeMode = "batched";
 export declare const CombineLatestComputeMode = "combine-latest";
 export type ComputeMode = typeof BatchedComputeMode | typeof CombineLatestComputeMode;
@@ -103,7 +53,6 @@ export type ThrottleMode = typeof ThrottleFirstMode | typeof ThrottleLastMode | 
  * @noInheritDoc
  */
 export interface ObservableModule {
-    animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): PureRunnableLike<T>;
     backpressureStrategy<T>(capacity: number, backpressureStrategy: BackpressureStrategy): PureStatefulObservableOperator<T, T>;
     buffer<T>(options?: {
         readonly count?: number;
@@ -282,6 +231,9 @@ export interface ObservableModule {
     }): PureRunnableLike<T>;
     ignoreElements<T>(): PureStatelessObservableOperator<unknown, T>;
     keep<T>(predicate: Predicate<T>): PureStatelessObservableOperator<T, T>;
+    keyFrame(duration: number, options?: {
+        readonly easing?: Function1<number, number>;
+    }): PureRunnableLike<number>;
     lastAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
         readonly backpressureStrategy?: BackpressureStrategy;
@@ -381,8 +333,9 @@ export interface ObservableModule {
     repeat<T>(): PureStatefulObservableOperator<T, T, DeferredObservableLike<T>>;
     retry<T>(shouldRetry?: (count: number, error: Error) => boolean): PureStatefulObservableOperator<T, T, DeferredObservableLike<T>>;
     run<T>(options?: {
-        readonly backpressureStrategy: BackpressureStrategy;
+        readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
+        readonly maxMicroTaskTicks?: number;
     }): SideEffect1<RunnableLike<T>>;
     scan<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): PureStatefulObservableOperator<T, TAcc>;
     scanMany<T, TAcc>(scanner: Function2<TAcc, T, PureRunnableLike<TAcc>>, initialValue: Factory<TAcc>): PureStatefulObservableOperator<T, TAcc>;
@@ -401,6 +354,11 @@ export interface ObservableModule {
     skipFirst<T>(options?: {
         readonly count?: number;
     }): PureStatefulObservableOperator<T, T>;
+    spring(options?: {
+        readonly stiffness?: number;
+        readonly damping?: number;
+        readonly precision?: number;
+    }): PureRunnableLike<number>;
     startWith<T>(value: T, ...values: readonly T[]): PureStatefulObservableOperator<T, T>;
     subscribe<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
@@ -461,7 +419,11 @@ export interface ObservableModule {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, EventSourceLike<T>>;
-    toReadonlyArray<T>(): Function1<RunnableLike<T>, ReadonlyArray<T>>;
+    toReadonlyArray<T>(options?: {
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+        readonly maxMicroTaskTicks?: number;
+    }): Function1<RunnableLike<T>, ReadonlyArray<T>>;
     toReadonlyArrayAsync<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
@@ -505,7 +467,6 @@ export interface ObservableModule {
     zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): DeferredObservableWithSideEffectsLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 }
 export type Signature = ObservableModule;
-export declare const animate: Signature["animate"];
 export declare const backpressureStrategy: Signature["backpressureStrategy"];
 export declare const buffer: Signature["buffer"];
 export declare const catchError: Signature["catchError"];
@@ -547,6 +508,7 @@ export declare const fromValue: Signature["fromValue"];
 export declare const generate: Signature["generate"];
 export declare const ignoreElements: Signature["ignoreElements"];
 export declare const keep: Signature["keep"];
+export declare const keyFrame: Signature["keyFrame"];
 export declare const lastAsync: Signature["lastAsync"];
 export declare const log: Signature["log"];
 export declare const map: Signature["map"];
@@ -566,6 +528,7 @@ export declare const run: Signature["run"];
 export declare const scan: Signature["scan"];
 export declare const scanMany: Signature["scanMany"];
 export declare const skipFirst: Signature["skipFirst"];
+export declare const spring: Signature["spring"];
 export declare const startWith: Signature["startWith"];
 export declare const subscribe: Signature["subscribe"];
 export declare const subscribeOn: Signature["subscribeOn"];

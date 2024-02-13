@@ -48,7 +48,6 @@ import {
   DisposableLike,
   QueueableLike,
 } from "../utils.js";
-import Observable_animate from "./Observable/__private__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__private__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
@@ -94,6 +93,7 @@ import Observable_fromValue from "./Observable/__private__/Observable.fromValue.
 import Observable_generate from "./Observable/__private__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__private__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
+import Observable_keyFrame from "./Observable/__private__/Observable.keyFrame.js";
 import Observable_lastAsync from "./Observable/__private__/Observable.lastAsync.js";
 import Observable_log from "./Observable/__private__/Observable.log.js";
 import Observable_map from "./Observable/__private__/Observable.map.js";
@@ -113,6 +113,7 @@ import Observable_run from "./Observable/__private__/Observable.run.js";
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
 import Observable_scanMany from "./Observable/__private__/Observable.scanMany.js";
 import Observable_skipFirst from "./Observable/__private__/Observable.skipFirst.js";
+import Observable_spring from "./Observable/__private__/Observable.spring.js";
 import Observable_startWith from "./Observable/__private__/Observable.startWith.js";
 import Observable_subscribe from "./Observable/__private__/Observable.subscribe.js";
 import Observable_subscribeOn from "./Observable/__private__/Observable.subscribeOn.js";
@@ -304,66 +305,6 @@ export interface MulticastObservableComputation extends Computation {
   >;
 }
 
-export namespace Animation {
-  /**
-   * @noInheritDoc
-   */
-  export interface Delay {
-    readonly type: "delay";
-    readonly duration: number;
-  }
-
-  /**
-   * @noInheritDoc
-   */
-  export interface KeyFrame {
-    readonly type: "keyframe";
-    readonly from: number;
-    readonly to: number;
-    readonly duration: number;
-    readonly easing?: Function1<number, number>;
-  }
-
-  /**
-   * @noInheritDoc
-   */
-  export interface Frame {
-    readonly type: "frame";
-    readonly value: number;
-  }
-
-  /**
-   * @noInheritDoc
-   */
-  export interface Loop<T> {
-    readonly type: "loop";
-    readonly animation: Animation<T> | readonly Animation<T>[];
-    readonly count?: number;
-  }
-
-  /**
-   * @noInheritDoc
-   */
-  export interface Spring {
-    readonly type: "spring";
-    readonly from: number;
-    readonly to: number;
-    readonly stiffness?: number;
-    readonly damping?: number;
-    readonly precision?: number;
-  }
-}
-export type Animation<T = number> =
-  | Animation.Delay
-  | Animation.Loop<T>
-  | (T extends number
-      ? (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
-          readonly selector?: never;
-        }
-      : (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
-          readonly selector: Function1<number, T>;
-        });
-
 export const BatchedComputeMode = ObservableCompute_BatchedComputeMode;
 export const CombineLatestComputeMode =
   ObservableCompute_CombineLatestComputeMode;
@@ -384,10 +325,6 @@ export type ThrottleMode =
  * @noInheritDoc
  */
 export interface ObservableModule {
-  animate<T = number>(
-    configs: Animation<T> | readonly Animation<T>[],
-  ): PureRunnableLike<T>;
-
   backpressureStrategy<T>(
     capacity: number,
     backpressureStrategy: BackpressureStrategy,
@@ -1022,6 +959,13 @@ export interface ObservableModule {
 
   keep<T>(predicate: Predicate<T>): PureStatelessObservableOperator<T, T>;
 
+  keyFrame(
+    duration: number,
+    options?: {
+      readonly easing?: Function1<number, number>;
+    },
+  ): PureRunnableLike<number>;
+
   lastAsync<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -1231,8 +1175,9 @@ export interface ObservableModule {
   ): PureStatefulObservableOperator<T, T, DeferredObservableLike<T>>;
 
   run<T>(options?: {
-    readonly backpressureStrategy: BackpressureStrategy;
+    readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
+    readonly maxMicroTaskTicks?: number;
   }): SideEffect1<RunnableLike<T>>;
 
   scan<T, TAcc>(
@@ -1276,6 +1221,12 @@ export interface ObservableModule {
   skipFirst<T>(options?: {
     readonly count?: number;
   }): PureStatefulObservableOperator<T, T>;
+
+  spring(options?: {
+    readonly stiffness?: number;
+    readonly damping?: number;
+    readonly precision?: number;
+  }): PureRunnableLike<number>;
 
   startWith<T>(
     value: T,
@@ -1404,7 +1355,11 @@ export interface ObservableModule {
     },
   ): Function1<ObservableLike<T>, EventSourceLike<T>>;
 
-  toReadonlyArray<T>(): Function1<RunnableLike<T>, ReadonlyArray<T>>;
+  toReadonlyArray<T>(options?: {
+    readonly backpressureStrategy?: BackpressureStrategy;
+    readonly capacity?: number;
+    readonly maxMicroTaskTicks?: number;
+  }): Function1<RunnableLike<T>, ReadonlyArray<T>>;
 
   toReadonlyArrayAsync<T>(
     scheduler: SchedulerLike,
@@ -1686,7 +1641,6 @@ export interface ObservableModule {
 
 export type Signature = ObservableModule;
 
-export const animate: Signature["animate"] = Observable_animate;
 export const backpressureStrategy: Signature["backpressureStrategy"] =
   Observable_backpressureStrategy;
 export const buffer: Signature["buffer"] = Observable_buffer;
@@ -1741,6 +1695,7 @@ export const generate: Signature["generate"] = Observable_generate;
 export const ignoreElements: Signature["ignoreElements"] =
   Observable_ignoreElements;
 export const keep: Signature["keep"] = Observable_keep;
+export const keyFrame: Signature["keyFrame"] = Observable_keyFrame;
 export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
 export const log: Signature["log"] = Observable_log;
 export const map: Signature["map"] = Observable_map;
@@ -1760,6 +1715,7 @@ export const run: Signature["run"] = Observable_run;
 export const scan: Signature["scan"] = Observable_scan;
 export const scanMany: Signature["scanMany"] = Observable_scanMany;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
+export const spring: Signature["spring"] = Observable_spring;
 export const startWith: Signature["startWith"] = Observable_startWith;
 export const subscribe: Signature["subscribe"] = Observable_subscribe;
 export const subscribeOn: Signature["subscribeOn"] = Observable_subscribeOn;

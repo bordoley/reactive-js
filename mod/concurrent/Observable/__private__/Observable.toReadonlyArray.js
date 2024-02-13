@@ -4,9 +4,9 @@ import { Array_push } from "../../../__internal__/constants.js";
 import { bindMethod, pipe } from "../../../functions.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_run from "./Observable.run.js";
-const Observable_toReadonlyArray = () => observable => {
+const Observable_toReadonlyArray = (options) => observable => {
     const result = [];
-    pipe(observable, Observable_forEach(bindMethod(result, Array_push)), Observable_run());
+    pipe(observable, Observable_forEach(bindMethod(result, Array_push)), Observable_run(options));
     return result;
 };
 export default Observable_toReadonlyArray;

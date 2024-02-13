@@ -58,6 +58,7 @@
 - [bind](functions.md#bind)
 - [bindMethod](functions.md#bindmethod)
 - [call](functions.md#call)
+- [clamp](functions.md#clamp)
 - [compose](functions.md#compose)
 - [debug](functions.md#debug)
 - [decrement](functions.md#decrement)
@@ -103,6 +104,7 @@
 - [raiseIf](functions.md#raiseif)
 - [raiseIfNone](functions.md#raiseifnone)
 - [returns](functions.md#returns)
+- [scale](functions.md#scale)
 - [strictEquality](functions.md#strictequality)
 - [tuple](functions.md#tuple)
 
@@ -1288,6 +1290,23 @@ Calls the function `f` with a given self value as this and arguments provided in
 #### Returns
 
 `T`
+
+___
+
+### clamp
+
+▸ **clamp**(`min`, `max`): [`Function1`](functions.md#function1)\<`number`, `number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `min` | `number` |
+| `max` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)\<`number`, `number`\>
 
 ___
 
@@ -5099,6 +5118,23 @@ Returns a function that takes an arbitrary number of arguments and always return
 ##### Returns
 
 `T`
+
+___
+
+### scale
+
+▸ **scale**(`start`, `end`): [`Function1`](functions.md#function1)\<`number`, `number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `start` | `number` |
+| `end` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)\<`number`, `number`\>
 
 ___
 

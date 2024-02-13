@@ -46,18 +46,17 @@ const Root = () => {
             const diffX = next.x - prev.x;
             const diffY = next.y - prev.y;
 
-            return Observable.animate({
-              type: "spring",
-              stiffness: 0.01,
-              damping: 0.1,
-              precision: 0.001,
-              from: 0,
-              to: 1,
-              selector: (v: number) => ({
+            return pipe(
+              Observable.spring({
+                stiffness: 0.01,
+                damping: 0.1,
+                precision: 0.001,
+              }),
+              Observable.map((v: number) => ({
                 x: prev.x + diffX * v,
                 y: prev.y + diffY * v,
-              }),
-            });
+              })),
+            );
           },
           returns({ x: 0, y: 0 }),
         ),

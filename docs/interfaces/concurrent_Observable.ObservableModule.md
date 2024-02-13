@@ -12,7 +12,6 @@
 
 ### Methods
 
-- [animate](concurrent_Observable.ObservableModule.md#animate)
 - [backpressureStrategy](concurrent_Observable.ObservableModule.md#backpressurestrategy)
 - [buffer](concurrent_Observable.ObservableModule.md#buffer)
 - [catchError](concurrent_Observable.ObservableModule.md#catcherror)
@@ -53,6 +52,7 @@
 - [generate](concurrent_Observable.ObservableModule.md#generate)
 - [ignoreElements](concurrent_Observable.ObservableModule.md#ignoreelements)
 - [keep](concurrent_Observable.ObservableModule.md#keep)
+- [keyFrame](concurrent_Observable.ObservableModule.md#keyframe)
 - [lastAsync](concurrent_Observable.ObservableModule.md#lastasync)
 - [log](concurrent_Observable.ObservableModule.md#log)
 - [map](concurrent_Observable.ObservableModule.md#map)
@@ -72,6 +72,7 @@
 - [scan](concurrent_Observable.ObservableModule.md#scan)
 - [scanMany](concurrent_Observable.ObservableModule.md#scanmany)
 - [skipFirst](concurrent_Observable.ObservableModule.md#skipfirst)
+- [spring](concurrent_Observable.ObservableModule.md#spring)
 - [startWith](concurrent_Observable.ObservableModule.md#startwith)
 - [subscribe](concurrent_Observable.ObservableModule.md#subscribe)
 - [subscribeOn](concurrent_Observable.ObservableModule.md#subscribeon)
@@ -98,28 +99,6 @@
 • **currentTime**: [`PureRunnableLike`](concurrent.PureRunnableLike.md)\<`number`\>
 
 ## Methods
-
-### animate
-
-▸ **animate**\<`T`\>(`configs`): [`PureRunnableLike`](concurrent.PureRunnableLike.md)\<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `configs` | [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\> \| readonly [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\>[] |
-
-#### Returns
-
-[`PureRunnableLike`](concurrent.PureRunnableLike.md)\<`T`\>
-
-___
 
 ### backpressureStrategy
 
@@ -2587,6 +2566,24 @@ ___
 
 ___
 
+### keyFrame
+
+▸ **keyFrame**(`duration`, `options?`): [`PureRunnableLike`](concurrent.PureRunnableLike.md)\<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `duration` | `number` |
+| `options?` | `Object` |
+| `options.easing?` | [`Function1`](../modules/functions.md#function1)\<`number`, `number`\> |
+
+#### Returns
+
+[`PureRunnableLike`](concurrent.PureRunnableLike.md)\<`number`\>
+
+___
+
 ### lastAsync
 
 ▸ **lastAsync**\<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)\<[`ObservableLike`](concurrent.ObservableLike.md)\<`T`\>, `Promise`\<[`Optional`](../modules/functions.md#optional)\<`T`\>\>\>
@@ -3470,8 +3467,9 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.backpressureStrategy` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
+| `options.maxMicroTaskTicks?` | `number` |
 
 #### Returns
 
@@ -3635,6 +3633,25 @@ ___
 #### Returns
 
 [`PureStatefulObservableOperator`](../modules/concurrent_Observable.md#purestatefulobservableoperator)\<`T`, `T`, [`ObservableLike`](concurrent.ObservableLike.md)\<`T`\>\>
+
+___
+
+### spring
+
+▸ **spring**(`options?`): [`PureRunnableLike`](concurrent.PureRunnableLike.md)\<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.damping?` | `number` |
+| `options.precision?` | `number` |
+| `options.stiffness?` | `number` |
+
+#### Returns
+
+[`PureRunnableLike`](concurrent.PureRunnableLike.md)\<`number`\>
 
 ___
 
@@ -4172,13 +4189,22 @@ ___
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**\<`T`\>(): [`Function1`](../modules/functions.md#function1)\<[`RunnableLike`](concurrent.RunnableLike.md)\<`T`\>, readonly `T`[]\>
+▸ **toReadonlyArray**\<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)\<[`RunnableLike`](concurrent.RunnableLike.md)\<`T`\>, readonly `T`[]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
+| `options.capacity?` | `number` |
+| `options.maxMicroTaskTicks?` | `number` |
 
 #### Returns
 

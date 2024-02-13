@@ -10,7 +10,13 @@ import {
   useStream,
 } from "@reactive-js/core/integrations/react";
 import { ScrollValue } from "@reactive-js/core/integrations/web";
-import { Optional, pipeLazy, pipeSomeLazy } from "@reactive-js/core/functions";
+import {
+  Optional,
+  pipe,
+  pipeLazy,
+  pipeSomeLazy,
+  scale,
+} from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/events/EventSource";
 import * as Streamable from "@reactive-js/core/concurrent/Streamable";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
@@ -21,6 +27,7 @@ import {
 } from "@reactive-js/core/events";
 import * as Publisher from "@reactive-js/core/events/Publisher";
 import { DictionaryLike_get } from "@reactive-js/core/collections";
+import * as Observable from "@reactive-js/core/concurrent/Observable";
 
 const AnimatedCircle = ({
   animation,
@@ -60,38 +67,23 @@ const ScrollApp = () => {
 
   const animationGroup = useStream(
     () =>
-      Streamable.animationGroupEventHandler<boolean, string, number>(
+      Streamable.animationGroup<number, boolean>(
         {
-          spring: direction =>
-            direction
-              ? [
-                  {
-                    type: "spring",
-                    precision: 0.1,
-                    from: 1,
-                    to: 1.2,
-                  },
-                  {
-                    type: "spring",
-                    precision: 0.1,
-                    from: 1.2,
-                    to: 1,
-                  },
-                ]
-              : [
-                  {
-                    type: "spring",
-                    precision: 0.1,
-                    from: 0,
-                    to: -0.01,
-                  },
-                  {
-                    type: "spring",
-                    precision: 0.1,
-                    from: -0.01,
-                    to: 0,
-                  },
-                ],
+          spring: (direction: boolean) =>
+            Observable.concat(
+              pipe(
+                Observable.spring({ precision: 0.1 }),
+                direction
+                  ? Observable.map(scale(1, 1.2))
+                  : Observable.map(scale(0, -0.01)),
+              ),
+              pipe(
+                Observable.spring({ precision: 0.1 }),
+                direction
+                  ? Observable.map(scale(1.2, 1))
+                  : Observable.map(scale(-0.01, 0)),
+              ),
+            ),
         },
         { mode: "switching", scheduler: animationScheduler },
       ),

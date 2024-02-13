@@ -240,6 +240,8 @@ interface FunctionsModule {
     b: TB,
   ): T;
 
+  clamp(min: number, max: number): Function1<number, number>;
+
   compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
   compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
   compose<T, A, B, C>(
@@ -1164,6 +1166,8 @@ interface FunctionsModule {
 
   returns<T>(v: T): (..._args: unknown[]) => T;
 
+  scale(start: number, end: number): Function1<number, number>;
+
   strictEquality<T>(a: T, b: T): boolean;
 
   tuple<TA>(a: TA): Tuple1<TA>;
@@ -1262,6 +1266,9 @@ export const call: Signature["call"] = <T>(
   self: unknown,
   ...args: readonly any[]
 ) => f.call(self, ...args);
+
+export const clamp: Signature["clamp"] = (min, max) => v =>
+  v > max ? max : v < min ? min : v;
 
 /**
  * Composes a series of unary functions.
@@ -1689,6 +1696,11 @@ export const returns: Signature["returns"] =
   <T>(v: T) =>
   () =>
     v;
+
+export const scale: Signature["scale"] = (start: number, end: number) => {
+  const diff = end - start;
+  return (v: number) => start + v * diff;
+};
 
 /**
  * The javascript strict equality function.

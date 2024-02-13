@@ -3,9 +3,11 @@ import {
   Tuple2,
   compose,
   isSome,
+  pipe,
   pipeLazy,
   pipeSome,
   pipeSomeLazy,
+  scale,
   tuple,
 } from "@reactive-js/core/functions";
 import React, { useState } from "react";
@@ -35,27 +37,21 @@ const Measure = () => {
 
   const animationGroup = useStream(
     () =>
-      Streamable.animationGroupEventHandler<
+      Streamable.animationGroup<
+        number,
         {
           prevWidth?: number;
           width: number;
-        },
-        string,
-        number
+        }
       >(
         {
           a: ({ prevWidth, width }: { prevWidth?: number; width: number }) =>
             isSome(prevWidth)
-              ? {
-                  type: "spring",
-                  from: prevWidth,
-                  to: width,
-                  precision: 0.2,
-                }
-              : {
-                  type: "frame",
-                  value: width,
-                },
+              ? pipe(
+                  Observable.spring({ precision: 0.2 }),
+                  Observable.map(scale(prevWidth, width)),
+                )
+              : Observable.fromValue()(width),
         },
         { mode: "switching", scheduler: animationScheduler },
       ),

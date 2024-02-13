@@ -48,6 +48,7 @@ export const bindMethod = (thiz, key) => bind(thiz[key], thiz);
  * Calls the function `f` with a given self value as this and arguments provided individually.
  */
 export const call = (f, self, ...args) => f.call(self, ...args);
+export const clamp = (min, max) => v => v > max ? max : v < min ? min : v;
 /**
  * Composes a series of unary functions.
  */
@@ -300,6 +301,10 @@ export const raiseIfNone = (v, message) => raiseIf(isNone(v), message);
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */
 export const returns = (v) => () => v;
+export const scale = (start, end) => {
+    const diff = end - start;
+    return (v) => start + v * diff;
+};
 /**
  * The javascript strict equality function.
  */

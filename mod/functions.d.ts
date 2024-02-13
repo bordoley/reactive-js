@@ -124,6 +124,7 @@ interface FunctionsModule {
     call<TInstance, T>(f: () => T, self: TInstance): T;
     call<TInstance, T, TA>(f: (a: TA) => T, self: TInstance, a: TA): T;
     call<TInstance, T, TA, TB>(f: (a: TA, b: TB) => T, self: TInstance, a: TA, b: TB): T;
+    clamp(min: number, max: number): Function1<number, number>;
     compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
     compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
     compose<T, A, B, C>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>): Function1<T, C>;
@@ -261,6 +262,7 @@ interface FunctionsModule {
     raiseIf(condition: boolean, message: string): void;
     raiseIfNone<T>(v: Optional<T>, message: string): asserts v is T;
     returns<T>(v: T): (..._args: unknown[]) => T;
+    scale(start: number, end: number): Function1<number, number>;
     strictEquality<T>(a: T, b: T): boolean;
     tuple<TA>(a: TA): Tuple1<TA>;
     tuple<TA, TB>(a: TA, b: TB): Tuple2<TA, TB>;
@@ -297,6 +299,7 @@ export declare const bindMethod: Signature["bindMethod"];
  * Calls the function `f` with a given self value as this and arguments provided individually.
  */
 export declare const call: Signature["call"];
+export declare const clamp: Signature["clamp"];
 /**
  * Composes a series of unary functions.
  */
@@ -447,6 +450,7 @@ export declare const raiseIfNone: Signature["raiseIfNone"];
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */
 export declare const returns: Signature["returns"];
+export declare const scale: Signature["scale"];
 /**
  * The javascript strict equality function.
  */

@@ -30,6 +30,7 @@ import {
   pipeLazy,
   pipeSome,
   returns,
+  scale,
   Tuple2,
 } from "@reactive-js/core/functions";
 import * as Streamable from "@reactive-js/core/concurrent/Streamable";
@@ -107,22 +108,25 @@ const AnimationGroup = () => {
 
   const animationStream = useStream(
     () =>
-      Streamable.animationGroupEventHandler<string, number>(
+      Streamable.animationGroup(
         {
-          a: {
-            type: "loop",
-            count: 2,
-            animation: [
-              { type: "keyframe", duration: 500, from: 0, to: 1 },
-              { type: "delay", duration: 250 },
-              { type: "keyframe", duration: 500, from: 1, to: 0 },
-            ],
-          },
-          b: [
-            { type: "keyframe", duration: 500, from: 0, to: 1 },
-            { type: "delay", duration: 250 },
-            { type: "spring", stiffness: 0.01, damping: 0.01, from: 1, to: 0 },
-          ],
+          a: pipe(
+            Observable.concat(
+              Observable.keyFrame(500),
+              Observable.empty({ delay: 250 }),
+              pipe(Observable.keyFrame(500), Observable.map(scale(1, 0))),
+            ),
+            Observable.repeat(2),
+          ),
+          b: _ =>
+            Observable.concat(
+              Observable.keyFrame(500),
+              Observable.empty({ delay: 250 }),
+              pipe(
+                Observable.spring({ stiffness: 0.01, damping: 0.01 }),
+                Observable.map(scale(1, 0)),
+              ),
+            ),
         },
         { mode: "blocking", scheduler: animationScheduler },
       ),
@@ -216,16 +220,16 @@ const Counter = () => {
   }, [history.uri, counterInitialValue, setCounterInitialValue]);
 
   const counter = useFlow(
-      pipeLazy(
-        Observable.generate(increment, returns(counterInitialValue ?? -1)),
-        Observable.forEach<number>(value =>
-          history.replace((uri: WindowLocationURI) => ({
-            ...uri,
-            query: `v=${value}`,
-          })),
-        ),
-        Flowable.fromRunnable(),
+    pipeLazy(
+      Observable.generate(increment, returns(counterInitialValue ?? -1)),
+      Observable.forEach<number>(value =>
+        history.replace((uri: WindowLocationURI) => ({
+          ...uri,
+          query: `v=${value}`,
+        })),
       ),
+      Flowable.fromRunnable(),
+    ),
     [history.replace, counterInitialValue],
   );
   const counterController = usePauseable(counter);
@@ -286,41 +290,30 @@ const RxComponent = createComponent(
     const createAnimationGroupEventHandler = (
       animationFrameScheduler: SchedulerLike,
     ) =>
-      Streamable.animationGroupEventHandler<
-        "animate" | "cancel",
-        string,
-        CSSStyleMapLike
-      >(
+      Streamable.animationGroup<CSSStyleMapLike>(
         {
-          a: ev =>
-            ev === "animate"
-              ? [
-                  {
-                    type: "keyframe",
-                    duration: 1000,
-                    from: 0,
-                    to: 50,
-                    selector: (v: number) => ({
-                      "background-color": "blue",
-                      margin: `${50 - v}px`,
-                      padding: `${v}px`,
-                    }),
-                  },
-                  {
-                    type: "spring",
-                    stiffness: 0.01,
-                    damping: 0.01,
-                    from: 50,
-                    to: 0,
-                    selector: (v: number) => ({
-                      "background-color": "green",
-                      margin: `${50 - v}px`,
-                      padding: `${v}px`,
-                    }),
-                  },
-                ]
-              : [],
+          a: Observable.concat(
+            pipe(
+              Observable.keyFrame(1000),
+              Observable.map(scale(0, 50)),
+              Observable.map((v: number) => ({
+                "background-color": "blue",
+                margin: `${50 - v}px`,
+                padding: `${v}px`,
+              })),
+            ),
+            pipe(
+              Observable.spring({ stiffness: 0.01, damping: 0.01 }),
+              Observable.map(scale(50, 0)),
+              Observable.map((v: number) => ({
+                "background-color": "green",
+                margin: `${50 - v}px`,
+                padding: `${v}px`,
+              })),
+            ),
+          ),
         },
+
         { mode: "switching", scheduler: animationFrameScheduler },
       );
 

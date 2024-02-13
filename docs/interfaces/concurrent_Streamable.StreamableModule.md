@@ -9,7 +9,7 @@
 ### Methods
 
 - [actionReducer](concurrent_Streamable.StreamableModule.md#actionreducer)
-- [animationGroupEventHandler](concurrent_Streamable.StreamableModule.md#animationgroupeventhandler)
+- [animationGroup](concurrent_Streamable.StreamableModule.md#animationgroup)
 - [create](concurrent_Streamable.StreamableModule.md#create)
 - [eventHandler](concurrent_Streamable.StreamableModule.md#eventhandler)
 - [identity](concurrent_Streamable.StreamableModule.md#identity)
@@ -46,23 +46,23 @@
 
 ___
 
-### animationGroupEventHandler
+### animationGroup
 
-▸ **animationGroupEventHandler**\<`TEvent`, `TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)\<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)\<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>\>
+▸ **animationGroup**\<`T`, `TEvent`, `TKey`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)\<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)\<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEvent` | `TEvent` |
-| `TKey` | extends `string` |
 | `T` | `T` |
+| `TEvent` | `unknown` |
+| `TKey` | extends `string` = `string` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)\<`TKey`, [`Function1`](../modules/functions.md#function1)\<`TEvent`, [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\> \| readonly [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)\<`TKey`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)\<`T`\> \| [`Function1`](../modules/functions.md#function1)\<`TEvent`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)\<`T`\>\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"switching"`` |
 | `options.scheduler?` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
@@ -71,21 +71,21 @@ ___
 
 [`StreamableLike`](concurrent.StreamableLike.md)\<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)\<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>\>
 
-▸ **animationGroupEventHandler**\<`TEvent`, `TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)\<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)\<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>\>
+▸ **animationGroup**\<`T`, `TEvent`, `TKey`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)\<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)\<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEvent` | `TEvent` |
-| `TKey` | extends `string` |
 | `T` | `T` |
+| `TEvent` | `unknown` |
+| `TKey` | extends `string` = `string` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)\<`TKey`, [`Function1`](../modules/functions.md#function1)\<`TEvent`, [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\> \| readonly [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)\<`TKey`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)\<`T`\> \| [`Function1`](../modules/functions.md#function1)\<`TEvent`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)\<`T`\>\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"blocking"`` |
 | `options.scheduler?` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
@@ -94,21 +94,21 @@ ___
 
 [`StreamableLike`](concurrent.StreamableLike.md)\<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)\<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>\>
 
-▸ **animationGroupEventHandler**\<`TEvent`, `TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)\<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)\<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>\>
+▸ **animationGroup**\<`T`, `TEvent`, `TKey`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)\<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)\<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEvent` | `TEvent` |
-| `TKey` | extends `string` |
 | `T` | `T` |
+| `TEvent` | `unknown` |
+| `TKey` | extends `string` = `string` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)\<`TKey`, [`Function1`](../modules/functions.md#function1)\<`TEvent`, [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\> \| readonly [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)\<`TKey`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)\<`T`\> \| [`Function1`](../modules/functions.md#function1)\<`TEvent`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)\<`T`\>\>\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
@@ -118,74 +118,6 @@ ___
 #### Returns
 
 [`StreamableLike`](concurrent.StreamableLike.md)\<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)\<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>\>
-
-▸ **animationGroupEventHandler**\<`TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)\<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)\<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `string` |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)\<`TKey`, [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\> \| readonly [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\>[]\> |
-| `options` | `Object` |
-| `options.mode` | ``"switching"`` |
-| `options.scheduler?` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
-
-#### Returns
-
-[`StreamableLike`](concurrent.StreamableLike.md)\<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)\<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>\>
-
-▸ **animationGroupEventHandler**\<`TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)\<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)\<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `string` |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)\<`TKey`, [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\> \| readonly [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\>[]\> |
-| `options` | `Object` |
-| `options.mode` | ``"blocking"`` |
-| `options.scheduler?` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
-
-#### Returns
-
-[`StreamableLike`](concurrent.StreamableLike.md)\<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)\<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>\>
-
-▸ **animationGroupEventHandler**\<`TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)\<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)\<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `string` |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)\<`TKey`, [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\> \| readonly [`Animation`](../modules/concurrent_Observable.md#animation)\<`T`\>[]\> |
-| `options` | `Object` |
-| `options.backpressureStrategy?` | [`BackpressureStrategy`](../modules/utils.md#backpressurestrategy) |
-| `options.capacity?` | `number` |
-| `options.mode` | ``"queueing"`` |
-| `options.scheduler?` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
-
-#### Returns
-
-[`StreamableLike`](concurrent.StreamableLike.md)\<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)\<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)\<`T`\>\>\>
 
 ___
 

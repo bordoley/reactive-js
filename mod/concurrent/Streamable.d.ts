@@ -1,9 +1,8 @@
 import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
-import { CacheLike, DeferredObservableLike, PureDeferredObservableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
+import { CacheLike, DeferredObservableLike, PureDeferredObservableLike, PureRunnableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
 import { EventSourceLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Reducer, Updater } from "../functions.js";
 import { BackpressureStrategy } from "../utils.js";
-import { Animation } from "./Observable.js";
 /**
  * @noInheritDoc
  */
@@ -11,34 +10,20 @@ export interface StreamableModule {
     actionReducer<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
         readonly equality?: Equality<T>;
     }): StreamableLike<TAction, T>;
-    animationGroupEventHandler<TEvent, TKey extends string, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
+    animationGroup<T, TEvent = unknown, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>, options: {
         readonly mode: "switching";
         readonly scheduler?: SchedulerLike;
     }): StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
-    animationGroupEventHandler<TEvent, TKey extends string, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
+    animationGroup<T, TEvent = unknown, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>, options: {
         readonly mode: "blocking";
         readonly scheduler?: SchedulerLike;
     }): StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
-    animationGroupEventHandler<TEvent, TKey extends string, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
+    animationGroup<T, TEvent = unknown, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>, options: {
         readonly mode: "queueing";
         readonly scheduler?: SchedulerLike;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
-    animationGroupEventHandler<TKey extends string, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
-        readonly mode: "switching";
-        readonly scheduler?: SchedulerLike;
-    }): StreamableLike<void, boolean, StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
-    animationGroupEventHandler<TKey extends string, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
-        readonly mode: "blocking";
-        readonly scheduler?: SchedulerLike;
-    }): StreamableLike<void, boolean, StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
-    animationGroupEventHandler<TKey extends string, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
-        readonly mode: "queueing";
-        readonly scheduler?: SchedulerLike;
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-    }): StreamableLike<void, boolean, StreamLike<void, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
     create<TReq, T>(op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
     eventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>, options: {
         readonly mode: "switching";
@@ -84,7 +69,7 @@ export interface StreamableModule {
 export type Signature = StreamableModule;
 export declare const create: Signature["create"];
 export declare const actionReducer: Signature["actionReducer"];
-export declare const animationGroupEventHandler: Signature["animationGroupEventHandler"];
+export declare const animationGroup: Signature["animationGroup"];
 export declare const eventHandler: Signature["eventHandler"];
 export declare const identity: Signature["identity"];
 export declare const inMemoryCache: Signature["inMemoryCache"];

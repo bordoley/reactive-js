@@ -12,11 +12,12 @@ import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_run: Observable.Signature["run"] =
   <T>(options?: {
-    readonly backpressureStrategy: BackpressureStrategy;
+    readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
+    readonly maxMicroTaskTicks?: number;
   }) =>
   (observable: RunnableLike<T>) => {
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = VirtualTimeScheduler.create(options);
 
     const subscription = pipe(
       observable,

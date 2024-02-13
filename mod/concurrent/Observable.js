@@ -2,7 +2,6 @@
 
 import { Computation_type, } from "../computations.js";
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, } from "../concurrent.js";
-import Observable_animate from "./Observable/__private__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__private__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
@@ -45,6 +44,7 @@ import Observable_fromValue from "./Observable/__private__/Observable.fromValue.
 import Observable_generate from "./Observable/__private__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__private__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
+import Observable_keyFrame from "./Observable/__private__/Observable.keyFrame.js";
 import Observable_lastAsync from "./Observable/__private__/Observable.lastAsync.js";
 import Observable_log from "./Observable/__private__/Observable.log.js";
 import Observable_map from "./Observable/__private__/Observable.map.js";
@@ -64,6 +64,7 @@ import Observable_run from "./Observable/__private__/Observable.run.js";
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
 import Observable_scanMany from "./Observable/__private__/Observable.scanMany.js";
 import Observable_skipFirst from "./Observable/__private__/Observable.skipFirst.js";
+import Observable_spring from "./Observable/__private__/Observable.spring.js";
 import Observable_startWith from "./Observable/__private__/Observable.startWith.js";
 import Observable_subscribe from "./Observable/__private__/Observable.subscribe.js";
 import Observable_subscribeOn from "./Observable/__private__/Observable.subscribeOn.js";
@@ -111,7 +112,6 @@ export const CombineLatestComputeMode = ObservableCompute_CombineLatestComputeMo
 export const ThrottleFirstMode = ObservableThrottle_ThrottleFirstMode;
 export const ThrottleLastMode = ObservableThrottle_ThrottleLastMode;
 export const ThrottleIntervalMode = ObservableThrottle_ThrottleIntervalMode;
-export const animate = Observable_animate;
 export const backpressureStrategy = Observable_backpressureStrategy;
 export const buffer = Observable_buffer;
 export const catchError = Observable_catchError;
@@ -153,6 +153,7 @@ export const fromValue = Observable_fromValue;
 export const generate = Observable_generate;
 export const ignoreElements = Observable_ignoreElements;
 export const keep = Observable_keep;
+export const keyFrame = Observable_keyFrame;
 export const lastAsync = Observable_lastAsync;
 export const log = Observable_log;
 export const map = Observable_map;
@@ -172,6 +173,7 @@ export const run = Observable_run;
 export const scan = Observable_scan;
 export const scanMany = Observable_scanMany;
 export const skipFirst = Observable_skipFirst;
+export const spring = Observable_spring;
 export const startWith = Observable_startWith;
 export const subscribe = Observable_subscribe;
 export const subscribeOn = Observable_subscribeOn;

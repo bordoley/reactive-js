@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Namespaces
-
-- [Animation](concurrent_Observable.Animation.md)
-
 ### Interfaces
 
 - [DeferredObservableWithSideEffectsComputation](../interfaces/concurrent_Observable.DeferredObservableWithSideEffectsComputation.md)
@@ -19,7 +15,6 @@
 
 ### Type Aliases
 
-- [Animation](concurrent_Observable.md#animation)
 - [ComputeMode](concurrent_Observable.md#computemode)
 - [DeferringObservableOperator](concurrent_Observable.md#deferringobservableoperator)
 - [ObservableOperatorWithSideEffects](concurrent_Observable.md#observableoperatorwithsideeffects)
@@ -43,7 +38,6 @@
 
 ### Functions
 
-- [animate](concurrent_Observable.md#animate)
 - [backpressureStrategy](concurrent_Observable.md#backpressurestrategy)
 - [buffer](concurrent_Observable.md#buffer)
 - [catchError](concurrent_Observable.md#catcherror)
@@ -84,6 +78,7 @@
 - [generate](concurrent_Observable.md#generate)
 - [ignoreElements](concurrent_Observable.md#ignoreelements)
 - [keep](concurrent_Observable.md#keep)
+- [keyFrame](concurrent_Observable.md#keyframe)
 - [lastAsync](concurrent_Observable.md#lastasync)
 - [log](concurrent_Observable.md#log)
 - [map](concurrent_Observable.md#map)
@@ -103,6 +98,7 @@
 - [scan](concurrent_Observable.md#scan)
 - [scanMany](concurrent_Observable.md#scanmany)
 - [skipFirst](concurrent_Observable.md#skipfirst)
+- [spring](concurrent_Observable.md#spring)
 - [startWith](concurrent_Observable.md#startwith)
 - [subscribe](concurrent_Observable.md#subscribe)
 - [subscribeOn](concurrent_Observable.md#subscribeon)
@@ -123,18 +119,6 @@
 - [zipLatest](concurrent_Observable.md#ziplatest)
 
 ## Type Aliases
-
-### Animation
-
-Ƭ **Animation**\<`T`\>: [`Delay`](../interfaces/concurrent_Observable.Animation.Delay.md) \| [`Loop`](../interfaces/concurrent_Observable.Animation.Loop.md)\<`T`\> \| `T` extends `number` ? [`KeyFrame`](../interfaces/concurrent_Observable.Animation.KeyFrame.md) \| [`Spring`](../interfaces/concurrent_Observable.Animation.Spring.md) \| [`Frame`](../interfaces/concurrent_Observable.Animation.Frame.md) & \{ `selector?`: `never`  } : [`KeyFrame`](../interfaces/concurrent_Observable.Animation.KeyFrame.md) \| [`Spring`](../interfaces/concurrent_Observable.Animation.Spring.md) \| [`Frame`](../interfaces/concurrent_Observable.Animation.Frame.md) & \{ `selector`: [`Function1`](functions.md#function1)\<`number`, `T`\>  }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `number` |
-
-___
 
 ### ComputeMode
 
@@ -347,28 +331,6 @@ ___
 • `Const` **currentTime**: [`Signature`](concurrent_Observable.md#signature)[``"currentTime"``]
 
 ## Functions
-
-### animate
-
-▸ **animate**\<`T`\>(`configs`): [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)\<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `configs` | [`Animation`](concurrent_Observable.md#animation)\<`T`\> \| readonly [`Animation`](concurrent_Observable.md#animation)\<`T`\>[] |
-
-#### Returns
-
-[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)\<`T`\>
-
-___
 
 ### backpressureStrategy
 
@@ -2836,6 +2798,24 @@ ___
 
 ___
 
+### keyFrame
+
+▸ **keyFrame**(`duration`, `options?`): [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)\<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `duration` | `number` |
+| `options?` | `Object` |
+| `options.easing?` | [`Function1`](functions.md#function1)\<`number`, `number`\> |
+
+#### Returns
+
+[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)\<`number`\>
+
+___
+
 ### lastAsync
 
 ▸ **lastAsync**\<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)\<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)\<`T`\>, `Promise`\<[`Optional`](functions.md#optional)\<`T`\>\>\>
@@ -3719,8 +3699,9 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.backpressureStrategy` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
 | `options.capacity?` | `number` |
+| `options.maxMicroTaskTicks?` | `number` |
 
 #### Returns
 
@@ -3884,6 +3865,25 @@ ___
 #### Returns
 
 [`PureStatefulObservableOperator`](concurrent_Observable.md#purestatefulobservableoperator)\<`T`, `T`, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)\<`T`\>\>
+
+___
+
+### spring
+
+▸ **spring**(`options?`): [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)\<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.damping?` | `number` |
+| `options.precision?` | `number` |
+| `options.stiffness?` | `number` |
+
+#### Returns
+
+[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)\<`number`\>
 
 ___
 
@@ -4421,13 +4421,22 @@ ___
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**\<`T`\>(): [`Function1`](functions.md#function1)\<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)\<`T`\>, readonly `T`[]\>
+▸ **toReadonlyArray**\<`T`\>(`options?`): [`Function1`](functions.md#function1)\<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)\<`T`\>, readonly `T`[]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
+| `options.capacity?` | `number` |
+| `options.maxMicroTaskTicks?` | `number` |
 
 #### Returns
 

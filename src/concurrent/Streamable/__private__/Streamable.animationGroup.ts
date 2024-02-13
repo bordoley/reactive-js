@@ -15,6 +15,7 @@ import {
   ReadonlyObjectMapLike,
 } from "../../../collections.js";
 import {
+  PureRunnableLike,
   RunnableWithSideEffectsLike,
   SchedulerLike,
   StreamLike,
@@ -36,22 +37,15 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
-import type { Animation } from "../../Observable.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 import DelegatingStreamMixin from "../../__mixins__/DelegatingStreamMixin.js";
 import Streamable_createEventHandler from "./Streamable.eventHandler.js";
 
-const Streamable_createAnimationGroupEventHandlerStream: <
-  TEvent,
-  TKey extends string,
-  T,
->(
+const Streamable_createAnimationGroupStream: <TEvent, TKey extends string, T>(
   animationGroup: ReadonlyObjectMapLike<
     TKey,
-    | Function1<TEvent, Animation<T> | readonly Animation<T>[]>
-    | Animation<T>
-    | readonly Animation<T>[]
+    Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
   >,
   creationOptions: {
     readonly mode: "switching" | "blocking" | "queueing";
@@ -67,12 +61,12 @@ const Streamable_createAnimationGroupEventHandlerStream: <
   }>,
 ) => StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>> =
   /*@__PURE__*/ (<TEvent, TKey extends string, T>() => {
-    const AnimationEventHandlerStream_delegate = Symbol(
-      "AnimationEventHandlerStream_delegate",
+    const AnimationGroupStream_eventSources = Symbol(
+      "AnimationGroupStream_delegate",
     );
 
     type TProperties = {
-      [AnimationEventHandlerStream_delegate]: ReadonlyObjectMapLike<
+      [AnimationGroupStream_eventSources]: ReadonlyObjectMapLike<
         TKey,
         EventSourceLike<T>
       >;
@@ -80,7 +74,7 @@ const Streamable_createAnimationGroupEventHandlerStream: <
 
     return mixInstanceFactory(
       include(DelegatingStreamMixin<TEvent, boolean>()),
-      function AnimationEventHandlerStream(
+      function AnimationGroupStream(
         instance: TProperties &
           Pick<
             DictionaryLike<TKey, EventSourceLike<T>>,
@@ -88,8 +82,7 @@ const Streamable_createAnimationGroupEventHandlerStream: <
           >,
         animationGroup: ReadonlyObjectMapLike<
           TKey,
-          | Function1<TEvent, Animation<T> | readonly Animation<T>[]>
-          | (Animation<T> | readonly Animation<T>[])
+          Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
         >,
         creationOptions: {
           readonly mode: "switching" | "blocking" | "queueing";
@@ -113,16 +106,12 @@ const Streamable_createAnimationGroupEventHandlerStream: <
             > = pipe(
               animationGroup,
               ReadonlyObjectMap.map<
-                | Function1<TEvent, Animation<T> | readonly Animation<T>[]>
-                | Animation<T>
-                | readonly Animation<T>[],
+                Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
                 RunnableWithSideEffectsLike<T>,
                 string
               >((factory, key: string) =>
                 pipe(
-                  Observable.animate<T>(
-                    isFunction(factory) ? factory(event) : factory,
-                  ),
+                  isFunction(factory) ? factory(event) : factory,
                   Observable.forEach((value: T) => {
                     const publisher = publishers[key];
                     publisher?.[EventListenerLike_notify](value);
@@ -160,18 +149,18 @@ const Streamable_createAnimationGroupEventHandlerStream: <
           streamDelegate,
         );
 
-        instance[AnimationEventHandlerStream_delegate] = publishers;
+        instance[AnimationGroupStream_eventSources] = publishers;
 
         return instance;
       },
       props<TProperties>({
-        [AnimationEventHandlerStream_delegate]: none,
+        [AnimationGroupStream_eventSources]: none,
       }),
       {
         get [DictionaryLike_keys](): EnumerableLike<TKey> {
           unsafeCast<TProperties>(this);
           return pipe(
-            this[AnimationEventHandlerStream_delegate],
+            this[AnimationGroupStream_eventSources],
             ReadonlyObjectMap.keys(),
           );
         },
@@ -180,38 +169,39 @@ const Streamable_createAnimationGroupEventHandlerStream: <
           this: TProperties,
           index: TKey,
         ): Optional<EventSourceLike<T>> {
-          return this[AnimationEventHandlerStream_delegate][index];
+          return this[AnimationGroupStream_eventSources][index];
         },
       },
     );
   })();
 
-const Streamable_animationGroupEventHandler: Streamable.Signature["animationGroupEventHandler"] =
-  (<TEvent, TKey extends string, T>(
-    animationGroup: ReadonlyObjectMapLike<
-      TKey,
-      | Function1<TEvent, Animation<T> | readonly Animation<T>[]>
-      | Animation<T>
-      | readonly Animation<T>[]
-    >,
-    createOptions: {
-      readonly mode: "queueing" | "blocking" | "switching";
-      readonly scheduler?: SchedulerLike;
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-    },
-  ): StreamableLike<
-    TEvent,
-    boolean,
-    StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
-  > => ({
-    [StreamableLike_stream]: (scheduler, options) =>
-      Streamable_createAnimationGroupEventHandlerStream(
-        animationGroup,
-        createOptions,
-        scheduler,
-        options,
-      ),
-  })) as Streamable.Signature["animationGroupEventHandler"];
+const Streamable_animationGroup: Streamable.Signature["animationGroup"] = (<
+  T,
+  TEvent = unknown,
+  TKey extends string = string,
+>(
+  animationGroup: ReadonlyObjectMapLike<
+    TKey,
+    Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
+  >,
+  createOptions: {
+    readonly mode: "queueing" | "blocking" | "switching";
+    readonly scheduler?: SchedulerLike;
+    readonly backpressureStrategy?: BackpressureStrategy;
+    readonly capacity?: number;
+  },
+): StreamableLike<
+  TEvent,
+  boolean,
+  StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
+> => ({
+  [StreamableLike_stream]: (scheduler, options) =>
+    Streamable_createAnimationGroupStream(
+      animationGroup,
+      createOptions,
+      scheduler,
+      options,
+    ),
+})) as Streamable.Signature["animationGroup"];
 
-export default Streamable_animationGroupEventHandler;
+export default Streamable_animationGroup;

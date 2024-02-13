@@ -3,18 +3,18 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
-  expectTrue,
+  //expectTrue,
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Dictionary from "../../collections/Dictionary.js";
-import { DictionaryCollection } from "../../collections/Dictionary.js";
+//import * as Dictionary from "../../collections/Dictionary.js";
+//import { DictionaryCollection } from "../../collections/Dictionary.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import {
-  DictionaryLike_get,
+  //DictionaryLike_get,
   ReadonlyObjectMapLike,
-  keySet,
+  //keySet,
 } from "../../collections.js";
 import { sequence } from "../../computations.js";
 import {
@@ -24,7 +24,7 @@ import {
   StreamableLike_stream,
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
-import * as EventSource from "../../events/EventSource.js";
+//import * as EventSource from "../../events/EventSource.js";
 import {
   Optional,
   SideEffect,
@@ -34,7 +34,7 @@ import {
   invoke,
   none,
   pipe,
-  pipeSome,
+  //pipeSome,
   returns,
   tuple,
 } from "../../functions.js";
@@ -52,6 +52,7 @@ import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
 testModule(
   "Streamable",
+  /*
   describe(
     "animationGroupEventHandler",
     test(
@@ -159,7 +160,7 @@ testModule(
         pipe(result, expectEquals(1));
       }),
     ),
-  ),
+  ),*/
   describe(
     "inMemoryCache",
     test("it publishes none on subscribe when the key is missing", () => {

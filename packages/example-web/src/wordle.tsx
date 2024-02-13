@@ -8,11 +8,12 @@ import {
   useStream,
   useObserve,
 } from "@reactive-js/core/integrations/react";
-import { Optional, pipeLazy } from "@reactive-js/core/functions";
+import { Optional, clamp, pipe, pipeLazy } from "@reactive-js/core/functions";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
 import { EventSourceLike } from "@reactive-js/core/events";
 import { DictionaryLike_get } from "@reactive-js/core/collections";
+import * as Observable from "@reactive-js/core/concurrent/Observable";
 
 const items = ["W", "O", "R", "D", "L", "E"];
 
@@ -41,11 +42,10 @@ const Box = (props: any) => (
   />
 );
 
-const clamp = (min: number, v: number, max: number): number =>
-  v > max ? max : v < min ? min : v;
+const clampPositive180deg = clamp(0, 180);
 
 const calcXRotation = (direction: boolean, value: number, i: number) => {
-  const clamped = clamp(0, value / (i + 1), 180);
+  const clamped = clampPositive180deg(value / (i + 1));
   return direction ? clamped : 180 - clamped;
 };
 
@@ -108,6 +108,11 @@ const AnimatedBox = ({
   );
 };
 
+const scale = (start: number, end: number) => (v: number) => {
+  const diff = end - start;
+  return start + v * diff;
+};
+
 export const Wordle = () => {
   const [state, updateState] = useState(false);
 
@@ -119,20 +124,20 @@ export const Wordle = () => {
   const animationGroup = useStream(
     () =>
       Streamable.animationGroupEventHandler<
-        boolean,
-        string,
-        { direction: boolean; value: number }
+        { direction: boolean; value: number },
+        boolean
       >(
         {
-          a: (direction: boolean) => ({
-            type: "spring",
-            stiffness: 0.0005,
-            damping: 0.0026,
-            precision: 0.1,
-            from: 0,
-            to: 180 * items.length,
-            selector: value => ({ direction, value }),
-          }),
+          a: (direction: boolean) =>
+            pipe(
+              Observable.spring({
+                stiffness: 0.0005,
+                damping: 0.0026,
+                precision: 0.1,
+              }),
+              Observable.map(scale(0, 180 * items.length)),
+              Observable.map(value => ({ direction, value })),
+            ),
         },
         { mode: "blocking", scheduler: animationScheduler },
       ),
