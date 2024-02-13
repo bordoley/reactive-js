@@ -8,6 +8,7 @@
 
 - [WindowLocationProvider](integrations_react_web.md#windowlocationprovider)
 - [useAnimate](integrations_react_web.md#useanimate)
+- [useAnimationGroup](integrations_react_web.md#useanimationgroup)
 - [useScroll](integrations_react_web.md#usescroll)
 - [useWindowLocation](integrations_react_web.md#usewindowlocation)
 
@@ -72,6 +73,31 @@ ___
 #### Returns
 
 `Ref`\<`TElement`\>
+
+___
+
+### useAnimationGroup
+
+▸ **useAnimationGroup**\<`T`, `TEvent`, `TKey`\>(`animationGroup`, `options?`): [`Optional`](functions.md#optional)\<[`StreamLike`](../interfaces/concurrent.StreamLike.md)\<`TEvent`, `boolean`\> & [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TEvent` | `unknown` |
+| `TKey` | extends `string` = `string` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `animationGroup` | [`ReadonlyObjectMapLike`](collections.md#readonlyobjectmaplike)\<`TKey`, [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)\<`T`\> \| [`Function1`](functions.md#function1)\<`TEvent`, [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)\<`T`\>\>\> |
+| `options?` | \{ `mode`: ``"switching"`` ; `priority?`: ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5``  } \| \{ `mode`: ``"blocking"`` ; `priority?`: ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5``  } \| \{ `backpressureStrategy?`: [`BackpressureStrategy`](utils.md#backpressurestrategy) ; `capacity?`: `number` ; `mode`: ``"queueing"`` ; `priority?`: ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5``  } |
+
+#### Returns
+
+[`Optional`](functions.md#optional)\<[`StreamLike`](../interfaces/concurrent.StreamLike.md)\<`TEvent`, `boolean`\> & [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)\<`TKey`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)\<`T`\>\>\>
 
 ___
 

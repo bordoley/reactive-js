@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useAnimate } from "@reactive-js/core/integrations/react/web";
+import {
+  useAnimate,
+  useAnimationGroup,
+} from "@reactive-js/core/integrations/react/web";
 import { Property } from "csstype";
-import * as Streamable from "@reactive-js/core/concurrent/Streamable";
 import {
   useDispatcher,
-  useDisposable,
-  useStream,
   useObserve,
 } from "@reactive-js/core/integrations/react";
-import { Optional, clamp, pipe, pipeLazy } from "@reactive-js/core/functions";
-import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
-import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
+import { Optional, clamp, pipe } from "@reactive-js/core/functions";
 import { EventSourceLike } from "@reactive-js/core/events";
 import { DictionaryLike_get } from "@reactive-js/core/collections";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
+import { scale } from "@reactive-js/core/functions";
 
 const items = ["W", "O", "R", "D", "L", "E"];
 
@@ -108,37 +107,23 @@ const AnimatedBox = ({
   );
 };
 
-const scale = (start: number, end: number) => (v: number) => {
-  const diff = end - start;
-  return start + v * diff;
-};
-
 export const Wordle = () => {
   const [state, updateState] = useState(false);
 
-  const animationScheduler = useDisposable(
-    pipeLazy(ReactScheduler.get(), AnimationFrameScheduler.create),
-    [],
-  );
-
-  const animationGroup = useStream(
-    () =>
-      Streamable.animationGroup<{ direction: boolean; value: number }, boolean>(
-        {
-          a: (direction: boolean) =>
-            pipe(
-              Observable.spring({
-                stiffness: 0.0005,
-                damping: 0.0026,
-                precision: 0.1,
-              }),
-              Observable.map(scale(0, 180 * items.length)),
-              Observable.map(value => ({ direction, value })),
-            ),
-        },
-        { mode: "blocking", scheduler: animationScheduler },
-      ),
-    [animationScheduler],
+  const animationGroup = useAnimationGroup(
+    {
+      a: (direction: boolean) =>
+        pipe(
+          Observable.spring({
+            stiffness: 0.0005,
+            damping: 0.0026,
+            precision: 0.1,
+          }),
+          Observable.map(scale(0, 180 * items.length)),
+          Observable.map(value => ({ direction, value })),
+        ),
+    },
+    { mode: "blocking" },
   );
 
   const animation = animationGroup?.[DictionaryLike_get]("a");

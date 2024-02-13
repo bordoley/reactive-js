@@ -44,34 +44,15 @@ export interface StreamableModule {
       TKey,
       Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
     >,
-    options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
-  ): StreamableLike<
-    TEvent,
-    boolean,
-    StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
-  >;
-  animationGroup<T, TEvent = unknown, TKey extends string = string>(
-    animationGroup: ReadonlyObjectMapLike<
-      TKey,
-      Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
-    >,
-    options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
-  ): StreamableLike<
-    TEvent,
-    boolean,
-    StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
-  >;
-  animationGroup<T, TEvent = unknown, TKey extends string = string>(
-    animationGroup: ReadonlyObjectMapLike<
-      TKey,
-      Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
-    >,
-    options: {
-      readonly mode: "queueing";
-      readonly scheduler?: SchedulerLike;
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-    },
+    options?:
+      | { readonly mode: "switching"; readonly scheduler?: SchedulerLike }
+      | { readonly mode: "blocking"; readonly scheduler?: SchedulerLike }
+      | {
+          readonly mode: "queueing";
+          readonly scheduler?: SchedulerLike;
+          readonly backpressureStrategy?: BackpressureStrategy;
+          readonly capacity?: number;
+        },
   ): StreamableLike<
     TEvent,
     boolean,
@@ -84,22 +65,14 @@ export interface StreamableModule {
 
   eventHandler<TEventType>(
     op: Function1<TEventType, DeferredObservableLike>,
-    options: { readonly mode: "switching" },
-  ): StreamableLike<TEventType, boolean>;
-  eventHandler<TEventType>(
-    op: Function1<TEventType, DeferredObservableLike>,
-    options: { readonly mode: "blocking" },
-  ): StreamableLike<TEventType, boolean>;
-  eventHandler<TEventType>(
-    op: Function1<TEventType, DeferredObservableLike>,
-    options: {
-      readonly mode: "queueing";
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-    },
-  ): StreamableLike<TEventType, boolean>;
-  eventHandler<TEventType>(
-    op: Function1<TEventType, DeferredObservableLike>,
+    options?:
+      | { readonly mode: "switching" }
+      | { readonly mode: "blocking" }
+      | {
+          readonly mode: "queueing";
+          readonly backpressureStrategy?: BackpressureStrategy;
+          readonly capacity?: number;
+        },
   ): StreamableLike<TEventType, boolean>;
 
   identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;

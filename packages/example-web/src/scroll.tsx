@@ -2,25 +2,21 @@ import React from "react";
 import ReactDOMClient from "react-dom/client";
 import {
   useAnimate,
+  useAnimationGroup,
   useScroll,
 } from "@reactive-js/core/integrations/react/web";
 import {
   useDispatcher,
   useDisposable,
-  useStream,
 } from "@reactive-js/core/integrations/react";
 import { ScrollValue } from "@reactive-js/core/integrations/web";
 import {
   Optional,
   pipe,
-  pipeLazy,
   pipeSomeLazy,
   scale,
 } from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/events/EventSource";
-import * as Streamable from "@reactive-js/core/concurrent/Streamable";
-import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
-import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
 import {
   EventListenerLike_notify,
   EventSourceLike,
@@ -60,32 +56,23 @@ const AnimatedCircle = ({
 };
 
 const ScrollApp = () => {
-  const animationScheduler = useDisposable(
-    pipeLazy(ReactScheduler.get(), AnimationFrameScheduler.create),
-    [],
-  );
-
-  const animationGroup = useStream(
-    () =>
-      Streamable.animationGroup<number, boolean>(
-        {
-          spring: (direction: boolean) =>
+  const animationGroup = useAnimationGroup(
+    {
+      spring: (direction: boolean) =>
+        pipe(
+          Observable.concat(
+            Observable.spring({ precision: 0.1 }),
             pipe(
-              Observable.concat(
-                Observable.spring({ precision: 0.1 }),
-                pipe(
-                  Observable.spring({ precision: 0.1 }),
-                  Observable.map(scale(1, 0)),
-                ),
-              ),
-              direction
-                ? Observable.map(scale(1, 1.2))
-                : Observable.map(scale(0, -0.01)),
+              Observable.spring({ precision: 0.1 }),
+              Observable.map(scale(1, 0)),
             ),
-        },
-        { mode: "switching", scheduler: animationScheduler },
-      ),
-    [],
+          ),
+          direction
+            ? Observable.map(scale(1, 1.2))
+            : Observable.map(scale(0, -0.01)),
+        ),
+    },
+    { mode: "switching" },
   );
   const { enqueue } = useDispatcher(animationGroup);
 

@@ -4,7 +4,6 @@ import * as Observable from "@reactive-js/core/concurrent/Observable";
 import {
   createComponent,
   useDispatcher,
-  useDisposable,
   useEnumerator,
   usePauseable,
   useStream,
@@ -12,6 +11,7 @@ import {
 } from "@reactive-js/core/integrations/react";
 import {
   useAnimate,
+  useAnimationGroup,
   useWindowLocation,
   WindowLocationProvider,
 } from "@reactive-js/core/integrations/react/web";
@@ -101,36 +101,27 @@ const AnimatedBox = ({
 };
 
 const AnimationGroup = () => {
-  const animationScheduler = useDisposable(
-    pipeLazy(ReactScheduler.get(), AnimationFrameScheduler.create),
-    [],
-  );
-
-  const animationStream = useStream(
-    () =>
-      Streamable.animationGroup(
-        {
-          a: pipe(
-            Observable.concat(
-              Observable.keyFrame(500),
-              Observable.empty({ delay: 250 }),
-              pipe(Observable.keyFrame(500), Observable.map(scale(1, 0))),
-            ),
-            Observable.repeat(2),
-          ),
-          b: _ =>
-            Observable.concat(
-              Observable.keyFrame(500),
-              Observable.empty({ delay: 250 }),
-              pipe(
-                Observable.spring({ stiffness: 0.01, damping: 0.01 }),
-                Observable.map(scale(1, 0)),
-              ),
-            ),
-        },
-        { mode: "blocking", scheduler: animationScheduler },
+  const animationStream = useAnimationGroup(
+    {
+      a: pipe(
+        Observable.concat(
+          Observable.keyFrame(500),
+          Observable.empty({ delay: 250 }),
+          pipe(Observable.keyFrame(500), Observable.map(scale(1, 0))),
+        ),
+        Observable.repeat(2),
       ),
-    [animationScheduler],
+      b: _ =>
+        Observable.concat(
+          Observable.keyFrame(500),
+          Observable.empty({ delay: 250 }),
+          pipe(
+            Observable.spring({ stiffness: 0.01, damping: 0.01 }),
+            Observable.map(scale(1, 0)),
+          ),
+        ),
+    },
+    { mode: "blocking" },
   );
 
   const animationDispatcher = useDispatcher(animationStream);

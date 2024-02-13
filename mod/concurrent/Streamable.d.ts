@@ -10,33 +10,28 @@ export interface StreamableModule {
     actionReducer<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
         readonly equality?: Equality<T>;
     }): StreamableLike<TAction, T>;
-    animationGroup<T, TEvent = unknown, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>, options: {
+    animationGroup<T, TEvent = unknown, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>, options?: {
         readonly mode: "switching";
         readonly scheduler?: SchedulerLike;
-    }): StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
-    animationGroup<T, TEvent = unknown, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>, options: {
+    } | {
         readonly mode: "blocking";
         readonly scheduler?: SchedulerLike;
-    }): StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
-    animationGroup<T, TEvent = unknown, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>, options: {
+    } | {
         readonly mode: "queueing";
         readonly scheduler?: SchedulerLike;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
     create<TReq, T>(op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
-    eventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>, options: {
+    eventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>, options?: {
         readonly mode: "switching";
-    }): StreamableLike<TEventType, boolean>;
-    eventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>, options: {
+    } | {
         readonly mode: "blocking";
-    }): StreamableLike<TEventType, boolean>;
-    eventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>, options: {
+    } | {
         readonly mode: "queueing";
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): StreamableLike<TEventType, boolean>;
-    eventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>): StreamableLike<TEventType, boolean>;
     identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
     inMemoryCache<T>(options?: {
         readonly capacity?: number;

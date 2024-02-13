@@ -4,7 +4,6 @@ import {
   compose,
   isSome,
   pipe,
-  pipeLazy,
   pipeSome,
   pipeSomeLazy,
   scale,
@@ -15,48 +14,31 @@ import * as Observable from "@reactive-js/core/concurrent/Observable";
 import {
   useDispatcher,
   useDisposable,
-  useStream,
   useObserve,
 } from "@reactive-js/core/integrations/react";
-import { useAnimate } from "@reactive-js/core/integrations/react/web";
+import {
+  useAnimate,
+  useAnimationGroup,
+} from "@reactive-js/core/integrations/react/web";
 import * as WebElement from "@reactive-js/core/integrations/web/Element";
 import { Rect } from "@reactive-js/core/integrations/web";
-import * as Streamable from "@reactive-js/core/concurrent/Streamable";
-import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
-import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
 import { pick } from "@reactive-js/core/computations";
 import { DictionaryLike_get } from "@reactive-js/core/collections";
 
 const Measure = () => {
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
 
-  const animationScheduler = useDisposable(
-    pipeLazy(ReactScheduler.get(), AnimationFrameScheduler.create),
-    [],
-  );
-
-  const animationGroup = useStream(
-    () =>
-      Streamable.animationGroup<
-        number,
-        {
-          prevWidth?: number;
-          width: number;
-        }
-      >(
-        {
-          a: ({ prevWidth, width }: { prevWidth?: number; width: number }) =>
-            isSome(prevWidth)
-              ? pipe(
-                  Observable.spring({ precision: 0.2 }),
-                  Observable.map(scale(prevWidth, width)),
-                )
-              : Observable.fromValue()(width),
-        },
-        { mode: "switching", scheduler: animationScheduler },
-      ),
-    [],
-    { capacity: 1, backpressureStrategy: "drop-oldest" },
+  const animationGroup = useAnimationGroup(
+    {
+      a: ({ prevWidth, width }: { prevWidth?: number; width: number }) =>
+        isSome(prevWidth)
+          ? pipe(
+              Observable.spring({ precision: 0.2 }),
+              Observable.map(scale(prevWidth, width)),
+            )
+          : Observable.fromValue()(width),
+    },
+    { mode: "switching" },
   );
 
   const animation = animationGroup?.[DictionaryLike_get]("a");

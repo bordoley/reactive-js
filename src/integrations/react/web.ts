@@ -8,8 +8,16 @@ import {
   useState,
 } from "react";
 import type * as React from "react";
-import { nullObject } from "../../__internal__/constants.js";
+import { unstable_NormalPriority } from "scheduler";
+import { Map_get, Map_set, nullObject } from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
+import { DictionaryLike, ReadonlyObjectMapLike } from "../../collections.js";
+import * as Streamable from "../../concurrent/Streamable.js";
+import {
+  PureRunnableLike,
+  SchedulerLike,
+  StreamLike,
+} from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import { EventSourceLike, StoreLike_value } from "../../events.js";
 import {
@@ -20,11 +28,14 @@ import {
   identity,
   isFunction,
   isNull,
+  newInstance,
   none,
   pipe,
   pipeSomeLazy,
 } from "../../functions.js";
-import { useDisposable, useListen, useObserve } from "../react.js";
+import { BackpressureStrategy } from "../../utils.js";
+import { useDisposable, useListen, useObserve, useStream } from "../react.js";
+import * as AnimationFrameScheduler from "../web/AnimationFrameScheduler.js";
 import * as WebElement from "../web/Element.js";
 import {
   CSSStyleMapLike,
@@ -36,6 +47,7 @@ import {
   WindowLocationLike_replace,
   WindowLocationURI,
 } from "../web.js";
+import * as ReactScheduler from "./Scheduler.js";
 
 interface ReactWebModule {
   readonly WindowLocationProvider: React.FunctionComponent<{
@@ -53,6 +65,24 @@ interface ReactWebModule {
     selector: Function1<T, CSSStyleMapLike>,
     deps: readonly unknown[],
   ): React.Ref<TElement>;
+
+  useAnimationGroup<T, TEvent = unknown, TKey extends string = string>(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
+    >,
+    options?:
+      | { readonly mode: "switching"; readonly priority?: 1 | 2 | 3 | 4 | 5 }
+      | { readonly mode: "blocking"; readonly priority?: 1 | 2 | 3 | 4 | 5 }
+      | {
+          readonly mode: "queueing";
+          readonly priority?: 1 | 2 | 3 | 4 | 5;
+          readonly backpressureStrategy?: BackpressureStrategy;
+          readonly capacity?: number;
+        },
+  ): Optional<
+    StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
+  >;
 
   /**
    */
@@ -77,6 +107,21 @@ type Signature = ReactWebModule;
 const WindowLocationContext = /*@__PURE__*/ createContext<WindowLocationLike>(
   none as unknown as WindowLocationLike,
 );
+
+const useAnimationFrameScheduler = /*@__PURE__*/ (() => {
+  const schedulerCache: Map<1 | 2 | 3 | 4 | 5, SchedulerLike> =
+    newInstance<Map<1 | 2 | 3 | 4 | 5, SchedulerLike>>(Map);
+
+  return (priority: 1 | 2 | 3 | 4 | 5 = unstable_NormalPriority) =>
+    schedulerCache[Map_get](priority) ??
+    (() => {
+      const scheduler = AnimationFrameScheduler.create(
+        ReactScheduler.get(priority),
+      );
+      schedulerCache[Map_set](priority, scheduler);
+      return scheduler;
+    })();
+})();
 
 export const useAnimate: Signature["useAnimate"] = <
   TElement extends HTMLElement,
@@ -113,6 +158,38 @@ export const useAnimate: Signature["useAnimate"] = <
   );
 
   return ref;
+};
+
+export const useAnimationGroup: Signature["useAnimationGroup"] = <
+  T,
+  TEvent = unknown,
+  TKey extends string = string,
+>(
+  animationGroup: ReadonlyObjectMapLike<
+    TKey,
+    Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
+  >,
+  options?:
+    | { readonly mode: "switching"; readonly priority?: 1 | 2 | 3 | 4 | 5 }
+    | { readonly mode: "blocking"; readonly priority?: 1 | 2 | 3 | 4 | 5 }
+    | {
+        readonly mode: "queueing";
+        readonly priority?: 1 | 2 | 3 | 4 | 5;
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+      },
+) => {
+  const animationFrameScheduler = useAnimationFrameScheduler(options?.priority);
+
+  return useStream(
+    () =>
+      Streamable.animationGroup(animationGroup, {
+        mode: "switching",
+        ...((options as unknown) ?? {}),
+        scheduler: animationFrameScheduler,
+      }),
+    [animationFrameScheduler],
+  );
 };
 
 export const useScroll: Signature["useScroll"] = <TElement extends HTMLElement>(
