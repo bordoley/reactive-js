@@ -18,12 +18,15 @@ import * as Subject from "../concurrent/Subject.js";
 import {
   DispatcherLike,
   DispatcherLike_complete,
+  FlowableLike,
+  FlowableLike_flow,
   MulticastObservableLike,
   ObservableLike,
   PauseableLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
+  PauseableObservableLike,
   StreamOf,
   StreamableLike,
   StreamableLike_stream,
@@ -89,6 +92,28 @@ interface ReactModule {
     hasCurrent: boolean;
     current: T;
   };
+
+  /**
+   */
+  useFlow<T>(
+    flowable: FlowableLike<T>,
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: BackpressureStrategy;
+      readonly capacity?: number;
+      readonly replay?: number;
+    },
+  ): Optional<PauseableObservableLike<T>>;
+  useFlow<T>(
+    factory: Factory<FlowableLike<T>>,
+    dep: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: BackpressureStrategy;
+      readonly capacity?: number;
+      readonly replay?: number;
+    },
+  ): Optional<PauseableObservableLike<T>>;
 
   /**
    */
@@ -423,4 +448,52 @@ export const useStream: Signature["useStream"] = <
   );
 
   return stream;
+};
+
+export const useFlow: Signature["useFlow"] = <T>(
+  flowableOrFactory: FlowableLike<T> | Factory<FlowableLike<T>>,
+  optionsOrDeps:
+    | Optional<{
+        readonly priority?: 1 | 2 | 3 | 4 | 5;
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+        readonly replay?: number;
+      }>
+    | readonly unknown[],
+  optionsOrNone?: {
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly backpressureStrategy?: BackpressureStrategy;
+    readonly capacity?: number;
+    readonly replay?: number;
+  },
+) => {
+  const flowable = isFunction(flowableOrFactory)
+    ? useMemo(flowableOrFactory, optionsOrDeps as readonly unknown[])
+    : flowableOrFactory;
+
+  const {
+    backpressureStrategy,
+    capacity,
+    priority,
+    replay = 1,
+  } = (isFunction(flowableOrFactory)
+    ? optionsOrNone
+    : (optionsOrDeps as Optional<{
+        readonly priority?: 1 | 2 | 3 | 4 | 5;
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+        readonly replay?: number;
+      }>)) ?? {};
+
+  const pauseable = useDisposable(
+    () =>
+      flowable[FlowableLike_flow](ReactScheduler.get(priority), {
+        replay,
+        backpressureStrategy,
+        capacity,
+      }),
+    [flowable, priority, replay, backpressureStrategy, capacity],
+  );
+
+  return pauseable;
 };

@@ -10,6 +10,7 @@
 - [useDispatcher](integrations_react.md#usedispatcher)
 - [useDisposable](integrations_react.md#usedisposable)
 - [useEnumerator](integrations_react.md#useenumerator)
+- [useFlow](integrations_react.md#useflow)
 - [useListen](integrations_react.md#uselisten)
 - [useObserve](integrations_react.md#useobserve)
 - [usePauseable](integrations_react.md#usepauseable)
@@ -118,6 +119,57 @@ ___
 | `current` | `T` |
 | `hasCurrent` | `boolean` |
 | `move` | [`Factory`](functions.md#factory)\<`boolean`\> |
+
+___
+
+### useFlow
+
+▸ **useFlow**\<`T`\>(`flowable`, `options?`): [`Optional`](functions.md#optional)\<[`PauseableObservableLike`](../interfaces/concurrent.PauseableObservableLike.md)\<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `flowable` | [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)\<`T`\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
+| `options.capacity?` | `number` |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`Optional`](functions.md#optional)\<[`PauseableObservableLike`](../interfaces/concurrent.PauseableObservableLike.md)\<`T`\>\>
+
+▸ **useFlow**\<`T`\>(`factory`, `dep`, `options?`): [`Optional`](functions.md#optional)\<[`PauseableObservableLike`](../interfaces/concurrent.PauseableObservableLike.md)\<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)\<[`FlowableLike`](../interfaces/concurrent.FlowableLike.md)\<`T`\>\> |
+| `dep` | readonly `unknown`[] |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | [`BackpressureStrategy`](utils.md#backpressurestrategy) |
+| `options.capacity?` | `number` |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`Optional`](functions.md#optional)\<[`PauseableObservableLike`](../interfaces/concurrent.PauseableObservableLike.md)\<`T`\>\>
 
 ___
 

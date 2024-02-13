@@ -22,7 +22,6 @@ import {
 } from "@reactive-js/core/integrations/web";
 import {
   increment,
-  invoke,
   isNone,
   isSome,
   none,
@@ -58,7 +57,6 @@ import {
   PauseableLike_resume,
   PauseableLike_isPaused,
   PauseableLike_pause,
-  FlowableLike_flow,
   CacheLike_get,
 } from "@reactive-js/core/concurrent";
 import { EventSourceLike, StoreLike_value } from "@reactive-js/core/events";
@@ -69,6 +67,7 @@ import {
 } from "@reactive-js/core/collections";
 import * as Enumerable from "@reactive-js/core/collections/Enumerable";
 import * as Flowable from "@reactive-js/core/concurrent/Flowable";
+import { useFlow } from "@reactive-js/core/integrations/react";
 
 const AnimatedBox = ({
   animation,
@@ -216,11 +215,9 @@ const Counter = () => {
     }
   }, [history.uri, counterInitialValue, setCounterInitialValue]);
 
-  const counter = useDisposable(
-    () =>
-      pipe(
-        Enumerable.generate(increment, returns(counterInitialValue ?? -1)),
-        Observable.fromEnumerable(),
+  const counter = useFlow(
+      pipeLazy(
+        Observable.generate(increment, returns(counterInitialValue ?? -1)),
         Observable.forEach<number>(value =>
           history.replace((uri: WindowLocationURI) => ({
             ...uri,
@@ -228,7 +225,6 @@ const Counter = () => {
           })),
         ),
         Flowable.fromRunnable(),
-        invoke(FlowableLike_flow, ReactScheduler.get()),
       ),
     [history.replace, counterInitialValue],
   );

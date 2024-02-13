@@ -27,7 +27,7 @@ const Observable_actionReducer =
       return pipe(
         obs,
         Observable.scan<TAction, T>(reducer, returns(acc)),
-        Observable.mergeWith<T>(pipe([acc], Observable.fromIterable())),
+        Observable.mergeWith<T>(pipe(acc, Observable.fromValue())),
         Observable.distinctUntilChanged<T>(options),
         invoke(ObservableLike_observe, observer),
       );
