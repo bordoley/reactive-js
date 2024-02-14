@@ -14,6 +14,7 @@
 
 - [add](utils_Disposable.DisposableModule.md#add)
 - [addTo](utils_Disposable.DisposableModule.md#addto)
+- [addToContainer](utils_Disposable.DisposableModule.md#addtocontainer)
 - [bindTo](utils_Disposable.DisposableModule.md#bindto)
 - [create](utils_Disposable.DisposableModule.md#create)
 - [raiseIfDisposedWithError](utils_Disposable.DisposableModule.md#raiseifdisposedwitherror)
@@ -33,7 +34,7 @@
 
 ### add
 
-▸ **add**\<`TDisposable`\>(`child`, `options?`): [`Updater`](../modules/functions.md#updater)\<`TDisposable`\>
+▸ **add**\<`TDisposable`\>(`child`): [`Updater`](../modules/functions.md#updater)\<`TDisposable`\>
 
 #### Type parameters
 
@@ -46,8 +47,6 @@
 | Name | Type |
 | :------ | :------ |
 | `child` | [`DisposableLike`](utils.DisposableLike.md) |
-| `options?` | `Object` |
-| `options.ignoreChildErrors?` | `boolean` |
 
 #### Returns
 
@@ -57,7 +56,7 @@ ___
 
 ### addTo
 
-▸ **addTo**\<`TDisposable`\>(`parent`, `options?`): [`Updater`](../modules/functions.md#updater)\<`TDisposable`\>
+▸ **addTo**\<`TDisposable`\>(`parent`): [`Updater`](../modules/functions.md#updater)\<`TDisposable`\>
 
 #### Type parameters
 
@@ -70,8 +69,28 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `parent` | [`DisposableLike`](utils.DisposableLike.md) |
-| `options?` | `Object` |
-| `options.ignoreChildErrors?` | `boolean` |
+
+#### Returns
+
+[`Updater`](../modules/functions.md#updater)\<`TDisposable`\>
+
+___
+
+### addToContainer
+
+▸ **addToContainer**\<`TDisposable`\>(`parent`): [`Updater`](../modules/functions.md#updater)\<`TDisposable`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TDisposable` | extends [`DisposableLike`](utils.DisposableLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `parent` | [`DisposableContainerLike`](utils.DisposableContainerLike.md) |
 
 #### Returns
 

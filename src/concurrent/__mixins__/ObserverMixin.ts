@@ -195,7 +195,7 @@ const ObserverMixin: <T>() => Mixin2<
               continuation,
               options,
             ),
-            Disposable.addTo(this, { ignoreChildErrors: true }),
+            Disposable.addToContainer(this),
           );
         },
 

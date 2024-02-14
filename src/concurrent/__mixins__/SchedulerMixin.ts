@@ -224,7 +224,7 @@ const SchedulerMixin: Mixin1<
 
         const continuation = pipe(
           QueableContinuation.create(this, effect, dueTime),
-          Disposable.addTo(this, { ignoreChildErrors: true }),
+          Disposable.addToContainer(this),
         );
 
         this[QueueableContinuationSchedulerLike_schedule](continuation);

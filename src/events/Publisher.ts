@@ -93,7 +93,8 @@ export const create: <T>(options?: {
         this: TProperties & PublisherLike<T>,
         listener: EventListenerLike<T>,
       ) {
-        pipe(this, Disposable.add(listener, { ignoreChildErrors: true }));
+        this;
+        pipe(listener, Disposable.addToContainer(this));
 
         if (this[DisposableLike_isDisposed]) {
           return;

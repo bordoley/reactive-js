@@ -52,7 +52,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
           observable,
           Observable_forEach(bindMethod(delegate, ObserverLike_notify)),
           Observable_subscribeWithConfig(delegate, delegate),
-          Disposable.addTo(delegate, { ignoreChildErrors: true }),
+          Disposable.addToContainer(delegate),
           DisposableContainer.onDisposed(doOnDispose),
         );
       }
@@ -60,7 +60,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
 
     return pipe(
       Observer_createWithDelegate(delegate),
-      Disposable.addTo(delegate, { ignoreChildErrors: true }),
+      Disposable.addToContainer(delegate),
       DisposableContainer.onDisposed(doOnDispose),
     );
   };

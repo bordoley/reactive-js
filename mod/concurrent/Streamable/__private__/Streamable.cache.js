@@ -106,7 +106,7 @@ const cacheStream = /*@__PURE__*/ (() => {
                     pipe(subject, DisposableContainer.onDisposed(_ => {
                         subscriptions[Map_delete](key);
                         scheduleCleanup(key);
-                    }), Disposable.addTo(this, { ignoreChildErrors: true }));
+                    }), Disposable.addToContainer(this));
                     const initialValue = store[Map_get](key);
                     if (isSome(initialValue)) {
                         subject[EventListenerLike_notify](initialValue);

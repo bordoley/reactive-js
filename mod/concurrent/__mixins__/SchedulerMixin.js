@@ -100,7 +100,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 return Disposable.disposed;
             }
             const dueTime = this[SchedulerLike_now] + clampPositiveInteger(options?.delay ?? 0);
-            const continuation = pipe(QueableContinuation.create(this, effect, dueTime), Disposable.addTo(this, { ignoreChildErrors: true }));
+            const continuation = pipe(QueableContinuation.create(this, effect, dueTime), Disposable.addToContainer(this));
             this[QueueableContinuationSchedulerLike_schedule](continuation);
             return continuation;
         },

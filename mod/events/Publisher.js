@@ -40,7 +40,8 @@ export const create = /*@__PURE__*/ (() => {
             }
         },
         [EventSourceLike_addEventListener](listener) {
-            pipe(this, Disposable.add(listener, { ignoreChildErrors: true }));
+            this;
+            pipe(listener, Disposable.addToContainer(this));
             if (this[DisposableLike_isDisposed]) {
                 return;
             }

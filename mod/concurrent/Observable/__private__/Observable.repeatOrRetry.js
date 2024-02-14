@@ -26,10 +26,10 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
             }
             else {
                 count++;
-                pipe(observable, Observable_forEach(bindMethod(delegate, ObserverLike_notify)), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(delegate, { ignoreChildErrors: true }), DisposableContainer.onDisposed(doOnDispose));
+                pipe(observable, Observable_forEach(bindMethod(delegate, ObserverLike_notify)), Observable_subscribeWithConfig(delegate, delegate), Disposable.addToContainer(delegate), DisposableContainer.onDisposed(doOnDispose));
             }
         };
-        return pipe(Observer_createWithDelegate(delegate), Disposable.addTo(delegate, { ignoreChildErrors: true }), DisposableContainer.onDisposed(doOnDispose));
+        return pipe(Observer_createWithDelegate(delegate), Disposable.addToContainer(delegate), DisposableContainer.onDisposed(doOnDispose));
     };
     return ((shouldRepeat) => (observable) => Observable_liftPure(pipe(createRepeatObserver, partial(observable, shouldRepeat)))(observable));
 })();

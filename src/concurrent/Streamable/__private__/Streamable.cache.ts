@@ -319,7 +319,7 @@ const cacheStream: <T>(
                 subscriptions[Map_delete](key);
                 scheduleCleanup(key);
               }),
-              Disposable.addTo(this, { ignoreChildErrors: true }),
+              Disposable.addToContainer(this),
             );
 
             const initialValue = store[Map_get](key);

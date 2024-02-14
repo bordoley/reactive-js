@@ -62,7 +62,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             this[ObserverMixin_scheduler][SchedulerLike_requestYield]();
         },
         [SchedulerLike_schedule](continuation, options) {
-            return pipe(this[ObserverMixin_scheduler][SchedulerLike_schedule](continuation, options), Disposable.addTo(this, { ignoreChildErrors: true }));
+            return pipe(this[ObserverMixin_scheduler][SchedulerLike_schedule](continuation, options), Disposable.addToContainer(this));
         },
         [QueueableLike_enqueue](next) {
             if (!this[DispatcherLike_isCompleted] &&

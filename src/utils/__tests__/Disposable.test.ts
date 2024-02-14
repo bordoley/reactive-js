@@ -22,10 +22,7 @@ testModule(
     "add",
     test("disposes child disposable when disposed", () => {
       const child = Disposable.create();
-      const disposable = pipe(
-        Disposable.create(),
-        Disposable.add(child, { ignoreChildErrors: true }),
-      );
+      const disposable = pipe(Disposable.create(), Disposable.add(child));
       disposable[DisposableLike_dispose]();
       pipe(child[DisposableLike_isDisposed], expectTrue);
     }),
@@ -34,7 +31,7 @@ testModule(
       const disposable = Disposable.create();
       disposable[DisposableLike_dispose]();
 
-      pipe(disposable, Disposable.add(child, { ignoreChildErrors: true }));
+      pipe(disposable, Disposable.add(child));
 
       pipe(child[DisposableLike_isDisposed], expectTrue);
     }),

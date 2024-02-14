@@ -6,9 +6,10 @@ import {
   SideEffect1,
   Updater,
 } from "../functions.js";
-import { DisposableLike } from "../utils.js";
+import { DisposableContainerLike, DisposableLike } from "../utils.js";
 import Disposable_add from "./Disposable/__private__/Disposable.add.js";
 import Disposable_addTo from "./Disposable/__private__/Disposable.addTo.js";
+import Disposable_addToContainer from "./Disposable/__private__/Disposable.addToContainer.js";
 import Disposable_bindTo from "./Disposable/__private__/Disposable.bindTo.js";
 import Disposable_create from "./Disposable/__private__/Disposable.create.js";
 import Disposable_disposed from "./Disposable/__private__/Disposable.disposed.js";
@@ -24,16 +25,14 @@ export interface DisposableModule {
 
   add<TDisposable extends DisposableLike>(
     child: DisposableLike,
-    options?: {
-      readonly ignoreChildErrors?: boolean;
-    },
   ): Updater<TDisposable>;
 
   addTo<TDisposable extends DisposableLike>(
     parent: DisposableLike,
-    options?: {
-      readonly ignoreChildErrors?: boolean;
-    },
+  ): Updater<TDisposable>;
+
+  addToContainer<TDisposable extends DisposableLike>(
+    parent: DisposableContainerLike,
   ): Updater<TDisposable>;
 
   bindTo<TDisposable extends DisposableLike>(
@@ -166,6 +165,8 @@ export type Signature = DisposableModule;
 
 export const add: Signature["add"] = Disposable_add;
 export const addTo: Signature["addTo"] = Disposable_addTo;
+export const addToContainer: Signature["addToContainer"] =
+  Disposable_addToContainer;
 export const bindTo: Signature["bindTo"] = Disposable_bindTo;
 export const create: Signature["create"] = Disposable_create;
 export const disposed: Signature["disposed"] = Disposable_disposed;
