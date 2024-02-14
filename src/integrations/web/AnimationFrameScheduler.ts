@@ -1,4 +1,9 @@
-import { globalObject } from "../../__internal__/constants.js";
+import {
+  Map_delete,
+  Map_get,
+  Map_set,
+  globalObject,
+} from "../../__internal__/constants.js";
 import {
   include,
   init,
@@ -26,12 +31,14 @@ import {
   Optional,
   invoke,
   isSome,
+  newInstance,
   none,
   pipe,
   pipeLazy,
   raiseIfNone,
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
 import {
   DisposableContainerLike_add,
@@ -43,10 +50,10 @@ import {
 } from "../../utils.js";
 
 interface Signature {
-  create(delayScheduler: SchedulerLike): SchedulerLike & DisposableLike;
+  get(delayScheduler: SchedulerLike): SchedulerLike;
 }
 
-export const create: Signature["create"] = /*@__PURE__*/ (() => {
+const create = /*@__PURE__*/ (() => {
   const AnimationFrameScheduler_delayScheduler = Symbol(
     "AnimationFrameScheduler_delayScheduler",
   );
@@ -186,4 +193,25 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
       },
     },
   );
+})();
+
+export const get: Signature["get"] = /*@__PURE__*/ (() => {
+  const schedulerCache: Map<SchedulerLike, SchedulerLike> =
+    newInstance<Map<SchedulerLike, SchedulerLike>>(Map);
+
+  return (scheduler: SchedulerLike) =>
+    schedulerCache[Map_get](scheduler) ??
+    (() => {
+      const animationFrameScheduler = create(scheduler);
+      schedulerCache[Map_set](scheduler, animationFrameScheduler);
+
+      pipe(
+        animationFrameScheduler,
+        DisposableContainer.onDisposed(_ =>
+          schedulerCache[Map_delete](scheduler),
+        ),
+      );
+
+      return scheduler;
+    })();
 })();

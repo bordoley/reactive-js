@@ -1,11 +1,9 @@
 import React, { useMemo } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
-import { useDisposable } from "@reactive-js/core/integrations/react";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
 import {
   pipe,
-  pipeLazy,
   pipeSomeLazy,
   returns,
 } from "@reactive-js/core/functions";
@@ -28,10 +26,7 @@ import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler"
 type Point = { x: number; y: number };
 
 const Root = () => {
-  const animationScheduler = useDisposable(
-    pipeLazy(ReactScheduler.get(), AnimationFrameScheduler.create),
-    [],
-  );
+  const animationScheduler = AnimationFrameScheduler.get(ReactScheduler.get());
 
   const spring = useMemo(
     pipeSomeLazy(animationScheduler, animationScheduler =>

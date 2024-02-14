@@ -1,16 +1,17 @@
 /// <reference types="./AnimationFrameScheduler.d.ts" />
 
-import { globalObject } from "../../__internal__/constants.js";
+import { Map_delete, Map_get, Map_set, globalObject, } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "../../concurrent/__internal__/Continuation.js";
 import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "../../concurrent/__internal__/ContinuationScheduler.js";
 import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
 import { SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
-import { invoke, isSome, none, pipe, pipeLazy, raiseIfNone, } from "../../functions.js";
+import { invoke, isSome, newInstance, none, pipe, pipeLazy, raiseIfNone, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
 import { DisposableContainerLike_add, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
-export const create = /*@__PURE__*/ (() => {
+const create = /*@__PURE__*/ (() => {
     const AnimationFrameScheduler_delayScheduler = Symbol("AnimationFrameScheduler_delayScheduler");
     const AnimationFrameScheduler_rafCallback = Symbol("AnimationFrameScheduler_rafCallback");
     const AnimationFrameScheduler_rafQueue = Symbol("AnimationFrameScheduler_rafQueue");
@@ -87,4 +88,14 @@ export const create = /*@__PURE__*/ (() => {
             }
         },
     });
+})();
+export const get = /*@__PURE__*/ (() => {
+    const schedulerCache = newInstance(Map);
+    return (scheduler) => schedulerCache[Map_get](scheduler) ??
+        (() => {
+            const animationFrameScheduler = create(scheduler);
+            schedulerCache[Map_set](scheduler, animationFrameScheduler);
+            pipe(animationFrameScheduler, DisposableContainer.onDisposed(_ => schedulerCache[Map_delete](scheduler)));
+            return scheduler;
+        })();
 })();

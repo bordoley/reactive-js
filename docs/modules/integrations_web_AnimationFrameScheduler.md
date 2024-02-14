@@ -6,13 +6,13 @@
 
 ### Functions
 
-- [create](integrations_web_AnimationFrameScheduler.md#create)
+- [get](integrations_web_AnimationFrameScheduler.md#get)
 
 ## Functions
 
-### create
+### get
 
-▸ **create**(`delayScheduler`): [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) & [`DisposableLike`](../interfaces/utils.DisposableLike.md)
+▸ **get**(`delayScheduler`): [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md)
 
 #### Parameters
 
@@ -22,4 +22,4 @@
 
 #### Returns
 
-[`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) & [`DisposableLike`](../interfaces/utils.DisposableLike.md)
+[`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md)

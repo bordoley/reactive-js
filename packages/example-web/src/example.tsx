@@ -45,12 +45,11 @@ import {
   __stream,
   __using,
 } from "@reactive-js/core/concurrent/Observable/effects";
-import { __animate } from "@reactive-js/core/integrations/web/effects";
+import { __animate, __animationFrameScheduler } from "@reactive-js/core/integrations/web/effects";
 import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
 import * as PauseableScheduler from "@reactive-js/core/concurrent/PauseableScheduler";
-import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import {
   ObservableLike,
@@ -311,18 +310,14 @@ const RxComponent = createComponent(
     return Observable.computeDeferred(() => {
       const { windowLocation } = __await(props);
       const uri = __await(windowLocation);
-
-      const scheduler = __currentScheduler();
-      const animationScheduler = __using(
-        AnimationFrameScheduler.create,
-        scheduler,
-      );
+      
+      const animationScheduler = __animationFrameScheduler();
 
       const createScheduler = __constant(() => {
         const scheduler = PauseableScheduler.create(animationScheduler);
         scheduler[PauseableLike_resume]();
         return scheduler;
-      }, scheduler);
+      }, animationScheduler);
 
       const pauseableScheduler = __using(createScheduler);
 

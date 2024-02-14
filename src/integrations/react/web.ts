@@ -8,21 +8,11 @@ import {
   useState,
 } from "react";
 import type * as React from "react";
-import { unstable_NormalPriority } from "scheduler";
-import {
-  Map_delete,
-  Map_get,
-  Map_set,
-  nullObject,
-} from "../../__internal__/constants.js";
+import { nullObject } from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { DictionaryLike, ReadonlyObjectMapLike } from "../../collections.js";
 import * as Streamable from "../../concurrent/Streamable.js";
-import {
-  PureRunnableLike,
-  SchedulerLike,
-  StreamLike,
-} from "../../concurrent.js";
+import { PureRunnableLike, StreamLike } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import { EventSourceLike, StoreLike_value } from "../../events.js";
 import {
@@ -33,12 +23,10 @@ import {
   identity,
   isFunction,
   isNull,
-  newInstance,
   none,
   pipe,
   pipeSomeLazy,
 } from "../../functions.js";
-import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { BackpressureStrategy } from "../../utils.js";
 import { useDisposable, useListen, useObserve, useStream } from "../react.js";
 import * as AnimationFrameScheduler from "../web/AnimationFrameScheduler.js";
@@ -114,28 +102,8 @@ const WindowLocationContext = /*@__PURE__*/ createContext<WindowLocationLike>(
   none as unknown as WindowLocationLike,
 );
 
-const useAnimationFrameScheduler = /*@__PURE__*/ (() => {
-  const schedulerCache: Map<1 | 2 | 3 | 4 | 5, SchedulerLike> =
-    newInstance<Map<1 | 2 | 3 | 4 | 5, SchedulerLike>>(Map);
-
-  return (priority: 1 | 2 | 3 | 4 | 5 = unstable_NormalPriority) =>
-    schedulerCache[Map_get](priority) ??
-    (() => {
-      const animationFrameScheduler = AnimationFrameScheduler.create(
-        ReactScheduler.get(priority),
-      );
-      schedulerCache[Map_set](priority, animationFrameScheduler);
-
-      pipe(
-        animationFrameScheduler,
-        DisposableContainer.onDisposed(_ =>
-          schedulerCache[Map_delete](priority),
-        ),
-      );
-
-      return animationFrameScheduler;
-    })();
-})();
+const useAnimationFrameScheduler = (priority?: 1 | 2 | 3 | 4 | 5) =>
+  AnimationFrameScheduler.get(ReactScheduler.get(priority));
 
 export const useAnimate: Signature["useAnimate"] = <
   TElement extends HTMLElement,

@@ -1,9 +1,4 @@
-import {
-  Map_delete,
-  Map_get,
-  Map_set,
-  nullObject,
-} from "../../__internal__/constants.js";
+import { nullObject } from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { DictionaryLike, ReadonlyObjectMapLike } from "../../collections.js";
 import {
@@ -30,13 +25,11 @@ import {
   Updater,
   compose,
   identity,
-  newInstance,
   none,
   pipe,
   returns,
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
-import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import {
   BackpressureStrategy,
   DisposableLike,
@@ -55,6 +48,8 @@ interface WebEffectsModule {
     animation: EventSourceLike<T>,
     selector: (ev: T) => CSSStyleMapLike,
   ): SideEffect1<Optional<HTMLElement | null>>;
+
+  __animationFrameScheduler(): SchedulerLike;
 
   __animationGroup<T, TEvent = unknown, TKey extends string = string>(
     animationGroup: ReadonlyObjectMapLike<
@@ -123,31 +118,11 @@ export const __animate: Signature["__animate"] = (
   return setRef;
 };
 
-const __animationFrameScheduler: () => SchedulerLike = /*@__PURE__*/ (() => {
-  const schedulerCache: Map<SchedulerLike, SchedulerLike> =
-    newInstance<Map<SchedulerLike, SchedulerLike>>(Map);
-
-  return () => {
+export const __animationFrameScheduler: Signature["__animationFrameScheduler"] =
+  () => {
     const scheduler = __currentScheduler();
-    return (
-      schedulerCache[Map_get](scheduler) ??
-      (() => {
-        const animationFrameScheduler =
-          AnimationFrameScheduler.create(scheduler);
-        schedulerCache[Map_set](scheduler, animationFrameScheduler);
-
-        pipe(
-          animationFrameScheduler,
-          DisposableContainer.onDisposed(_ =>
-            schedulerCache[Map_delete](scheduler),
-          ),
-        );
-
-        return scheduler;
-      })()
-    );
+    return AnimationFrameScheduler.get(scheduler);
   };
-})();
 
 export const __animationGroup: Signature["__animationGroup"] = <
   T,
