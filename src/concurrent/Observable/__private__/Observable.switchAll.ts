@@ -17,6 +17,7 @@ import {
 } from "../../../concurrent.js";
 import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
@@ -76,7 +77,10 @@ const createSwitchAllObserver: <T>(
             Disposable.addTo(delegate),
           );
 
-          pipe(instance, Disposable.onComplete(bind(onDispose, instance)));
+          pipe(
+            instance,
+            DisposableContainer.onComplete(bind(onDispose, instance)),
+          );
 
           return instance;
         },
@@ -105,7 +109,7 @@ const createSwitchAllObserver: <T>(
                   this,
                 ),
                 Disposable.addTo(this[SwitchAllObserver_delegate]),
-                Disposable.onComplete(() => {
+                DisposableContainer.onComplete(() => {
                   if (this[DisposableLike_isDisposed]) {
                     this[SwitchAllObserver_delegate][DisposableLike_dispose]();
                   }

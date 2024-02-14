@@ -10,6 +10,7 @@
 
 ### Interfaces
 
+- [DisposableContainerLike](../interfaces/utils.DisposableContainerLike.md)
 - [DisposableLike](../interfaces/utils.DisposableLike.md)
 - [IndexedQueueLike](../interfaces/utils.IndexedQueueLike.md)
 - [QueueLike](../interfaces/utils.QueueLike.md)
@@ -23,7 +24,7 @@
 
 ### Variables
 
-- [DisposableLike\_add](utils.md#disposablelike_add)
+- [DisposableContainerLike\_add](utils.md#disposablecontainerlike_add)
 - [DisposableLike\_dispose](utils.md#disposablelike_dispose)
 - [DisposableLike\_error](utils.md#disposablelike_error)
 - [DisposableLike\_isDisposed](utils.md#disposablelike_isdisposed)
@@ -51,9 +52,9 @@
 
 ## Variables
 
-### DisposableLike\_add
+### DisposableContainerLike\_add
 
-• `Const` **DisposableLike\_add**: unique `symbol`
+• `Const` **DisposableContainerLike\_add**: unique `symbol`
 
 ___
 

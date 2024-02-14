@@ -34,6 +34,7 @@ import { SideEffect1, call, none, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
 import {
+  DisposableContainerLike,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -111,7 +112,7 @@ const ObserverMixin: <T>() => Mixin2<
     mix<
       ObserverLike<T>,
       TProperties,
-      SchedulerLike &
+      Omit<SchedulerLike, keyof DisposableContainerLike> &
         Pick<
           ObserverLike<T>,
           | typeof ObserverLike_notify
@@ -128,7 +129,7 @@ const ObserverMixin: <T>() => Mixin2<
     >(
       include(IndexedQueueMixin(), LazyInitEventSourceMixin()),
       function ObserverMixin(
-        instance: SchedulerLike &
+        instance: Omit<SchedulerLike, keyof DisposableContainerLike> &
           DisposableLike &
           Pick<
             ObserverLike<T>,

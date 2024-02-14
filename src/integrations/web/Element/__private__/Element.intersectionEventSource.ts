@@ -13,7 +13,7 @@ import {
   PublisherLike,
 } from "../../../../events.js";
 import { isNone, newInstance, pipe } from "../../../../functions.js";
-import * as Disposable from "../../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 import type * as Element from "../../Element.js";
 
 const Element_intersectionEventSource: Element.Signature["intersectionEventSource"] =
@@ -80,7 +80,7 @@ const Element_intersectionEventSource: Element.Signature["intersectionEventSourc
 
               return pipe(
                 publisher,
-                Disposable.onDisposed(() => {
+                DisposableContainer.onDisposed(() => {
                   const intersectionObserver =
                     intersectionObservers[Map_get](root);
                   intersectionObserver?.unobserve(child);

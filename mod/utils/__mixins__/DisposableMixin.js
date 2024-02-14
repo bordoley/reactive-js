@@ -3,7 +3,7 @@
 import { Set, Set_add, Set_delete, Set_has, } from "../../__internal__/constants.js";
 import { mix, props } from "../../__internal__/mixins.js";
 import { isFunction, newInstance, none, } from "../../functions.js";
-import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
+import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
 const DisposableMixin_disposables = Symbol("DisposableMixin_disposables");
 const doDispose = (instance, disposable) => {
     const error = instance[DisposableLike_error];
@@ -41,7 +41,7 @@ const DisposableMixin = /*@__PURE__*/ mix(function DisposableMixin(instance) {
             }
         }
     },
-    [DisposableLike_add](disposable) {
+    [DisposableContainerLike_add](disposable) {
         const disposables = this[DisposableMixin_disposables];
         if (this === disposable) {
             return;
@@ -52,7 +52,7 @@ const DisposableMixin = /*@__PURE__*/ mix(function DisposableMixin(instance) {
         else if (!disposables[Set_has](disposable)) {
             disposables[Set_add](disposable);
             if (!isFunction(disposable)) {
-                disposable[DisposableLike_add](_ => {
+                disposable[DisposableContainerLike_add](_ => {
                     disposables[Set_delete](disposable);
                 });
             }

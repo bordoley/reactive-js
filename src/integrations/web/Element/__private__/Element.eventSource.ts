@@ -4,7 +4,7 @@ import {
   EventSourceLike,
 } from "../../../../events.js";
 import { Function1, bindMethod, pipe } from "../../../../functions.js";
-import * as Disposable from "../../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 
 export type EventTarget = {
   addEventListener(
@@ -33,7 +33,7 @@ const Element_eventSource: (
 
       pipe(
         listener,
-        Disposable.onDisposed(_ => {
+        DisposableContainer.onDisposed(_ => {
           target.removeEventListener(eventName, eventHandler);
         }),
       );

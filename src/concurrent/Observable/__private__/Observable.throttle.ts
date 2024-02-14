@@ -23,6 +23,7 @@ import {
   pipeLazy,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
@@ -124,7 +125,7 @@ const createThrottleObserver: <T>(
 
           pipe(
             instance,
-            Disposable.onComplete(() => {
+            DisposableContainer.onComplete(() => {
               if (
                 instance[ThrottleObserver_mode] !== ThrottleFirstMode &&
                 instance[ThrottleObserver_hasValue] &&

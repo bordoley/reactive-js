@@ -9,7 +9,12 @@ import {
 } from "react";
 import type * as React from "react";
 import { unstable_NormalPriority } from "scheduler";
-import { Map_get, Map_set, nullObject } from "../../__internal__/constants.js";
+import {
+  Map_delete,
+  Map_get,
+  Map_set,
+  nullObject,
+} from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { DictionaryLike, ReadonlyObjectMapLike } from "../../collections.js";
 import * as Streamable from "../../concurrent/Streamable.js";
@@ -33,6 +38,7 @@ import {
   pipe,
   pipeSomeLazy,
 } from "../../functions.js";
+import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { BackpressureStrategy } from "../../utils.js";
 import { useDisposable, useListen, useObserve, useStream } from "../react.js";
 import * as AnimationFrameScheduler from "../web/AnimationFrameScheduler.js";
@@ -115,11 +121,19 @@ const useAnimationFrameScheduler = /*@__PURE__*/ (() => {
   return (priority: 1 | 2 | 3 | 4 | 5 = unstable_NormalPriority) =>
     schedulerCache[Map_get](priority) ??
     (() => {
-      const scheduler = AnimationFrameScheduler.create(
+      const animationFrameScheduler = AnimationFrameScheduler.create(
         ReactScheduler.get(priority),
       );
-      schedulerCache[Map_set](priority, scheduler);
-      return scheduler;
+      schedulerCache[Map_set](priority, animationFrameScheduler);
+
+      pipe(
+        animationFrameScheduler,
+        DisposableContainer.onDisposed(_ =>
+          schedulerCache[Map_delete](priority),
+        ),
+      );
+
+      return animationFrameScheduler;
     })();
 })();
 

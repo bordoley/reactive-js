@@ -8,6 +8,7 @@ import {
 import { SchedulerLike, SchedulerLike_now } from "../concurrent.js";
 import { isSome, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
+import * as DisposableContainer from "../utils/DisposableContainer.js";
 import { DisposableLike, DisposableLike_dispose } from "../utils.js";
 import {
   ContinuationLike,
@@ -38,7 +39,7 @@ const scheduleDelayed = (
   const disposable = pipe(
     Disposable.create(),
     Disposable.addTo(continuation),
-    Disposable.onDisposed(_ => globalObject.clearTimeout(timeout)),
+    DisposableContainer.onDisposed(_ => globalObject.clearTimeout(timeout)),
   );
 
   const timeout: ReturnType<typeof setTimeout> = globalObject.setTimeout(
@@ -59,7 +60,9 @@ const scheduleImmediate = (
     const disposable = pipe(
       Disposable.create(),
       Disposable.addTo(continuation),
-      Disposable.onDisposed(() => globalObject.clearImmediate(immmediate)),
+      DisposableContainer.onDisposed(() =>
+        globalObject.clearImmediate(immmediate),
+      ),
     );
     const immmediate: ReturnType<typeof setImmediate> = setImmediate(
       runContinuation,

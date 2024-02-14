@@ -3,7 +3,7 @@
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
 import { EventSourceLike_addEventListener, } from "../../../events.js";
 import { error, none, pipe, } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Publisher from "../../Publisher.js";
 const EventSource_create = /*@__PURE__*/ (() => {
@@ -21,7 +21,7 @@ const EventSource_create = /*@__PURE__*/ (() => {
                 (() => {
                     const delegate = pipe(Publisher.create({
                         autoDispose: true,
-                    }), Disposable.onDisposed(() => {
+                    }), DisposableContainer.onDisposed(() => {
                         this[CreateEventSource_delegate] = none;
                     }));
                     this[CreateEventSource_delegate] = delegate;

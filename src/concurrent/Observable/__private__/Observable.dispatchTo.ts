@@ -4,7 +4,7 @@ import {
   ObserverLike,
 } from "../../../concurrent.js";
 import { bindMethod, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createEnqueueObserver from "../../Observer/__private__/Observer.createEnqueueObserver.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
@@ -15,7 +15,9 @@ const Observable_dispatchTo: Observable.Signature["dispatchTo"] = <T>(
   Observable_liftWithSideEffects((observer: ObserverLike<T>) =>
     pipe(
       Observer_createEnqueueObserver(observer, dispatcher),
-      Disposable.onComplete(bindMethod(dispatcher, DispatcherLike_complete)),
+      DisposableContainer.onComplete(
+        bindMethod(dispatcher, DispatcherLike_complete),
+      ),
     ),
   );
 

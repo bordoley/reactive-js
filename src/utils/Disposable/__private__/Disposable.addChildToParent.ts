@@ -1,10 +1,10 @@
 import { bindMethod, pipe } from "../../../functions.js";
 import {
+  DisposableContainerLike_add,
   DisposableLike,
-  DisposableLike_add,
   DisposableLike_dispose,
 } from "../../../utils.js";
-import Disposable_onError from "./Disposable.onError.js";
+import Disposable_onError from "../../DisposableContainer/__private__/DisposableContainer.onError.js";
 
 const Disposable_addChildToParent = (
   parent: DisposableLike,
@@ -13,7 +13,7 @@ const Disposable_addChildToParent = (
 ) => {
   const { ignoreChildErrors = false } = options ?? {};
 
-  parent[DisposableLike_add](child);
+  parent[DisposableContainerLike_add](child);
 
   if (!ignoreChildErrors) {
     pipe(child, Disposable_onError(bindMethod(parent, DisposableLike_dispose)));

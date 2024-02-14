@@ -3,7 +3,7 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { ObserverLike_notify } from "../../../concurrent.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
@@ -16,7 +16,7 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
         instance[ThrowIfEmptyObserver_delegate] = delegate;
-        pipe(instance, Disposable.onComplete(() => {
+        pipe(instance, DisposableContainer.onComplete(() => {
             let err = none;
             if (instance[ThrowIfEmptyObserver_isEmpty]) {
                 try {

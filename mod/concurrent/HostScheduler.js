@@ -5,18 +5,19 @@ import { include, init, mixInstanceFactory, props, } from "../__internal__/mixin
 import { SchedulerLike_now } from "../concurrent.js";
 import { isSome, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
+import * as DisposableContainer from "../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../utils.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "./__internal__/Continuation.js";
 import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "./__internal__/ContinuationScheduler.js";
 import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
 const scheduleDelayed = (scheduler, continuation, delay) => {
-    const disposable = pipe(Disposable.create(), Disposable.addTo(continuation), Disposable.onDisposed(_ => globalObject.clearTimeout(timeout)));
+    const disposable = pipe(Disposable.create(), Disposable.addTo(continuation), DisposableContainer.onDisposed(_ => globalObject.clearTimeout(timeout)));
     const timeout = globalObject.setTimeout(runContinuation, delay, scheduler, continuation, disposable);
 };
 const scheduleImmediate = (scheduler, continuation) => {
     const { setImmediate } = globalObject;
     if (isSome(setImmediate)) {
-        const disposable = pipe(Disposable.create(), Disposable.addTo(continuation), Disposable.onDisposed(() => globalObject.clearImmediate(immmediate)));
+        const disposable = pipe(Disposable.create(), Disposable.addTo(continuation), DisposableContainer.onDisposed(() => globalObject.clearImmediate(immmediate)));
         const immmediate = setImmediate(runContinuation, scheduler, continuation, disposable);
     }
     else {

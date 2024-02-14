@@ -8,6 +8,7 @@ import { CacheLike_get, ContinuationContextLike_yield, SchedulerLike_schedule, S
 import { EventListenerLike_notify } from "../../../events.js";
 import { bindMethod, compose, identity, invoke, isNone, isSome, newInstance, none, pipe, tuple, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import { DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
@@ -102,7 +103,7 @@ const cacheStream = /*@__PURE__*/ (() => {
                         replay: 1,
                     });
                     subscriptions[Map_set](key, subject);
-                    pipe(subject, Disposable.onDisposed(_ => {
+                    pipe(subject, DisposableContainer.onDisposed(_ => {
                         subscriptions[Map_delete](key);
                         scheduleCleanup(key);
                     }), Disposable.addTo(this, { ignoreChildErrors: true }));

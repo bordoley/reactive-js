@@ -5,7 +5,7 @@ import * as EventSource from "../../../../events/EventSource.js";
 import * as Publisher from "../../../../events/Publisher.js";
 import { EventListenerLike_notify, EventSourceLike_addEventListener, } from "../../../../events.js";
 import { isNone, newInstance, pipe } from "../../../../functions.js";
-import * as Disposable from "../../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 const Element_intersectionEventSource = 
 /*@__PURE__*/ (() => {
     const intersectionObservers = newInstance(Map);
@@ -40,7 +40,7 @@ const Element_intersectionEventSource =
                         return intersectionObserver;
                     })();
                 intersectionObserver.observe(child);
-                return pipe(publisher, Disposable.onDisposed(() => {
+                return pipe(publisher, DisposableContainer.onDisposed(() => {
                     const intersectionObserver = intersectionObservers[Map_get](root);
                     intersectionObserver?.unobserve(child);
                     const childToPublisherMap = eventPublishers[Map_get](root);

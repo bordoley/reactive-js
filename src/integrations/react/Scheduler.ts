@@ -5,7 +5,12 @@ import {
   unstable_scheduleCallback,
   unstable_shouldYield,
 } from "scheduler";
-import { Map, Map_get, Map_set } from "../../__internal__/constants.js";
+import {
+  Map,
+  Map_delete,
+  Map_get,
+  Map_set,
+} from "../../__internal__/constants.js";
 import {
   include,
   init,
@@ -26,6 +31,7 @@ import SchedulerMixin from "../../concurrent/__mixins__/SchedulerMixin.js";
 import { SchedulerLike, SchedulerLike_now } from "../../concurrent.js";
 import { newInstance, none, pipe, pipeLazy } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { DisposableLike, DisposableLike_dispose } from "../../utils.js";
 
 interface ReactSchedulerModule {
@@ -84,7 +90,7 @@ const createReactScheduler = /*@__PURE__*/ (() => {
 
         const callbackNodeDisposable = pipe(
           Disposable.create(),
-          Disposable.onDisposed(
+          DisposableContainer.onDisposed(
             pipeLazy(callbackNode, unstable_cancelCallback),
           ),
           Disposable.addTo(continuation),
@@ -102,6 +108,12 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
     (() => {
       const scheduler = createReactScheduler(priority);
       schedulerCache[Map_set](priority, scheduler);
+      pipe(
+        scheduler,
+        DisposableContainer.onDisposed(_ =>
+          schedulerCache[Map_delete](priority),
+        ),
+      );
       return scheduler;
     })();
 })();

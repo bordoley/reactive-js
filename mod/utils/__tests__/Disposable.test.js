@@ -1,8 +1,8 @@
 /// <reference types="./Disposable.test.d.ts" />
 
 import { Array_push } from "../../__internal__/constants.js";
-import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectToHaveBeenCalledTimes, expectTrue, mockFn, test, testModule, } from "../../__internal__/testing.js";
-import { error, newInstance, none, pipe, pipeLazy, raise, } from "../../functions.js";
+import { describe, expectEquals, expectFalse, expectTrue, test, testModule, } from "../../__internal__/testing.js";
+import { newInstance, pipe } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 testModule("Disposable", describe("add", test("disposes child disposable when disposed", () => {
@@ -40,52 +40,6 @@ testModule("Disposable", describe("add", test("disposes child disposable when di
     const error = newInstance(Error);
     child[DisposableLike_dispose](error);
     pipe(parent[DisposableLike_error], expectEquals(error));
-})), describe("onComplete", test("disposing the parent without error invokes the callback", () => {
-    const disposable = Disposable.create();
-    const callback = mockFn();
-    pipe(disposable, Disposable.onComplete(callback));
-    disposable[DisposableLike_dispose]();
-    pipe(callback, expectToHaveBeenCalledTimes(1));
-}), test("disposing the parent with an error does not invoke the callback", () => {
-    const disposable = Disposable.create();
-    const callback = mockFn();
-    pipe(disposable, Disposable.onComplete(callback));
-    disposable[DisposableLike_dispose](newInstance(Error));
-    pipe(callback, expectToHaveBeenCalledTimes(0));
-})), describe("onDisposed", test("disposes teardown function exactly once when disposed", () => {
-    const teardown = mockFn();
-    const disposable = pipe(Disposable.create(), Disposable.onDisposed(teardown), Disposable.onDisposed(teardown));
-    disposable[DisposableLike_dispose]();
-    pipe(teardown, expectToHaveBeenCalledTimes(1));
-}), test("catches and swallows Errors thrown by teardown function", () => {
-    const teardown = pipeLazy(none, raise);
-    const disposable = pipe(Disposable.create(), Disposable.onDisposed(teardown));
-    disposable[DisposableLike_dispose]();
-    pipe(disposable[DisposableLike_error], expectIsNone);
-}), test("propogates errors when disposed with an Error", () => {
-    const err = error(null);
-    const childTeardown = mockFn();
-    const disposable = pipe(Disposable.create(), Disposable.onDisposed(childTeardown));
-    disposable[DisposableLike_dispose](err);
-    pipe(disposable[DisposableLike_error], expectEquals(err));
-    pipe(childTeardown, expectToHaveBeenCalledTimes(1));
-    pipe(childTeardown.calls[0], expectArrayEquals([err]));
-})), describe("toAbortSignal", test("disposing the disposable invokes the abort signal", () => {
-    const disposable = Disposable.create();
-    const signal = pipe(disposable, Disposable.toAbortSignal);
-    const callback = mockFn();
-    signal.onabort = callback;
-    disposable[DisposableLike_dispose]();
-    pipe(callback, expectToHaveBeenCalledTimes(1));
-}), test("disposing the disposable with an error invokes the abort signal", () => {
-    const disposable = Disposable.create();
-    const signal = pipe(disposable, Disposable.toAbortSignal);
-    const callback = mockFn();
-    signal.onabort = callback;
-    const error = newInstance(Error);
-    disposable[DisposableLike_dispose](error);
-    pipe(callback, expectToHaveBeenCalledTimes(1));
-    pipe(signal.reason, expectEquals(error));
 })), describe("toErrorHandler", test("disposes the disposable with a wrapped error", () => {
     const disposable1 = Disposable.create();
     const errorHandler1 = pipe(disposable1, Disposable.toErrorHandler);

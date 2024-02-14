@@ -34,6 +34,7 @@ import {
 import * as Disposable from "../../utils/Disposable.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
 import {
+  DisposableContainerLike_add,
   DisposableLike,
   IndexedQueueLike,
   QueueLike_count,
@@ -134,6 +135,8 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
           instance[AnimationFrameScheduler_rafIsRunning] = false;
         }
       };
+
+      hostScheduler[DisposableContainerLike_add](instance);
 
       return instance;
     },

@@ -1,8 +1,5 @@
-import { Factory, Function1, Function2, Function3, Optional, SideEffect, SideEffect1, Updater } from "../functions.js";
+import { Factory, Function1, Function2, Function3, SideEffect1, Updater } from "../functions.js";
 import { DisposableLike } from "../utils.js";
-/**
- * @noInheritDoc
- */
 export interface DisposableModule {
     readonly disposed: DisposableLike;
     add<TDisposable extends DisposableLike>(child: DisposableLike, options?: {
@@ -13,11 +10,7 @@ export interface DisposableModule {
     }): Updater<TDisposable>;
     bindTo<TDisposable extends DisposableLike>(child: DisposableLike): Updater<TDisposable>;
     create(): DisposableLike;
-    onComplete<TDisposable extends DisposableLike>(teardown: SideEffect): Updater<TDisposable>;
-    onDisposed<TDisposable extends DisposableLike>(teardown: SideEffect1<Optional<Error>>): Updater<TDisposable>;
-    onError<TDisposable extends DisposableLike>(teardown: SideEffect1<Error>): Updater<TDisposable>;
     raiseIfDisposedWithError(disposable: DisposableLike): void;
-    toAbortSignal(disposable: DisposableLike): AbortSignal;
     /**
      * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
      */
@@ -41,11 +34,7 @@ export declare const addTo: Signature["addTo"];
 export declare const bindTo: Signature["bindTo"];
 export declare const create: Signature["create"];
 export declare const disposed: Signature["disposed"];
-export declare const onComplete: Signature["onComplete"];
-export declare const onDisposed: Signature["onDisposed"];
-export declare const onError: Signature["onError"];
 export declare const raiseIfDisposedWithError: Signature["raiseIfDisposedWithError"];
-export declare const toAbortSignal: Signature["toAbortSignal"];
 export declare const toErrorHandler: Signature["toErrorHandler"];
 export declare const using: Signature["using"];
 export declare const usingAsync: Signature["usingAsync"];

@@ -6,6 +6,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { DispatcherLike_complete, ObserverLike_notify, } from "../../../concurrent.js";
 import { none, partial, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
@@ -20,7 +21,7 @@ const createBufferObserver = /*@__PURE__*/ (() => createInstanceFactory(decorate
     instance[BufferObserver_delegate] = delegate;
     instance[BufferObserver_count] = clampPositiveNonZeroInteger(count ?? MAX_SAFE_INTEGER);
     instance[BufferObserver_buffer] = [];
-    pipe(instance, Disposable.addTo(delegate), Disposable.onComplete(() => {
+    pipe(instance, Disposable.addTo(delegate), DisposableContainer.onComplete(() => {
         const buffer = instance[BufferObserver_buffer];
         instance[BufferObserver_buffer] = [];
         if (buffer[Array_length] > 0) {

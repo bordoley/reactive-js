@@ -2,14 +2,14 @@
 
 import { mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { none, pipe, returns } from "../../functions.js";
-import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
-import * as Disposable from "../Disposable.js";
+import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
+import * as DisposableContainer from "../DisposableContainer.js";
 export const DelegatingDisposableLike_delegate = Symbol("DelegatingDisposableLike_delegate");
 const DelegatingDisposableMixin = 
 /*@__PURE__*/ (() => {
     return returns(mix(function DelegatingDisposableMixin(instance, delegate) {
         instance[DelegatingDisposableLike_delegate] = delegate;
-        pipe(delegate, Disposable.onDisposed(_ => {
+        pipe(delegate, DisposableContainer.onDisposed(_ => {
             instance[DisposableLike_isDisposed] = true;
         }));
         return instance;
@@ -21,9 +21,9 @@ const DelegatingDisposableMixin =
             unsafeCast(this);
             return this[DelegatingDisposableLike_delegate][DisposableLike_error];
         },
-        [DisposableLike_add](disposable) {
+        [DisposableContainerLike_add](disposable) {
             const delegate = this[DelegatingDisposableLike_delegate];
-            delegate[DisposableLike_add](
+            delegate[DisposableContainerLike_add](
             // Cast to make the typechecker happy even though its a lie.
             disposable);
         },

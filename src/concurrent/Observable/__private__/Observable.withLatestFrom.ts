@@ -22,6 +22,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin, {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
@@ -85,7 +86,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
             }),
             Observable_subscribeWithConfig(delegate, delegate),
             Disposable.addTo(instance),
-            Disposable.onComplete(() => {
+            DisposableContainer.onComplete(() => {
               if (!instance[WithLatestFromObserver_hasLatest]) {
                 instance[DisposableLike_dispose]();
               }

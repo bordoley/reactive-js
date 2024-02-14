@@ -10,6 +10,7 @@ import {
 } from "../../../concurrent.js";
 import { bindMethod, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
@@ -29,7 +30,7 @@ const Observable_mergeMany: Observable.Signature["mergeMany"] = (<T>(
       pipe(
         Observer_createWithDelegate(observer),
         Disposable.addTo(observer),
-        Disposable.onComplete(() => {
+        DisposableContainer.onComplete(() => {
           completed++;
           if (completed >= count) {
             observer[DisposableLike_dispose]();

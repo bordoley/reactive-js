@@ -22,11 +22,7 @@
 - [addTo](utils_Disposable.md#addto)
 - [bindTo](utils_Disposable.md#bindto)
 - [create](utils_Disposable.md#create)
-- [onComplete](utils_Disposable.md#oncomplete)
-- [onDisposed](utils_Disposable.md#ondisposed)
-- [onError](utils_Disposable.md#onerror)
 - [raiseIfDisposedWithError](utils_Disposable.md#raiseifdisposedwitherror)
-- [toAbortSignal](utils_Disposable.md#toabortsignal)
 - [toErrorHandler](utils_Disposable.md#toerrorhandler)
 - [using](utils_Disposable.md#using)
 - [usingAsync](utils_Disposable.md#usingasync)
@@ -127,72 +123,6 @@ ___
 
 ___
 
-### onComplete
-
-▸ **onComplete**\<`TDisposable`\>(`teardown`): [`Updater`](functions.md#updater)\<`TDisposable`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TDisposable` | extends [`DisposableLike`](../interfaces/utils.DisposableLike.md) |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `teardown` | [`SideEffect`](functions.md#sideeffect) |
-
-#### Returns
-
-[`Updater`](functions.md#updater)\<`TDisposable`\>
-
-___
-
-### onDisposed
-
-▸ **onDisposed**\<`TDisposable`\>(`teardown`): [`Updater`](functions.md#updater)\<`TDisposable`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TDisposable` | extends [`DisposableLike`](../interfaces/utils.DisposableLike.md) |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `teardown` | [`SideEffect1`](functions.md#sideeffect1)\<[`Optional`](functions.md#optional)\<`Error`\>\> |
-
-#### Returns
-
-[`Updater`](functions.md#updater)\<`TDisposable`\>
-
-___
-
-### onError
-
-▸ **onError**\<`TDisposable`\>(`teardown`): [`Updater`](functions.md#updater)\<`TDisposable`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TDisposable` | extends [`DisposableLike`](../interfaces/utils.DisposableLike.md) |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `teardown` | [`SideEffect1`](functions.md#sideeffect1)\<`Error`\> |
-
-#### Returns
-
-[`Updater`](functions.md#updater)\<`TDisposable`\>
-
-___
-
 ### raiseIfDisposedWithError
 
 ▸ **raiseIfDisposedWithError**(`disposable`): `void`
@@ -206,22 +136,6 @@ ___
 #### Returns
 
 `void`
-
-___
-
-### toAbortSignal
-
-▸ **toAbortSignal**(`disposable`): `AbortSignal`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `disposable` | [`DisposableLike`](../interfaces/utils.DisposableLike.md) |
-
-#### Returns
-
-`AbortSignal`
 
 ___
 

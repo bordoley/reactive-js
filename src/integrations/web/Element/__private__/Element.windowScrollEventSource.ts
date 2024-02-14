@@ -4,7 +4,7 @@ import {
   EventSourceLike_addEventListener,
 } from "../../../../events.js";
 import { Optional, invoke, none, pipe } from "../../../../functions.js";
-import * as Disposable from "../../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 import Element_eventSource from "./Element.eventSource.js";
 
 const Element_windowScrollEventSource = /*@__PURE__*/ (() => {
@@ -16,7 +16,7 @@ const Element_windowScrollEventSource = /*@__PURE__*/ (() => {
       windowScrollEventSourceRef = EventSource.create(listener => {
         pipe(
           listener,
-          Disposable.onDisposed(() => {
+          DisposableContainer.onDisposed(() => {
             windowScrollEventSourceRef = none;
           }),
         );

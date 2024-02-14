@@ -79,6 +79,7 @@ import {
   tuple,
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
 import {
   DisposableLike_dispose,
@@ -1298,7 +1299,7 @@ testModule(
       pipe(
         Observable.empty({ delay: 5 }),
         Observable.subscribe(scheduler),
-        Disposable.onComplete(() => {
+        DisposableContainer.onComplete(() => {
           disposedTime = scheduler[SchedulerLike_now];
         }),
       );

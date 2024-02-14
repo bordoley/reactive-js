@@ -14,6 +14,7 @@ import * as WritableStore from "../../events/WritableStore.js";
 import { EventListenerLike_notify, StoreLike_value } from "../../events.js";
 import { alwaysTrue, arrayEquality, bind, bindMethod, error, ignore, increment, incrementBy, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, scale, tuple, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, OverflowBackpressureStrategy, QueueableLike_enqueue, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as HostScheduler from "../HostScheduler.js";
@@ -277,7 +278,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
 })), ObservableOperatorWithSideEffectsTests(Observable.dispatchTo({}))), describe("distinctUntilChanged", PureStatefulObservableOperator(Observable.distinctUntilChanged())), describe("empty", test("with delay", () => {
     let disposedTime = -1;
     const scheduler = VirtualTimeScheduler.create();
-    pipe(Observable.empty({ delay: 5 }), Observable.subscribe(scheduler), Disposable.onComplete(() => {
+    pipe(Observable.empty({ delay: 5 }), Observable.subscribe(scheduler), DisposableContainer.onComplete(() => {
         disposedTime = scheduler[SchedulerLike_now];
     }));
     scheduler[VirtualTimeSchedulerLike_run]();

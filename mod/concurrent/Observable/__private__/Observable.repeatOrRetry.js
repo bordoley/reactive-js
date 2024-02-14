@@ -3,6 +3,7 @@
 import { ObserverLike_notify, } from "../../../concurrent.js";
 import { bindMethod, error, isSome, partial, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -25,10 +26,10 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
             }
             else {
                 count++;
-                pipe(observable, Observable_forEach(bindMethod(delegate, ObserverLike_notify)), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(delegate, { ignoreChildErrors: true }), Disposable.onDisposed(doOnDispose));
+                pipe(observable, Observable_forEach(bindMethod(delegate, ObserverLike_notify)), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(delegate, { ignoreChildErrors: true }), DisposableContainer.onDisposed(doOnDispose));
             }
         };
-        return pipe(Observer_createWithDelegate(delegate), Disposable.addTo(delegate, { ignoreChildErrors: true }), Disposable.onDisposed(doOnDispose));
+        return pipe(Observer_createWithDelegate(delegate), Disposable.addTo(delegate, { ignoreChildErrors: true }), DisposableContainer.onDisposed(doOnDispose));
     };
     return ((shouldRepeat) => (observable) => Observable_liftPure(pipe(createRepeatObserver, partial(observable, shouldRepeat)))(observable));
 })();

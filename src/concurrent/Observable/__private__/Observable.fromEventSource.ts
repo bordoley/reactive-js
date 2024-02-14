@@ -3,6 +3,7 @@ import * as EventSource from "../../../events/EventSource.js";
 import { EventSourceLike } from "../../../events.js";
 import { bindMethod, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { QueueableLike_enqueue } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createMulticast from "./Observable.createMulticast.js";
@@ -16,7 +17,9 @@ const Observable_fromEventSource: Observable.Signature["fromEventSource"] =
         EventSource.addEventHandler(
           bindMethod(observer, QueueableLike_enqueue),
         ),
-        Disposable.onComplete(bindMethod(observer, DispatcherLike_complete)),
+        DisposableContainer.onComplete(
+          bindMethod(observer, DispatcherLike_complete),
+        ),
         Disposable.addTo(observer),
       );
     });

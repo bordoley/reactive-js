@@ -4,7 +4,7 @@ import { Map, Map_delete, Map_get, Map_set, Map_size, } from "../../../../__inte
 import * as Publisher from "../../../../events/Publisher.js";
 import { EventListenerLike_notify } from "../../../../events.js";
 import { isNone, newInstance, none, pipe, } from "../../../../functions.js";
-import * as Disposable from "../../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 const Element_resizeEventSource = 
 /*@__PURE__*/ (() => {
     const publishers = newInstance(Map);
@@ -26,7 +26,7 @@ const Element_resizeEventSource =
             (() => {
                 const publisher = pipe(Publisher.create({
                     autoDispose: true,
-                }), Disposable.onDisposed(() => {
+                }), DisposableContainer.onDisposed(() => {
                     resizeObserver?.unobserve(element);
                     publishers[Map_delete](element);
                     if (publishers[Map_size] > 0) {

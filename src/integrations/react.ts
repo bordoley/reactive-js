@@ -51,7 +51,7 @@ import {
   pipeSomeLazy,
   raiseError,
 } from "../functions.js";
-import * as Disposable from "../utils/Disposable.js";
+import * as DisposableContainer from "../utils/DisposableContainer.js";
 import {
   BackpressureStrategy,
   DisposableLike,
@@ -242,7 +242,7 @@ export const useDisposable: Signature["useDisposable"] = <
       return;
     }
 
-    pipe(disposable, Disposable.onError(setError));
+    pipe(disposable, DisposableContainer.onError(setError));
 
     setDisposable(disposable);
     return bindMethod(disposable, DisposableLike_dispose);
@@ -305,7 +305,7 @@ export const useListen: Signature["useListen"] = <T>(
     pipeSomeLazy(
       eventSource,
       EventSource.addEventHandler(v => updateState(_ => v)),
-      Disposable.onError(updateError),
+      DisposableContainer.onError(updateError),
     ),
     [eventSource, updateState, updateError],
   );
@@ -354,7 +354,7 @@ export const useObserve: Signature["useObserve"] = <T>(
         backpressureStrategy,
         capacity,
       }),
-      Disposable.onError(updateError),
+      DisposableContainer.onError(updateError),
     ),
     [
       observable,

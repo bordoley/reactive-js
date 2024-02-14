@@ -13,8 +13,8 @@ import {
   none,
 } from "../../functions.js";
 import {
+  DisposableContainerLike_add,
   DisposableLike,
-  DisposableLike_add,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
@@ -52,7 +52,7 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
   function DisposableMixin(
     instance: Pick<
       DisposableLike,
-      typeof DisposableLike_dispose | typeof DisposableLike_add
+      typeof DisposableLike_dispose | typeof DisposableContainerLike_add
     > &
       Mutable<TProperties>,
   ): DisposableLike {
@@ -83,7 +83,7 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
         }
       }
     },
-    [DisposableLike_add](
+    [DisposableContainerLike_add](
       this: TProperties & DisposableLike,
       disposable: DisposableLike | SideEffect1<Optional<Error>>,
     ) {
@@ -97,7 +97,7 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
         disposables[Set_add](disposable);
 
         if (!isFunction(disposable)) {
-          disposable[DisposableLike_add](_ => {
+          disposable[DisposableContainerLike_add](_ => {
             disposables[Set_delete](disposable);
           });
         }

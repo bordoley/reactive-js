@@ -13,7 +13,7 @@ import { StoreLike_value } from "../../events.js";
 import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, raiseIf, returns, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
-import { DropOldestBackpressureStrategy, QueueableLike_enqueue, } from "../../utils.js";
+import { DisposableContainerLike_add, DropOldestBackpressureStrategy, QueueableLike_enqueue, } from "../../utils.js";
 import { WindowLocationLike_canGoBack, WindowLocationLike_goBack, WindowLocationLike_push, WindowLocationLike_replace, } from "../web.js";
 import * as Element from "./Element.js";
 const { history, location } = window;
@@ -131,6 +131,7 @@ export const subscribe = /*@__PURE__*/ (() => {
             backpressureStrategy: DropOldestBackpressureStrategy,
         }));
         currentWindowLocationObservable = pipe(createWindowLocationObservable(locationStream, scheduler), Disposable.add(pushState), Disposable.add(replaceState));
+        scheduler[DisposableContainerLike_add](currentWindowLocationObservable);
         return currentWindowLocationObservable;
     };
 })();

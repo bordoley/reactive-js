@@ -12,7 +12,7 @@ import {
   ObserverLike_notify,
 } from "../../../concurrent.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
   DisposableLike_dispose,
@@ -63,7 +63,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
 
           pipe(
             instance,
-            Disposable.onComplete(() => {
+            DisposableContainer.onComplete(() => {
               const data = textDecoder.decode(newInstance(Uint8Array, []), {
                 stream: false,
               });

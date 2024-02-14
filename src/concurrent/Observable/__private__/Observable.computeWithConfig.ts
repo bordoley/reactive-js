@@ -30,6 +30,7 @@ import {
   raiseIf,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -301,7 +302,7 @@ class ComputeContext {
         }),
         Observable_subscribeWithConfig(observer, observer),
         Disposable.addTo(observer),
-        Disposable.onComplete(this[ComputeContext_cleanup]),
+        DisposableContainer.onComplete(this[ComputeContext_cleanup]),
       );
 
       effect[AwaitOrObserveEffect_observable] = observable;

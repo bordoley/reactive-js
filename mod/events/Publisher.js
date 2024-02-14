@@ -5,6 +5,7 @@ import { include, init, mixInstanceFactory, props, } from "../__internal__/mixin
 import { EventListenerLike_isErrorSafe, EventListenerLike_notify, EventSourceLike_addEventListener, } from "../events.js";
 import { error, newInstance, none, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
+import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed } from "../utils.js";
 export const create = /*@__PURE__*/ (() => {
@@ -14,7 +15,7 @@ export const create = /*@__PURE__*/ (() => {
         init(DisposableMixin, instance);
         instance[Publisher_listeners] = newInstance(Set);
         instance[Publisher_autoDispose] = options?.autoDispose ?? false;
-        pipe(instance, Disposable.onDisposed(e => {
+        pipe(instance, DisposableContainer.onDisposed(e => {
             for (const listener of instance[Publisher_listeners]) {
                 listener[DisposableLike_dispose](e);
             }
@@ -48,7 +49,7 @@ export const create = /*@__PURE__*/ (() => {
                 return;
             }
             listeners[Set_add](listener);
-            pipe(listener, Disposable.onDisposed(_ => {
+            pipe(listener, DisposableContainer.onDisposed(_ => {
                 listeners[Set_delete](listener);
                 if (this[Publisher_autoDispose] &&
                     this[Publisher_listeners][Set_size] === 0) {

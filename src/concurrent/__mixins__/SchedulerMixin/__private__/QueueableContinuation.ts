@@ -24,7 +24,7 @@ import {
   pipeLazy,
   raiseIf,
 } from "../../../../functions.js";
-import * as Disposable from "../../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../../utils/__mixins__/DisposableMixin.js";
 import IndexedQueueMixin from "../../../../utils/__mixins__/IndexedQueueMixin.js";
 import {
@@ -235,7 +235,7 @@ export const create: (
 
       pipe(
         instance,
-        Disposable.onDisposed(
+        DisposableContainer.onDisposed(
           pipeLazy(instance, rescheduleChildrenOnParentOrScheduler),
         ),
       );

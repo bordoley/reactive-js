@@ -6,6 +6,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
 import { bindMethod, isSome, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
@@ -22,7 +23,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
     const MergeAllObserver_observablesQueue = Symbol("MergeAllObserver_observablesQueue");
     const subscribeToObservable = (observer, nextObs) => {
         observer[MergeAllObserver_activeCount]++;
-        pipe(nextObs, Observable_forEach(bindMethod(observer[MergeAllObserver_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(observer[MergeAllObserver_delegate], observer), Disposable.addTo(observer[MergeAllObserver_delegate]), Disposable.onComplete(observer[MergeAllObserver_onDispose]));
+        pipe(nextObs, Observable_forEach(bindMethod(observer[MergeAllObserver_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(observer[MergeAllObserver_delegate], observer), Disposable.addTo(observer[MergeAllObserver_delegate]), DisposableContainer.onComplete(observer[MergeAllObserver_onDispose]));
     };
     const createMergeAllObserver = createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
         init(DisposableMixin, instance);
@@ -45,7 +46,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
                 instance[MergeAllObserver_delegate][DisposableLike_dispose]();
             }
         };
-        pipe(instance, Disposable.onComplete(() => {
+        pipe(instance, DisposableContainer.onComplete(() => {
             if (delegate[DisposableLike_isDisposed]) {
                 // FIXME: Clear the queue
             }

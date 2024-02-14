@@ -4,6 +4,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
@@ -22,7 +23,7 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
         pipe(other, Observable_forEach((next) => {
             instance[WithLatestFromObserver_hasLatest] = true;
             instance[WithLatestFromObserver_otherLatest] = next;
-        }), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(instance), Disposable.onComplete(() => {
+        }), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(instance), DisposableContainer.onComplete(() => {
             if (!instance[WithLatestFromObserver_hasLatest]) {
                 instance[DisposableLike_dispose]();
             }

@@ -13,6 +13,7 @@ import {
 } from "../../../concurrent.js";
 import { bindMethod, error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -90,7 +91,9 @@ const Flowable_fromAsyncIterable: Flowable.Signature["fromAsyncIterable"] =
             capacity: observer[QueueableLike_capacity],
           }),
           Disposable.addTo(observer),
-          Disposable.onComplete(bindMethod(observer, DispatcherLike_complete)),
+          DisposableContainer.onComplete(
+            bindMethod(observer, DispatcherLike_complete),
+          ),
         );
       }),
     );

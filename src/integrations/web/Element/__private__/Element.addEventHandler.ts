@@ -1,5 +1,6 @@
 import { Function1, SideEffect1, pipe } from "../../../../functions.js";
 import * as Disposable from "../../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 import { DisposableLike } from "../../../../utils.js";
 import type * as Element from "../../Element.js";
 
@@ -21,7 +22,7 @@ const Element_addEventHandler: Element.Signature["addEventHandler"] =
 
     pipe(
       disposable,
-      Disposable.onDisposed(_ => {
+      DisposableContainer.onDisposed(_ => {
         target.removeEventListener(eventName, eventHandler);
       }),
     );

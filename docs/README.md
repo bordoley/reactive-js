@@ -39,6 +39,7 @@ Reactive-JS
 - [integrations/web/effects](modules/integrations_web_effects.md)
 - [utils](modules/utils.md)
 - [utils/Disposable](modules/utils_Disposable.md)
+- [utils/DisposableContainer](modules/utils_DisposableContainer.md)
 - [utils/IndexedQueue](modules/utils_IndexedQueue.md)
 - [utils/PriorityQueue](modules/utils_PriorityQueue.md)
 - [utils/SerialDisposable](modules/utils_SerialDisposable.md)

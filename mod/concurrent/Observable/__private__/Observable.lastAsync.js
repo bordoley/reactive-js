@@ -2,7 +2,7 @@
 
 import { Promise } from "../../../__internal__/constants.js";
 import { newInstance, none, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 const Observable_lastAsync = (scheduler, options) => async (observable) => {
@@ -10,7 +10,7 @@ const Observable_lastAsync = (scheduler, options) => async (observable) => {
         let result = none;
         pipe(observable, Observable_forEach((next) => {
             result = next;
-        }), Observable_subscribe(scheduler, options), Disposable.onError(reject), Disposable.onComplete(() => {
+        }), Observable_subscribe(scheduler, options), DisposableContainer.onError(reject), DisposableContainer.onComplete(() => {
             resolve(result);
         }));
     });

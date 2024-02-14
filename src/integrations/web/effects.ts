@@ -1,31 +1,50 @@
-import { nullObject } from "../../__internal__/constants.js";
+import {
+  Map_delete,
+  Map_get,
+  Map_set,
+  nullObject,
+} from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
+import { DictionaryLike, ReadonlyObjectMapLike } from "../../collections.js";
 import {
   __constant,
+  __currentScheduler,
   __memo,
   __observe,
   __state,
+  __stream,
   __using,
 } from "../../concurrent/Observable/effects.js";
+import * as Streamable from "../../concurrent/Streamable.js";
+import {
+  PureRunnableLike,
+  SchedulerLike,
+  StreamLike,
+} from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import { EventSourceLike } from "../../events.js";
 import {
+  Function1,
   Optional,
   SideEffect1,
   Updater,
   compose,
   identity,
+  newInstance,
   none,
   pipe,
   returns,
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import {
+  BackpressureStrategy,
   DisposableLike,
   QueueableLike,
   QueueableLike_enqueue,
 } from "../../utils.js";
 import { CSSStyleMapLike } from "../web.js";
+import * as AnimationFrameScheduler from "./AnimationFrameScheduler.js";
 
 interface WebEffectsModule {
   __animate(
@@ -36,6 +55,21 @@ interface WebEffectsModule {
     animation: EventSourceLike<T>,
     selector: (ev: T) => CSSStyleMapLike,
   ): SideEffect1<Optional<HTMLElement | null>>;
+
+  __animationGroup<T, TEvent = unknown, TKey extends string = string>(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
+    >,
+    options?:
+      | { readonly mode: "switching" }
+      | { readonly mode: "blocking" }
+      | {
+          readonly mode: "queueing";
+          readonly backpressureStrategy?: BackpressureStrategy;
+          readonly capacity?: number;
+        },
+  ): StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>;
 }
 
 type Signature = WebEffectsModule;
@@ -87,4 +121,63 @@ export const __animate: Signature["__animate"] = (
   );
 
   return setRef;
+};
+
+const __animationFrameScheduler: () => SchedulerLike = /*@__PURE__*/ (() => {
+  const schedulerCache: Map<SchedulerLike, SchedulerLike> =
+    newInstance<Map<SchedulerLike, SchedulerLike>>(Map);
+
+  return () => {
+    const scheduler = __currentScheduler();
+    return (
+      schedulerCache[Map_get](scheduler) ??
+      (() => {
+        const animationFrameScheduler =
+          AnimationFrameScheduler.create(scheduler);
+        schedulerCache[Map_set](scheduler, animationFrameScheduler);
+
+        pipe(
+          animationFrameScheduler,
+          DisposableContainer.onDisposed(_ =>
+            schedulerCache[Map_delete](scheduler),
+          ),
+        );
+
+        return scheduler;
+      })()
+    );
+  };
+})();
+
+export const __animationGroup: Signature["__animationGroup"] = <
+  T,
+  TEvent = unknown,
+  TKey extends string = string,
+>(
+  animationGroup: ReadonlyObjectMapLike<
+    TKey,
+    Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
+  >,
+  options?:
+    | { readonly mode: "switching"; readonly priority?: 1 | 2 | 3 | 4 | 5 }
+    | { readonly mode: "blocking"; readonly priority?: 1 | 2 | 3 | 4 | 5 }
+    | {
+        readonly mode: "queueing";
+        readonly priority?: 1 | 2 | 3 | 4 | 5;
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+      },
+) => {
+  const animationFrameScheduler = __animationFrameScheduler();
+
+  const animationGroupStreamable = __constant(
+    Streamable.animationGroup(animationGroup, {
+      mode: "switching",
+      ...((options as unknown) ?? {}),
+      scheduler: animationFrameScheduler,
+    }),
+    animationFrameScheduler,
+  );
+
+  return __stream(animationGroupStreamable);
 };

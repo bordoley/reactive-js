@@ -1,6 +1,6 @@
 import { DispatcherLike_complete, ObserverLike } from "../../../concurrent.js";
 import { error } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import {
   DisposableLike_dispose,
   QueueableLike_enqueue,
@@ -12,7 +12,7 @@ const Observable_fromAsyncFactory: Observable.Signature["fromAsyncFactory"] =
   <T>() =>
   (f: (abortSignal: AbortSignal) => Promise<T>) =>
     Observable_create<T>(async (observer: ObserverLike<T>) => {
-      const abortSignal = Disposable.toAbortSignal(observer);
+      const abortSignal = DisposableContainer.toAbortSignal(observer);
       try {
         const result = await f(abortSignal);
         observer[QueueableLike_enqueue](result);

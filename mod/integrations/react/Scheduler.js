@@ -1,7 +1,7 @@
 /// <reference types="./Scheduler.d.ts" />
 
 import { unstable_NormalPriority, unstable_cancelCallback, unstable_now, unstable_scheduleCallback, unstable_shouldYield, } from "scheduler";
-import { Map, Map_get, Map_set } from "../../__internal__/constants.js";
+import { Map, Map_delete, Map_get, Map_set, } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "../../concurrent/__internal__/Continuation.js";
 import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "../../concurrent/__internal__/ContinuationScheduler.js";
@@ -9,6 +9,7 @@ import SchedulerMixin from "../../concurrent/__mixins__/SchedulerMixin.js";
 import { SchedulerLike_now } from "../../concurrent.js";
 import { newInstance, none, pipe, pipeLazy } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../utils.js";
 const createReactScheduler = /*@__PURE__*/ (() => {
     const ReactScheduler_priority = Symbol("ReactScheduler_priority");
@@ -34,7 +35,7 @@ const createReactScheduler = /*@__PURE__*/ (() => {
             const dueTime = continuation[ContinuationLike_dueTime];
             const delay = dueTime - now;
             const callbackNode = unstable_scheduleCallback(this[ReactScheduler_priority], callback, delay > 0 ? { delay } : none);
-            const callbackNodeDisposable = pipe(Disposable.create(), Disposable.onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)), Disposable.addTo(continuation));
+            const callbackNodeDisposable = pipe(Disposable.create(), DisposableContainer.onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)), Disposable.addTo(continuation));
         },
     });
 })();
@@ -44,6 +45,7 @@ export const get = /*@__PURE__*/ (() => {
         (() => {
             const scheduler = createReactScheduler(priority);
             schedulerCache[Map_set](priority, scheduler);
+            pipe(scheduler, DisposableContainer.onDisposed(_ => schedulerCache[Map_delete](priority)));
             return scheduler;
         })();
 })();

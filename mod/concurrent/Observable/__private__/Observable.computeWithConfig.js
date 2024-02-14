@@ -4,6 +4,7 @@ import { Array_length, Array_push, __DEV__, } from "../../../__internal__/consta
 import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseIf, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
@@ -137,7 +138,7 @@ class ComputeContext {
                             ? pipe(observer[SchedulerLike_schedule](runComputation), Disposable.addTo(observer))
                             : scheduledComputationSubscription;
                 }
-            }), Observable_subscribeWithConfig(observer, observer), Disposable.addTo(observer), Disposable.onComplete(this[ComputeContext_cleanup]));
+            }), Observable_subscribeWithConfig(observer, observer), Disposable.addTo(observer), DisposableContainer.onComplete(this[ComputeContext_cleanup]));
             effect[AwaitOrObserveEffect_observable] = observable;
             effect[AwaitOrObserveEffect_value] = none;
             effect[AwaitOrObserveEffect_hasValue] = false;

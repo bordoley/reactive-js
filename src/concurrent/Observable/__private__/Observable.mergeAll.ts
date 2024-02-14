@@ -31,6 +31,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
@@ -93,7 +94,7 @@ const createMergeAllObserverOperator: <T>(options?: {
         observer,
       ),
       Disposable.addTo(observer[MergeAllObserver_delegate]),
-      Disposable.onComplete(observer[MergeAllObserver_onDispose]),
+      DisposableContainer.onComplete(observer[MergeAllObserver_onDispose]),
     );
   };
 
@@ -143,7 +144,7 @@ const createMergeAllObserverOperator: <T>(options?: {
 
           pipe(
             instance,
-            Disposable.onComplete(() => {
+            DisposableContainer.onComplete(() => {
               if (delegate[DisposableLike_isDisposed]) {
                 // FIXME: Clear the queue
               } else if (

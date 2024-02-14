@@ -10,6 +10,7 @@ import {
 } from "../../../concurrent.js";
 import { bindMethod, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
@@ -27,7 +28,7 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
       pipe(
         Observer_createWithDelegate(delegate),
         Disposable.addTo(delegate),
-        Disposable.onComplete(() => {
+        DisposableContainer.onComplete(() => {
           if (next < observables[Array_length]) {
             observables[next][ObservableLike_observe](
               createConcatObserver(delegate, observables, next + 1),

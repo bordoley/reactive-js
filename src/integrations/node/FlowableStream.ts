@@ -19,6 +19,7 @@ import {
   pipe,
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -67,7 +68,7 @@ const addDisposable =
   stream => {
     stream.on("error", Disposable.toErrorHandler(disposable));
     stream.once("close", bindMethod(disposable, DisposableLike_dispose));
-    pipe(disposable, Disposable.onError(disposeStream(stream)));
+    pipe(disposable, DisposableContainer.onError(disposeStream(stream)));
     return stream;
   };
 
@@ -76,7 +77,7 @@ const addToDisposable =
     disposable: DisposableLike,
   ): Function1<TNodeStream, TNodeStream> =>
   stream => {
-    pipe(disposable, Disposable.onDisposed(disposeStream(stream)));
+    pipe(disposable, DisposableContainer.onDisposed(disposeStream(stream)));
     stream.on("error", Disposable.toErrorHandler(disposable));
     return stream;
   };
@@ -86,8 +87,10 @@ export const create: Signature["create"] = factory =>
     Observable.create<Uint8Array>(observer => {
       const dispatchDisposable = pipe(
         Disposable.create(),
-        Disposable.onError(Disposable.toErrorHandler(observer)),
-        Disposable.onComplete(bindMethod(observer, DispatcherLike_complete)),
+        DisposableContainer.onError(Disposable.toErrorHandler(observer)),
+        DisposableContainer.onComplete(
+          bindMethod(observer, DispatcherLike_complete),
+        ),
       );
 
       const readable = pipe(
@@ -151,7 +154,10 @@ export const writeTo: Signature["writeTo"] =
         invoke(ObservableLike_observe, observer),
       );
 
-      pipe(observer, Disposable.onComplete(bindMethod(writable, "end")));
+      pipe(
+        observer,
+        DisposableContainer.onComplete(bindMethod(writable, "end")),
+      );
 
       const onDrain = bindMethod(flowed, PauseableLike_resume);
       const onFinish = bindMethod(observer, DisposableLike_dispose);

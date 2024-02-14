@@ -28,7 +28,7 @@ import {
   EventListenerLike_notify,
 } from "../events.js";
 import { error, isSome, newInstance, none, pipe } from "../functions.js";
-import * as Disposable from "../utils/Disposable.js";
+import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import IndexedQueueMixin from "../utils/__mixins__/IndexedQueueMixin.js";
 import {
@@ -88,7 +88,7 @@ export const create: <T>(options?: {
 
       pipe(
         instance,
-        Disposable.onDisposed(e => {
+        DisposableContainer.onDisposed(e => {
           for (const observer of instance[Subject_observers]) {
             if (isSome(e)) {
               observer[DisposableLike_dispose](e);
@@ -149,7 +149,7 @@ export const create: <T>(options?: {
 
         pipe(
           observer,
-          Disposable.onDisposed(_ => {
+          DisposableContainer.onDisposed(_ => {
             observers[Set_delete](observer);
 
             if (

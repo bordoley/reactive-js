@@ -13,7 +13,7 @@ import {
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
 import { none, partial, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
@@ -58,7 +58,7 @@ const createTakeLastObserver = /*@__PURE__*/ (<T>() => {
 
           pipe(
             instance,
-            Disposable.onComplete(() => {
+            DisposableContainer.onComplete(() => {
               const queue = instance[TakeLastObserver_queue];
               let index = 0;
               const count = queue[QueueLike_count];

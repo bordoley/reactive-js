@@ -1,7 +1,26 @@
 import { Error } from "./__internal__/constants.js";
 import { Optional, SideEffect1 } from "./functions.js";
 
-export const DisposableLike_add = Symbol("DisposableLike_add");
+export const DisposableContainerLike_add = Symbol(
+  "DisposableContainerLike_add",
+);
+
+export interface DisposableContainerLike {
+  /**
+   * Adds the given `DisposableLike` or teardown function to this container or disposes it if the container has been disposed.
+   *
+   * @param disposable - The disposable to add.
+   */
+  [DisposableContainerLike_add](disposable: DisposableLike): void;
+
+  /**
+   * Adds the given teardown function to this container or disposes it if the container has been disposed.
+   *
+   * @param teardown - The teardown function to add.
+   */
+  [DisposableContainerLike_add](teardown: SideEffect1<Optional<Error>>): void;
+}
+
 export const DisposableLike_dispose = Symbol("DisposableLike_dispose");
 export const DisposableLike_error = Symbol("DisposableLike_error");
 export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
@@ -9,7 +28,7 @@ export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 /**
  * @noInheritDoc
  */
-export interface DisposableLike {
+export interface DisposableLike extends DisposableContainerLike {
   /**
    * The error the `Disposable` was disposed with if disposed.
    */
@@ -19,15 +38,6 @@ export interface DisposableLike {
    * `true` if this resource has been disposed, otherwise false
    */
   readonly [DisposableLike_isDisposed]: boolean;
-
-  /**
-   * Adds the given `DisposableLike` or teardown function to this container or disposes it if the container has been disposed.
-   *
-   * @param disposable - The disposable to add.
-   * @param ignoreChildErrors - Indicates that the parent should not auto dispose if the child disposed with an error.
-   */
-  [DisposableLike_add](disposable: DisposableLike): void;
-  [DisposableLike_add](teardown: SideEffect1<Optional<Error>>): void;
 
   /**
    * Dispose the resource.

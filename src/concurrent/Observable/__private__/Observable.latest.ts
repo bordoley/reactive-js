@@ -23,7 +23,7 @@ import {
   ObserverLike_notify,
 } from "../../../concurrent.js";
 import { none, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
@@ -146,7 +146,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
       for (const observable of observables) {
         const innerObserver = pipe(
           createLatestObserver(ctx, delegate),
-          Disposable.onComplete(onCompleted(ctx)),
+          DisposableContainer.onComplete(onCompleted(ctx)),
         );
 
         ctx[LatestCtx_observers][Array_push](innerObserver);

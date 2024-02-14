@@ -2,6 +2,7 @@ import { Array_length } from "../../../__internal__/constants.js";
 import { EventListenerLike_notify, EventSourceLike } from "../../../events.js";
 import { bindMethod, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import type * as EventSource from "../../EventSource.js";
 
@@ -22,7 +23,7 @@ const EventSource_mergeMany: EventSource.Signature["mergeMany"] = <T>(
         eventSource,
         EventSource_addEventHandler(eventHandler),
         Disposable.addTo(listener),
-        Disposable.onComplete(() => {
+        DisposableContainer.onComplete(() => {
           completed++;
           if (completed >= count) {
             listener[DisposableLike_dispose]();

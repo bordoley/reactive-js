@@ -15,7 +15,7 @@ import {
   partial,
   pipe,
 } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike, DisposableLike_dispose } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -49,7 +49,7 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
 
           pipe(
             instance,
-            Disposable.onComplete(() => {
+            DisposableContainer.onComplete(() => {
               let err: Optional<Error> = none;
 
               if (instance[ThrowIfEmptyObserver_isEmpty]) {

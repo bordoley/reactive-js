@@ -12,6 +12,7 @@ import {
 } from "../../../concurrent.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
+  DisposableContainerLike_add,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
@@ -59,6 +60,7 @@ const Observable_subscribeWithConfig =
   ) =>
   (observable: ObservableLike) => {
     const observer = createObserver(scheduler, config);
+    scheduler[DisposableContainerLike_add](observer);
     observable[ObservableLike_observe](observer);
     return observer;
   };

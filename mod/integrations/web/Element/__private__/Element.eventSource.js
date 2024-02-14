@@ -3,7 +3,7 @@
 import * as EventSource from "../../../../events/EventSource.js";
 import { EventListenerLike_notify, } from "../../../../events.js";
 import { bindMethod, pipe } from "../../../../functions.js";
-import * as Disposable from "../../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 const Element_eventSource = (eventName, options) => (target) => EventSource.create(listener => {
     const eventHandler = bindMethod(listener, EventListenerLike_notify);
     const addEventListenerOptions = {
@@ -11,7 +11,7 @@ const Element_eventSource = (eventName, options) => (target) => EventSource.crea
         passive: options?.capture ?? true,
     };
     target.addEventListener(eventName, eventHandler, addEventListenerOptions);
-    pipe(listener, Disposable.onDisposed(_ => {
+    pipe(listener, DisposableContainer.onDisposed(_ => {
         target.removeEventListener(eventName, eventHandler);
     }));
 });

@@ -12,7 +12,7 @@ import {
   none,
   pipe,
 } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import type * as EventSource from "../../EventSource.js";
 import * as Publisher from "../../Publisher.js";
@@ -56,7 +56,7 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
               Publisher.create<T>({
                 autoDispose: true,
               }),
-              Disposable.onDisposed(() => {
+              DisposableContainer.onDisposed(() => {
                 this[CreateEventSource_delegate] = none;
               }),
             );

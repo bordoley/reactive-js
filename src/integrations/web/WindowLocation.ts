@@ -43,6 +43,7 @@ import * as Disposable from "../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   BackpressureStrategy,
+  DisposableContainerLike_add,
   DisposableLike,
   DropOldestBackpressureStrategy,
   QueueableLike_enqueue,
@@ -334,6 +335,8 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       Disposable.add(pushState),
       Disposable.add(replaceState),
     );
+
+    scheduler[DisposableContainerLike_add](currentWindowLocationObservable);
 
     return currentWindowLocationObservable;
   };

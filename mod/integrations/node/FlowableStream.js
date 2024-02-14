@@ -5,6 +5,7 @@ import * as Observable from "../../concurrent/Observable.js";
 import { DispatcherLike_complete, FlowableLike_flow, ObservableLike_observe, PauseableLike_pause, PauseableLike_resume, } from "../../concurrent.js";
 import { bindMethod, ignore, invoke, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 const disposeStream = (stream) => () => {
     stream.removeAllListeners();
@@ -21,16 +22,16 @@ const addToNodeStream = (stream) => disposable => {
 const addDisposable = (disposable) => stream => {
     stream.on("error", Disposable.toErrorHandler(disposable));
     stream.once("close", bindMethod(disposable, DisposableLike_dispose));
-    pipe(disposable, Disposable.onError(disposeStream(stream)));
+    pipe(disposable, DisposableContainer.onError(disposeStream(stream)));
     return stream;
 };
 const addToDisposable = (disposable) => stream => {
-    pipe(disposable, Disposable.onDisposed(disposeStream(stream)));
+    pipe(disposable, DisposableContainer.onDisposed(disposeStream(stream)));
     stream.on("error", Disposable.toErrorHandler(disposable));
     return stream;
 };
 export const create = factory => Flowable.create(mode => Observable.create(observer => {
-    const dispatchDisposable = pipe(Disposable.create(), Disposable.onError(Disposable.toErrorHandler(observer)), Disposable.onComplete(bindMethod(observer, DispatcherLike_complete)));
+    const dispatchDisposable = pipe(Disposable.create(), DisposableContainer.onError(Disposable.toErrorHandler(observer)), DisposableContainer.onComplete(bindMethod(observer, DispatcherLike_complete)));
     const readable = pipe(factory(), addToDisposable(observer), addDisposable(dispatchDisposable));
     readable.pause();
     pipe(mode, Observable.forEach(isPaused => {
@@ -60,7 +61,7 @@ export const writeTo = (writable) => flowable => Observable.create(observer => {
             flowed[PauseableLike_pause]();
         }
     }), invoke(ObservableLike_observe, observer));
-    pipe(observer, Disposable.onComplete(bindMethod(writable, "end")));
+    pipe(observer, DisposableContainer.onComplete(bindMethod(writable, "end")));
     const onDrain = bindMethod(flowed, PauseableLike_resume);
     const onFinish = bindMethod(observer, DisposableLike_dispose);
     writable.on("drain", onDrain);

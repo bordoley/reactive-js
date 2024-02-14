@@ -7,6 +7,7 @@ import {
 import { Function1, Optional, SideEffect1 } from "./functions.js";
 import {
   BackpressureStrategy,
+  DisposableContainerLike,
   DisposableLike,
   QueueableLike,
 } from "./utils.js";
@@ -93,7 +94,7 @@ export interface ContinuationContextLike {
  *
  * @noInheritDoc
  */
-export interface SchedulerLike {
+export interface SchedulerLike extends DisposableContainerLike {
   /**
    * Boolean flag indicating the scheduler is currently
    * running a continuation.

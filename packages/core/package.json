@@ -80,6 +80,7 @@
     "./integrations/web/WindowLocation": "./integrations/web/WindowLocation.js",
     "./utils": "./utils.js",
     "./utils/Disposable": "./utils/Disposable.js",
+    "./utils/DisposableContainer": "./utils/DisposableContainer.js",
     "./utils/IndexedQueue": "./utils/IndexedQueue.js",
     "./utils/PriorityQueue": "./utils/PriorityQueue.js",
     "./utils/SerialDisposable": "./utils/SerialDisposable.js"

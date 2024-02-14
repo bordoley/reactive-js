@@ -29,6 +29,7 @@ import * as Disposable from "../utils/Disposable.js";
 import PriorityQueueMixin from "../utils/__mixins__/PriorityQueueMixin.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
 import {
+  DisposableContainerLike_add,
   DisposableLike,
   DisposableLike_isDisposed,
   QueueLike,
@@ -142,6 +143,8 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     instance[SerialDisposableLike_current] = hostScheduler[
       SchedulerLike_schedule
     ](hostSchedulerContinuation, { delay });
+
+    hostScheduler[DisposableContainerLike_add](instance);
   };
 
   return mixInstanceFactory(

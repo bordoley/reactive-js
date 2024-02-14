@@ -178,13 +178,14 @@ testModule(
           Observable.subscribe(vts),
         );
 
+        vts[SchedulerLike_schedule](() => {
+          pipe(result, expectArrayEquals([3, 4]));
+          expectFalse(subject[DisposableLike_isDisposed]);
+          subscription[DisposableLike_dispose]();
+          expectTrue(subject[DisposableLike_isDisposed]);
+        });
+
         vts[VirtualTimeSchedulerLike_run]();
-
-        pipe(result, expectArrayEquals([3, 4]));
-
-        expectFalse(subject[DisposableLike_isDisposed]);
-        subscription[DisposableLike_dispose]();
-        expectTrue(subject[DisposableLike_isDisposed]);
       }),
     ),
   ),

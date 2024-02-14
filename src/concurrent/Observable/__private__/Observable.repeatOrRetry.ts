@@ -12,6 +12,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
@@ -52,7 +53,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
           Observable_forEach(bindMethod(delegate, ObserverLike_notify)),
           Observable_subscribeWithConfig(delegate, delegate),
           Disposable.addTo(delegate, { ignoreChildErrors: true }),
-          Disposable.onDisposed(doOnDispose),
+          DisposableContainer.onDisposed(doOnDispose),
         );
       }
     };
@@ -60,7 +61,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
     return pipe(
       Observer_createWithDelegate(delegate),
       Disposable.addTo(delegate, { ignoreChildErrors: true }),
-      Disposable.onDisposed(doOnDispose),
+      DisposableContainer.onDisposed(doOnDispose),
     );
   };
 

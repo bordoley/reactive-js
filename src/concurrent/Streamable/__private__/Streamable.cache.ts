@@ -50,6 +50,7 @@ import {
   tuple,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import {
   BackpressureStrategy,
@@ -314,7 +315,7 @@ const cacheStream: <T>(
 
             pipe(
               subject,
-              Disposable.onDisposed(_ => {
+              DisposableContainer.onDisposed(_ => {
                 subscriptions[Map_delete](key);
                 scheduleCleanup(key);
               }),

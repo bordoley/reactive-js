@@ -4,6 +4,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { DispatcherLike_complete, ObserverLike_notify, } from "../../../concurrent.js";
 import { isSome, none, partial, pipe, pipeLazy, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_isDisposed, QueueableLike_enqueue, SerialDisposableLike_current, } from "../../../utils.js";
@@ -43,7 +44,7 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
                 setupDurationSubscription(instance, value);
             }
         };
-        pipe(instance, Disposable.onComplete(() => {
+        pipe(instance, DisposableContainer.onComplete(() => {
             if (instance[ThrottleObserver_mode] !== ThrottleFirstMode &&
                 instance[ThrottleObserver_hasValue] &&
                 !delegate[DisposableLike_isDisposed] &&

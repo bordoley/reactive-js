@@ -14,7 +14,7 @@ import {
   none,
   pipe,
 } from "../../../../functions.js";
-import * as Disposable from "../../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 import type * as Element from "../../Element.js";
 
 const Element_resizeEventSource: Element.Signature["resizeEventSource"] =
@@ -47,7 +47,7 @@ const Element_resizeEventSource: Element.Signature["resizeEventSource"] =
             Publisher.create<ResizeObserverEntry>({
               autoDispose: true,
             }),
-            Disposable.onDisposed(() => {
+            DisposableContainer.onDisposed(() => {
               resizeObserver?.unobserve(element);
               publishers[Map_delete](element);
 

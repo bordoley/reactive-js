@@ -3,8 +3,6 @@ import {
   Function1,
   Function2,
   Function3,
-  Optional,
-  SideEffect,
   SideEffect1,
   Updater,
 } from "../functions.js";
@@ -14,20 +12,13 @@ import Disposable_addTo from "./Disposable/__private__/Disposable.addTo.js";
 import Disposable_bindTo from "./Disposable/__private__/Disposable.bindTo.js";
 import Disposable_create from "./Disposable/__private__/Disposable.create.js";
 import Disposable_disposed from "./Disposable/__private__/Disposable.disposed.js";
-import Disposable_onComplete from "./Disposable/__private__/Disposable.onComplete.js";
-import Disposable_onDisposed from "./Disposable/__private__/Disposable.onDisposed.js";
-import Disposable_onError from "./Disposable/__private__/Disposable.onError.js";
 import Disposable_raiseIfDisposedWithError from "./Disposable/__private__/Disposable.raiseIfDisposedWithError.js";
-import Disposable_toAbortSignal from "./Disposable/__private__/Disposable.toAbortSignal.js";
 import Disposable_toErrorHandler from "./Disposable/__private__/Disposable.toErrorHandler.js";
 import Disposable_using from "./Disposable/__private__/Disposable.using.js";
 import Disposable_usingAsync from "./Disposable/__private__/Disposable.usingAsync.js";
 import Disposable_usingAsyncLazy from "./Disposable/__private__/Disposable.usingAsyncLazy.js";
 import Disposable_usingLazy from "./Disposable/__private__/Disposable.usingLazy.js";
 
-/**
- * @noInheritDoc
- */
 export interface DisposableModule {
   readonly disposed: DisposableLike;
 
@@ -51,21 +42,7 @@ export interface DisposableModule {
 
   create(): DisposableLike;
 
-  onComplete<TDisposable extends DisposableLike>(
-    teardown: SideEffect,
-  ): Updater<TDisposable>;
-
-  onDisposed<TDisposable extends DisposableLike>(
-    teardown: SideEffect1<Optional<Error>>,
-  ): Updater<TDisposable>;
-
-  onError<TDisposable extends DisposableLike>(
-    teardown: SideEffect1<Error>,
-  ): Updater<TDisposable>;
-
   raiseIfDisposedWithError(disposable: DisposableLike): void;
-
-  toAbortSignal(disposable: DisposableLike): AbortSignal;
 
   /**
    * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
@@ -192,13 +169,8 @@ export const addTo: Signature["addTo"] = Disposable_addTo;
 export const bindTo: Signature["bindTo"] = Disposable_bindTo;
 export const create: Signature["create"] = Disposable_create;
 export const disposed: Signature["disposed"] = Disposable_disposed;
-export const onComplete: Signature["onComplete"] = Disposable_onComplete;
-export const onDisposed: Signature["onDisposed"] = Disposable_onDisposed;
-export const onError: Signature["onError"] = Disposable_onError;
 export const raiseIfDisposedWithError: Signature["raiseIfDisposedWithError"] =
   Disposable_raiseIfDisposedWithError;
-export const toAbortSignal: Signature["toAbortSignal"] =
-  Disposable_toAbortSignal;
 export const toErrorHandler: Signature["toErrorHandler"] =
   Disposable_toErrorHandler;
 export const using: Signature["using"] = Disposable_using;

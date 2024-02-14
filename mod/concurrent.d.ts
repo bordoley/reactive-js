@@ -1,7 +1,7 @@
 import { ReadonlyObjectMapLike } from "./collections.js";
 import { ErrorSafeEventListenerLike, EventSourceLike, StoreLike } from "./events.js";
 import { Function1, Optional, SideEffect1 } from "./functions.js";
-import { BackpressureStrategy, DisposableLike, QueueableLike } from "./utils.js";
+import { BackpressureStrategy, DisposableContainerLike, DisposableLike, QueueableLike } from "./utils.js";
 export declare const DispatcherLikeEvent_ready: unique symbol;
 export declare const DispatcherLikeEvent_capacityExceeded: unique symbol;
 export declare const DispatcherLikeEvent_completed: unique symbol;
@@ -56,7 +56,7 @@ export interface ContinuationContextLike {
  *
  * @noInheritDoc
  */
-export interface SchedulerLike {
+export interface SchedulerLike extends DisposableContainerLike {
     /**
      * Boolean flag indicating the scheduler is currently
      * running a continuation.

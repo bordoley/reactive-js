@@ -18,6 +18,7 @@ import {
 } from "../../../concurrent.js";
 import { Optional, none, partial, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
   DisposableLike_dispose,
@@ -64,7 +65,7 @@ const createBufferObserver: <T>(
           pipe(
             instance,
             Disposable.addTo(delegate),
-            Disposable.onComplete(() => {
+            DisposableContainer.onComplete(() => {
               const buffer = instance[BufferObserver_buffer];
               instance[BufferObserver_buffer] = [];
 

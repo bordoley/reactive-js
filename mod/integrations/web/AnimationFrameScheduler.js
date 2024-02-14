@@ -9,7 +9,7 @@ import { SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, }
 import { invoke, isSome, none, pipe, pipeLazy, raiseIfNone, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
-import { QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
+import { DisposableContainerLike_add, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
 export const create = /*@__PURE__*/ (() => {
     const AnimationFrameScheduler_delayScheduler = Symbol("AnimationFrameScheduler_delayScheduler");
     const AnimationFrameScheduler_rafCallback = Symbol("AnimationFrameScheduler_rafCallback");
@@ -59,6 +59,7 @@ export const create = /*@__PURE__*/ (() => {
                 instance[AnimationFrameScheduler_rafIsRunning] = false;
             }
         };
+        hostScheduler[DisposableContainerLike_add](instance);
         return instance;
     }, props({
         [AnimationFrameScheduler_delayScheduler]: none,

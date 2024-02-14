@@ -4,7 +4,7 @@ import { __DEV__ } from "../../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../../../__internal__/mixins.js";
 import { ContinuationContextLike_yield, SchedulerLike_now, SchedulerLike_shouldYield, } from "../../../../concurrent.js";
 import { error, isSome, newInstance, none, pipe, pipeLazy, raiseIf, } from "../../../../functions.js";
-import * as Disposable from "../../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../../utils/__mixins__/DisposableMixin.js";
 import IndexedQueueMixin from "../../../../utils/__mixins__/IndexedQueueMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../../utils.js";
@@ -117,7 +117,7 @@ export const create = /*@__PURE__*/ (() => {
             scheduler[QueueableContinuationSchedulerLike_nextTaskID];
         instance[QueueableContinuation_scheduler] = scheduler;
         instance[QueueableContinuation_effect] = effect;
-        pipe(instance, Disposable.onDisposed(pipeLazy(instance, rescheduleChildrenOnParentOrScheduler)));
+        pipe(instance, DisposableContainer.onDisposed(pipeLazy(instance, rescheduleChildrenOnParentOrScheduler)));
         return instance;
     }, props({
         [QueueableContinuationLike_parent]: none,

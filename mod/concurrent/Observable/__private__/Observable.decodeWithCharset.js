@@ -4,7 +4,7 @@ import { Array_length } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DispatcherLike_complete, ObserverLike_notify, } from "../../../concurrent.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
@@ -19,7 +19,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         init(DelegatingObserverMixin(), instance, delegate);
         const textDecoder = newInstance(TextDecoder, charset, options);
         instance[DecodeWithCharsetObserver_textDecoder] = textDecoder;
-        pipe(instance, Disposable.onComplete(() => {
+        pipe(instance, DisposableContainer.onComplete(() => {
             const data = textDecoder.decode(newInstance(Uint8Array, []), {
                 stream: false,
             });

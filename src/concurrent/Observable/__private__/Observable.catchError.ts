@@ -1,6 +1,6 @@
 import { ObserverLike } from "../../../concurrent.js";
 import { SideEffect1, bindMethod, error, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
@@ -12,8 +12,10 @@ const Observable_catchError: Observable.Signature["catchError"] =
       (errorHandler: SideEffect1<Error>) => (delegate: ObserverLike<T>) =>
         pipe(
           Observer_createWithDelegate<T>(delegate),
-          Disposable.onComplete(bindMethod(delegate, DisposableLike_dispose)),
-          Disposable.onError((err: Error) => {
+          DisposableContainer.onComplete(
+            bindMethod(delegate, DisposableLike_dispose),
+          ),
+          DisposableContainer.onError((err: Error) => {
             try {
               errorHandler(err);
               delegate[DisposableLike_dispose]();

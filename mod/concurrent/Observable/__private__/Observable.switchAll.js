@@ -4,6 +4,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
 import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, SerialDisposableLike_current, } from "../../../utils.js";
@@ -25,7 +26,7 @@ const createSwitchAllObserver = /*@__PURE__*/ (() => {
         init(DelegatingObserverMixin(), instance, delegate);
         instance[SwitchAllObserver_delegate] = delegate;
         instance[SwitchAllObserver_currentRef] = pipe(SerialDisposable.create(), Disposable.addTo(delegate));
-        pipe(instance, Disposable.onComplete(bind(onDispose, instance)));
+        pipe(instance, DisposableContainer.onComplete(bind(onDispose, instance)));
         return instance;
     }, props({
         [SwitchAllObserver_currentRef]: none,
@@ -33,7 +34,7 @@ const createSwitchAllObserver = /*@__PURE__*/ (() => {
     }), {
         [ObserverLike_notify](next) {
             this[SwitchAllObserver_currentRef][SerialDisposableLike_current] =
-                pipe(next, Observable_forEach(bindMethod(this[SwitchAllObserver_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(this[SwitchAllObserver_delegate], this), Disposable.addTo(this[SwitchAllObserver_delegate]), Disposable.onComplete(() => {
+                pipe(next, Observable_forEach(bindMethod(this[SwitchAllObserver_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(this[SwitchAllObserver_delegate], this), Disposable.addTo(this[SwitchAllObserver_delegate]), DisposableContainer.onComplete(() => {
                     if (this[DisposableLike_isDisposed]) {
                         this[SwitchAllObserver_delegate][DisposableLike_dispose]();
                     }

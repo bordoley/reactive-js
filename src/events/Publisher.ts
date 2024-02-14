@@ -21,6 +21,7 @@ import {
 } from "../events.js";
 import { error, newInstance, none, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
+import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed } from "../utils.js";
 
@@ -55,7 +56,7 @@ export const create: <T>(options?: {
 
       pipe(
         instance,
-        Disposable.onDisposed(e => {
+        DisposableContainer.onDisposed(e => {
           for (const listener of instance[Publisher_listeners]) {
             listener[DisposableLike_dispose](e);
           }
@@ -107,7 +108,7 @@ export const create: <T>(options?: {
         listeners[Set_add](listener);
         pipe(
           listener,
-          Disposable.onDisposed(_ => {
+          DisposableContainer.onDisposed(_ => {
             listeners[Set_delete](listener);
 
             if (

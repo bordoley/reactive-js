@@ -1,7 +1,7 @@
 import { Promise } from "../../../__internal__/constants.js";
 import { ObservableLike, SchedulerLike } from "../../../concurrent.js";
 import { Optional, newInstance, none, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { BackpressureStrategy } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -31,8 +31,8 @@ const Observable_lastAsync: Observable.Signature["lastAsync"] =
           result = next;
         }),
         Observable_subscribe(scheduler, options),
-        Disposable.onError(reject),
-        Disposable.onComplete(() => {
+        DisposableContainer.onError(reject),
+        DisposableContainer.onComplete(() => {
           resolve(result as T);
         }),
       );

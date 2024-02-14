@@ -4,7 +4,7 @@ import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { ContinuationContextLike_yield, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { none, partial, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose, DropOldestBackpressureStrategy, IndexedQueueLike_get, QueueLike_count, QueueableLike_enqueue, } from "../../../utils.js";
@@ -20,7 +20,7 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
             capacity: takeLastCount,
             backpressureStrategy: DropOldestBackpressureStrategy,
         });
-        pipe(instance, Disposable.onComplete(() => {
+        pipe(instance, DisposableContainer.onComplete(() => {
             const queue = instance[TakeLastObserver_queue];
             let index = 0;
             const count = queue[QueueLike_count];

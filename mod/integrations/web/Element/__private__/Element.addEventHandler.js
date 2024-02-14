@@ -2,6 +2,7 @@
 
 import { pipe } from "../../../../functions.js";
 import * as Disposable from "../../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 const Element_addEventHandler = (eventName, eventHandler, options) => target => {
     const disposable = Disposable.create();
     const addEventListenerOptions = {
@@ -9,7 +10,7 @@ const Element_addEventHandler = (eventName, eventHandler, options) => target => 
         passive: options?.capture ?? true,
     };
     target.addEventListener(eventName, eventHandler, addEventListenerOptions);
-    pipe(disposable, Disposable.onDisposed(_ => {
+    pipe(disposable, DisposableContainer.onDisposed(_ => {
         target.removeEventListener(eventName, eventHandler);
     }));
     return disposable;

@@ -6,7 +6,7 @@ import { include, init, mixInstanceFactory, props, } from "../__internal__/mixin
 import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../concurrent.js";
 import { EventListenerLike_isErrorSafe, EventListenerLike_notify, } from "../events.js";
 import { error, isSome, newInstance, none, pipe } from "../functions.js";
-import * as Disposable from "../utils/Disposable.js";
+import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import IndexedQueueMixin from "../utils/__mixins__/IndexedQueueMixin.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, IndexedQueueLike_get, QueueLike_count, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../utils.js";
@@ -22,7 +22,7 @@ export const create = /*@__PURE__*/ (() => {
         });
         instance[Subject_observers] = newInstance(Set);
         instance[Subject_autoDispose] = options?.autoDispose ?? false;
-        pipe(instance, Disposable.onDisposed(e => {
+        pipe(instance, DisposableContainer.onDisposed(e => {
             for (const observer of instance[Subject_observers]) {
                 if (isSome(e)) {
                     observer[DisposableLike_dispose](e);
@@ -65,7 +65,7 @@ export const create = /*@__PURE__*/ (() => {
                 return;
             }
             observers[Set_add](observer);
-            pipe(observer, Disposable.onDisposed(_ => {
+            pipe(observer, DisposableContainer.onDisposed(_ => {
                 observers[Set_delete](observer);
                 if (this[Subject_autoDispose] &&
                     this[Subject_observers][Set_size] === 0) {

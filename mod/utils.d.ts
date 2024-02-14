@@ -1,13 +1,27 @@
 import { Error } from "./__internal__/constants.js";
 import { Optional, SideEffect1 } from "./functions.js";
-export declare const DisposableLike_add: unique symbol;
+export declare const DisposableContainerLike_add: unique symbol;
+export interface DisposableContainerLike {
+    /**
+     * Adds the given `DisposableLike` or teardown function to this container or disposes it if the container has been disposed.
+     *
+     * @param disposable - The disposable to add.
+     */
+    [DisposableContainerLike_add](disposable: DisposableLike): void;
+    /**
+     * Adds the given teardown function to this container or disposes it if the container has been disposed.
+     *
+     * @param teardown - The teardown function to add.
+     */
+    [DisposableContainerLike_add](teardown: SideEffect1<Optional<Error>>): void;
+}
 export declare const DisposableLike_dispose: unique symbol;
 export declare const DisposableLike_error: unique symbol;
 export declare const DisposableLike_isDisposed: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface DisposableLike {
+export interface DisposableLike extends DisposableContainerLike {
     /**
      * The error the `Disposable` was disposed with if disposed.
      */
@@ -16,14 +30,6 @@ export interface DisposableLike {
      * `true` if this resource has been disposed, otherwise false
      */
     readonly [DisposableLike_isDisposed]: boolean;
-    /**
-     * Adds the given `DisposableLike` or teardown function to this container or disposes it if the container has been disposed.
-     *
-     * @param disposable - The disposable to add.
-     * @param ignoreChildErrors - Indicates that the parent should not auto dispose if the child disposed with an error.
-     */
-    [DisposableLike_add](disposable: DisposableLike): void;
-    [DisposableLike_add](teardown: SideEffect1<Optional<Error>>): void;
     /**
      * Dispose the resource.
      *
