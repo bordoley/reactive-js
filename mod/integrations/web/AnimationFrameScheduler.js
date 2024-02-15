@@ -1,5 +1,6 @@
 /// <reference types="./AnimationFrameScheduler.d.ts" />
 
+import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import { Map_delete, Map_get, Map_set, globalObject, } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "../../concurrent/__internal__/Continuation.js";
@@ -13,34 +14,29 @@ import * as IndexedQueue from "../../utils/IndexedQueue.js";
 import { DisposableContainerLike_add, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
 const create = /*@__PURE__*/ (() => {
     const AnimationFrameScheduler_delayScheduler = Symbol("AnimationFrameScheduler_delayScheduler");
-    const AnimationFrameScheduler_rafCallback = Symbol("AnimationFrameScheduler_rafCallback");
-    const AnimationFrameScheduler_rafQueue = Symbol("AnimationFrameScheduler_rafQueue");
-    const AnimationFrameScheduler_rafIsRunning = Symbol("AnimationFrameScheduler_rafIsRunning");
+    const RafScheduler_schedule = Symbol("RafScheduler_schedule");
     const raf = globalObject.requestAnimationFrame;
     raiseIfNone(raf, "requestAnimationFrame is not defined in the current environment");
-    return mixInstanceFactory(include(CurrentTimeSchedulerMixin), function AnimationFrameScheduler(instance, hostScheduler) {
-        init(CurrentTimeSchedulerMixin, instance, 5);
-        instance[AnimationFrameScheduler_delayScheduler] = hostScheduler;
-        instance[AnimationFrameScheduler_rafQueue] = IndexedQueue.create();
-        instance[AnimationFrameScheduler_rafIsRunning] = false;
-        instance[AnimationFrameScheduler_rafCallback] = () => {
-            const startTime = instance[SchedulerLike_now];
-            const workQueue = instance[AnimationFrameScheduler_rafQueue];
-            instance[AnimationFrameScheduler_rafQueue] = IndexedQueue.create();
+    const rafScheduler = (() => {
+        const RafScheduler_rafQueue = Symbol("RafScheduler_rafQueue");
+        const RafScheduler_rafIsRunning = Symbol("RafScheduler_rafIsRunning");
+        const rafCallback = () => {
+            const startTime = CurrentTime.now();
+            const workQueue = rafScheduler[RafScheduler_rafQueue];
+            rafScheduler[RafScheduler_rafQueue] = IndexedQueue.create();
             let continuation = none;
-            while (((continuation = workQueue[QueueLike_dequeue]()),
-                isSome(continuation))) {
+            while (((continuation = workQueue[QueueLike_dequeue]()), isSome(continuation))) {
                 continuation[ContinuationLike_run]();
-                const elapsedTime = instance[SchedulerLike_now] - startTime;
+                const elapsedTime = CurrentTime.now() - startTime;
                 if (elapsedTime > 5 /*ms*/) {
                     break;
                 }
             }
             const continuationsCount = workQueue[QueueLike_count];
-            const newWorkQueue = instance[AnimationFrameScheduler_rafQueue];
+            const newWorkQueue = rafScheduler[RafScheduler_rafQueue];
             const newContinuationsCount = newWorkQueue[QueueLike_count];
             if (continuationsCount > 0 && newContinuationsCount === 0) {
-                instance[AnimationFrameScheduler_rafQueue] = workQueue;
+                rafScheduler[RafScheduler_rafQueue] = workQueue;
             }
             else if (continuationsCount > 0) {
                 // Merge the job queues copying the newly enqueued jobs
@@ -50,23 +46,36 @@ const create = /*@__PURE__*/ (() => {
                     isSome(continuation))) {
                     workQueue[QueueableLike_enqueue](continuation);
                 }
-                instance[AnimationFrameScheduler_rafQueue] = workQueue;
+                rafScheduler[RafScheduler_rafQueue] = workQueue;
             }
-            const continuationsQueueCount = instance[AnimationFrameScheduler_rafQueue][QueueLike_count];
+            const continuationsQueueCount = rafScheduler[RafScheduler_rafQueue][QueueLike_count];
             if (continuationsQueueCount > 0) {
-                raf(instance[AnimationFrameScheduler_rafCallback]);
+                raf(rafCallback);
             }
             else {
-                instance[AnimationFrameScheduler_rafIsRunning] = false;
+                rafScheduler[RafScheduler_rafIsRunning] = false;
             }
         };
+        const rafScheduler = {
+            [RafScheduler_rafQueue]: IndexedQueue.create(),
+            [RafScheduler_rafIsRunning]: false,
+            [RafScheduler_schedule](continuation) {
+                this[RafScheduler_rafQueue][QueueableLike_enqueue](continuation);
+                if (!this[RafScheduler_rafIsRunning]) {
+                    this[RafScheduler_rafIsRunning] = true;
+                    raf(rafCallback);
+                }
+            },
+        };
+        return rafScheduler;
+    })();
+    return mixInstanceFactory(include(CurrentTimeSchedulerMixin), function AnimationFrameScheduler(instance, hostScheduler) {
+        init(CurrentTimeSchedulerMixin, instance, 5);
+        instance[AnimationFrameScheduler_delayScheduler] = hostScheduler;
         hostScheduler[DisposableContainerLike_add](instance);
         return instance;
     }, props({
         [AnimationFrameScheduler_delayScheduler]: none,
-        [AnimationFrameScheduler_rafCallback]: none,
-        [AnimationFrameScheduler_rafQueue]: none,
-        [AnimationFrameScheduler_rafIsRunning]: false,
     }), {
         [ContinuationSchedulerLike_shouldYield]: true,
         [SchedulerLike_shouldYield]: true,
@@ -80,11 +89,7 @@ const create = /*@__PURE__*/ (() => {
                 pipe(this[AnimationFrameScheduler_delayScheduler], invoke(SchedulerLike_schedule, pipeLazy(this, invoke(ContinuationSchedulerLike_schedule, continuation)), { delay }), Disposable.addTo(continuation));
             }
             else {
-                this[AnimationFrameScheduler_rafQueue][QueueableLike_enqueue](continuation);
-                if (!this[AnimationFrameScheduler_rafIsRunning]) {
-                    this[AnimationFrameScheduler_rafIsRunning] = true;
-                    raf(this[AnimationFrameScheduler_rafCallback]);
-                }
+                rafScheduler[RafScheduler_schedule](continuation);
             }
         },
     });

@@ -2,11 +2,7 @@ import React, { useMemo } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
-import {
-  pipe,
-  pipeSomeLazy,
-  returns,
-} from "@reactive-js/core/functions";
+import { pipe, pipeSomeLazy, returns } from "@reactive-js/core/functions";
 import {
   __await,
   __bindMethod,

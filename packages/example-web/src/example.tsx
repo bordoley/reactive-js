@@ -45,7 +45,10 @@ import {
   __stream,
   __using,
 } from "@reactive-js/core/concurrent/Observable/effects";
-import { __animate, __animationFrameScheduler } from "@reactive-js/core/integrations/web/effects";
+import {
+  __animate,
+  __animationFrameScheduler,
+} from "@reactive-js/core/integrations/web/effects";
 import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
@@ -310,7 +313,7 @@ const RxComponent = createComponent(
     return Observable.computeDeferred(() => {
       const { windowLocation } = __await(props);
       const uri = __await(windowLocation);
-      
+
       const animationScheduler = __animationFrameScheduler();
 
       const createScheduler = __constant(() => {
