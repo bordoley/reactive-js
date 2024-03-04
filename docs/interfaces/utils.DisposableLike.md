@@ -8,6 +8,8 @@
 
 - [`DisposableContainerLike`](utils.DisposableContainerLike.md)
 
+- `Disposable`
+
   ↳ **`DisposableLike`**
 
   ↳↳ [`DispatcherLike`](concurrent.DispatcherLike.md)
@@ -31,7 +33,7 @@
 
 ### Methods
 
-- [[DisposableLike\_dispose]](utils.DisposableLike.md#[disposablelike_dispose])
+- [[dispose]](utils.DisposableLike.md#[dispose])
 
 ## Properties
 
@@ -51,9 +53,9 @@ ___
 
 ## Methods
 
-### [DisposableLike\_dispose]
+### [dispose]
 
-▸ **[DisposableLike_dispose]**(`error?`): `void`
+▸ **[dispose]**(`error?`): `void`
 
 Dispose the resource.
 
@@ -66,3 +68,7 @@ Dispose the resource.
 #### Returns
 
 `void`
+
+#### Overrides
+
+Disposable.[dispose]

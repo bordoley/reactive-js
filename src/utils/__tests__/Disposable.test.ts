@@ -1,15 +1,12 @@
-import { Array_push } from "../../__internal__/constants.js";
 import {
   describe,
   expectEquals,
-  expectFalse,
   expectTrue,
   test,
   testModule,
 } from "../../__internal__/testing.js";
 import { Optional, newInstance, pipe } from "../../functions.js";
 import {
-  DisposableLike,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
@@ -97,27 +94,6 @@ testModule(
         disposable2[DisposableLike_error]?.message,
         expectEquals<unknown>("message"),
       );
-    }),
-  ),
-  describe(
-    "using",
-    test("with multiple disposable factories", () => {
-      const disposables: DisposableLike[] = [];
-
-      Disposable.using(
-        Disposable.create,
-        Disposable.create,
-      )((d1, d2) => {
-        disposables[Array_push](d1);
-        disposables[Array_push](d2);
-
-        expectFalse(d1[DisposableLike_isDisposed]);
-        expectFalse(d2[DisposableLike_isDisposed]);
-      });
-
-      const [d1, d2] = disposables;
-      expectTrue(d1[DisposableLike_isDisposed]);
-      expectTrue(d2[DisposableLike_isDisposed]);
     }),
   ),
 );

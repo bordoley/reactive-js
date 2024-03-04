@@ -60,7 +60,7 @@ ___
 
 ### DisposableLike\_dispose
 
-• `Const` **DisposableLike\_dispose**: unique `symbol`
+• `Const` **DisposableLike\_dispose**: typeof `Symbol.dispose`
 
 ___
 

@@ -11,70 +11,65 @@ import {
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
 import { pipe } from "../../functions.js";
-import * as Disposable from "../../utils/Disposable.js";
 import { DisposableLike_dispose } from "../../utils.js";
 import * as PauseableScheduler from "../PauseableScheduler.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
 testModule(
   "PauseableScheduler",
-  test(
-    "with disposed continuations",
-    Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
-      const scheduler = PauseableScheduler.create(vts);
+  test("with disposed continuations", () => {
+    using vts = VirtualTimeScheduler.create();
+    const scheduler = PauseableScheduler.create(vts);
 
-      let result: number[] = [];
+    let result: number[] = [];
 
-      scheduler[SchedulerLike_schedule](() => {
-        result[Array_push](0);
-      });
+    scheduler[SchedulerLike_schedule](() => {
+      result[Array_push](0);
+    });
 
-      const s1 = scheduler[SchedulerLike_schedule](() => {
-        result[Array_push](1);
-      });
+    const s1 = scheduler[SchedulerLike_schedule](() => {
+      result[Array_push](1);
+    });
 
-      const s2 = scheduler[SchedulerLike_schedule](() => {
-        result[Array_push](2);
-      });
+    const s2 = scheduler[SchedulerLike_schedule](() => {
+      result[Array_push](2);
+    });
 
-      scheduler[SchedulerLike_schedule](() => {
-        result[Array_push](3);
-      });
+    scheduler[SchedulerLike_schedule](() => {
+      result[Array_push](3);
+    });
 
-      scheduler[PauseableLike_resume]();
-      s1[DisposableLike_dispose]();
-      s2[DisposableLike_dispose]();
+    scheduler[PauseableLike_resume]();
+    s1[DisposableLike_dispose]();
+    s2[DisposableLike_dispose]();
 
-      vts[VirtualTimeSchedulerLike_run]();
+    vts[VirtualTimeSchedulerLike_run]();
 
-      pipe(result, expectArrayEquals([0, 3]));
-    }),
-  ),
-  test(
-    "with delayed continuations",
-    Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
-      const scheduler = PauseableScheduler.create(vts);
+    pipe(result, expectArrayEquals([0, 3]));
+  }),
+  test("with delayed continuations", () => {
+    using vts = VirtualTimeScheduler.create();
+    const scheduler = PauseableScheduler.create(vts);
 
-      let result: number[] = [];
+    let result: number[] = [];
 
-      scheduler[SchedulerLike_schedule](
-        () => {
-          result[Array_push](scheduler[SchedulerLike_now]);
-        },
-        { delay: 3 },
-      );
+    scheduler[SchedulerLike_schedule](
+      () => {
+        result[Array_push](scheduler[SchedulerLike_now]);
+      },
+      { delay: 3 },
+    );
 
-      scheduler[SchedulerLike_schedule](
-        () => {
-          result[Array_push](scheduler[SchedulerLike_now]);
-        },
-        { delay: 5 },
-      );
+    scheduler[SchedulerLike_schedule](
+      () => {
+        result[Array_push](scheduler[SchedulerLike_now]);
+      },
+      { delay: 5 },
+    );
 
-      scheduler[PauseableLike_resume]();
-      vts[VirtualTimeSchedulerLike_run]();
+    scheduler[PauseableLike_resume]();
+    vts[VirtualTimeSchedulerLike_run]();
 
-      pipe(result, expectArrayEquals([3, 5]));
-    }),
-  ),
+    pipe(result, expectArrayEquals([3, 5]));
+  }),
 );

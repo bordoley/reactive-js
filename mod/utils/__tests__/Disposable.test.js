@@ -1,7 +1,6 @@
 /// <reference types="./Disposable.test.d.ts" />
 
-import { Array_push } from "../../__internal__/constants.js";
-import { describe, expectEquals, expectFalse, expectTrue, test, testModule, } from "../../__internal__/testing.js";
+import { describe, expectEquals, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import { newInstance, pipe } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
@@ -50,16 +49,5 @@ testModule("Disposable", describe("add", test("disposes child disposable when di
     const errorHandler2 = pipe(disposable2, Disposable.toErrorHandler);
     errorHandler2("message");
     pipe(disposable2[DisposableLike_error]?.message, expectEquals("message"));
-})), describe("using", test("with multiple disposable factories", () => {
-    const disposables = [];
-    Disposable.using(Disposable.create, Disposable.create)((d1, d2) => {
-        disposables[Array_push](d1);
-        disposables[Array_push](d2);
-        expectFalse(d1[DisposableLike_isDisposed]);
-        expectFalse(d2[DisposableLike_isDisposed]);
-    });
-    const [d1, d2] = disposables;
-    expectTrue(d1[DisposableLike_isDisposed]);
-    expectTrue(d2[DisposableLike_isDisposed]);
 })));
 ((_) => { })(Disposable);

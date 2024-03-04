@@ -54,111 +54,100 @@ testModule(
   "Streamable",
   describe(
     "animationGroup",
-    test(
-      "blocking mode",
-      Disposable.usingLazy(() =>
-        VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }),
-      )(vts => {
-        const stream = Streamable.animationGroup<number>(
-          {
-            a: Observable.keyFrame(500),
-          },
-          { mode: "blocking" },
-        )[StreamableLike_stream](vts);
+    test("blocking mode", () => {
+      using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
+      const stream = Streamable.animationGroup<number>(
+        {
+          a: Observable.keyFrame(500),
+        },
+        { mode: "blocking" },
+      )[StreamableLike_stream](vts);
 
-        pipe(
-          stream,
-          keySet<DictionaryCollection>(Dictionary.keys),
-          invoke("has", "a"),
-          expectTrue,
-        );
+      pipe(
+        stream,
+        keySet<DictionaryCollection>(Dictionary.keys),
+        invoke("has", "a"),
+        expectTrue,
+      );
 
-        let result = 0;
+      let result = 0;
 
-        pipeSome(
-          stream[DictionaryLike_get]("a"),
-          EventSource.addEventHandler(ev => {
-            result = ev;
-          }),
-        );
+      pipeSome(
+        stream[DictionaryLike_get]("a"),
+        EventSource.addEventHandler(ev => {
+          result = ev;
+        }),
+      );
 
-        stream[QueueableLike_enqueue](none);
+      stream[QueueableLike_enqueue](none);
 
-        vts[VirtualTimeSchedulerLike_run]();
+      vts[VirtualTimeSchedulerLike_run]();
 
-        pipe(result, expectEquals(1));
-      }),
-    ),
-    test(
-      "queueing mode",
-      Disposable.usingLazy(() =>
-        VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }),
-      )(vts => {
-        const stream = Streamable.animationGroup<number>(
-          {
-            a: Observable.keyFrame(500),
-          },
-          { mode: "queueing" },
-        )[StreamableLike_stream](vts);
+      pipe(result, expectEquals(1));
+    }),
+    test("queueing mode", () => {
+      using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
 
-        pipe(
-          stream,
-          keySet<DictionaryCollection>(Dictionary.keys),
-          invoke("has", "a"),
-          expectTrue,
-        );
+      const stream = Streamable.animationGroup<number>(
+        {
+          a: Observable.keyFrame(500),
+        },
+        { mode: "queueing" },
+      )[StreamableLike_stream](vts);
 
-        let result = 0;
+      pipe(
+        stream,
+        keySet<DictionaryCollection>(Dictionary.keys),
+        invoke("has", "a"),
+        expectTrue,
+      );
 
-        pipeSome(
-          stream[DictionaryLike_get]("a"),
-          EventSource.addEventHandler(ev => {
-            result = ev;
-          }),
-        );
+      let result = 0;
 
-        stream[QueueableLike_enqueue](none);
+      pipeSome(
+        stream[DictionaryLike_get]("a"),
+        EventSource.addEventHandler(ev => {
+          result = ev;
+        }),
+      );
 
-        vts[VirtualTimeSchedulerLike_run]();
+      stream[QueueableLike_enqueue](none);
 
-        pipe(result, expectEquals(1));
-      }),
-    ),
-    test(
-      "switching mode",
-      Disposable.usingLazy(() =>
-        VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }),
-      )(vts => {
-        const stream = Streamable.animationGroup<number>(
-          {
-            a: Observable.keyFrame(500),
-          },
-          { mode: "switching" },
-        )[StreamableLike_stream](vts);
+      vts[VirtualTimeSchedulerLike_run]();
 
-        pipe(
-          stream,
-          keySet<DictionaryCollection>(Dictionary.keys),
-          invoke("has", "a"),
-          expectTrue,
-        );
+      pipe(result, expectEquals(1));
+    }),
+    test("switching mode", () => {
+      using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
+      const stream = Streamable.animationGroup<number>(
+        {
+          a: Observable.keyFrame(500),
+        },
+        { mode: "switching" },
+      )[StreamableLike_stream](vts);
 
-        let result = 0;
+      pipe(
+        stream,
+        keySet<DictionaryCollection>(Dictionary.keys),
+        invoke("has", "a"),
+        expectTrue,
+      );
 
-        pipeSome(
-          stream[DictionaryLike_get]("a"),
-          EventSource.addEventHandler(ev => {
-            result = ev;
-          }),
-        );
+      let result = 0;
 
-        stream[QueueableLike_enqueue](none);
+      pipeSome(
+        stream[DictionaryLike_get]("a"),
+        EventSource.addEventHandler(ev => {
+          result = ev;
+        }),
+      );
 
-        vts[VirtualTimeSchedulerLike_run]();
+      stream[QueueableLike_enqueue](none);
 
-        pipe(result, expectEquals(1));
-      }),
-    ),
+      vts[VirtualTimeSchedulerLike_run]();
+
+      pipe(result, expectEquals(1));
+    }),
   ),
   describe(
     "inMemoryCache",

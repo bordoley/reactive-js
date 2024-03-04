@@ -1,5 +1,50 @@
 /// <reference types="./Observable.test.d.ts" />
 
+var __addDisposableResource = (this && this.__addDisposableResource) || function (env, value, async) {
+    if (value !== null && value !== void 0) {
+        if (typeof value !== "object" && typeof value !== "function") throw new TypeError("Object expected.");
+        var dispose;
+        if (async) {
+            if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
+            dispose = value[Symbol.asyncDispose];
+        }
+        if (dispose === void 0) {
+            if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
+            dispose = value[Symbol.dispose];
+        }
+        if (typeof dispose !== "function") throw new TypeError("Object not disposable.");
+        env.stack.push({ value: value, dispose: dispose, async: async });
+    }
+    else if (async) {
+        env.stack.push({ async: true });
+    }
+    return value;
+};
+var __disposeResources = (this && this.__disposeResources) || (function (SuppressedError) {
+    return function (env) {
+        function fail(e) {
+            env.error = env.hasError ? new SuppressedError(e, env.error, "An error was suppressed during disposal.") : e;
+            env.hasError = true;
+        }
+        function next() {
+            while (env.stack.length) {
+                var rec = env.stack.pop();
+                try {
+                    var result = rec.dispose && rec.dispose.call(rec.value);
+                    if (rec.async) return Promise.resolve(result).then(next, function(e) { fail(e); return next(); });
+                }
+                catch (e) {
+                    fail(e);
+                }
+            }
+            if (env.hasError) throw env.error;
+        }
+        return next();
+    };
+})(typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
+    var e = new Error(message);
+    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+});
 import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
@@ -59,43 +104,158 @@ const testIsRunnableWithSideEffects = (obs) => test("is PureRunnableLike", pipeL
 const testIsDeferredObservableWithSideEffects = (obs) => test("is DeferredObservableWithSideEffectsLike", pipeLazy(obs, expectIsDeferredObservableWithSideEffects));
 const testIsPureDeferredObservable = (obs) => test("is PureDeferredObservableLike", pipeLazy(obs, expectIsPureDeferredObservable));
 const testIsMulticastObservable = (obs) => test("is MulticastObservableLike", pipeLazy(obs, expectIsMulticastObservable));
-const PureStatelessObservableOperatorTests = (op) => describe("PureStatelessObservableOperator", test("with PureRunnableLike", pipeLazy(Observable.empty({ delay: 1 }), op, expectIsPureRunnable)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty({ delay: 1 }), Observable.forEach(ignore), op, expectIsRunnableWithSideEffects)), test("with PureDeferredObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts), op, expectIsPureDeferredObservable))), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
+const PureStatelessObservableOperatorTests = (op) => describe("PureStatelessObservableOperator", test("with PureRunnableLike", pipeLazy(Observable.empty({ delay: 1 }), op, expectIsPureRunnable)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty({ delay: 1 }), Observable.forEach(ignore), op, expectIsRunnableWithSideEffects)), test("with PureDeferredObservableLike", () => {
+    const env_1 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);
+        pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts), op, expectIsPureDeferredObservable);
+    }
+    catch (e_1) {
+        env_1.error = e_1;
+        env_1.hasError = true;
+    }
+    finally {
+        __disposeResources(env_1);
+    }
+}), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory(), op, expectIsDeferredObservableWithSideEffects)), test("with MulticastObservableLike", pipeLazy(new Promise(ignore), Observable.fromPromise(), op, expectIsMulticastObservable)));
-const PureStatefulObservableOperator = (op) => describe("PureStatefulObservableOperator", test("with PureRunnableLike", pipeLazy(Observable.empty({ delay: 1 }), op, expectIsPureRunnable)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty({ delay: 1 }), Observable.forEach(ignore), op, expectIsRunnableWithSideEffects)), test("with PureDeferredObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts), op, expectIsPureDeferredObservable))), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
+const PureStatefulObservableOperator = (op) => describe("PureStatefulObservableOperator", test("with PureRunnableLike", pipeLazy(Observable.empty({ delay: 1 }), op, expectIsPureRunnable)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty({ delay: 1 }), Observable.forEach(ignore), op, expectIsRunnableWithSideEffects)), test("with PureDeferredObservableLike", () => {
+    const env_2 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create(), false);
+        pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts), op, expectIsPureDeferredObservable);
+    }
+    catch (e_2) {
+        env_2.error = e_2;
+        env_2.hasError = true;
+    }
+    finally {
+        __disposeResources(env_2);
+    }
+}), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory(), op, expectIsDeferredObservableWithSideEffects)), test("with MulticastObservableLike", pipeLazy(new Promise(ignore), Observable.fromPromise(), op, expectIsPureDeferredObservable)));
-const PureDeferredObservableOperatorWithDeferredObservableBaseTests = (op) => describe("PureStatelessObservableOperatorWithDeferredObservableBaseTests", test("with PureRunnableLike", pipeLazy(Observable.empty({ delay: 1 }), op, expectIsPureRunnable)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty({ delay: 1 }), Observable.forEach(ignore), op, expectIsRunnableWithSideEffects)), test("with PureDeferredObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts), op, expectIsPureDeferredObservable))), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
+const PureDeferredObservableOperatorWithDeferredObservableBaseTests = (op) => describe("PureStatelessObservableOperatorWithDeferredObservableBaseTests", test("with PureRunnableLike", pipeLazy(Observable.empty({ delay: 1 }), op, expectIsPureRunnable)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty({ delay: 1 }), Observable.forEach(ignore), op, expectIsRunnableWithSideEffects)), test("with PureDeferredObservableLike", () => {
+    const env_3 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_3, VirtualTimeScheduler.create(), false);
+        pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts), op, expectIsPureDeferredObservable);
+    }
+    catch (e_3) {
+        env_3.error = e_3;
+        env_3.hasError = true;
+    }
+    finally {
+        __disposeResources(env_3);
+    }
+}), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory(), op, expectIsDeferredObservableWithSideEffects)));
-const DeferringObservableOperatorTests = (op) => describe("DeferringObservableOperatorTests", test("with PureRunnableLike", pipeLazy(Observable.empty({ delay: 1 }), op, expectIsPureDeferredObservable)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty({ delay: 1 }), Observable.forEach(ignore), op, expectIsDeferredObservableWithSideEffects)), test("with PureDeferredObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts), op, expectIsPureDeferredObservable))), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
+const DeferringObservableOperatorTests = (op) => describe("DeferringObservableOperatorTests", test("with PureRunnableLike", pipeLazy(Observable.empty({ delay: 1 }), op, expectIsPureDeferredObservable)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty({ delay: 1 }), Observable.forEach(ignore), op, expectIsDeferredObservableWithSideEffects)), test("with PureDeferredObservableLike", () => {
+    const env_4 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_4, VirtualTimeScheduler.create(), false);
+        pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts), op, expectIsPureDeferredObservable);
+    }
+    catch (e_4) {
+        env_4.error = e_4;
+        env_4.hasError = true;
+    }
+    finally {
+        __disposeResources(env_4);
+    }
+}), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory(), op, expectIsDeferredObservableWithSideEffects)));
-const ObservableOperatorWithSideEffectsTests = (op) => describe("ObservableOperatorWithSideEffects", test("with PureRunnableLike", pipeLazy(Observable.empty({ delay: 1 }), op, expectIsRunnableWithSideEffects)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty({ delay: 1 }), Observable.forEach(ignore), op, expectIsRunnableWithSideEffects)), test("with PureDeferredObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts), x => x, op, expectIsDeferredObservableWithSideEffects))), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
+const ObservableOperatorWithSideEffectsTests = (op) => describe("ObservableOperatorWithSideEffects", test("with PureRunnableLike", pipeLazy(Observable.empty({ delay: 1 }), op, expectIsRunnableWithSideEffects)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty({ delay: 1 }), Observable.forEach(ignore), op, expectIsRunnableWithSideEffects)), test("with PureDeferredObservableLike", () => {
+    const env_5 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
+        pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts), x => x, op, expectIsDeferredObservableWithSideEffects);
+    }
+    catch (e_5) {
+        env_5.error = e_5;
+        env_5.hasError = true;
+    }
+    finally {
+        __disposeResources(env_5);
+    }
+}), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory(), op, expectIsDeferredObservableWithSideEffects)), test("with MulticastObservableLike", pipeLazy(new Promise(ignore), Observable.fromPromise(), op, expectIsDeferredObservableWithSideEffects)));
-const AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests = (op) => describe("AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests", test("with PureRunnableLike", pipeLazy(Observable.empty({ delay: 1 }), op, expectIsDeferredObservableWithSideEffects)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty({ delay: 1 }), Observable.forEach(ignore), op, expectIsDeferredObservableWithSideEffects)), test("with PureDeferredObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts), op, expectIsDeferredObservableWithSideEffects))), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
+const AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests = (op) => describe("AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests", test("with PureRunnableLike", pipeLazy(Observable.empty({ delay: 1 }), op, expectIsDeferredObservableWithSideEffects)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty({ delay: 1 }), Observable.forEach(ignore), op, expectIsDeferredObservableWithSideEffects)), test("with PureDeferredObservableLike", () => {
+    const env_6 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_6, VirtualTimeScheduler.create(), false);
+        pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts), op, expectIsDeferredObservableWithSideEffects);
+    }
+    catch (e_6) {
+        env_6.error = e_6;
+        env_6.hasError = true;
+    }
+    finally {
+        __disposeResources(env_6);
+    }
+}), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory(), op, expectIsDeferredObservableWithSideEffects)), test("with MulticastObservableLike", pipeLazy(new Promise(ignore), Observable.fromPromise(), op, expectIsDeferredObservableWithSideEffects)));
 testModule("Observable", describe("effects", test("calling an effect from outside a computation expression throws", () => {
     expectToThrow(() => __constant(0));
-})), DeferredComputationModuleTests(Observable, Observable.toReadonlyArray), PureStatelesssComputationModuleTests(Observable, Observable.fromReadonlyArray, Observable.toReadonlyArray), PureStatefulComputationModuleTests(Observable, Observable.toReadonlyArray), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
-    await expectToThrowAsync(pipeLazyAsync(Observable.create(observer => {
-        for (let i = 0; i < 10; i++) {
-            observer[QueueableLike_enqueue](i);
-        }
-    }), Observable.backpressureStrategy(1, ThrowBackpressureStrategy), Observable.toReadonlyArrayAsync(scheduler)));
-})), testAsync("with a drop latest backpressure strategy", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => pipeAsync(Observable.create(observer => {
-    for (let i = 0; i < 10; i++) {
-        observer[QueueableLike_enqueue](i);
+})), DeferredComputationModuleTests(Observable, Observable.toReadonlyArray), PureStatelesssComputationModuleTests(Observable, Observable.fromReadonlyArray, Observable.toReadonlyArray), PureStatefulComputationModuleTests(Observable, Observable.toReadonlyArray), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", async () => {
+    const env_7 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_7, HostScheduler.create(), false);
+        await expectToThrowAsync(pipeLazyAsync(Observable.create(observer => {
+            for (let i = 0; i < 10; i++) {
+                observer[QueueableLike_enqueue](i);
+            }
+        }), Observable.backpressureStrategy(1, ThrowBackpressureStrategy), Observable.toReadonlyArrayAsync(scheduler)));
     }
-    observer[DispatcherLike_complete]();
-}), Observable.backpressureStrategy(1, DropLatestBackpressureStrategy), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([0])))), testAsync("with a drop-oldest latest backpressure strategy", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => pipeAsync(Observable.create(observer => {
-    for (let i = 0; i < 10; i++) {
-        observer[QueueableLike_enqueue](i);
+    catch (e_7) {
+        env_7.error = e_7;
+        env_7.hasError = true;
     }
-    observer[DispatcherLike_complete]();
-}), Observable.backpressureStrategy(1, DropOldestBackpressureStrategy), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([9])))), test("it passes through notifications", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.backpressureStrategy(1, DropLatestBackpressureStrategy), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), PureStatefulObservableOperator(Observable.backpressureStrategy(10, DropLatestBackpressureStrategy))), describe("buffer", PureStatefulObservableOperator(Observable.buffer())), describe("catchError", test("when the source throws", () => {
+    finally {
+        __disposeResources(env_7);
+    }
+}), testAsync("with a drop latest backpressure strategy", async () => {
+    const env_8 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_8, HostScheduler.create(), false);
+        await pipeAsync(Observable.create(observer => {
+            for (let i = 0; i < 10; i++) {
+                observer[QueueableLike_enqueue](i);
+            }
+            observer[DispatcherLike_complete]();
+        }), Observable.backpressureStrategy(1, DropLatestBackpressureStrategy), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([0]));
+    }
+    catch (e_8) {
+        env_8.error = e_8;
+        env_8.hasError = true;
+    }
+    finally {
+        __disposeResources(env_8);
+    }
+}), testAsync("with a drop-oldest latest backpressure strategy", async () => {
+    const env_9 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_9, HostScheduler.create(), false);
+        await pipeAsync(Observable.create(observer => {
+            for (let i = 0; i < 10; i++) {
+                observer[QueueableLike_enqueue](i);
+            }
+            observer[DispatcherLike_complete]();
+        }), Observable.backpressureStrategy(1, DropOldestBackpressureStrategy), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([9]));
+    }
+    catch (e_9) {
+        env_9.error = e_9;
+        env_9.hasError = true;
+    }
+    finally {
+        __disposeResources(env_9);
+    }
+}), test("it passes through notifications", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.backpressureStrategy(1, DropLatestBackpressureStrategy), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), PureStatefulObservableOperator(Observable.backpressureStrategy(10, DropLatestBackpressureStrategy))), describe("buffer", PureStatefulObservableOperator(Observable.buffer())), describe("catchError", test("when the source throws", () => {
     const e1 = "e1";
     let result = none;
     pipe(Observable.throws({ raise: () => e1 }), Observable.catchError((e) => {
@@ -122,32 +282,82 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         result = e["cause"];
     }), Observable.toReadonlyArray());
     pipe(result, ReadonlyArray.map(x => x.message), expectArrayEquals(["e2", "e1"]));
-}), PureStatefulObservableOperator(Observable.catchError(ignore))), describe("combineLatest", test("combineLatest", pipeLazy(Observable.combineLatest(pipe(Enumerable.generate(incrementBy(2), returns(1)), Observable.fromEnumerable({ delay: 2 }), Observable.takeFirst({ count: 3 })), pipe(Enumerable.generate(incrementBy(2), returns(0)), Observable.fromEnumerable({ delay: 3 }), Observable.takeFirst({ count: 2 }))), Observable.toReadonlyArray(), expectArrayEquals([tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)], { valuesEquality: arrayEquality() }))), testIsPureRunnable(Observable.combineLatest(Observable.empty({ delay: 1 }), Observable.empty({ delay: 1 }))), testIsPureDeferredObservable(Disposable.using(VirtualTimeScheduler.create)(vts => Observable.combineLatest(pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)), Observable.empty({ delay: 1 })))), testIsRunnableWithSideEffects(Observable.combineLatest(Observable.empty({ delay: 1 }), pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)))), testIsPureDeferredObservable(Observable.combineLatest(Observable.empty({ delay: 1 }), Subject.create())), testIsDeferredObservableWithSideEffects(Observable.combineLatest(pipe(async () => {
-    throw new Error();
-}, Observable.fromAsyncFactory()), Observable.empty({ delay: 1 }), pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore))))), describe("computeDeferred", testAsync("__stream", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => pipeAsync(Observable.computeDeferred(() => {
-    const stream = __stream(Streamable.identity());
-    const push = __bindMethod(stream, QueueableLike_enqueue);
-    const result = __observe(stream) ?? 0;
-    __do(push, result + 1);
-    return result;
-}), Observable.takeFirst({ count: 10 }), x => x, Observable.buffer(), Observable.lastAsync(scheduler), x => x ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])))), testAsync("__state", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync(Observable.computeDeferred(() => {
-    const initialState = __constant(() => 0);
-    const state = __state(initialState);
-    const push = __bindMethod(state, QueueableLike_enqueue);
-    const result = __observe(state) ?? -1;
-    if (result > -1) {
-        __do(push, () => result + 1);
+}), PureStatefulObservableOperator(Observable.catchError(ignore))), describe("combineLatest", test("combineLatest", pipeLazy(Observable.combineLatest(pipe(Enumerable.generate(incrementBy(2), returns(1)), Observable.fromEnumerable({ delay: 2 }), Observable.takeFirst({ count: 3 })), pipe(Enumerable.generate(incrementBy(2), returns(0)), Observable.fromEnumerable({ delay: 3 }), Observable.takeFirst({ count: 2 }))), Observable.toReadonlyArray(), expectArrayEquals([tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)], { valuesEquality: arrayEquality() }))), testIsPureRunnable(Observable.combineLatest(Observable.empty({ delay: 1 }), Observable.empty({ delay: 1 }))), testIsPureDeferredObservable((() => {
+    const env_10 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_10, VirtualTimeScheduler.create(), false);
+        return Observable.combineLatest(pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)), Observable.empty({ delay: 1 }));
     }
-    return result;
-}), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler), x => x ?? [], expectArrayEquals([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8])))), testAsync("awaiting a Multicast Observable", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => {
-    const subject = Subject.create({ replay: 2 });
-    subject[EventListenerLike_notify](1);
-    return pipeAsync(Observable.computeDeferred(() => {
-        const result = __await(subject);
-        __do(bindMethod(subject, DisposableLike_dispose));
-        return result;
-    }), Observable.distinctUntilChanged(), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1]));
-})), testIsDeferredObservableWithSideEffects(Observable.computeDeferred(() => { }))), describe("computeRunnable", test("batch mode", () => {
+    catch (e_10) {
+        env_10.error = e_10;
+        env_10.hasError = true;
+    }
+    finally {
+        __disposeResources(env_10);
+    }
+})()), testIsRunnableWithSideEffects(Observable.combineLatest(Observable.empty({ delay: 1 }), pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)))), testIsPureDeferredObservable(Observable.combineLatest(Observable.empty({ delay: 1 }), Subject.create())), testIsDeferredObservableWithSideEffects(Observable.combineLatest(pipe(async () => {
+    throw new Error();
+}, Observable.fromAsyncFactory()), Observable.empty({ delay: 1 }), pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore))))), describe("computeDeferred", testAsync("__stream", async () => {
+    const env_11 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_11, HostScheduler.create(), false);
+        await pipeAsync(Observable.computeDeferred(() => {
+            const stream = __stream(Streamable.identity());
+            const push = __bindMethod(stream, QueueableLike_enqueue);
+            const result = __observe(stream) ?? 0;
+            __do(push, result + 1);
+            return result;
+        }), Observable.takeFirst({ count: 10 }), x => x, Observable.buffer(), Observable.lastAsync(scheduler), x => x ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+    }
+    catch (e_11) {
+        env_11.error = e_11;
+        env_11.hasError = true;
+    }
+    finally {
+        __disposeResources(env_11);
+    }
+}), testAsync("__state", async () => {
+    const env_12 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_12, HostScheduler.create(), false);
+        await pipeAsync(Observable.computeDeferred(() => {
+            const initialState = __constant(() => 0);
+            const state = __state(initialState);
+            const push = __bindMethod(state, QueueableLike_enqueue);
+            const result = __observe(state) ?? -1;
+            if (result > -1) {
+                __do(push, () => result + 1);
+            }
+            return result;
+        }), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler), x => x ?? [], expectArrayEquals([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8]));
+    }
+    catch (e_12) {
+        env_12.error = e_12;
+        env_12.hasError = true;
+    }
+    finally {
+        __disposeResources(env_12);
+    }
+}), testAsync("awaiting a Multicast Observable", async () => {
+    const env_13 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_13, HostScheduler.create(), false);
+        const subject = Subject.create({ replay: 2 });
+        subject[EventListenerLike_notify](1);
+        await pipeAsync(Observable.computeDeferred(() => {
+            const result = __await(subject);
+            __do(bindMethod(subject, DisposableLike_dispose));
+            return result;
+        }), Observable.distinctUntilChanged(), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1]));
+    }
+    catch (e_13) {
+        env_13.error = e_13;
+        env_13.hasError = true;
+    }
+    finally {
+        __disposeResources(env_13);
+    }
+}), testIsDeferredObservableWithSideEffects(Observable.computeDeferred(() => { }))), describe("computeRunnable", test("batch mode", () => {
     const result = [];
     pipe(Observable.computeRunnable(() => {
         const fromValueWithDelay = __constant((delay, value) => pipe([value], Observable.fromReadonlyArray({ delay })));
@@ -170,14 +380,25 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         return __await(next);
     }, { mode: "combine-latest" }), keepType(Observable.keep)(isSome), Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.run());
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
-}), test("when compute function throws", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
-    const error = newInstance(Error);
-    const subscription = pipe(Observable.computeRunnable(() => {
-        raise(error);
-    }), Observable.subscribe(vts));
-    vts[VirtualTimeSchedulerLike_run]();
-    pipe(subscription[DisposableLike_error], expectEquals(error));
-})), test("conditional hooks", pipeLazy(Observable.computeRunnable(() => {
+}), test("when compute function throws", () => {
+    const env_14 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_14, VirtualTimeScheduler.create(), false);
+        const error = newInstance(Error);
+        const subscription = pipe(Observable.computeRunnable(() => {
+            raise(error);
+        }), Observable.subscribe(vts));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(subscription[DisposableLike_error], expectEquals(error));
+    }
+    catch (e_14) {
+        env_14.error = e_14;
+        env_14.hasError = true;
+    }
+    finally {
+        __disposeResources(env_14);
+    }
+}), test("conditional hooks", pipeLazy(Observable.computeRunnable(() => {
     const src = __constant(pipe([0, 1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 5 })));
     const src2 = __constant(pipe(Enumerable.generate(increment, returns(100)), Observable.fromEnumerable({ delay: 2 })));
     const v = __await(src);
@@ -211,10 +432,23 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
 }))), describe("concatMany", testIsPureRunnable(Observable.concatMany([
     Observable.empty({ delay: 1 }),
     Observable.empty({ delay: 1 }),
-])), testIsPureDeferredObservable(Disposable.using(VirtualTimeScheduler.create)(vts => Observable.concatMany([
-    pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)),
-    Observable.empty({ delay: 1 }),
-]))), testIsRunnableWithSideEffects(Observable.concatMany([
+])), testIsPureDeferredObservable((() => {
+    const env_15 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_15, VirtualTimeScheduler.create(), false);
+        return Observable.concatMany([
+            pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)),
+            Observable.empty({ delay: 1 }),
+        ]);
+    }
+    catch (e_15) {
+        env_15.error = e_15;
+        env_15.hasError = true;
+    }
+    finally {
+        __disposeResources(env_15);
+    }
+})()), testIsRunnableWithSideEffects(Observable.concatMany([
     pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
     Observable.empty({ delay: 1 }),
 ])), testIsDeferredObservableWithSideEffects(Observable.concatMany([
@@ -223,7 +457,20 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
 ])), testIsPureDeferredObservable(Observable.concatMany([Subject.create(), Observable.empty({ delay: 1 })])), testIsDeferredObservableWithSideEffects(Observable.concatMany([
     Subject.create(),
     pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
-]))), describe("concatMap", testAsync("maps each value to a container and flattens", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync([0, 1], Observable.fromReadonlyArray(), Observable.concatMap(pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }))), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 1, 2, 3])))), test("maps each value to a container and flattens", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatMap(pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })), {
+]))), describe("concatMap", testAsync("maps each value to a container and flattens", async () => {
+    const env_16 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_16, HostScheduler.create(), false);
+        await pipeAsync([0, 1], Observable.fromReadonlyArray(), Observable.concatMap(pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }))), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 1, 2, 3]));
+    }
+    catch (e_16) {
+        env_16.error = e_16;
+        env_16.hasError = true;
+    }
+    finally {
+        __disposeResources(env_16);
+    }
+}), test("maps each value to a container and flattens", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatMap(pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })), {
     innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), PureStatefulObservableOperator(Observable.concatMap(_ => Observable.empty({ delay: 1 }))), DeferringObservableOperatorTests(Observable.concatMap(_ => Observable.empty({ delay: 1 }), {
     innerType: Observable.PureDeferredObservableType,
@@ -231,51 +478,136 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
     innerType: Observable.RunnableWithSideEffectsType,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.concatMap(_ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)), {
     innerType: Observable.DeferredObservableWithSideEffectsType,
-}))), describe("concatWith", test("concats two containers together", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatWith(pipe([2, 3, 4], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4]))), PureStatefulObservableOperator(Observable.concatWith(Observable.empty({ delay: 1 }), Observable.empty({ delay: 1 }))), ObservableOperatorWithSideEffectsTests(Observable.concatWith(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)))), DeferringObservableOperatorTests(Disposable.using(VirtualTimeScheduler.create)(vts => Observable.concatWith(pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts))))), describe("concat with DeferredObservableWithSideEffectsLikes", test("with PureRunnableLike", pipeLazy(Observable.empty({ delay: 1 }), Observable.concatWith(pipe(async () => {
+}))), describe("concatWith", test("concats two containers together", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatWith(pipe([2, 3, 4], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4]))), PureStatefulObservableOperator(Observable.concatWith(Observable.empty({ delay: 1 }), Observable.empty({ delay: 1 }))), ObservableOperatorWithSideEffectsTests(Observable.concatWith(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)))), DeferringObservableOperatorTests((() => {
+    const env_17 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_17, VirtualTimeScheduler.create(), false);
+        return Observable.concatWith(pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)));
+    }
+    catch (e_17) {
+        env_17.error = e_17;
+        env_17.hasError = true;
+    }
+    finally {
+        __disposeResources(env_17);
+    }
+})()), describe("concat with DeferredObservableWithSideEffectsLikes", test("with PureRunnableLike", pipeLazy(Observable.empty({ delay: 1 }), Observable.concatWith(pipe(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory())), expectIsDeferredObservableWithSideEffects)), test("with RunnableWithSideEffectsLike", pipeLazy(Observable.empty({ delay: 1 }), Observable.forEach(ignore), Observable.concatWith(pipe(async () => {
     throw new Error();
-}, Observable.fromAsyncFactory())), expectIsDeferredObservableWithSideEffects)), test("with PureDeferredObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts), Observable.concatWith(pipe(async () => {
-    throw new Error();
-}, Observable.fromAsyncFactory())), expectIsDeferredObservableWithSideEffects))), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
+}, Observable.fromAsyncFactory())), expectIsDeferredObservableWithSideEffects)), test("with PureDeferredObservableLike", () => {
+    const env_18 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_18, VirtualTimeScheduler.create(), false);
+        pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts), Observable.concatWith(pipe(async () => {
+            throw new Error();
+        }, Observable.fromAsyncFactory())), expectIsDeferredObservableWithSideEffects);
+    }
+    catch (e_18) {
+        env_18.error = e_18;
+        env_18.hasError = true;
+    }
+    finally {
+        __disposeResources(env_18);
+    }
+}), test("with DeferredObservableWithSideEffectsLike", pipeLazy(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory(), Observable.concatWith(pipe(async () => {
     throw new Error();
-}, Observable.fromAsyncFactory())), expectIsDeferredObservableWithSideEffects)), test("with MulticastObservableLike", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => pipe(new Promise(ignore), Observable.fromPromise(), Observable.concatWith(pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts))), expectIsPureDeferredObservable))))), describe("create", testIsDeferredObservableWithSideEffects(Observable.create(ignore))), describe("currentTime", test("publish current time from VTS", pipeLazy(Observable.currentTime, Observable.takeFirst({ count: 5 }), Observable.toReadonlyArray(), 
+}, Observable.fromAsyncFactory())), expectIsDeferredObservableWithSideEffects)), test("with MulticastObservableLike", () => {
+    const env_19 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_19, VirtualTimeScheduler.create(), false);
+        pipe(new Promise(ignore), Observable.fromPromise(), Observable.concatWith(pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts))), expectIsPureDeferredObservable);
+    }
+    catch (e_19) {
+        env_19.error = e_19;
+        env_19.hasError = true;
+    }
+    finally {
+        __disposeResources(env_19);
+    }
+}))), describe("create", testIsDeferredObservableWithSideEffects(Observable.create(ignore))), describe("currentTime", test("publish current time from VTS", pipeLazy(Observable.currentTime, Observable.takeFirst({ count: 5 }), Observable.toReadonlyArray(), 
 // Only delayed scheduled continuations increment the clock
-expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)), describe("debug", ObservableOperatorWithSideEffectsTests(Observable.debug())), describe("decodeWithCharset", PureStatefulObservableOperator(Observable.decodeWithCharset())), describe("defer", testAsync("defering a promise converted to an Observable", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync(Observable.defer(() => pipe(Promise.resolve(1), Observable.fromPromise())), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1])))), testIsPureDeferredObservable(Observable.defer(Subject.create))), describe("dispatchTo", test("when backpressure exception is thrown", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
-    const stream = Streamable.identity()[StreamableLike_stream](vts, {
-        backpressureStrategy: ThrowBackpressureStrategy,
-        capacity: 1,
-    });
-    expectToThrow(pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Observable.run()));
-})), test("when completed successfully", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
-    const stream = Streamable.identity()[StreamableLike_stream](vts, {
-        backpressureStrategy: OverflowBackpressureStrategy,
-        capacity: 1,
-    });
-    let completed = false;
-    pipe(stream, EventSource.addEventHandler(ev => {
-        if (ev === DispatcherLikeEvent_completed) {
-            completed = true;
-        }
-    }));
-    pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Observable.toReadonlyArray());
-    expectTrue(completed);
-})), test("when completed successfully from delayed source", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
-    const stream = Streamable.identity()[StreamableLike_stream](vts, {
-        backpressureStrategy: OverflowBackpressureStrategy,
-        capacity: 1,
-    });
-    let completed = false;
-    pipe(stream, EventSource.addEventHandler(ev => {
-        if (ev === DispatcherLikeEvent_completed) {
-            completed = true;
-        }
-    }));
-    pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray({ delay: 1 }), Observable.dispatchTo(stream), Observable.toReadonlyArray());
-    expectTrue(completed);
-})), ObservableOperatorWithSideEffectsTests(Observable.dispatchTo({}))), describe("distinctUntilChanged", PureStatefulObservableOperator(Observable.distinctUntilChanged())), describe("empty", test("with delay", () => {
+expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)), describe("debug", ObservableOperatorWithSideEffectsTests(Observable.debug())), describe("decodeWithCharset", PureStatefulObservableOperator(Observable.decodeWithCharset())), describe("defer", testAsync("defering a promise converted to an Observable", async () => {
+    const env_20 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_20, HostScheduler.create(), false);
+        await pipeAsync(Observable.defer(() => pipe(Promise.resolve(1), Observable.fromPromise())), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1]));
+    }
+    catch (e_20) {
+        env_20.error = e_20;
+        env_20.hasError = true;
+    }
+    finally {
+        __disposeResources(env_20);
+    }
+}), testIsPureDeferredObservable(Observable.defer(Subject.create))), describe("dispatchTo", test("when backpressure exception is thrown", () => {
+    const env_21 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_21, VirtualTimeScheduler.create(), false);
+        const stream = Streamable.identity()[StreamableLike_stream](vts, {
+            backpressureStrategy: ThrowBackpressureStrategy,
+            capacity: 1,
+        });
+        expectToThrow(pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Observable.run()));
+    }
+    catch (e_21) {
+        env_21.error = e_21;
+        env_21.hasError = true;
+    }
+    finally {
+        __disposeResources(env_21);
+    }
+}), test("when completed successfully", () => {
+    const env_22 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_22, VirtualTimeScheduler.create(), false);
+        const stream = Streamable.identity()[StreamableLike_stream](vts, {
+            backpressureStrategy: OverflowBackpressureStrategy,
+            capacity: 1,
+        });
+        let completed = false;
+        pipe(stream, EventSource.addEventHandler(ev => {
+            if (ev === DispatcherLikeEvent_completed) {
+                completed = true;
+            }
+        }));
+        pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Observable.toReadonlyArray());
+        expectTrue(completed);
+    }
+    catch (e_22) {
+        env_22.error = e_22;
+        env_22.hasError = true;
+    }
+    finally {
+        __disposeResources(env_22);
+    }
+}), test("when completed successfully from delayed source", () => {
+    const env_23 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_23, VirtualTimeScheduler.create(), false);
+        const stream = Streamable.identity()[StreamableLike_stream](vts, {
+            backpressureStrategy: OverflowBackpressureStrategy,
+            capacity: 1,
+        });
+        let completed = false;
+        pipe(stream, EventSource.addEventHandler(ev => {
+            if (ev === DispatcherLikeEvent_completed) {
+                completed = true;
+            }
+        }));
+        pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray({ delay: 1 }), Observable.dispatchTo(stream), Observable.toReadonlyArray());
+        expectTrue(completed);
+    }
+    catch (e_23) {
+        env_23.error = e_23;
+        env_23.hasError = true;
+    }
+    finally {
+        __disposeResources(env_23);
+    }
+}), ObservableOperatorWithSideEffectsTests(Observable.dispatchTo({}))), describe("distinctUntilChanged", PureStatefulObservableOperator(Observable.distinctUntilChanged())), describe("empty", test("with delay", () => {
     let disposedTime = -1;
     const scheduler = VirtualTimeScheduler.create();
     pipe(Observable.empty({ delay: 5 }), Observable.subscribe(scheduler), DisposableContainer.onComplete(() => {
@@ -303,7 +635,46 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     innerType: Observable.RunnableWithSideEffectsType,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.exhaustMap(_ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)), {
     innerType: Observable.DeferredObservableWithSideEffectsType,
-}))), describe("firstAsync", testAsync("empty source", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync([], Observable.fromReadonlyArray(), Observable.firstAsync(scheduler), expectIsNone))), testAsync("it returns the first value", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.firstAsync(scheduler), expectEquals(1))))), describe("flatMapAsync", testAsync("mapping a number to a promise", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync(1, Observable.fromValue(), Observable.flatMapAsync(async (x) => await Promise.resolve(x)), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1])))), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.flatMapAsync(async (x) => await Promise.resolve(x)))), describe("flatMapIterable", test("maps the incoming value with the inline generator function", pipeLazy([none, none], Observable.fromReadonlyArray(), Observable.flatMapIterable(function* (_) {
+}))), describe("firstAsync", testAsync("empty source", async () => {
+    const env_24 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_24, HostScheduler.create(), false);
+        await pipeAsync([], Observable.fromReadonlyArray(), Observable.firstAsync(scheduler), expectIsNone);
+    }
+    catch (e_24) {
+        env_24.error = e_24;
+        env_24.hasError = true;
+    }
+    finally {
+        __disposeResources(env_24);
+    }
+}), testAsync("it returns the first value", async () => {
+    const env_25 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_25, HostScheduler.create(), false);
+        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.firstAsync(scheduler), expectEquals(1));
+    }
+    catch (e_25) {
+        env_25.error = e_25;
+        env_25.hasError = true;
+    }
+    finally {
+        __disposeResources(env_25);
+    }
+})), describe("flatMapAsync", testAsync("mapping a number to a promise", async () => {
+    const env_26 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_26, HostScheduler.create(), false);
+        await pipeAsync(1, Observable.fromValue(), Observable.flatMapAsync(async (x) => await Promise.resolve(x)), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1]));
+    }
+    catch (e_26) {
+        env_26.error = e_26;
+        env_26.hasError = true;
+    }
+    finally {
+        __disposeResources(env_26);
+    }
+}), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.flatMapAsync(async (x) => await Promise.resolve(x)))), describe("flatMapIterable", test("maps the incoming value with the inline generator function", pipeLazy([none, none], Observable.fromReadonlyArray(), Observable.flatMapIterable(function* (_) {
     yield 1;
     yield 2;
     yield 3;
@@ -322,45 +693,139 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     pipe(pipeLazy([1, 1], Observable.fromReadonlyArray({ delay: 3 }), Observable.forEach(_ => {
         throw err;
     }), Observable.toReadonlyArray()), expectToThrowError(err));
-}), ObservableOperatorWithSideEffectsTests(Observable.forEach(ignore))), describe("forkMerge", testAsync("with pure src and inner runnables with side-effects", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
-    await pipeAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forkMerge(Observable.flatMapIterable(_ => [1, 2]), Observable.flatMapIterable(_ => [3, 4])), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]));
-})), testAsync("src with side-effects is only subscribed to once", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
-    const sideEffect = mockFn();
-    const src = pipe(0, Observable.fromValue(), Observable.forEach(sideEffect));
-    await pipeAsync(src, Observable.forkMerge(Observable.flatMapIterable(_ => [1, 2, 3]), Observable.flatMapIterable(_ => [4, 5, 6])), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 5, 6]));
-    pipe(sideEffect, expectToHaveBeenCalledTimes(1));
-}))), describe("fromAsyncFactory", testAsync("when promise resolves", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync(async () => {
-    await Promise.resolve(1);
-    return 2;
-}, Observable.fromAsyncFactory(), Observable.lastAsync(scheduler), expectEquals(2)))), testAsync("when promise fails with an exception", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipe(pipe(async () => {
-    await Promise.resolve(1);
+}), ObservableOperatorWithSideEffectsTests(Observable.forEach(ignore))), describe("forkMerge", testAsync("with pure src and inner runnables with side-effects", async () => {
+    const env_27 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_27, HostScheduler.create(), false);
+        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forkMerge(Observable.flatMapIterable(_ => [1, 2]), Observable.flatMapIterable(_ => [3, 4])), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]));
+    }
+    catch (e_27) {
+        env_27.error = e_27;
+        env_27.hasError = true;
+    }
+    finally {
+        __disposeResources(env_27);
+    }
+}), testAsync("src with side-effects is only subscribed to once", async () => {
+    const env_28 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_28, HostScheduler.create(), false);
+        const sideEffect = mockFn();
+        const src = pipe(0, Observable.fromValue(), Observable.forEach(sideEffect));
+        await pipeAsync(src, Observable.forkMerge(Observable.flatMapIterable(_ => [1, 2, 3]), Observable.flatMapIterable(_ => [4, 5, 6])), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 5, 6]));
+        pipe(sideEffect, expectToHaveBeenCalledTimes(1));
+    }
+    catch (e_28) {
+        env_28.error = e_28;
+        env_28.hasError = true;
+    }
+    finally {
+        __disposeResources(env_28);
+    }
+})), describe("fromAsyncFactory", testAsync("when promise resolves", async () => {
+    const env_29 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_29, HostScheduler.create(), false);
+        await pipeAsync(async () => {
+            await Promise.resolve(1);
+            return 2;
+        }, Observable.fromAsyncFactory(), Observable.lastAsync(scheduler), expectEquals(2));
+    }
+    catch (e_29) {
+        env_29.error = e_29;
+        env_29.hasError = true;
+    }
+    finally {
+        __disposeResources(env_29);
+    }
+}), testAsync("when promise fails with an exception", async () => {
+    const env_30 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_30, HostScheduler.create(), false);
+        await pipe(pipe(async () => {
+            await Promise.resolve(1);
+            raise();
+        }, Observable.fromAsyncFactory(), Observable.lastAsync(scheduler)), expectPromiseToThrow);
+    }
+    catch (e_30) {
+        env_30.error = e_30;
+        env_30.hasError = true;
+    }
+    finally {
+        __disposeResources(env_30);
+    }
+}), testAsync("when factory throws an exception", async () => {
+    const env_31 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_31, HostScheduler.create(), false);
+        await pipe(pipe(async () => {
+            raise();
+        }, Observable.fromAsyncFactory(), Observable.lastAsync(scheduler)), expectPromiseToThrow);
+    }
+    catch (e_31) {
+        env_31.error = e_31;
+        env_31.hasError = true;
+    }
+    finally {
+        __disposeResources(env_31);
+    }
+}), testIsDeferredObservableWithSideEffects(pipe(async () => {
     raise();
-}, Observable.fromAsyncFactory(), Observable.lastAsync(scheduler)), expectPromiseToThrow))), testAsync("when factory throws an exception", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipe(pipe(async () => {
-    raise();
-}, Observable.fromAsyncFactory(), Observable.lastAsync(scheduler)), expectPromiseToThrow))), testIsDeferredObservableWithSideEffects(pipe(async () => {
-    raise();
-}, Observable.fromAsyncFactory()))), describe("fromAsyncIterable", testAsync("infinite immediately resolving iterable", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
-    const result = await pipe((async function* foo() {
-        let i = 0;
-        while (true) {
-            yield i++;
-        }
-    })(), Observable.fromAsyncIterable(), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler, { capacity: 5 }));
-    pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
-})), testAsync("iterable that completes", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
-    const result = await pipe((async function* foo() {
-        yield 1;
-        yield 2;
-        yield 3;
-    })(), Observable.fromAsyncIterable(), Observable.buffer(), Observable.lastAsync(scheduler, { capacity: 1 }));
-    pipe(result ?? [], expectArrayEquals([1, 2, 3]));
-})), testAsync("iterable that throws", pipeLazy(Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
-    const e = error();
-    const result = await pipe((async function* foo() {
-        throw e;
-    })(), Observable.fromAsyncIterable(), Observable.lastAsync(scheduler, { capacity: 1 }));
-    pipe(result, expectEquals(e));
-}), expectToThrowAsync)), testIsDeferredObservableWithSideEffects(pipe((async function* foo() {
+}, Observable.fromAsyncFactory()))), describe("fromAsyncIterable", testAsync("infinite immediately resolving iterable", async () => {
+    const env_32 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_32, HostScheduler.create(), false);
+        const result = await pipe((async function* foo() {
+            let i = 0;
+            while (true) {
+                yield i++;
+            }
+        })(), Observable.fromAsyncIterable(), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler, { capacity: 5 }));
+        pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+    }
+    catch (e_32) {
+        env_32.error = e_32;
+        env_32.hasError = true;
+    }
+    finally {
+        __disposeResources(env_32);
+    }
+}), testAsync("iterable that completes", async () => {
+    const env_33 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_33, HostScheduler.create(), false);
+        const result = await pipe((async function* foo() {
+            yield 1;
+            yield 2;
+            yield 3;
+        })(), Observable.fromAsyncIterable(), Observable.buffer(), Observable.lastAsync(scheduler, { capacity: 1 }));
+        pipe(result ?? [], expectArrayEquals([1, 2, 3]));
+    }
+    catch (e_33) {
+        env_33.error = e_33;
+        env_33.hasError = true;
+    }
+    finally {
+        __disposeResources(env_33);
+    }
+}), testAsync("iterable that throws", pipeLazy(async () => {
+    const env_34 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_34, HostScheduler.create(), false);
+        const e = error();
+        const result = await pipe((async function* foo() {
+            throw e;
+        })(), Observable.fromAsyncIterable(), Observable.lastAsync(scheduler, { capacity: 1 }));
+        pipe(result, expectEquals(e));
+    }
+    catch (e_34) {
+        env_34.error = e_34;
+        env_34.hasError = true;
+    }
+    finally {
+        __disposeResources(env_34);
+    }
+}, expectToThrowAsync)), testIsDeferredObservableWithSideEffects(pipe((async function* foo() {
     let i = 0;
     while (true) {
         yield i++;
@@ -369,7 +834,33 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     throw newInstance(Error);
 })(), Observable.fromIterable(), Observable.run()), expectToThrow)), testIsRunnableWithSideEffects(pipe((function* Generator() {
     throw newInstance(Error);
-})(), Observable.fromIterable()))), describe("fromPromise", testAsync("when the promise resolves", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync(Promise.resolve(1), Observable.fromPromise(), Observable.lastAsync(scheduler), expectEquals(1)))), testAsync("when the promise reject", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync(pipeAsync(Promise.reject(newInstance(Error)), Observable.fromPromise(), Observable.lastAsync(scheduler)), expectPromiseToThrow))), testIsMulticastObservable(pipe(Promise.resolve(true), Observable.fromPromise()))), describe("fromReadonlyArray", testIsPureRunnable(pipe([], Observable.fromReadonlyArray({ delay: 1 })))), describe("fromStore", test("it publishes the current value and all subsequent values", () => {
+})(), Observable.fromIterable()))), describe("fromPromise", testAsync("when the promise resolves", async () => {
+    const env_35 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_35, HostScheduler.create(), false);
+        await pipeAsync(Promise.resolve(1), Observable.fromPromise(), Observable.lastAsync(scheduler), expectEquals(1));
+    }
+    catch (e_35) {
+        env_35.error = e_35;
+        env_35.hasError = true;
+    }
+    finally {
+        __disposeResources(env_35);
+    }
+}), testAsync("when the promise reject", async () => {
+    const env_36 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_36, HostScheduler.create(), false);
+        await pipeAsync(pipeAsync(Promise.reject(newInstance(Error)), Observable.fromPromise(), Observable.lastAsync(scheduler)), expectPromiseToThrow);
+    }
+    catch (e_36) {
+        env_36.error = e_36;
+        env_36.hasError = true;
+    }
+    finally {
+        __disposeResources(env_36);
+    }
+}), testIsMulticastObservable(pipe(Promise.resolve(true), Observable.fromPromise()))), describe("fromReadonlyArray", testIsPureRunnable(pipe([], Observable.fromReadonlyArray({ delay: 1 })))), describe("fromStore", test("it publishes the current value and all subsequent values", () => {
     const store = WritableStore.create(-1);
     const scheduler = VirtualTimeScheduler.create();
     const result = [];
@@ -381,7 +872,33 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     pipe(result, expectArrayEquals([-1, 0, 1, 2]));
 }), testIsMulticastObservable(pipe(WritableStore.create(-1), Observable.fromStore()))), describe("fromValue", testIsPureRunnable(pipe("a", Observable.fromValue({ delay: 1 })))), describe("ignoreElements", test("ignores all elements", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.ignoreElements(), Observable.toReadonlyArray(), expectArrayEquals([]))), PureStatelessObservableOperatorTests(Observable.ignoreElements())), describe("keep", PureStatelessObservableOperatorTests(Observable.keep(alwaysTrue))), describe("keyFrame", test("keyframing from 0 to 10 over a duration of 10 clock clicks", pipeLazy(Observable.keyFrame(10), Observable.map(scale(0, 10)), Observable.toReadonlyArray({
     maxMicroTaskTicks: 1,
-}), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])))), describe("lastAsync", testAsync("empty source", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync([], Observable.fromReadonlyArray(), Observable.lastAsync(scheduler), expectIsNone))), testAsync("it returns the last value", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.lastAsync(scheduler), expectEquals(3))))), describe("log", ObservableOperatorWithSideEffectsTests(Observable.log())), describe("map", PureStatelessObservableOperatorTests(Observable.map(returns(none)))), describe("merge", test("validate output runtime type", () => {
+}), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])))), describe("lastAsync", testAsync("empty source", async () => {
+    const env_37 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_37, HostScheduler.create(), false);
+        await pipeAsync([], Observable.fromReadonlyArray(), Observable.lastAsync(scheduler), expectIsNone);
+    }
+    catch (e_37) {
+        env_37.error = e_37;
+        env_37.hasError = true;
+    }
+    finally {
+        __disposeResources(env_37);
+    }
+}), testAsync("it returns the last value", async () => {
+    const env_38 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_38, HostScheduler.create(), false);
+        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.lastAsync(scheduler), expectEquals(3));
+    }
+    catch (e_38) {
+        env_38.error = e_38;
+        env_38.hasError = true;
+    }
+    finally {
+        __disposeResources(env_38);
+    }
+})), describe("log", ObservableOperatorWithSideEffectsTests(Observable.log())), describe("map", PureStatelessObservableOperatorTests(Observable.map(returns(none)))), describe("merge", test("validate output runtime type", () => {
     const pureEnumerable = pipe([1, 2, 3], Observable.fromReadonlyArray());
     const enumerableWithSideEffects = pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.forEach(ignore));
     const pureRunnable = pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }));
@@ -420,17 +937,43 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
 }))), describe("mergeMany", testIsPureRunnable(Observable.mergeMany([
     Observable.empty({ delay: 1 }),
     Observable.empty({ delay: 1 }),
-])), testIsPureDeferredObservable(Disposable.using(VirtualTimeScheduler.create)(vts => Observable.mergeMany([
-    pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)),
-    Observable.empty({ delay: 1 }),
-]))), testIsRunnableWithSideEffects(Observable.mergeMany([
+])), testIsPureDeferredObservable((() => {
+    const env_39 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_39, VirtualTimeScheduler.create(), false);
+        return Observable.mergeMany([
+            pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)),
+            Observable.empty({ delay: 1 }),
+        ]);
+    }
+    catch (e_39) {
+        env_39.error = e_39;
+        env_39.hasError = true;
+    }
+    finally {
+        __disposeResources(env_39);
+    }
+})()), testIsRunnableWithSideEffects(Observable.mergeMany([
     pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
     Observable.empty({ delay: 1 }),
 ])), testIsMulticastObservable(Observable.mergeMany([Subject.create(), Observable.empty()])), testIsPureDeferredObservable(Observable.mergeMany([Subject.create(), Observable.empty({ delay: 1 })])), testIsDeferredObservableWithSideEffects(Observable.mergeMany([
     Observable.create(ignore),
     Subject.create(),
     Observable.empty({ delay: 1 }),
-]))), describe("mergeMap", testAsync("without delay, merge all observables as they are produced", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.mergeMap(x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3])))), test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.mergeMap(x => pipe([x, x, x], Observable.fromReadonlyArray()), {
+]))), describe("mergeMap", testAsync("without delay, merge all observables as they are produced", async () => {
+    const env_40 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_40, HostScheduler.create(), false);
+        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.mergeMap(x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]));
+    }
+    catch (e_40) {
+        env_40.error = e_40;
+        env_40.hasError = true;
+    }
+    finally {
+        __disposeResources(env_40);
+    }
+}), test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.mergeMap(x => pipe([x, x, x], Observable.fromReadonlyArray()), {
     innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]))), PureStatefulObservableOperator(Observable.mergeMap(_ => Observable.empty({ delay: 1 }))), DeferringObservableOperatorTests(Observable.mergeMap(_ => Observable.empty({ delay: 1 }), {
     innerType: Observable.PureDeferredObservableType,
@@ -438,7 +981,33 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     innerType: Observable.RunnableWithSideEffectsType,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.mergeMap(_ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)), {
     innerType: Observable.DeferredObservableWithSideEffectsType,
-}))), describe("mergeWith", PureStatefulObservableOperator(Observable.mergeWith(Observable.empty({ delay: 1 }))), ObservableOperatorWithSideEffectsTests(Observable.mergeWith(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)))), DeferringObservableOperatorTests(Disposable.using(VirtualTimeScheduler.create)(vts => Observable.mergeWith(pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts))))), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.mergeWith(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), Observable.forEach(ignore))))), describe("multicast", testIsMulticastObservable(Disposable.using(VirtualTimeScheduler.create)(vts => pipe(Observable.empty({ delay: 1 }), Observable.multicast(vts)))), test("shared observable zipped with itself, auto disposing", () => {
+}))), describe("mergeWith", PureStatefulObservableOperator(Observable.mergeWith(Observable.empty({ delay: 1 }))), ObservableOperatorWithSideEffectsTests(Observable.mergeWith(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)))), DeferringObservableOperatorTests((() => {
+    const env_41 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_41, VirtualTimeScheduler.create(), false);
+        return Observable.mergeWith(pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)));
+    }
+    catch (e_41) {
+        env_41.error = e_41;
+        env_41.hasError = true;
+    }
+    finally {
+        __disposeResources(env_41);
+    }
+})()), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.mergeWith(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), Observable.forEach(ignore))))), describe("multicast", testIsMulticastObservable((() => {
+    const env_42 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_42, VirtualTimeScheduler.create(), false);
+        return pipe(Observable.empty({ delay: 1 }), Observable.multicast(vts));
+    }
+    catch (e_42) {
+        env_42.error = e_42;
+        env_42.hasError = true;
+    }
+    finally {
+        __disposeResources(env_42);
+    }
+})()), test("shared observable zipped with itself, auto disposing", () => {
     const scheduler = VirtualTimeScheduler.create();
     const shared = pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forEach(ignore), Observable.multicast(scheduler, { replay: 1, autoDispose: true }));
     expectIsMulticastObservable(shared);
@@ -456,10 +1025,21 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(disp, expectToHaveBeenCalledTimes(1));
     pipe(f, expectToHaveBeenCalledTimes(1));
-}), test("when callback function throws", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
-    const subscription = pipe([1], Observable.fromReadonlyArray(), Observable.onSubscribe(raise), Observable.subscribe(vts));
-    pipe(subscription[DisposableLike_error], expectIsSome);
-})), test("when callback returns a disposable", () => {
+}), test("when callback function throws", () => {
+    const env_43 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_43, VirtualTimeScheduler.create(), false);
+        const subscription = pipe([1], Observable.fromReadonlyArray(), Observable.onSubscribe(raise), Observable.subscribe(vts));
+        pipe(subscription[DisposableLike_error], expectIsSome);
+    }
+    catch (e_43) {
+        env_43.error = e_43;
+        env_43.hasError = true;
+    }
+    finally {
+        __disposeResources(env_43);
+    }
+}), test("when callback returns a disposable", () => {
     const scheduler = VirtualTimeScheduler.create();
     const disp = Disposable.create();
     const f = mockFn(disp);
@@ -494,9 +1074,49 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     innerType: RunnableWithSideEffectsType,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
     innerType: DeferredObservableWithSideEffectsType,
-}))), describe("skipFirst", PureStatefulObservableOperator(Observable.skipFirst())), describe("spring", testAsync("test with spring", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
-    await pipeAsync(Observable.spring(), Observable.lastAsync(scheduler), expectEquals(1));
-}))), describe("startWith", test("appends the additional values to the start of the container", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.startWith(2, 3, 4), Observable.toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1]))), PureStatefulObservableOperator(Observable.startWith(1, 2, 3))), describe("subscribeOn", testIsPureDeferredObservable(Disposable.using(VirtualTimeScheduler.create)(vts => pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)))), testIsDeferredObservableWithSideEffects(Disposable.using(VirtualTimeScheduler.create)(vts => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore), Observable.subscribeOn(vts)))), testIsMulticastObservable(Disposable.using(VirtualTimeScheduler.create)(vts => pipe(Subject.create(), Observable.subscribeOn(vts))))), describe("switchAll", test("with empty source", pipeLazy(Observable.empty({ delay: 1 }), Observable.switchAll({
+}))), describe("skipFirst", PureStatefulObservableOperator(Observable.skipFirst())), describe("spring", testAsync("test with spring", async () => {
+    const env_44 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_44, HostScheduler.create(), false);
+        await pipeAsync(Observable.spring(), Observable.lastAsync(scheduler), expectEquals(1));
+    }
+    catch (e_44) {
+        env_44.error = e_44;
+        env_44.hasError = true;
+    }
+    finally {
+        __disposeResources(env_44);
+    }
+})), describe("startWith", test("appends the additional values to the start of the container", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.startWith(2, 3, 4), Observable.toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1]))), PureStatefulObservableOperator(Observable.startWith(1, 2, 3))), describe("subscribeOn", testIsPureDeferredObservable((() => {
+    const env_45 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_45, VirtualTimeScheduler.create(), false);
+        return pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts));
+    }
+    catch (e_45) {
+        env_45.error = e_45;
+        env_45.hasError = true;
+    }
+    finally {
+        __disposeResources(env_45);
+    }
+})()), testIsDeferredObservableWithSideEffects((() => {
+    const env_46 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_46, VirtualTimeScheduler.create(), false);
+        return pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore), Observable.subscribeOn(vts));
+    }
+    catch (e_46) {
+        env_46.error = e_46;
+        env_46.hasError = true;
+    }
+    finally {
+        __disposeResources(env_46);
+    }
+})()), testIsMulticastObservable((() => {
+    const vts = VirtualTimeScheduler.create();
+    return pipe(Subject.create(), Observable.subscribeOn(vts));
+})())), describe("switchAll", test("with empty source", pipeLazy(Observable.empty({ delay: 1 }), Observable.switchAll({
     innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([]))), PureStatefulObservableOperator(Observable.switchAll()), DeferringObservableOperatorTests(Observable.switchAll({
     innerType: Observable.PureDeferredObservableType,
@@ -545,10 +1165,49 @@ Observable.takeLast({ count: 0 }), Observable.toReadonlyArray(), expectArrayEqua
     pipe([0, 1, 2], Observable.fromReadonlyArray(), Observable.toEventSource(scheduler), EventSource.addEventHandler(bind(Array.prototype[Array_push], result)));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([0, 1, 2]));
-})), describe("toReadonlyArrayAsync", testAsync("with pure delayed source", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 3 }), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3])))), testAsync("with empty non-runnable source", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync(EventSource.create(l => l[DisposableLike_dispose]()), Observable.fromEventSource(), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([]))))), describe("withCurrentTime", PureStatefulObservableOperator(Observable.withCurrentTime(returns))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.withLatestFrom(pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })), (tuple)), Observable.toReadonlyArray(), expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], { valuesEquality: arrayEquality() }))), test("when latest produces no values", pipeLazy([0], Observable.fromReadonlyArray({ delay: 1 }), Observable.withLatestFrom(Observable.empty({ delay: 0 }), returns(1)), Observable.toReadonlyArray(), expectArrayEquals([]))), test("when latest throws", () => {
+})), describe("toReadonlyArrayAsync", testAsync("with pure delayed source", async () => {
+    const env_47 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_47, HostScheduler.create(), false);
+        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 3 }), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3]));
+    }
+    catch (e_47) {
+        env_47.error = e_47;
+        env_47.hasError = true;
+    }
+    finally {
+        __disposeResources(env_47);
+    }
+}), testAsync("with empty non-runnable source", async () => {
+    const env_48 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_48, HostScheduler.create(), false);
+        await pipeAsync(EventSource.create(l => l[DisposableLike_dispose]()), Observable.fromEventSource(), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([]));
+    }
+    catch (e_48) {
+        env_48.error = e_48;
+        env_48.hasError = true;
+    }
+    finally {
+        __disposeResources(env_48);
+    }
+})), describe("withCurrentTime", PureStatefulObservableOperator(Observable.withCurrentTime(returns))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.withLatestFrom(pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })), (tuple)), Observable.toReadonlyArray(), expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], { valuesEquality: arrayEquality() }))), test("when latest produces no values", pipeLazy([0], Observable.fromReadonlyArray({ delay: 1 }), Observable.withLatestFrom(Observable.empty({ delay: 0 }), returns(1)), Observable.toReadonlyArray(), expectArrayEquals([]))), test("when latest throws", () => {
     const error = newInstance(Error);
     pipe(pipeLazy([0], Observable.fromReadonlyArray({ delay: 1 }), Observable.withLatestFrom(Observable.throws({ raise: returns(error) }), returns(1)), Observable.run()), expectToThrowError(error));
-}), PureStatefulObservableOperator(Observable.withLatestFrom(Observable.empty({ delay: 1 }), returns)), ObservableOperatorWithSideEffectsTests(Observable.withLatestFrom(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)), returns)), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.withLatestFrom(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), Observable.forEach(ignore)), returns)), DeferringObservableOperatorTests(Observable.withLatestFrom(Subject.create(), returns))), describe("zipLatest", test("zip two delayed observable", pipeLazy(Observable.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Observable.fromReadonlyArray({ delay: 1, delayStart: true })), pipe([1, 2, 3, 4], Observable.fromReadonlyArray({ delay: 2, delayStart: true }))), Observable.map(([a, b]) => a + b), Observable.toReadonlyArray(), expectArrayEquals([2, 5, 8, 11]))), testIsPureRunnable(Observable.zipLatest(Observable.empty({ delay: 1 }), Observable.empty({ delay: 1 }))), testIsPureDeferredObservable(Disposable.using(VirtualTimeScheduler.create)(vts => Observable.zipLatest(pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)), Observable.empty({ delay: 1 })))), testIsRunnableWithSideEffects(Observable.zipLatest(Observable.empty({ delay: 1 }), pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)))), testIsPureDeferredObservable(Observable.zipLatest(Observable.empty({ delay: 1 }), Subject.create())), testIsDeferredObservableWithSideEffects(Observable.zipLatest(pipe(async () => {
+}), PureStatefulObservableOperator(Observable.withLatestFrom(Observable.empty({ delay: 1 }), returns)), ObservableOperatorWithSideEffectsTests(Observable.withLatestFrom(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)), returns)), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.withLatestFrom(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), Observable.forEach(ignore)), returns)), DeferringObservableOperatorTests(Observable.withLatestFrom(Subject.create(), returns))), describe("zipLatest", test("zip two delayed observable", pipeLazy(Observable.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Observable.fromReadonlyArray({ delay: 1, delayStart: true })), pipe([1, 2, 3, 4], Observable.fromReadonlyArray({ delay: 2, delayStart: true }))), Observable.map(([a, b]) => a + b), Observable.toReadonlyArray(), expectArrayEquals([2, 5, 8, 11]))), testIsPureRunnable(Observable.zipLatest(Observable.empty({ delay: 1 }), Observable.empty({ delay: 1 }))), testIsPureDeferredObservable((() => {
+    const env_49 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_49, VirtualTimeScheduler.create(), false);
+        return Observable.zipLatest(pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)), Observable.empty({ delay: 1 }));
+    }
+    catch (e_49) {
+        env_49.error = e_49;
+        env_49.hasError = true;
+    }
+    finally {
+        __disposeResources(env_49);
+    }
+})()), testIsRunnableWithSideEffects(Observable.zipLatest(Observable.empty({ delay: 1 }), pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)))), testIsPureDeferredObservable(Observable.zipLatest(Observable.empty({ delay: 1 }), Subject.create())), testIsDeferredObservableWithSideEffects(Observable.zipLatest(pipe(async () => {
     throw new Error();
 }, Observable.fromAsyncFactory()), Observable.empty({ delay: 1 }), pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore))))));
 ((_) => { })(Observable);

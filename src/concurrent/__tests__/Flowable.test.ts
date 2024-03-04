@@ -16,7 +16,6 @@ import {
   FlowableLike_flow,
   PauseableLike_pause,
   PauseableLike_resume,
-  SchedulerLike,
   SchedulerLike_schedule,
   StreamableLike_stream,
   VirtualTimeSchedulerLike_run,
@@ -91,78 +90,71 @@ testModule(
   ),
   describe(
     "fromAsyncIterable",
-    testAsync(
-      "infinite immediately resolving iterable",
-      Disposable.usingAsyncLazy(HostScheduler.create)(
-        async (scheduler: SchedulerLike) => {
-          const stream = pipe(
-            (async function* foo() {
-              let i = 0;
-              while (true) {
-                yield i++;
-              }
-            })(),
-            Flowable.fromAsyncIterable(),
-            invoke(FlowableLike_flow, scheduler, { capacity: 1 }),
-          );
-          stream[PauseableLike_resume]();
+    testAsync("infinite immediately resolving iterable", async () => {
+      using scheduler = HostScheduler.create();
 
-          const result = await pipe(
-            stream,
-            Observable.takeFirst({ count: 10 }),
-            Observable.buffer(),
-            Observable.lastAsync<readonly number[]>(scheduler),
-          );
-          pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
-        },
-      ),
-    ),
+      const stream = pipe(
+        (async function* foo() {
+          let i = 0;
+          while (true) {
+            yield i++;
+          }
+        })(),
+        Flowable.fromAsyncIterable(),
+        invoke(FlowableLike_flow, scheduler, { capacity: 1 }),
+      );
+      stream[PauseableLike_resume]();
+
+      const result = await pipe(
+        stream,
+        Observable.takeFirst({ count: 10 }),
+        Observable.buffer(),
+        Observable.lastAsync<readonly number[]>(scheduler),
+      );
+      pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+    }),
     testAsync(
       "iterable that completes",
-      Disposable.usingAsyncLazy(HostScheduler.create)(
-        async (scheduler: SchedulerLike) => {
-          const stream = pipe(
-            (async function* foo() {
-              yield 1;
-              yield 2;
-              yield 3;
-            })(),
-            Flowable.fromAsyncIterable<number>(),
-            invoke(FlowableLike_flow, scheduler, { capacity: 1 }),
-          );
-          stream[PauseableLike_resume]();
 
-          const result = await pipe(
-            stream,
-            Observable.buffer<number>(),
-            Observable.lastAsync(scheduler),
-          );
+      async () => {
+        using scheduler = HostScheduler.create();
+        const stream = pipe(
+          (async function* foo() {
+            yield 1;
+            yield 2;
+            yield 3;
+          })(),
+          Flowable.fromAsyncIterable<number>(),
+          invoke(FlowableLike_flow, scheduler, { capacity: 1 }),
+        );
+        stream[PauseableLike_resume]();
 
-          pipe(result ?? [], expectArrayEquals([1, 2, 3]));
-        },
-      ),
+        const result = await pipe(
+          stream,
+          Observable.buffer<number>(),
+          Observable.lastAsync(scheduler),
+        );
+
+        pipe(result ?? [], expectArrayEquals([1, 2, 3]));
+      },
     ),
     testAsync(
       "iterable that throws",
-      pipeLazy(
-        Disposable.usingAsyncLazy(HostScheduler.create)(
-          async (scheduler: SchedulerLike) => {
-            const e = error();
+      pipeLazy(async () => {
+        using scheduler = HostScheduler.create();
+        const e = error();
 
-            const stream = pipe(
-              (async function* foo() {
-                throw e;
-              })(),
-              Flowable.fromAsyncIterable(),
-              invoke(FlowableLike_flow, scheduler, { capacity: 1 }),
-            );
-            stream[PauseableLike_resume]();
+        const stream = pipe(
+          (async function* foo() {
+            throw e;
+          })(),
+          Flowable.fromAsyncIterable(),
+          invoke(FlowableLike_flow, scheduler, { capacity: 1 }),
+        );
+        stream[PauseableLike_resume]();
 
-            await pipe(stream, Observable.lastAsync(scheduler));
-          },
-        ),
-        expectToThrowAsync,
-      ),
+        await pipe(stream, Observable.lastAsync(scheduler));
+      }, expectToThrowAsync),
     ),
   ),
   describe(
@@ -248,27 +240,22 @@ testModule(
 
       pipe(subscription[DisposableLike_isDisposed], expectTrue);
     }),
-    test(
-      "when the source throws",
-      Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
-        const error = newInstance(Error);
+    test("when the source throws", () => {
+      using vts = VirtualTimeScheduler.create();
+      const error = newInstance(Error);
 
-        const flowed = pipe(
-          Observable.throws({ raise: () => error }),
-          Flowable.fromRunnable(),
-          invoke(FlowableLike_flow, vts),
-          Disposable.addTo(vts),
-        );
-        flowed[PauseableLike_resume]();
+      const flowed = pipe(
+        Observable.throws({ raise: () => error }),
+        Flowable.fromRunnable(),
+        invoke(FlowableLike_flow, vts),
+        Disposable.addTo(vts),
+      );
+      flowed[PauseableLike_resume]();
 
-        vts[VirtualTimeSchedulerLike_run]();
+      vts[VirtualTimeSchedulerLike_run]();
 
-        pipe(
-          flowed[DisposableLike_error],
-          expectEquals<Optional<Error>>(error),
-        );
-      }),
-    ),
+      pipe(flowed[DisposableLike_error], expectEquals<Optional<Error>>(error));
+    }),
   ),
 );
 

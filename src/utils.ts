@@ -1,5 +1,5 @@
 import { Error } from "./__internal__/constants.js";
-import { Optional, SideEffect1 } from "./functions.js";
+import { Optional, SideEffect1, isNone } from "./functions.js";
 
 export const DisposableContainerLike_add = Symbol(
   "DisposableContainerLike_add",
@@ -21,14 +21,18 @@ export interface DisposableContainerLike {
   [DisposableContainerLike_add](teardown: SideEffect1<Optional<Error>>): void;
 }
 
-export const DisposableLike_dispose = Symbol("DisposableLike_dispose");
+if (isNone(Symbol.dispose)) {
+  (Symbol as any).dispose = Symbol("dispose");
+}
+
+export const DisposableLike_dispose: typeof Symbol.dispose = Symbol.dispose;
 export const DisposableLike_error = Symbol("DisposableLike_error");
 export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 
 /**
  * @noInheritDoc
  */
-export interface DisposableLike extends DisposableContainerLike {
+export interface DisposableLike extends DisposableContainerLike, Disposable {
   /**
    * The error the `Disposable` was disposed with if disposed.
    */

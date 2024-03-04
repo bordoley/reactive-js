@@ -1,3 +1,4 @@
+/// <reference types="node" resolution-mode="require"/>
 import { Error } from "./__internal__/constants.js";
 import { Optional, SideEffect1 } from "./functions.js";
 export declare const DisposableContainerLike_add: unique symbol;
@@ -15,13 +16,13 @@ export interface DisposableContainerLike {
      */
     [DisposableContainerLike_add](teardown: SideEffect1<Optional<Error>>): void;
 }
-export declare const DisposableLike_dispose: unique symbol;
+export declare const DisposableLike_dispose: typeof Symbol.dispose;
 export declare const DisposableLike_error: unique symbol;
 export declare const DisposableLike_isDisposed: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface DisposableLike extends DisposableContainerLike {
+export interface DisposableLike extends DisposableContainerLike, Disposable {
     /**
      * The error the `Disposable` was disposed with if disposed.
      */
