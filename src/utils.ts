@@ -1,4 +1,4 @@
-import { Error } from "./__internal__/constants.js";
+import { Error, Symbol as GlobalSymbol } from "./__internal__/constants.js";
 import { Optional, SideEffect1, isNone } from "./functions.js";
 
 export const DisposableContainerLike_add = Symbol(
@@ -23,10 +23,10 @@ export interface DisposableContainerLike {
 
 export const DisposableLike_dispose: typeof Symbol.dispose =
   /*@__PURE__*/ ((): typeof Symbol.dispose => {
-    if (isNone(Symbol.dispose)) {
-      (Symbol as any).dispose = Symbol("dispose");
+    if (isNone(GlobalSymbol.dispose)) {
+      (GlobalSymbol as any).dispose = Symbol("dispose");
     }
-    return Symbol.dispose;
+    return GlobalSymbol.dispose;
   })();
 
 export const DisposableLike_error = Symbol("DisposableLike_error");

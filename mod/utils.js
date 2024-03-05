@@ -1,14 +1,14 @@
 /// <reference types="./utils.d.ts" />
 
-import { Error } from "./__internal__/constants.js";
+import { Error, Symbol as GlobalSymbol } from "./__internal__/constants.js";
 import { isNone } from "./functions.js";
 export const DisposableContainerLike_add = Symbol("DisposableContainerLike_add");
 export const DisposableLike_dispose = 
 /*@__PURE__*/ (() => {
-    if (isNone(Symbol.dispose)) {
-        Symbol.dispose = Symbol("dispose");
+    if (isNone(GlobalSymbol.dispose)) {
+        GlobalSymbol.dispose = Symbol("dispose");
     }
-    return Symbol.dispose;
+    return GlobalSymbol.dispose;
 })();
 export const DisposableLike_error = Symbol("DisposableLike_error");
 export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
