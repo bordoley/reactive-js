@@ -56,21 +56,21 @@ testModule("PauseableScheduler", test("with disposed continuations", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);
-        const scheduler = PauseableScheduler.create(vts);
+        const pauseableScheduler = __addDisposableResource(env_1, PauseableScheduler.create(vts), false);
         let result = [];
-        scheduler[SchedulerLike_schedule](() => {
+        pauseableScheduler[SchedulerLike_schedule](() => {
             result[Array_push](0);
         });
-        const s1 = scheduler[SchedulerLike_schedule](() => {
+        const s1 = pauseableScheduler[SchedulerLike_schedule](() => {
             result[Array_push](1);
         });
-        const s2 = scheduler[SchedulerLike_schedule](() => {
+        const s2 = pauseableScheduler[SchedulerLike_schedule](() => {
             result[Array_push](2);
         });
-        scheduler[SchedulerLike_schedule](() => {
+        pauseableScheduler[SchedulerLike_schedule](() => {
             result[Array_push](3);
         });
-        scheduler[PauseableLike_resume]();
+        pauseableScheduler[PauseableLike_resume]();
         s1[DisposableLike_dispose]();
         s2[DisposableLike_dispose]();
         vts[VirtualTimeSchedulerLike_run]();
@@ -87,15 +87,15 @@ testModule("PauseableScheduler", test("with disposed continuations", () => {
     const env_2 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create(), false);
-        const scheduler = PauseableScheduler.create(vts);
+        const pauseableScheduler = __addDisposableResource(env_2, PauseableScheduler.create(vts), false);
         let result = [];
-        scheduler[SchedulerLike_schedule](() => {
-            result[Array_push](scheduler[SchedulerLike_now]);
+        pauseableScheduler[SchedulerLike_schedule](() => {
+            result[Array_push](pauseableScheduler[SchedulerLike_now]);
         }, { delay: 3 });
-        scheduler[SchedulerLike_schedule](() => {
-            result[Array_push](scheduler[SchedulerLike_now]);
+        pauseableScheduler[SchedulerLike_schedule](() => {
+            result[Array_push](pauseableScheduler[SchedulerLike_now]);
         }, { delay: 5 });
-        scheduler[PauseableLike_resume]();
+        pauseableScheduler[PauseableLike_resume]();
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([3, 5]));
     }

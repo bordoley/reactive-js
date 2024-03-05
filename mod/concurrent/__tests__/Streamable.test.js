@@ -130,144 +130,194 @@ testModule("Streamable", describe("animationGroup", test("blocking mode", () => 
         __disposeResources(env_3);
     }
 })), describe("inMemoryCache", test("it publishes none on subscribe when the key is missing", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const cache = Streamable.inMemoryCache({ capacity: 1 })[StreamableLike_stream](scheduler);
-    const result = [];
-    pipe([
-        tuple(2, () => {
-            pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(scheduler));
-        }),
-    ], ReadonlyArray.forEach(([time, f]) => {
-        scheduler[SchedulerLike_schedule](f, { delay: time });
-    }));
-    scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(result, expectArrayEquals([none]));
+    const env_4 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_4, VirtualTimeScheduler.create(), false);
+        const cache = Streamable.inMemoryCache({ capacity: 1 })[StreamableLike_stream](vts);
+        const result = [];
+        pipe([
+            tuple(2, () => {
+                pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
+            }),
+        ], ReadonlyArray.forEach(([time, f]) => {
+            vts[SchedulerLike_schedule](f, { delay: time });
+        }));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(result, expectArrayEquals([none]));
+    }
+    catch (e_4) {
+        env_4.error = e_4;
+        env_4.hasError = true;
+    }
+    finally {
+        __disposeResources(env_4);
+    }
 }), test("explicitly deleting a key", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const cache = Streamable.inMemoryCache({ capacity: 1 })[StreamableLike_stream](scheduler);
-    const result = [];
-    pipe([
-        tuple(0, () => {
-            cache[QueueableLike_enqueue]({ abc: _ => 1 });
-        }),
-        tuple(1, () => {
-            cache[QueueableLike_enqueue]({ abc: _ => none });
-        }),
-        tuple(2, () => {
-            pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(scheduler));
-        }),
-        tuple(3, () => {
-            cache[QueueableLike_enqueue]({ abc: _ => 2 });
-        }),
-        tuple(4, () => {
-            cache[QueueableLike_enqueue]({ abc: _ => none });
-        }),
-    ], ReadonlyArray.forEach(([time, f]) => {
-        scheduler[SchedulerLike_schedule](f, { delay: time });
-    }));
-    scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(result, expectArrayEquals([none, 2, none]));
+    const env_5 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
+        const cache = Streamable.inMemoryCache({ capacity: 1 })[StreamableLike_stream](vts);
+        const result = [];
+        pipe([
+            tuple(0, () => {
+                cache[QueueableLike_enqueue]({ abc: _ => 1 });
+            }),
+            tuple(1, () => {
+                cache[QueueableLike_enqueue]({ abc: _ => none });
+            }),
+            tuple(2, () => {
+                pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
+            }),
+            tuple(3, () => {
+                cache[QueueableLike_enqueue]({ abc: _ => 2 });
+            }),
+            tuple(4, () => {
+                cache[QueueableLike_enqueue]({ abc: _ => none });
+            }),
+        ], ReadonlyArray.forEach(([time, f]) => {
+            vts[SchedulerLike_schedule](f, { delay: time });
+        }));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(result, expectArrayEquals([none, 2, none]));
+    }
+    catch (e_5) {
+        env_5.error = e_5;
+        env_5.hasError = true;
+    }
+    finally {
+        __disposeResources(env_5);
+    }
 }), test("integration test", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const cache = Streamable.inMemoryCache({ capacity: 1 })[StreamableLike_stream](scheduler);
-    const result1 = [];
-    const abcSubscription1 = pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result1, Array_push)), Observable.subscribe(scheduler));
-    const result2 = [];
-    let abcSubscription2 = Disposable.disposed;
-    const result3 = [];
-    let abcSubscription3 = Disposable.disposed;
-    pipe([
-        tuple(1, () => {
-            cache[QueueableLike_enqueue]({ abc: _ => 1 });
-        }),
-        tuple(2, () => {
-            abcSubscription2 = pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result2, Array_push)), Observable.subscribe(scheduler));
-        }),
-        tuple(3, () => {
-            cache[QueueableLike_enqueue]({ abc: _ => 2 });
-        }),
-        tuple(4, () => {
-            abcSubscription2[DisposableLike_dispose]();
-        }),
-        tuple(4, () => {
-            cache[QueueableLike_enqueue]({ abc: _ => 2, def: _ => 0 });
-        }),
-        tuple(5, () => {
-            cache[QueueableLike_enqueue]({ abc: _ => 3 });
-        }),
-        tuple(6, () => {
-            abcSubscription1[DisposableLike_dispose]();
-        }),
-        tuple(7, () => {
-            cache[QueueableLike_enqueue]({ abc: _ => 3 });
-        }),
-        tuple(8, () => {
-            abcSubscription3 = pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result3, Array_push)), Observable.subscribe(scheduler));
-        }),
-        tuple(9, () => {
-            abcSubscription3[DisposableLike_dispose]();
-        }),
-        tuple(10, () => {
-            cache[QueueableLike_enqueue]({
-                abc: _ => 3,
-                def: _ => 1,
-                ghi: _ => 2,
-            });
-        }),
-    ], ReadonlyArray.forEach(([time, f]) => {
-        scheduler[SchedulerLike_schedule](f, { delay: time });
-    }));
-    scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(result1, expectArrayEquals([none, 1, 2]));
-    pipe(result2, expectArrayEquals([1]));
-    pipe(result3, expectArrayEquals([3]));
+    const env_6 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_6, VirtualTimeScheduler.create(), false);
+        const cache = Streamable.inMemoryCache({ capacity: 1 })[StreamableLike_stream](vts);
+        const result1 = [];
+        const abcSubscription1 = pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result1, Array_push)), Observable.subscribe(vts));
+        const result2 = [];
+        let abcSubscription2 = Disposable.disposed;
+        const result3 = [];
+        let abcSubscription3 = Disposable.disposed;
+        pipe([
+            tuple(1, () => {
+                cache[QueueableLike_enqueue]({ abc: _ => 1 });
+            }),
+            tuple(2, () => {
+                abcSubscription2 = pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result2, Array_push)), Observable.subscribe(vts));
+            }),
+            tuple(3, () => {
+                cache[QueueableLike_enqueue]({ abc: _ => 2 });
+            }),
+            tuple(4, () => {
+                abcSubscription2[DisposableLike_dispose]();
+            }),
+            tuple(4, () => {
+                cache[QueueableLike_enqueue]({ abc: _ => 2, def: _ => 0 });
+            }),
+            tuple(5, () => {
+                cache[QueueableLike_enqueue]({ abc: _ => 3 });
+            }),
+            tuple(6, () => {
+                abcSubscription1[DisposableLike_dispose]();
+            }),
+            tuple(7, () => {
+                cache[QueueableLike_enqueue]({ abc: _ => 3 });
+            }),
+            tuple(8, () => {
+                abcSubscription3 = pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result3, Array_push)), Observable.subscribe(vts));
+            }),
+            tuple(9, () => {
+                abcSubscription3[DisposableLike_dispose]();
+            }),
+            tuple(10, () => {
+                cache[QueueableLike_enqueue]({
+                    abc: _ => 3,
+                    def: _ => 1,
+                    ghi: _ => 2,
+                });
+            }),
+        ], ReadonlyArray.forEach(([time, f]) => {
+            vts[SchedulerLike_schedule](f, { delay: time });
+        }));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(result1, expectArrayEquals([none, 1, 2]));
+        pipe(result2, expectArrayEquals([1]));
+        pipe(result3, expectArrayEquals([3]));
+    }
+    catch (e_6) {
+        env_6.error = e_6;
+        env_6.hasError = true;
+    }
+    finally {
+        __disposeResources(env_6);
+    }
 })), describe("persistentCache", test("integration test", () => {
-    const store = {
-        abc: 1,
-        def: 2,
-    };
-    const persistentStore = {
-        load: (_) => pipe({ ...store }, Observable.fromValue()),
-        store: (updates) => pipe(Observable.empty(), Observable.onSubscribe(() => {
-            pipe(updates, ReadonlyObjectMap.forEach((v, k) => {
-                store[k] = v;
-            }));
-        })),
-    };
-    const scheduler = VirtualTimeScheduler.create();
-    const cache = Streamable.persistentCache(persistentStore, {
-        capacity: 1,
-    })[StreamableLike_stream](scheduler);
-    const result1 = [];
-    pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result1, Array_push)), Observable.subscribe(scheduler));
-    pipe([
-        [
-            2,
-            () => {
-                cache[QueueableLike_enqueue]({ abc: _ => 4, hgi: _ => 6 });
-            },
-        ],
-    ], ReadonlyArray.forEach(([time, f]) => {
-        scheduler[SchedulerLike_schedule](f, { delay: time });
-    }));
-    scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(result1, expectArrayEquals([1, 4]));
+    const env_7 = { stack: [], error: void 0, hasError: false };
+    try {
+        const store = {
+            abc: 1,
+            def: 2,
+        };
+        const persistentStore = {
+            load: (_) => pipe({ ...store }, Observable.fromValue()),
+            store: (updates) => pipe(Observable.empty(), Observable.onSubscribe(() => {
+                pipe(updates, ReadonlyObjectMap.forEach((v, k) => {
+                    store[k] = v;
+                }));
+            })),
+        };
+        const vts = __addDisposableResource(env_7, VirtualTimeScheduler.create(), false);
+        const cache = Streamable.persistentCache(persistentStore, {
+            capacity: 1,
+        })[StreamableLike_stream](vts);
+        const result1 = [];
+        pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result1, Array_push)), Observable.subscribe(vts));
+        pipe([
+            [
+                2,
+                () => {
+                    cache[QueueableLike_enqueue]({ abc: _ => 4, hgi: _ => 6 });
+                },
+            ],
+        ], ReadonlyArray.forEach(([time, f]) => {
+            vts[SchedulerLike_schedule](f, { delay: time });
+        }));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(result1, expectArrayEquals([1, 4]));
+    }
+    catch (e_7) {
+        env_7.error = e_7;
+        env_7.hasError = true;
+    }
+    finally {
+        __disposeResources(env_7);
+    }
 })), describe("stateStore", test("stateStore", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const streamable = Streamable.stateStore(returns(1));
-    const stateStream = streamable[StreamableLike_stream](scheduler, {
-        capacity: 20,
-        backpressureStrategy: DropLatestBackpressureStrategy,
-    });
-    pipe(stateStream[QueueableLike_capacity], expectEquals(20));
-    pipe(stateStream[QueueableLike_backpressureStrategy], expectEquals(DropLatestBackpressureStrategy));
-    stateStream[QueueableLike_enqueue](returns(2));
-    stateStream[QueueableLike_enqueue](returns(3));
-    stateStream[DispatcherLike_complete]();
-    let result = [];
-    pipe(stateStream, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(scheduler));
-    scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(result, expectArrayEquals([1, 2, 3]));
+    const env_8 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_8, VirtualTimeScheduler.create(), false);
+        const streamable = Streamable.stateStore(returns(1));
+        const stateStream = streamable[StreamableLike_stream](vts, {
+            capacity: 20,
+            backpressureStrategy: DropLatestBackpressureStrategy,
+        });
+        pipe(stateStream[QueueableLike_capacity], expectEquals(20));
+        pipe(stateStream[QueueableLike_backpressureStrategy], expectEquals(DropLatestBackpressureStrategy));
+        stateStream[QueueableLike_enqueue](returns(2));
+        stateStream[QueueableLike_enqueue](returns(3));
+        stateStream[DispatcherLike_complete]();
+        let result = [];
+        pipe(stateStream, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(vts));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(result, expectArrayEquals([1, 2, 3]));
+    }
+    catch (e_8) {
+        env_8.error = e_8;
+        env_8.hasError = true;
+    }
+    finally {
+        __disposeResources(env_8);
+    }
 })), describe("syncState", test("without throttling", () => {
     const vts = VirtualTimeScheduler.create();
     const stream = pipe(Streamable.stateStore(returns(-1)), Streamable.syncState(state => pipe(sequence(Observable.generate)(state + 10), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (oldState, newState) => newState !== oldState

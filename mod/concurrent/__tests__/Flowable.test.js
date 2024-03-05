@@ -58,22 +58,32 @@ import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable observable into a stream with backpressure", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const src = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Observable.takeFirst({ count: 5 }), Flowable.fromRunnable());
-    const dest = Streamable.identity()[StreamableLike_stream](scheduler, {
-        backpressureStrategy: ThrowBackpressureStrategy,
-        capacity: 1,
-    });
-    const dispatchToSubscription = pipe(src, Flowable.dispatchTo(dest), Observable.subscribe(scheduler));
-    const result = [];
-    pipe(dest, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(scheduler));
-    scheduler[VirtualTimeSchedulerLike_run]();
-    expectTrue(dispatchToSubscription[DisposableLike_isDisposed]);
-    pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
-})), describe("fromAsyncIterable", testAsync("infinite immediately resolving iterable", async () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
-        const scheduler = __addDisposableResource(env_1, HostScheduler.create(), false);
+        const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);
+        const src = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Observable.takeFirst({ count: 5 }), Flowable.fromRunnable());
+        const dest = Streamable.identity()[StreamableLike_stream](vts, {
+            backpressureStrategy: ThrowBackpressureStrategy,
+            capacity: 1,
+        });
+        const dispatchToSubscription = pipe(src, Flowable.dispatchTo(dest), Observable.subscribe(vts));
+        const result = [];
+        pipe(dest, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(vts));
+        vts[VirtualTimeSchedulerLike_run]();
+        expectTrue(dispatchToSubscription[DisposableLike_isDisposed]);
+        pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
+    }
+    catch (e_1) {
+        env_1.error = e_1;
+        env_1.hasError = true;
+    }
+    finally {
+        __disposeResources(env_1);
+    }
+})), describe("fromAsyncIterable", testAsync("infinite immediately resolving iterable", async () => {
+    const env_2 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_2, HostScheduler.create(), false);
         const stream = pipe((async function* foo() {
             let i = 0;
             while (true) {
@@ -84,17 +94,17 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
         const result = await pipe(stream, Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler));
         pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
-    catch (e_1) {
-        env_1.error = e_1;
-        env_1.hasError = true;
+    catch (e_2) {
+        env_2.error = e_2;
+        env_2.hasError = true;
     }
     finally {
-        __disposeResources(env_1);
+        __disposeResources(env_2);
     }
 }), testAsync("iterable that completes", async () => {
-    const env_2 = { stack: [], error: void 0, hasError: false };
+    const env_3 = { stack: [], error: void 0, hasError: false };
     try {
-        const scheduler = __addDisposableResource(env_2, HostScheduler.create(), false);
+        const scheduler = __addDisposableResource(env_3, HostScheduler.create(), false);
         const stream = pipe((async function* foo() {
             yield 1;
             yield 2;
@@ -104,24 +114,6 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
         const result = await pipe(stream, Observable.buffer(), Observable.lastAsync(scheduler));
         pipe(result ?? [], expectArrayEquals([1, 2, 3]));
     }
-    catch (e_2) {
-        env_2.error = e_2;
-        env_2.hasError = true;
-    }
-    finally {
-        __disposeResources(env_2);
-    }
-}), testAsync("iterable that throws", pipeLazy(async () => {
-    const env_3 = { stack: [], error: void 0, hasError: false };
-    try {
-        const scheduler = __addDisposableResource(env_3, HostScheduler.create(), false);
-        const e = error();
-        const stream = pipe((async function* foo() {
-            throw e;
-        })(), Flowable.fromAsyncIterable(), invoke(FlowableLike_flow, scheduler, { capacity: 1 }));
-        stream[PauseableLike_resume]();
-        await pipe(stream, Observable.lastAsync(scheduler));
-    }
     catch (e_3) {
         env_3.error = e_3;
         env_3.hasError = true;
@@ -129,50 +121,16 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
     finally {
         __disposeResources(env_3);
     }
-}, expectToThrowAsync))), describe("fromRunnable", test("a source with delay", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const generateObservable = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Flowable.fromRunnable(), invoke(FlowableLike_flow, scheduler));
-    generateObservable[PauseableLike_resume](),
-        scheduler[SchedulerLike_schedule](() => generateObservable[PauseableLike_pause](), {
-            delay: 2,
-        });
-    scheduler[SchedulerLike_schedule](() => generateObservable[PauseableLike_resume](), {
-        delay: 4,
-    });
-    scheduler[SchedulerLike_schedule](() => generateObservable[DisposableLike_dispose](), {
-        delay: 6,
-    });
-    const f = mockFn();
-    const subscription = pipe(generateObservable, Observable.forEach((x) => {
-        f(x);
-    }), Observable.subscribe(scheduler));
-    scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(f, expectToHaveBeenCalledTimes(2));
-    pipe(f.calls.flat(), expectArrayEquals([0, 1]));
-    pipe(subscription[DisposableLike_isDisposed], expectTrue);
-}), test("flow a generating source", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const flowed = pipe([0, 1, 2], Observable.fromReadonlyArray(), Flowable.fromRunnable(), invoke(FlowableLike_flow, scheduler), Disposable.addTo(scheduler));
-    scheduler[SchedulerLike_schedule](() => flowed[PauseableLike_resume](), {
-        delay: 2,
-    });
-    const f = mockFn();
-    const subscription = pipe(flowed, Observable.withCurrentTime(tuple), Observable.forEach(([_, v]) => {
-        f(v);
-    }), Observable.subscribe(scheduler), Disposable.addTo(scheduler));
-    scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(f, expectToHaveBeenCalledTimes(3));
-    pipe(f.calls.flat(), expectArrayEquals([0, 1, 2]));
-    pipe(subscription[DisposableLike_isDisposed], expectTrue);
-}), test("when the source throws", () => {
+}), testAsync("iterable that throws", pipeLazy(async () => {
     const env_4 = { stack: [], error: void 0, hasError: false };
     try {
-        const vts = __addDisposableResource(env_4, VirtualTimeScheduler.create(), false);
-        const error = newInstance(Error);
-        const flowed = pipe(Observable.throws({ raise: () => error }), Flowable.fromRunnable(), invoke(FlowableLike_flow, vts), Disposable.addTo(vts));
-        flowed[PauseableLike_resume]();
-        vts[VirtualTimeSchedulerLike_run]();
-        pipe(flowed[DisposableLike_error], expectEquals(error));
+        const scheduler = __addDisposableResource(env_4, HostScheduler.create(), false);
+        const e = error();
+        const stream = pipe((async function* foo() {
+            throw e;
+        })(), Flowable.fromAsyncIterable(), invoke(FlowableLike_flow, scheduler, { capacity: 1 }));
+        stream[PauseableLike_resume]();
+        await pipe(stream, Observable.lastAsync(scheduler));
     }
     catch (e_4) {
         env_4.error = e_4;
@@ -180,6 +138,78 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
     }
     finally {
         __disposeResources(env_4);
+    }
+}, expectToThrowAsync))), describe("fromRunnable", test("a source with delay", () => {
+    const env_5 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
+        const generateObservable = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Flowable.fromRunnable(), invoke(FlowableLike_flow, vts));
+        generateObservable[PauseableLike_resume](),
+            vts[SchedulerLike_schedule](() => generateObservable[PauseableLike_pause](), {
+                delay: 2,
+            });
+        vts[SchedulerLike_schedule](() => generateObservable[PauseableLike_resume](), {
+            delay: 4,
+        });
+        vts[SchedulerLike_schedule](() => generateObservable[DisposableLike_dispose](), {
+            delay: 6,
+        });
+        const f = mockFn();
+        const subscription = pipe(generateObservable, Observable.forEach((x) => {
+            f(x);
+        }), Observable.subscribe(vts));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(f, expectToHaveBeenCalledTimes(2));
+        pipe(f.calls.flat(), expectArrayEquals([0, 1]));
+        pipe(subscription[DisposableLike_isDisposed], expectTrue);
+    }
+    catch (e_5) {
+        env_5.error = e_5;
+        env_5.hasError = true;
+    }
+    finally {
+        __disposeResources(env_5);
+    }
+}), test("flow a generating source", () => {
+    const env_6 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_6, VirtualTimeScheduler.create(), false);
+        const flowed = pipe([0, 1, 2], Observable.fromReadonlyArray(), Flowable.fromRunnable(), invoke(FlowableLike_flow, vts), Disposable.addTo(vts));
+        vts[SchedulerLike_schedule](() => flowed[PauseableLike_resume](), {
+            delay: 2,
+        });
+        const f = mockFn();
+        const subscription = pipe(flowed, Observable.withCurrentTime(tuple), Observable.forEach(([_, v]) => {
+            f(v);
+        }), Observable.subscribe(vts), Disposable.addTo(vts));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(f, expectToHaveBeenCalledTimes(3));
+        pipe(f.calls.flat(), expectArrayEquals([0, 1, 2]));
+        pipe(subscription[DisposableLike_isDisposed], expectTrue);
+    }
+    catch (e_6) {
+        env_6.error = e_6;
+        env_6.hasError = true;
+    }
+    finally {
+        __disposeResources(env_6);
+    }
+}), test("when the source throws", () => {
+    const env_7 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_7, VirtualTimeScheduler.create(), false);
+        const error = newInstance(Error);
+        const flowed = pipe(Observable.throws({ raise: () => error }), Flowable.fromRunnable(), invoke(FlowableLike_flow, vts), Disposable.addTo(vts));
+        flowed[PauseableLike_resume]();
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(flowed[DisposableLike_error], expectEquals(error));
+    }
+    catch (e_7) {
+        env_7.error = e_7;
+        env_7.hasError = true;
+    }
+    finally {
+        __disposeResources(env_7);
     }
 })));
 ((_) => { })(Flowable);

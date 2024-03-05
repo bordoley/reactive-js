@@ -19,27 +19,27 @@ testModule(
   "PauseableScheduler",
   test("with disposed continuations", () => {
     using vts = VirtualTimeScheduler.create();
-    const scheduler = PauseableScheduler.create(vts);
+    using pauseableScheduler = PauseableScheduler.create(vts);
 
     let result: number[] = [];
 
-    scheduler[SchedulerLike_schedule](() => {
+    pauseableScheduler[SchedulerLike_schedule](() => {
       result[Array_push](0);
     });
 
-    const s1 = scheduler[SchedulerLike_schedule](() => {
+    const s1 = pauseableScheduler[SchedulerLike_schedule](() => {
       result[Array_push](1);
     });
 
-    const s2 = scheduler[SchedulerLike_schedule](() => {
+    const s2 = pauseableScheduler[SchedulerLike_schedule](() => {
       result[Array_push](2);
     });
 
-    scheduler[SchedulerLike_schedule](() => {
+    pauseableScheduler[SchedulerLike_schedule](() => {
       result[Array_push](3);
     });
 
-    scheduler[PauseableLike_resume]();
+    pauseableScheduler[PauseableLike_resume]();
     s1[DisposableLike_dispose]();
     s2[DisposableLike_dispose]();
 
@@ -49,25 +49,25 @@ testModule(
   }),
   test("with delayed continuations", () => {
     using vts = VirtualTimeScheduler.create();
-    const scheduler = PauseableScheduler.create(vts);
+    using pauseableScheduler = PauseableScheduler.create(vts);
 
     let result: number[] = [];
 
-    scheduler[SchedulerLike_schedule](
+    pauseableScheduler[SchedulerLike_schedule](
       () => {
-        result[Array_push](scheduler[SchedulerLike_now]);
+        result[Array_push](pauseableScheduler[SchedulerLike_now]);
       },
       { delay: 3 },
     );
 
-    scheduler[SchedulerLike_schedule](
+    pauseableScheduler[SchedulerLike_schedule](
       () => {
-        result[Array_push](scheduler[SchedulerLike_now]);
+        result[Array_push](pauseableScheduler[SchedulerLike_now]);
       },
       { delay: 5 },
     );
 
-    scheduler[PauseableLike_resume]();
+    pauseableScheduler[PauseableLike_resume]();
     vts[VirtualTimeSchedulerLike_run]();
 
     pipe(result, expectArrayEquals([3, 5]));

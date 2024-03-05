@@ -51,7 +51,7 @@ testModule(
   describe(
     "dispatchTo",
     test("dispatching a pauseable observable into a stream with backpressure", () => {
-      const scheduler = VirtualTimeScheduler.create();
+      using vts = VirtualTimeScheduler.create();
 
       const src = pipe(
         Enumerable.generate(increment, returns(-1)),
@@ -60,28 +60,25 @@ testModule(
         Flowable.fromRunnable(),
       );
 
-      const dest = Streamable.identity<number>()[StreamableLike_stream](
-        scheduler,
-        {
-          backpressureStrategy: ThrowBackpressureStrategy,
-          capacity: 1,
-        },
-      );
+      const dest = Streamable.identity<number>()[StreamableLike_stream](vts, {
+        backpressureStrategy: ThrowBackpressureStrategy,
+        capacity: 1,
+      });
 
       const dispatchToSubscription = pipe(
         src,
         Flowable.dispatchTo(dest),
-        Observable.subscribe(scheduler),
+        Observable.subscribe(vts),
       );
 
       const result: number[] = [];
       pipe(
         dest,
         Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
-        Observable.subscribe(scheduler),
+        Observable.subscribe(vts),
       );
 
-      scheduler[VirtualTimeSchedulerLike_run]();
+      vts[VirtualTimeSchedulerLike_run]();
 
       expectTrue(dispatchToSubscription[DisposableLike_isDisposed]);
 
@@ -160,31 +157,31 @@ testModule(
   describe(
     "fromRunnable",
     test("a source with delay", () => {
-      const scheduler = VirtualTimeScheduler.create();
+      using vts = VirtualTimeScheduler.create();
 
       const generateObservable = pipe(
         Enumerable.generate(increment, returns(-1)),
         Observable.fromEnumerable({ delay: 1, delayStart: true }),
         Flowable.fromRunnable(),
-        invoke(FlowableLike_flow, scheduler),
+        invoke(FlowableLike_flow, vts),
       );
 
       generateObservable[PauseableLike_resume](),
-        scheduler[SchedulerLike_schedule](
+        vts[SchedulerLike_schedule](
           () => generateObservable[PauseableLike_pause](),
           {
             delay: 2,
           },
         );
 
-      scheduler[SchedulerLike_schedule](
+      vts[SchedulerLike_schedule](
         () => generateObservable[PauseableLike_resume](),
         {
           delay: 4,
         },
       );
 
-      scheduler[SchedulerLike_schedule](
+      vts[SchedulerLike_schedule](
         () => generateObservable[DisposableLike_dispose](),
         {
           delay: 6,
@@ -197,10 +194,10 @@ testModule(
         Observable.forEach((x: number) => {
           f(x);
         }),
-        Observable.subscribe(scheduler),
+        Observable.subscribe(vts),
       );
 
-      scheduler[VirtualTimeSchedulerLike_run]();
+      vts[VirtualTimeSchedulerLike_run]();
 
       pipe(f, expectToHaveBeenCalledTimes(2));
       pipe(f.calls.flat(), expectArrayEquals([0, 1]));
@@ -208,17 +205,17 @@ testModule(
       pipe(subscription[DisposableLike_isDisposed], expectTrue);
     }),
     test("flow a generating source", () => {
-      const scheduler = VirtualTimeScheduler.create();
+      using vts = VirtualTimeScheduler.create();
 
       const flowed = pipe(
         [0, 1, 2],
         Observable.fromReadonlyArray(),
         Flowable.fromRunnable(),
-        invoke(FlowableLike_flow, scheduler),
-        Disposable.addTo(scheduler),
+        invoke(FlowableLike_flow, vts),
+        Disposable.addTo(vts),
       );
 
-      scheduler[SchedulerLike_schedule](() => flowed[PauseableLike_resume](), {
+      vts[SchedulerLike_schedule](() => flowed[PauseableLike_resume](), {
         delay: 2,
       });
 
@@ -229,11 +226,11 @@ testModule(
         Observable.forEach(([_, v]: Tuple2<number, any>) => {
           f(v);
         }),
-        Observable.subscribe(scheduler),
-        Disposable.addTo(scheduler),
+        Observable.subscribe(vts),
+        Disposable.addTo(vts),
       );
 
-      scheduler[VirtualTimeSchedulerLike_run]();
+      vts[VirtualTimeSchedulerLike_run]();
 
       pipe(f, expectToHaveBeenCalledTimes(3));
       pipe(f.calls.flat(), expectArrayEquals([0, 1, 2]));

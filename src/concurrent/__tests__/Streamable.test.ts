@@ -152,11 +152,11 @@ testModule(
   describe(
     "inMemoryCache",
     test("it publishes none on subscribe when the key is missing", () => {
-      const scheduler = VirtualTimeScheduler.create();
+      using vts = VirtualTimeScheduler.create();
 
       const cache = Streamable.inMemoryCache<number>({ capacity: 1 })[
         StreamableLike_stream
-      ](scheduler);
+      ](vts);
 
       const result: Optional<number>[] = [];
 
@@ -166,25 +166,25 @@ testModule(
             pipe(
               cache[CacheLike_get]("abc"),
               Observable.forEach(bindMethod(result, Array_push)),
-              Observable.subscribe(scheduler),
+              Observable.subscribe(vts),
             );
           }),
         ],
         ReadonlyArray.forEach(([time, f]) => {
-          scheduler[SchedulerLike_schedule](f, { delay: time });
+          vts[SchedulerLike_schedule](f, { delay: time });
         }),
       );
 
-      scheduler[VirtualTimeSchedulerLike_run]();
+      vts[VirtualTimeSchedulerLike_run]();
 
       pipe(result, expectArrayEquals<Optional<number>>([none]));
     }),
     test("explicitly deleting a key", () => {
-      const scheduler = VirtualTimeScheduler.create();
+      using vts = VirtualTimeScheduler.create();
 
       const cache = Streamable.inMemoryCache<number>({ capacity: 1 })[
         StreamableLike_stream
-      ](scheduler);
+      ](vts);
 
       const result: number[] = [];
 
@@ -202,7 +202,7 @@ testModule(
             pipe(
               cache[CacheLike_get]("abc"),
               Observable.forEach(bindMethod(result, Array_push)),
-              Observable.subscribe(scheduler),
+              Observable.subscribe(vts),
             );
           }),
 
@@ -215,26 +215,26 @@ testModule(
           }),
         ],
         ReadonlyArray.forEach(([time, f]) => {
-          scheduler[SchedulerLike_schedule](f, { delay: time });
+          vts[SchedulerLike_schedule](f, { delay: time });
         }),
       );
 
-      scheduler[VirtualTimeSchedulerLike_run]();
+      vts[VirtualTimeSchedulerLike_run]();
 
       pipe(result, expectArrayEquals([none, 2, none]));
     }),
     test("integration test", () => {
-      const scheduler = VirtualTimeScheduler.create();
+      using vts = VirtualTimeScheduler.create();
 
       const cache = Streamable.inMemoryCache<number>({ capacity: 1 })[
         StreamableLike_stream
-      ](scheduler);
+      ](vts);
 
       const result1: number[] = [];
       const abcSubscription1 = pipe(
         cache[CacheLike_get]("abc"),
         Observable.forEach(bindMethod(result1, Array_push)),
-        Observable.subscribe(scheduler),
+        Observable.subscribe(vts),
       );
 
       const result2: number[] = [];
@@ -252,7 +252,7 @@ testModule(
             abcSubscription2 = pipe(
               cache[CacheLike_get]("abc"),
               Observable.forEach(bindMethod(result2, Array_push)),
-              Observable.subscribe(scheduler),
+              Observable.subscribe(vts),
             );
           }),
           tuple(3, () => {
@@ -278,7 +278,7 @@ testModule(
             abcSubscription3 = pipe(
               cache[CacheLike_get]("abc"),
               Observable.forEach(bindMethod(result3, Array_push)),
-              Observable.subscribe(scheduler),
+              Observable.subscribe(vts),
             );
           }),
           tuple(9, () => {
@@ -293,11 +293,11 @@ testModule(
           }),
         ],
         ReadonlyArray.forEach(([time, f]) => {
-          scheduler[SchedulerLike_schedule](f, { delay: time });
+          vts[SchedulerLike_schedule](f, { delay: time });
         }),
       );
 
-      scheduler[VirtualTimeSchedulerLike_run]();
+      vts[VirtualTimeSchedulerLike_run]();
 
       pipe(result1, expectArrayEquals([none, 1, 2]));
       pipe(result2, expectArrayEquals([1]));
@@ -329,17 +329,17 @@ testModule(
           ),
       };
 
-      const scheduler = VirtualTimeScheduler.create();
+      using vts = VirtualTimeScheduler.create();
 
       const cache = Streamable.persistentCache<number>(persistentStore, {
         capacity: 1,
-      })[StreamableLike_stream](scheduler);
+      })[StreamableLike_stream](vts);
 
       const result1: number[] = [];
       pipe(
         cache[CacheLike_get]("abc"),
         Observable.forEach(bindMethod(result1, Array_push)),
-        Observable.subscribe(scheduler),
+        Observable.subscribe(vts),
       );
 
       pipe(
@@ -353,11 +353,11 @@ testModule(
         ],
 
         ReadonlyArray.forEach(([time, f]: Tuple2<number, SideEffect>) => {
-          scheduler[SchedulerLike_schedule](f, { delay: time });
+          vts[SchedulerLike_schedule](f, { delay: time });
         }),
       );
 
-      scheduler[VirtualTimeSchedulerLike_run]();
+      vts[VirtualTimeSchedulerLike_run]();
 
       pipe(result1, expectArrayEquals([1, 4]));
     }),
@@ -365,9 +365,9 @@ testModule(
   describe(
     "stateStore",
     test("stateStore", () => {
-      const scheduler = VirtualTimeScheduler.create();
+      using vts = VirtualTimeScheduler.create();
       const streamable = Streamable.stateStore(returns(1));
-      const stateStream = streamable[StreamableLike_stream](scheduler, {
+      const stateStream = streamable[StreamableLike_stream](vts, {
         capacity: 20,
         backpressureStrategy: DropLatestBackpressureStrategy,
       });
@@ -387,10 +387,10 @@ testModule(
       pipe(
         stateStream,
         Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
-        Observable.subscribe(scheduler),
+        Observable.subscribe(vts),
       );
 
-      scheduler[VirtualTimeSchedulerLike_run]();
+      vts[VirtualTimeSchedulerLike_run]();
 
       pipe(result, expectArrayEquals([1, 2, 3]));
     }),

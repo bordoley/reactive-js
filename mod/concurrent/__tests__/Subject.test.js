@@ -56,62 +56,102 @@ import * as Observable from "../Observable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 testModule("Subject", describe("create", test("with replay", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const subject = Subject.create({ replay: 2 });
-    for (const v of [1, 2, 3, 4]) {
-        subject[EventListenerLike_notify](v);
-    }
-    subject[DisposableLike_dispose]();
-    const result = [];
-    pipe(subject, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(scheduler));
-    scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(result, expectArrayEquals([3, 4]));
-}), test("with multiple observers", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const subject = Subject.create({ autoDispose: true });
-    expectFalse(subject[DisposableLike_isDisposed]);
-    const sub1 = pipe(subject, Observable.subscribe(scheduler));
-    expectFalse(subject[DisposableLike_isDisposed]);
-    const sub2 = pipe(subject, Observable.subscribe(scheduler));
-    expectFalse(subject[DisposableLike_isDisposed]);
-    const sub3 = pipe(Observable.create(observer => {
-        subject[ObservableLike_observe](observer);
-        subject[ObservableLike_observe](observer);
-    }), Observable.subscribe(scheduler));
-    expectFalse(subject[DisposableLike_isDisposed]);
-    sub3[DisposableLike_dispose]();
-    expectFalse(subject[DisposableLike_isDisposed]);
-    sub1[DisposableLike_dispose]();
-    expectFalse(subject[DisposableLike_isDisposed]);
-    sub2[DisposableLike_dispose]();
-    expectTrue(subject[DisposableLike_isDisposed]);
-}), test("notifying a disposed subject", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const subject = Subject.create();
-    const result = [];
-    const subjectSubscription = pipe(subject, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(scheduler));
-    const generateSubscription = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 3, delayStart: true }), Observable.forEach(bindMethod(subject, EventListenerLike_notify)), Observable.subscribe(scheduler));
-    scheduler[SchedulerLike_schedule](() => {
-        subject[DisposableLike_dispose]();
-    }, { delay: 7 });
-    scheduler[SchedulerLike_schedule](() => {
-        generateSubscription[DisposableLike_dispose]();
-    }, { delay: 10 });
-    scheduler[VirtualTimeSchedulerLike_run]();
-    expectTrue(subjectSubscription[DisposableLike_isDisposed]);
-    pipe(result, expectArrayEquals([0, 1]));
-}), test("subscribing to a subject disposed with an error", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const subject = Subject.create();
-    const e = new Error();
-    subject[DisposableLike_dispose](e);
-    const subscription = pipe(subject, Observable.subscribe(scheduler));
-    scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(subscription[DisposableLike_error], expectEquals(e));
-}), test("notifing an observer that throws an exception on overflow", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);
+        const subject = Subject.create({ replay: 2 });
+        for (const v of [1, 2, 3, 4]) {
+            subject[EventListenerLike_notify](v);
+        }
+        subject[DisposableLike_dispose]();
+        const result = [];
+        pipe(subject, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(vts));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(result, expectArrayEquals([3, 4]));
+    }
+    catch (e_1) {
+        env_1.error = e_1;
+        env_1.hasError = true;
+    }
+    finally {
+        __disposeResources(env_1);
+    }
+}), test("with multiple observers", () => {
+    const env_2 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create(), false);
+        const subject = Subject.create({ autoDispose: true });
+        expectFalse(subject[DisposableLike_isDisposed]);
+        const sub1 = pipe(subject, Observable.subscribe(vts));
+        expectFalse(subject[DisposableLike_isDisposed]);
+        const sub2 = pipe(subject, Observable.subscribe(vts));
+        expectFalse(subject[DisposableLike_isDisposed]);
+        const sub3 = pipe(Observable.create(observer => {
+            subject[ObservableLike_observe](observer);
+            subject[ObservableLike_observe](observer);
+        }), Observable.subscribe(vts));
+        expectFalse(subject[DisposableLike_isDisposed]);
+        sub3[DisposableLike_dispose]();
+        expectFalse(subject[DisposableLike_isDisposed]);
+        sub1[DisposableLike_dispose]();
+        expectFalse(subject[DisposableLike_isDisposed]);
+        sub2[DisposableLike_dispose]();
+        expectTrue(subject[DisposableLike_isDisposed]);
+    }
+    catch (e_2) {
+        env_2.error = e_2;
+        env_2.hasError = true;
+    }
+    finally {
+        __disposeResources(env_2);
+    }
+}), test("notifying a disposed subject", () => {
+    const env_3 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_3, VirtualTimeScheduler.create(), false);
+        const subject = Subject.create();
+        const result = [];
+        const subjectSubscription = pipe(subject, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(vts));
+        const generateSubscription = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 3, delayStart: true }), Observable.forEach(bindMethod(subject, EventListenerLike_notify)), Observable.subscribe(vts));
+        vts[SchedulerLike_schedule](() => {
+            subject[DisposableLike_dispose]();
+        }, { delay: 7 });
+        vts[SchedulerLike_schedule](() => {
+            generateSubscription[DisposableLike_dispose]();
+        }, { delay: 10 });
+        vts[VirtualTimeSchedulerLike_run]();
+        expectTrue(subjectSubscription[DisposableLike_isDisposed]);
+        pipe(result, expectArrayEquals([0, 1]));
+    }
+    catch (e_3) {
+        env_3.error = e_3;
+        env_3.hasError = true;
+    }
+    finally {
+        __disposeResources(env_3);
+    }
+}), test("subscribing to a subject disposed with an error", () => {
+    const env_4 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_4, VirtualTimeScheduler.create(), false);
+        const subject = Subject.create();
+        const e = new Error();
+        subject[DisposableLike_dispose](e);
+        const subscription = pipe(subject, Observable.subscribe(vts));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(subscription[DisposableLike_error], expectEquals(e));
+    }
+    catch (e_4) {
+        env_4.error = e_4;
+        env_4.hasError = true;
+    }
+    finally {
+        __disposeResources(env_4);
+    }
+}), test("notifing an observer that throws an exception on overflow", () => {
+    const env_5 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
         const subject = Subject.create();
         const subscription = pipe(subject, Observable.subscribe(vts, {
             backpressureStrategy: ThrowBackpressureStrategy,
@@ -122,17 +162,17 @@ testModule("Subject", describe("create", test("with replay", () => {
         subject[EventListenerLike_notify](3);
         expectIsSome(subscription[DisposableLike_error]);
     }
-    catch (e_1) {
-        env_1.error = e_1;
-        env_1.hasError = true;
+    catch (e_5) {
+        env_5.error = e_5;
+        env_5.hasError = true;
     }
     finally {
-        __disposeResources(env_1);
+        __disposeResources(env_5);
     }
 }), test("with autoDispose", () => {
-    const env_2 = { stack: [], error: void 0, hasError: false };
+    const env_6 = { stack: [], error: void 0, hasError: false };
     try {
-        const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create(), false);
+        const vts = __addDisposableResource(env_6, VirtualTimeScheduler.create(), false);
         const subject = Subject.create({
             autoDispose: true,
             replay: 2,
@@ -150,11 +190,11 @@ testModule("Subject", describe("create", test("with replay", () => {
         });
         vts[VirtualTimeSchedulerLike_run]();
     }
-    catch (e_2) {
-        env_2.error = e_2;
-        env_2.hasError = true;
+    catch (e_6) {
+        env_6.error = e_6;
+        env_6.hasError = true;
     }
     finally {
-        __disposeResources(env_2);
+        __disposeResources(env_6);
     }
 })));
