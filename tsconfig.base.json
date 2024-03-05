@@ -6,7 +6,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "lib": ["DOM", "ES2022"],
+    "lib": ["DOM", "ES2022", "esnext.disposable"],
     "module": "NodeNext",
     "moduleResolution": "nodenext",
     "newLine": "LF",
