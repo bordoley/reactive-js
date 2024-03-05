@@ -21,11 +21,14 @@ export interface DisposableContainerLike {
   [DisposableContainerLike_add](teardown: SideEffect1<Optional<Error>>): void;
 }
 
-if (isNone(Symbol.dispose)) {
-  (Symbol as any).dispose = Symbol("dispose");
-}
+export const DisposableLike_dispose: typeof Symbol.dispose =
+  /*@__PURE__*/ ((): typeof Symbol.dispose => {
+    if (isNone(Symbol.dispose)) {
+      (Symbol as any).dispose = Symbol("dispose");
+    }
+    return Symbol.dispose;
+  })();
 
-export const DisposableLike_dispose: typeof Symbol.dispose = Symbol.dispose;
 export const DisposableLike_error = Symbol("DisposableLike_error");
 export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 

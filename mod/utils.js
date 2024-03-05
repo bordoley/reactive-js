@@ -3,10 +3,13 @@
 import { Error } from "./__internal__/constants.js";
 import { isNone } from "./functions.js";
 export const DisposableContainerLike_add = Symbol("DisposableContainerLike_add");
-if (isNone(Symbol.dispose)) {
-    Symbol.dispose = Symbol("dispose");
-}
-export const DisposableLike_dispose = Symbol.dispose;
+export const DisposableLike_dispose = 
+/*@__PURE__*/ (() => {
+    if (isNone(Symbol.dispose)) {
+        Symbol.dispose = Symbol("dispose");
+    }
+    return Symbol.dispose;
+})();
 export const DisposableLike_error = Symbol("DisposableLike_error");
 export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 export const SerialDisposableLike_current = Symbol("SerialDisposableLike_current");
