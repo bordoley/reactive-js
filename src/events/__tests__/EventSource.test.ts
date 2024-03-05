@@ -119,7 +119,7 @@ testModule(
   describe(
     "merge",
     test("with source that have different delays", () => {
-      const vts = VirtualTimeScheduler.create();
+      using vts = VirtualTimeScheduler.create();
 
       const result: number[] = [];
       const [ev1, ev2, ev3] = pipe(
@@ -149,7 +149,7 @@ testModule(
   describe(
     "mergeWith",
     test("with source that have different delays", () => {
-      const vts = VirtualTimeScheduler.create();
+      using vts = VirtualTimeScheduler.create();
 
       const result: number[] = [];
       const [ev1, ev2] = pipe(

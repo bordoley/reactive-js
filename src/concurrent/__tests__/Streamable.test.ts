@@ -398,7 +398,7 @@ testModule(
   describe(
     "syncState",
     test("without throttling", () => {
-      const vts = VirtualTimeScheduler.create();
+      using vts = VirtualTimeScheduler.create();
 
       const stream = pipe(
         Streamable.stateStore(returns(-1)),
@@ -438,7 +438,7 @@ testModule(
       pipe(result, expectArrayEquals([-1, 9, 11, 10]));
     }),
     test("with throttling", () => {
-      const vts = VirtualTimeScheduler.create();
+      using vts = VirtualTimeScheduler.create();
 
       let updateCnt = 0;
 

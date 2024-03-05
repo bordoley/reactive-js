@@ -2419,7 +2419,7 @@ testModule(
     ),
     testIsMulticastObservable(
       (() => {
-        const vts = VirtualTimeScheduler.create();
+        using vts = VirtualTimeScheduler.create();
         return pipe(Subject.create(), Observable.subscribeOn(vts));
       })(),
     ),
