@@ -30,7 +30,7 @@ Adds the given `DisposableLike` or teardown function to this container or dispos
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `disposable` | [`DisposableLike`](utils.DisposableLike.md) | The disposable to add. |
+| `disposable` | `Disposable` | The disposable to add. |
 
 #### Returns
 

@@ -9,10 +9,12 @@ import {
   Optional,
   SideEffect1,
   isFunction,
+  isSome,
   newInstance,
   none,
 } from "../../functions.js";
 import {
+  DisposableContainerLike,
   DisposableContainerLike_add,
   DisposableLike,
   DisposableLike_dispose,
@@ -24,7 +26,7 @@ const DisposableMixin_disposables = Symbol("DisposableMixin_disposables");
 
 const doDispose = (
   instance: DisposableLike,
-  disposable: DisposableLike | SideEffect1<Optional<Error>>,
+  disposable: Disposable | SideEffect1<Optional<Error>>,
 ) => {
   const error = instance[DisposableLike_error];
   if (isFunction(disposable)) {
@@ -36,7 +38,7 @@ const doDispose = (
        */
     }
   } else {
-    disposable[DisposableLike_dispose](error);
+    (disposable as DisposableLike)[DisposableLike_dispose](error);
   }
 };
 
@@ -44,8 +46,17 @@ type TProperties = {
   [DisposableLike_error]: Optional<Error>;
   [DisposableLike_isDisposed]: boolean;
   readonly [DisposableMixin_disposables]: Set<
-    DisposableLike | SideEffect1<Optional<Error>>
+    Disposable | SideEffect1<Optional<Error>>
   >;
+};
+
+const isDisposableContainer = (
+  disposable: Disposable | SideEffect1<Optional<Error>>,
+): disposable is DisposableContainerLike & Disposable => {
+  return (
+    !isFunction(disposable) &&
+    isSome((disposable as any)[DisposableContainerLike_add])
+  );
 };
 
 const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
@@ -85,7 +96,7 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
     },
     [DisposableContainerLike_add](
       this: TProperties & DisposableLike,
-      disposable: DisposableLike | SideEffect1<Optional<Error>>,
+      disposable: Disposable | SideEffect1<Optional<Error>>,
     ) {
       const disposables = this[DisposableMixin_disposables];
 
@@ -96,7 +107,7 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
       } else if (!disposables[Set_has](disposable)) {
         disposables[Set_add](disposable);
 
-        if (!isFunction(disposable)) {
+        if (isDisposableContainer(disposable)) {
           disposable[DisposableContainerLike_add](_ => {
             disposables[Set_delete](disposable);
           });
