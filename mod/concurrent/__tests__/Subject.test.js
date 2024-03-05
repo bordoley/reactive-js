@@ -50,7 +50,7 @@ import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsSome, e
 import * as Enumerable from "../../collections/Enumerable.js";
 import { ObservableLike_observe, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import { EventListenerLike_notify } from "../../events.js";
-import { bind, bindMethod, increment, pipe, returns, } from "../../functions.js";
+import { bindMethod, increment, pipe, returns, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as Subject from "../Subject.js";
@@ -65,7 +65,7 @@ testModule("Subject", describe("create", test("with replay", () => {
         }
         subject[DisposableLike_dispose]();
         const result = [];
-        pipe(subject, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(vts));
+        pipe(subject, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([3, 4]));
     }
@@ -111,7 +111,7 @@ testModule("Subject", describe("create", test("with replay", () => {
         const vts = __addDisposableResource(env_3, VirtualTimeScheduler.create(), false);
         const subject = Subject.create();
         const result = [];
-        const subjectSubscription = pipe(subject, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(vts));
+        const subjectSubscription = pipe(subject, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         const generateSubscription = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 3, delayStart: true }), Observable.forEach(bindMethod(subject, EventListenerLike_notify)), Observable.subscribe(vts));
         vts[SchedulerLike_schedule](() => {
             subject[DisposableLike_dispose]();
@@ -181,7 +181,7 @@ testModule("Subject", describe("create", test("with replay", () => {
             subject[EventListenerLike_notify](v);
         }
         const result = [];
-        const subscription = pipe(subject, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(vts));
+        const subscription = pipe(subject, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         vts[SchedulerLike_schedule](() => {
             pipe(result, expectArrayEquals([3, 4]));
             expectFalse(subject[DisposableLike_isDisposed]);

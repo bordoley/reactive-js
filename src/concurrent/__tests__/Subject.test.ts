@@ -18,7 +18,6 @@ import {
 import { EventListenerLike_notify } from "../../events.js";
 import {
   Optional,
-  bind,
   bindMethod,
   increment,
   pipe,
@@ -51,7 +50,7 @@ testModule(
       const result: number[] = [];
       pipe(
         subject,
-        Observable.forEach(bind(Array.prototype[Array_push], result)),
+        Observable.forEach(bindMethod(result, Array_push)),
         Observable.subscribe(vts),
       );
 
@@ -92,7 +91,7 @@ testModule(
 
       const subjectSubscription = pipe(
         subject,
-        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
+        Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.subscribe(vts),
       );
 
@@ -172,7 +171,7 @@ testModule(
       const result: number[] = [];
       const subscription = pipe(
         subject,
-        Observable.forEach(bind(Array.prototype[Array_push], result)),
+        Observable.forEach(bindMethod(result, Array_push)),
         Observable.subscribe(vts),
       );
 

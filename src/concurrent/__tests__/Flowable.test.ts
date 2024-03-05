@@ -23,7 +23,7 @@ import {
 import {
   Optional,
   Tuple2,
-  bind,
+  bindMethod,
   error,
   increment,
   invoke,
@@ -74,7 +74,7 @@ testModule(
       const result: number[] = [];
       pipe(
         dest,
-        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
+        Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.subscribe(vts),
       );
 

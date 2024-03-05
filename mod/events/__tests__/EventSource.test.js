@@ -53,7 +53,7 @@ import * as Observable from "../../concurrent/Observable.js";
 import * as VirtualTimeScheduler from "../../concurrent/VirtualTimeScheduler.js";
 import { VirtualTimeSchedulerLike_run } from "../../concurrent.js";
 import { EventListenerLike_notify, EventSourceLike_addEventListener, } from "../../events.js";
-import { bind, compose, ignore, isSome, newInstance, none, pick, pipe, pipeLazy, raise, } from "../../functions.js";
+import { bindMethod, compose, ignore, isSome, newInstance, none, pick, pipe, pipeLazy, raise, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 testModule("EventSource", PureStatelessComputationModuleTests(EventSource, () => (arr) => ({
@@ -65,7 +65,7 @@ testModule("EventSource", PureStatelessComputationModuleTests(EventSource, () =>
     },
 }), () => (eventSource) => {
     const result = [];
-    const subscription = pipe(eventSource, EventSource.addEventHandler(bind(Array.prototype[Array_push], result)));
+    const subscription = pipe(eventSource, EventSource.addEventHandler(bindMethod(result, Array_push)));
     if (isSome(subscription[DisposableLike_error])) {
         throw subscription[DisposableLike_error];
     }
@@ -97,7 +97,7 @@ testModule("EventSource", PureStatelessComputationModuleTests(EventSource, () =>
             [2, 5, 8],
             [3, 6, 9],
         ], ReadonlyArray.map(compose(Observable.fromReadonlyArray({ delay: 3 }), Observable.toEventSource(vts))));
-        pipe(EventSource.merge(ev1, ev2, ev3), EventSource.addEventHandler(bind(Array.prototype[Array_push], result)));
+        pipe(EventSource.merge(ev1, ev2, ev3), EventSource.addEventHandler(bindMethod(result, Array_push)));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
@@ -117,7 +117,7 @@ testModule("EventSource", PureStatelessComputationModuleTests(EventSource, () =>
             [1, 3, 5],
             [2, 4, 6],
         ], ReadonlyArray.map(compose(Observable.fromReadonlyArray({ delay: 3 }), Observable.toEventSource(vts))));
-        pipe(ev1, EventSource.mergeWith(ev2), EventSource.addEventHandler(bind(Array.prototype[Array_push], result)));
+        pipe(ev1, EventSource.mergeWith(ev2), EventSource.addEventHandler(bindMethod(result, Array_push)));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
     }

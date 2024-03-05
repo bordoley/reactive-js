@@ -57,7 +57,6 @@ import {
   Tuple2,
   alwaysTrue,
   arrayEquality,
-  bind,
   bindMethod,
   error,
   ignore,
@@ -758,7 +757,7 @@ testModule(
           return result1 + result2 + result3;
         }),
         Observable.takeLast<number>(),
-        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
+        Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.run(),
       );
 
@@ -785,7 +784,7 @@ testModule(
         keepType<Observable.RunnableWithSideEffectsComputation>(
           Observable.keep,
         )(isSome),
-        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
+        Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.run(),
       );
 
@@ -1720,7 +1719,7 @@ testModule(
       pipe(
         store,
         Observable.fromStore(),
-        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
+        Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.subscribe(vts),
       );
 
@@ -2090,7 +2089,7 @@ testModule(
       pipe(
         Observable.zipLatest(shared, shared),
         Observable.map<Tuple2<number, number>, number>(([a, b]) => a + b),
-        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
+        Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.subscribe(vts),
       );
 
@@ -2771,7 +2770,7 @@ testModule(
         [0, 1, 2],
         Observable.fromReadonlyArray(),
         Observable.toEventSource(vts),
-        EventSource.addEventHandler(bind(Array.prototype[Array_push], result)),
+        EventSource.addEventHandler(bindMethod(result, Array_push)),
       );
 
       vts[VirtualTimeSchedulerLike_run]();

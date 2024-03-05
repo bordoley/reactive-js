@@ -21,7 +21,7 @@ import {
 } from "../../events.js";
 import {
   Optional,
-  bind,
+  bindMethod,
   compose,
   ignore,
   isSome,
@@ -53,9 +53,7 @@ testModule(
         const result: T[] = [];
         const subscription = pipe(
           eventSource,
-          EventSource.addEventHandler(
-            bind(Array.prototype[Array_push], result),
-          ),
+          EventSource.addEventHandler(bindMethod(result, Array_push)),
         );
 
         if (isSome(subscription[DisposableLike_error])) {
@@ -138,7 +136,7 @@ testModule(
 
       pipe(
         EventSource.merge(ev1, ev2, ev3),
-        EventSource.addEventHandler(bind(Array.prototype[Array_push], result)),
+        EventSource.addEventHandler(bindMethod(result, Array_push)),
       );
 
       vts[VirtualTimeSchedulerLike_run]();
@@ -168,7 +166,7 @@ testModule(
       pipe(
         ev1,
         EventSource.mergeWith(ev2),
-        EventSource.addEventHandler(bind(Array.prototype[Array_push], result)),
+        EventSource.addEventHandler(bindMethod(result, Array_push)),
       );
 
       vts[VirtualTimeSchedulerLike_run]();

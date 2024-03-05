@@ -54,7 +54,7 @@ import { DictionaryLike_get, keySet, } from "../../collections.js";
 import { sequence } from "../../computations.js";
 import { CacheLike_get, DispatcherLike_complete, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
-import { bind, bindMethod, invoke, none, pipe, pipeSome, returns, tuple, } from "../../functions.js";
+import { bindMethod, invoke, none, pipe, pipeSome, returns, tuple, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import { DisposableLike_dispose, DropLatestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import * as Observable from "../Observable.js";
@@ -307,7 +307,7 @@ testModule("Streamable", describe("animationGroup", test("blocking mode", () => 
         stateStream[QueueableLike_enqueue](returns(3));
         stateStream[DispatcherLike_complete]();
         let result = [];
-        pipe(stateStream, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(vts));
+        pipe(stateStream, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([1, 2, 3]));
     }
@@ -327,7 +327,7 @@ testModule("Streamable", describe("animationGroup", test("blocking mode", () => 
             : Observable.empty({ delay: 0 })), invoke(StreamableLike_stream, vts));
         pipe((x) => x + 2, Observable.fromValue({ delay: 5 }), Observable.enqueue(stream), Observable.subscribe(vts));
         const result = [];
-        pipe(stream, Observable.forEach(bind(Array.prototype[Array_push], result)), Observable.subscribe(vts));
+        pipe(stream, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([-1, 9, 11, 10]));
     }

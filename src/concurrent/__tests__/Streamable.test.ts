@@ -29,7 +29,6 @@ import {
   Optional,
   SideEffect,
   Tuple2,
-  bind,
   bindMethod,
   invoke,
   none,
@@ -386,7 +385,7 @@ testModule(
 
       pipe(
         stateStream,
-        Observable.forEach<number>(bind(Array.prototype[Array_push], result)),
+        Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.subscribe(vts),
       );
 
@@ -429,7 +428,7 @@ testModule(
       const result: number[] = [];
       pipe(
         stream,
-        Observable.forEach(bind(Array.prototype[Array_push], result)),
+        Observable.forEach(bindMethod(result, Array_push)),
         Observable.subscribe(vts),
       );
 

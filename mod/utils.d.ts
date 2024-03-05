@@ -1,4 +1,3 @@
-/// <reference types="node" resolution-mode="require"/>
 import { Error } from "./__internal__/constants.js";
 import { Optional, SideEffect1 } from "./functions.js";
 export declare const DisposableContainerLike_add: unique symbol;
