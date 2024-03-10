@@ -22,8 +22,7 @@ const DelegatingDisposableMixin =
             return this[DelegatingDisposableLike_delegate][DisposableLike_error];
         },
         [DisposableContainerLike_add](disposable) {
-            const delegate = this[DelegatingDisposableLike_delegate];
-            delegate[DisposableContainerLike_add](
+            this[DelegatingDisposableLike_delegate][DisposableContainerLike_add](
             // Cast to make the typechecker happy even though its a lie.
             disposable);
         },

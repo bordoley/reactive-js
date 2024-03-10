@@ -66,8 +66,9 @@ const DelegatingDisposableMixin: <
             this: TProperties,
             disposable: Disposable | SideEffect1<Optional<Error>>,
           ) {
-            const delegate = this[DelegatingDisposableLike_delegate];
-            delegate[DisposableContainerLike_add](
+            this[DelegatingDisposableLike_delegate][
+              DisposableContainerLike_add
+            ](
               // Cast to make the typechecker happy even though its a lie.
               disposable as Disposable,
             );
