@@ -108,12 +108,11 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
     (() => {
       const scheduler = createReactScheduler(priority);
       schedulerCache[Map_set](priority, scheduler);
-      pipe(
+      return pipe(
         scheduler,
         DisposableContainer.onDisposed(_ =>
           schedulerCache[Map_delete](priority),
         ),
       );
-      return scheduler;
     })();
 })();

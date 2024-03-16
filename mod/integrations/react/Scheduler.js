@@ -45,7 +45,6 @@ export const get = /*@__PURE__*/ (() => {
         (() => {
             const scheduler = createReactScheduler(priority);
             schedulerCache[Map_set](priority, scheduler);
-            pipe(scheduler, DisposableContainer.onDisposed(_ => schedulerCache[Map_delete](priority)));
-            return scheduler;
+            return pipe(scheduler, DisposableContainer.onDisposed(_ => schedulerCache[Map_delete](priority)));
         })();
 })();

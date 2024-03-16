@@ -100,7 +100,6 @@ export const get = /*@__PURE__*/ (() => {
         (() => {
             const animationFrameScheduler = create(scheduler);
             schedulerCache[Map_set](scheduler, animationFrameScheduler);
-            pipe(animationFrameScheduler, DisposableContainer.onDisposed(_ => schedulerCache[Map_delete](scheduler)));
-            return scheduler;
+            return pipe(animationFrameScheduler, DisposableContainer.onDisposed(_ => schedulerCache[Map_delete](scheduler)));
         })();
 })();
