@@ -1,7 +1,7 @@
-import { MAX_SAFE_INTEGER, __DEV__ } from "../../__internal__/constants.js";
+import { __DEV__ } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import {
-  Mixin1,
+  Mixin,
   include,
   init,
   mix,
@@ -50,9 +50,8 @@ import {
 } from "./SchedulerMixin/__private__/QueueableContinuation.js";
 import * as QueableContinuation from "./SchedulerMixin/__private__/QueueableContinuation.js";
 
-const SchedulerMixin: Mixin1<
+const SchedulerMixin: Mixin<
   SchedulerLike & DisposableLike,
-  number,
   ContinuationSchedulerLike
 > = /*@__PURE__*/ (() => {
   const SchedulerMixin_currentContinuation = Symbol(
@@ -64,7 +63,6 @@ const SchedulerMixin: Mixin1<
 
   type TProperties = {
     [SchedulerMixin_currentContinuation]: Optional<QueueableContinuationLike>;
-    [SchedulerLike_maxYieldInterval]: number;
     [SchedulerMixin_yieldRequested]: boolean;
     [SchedulerMixin_startTime]: number;
     [SchedulerMixin_taskIDCounter]: number;
@@ -81,25 +79,19 @@ const SchedulerMixin: Mixin1<
         | typeof SchedulerLike_requestYield
         | typeof SchedulerLike_schedule
       >,
-    ContinuationSchedulerLike & SchedulerLike & DisposableLike,
-    number
+    ContinuationSchedulerLike & SchedulerLike & DisposableLike
   >(
     include(DisposableMixin),
     function SchedulerMixin(
       instance: SchedulerLike &
         QueueableContinuationSchedulerLike &
         TProperties,
-      maxYieldInterval: number,
     ): SchedulerLike & DisposableLike {
       init(DisposableMixin, instance);
-
-      instance[SchedulerLike_maxYieldInterval] =
-        clampPositiveInteger(maxYieldInterval);
 
       return instance;
     },
     props<TProperties>({
-      [SchedulerLike_maxYieldInterval]: MAX_SAFE_INTEGER,
       [SchedulerMixin_currentContinuation]: none,
       [SchedulerMixin_yieldRequested]: false,
       [SchedulerMixin_startTime]: 0,

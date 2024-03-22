@@ -3,7 +3,7 @@
 import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, } from "../__internal__/constants.js";
 import { clampPositiveNonZeroInteger, max } from "../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
-import { SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../concurrent.js";
+import { SchedulerLike_maxYieldInterval, SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../concurrent.js";
 import { isSome, none } from "../functions.js";
 import * as PriorityQueue from "../utils/PriorityQueue.js";
 import { DisposableLike_dispose, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, } from "../utils.js";
@@ -15,7 +15,7 @@ const VirtualTimeScheduler_maxMicroTaskTicks = Symbol("VirtualTimeScheduler_maxM
 const VirtualTimeScheduler_microTaskTicks = Symbol("VirtualTimeScheduler_microTaskTicks");
 const VirtualTimeScheduler_queue = Symbol("VirtualTimeScheduler_queue");
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFactory(include(SchedulerMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
-    init(SchedulerMixin, instance, 1);
+    init(SchedulerMixin, instance);
     instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
     instance[VirtualTimeScheduler_queue] = PriorityQueue.create(Continuation.compare);
     return instance;
@@ -25,6 +25,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFacto
     [VirtualTimeScheduler_microTaskTicks]: 0,
     [VirtualTimeScheduler_queue]: none,
 }), {
+    [SchedulerLike_maxYieldInterval]: 1,
     get [ContinuationSchedulerLike_shouldYield]() {
         unsafeCast(this);
         this[VirtualTimeScheduler_microTaskTicks]++;

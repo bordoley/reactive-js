@@ -1,6 +1,6 @@
 /// <reference types="./SchedulerMixin.d.ts" />
 
-import { MAX_SAFE_INTEGER, __DEV__ } from "../../__internal__/constants.js";
+import { __DEV__ } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
@@ -17,13 +17,10 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
     const SchedulerMixin_startTime = Symbol("SchedulerMixin_startTime");
     const SchedulerMixin_taskIDCounter = Symbol("SchedulerMixin_taskIDCounter");
     const SchedulerMixin_yieldRequested = Symbol("SchedulerMixin_yieldRequested");
-    return mix(include(DisposableMixin), function SchedulerMixin(instance, maxYieldInterval) {
+    return mix(include(DisposableMixin), function SchedulerMixin(instance) {
         init(DisposableMixin, instance);
-        instance[SchedulerLike_maxYieldInterval] =
-            clampPositiveInteger(maxYieldInterval);
         return instance;
     }, props({
-        [SchedulerLike_maxYieldInterval]: MAX_SAFE_INTEGER,
         [SchedulerMixin_currentContinuation]: none,
         [SchedulerMixin_yieldRequested]: false,
         [SchedulerMixin_startTime]: 0,

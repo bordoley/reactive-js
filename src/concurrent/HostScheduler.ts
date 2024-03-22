@@ -60,6 +60,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   type TProperties = {
     [HostScheduler_hostSchedulerContinuationDueTime]: number;
     [HostScheduler_activeContinuation]: Optional<ContinuationLike>;
+    [SchedulerLike_maxYieldInterval]: number;
   };
 
   const isInputPending = () =>
@@ -179,7 +180,9 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         Mutable<TProperties>,
       maxYieldInterval: number,
     ): SchedulerLike & DisposableLike {
-      init(CurrentTimeSchedulerMixin, instance, maxYieldInterval);
+      instance[SchedulerLike_maxYieldInterval] = maxYieldInterval;
+
+      init(CurrentTimeSchedulerMixin, instance);
       init(SerialDisposableMixin(), instance, Disposable.disposed);
       init(
         PriorityQueueMixin<ContinuationLike>(),
@@ -193,6 +196,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     props<TProperties>({
       [HostScheduler_hostSchedulerContinuationDueTime]: 0,
       [HostScheduler_activeContinuation]: none,
+      [SchedulerLike_maxYieldInterval]: 300,
     }),
     {
       get [ContinuationSchedulerLike_shouldYield](): boolean {

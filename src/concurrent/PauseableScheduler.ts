@@ -158,7 +158,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         Mutable<TProperties>,
       host: SchedulerLike,
     ): PauseableSchedulerLike {
-      init(SchedulerMixin, instance, host[SchedulerLike_maxYieldInterval]);
+      init(SchedulerMixin, instance);
       init(SerialDisposableMixin(), instance, Disposable.disposed);
       init(
         PriorityQueueMixin<ContinuationLike>(),
@@ -215,6 +215,13 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       [PauseableScheduler_activeContinuation]: none,
     }),
     {
+      get [SchedulerLike_maxYieldInterval](): number {
+        unsafeCast<TProperties>(this);
+        return this[PauseableScheduler_hostScheduler][
+          SchedulerLike_maxYieldInterval
+        ];
+      },
+
       get [SchedulerLike_now](): number {
         unsafeCast<TProperties>(this);
         const hostNow =

@@ -6,7 +6,7 @@ import { include, init, mixInstanceFactory, props, } from "../../__internal__/mi
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "../../concurrent/__internal__/Continuation.js";
 import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "../../concurrent/__internal__/ContinuationScheduler.js";
 import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
-import { SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
+import { SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import { invoke, isSome, newInstance, none, pipe, pipeLazy, raiseIfNone, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
@@ -77,6 +77,7 @@ const create = /*@__PURE__*/ (() => {
     }, props({
         [AnimationFrameScheduler_delayScheduler]: none,
     }), {
+        [SchedulerLike_maxYieldInterval]: 5,
         [ContinuationSchedulerLike_shouldYield]: true,
         [SchedulerLike_shouldYield]: true,
         [ContinuationSchedulerLike_schedule](continuation) {

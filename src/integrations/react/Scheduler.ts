@@ -27,7 +27,11 @@ import {
   ContinuationSchedulerLike_shouldYield,
 } from "../../concurrent/__internal__/ContinuationScheduler.js";
 import SchedulerMixin from "../../concurrent/__mixins__/SchedulerMixin.js";
-import { SchedulerLike, SchedulerLike_now } from "../../concurrent.js";
+import {
+  SchedulerLike,
+  SchedulerLike_maxYieldInterval,
+  SchedulerLike_now,
+} from "../../concurrent.js";
 import { bindMethod, newInstance, none, pipe } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { DisposableLike } from "../../utils.js";
@@ -51,7 +55,7 @@ const createReactScheduler = /*@__PURE__*/ (() => {
       instance: ContinuationSchedulerLike & TProperties,
       priority: 1 | 2 | 3 | 4 | 5,
     ): SchedulerLike & DisposableLike {
-      init(SchedulerMixin, instance, 300);
+      init(SchedulerMixin, instance);
       instance[ReactScheduler_priority] = priority;
       return instance;
     },
@@ -59,6 +63,8 @@ const createReactScheduler = /*@__PURE__*/ (() => {
       [ReactScheduler_priority]: 3,
     }),
     {
+      [SchedulerLike_maxYieldInterval]: 300,
+
       get [SchedulerLike_now](): number {
         return unstable_now();
       },

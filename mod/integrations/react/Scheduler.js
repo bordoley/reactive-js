@@ -6,18 +6,19 @@ import { include, init, mixInstanceFactory, props, } from "../../__internal__/mi
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "../../concurrent/__internal__/Continuation.js";
 import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "../../concurrent/__internal__/ContinuationScheduler.js";
 import SchedulerMixin from "../../concurrent/__mixins__/SchedulerMixin.js";
-import { SchedulerLike_now } from "../../concurrent.js";
+import { SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../../concurrent.js";
 import { bindMethod, newInstance, none, pipe } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 const createReactScheduler = /*@__PURE__*/ (() => {
     const ReactScheduler_priority = Symbol("ReactScheduler_priority");
     return mixInstanceFactory(include(SchedulerMixin), function ReactPriorityScheduler(instance, priority) {
-        init(SchedulerMixin, instance, 300);
+        init(SchedulerMixin, instance);
         instance[ReactScheduler_priority] = priority;
         return instance;
     }, props({
         [ReactScheduler_priority]: 3,
     }), {
+        [SchedulerLike_maxYieldInterval]: 300,
         get [SchedulerLike_now]() {
             return unstable_now();
         },

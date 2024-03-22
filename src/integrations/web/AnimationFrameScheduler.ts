@@ -24,6 +24,7 @@ import {
 import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
 import {
   SchedulerLike,
+  SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
@@ -171,6 +172,8 @@ const create = /*@__PURE__*/ (() => {
       [AnimationFrameScheduler_delayScheduler]: none,
     }),
     {
+      [SchedulerLike_maxYieldInterval]: 5,
+
       [ContinuationSchedulerLike_shouldYield]: true,
       [SchedulerLike_shouldYield]: true,
 

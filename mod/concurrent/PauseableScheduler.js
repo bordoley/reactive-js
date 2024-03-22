@@ -58,7 +58,7 @@ export const create = /*@PURE__*/ (() => {
         hostScheduler[DisposableContainerLike_add](instance);
     };
     return mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), PriorityQueueMixin()), function PauseableScheduler(instance, host) {
-        init(SchedulerMixin, instance, host[SchedulerLike_maxYieldInterval]);
+        init(SchedulerMixin, instance);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
         init(PriorityQueueMixin(), instance, Continuation.compare, none);
         instance[PauseableScheduler_hostScheduler] = host;
@@ -97,6 +97,10 @@ export const create = /*@PURE__*/ (() => {
         [PauseableScheduler_timeDrift]: 0,
         [PauseableScheduler_activeContinuation]: none,
     }), {
+        get [SchedulerLike_maxYieldInterval]() {
+            unsafeCast(this);
+            return this[PauseableScheduler_hostScheduler][SchedulerLike_maxYieldInterval];
+        },
         get [SchedulerLike_now]() {
             unsafeCast(this);
             const hostNow = this[PauseableScheduler_hostScheduler][SchedulerLike_now];

@@ -81,13 +81,15 @@ export const create = /*@PURE__*/ (() => {
         }
     };
     const createHostSchedulerInstance = mixInstanceFactory(include(CurrentTimeSchedulerMixin, SchedulerMixin, SerialDisposableMixin(), PriorityQueueMixin()), function HostScheduler(instance, maxYieldInterval) {
-        init(CurrentTimeSchedulerMixin, instance, maxYieldInterval);
+        instance[SchedulerLike_maxYieldInterval] = maxYieldInterval;
+        init(CurrentTimeSchedulerMixin, instance);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
         init(PriorityQueueMixin(), instance, Continuation.compare, none);
         return instance;
     }, props({
         [HostScheduler_hostSchedulerContinuationDueTime]: 0,
         [HostScheduler_activeContinuation]: none,
+        [SchedulerLike_maxYieldInterval]: 300,
     }), {
         get [ContinuationSchedulerLike_shouldYield]() {
             unsafeCast(this);

@@ -13,6 +13,7 @@ import {
 } from "../__internal__/mixins.js";
 import {
   SchedulerLike,
+  SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
   VirtualTimeSchedulerLike,
   VirtualTimeSchedulerLike_run,
@@ -75,7 +76,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         ContinuationSchedulerLike,
       maxMicroTaskTicks: number,
     ): VirtualTimeSchedulerLike {
-      init(SchedulerMixin, instance, 1);
+      init(SchedulerMixin, instance);
 
       instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
       instance[VirtualTimeScheduler_queue] = PriorityQueue.create(
@@ -91,6 +92,8 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
       [VirtualTimeScheduler_queue]: none,
     }),
     {
+      [SchedulerLike_maxYieldInterval]: 1,
+
       get [ContinuationSchedulerLike_shouldYield]() {
         unsafeCast<TProperties>(this);
 

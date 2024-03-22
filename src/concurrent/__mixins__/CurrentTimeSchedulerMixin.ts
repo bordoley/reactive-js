@@ -1,34 +1,25 @@
 import * as CurrentTime from "../../__internal__/CurrentTime.js";
-import {
-  Mixin1,
-  include,
-  init,
-  mix,
-  props,
-} from "../../__internal__/mixins.js";
+import { Mixin, include, init, mix, props } from "../../__internal__/mixins.js";
 import { SchedulerLike, SchedulerLike_now } from "../../concurrent.js";
 import { DisposableLike } from "../../utils.js";
 import { ContinuationSchedulerLike } from "../__internal__/ContinuationScheduler.js";
 import SchedulerMixin from "./SchedulerMixin.js";
 
-const CurrentTimeSchedulerMixin: Mixin1<
+const CurrentTimeSchedulerMixin: Mixin<
   SchedulerLike & DisposableLike,
-  number,
   Omit<ContinuationSchedulerLike, typeof SchedulerLike_now>
 > = /*@__PURE__*/ (() =>
   mix<
     SchedulerLike & DisposableLike,
     object,
     Pick<SchedulerLike, typeof SchedulerLike_now>,
-    ContinuationSchedulerLike & SchedulerLike & DisposableLike,
-    number
+    ContinuationSchedulerLike & SchedulerLike & DisposableLike
   >(
     include(SchedulerMixin),
     function CurrentTimeSchedulerMixin(
       instance: ContinuationSchedulerLike,
-      maxYieldInterval: number,
     ): SchedulerLike & DisposableLike {
-      init(SchedulerMixin, instance, maxYieldInterval);
+      init(SchedulerMixin, instance);
       return instance;
     },
     props(),
