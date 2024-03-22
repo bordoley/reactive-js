@@ -3,7 +3,7 @@
 import { __DEV__ } from "../../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../../../__internal__/mixins.js";
 import { ContinuationContextLike_yield, SchedulerLike_now, SchedulerLike_shouldYield, } from "../../../../concurrent.js";
-import { error, isSome, newInstance, none, pipe, pipeLazy, raiseIf, } from "../../../../functions.js";
+import { error, isSome, newInstance, none, pipe, raiseIf, } from "../../../../functions.js";
 import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../../utils/__mixins__/DisposableMixin.js";
 import IndexedQueueMixin from "../../../../utils/__mixins__/IndexedQueueMixin.js";
@@ -42,20 +42,16 @@ export const create = /*@__PURE__*/ (() => {
     const rescheduleChildrenOnParentOrScheduler = (continuation) => {
         const scheduler = continuation[QueueableContinuation_scheduler];
         const parent = findNearestNonDisposedParent(continuation);
-        if (isSome(parent)) {
-            let head = none;
-            while (((head = continuation[QueueLike_dequeue]()), isSome(head))) {
-                if (!head[DisposableLike_isDisposed]) {
-                    parent[QueueableLike_enqueue](head);
-                }
+        let head = none;
+        while (((head = continuation[QueueLike_dequeue]()), isSome(head))) {
+            if (head[DisposableLike_isDisposed]) {
+                // continue
             }
-        }
-        else {
-            let head = none;
-            while (((head = continuation[QueueLike_dequeue]()), isSome(head))) {
-                if (!head[DisposableLike_isDisposed]) {
-                    scheduler[QueueableContinuationSchedulerLike_schedule](head);
-                }
+            else if (isSome(parent)) {
+                parent[QueueableLike_enqueue](head);
+            }
+            else {
+                scheduler[QueueableContinuationSchedulerLike_schedule](head);
             }
         }
     };
@@ -117,7 +113,17 @@ export const create = /*@__PURE__*/ (() => {
             scheduler[QueueableContinuationSchedulerLike_nextTaskID];
         instance[QueueableContinuation_scheduler] = scheduler;
         instance[QueueableContinuation_effect] = effect;
-        pipe(instance, DisposableContainer.onDisposed(pipeLazy(instance, rescheduleChildrenOnParentOrScheduler)));
+        pipe(instance, DisposableContainer.onDisposed(_ => {
+            rescheduleChildrenOnParentOrScheduler(instance);
+            // A continuation could be disposed and yet retained
+            // by a scheduler in a queue so free all references
+            // to avoid retaining memory.
+            instance[QueueableContinuationLike_parent] = none;
+            instance[QueueableContinuation_scheduler] =
+                none;
+            instance[QueueableContinuation_effect] =
+                none;
+        }));
         return instance;
     }, props({
         [QueueableContinuationLike_parent]: none,

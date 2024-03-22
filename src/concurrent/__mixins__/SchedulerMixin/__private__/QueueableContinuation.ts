@@ -21,7 +21,6 @@ import {
   newInstance,
   none,
   pipe,
-  pipeLazy,
   raiseIf,
 } from "../../../../functions.js";
 import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
@@ -129,19 +128,14 @@ export const create: (
     const scheduler = continuation[QueueableContinuation_scheduler];
     const parent = findNearestNonDisposedParent(continuation);
 
-    if (isSome(parent)) {
-      let head: Optional<QueueableContinuationLike> = none;
-      while (((head = continuation[QueueLike_dequeue]()), isSome(head))) {
-        if (!head[DisposableLike_isDisposed]) {
-          parent[QueueableLike_enqueue](head);
-        }
-      }
-    } else {
-      let head: Optional<QueueableContinuationLike> = none;
-      while (((head = continuation[QueueLike_dequeue]()), isSome(head))) {
-        if (!head[DisposableLike_isDisposed]) {
-          scheduler[QueueableContinuationSchedulerLike_schedule](head);
-        }
+    let head: Optional<QueueableContinuationLike> = none;
+    while (((head = continuation[QueueLike_dequeue]()), isSome(head))) {
+      if (head[DisposableLike_isDisposed]) {
+        // continue
+      } else if (isSome(parent)) {
+        parent[QueueableLike_enqueue](head);
+      } else {
+        scheduler[QueueableContinuationSchedulerLike_schedule](head);
       }
     }
   };
@@ -235,9 +229,18 @@ export const create: (
 
       pipe(
         instance,
-        DisposableContainer.onDisposed(
-          pipeLazy(instance, rescheduleChildrenOnParentOrScheduler),
-        ),
+        DisposableContainer.onDisposed(_ => {
+          rescheduleChildrenOnParentOrScheduler(instance);
+
+          // A continuation could be disposed and yet retained
+          // by a scheduler in a queue so free all references
+          // to avoid retaining memory.
+          instance[QueueableContinuationLike_parent] = none;
+          instance[QueueableContinuation_scheduler] =
+            none as unknown as QueueableContinuationSchedulerLike;
+          instance[QueueableContinuation_effect] =
+            none as unknown as SideEffect1<ContinuationContextLike>;
+        }),
       );
 
       return instance;
