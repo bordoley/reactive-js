@@ -238,11 +238,14 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         const now = this[SchedulerLike_now];
         const nextContinuation = peek(this);
 
+        const yieldToNextContinuation =
+          isSome(nextContinuation) &&
+          this[PauseableScheduler_activeContinuation] !== nextContinuation &&
+          nextContinuation[ContinuationLike_dueTime] <= now;
+
         return (
           this[PauseableLike_isPaused][StoreLike_value] ||
-          (isSome(nextContinuation) &&
-            this[PauseableScheduler_activeContinuation] !== nextContinuation &&
-            nextContinuation[ContinuationLike_dueTime] <= now) ||
+          yieldToNextContinuation ||
           this[PauseableScheduler_hostScheduler][SchedulerLike_shouldYield]
         );
       },

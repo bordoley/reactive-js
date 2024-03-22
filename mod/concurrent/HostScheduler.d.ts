@@ -1,8 +1,5 @@
 import { SchedulerLike } from "../concurrent.js";
 import { DisposableLike } from "../utils.js";
-/**
- * @noInheritDoc
- */
 interface Signature {
     create(options?: {
         readonly maxYieldInterval?: number;
