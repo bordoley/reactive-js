@@ -20,6 +20,5 @@ interface WebEffectsModule {
 }
 type Signature = WebEffectsModule;
 export declare const __animate: Signature["__animate"];
-export declare const __animationFrameScheduler: Signature["__animationFrameScheduler"];
 export declare const __animationGroup: Signature["__animationGroup"];
 export {};

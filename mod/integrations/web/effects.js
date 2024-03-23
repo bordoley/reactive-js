@@ -2,7 +2,7 @@
 
 import { nullObject } from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
-import { __constant, __currentScheduler, __memo, __observe, __state, __stream, __using, } from "../../concurrent/Observable/effects.js";
+import { __constant, __memo, __observe, __state, __stream, __using, } from "../../concurrent/Observable/effects.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import * as EventSource from "../../events/EventSource.js";
 import { compose, identity, none, pipe, returns, } from "../../functions.js";
@@ -26,12 +26,8 @@ export const __animate = (animation, selector) => {
     __using(animateHtmlElement, htmlElement, animation, memoizedSelector ?? identity);
     return setRef;
 };
-export const __animationFrameScheduler = () => {
-    const scheduler = __currentScheduler();
-    return AnimationFrameScheduler.get(scheduler);
-};
 export const __animationGroup = (animationGroup, options) => {
-    const animationFrameScheduler = __animationFrameScheduler();
+    const animationFrameScheduler = AnimationFrameScheduler.get();
     const animationGroupStreamable = __constant(Streamable.animationGroup(animationGroup, {
         mode: "switching",
         ...(options ?? {}),

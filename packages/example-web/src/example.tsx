@@ -45,10 +45,7 @@ import {
   __stream,
   __using,
 } from "@reactive-js/core/concurrent/Observable/effects";
-import {
-  __animate,
-  __animationFrameScheduler,
-} from "@reactive-js/core/integrations/web/effects";
+import { __animate } from "@reactive-js/core/integrations/web/effects";
 import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
@@ -71,6 +68,7 @@ import {
 import * as Enumerable from "@reactive-js/core/collections/Enumerable";
 import * as Flowable from "@reactive-js/core/concurrent/Flowable";
 import { useFlow } from "@reactive-js/core/integrations/react";
+import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
 
 const AnimatedBox = ({
   animation,
@@ -314,7 +312,7 @@ const RxComponent = createComponent(
       const { windowLocation } = __await(props);
       const uri = __await(windowLocation);
 
-      const animationScheduler = __animationFrameScheduler();
+      const animationScheduler = AnimationFrameScheduler.get();
 
       const createScheduler = __constant(() => {
         const scheduler = PauseableScheduler.create(animationScheduler);

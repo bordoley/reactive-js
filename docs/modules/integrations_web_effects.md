@@ -7,7 +7,6 @@
 ### Functions
 
 - [\_\_animate](integrations_web_effects.md#__animate)
-- [\_\_animationFrameScheduler](integrations_web_effects.md#__animationframescheduler)
 - [\_\_animationGroup](integrations_web_effects.md#__animationgroup)
 
 ## Functions
@@ -44,16 +43,6 @@
 #### Returns
 
 [`SideEffect1`](functions.md#sideeffect1)\<[`Optional`](functions.md#optional)\<``null`` \| `HTMLElement`\>\>
-
-___
-
-### \_\_animationFrameScheduler
-
-▸ **__animationFrameScheduler**(): [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md)
-
-#### Returns
-
-[`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md)
 
 ___
 

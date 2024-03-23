@@ -14,12 +14,21 @@ import {
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
 } from "../concurrent.js";
-import { Optional, isNone, isSome, none } from "../functions.js";
+import {
+  Optional,
+  isNone,
+  isSome,
+  none,
+  pipe,
+  pipeLazy,
+} from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
+import * as DisposableContainer from "../utils/DisposableContainer.js";
 import PriorityQueueMixin from "../utils/__mixins__/PriorityQueueMixin.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
 import {
   DisposableLike,
+  DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueLike,
   QueueLike_dequeue,
@@ -43,9 +52,11 @@ import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js
 import SchedulerMixin from "./__mixins__/SchedulerMixin.js";
 
 interface Signature {
-  create(options?: {
-    readonly maxYieldInterval?: number;
-  }): SchedulerLike & DisposableLike;
+  create(): SchedulerLike & DisposableLike;
+
+  get(): SchedulerLike;
+
+  setMaxYieldInterval(maxYieldInterval: number): void;
 }
 
 export const create: Signature["create"] = /*@PURE__*/ (() => {
@@ -58,9 +69,9 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   );
 
   type TProperties = {
+    [SchedulerLike_maxYieldInterval]: number;
     [HostScheduler_hostSchedulerContinuationDueTime]: number;
     [HostScheduler_activeContinuation]: Optional<ContinuationLike>;
-    [SchedulerLike_maxYieldInterval]: number;
   };
 
   const isInputPending = () =>
@@ -91,7 +102,10 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       ContinuationSchedulerLike &
       SchedulerLike &
       QueueLike<ContinuationLike>,
+    immmediateOrTimerDisposable: DisposableLike,
   ) => {
+    immmediateOrTimerDisposable[DisposableLike_dispose]();
+
     const startTime = instance[SchedulerLike_now];
 
     while (!instance[DisposableLike_isDisposed]) {
@@ -160,12 +174,27 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
     instance[HostScheduler_hostSchedulerContinuationDueTime] = dueTime;
 
-    const { setImmediate, setTimeout } = globalObject;
-    if (delay > 4 || isNone(setImmediate)) {
-      setTimeout(hostSchedulerContinuation, delay, instance);
-    } else {
-      setImmediate(hostSchedulerContinuation, instance);
-    }
+    const disposable = Disposable.create();
+
+    const { setImmediate, setTimeout, clearImmediate, clearTimeout } =
+      globalObject;
+
+    const cleanup =
+      delay > 4 || isNone(setImmediate)
+        ? pipeLazy(
+            setTimeout(hostSchedulerContinuation, delay, instance, disposable),
+            clearTimeout,
+          )
+        : pipeLazy(
+            setImmediate(hostSchedulerContinuation, instance, disposable),
+            clearImmediate,
+          );
+
+    pipe(
+      disposable,
+      Disposable.addTo(instance),
+      DisposableContainer.onDisposed(cleanup),
+    );
   };
 
   const createHostSchedulerInstance = mixInstanceFactory(
@@ -194,9 +223,9 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       return instance;
     },
     props<TProperties>({
+      [SchedulerLike_maxYieldInterval]: 300,
       [HostScheduler_hostSchedulerContinuationDueTime]: 0,
       [HostScheduler_activeContinuation]: none,
-      [SchedulerLike_maxYieldInterval]: 300,
     }),
     {
       get [ContinuationSchedulerLike_shouldYield](): boolean {
@@ -238,6 +267,25 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     } = {},
   ) => {
     const { maxYieldInterval = 300 } = options;
-    return createHostSchedulerInstance(maxYieldInterval);
+    return createHostSchedulerInstance(clampPositiveInteger(maxYieldInterval));
   };
 })();
+
+let globalHostScheduler: Optional<SchedulerLike & DisposableLike> = none;
+
+export const get: Signature["get"] = () => {
+  if (isNone(globalHostScheduler)) {
+    const scheduler = create();
+    globalHostScheduler = scheduler;
+  }
+
+  return globalHostScheduler;
+};
+
+export const setMaxYieldInterval: Signature["setMaxYieldInterval"] = (
+  maxYieldInterval: number,
+) => {
+  const scheduler = get();
+  (scheduler as Mutable<SchedulerLike>)[SchedulerLike_maxYieldInterval] =
+    clampPositiveInteger(maxYieldInterval);
+};

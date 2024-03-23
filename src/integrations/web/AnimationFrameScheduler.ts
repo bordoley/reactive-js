@@ -1,16 +1,12 @@
 import * as CurrentTime from "../../__internal__/CurrentTime.js";
-import {
-  Map_delete,
-  Map_get,
-  Map_set,
-  globalObject,
-} from "../../__internal__/constants.js";
+import { globalObject } from "../../__internal__/constants.js";
 import {
   include,
   init,
   mixInstanceFactory,
   props,
 } from "../../__internal__/mixins.js";
+import * as HostScheduler from "../../concurrent/HostScheduler.js";
 import {
   ContinuationLike,
   ContinuationLike_dueTime,
@@ -32,18 +28,16 @@ import {
 import {
   Optional,
   invoke,
+  isNone,
   isSome,
-  newInstance,
   none,
   pipe,
   pipeLazy,
   raiseIfNone,
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
-import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
 import {
-  DisposableContainerLike_add,
   DisposableLike,
   IndexedQueueLike,
   QueueLike_count,
@@ -52,16 +46,10 @@ import {
 } from "../../utils.js";
 
 interface Signature {
-  get(delayScheduler: SchedulerLike): SchedulerLike;
+  get(): SchedulerLike;
 }
 
-const create = /*@__PURE__*/ (() => {
-  const AnimationFrameScheduler_delayScheduler = Symbol(
-    "AnimationFrameScheduler_delayScheduler",
-  );
-
-  const RafScheduler_schedule = Symbol("RafScheduler_schedule");
-
+export const get: Signature["get"] = /*@__PURE__*/ (() => {
   const raf = globalObject.requestAnimationFrame;
 
   raiseIfNone(
@@ -69,111 +57,87 @@ const create = /*@__PURE__*/ (() => {
     "requestAnimationFrame is not defined in the current environment",
   );
 
+  const AnimationFrameScheduler_rafQueue = Symbol("RafScheduler_rafQueue");
+  const AnimationFrameScheduler_rafIsRunning = Symbol(
+    "RafScheduler_rafIsRunning",
+  );
+
   type TProperties = {
-    [AnimationFrameScheduler_delayScheduler]: SchedulerLike;
+    [AnimationFrameScheduler_rafIsRunning]: boolean;
+    [AnimationFrameScheduler_rafQueue]: IndexedQueueLike<ContinuationLike>;
   };
 
-  interface RafScheduler {
-    [RafScheduler_schedule](continuation: ContinuationLike): void;
-  }
+  const rafCallback = () => {
+    const startTime = CurrentTime.now();
+    const animationFrameScheduler =
+      globalAnimationFrameScheduler as unknown as TProperties;
+    const workQueue = animationFrameScheduler[AnimationFrameScheduler_rafQueue];
 
-  const rafScheduler: RafScheduler = (() => {
-    const RafScheduler_rafQueue = Symbol("RafScheduler_rafQueue");
+    animationFrameScheduler[AnimationFrameScheduler_rafQueue] =
+      IndexedQueue.create();
 
-    const RafScheduler_rafIsRunning = Symbol("RafScheduler_rafIsRunning");
+    let continuation: Optional<ContinuationLike> = none;
+    while (
+      ((continuation = workQueue[QueueLike_dequeue]()), isSome(continuation))
+    ) {
+      continuation[ContinuationLike_run]();
 
-    interface RafSchedulerImpl {
-      [RafScheduler_rafQueue]: IndexedQueueLike<ContinuationLike>;
-      [RafScheduler_rafIsRunning]: boolean;
-      [RafScheduler_schedule](continuation: ContinuationLike): void;
+      const elapsedTime = CurrentTime.now() - startTime;
+      if (elapsedTime > 5 /*ms*/) {
+        break;
+      }
     }
 
-    const rafCallback = () => {
-      const startTime = CurrentTime.now();
-      const workQueue = rafScheduler[RafScheduler_rafQueue];
+    const continuationsCount = workQueue[QueueLike_count];
+    const newWorkQueue =
+      animationFrameScheduler[AnimationFrameScheduler_rafQueue];
+    const newContinuationsCount = newWorkQueue[QueueLike_count];
 
-      rafScheduler[RafScheduler_rafQueue] = IndexedQueue.create();
-
+    if (continuationsCount > 0 && newContinuationsCount === 0) {
+      animationFrameScheduler[AnimationFrameScheduler_rafQueue] = workQueue;
+    } else if (continuationsCount > 0) {
+      // Merge the job queues copying the newly enqueued jobs
+      // onto the original queue.
       let continuation: Optional<ContinuationLike> = none;
       while (
-        ((continuation = workQueue[QueueLike_dequeue]()), isSome(continuation))
+        ((continuation = newWorkQueue[QueueLike_dequeue]()),
+        isSome(continuation))
       ) {
-        continuation[ContinuationLike_run]();
-
-        const elapsedTime = CurrentTime.now() - startTime;
-        if (elapsedTime > 5 /*ms*/) {
-          break;
-        }
+        workQueue[QueueableLike_enqueue](continuation);
       }
+      animationFrameScheduler[AnimationFrameScheduler_rafQueue] = workQueue;
+    }
 
-      const continuationsCount = workQueue[QueueLike_count];
-      const newWorkQueue = rafScheduler[RafScheduler_rafQueue];
-      const newContinuationsCount = newWorkQueue[QueueLike_count];
+    const continuationsQueueCount =
+      animationFrameScheduler[AnimationFrameScheduler_rafQueue][
+        QueueLike_count
+      ];
+    if (continuationsQueueCount > 0) {
+      raf(rafCallback);
+    } else {
+      animationFrameScheduler[AnimationFrameScheduler_rafIsRunning] = false;
+    }
+  };
 
-      if (continuationsCount > 0 && newContinuationsCount === 0) {
-        rafScheduler[RafScheduler_rafQueue] = workQueue;
-      } else if (continuationsCount > 0) {
-        // Merge the job queues copying the newly enqueued jobs
-        // onto the original queue.
-        let continuation: Optional<ContinuationLike> = none;
-        while (
-          ((continuation = newWorkQueue[QueueLike_dequeue]()),
-          isSome(continuation))
-        ) {
-          workQueue[QueueableLike_enqueue](continuation);
-        }
-        rafScheduler[RafScheduler_rafQueue] = workQueue;
-      }
-
-      const continuationsQueueCount =
-        rafScheduler[RafScheduler_rafQueue][QueueLike_count];
-      if (continuationsQueueCount > 0) {
-        raf(rafCallback);
-      } else {
-        rafScheduler[RafScheduler_rafIsRunning] = false;
-      }
-    };
-
-    const rafScheduler: RafSchedulerImpl = {
-      [RafScheduler_rafQueue]: IndexedQueue.create<ContinuationLike>(),
-      [RafScheduler_rafIsRunning]: false,
-      [RafScheduler_schedule](
-        this: RafSchedulerImpl,
-        continuation: ContinuationLike,
-      ) {
-        this[RafScheduler_rafQueue][QueueableLike_enqueue](continuation);
-
-        if (!this[RafScheduler_rafIsRunning]) {
-          this[RafScheduler_rafIsRunning] = true;
-          raf(rafCallback);
-        }
-      },
-    };
-
-    return rafScheduler;
-  })();
-
-  return mixInstanceFactory(
+  const createAnimationFrameScheduler = mixInstanceFactory(
     include(CurrentTimeSchedulerMixin),
     function AnimationFrameScheduler(
       instance: Omit<ContinuationSchedulerLike, typeof SchedulerLike_now> &
         TProperties,
-      hostScheduler: SchedulerLike,
     ): SchedulerLike & DisposableLike {
-      init(CurrentTimeSchedulerMixin, instance, 5);
+      init(CurrentTimeSchedulerMixin, instance);
 
-      instance[AnimationFrameScheduler_delayScheduler] = hostScheduler;
-
-      hostScheduler[DisposableContainerLike_add](instance);
+      instance[AnimationFrameScheduler_rafQueue] =
+        IndexedQueue.create<ContinuationLike>();
 
       return instance;
     },
     props<TProperties>({
-      [AnimationFrameScheduler_delayScheduler]: none,
+      [AnimationFrameScheduler_rafIsRunning]: false,
+      [AnimationFrameScheduler_rafQueue]: none,
     }),
     {
       [SchedulerLike_maxYieldInterval]: 5,
-
       [ContinuationSchedulerLike_shouldYield]: true,
       [SchedulerLike_shouldYield]: true,
 
@@ -189,7 +153,7 @@ const create = /*@__PURE__*/ (() => {
         // if its not more than a frame.
         if (delay > 16) {
           pipe(
-            this[AnimationFrameScheduler_delayScheduler],
+            HostScheduler.get(),
             invoke(
               SchedulerLike_schedule,
               pipeLazy(
@@ -201,28 +165,27 @@ const create = /*@__PURE__*/ (() => {
             Disposable.addTo(continuation),
           );
         } else {
-          rafScheduler[RafScheduler_schedule](continuation);
+          this[AnimationFrameScheduler_rafQueue][QueueableLike_enqueue](
+            continuation,
+          );
+
+          if (!this[AnimationFrameScheduler_rafIsRunning]) {
+            this[AnimationFrameScheduler_rafIsRunning] = true;
+            raf(rafCallback);
+          }
         }
       },
     },
   );
-})();
 
-export const get: Signature["get"] = /*@__PURE__*/ (() => {
-  const schedulerCache: Map<SchedulerLike, SchedulerLike> =
-    newInstance<Map<SchedulerLike, SchedulerLike>>(Map);
+  let globalAnimationFrameScheduler: Optional<SchedulerLike> = none;
 
-  return (scheduler: SchedulerLike) =>
-    schedulerCache[Map_get](scheduler) ??
-    (() => {
-      const animationFrameScheduler = create(scheduler);
-      schedulerCache[Map_set](scheduler, animationFrameScheduler);
+  return () => {
+    if (isNone(globalAnimationFrameScheduler)) {
+      const scheduler = createAnimationFrameScheduler();
+      globalAnimationFrameScheduler = scheduler;
+    }
 
-      return pipe(
-        animationFrameScheduler,
-        DisposableContainer.onDisposed(_ =>
-          schedulerCache[Map_delete](scheduler),
-        ),
-      );
-    })();
+    return globalAnimationFrameScheduler;
+  };
 })();

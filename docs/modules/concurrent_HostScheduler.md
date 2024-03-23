@@ -7,20 +7,41 @@
 ### Functions
 
 - [create](concurrent_HostScheduler.md#create)
+- [get](concurrent_HostScheduler.md#get)
+- [setMaxYieldInterval](concurrent_HostScheduler.md#setmaxyieldinterval)
 
 ## Functions
 
 ### create
 
-▸ **create**(`options?`): [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) & [`DisposableLike`](../interfaces/utils.DisposableLike.md)
+▸ **create**(): [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) & [`DisposableLike`](../interfaces/utils.DisposableLike.md)
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) & [`DisposableLike`](../interfaces/utils.DisposableLike.md)
+
+___
+
+### get
+
+▸ **get**(): [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md)
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md)
+
+___
+
+### setMaxYieldInterval
+
+▸ **setMaxYieldInterval**(`maxYieldInterval`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.maxYieldInterval?` | `number` |
+| `maxYieldInterval` | `number` |
 
 #### Returns
 
-[`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) & [`DisposableLike`](../interfaces/utils.DisposableLike.md)
+`void`

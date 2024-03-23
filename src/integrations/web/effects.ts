@@ -3,7 +3,6 @@ import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { DictionaryLike, ReadonlyObjectMapLike } from "../../collections.js";
 import {
   __constant,
-  __currentScheduler,
   __memo,
   __observe,
   __state,
@@ -118,12 +117,6 @@ export const __animate: Signature["__animate"] = (
   return setRef;
 };
 
-export const __animationFrameScheduler: Signature["__animationFrameScheduler"] =
-  () => {
-    const scheduler = __currentScheduler();
-    return AnimationFrameScheduler.get(scheduler);
-  };
-
 export const __animationGroup: Signature["__animationGroup"] = <
   T,
   TEvent = unknown,
@@ -143,7 +136,7 @@ export const __animationGroup: Signature["__animationGroup"] = <
         readonly capacity?: number;
       },
 ) => {
-  const animationFrameScheduler = __animationFrameScheduler();
+  const animationFrameScheduler = AnimationFrameScheduler.get();
 
   const animationGroupStreamable = __constant(
     Streamable.animationGroup(animationGroup, {

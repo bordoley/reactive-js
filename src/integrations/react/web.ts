@@ -41,7 +41,6 @@ import {
   WindowLocationLike_replace,
   WindowLocationURI,
 } from "../web.js";
-import * as ReactScheduler from "./Scheduler.js";
 
 interface ReactWebModule {
   readonly WindowLocationProvider: React.FunctionComponent<{
@@ -102,9 +101,6 @@ const WindowLocationContext = /*@__PURE__*/ createContext<WindowLocationLike>(
   none as unknown as WindowLocationLike,
 );
 
-const useAnimationFrameScheduler = (priority?: 1 | 2 | 3 | 4 | 5) =>
-  AnimationFrameScheduler.get(ReactScheduler.get(priority));
-
 export const useAnimate: Signature["useAnimate"] = <
   TElement extends HTMLElement,
   T,
@@ -161,7 +157,7 @@ export const useAnimationGroup: Signature["useAnimationGroup"] = <
         readonly capacity?: number;
       },
 ) => {
-  const animationFrameScheduler = useAnimationFrameScheduler(options?.priority);
+  const animationFrameScheduler = AnimationFrameScheduler.get();
 
   return useStream(
     () =>

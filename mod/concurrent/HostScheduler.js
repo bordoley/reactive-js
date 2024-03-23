@@ -4,11 +4,12 @@ import { MAX_VALUE, globalObject } from "../__internal__/constants.js";
 import { clampPositiveInteger } from "../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
 import { SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../concurrent.js";
-import { isNone, isSome, none } from "../functions.js";
+import { isNone, isSome, none, pipe, pipeLazy, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
+import * as DisposableContainer from "../utils/DisposableContainer.js";
 import PriorityQueueMixin from "../utils/__mixins__/PriorityQueueMixin.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
-import { DisposableLike_isDisposed, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, SerialDisposableLike_current, } from "../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, SerialDisposableLike_current, } from "../utils.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "./__internal__/Continuation.js";
 import * as Continuation from "./__internal__/Continuation.js";
 import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "./__internal__/ContinuationScheduler.js";
@@ -29,7 +30,8 @@ export const create = /*@PURE__*/ (() => {
         }
         return continuation;
     };
-    const hostSchedulerContinuation = (instance) => {
+    const hostSchedulerContinuation = (instance, immmediateOrTimerDisposable) => {
+        immmediateOrTimerDisposable[DisposableLike_dispose]();
         const startTime = instance[SchedulerLike_now];
         while (!instance[DisposableLike_isDisposed]) {
             const nextContinuationToRun = peek(instance);
@@ -72,13 +74,12 @@ export const create = /*@PURE__*/ (() => {
         const dueTime = nextContinuation[ContinuationLike_dueTime];
         const delay = clampPositiveInteger(dueTime - now);
         instance[HostScheduler_hostSchedulerContinuationDueTime] = dueTime;
-        const { setImmediate, setTimeout } = globalObject;
-        if (delay > 4 || isNone(setImmediate)) {
-            setTimeout(hostSchedulerContinuation, delay, instance);
-        }
-        else {
-            setImmediate(hostSchedulerContinuation, instance);
-        }
+        const disposable = Disposable.create();
+        const { setImmediate, setTimeout, clearImmediate, clearTimeout } = globalObject;
+        const cleanup = delay > 4 || isNone(setImmediate)
+            ? pipeLazy(setTimeout(hostSchedulerContinuation, delay, instance, disposable), clearTimeout)
+            : pipeLazy(setImmediate(hostSchedulerContinuation, instance, disposable), clearImmediate);
+        pipe(disposable, Disposable.addTo(instance), DisposableContainer.onDisposed(cleanup));
     };
     const createHostSchedulerInstance = mixInstanceFactory(include(CurrentTimeSchedulerMixin, SchedulerMixin, SerialDisposableMixin(), PriorityQueueMixin()), function HostScheduler(instance, maxYieldInterval) {
         instance[SchedulerLike_maxYieldInterval] = maxYieldInterval;
@@ -87,9 +88,9 @@ export const create = /*@PURE__*/ (() => {
         init(PriorityQueueMixin(), instance, Continuation.compare, none);
         return instance;
     }, props({
+        [SchedulerLike_maxYieldInterval]: 300,
         [HostScheduler_hostSchedulerContinuationDueTime]: 0,
         [HostScheduler_activeContinuation]: none,
-        [SchedulerLike_maxYieldInterval]: 300,
     }), {
         get [ContinuationSchedulerLike_shouldYield]() {
             unsafeCast(this);
@@ -107,6 +108,19 @@ export const create = /*@PURE__*/ (() => {
     });
     return (options = {}) => {
         const { maxYieldInterval = 300 } = options;
-        return createHostSchedulerInstance(maxYieldInterval);
+        return createHostSchedulerInstance(clampPositiveInteger(maxYieldInterval));
     };
 })();
+let globalHostScheduler = none;
+export const get = () => {
+    if (isNone(globalHostScheduler)) {
+        const scheduler = create();
+        globalHostScheduler = scheduler;
+    }
+    return globalHostScheduler;
+};
+export const setMaxYieldInterval = (maxYieldInterval) => {
+    const scheduler = get();
+    scheduler[SchedulerLike_maxYieldInterval] =
+        clampPositiveInteger(maxYieldInterval);
+};

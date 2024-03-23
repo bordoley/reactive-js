@@ -18,7 +18,7 @@ import {
 import * as Enumerable from "@reactive-js/core/collections/Enumerable";
 import * as Flowable from "@reactive-js/core/concurrent/Flowable";
 
-  const scheduler = HostScheduler.create();
+  const scheduler = HostScheduler.get();
 
   const counter = pipe(
     Enumerable.generate(increment, returns(-1)),

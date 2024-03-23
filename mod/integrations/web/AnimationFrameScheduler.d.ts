@@ -1,6 +1,6 @@
 import { SchedulerLike } from "../../concurrent.js";
 interface Signature {
-    get(delayScheduler: SchedulerLike): SchedulerLike;
+    get(): SchedulerLike;
 }
 export declare const get: Signature["get"];
 export {};

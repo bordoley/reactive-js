@@ -12,13 +12,7 @@
 
 ### get
 
-▸ **get**(`delayScheduler`): [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `delayScheduler` | [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) |
+▸ **get**(): [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md)
 
 #### Returns
 
