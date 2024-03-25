@@ -74,9 +74,6 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     [HostScheduler_activeContinuation]: Optional<ContinuationLike>;
   };
 
-  const isInputPending = () =>
-    globalObject?.navigator?.scheduling?.isInputPending?.() ?? false;
-
   const peek = (
     instance: TProperties &
       ContinuationSchedulerLike &
@@ -131,8 +128,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       instance[HostScheduler_activeContinuation] = none;
 
       const elapsed = instance[SchedulerLike_now] - startTime;
-      const shouldYield =
-        elapsed > instance[SchedulerLike_maxYieldInterval] || isInputPending();
+      const shouldYield = elapsed > instance[SchedulerLike_maxYieldInterval];
 
       if (shouldYield) {
         scheduleOnHost(instance);
@@ -244,7 +240,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           this[HostScheduler_activeContinuation] !== nextContinuation &&
           nextContinuation[ContinuationLike_dueTime] <= now;
 
-        return yieldToNextContinuation || isInputPending();
+        return yieldToNextContinuation;
       },
       [ContinuationSchedulerLike_schedule](
         this: TProperties &

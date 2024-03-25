@@ -18,7 +18,6 @@ import SchedulerMixin from "./__mixins__/SchedulerMixin.js";
 export const create = /*@PURE__*/ (() => {
     const HostScheduler_hostSchedulerContinuationDueTime = Symbol("HostScheduler_hostSchedulerContinuationDueTime");
     const HostScheduler_activeContinuation = Symbol("HostScheduler_activeContinuation");
-    const isInputPending = () => globalObject?.navigator?.scheduling?.isInputPending?.() ?? false;
     const peek = (instance) => {
         let continuation = none;
         while (true) {
@@ -50,7 +49,7 @@ export const create = /*@PURE__*/ (() => {
             continuation?.[ContinuationLike_run]();
             instance[HostScheduler_activeContinuation] = none;
             const elapsed = instance[SchedulerLike_now] - startTime;
-            const shouldYield = elapsed > instance[SchedulerLike_maxYieldInterval] || isInputPending();
+            const shouldYield = elapsed > instance[SchedulerLike_maxYieldInterval];
             if (shouldYield) {
                 scheduleOnHost(instance);
                 break;
@@ -99,7 +98,7 @@ export const create = /*@PURE__*/ (() => {
             const yieldToNextContinuation = isSome(nextContinuation) &&
                 this[HostScheduler_activeContinuation] !== nextContinuation &&
                 nextContinuation[ContinuationLike_dueTime] <= now;
-            return yieldToNextContinuation || isInputPending();
+            return yieldToNextContinuation;
         },
         [ContinuationSchedulerLike_schedule](continuation) {
             this[QueueableLike_enqueue](continuation);
