@@ -33,6 +33,7 @@ type GlobalObject = {
   Function: typeof globalThis.Function;
   Map: typeof globalThis.Map;
   Math: typeof globalThis.Math;
+  MessageChannel: typeof globalThis.MessageChannel;
   Number: typeof globalThis.Number;
   Object: typeof globalThis.Object;
   Promise: typeof globalThis.Promise;

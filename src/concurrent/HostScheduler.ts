@@ -18,6 +18,7 @@ import {
   Optional,
   isNone,
   isSome,
+  newInstance,
   none,
   pipe,
   pipeLazy,
@@ -68,10 +69,15 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     "HostScheduler_activeContinuation",
   );
 
+  const HostScheduler_messageChannel = Symbol(
+    "MessageChannelScheduler_messageChannel",
+  );
+
   type TProperties = {
     [SchedulerLike_maxYieldInterval]: number;
     [HostScheduler_hostSchedulerContinuationDueTime]: number;
     [HostScheduler_activeContinuation]: Optional<ContinuationLike>;
+    [HostScheduler_messageChannel]: Optional<MessageChannel>;
   };
 
   const peek = (
@@ -170,27 +176,38 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
     instance[HostScheduler_hostSchedulerContinuationDueTime] = dueTime;
 
-    const disposable = Disposable.create();
-
     const { setImmediate, setTimeout, clearImmediate, clearTimeout } =
       globalObject;
 
-    const cleanup =
-      delay > 4 || isNone(setImmediate)
-        ? pipeLazy(
-            setTimeout(hostSchedulerContinuation, delay, instance, disposable),
-            clearTimeout,
-          )
-        : pipeLazy(
-            setImmediate(hostSchedulerContinuation, instance, disposable),
-            clearImmediate,
-          );
+    const hostMessageChannel = instance[HostScheduler_messageChannel];
 
-    pipe(
-      disposable,
-      Disposable.addTo(instance),
-      DisposableContainer.onDisposed(cleanup),
-    );
+    if (delay <= 4 && isSome(hostMessageChannel)) {
+      hostMessageChannel.port2.postMessage(null);
+    } else {
+      const disposable = Disposable.create();
+
+      const cleanup =
+        delay > 4 || isNone(setImmediate)
+          ? pipeLazy(
+              setTimeout(
+                hostSchedulerContinuation,
+                delay,
+                instance,
+                disposable,
+              ),
+              clearTimeout,
+            )
+          : pipeLazy(
+              setImmediate(hostSchedulerContinuation, instance, disposable),
+              clearImmediate,
+            );
+
+      pipe(
+        disposable,
+        Disposable.addTo(instance),
+        DisposableContainer.onDisposed(cleanup),
+      );
+    }
   };
 
   const createHostSchedulerInstance = mixInstanceFactory(
@@ -216,12 +233,31 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         none,
       );
 
+      const MessageChannel = globalObject.MessageChannel;
+      const setImmediate = globalObject.setImmediate;
+
+      if (isSome(MessageChannel) && isNone(setImmediate)) {
+        const channel = newInstance(MessageChannel);
+        instance[HostScheduler_messageChannel] = channel;
+        channel.port1.onmessage = () =>
+          hostSchedulerContinuation(instance, Disposable.disposed);
+
+        pipe(
+          instance,
+          DisposableContainer.onDisposed(_ => {
+            channel.port1.close();
+            channel.port2.close();
+          }),
+        );
+      }
+
       return instance;
     },
     props<TProperties>({
       [SchedulerLike_maxYieldInterval]: 300,
       [HostScheduler_hostSchedulerContinuationDueTime]: 0,
       [HostScheduler_activeContinuation]: none,
+      [HostScheduler_messageChannel]: none,
     }),
     {
       get [ContinuationSchedulerLike_shouldYield](): boolean {

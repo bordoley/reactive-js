@@ -4,7 +4,7 @@ import { MAX_VALUE, globalObject } from "../__internal__/constants.js";
 import { clampPositiveInteger } from "../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
 import { SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../concurrent.js";
-import { isNone, isSome, none, pipe, pipeLazy, } from "../functions.js";
+import { isNone, isSome, newInstance, none, pipe, pipeLazy, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import PriorityQueueMixin from "../utils/__mixins__/PriorityQueueMixin.js";
@@ -18,6 +18,7 @@ import SchedulerMixin from "./__mixins__/SchedulerMixin.js";
 export const create = /*@PURE__*/ (() => {
     const HostScheduler_hostSchedulerContinuationDueTime = Symbol("HostScheduler_hostSchedulerContinuationDueTime");
     const HostScheduler_activeContinuation = Symbol("HostScheduler_activeContinuation");
+    const HostScheduler_messageChannel = Symbol("MessageChannelScheduler_messageChannel");
     const peek = (instance) => {
         let continuation = none;
         while (true) {
@@ -73,23 +74,41 @@ export const create = /*@PURE__*/ (() => {
         const dueTime = nextContinuation[ContinuationLike_dueTime];
         const delay = clampPositiveInteger(dueTime - now);
         instance[HostScheduler_hostSchedulerContinuationDueTime] = dueTime;
-        const disposable = Disposable.create();
         const { setImmediate, setTimeout, clearImmediate, clearTimeout } = globalObject;
-        const cleanup = delay > 4 || isNone(setImmediate)
-            ? pipeLazy(setTimeout(hostSchedulerContinuation, delay, instance, disposable), clearTimeout)
-            : pipeLazy(setImmediate(hostSchedulerContinuation, instance, disposable), clearImmediate);
-        pipe(disposable, Disposable.addTo(instance), DisposableContainer.onDisposed(cleanup));
+        const hostMessageChannel = instance[HostScheduler_messageChannel];
+        if (delay <= 4 && isSome(hostMessageChannel)) {
+            hostMessageChannel.port2.postMessage(null);
+        }
+        else {
+            const disposable = Disposable.create();
+            const cleanup = delay > 4 || isNone(setImmediate)
+                ? pipeLazy(setTimeout(hostSchedulerContinuation, delay, instance, disposable), clearTimeout)
+                : pipeLazy(setImmediate(hostSchedulerContinuation, instance, disposable), clearImmediate);
+            pipe(disposable, Disposable.addTo(instance), DisposableContainer.onDisposed(cleanup));
+        }
     };
     const createHostSchedulerInstance = mixInstanceFactory(include(CurrentTimeSchedulerMixin, SchedulerMixin, SerialDisposableMixin(), PriorityQueueMixin()), function HostScheduler(instance, maxYieldInterval) {
         instance[SchedulerLike_maxYieldInterval] = maxYieldInterval;
         init(CurrentTimeSchedulerMixin, instance);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
         init(PriorityQueueMixin(), instance, Continuation.compare, none);
+        const MessageChannel = globalObject.MessageChannel;
+        const setImmediate = globalObject.setImmediate;
+        if (isSome(MessageChannel) && isNone(setImmediate)) {
+            const channel = newInstance(MessageChannel);
+            instance[HostScheduler_messageChannel] = channel;
+            channel.port1.onmessage = () => hostSchedulerContinuation(instance, Disposable.disposed);
+            pipe(instance, DisposableContainer.onDisposed(_ => {
+                channel.port1.close();
+                channel.port2.close();
+            }));
+        }
         return instance;
     }, props({
         [SchedulerLike_maxYieldInterval]: 300,
         [HostScheduler_hostSchedulerContinuationDueTime]: 0,
         [HostScheduler_activeContinuation]: none,
+        [HostScheduler_messageChannel]: none,
     }), {
         get [ContinuationSchedulerLike_shouldYield]() {
             unsafeCast(this);
