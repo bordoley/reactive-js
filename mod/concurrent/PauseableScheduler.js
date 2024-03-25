@@ -34,7 +34,6 @@ export const create = /*@PURE__*/ (() => {
         return continuation;
     };
     const scheduleOnHost = (instance) => {
-        const now = instance[SchedulerLike_now];
         const hostScheduler = instance[PauseableScheduler_hostScheduler];
         const hostSchedulerContinuation = instance[PauseableScheduler_hostSchedulerContinuation];
         const hostSchedulerContinuationIsScheduled = !instance[SerialDisposableLike_current][DisposableLike_isDisposed];
@@ -51,11 +50,11 @@ export const create = /*@PURE__*/ (() => {
             isPaused) {
             return;
         }
+        const now = instance[SchedulerLike_now];
         const dueTime = nextContinuation[ContinuationLike_dueTime];
         const delay = clampPositiveInteger(dueTime - now);
         instance[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
         instance[SerialDisposableLike_current] = hostScheduler[SchedulerLike_schedule](hostSchedulerContinuation, { delay });
-        hostScheduler[DisposableContainerLike_add](instance);
     };
     return mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), PriorityQueueMixin()), function PauseableScheduler(instance, host) {
         init(SchedulerMixin, instance);
@@ -87,6 +86,7 @@ export const create = /*@PURE__*/ (() => {
                 ctx[ContinuationContextLike_yield](clampPositiveInteger(delay));
             }
         };
+        host[DisposableContainerLike_add](instance);
         return instance;
     }, props({
         [PauseableLike_isPaused]: none,

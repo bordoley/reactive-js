@@ -109,7 +109,6 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       SchedulerLike &
       QueueLike<ContinuationLike>,
   ) => {
-    const now = instance[SchedulerLike_now];
     const hostScheduler = instance[PauseableScheduler_hostScheduler];
     const hostSchedulerContinuation =
       instance[PauseableScheduler_hostSchedulerContinuation];
@@ -135,6 +134,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       return;
     }
 
+    const now = instance[SchedulerLike_now];
     const dueTime = nextContinuation[ContinuationLike_dueTime];
     const delay = clampPositiveInteger(dueTime - now);
 
@@ -143,8 +143,6 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     instance[SerialDisposableLike_current] = hostScheduler[
       SchedulerLike_schedule
     ](hostSchedulerContinuation, { delay });
-
-    hostScheduler[DisposableContainerLike_add](instance);
   };
 
   return mixInstanceFactory(
@@ -202,6 +200,8 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           ctx[ContinuationContextLike_yield](clampPositiveInteger(delay));
         }
       };
+
+      host[DisposableContainerLike_add](instance);
 
       return instance;
     },
