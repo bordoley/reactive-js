@@ -1,4 +1,3 @@
-/// <reference types="node" resolution-mode="require"/>
 import { Readable, Writable } from "stream";
 import { DeferredObservableWithSideEffectsLike, FlowableLike } from "../../concurrent.js";
 import { Factory, Function1 } from "../../functions.js";

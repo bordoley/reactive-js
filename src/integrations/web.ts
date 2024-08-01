@@ -44,22 +44,21 @@ export interface WindowLocationLike
 /**
  * @noInheritDoc
  */
-export interface CSSStyleMapLike
-  extends ReadonlyObjectMapLike<
-    keyof Omit<
-      CSSStyleDeclaration,
-      | "item"
-      | "length"
-      | "parentRule"
-      | "getPropertyPriority"
-      | "getPropertyValue"
-      | "removeProperty"
-      | "setProperty"
-      | number
-      | typeof Symbol.iterator
-    >,
-    string
-  > {}
+export type CSSStyleMapLike = ReadonlyObjectMapLike<
+  keyof Omit<
+    CSSStyleDeclaration,
+    | "item"
+    | "length"
+    | "parentRule"
+    | "getPropertyPriority"
+    | "getPropertyValue"
+    | "removeProperty"
+    | "setProperty"
+    | number
+    | typeof Symbol.iterator
+  >,
+  string
+>;
 
 /**
  * @noInheritDoc

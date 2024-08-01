@@ -35,17 +35,17 @@ interface __Using {
 }
 export declare const __using: __Using["__using"];
 export declare const __currentScheduler: () => SchedulerLike;
-export declare const __stream: <TStreamable extends StreamableLike<unknown, unknown, StreamLike<unknown, unknown>>>(streamable: TStreamable, { replay, backpressureStrategy, capacity, scheduler, }?: {
-    readonly replay?: number | undefined;
-    readonly scheduler?: SchedulerLike | undefined;
-    readonly backpressureStrategy?: BackpressureStrategy | undefined;
-    readonly capacity?: number | undefined;
+export declare const __stream: <TStreamable extends StreamableLike>(streamable: TStreamable, { replay, backpressureStrategy, capacity, scheduler, }?: {
+    readonly replay?: number;
+    readonly scheduler?: SchedulerLike;
+    readonly backpressureStrategy?: BackpressureStrategy;
+    readonly capacity?: number;
 }) => StreamOf<TStreamable>;
 export declare const __state: <T>(initialState: () => T, options?: {
     readonly equality?: Optional<Equality<T>>;
-    readonly replay?: number | undefined;
-    readonly scheduler?: SchedulerLike | undefined;
-    readonly capacity?: number | undefined;
+    readonly replay?: number;
+    readonly scheduler?: SchedulerLike;
+    readonly capacity?: number;
 }) => StreamLike<Updater<T>, T>;
-export declare const __bindMethod: <T extends { [K in TKey]: (...args: any[]) => any; }, TKey extends string | number | symbol, TFunction extends T[TKey]>(thiz: T, key: TKey) => TFunction;
+export declare const __bindMethod: <T extends { [K in TKey]: (...args: any[]) => any; }, TKey extends number | string | symbol, TFunction extends T[TKey]>(thiz: T, key: TKey) => TFunction;
 export {};

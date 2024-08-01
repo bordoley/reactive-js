@@ -290,9 +290,7 @@ export const __state = /*@__PURE__*/ (() => {
   };
 })();
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export const __bindMethod = <
-  // eslint-disable-next-line @typescript-eslint/ban-types
   T extends { [K in TKey]: (...args: any[]) => any },
   TKey extends number | string | symbol,
   TFunction extends T[TKey],

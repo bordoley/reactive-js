@@ -183,7 +183,7 @@ interface FunctionsModule {
     pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(keyA: TKeyA, keyB: TKeyB): Function1<T, T[TKeyA][TKeyB]>;
     pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA], TKeyC extends keyof T[TKeyA][TKeyB]>(keyA: TKeyA, keyB: TKeyB, keyC: TKeyC): Function1<T, T[TKeyA][TKeyB][TKeyC]>;
     pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA], TKeyC extends keyof T[TKeyA][TKeyB], TKeyD extends keyof T[TKeyA][TKeyB][TKeyC]>(keyA: TKeyA, keyB: TKeyB, keyC: TKeyC, keyD: TKeyD): Function1<T, T[TKeyA][TKeyB][TKeyC][TKeyD]>;
-    pickUnsafe<T = unknown>(...keys: (string | symbol | number)[]): Function1<{}, T>;
+    pickUnsafe<T = unknown>(...keys: (string | symbol | number)[]): Function1<object, T>;
     pipe<T, A>(src: T, op1: Function1<T, A>): A;
     pipe<T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
     pipe<T, A, B, C>(src: T, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>): C;

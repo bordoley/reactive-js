@@ -1,6 +1,6 @@
 import { ObservableLike, ObservableLike_isMulticasted } from "../../../concurrent.js";
 import { TypePredicate } from "../../../functions.js";
-declare const Observable_allAreMulticasted: TypePredicate<readonly ObservableLike<unknown>[], readonly (ObservableLike<unknown> & {
+declare const Observable_allAreMulticasted: TypePredicate<ReadonlyArray<ObservableLike>, ReadonlyArray<ObservableLike & {
     [ObservableLike_isMulticasted]: true;
-})[]>;
+}>>;
 export default Observable_allAreMulticasted;

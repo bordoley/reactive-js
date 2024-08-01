@@ -3,5 +3,5 @@ import Streamable_cache from "./Streamable.cache.js";
 declare const Streamable_inMemoryCache: <T>(options?: {
     readonly capacity?: number;
     readonly cleanupScheduler?: SchedulerLike;
-}) => import("../../../concurrent.js").StreamableLike<import("../../../collections.js").ReadonlyObjectMapLike<string, import("../../../functions.js").Function1<import("../../../functions.js").Optional<T>, import("../../../functions.js").Optional<T>>>, never, import("../../../concurrent.js").CacheLike<T>>;
+}) => ReturnType<typeof Streamable_cache<T>>;
 export default Streamable_inMemoryCache;

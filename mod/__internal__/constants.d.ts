@@ -1,5 +1,3 @@
-/// <reference types="jest" />
-/// <reference types="node" resolution-mode="require"/>
 export declare const typeofObject = "object";
 export declare const Global_process = "process";
 type GlobalObject = {
