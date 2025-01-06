@@ -4,10 +4,9 @@ export const Global_process = "process";
 type GlobalObject = {
   // strictly speaking this should be optional, but its only
   // used if setImmediate is not optional.
-  clearImmediate: typeof globalThis.clearImmediate;
+  clearImmediate: (id: unknown) => void;
   clearTimeout: typeof globalThis.clearTimeout;
-
-  describe?: jest.Describe;
+  describe?: (name: string, fn: () => void) => void;
   navigator?: {
     scheduling?: {
       isInputPending?: () => boolean;
@@ -20,10 +19,16 @@ type GlobalObject = {
     env: { [key in string]?: unknown };
     hrtime?: () => [number, number];
   };
-  requestAnimationFrame?: typeof globalThis.requestAnimationFrame;
-  setImmediate?: typeof globalThis.setImmediate;
+  requestAnimationFrame?: (callback: () => void) => number;
+  setImmediate?: <TArgs extends any[]>(
+    callback: (...args: TArgs) => void,
+    ...args: TArgs
+  ) => unknown;
   setTimeout: typeof globalThis.setTimeout;
-  test?: jest.It;
+  test?: (
+    name: string,
+    fn?: (() => void | undefined) | (() => PromiseLike<unknown>),
+  ) => void;
 
   Array: typeof globalThis.Array;
   Deno?: {
@@ -44,7 +49,11 @@ type GlobalObject = {
 };
 
 export const globalObject: GlobalObject = (
-  typeof window === typeofObject ? window : global
+  typeof window === typeofObject
+    ? window
+    : typeof global === typeofObject
+      ? global
+      : globalThis
 ) as GlobalObject;
 
 export const Array = globalObject.Array;

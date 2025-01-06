@@ -1,11 +1,9 @@
-/// <reference types="jest" />
-/// <reference types="node" resolution-mode="require"/>
 export declare const typeofObject = "object";
 export declare const Global_process = "process";
 type GlobalObject = {
-    clearImmediate: typeof globalThis.clearImmediate;
+    clearImmediate: (id: unknown) => void;
     clearTimeout: typeof globalThis.clearTimeout;
-    describe?: jest.Describe;
+    describe?: (name: string, fn: () => void) => void;
     navigator?: {
         scheduling?: {
             isInputPending?: () => boolean;
@@ -20,10 +18,10 @@ type GlobalObject = {
         };
         hrtime?: () => [number, number];
     };
-    requestAnimationFrame?: typeof globalThis.requestAnimationFrame;
-    setImmediate?: typeof globalThis.setImmediate;
+    requestAnimationFrame?: (callback: () => void) => number;
+    setImmediate?: <TArgs extends any[]>(callback: (...args: TArgs) => void, ...args: TArgs) => unknown;
     setTimeout: typeof globalThis.setTimeout;
-    test?: jest.It;
+    test?: (name: string, fn?: (() => void | undefined) | (() => PromiseLike<unknown>)) => void;
     Array: typeof globalThis.Array;
     Deno?: {
         test(name: string, f: () => void): void;

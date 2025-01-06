@@ -26,10 +26,10 @@ testModule(
     test("using mapped value", () => {
       const mapped = pipe(
         ["b", "d", "f"],
-        compose(
-          ReadonlyArray.entries<string, number>(),
-          Dictionary.fromEntries(),
-        ),
+
+        ReadonlyArray.entries<string, number>(),
+        Dictionary.fromEntries(),
+
         Dictionary.map<string, number, number>((_, key: number) => key),
       );
 

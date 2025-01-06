@@ -62,11 +62,15 @@ interface WebWindowLocationModule {
   subscribe(scheduler: SchedulerLike): WindowLocationLike & DisposableLike;
 }
 
+interface SerializableWindowLocationURI extends WindowLocationURI {
+  toString(): string;
+}
+
 type Signature = WebWindowLocationModule;
 
 const { history, location } = window;
 
-const windowLocationPrototype = {
+const serializableWindowLocationPrototype = {
   toString(this: WindowLocationURI) {
     const { path, query, fragment } = this;
     let uri =
@@ -79,12 +83,15 @@ const windowLocationPrototype = {
   },
 };
 
-const createWindowLocationURIWithPrototype = (
+const createSerializableWindowLocationURI = (
   uri: WindowLocationURI,
-): WindowLocationURI =>
-  uri.toString === windowLocationPrototype.toString
+): SerializableWindowLocationURI =>
+  uri.toString === serializableWindowLocationPrototype.toString
     ? uri
-    : Obj.create(windowLocationPrototype, Obj.getOwnPropertyDescriptors(uri));
+    : Obj.create(
+        serializableWindowLocationPrototype,
+        Obj.getOwnPropertyDescriptors(uri),
+      );
 
 const getCurrentWindowLocationURI = (): WindowLocationURI => {
   const {
@@ -93,7 +100,7 @@ const getCurrentWindowLocationURI = (): WindowLocationURI => {
     hash: fragment,
   } = newInstance(URL, location.href);
 
-  return createWindowLocationURIWithPrototype({
+  return createSerializableWindowLocationURI({
     path,
     query: query.slice(1),
     fragment: fragment.slice(1),
@@ -127,7 +134,7 @@ const createSyncToHistoryStream = (
     readonly backpressureStrategy?: BackpressureStrategy;
   },
 ) =>
-  Streamable.create<TState, TState>(
+  Streamable.create<TState, TState & { uri: SerializableWindowLocationURI }>(
     compose(
       Observable.throttle(100),
       Observable.forEach(({ counter, uri }) => {
@@ -190,7 +197,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       ) {
         this[WindowLocation_delegate][QueueableLike_enqueue](
           (prevState: TState) => {
-            const uri = createWindowLocationURIWithPrototype(
+            const uri = createSerializableWindowLocationURI(
               isFunction(stateOrUpdater)
                 ? stateOrUpdater(prevState.uri)
                 : stateOrUpdater,
@@ -207,7 +214,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       ) {
         this[WindowLocation_delegate][QueueableLike_enqueue](
           (prevState: TState) => {
-            const uri = createWindowLocationURIWithPrototype(
+            const uri = createSerializableWindowLocationURI(
               isFunction(stateOrUpdater)
                 ? stateOrUpdater(prevState.uri)
                 : stateOrUpdater,
@@ -282,7 +289,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
                 title: string;
               };
 
-              const uri = createWindowLocationURIWithPrototype({
+              const uri = createSerializableWindowLocationURI({
                 ...getCurrentWindowLocationURI(),
                 title,
               });

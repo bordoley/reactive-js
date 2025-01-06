@@ -2,7 +2,11 @@
 
 export const typeofObject = "object";
 export const Global_process = "process";
-export const globalObject = (typeof window === typeofObject ? window : global);
+export const globalObject = (typeof window === typeofObject
+    ? window
+    : typeof global === typeofObject
+        ? global
+        : globalThis);
 export const Array = globalObject.Array;
 export const Error = globalObject.Error;
 export const Function = globalObject.Function;

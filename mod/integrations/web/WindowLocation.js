@@ -17,7 +17,7 @@ import { DisposableContainerLike_add, DropOldestBackpressureStrategy, QueueableL
 import { WindowLocationLike_canGoBack, WindowLocationLike_goBack, WindowLocationLike_push, WindowLocationLike_replace, } from "../web.js";
 import * as Element from "./Element.js";
 const { history, location } = window;
-const windowLocationPrototype = {
+const serializableWindowLocationPrototype = {
     toString() {
         const { path, query, fragment } = this;
         let uri = path[Array_length] === 0 ? "" : !path.startsWith("/") ? `/${path}` : path;
@@ -27,12 +27,12 @@ const windowLocationPrototype = {
         return String(newInstance(URL, base.origin + uri));
     },
 };
-const createWindowLocationURIWithPrototype = (uri) => uri.toString === windowLocationPrototype.toString
+const createSerializableWindowLocationURI = (uri) => uri.toString === serializableWindowLocationPrototype.toString
     ? uri
-    : Obj.create(windowLocationPrototype, Obj.getOwnPropertyDescriptors(uri));
+    : Obj.create(serializableWindowLocationPrototype, Obj.getOwnPropertyDescriptors(uri));
 const getCurrentWindowLocationURI = () => {
     const { pathname: path, search: query, hash: fragment, } = newInstance(URL, location.href);
-    return createWindowLocationURIWithPrototype({
+    return createSerializableWindowLocationURI({
         path,
         query: query.slice(1),
         fragment: fragment.slice(1),
@@ -69,7 +69,7 @@ export const subscribe = /*@__PURE__*/ (() => {
         [ObservableLike_isPure]: true,
         [WindowLocationLike_push](stateOrUpdater) {
             this[WindowLocation_delegate][QueueableLike_enqueue]((prevState) => {
-                const uri = createWindowLocationURIWithPrototype(isFunction(stateOrUpdater)
+                const uri = createSerializableWindowLocationURI(isFunction(stateOrUpdater)
                     ? stateOrUpdater(prevState.uri)
                     : stateOrUpdater);
                 return { uri, replace: false, counter: prevState.counter + 1 };
@@ -77,7 +77,7 @@ export const subscribe = /*@__PURE__*/ (() => {
         },
         [WindowLocationLike_replace](stateOrUpdater) {
             this[WindowLocation_delegate][QueueableLike_enqueue]((prevState) => {
-                const uri = createWindowLocationURIWithPrototype(isFunction(stateOrUpdater)
+                const uri = createSerializableWindowLocationURI(isFunction(stateOrUpdater)
                     ? stateOrUpdater(prevState.uri)
                     : stateOrUpdater);
                 return { uri, replace: true, counter: prevState.counter };
@@ -105,7 +105,7 @@ export const subscribe = /*@__PURE__*/ (() => {
         // Initialize the history state on page load
         pipe(window, Element.eventSource("popstate"), EventSource.map((e) => {
             const { counter, title } = e.state;
-            const uri = createWindowLocationURIWithPrototype({
+            const uri = createSerializableWindowLocationURI({
                 ...getCurrentWindowLocationURI(),
                 title,
             });

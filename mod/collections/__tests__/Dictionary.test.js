@@ -10,7 +10,7 @@ import * as ReadonlyArray from "../ReadonlyArray.js";
 import CollectionModuleTests from "./fixtures/CollectionModuleTests.js";
 import DictionaryCollectionModuleTests from "./fixtures/DictionaryCollectionModuleTests.js";
 testModule("Dictionary", CollectionModuleTests(Dictionary, () => compose(ReadonlyArray.entries(), Dictionary.fromEntries())), DictionaryCollectionModuleTests(Dictionary), describe("map", test("using mapped value", () => {
-    const mapped = pipe(["b", "d", "f"], compose(ReadonlyArray.entries(), Dictionary.fromEntries()), Dictionary.map((_, key) => key));
+    const mapped = pipe(["b", "d", "f"], ReadonlyArray.entries(), Dictionary.fromEntries(), Dictionary.map((_, key) => key));
     pipe(mapped[DictionaryLike_keys], Enumerable.toReadonlyArray(), x => x[Array_length], expectEquals(3));
     pipe(mapped[DictionaryLike_get](0), expectEquals(0));
     pipe(mapped[DictionaryLike_get](100), expectIsNone);

@@ -37,7 +37,6 @@ export const arrayEquality = (valuesEquality = strictEquality) => valuesEquality
  * Creates a new function that, when called, calls `f` with its
  * this keyword set to the provided value.
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
 export const bind = (f, thiz) => f.bind(thiz);
 /**
  * Creates a new function that, when called, invokes the method
@@ -168,9 +167,7 @@ export const partial = (...args) => (f) => (arg0) => f(arg0, ...args);
 /**
  * Type-unsafe variant of `pick`.
  */
-export const pickUnsafe = (k1, k2, k3, ...keys) => 
-// eslint-disable-next-line @typescript-eslint/ban-types
-(value) => {
+export const pickUnsafe = (k1, k2, k3, ...keys) => (value) => {
     let result = value;
     result = result[k1];
     result = k2 !== none ? result[k2] : result;

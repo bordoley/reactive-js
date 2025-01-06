@@ -72,5 +72,4 @@ export const __state = /*@__PURE__*/ (() => {
         return __stream(streamable, options);
     };
 })();
-// eslint-disable-next-line @typescript-eslint/ban-types
 export const __bindMethod = (thiz, key) => __memo(bindMethod, thiz, key);

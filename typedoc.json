@@ -18,9 +18,6 @@
   "excludePrivate": true,
   "excludeProtected": true,
   "disableSources": true,
-  "markedOptions": {
-    "mangle": false
-  },
   "tsconfig": "tsconfig.typedoc.json",
   "plugin": ["typedoc-plugin-markdown", "typedoc-plugin-no-inherit"]
 }

@@ -219,11 +219,9 @@ interface FunctionsModule {
 
   arrayEquality<T>(valuesEquality?: Equality<T>): Equality<readonly T[]>;
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
   bind<F extends Function>(f: F, thiz: unknown): F;
 
   bindMethod<
-    // eslint-disable-next-line @typescript-eslint/ban-types
     T extends Record<TKey, (...args: any[]) => any>,
     TKey extends number | string | symbol,
   >(
@@ -381,7 +379,6 @@ interface FunctionsModule {
 
   isFalse(v: boolean): v is false;
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
   isFunction(f: unknown): f is Function;
 
   isNone<T>(option: Optional<T>): option is undefined;
@@ -477,8 +474,7 @@ interface FunctionsModule {
 
   pickUnsafe<T = unknown>(
     ...keys: (string | symbol | number)[]
-  ): // eslint-disable-next-line @typescript-eslint/ban-types
-  Function1<{}, T>;
+  ): Function1<{}, T>;
 
   pipe<T, A>(src: T, op1: Function1<T, A>): A;
   pipe<T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
@@ -1241,7 +1237,7 @@ export const arrayEquality: Signature["arrayEquality"] = <T>(
  * Creates a new function that, when called, calls `f` with its
  * this keyword set to the provided value.
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
+
 export const bind: Signature["bind"] = (f: Function, thiz: unknown) =>
   f.bind(thiz);
 
@@ -1250,7 +1246,6 @@ export const bind: Signature["bind"] = (f: Function, thiz: unknown) =>
  * `thiz[key]` with the provided arguments.
  */
 export const bindMethod: Signature["bindMethod"] = <
-  // eslint-disable-next-line @typescript-eslint/ban-types
   T extends Record<TKey, (...args: any[]) => any>,
   TKey extends number | string | symbol,
 >(
@@ -1415,8 +1410,7 @@ export const isFalse: Signature["isFalse"] = (v: boolean): v is false => !v;
 
 export const isFunction: Signature["isFunction"] = (
   f: unknown,
-): // eslint-disable-next-line @typescript-eslint/ban-types
-f is Function => typeof f === "function" || f instanceof Function;
+): f is Function => typeof f === "function" || f instanceof Function;
 
 /**
  * Returns true if `option` is `none`.
@@ -1500,7 +1494,6 @@ export const pickUnsafe: Signature["pickUnsafe"] =
     k3: Optional<string | symbol | number>,
     ...keys: (string | symbol | number)[]
   ) =>
-  // eslint-disable-next-line @typescript-eslint/ban-types
   (value: {}) => {
     let result: any = value;
 
