@@ -23,10 +23,7 @@ import {
   ObserverLike,
   SubjectLike,
 } from "../concurrent.js";
-import {
-  EventListenerLike_isErrorSafe,
-  EventListenerLike_notify,
-} from "../events.js";
+import { EventListenerLike_notify } from "../events.js";
 import { error, isSome, newInstance, none, pipe } from "../functions.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
@@ -66,7 +63,6 @@ export const create: <T>(options?: {
         | typeof ObservableLike_isMulticasted
         | typeof ObservableLike_isPure
         | typeof ObservableLike_isRunnable
-        | typeof EventListenerLike_isErrorSafe
         | typeof EventListenerLike_notify
       > &
         Mutable<TProperties>,
@@ -106,7 +102,6 @@ export const create: <T>(options?: {
       [Subject_observers]: none,
     }),
     {
-      [EventListenerLike_isErrorSafe]: true as const,
       [ObservableLike_isDeferred]: false as const,
       [ObservableLike_isMulticasted]: true as const,
       [ObservableLike_isPure]: true as const,

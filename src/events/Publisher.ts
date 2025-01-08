@@ -14,7 +14,6 @@ import {
 } from "../__internal__/mixins.js";
 import {
   EventListenerLike,
-  EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
   EventSourceLike_addEventListener,
   PublisherLike,
@@ -42,7 +41,6 @@ export const create: <T>(options?: {
       instance: Pick<
         PublisherLike<T>,
         | typeof EventSourceLike_addEventListener
-        | typeof EventListenerLike_isErrorSafe
         | typeof EventListenerLike_notify
       > &
         Mutable<TProperties>,
@@ -70,8 +68,6 @@ export const create: <T>(options?: {
       [Publisher_listeners]: none,
     }),
     {
-      [EventListenerLike_isErrorSafe]: true as const,
-
       [EventListenerLike_notify](
         this: TProperties & PublisherLike<T>,
         next: T,

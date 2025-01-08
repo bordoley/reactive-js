@@ -12,17 +12,12 @@
 
 ## Extended by
 
-- [`ErrorSafeEventListenerLike`](ErrorSafeEventListenerLike.md)
+- [`SubjectLike`](../../concurrent/interfaces/SubjectLike.md)
+- [`PublisherLike`](PublisherLike.md)
 
 ## Type Parameters
 
 • **T** = `unknown`
-
-## Properties
-
-### \[EventListenerLike\_isErrorSafe\]
-
-> `readonly` **\[EventListenerLike\_isErrorSafe\]**: `boolean`
 
 ## Methods
 

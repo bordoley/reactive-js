@@ -1,5 +1,5 @@
 import { ReadonlyObjectMapLike } from "./collections.js";
-import { ErrorSafeEventListenerLike, EventSourceLike, StoreLike } from "./events.js";
+import { EventListenerLike, EventSourceLike, StoreLike } from "./events.js";
 import { Function1, Optional, SideEffect1 } from "./functions.js";
 import { BackpressureStrategy, DisposableContainerLike, DisposableLike, QueueableLike } from "./utils.js";
 export declare const DispatcherLikeEvent_ready: unique symbol;
@@ -219,7 +219,7 @@ export interface MulticastObservableLike<T = unknown> extends PureObservableLike
 /**
  * @noInheritDoc
  */
-export interface SubjectLike<T = unknown> extends MulticastObservableLike<T>, ErrorSafeEventListenerLike<T> {
+export interface SubjectLike<T = unknown> extends MulticastObservableLike<T>, EventListenerLike<T> {
 }
 /**
  * @noInheritDoc

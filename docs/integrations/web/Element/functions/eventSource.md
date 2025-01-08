@@ -1106,7 +1106,7 @@
 
 #### eventListener
 
-[`ErrorSafeEventListenerLike`](../../../../events/interfaces/ErrorSafeEventListenerLike.md)\<`PictureInPictureWindowEventMap`\[`K`\]\>
+[`EventListenerLike`](../../../../events/interfaces/EventListenerLike.md)\<`PictureInPictureWindowEventMap`\[`K`\]\>
 
 #### options?
 
@@ -1440,7 +1440,7 @@
 
 #### eventListener
 
-[`ErrorSafeEventListenerLike`](../../../../events/interfaces/ErrorSafeEventListenerLike.md)\<`ServiceWorkerContainerEventMap`\[`K`\]\>
+[`EventListenerLike`](../../../../events/interfaces/EventListenerLike.md)\<`ServiceWorkerContainerEventMap`\[`K`\]\>
 
 #### options?
 
@@ -1474,7 +1474,7 @@
 
 #### eventListener
 
-[`ErrorSafeEventListenerLike`](../../../../events/interfaces/ErrorSafeEventListenerLike.md)\<`ServiceWorkerRegistrationEventMap`\[`K`\]\>
+[`EventListenerLike`](../../../../events/interfaces/EventListenerLike.md)\<`ServiceWorkerRegistrationEventMap`\[`K`\]\>
 
 #### options?
 
@@ -1628,7 +1628,7 @@
 
 #### eventListener
 
-[`ErrorSafeEventListenerLike`](../../../../events/interfaces/ErrorSafeEventListenerLike.md)\<`SpeechSynthesisUtteranceEventMap`\[`K`\]\>
+[`EventListenerLike`](../../../../events/interfaces/EventListenerLike.md)\<`SpeechSynthesisUtteranceEventMap`\[`K`\]\>
 
 #### options?
 

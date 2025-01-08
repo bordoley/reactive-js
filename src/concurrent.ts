@@ -1,9 +1,5 @@
 import { ReadonlyObjectMapLike } from "./collections.js";
-import {
-  ErrorSafeEventListenerLike,
-  EventSourceLike,
-  StoreLike,
-} from "./events.js";
+import { EventListenerLike, EventSourceLike, StoreLike } from "./events.js";
 import { Function1, Optional, SideEffect1 } from "./functions.js";
 import {
   BackpressureStrategy,
@@ -300,7 +296,7 @@ export interface MulticastObservableLike<T = unknown>
  */
 export interface SubjectLike<T = unknown>
   extends MulticastObservableLike<T>,
-    ErrorSafeEventListenerLike<T> {}
+    EventListenerLike<T> {}
 
 /**
  * @noInheritDoc

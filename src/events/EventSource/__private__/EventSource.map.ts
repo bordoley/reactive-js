@@ -6,7 +6,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   EventListenerLike,
-  EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
 } from "../../../events.js";
 import { Function1, none, partial, pipe } from "../../../functions.js";
@@ -31,10 +30,7 @@ const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (() => {
     mixInstanceFactory(
       include(DelegatingDisposableMixin<EventListenerLike<TB>>()),
       function MapEventListener(
-        instance: Pick<
-          EventListenerLike<TA>,
-          typeof EventListenerLike_notify | typeof EventListenerLike_isErrorSafe
-        > &
+        instance: Pick<EventListenerLike<TA>, typeof EventListenerLike_notify> &
           TProperties<TA, TB>,
         delegate: EventListenerLike<TB>,
         selector: Function1<TA, TB>,
@@ -52,8 +48,6 @@ const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (() => {
         [MapEventListener_selector]: none,
       }),
       {
-        [EventListenerLike_isErrorSafe]: false,
-
         [EventListenerLike_notify](
           this: TProperties<TA, TB> &
             DelegatingDisposableLike<EventListenerLike<TB>> &

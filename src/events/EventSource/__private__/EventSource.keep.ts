@@ -6,7 +6,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   EventListenerLike,
-  EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
 } from "../../../events.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
@@ -31,10 +30,7 @@ const EventSource_keep: EventSource.Signature["keep"] = /*@__PURE__*/ (() => {
     mixInstanceFactory(
       include(DelegatingDisposableMixin<EventListenerLike<T>>()),
       function KeepEventListener(
-        instance: Pick<
-          EventListenerLike<T>,
-          typeof EventListenerLike_isErrorSafe | typeof EventListenerLike_notify
-        > &
+        instance: Pick<EventListenerLike<T>, typeof EventListenerLike_notify> &
           TProperties<T>,
         delegate: EventListenerLike<T>,
         predicate: Predicate<T>,
@@ -52,8 +48,6 @@ const EventSource_keep: EventSource.Signature["keep"] = /*@__PURE__*/ (() => {
         [KeepEventListener_predicate]: none,
       }),
       {
-        [EventListenerLike_isErrorSafe]: false,
-
         [EventListenerLike_notify](
           this: TProperties<T> &
             DelegatingDisposableLike<EventListenerLike<T>> &

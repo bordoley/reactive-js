@@ -4,7 +4,7 @@ import { Set, Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/co
 import { clampPositiveInteger } from "../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../concurrent.js";
-import { EventListenerLike_isErrorSafe, EventListenerLike_notify, } from "../events.js";
+import { EventListenerLike_notify } from "../events.js";
 import { error, isSome, newInstance, none, pipe } from "../functions.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
@@ -37,7 +37,6 @@ export const create = /*@__PURE__*/ (() => {
         [Subject_autoDispose]: false,
         [Subject_observers]: none,
     }), {
-        [EventListenerLike_isErrorSafe]: true,
         [ObservableLike_isDeferred]: false,
         [ObservableLike_isMulticasted]: true,
         [ObservableLike_isPure]: true,

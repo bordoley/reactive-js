@@ -2,7 +2,7 @@
 
 import { Set, Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
-import { EventListenerLike_isErrorSafe, EventListenerLike_notify, EventSourceLike_addEventListener, } from "../events.js";
+import { EventListenerLike_notify, EventSourceLike_addEventListener, } from "../events.js";
 import { error, newInstance, none, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
@@ -25,7 +25,6 @@ export const create = /*@__PURE__*/ (() => {
         [Publisher_autoDispose]: false,
         [Publisher_listeners]: none,
     }), {
-        [EventListenerLike_isErrorSafe]: true,
         [EventListenerLike_notify](next) {
             if (this[DisposableLike_isDisposed]) {
                 return;

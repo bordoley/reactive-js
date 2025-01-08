@@ -1,23 +1,15 @@
 import { DisposableLike } from "./utils.js";
-export declare const EventListenerLike_isErrorSafe: unique symbol;
 export declare const EventListenerLike_notify: unique symbol;
 /**
  * @noInheritDoc
  */
 export interface EventListenerLike<T = unknown> extends DisposableLike {
-    readonly [EventListenerLike_isErrorSafe]: boolean;
     /**
      * Notifies the EventListener of the next notification produced by the source.
      *
      * @param next - The next notification value.
      */
     [EventListenerLike_notify](event: T): void;
-}
-/**
- * @noInheritDoc
- */
-export interface ErrorSafeEventListenerLike<T = unknown> extends EventListenerLike<T> {
-    readonly [EventListenerLike_isErrorSafe]: true;
 }
 export declare const EventSourceLike_addEventListener: unique symbol;
 /**
@@ -29,7 +21,7 @@ export interface EventSourceLike<T = unknown> {
 /**
  * @noInheritDoc
  */
-export interface PublisherLike<T = unknown> extends EventSourceLike<T>, ErrorSafeEventListenerLike<T> {
+export interface PublisherLike<T = unknown> extends EventSourceLike<T>, EventListenerLike<T> {
 }
 export declare const StoreLike_value: unique symbol;
 /**

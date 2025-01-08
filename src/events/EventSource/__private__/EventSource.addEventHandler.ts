@@ -7,7 +7,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   EventListenerLike,
-  EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
   EventSourceLike,
   EventSourceLike_addEventListener,
@@ -26,8 +25,7 @@ const EventListener_createInternal: <T>(
   return mixInstanceFactory(
     include(DisposableMixin),
     function EventListener(
-      instance: Pick<EventListenerLike, typeof EventListenerLike_isErrorSafe> &
-        Mutable<TProperties>,
+      instance: Mutable<TProperties>,
       notify: (this: EventListenerLike<T>, a: T) => void,
     ): EventListenerLike<T> {
       init(DisposableMixin, instance);
@@ -39,9 +37,6 @@ const EventListener_createInternal: <T>(
     props<TProperties>({
       [EventListenerLike_notify]: none,
     }),
-    {
-      [EventListenerLike_isErrorSafe]: false,
-    },
   );
 })();
 

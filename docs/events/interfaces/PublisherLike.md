@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`EventSourceLike`](EventSourceLike.md)\<`T`\>.[`ErrorSafeEventListenerLike`](ErrorSafeEventListenerLike.md)\<`T`\>
+- [`EventSourceLike`](EventSourceLike.md)\<`T`\>.[`EventListenerLike`](EventListenerLike.md)\<`T`\>
 
 ## Type Parameters
 

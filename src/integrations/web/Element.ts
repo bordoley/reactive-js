@@ -1,8 +1,4 @@
-import {
-  ErrorSafeEventListenerLike,
-  EventSourceLike,
-  StoreLike,
-} from "../../events.js";
+import { EventListenerLike, EventSourceLike, StoreLike } from "../../events.js";
 import { Function1, SideEffect1 } from "../../functions.js";
 import { DisposableLike } from "../../utils.js";
 import { Rect, ScrollValue } from "../web.js";
@@ -791,9 +787,7 @@ export interface WebElementModule {
     K extends keyof PictureInPictureWindowEventMap,
   >(
     eventName: K,
-    eventListener: ErrorSafeEventListenerLike<
-      PictureInPictureWindowEventMap[K]
-    >,
+    eventListener: EventListenerLike<PictureInPictureWindowEventMap[K]>,
     options?: { passive?: boolean; capture?: boolean },
   ): Function1<
     TEventTarget,
@@ -874,9 +868,7 @@ export interface WebElementModule {
     K extends keyof ServiceWorkerContainerEventMap,
   >(
     eventName: K,
-    eventListener: ErrorSafeEventListenerLike<
-      ServiceWorkerContainerEventMap[K]
-    >,
+    eventListener: EventListenerLike<ServiceWorkerContainerEventMap[K]>,
     options?: { passive?: boolean; capture?: boolean },
   ): Function1<
     TEventTarget,
@@ -887,9 +879,7 @@ export interface WebElementModule {
     K extends keyof ServiceWorkerRegistrationEventMap,
   >(
     eventName: K,
-    eventListener: ErrorSafeEventListenerLike<
-      ServiceWorkerRegistrationEventMap[K]
-    >,
+    eventListener: EventListenerLike<ServiceWorkerRegistrationEventMap[K]>,
     options?: { passive?: boolean; capture?: boolean },
   ): Function1<
     TEventTarget,
@@ -928,9 +918,7 @@ export interface WebElementModule {
     K extends keyof SpeechSynthesisUtteranceEventMap,
   >(
     eventName: K,
-    eventListener: ErrorSafeEventListenerLike<
-      SpeechSynthesisUtteranceEventMap[K]
-    >,
+    eventListener: EventListenerLike<SpeechSynthesisUtteranceEventMap[K]>,
     options?: { passive?: boolean; capture?: boolean },
   ): Function1<
     TEventTarget,

@@ -2,10 +2,19 @@
 
 import * as EventSource from "../../../../events/EventSource.js";
 import { EventListenerLike_notify, } from "../../../../events.js";
-import { bindMethod, pipe } from "../../../../functions.js";
+import { bindMethod, error, pipe } from "../../../../functions.js";
 import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
+import { DisposableLike_dispose } from "../../../../utils.js";
 const Element_eventSource = (eventName, options) => (target) => EventSource.create(listener => {
-    const eventHandler = bindMethod(listener, EventListenerLike_notify);
+    const eventHandler = (ev) => {
+        try {
+            listener[EventListenerLike_notify](ev);
+        }
+        catch (e) {
+            listener[DisposableLike_dispose](error(e));
+        }
+    };
+    bindMethod(listener, EventListenerLike_notify);
     const addEventListenerOptions = {
         capture: options?.capture ?? false,
         passive: options?.capture ?? true,
