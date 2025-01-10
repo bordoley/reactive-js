@@ -1,6 +1,6 @@
 /// <reference types="./Observable.switchAll.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
 import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -8,8 +8,8 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, SerialDisposableLike_current, } from "../../../utils.js";
+import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
-import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -21,7 +21,7 @@ const createSwitchAllObserver = /*@__PURE__*/ (() => {
             this[SwitchAllObserver_delegate][DisposableLike_dispose]();
         }
     }
-    return createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function SwitchAllObserver(instance, delegate) {
+    return mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin()), function SwitchAllObserver(instance, delegate) {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
         instance[SwitchAllObserver_delegate] = delegate;
@@ -33,14 +33,14 @@ const createSwitchAllObserver = /*@__PURE__*/ (() => {
         [SwitchAllObserver_delegate]: none,
     }), {
         [ObserverLike_notify](next) {
-            this[SwitchAllObserver_currentRef][SerialDisposableLike_current] =
-                pipe(next, Observable_forEach(bindMethod(this[SwitchAllObserver_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(this[SwitchAllObserver_delegate], this), Disposable.addTo(this[SwitchAllObserver_delegate]), DisposableContainer.onComplete(() => {
-                    if (this[DisposableLike_isDisposed]) {
-                        this[SwitchAllObserver_delegate][DisposableLike_dispose]();
-                    }
-                }));
+            Observer_assertObserverState(this);
+            this[SwitchAllObserver_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(bindMethod(this[SwitchAllObserver_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(this[SwitchAllObserver_delegate], this), Disposable.addTo(this[SwitchAllObserver_delegate]), DisposableContainer.onComplete(() => {
+                if (this[DisposableLike_isDisposed]) {
+                    this[SwitchAllObserver_delegate][DisposableLike_dispose]();
+                }
+            }));
         },
-    })));
+    });
 })();
 const Observable_switchAll = ((options) => Observable_lift(options?.innerType ?? {
     [ObservableLike_isDeferred]: true,

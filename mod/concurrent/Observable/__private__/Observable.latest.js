@@ -1,15 +1,15 @@
 /// <reference types="./Observable.latest.d.ts" />
 
 import { Array_every, Array_length, Array_push, } from "../../../__internal__/constants.js";
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../concurrent.js";
 import { none, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose } from "../../../utils.js";
+import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
-import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
@@ -29,7 +29,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
     const LatestObserver_ctx = Symbol("LatestObserver_ctx");
     const LatestObserver_latest = Symbol("LatestObserver_latest");
     const LatestObserver_ready = Symbol("LatestObserver_ready");
-    const createLatestObserver = createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function LatestObserver(instance, ctx, delegate) {
+    const createLatestObserver = mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin()), function LatestObserver(instance, ctx, delegate) {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
         instance[LatestObserver_ctx] = ctx;
@@ -40,6 +40,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         [LatestObserver_ctx]: none,
     }), {
         [ObserverLike_notify](next) {
+            Observer_assertObserverState(this);
             const ctx = this[LatestObserver_ctx];
             const mode = ctx[LatestCtx_mode];
             const observers = ctx[LatestCtx_observers];
@@ -57,7 +58,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
                 }
             }
         },
-    })));
+    });
     return (observables, mode) => {
         const onSubscribe = (delegate) => {
             const ctx = {

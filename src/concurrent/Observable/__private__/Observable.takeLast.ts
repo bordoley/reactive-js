@@ -1,9 +1,8 @@
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -27,8 +26,8 @@ import {
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
+import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
-import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const createTakeLastObserver = /*@__PURE__*/ (<T>() => {
@@ -38,66 +37,63 @@ const createTakeLastObserver = /*@__PURE__*/ (<T>() => {
     [TakeLastObserver_queue]: IndexedQueueLike<T>;
   };
 
-  return createInstanceFactory(
-    decorateNotifyWithObserverStateAssert(
-      mix(
-        include(DisposableMixin, DelegatingObserverMixin()),
-        function TakeLastObserver(
-          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
-            TProperties,
-          delegate: ObserverLike<T>,
-          takeLastCount: number,
-        ): ObserverLike<T> {
-          init(DisposableMixin, instance);
-          init(DelegatingObserverMixin(), instance, delegate);
+  return mixInstanceFactory(
+    include(DisposableMixin, DelegatingObserverMixin()),
+    function TakeLastObserver(
+      instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProperties,
+      delegate: ObserverLike<T>,
+      takeLastCount: number,
+    ): ObserverLike<T> {
+      init(DisposableMixin, instance);
+      init(DelegatingObserverMixin(), instance, delegate);
 
-          instance[TakeLastObserver_queue] = IndexedQueue.create({
-            capacity: takeLastCount,
-            backpressureStrategy: DropOldestBackpressureStrategy,
-          });
+      instance[TakeLastObserver_queue] = IndexedQueue.create({
+        capacity: takeLastCount,
+        backpressureStrategy: DropOldestBackpressureStrategy,
+      });
 
-          pipe(
-            instance,
-            DisposableContainer.onComplete(() => {
-              const queue = instance[TakeLastObserver_queue];
-              let index = 0;
-              const count = queue[QueueLike_count];
+      pipe(
+        instance,
+        DisposableContainer.onComplete(() => {
+          const queue = instance[TakeLastObserver_queue];
+          let index = 0;
+          const count = queue[QueueLike_count];
 
-              if (count === 0) {
-                return;
+          if (count === 0) {
+            return;
+          }
+
+          delegate[SchedulerLike_schedule](ctx => {
+            while (index < count) {
+              const v = queue[IndexedQueueLike_get](index);
+              delegate[ObserverLike_notify](v);
+
+              index++;
+
+              if (index < count) {
+                ctx[ContinuationContextLike_yield]();
               }
-
-              delegate[SchedulerLike_schedule](ctx => {
-                while (index < count) {
-                  const v = queue[IndexedQueueLike_get](index);
-                  delegate[ObserverLike_notify](v);
-
-                  index++;
-
-                  if (index < count) {
-                    ctx[ContinuationContextLike_yield]();
-                  }
-                }
-                delegate[DisposableLike_dispose]();
-              });
-            }),
-          );
-
-          return instance;
-        },
-        props<TProperties>({
-          [TakeLastObserver_queue]: none,
+            }
+            delegate[DisposableLike_dispose]();
+          });
         }),
-        {
-          [ObserverLike_notify](
-            this: TProperties & DisposableLike & QueueLike<T>,
-            next: T,
-          ) {
-            this[TakeLastObserver_queue][QueueableLike_enqueue](next);
-          },
-        },
-      ),
-    ),
+      );
+
+      return instance;
+    },
+    props<TProperties>({
+      [TakeLastObserver_queue]: none,
+    }),
+    {
+      [ObserverLike_notify](
+        this: TProperties & DisposableLike & QueueLike<T> & ObserverLike<T>,
+        next: T,
+      ) {
+        Observer_assertObserverState(this);
+
+        this[TakeLastObserver_queue][QueueableLike_enqueue](next);
+      },
+    },
   );
 })();
 

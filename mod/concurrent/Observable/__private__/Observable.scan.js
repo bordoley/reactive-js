@@ -1,17 +1,17 @@
 /// <reference types="./Observable.scan.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { ObserverLike_notify } from "../../../concurrent.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { DisposableLike_dispose } from "../../../utils.js";
+import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
-import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const ScanObserver_acc = Symbol("ScanObserver_acc");
 const ScanObserver_reducer = Symbol("ScanObserver_reducer");
 const createScanObserver = /*@__PURE__*/ (() => {
-    return createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DelegatingDisposableMixin(), ObserverMixin()), function ScanObserver(instance, delegate, reducer, initialValue) {
+    return mixInstanceFactory(include(DelegatingDisposableMixin(), ObserverMixin()), function ScanObserver(instance, delegate, reducer, initialValue) {
         init(DelegatingDisposableMixin(), instance, delegate);
         init(ObserverMixin(), instance, delegate, delegate);
         instance[ScanObserver_reducer] = reducer;
@@ -27,11 +27,12 @@ const createScanObserver = /*@__PURE__*/ (() => {
         [ScanObserver_reducer]: none,
     }), {
         [ObserverLike_notify](next) {
+            Observer_assertObserverState(this);
             const nextAcc = this[ScanObserver_reducer](this[ScanObserver_acc], next);
             this[ScanObserver_acc] = nextAcc;
             this[DelegatingDisposableLike_delegate][ObserverLike_notify](nextAcc);
         },
-    })));
+    });
 })();
 const Observable_scan = (reducer, initialValue) => pipe((createScanObserver), partial(reducer, initialValue), Observable_liftPureDeferred);
 export default Observable_scan;

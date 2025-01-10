@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import { ObserverLike, ObserverLike_notify } from "../../../concurrent.js";
@@ -12,8 +11,8 @@ import DelegatingDisposableMixin, {
   DelegatingDisposableLike_delegate,
 } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Observable from "../../Observable.js";
+import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
-import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const MapObserver_selector = Symbol("MapObserver_selector");
@@ -26,45 +25,37 @@ const createMapObserver: <TA, TB>(
   delegate: ObserverLike<TB>,
   selector: Function1<TA, TB>,
 ) => ObserverLike<TA> = /*@__PURE__*/ (<TA, TB>() =>
-  createInstanceFactory(
-    decorateNotifyWithObserverStateAssert(
-      mix(
-        include(DelegatingDisposableMixin<ObserverLike<TB>>(), ObserverMixin()),
-        function MapObserver(
-          instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
-            TProperties<TA, TB>,
-          delegate: ObserverLike<TB>,
-          selector: Function1<TA, TB>,
-        ): ObserverLike<TA> {
-          init(
-            DelegatingDisposableMixin<ObserverLike<TB>>(),
-            instance,
-            delegate,
-          );
-          init(ObserverMixin(), instance, delegate, delegate);
+  mixInstanceFactory(
+    include(DelegatingDisposableMixin<ObserverLike<TB>>(), ObserverMixin()),
+    function MapObserver(
+      instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
+        TProperties<TA, TB>,
+      delegate: ObserverLike<TB>,
+      selector: Function1<TA, TB>,
+    ): ObserverLike<TA> {
+      init(DelegatingDisposableMixin<ObserverLike<TB>>(), instance, delegate);
+      init(ObserverMixin(), instance, delegate, delegate);
 
-          instance[MapObserver_selector] = selector;
+      instance[MapObserver_selector] = selector;
 
-          return instance;
-        },
-        props<TProperties<TA, TB>>({
-          [MapObserver_selector]: none,
-        }),
-        {
-          [ObserverLike_notify](
-            this: TProperties<TA, TB> &
-              DelegatingDisposableLike<ObserverLike<TB>> &
-              ObserverLike<TA>,
-            next: TA,
-          ) {
-            const mapped = this[MapObserver_selector](next);
-            this[DelegatingDisposableLike_delegate][ObserverLike_notify](
-              mapped,
-            );
-          },
-        },
-      ),
-    ),
+      return instance;
+    },
+    props<TProperties<TA, TB>>({
+      [MapObserver_selector]: none,
+    }),
+    {
+      [ObserverLike_notify](
+        this: TProperties<TA, TB> &
+          DelegatingDisposableLike<ObserverLike<TB>> &
+          ObserverLike<TA>,
+        next: TA,
+      ) {
+        Observer_assertObserverState(this);
+
+        const mapped = this[MapObserver_selector](next);
+        this[DelegatingDisposableLike_delegate][ObserverLike_notify](mapped);
+      },
+    },
   ))();
 
 const Observable_map: Observable.Signature["map"] = <TA, TB>(

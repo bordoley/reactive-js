@@ -1,19 +1,19 @@
 /// <reference types="./Observable.takeLast.d.ts" />
 
 import { clampPositiveInteger } from "../../../__internal__/math.js";
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { ContinuationContextLike_yield, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { none, partial, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose, DropOldestBackpressureStrategy, IndexedQueueLike_get, QueueLike_count, QueueableLike_enqueue, } from "../../../utils.js";
+import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
-import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createTakeLastObserver = /*@__PURE__*/ (() => {
     const TakeLastObserver_queue = Symbol("TakeLastObserver_queue");
-    return createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function TakeLastObserver(instance, delegate, takeLastCount) {
+    return mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin()), function TakeLastObserver(instance, delegate, takeLastCount) {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
         instance[TakeLastObserver_queue] = IndexedQueue.create({
@@ -44,9 +44,10 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
         [TakeLastObserver_queue]: none,
     }), {
         [ObserverLike_notify](next) {
+            Observer_assertObserverState(this);
             this[TakeLastObserver_queue][QueueableLike_enqueue](next);
         },
-    })));
+    });
 })();
 const Observable_takeLast = (options = {}) => pipe(createTakeLastObserver, partial(clampPositiveInteger(options.count ?? 1)), Observable_liftPureDeferred);
 export default Observable_takeLast;

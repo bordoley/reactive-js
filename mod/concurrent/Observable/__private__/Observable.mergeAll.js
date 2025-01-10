@@ -2,7 +2,7 @@
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger, clampPositiveNonZeroInteger, } from "../../../__internal__/math.js";
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
 import { bindMethod, isSome, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -10,8 +10,8 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
+import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
-import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -25,7 +25,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         observer[MergeAllObserver_activeCount]++;
         pipe(nextObs, Observable_forEach(bindMethod(observer[MergeAllObserver_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(observer[MergeAllObserver_delegate], observer), Disposable.addTo(observer[MergeAllObserver_delegate]), DisposableContainer.onComplete(observer[MergeAllObserver_onDispose]));
     };
-    const createMergeAllObserver = createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
+    const createMergeAllObserver = mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
         instance[MergeAllObserver_observablesQueue] = IndexedQueue.create({
@@ -65,6 +65,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         [MergeAllObserver_observablesQueue]: none,
     }), {
         [ObserverLike_notify](next) {
+            Observer_assertObserverState(this);
             if (this[MergeAllObserver_activeCount] <
                 this[MergeAllObserver_concurrency]) {
                 subscribeToObservable(this, next);
@@ -73,7 +74,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
                 this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
             }
         },
-    })));
+    });
     return (options = {}) => {
         const concurrency = clampPositiveNonZeroInteger(options.concurrency ?? MAX_SAFE_INTEGER);
         const capacity = clampPositiveInteger(options.capacity ?? MAX_SAFE_INTEGER);

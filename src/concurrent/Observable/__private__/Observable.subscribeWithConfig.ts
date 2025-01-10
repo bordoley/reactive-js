@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
 } from "../../../__internal__/mixins.js";
 import {
   ObservableLike,
@@ -18,7 +17,6 @@ import {
   QueueableLike_capacity,
 } from "../../../utils.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
-import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 
 const createObserver: <T>(
   scheduler: SchedulerLike,
@@ -27,26 +25,22 @@ const createObserver: <T>(
     typeof QueueableLike_capacity | typeof QueueableLike_backpressureStrategy
   >,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
-  return createInstanceFactory(
-    decorateNotifyWithObserverStateAssert(
-      mix(
-        include(DisposableMixin, ObserverMixin<T>()),
-        function SubscribeObserver(
-          instance: unknown,
-          scheduler: SchedulerLike,
-          config: Pick<
-            QueueableLike,
-            | typeof QueueableLike_capacity
-            | typeof QueueableLike_backpressureStrategy
-          >,
-        ): ObserverLike<T> {
-          init(DisposableMixin, instance);
-          init(ObserverMixin(), instance, scheduler, config);
+  return mixInstanceFactory(
+    include(DisposableMixin, ObserverMixin<T>()),
+    function SubscribeObserver(
+      instance: unknown,
+      scheduler: SchedulerLike,
+      config: Pick<
+        QueueableLike,
+        | typeof QueueableLike_capacity
+        | typeof QueueableLike_backpressureStrategy
+      >,
+    ): ObserverLike<T> {
+      init(DisposableMixin, instance);
+      init(ObserverMixin(), instance, scheduler, config);
 
-          return instance;
-        },
-      ),
-    ),
+      return instance;
+    },
   );
 })();
 

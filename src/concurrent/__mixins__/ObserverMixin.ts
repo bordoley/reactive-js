@@ -46,6 +46,7 @@ import {
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../utils.js";
+import Observer_assertObserverState from "../Observer/__private__/Observer.assertObserverState.js";
 
 const ObserverMixin: <T>() => Mixin2<
   ObserverLike<T>,
@@ -261,7 +262,9 @@ const ObserverMixin: <T>() => Mixin2<
           }
         },
 
-        [ObserverLike_notify](this: ObserverLike, _: T) {},
+        [ObserverLike_notify](this: ObserverLike, _: T) {
+          Observer_assertObserverState(this);
+        },
       },
     ),
   );

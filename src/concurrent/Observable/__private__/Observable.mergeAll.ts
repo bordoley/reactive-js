@@ -5,10 +5,9 @@ import {
 } from "../../../__internal__/math.js";
 import {
   Mutable,
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -46,8 +45,8 @@ import {
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
+import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
-import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -98,95 +97,91 @@ const createMergeAllObserverOperator: <T>(options?: {
     );
   };
 
-  const createMergeAllObserver = createInstanceFactory(
-    decorateNotifyWithObserverStateAssert(
-      mix(
-        include(
-          DisposableMixin,
-          DelegatingObserverMixin<DeferredObservableWithSideEffectsLike<T>>(),
-        ),
-        function MergeAllObserver(
-          instance: Pick<
-            ObserverLike<DeferredObservableWithSideEffectsLike<T>>,
-            typeof ObserverLike_notify
-          > &
-            Mutable<TProperties>,
-          delegate: ObserverLike<T>,
-          capacity: number,
-          backpressureStrategy: BackpressureStrategy,
-          concurrency: number,
-        ): ObserverLike<ObservableLike<T>> {
-          init(DisposableMixin, instance);
-          init(DelegatingObserverMixin(), instance, delegate);
-
-          instance[MergeAllObserver_observablesQueue] = IndexedQueue.create({
-            capacity,
-            backpressureStrategy,
-          });
-          instance[MergeAllObserver_concurrency] = concurrency;
-          instance[MergeAllObserver_delegate] = delegate;
-
-          instance[MergeAllObserver_activeCount] = 0;
-          instance[MergeAllObserver_onDispose] = () => {
-            instance[MergeAllObserver_activeCount]--;
-            const nextObs: Optional<ObservableLike<T>> =
-              instance[MergeAllObserver_observablesQueue][QueueLike_dequeue]();
-
-            if (isSome(nextObs)) {
-              subscribeToObservable(instance, nextObs);
-            } else if (
-              instance[DisposableLike_isDisposed] &&
-              instance[MergeAllObserver_activeCount] <= 0
-            ) {
-              instance[MergeAllObserver_delegate][DisposableLike_dispose]();
-            }
-          };
-
-          pipe(
-            instance,
-            DisposableContainer.onComplete(() => {
-              if (delegate[DisposableLike_isDisposed]) {
-                // FIXME: Clear the queue
-              } else if (
-                instance[MergeAllObserver_observablesQueue][QueueLike_count] +
-                  instance[MergeAllObserver_activeCount] ===
-                0
-              ) {
-                delegate[DisposableLike_dispose]();
-              }
-            }),
-          );
-
-          return instance;
-        },
-        props<TProperties>({
-          [MergeAllObserver_activeCount]: 0,
-          [MergeAllObserver_concurrency]: 0,
-          [MergeAllObserver_delegate]: none,
-          [MergeAllObserver_onDispose]: none,
-          [MergeAllObserver_observablesQueue]: none,
-        }),
-        {
-          [ObserverLike_notify](
-            this: TProperties &
-              ObserverLike<DeferredObservableWithSideEffectsLike<T>> &
-              QueueLike<DeferredObservableWithSideEffectsLike<T>>,
-            next: DeferredObservableWithSideEffectsLike<T>,
-          ) {
-            if (
-              this[MergeAllObserver_activeCount] <
-              this[MergeAllObserver_concurrency]
-            ) {
-              subscribeToObservable(this, next);
-            } else {
-              this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](
-                next,
-              );
-            }
-          },
-        },
-      ),
+  const createMergeAllObserver = mixInstanceFactory(
+    include(
+      DisposableMixin,
+      DelegatingObserverMixin<DeferredObservableWithSideEffectsLike<T>>(),
     ),
+    function MergeAllObserver(
+      instance: Pick<
+        ObserverLike<DeferredObservableWithSideEffectsLike<T>>,
+        typeof ObserverLike_notify
+      > &
+        Mutable<TProperties>,
+      delegate: ObserverLike<T>,
+      capacity: number,
+      backpressureStrategy: BackpressureStrategy,
+      concurrency: number,
+    ): ObserverLike<ObservableLike<T>> {
+      init(DisposableMixin, instance);
+      init(DelegatingObserverMixin(), instance, delegate);
+
+      instance[MergeAllObserver_observablesQueue] = IndexedQueue.create({
+        capacity,
+        backpressureStrategy,
+      });
+      instance[MergeAllObserver_concurrency] = concurrency;
+      instance[MergeAllObserver_delegate] = delegate;
+
+      instance[MergeAllObserver_activeCount] = 0;
+      instance[MergeAllObserver_onDispose] = () => {
+        instance[MergeAllObserver_activeCount]--;
+        const nextObs: Optional<ObservableLike<T>> =
+          instance[MergeAllObserver_observablesQueue][QueueLike_dequeue]();
+
+        if (isSome(nextObs)) {
+          subscribeToObservable(instance, nextObs);
+        } else if (
+          instance[DisposableLike_isDisposed] &&
+          instance[MergeAllObserver_activeCount] <= 0
+        ) {
+          instance[MergeAllObserver_delegate][DisposableLike_dispose]();
+        }
+      };
+
+      pipe(
+        instance,
+        DisposableContainer.onComplete(() => {
+          if (delegate[DisposableLike_isDisposed]) {
+            // FIXME: Clear the queue
+          } else if (
+            instance[MergeAllObserver_observablesQueue][QueueLike_count] +
+              instance[MergeAllObserver_activeCount] ===
+            0
+          ) {
+            delegate[DisposableLike_dispose]();
+          }
+        }),
+      );
+
+      return instance;
+    },
+    props<TProperties>({
+      [MergeAllObserver_activeCount]: 0,
+      [MergeAllObserver_concurrency]: 0,
+      [MergeAllObserver_delegate]: none,
+      [MergeAllObserver_onDispose]: none,
+      [MergeAllObserver_observablesQueue]: none,
+    }),
+    {
+      [ObserverLike_notify](
+        this: TProperties &
+          ObserverLike<DeferredObservableWithSideEffectsLike<T>> &
+          QueueLike<DeferredObservableWithSideEffectsLike<T>>,
+        next: DeferredObservableWithSideEffectsLike<T>,
+      ) {
+        Observer_assertObserverState(this);
+
+        if (
+          this[MergeAllObserver_activeCount] <
+          this[MergeAllObserver_concurrency]
+        ) {
+          subscribeToObservable(this, next);
+        } else {
+          this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
+        }
+      },
+    },
   );
 
   return (

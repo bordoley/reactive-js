@@ -1,9 +1,8 @@
 import { Array_length } from "../../../__internal__/constants.js";
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -19,8 +18,8 @@ import {
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
+import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
-import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
@@ -36,73 +35,63 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
     [DecodeWithCharsetObserver_textDecoder]: TextDecoder;
   };
 
-  return createInstanceFactory(
-    decorateNotifyWithObserverStateAssert(
-      mix(
-        include(DisposableMixin, DelegatingObserverMixin<ArrayBuffer>()),
-        function DecodeWithCharsetObserver(
-          instance: Pick<
-            ObserverLike<ArrayBuffer>,
-            typeof ObserverLike_notify
-          > &
-            TProperties,
-          delegate: ObserverLike<string>,
-          charset: string,
-          options?: {
-            fatal?: boolean;
-            ignoreBOM?: boolean;
-          },
-        ): ObserverLike<ArrayBuffer> {
-          init(DisposableMixin, instance);
-          instance[DecodeWithCharsetObserver_delegate] = delegate;
+  return mixInstanceFactory(
+    include(DisposableMixin, DelegatingObserverMixin<ArrayBuffer>()),
+    function DecodeWithCharsetObserver(
+      instance: Pick<ObserverLike<ArrayBuffer>, typeof ObserverLike_notify> &
+        TProperties,
+      delegate: ObserverLike<string>,
+      charset: string,
+      options?: {
+        fatal?: boolean;
+        ignoreBOM?: boolean;
+      },
+    ): ObserverLike<ArrayBuffer> {
+      init(DisposableMixin, instance);
+      instance[DecodeWithCharsetObserver_delegate] = delegate;
 
-          init(DelegatingObserverMixin<ArrayBuffer>(), instance, delegate);
+      init(DelegatingObserverMixin<ArrayBuffer>(), instance, delegate);
 
-          const textDecoder = newInstance(TextDecoder, charset, options);
-          instance[DecodeWithCharsetObserver_textDecoder] = textDecoder;
+      const textDecoder = newInstance(TextDecoder, charset, options);
+      instance[DecodeWithCharsetObserver_textDecoder] = textDecoder;
 
-          pipe(
-            instance,
-            DisposableContainer.onComplete(() => {
-              const data = textDecoder.decode(newInstance(Uint8Array, []), {
-                stream: false,
-              });
+      pipe(
+        instance,
+        DisposableContainer.onComplete(() => {
+          const data = textDecoder.decode(newInstance(Uint8Array, []), {
+            stream: false,
+          });
 
-              if (data[Array_length] > 0) {
-                delegate[QueueableLike_enqueue](data);
-                delegate[DispatcherLike_complete]();
-              } else {
-                delegate[DisposableLike_dispose]();
-              }
-            }),
-          );
-
-          return instance;
-        },
-        props<TProperties>({
-          [DecodeWithCharsetObserver_delegate]: none,
-          [DecodeWithCharsetObserver_textDecoder]: none,
+          if (data[Array_length] > 0) {
+            delegate[QueueableLike_enqueue](data);
+            delegate[DispatcherLike_complete]();
+          } else {
+            delegate[DisposableLike_dispose]();
+          }
         }),
-        {
-          [ObserverLike_notify](
-            this: TProperties & ObserverLike<ArrayBuffer>,
-            next: ArrayBuffer,
-          ) {
-            const data = this[DecodeWithCharsetObserver_textDecoder].decode(
-              next,
-              {
-                stream: true,
-              },
-            );
-            if (data[Array_length] > 0) {
-              this[DecodeWithCharsetObserver_delegate][ObserverLike_notify](
-                data,
-              );
-            }
-          },
-        },
-      ),
-    ),
+      );
+
+      return instance;
+    },
+    props<TProperties>({
+      [DecodeWithCharsetObserver_delegate]: none,
+      [DecodeWithCharsetObserver_textDecoder]: none,
+    }),
+    {
+      [ObserverLike_notify](
+        this: TProperties & ObserverLike<ArrayBuffer>,
+        next: ArrayBuffer,
+      ) {
+        Observer_assertObserverState(this);
+
+        const data = this[DecodeWithCharsetObserver_textDecoder].decode(next, {
+          stream: true,
+        });
+        if (data[Array_length] > 0) {
+          this[DecodeWithCharsetObserver_delegate][ObserverLike_notify](data);
+        }
+      },
+    },
   );
 })();
 

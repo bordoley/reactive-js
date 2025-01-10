@@ -2,20 +2,20 @@
 
 import { Array_length, Array_push, MAX_SAFE_INTEGER, } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { DispatcherLike_complete, ObserverLike_notify, } from "../../../concurrent.js";
 import { none, partial, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
+import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
-import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const BufferObserver_delegate = Symbol("BufferObserver_delegate");
 const BufferObserver_buffer = Symbol("BufferObserver_buffer");
 const BufferObserver_count = Symbol("BufferingLike_count");
-const createBufferObserver = /*@__PURE__*/ (() => createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, ObserverMixin()), function BufferObserver(instance, delegate, count) {
+const createBufferObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DisposableMixin, ObserverMixin()), function BufferObserver(instance, delegate, count) {
     init(DisposableMixin, instance);
     init(ObserverMixin(), instance, delegate, delegate);
     instance[BufferObserver_delegate] = delegate;
@@ -39,6 +39,7 @@ const createBufferObserver = /*@__PURE__*/ (() => createInstanceFactory(decorate
     [BufferObserver_count]: 0,
 }), {
     [ObserverLike_notify](next) {
+        Observer_assertObserverState(this);
         const buffer = this[BufferObserver_buffer];
         const count = this[BufferObserver_count];
         buffer[Array_push](next);
@@ -47,6 +48,6 @@ const createBufferObserver = /*@__PURE__*/ (() => createInstanceFactory(decorate
             this[BufferObserver_delegate][ObserverLike_notify](buffer);
         }
     },
-}))))();
+}))();
 const Observable_buffer = (options) => pipe((createBufferObserver), partial(options?.count), Observable_liftPureDeferred);
 export default Observable_buffer;

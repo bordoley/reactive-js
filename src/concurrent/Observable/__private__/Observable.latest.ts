@@ -5,10 +5,9 @@ import {
 } from "../../../__internal__/constants.js";
 import {
   Mutable,
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
@@ -26,8 +25,8 @@ import { none, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose } from "../../../utils.js";
+import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
-import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
@@ -69,66 +68,55 @@ const Observable_latest = /*@__PURE__*/ (() => {
     readonly [LatestObserver_ctx]: LatestCtx;
   };
 
-  const createLatestObserver = createInstanceFactory(
-    decorateNotifyWithObserverStateAssert<
-      ObserverLike & TProperties,
-      LatestCtx,
-      ObserverLike
-    >(
-      mix(
-        include(DisposableMixin, DelegatingObserverMixin()),
-        function LatestObserver(
-          instance: Pick<ObserverLike, typeof ObserverLike_notify> &
-            Mutable<TProperties>,
-          ctx: LatestCtx,
-          delegate: ObserverLike,
-        ): ObserverLike & TProperties {
-          init(DisposableMixin, instance);
-          init(DelegatingObserverMixin(), instance, delegate);
+  const createLatestObserver = mixInstanceFactory(
+    include(DisposableMixin, DelegatingObserverMixin()),
+    function LatestObserver(
+      instance: Pick<ObserverLike, typeof ObserverLike_notify> &
+        Mutable<TProperties>,
+      ctx: LatestCtx,
+      delegate: ObserverLike,
+    ): ObserverLike & TProperties {
+      init(DisposableMixin, instance);
+      init(DelegatingObserverMixin(), instance, delegate);
 
-          instance[LatestObserver_ctx] = ctx;
+      instance[LatestObserver_ctx] = ctx;
 
-          return instance;
-        },
-        props<TProperties>({
-          [LatestObserver_ready]: false,
-          [LatestObserver_latest]: none,
-          [LatestObserver_ctx]: none,
-        }),
-        {
-          [ObserverLike_notify](
-            this: TProperties & ObserverLike,
-            next: unknown,
-          ) {
-            const ctx = this[LatestObserver_ctx];
-            const mode = ctx[LatestCtx_mode];
-            const observers = ctx[LatestCtx_observers];
+      return instance;
+    },
+    props<TProperties>({
+      [LatestObserver_ready]: false,
+      [LatestObserver_latest]: none,
+      [LatestObserver_ctx]: none,
+    }),
+    {
+      [ObserverLike_notify](this: TProperties & ObserverLike, next: unknown) {
+        Observer_assertObserverState(this);
 
-            this[LatestObserver_latest] = next;
-            this[LatestObserver_ready] = true;
+        const ctx = this[LatestObserver_ctx];
+        const mode = ctx[LatestCtx_mode];
+        const observers = ctx[LatestCtx_observers];
 
-            const isReady = observers[Array_every](
-              x => x[LatestObserver_ready],
-            );
+        this[LatestObserver_latest] = next;
+        this[LatestObserver_ready] = true;
 
-            if (isReady) {
-              const result = pipe(
-                observers,
-                ReadonlyArray.map(observer => observer[LatestObserver_latest]),
-              );
-              ctx[LatestCtx_delegate][ObserverLike_notify](result);
+        const isReady = observers[Array_every](x => x[LatestObserver_ready]);
 
-              if (mode === zipMode) {
-                for (const sub of observers) {
-                  sub[LatestObserver_ready] = false;
-                  sub[LatestObserver_latest] = none as any;
-                }
-              }
+        if (isReady) {
+          const result = pipe(
+            observers,
+            ReadonlyArray.map(observer => observer[LatestObserver_latest]),
+          );
+          ctx[LatestCtx_delegate][ObserverLike_notify](result);
+
+          if (mode === zipMode) {
+            for (const sub of observers) {
+              sub[LatestObserver_ready] = false;
+              sub[LatestObserver_latest] = none as any;
             }
-          },
-        },
-      ),
-    ),
+          }
+        }
+      },
+    },
   );
 
   return (

@@ -1,8 +1,7 @@
 import {
-  createInstanceFactory,
   include,
   init,
-  mix,
+  mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import { ObserverLike, ObserverLike_notify } from "../../../concurrent.js";
@@ -12,8 +11,8 @@ import DelegatingDisposableMixin, {
   DelegatingDisposableLike_delegate,
 } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Observable from "../../Observable.js";
+import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
-import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const KeepObserver_predicate = Symbol("KeepObserver_predicate");
@@ -26,46 +25,38 @@ const createKeepObserver: <T>(
   delegate: ObserverLike<T>,
   predicate: Predicate<T>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
-  createInstanceFactory(
-    decorateNotifyWithObserverStateAssert(
-      mix(
-        include(DelegatingDisposableMixin<ObserverLike<T>>(), ObserverMixin()),
-        function KeepObserver(
-          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
-            TProperties<T>,
-          delegate: ObserverLike<T>,
-          predicate: Predicate<T>,
-        ): ObserverLike<T> {
-          init(
-            DelegatingDisposableMixin<ObserverLike<T>>(),
-            instance,
-            delegate,
-          );
-          init(ObserverMixin(), instance, delegate, delegate);
+  mixInstanceFactory(
+    include(DelegatingDisposableMixin<ObserverLike<T>>(), ObserverMixin()),
+    function KeepObserver(
+      instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+        TProperties<T>,
+      delegate: ObserverLike<T>,
+      predicate: Predicate<T>,
+    ): ObserverLike<T> {
+      init(DelegatingDisposableMixin<ObserverLike<T>>(), instance, delegate);
+      init(ObserverMixin(), instance, delegate, delegate);
 
-          instance[KeepObserver_predicate] = predicate;
+      instance[KeepObserver_predicate] = predicate;
 
-          return instance;
-        },
-        props<TProperties<T>>({
-          [KeepObserver_predicate]: none,
-        }),
-        {
-          [ObserverLike_notify](
-            this: TProperties<T> &
-              DelegatingDisposableLike<ObserverLike<T>> &
-              ObserverLike<T>,
-            next: T,
-          ) {
-            if (this[KeepObserver_predicate](next)) {
-              this[DelegatingDisposableLike_delegate][ObserverLike_notify](
-                next,
-              );
-            }
-          },
-        },
-      ),
-    ),
+      return instance;
+    },
+    props<TProperties<T>>({
+      [KeepObserver_predicate]: none,
+    }),
+    {
+      [ObserverLike_notify](
+        this: TProperties<T> &
+          DelegatingDisposableLike<ObserverLike<T>> &
+          ObserverLike<T>,
+        next: T,
+      ) {
+        Observer_assertObserverState(this);
+
+        if (this[KeepObserver_predicate](next)) {
+          this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
+        }
+      },
+    },
   ))();
 
 const Observable_keep: Observable.Signature["keep"] = <T>(
