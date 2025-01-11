@@ -7,7 +7,7 @@ import { SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, Scheduler
 import { isNone, isSome, newInstance, none, pipe, pipeLazy, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
-import PriorityQueueMixin from "../utils/__mixins__/PriorityQueueMixin.js";
+import QueueMixin from "../utils/__mixins__/QueueMixin.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, SerialDisposableLike_current, } from "../utils.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "./__internal__/Continuation.js";
@@ -87,11 +87,11 @@ export const create = /*@PURE__*/ (() => {
             pipe(disposable, Disposable.addTo(instance), DisposableContainer.onDisposed(cleanup));
         }
     };
-    const createHostSchedulerInstance = mixInstanceFactory(include(CurrentTimeSchedulerMixin, SchedulerMixin, SerialDisposableMixin(), PriorityQueueMixin()), function HostScheduler(instance, maxYieldInterval) {
+    const createHostSchedulerInstance = mixInstanceFactory(include(CurrentTimeSchedulerMixin, SchedulerMixin, SerialDisposableMixin(), QueueMixin()), function HostScheduler(instance, maxYieldInterval) {
         instance[SchedulerLike_maxYieldInterval] = maxYieldInterval;
         init(CurrentTimeSchedulerMixin, instance);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
-        init(PriorityQueueMixin(), instance, Continuation.compare, none);
+        init(QueueMixin(), instance, Continuation.compare, none);
         const MessageChannel = globalObject.MessageChannel;
         const setImmediate = globalObject.setImmediate;
         if (isSome(MessageChannel) && isNone(setImmediate)) {

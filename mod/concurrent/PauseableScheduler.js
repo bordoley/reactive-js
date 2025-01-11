@@ -8,7 +8,7 @@ import * as WritableStore from "../events/WritableStore.js";
 import { StoreLike_value } from "../events.js";
 import { isNone, isSome, none } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
-import PriorityQueueMixin from "../utils/__mixins__/PriorityQueueMixin.js";
+import QueueMixin from "../utils/__mixins__/QueueMixin.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
 import { DisposableContainerLike_add, DisposableLike_isDisposed, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, SerialDisposableLike_current, } from "../utils.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "./__internal__/Continuation.js";
@@ -56,10 +56,10 @@ export const create = /*@PURE__*/ (() => {
         instance[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
         instance[SerialDisposableLike_current] = hostScheduler[SchedulerLike_schedule](hostSchedulerContinuation, { delay });
     };
-    return mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), PriorityQueueMixin()), function PauseableScheduler(instance, host) {
+    return mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), QueueMixin()), function PauseableScheduler(instance, host) {
         init(SchedulerMixin, instance);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
-        init(PriorityQueueMixin(), instance, Continuation.compare, none);
+        init(QueueMixin(), instance, Continuation.compare, none);
         instance[PauseableScheduler_hostScheduler] = host;
         instance[PauseableScheduler_pausedTime] = host[SchedulerLike_now];
         instance[PauseableScheduler_timeDrift] = 0;

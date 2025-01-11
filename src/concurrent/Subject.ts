@@ -27,7 +27,7 @@ import { EventListenerLike_notify } from "../events.js";
 import { error, isSome, newInstance, none, pipe } from "../functions.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
-import IndexedQueueMixin from "../utils/__mixins__/IndexedQueueMixin.js";
+import QueueMixin from "../utils/__mixins__/QueueMixin.js";
 import {
   DisposableLike_dispose,
   DisposableLike_error,
@@ -52,7 +52,7 @@ export const create: <T>(options?: {
   };
 
   return mixInstanceFactory(
-    include(DisposableMixin, IndexedQueueMixin()),
+    include(DisposableMixin, QueueMixin()),
     function Subject(
       instance: Pick<
         SubjectLike<T>,
@@ -72,7 +72,7 @@ export const create: <T>(options?: {
       const replay = clampPositiveInteger(options?.replay ?? 0);
 
       init(DisposableMixin, instance);
-      init(IndexedQueueMixin<T>(), instance, {
+      init(QueueMixin<T>(), instance, none, {
         [QueueableLike_backpressureStrategy]: DropOldestBackpressureStrategy,
         [QueueableLike_capacity]: replay,
       });

@@ -6,7 +6,7 @@ import { ContinuationContextLike_yield, SchedulerLike_now, SchedulerLike_shouldY
 import { error, isSome, newInstance, none, pipe, raiseIf, } from "../../../../functions.js";
 import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../../utils/__mixins__/DisposableMixin.js";
-import IndexedQueueMixin from "../../../../utils/__mixins__/IndexedQueueMixin.js";
+import QueueMixin from "../../../../utils/__mixins__/QueueMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../../utils.js";
 import { ContinuationLike_dueTime, ContinuationLike_id, ContinuationLike_run, } from "../../../__internal__/Continuation.js";
 export const QueueableContinuationLike_parent = Symbol("QueueableContinuationLike_parent");
@@ -105,9 +105,9 @@ export const create = /*@__PURE__*/ (() => {
             thiz[DisposableLike_dispose](err);
         }
     };
-    return mixInstanceFactory(include(DisposableMixin, IndexedQueueMixin()), function QueueableContinuation(instance, scheduler, effect, dueTime) {
+    return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function QueueableContinuation(instance, scheduler, effect, dueTime) {
         init(DisposableMixin, instance);
-        init(IndexedQueueMixin(), instance, none);
+        init(QueueMixin(), instance, none, none);
         instance[ContinuationLike_dueTime] = dueTime;
         instance[ContinuationLike_id] =
             scheduler[QueueableContinuationSchedulerLike_nextTaskID];

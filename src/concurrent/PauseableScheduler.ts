@@ -26,7 +26,7 @@ import * as WritableStore from "../events/WritableStore.js";
 import { StoreLike_value, WritableStoreLike } from "../events.js";
 import { Optional, SideEffect1, isNone, isSome, none } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
-import PriorityQueueMixin from "../utils/__mixins__/PriorityQueueMixin.js";
+import QueueMixin from "../utils/__mixins__/QueueMixin.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
 import {
   DisposableContainerLike_add,
@@ -146,7 +146,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   };
 
   return mixInstanceFactory(
-    include(SchedulerMixin, SerialDisposableMixin(), PriorityQueueMixin()),
+    include(SchedulerMixin, SerialDisposableMixin(), QueueMixin()),
     function PauseableScheduler(
       instance: Pick<
         PauseableSchedulerLike,
@@ -159,7 +159,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       init(SchedulerMixin, instance);
       init(SerialDisposableMixin(), instance, Disposable.disposed);
       init(
-        PriorityQueueMixin<ContinuationLike>(),
+        QueueMixin<ContinuationLike>(),
         instance,
         Continuation.compare,
         none,

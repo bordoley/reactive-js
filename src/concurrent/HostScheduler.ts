@@ -25,7 +25,7 @@ import {
 } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
-import PriorityQueueMixin from "../utils/__mixins__/PriorityQueueMixin.js";
+import QueueMixin from "../utils/__mixins__/QueueMixin.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
 import {
   DisposableLike,
@@ -215,7 +215,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       CurrentTimeSchedulerMixin,
       SchedulerMixin,
       SerialDisposableMixin(),
-      PriorityQueueMixin(),
+      QueueMixin(),
     ),
     function HostScheduler(
       instance: Omit<ContinuationSchedulerLike, typeof SchedulerLike_now> &
@@ -227,7 +227,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       init(CurrentTimeSchedulerMixin, instance);
       init(SerialDisposableMixin(), instance, Disposable.disposed);
       init(
-        PriorityQueueMixin<ContinuationLike>(),
+        QueueMixin<ContinuationLike>(),
         instance,
         Continuation.compare,
         none,

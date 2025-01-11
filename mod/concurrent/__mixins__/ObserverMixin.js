@@ -6,7 +6,7 @@ import LazyInitEventSourceMixin, { LazyInitEventSourceLike_publisher, } from "..
 import { EventListenerLike_notify } from "../../events.js";
 import { call, none, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
-import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
+import QueueMixin from "../../utils/__mixins__/QueueMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
 import Observer_assertObserverState from "../Observer/__private__/Observer.assertObserverState.js";
 const ObserverMixin = /*@__PURE__*/ (() => {
@@ -32,9 +32,9 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             observer[ObserverMixin_dispatchSubscription] = pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
         }
     };
-    const indexedQueueProtoype = getPrototype(IndexedQueueMixin());
-    return returns(mix(include(IndexedQueueMixin(), LazyInitEventSourceMixin()), function ObserverMixin(instance, scheduler, config) {
-        init(IndexedQueueMixin(), instance, config);
+    const queueProtoype = getPrototype(QueueMixin());
+    return returns(mix(include(QueueMixin(), LazyInitEventSourceMixin()), function ObserverMixin(instance, scheduler, config) {
+        init(QueueMixin(), instance, none, config);
         init(LazyInitEventSourceMixin(), instance);
         instance[ObserverMixin_scheduler] = scheduler;
         return instance;
@@ -68,7 +68,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         [QueueableLike_enqueue](next) {
             if (!this[DispatcherLike_isCompleted] &&
                 !this[DisposableLike_isDisposed]) {
-                const result = call(indexedQueueProtoype[QueueableLike_enqueue], this, next);
+                const result = call(queueProtoype[QueueableLike_enqueue], this, next);
                 if (!result) {
                     this[LazyInitEventSourceLike_publisher]?.[EventListenerLike_notify](DispatcherLikeEvent_capacityExceeded);
                 }

@@ -32,7 +32,7 @@ import LazyInitEventSourceMixin, {
 import { EventListenerLike_notify } from "../../events.js";
 import { SideEffect1, call, none, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
-import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
+import QueueMixin from "../../utils/__mixins__/QueueMixin.js";
 import {
   DisposableContainerLike,
   DisposableLike,
@@ -107,7 +107,7 @@ const ObserverMixin: <T>() => Mixin2<
     }
   };
 
-  const indexedQueueProtoype = getPrototype(IndexedQueueMixin<T>());
+  const queueProtoype = getPrototype(QueueMixin<T>());
 
   return returns(
     mix<
@@ -128,7 +128,7 @@ const ObserverMixin: <T>() => Mixin2<
         | typeof QueueableLike_backpressureStrategy
       >
     >(
-      include(IndexedQueueMixin(), LazyInitEventSourceMixin()),
+      include(QueueMixin(), LazyInitEventSourceMixin()),
       function ObserverMixin(
         instance: Omit<SchedulerLike, keyof DisposableContainerLike> &
           DisposableLike &
@@ -146,7 +146,7 @@ const ObserverMixin: <T>() => Mixin2<
           | typeof QueueableLike_backpressureStrategy
         >,
       ): ObserverLike<T> {
-        init(IndexedQueueMixin<T>(), instance, config);
+        init(QueueMixin<T>(), instance, none, config);
 
         init(LazyInitEventSourceMixin(), instance);
 
@@ -216,7 +216,7 @@ const ObserverMixin: <T>() => Mixin2<
             !this[DisposableLike_isDisposed]
           ) {
             const result = call(
-              indexedQueueProtoype[QueueableLike_enqueue],
+              queueProtoype[QueueableLike_enqueue],
               this,
               next,
             );

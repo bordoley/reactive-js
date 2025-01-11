@@ -25,7 +25,7 @@ import {
 } from "../../../../functions.js";
 import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../../utils/__mixins__/DisposableMixin.js";
-import IndexedQueueMixin from "../../../../utils/__mixins__/IndexedQueueMixin.js";
+import QueueMixin from "../../../../utils/__mixins__/QueueMixin.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -206,7 +206,7 @@ export const create: (
   };
 
   return mixInstanceFactory(
-    include(DisposableMixin, IndexedQueueMixin<QueueableContinuationLike>()),
+    include(DisposableMixin, QueueMixin<QueueableContinuationLike>()),
     function QueueableContinuation(
       instance: Pick<QueueableContinuationLike, typeof ContinuationLike_run> &
         ContinuationContextLike &
@@ -217,7 +217,7 @@ export const create: (
     ): QueueableContinuationLike & ContinuationContextLike {
       init(DisposableMixin, instance);
 
-      init(IndexedQueueMixin<QueueableContinuationLike>(), instance, none);
+      init(QueueMixin<QueueableContinuationLike>(), instance, none, none);
 
       instance[ContinuationLike_dueTime] = dueTime;
 
