@@ -9,16 +9,16 @@ import { error, isSome, newInstance, none, pipe } from "../functions.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import QueueMixin from "../utils/__mixins__/QueueMixin.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, QueueableLike_enqueue, } from "../utils.js";
 export const create = /*@__PURE__*/ (() => {
     const Subject_autoDispose = Symbol("Subject_autoDispose");
     const Subject_observers = Symbol("Subject_observers");
     return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function Subject(instance, options) {
         const replay = clampPositiveInteger(options?.replay ?? 0);
         init(DisposableMixin, instance);
-        init(QueueMixin(), instance, none, {
-            [QueueableLike_backpressureStrategy]: DropOldestBackpressureStrategy,
-            [QueueableLike_capacity]: replay,
+        init(QueueMixin(), instance, {
+            backpressureStrategy: DropOldestBackpressureStrategy,
+            capacity: replay,
         });
         instance[Subject_observers] = newInstance(Set);
         instance[Subject_autoDispose] = options?.autoDispose ?? false;

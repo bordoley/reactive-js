@@ -147,12 +147,11 @@ const QueueMixin = /*@PURE*/ (() => {
         shrink(queue);
         return item;
     };
-    return returns(mix(function QueueMixin(instance, comparator, config) {
+    return returns(mix(function QueueMixin(instance, config) {
         instance[QueueableLike_backpressureStrategy] =
-            config?.[QueueableLike_backpressureStrategy] ??
-                OverflowBackpressureStrategy;
-        instance[QueueableLike_capacity] = clampPositiveInteger(config?.[QueueableLike_capacity] ?? MAX_SAFE_INTEGER);
-        instance[QueueMixin_comparator] = comparator;
+            config?.backpressureStrategy ?? OverflowBackpressureStrategy;
+        instance[QueueableLike_capacity] = clampPositiveInteger(config?.capacity ?? MAX_SAFE_INTEGER);
+        instance[QueueMixin_comparator] = config?.comparator;
         instance[QueueMixin_capacityMask] = 31;
         instance[QueueMixin_values] = newInstance(Array, 32);
         return instance;

@@ -158,12 +158,9 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     ): PauseableSchedulerLike {
       init(SchedulerMixin, instance);
       init(SerialDisposableMixin(), instance, Disposable.disposed);
-      init(
-        QueueMixin<ContinuationLike>(),
-        instance,
-        Continuation.compare,
-        none,
-      );
+      init(QueueMixin<ContinuationLike>(), instance, {
+        comparator: Continuation.compare,
+      });
 
       instance[PauseableScheduler_hostScheduler] = host;
 

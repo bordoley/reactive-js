@@ -107,7 +107,7 @@ export const create = /*@__PURE__*/ (() => {
     };
     return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function QueueableContinuation(instance, scheduler, effect, dueTime) {
         init(DisposableMixin, instance);
-        init(QueueMixin(), instance, none, none);
+        init(QueueMixin(), instance, none);
         instance[ContinuationLike_dueTime] = dueTime;
         instance[ContinuationLike_id] =
             scheduler[QueueableContinuationSchedulerLike_nextTaskID];

@@ -217,7 +217,7 @@ export const create: (
     ): QueueableContinuationLike & ContinuationContextLike {
       init(DisposableMixin, instance);
 
-      init(QueueMixin<QueueableContinuationLike>(), instance, none, none);
+      init(QueueMixin<QueueableContinuationLike>(), instance, none);
 
       instance[ContinuationLike_dueTime] = dueTime;
 

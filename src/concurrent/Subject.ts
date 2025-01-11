@@ -34,8 +34,6 @@ import {
   DisposableLike_isDisposed,
   DropOldestBackpressureStrategy,
   QueueLike,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../utils.js";
 
@@ -72,9 +70,9 @@ export const create: <T>(options?: {
       const replay = clampPositiveInteger(options?.replay ?? 0);
 
       init(DisposableMixin, instance);
-      init(QueueMixin<T>(), instance, none, {
-        [QueueableLike_backpressureStrategy]: DropOldestBackpressureStrategy,
-        [QueueableLike_capacity]: replay,
+      init(QueueMixin<T>(), instance, {
+        backpressureStrategy: DropOldestBackpressureStrategy,
+        capacity: replay,
       });
 
       instance[Subject_observers] = newInstance<Set<ObserverLike>>(Set);

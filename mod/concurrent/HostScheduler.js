@@ -91,7 +91,9 @@ export const create = /*@PURE__*/ (() => {
         instance[SchedulerLike_maxYieldInterval] = maxYieldInterval;
         init(CurrentTimeSchedulerMixin, instance);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
-        init(QueueMixin(), instance, Continuation.compare, none);
+        init(QueueMixin(), instance, {
+            comparator: Continuation.compare,
+        });
         const MessageChannel = globalObject.MessageChannel;
         const setImmediate = globalObject.setImmediate;
         if (isSome(MessageChannel) && isNone(setImmediate)) {

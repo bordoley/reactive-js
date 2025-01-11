@@ -7,7 +7,7 @@ import { EventListenerLike_notify } from "../../events.js";
 import { call, none, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import QueueMixin from "../../utils/__mixins__/QueueMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import Observer_assertObserverState from "../Observer/__private__/Observer.assertObserverState.js";
 const ObserverMixin = /*@__PURE__*/ (() => {
     const ObserverMixin_dispatchSubscription = Symbol("ObserverMixin_dispatchSubscription");
@@ -34,7 +34,10 @@ const ObserverMixin = /*@__PURE__*/ (() => {
     };
     const queueProtoype = getPrototype(QueueMixin());
     return returns(mix(include(QueueMixin(), LazyInitEventSourceMixin()), function ObserverMixin(instance, scheduler, config) {
-        init(QueueMixin(), instance, none, config);
+        init(QueueMixin(), instance, {
+            backpressureStrategy: config[QueueableLike_backpressureStrategy],
+            capacity: config[QueueableLike_capacity],
+        });
         init(LazyInitEventSourceMixin(), instance);
         instance[ObserverMixin_scheduler] = scheduler;
         return instance;

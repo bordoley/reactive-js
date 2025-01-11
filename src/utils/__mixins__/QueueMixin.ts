@@ -5,7 +5,7 @@ import {
 } from "../../__internal__/constants.js";
 import { clampPositiveInteger, floor } from "../../__internal__/math.js";
 import {
-  Mixin2,
+  Mixin1,
   Mutable,
   mix,
   props,
@@ -37,12 +37,12 @@ import {
   ThrowBackpressureStrategy,
 } from "../../utils.js";
 
-const QueueMixin: <T>() => Mixin2<
+const QueueMixin: <T>() => Mixin1<
   QueueLike<T>,
-  Optional<Comparator<T>>,
   Optional<{
-    readonly [QueueableLike_backpressureStrategy]?: BackpressureStrategy;
-    readonly [QueueableLike_capacity]?: number;
+    capacity?: number;
+    comparator?: Comparator<T>;
+    backpressureStrategy?: BackpressureStrategy;
   }>,
   unknown,
   Omit<
@@ -257,20 +257,19 @@ const QueueMixin: <T>() => Mixin2<
           typeof QueueLike_count | typeof QueueableLike_capacity
         > &
           Mutable<TProperties>,
-        comparator: Optional<Comparator<T>>,
         config?: {
-          readonly [QueueableLike_backpressureStrategy]?: BackpressureStrategy;
-          readonly [QueueableLike_capacity]?: number;
+          capacity?: number;
+          comparator?: Comparator<T>;
+          backpressureStrategy?: BackpressureStrategy;
         },
       ): QueueLike<T> {
         instance[QueueableLike_backpressureStrategy] =
-          config?.[QueueableLike_backpressureStrategy] ??
-          OverflowBackpressureStrategy;
+          config?.backpressureStrategy ?? OverflowBackpressureStrategy;
         instance[QueueableLike_capacity] = clampPositiveInteger(
-          config?.[QueueableLike_capacity] ?? MAX_SAFE_INTEGER,
+          config?.capacity ?? MAX_SAFE_INTEGER,
         );
 
-        instance[QueueMixin_comparator] = comparator;
+        instance[QueueMixin_comparator] = config?.comparator;
 
         instance[QueueMixin_capacityMask] = 31;
         instance[QueueMixin_values] = newInstance<Array<Optional<T>>, number>(

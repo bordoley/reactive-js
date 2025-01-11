@@ -226,12 +226,9 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
       init(CurrentTimeSchedulerMixin, instance);
       init(SerialDisposableMixin(), instance, Disposable.disposed);
-      init(
-        QueueMixin<ContinuationLike>(),
-        instance,
-        Continuation.compare,
-        none,
-      );
+      init(QueueMixin<ContinuationLike>(), instance, {
+        comparator: Continuation.compare,
+      });
 
       const MessageChannel = globalObject.MessageChannel;
       const setImmediate = globalObject.setImmediate;

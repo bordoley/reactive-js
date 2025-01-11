@@ -59,7 +59,9 @@ export const create = /*@PURE__*/ (() => {
     return mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), QueueMixin()), function PauseableScheduler(instance, host) {
         init(SchedulerMixin, instance);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
-        init(QueueMixin(), instance, Continuation.compare, none);
+        init(QueueMixin(), instance, {
+            comparator: Continuation.compare,
+        });
         instance[PauseableScheduler_hostScheduler] = host;
         instance[PauseableScheduler_pausedTime] = host[SchedulerLike_now];
         instance[PauseableScheduler_timeDrift] = 0;
