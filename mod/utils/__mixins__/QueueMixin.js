@@ -132,21 +132,6 @@ const QueueMixin = /*@PURE*/ (() => {
         values[computedIndex] = value;
         return oldValue;
     };
-    const popLast = (queue) => {
-        const head = queue[QueueMixin_head];
-        const values = queue[QueueMixin_values];
-        const capacity = values[Array_length];
-        let tail = queue[QueueMixin_tail];
-        const item = head === tail
-            ? none
-            : ((tail = (tail - 1 + capacity) & queue[QueueMixin_capacityMask]),
-                (queue[QueueMixin_tail] = tail),
-                queue[QueueLike_count]--,
-                values[tail]);
-        values[tail] = none;
-        shrink(queue);
-        return item;
-    };
     return returns(mix(function QueueMixin(instance, config) {
         instance[QueueableLike_backpressureStrategy] =
             config?.backpressureStrategy ?? OverflowBackpressureStrategy;
@@ -183,25 +168,31 @@ const QueueMixin = /*@PURE*/ (() => {
         [QueueLike_dequeue]() {
             const count = this[QueueLike_count];
             const isSorted = isSome(this[QueueMixin_comparator]);
+            const tail = this[QueueMixin_tail];
+            const values = this[QueueMixin_values];
+            const head = this[QueueMixin_head];
             if (count === 0) {
                 return none;
             }
             else if (count > 1 && isSorted) {
                 const first = getValue(this, 0);
-                const last = popLast(this);
+                const capacity = values[Array_length];
+                const newTail = (tail - 1 + capacity) & this[QueueMixin_capacityMask];
+                this[QueueMixin_tail] = newTail;
+                this[QueueLike_count]--;
+                const last = values[newTail];
+                values[newTail] = none;
+                shrink(this);
                 setValue(this, 0, last);
                 siftDown(this, last);
                 return first;
             }
             else {
-                const tail = this[QueueMixin_tail];
-                const values = this[QueueMixin_values];
-                let head = this[QueueMixin_head];
                 const item = head === tail ? none : values[head];
                 if (head !== tail) {
                     values[head] = none;
-                    head = (head + 1) & this[QueueMixin_capacityMask];
-                    this[QueueMixin_head] = head;
+                    this[QueueMixin_head] =
+                        (head + 1) & this[QueueMixin_capacityMask];
                     this[QueueLike_count]--;
                 }
                 shrink(this);
