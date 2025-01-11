@@ -15,14 +15,12 @@ import {
   PauseableLike_pause, 
   PauseableLike_resume
 } from "@reactive-js/core/concurrent";
-import * as Enumerable from "@reactive-js/core/collections/Enumerable";
 import * as Flowable from "@reactive-js/core/concurrent/Flowable";
 
   const scheduler = HostScheduler.get();
 
   const counter = pipe(
-    Enumerable.generate(increment, returns(-1)),
-    Observable.fromEnumerable({delay: 500}),
+    Observable.generate(increment, returns(-1), {delay: 500}),
     Flowable.fromRunnable(),
     invoke(FlowableLike_flow, scheduler)
   );

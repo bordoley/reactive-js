@@ -6,7 +6,7 @@
 
 # Function: WindowLocationProvider()
 
-> **WindowLocationProvider**(`props`): `ReactNode` \| `Promise`\<`ReactNode`\>
+> **WindowLocationProvider**(`props`): `ReactNode`
 
 ## Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-`ReactNode` \| `Promise`\<`ReactNode`\>
+`ReactNode`

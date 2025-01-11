@@ -1,8 +1,11 @@
-import { bind, pipe } from "../../../functions.js";
-import Enumerable_fromIteratorFactory from "../../Enumerable/__private__/Enumerable.fromIteratorFactory.js";
+import { returns } from "../../../functions.js";
 import type * as ReadonlyMap from "../../ReadonlyMap.js";
 
-const ReadonlyMap_entries: ReadonlyMap.Signature["entries"] = () => map =>
-  pipe(bind(map.entries, map), Enumerable_fromIteratorFactory());
+const ReadonlyMap_entries: ReadonlyMap.Signature["entries"] =
+  /*@__PURE__*/ returns(map => ({
+    [Symbol.iterator]() {
+      return map.entries();
+    },
+  }));
 
 export default ReadonlyMap_entries;

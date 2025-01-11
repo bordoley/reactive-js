@@ -1,7 +1,11 @@
 /// <reference types="./Dictionary.values.d.ts" />
 
 import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
-import { bindMethod, pipe } from "../../../functions.js";
-import * as Enumerable from "../../Enumerable.js";
-const Dictionary_values = () => (dict) => pipe(dict[DictionaryLike_keys], Enumerable.map(bindMethod(dict, DictionaryLike_get)));
+const Dictionary_values = () => (dict) => ({
+    *[Symbol.iterator]() {
+        for (const key of dict[DictionaryLike_keys]) {
+            yield dict[DictionaryLike_get](key);
+        }
+    },
+});
 export default Dictionary_values;

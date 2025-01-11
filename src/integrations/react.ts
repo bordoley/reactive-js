@@ -1,5 +1,4 @@
 import {
-  ComponentType,
   ReactElement,
   useCallback,
   useEffect,
@@ -8,11 +7,6 @@ import {
   useState,
 } from "react";
 import { nullObject } from "../__internal__/constants.js";
-import {
-  EnumeratorLike,
-  EnumeratorLike_current,
-  EnumeratorLike_move,
-} from "../collections.js";
 import * as Observable from "../concurrent/Observable.js";
 import * as Subject from "../concurrent/Subject.js";
 import {
@@ -71,7 +65,7 @@ interface ReactModule {
       readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     },
-  ): ComponentType<TProps>;
+  ): Function1<TProps, React.ReactNode>;
 
   useDispatcher<TReq>(dispatcher: Optional<DispatcherLike<TReq>>): {
     enqueue: Function1<TReq, boolean>;
@@ -84,14 +78,6 @@ interface ReactModule {
     factory: () => Optional<TDisposable>,
     deps: readonly unknown[],
   ): Optional<TDisposable>;
-
-  /**
-   */
-  useEnumerator<T>(enumerator: Optional<EnumeratorLike<T>>): {
-    move: Factory<boolean>;
-    hasCurrent: boolean;
-    current: T;
-  };
 
   /**
    */
@@ -249,43 +235,6 @@ export const useDisposable: Signature["useDisposable"] = <
   }, [...deps, setDisposable]);
 
   return isSome(error) ? raiseError(error) : disposable;
-};
-
-export const useEnumerator: Signature["useEnumerator"] = <T>(
-  enumerator: Optional<EnumeratorLike<T>>,
-) => {
-  const stableEnumeratorRef = useRef<Optional<EnumeratorLike<T>>>(none);
-
-  useEffect(() => {
-    stableEnumeratorRef.current = enumerator;
-  }, [enumerator]);
-
-  const [{ current, hasCurrent }, setState] = useState<{
-    current: T;
-    hasCurrent: boolean;
-  }>({
-    current: none as T,
-    hasCurrent: false,
-  });
-
-  const move = useCallback(() => {
-    const { current } = stableEnumeratorRef;
-    if (isSome(current) && current[EnumeratorLike_move]()) {
-      setState({
-        current: current[EnumeratorLike_current],
-        hasCurrent: true,
-      });
-      return true;
-    } else {
-      setState({
-        current: none as T,
-        hasCurrent: false,
-      });
-      return false;
-    }
-  }, [stableEnumeratorRef, setState]);
-
-  return { current, hasCurrent, move };
 };
 
 export const useListen: Signature["useListen"] = <T>(

@@ -6,10 +6,6 @@
 
 # Interface: PureStatefulComputationModule\<C\>
 
-## Extended by
-
-- [`EnumerableModule`](../../collections/Enumerable/interfaces/EnumerableModule.md)
-
 ## Type Parameters
 
 • **C** *extends* [`Computation`](Computation.md)

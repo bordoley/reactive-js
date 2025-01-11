@@ -11,7 +11,6 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Enumerable from "../../collections/Enumerable.js";
 import {
   FlowableLike_flow,
   PauseableLike_pause,
@@ -54,8 +53,10 @@ testModule(
       using vts = VirtualTimeScheduler.create();
 
       const src = pipe(
-        Enumerable.generate(increment, returns(-1)),
-        Observable.fromEnumerable({ delay: 1, delayStart: true }),
+        Observable.generate(increment, returns(-1), {
+          delay: 1,
+          delayStart: true,
+        }),
         Observable.takeFirst<number>({ count: 5 }),
         Flowable.fromRunnable(),
       );
@@ -160,8 +161,10 @@ testModule(
       using vts = VirtualTimeScheduler.create();
 
       const generateObservable = pipe(
-        Enumerable.generate(increment, returns(-1)),
-        Observable.fromEnumerable({ delay: 1, delayStart: true }),
+        Observable.generate(increment, returns(-1), {
+          delay: 1,
+          delayStart: true,
+        }),
         Flowable.fromRunnable(),
         invoke(FlowableLike_flow, vts),
       );

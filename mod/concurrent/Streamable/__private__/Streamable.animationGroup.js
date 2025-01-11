@@ -1,7 +1,7 @@
 /// <reference types="./Streamable.animationGroup.d.ts" />
 
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../../../__internal__/mixins.js";
-import * as Enumerable from "../../../collections/Enumerable.js";
+import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
 import { StreamableLike_stream, } from "../../../concurrent.js";
@@ -19,7 +19,7 @@ const Streamable_createAnimationGroupStream =
         const streamDelegate = Streamable_createEventHandler((event) => Observable.mergeMany(pipe(animationGroup, ReadonlyObjectMap.map((factory, key) => pipe(isFunction(factory) ? factory(event) : factory, Observable.forEach((value) => {
             const publisher = publishers[key];
             publisher?.[EventListenerLike_notify](value);
-        }), Observable.ignoreElements(), Observable.subscribeOn(animationScheduler))), ReadonlyObjectMap.values(), Enumerable.toReadonlyArray())), creationOptions)[StreamableLike_stream](scheduler, streamOptions);
+        }), Observable.ignoreElements(), Observable.subscribeOn(animationScheduler))), ReadonlyObjectMap.values(), ReadonlyArray.fromIterable())), creationOptions)[StreamableLike_stream](scheduler, streamOptions);
         const publishers = pipe(animationGroup, ReadonlyObjectMap.map(_ => pipe(Publisher.create(), Disposable.addTo(streamDelegate))));
         const animationScheduler = creationOptions?.scheduler ?? scheduler;
         init(DelegatingStreamMixin(), instance, streamDelegate);

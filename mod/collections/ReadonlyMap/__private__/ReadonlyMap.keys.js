@@ -1,6 +1,9 @@
 /// <reference types="./ReadonlyMap.keys.d.ts" />
 
-import { bind, pipe } from "../../../functions.js";
-import Enumerable_fromIteratorFactory from "../../Enumerable/__private__/Enumerable.fromIteratorFactory.js";
-const ReadonlyMap_keys = () => map => pipe(bind(map.keys, map), Enumerable_fromIteratorFactory());
+import { returns } from "../../../functions.js";
+const ReadonlyMap_keys = /*@__PURE__*/ returns(map => ({
+    [Symbol.iterator]() {
+        return map.keys();
+    },
+}));
 export default ReadonlyMap_keys;

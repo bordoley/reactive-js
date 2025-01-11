@@ -6,7 +6,7 @@
 
 # Function: fromEntries()
 
-> **fromEntries**\<`T`, `TKey`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`EnumerableLike`](../../interfaces/EnumerableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>, `ReadonlyMap`\<`TKey`, `T`\>\>
+> **fromEntries**\<`T`, `TKey`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>, `ReadonlyMap`\<`TKey`, `T`\>\>
 
 ## Type Parameters
 
@@ -16,4 +16,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`EnumerableLike`](../../interfaces/EnumerableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>, `ReadonlyMap`\<`TKey`, `T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>, `ReadonlyMap`\<`TKey`, `T`\>\>

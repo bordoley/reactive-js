@@ -8,7 +8,6 @@
 
 ## Extended by
 
-- [`EnumerableModule`](../../collections/Enumerable/interfaces/EnumerableModule.md)
 - [`EventSourceModule`](../../events/EventSource/interfaces/EventSourceModule.md)
 
 ## Type Parameters

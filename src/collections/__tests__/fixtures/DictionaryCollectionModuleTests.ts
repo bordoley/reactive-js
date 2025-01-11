@@ -8,7 +8,6 @@ import {
   DictionaryCollectionModule,
 } from "../../../collections.js";
 import { arrayEquality, pipe, pipeLazy, tuple } from "../../../functions.js";
-import * as Enumerable from "../../Enumerable.js";
 import * as ReadonlyArray from "../../ReadonlyArray.js";
 
 const DictionaryCollectionModuleTests = <C extends Collection>(
@@ -28,7 +27,7 @@ const DictionaryCollectionModuleTests = <C extends Collection>(
             pipe([tuple("b", "b")], ReadonlyArray.values(), m.fromEntries()),
           ),
           m.entries(),
-          Enumerable.toReadonlyArray(),
+          ReadonlyArray.fromIterable(),
           expectArrayEquals([tuple("a", "a"), tuple("b", "b")], {
             valuesEquality: arrayEquality(),
           }),
@@ -44,7 +43,7 @@ const DictionaryCollectionModuleTests = <C extends Collection>(
             pipe([tuple("b", "b")], ReadonlyArray.values(), m.fromEntries()),
           ),
           m.entries(),
-          Enumerable.toReadonlyArray(),
+          ReadonlyArray.fromIterable(),
           expectArrayEquals([tuple("a", "a"), tuple("b", "b")], {
             valuesEquality: arrayEquality(),
           }),

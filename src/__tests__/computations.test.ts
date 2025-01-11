@@ -4,9 +4,8 @@ import {
   test,
   testModule,
 } from "../__internal__/testing.js";
-import * as Enumerable from "../collections/Enumerable.js";
-import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import { keepType, mapTo, pick } from "../computations.js";
+import * as Observable from "../concurrent/Observable.js";
 import { Optional, isSome, none, pipe, pipeLazy, tuple } from "../functions.js";
 
 testModule(
@@ -17,9 +16,12 @@ testModule(
       "filters null values",
       pipeLazy(
         ["b", none, "v"],
-        ReadonlyArray.values(),
-        keepType(Enumerable.keep)<Optional<string>, string>(isSome),
-        Enumerable.toReadonlyArray(),
+        Observable.fromReadonlyArray(),
+        keepType<Observable.PureRunnableComputation>(Observable.keep)<
+          Optional<string>,
+          string
+        >(isSome),
+        Observable.toReadonlyArray(),
         expectArrayEquals(["b", "v"]),
       ),
     ),
@@ -34,9 +36,9 @@ testModule(
           ["c", "d"],
           ["e", "f"],
         ],
-        ReadonlyArray.values(),
-        mapTo(Enumerable.map)(2),
-        Enumerable.toReadonlyArray(),
+        Observable.fromReadonlyArray(),
+        mapTo<Observable.PureRunnableComputation>(Observable.map)(2),
+        Observable.toReadonlyArray(),
         expectArrayEquals([2, 2, 2]),
       ),
     ),
@@ -55,9 +57,9 @@ testModule(
 
       pipe(
         [obj],
-        ReadonlyArray.values(),
-        pick(Enumerable.map)(keyA, keyB),
-        Enumerable.toReadonlyArray<string>(),
+        Observable.fromReadonlyArray(),
+        pick<Observable.PureRunnableComputation>(Observable.map)(keyA, keyB),
+        Observable.toReadonlyArray<string>(),
         expectArrayEquals<string>(["value"]),
       );
     }),
@@ -70,9 +72,12 @@ testModule(
 
       pipe(
         [obj],
-        ReadonlyArray.values(),
-        pick(Enumerable.map)("keyA", "keyB"),
-        Enumerable.toReadonlyArray<string>(),
+        Observable.fromReadonlyArray(),
+        pick<Observable.PureRunnableComputation>(Observable.map)(
+          "keyA",
+          "keyB",
+        ),
+        Observable.toReadonlyArray<string>(),
         expectArrayEquals<string>(["value"]),
       );
     }),
@@ -81,9 +86,9 @@ testModule(
 
       pipe(
         [obj],
-        ReadonlyArray.values(),
-        pick(Enumerable.map)(3),
-        Enumerable.toReadonlyArray<number>(),
+        Observable.fromReadonlyArray(),
+        pick<Observable.PureRunnableComputation>(Observable.map)(3),
+        Observable.toReadonlyArray<number>(),
         expectArrayEquals<number>([4]),
       );
     }),

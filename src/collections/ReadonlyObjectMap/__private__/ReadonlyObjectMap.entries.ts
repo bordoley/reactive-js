@@ -1,18 +1,21 @@
 import * as Obj from "../../../__internal__/Object.js";
 import { ReadonlyObjectMapLike } from "../../../collections.js";
-import { pipe, tuple } from "../../../functions.js";
-import Enumerable_fromIteratorFactory from "../../Enumerable/__private__/Enumerable.fromIteratorFactory.js";
+import { Tuple2, returns, tuple } from "../../../functions.js";
 import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 
 const ReadonlyObjectMap_entries: ReadonlyObjectMap.Signature["entries"] =
-  <T, TKey extends ReadonlyObjectMap.TKeyBase = ReadonlyObjectMap.TKeyBase>() =>
-  (obj: ReadonlyObjectMapLike<TKey, T>) =>
-    pipe(function* () {
-      for (const key in obj) {
-        if (Obj.hasOwn(obj, key)) {
-          yield tuple(key as TKey, obj[key as TKey] as T);
+  /*@__PURE__*/ returns(
+    <T, TKey extends ReadonlyObjectMap.TKeyBase = ReadonlyObjectMap.TKeyBase>(
+      obj: ReadonlyObjectMapLike<TKey, unknown>,
+    ) => ({
+      *[Symbol.iterator](): Iterator<Tuple2<TKey, T>> {
+        for (const key in obj) {
+          if (Obj.hasOwn(obj, key)) {
+            yield tuple(key, obj[key as TKey] as T);
+          }
         }
-      }
-    }, Enumerable_fromIteratorFactory());
+      },
+    }),
+  ) as ReadonlyObjectMap.Signature["entries"];
 
 export default ReadonlyObjectMap_entries;

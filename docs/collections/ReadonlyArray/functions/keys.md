@@ -6,7 +6,7 @@
 
 # Function: keys()
 
-> **keys**\<`TKey`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `unknown`[], [`EnumerableLike`](../../interfaces/EnumerableLike.md)\<`TKey`\>\>
+> **keys**\<`TKey`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `unknown`[], `Iterable`\<`TKey`\>\>
 
 ## Type Parameters
 
@@ -14,4 +14,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `unknown`[], [`EnumerableLike`](../../interfaces/EnumerableLike.md)\<`TKey`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `unknown`[], `Iterable`\<`TKey`\>\>

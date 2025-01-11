@@ -5,13 +5,12 @@ import {
   props,
   unsafeCast,
 } from "../../../__internal__/mixins.js";
-import * as Enumerable from "../../../collections/Enumerable.js";
+import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import {
   DictionaryLike,
   DictionaryLike_get,
   DictionaryLike_keys,
-  EnumerableLike,
   ReadonlyObjectMapLike,
 } from "../../../collections.js";
 import {
@@ -119,7 +118,7 @@ const Streamable_createAnimationGroupStream: <TEvent, TKey extends string, T>(
                   ),
                 ),
                 ReadonlyObjectMap.values(),
-                Enumerable.toReadonlyArray<DeferredObservableLike<T>>(),
+                ReadonlyArray.fromIterable<DeferredObservableLike<T>>(),
               ),
             ),
           creationOptions as any,
@@ -149,7 +148,7 @@ const Streamable_createAnimationGroupStream: <TEvent, TKey extends string, T>(
         [AnimationGroupStream_eventSources]: none,
       }),
       {
-        get [DictionaryLike_keys](): EnumerableLike<TKey> {
+        get [DictionaryLike_keys](): Iterable<TKey> {
           unsafeCast<TProperties>(this);
           return pipe(
             this[AnimationGroupStream_eventSources],

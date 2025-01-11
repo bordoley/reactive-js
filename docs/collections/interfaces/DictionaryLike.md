@@ -16,7 +16,7 @@
 
 ### \[DictionaryLike\_keys\]
 
-> `readonly` **\[DictionaryLike\_keys\]**: [`EnumerableLike`](EnumerableLike.md)\<`TKey`\>
+> `readonly` **\[DictionaryLike\_keys\]**: `Iterable`\<`TKey`\>
 
 ## Methods
 

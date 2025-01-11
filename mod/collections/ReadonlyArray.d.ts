@@ -1,4 +1,4 @@
-import { Collection, CollectionModule, CollectionOf, Collection_T, Collection_type, EnumerableLike, KeyOf } from "../collections.js";
+import { Collection, CollectionModule, CollectionOf, Collection_T, Collection_type, KeyOf } from "../collections.js";
 import { Function1, Tuple2 } from "../functions.js";
 /**
  * @noInheritDoc
@@ -16,14 +16,15 @@ export interface ReadonlyArrayModule extends CollectionModule<ReadonlyArrayColle
     entries<T, TKey extends number = number>(options?: {
         readonly count?: number;
         readonly start?: number;
-    }): Function1<CollectionOf<ReadonlyArrayCollection, T, TKey>, EnumerableLike<Tuple2<TKey, T>>>;
+    }): Function1<CollectionOf<ReadonlyArrayCollection, T, TKey>, Iterable<Tuple2<TKey, T>>>;
+    fromIterable<T>(): Function1<Iterable<T>, ReadonlyArray<T>>;
     /**
      *
      */
     values<T, TKey extends KeyOf<ReadonlyArrayCollection> = KeyOf<ReadonlyArrayCollection>>(options?: {
         readonly count?: number;
         readonly start?: number;
-    }): Function1<CollectionOf<ReadonlyArrayCollection, T, TKey>, EnumerableLike<T>>;
+    }): Function1<CollectionOf<ReadonlyArrayCollection, T, TKey>, Iterable<T>>;
     slice<T>(options?: {
         readonly count?: number;
         readonly start?: number;
@@ -33,6 +34,7 @@ export type Signature = ReadonlyArrayModule;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const forEach: Signature["forEach"];
+export declare const fromIterable: Signature["fromIterable"];
 export declare const keep: Signature["keep"];
 export declare const keys: Signature["keys"];
 export declare const map: Signature["map"];

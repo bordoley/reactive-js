@@ -1,4 +1,3 @@
-import { EnumerableLike } from "../collections.js";
 import { Computation, Computation_T, Computation_type } from "../computations.js";
 import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
 import { EventSourceLike, StoreLike } from "../events.js";
@@ -205,10 +204,6 @@ export interface ObservableModule {
     forkMerge<TIn, TOut>(fst: Function1<MulticastObservableLike<TIn>, ObservableLike<TOut>>, snd: Function1<MulticastObservableLike<TIn>, ObservableLike<TOut>>, ...tail: readonly Function1<MulticastObservableLike<TIn>, ObservableLike<TOut>>[]): Function1<ObservableLike<TIn>, DeferredObservableWithSideEffectsLike<TOut>>;
     fromAsyncFactory<T>(): Function1<Function1<AbortSignal, Promise<T>>, DeferredObservableWithSideEffectsLike<T>>;
     fromAsyncIterable<T>(): Function1<AsyncIterable<T>, DeferredObservableWithSideEffectsLike<T>>;
-    fromEnumerable<T>(options?: {
-        readonly delay: number;
-        readonly delayStart?: boolean;
-    }): Function1<EnumerableLike<T>, PureRunnableLike<T>>;
     fromEventSource<T>(): Function1<EventSourceLike<T>, MulticastObservableLike<T>>;
     fromIterable<T>(options?: {
         readonly delay: number;
@@ -498,7 +493,6 @@ export declare const forEach: Signature["forEach"];
 export declare const forkMerge: Signature["forkMerge"];
 export declare const fromAsyncFactory: Signature["fromAsyncFactory"];
 export declare const fromAsyncIterable: Signature["fromAsyncIterable"];
-export declare const fromEnumerable: Signature["fromEnumerable"];
 export declare const fromEventSource: Signature["fromEventSource"];
 export declare const fromIterable: Signature["fromIterable"];
 export declare const fromPromise: Signature["fromPromise"];

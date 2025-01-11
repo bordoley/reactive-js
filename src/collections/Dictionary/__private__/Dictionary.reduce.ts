@@ -2,9 +2,6 @@ import {
   DictionaryLike,
   DictionaryLike_get,
   DictionaryLike_keys,
-  EnumerableLike_enumerate,
-  EnumeratorLike_current,
-  EnumeratorLike_move,
 } from "../../../collections.js";
 import { Factory, Function3 } from "../../../functions.js";
 import type * as Dictionary from "../../Dictionary.js";
@@ -15,15 +12,13 @@ const Dictionary_reduce: Dictionary.Signature["reduce"] =
     initialValue: Factory<TAcc>,
   ) =>
   (dict: DictionaryLike<TKey, T>) => {
-    const keys = dict[DictionaryLike_keys][EnumerableLike_enumerate]();
     let acc = initialValue();
 
-    while (keys[EnumeratorLike_move]()) {
-      const key = keys[EnumeratorLike_current];
+    for (const key of dict[DictionaryLike_keys]) {
       const value = dict[DictionaryLike_get](key) as T;
-
       acc = reducer(acc, value, key);
     }
+
     return acc;
   };
 

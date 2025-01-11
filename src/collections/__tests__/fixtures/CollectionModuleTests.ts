@@ -24,7 +24,7 @@ import {
   tuple,
 } from "../../../functions.js";
 import * as Dictionary from "../../Dictionary.js";
-import * as Enumerable from "../../Enumerable.js";
+import * as ReadonlyArray from "../../ReadonlyArray.js";
 import * as ReadonlyMap from "../../ReadonlyMap.js";
 
 const CollectionModuleTests = <C extends Collection>(
@@ -43,7 +43,7 @@ const CollectionModuleTests = <C extends Collection>(
         pipeLazy(
           m.empty<number>(),
           m.values(),
-          Enumerable.toReadonlyArray(),
+          ReadonlyArray.fromIterable(),
           expectArrayEquals<number>([]),
         ),
       ),
@@ -56,7 +56,7 @@ const CollectionModuleTests = <C extends Collection>(
           ["b", "d"],
           fromReadonlyArray(),
           m.entries<string, number>(),
-          Enumerable.toReadonlyArray(),
+          ReadonlyArray.fromIterable(),
           expectArrayEquals([tuple(0, "b"), tuple(1, "d")], {
             valuesEquality: arrayEquality(),
           }),
@@ -87,7 +87,7 @@ const CollectionModuleTests = <C extends Collection>(
           fromReadonlyArray(),
           m.keep(greaterThan(5)),
           m.values(),
-          Enumerable.toReadonlyArray(),
+          ReadonlyArray.fromIterable(),
           expectArrayEquals([8, 10, 7]),
         ),
       ),
@@ -99,7 +99,7 @@ const CollectionModuleTests = <C extends Collection>(
           ["b", none, "v"],
           fromReadonlyArray<Optional<string>>(),
           m.keys(),
-          Enumerable.toReadonlyArray(),
+          ReadonlyArray.fromIterable(),
         );
 
         pipe(keys.length, expectEquals(3));
@@ -115,7 +115,7 @@ const CollectionModuleTests = <C extends Collection>(
           fromReadonlyArray(),
           m.map<string, number, number>((_, key: number) => key),
           m.values(),
-          Enumerable.toReadonlyArray(),
+          ReadonlyArray.fromIterable(),
           expectArrayEquals([0, 1, 2]),
         ),
       ),
@@ -146,7 +146,7 @@ const CollectionModuleTests = <C extends Collection>(
 
         pipe(
           dict[DictionaryLike_keys],
-          Enumerable.toReadonlyArray(),
+          ReadonlyArray.fromIterable(),
           x => x.length,
           expectEquals(3),
         );
@@ -161,7 +161,7 @@ const CollectionModuleTests = <C extends Collection>(
         pipe(
           dict,
           Dictionary.values(),
-          Enumerable.toReadonlyArray(),
+          ReadonlyArray.fromIterable(),
           expectArrayEquals(["b", none, "v"]),
         );
       }),
@@ -172,7 +172,7 @@ const CollectionModuleTests = <C extends Collection>(
           fromReadonlyArray<Optional<string>>(),
           m.toDictionary<Optional<string>, number>(),
           Dictionary.keys(),
-          Enumerable.toReadonlyArray(),
+          ReadonlyArray.fromIterable(),
           expectArrayEquals([0, 1, 2]),
         ),
       ),
@@ -207,7 +207,7 @@ const CollectionModuleTests = <C extends Collection>(
         pipe(
           dict,
           ReadonlyMap.keys(),
-          Enumerable.toReadonlyArray(),
+          ReadonlyArray.fromIterable(),
           expectArrayEquals([0, 1, 2]),
         );
       }),

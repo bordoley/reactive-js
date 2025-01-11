@@ -6,9 +6,7 @@ import {
   isOdd,
   returns,
 } from "@reactive-js/core/functions";
-import * as Enumerable from "@reactive-js/core/collections/Enumerable";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
-import * as ReadonlyArray from "@reactive-js/core/collections/ReadonlyArray";
 
 /**
  * A function that returns the result of summing
@@ -36,14 +34,6 @@ export const map = (n: number) =>
   benchmarkGroup(
     `map ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    benchmarkTest("Enumerable", async (src: readonly number[]) =>
-      pipeLazy(
-        src,
-        ReadonlyArray.values(),
-        Enumerable.map(increment),
-        Enumerable.toReadonlyArray(),
-      ),
-    ),
     benchmarkTest("Observable", async (src: readonly number[]) =>
       pipeLazy(
         src,
@@ -61,18 +51,6 @@ export const filterMapFusion = (n: number) =>
   benchmarkGroup(
     `filter -> map -> fusion with ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    benchmarkTest("Enumerable", async (src: readonly number[]) =>
-      pipeLazy(
-        src,
-        ReadonlyArray.values(),
-        Enumerable.map(increment),
-        Enumerable.keep(isOdd),
-        Enumerable.map(increment),
-        Enumerable.map(increment),
-        Enumerable.keep(isEven),
-        Enumerable.toReadonlyArray(),
-      ),
-    ),
     benchmarkTest("Observable", async (src: readonly number[]) =>
       pipeLazy(
         src,
@@ -102,15 +80,6 @@ export const filterMapReduce = (n: number) =>
   benchmarkGroup(
     `filter -> map -> reduce ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    benchmarkTest("Enumerable", async (src: readonly number[]) =>
-      pipeLazy(
-        src,
-        ReadonlyArray.values(),
-        Enumerable.keep(isEven),
-        Enumerable.map(increment),
-        Enumerable.toReadonlyArray(),
-      ),
-    ),
     benchmarkTest("Observable", async (src: readonly number[]) =>
       pipeLazy(
         src,
@@ -138,14 +107,6 @@ export const scanReduce = (n: number) =>
   benchmarkGroup(
     `scan -> reduce ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    benchmarkTest("Enumerable", async (src: readonly number[]) =>
-      pipeLazy(
-        src,
-        ReadonlyArray.values(),
-        Enumerable.scan(sum, returns(0)),
-        Enumerable.toReadonlyArray(),
-      ),
-    ),
     benchmarkTest("Observable", async (src: readonly number[]) =>
       pipeLazy(
         src,

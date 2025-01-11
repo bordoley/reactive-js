@@ -10,7 +10,6 @@ import {
 import { DictionaryLike_get, DictionaryLike_keys } from "../../collections.js";
 import { Optional, compose, pipe } from "../../functions.js";
 import * as Dictionary from "../Dictionary.js";
-import * as Enumerable from "../Enumerable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import CollectionModuleTests from "./fixtures/CollectionModuleTests.js";
 import DictionaryCollectionModuleTests from "./fixtures/DictionaryCollectionModuleTests.js";
@@ -35,7 +34,7 @@ testModule(
 
       pipe(
         mapped[DictionaryLike_keys],
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
         x => x[Array_length],
         expectEquals(3),
       );
@@ -44,7 +43,7 @@ testModule(
 
       pipe(
         mapped[DictionaryLike_keys],
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
         expectArrayEquals([0, 1, 2]),
       );
     }),

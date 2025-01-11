@@ -6,7 +6,7 @@
 
 # Function: createComponent()
 
-> **createComponent**\<`TProps`\>(`fn`, `options`?): `ComponentType`\<`TProps`\>
+> **createComponent**\<`TProps`\>(`fn`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`TProps`, `ReactNode`\>
 
 ## Type Parameters
 
@@ -34,4 +34,4 @@
 
 ## Returns
 
-`ComponentType`\<`TProps`\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TProps`, `ReactNode`\>

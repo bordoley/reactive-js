@@ -2,7 +2,6 @@ import {
   DictionaryLike,
   DictionaryLike_get,
   DictionaryLike_keys,
-  EnumerableLike,
 } from "../../../collections.js";
 import {
   Function2,
@@ -29,7 +28,7 @@ class MappingDictionary<T, TKey, TIn> implements DictionaryLike<TKey, T> {
     this[MappingDictionary_selector] = mapper;
   }
 
-  get [DictionaryLike_keys](): EnumerableLike<TKey> {
+  get [DictionaryLike_keys](): Iterable<TKey> {
     return this[MappingDictionary_delegate][DictionaryLike_keys];
   }
 

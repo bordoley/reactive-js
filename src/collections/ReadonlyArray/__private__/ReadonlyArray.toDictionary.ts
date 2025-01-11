@@ -2,7 +2,6 @@ import {
   DictionaryLike,
   DictionaryLike_get,
   DictionaryLike_keys,
-  EnumerableLike,
 } from "../../../collections.js";
 import { Optional, newInstance, pipe } from "../../../functions.js";
 import type * as ReadonlyArray from "../../ReadonlyArray.js";
@@ -21,7 +20,7 @@ class ReadonlyArrayDictionary<T, TKey extends ReadonlyArray.TKeyBase>
     return this.d[index];
   }
 
-  get [DictionaryLike_keys](): EnumerableLike<TKey> {
+  get [DictionaryLike_keys](): Iterable<TKey> {
     return pipe(this.d, ReadonlyArray_keys());
   }
 }

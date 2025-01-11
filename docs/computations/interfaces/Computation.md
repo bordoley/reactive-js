@@ -8,7 +8,6 @@
 
 ## Extended by
 
-- [`EnumerableComputation`](../../collections/Enumerable/interfaces/EnumerableComputation.md)
 - [`PureRunnableComputation`](../../concurrent/Observable/interfaces/PureRunnableComputation.md)
 - [`RunnableWithSideEffectsComputation`](../../concurrent/Observable/interfaces/RunnableWithSideEffectsComputation.md)
 - [`PuredDeferredObservableComputation`](../../concurrent/Observable/interfaces/PuredDeferredObservableComputation.md)

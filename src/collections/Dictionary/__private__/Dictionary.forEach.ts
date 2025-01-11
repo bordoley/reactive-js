@@ -2,9 +2,6 @@ import {
   DictionaryLike,
   DictionaryLike_get,
   DictionaryLike_keys,
-  EnumerableLike_enumerate,
-  EnumeratorLike_current,
-  EnumeratorLike_move,
 } from "../../../collections.js";
 import { SideEffect1, SideEffect2 } from "../../../functions.js";
 import type * as Dictionary from "../../Dictionary.js";
@@ -14,10 +11,7 @@ const Dictionary_forEach: Dictionary.Signature["forEach"] =
     effect: SideEffect2<T, TKey>,
   ): SideEffect1<DictionaryLike<TKey, T>> =>
   dict => {
-    const keys = dict[DictionaryLike_keys][EnumerableLike_enumerate]();
-
-    while (keys[EnumeratorLike_move]()) {
-      const key = keys[EnumeratorLike_current];
+    for (let key of dict[DictionaryLike_keys]) {
       const value = dict[DictionaryLike_get](key) as T;
 
       effect(value, key as TKey);

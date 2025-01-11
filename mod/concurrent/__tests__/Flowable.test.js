@@ -54,7 +54,6 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 });
 import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectToHaveBeenCalledTimes, expectToThrowAsync, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
-import * as Enumerable from "../../collections/Enumerable.js";
 import { FlowableLike_flow, PauseableLike_pause, PauseableLike_resume, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import { bindMethod, error, increment, invoke, newInstance, pipe, pipeLazy, returns, tuple, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -68,7 +67,10 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);
-        const src = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Observable.takeFirst({ count: 5 }), Flowable.fromRunnable());
+        const src = pipe(Observable.generate(increment, returns(-1), {
+            delay: 1,
+            delayStart: true,
+        }), Observable.takeFirst({ count: 5 }), Flowable.fromRunnable());
         const dest = Streamable.identity()[StreamableLike_stream](vts, {
             backpressureStrategy: ThrowBackpressureStrategy,
             capacity: 1,
@@ -150,7 +152,10 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
     const env_5 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
-        const generateObservable = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Flowable.fromRunnable(), invoke(FlowableLike_flow, vts));
+        const generateObservable = pipe(Observable.generate(increment, returns(-1), {
+            delay: 1,
+            delayStart: true,
+        }), Flowable.fromRunnable(), invoke(FlowableLike_flow, vts));
         generateObservable[PauseableLike_resume](),
             vts[SchedulerLike_schedule](() => generateObservable[PauseableLike_pause](), {
                 delay: 2,

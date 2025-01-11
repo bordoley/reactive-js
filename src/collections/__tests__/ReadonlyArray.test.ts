@@ -5,7 +5,6 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import { identity, pipeLazy } from "../../functions.js";
-import * as Enumerable from "../Enumerable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import CollectionModuleTests from "./fixtures/CollectionModuleTests.js";
 
@@ -19,8 +18,8 @@ testModule(
       pipeLazy(
         [1, 2, 3, 4],
         ReadonlyArray.entries({ start: 1 }),
-        Enumerable.map(([_k, v]) => v),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
+        ReadonlyArray.map(([_k, v]) => v),
         expectArrayEquals([2, 3, 4]),
       ),
     ),
@@ -29,8 +28,8 @@ testModule(
       pipeLazy(
         [1, 2, 3, 4],
         ReadonlyArray.entries({ start: 1, count: 2 }),
-        Enumerable.map(([_k, v]) => v),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
+        ReadonlyArray.map(([_k, v]) => v),
         expectArrayEquals([2, 3]),
       ),
     ),
@@ -39,8 +38,8 @@ testModule(
       pipeLazy(
         [1, 2, 3, 4],
         ReadonlyArray.entries({ start: 1, count: 10 }),
-        Enumerable.map(([_k, v]) => v),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
+        ReadonlyArray.map(([_k, v]) => v),
         expectArrayEquals([2, 3, 4]),
       ),
     ),
@@ -48,10 +47,9 @@ testModule(
       "negative count",
       pipeLazy(
         [1, 2, 3, 4],
-
         ReadonlyArray.entries({ count: -2 }),
-        Enumerable.map(([_k, v]) => v),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
+        ReadonlyArray.map(([_k, v]) => v),
         expectArrayEquals([4, 3]),
       ),
     ),
@@ -61,8 +59,8 @@ testModule(
         [1, 2, 3, 4],
 
         ReadonlyArray.entries({ start: 2, count: -2 }),
-        Enumerable.map(([_k, v]) => v),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
+        ReadonlyArray.map(([_k, v]) => v),
         expectArrayEquals([3, 2]),
       ),
     ),
@@ -128,9 +126,8 @@ testModule(
       "starting at index greater than 0",
       pipeLazy(
         [1, 2, 3, 4],
-
         ReadonlyArray.values({ start: 1 }),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
         expectArrayEquals([2, 3, 4]),
       ),
     ),
@@ -138,9 +135,8 @@ testModule(
       "starting at index greater than 0 with count",
       pipeLazy(
         [1, 2, 3, 4],
-
         ReadonlyArray.values({ start: 1, count: 2 }),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
         expectArrayEquals([2, 3]),
       ),
     ),
@@ -148,9 +144,8 @@ testModule(
       "starting at index greater than 0 with count exceeding the length",
       pipeLazy(
         [1, 2, 3, 4],
-
         ReadonlyArray.values({ start: 1, count: 10 }),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
         expectArrayEquals([2, 3, 4]),
       ),
     ),
@@ -158,9 +153,8 @@ testModule(
       "negative count",
       pipeLazy(
         [1, 2, 3, 4],
-
         ReadonlyArray.values({ count: -2 }),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
         expectArrayEquals([4, 3]),
       ),
     ),
@@ -168,9 +162,8 @@ testModule(
       "starting at index greater than 0 with negative count",
       pipeLazy(
         [1, 2, 3, 4],
-
         ReadonlyArray.values({ start: 2, count: -2 }),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
         expectArrayEquals([3, 2]),
       ),
     ),

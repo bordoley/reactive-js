@@ -2,11 +2,6 @@
 
 import { Set } from "./__internal__/constants.js";
 import { newInstance, } from "./functions.js";
-export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
-export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
-export const EnumeratorLike_isCompleted = Symbol("EnumeratorLike_isCompleted");
-export const EnumeratorLike_move = Symbol("EnumeratorLike_move");
-export const EnumerableLike_enumerate = Symbol("EnumerableLike_enumerate");
 export const DictionaryLike_get = Symbol("DictionaryLike_get");
 export const DictionaryLike_keys = Symbol("DictionaryLike_keys");
 export const Collection_T = Symbol("Collection_T");

@@ -1,4 +1,3 @@
-import { EnumerableLike } from "../collections.js";
 import {
   Computation,
   Computation_T,
@@ -83,7 +82,6 @@ import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
 import Observable_forkMerge from "./Observable/__private__/Observable.forkMerge.js";
 import Observable_fromAsyncFactory from "./Observable/__private__/Observable.fromAsyncFactory.js";
 import Observable_fromAsyncIterable from "./Observable/__private__/Observable.fromAsyncIterable.js";
-import Observable_fromEnumerable from "./Observable/__private__/Observable.fromEnumerable.js";
 import Observable_fromEventSource from "./Observable/__private__/Observable.fromEventSource.js";
 import Observable_fromIterable from "./Observable/__private__/Observable.fromIterable.js";
 import Observable_fromPromise from "./Observable/__private__/Observable.fromPromise.js";
@@ -916,11 +914,6 @@ export interface ObservableModule {
     DeferredObservableWithSideEffectsLike<T>
   >;
 
-  fromEnumerable<T>(options?: {
-    readonly delay: number;
-    readonly delayStart?: boolean;
-  }): Function1<EnumerableLike<T>, PureRunnableLike<T>>;
-
   fromEventSource<T>(): Function1<
     EventSourceLike<T>,
     MulticastObservableLike<T>
@@ -1681,8 +1674,6 @@ export const fromAsyncFactory: Signature["fromAsyncFactory"] =
   Observable_fromAsyncFactory;
 export const fromAsyncIterable: Signature["fromAsyncIterable"] =
   Observable_fromAsyncIterable;
-export const fromEnumerable: Signature["fromEnumerable"] =
-  Observable_fromEnumerable;
 export const fromEventSource: Signature["fromEventSource"] =
   Observable_fromEventSource;
 export const fromIterable: Signature["fromIterable"] = Observable_fromIterable;

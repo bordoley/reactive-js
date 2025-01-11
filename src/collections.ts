@@ -11,50 +11,6 @@ import {
   newInstance,
 } from "./functions.js";
 
-export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
-export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
-export const EnumeratorLike_isCompleted = Symbol("EnumeratorLike_isCompleted");
-export const EnumeratorLike_move = Symbol("EnumeratorLike_move");
-
-/**
- * An interactive mutable enumerator that can be used to iterate
- * over an underlying source of data.
- *
- * @noInheritDoc
- */
-export interface EnumeratorLike<T = unknown> {
-  /**
-   * Indicates if the `EnumeratorLike` is completed.
-   */
-  readonly [EnumeratorLike_isCompleted]: boolean;
-
-  /**
-   * Returns the element if present.
-   */
-  readonly [EnumeratorLike_current]: T;
-
-  /**
-   * Indicates if the `EnumeratorLike` has a current value.
-   */
-  readonly [EnumeratorLike_hasCurrent]: boolean;
-
-  /**
-   * Advances the enumerator to the next value, if present.
-   *
-   * @returns true if successful, otherwise false.
-   */
-  [EnumeratorLike_move](): boolean;
-}
-
-export const EnumerableLike_enumerate = Symbol("EnumerableLike_enumerate");
-
-/**
- * @noInheritDoc
- */
-export interface EnumerableLike<T = unknown> extends Iterable<T> {
-  [EnumerableLike_enumerate](): EnumeratorLike<T>;
-}
-
 /**
  * @noInheritDoc
  */
@@ -69,7 +25,7 @@ export const DictionaryLike_keys = Symbol("DictionaryLike_keys");
  * @noInheritDoc
  */
 export interface DictionaryLike<TKey = unknown, T = unknown> {
-  readonly [DictionaryLike_keys]: EnumerableLike<TKey>;
+  readonly [DictionaryLike_keys]: Iterable<TKey>;
 
   [DictionaryLike_get](index: TKey): Optional<T>;
 }
@@ -138,7 +94,7 @@ export interface CollectionModule<C extends Collection> {
    */
   entries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
     CollectionOf<C, T, TKey>,
-    EnumerableLike<Tuple2<TKey, T>>
+    Iterable<Tuple2<TKey, T>>
   >;
 
   forEach<T, TKey extends KeyOf<C> = KeyOf<C>>(
@@ -154,7 +110,7 @@ export interface CollectionModule<C extends Collection> {
    */
   keys<TKey extends KeyOf<C>>(): Function1<
     CollectionOf<C, unknown, TKey>,
-    EnumerableLike<TKey>
+    Iterable<TKey>
   >;
 
   /**
@@ -198,7 +154,7 @@ export interface CollectionModule<C extends Collection> {
    */
   values<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
     CollectionOf<C, T, TKey>,
-    EnumerableLike<T>
+    Iterable<T>
   >;
 }
 
@@ -208,7 +164,7 @@ export interface CollectionModule<C extends Collection> {
 export interface DictionaryCollectionModule<C extends Collection>
   extends CollectionModule<C> {
   fromEntries<T, TKey extends KeyOf<C>>(): Function1<
-    EnumerableLike<Tuple2<TKey, T>>,
+    Iterable<Tuple2<TKey, T>>,
     CollectionOf<C, T, TKey>
   >;
 

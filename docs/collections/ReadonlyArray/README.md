@@ -21,6 +21,7 @@
 - [empty](functions/empty.md)
 - [entries](functions/entries.md)
 - [forEach](functions/forEach.md)
+- [fromIterable](functions/fromIterable.md)
 - [keep](functions/keep.md)
 - [keys](functions/keys.md)
 - [map](functions/map.md)

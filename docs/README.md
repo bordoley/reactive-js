@@ -8,7 +8,6 @@
 
 - [collections](collections/README.md)
 - [collections/Dictionary](collections/Dictionary/README.md)
-- [collections/Enumerable](collections/Enumerable/README.md)
 - [collections/ReadonlyArray](collections/ReadonlyArray/README.md)
 - [collections/ReadonlyMap](collections/ReadonlyMap/README.md)
 - [collections/ReadonlyObjectMap](collections/ReadonlyObjectMap/README.md)

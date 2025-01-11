@@ -17,7 +17,6 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
 import PureStatefulComputationModuleTests from "../../computations/__tests__/fixtures/PureStatefulComputationModuleTests.js";
@@ -618,13 +617,11 @@ testModule(
       pipeLazy(
         Observable.combineLatest<number, number>(
           pipe(
-            Enumerable.generate(incrementBy(2), returns(1)),
-            Observable.fromEnumerable({ delay: 2 }),
+            Observable.generate(incrementBy(2), returns(1), { delay: 2 }),
             Observable.takeFirst({ count: 3 }),
           ),
           pipe(
-            Enumerable.generate(incrementBy(2), returns(0)),
-            Observable.fromEnumerable({ delay: 3 }),
+            Observable.generate(incrementBy(2), returns(0), { delay: 3 }),
             Observable.takeFirst({ count: 2 }),
           ),
         ),
@@ -820,10 +817,7 @@ testModule(
               ),
             );
             const src2 = __constant(
-              pipe(
-                Enumerable.generate(increment, returns(100)),
-                Observable.fromEnumerable({ delay: 2 }),
-              ),
+              Observable.generate(increment, returns(100), { delay: 2 }),
             );
 
             const v = __await(src);
@@ -851,10 +845,7 @@ testModule(
             ),
           );
           const src2 = __constant(
-            pipe(
-              Enumerable.generate(increment, returns(100)),
-              Observable.fromEnumerable({ delay: 2 }),
-            ),
+            Observable.generate(increment, returns(100), { delay: 2 }),
           );
 
           const src3 = __constant(
@@ -1620,15 +1611,6 @@ testModule(
     ),
   ),
   describe(
-    "fromEnumerable",
-    testIsPureRunnable(
-      pipe(
-        Enumerable.generate(increment, returns(0)),
-        Observable.fromEnumerable({ delay: 1, delayStart: true }),
-      ),
-    ),
-  ),
-  describe(
     "fromEventSource",
     testIsMulticastObservable(
       pipe(EventSource.create(ignore), Observable.fromEventSource()),
@@ -1724,8 +1706,7 @@ testModule(
       );
 
       pipe(
-        Enumerable.generate(increment, returns(-1)),
-        Observable.fromEnumerable({ delay: 3 }),
+        Observable.generate(increment, returns(-1), { delay: 3 }),
         Observable.takeFirst({ count: 3 }),
         Observable.forEach<number>(x => {
           store[StoreLike_value] = x;
@@ -1806,12 +1787,6 @@ testModule(
   describe(
     "merge",
     test("validate output runtime type", () => {
-      const pureEnumerable = pipe([1, 2, 3], Observable.fromReadonlyArray());
-      const enumerableWithSideEffects = pipe(
-        [1, 2, 3],
-        Observable.fromReadonlyArray(),
-        Observable.forEach(ignore),
-      );
       const pureRunnable = pipe(
         [1, 2, 3],
         Observable.fromReadonlyArray({ delay: 2 }),
@@ -1828,8 +1803,6 @@ testModule(
       const multicast = Subject.create();
 
       const merged1 = Observable.merge(
-        pureEnumerable,
-        enumerableWithSideEffects,
         pureRunnable,
         runnableWithSideEffects,
         deferred,
@@ -1837,12 +1810,10 @@ testModule(
       );
       expectIsDeferredObservableWithSideEffects(merged1);
 
-      const merged2 = Observable.merge(pureEnumerable, pureRunnable, multicast);
+      const merged2 = Observable.merge(pureRunnable, multicast);
       expectIsPureDeferredObservable(merged2);
 
       const merged3 = Observable.merge(
-        pureEnumerable,
-        enumerableWithSideEffects,
         pureRunnable,
         runnableWithSideEffects,
         deferred,
@@ -1850,28 +1821,10 @@ testModule(
       );
       expectIsDeferredObservableWithSideEffects(merged3);
 
-      const merged4 = Observable.merge(
-        pureEnumerable,
-        enumerableWithSideEffects,
-        pureRunnable,
-        runnableWithSideEffects,
-      );
+      const merged4 = Observable.merge(pureRunnable, runnableWithSideEffects);
       expectIsRunnableWithSideEffects(merged4);
 
-      const merged5 = Observable.merge(
-        pureEnumerable,
-        enumerableWithSideEffects,
-        pureRunnable,
-      );
-      expectIsRunnableWithSideEffects(merged5);
-
-      const merged6 = Observable.merge(
-        pureEnumerable,
-        enumerableWithSideEffects,
-      );
-      expectIsRunnableWithSideEffects(merged6);
-
-      const merged7 = Observable.merge(pureEnumerable, pureEnumerable);
+      const merged7 = Observable.merge(pureRunnable, pureRunnable);
       expectIsPureRunnable(merged7);
 
       const merged8 = Observable.merge(Subject.create(), Subject.create());
@@ -2282,8 +2235,7 @@ testModule(
       pipeLazy(
         Observable.concat(
           pipe(
-            Enumerable.generate(increment, returns(0)),
-            Observable.fromEnumerable(),
+            Observable.generate(increment, returns(0)),
             Observable.takeFirst({ count: 3 }),
           ),
           Observable.throws(),
@@ -2299,8 +2251,7 @@ testModule(
       pipeLazy(
         Observable.concat(
           pipe(
-            Enumerable.generate(increment, returns(0)),
-            Observable.fromEnumerable(),
+            Observable.generate(increment, returns(0)),
             Observable.takeFirst({ count: 3 }),
           ),
           Observable.throws(),
@@ -2337,9 +2288,8 @@ testModule(
     test(
       "slow source, fast scan function",
       pipeLazy(
-        Enumerable.generate(increment, returns(-1)),
-        Enumerable.takeFirst({ count: 10 }),
-        Observable.fromEnumerable({ delay: 10 }),
+        Observable.generate(increment, returns(-1), { delay: 10 }),
+        Observable.takeFirst({ count: 10 }),
         Observable.scanMany(
           (_acc: number, next: number) =>
             pipe(next, Observable.fromValue({ delay: 2 })),
@@ -2650,8 +2600,10 @@ testModule(
     test(
       "first",
       pipeLazy(
-        Enumerable.generate(increment, returns<number>(-1)),
-        Observable.fromEnumerable({ delay: 1, delayStart: true }),
+        Observable.generate(increment, returns<number>(-1), {
+          delay: 1,
+          delayStart: true,
+        }),
         Observable.takeFirst({ count: 100 }),
         Observable.throttle<number>(50, { mode: "first" }),
         Observable.toReadonlyArray(),
@@ -2661,8 +2613,10 @@ testModule(
     test(
       "last",
       pipeLazy(
-        Enumerable.generate(increment, returns<number>(-1)),
-        Observable.fromEnumerable({ delay: 1, delayStart: true }),
+        Observable.generate(increment, returns<number>(-1), {
+          delay: 1,
+          delayStart: true,
+        }),
         Observable.takeFirst({ count: 200 }),
         Observable.throttle<number>(50, { mode: "last" }),
         Observable.toReadonlyArray(),
@@ -2672,8 +2626,10 @@ testModule(
     test(
       "interval",
       pipeLazy(
-        Enumerable.generate(increment, returns<number>(-1)),
-        Observable.fromEnumerable({ delay: 1, delayStart: true }),
+        Observable.generate(increment, returns<number>(-1), {
+          delay: 1,
+          delayStart: true,
+        }),
         Observable.takeFirst({ count: 200 }),
         Observable.throttle<number>(75, { mode: "interval" }),
         Observable.toReadonlyArray(),

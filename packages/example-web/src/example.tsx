@@ -4,7 +4,6 @@ import * as Observable from "@reactive-js/core/concurrent/Observable";
 import {
   createComponent,
   useDispatcher,
-  useEnumerator,
   usePauseable,
   useStream,
   useObserve,
@@ -23,6 +22,7 @@ import {
 import {
   increment,
   isNone,
+  isReadonlyArray,
   isSome,
   none,
   Optional,
@@ -35,6 +35,7 @@ import {
 } from "@reactive-js/core/functions";
 import * as Streamable from "@reactive-js/core/concurrent/Streamable";
 import * as Dictionary from "@reactive-js/core/collections/Dictionary";
+import * as ReadonlyArray from "@reactive-js/core/collections/ReadonlyArray";
 import {
   __await,
   __bindMethod,
@@ -61,11 +62,7 @@ import {
 } from "@reactive-js/core/concurrent";
 import { EventSourceLike, StoreLike_value } from "@reactive-js/core/events";
 import { QueueableLike_enqueue } from "@reactive-js/core/utils";
-import {
-  DictionaryLike_get,
-  EnumerableLike_enumerate,
-} from "@reactive-js/core/collections";
-import * as Enumerable from "@reactive-js/core/collections/Enumerable";
+import { DictionaryLike_get } from "@reactive-js/core/collections";
 import * as Flowable from "@reactive-js/core/concurrent/Flowable";
 import { useFlow } from "@reactive-js/core/integrations/react";
 import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
@@ -133,12 +130,12 @@ const AnimationGroup = () => {
         {pipeSome(
           animationStream,
           Dictionary.entries(),
-          Enumerable.map(
+          ReadonlyArray.fromIterable(),
+          ReadonlyArray.map(
             ([key, animation]: Tuple2<string, EventSourceLike<number>>) => (
               <AnimatedBox key={key} animation={animation} />
             ),
           ),
-          Enumerable.toReadonlyArray(),
         )}
       </div>
       <div>
@@ -171,27 +168,6 @@ const Cache = () => {
     <div>
       <input type="text" onChange={onChange} value={value}></input>
       <span>{value}</span>
-    </div>
-  );
-};
-
-const EnumeratorComponent = () => {
-  const enumerator = useMemo(
-    () => Enumerable.generate(increment, () => -1)[EnumerableLike_enumerate](),
-    [],
-  );
-
-  const enumeratorContoller = useEnumerator(enumerator);
-
-  return (
-    <div>
-      <button onClick={enumeratorContoller.move}>Move the Enumerator</button>
-      <span>
-        {" "}
-        {enumeratorContoller.hasCurrent
-          ? enumeratorContoller.current
-          : "no value"}
-      </span>
     </div>
   );
 };
@@ -402,7 +378,6 @@ ReactDOMClient.createRoot(rootElement as any).render(
     <History />
     <Counter />
     <AnimationGroup />
-    <EnumeratorComponent />
     <Cache />
     <RxComponent windowLocation={windowLocation} />
     <Wordle />

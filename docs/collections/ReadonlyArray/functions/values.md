@@ -6,7 +6,7 @@
 
 # Function: values()
 
-> **values**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`EnumerableLike`](../../interfaces/EnumerableLike.md)\<`T`\>\>
+> **values**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<`T`\>\>
 
 ## Type Parameters
 
@@ -28,4 +28,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`EnumerableLike`](../../interfaces/EnumerableLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<`T`\>\>

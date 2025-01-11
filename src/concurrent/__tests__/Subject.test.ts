@@ -9,7 +9,6 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Enumerable from "../../collections/Enumerable.js";
 import {
   ObservableLike_observe,
   SchedulerLike_schedule,
@@ -96,8 +95,10 @@ testModule(
       );
 
       const generateSubscription = pipe(
-        Enumerable.generate(increment, returns(-1)),
-        Observable.fromEnumerable({ delay: 3, delayStart: true }),
+        Observable.generate(increment, returns(-1), {
+          delay: 3,
+          delayStart: true,
+        }),
         Observable.forEach(bindMethod(subject, EventListenerLike_notify)),
         Observable.subscribe(vts),
       );

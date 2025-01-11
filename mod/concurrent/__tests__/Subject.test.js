@@ -54,7 +54,6 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 });
 import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsSome, expectTrue, test, testModule, } from "../../__internal__/testing.js";
-import * as Enumerable from "../../collections/Enumerable.js";
 import { ObservableLike_observe, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import { EventListenerLike_notify } from "../../events.js";
 import { bindMethod, increment, pipe, returns, } from "../../functions.js";
@@ -119,7 +118,10 @@ testModule("Subject", describe("create", test("with replay", () => {
         const subject = Subject.create();
         const result = [];
         const subjectSubscription = pipe(subject, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
-        const generateSubscription = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 3, delayStart: true }), Observable.forEach(bindMethod(subject, EventListenerLike_notify)), Observable.subscribe(vts));
+        const generateSubscription = pipe(Observable.generate(increment, returns(-1), {
+            delay: 3,
+            delayStart: true,
+        }), Observable.forEach(bindMethod(subject, EventListenerLike_notify)), Observable.subscribe(vts));
         vts[SchedulerLike_schedule](() => {
             subject[DisposableLike_dispose]();
         }, { delay: 7 });

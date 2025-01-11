@@ -16,7 +16,7 @@
 
 ### keys
 
-\<`TKey`\>() => [`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](../interfaces/EnumerableLike.md)\<`TKey`\>\>
+\<`TKey`\>() => [`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `unknown`, `TKey`\>, `Iterable`\<`TKey`\>\>
 
 ## Returns
 

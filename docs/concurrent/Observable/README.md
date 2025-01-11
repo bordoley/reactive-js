@@ -70,7 +70,6 @@
 - [forkMerge](functions/forkMerge.md)
 - [fromAsyncFactory](functions/fromAsyncFactory.md)
 - [fromAsyncIterable](functions/fromAsyncIterable.md)
-- [fromEnumerable](functions/fromEnumerable.md)
 - [fromEventSource](functions/fromEventSource.md)
 - [fromIterable](functions/fromIterable.md)
 - [fromPromise](functions/fromPromise.md)

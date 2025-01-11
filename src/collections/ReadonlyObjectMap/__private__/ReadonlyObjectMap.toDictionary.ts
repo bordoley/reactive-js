@@ -2,7 +2,6 @@ import {
   DictionaryLike,
   DictionaryLike_get,
   DictionaryLike_keys,
-  EnumerableLike,
   ReadonlyObjectMapLike,
 } from "../../../collections.js";
 import { Optional, newInstance, pipe } from "../../../functions.js";
@@ -12,7 +11,7 @@ import ReadonlyObjectMap_keys from "./ReadonlyObjectMap.keys.js";
 class ReadonlyObjectMapDictionary<T, TKey extends ReadonlyObjectMap.TKeyBase>
   implements DictionaryLike<TKey, T>
 {
-  readonly [DictionaryLike_keys]: EnumerableLike<TKey>;
+  readonly [DictionaryLike_keys]: Iterable<TKey>;
   readonly d: ReadonlyObjectMapLike<TKey, T>;
 
   constructor(delegate: ReadonlyObjectMapLike<TKey, T>) {

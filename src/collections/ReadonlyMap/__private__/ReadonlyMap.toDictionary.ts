@@ -3,7 +3,6 @@ import {
   DictionaryLike,
   DictionaryLike_get,
   DictionaryLike_keys,
-  EnumerableLike,
 } from "../../../collections.js";
 import { Optional, newInstance, pipe } from "../../../functions.js";
 import type * as ReadonlyMap from "../../ReadonlyMap.js";
@@ -14,7 +13,7 @@ class ReadonlyMapDictionary<
   TKey extends ReadonlyMap.TKeyBase = ReadonlyMap.TKeyBase,
 > implements DictionaryLike<TKey, T>
 {
-  readonly [DictionaryLike_keys]: EnumerableLike<TKey>;
+  readonly [DictionaryLike_keys]: Iterable<TKey>;
 
   constructor(readonly d: ReadonlyMap<TKey, T>) {
     this[DictionaryLike_keys] = pipe(this.d, ReadonlyMap_keys());

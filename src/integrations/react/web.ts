@@ -43,10 +43,10 @@ import {
 } from "../web.js";
 
 interface ReactWebModule {
-  readonly WindowLocationProvider: React.FunctionComponent<{
+  WindowLocationProvider(props: {
     windowLocation: WindowLocationLike;
     children: React.ReactNode;
-  }>;
+  }): React.ReactNode;
 
   /**
    */

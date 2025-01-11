@@ -19,7 +19,6 @@ import {
   tuple,
 } from "../../functions.js";
 import * as Dictionary from "../Dictionary.js";
-import * as Enumerable from "../Enumerable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as ReadonlyMap from "../ReadonlyMap.js";
 import * as ReadonlyObjectMap from "../ReadonlyObjectMap.js";
@@ -35,7 +34,7 @@ testModule(
       pipeLazy(
         ReadonlyObjectMap.empty<number>(),
         ReadonlyObjectMap.values(),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
         expectArrayEquals<number>([]),
       ),
     ),
@@ -49,7 +48,7 @@ testModule(
         ReadonlyArray.values(),
         ReadonlyObjectMap.fromEntries(),
         ReadonlyObjectMap.entries(),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
         expectArrayEquals([tuple("0", "b"), tuple("1", "d")], {
           valuesEquality: arrayEquality(),
         }),
@@ -66,7 +65,7 @@ testModule(
         ReadonlyObjectMap.fromEntries(),
         ReadonlyObjectMap.map<string, string, string>((_, key: string) => key),
         ReadonlyObjectMap.values(),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
         expectArrayEquals(["0", "1", "2"]),
       ),
     ),
@@ -100,7 +99,7 @@ testModule(
 
       pipe(
         dict[DictionaryLike_keys],
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
         x => x[Array_length],
         expectEquals(3),
       );
@@ -116,7 +115,7 @@ testModule(
       pipe(
         dict,
         Dictionary.values(),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
         expectArrayEquals(["b", none, "v"]),
       );
     }),
@@ -128,7 +127,7 @@ testModule(
         ReadonlyObjectMap.fromEntries(),
         ReadonlyObjectMap.toDictionary<Optional<string>, string>(),
         Dictionary.keys(),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
         expectArrayEquals(["0", "1", "2"]),
       ),
     ),
@@ -166,7 +165,7 @@ testModule(
       pipe(
         dict,
         ReadonlyMap.keys(),
-        Enumerable.toReadonlyArray(),
+        ReadonlyArray.fromIterable(),
         expectArrayEquals(["0", "1", "2"]),
       );
     }),
