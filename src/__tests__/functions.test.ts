@@ -50,6 +50,7 @@ import {
   pipeSome,
   pipeSomeLazy,
   raiseIf,
+  raiseIfNone,
   returns,
   tuple,
 } from "../functions.js";
@@ -390,6 +391,15 @@ testModule(
     }),
     test("with false", () => {
       raiseIf(false, "");
+    }),
+  ),
+  describe(
+    "raiseIfNone",
+    test("with None", () => {
+      expectToThrow(() => raiseIfNone(none, ""));
+    }),
+    test("with Some", () => {
+      raiseIfNone({}, "");
     }),
   ),
   describe(

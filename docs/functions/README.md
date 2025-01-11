@@ -60,7 +60,6 @@
 - [bind](functions/bind.md)
 - [bindMethod](functions/bindMethod.md)
 - [call](functions/call.md)
-- [clamp](functions/clamp.md)
 - [compose](functions/compose.md)
 - [debug](functions/debug.md)
 - [decrement](functions/decrement.md)

@@ -41,10 +41,10 @@ const QueueMixin = /*@PURE*/ (() => {
         const values = instance[QueueMixin_values];
         const capacity = values[Array_length];
         const capacityMask = instance[QueueMixin_capacityMask];
-        if (count < capacity >> 1 || (tail !== head && tail !== 0)) {
+        if (count < capacity) {
             return;
         }
-        if (head === 0 || (tail === 0 && head < capacity >> 2)) {
+        if (head === 0) {
             values[Array_length] <<= 1;
             instance[QueueMixin_tail] = count + head;
         }
@@ -64,7 +64,7 @@ const QueueMixin = /*@PURE*/ (() => {
         const head = instance[QueueMixin_head];
         const tail = instance[QueueMixin_tail];
         const newCapacity = capacity >> 1;
-        if (count >= capacity >> 2 || capacity <= 32) {
+        if (count >= capacity >> 1 || capacity <= 32) {
             return;
         }
         if (tail >= head && tail < newCapacity) {
@@ -188,13 +188,10 @@ const QueueMixin = /*@PURE*/ (() => {
                 return first;
             }
             else {
-                const item = head === tail ? none : values[head];
-                if (head !== tail) {
-                    values[head] = none;
-                    this[QueueMixin_head] =
-                        (head + 1) & this[QueueMixin_capacityMask];
-                    this[QueueLike_count]--;
-                }
+                const item = values[head];
+                values[head] = none;
+                this[QueueMixin_head] = (head + 1) & this[QueueMixin_capacityMask];
+                this[QueueLike_count]--;
                 shrink(this);
                 return item;
             }

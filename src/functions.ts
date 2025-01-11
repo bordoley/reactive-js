@@ -238,8 +238,6 @@ interface FunctionsModule {
     b: TB,
   ): T;
 
-  clamp(min: number, max: number): Function1<number, number>;
-
   compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
   compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
   compose<T, A, B, C>(
@@ -1261,9 +1259,6 @@ export const call: Signature["call"] = <T>(
   self: unknown,
   ...args: readonly any[]
 ) => f.call(self, ...args);
-
-export const clamp: Signature["clamp"] = (min, max) => v =>
-  v > max ? max : v < min ? min : v;
 
 /**
  * Composes a series of unary functions.

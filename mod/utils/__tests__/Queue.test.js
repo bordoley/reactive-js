@@ -27,7 +27,19 @@ const makeShuffledArray = (n) => {
     }
     return result;
 };
-testModule("Queue", test("push/pull/count", () => {
+testModule("Queue", test("enqueue", () => {
+    const queue = Queue.create();
+    for (let i = 0; i < 127; i++) {
+        queue[QueueableLike_enqueue](i);
+    }
+    for (let i = 0; i < 62; i++) {
+        queue[QueueLike_dequeue]();
+    }
+    for (let i = 128; i < 255; i++) {
+        queue[QueueableLike_enqueue](i);
+    }
+    pipe(queue[QueueLike_count], expectEquals(192));
+}), test("push/pull/count", () => {
     const queue = Queue.create();
     pipe(queue[QueueLike_head], expectEquals(none));
     pipe(queue[QueueLike_dequeue](), expectEquals(none));

@@ -3,6 +3,7 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
+  expectFalse,
   expectTrue,
   test,
   testModule,
@@ -20,6 +21,7 @@ import { sequence } from "../../computations.js";
 import {
   CacheLike_get,
   DispatcherLike_complete,
+  DispatcherLike_isCompleted,
   SchedulerLike_schedule,
   StreamableLike_stream,
   VirtualTimeSchedulerLike_run,
@@ -225,9 +227,8 @@ testModule(
     test("integration test", () => {
       using vts = VirtualTimeScheduler.create();
 
-      const cache = Streamable.inMemoryCache<number>({ capacity: 1 })[
-        StreamableLike_stream
-      ](vts);
+      const cache =
+        Streamable.inMemoryCache<number>()[StreamableLike_stream](vts);
 
       const result1: number[] = [];
       const abcSubscription1 = pipe(
@@ -392,6 +393,20 @@ testModule(
       vts[VirtualTimeSchedulerLike_run]();
 
       pipe(result, expectArrayEquals([1, 2, 3]));
+    }),
+    test("completing the store", () => {
+      using vts = VirtualTimeScheduler.create();
+      const streamable = Streamable.stateStore(returns(1));
+      const stateStream = streamable[StreamableLike_stream](vts, {
+        capacity: 20,
+        backpressureStrategy: DropLatestBackpressureStrategy,
+      });
+
+      expectFalse(stateStream[DispatcherLike_isCompleted]);
+
+      stateStream[DispatcherLike_complete]();
+
+      expectTrue(stateStream[DispatcherLike_isCompleted]);
     }),
   ),
   describe(

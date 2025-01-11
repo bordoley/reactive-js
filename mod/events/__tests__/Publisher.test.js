@@ -1,7 +1,7 @@
 /// <reference types="./Publisher.test.d.ts" />
 
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectTrue, test, testModule, } from "../../__internal__/testing.js";
-import { EventListenerLike_notify } from "../../events.js";
+import { EventListenerLike_notify, EventSourceLike_addEventListener, } from "../../events.js";
 import { ignore, newInstance, none, pipe, raiseError, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
@@ -39,4 +39,11 @@ testModule("Publisher", describe("create", test("when disposed with an error", (
     publisher[DisposableLike_dispose]();
     publisher[EventListenerLike_notify](3);
     pipe(result, expectArrayEquals([1, 2]));
-})));
+})), test("add the same publisher as a listener multiple times", () => {
+    const publisher = Publisher.create({ autoDispose: true });
+    const listener = Publisher.create({ autoDispose: true });
+    publisher[EventSourceLike_addEventListener](listener);
+    publisher[EventSourceLike_addEventListener](listener);
+    listener[DisposableLike_dispose]();
+    expectTrue(publisher[DisposableLike_isDisposed]);
+}));

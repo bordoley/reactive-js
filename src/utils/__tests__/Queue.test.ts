@@ -50,6 +50,23 @@ const makeShuffledArray = (n: number) => {
 
 testModule(
   "Queue",
+  test("enqueue", () => {
+    const queue = Queue.create<number>();
+
+    for (let i = 0; i < 127; i++) {
+      queue[QueueableLike_enqueue](i);
+    }
+
+    for (let i = 0; i < 62; i++) {
+      queue[QueueLike_dequeue]();
+    }
+
+    for (let i = 128; i < 255; i++) {
+      queue[QueueableLike_enqueue](i);
+    }
+
+    pipe(queue[QueueLike_count], expectEquals(192));
+  }),
   test("push/pull/count", () => {
     const queue = Queue.create<number>();
 

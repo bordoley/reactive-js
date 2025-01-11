@@ -47,7 +47,6 @@ export const bindMethod = (thiz, key) => bind(thiz[key], thiz);
  * Calls the function `f` with a given self value as this and arguments provided individually.
  */
 export const call = (f, self, ...args) => f.call(self, ...args);
-export const clamp = (min, max) => v => v > max ? max : v < min ? min : v;
 /**
  * Composes a series of unary functions.
  */

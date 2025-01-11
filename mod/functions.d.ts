@@ -124,7 +124,6 @@ interface FunctionsModule {
     call<TInstance, T>(f: () => T, self: TInstance): T;
     call<TInstance, T, TA>(f: (a: TA) => T, self: TInstance, a: TA): T;
     call<TInstance, T, TA, TB>(f: (a: TA, b: TB) => T, self: TInstance, a: TA, b: TB): T;
-    clamp(min: number, max: number): Function1<number, number>;
     compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
     compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
     compose<T, A, B, C>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>): Function1<T, C>;
@@ -299,7 +298,6 @@ export declare const bindMethod: Signature["bindMethod"];
  * Calls the function `f` with a given self value as this and arguments provided individually.
  */
 export declare const call: Signature["call"];
-export declare const clamp: Signature["clamp"];
 /**
  * Composes a series of unary functions.
  */

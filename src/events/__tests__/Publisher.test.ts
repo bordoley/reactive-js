@@ -8,7 +8,10 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { EventListenerLike_notify } from "../../events.js";
+import {
+  EventListenerLike_notify,
+  EventSourceLike_addEventListener,
+} from "../../events.js";
 import {
   Optional,
   ignore,
@@ -83,4 +86,15 @@ testModule(
       pipe(result, expectArrayEquals([1, 2]));
     }),
   ),
+  test("add the same publisher as a listener multiple times", () => {
+    const publisher = Publisher.create<number>({ autoDispose: true });
+    const listener = Publisher.create<number>({ autoDispose: true });
+
+    publisher[EventSourceLike_addEventListener](listener);
+    publisher[EventSourceLike_addEventListener](listener);
+
+    listener[DisposableLike_dispose]();
+
+    expectTrue(publisher[DisposableLike_isDisposed]);
+  }),
 );

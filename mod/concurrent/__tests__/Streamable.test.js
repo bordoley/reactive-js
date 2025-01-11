@@ -53,13 +53,13 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 });
 import { Array_push } from "../../__internal__/constants.js";
-import { describe, expectArrayEquals, expectEquals, expectTrue, test, testModule, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectFalse, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import * as Dictionary from "../../collections/Dictionary.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { DictionaryLike_get, keySet, } from "../../collections.js";
 import { sequence } from "../../computations.js";
-import { CacheLike_get, DispatcherLike_complete, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
+import { CacheLike_get, DispatcherLike_complete, DispatcherLike_isCompleted, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import { bindMethod, invoke, none, pipe, pipeSome, returns, tuple, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -198,7 +198,7 @@ testModule("Streamable", describe("animationGroup", test("blocking mode", () => 
     const env_6 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_6, VirtualTimeScheduler.create(), false);
-        const cache = Streamable.inMemoryCache({ capacity: 1 })[StreamableLike_stream](vts);
+        const cache = Streamable.inMemoryCache()[StreamableLike_stream](vts);
         const result1 = [];
         const abcSubscription1 = pipe(cache[CacheLike_get]("abc"), Observable.forEach(bindMethod(result1, Array_push)), Observable.subscribe(vts));
         const result2 = [];
@@ -325,10 +325,30 @@ testModule("Streamable", describe("animationGroup", test("blocking mode", () => 
     finally {
         __disposeResources(env_8);
     }
-})), describe("syncState", test("without throttling", () => {
+}), test("completing the store", () => {
     const env_9 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_9, VirtualTimeScheduler.create(), false);
+        const streamable = Streamable.stateStore(returns(1));
+        const stateStream = streamable[StreamableLike_stream](vts, {
+            capacity: 20,
+            backpressureStrategy: DropLatestBackpressureStrategy,
+        });
+        expectFalse(stateStream[DispatcherLike_isCompleted]);
+        stateStream[DispatcherLike_complete]();
+        expectTrue(stateStream[DispatcherLike_isCompleted]);
+    }
+    catch (e_9) {
+        env_9.error = e_9;
+        env_9.hasError = true;
+    }
+    finally {
+        __disposeResources(env_9);
+    }
+})), describe("syncState", test("without throttling", () => {
+    const env_10 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_10, VirtualTimeScheduler.create(), false);
         const stream = pipe(Streamable.stateStore(returns(-1)), Streamable.syncState(state => pipe(sequence(Observable.generate)(state + 10), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (oldState, newState) => newState !== oldState
             ? Observable.empty({ delay: 0 })
             : Observable.empty({ delay: 0 })), invoke(StreamableLike_stream, vts));
@@ -338,17 +358,17 @@ testModule("Streamable", describe("animationGroup", test("blocking mode", () => 
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([-1, 9, 11, 10]));
     }
-    catch (e_9) {
-        env_9.error = e_9;
-        env_9.hasError = true;
+    catch (e_10) {
+        env_10.error = e_10;
+        env_10.hasError = true;
     }
     finally {
-        __disposeResources(env_9);
+        __disposeResources(env_10);
     }
 }), test("with throttling", () => {
-    const env_10 = { stack: [], error: void 0, hasError: false };
+    const env_11 = { stack: [], error: void 0, hasError: false };
     try {
-        const vts = __addDisposableResource(env_10, VirtualTimeScheduler.create(), false);
+        const vts = __addDisposableResource(env_11, VirtualTimeScheduler.create(), false);
         let updateCnt = 0;
         const stream = pipe(Streamable.stateStore(returns(-1)), Streamable.syncState(_state => Observable.empty({ delay: 1 }), (oldState, newState) => {
             updateCnt++;
@@ -360,12 +380,12 @@ testModule("Streamable", describe("animationGroup", test("blocking mode", () => 
         vts[VirtualTimeSchedulerLike_run]();
         pipe(updateCnt, expectEquals(2));
     }
-    catch (e_10) {
-        env_10.error = e_10;
-        env_10.hasError = true;
+    catch (e_11) {
+        env_11.error = e_11;
+        env_11.hasError = true;
     }
     finally {
-        __disposeResources(env_10);
+        __disposeResources(env_11);
     }
 })));
 ((_) => { })(Streamable);
