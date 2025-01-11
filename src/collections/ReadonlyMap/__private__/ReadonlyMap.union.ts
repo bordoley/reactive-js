@@ -7,11 +7,11 @@ const ReadonlyMap_union: ReadonlyMap.Signature["union"] =
   (m1: ReadonlyMap<TKey, T>) => {
     const result: Map<TKey, T> = newInstance<Map<TKey, T>>(Map);
 
-    for (let [key, value] of m1) {
+    for (const [key, value] of m1) {
       result[Map_set](key, value);
     }
 
-    for (let [key, value] of m2) {
+    for (const [key, value] of m2) {
       result[Map_set](key, value);
     }
 

@@ -6,7 +6,7 @@ const ReadonlyMap_forEach: ReadonlyMap.Signature["forEach"] =
     effect: SideEffect2<T, TKey>,
   ): SideEffect1<ReadonlyMap<TKey, T>> =>
   map => {
-    for (let [key, value] of map) {
+    for (const [key, value] of map) {
       effect(value, key as TKey);
     }
   };

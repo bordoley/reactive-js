@@ -373,16 +373,12 @@ const QueueMixin: <T>() => Mixin1<
           }
 
           const values = this[QueueMixin_values];
-
           const capacityMask = this[QueueMixin_capacityMask];
-
-          let tail = this[QueueMixin_tail];
+          const tail = this[QueueMixin_tail];
 
           values[tail] = item;
           this[QueueLike_count]++;
-
-          tail = (tail + 1) & capacityMask;
-          this[QueueMixin_tail] = tail;
+          this[QueueMixin_tail] = (tail + 1) & capacityMask;
 
           grow(this);
 

@@ -11,7 +11,7 @@ const Dictionary_forEach: Dictionary.Signature["forEach"] =
     effect: SideEffect2<T, TKey>,
   ): SideEffect1<DictionaryLike<TKey, T>> =>
   dict => {
-    for (let key of dict[DictionaryLike_keys]) {
+    for (const key of dict[DictionaryLike_keys]) {
       const value = dict[DictionaryLike_get](key) as T;
 
       effect(value, key as TKey);

@@ -2,7 +2,7 @@
 
 const ReadonlyMap_reduce = (reducer, initialValue) => (map) => {
     let result = initialValue();
-    for (let [key, value] of map) {
+    for (const [key, value] of map) {
         result = reducer(result, value, key);
     }
     return result;

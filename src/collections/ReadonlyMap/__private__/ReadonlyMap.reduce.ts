@@ -9,7 +9,7 @@ const ReadonlyMap_reduce: ReadonlyMap.Signature["reduce"] =
   (map: ReadonlyMap<TKey, T>) => {
     let result = initialValue();
 
-    for (let [key, value] of map) {
+    for (const [key, value] of map) {
       result = reducer(result, value, key);
     }
 

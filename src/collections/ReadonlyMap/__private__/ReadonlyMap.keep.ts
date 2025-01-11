@@ -9,7 +9,7 @@ const ReadonlyMap_keep: ReadonlyMap.Signature["keep"] =
   (map: ReadonlyMap<TKey, T>) => {
     const result = newInstance(Map<TKey, T>);
 
-    for (let [key, value] of map) {
+    for (const [key, value] of map) {
       if (predicate(value, key)) {
         result[Map_set](key, value);
       }
