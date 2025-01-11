@@ -9,7 +9,7 @@ import { EventListenerLike_notify } from "../../../events.js";
 import { bindMethod, compose, identity, invoke, isNone, isSome, newInstance, none, pipe, tuple, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import * as IndexedQueue from "../../../utils/IndexedQueue.js";
+import * as Queue from "../../../utils/Queue.js";
 import { DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import * as Subject from "../../Subject.js";
@@ -23,7 +23,7 @@ const cacheStream = /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(DelegatingStreamMixin()), function CacheStream(instance, scheduler, options, capacity, cleanupScheduler, persistentStore) {
         const store = newInstance(Map);
         const subscriptions = newInstance(Map);
-        const cleanupQueue = IndexedQueue.create();
+        const cleanupQueue = Queue.create();
         const cleanupContinuation = (ctx) => {
             while (store[Map_size] > capacity) {
                 const key = cleanupQueue[QueueLike_dequeue]();

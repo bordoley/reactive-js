@@ -9,7 +9,7 @@ import { error, isSome, newInstance, none, pipe } from "../functions.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import IndexedQueueMixin from "../utils/__mixins__/IndexedQueueMixin.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, IndexedQueueLike_get, QueueLike_count, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../utils.js";
 export const create = /*@__PURE__*/ (() => {
     const Subject_autoDispose = Symbol("Subject_autoDispose");
     const Subject_observers = Symbol("Subject_observers");
@@ -71,12 +71,7 @@ export const create = /*@__PURE__*/ (() => {
                     this[DisposableLike_dispose]();
                 }
             }));
-            // The idea here is that an onSubscribe function may
-            // call next from unscheduled sources such as event handlers.
-            // So we marshall those events back to the scheduler.
-            const count = this[QueueLike_count];
-            for (let i = 0; i < count; i++) {
-                const next = this[IndexedQueueLike_get](i);
+            for (const next of this) {
                 observer[QueueableLike_enqueue](next);
             }
             if (this[DisposableLike_isDisposed]) {

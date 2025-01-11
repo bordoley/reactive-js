@@ -4,7 +4,11 @@ import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/const
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { newInstance, none, raiseError, raiseIf, returns, } from "../../functions.js";
-import { BackPressureError, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, IndexedQueueLike_get, IndexedQueueLike_set, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, StackLike_head, StackLike_pop, ThrowBackpressureStrategy, } from "../../utils.js";
+import { BackPressureError, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, ThrowBackpressureStrategy, } from "../../utils.js";
+export const StackLike_head = Symbol("StackLike_head");
+export const StackLike_pop = Symbol("StackLike_pop");
+export const IndexedQueueLike_get = Symbol("IndexedQueueLike_get");
+export const IndexedQueueLike_set = Symbol("IndexedQueueLike_set");
 const IndexedQueueMixin = /*@PURE*/ (() => {
     const IndexedQueueMixin_capacityMask = Symbol("IndexedQueueMixin_capacityMask");
     const IndexedQueueMixin_head = Symbol("IndexedQueueMixin_head");
@@ -148,6 +152,12 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
             const oldValue = values[computedIndex];
             values[computedIndex] = value;
             return oldValue;
+        },
+        *[Symbol.iterator]() {
+            const count = this[QueueLike_count];
+            for (let i = 0; i < count; i++) {
+                yield this[IndexedQueueLike_get](i);
+            }
         },
         [QueueableLike_enqueue](item) {
             const backpressureStrategy = this[QueueableLike_backpressureStrategy];

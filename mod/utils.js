@@ -20,13 +20,9 @@ export const DropLatestBackpressureStrategy = "drop-latest";
 export const DropOldestBackpressureStrategy = "drop-oldest";
 export const OverflowBackpressureStrategy = "overflow";
 export const ThrowBackpressureStrategy = "throw";
-export const StackLike_head = Symbol("StackLike_head");
-export const StackLike_pop = Symbol("StackLike_pop");
 export const QueueLike_head = Symbol("QueueLike_head");
 export const QueueLike_dequeue = Symbol("QueueLike_dequeue");
 export const QueueLike_count = Symbol("QueueLike_count");
-export const IndexedQueueLike_get = Symbol("IndexedQueueLike_get");
-export const IndexedQueueLike_set = Symbol("IndexedQueueLike_set");
 /**
  * @noInheritDoc
  */

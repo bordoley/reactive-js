@@ -75,34 +75,16 @@ export interface QueueableLike<T = unknown> {
      */
     [QueueableLike_enqueue](req: T): boolean;
 }
-export declare const StackLike_head: unique symbol;
-export declare const StackLike_pop: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface StackLike<T = unknown> extends QueueableLike<T> {
-    readonly [StackLike_head]: Optional<T>;
-    [StackLike_pop](): Optional<T>;
-}
 export declare const QueueLike_head: unique symbol;
 export declare const QueueLike_dequeue: unique symbol;
 export declare const QueueLike_count: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface QueueLike<T = unknown> extends QueueableLike<T> {
+export interface QueueLike<T = unknown> extends QueueableLike<T>, Iterable<T> {
     readonly [QueueLike_count]: number;
     readonly [QueueLike_head]: Optional<T>;
     [QueueLike_dequeue](): Optional<T>;
-}
-export declare const IndexedQueueLike_get: unique symbol;
-export declare const IndexedQueueLike_set: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface IndexedQueueLike<T = unknown> extends QueueLike<T>, StackLike<T> {
-    [IndexedQueueLike_get](index: number): T;
-    [IndexedQueueLike_set](key: number, value: T): T;
 }
 /**
  * @noInheritDoc

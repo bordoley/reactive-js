@@ -3,8 +3,8 @@
 import { floor } from "../../__internal__/math.js";
 import { getPrototype, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { call, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
-import { BackPressureError, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, IndexedQueueLike_get, IndexedQueueLike_set, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, StackLike_pop, ThrowBackpressureStrategy, } from "../../utils.js";
-import IndexedQueueMixin from "./IndexedQueueMixin.js";
+import { BackPressureError, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, ThrowBackpressureStrategy, } from "../../utils.js";
+import IndexedQueueMixin, { IndexedQueueLike_get, IndexedQueueLike_set, StackLike_pop, } from "./IndexedQueueMixin.js";
 const PriorityQueueMixin = /*@__PURE__*/ (() => {
     const IndexedQueuePrototype = getPrototype(IndexedQueueMixin());
     const PriorityQueueMixin_comparator = Symbol("PriorityQueueMixin_comparator");

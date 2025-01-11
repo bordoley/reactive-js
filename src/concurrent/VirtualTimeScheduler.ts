@@ -19,7 +19,7 @@ import {
   VirtualTimeSchedulerLike_run,
 } from "../concurrent.js";
 import { Optional, isSome, none } from "../functions.js";
-import * as PriorityQueue from "../utils/PriorityQueue.js";
+import * as Queue from "../utils/Queue.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -79,9 +79,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
       init(SchedulerMixin, instance);
 
       instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
-      instance[VirtualTimeScheduler_queue] = PriorityQueue.create(
-        Continuation.compare,
-      );
+      instance[VirtualTimeScheduler_queue] = Queue.create({
+        comparator: Continuation.compare,
+      });
 
       return instance;
     },
@@ -112,9 +112,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           ((queue = this[VirtualTimeScheduler_queue]),
           queue[QueueLike_count] > 0)
         ) {
-          this[VirtualTimeScheduler_queue] = PriorityQueue.create(
-            Continuation.compare,
-          );
+          this[VirtualTimeScheduler_queue] = Queue.create({
+            comparator: Continuation.compare,
+          });
 
           const currentTime = this[SchedulerLike_now];
 

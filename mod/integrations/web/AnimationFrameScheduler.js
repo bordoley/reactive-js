@@ -10,7 +10,7 @@ import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSc
 import { SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import { invoke, isNone, isSome, none, pipe, pipeLazy, raiseIfNone, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
-import * as IndexedQueue from "../../utils/IndexedQueue.js";
+import * as Queue from "../../utils/Queue.js";
 import { QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
 export const get = /*@__PURE__*/ (() => {
     const raf = globalObject.requestAnimationFrame;
@@ -21,8 +21,7 @@ export const get = /*@__PURE__*/ (() => {
         const startTime = CurrentTime.now();
         const animationFrameScheduler = globalAnimationFrameScheduler;
         const workQueue = animationFrameScheduler[AnimationFrameScheduler_rafQueue];
-        animationFrameScheduler[AnimationFrameScheduler_rafQueue] =
-            IndexedQueue.create();
+        animationFrameScheduler[AnimationFrameScheduler_rafQueue] = Queue.create();
         let continuation = none;
         while (((continuation = workQueue[QueueLike_dequeue]()), isSome(continuation))) {
             continuation[ContinuationLike_run]();
@@ -58,7 +57,7 @@ export const get = /*@__PURE__*/ (() => {
     const createAnimationFrameScheduler = mixInstanceFactory(include(CurrentTimeSchedulerMixin), function AnimationFrameScheduler(instance) {
         init(CurrentTimeSchedulerMixin, instance);
         instance[AnimationFrameScheduler_rafQueue] =
-            IndexedQueue.create();
+            Queue.create();
         return instance;
     }, props({
         [AnimationFrameScheduler_rafIsRunning]: false,

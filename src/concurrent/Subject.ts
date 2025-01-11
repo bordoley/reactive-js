@@ -33,9 +33,7 @@ import {
   DisposableLike_error,
   DisposableLike_isDisposed,
   DropOldestBackpressureStrategy,
-  IndexedQueueLike,
-  IndexedQueueLike_get,
-  QueueLike_count,
+  QueueLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
@@ -108,7 +106,7 @@ export const create: <T>(options?: {
       [ObservableLike_isRunnable]: false as const,
 
       [EventListenerLike_notify](
-        this: TProperties & SubjectLike<T> & IndexedQueueLike<T>,
+        this: TProperties & SubjectLike<T> & QueueLike<T>,
         next: T,
       ) {
         if (this[DisposableLike_isDisposed]) {
@@ -127,7 +125,7 @@ export const create: <T>(options?: {
       },
 
       [ObservableLike_observe](
-        this: TProperties & SubjectLike<T> & IndexedQueueLike<T>,
+        this: TProperties & SubjectLike<T> & QueueLike<T>,
         observer: ObserverLike<T>,
       ) {
         const observers = this[Subject_observers];
@@ -156,13 +154,7 @@ export const create: <T>(options?: {
           }),
         );
 
-        // The idea here is that an onSubscribe function may
-        // call next from unscheduled sources such as event handlers.
-        // So we marshall those events back to the scheduler.
-        const count = this[QueueLike_count];
-
-        for (let i = 0; i < count; i++) {
-          const next = this[IndexedQueueLike_get](i);
+        for (const next of this) {
           observer[QueueableLike_enqueue](next);
         }
 

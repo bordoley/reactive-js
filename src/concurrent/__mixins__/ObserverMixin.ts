@@ -38,7 +38,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  IndexedQueueLike,
+  QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
   QueueableLike,
@@ -71,7 +71,7 @@ const ObserverMixin: <T>() => Mixin2<
   const scheduleDrainQueue = (
     observer: TProperties &
       ObserverLike<T> &
-      IndexedQueueLike<T> &
+      QueueLike<T> &
       LazyInitEventSourceLike<
         | typeof DispatcherLikeEvent_ready
         | typeof DispatcherLikeEvent_capacityExceeded
@@ -203,7 +203,7 @@ const ObserverMixin: <T>() => Mixin2<
         [QueueableLike_enqueue](
           this: TProperties &
             ObserverLike<T> &
-            IndexedQueueLike<T> &
+            QueueLike<T> &
             LazyInitEventSourceLike<
               | typeof DispatcherLikeEvent_ready
               | typeof DispatcherLikeEvent_capacityExceeded
@@ -236,7 +236,7 @@ const ObserverMixin: <T>() => Mixin2<
         [DispatcherLike_complete](
           this: TProperties &
             ObserverLike<T> &
-            IndexedQueueLike<T> &
+            QueueLike<T> &
             LazyInitEventSourceLike<
               | typeof DispatcherLikeEvent_ready
               | typeof DispatcherLikeEvent_capacityExceeded

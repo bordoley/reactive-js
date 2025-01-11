@@ -31,13 +31,12 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import * as IndexedQueue from "../../../utils/IndexedQueue.js";
+import * as Queue from "../../../utils/Queue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
   BackpressureStrategy,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  IndexedQueueLike,
   OverflowBackpressureStrategy,
   QueueLike,
   QueueLike_count,
@@ -72,9 +71,7 @@ const createMergeAllObserverOperator: <T>(options?: {
     readonly [MergeAllObserver_concurrency]: number;
     readonly [MergeAllObserver_delegate]: ObserverLike<T>;
     readonly [MergeAllObserver_onDispose]: SideEffect;
-    readonly [MergeAllObserver_observablesQueue]: IndexedQueueLike<
-      ObservableLike<T>
-    >;
+    readonly [MergeAllObserver_observablesQueue]: QueueLike<ObservableLike<T>>;
   };
 
   const subscribeToObservable = (
@@ -116,7 +113,7 @@ const createMergeAllObserverOperator: <T>(options?: {
       init(DisposableMixin, instance);
       init(DelegatingObserverMixin(), instance, delegate);
 
-      instance[MergeAllObserver_observablesQueue] = IndexedQueue.create({
+      instance[MergeAllObserver_observablesQueue] = Queue.create({
         capacity,
         backpressureStrategy,
       });

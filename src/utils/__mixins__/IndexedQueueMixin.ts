@@ -24,20 +24,35 @@ import {
   BackpressureStrategy,
   DropLatestBackpressureStrategy,
   DropOldestBackpressureStrategy,
-  IndexedQueueLike,
-  IndexedQueueLike_get,
-  IndexedQueueLike_set,
   OverflowBackpressureStrategy,
+  QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
   QueueLike_head,
+  QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
-  StackLike_head,
-  StackLike_pop,
   ThrowBackpressureStrategy,
 } from "../../utils.js";
+
+export const StackLike_head = Symbol("StackLike_head");
+export const StackLike_pop = Symbol("StackLike_pop");
+
+export interface StackLike<T = unknown> extends QueueableLike<T> {
+  readonly [StackLike_head]: Optional<T>;
+  [StackLike_pop](): Optional<T>;
+}
+
+export const IndexedQueueLike_get = Symbol("IndexedQueueLike_get");
+export const IndexedQueueLike_set = Symbol("IndexedQueueLike_set");
+
+export interface IndexedQueueLike<T = unknown>
+  extends QueueLike<T>,
+    StackLike<T> {
+  [IndexedQueueLike_get](index: number): T;
+  [IndexedQueueLike_set](key: number, value: T): T;
+}
 
 const IndexedQueueMixin: <T>() => Mixin1<
   IndexedQueueLike<T>,
@@ -279,6 +294,13 @@ const IndexedQueueMixin: <T>() => Mixin1<
           values[computedIndex] = value;
 
           return oldValue;
+        },
+
+        *[Symbol.iterator](this: IndexedQueueLike<T>): Iterator<T> {
+          const count = this[QueueLike_count];
+          for (let i = 0; i < count; i++) {
+            yield this[IndexedQueueLike_get](i);
+          }
         },
 
         [QueueableLike_enqueue](

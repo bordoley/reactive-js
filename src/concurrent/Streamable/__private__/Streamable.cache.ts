@@ -51,7 +51,7 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import * as IndexedQueue from "../../../utils/IndexedQueue.js";
+import * as Queue from "../../../utils/Queue.js";
 import {
   BackpressureStrategy,
   DisposableLike,
@@ -121,7 +121,7 @@ const cacheStream: <T>(
       const store = newInstance<Map<string, T>>(Map);
       const subscriptions =
         newInstance<Map<string, SubjectLike<Optional<T>>>>(Map);
-      const cleanupQueue = IndexedQueue.create<string>();
+      const cleanupQueue = Queue.create<string>();
 
       const cleanupContinuation = (ctx: ContinuationContextLike) => {
         while (store[Map_size] > capacity) {

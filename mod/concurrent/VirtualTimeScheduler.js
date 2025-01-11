@@ -5,7 +5,7 @@ import { clampPositiveNonZeroInteger, max } from "../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
 import { SchedulerLike_maxYieldInterval, SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../concurrent.js";
 import { isSome, none } from "../functions.js";
-import * as PriorityQueue from "../utils/PriorityQueue.js";
+import * as Queue from "../utils/Queue.js";
 import { DisposableLike_dispose, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, } from "../utils.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "./__internal__/Continuation.js";
 import * as Continuation from "./__internal__/Continuation.js";
@@ -17,7 +17,9 @@ const VirtualTimeScheduler_queue = Symbol("VirtualTimeScheduler_queue");
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFactory(include(SchedulerMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
     init(SchedulerMixin, instance);
     instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
-    instance[VirtualTimeScheduler_queue] = PriorityQueue.create(Continuation.compare);
+    instance[VirtualTimeScheduler_queue] = Queue.create({
+        comparator: Continuation.compare,
+    });
     return instance;
 }, props({
     [SchedulerLike_now]: 0,
@@ -36,7 +38,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFacto
         let queue = none;
         while (((queue = this[VirtualTimeScheduler_queue]),
             queue[QueueLike_count] > 0)) {
-            this[VirtualTimeScheduler_queue] = PriorityQueue.create(Continuation.compare);
+            this[VirtualTimeScheduler_queue] = Queue.create({
+                comparator: Continuation.compare,
+            });
             const currentTime = this[SchedulerLike_now];
             let continuation = none;
             while (((continuation = queue[QueueLike_dequeue]()), isSome(continuation))) {

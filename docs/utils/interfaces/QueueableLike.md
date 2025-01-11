@@ -11,7 +11,6 @@ An interface for types that support buffering items with backpressure.
 ## Extended by
 
 - [`DispatcherLike`](../../concurrent/interfaces/DispatcherLike.md)
-- [`StackLike`](StackLike.md)
 - [`QueueLike`](QueueLike.md)
 
 ## Type Parameters

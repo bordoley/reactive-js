@@ -23,19 +23,20 @@ import {
   BackpressureStrategy,
   DropLatestBackpressureStrategy,
   DropOldestBackpressureStrategy,
-  IndexedQueueLike,
-  IndexedQueueLike_get,
-  IndexedQueueLike_set,
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
-  StackLike_pop,
   ThrowBackpressureStrategy,
 } from "../../utils.js";
-import IndexedQueueMixin from "./IndexedQueueMixin.js";
+import IndexedQueueMixin, {
+  IndexedQueueLike,
+  IndexedQueueLike_get,
+  IndexedQueueLike_set,
+  StackLike_pop,
+} from "./IndexedQueueMixin.js";
 
 const PriorityQueueMixin: <T>() => Mixin2<
   QueueLike<T>,

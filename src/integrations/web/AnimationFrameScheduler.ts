@@ -36,10 +36,10 @@ import {
   raiseIfNone,
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
-import * as IndexedQueue from "../../utils/IndexedQueue.js";
+import * as Queue from "../../utils/Queue.js";
 import {
   DisposableLike,
-  IndexedQueueLike,
+  QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
   QueueableLike_enqueue,
@@ -64,7 +64,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
 
   type TProperties = {
     [AnimationFrameScheduler_rafIsRunning]: boolean;
-    [AnimationFrameScheduler_rafQueue]: IndexedQueueLike<ContinuationLike>;
+    [AnimationFrameScheduler_rafQueue]: QueueLike<ContinuationLike>;
   };
 
   const rafCallback = () => {
@@ -73,8 +73,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
       globalAnimationFrameScheduler as unknown as TProperties;
     const workQueue = animationFrameScheduler[AnimationFrameScheduler_rafQueue];
 
-    animationFrameScheduler[AnimationFrameScheduler_rafQueue] =
-      IndexedQueue.create();
+    animationFrameScheduler[AnimationFrameScheduler_rafQueue] = Queue.create();
 
     let continuation: Optional<ContinuationLike> = none;
     while (
@@ -128,7 +127,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
       init(CurrentTimeSchedulerMixin, instance);
 
       instance[AnimationFrameScheduler_rafQueue] =
-        IndexedQueue.create<ContinuationLike>();
+        Queue.create<ContinuationLike>();
 
       return instance;
     },

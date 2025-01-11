@@ -5,9 +5,9 @@ import { include, init, mixInstanceFactory, props, } from "../../../__internal__
 import { ContinuationContextLike_yield, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { none, partial, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import * as IndexedQueue from "../../../utils/IndexedQueue.js";
+import * as Queue from "../../../utils/Queue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import { DisposableLike_dispose, DropOldestBackpressureStrategy, IndexedQueueLike_get, QueueLike_count, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_dispose, DropOldestBackpressureStrategy, QueueLike_count, QueueableLike_enqueue, } from "../../../utils.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -16,25 +16,21 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin()), function TakeLastObserver(instance, delegate, takeLastCount) {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
-        instance[TakeLastObserver_queue] = IndexedQueue.create({
+        instance[TakeLastObserver_queue] = Queue.create({
             capacity: takeLastCount,
             backpressureStrategy: DropOldestBackpressureStrategy,
         });
         pipe(instance, DisposableContainer.onComplete(() => {
             const queue = instance[TakeLastObserver_queue];
-            let index = 0;
             const count = queue[QueueLike_count];
             if (count === 0) {
                 return;
             }
             delegate[SchedulerLike_schedule](ctx => {
-                while (index < count) {
-                    const v = queue[IndexedQueueLike_get](index);
+                for (const v of queue) {
                     delegate[ObserverLike_notify](v);
-                    index++;
-                    if (index < count) {
-                        ctx[ContinuationContextLike_yield]();
-                    }
+                    // FIXME: Might be a bug
+                    ctx[ContinuationContextLike_yield]();
                 }
                 delegate[DisposableLike_dispose]();
             });

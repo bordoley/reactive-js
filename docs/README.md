@@ -39,6 +39,5 @@
 - [utils](utils/README.md)
 - [utils/Disposable](utils/Disposable/README.md)
 - [utils/DisposableContainer](utils/DisposableContainer/README.md)
-- [utils/IndexedQueue](utils/IndexedQueue/README.md)
-- [utils/PriorityQueue](utils/PriorityQueue/README.md)
+- [utils/Queue](utils/Queue/README.md)
 - [utils/SerialDisposable](utils/SerialDisposable/README.md)

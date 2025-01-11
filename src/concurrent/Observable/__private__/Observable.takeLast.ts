@@ -13,14 +13,12 @@ import {
 } from "../../../concurrent.js";
 import { none, partial, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import * as IndexedQueue from "../../../utils/IndexedQueue.js";
+import * as Queue from "../../../utils/Queue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
   DropOldestBackpressureStrategy,
-  IndexedQueueLike,
-  IndexedQueueLike_get,
   QueueLike,
   QueueLike_count,
   QueueableLike_enqueue,
@@ -34,7 +32,7 @@ const createTakeLastObserver = /*@__PURE__*/ (<T>() => {
   const TakeLastObserver_queue = Symbol("TakeLastObserver_queue");
 
   type TProperties = {
-    [TakeLastObserver_queue]: IndexedQueueLike<T>;
+    [TakeLastObserver_queue]: QueueLike<T>;
   };
 
   return mixInstanceFactory(
@@ -47,7 +45,7 @@ const createTakeLastObserver = /*@__PURE__*/ (<T>() => {
       init(DisposableMixin, instance);
       init(DelegatingObserverMixin(), instance, delegate);
 
-      instance[TakeLastObserver_queue] = IndexedQueue.create({
+      instance[TakeLastObserver_queue] = Queue.create({
         capacity: takeLastCount,
         backpressureStrategy: DropOldestBackpressureStrategy,
       });
@@ -56,7 +54,6 @@ const createTakeLastObserver = /*@__PURE__*/ (<T>() => {
         instance,
         DisposableContainer.onComplete(() => {
           const queue = instance[TakeLastObserver_queue];
-          let index = 0;
           const count = queue[QueueLike_count];
 
           if (count === 0) {
@@ -64,16 +61,13 @@ const createTakeLastObserver = /*@__PURE__*/ (<T>() => {
           }
 
           delegate[SchedulerLike_schedule](ctx => {
-            while (index < count) {
-              const v = queue[IndexedQueueLike_get](index);
+            for (const v of queue) {
               delegate[ObserverLike_notify](v);
 
-              index++;
-
-              if (index < count) {
-                ctx[ContinuationContextLike_yield]();
-              }
+              // FIXME: Might be a bug
+              ctx[ContinuationContextLike_yield]();
             }
+
             delegate[DisposableLike_dispose]();
           });
         }),

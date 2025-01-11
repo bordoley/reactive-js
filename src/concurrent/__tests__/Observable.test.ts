@@ -76,7 +76,7 @@ import {
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
-import * as IndexedQueue from "../../utils/IndexedQueue.js";
+import * as Queue from "../../utils/Queue.js";
 import {
   DisposableLike_dispose,
   DisposableLike_error,
@@ -1275,9 +1275,7 @@ testModule(
   ),
   describe(
     "enqueue",
-    ObservableOperatorWithSideEffectsTests(
-      Observable.enqueue(IndexedQueue.create()),
-    ),
+    ObservableOperatorWithSideEffectsTests(Observable.enqueue(Queue.create())),
   ),
   describe(
     "exhaust",
