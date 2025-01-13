@@ -157,57 +157,6 @@ const QueueMixin: <T>() => Mixin1<
     instance[QueueMixin_capacityMask] = newCapacity - 1;
   };
 
-  const siftDown = (queue: TProperties & QueueLike<T>, item: T) => {
-    const compare = queue[QueueMixin_comparator] as Comparator<T>;
-    const count = queue[QueueLike_count];
-
-    for (let index = 0; index < count; ) {
-      const leftIndex = (index + 1) * 2 - 1;
-      const rightIndex = leftIndex + 1;
-
-      const hasLeft = leftIndex >= 0 && leftIndex < count;
-      const hasRight = rightIndex >= 0 && rightIndex < count;
-
-      const left = hasLeft ? getValue(queue, leftIndex) : none;
-      const right = hasRight ? getValue(queue, rightIndex) : none;
-
-      if (hasLeft && compare(left as T, item) < 0) {
-        if (hasRight && compare(right as T, left as T) < 0) {
-          setValue(queue, index, right as T);
-          setValue(queue, rightIndex, item);
-          index = rightIndex;
-        } else {
-          setValue(queue, index, left as T);
-          setValue(queue, leftIndex, item);
-          index = leftIndex;
-        }
-      } else if (hasRight && compare(right as T, item) < 0) {
-        setValue(queue, index, right as T);
-        setValue(queue, rightIndex, item);
-        index = rightIndex;
-      } else {
-        break;
-      }
-    }
-  };
-
-  const siftUp = (queue: TProperties & QueueLike<T>, item: T) => {
-    const compare = queue[QueueMixin_comparator] as Comparator<T>;
-    const count = queue[QueueLike_count];
-
-    for (
-      let index = count - 1, parentIndex = floor((index - 1) / 2);
-      parentIndex >= 0 &&
-      parentIndex <= count &&
-      compare(getValue(queue, parentIndex), item) > 0;
-      index = parentIndex, parentIndex = floor((index - 1) / 2)
-    ) {
-      const parent = getValue(queue, parentIndex);
-      setValue(queue, parentIndex, item);
-      setValue(queue, index, parent);
-    }
-  };
-
   const getValue = (queue: TProperties & QueueLike<T>, index: number): T => {
     const computedIndex = computeIndex(queue, index);
     return queue[QueueMixin_values][computedIndex] as T;
@@ -295,35 +244,60 @@ const QueueMixin: <T>() => Mixin1<
 
           if (count === 0) {
             return none;
-          } else if (count > 1 && isSorted) {
-            const first = getValue(this, 0);
-            const capacity = values[Array_length];
+          }
 
+          const item = values[head];
+          this[QueueLike_count]--;
+
+          if (isSorted && count > 1) {
+            const capacity = values[Array_length];
             const newTail =
               (tail - 1 + capacity) & this[QueueMixin_capacityMask];
-            this[QueueMixin_tail] = newTail;
-            this[QueueLike_count]--;
             const last = values[newTail] as T;
             values[newTail] = none;
+            values[head] = last;
+            this[QueueMixin_tail] = newTail;
 
-            shrink(this);
+            // Inline: siftDown
+            const compare = this[QueueMixin_comparator] as Comparator<T>;
+            const count = this[QueueLike_count];
 
-            setValue(this, 0, last);
+            for (let index = 0; index < count; ) {
+              const leftIndex = (index + 1) * 2 - 1;
+              const rightIndex = leftIndex + 1;
 
-            siftDown(this, last);
+              const hasLeft = leftIndex >= 0 && leftIndex < count;
+              const hasRight = rightIndex >= 0 && rightIndex < count;
 
-            return first;
+              const left = hasLeft ? getValue(this, leftIndex) : none;
+              const right = hasRight ? getValue(this, rightIndex) : none;
+
+              if (hasLeft && compare(left as T, last) < 0) {
+                if (hasRight && compare(right as T, left as T) < 0) {
+                  setValue(this, index, right as T);
+                  setValue(this, rightIndex, last);
+                  index = rightIndex;
+                } else {
+                  setValue(this, index, left as T);
+                  setValue(this, leftIndex, last);
+                  index = leftIndex;
+                }
+              } else if (hasRight && compare(right as T, last) < 0) {
+                setValue(this, index, right as T);
+                setValue(this, rightIndex, last);
+                index = rightIndex;
+              } else {
+                break;
+              }
+            }
           } else {
-            const item = values[head];
-
             values[head] = none;
             this[QueueMixin_head] = (head + 1) & this[QueueMixin_capacityMask];
-            this[QueueLike_count]--;
-
-            shrink(this);
-
-            return item;
           }
+
+          shrink(this);
+
+          return item;
         },
 
         *[Symbol.iterator](this: QueueLike<T> & TProperties): Iterator<T> {
@@ -377,11 +351,25 @@ const QueueMixin: <T>() => Mixin1<
           this[QueueLike_count]++;
           this[QueueMixin_tail] = (tail + 1) & capacityMask;
 
-          grow(this);
-
           if (isSorted) {
-            siftUp(this, item);
+            // INLINE: siftUp
+            const compare = this[QueueMixin_comparator] as Comparator<T>;
+            const count = this[QueueLike_count];
+
+            for (
+              let index = count - 1, parentIndex = floor((index - 1) / 2);
+              parentIndex >= 0 &&
+              parentIndex <= count &&
+              compare(getValue(this, parentIndex), item) > 0;
+              index = parentIndex, parentIndex = floor((index - 1) / 2)
+            ) {
+              const parent = getValue(this, parentIndex);
+              setValue(this, parentIndex, item);
+              setValue(this, index, parent);
+            }
           }
+
+          grow(this);
 
           return this[QueueLike_count] < this[QueueableLike_capacity];
         },
