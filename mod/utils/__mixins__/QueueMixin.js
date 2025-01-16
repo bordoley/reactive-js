@@ -12,19 +12,19 @@ const QueueMixin = /*@PURE*/ (() => {
     const QueueMixin_values = Symbol("QueueMixin_values");
     const QueueMixin_comparator = Symbol("QueueMixin_comparator");
     const computeIndex = (thiz, index) => {
-        const capacity = thiz[QueueMixin_values][Array_length];
+        const valuesLength = thiz[QueueMixin_values][Array_length];
         const head = thiz[QueueMixin_head];
         const headOffsetIndex = index + head;
-        const tailOffsetIndex = headOffsetIndex - capacity;
+        const tailOffsetIndex = headOffsetIndex - valuesLength;
         const count = thiz[QueueLike_count];
         raiseIf(index < 0 || index >= count, "index out of range");
-        return headOffsetIndex < capacity ? headOffsetIndex : tailOffsetIndex;
+        return headOffsetIndex < valuesLength ? headOffsetIndex : tailOffsetIndex;
     };
     const copyArray = (src, head, tail, size) => {
-        const capacity = src[Array_length];
+        const arrayLength = src[Array_length];
         const dest = newInstance(Array, size);
         let k = 0;
-        let bound = head >= tail ? capacity : tail;
+        let bound = head >= tail ? arrayLength : tail;
         for (let i = head; i < bound; i++) {
             dest[k++] = src[i];
         }
@@ -152,8 +152,16 @@ const QueueMixin = /*@PURE*/ (() => {
         },
         *[Symbol.iterator]() {
             const count = this[QueueLike_count];
-            for (let i = 0; i < count; i++) {
-                yield getValue(this, i);
+            const head = this[QueueMixin_head];
+            const tail = this[QueueMixin_tail];
+            const values = this[QueueMixin_values];
+            const headCount = head < tail ? tail : count;
+            for (let i = head; i < headCount; i++) {
+                yield values[i];
+            }
+            const tailCount = head < tail ? 0 : tail;
+            for (let i = 0; i < tailCount; i++) {
+                yield values[i];
             }
         },
         [QueueableLike_enqueue](item) {

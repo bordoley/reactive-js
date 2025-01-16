@@ -70,15 +70,15 @@ const QueueMixin: <T>() => Mixin1<
   };
 
   const computeIndex = (thiz: TProperties & QueueLike<T>, index: number) => {
-    const capacity = thiz[QueueMixin_values][Array_length];
+    const valuesLength = thiz[QueueMixin_values][Array_length];
     const head = thiz[QueueMixin_head];
     const headOffsetIndex = index + head;
-    const tailOffsetIndex = headOffsetIndex - capacity;
+    const tailOffsetIndex = headOffsetIndex - valuesLength;
     const count = thiz[QueueLike_count];
 
     raiseIf(index < 0 || index >= count, "index out of range");
 
-    return headOffsetIndex < capacity ? headOffsetIndex : tailOffsetIndex;
+    return headOffsetIndex < valuesLength ? headOffsetIndex : tailOffsetIndex;
   };
 
   const copyArray = (
@@ -87,12 +87,12 @@ const QueueMixin: <T>() => Mixin1<
     tail: number,
     size: number,
   ) => {
-    const capacity = src[Array_length];
+    const arrayLength = src[Array_length];
 
     const dest = newInstance<Array<Optional<T>>, number>(Array, size);
     let k = 0;
 
-    let bound = head >= tail ? capacity : tail;
+    let bound = head >= tail ? arrayLength : tail;
     for (let i = head; i < bound; i++) {
       dest[k++] = src[i];
     }
@@ -267,8 +267,18 @@ const QueueMixin: <T>() => Mixin1<
 
         *[Symbol.iterator](this: QueueLike<T> & TProperties): Iterator<T> {
           const count = this[QueueLike_count];
-          for (let i = 0; i < count; i++) {
-            yield getValue(this, i);
+          const head = this[QueueMixin_head];
+          const tail = this[QueueMixin_tail];
+          const values = this[QueueMixin_values];
+
+          const headCount = head < tail ? tail : count;
+          for (let i = head; i < headCount; i++) {
+            yield values[i] as T;
+          }
+
+          const tailCount = head < tail ? 0 : tail;
+          for (let i = 0; i < tailCount; i++) {
+            yield values[i] as T;
           }
         },
 
