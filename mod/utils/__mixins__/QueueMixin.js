@@ -34,93 +34,6 @@ const QueueMixin = /*@PURE*/ (() => {
         }
         return dest;
     };
-    const grow = (instance) => {
-        const head = instance[QueueMixin_head];
-        const tail = instance[QueueMixin_tail];
-        const count = instance[QueueLike_count];
-        const values = instance[QueueMixin_values];
-        const capacity = values[Array_length];
-        const capacityMask = instance[QueueMixin_capacityMask];
-        if (count < capacity) {
-            return;
-        }
-        if (head === 0) {
-            values[Array_length] <<= 1;
-            instance[QueueMixin_tail] = count + head;
-        }
-        else {
-            const newCapacity = capacity << 1;
-            const newList = copyArray(values, head, tail, newCapacity);
-            instance[QueueMixin_values] = newList;
-            instance[QueueMixin_head] = 0;
-            instance[QueueMixin_tail] = count;
-        }
-        instance[QueueMixin_capacityMask] = (capacityMask << 1) | 1;
-    };
-    const shrink = (instance) => {
-        const values = instance[QueueMixin_values];
-        const capacity = values[Array_length];
-        const count = instance[QueueLike_count];
-        const head = instance[QueueMixin_head];
-        const tail = instance[QueueMixin_tail];
-        const newCapacity = capacity >> 1;
-        if (count >= capacity >> 1 || capacity <= 32) {
-            return;
-        }
-        if (tail >= head && tail < newCapacity) {
-            values[Array_length] >>= 1;
-        }
-        else {
-            const newList = copyArray(values, head, tail, newCapacity);
-            instance[QueueMixin_values] = newList;
-            instance[QueueMixin_head] = 0;
-            instance[QueueMixin_tail] = count;
-        }
-        instance[QueueMixin_capacityMask] = newCapacity - 1;
-    };
-    const siftDown = (queue, item) => {
-        const compare = queue[QueueMixin_comparator];
-        const count = queue[QueueLike_count];
-        for (let index = 0; index < count;) {
-            const leftIndex = (index + 1) * 2 - 1;
-            const rightIndex = leftIndex + 1;
-            const hasLeft = leftIndex >= 0 && leftIndex < count;
-            const hasRight = rightIndex >= 0 && rightIndex < count;
-            const left = hasLeft ? getValue(queue, leftIndex) : none;
-            const right = hasRight ? getValue(queue, rightIndex) : none;
-            if (hasLeft && compare(left, item) < 0) {
-                if (hasRight && compare(right, left) < 0) {
-                    setValue(queue, index, right);
-                    setValue(queue, rightIndex, item);
-                    index = rightIndex;
-                }
-                else {
-                    setValue(queue, index, left);
-                    setValue(queue, leftIndex, item);
-                    index = leftIndex;
-                }
-            }
-            else if (hasRight && compare(right, item) < 0) {
-                setValue(queue, index, right);
-                setValue(queue, rightIndex, item);
-                index = rightIndex;
-            }
-            else {
-                break;
-            }
-        }
-    };
-    const siftUp = (queue, item) => {
-        const compare = queue[QueueMixin_comparator];
-        const count = queue[QueueLike_count];
-        for (let index = count - 1, parentIndex = floor((index - 1) / 2); parentIndex >= 0 &&
-            parentIndex <= count &&
-            compare(getValue(queue, parentIndex), item) > 0; index = parentIndex, parentIndex = floor((index - 1) / 2)) {
-            const parent = getValue(queue, parentIndex);
-            setValue(queue, parentIndex, item);
-            setValue(queue, index, parent);
-        }
-    };
     const getValue = (queue, index) => {
         const computedIndex = computeIndex(queue, index);
         return queue[QueueMixin_values][computedIndex];
@@ -170,31 +83,72 @@ const QueueMixin = /*@PURE*/ (() => {
             const isSorted = isSome(this[QueueMixin_comparator]);
             const tail = this[QueueMixin_tail];
             const values = this[QueueMixin_values];
+            const valuesLength = values[Array_length];
             const head = this[QueueMixin_head];
+            const item = values[head];
+            const compare = this[QueueMixin_comparator];
             if (count === 0) {
                 return none;
             }
-            else if (count > 1 && isSorted) {
-                const first = getValue(this, 0);
-                const capacity = values[Array_length];
-                const newTail = (tail - 1 + capacity) & this[QueueMixin_capacityMask];
-                this[QueueMixin_tail] = newTail;
-                this[QueueLike_count]--;
+            this[QueueLike_count]--;
+            const newCount = this[QueueLike_count];
+            if (isSorted && newCount > 1) {
+                const newTail = (tail - 1 + valuesLength) & this[QueueMixin_capacityMask];
                 const last = values[newTail];
                 values[newTail] = none;
-                shrink(this);
-                setValue(this, 0, last);
-                siftDown(this, last);
-                return first;
+                values[head] = last;
+                this[QueueMixin_tail] = newTail;
+                // Inline: siftDown
+                for (let index = 0; index < newCount;) {
+                    const leftIndex = (index + 1) * 2 - 1;
+                    const rightIndex = leftIndex + 1;
+                    const hasLeft = leftIndex >= 0 && leftIndex < newCount;
+                    const hasRight = rightIndex >= 0 && rightIndex < newCount;
+                    const left = hasLeft ? getValue(this, leftIndex) : none;
+                    const right = hasRight ? getValue(this, rightIndex) : none;
+                    if (hasLeft && compare(left, last) < 0) {
+                        if (hasRight && compare(right, left) < 0) {
+                            setValue(this, index, right);
+                            setValue(this, rightIndex, last);
+                            index = rightIndex;
+                        }
+                        else {
+                            setValue(this, index, left);
+                            setValue(this, leftIndex, last);
+                            index = leftIndex;
+                        }
+                    }
+                    else if (hasRight && compare(right, last) < 0) {
+                        setValue(this, index, right);
+                        setValue(this, rightIndex, last);
+                        index = rightIndex;
+                    }
+                    else {
+                        break;
+                    }
+                }
             }
             else {
-                const item = values[head];
                 values[head] = none;
                 this[QueueMixin_head] = (head + 1) & this[QueueMixin_capacityMask];
-                this[QueueLike_count]--;
-                shrink(this);
-                return item;
             }
+            // Inline: shrink
+            if (!((newCount << valuesLength) >> 1 || valuesLength <= 32)) {
+                const head = this[QueueMixin_head];
+                const tail = this[QueueMixin_tail];
+                const newValuesLength = valuesLength >> 1;
+                if (tail >= head && tail < newValuesLength) {
+                    values[Array_length] >>= 1;
+                }
+                else {
+                    const newValues = copyArray(values, head, tail, newValuesLength);
+                    this[QueueMixin_values] = newValues;
+                    this[QueueMixin_head] = 0;
+                    this[QueueMixin_tail] = newCount;
+                }
+                this[QueueMixin_capacityMask] = newValuesLength - 1;
+            }
+            return item;
         },
         *[Symbol.iterator]() {
             const count = this[QueueLike_count];
@@ -205,8 +159,13 @@ const QueueMixin = /*@PURE*/ (() => {
         [QueueableLike_enqueue](item) {
             const backpressureStrategy = this[QueueableLike_backpressureStrategy];
             const capacity = this[QueueableLike_capacity];
+            const compare = this[QueueMixin_comparator];
             const count = this[QueueLike_count];
             const isSorted = isSome(this[QueueMixin_comparator]);
+            const values = this[QueueMixin_values];
+            const valuesLength = values[Array_length];
+            const capacityMask = this[QueueMixin_capacityMask];
+            const tail = this[QueueMixin_tail];
             if (backpressureStrategy === DropLatestBackpressureStrategy &&
                 count >= capacity) {
                 return false;
@@ -228,17 +187,38 @@ const QueueMixin = /*@PURE*/ (() => {
                 count >= capacity) {
                 raiseError(newInstance(BackPressureError, capacity, backpressureStrategy));
             }
-            const values = this[QueueMixin_values];
-            const capacityMask = this[QueueMixin_capacityMask];
-            const tail = this[QueueMixin_tail];
             values[tail] = item;
             this[QueueLike_count]++;
+            const newCount = this[QueueLike_count];
             this[QueueMixin_tail] = (tail + 1) & capacityMask;
-            grow(this);
             if (isSorted) {
-                siftUp(this, item);
+                // INLINE: siftUp
+                for (let index = newCount - 1, parentIndex = floor((index - 1) / 2); parentIndex >= 0 &&
+                    parentIndex <= newCount &&
+                    compare(getValue(this, parentIndex), item) > 0; index = parentIndex, parentIndex = floor((index - 1) / 2)) {
+                    const parent = getValue(this, parentIndex);
+                    setValue(this, parentIndex, item);
+                    setValue(this, index, parent);
+                }
             }
-            return this[QueueLike_count] < this[QueueableLike_capacity];
+            // Inline: grow
+            if (newCount >= valuesLength) {
+                const head = this[QueueMixin_head];
+                const tail = this[QueueMixin_tail];
+                if (head === 0) {
+                    values[Array_length] <<= 1;
+                    this[QueueMixin_tail] = newCount + head;
+                }
+                else {
+                    const newValuesLength = valuesLength << 1;
+                    const newValues = copyArray(values, head, tail, newValuesLength);
+                    this[QueueMixin_values] = newValues;
+                    this[QueueMixin_head] = 0;
+                    this[QueueMixin_tail] = newCount;
+                }
+                this[QueueMixin_capacityMask] = (capacityMask << 1) | 1;
+            }
+            return newCount < this[QueueableLike_capacity];
         },
     }));
 })();
