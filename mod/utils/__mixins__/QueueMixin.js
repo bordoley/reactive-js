@@ -87,17 +87,17 @@ const QueueMixin = /*@PURE*/ (() => {
             const head = this[QueueMixin_head];
             const item = values[head];
             const compare = this[QueueMixin_comparator];
+            const capacityMask = this[QueueMixin_capacityMask];
             if (count === 0) {
                 return none;
             }
-            this[QueueLike_count]--;
-            const newCount = this[QueueLike_count];
+            const newCount = --this[QueueLike_count];
             if (isSorted && newCount > 1) {
-                const newTail = (tail - 1 + valuesLength) & this[QueueMixin_capacityMask];
+                const newTail = (this[QueueMixin_tail] =
+                    (tail - 1 + valuesLength) & capacityMask);
                 const last = values[newTail];
                 values[newTail] = none;
                 values[head] = last;
-                this[QueueMixin_tail] = newTail;
                 // Inline: siftDown
                 for (let index = 0; index < newCount;) {
                     const leftIndex = (index + 1) * 2 - 1;
@@ -130,36 +130,37 @@ const QueueMixin = /*@PURE*/ (() => {
             }
             else {
                 values[head] = none;
-                this[QueueMixin_head] = (head + 1) & this[QueueMixin_capacityMask];
+                this[QueueMixin_head] = (head + 1) & capacityMask;
             }
+            const newHead = this[QueueMixin_head];
+            const newTail = this[QueueMixin_tail];
+            const newValuesLength = valuesLength >> 1;
+            const shouldShrink = newCount < newValuesLength && valuesLength > 32;
+            const newCapacityMask = shouldShrink
+                ? newValuesLength - 1
+                : capacityMask;
             // Inline: shrink
-            if (!((newCount << valuesLength) >> 1 || valuesLength <= 32)) {
-                const head = this[QueueMixin_head];
-                const tail = this[QueueMixin_tail];
-                const newValuesLength = valuesLength >> 1;
-                if (tail >= head && tail < newValuesLength) {
-                    values[Array_length] >>= 1;
-                }
-                else {
-                    const newValues = copyArray(values, head, tail, newValuesLength);
-                    this[QueueMixin_values] = newValues;
-                    this[QueueMixin_head] = 0;
-                    this[QueueMixin_tail] = newCount;
-                }
-                this[QueueMixin_capacityMask] = newValuesLength - 1;
+            if (shouldShrink && newTail >= newHead && newTail < newValuesLength) {
+                values[Array_length] = newValuesLength;
             }
+            else if (shouldShrink) {
+                this[QueueMixin_values] = copyArray(values, newHead, newTail, newValuesLength);
+                this[QueueMixin_head] = 0;
+                this[QueueMixin_tail] = newCount;
+            }
+            this[QueueMixin_capacityMask] = newCapacityMask;
             return item;
         },
         *[Symbol.iterator]() {
-            const count = this[QueueLike_count];
             const head = this[QueueMixin_head];
             const tail = this[QueueMixin_tail];
             const values = this[QueueMixin_values];
-            const headCount = head < tail ? tail : count;
+            const valuesLength = values[Array_length];
+            const headCount = head <= tail ? tail : valuesLength;
             for (let i = head; i < headCount; i++) {
                 yield values[i];
             }
-            const tailCount = head < tail ? 0 : tail;
+            const tailCount = head <= tail ? 0 : tail;
             for (let i = 0; i < tailCount; i++) {
                 yield values[i];
             }
@@ -173,60 +174,56 @@ const QueueMixin = /*@PURE*/ (() => {
             const values = this[QueueMixin_values];
             const valuesLength = values[Array_length];
             const capacityMask = this[QueueMixin_capacityMask];
+            const head = this[QueueMixin_head];
             const tail = this[QueueMixin_tail];
-            if (backpressureStrategy === DropLatestBackpressureStrategy &&
-                count >= capacity) {
+            const applyBackpressure = count >= capacity;
+            if ((backpressureStrategy === DropLatestBackpressureStrategy &&
+                applyBackpressure) ||
+                // Special case the 0 capacity queue so that we don't fall through
+                // to pushing an item onto the queue
+                (backpressureStrategy === DropOldestBackpressureStrategy &&
+                    capacity === 0)) {
                 return false;
             }
             else if (backpressureStrategy === DropOldestBackpressureStrategy &&
-                count >= capacity) {
-                if (capacity > 0) {
-                    // We want to pop off the oldest value first, before enqueueing
-                    // to avoid unintentionally growing the queue.
-                    this[QueueLike_dequeue]();
-                }
-                else {
-                    // Special case the 0 capacity queue so that we don't fall through
-                    // to pushing an item onto the queue
-                    return false;
-                }
+                applyBackpressure) {
+                // We want to pop off the oldest value first, before enqueueing
+                // to avoid unintentionally growing the queue.
+                this[QueueLike_dequeue]();
             }
             else if (backpressureStrategy === ThrowBackpressureStrategy &&
-                count >= capacity) {
+                applyBackpressure) {
                 raiseError(newInstance(BackPressureError, capacity, backpressureStrategy));
             }
             values[tail] = item;
-            this[QueueLike_count]++;
-            const newCount = this[QueueLike_count];
-            this[QueueMixin_tail] = (tail + 1) & capacityMask;
-            if (isSorted) {
-                // INLINE: siftUp
-                for (let index = newCount - 1, parentIndex = floor((index - 1) / 2); parentIndex >= 0 &&
-                    parentIndex <= newCount &&
-                    compare(getValue(this, parentIndex), item) > 0; index = parentIndex, parentIndex = floor((index - 1) / 2)) {
-                    const parent = getValue(this, parentIndex);
-                    setValue(this, parentIndex, item);
-                    setValue(this, index, parent);
-                }
+            const newCount = ++this[QueueLike_count];
+            const newTail = (this[QueueMixin_tail] = (tail + 1) & capacityMask);
+            // Inline: siftUp
+            for (let index = newCount - 1, parentIndex = floor((index - 1) / 2); isSorted &&
+                parentIndex >= 0 &&
+                parentIndex <= newCount &&
+                compare(getValue(this, parentIndex), item) > 0; index = parentIndex, parentIndex = floor((index - 1) / 2)) {
+                const parent = getValue(this, parentIndex);
+                setValue(this, parentIndex, item);
+                setValue(this, index, parent);
             }
+            const shouldGrow = newCount >= valuesLength;
+            const newCapacityMask = shouldGrow
+                ? (capacityMask << 1) | 1
+                : capacityMask;
+            const newValuesLength = valuesLength << 1;
             // Inline: grow
-            if (newCount >= valuesLength) {
-                const head = this[QueueMixin_head];
-                const tail = this[QueueMixin_tail];
-                if (head === 0) {
-                    values[Array_length] <<= 1;
-                    this[QueueMixin_tail] = newCount + head;
-                }
-                else {
-                    const newValuesLength = valuesLength << 1;
-                    const newValues = copyArray(values, head, tail, newValuesLength);
-                    this[QueueMixin_values] = newValues;
-                    this[QueueMixin_head] = 0;
-                    this[QueueMixin_tail] = newCount;
-                }
-                this[QueueMixin_capacityMask] = (capacityMask << 1) | 1;
+            if (shouldGrow && head === 0) {
+                values[Array_length] = newValuesLength;
+                this[QueueMixin_tail] = newCount + head;
             }
-            return newCount < this[QueueableLike_capacity];
+            else if (shouldGrow) {
+                this[QueueMixin_values] = copyArray(values, head, newTail, newValuesLength);
+                this[QueueMixin_head] = 0;
+                this[QueueMixin_tail] = newCount;
+            }
+            this[QueueMixin_capacityMask] = newCapacityMask;
+            return newCount < capacity;
         },
     }));
 })();

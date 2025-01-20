@@ -137,9 +137,29 @@ testModule(
 
     pipe(queue[QueueLike_head], expectEquals(250 as Optional<number>));
   }),
+  test("iterator", () => {
+    const queue = Queue.create<number>();
+
+    for (let i = 0; i < 31; i++) {
+      queue[QueueableLike_enqueue](i);
+    }
+
+    for (let i = 0; i < 10; i++) {
+      queue[QueueLike_dequeue]();
+    }
+
+    for (let i = 31; i < 40; i++) {
+      queue[QueueableLike_enqueue](i);
+    }
+
+    let prev = 9;
+    for (const v of queue) {
+      pipe(v, expectEquals(prev + 1));
+      prev = v;
+    }
+  }),
   describe(
     "priority queue",
-
     test("push", () => {
       const queue = createPriorityQueue();
       const shuffledArray = makeShuffledArray(100);
