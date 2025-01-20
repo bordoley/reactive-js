@@ -27,8 +27,10 @@ export const SchedulerMixinBaseLike_schedule = Symbol("SchedulerMixinBaseLike_sc
 const SchedulerMixin = /*@__PURE__*/ (() => {
     const QueueableSchedulerContinuationLike_parent = Symbol("QueueableSchedulerContinuationLike_parent");
     const SchedulerMixinLike_schedule = Symbol("SchedulerMixinLike_schedule");
-    const SchedulerMixinLike_nextTaskID = Symbol("SchedulerMixinLike_nextTaskID");
+    const SchedulerMixinLike_taskIDCounter = Symbol("SchedulerMixinLike_taskIDCounter");
     const SchedulerMixinLike_currentContinuation = Symbol("SchedulerMixinLike_currentContinuation");
+    const SchedulerMixinLike_startTime = Symbol("SchedulerMixinLike_startTime");
+    const SchedulerMixinLike_yieldRequested = Symbol("SchedulerMixinLike_yieldRequested");
     const createQueueableContinuation = (() => {
         class ContinuationYieldError {
             delay;
@@ -107,8 +109,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                     // Bump the taskID so that the yielded with delay continuation is run
                     // at a lower relative priority to other previously scheduled continuations
                     // with the same due time.
-                    thiz[SchedulerContinuationLike_id] =
-                        scheduler[SchedulerMixinLike_nextTaskID];
+                    thiz[SchedulerContinuationLike_id] = ++scheduler[SchedulerMixinLike_taskIDCounter];
                     thiz[SchedulerContinuationLike_dueTime] =
                         scheduler[SchedulerLike_now] + delay;
                     rescheduleChildrenOnParentOrScheduler(thiz);
@@ -126,8 +127,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
             init(DisposableMixin, instance);
             init(QueueMixin(), instance, none);
             instance[SchedulerContinuationLike_dueTime] = dueTime;
-            instance[SchedulerContinuationLike_id] =
-                scheduler[SchedulerMixinLike_nextTaskID];
+            instance[SchedulerContinuationLike_id] = ++scheduler[SchedulerMixinLike_taskIDCounter];
             instance[QueueableContinuation_scheduler] = scheduler;
             instance[QueueableContinuation_effect] = effect;
             pipe(instance, DisposableContainer.onDisposed(_ => {
@@ -156,6 +156,16 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 const scheduler = this[QueueableContinuation_scheduler];
                 const oldCurrentContinuation = scheduler[SchedulerMixinLike_currentContinuation];
                 scheduler[SchedulerMixinLike_currentContinuation] = this;
+                // A QueueableSchedulerContinuationLike may run inner continuations that will
+                // set the currentContinuation to themselves, but we don't want to
+                // reset the startTime or yieldRequested flags in this case since these
+                // should be honored for the duration of the time that the synchronous
+                // parent continuation is active.
+                if (isNone(oldCurrentContinuation)) {
+                    scheduler[SchedulerMixinLike_startTime] =
+                        scheduler[SchedulerLike_now];
+                    scheduler[SchedulerMixinLike_yieldRequested] = false;
+                }
                 runContinuation(this);
                 scheduler[SchedulerMixinLike_currentContinuation] =
                     oldCurrentContinuation;
@@ -173,44 +183,18 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
             },
         });
     })();
-    const SchedulerMixin_currentContinuation = Symbol("SchedulerMixin_currentContinuation");
-    const SchedulerMixin_startTime = Symbol("SchedulerMixin_startTime");
-    const SchedulerMixin_taskIDCounter = Symbol("SchedulerMixin_taskIDCounter");
-    const SchedulerMixin_yieldRequested = Symbol("SchedulerMixin_yieldRequested");
     return mix(include(DisposableMixin), function SchedulerMixin(instance) {
         init(DisposableMixin, instance);
         return instance;
     }, props({
-        [SchedulerMixin_currentContinuation]: none,
-        [SchedulerMixin_yieldRequested]: false,
-        [SchedulerMixin_startTime]: 0,
-        [SchedulerMixin_taskIDCounter]: 0,
+        [SchedulerMixinLike_currentContinuation]: none,
+        [SchedulerMixinLike_yieldRequested]: false,
+        [SchedulerMixinLike_startTime]: 0,
+        [SchedulerMixinLike_taskIDCounter]: 0,
     }), {
-        get [SchedulerMixinLike_currentContinuation]() {
-            unsafeCast(this);
-            return this[SchedulerMixin_currentContinuation];
-        },
-        set [SchedulerMixinLike_currentContinuation](continuation) {
-            unsafeCast(this);
-            const oldCurrentContinuation = this[SchedulerMixin_currentContinuation];
-            this[SchedulerMixin_currentContinuation] = continuation;
-            // A QueueableSchedulerContinuationLike may run inner continuations that will
-            // set the currentContinuation to themselves, but we don't want to
-            // reset the startTime or yieldRequested flags in this case since these
-            // should be honored for the duration of the time that the synchronous
-            // parent continuation is active.
-            if (isNone(oldCurrentContinuation)) {
-                this[SchedulerMixin_startTime] = this[SchedulerLike_now];
-                this[SchedulerMixin_yieldRequested] = false;
-            }
-        },
-        get [SchedulerMixinLike_nextTaskID]() {
-            unsafeCast(this);
-            return this[SchedulerMixin_taskIDCounter]++;
-        },
         get [SchedulerLike_inContinuation]() {
             unsafeCast(this);
-            const currentContinuation = this[SchedulerMixin_currentContinuation];
+            const currentContinuation = this[SchedulerMixinLike_currentContinuation];
             return isSome(currentContinuation);
         },
         get [SchedulerLike_shouldYield]() {
@@ -220,9 +204,10 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 raiseIf(!inContinuation, "shouldYield may only be called from within a scheduler continuation");
             }
             const isDisposed = this[DisposableLike_isDisposed];
-            const yieldRequested = this[SchedulerMixin_yieldRequested];
+            const yieldRequested = this[SchedulerMixinLike_yieldRequested];
             const exceededMaxYieldInterval = this[SchedulerLike_now] >
-                this[SchedulerMixin_startTime] + this[SchedulerLike_maxYieldInterval];
+                this[SchedulerMixinLike_startTime] +
+                    this[SchedulerLike_maxYieldInterval];
             const currentContinuationHasScheduledChildren = this[SchedulerMixinLike_currentContinuation][QueueLike_count] > 0;
             return (isDisposed ||
                 yieldRequested ||
@@ -231,7 +216,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 this[SchedulerMixinBaseLike_shouldYield]);
         },
         [SchedulerLike_requestYield]() {
-            this[SchedulerMixin_yieldRequested] = true;
+            this[SchedulerMixinLike_yieldRequested] = true;
         },
         [SchedulerMixinLike_schedule](continuation) {
             const activeContinuation = this[SchedulerMixinLike_currentContinuation];
