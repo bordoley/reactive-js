@@ -8,9 +8,8 @@ import { isNone, isSome, none, pipe, raiseIf, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_isDisposed, QueueLike_count, QueueableLike_enqueue, } from "../../utils.js";
-import { ContinuationLike_dueTime } from "../__internal__/Continuation.js";
-import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "../__internal__/ContinuationScheduler.js";
-import { QueueableContinuationSchedulerLike_currentContinuation, QueueableContinuationSchedulerLike_nextTaskID, QueueableContinuationSchedulerLike_schedule, } from "./SchedulerMixin/__private__/QueueableContinuation.js";
+import { ContinuationLike_dueTime, } from "../__internal__/Continuation.js";
+import { QueueableSchedulerMixinBaseLike_currentContinuation, QueueableSchedulerMixinBaseLike_nextTaskID, QueueableSchedulerMixinBaseLike_schedule, } from "./SchedulerMixin/__private__/QueueableContinuation.js";
 import * as QueableContinuation from "./SchedulerMixin/__private__/QueueableContinuation.js";
 const SchedulerMixin = /*@__PURE__*/ (() => {
     const SchedulerMixin_currentContinuation = Symbol("SchedulerMixin_currentContinuation");
@@ -26,11 +25,11 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
         [SchedulerMixin_startTime]: 0,
         [SchedulerMixin_taskIDCounter]: 0,
     }), {
-        get [QueueableContinuationSchedulerLike_currentContinuation]() {
+        get [QueueableSchedulerMixinBaseLike_currentContinuation]() {
             unsafeCast(this);
             return this[SchedulerMixin_currentContinuation];
         },
-        set [QueueableContinuationSchedulerLike_currentContinuation](continuation) {
+        set [QueueableSchedulerMixinBaseLike_currentContinuation](continuation) {
             unsafeCast(this);
             const oldCurrentContinuation = this[SchedulerMixin_currentContinuation];
             this[SchedulerMixin_currentContinuation] = continuation;
@@ -44,7 +43,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 this[SchedulerMixin_yieldRequested] = false;
             }
         },
-        get [QueueableContinuationSchedulerLike_nextTaskID]() {
+        get [QueueableSchedulerMixinBaseLike_nextTaskID]() {
             unsafeCast(this);
             return this[SchedulerMixin_taskIDCounter]++;
         },
@@ -63,18 +62,18 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
             const yieldRequested = this[SchedulerMixin_yieldRequested];
             const exceededMaxYieldInterval = this[SchedulerLike_now] >
                 this[SchedulerMixin_startTime] + this[SchedulerLike_maxYieldInterval];
-            const currentContinuationHasScheduledChildren = this[QueueableContinuationSchedulerLike_currentContinuation][QueueLike_count] > 0;
+            const currentContinuationHasScheduledChildren = this[QueueableSchedulerMixinBaseLike_currentContinuation][QueueLike_count] > 0;
             return (isDisposed ||
                 yieldRequested ||
                 exceededMaxYieldInterval ||
                 currentContinuationHasScheduledChildren ||
-                this[ContinuationSchedulerLike_shouldYield]);
+                this[SchedulerMixinBaseLike_shouldYield]);
         },
         [SchedulerLike_requestYield]() {
             this[SchedulerMixin_yieldRequested] = true;
         },
-        [QueueableContinuationSchedulerLike_schedule](continuation) {
-            const activeContinuation = this[QueueableContinuationSchedulerLike_currentContinuation];
+        [QueueableSchedulerMixinBaseLike_schedule](continuation) {
+            const activeContinuation = this[QueueableSchedulerMixinBaseLike_currentContinuation];
             const now = this[SchedulerLike_now];
             const dueTime = continuation[ContinuationLike_dueTime];
             if (dueTime > now ||
@@ -86,7 +85,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 // Occurs when an active continuation is rescheduling its
                 // children because it has been rescheduled in the future.
                 activeContinuation[ContinuationLike_dueTime] > now) {
-                this[ContinuationSchedulerLike_schedule](continuation);
+                this[SchedulerMixinBaseLike_schedule](continuation);
             }
             else {
                 activeContinuation[QueueableLike_enqueue](continuation);
@@ -98,9 +97,11 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
             }
             const dueTime = this[SchedulerLike_now] + clampPositiveInteger(options?.delay ?? 0);
             const continuation = pipe(QueableContinuation.create(this, effect, dueTime), Disposable.addToContainer(this));
-            this[QueueableContinuationSchedulerLike_schedule](continuation);
+            this[QueueableSchedulerMixinBaseLike_schedule](continuation);
             return continuation;
         },
     });
 })();
 export default SchedulerMixin;
+export const SchedulerMixinBaseLike_shouldYield = Symbol("SchedulerMixinBaseLike_shouldYield");
+export const SchedulerMixinBaseLike_schedule = Symbol("SchedulerMixinBaseLike_schedule");

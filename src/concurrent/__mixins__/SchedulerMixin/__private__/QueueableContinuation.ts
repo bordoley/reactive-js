@@ -50,34 +50,34 @@ export interface QueueableContinuationLike
   [QueueableContinuationLike_parent]: Optional<QueueableContinuationLike>;
 }
 
-export const QueueableContinuationSchedulerLike_schedule = Symbol(
-  "QueueableContinuationSchedulerLike_schedule",
+export const QueueableSchedulerMixinBaseLike_schedule = Symbol(
+  "QueueableSchedulerMixinBaseLike_schedule",
 );
 
-export const QueueableContinuationSchedulerLike_nextTaskID = Symbol(
-  "QueueableContinuationSchedulerLike_nextTaskID",
+export const QueueableSchedulerMixinBaseLike_nextTaskID = Symbol(
+  "QueueableSchedulerMixinBaseLike_nextTaskID",
 );
 
-export const QueueableContinuationSchedulerLike_currentContinuation = Symbol(
-  "QueueableContinuationSchedulerLike_currentContinuation",
+export const QueueableSchedulerMixinBaseLike_currentContinuation = Symbol(
+  "QueueableSchedulerMixinBaseLike_currentContinuation",
 );
 
-export interface QueueableContinuationSchedulerLike
+export interface QueueableSchedulerMixinBaseLike
   extends Pick<
     SchedulerLike,
     typeof SchedulerLike_now | typeof SchedulerLike_shouldYield
   > {
-  readonly [QueueableContinuationSchedulerLike_nextTaskID]: number;
+  readonly [QueueableSchedulerMixinBaseLike_nextTaskID]: number;
 
-  [QueueableContinuationSchedulerLike_currentContinuation]: Optional<QueueableContinuationLike>;
+  [QueueableSchedulerMixinBaseLike_currentContinuation]: Optional<QueueableContinuationLike>;
 
-  [QueueableContinuationSchedulerLike_schedule](
+  [QueueableSchedulerMixinBaseLike_schedule](
     continuation: QueueableContinuationLike,
   ): void;
 }
 
 export const create: (
-  scheduler: QueueableContinuationSchedulerLike,
+  scheduler: QueueableSchedulerMixinBaseLike,
   effect: SideEffect1<ContinuationContextLike>,
   dueTime: number,
 ) => QueueableContinuationLike = /*@__PURE__*/ (() => {
@@ -93,7 +93,7 @@ export const create: (
 
   type TProperties = {
     [QueueableContinuationLike_parent]: Optional<QueueableContinuationLike>;
-    [QueueableContinuation_scheduler]: QueueableContinuationSchedulerLike;
+    [QueueableContinuation_scheduler]: QueueableSchedulerMixinBaseLike;
     [QueueableContinuation_effect]: SideEffect1<ContinuationContextLike>;
     [ContinuationLike_dueTime]: number;
     [ContinuationLike_id]: number;
@@ -118,7 +118,7 @@ export const create: (
     if (isSome(parent)) {
       parent[QueueableLike_enqueue](continuation);
     } else {
-      scheduler[QueueableContinuationSchedulerLike_schedule](continuation);
+      scheduler[QueueableSchedulerMixinBaseLike_schedule](continuation);
     }
   };
 
@@ -135,7 +135,7 @@ export const create: (
       } else if (isSome(parent)) {
         parent[QueueableLike_enqueue](head);
       } else {
-        scheduler[QueueableContinuationSchedulerLike_schedule](head);
+        scheduler[QueueableSchedulerMixinBaseLike_schedule](head);
       }
     }
   };
@@ -190,13 +190,13 @@ export const create: (
         // at a lower relative priority to other previously scheduled continuations
         // with the same due time.
         thiz[ContinuationLike_id] =
-          scheduler[QueueableContinuationSchedulerLike_nextTaskID];
+          scheduler[QueueableSchedulerMixinBaseLike_nextTaskID];
 
         thiz[ContinuationLike_dueTime] = scheduler[SchedulerLike_now] + delay;
 
         rescheduleChildrenOnParentOrScheduler(thiz);
 
-        scheduler[QueueableContinuationSchedulerLike_schedule](thiz);
+        scheduler[QueueableSchedulerMixinBaseLike_schedule](thiz);
       } else {
         rescheduleContinuation(thiz);
       }
@@ -211,7 +211,7 @@ export const create: (
       instance: Pick<QueueableContinuationLike, typeof ContinuationLike_run> &
         ContinuationContextLike &
         Mutable<TProperties>,
-      scheduler: QueueableContinuationSchedulerLike,
+      scheduler: QueueableSchedulerMixinBaseLike,
       effect: SideEffect1<ContinuationContextLike>,
       dueTime: number,
     ): QueueableContinuationLike & ContinuationContextLike {
@@ -222,7 +222,7 @@ export const create: (
       instance[ContinuationLike_dueTime] = dueTime;
 
       instance[ContinuationLike_id] =
-        scheduler[QueueableContinuationSchedulerLike_nextTaskID];
+        scheduler[QueueableSchedulerMixinBaseLike_nextTaskID];
 
       instance[QueueableContinuation_scheduler] = scheduler;
       instance[QueueableContinuation_effect] = effect;
@@ -237,7 +237,7 @@ export const create: (
           // to avoid retaining memory.
           instance[QueueableContinuationLike_parent] = none;
           instance[QueueableContinuation_scheduler] =
-            none as unknown as QueueableContinuationSchedulerLike;
+            none as unknown as QueueableSchedulerMixinBaseLike;
           instance[QueueableContinuation_effect] =
             none as unknown as SideEffect1<ContinuationContextLike>;
         }),
@@ -267,14 +267,13 @@ export const create: (
         const scheduler = this[QueueableContinuation_scheduler];
 
         const oldCurrentContinuation =
-          scheduler[QueueableContinuationSchedulerLike_currentContinuation];
+          scheduler[QueueableSchedulerMixinBaseLike_currentContinuation];
 
-        scheduler[QueueableContinuationSchedulerLike_currentContinuation] =
-          this;
+        scheduler[QueueableSchedulerMixinBaseLike_currentContinuation] = this;
 
         runContinuation(this);
 
-        scheduler[QueueableContinuationSchedulerLike_currentContinuation] =
+        scheduler[QueueableSchedulerMixinBaseLike_currentContinuation] =
           oldCurrentContinuation;
       },
 
@@ -286,7 +285,7 @@ export const create: (
 
         if (__DEV__) {
           const currentContinuation =
-            scheduler[QueueableContinuationSchedulerLike_currentContinuation];
+            scheduler[QueueableSchedulerMixinBaseLike_currentContinuation];
 
           raiseIf(
             currentContinuation !== this,

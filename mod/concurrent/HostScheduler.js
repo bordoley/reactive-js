@@ -12,9 +12,8 @@ import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js"
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, SerialDisposableLike_current, } from "../utils.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "./__internal__/Continuation.js";
 import * as Continuation from "./__internal__/Continuation.js";
-import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "./__internal__/ContinuationScheduler.js";
 import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
-import SchedulerMixin from "./__mixins__/SchedulerMixin.js";
+import SchedulerMixin, { SchedulerMixinBaseLike_schedule, SchedulerMixinBaseLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
 export const create = /*@PURE__*/ (() => {
     const HostScheduler_hostSchedulerContinuationDueTime = Symbol("HostScheduler_hostSchedulerContinuationDueTime");
     const HostScheduler_activeContinuation = Symbol("HostScheduler_activeContinuation");
@@ -112,7 +111,7 @@ export const create = /*@PURE__*/ (() => {
         [HostScheduler_activeContinuation]: none,
         [HostScheduler_messageChannel]: none,
     }), {
-        get [ContinuationSchedulerLike_shouldYield]() {
+        get [SchedulerMixinBaseLike_shouldYield]() {
             unsafeCast(this);
             const now = this[SchedulerLike_now];
             const nextContinuation = peek(this);
@@ -121,7 +120,7 @@ export const create = /*@PURE__*/ (() => {
                 nextContinuation[ContinuationLike_dueTime] <= now;
             return yieldToNextContinuation;
         },
-        [ContinuationSchedulerLike_schedule](continuation) {
+        [SchedulerMixinBaseLike_schedule](continuation) {
             this[QueueableLike_enqueue](continuation);
             scheduleOnHost(this);
         },

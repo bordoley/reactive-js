@@ -45,12 +45,11 @@ import {
   ContinuationLike_run,
 } from "./__internal__/Continuation.js";
 import * as Continuation from "./__internal__/Continuation.js";
-import {
-  ContinuationSchedulerLike,
-  ContinuationSchedulerLike_schedule,
-  ContinuationSchedulerLike_shouldYield,
-} from "./__internal__/ContinuationScheduler.js";
-import SchedulerMixin from "./__mixins__/SchedulerMixin.js";
+import SchedulerMixin, {
+  SchedulerMixinBaseLike,
+  SchedulerMixinBaseLike_schedule,
+  SchedulerMixinBaseLike_shouldYield,
+} from "./__mixins__/SchedulerMixin.js";
 
 interface Signature {
   create(hostScheduler: SchedulerLike): PauseableSchedulerLike;
@@ -85,7 +84,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
   const peek = (
     instance: TProperties &
-      ContinuationSchedulerLike &
+      SchedulerMixinBaseLike &
       QueueLike<ContinuationLike>,
   ): Optional<ContinuationLike> => {
     let continuation: Optional<ContinuationLike> = none;
@@ -105,7 +104,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   const scheduleOnHost = (
     instance: TProperties &
       SerialDisposableLike &
-      ContinuationSchedulerLike &
+      SchedulerMixinBaseLike &
       SchedulerLike &
       QueueLike<ContinuationLike>,
   ) => {
@@ -152,7 +151,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         PauseableSchedulerLike,
         typeof PauseableLike_pause | typeof PauseableLike_resume
       > &
-        ContinuationSchedulerLike &
+        SchedulerMixinBaseLike &
         Mutable<TProperties>,
       host: SchedulerLike,
     ): PauseableSchedulerLike {
@@ -231,7 +230,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
         return isPaused ? pausedTime : activeTime;
       },
-      get [ContinuationSchedulerLike_shouldYield](): boolean {
+      get [SchedulerMixinBaseLike_shouldYield](): boolean {
         unsafeCast<
           TProperties &
             DisposableLike &
@@ -254,7 +253,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         );
       },
       [PauseableLike_pause](
-        this: TProperties & SerialDisposableLike & ContinuationSchedulerLike,
+        this: TProperties & SerialDisposableLike & SchedulerMixinBaseLike,
       ) {
         const hostNow =
           this[PauseableScheduler_hostScheduler][SchedulerLike_now];
@@ -265,7 +264,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       [PauseableLike_resume](
         this: TProperties &
           SerialDisposableLike &
-          ContinuationSchedulerLike &
+          SchedulerMixinBaseLike &
           SchedulerLike &
           QueueLike<ContinuationLike>,
       ) {
@@ -276,10 +275,10 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         this[PauseableLike_isPaused][StoreLike_value] = false;
         scheduleOnHost(this);
       },
-      [ContinuationSchedulerLike_schedule](
+      [SchedulerMixinBaseLike_schedule](
         this: TProperties &
           SerialDisposableLike &
-          ContinuationSchedulerLike &
+          SchedulerMixinBaseLike &
           SchedulerLike &
           QueueLike<ContinuationLike>,
         continuation: ContinuationLike,

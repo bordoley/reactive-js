@@ -21,12 +21,11 @@ import {
   ContinuationLike_dueTime,
   ContinuationLike_run,
 } from "../../concurrent/__internal__/Continuation.js";
-import {
-  ContinuationSchedulerLike,
-  ContinuationSchedulerLike_schedule,
-  ContinuationSchedulerLike_shouldYield,
-} from "../../concurrent/__internal__/ContinuationScheduler.js";
-import SchedulerMixin from "../../concurrent/__mixins__/SchedulerMixin.js";
+import SchedulerMixin, {
+  SchedulerMixinBaseLike,
+  SchedulerMixinBaseLike_schedule,
+  SchedulerMixinBaseLike_shouldYield,
+} from "../../concurrent/__mixins__/SchedulerMixin.js";
 import {
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
@@ -52,7 +51,7 @@ const createReactScheduler = /*@__PURE__*/ (() => {
   return mixInstanceFactory(
     include(SchedulerMixin),
     function ReactPriorityScheduler(
-      instance: ContinuationSchedulerLike & TProperties,
+      instance: SchedulerMixinBaseLike & TProperties,
       priority: 1 | 2 | 3 | 4 | 5,
     ): SchedulerLike & DisposableLike {
       init(SchedulerMixin, instance);
@@ -69,12 +68,12 @@ const createReactScheduler = /*@__PURE__*/ (() => {
         return unstable_now();
       },
 
-      get [ContinuationSchedulerLike_shouldYield](): boolean {
+      get [SchedulerMixinBaseLike_shouldYield](): boolean {
         return unstable_shouldYield();
       },
 
-      [ContinuationSchedulerLike_schedule](
-        this: ContinuationSchedulerLike & TProperties,
+      [SchedulerMixinBaseLike_schedule](
+        this: SchedulerMixinBaseLike & TProperties,
         continuation: ContinuationLike,
       ) {
         const now = this[SchedulerLike_now];

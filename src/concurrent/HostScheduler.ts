@@ -44,13 +44,12 @@ import {
   ContinuationLike_run,
 } from "./__internal__/Continuation.js";
 import * as Continuation from "./__internal__/Continuation.js";
-import {
-  ContinuationSchedulerLike,
-  ContinuationSchedulerLike_schedule,
-  ContinuationSchedulerLike_shouldYield,
-} from "./__internal__/ContinuationScheduler.js";
 import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
-import SchedulerMixin from "./__mixins__/SchedulerMixin.js";
+import SchedulerMixin, {
+  SchedulerMixinBaseLike,
+  SchedulerMixinBaseLike_schedule,
+  SchedulerMixinBaseLike_shouldYield,
+} from "./__mixins__/SchedulerMixin.js";
 
 interface Signature {
   create(): SchedulerLike & DisposableLike;
@@ -82,7 +81,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
   const peek = (
     instance: TProperties &
-      ContinuationSchedulerLike &
+      SchedulerMixinBaseLike &
       QueueLike<ContinuationLike>,
   ): Optional<ContinuationLike> => {
     let continuation: Optional<ContinuationLike> = none;
@@ -102,7 +101,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   const hostSchedulerContinuation = (
     instance: TProperties &
       SerialDisposableLike &
-      ContinuationSchedulerLike &
+      SchedulerMixinBaseLike &
       SchedulerLike &
       QueueLike<ContinuationLike>,
     immmediateOrTimerDisposable: DisposableLike,
@@ -146,7 +145,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   const scheduleOnHost = (
     instance: TProperties &
       SerialDisposableLike &
-      ContinuationSchedulerLike &
+      SchedulerMixinBaseLike &
       SchedulerLike &
       QueueLike<ContinuationLike>,
   ) => {
@@ -218,7 +217,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       QueueMixin(),
     ),
     function HostScheduler(
-      instance: Omit<ContinuationSchedulerLike, typeof SchedulerLike_now> &
+      instance: Omit<SchedulerMixinBaseLike, typeof SchedulerLike_now> &
         Mutable<TProperties>,
       maxYieldInterval: number,
     ): SchedulerLike & DisposableLike {
@@ -257,7 +256,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       [HostScheduler_messageChannel]: none,
     }),
     {
-      get [ContinuationSchedulerLike_shouldYield](): boolean {
+      get [SchedulerMixinBaseLike_shouldYield](): boolean {
         unsafeCast<
           TProperties &
             DisposableLike &
@@ -275,10 +274,10 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
         return yieldToNextContinuation;
       },
-      [ContinuationSchedulerLike_schedule](
+      [SchedulerMixinBaseLike_schedule](
         this: TProperties &
           SerialDisposableLike &
-          ContinuationSchedulerLike &
+          SchedulerMixinBaseLike &
           SchedulerLike &
           QueueLike<ContinuationLike>,
         continuation: ContinuationLike,

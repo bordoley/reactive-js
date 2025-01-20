@@ -4,8 +4,7 @@ import { unstable_NormalPriority, unstable_now, unstable_scheduleCallback, unsta
 import { Map, Map_delete, Map_get, Map_set, } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "../../concurrent/__internal__/Continuation.js";
-import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "../../concurrent/__internal__/ContinuationScheduler.js";
-import SchedulerMixin from "../../concurrent/__mixins__/SchedulerMixin.js";
+import SchedulerMixin, { SchedulerMixinBaseLike_schedule, SchedulerMixinBaseLike_shouldYield, } from "../../concurrent/__mixins__/SchedulerMixin.js";
 import { SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../../concurrent.js";
 import { bindMethod, newInstance, none, pipe } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
@@ -22,10 +21,10 @@ const createReactScheduler = /*@__PURE__*/ (() => {
         get [SchedulerLike_now]() {
             return unstable_now();
         },
-        get [ContinuationSchedulerLike_shouldYield]() {
+        get [SchedulerMixinBaseLike_shouldYield]() {
             return unstable_shouldYield();
         },
-        [ContinuationSchedulerLike_schedule](continuation) {
+        [SchedulerMixinBaseLike_schedule](continuation) {
             const now = this[SchedulerLike_now];
             const dueTime = continuation[ContinuationLike_dueTime];
             const delay = dueTime - now;

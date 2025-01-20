@@ -10,9 +10,9 @@ import QueueMixin from "../../../../utils/__mixins__/QueueMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../../utils.js";
 import { ContinuationLike_dueTime, ContinuationLike_id, ContinuationLike_run, } from "../../../__internal__/Continuation.js";
 export const QueueableContinuationLike_parent = Symbol("QueueableContinuationLike_parent");
-export const QueueableContinuationSchedulerLike_schedule = Symbol("QueueableContinuationSchedulerLike_schedule");
-export const QueueableContinuationSchedulerLike_nextTaskID = Symbol("QueueableContinuationSchedulerLike_nextTaskID");
-export const QueueableContinuationSchedulerLike_currentContinuation = Symbol("QueueableContinuationSchedulerLike_currentContinuation");
+export const QueueableSchedulerMixinBaseLike_schedule = Symbol("QueueableSchedulerMixinBaseLike_schedule");
+export const QueueableSchedulerMixinBaseLike_nextTaskID = Symbol("QueueableSchedulerMixinBaseLike_nextTaskID");
+export const QueueableSchedulerMixinBaseLike_currentContinuation = Symbol("QueueableSchedulerMixinBaseLike_currentContinuation");
 export const create = /*@__PURE__*/ (() => {
     class ContinuationYieldError {
         delay;
@@ -36,7 +36,7 @@ export const create = /*@__PURE__*/ (() => {
             parent[QueueableLike_enqueue](continuation);
         }
         else {
-            scheduler[QueueableContinuationSchedulerLike_schedule](continuation);
+            scheduler[QueueableSchedulerMixinBaseLike_schedule](continuation);
         }
     };
     const rescheduleChildrenOnParentOrScheduler = (continuation) => {
@@ -51,7 +51,7 @@ export const create = /*@__PURE__*/ (() => {
                 parent[QueueableLike_enqueue](head);
             }
             else {
-                scheduler[QueueableContinuationSchedulerLike_schedule](head);
+                scheduler[QueueableSchedulerMixinBaseLike_schedule](head);
             }
         }
     };
@@ -92,10 +92,10 @@ export const create = /*@__PURE__*/ (() => {
                 // at a lower relative priority to other previously scheduled continuations
                 // with the same due time.
                 thiz[ContinuationLike_id] =
-                    scheduler[QueueableContinuationSchedulerLike_nextTaskID];
+                    scheduler[QueueableSchedulerMixinBaseLike_nextTaskID];
                 thiz[ContinuationLike_dueTime] = scheduler[SchedulerLike_now] + delay;
                 rescheduleChildrenOnParentOrScheduler(thiz);
-                scheduler[QueueableContinuationSchedulerLike_schedule](thiz);
+                scheduler[QueueableSchedulerMixinBaseLike_schedule](thiz);
             }
             else {
                 rescheduleContinuation(thiz);
@@ -110,7 +110,7 @@ export const create = /*@__PURE__*/ (() => {
         init(QueueMixin(), instance, none);
         instance[ContinuationLike_dueTime] = dueTime;
         instance[ContinuationLike_id] =
-            scheduler[QueueableContinuationSchedulerLike_nextTaskID];
+            scheduler[QueueableSchedulerMixinBaseLike_nextTaskID];
         instance[QueueableContinuation_scheduler] = scheduler;
         instance[QueueableContinuation_effect] = effect;
         pipe(instance, DisposableContainer.onDisposed(_ => {
@@ -137,17 +137,16 @@ export const create = /*@__PURE__*/ (() => {
                 return;
             }
             const scheduler = this[QueueableContinuation_scheduler];
-            const oldCurrentContinuation = scheduler[QueueableContinuationSchedulerLike_currentContinuation];
-            scheduler[QueueableContinuationSchedulerLike_currentContinuation] =
-                this;
+            const oldCurrentContinuation = scheduler[QueueableSchedulerMixinBaseLike_currentContinuation];
+            scheduler[QueueableSchedulerMixinBaseLike_currentContinuation] = this;
             runContinuation(this);
-            scheduler[QueueableContinuationSchedulerLike_currentContinuation] =
+            scheduler[QueueableSchedulerMixinBaseLike_currentContinuation] =
                 oldCurrentContinuation;
         },
         [ContinuationContextLike_yield](delay = 0) {
             const scheduler = this[QueueableContinuation_scheduler];
             if (__DEV__) {
-                const currentContinuation = scheduler[QueueableContinuationSchedulerLike_currentContinuation];
+                const currentContinuation = scheduler[QueueableSchedulerMixinBaseLike_currentContinuation];
                 raiseIf(currentContinuation !== this, "Attempted to invoke yield outside of a continuation's run context");
             }
             const shouldYield = delay > 0 || scheduler[SchedulerLike_shouldYield];

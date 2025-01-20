@@ -12,12 +12,12 @@ import {
   ContinuationLike_dueTime,
   ContinuationLike_run,
 } from "../../concurrent/__internal__/Continuation.js";
-import {
-  ContinuationSchedulerLike,
-  ContinuationSchedulerLike_schedule,
-  ContinuationSchedulerLike_shouldYield,
-} from "../../concurrent/__internal__/ContinuationScheduler.js";
 import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
+import {
+  SchedulerMixinBaseLike,
+  SchedulerMixinBaseLike_schedule,
+  SchedulerMixinBaseLike_shouldYield,
+} from "../../concurrent/__mixins__/SchedulerMixin.js";
 import {
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
@@ -121,7 +121,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
   const createAnimationFrameScheduler = mixInstanceFactory(
     include(CurrentTimeSchedulerMixin),
     function AnimationFrameScheduler(
-      instance: Omit<ContinuationSchedulerLike, typeof SchedulerLike_now> &
+      instance: Omit<SchedulerMixinBaseLike, typeof SchedulerLike_now> &
         TProperties,
     ): SchedulerLike & DisposableLike {
       init(CurrentTimeSchedulerMixin, instance);
@@ -137,11 +137,11 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
     }),
     {
       [SchedulerLike_maxYieldInterval]: 5,
-      [ContinuationSchedulerLike_shouldYield]: true,
+      [SchedulerMixinBaseLike_shouldYield]: true,
       [SchedulerLike_shouldYield]: true,
 
-      [ContinuationSchedulerLike_schedule](
-        this: ContinuationSchedulerLike & TProperties,
+      [SchedulerMixinBaseLike_schedule](
+        this: SchedulerMixinBaseLike & TProperties,
         continuation: ContinuationLike,
       ) {
         const now = this[SchedulerLike_now];
@@ -157,7 +157,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
               SchedulerLike_schedule,
               pipeLazy(
                 this,
-                invoke(ContinuationSchedulerLike_schedule, continuation),
+                invoke(SchedulerMixinBaseLike_schedule, continuation),
               ),
               { delay },
             ),

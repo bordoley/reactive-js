@@ -13,8 +13,7 @@ import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js"
 import { DisposableContainerLike_add, DisposableLike_isDisposed, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, SerialDisposableLike_current, } from "../utils.js";
 import { ContinuationLike_dueTime, ContinuationLike_run, } from "./__internal__/Continuation.js";
 import * as Continuation from "./__internal__/Continuation.js";
-import { ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, } from "./__internal__/ContinuationScheduler.js";
-import SchedulerMixin from "./__mixins__/SchedulerMixin.js";
+import SchedulerMixin, { SchedulerMixinBaseLike_schedule, SchedulerMixinBaseLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
 export const create = /*@PURE__*/ (() => {
     const PauseableScheduler_hostScheduler = Symbol("PauseableScheduler_hostScheduler");
     const PauseableScheduler_hostSchedulerContinuation = Symbol("PauseableScheduler_hostSchedulerContinuation");
@@ -112,7 +111,7 @@ export const create = /*@PURE__*/ (() => {
             const activeTime = hostNow - this[PauseableScheduler_timeDrift];
             return isPaused ? pausedTime : activeTime;
         },
-        get [ContinuationSchedulerLike_shouldYield]() {
+        get [SchedulerMixinBaseLike_shouldYield]() {
             unsafeCast(this);
             const now = this[SchedulerLike_now];
             const nextContinuation = peek(this);
@@ -136,7 +135,7 @@ export const create = /*@PURE__*/ (() => {
             this[PauseableLike_isPaused][StoreLike_value] = false;
             scheduleOnHost(this);
         },
-        [ContinuationSchedulerLike_schedule](continuation) {
+        [SchedulerMixinBaseLike_schedule](continuation) {
             this[QueueableLike_enqueue](continuation);
             scheduleOnHost(this);
         },
