@@ -4,9 +4,8 @@ import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import { globalObject } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import * as HostScheduler from "../../concurrent/HostScheduler.js";
-import { ContinuationLike_dueTime, ContinuationLike_run, } from "../../concurrent/__internal__/Continuation.js";
 import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
-import { SchedulerMixinBaseLike_schedule, SchedulerMixinBaseLike_shouldYield, } from "../../concurrent/__mixins__/SchedulerMixin.js";
+import { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinBaseLike_schedule, SchedulerMixinBaseLike_shouldYield, } from "../../concurrent/__mixins__/SchedulerMixin.js";
 import { SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import { invoke, isNone, isSome, none, pipe, pipeLazy, raiseIfNone, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -24,7 +23,7 @@ export const get = /*@__PURE__*/ (() => {
         animationFrameScheduler[AnimationFrameScheduler_rafQueue] = Queue.create();
         let continuation = none;
         while (((continuation = workQueue[QueueLike_dequeue]()), isSome(continuation))) {
-            continuation[ContinuationLike_run]();
+            continuation[SchedulerContinuationLike_run]();
             const elapsedTime = CurrentTime.now() - startTime;
             if (elapsedTime > 5 /*ms*/) {
                 break;
@@ -68,7 +67,7 @@ export const get = /*@__PURE__*/ (() => {
         [SchedulerLike_shouldYield]: true,
         [SchedulerMixinBaseLike_schedule](continuation) {
             const now = this[SchedulerLike_now];
-            const dueTime = continuation[ContinuationLike_dueTime];
+            const dueTime = continuation[SchedulerContinuationLike_dueTime];
             const delay = dueTime - now;
             // The frame time is 16 ms at 60 fps so just ignore the delay
             // if its not more than a frame.

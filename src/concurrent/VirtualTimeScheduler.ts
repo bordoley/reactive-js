@@ -29,13 +29,11 @@ import {
   QueueLike_head,
   QueueableLike_enqueue,
 } from "../utils.js";
-import {
-  ContinuationLike,
-  ContinuationLike_dueTime,
-  ContinuationLike_run,
-} from "./__internal__/Continuation.js";
-import * as Continuation from "./__internal__/Continuation.js";
 import SchedulerMixin, {
+  SchedulerContinuation,
+  SchedulerContinuationLike,
+  SchedulerContinuationLike_dueTime,
+  SchedulerContinuationLike_run,
   SchedulerMixinBaseLike,
   SchedulerMixinBaseLike_schedule,
   SchedulerMixinBaseLike_shouldYield,
@@ -60,7 +58,7 @@ type TProperties = {
   [SchedulerLike_now]: number;
   readonly [VirtualTimeScheduler_maxMicroTaskTicks]: number;
   [VirtualTimeScheduler_microTaskTicks]: number;
-  [VirtualTimeScheduler_queue]: QueueLike<ContinuationLike>;
+  [VirtualTimeScheduler_queue]: QueueLike<SchedulerContinuationLike>;
 };
 
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
@@ -79,7 +77,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
 
       instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
       instance[VirtualTimeScheduler_queue] = Queue.create({
-        comparator: Continuation.compare,
+        comparator: SchedulerContinuation.compare,
       });
 
       return instance;
@@ -106,23 +104,23 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
       [VirtualTimeSchedulerLike_run](
         this: TProperties & SchedulerMixinBaseLike & DisposableLike,
       ) {
-        let queue: Optional<QueueLike<ContinuationLike>> = none;
+        let queue: Optional<QueueLike<SchedulerContinuationLike>> = none;
         while (
           ((queue = this[VirtualTimeScheduler_queue]),
           queue[QueueLike_count] > 0)
         ) {
           this[VirtualTimeScheduler_queue] = Queue.create({
-            comparator: Continuation.compare,
+            comparator: SchedulerContinuation.compare,
           });
 
           const currentTime = this[SchedulerLike_now];
 
-          let continuation: Optional<ContinuationLike> = none;
+          let continuation: Optional<SchedulerContinuationLike> = none;
 
           while (
             ((continuation = queue[QueueLike_dequeue]()), isSome(continuation))
           ) {
-            if (continuation[ContinuationLike_dueTime] > currentTime) {
+            if (continuation[SchedulerContinuationLike_dueTime] > currentTime) {
               // copy the task and all other remaining tasks back to the scheduler queue
 
               this[VirtualTimeScheduler_queue][QueueableLike_enqueue](
@@ -138,13 +136,13 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
               }
             } else {
               this[VirtualTimeScheduler_microTaskTicks] = 0;
-              continuation[ContinuationLike_run]();
+              continuation[SchedulerContinuationLike_run]();
             }
           }
 
           const queueHeadDueTime =
             this[VirtualTimeScheduler_queue][QueueLike_head]?.[
-              ContinuationLike_dueTime
+              SchedulerContinuationLike_dueTime
             ] ?? MIN_SAFE_INTEGER;
 
           this[SchedulerLike_now] = max(queueHeadDueTime, currentTime + 1);
@@ -153,8 +151,10 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         this[DisposableLike_dispose]();
       },
       [SchedulerMixinBaseLike_schedule](
-        this: TProperties & QueueLike<ContinuationLike> & SchedulerLike,
-        continuation: ContinuationLike,
+        this: TProperties &
+          QueueLike<SchedulerContinuationLike> &
+          SchedulerLike,
+        continuation: SchedulerContinuationLike,
       ) {
         this[VirtualTimeScheduler_queue][QueueableLike_enqueue](continuation);
       },

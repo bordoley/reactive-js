@@ -7,13 +7,11 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import * as HostScheduler from "../../concurrent/HostScheduler.js";
-import {
-  ContinuationLike,
-  ContinuationLike_dueTime,
-  ContinuationLike_run,
-} from "../../concurrent/__internal__/Continuation.js";
 import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
 import {
+  SchedulerContinuationLike,
+  SchedulerContinuationLike_dueTime,
+  SchedulerContinuationLike_run,
   SchedulerMixinBaseLike,
   SchedulerMixinBaseLike_schedule,
   SchedulerMixinBaseLike_shouldYield,
@@ -64,7 +62,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
 
   type TProperties = {
     [AnimationFrameScheduler_rafIsRunning]: boolean;
-    [AnimationFrameScheduler_rafQueue]: QueueLike<ContinuationLike>;
+    [AnimationFrameScheduler_rafQueue]: QueueLike<SchedulerContinuationLike>;
   };
 
   const rafCallback = () => {
@@ -75,11 +73,11 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
 
     animationFrameScheduler[AnimationFrameScheduler_rafQueue] = Queue.create();
 
-    let continuation: Optional<ContinuationLike> = none;
+    let continuation: Optional<SchedulerContinuationLike> = none;
     while (
       ((continuation = workQueue[QueueLike_dequeue]()), isSome(continuation))
     ) {
-      continuation[ContinuationLike_run]();
+      continuation[SchedulerContinuationLike_run]();
 
       const elapsedTime = CurrentTime.now() - startTime;
       if (elapsedTime > 5 /*ms*/) {
@@ -97,7 +95,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
     } else if (continuationsCount > 0) {
       // Merge the job queues copying the newly enqueued jobs
       // onto the original queue.
-      let continuation: Optional<ContinuationLike> = none;
+      let continuation: Optional<SchedulerContinuationLike> = none;
       while (
         ((continuation = newWorkQueue[QueueLike_dequeue]()),
         isSome(continuation))
@@ -127,7 +125,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
       init(CurrentTimeSchedulerMixin, instance);
 
       instance[AnimationFrameScheduler_rafQueue] =
-        Queue.create<ContinuationLike>();
+        Queue.create<SchedulerContinuationLike>();
 
       return instance;
     },
@@ -142,10 +140,10 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
 
       [SchedulerMixinBaseLike_schedule](
         this: SchedulerMixinBaseLike & TProperties,
-        continuation: ContinuationLike,
+        continuation: SchedulerContinuationLike,
       ) {
         const now = this[SchedulerLike_now];
-        const dueTime = continuation[ContinuationLike_dueTime];
+        const dueTime = continuation[SchedulerContinuationLike_dueTime];
         const delay = dueTime - now;
 
         // The frame time is 16 ms at 60 fps so just ignore the delay

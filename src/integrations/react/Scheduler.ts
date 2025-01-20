@@ -16,12 +16,10 @@ import {
   mixInstanceFactory,
   props,
 } from "../../__internal__/mixins.js";
-import {
-  ContinuationLike,
-  ContinuationLike_dueTime,
-  ContinuationLike_run,
-} from "../../concurrent/__internal__/Continuation.js";
 import SchedulerMixin, {
+  SchedulerContinuationLike,
+  SchedulerContinuationLike_dueTime,
+  SchedulerContinuationLike_run,
   SchedulerMixinBaseLike,
   SchedulerMixinBaseLike_schedule,
   SchedulerMixinBaseLike_shouldYield,
@@ -74,15 +72,15 @@ const createReactScheduler = /*@__PURE__*/ (() => {
 
       [SchedulerMixinBaseLike_schedule](
         this: SchedulerMixinBaseLike & TProperties,
-        continuation: ContinuationLike,
+        continuation: SchedulerContinuationLike,
       ) {
         const now = this[SchedulerLike_now];
-        const dueTime = continuation[ContinuationLike_dueTime];
+        const dueTime = continuation[SchedulerContinuationLike_dueTime];
         const delay = dueTime - now;
 
         unstable_scheduleCallback(
           this[ReactScheduler_priority],
-          bindMethod(continuation, ContinuationLike_run),
+          bindMethod(continuation, SchedulerContinuationLike_run),
           delay > 0 ? { delay } : none,
         );
       },

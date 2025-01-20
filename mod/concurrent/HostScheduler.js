@@ -10,10 +10,8 @@ import * as DisposableContainer from "../utils/DisposableContainer.js";
 import QueueMixin from "../utils/__mixins__/QueueMixin.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, SerialDisposableLike_current, } from "../utils.js";
-import { ContinuationLike_dueTime, ContinuationLike_run, } from "./__internal__/Continuation.js";
-import * as Continuation from "./__internal__/Continuation.js";
 import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
-import SchedulerMixin, { SchedulerMixinBaseLike_schedule, SchedulerMixinBaseLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
+import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinBaseLike_schedule, SchedulerMixinBaseLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
 export const create = /*@PURE__*/ (() => {
     const HostScheduler_hostSchedulerContinuationDueTime = Symbol("HostScheduler_hostSchedulerContinuationDueTime");
     const HostScheduler_activeContinuation = Symbol("HostScheduler_activeContinuation");
@@ -37,7 +35,7 @@ export const create = /*@PURE__*/ (() => {
             if (isNone(nextContinuationToRun)) {
                 break;
             }
-            const dueTime = nextContinuationToRun[ContinuationLike_dueTime];
+            const dueTime = nextContinuationToRun[SchedulerContinuationLike_dueTime];
             const now = instance[SchedulerLike_now];
             const delay = dueTime - now;
             if (delay > 0) {
@@ -46,7 +44,7 @@ export const create = /*@PURE__*/ (() => {
             }
             const continuation = instance[QueueLike_dequeue]();
             instance[HostScheduler_activeContinuation] = continuation;
-            continuation?.[ContinuationLike_run]();
+            continuation?.[SchedulerContinuationLike_run]();
             instance[HostScheduler_activeContinuation] = none;
             const elapsed = instance[SchedulerLike_now] - startTime;
             const shouldYield = elapsed > instance[SchedulerLike_maxYieldInterval];
@@ -61,7 +59,7 @@ export const create = /*@PURE__*/ (() => {
         const hostSchedulerContinuationIsScheduled = !instance[SerialDisposableLike_current][DisposableLike_isDisposed];
         const hostSchedulerContinuationDueTime = instance[HostScheduler_hostSchedulerContinuationDueTime];
         const nextContinuation = peek(instance);
-        const nextContinuationDueTime = nextContinuation?.[ContinuationLike_dueTime] ?? MAX_VALUE;
+        const nextContinuationDueTime = nextContinuation?.[SchedulerContinuationLike_dueTime] ?? MAX_VALUE;
         const inContinuation = instance[SchedulerLike_inContinuation];
         const hostContinuationAlreadyScheduled = hostSchedulerContinuationIsScheduled &&
             hostSchedulerContinuationDueTime <= nextContinuationDueTime;
@@ -70,7 +68,7 @@ export const create = /*@PURE__*/ (() => {
             hostContinuationAlreadyScheduled) {
             return;
         }
-        const dueTime = nextContinuation[ContinuationLike_dueTime];
+        const dueTime = nextContinuation[SchedulerContinuationLike_dueTime];
         const delay = clampPositiveInteger(dueTime - now);
         instance[HostScheduler_hostSchedulerContinuationDueTime] = dueTime;
         const { setImmediate, setTimeout, clearImmediate, clearTimeout } = globalObject;
@@ -91,7 +89,7 @@ export const create = /*@PURE__*/ (() => {
         init(CurrentTimeSchedulerMixin, instance);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
         init(QueueMixin(), instance, {
-            comparator: Continuation.compare,
+            comparator: SchedulerContinuation.compare,
         });
         const MessageChannel = globalObject.MessageChannel;
         const setImmediate = globalObject.setImmediate;
@@ -117,7 +115,7 @@ export const create = /*@PURE__*/ (() => {
             const nextContinuation = peek(this);
             const yieldToNextContinuation = isSome(nextContinuation) &&
                 this[HostScheduler_activeContinuation] !== nextContinuation &&
-                nextContinuation[ContinuationLike_dueTime] <= now;
+                nextContinuation[SchedulerContinuationLike_dueTime] <= now;
             return yieldToNextContinuation;
         },
         [SchedulerMixinBaseLike_schedule](continuation) {
