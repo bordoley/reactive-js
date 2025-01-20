@@ -18,7 +18,6 @@ import {
   newInstance,
   none,
   raiseError,
-  raiseIf,
   returns,
 } from "../../functions.js";
 import {
@@ -76,9 +75,11 @@ const QueueMixin: <T>() => Mixin1<
     const tailOffsetIndex = headOffsetIndex - valuesLength;
     const count = thiz[QueueLike_count];
 
-    raiseIf(index < 0 || index >= count, "index out of range");
-
-    return headOffsetIndex < valuesLength ? headOffsetIndex : tailOffsetIndex;
+    return index < 0 || index >= count
+      ? -1
+      : headOffsetIndex < valuesLength
+        ? headOffsetIndex
+        : tailOffsetIndex;
   };
 
   const copyArray = (
@@ -103,25 +104,6 @@ const QueueMixin: <T>() => Mixin1<
     }
 
     return dest;
-  };
-
-  const getValue = (queue: TProperties & QueueLike<T>, index: number): T => {
-    const computedIndex = computeIndex(queue, index);
-    return queue[QueueMixin_values][computedIndex] as T;
-  };
-
-  const setValue = (
-    queue: TProperties & QueueLike<T>,
-    index: number,
-    value: T,
-  ): T => {
-    const values = queue[QueueMixin_values];
-    const computedIndex = computeIndex(queue, index);
-    const oldValue = values[computedIndex] as T;
-
-    values[computedIndex] = value;
-
-    return oldValue;
   };
 
   return returns(
@@ -209,28 +191,32 @@ const QueueMixin: <T>() => Mixin1<
 
             // Inline: siftDown
             for (let index = 0; index < newCount; ) {
+              const indexValuesIndex = computeIndex(this, index);
+
               const leftIndex = (index + 1) * 2 - 1;
               const rightIndex = leftIndex + 1;
 
               const hasLeft = leftIndex >= 0 && leftIndex < newCount;
-              const hasRight = rightIndex >= 0 && rightIndex < newCount;
+              const leftValuesIndex = computeIndex(this, leftIndex);
+              const left = values[leftValuesIndex];
 
-              const left = hasLeft ? getValue(this, leftIndex) : none;
-              const right = hasRight ? getValue(this, rightIndex) : none;
+              const hasRight = rightIndex >= 0 && rightIndex < newCount;
+              const rightValuesIndex = computeIndex(this, rightIndex);
+              const right = values[rightValuesIndex];
 
               if (hasLeft && compare(left as T, last) < 0) {
                 if (hasRight && compare(right as T, left as T) < 0) {
-                  setValue(this, index, right as T);
-                  setValue(this, rightIndex, last);
+                  values[indexValuesIndex] = right;
+                  values[rightValuesIndex] = last;
                   index = rightIndex;
                 } else {
-                  setValue(this, index, left as T);
-                  setValue(this, leftIndex, last);
+                  values[indexValuesIndex] = left;
+                  values[leftValuesIndex] = last;
                   index = leftIndex;
                 }
               } else if (hasRight && compare(right as T, last) < 0) {
-                setValue(this, index, right as T);
-                setValue(this, rightIndex, last);
+                values[indexValuesIndex] = right;
+                values[rightValuesIndex] = last;
                 index = rightIndex;
               } else {
                 break;
@@ -332,16 +318,21 @@ const QueueMixin: <T>() => Mixin1<
 
           // Inline: siftUp
           for (
-            let index = newCount - 1, parentIndex = floor((index - 1) / 2);
+            let index = newCount - 1,
+              parentIndex = floor((index - 1) / 2),
+              parentValuesIndex = computeIndex(this, parentIndex);
             isSorted &&
             parentIndex >= 0 &&
             parentIndex <= newCount &&
-            compare(getValue(this, parentIndex), item) > 0;
-            index = parentIndex, parentIndex = floor((index - 1) / 2)
+            compare(values[parentValuesIndex] as T, item) > 0;
+            index = parentIndex,
+              parentIndex = floor((index - 1) / 2),
+              parentValuesIndex = computeIndex(this, parentIndex)
           ) {
-            const parent = getValue(this, parentIndex);
-            setValue(this, parentIndex, item);
-            setValue(this, index, parent);
+            const parent = values[parentValuesIndex] as T;
+            const itemValuesIndex = computeIndex(this, index);
+            values[parentValuesIndex] = item;
+            values[itemValuesIndex] = parent;
           }
 
           const shouldGrow = newCount >= valuesLength;

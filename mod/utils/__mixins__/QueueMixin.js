@@ -3,7 +3,7 @@
 import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/constants.js";
 import { clampPositiveInteger, floor } from "../../__internal__/math.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
-import { isSome, newInstance, none, raiseError, raiseIf, returns, } from "../../functions.js";
+import { isSome, newInstance, none, raiseError, returns, } from "../../functions.js";
 import { BackPressureError, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, ThrowBackpressureStrategy, } from "../../utils.js";
 const QueueMixin = /*@PURE*/ (() => {
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
@@ -17,8 +17,11 @@ const QueueMixin = /*@PURE*/ (() => {
         const headOffsetIndex = index + head;
         const tailOffsetIndex = headOffsetIndex - valuesLength;
         const count = thiz[QueueLike_count];
-        raiseIf(index < 0 || index >= count, "index out of range");
-        return headOffsetIndex < valuesLength ? headOffsetIndex : tailOffsetIndex;
+        return index < 0 || index >= count
+            ? -1
+            : headOffsetIndex < valuesLength
+                ? headOffsetIndex
+                : tailOffsetIndex;
     };
     const copyArray = (src, head, tail, size) => {
         const arrayLength = src[Array_length];
@@ -33,17 +36,6 @@ const QueueMixin = /*@PURE*/ (() => {
             dest[k++] = src[i];
         }
         return dest;
-    };
-    const getValue = (queue, index) => {
-        const computedIndex = computeIndex(queue, index);
-        return queue[QueueMixin_values][computedIndex];
-    };
-    const setValue = (queue, index, value) => {
-        const values = queue[QueueMixin_values];
-        const computedIndex = computeIndex(queue, index);
-        const oldValue = values[computedIndex];
-        values[computedIndex] = value;
-        return oldValue;
     };
     return returns(mix(function QueueMixin(instance, config) {
         instance[QueueableLike_backpressureStrategy] =
@@ -100,27 +92,30 @@ const QueueMixin = /*@PURE*/ (() => {
                 values[head] = last;
                 // Inline: siftDown
                 for (let index = 0; index < newCount;) {
+                    const indexValuesIndex = computeIndex(this, index);
                     const leftIndex = (index + 1) * 2 - 1;
                     const rightIndex = leftIndex + 1;
                     const hasLeft = leftIndex >= 0 && leftIndex < newCount;
+                    const leftValuesIndex = computeIndex(this, leftIndex);
+                    const left = values[leftValuesIndex];
                     const hasRight = rightIndex >= 0 && rightIndex < newCount;
-                    const left = hasLeft ? getValue(this, leftIndex) : none;
-                    const right = hasRight ? getValue(this, rightIndex) : none;
+                    const rightValuesIndex = computeIndex(this, rightIndex);
+                    const right = values[rightValuesIndex];
                     if (hasLeft && compare(left, last) < 0) {
                         if (hasRight && compare(right, left) < 0) {
-                            setValue(this, index, right);
-                            setValue(this, rightIndex, last);
+                            values[indexValuesIndex] = right;
+                            values[rightValuesIndex] = last;
                             index = rightIndex;
                         }
                         else {
-                            setValue(this, index, left);
-                            setValue(this, leftIndex, last);
+                            values[indexValuesIndex] = left;
+                            values[leftValuesIndex] = last;
                             index = leftIndex;
                         }
                     }
                     else if (hasRight && compare(right, last) < 0) {
-                        setValue(this, index, right);
-                        setValue(this, rightIndex, last);
+                        values[indexValuesIndex] = right;
+                        values[rightValuesIndex] = last;
                         index = rightIndex;
                     }
                     else {
@@ -199,13 +194,16 @@ const QueueMixin = /*@PURE*/ (() => {
             const newCount = ++this[QueueLike_count];
             const newTail = (this[QueueMixin_tail] = (tail + 1) & capacityMask);
             // Inline: siftUp
-            for (let index = newCount - 1, parentIndex = floor((index - 1) / 2); isSorted &&
+            for (let index = newCount - 1, parentIndex = floor((index - 1) / 2), parentValuesIndex = computeIndex(this, parentIndex); isSorted &&
                 parentIndex >= 0 &&
                 parentIndex <= newCount &&
-                compare(getValue(this, parentIndex), item) > 0; index = parentIndex, parentIndex = floor((index - 1) / 2)) {
-                const parent = getValue(this, parentIndex);
-                setValue(this, parentIndex, item);
-                setValue(this, index, parent);
+                compare(values[parentValuesIndex], item) > 0; index = parentIndex,
+                parentIndex = floor((index - 1) / 2),
+                parentValuesIndex = computeIndex(this, parentIndex)) {
+                const parent = values[parentValuesIndex];
+                const itemValuesIndex = computeIndex(this, index);
+                values[parentValuesIndex] = item;
+                values[itemValuesIndex] = parent;
             }
             const shouldGrow = newCount >= valuesLength;
             const newCapacityMask = shouldGrow
