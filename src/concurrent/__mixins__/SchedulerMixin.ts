@@ -74,28 +74,28 @@ export const SchedulerContinuation = {
   },
 };
 
-export const SchedulerMixinBaseLike_shouldYield = Symbol(
-  "SchedulerMixinBaseLike_shouldYield",
+export const SchedulerMixinHostLike_shouldYield = Symbol(
+  "SchedulerMixinHostLike_shouldYield",
 );
-export const SchedulerMixinBaseLike_schedule = Symbol(
-  "SchedulerMixinBaseLike_schedule",
+export const SchedulerMixinHostLike_schedule = Symbol(
+  "SchedulerMixinHostLike_schedule",
 );
 
-export interface SchedulerMixinBaseLike
+export interface SchedulerMixinHostLike
   extends Pick<
     SchedulerLike,
     typeof SchedulerLike_now | typeof SchedulerLike_maxYieldInterval
   > {
-  readonly [SchedulerMixinBaseLike_shouldYield]: boolean;
+  readonly [SchedulerMixinHostLike_shouldYield]: boolean;
 
-  [SchedulerMixinBaseLike_schedule](
+  [SchedulerMixinHostLike_schedule](
     continuation: SchedulerContinuationLike,
   ): void;
 }
 
 const SchedulerMixin: Mixin<
   SchedulerLike & DisposableLike,
-  SchedulerMixinBaseLike
+  SchedulerMixinHostLike
 > = /*@__PURE__*/ (() => {
   const QueueableSchedulerContinuationLike_parent = Symbol(
     "QueueableSchedulerContinuationLike_parent",
@@ -404,7 +404,7 @@ const SchedulerMixin: Mixin<
       | typeof SchedulerMixinLike_startTime
       | typeof SchedulerMixinLike_taskIDCounter
     >,
-    SchedulerMixinBaseLike & SchedulerLike & DisposableLike
+    SchedulerMixinHostLike & SchedulerLike & DisposableLike
   >(
     include(DisposableMixin),
     function SchedulerMixin(
@@ -422,7 +422,7 @@ const SchedulerMixin: Mixin<
     }),
     {
       get [SchedulerLike_inContinuation](): boolean {
-        unsafeCast<SchedulerMixinBaseLike & SchedulerMixinLike>(this);
+        unsafeCast<SchedulerMixinHostLike & SchedulerMixinLike>(this);
         const currentContinuation =
           this[SchedulerMixinLike_currentContinuation];
         return isSome(currentContinuation);
@@ -430,7 +430,7 @@ const SchedulerMixin: Mixin<
 
       get [SchedulerLike_shouldYield](): boolean {
         unsafeCast<
-          SchedulerMixinLike & SchedulerMixinBaseLike & DisposableLike
+          SchedulerMixinLike & SchedulerMixinHostLike & DisposableLike
         >(this);
 
         if (__DEV__) {
@@ -460,7 +460,7 @@ const SchedulerMixin: Mixin<
           yieldRequested ||
           exceededMaxYieldInterval ||
           currentContinuationHasScheduledChildren ||
-          this[SchedulerMixinBaseLike_shouldYield]
+          this[SchedulerMixinHostLike_shouldYield]
         );
       },
 
@@ -469,7 +469,7 @@ const SchedulerMixin: Mixin<
       },
 
       [SchedulerMixinLike_schedule](
-        this: SchedulerMixinBaseLike & SchedulerMixinLike,
+        this: SchedulerMixinHostLike & SchedulerMixinLike,
         continuation: QueueableSchedulerContinuationLike,
       ): void {
         const activeContinuation = this[SchedulerMixinLike_currentContinuation];
@@ -488,7 +488,7 @@ const SchedulerMixin: Mixin<
           // children because it has been rescheduled in the future.
           activeContinuation[SchedulerContinuationLike_dueTime] > now
         ) {
-          this[SchedulerMixinBaseLike_schedule](continuation);
+          this[SchedulerMixinHostLike_schedule](continuation);
         } else {
           activeContinuation[QueueableLike_enqueue](continuation);
         }

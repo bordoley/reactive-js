@@ -22,8 +22,8 @@ export const SchedulerContinuation = {
             : a[SchedulerContinuationLike_id] - b[SchedulerContinuationLike_id];
     },
 };
-export const SchedulerMixinBaseLike_shouldYield = Symbol("SchedulerMixinBaseLike_shouldYield");
-export const SchedulerMixinBaseLike_schedule = Symbol("SchedulerMixinBaseLike_schedule");
+export const SchedulerMixinHostLike_shouldYield = Symbol("SchedulerMixinHostLike_shouldYield");
+export const SchedulerMixinHostLike_schedule = Symbol("SchedulerMixinHostLike_schedule");
 const SchedulerMixin = /*@__PURE__*/ (() => {
     const QueueableSchedulerContinuationLike_parent = Symbol("QueueableSchedulerContinuationLike_parent");
     const SchedulerMixinLike_schedule = Symbol("SchedulerMixinLike_schedule");
@@ -213,7 +213,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 yieldRequested ||
                 exceededMaxYieldInterval ||
                 currentContinuationHasScheduledChildren ||
-                this[SchedulerMixinBaseLike_shouldYield]);
+                this[SchedulerMixinHostLike_shouldYield]);
         },
         [SchedulerLike_requestYield]() {
             this[SchedulerMixinLike_yieldRequested] = true;
@@ -231,7 +231,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 // Occurs when an active continuation is rescheduling its
                 // children because it has been rescheduled in the future.
                 activeContinuation[SchedulerContinuationLike_dueTime] > now) {
-                this[SchedulerMixinBaseLike_schedule](continuation);
+                this[SchedulerMixinHostLike_schedule](continuation);
             }
             else {
                 activeContinuation[QueueableLike_enqueue](continuation);

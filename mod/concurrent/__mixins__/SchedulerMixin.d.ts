@@ -12,11 +12,11 @@ export interface SchedulerContinuationLike extends DisposableLike {
 export declare const SchedulerContinuation: {
     compare: (a: SchedulerContinuationLike, b: SchedulerContinuationLike) => number;
 };
-export declare const SchedulerMixinBaseLike_shouldYield: unique symbol;
-export declare const SchedulerMixinBaseLike_schedule: unique symbol;
-export interface SchedulerMixinBaseLike extends Pick<SchedulerLike, typeof SchedulerLike_now | typeof SchedulerLike_maxYieldInterval> {
-    readonly [SchedulerMixinBaseLike_shouldYield]: boolean;
-    [SchedulerMixinBaseLike_schedule](continuation: SchedulerContinuationLike): void;
+export declare const SchedulerMixinHostLike_shouldYield: unique symbol;
+export declare const SchedulerMixinHostLike_schedule: unique symbol;
+export interface SchedulerMixinHostLike extends Pick<SchedulerLike, typeof SchedulerLike_now | typeof SchedulerLike_maxYieldInterval> {
+    readonly [SchedulerMixinHostLike_shouldYield]: boolean;
+    [SchedulerMixinHostLike_schedule](continuation: SchedulerContinuationLike): void;
 }
-declare const SchedulerMixin: Mixin<SchedulerLike & DisposableLike, SchedulerMixinBaseLike>;
+declare const SchedulerMixin: Mixin<SchedulerLike & DisposableLike, SchedulerMixinHostLike>;
 export default SchedulerMixin;

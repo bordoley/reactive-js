@@ -20,9 +20,9 @@ import SchedulerMixin, {
   SchedulerContinuationLike,
   SchedulerContinuationLike_dueTime,
   SchedulerContinuationLike_run,
-  SchedulerMixinBaseLike,
-  SchedulerMixinBaseLike_schedule,
-  SchedulerMixinBaseLike_shouldYield,
+  SchedulerMixinHostLike,
+  SchedulerMixinHostLike_schedule,
+  SchedulerMixinHostLike_shouldYield,
 } from "../../concurrent/__mixins__/SchedulerMixin.js";
 import {
   SchedulerLike,
@@ -49,7 +49,7 @@ const createReactScheduler = /*@__PURE__*/ (() => {
   return mixInstanceFactory(
     include(SchedulerMixin),
     function ReactPriorityScheduler(
-      instance: SchedulerMixinBaseLike & TProperties,
+      instance: SchedulerMixinHostLike & TProperties,
       priority: 1 | 2 | 3 | 4 | 5,
     ): SchedulerLike & DisposableLike {
       init(SchedulerMixin, instance);
@@ -66,12 +66,12 @@ const createReactScheduler = /*@__PURE__*/ (() => {
         return unstable_now();
       },
 
-      get [SchedulerMixinBaseLike_shouldYield](): boolean {
+      get [SchedulerMixinHostLike_shouldYield](): boolean {
         return unstable_shouldYield();
       },
 
-      [SchedulerMixinBaseLike_schedule](
-        this: SchedulerMixinBaseLike & TProperties,
+      [SchedulerMixinHostLike_schedule](
+        this: SchedulerMixinHostLike & TProperties,
         continuation: SchedulerContinuationLike,
       ) {
         const now = this[SchedulerLike_now];

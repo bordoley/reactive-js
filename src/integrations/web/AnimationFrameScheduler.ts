@@ -12,9 +12,9 @@ import {
   SchedulerContinuationLike,
   SchedulerContinuationLike_dueTime,
   SchedulerContinuationLike_run,
-  SchedulerMixinBaseLike,
-  SchedulerMixinBaseLike_schedule,
-  SchedulerMixinBaseLike_shouldYield,
+  SchedulerMixinHostLike,
+  SchedulerMixinHostLike_schedule,
+  SchedulerMixinHostLike_shouldYield,
 } from "../../concurrent/__mixins__/SchedulerMixin.js";
 import {
   SchedulerLike,
@@ -119,7 +119,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
   const createAnimationFrameScheduler = mixInstanceFactory(
     include(CurrentTimeSchedulerMixin),
     function AnimationFrameScheduler(
-      instance: Omit<SchedulerMixinBaseLike, typeof SchedulerLike_now> &
+      instance: Omit<SchedulerMixinHostLike, typeof SchedulerLike_now> &
         TProperties,
     ): SchedulerLike & DisposableLike {
       init(CurrentTimeSchedulerMixin, instance);
@@ -135,11 +135,11 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
     }),
     {
       [SchedulerLike_maxYieldInterval]: 5,
-      [SchedulerMixinBaseLike_shouldYield]: true,
+      [SchedulerMixinHostLike_shouldYield]: true,
       [SchedulerLike_shouldYield]: true,
 
-      [SchedulerMixinBaseLike_schedule](
-        this: SchedulerMixinBaseLike & TProperties,
+      [SchedulerMixinHostLike_schedule](
+        this: SchedulerMixinHostLike & TProperties,
         continuation: SchedulerContinuationLike,
       ) {
         const now = this[SchedulerLike_now];
@@ -155,7 +155,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
               SchedulerLike_schedule,
               pipeLazy(
                 this,
-                invoke(SchedulerMixinBaseLike_schedule, continuation),
+                invoke(SchedulerMixinHostLike_schedule, continuation),
               ),
               { delay },
             ),

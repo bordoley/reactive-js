@@ -11,7 +11,7 @@ import * as Disposable from "../utils/Disposable.js";
 import QueueMixin from "../utils/__mixins__/QueueMixin.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
 import { DisposableContainerLike_add, DisposableLike_isDisposed, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, SerialDisposableLike_current, } from "../utils.js";
-import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinBaseLike_schedule, SchedulerMixinBaseLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
+import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
 export const create = /*@PURE__*/ (() => {
     const PauseableScheduler_hostScheduler = Symbol("PauseableScheduler_hostScheduler");
     const PauseableScheduler_hostSchedulerContinuation = Symbol("PauseableScheduler_hostSchedulerContinuation");
@@ -109,7 +109,7 @@ export const create = /*@PURE__*/ (() => {
             const activeTime = hostNow - this[PauseableScheduler_timeDrift];
             return isPaused ? pausedTime : activeTime;
         },
-        get [SchedulerMixinBaseLike_shouldYield]() {
+        get [SchedulerMixinHostLike_shouldYield]() {
             unsafeCast(this);
             const now = this[SchedulerLike_now];
             const nextContinuation = peek(this);
@@ -133,7 +133,7 @@ export const create = /*@PURE__*/ (() => {
             this[PauseableLike_isPaused][StoreLike_value] = false;
             scheduleOnHost(this);
         },
-        [SchedulerMixinBaseLike_schedule](continuation) {
+        [SchedulerMixinHostLike_schedule](continuation) {
             this[QueueableLike_enqueue](continuation);
             scheduleOnHost(this);
         },

@@ -44,9 +44,9 @@ import SchedulerMixin, {
   SchedulerContinuationLike,
   SchedulerContinuationLike_dueTime,
   SchedulerContinuationLike_run,
-  SchedulerMixinBaseLike,
-  SchedulerMixinBaseLike_schedule,
-  SchedulerMixinBaseLike_shouldYield,
+  SchedulerMixinHostLike,
+  SchedulerMixinHostLike_schedule,
+  SchedulerMixinHostLike_shouldYield,
 } from "./__mixins__/SchedulerMixin.js";
 
 interface Signature {
@@ -82,7 +82,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
   const peek = (
     instance: TProperties &
-      SchedulerMixinBaseLike &
+      SchedulerMixinHostLike &
       QueueLike<SchedulerContinuationLike>,
   ): Optional<SchedulerContinuationLike> => {
     let continuation: Optional<SchedulerContinuationLike> = none;
@@ -102,7 +102,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   const scheduleOnHost = (
     instance: TProperties &
       SerialDisposableLike &
-      SchedulerMixinBaseLike &
+      SchedulerMixinHostLike &
       SchedulerLike &
       QueueLike<SchedulerContinuationLike>,
   ) => {
@@ -149,7 +149,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         PauseableSchedulerLike,
         typeof PauseableLike_pause | typeof PauseableLike_resume
       > &
-        SchedulerMixinBaseLike &
+        SchedulerMixinHostLike &
         Mutable<TProperties>,
       host: SchedulerLike,
     ): PauseableSchedulerLike {
@@ -229,7 +229,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
         return isPaused ? pausedTime : activeTime;
       },
-      get [SchedulerMixinBaseLike_shouldYield](): boolean {
+      get [SchedulerMixinHostLike_shouldYield](): boolean {
         unsafeCast<
           TProperties &
             DisposableLike &
@@ -252,7 +252,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         );
       },
       [PauseableLike_pause](
-        this: TProperties & SerialDisposableLike & SchedulerMixinBaseLike,
+        this: TProperties & SerialDisposableLike & SchedulerMixinHostLike,
       ) {
         const hostNow =
           this[PauseableScheduler_hostScheduler][SchedulerLike_now];
@@ -263,7 +263,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       [PauseableLike_resume](
         this: TProperties &
           SerialDisposableLike &
-          SchedulerMixinBaseLike &
+          SchedulerMixinHostLike &
           SchedulerLike &
           QueueLike<SchedulerContinuationLike>,
       ) {
@@ -274,10 +274,10 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         this[PauseableLike_isPaused][StoreLike_value] = false;
         scheduleOnHost(this);
       },
-      [SchedulerMixinBaseLike_schedule](
+      [SchedulerMixinHostLike_schedule](
         this: TProperties &
           SerialDisposableLike &
-          SchedulerMixinBaseLike &
+          SchedulerMixinHostLike &
           SchedulerLike &
           QueueLike<SchedulerContinuationLike>,
         continuation: SchedulerContinuationLike,

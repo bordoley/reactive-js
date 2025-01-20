@@ -7,7 +7,7 @@ import { SchedulerLike_maxYieldInterval, SchedulerLike_now, VirtualTimeScheduler
 import { isSome, none } from "../functions.js";
 import * as Queue from "../utils/Queue.js";
 import { DisposableLike_dispose, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, } from "../utils.js";
-import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinBaseLike_schedule, SchedulerMixinBaseLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
+import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
 const VirtualTimeScheduler_maxMicroTaskTicks = Symbol("VirtualTimeScheduler_maxMicroTaskTicks");
 const VirtualTimeScheduler_microTaskTicks = Symbol("VirtualTimeScheduler_microTaskTicks");
 const VirtualTimeScheduler_queue = Symbol("VirtualTimeScheduler_queue");
@@ -25,7 +25,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFacto
     [VirtualTimeScheduler_queue]: none,
 }), {
     [SchedulerLike_maxYieldInterval]: 1,
-    get [SchedulerMixinBaseLike_shouldYield]() {
+    get [SchedulerMixinHostLike_shouldYield]() {
         unsafeCast(this);
         this[VirtualTimeScheduler_microTaskTicks]++;
         return (this[VirtualTimeScheduler_microTaskTicks] >=
@@ -59,7 +59,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFacto
         }
         this[DisposableLike_dispose]();
     },
-    [SchedulerMixinBaseLike_schedule](continuation) {
+    [SchedulerMixinHostLike_schedule](continuation) {
         this[VirtualTimeScheduler_queue][QueueableLike_enqueue](continuation);
     },
 }))();

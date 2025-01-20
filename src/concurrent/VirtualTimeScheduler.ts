@@ -34,9 +34,9 @@ import SchedulerMixin, {
   SchedulerContinuationLike,
   SchedulerContinuationLike_dueTime,
   SchedulerContinuationLike_run,
-  SchedulerMixinBaseLike,
-  SchedulerMixinBaseLike_schedule,
-  SchedulerMixinBaseLike_shouldYield,
+  SchedulerMixinHostLike,
+  SchedulerMixinHostLike_schedule,
+  SchedulerMixinHostLike_shouldYield,
 } from "./__mixins__/SchedulerMixin.js";
 
 interface Signature {
@@ -70,7 +70,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         typeof VirtualTimeSchedulerLike_run
       > &
         Mutable<TProperties> &
-        SchedulerMixinBaseLike,
+        SchedulerMixinHostLike,
       maxMicroTaskTicks: number,
     ): VirtualTimeSchedulerLike {
       init(SchedulerMixin, instance);
@@ -91,7 +91,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
     {
       [SchedulerLike_maxYieldInterval]: 1,
 
-      get [SchedulerMixinBaseLike_shouldYield]() {
+      get [SchedulerMixinHostLike_shouldYield]() {
         unsafeCast<TProperties>(this);
 
         this[VirtualTimeScheduler_microTaskTicks]++;
@@ -102,7 +102,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         );
       },
       [VirtualTimeSchedulerLike_run](
-        this: TProperties & SchedulerMixinBaseLike & DisposableLike,
+        this: TProperties & SchedulerMixinHostLike & DisposableLike,
       ) {
         let queue: Optional<QueueLike<SchedulerContinuationLike>> = none;
         while (
@@ -150,7 +150,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
 
         this[DisposableLike_dispose]();
       },
-      [SchedulerMixinBaseLike_schedule](
+      [SchedulerMixinHostLike_schedule](
         this: TProperties &
           QueueLike<SchedulerContinuationLike> &
           SchedulerLike,

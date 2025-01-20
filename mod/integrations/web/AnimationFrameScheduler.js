@@ -5,7 +5,7 @@ import { globalObject } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import * as HostScheduler from "../../concurrent/HostScheduler.js";
 import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
-import { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinBaseLike_schedule, SchedulerMixinBaseLike_shouldYield, } from "../../concurrent/__mixins__/SchedulerMixin.js";
+import { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../../concurrent/__mixins__/SchedulerMixin.js";
 import { SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import { invoke, isNone, isSome, none, pipe, pipeLazy, raiseIfNone, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -63,16 +63,16 @@ export const get = /*@__PURE__*/ (() => {
         [AnimationFrameScheduler_rafQueue]: none,
     }), {
         [SchedulerLike_maxYieldInterval]: 5,
-        [SchedulerMixinBaseLike_shouldYield]: true,
+        [SchedulerMixinHostLike_shouldYield]: true,
         [SchedulerLike_shouldYield]: true,
-        [SchedulerMixinBaseLike_schedule](continuation) {
+        [SchedulerMixinHostLike_schedule](continuation) {
             const now = this[SchedulerLike_now];
             const dueTime = continuation[SchedulerContinuationLike_dueTime];
             const delay = dueTime - now;
             // The frame time is 16 ms at 60 fps so just ignore the delay
             // if its not more than a frame.
             if (delay > 16) {
-                pipe(HostScheduler.get(), invoke(SchedulerLike_schedule, pipeLazy(this, invoke(SchedulerMixinBaseLike_schedule, continuation)), { delay }), Disposable.addTo(continuation));
+                pipe(HostScheduler.get(), invoke(SchedulerLike_schedule, pipeLazy(this, invoke(SchedulerMixinHostLike_schedule, continuation)), { delay }), Disposable.addTo(continuation));
             }
             else {
                 this[AnimationFrameScheduler_rafQueue][QueueableLike_enqueue](continuation);
