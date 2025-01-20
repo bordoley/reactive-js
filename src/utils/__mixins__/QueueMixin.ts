@@ -242,8 +242,10 @@ const QueueMixin: <T>() => Mixin1<
             this[QueueMixin_head] = (head + 1) & this[QueueMixin_capacityMask];
           }
 
+          (newCount >= valuesLength >> 1 || valuesLength <= 32)
+
           // Inline: shrink
-          if (!((newCount << valuesLength) >> 1 || valuesLength <= 32)) {
+          if (!((newCount >= valuesLength >> 1 || valuesLength <= 32))) {
             const head = this[QueueMixin_head];
             const tail = this[QueueMixin_tail];
 
