@@ -8,7 +8,7 @@ import {
   useDispatcher,
   useObserve,
 } from "@reactive-js/core/integrations/react";
-import { Optional, clamp, pipe } from "@reactive-js/core/functions";
+import { Optional, pipe } from "@reactive-js/core/functions";
 import { EventSourceLike } from "@reactive-js/core/events";
 import { DictionaryLike_get } from "@reactive-js/core/collections";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
@@ -41,7 +41,11 @@ const Box = (props: any) => (
   />
 );
 
-const clampPositive180deg = clamp(0, 180);
+
+const clamp = (min: number, v: number, max: number): number =>
+  v > max ? max : v < min ? min : v;
+
+const clampPositive180deg = (v: number) => clamp(0, v, 180);
 
 const calcXRotation = (direction: boolean, value: number, i: number) => {
   const clamped = clampPositive180deg(value / (i + 1));
