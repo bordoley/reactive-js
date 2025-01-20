@@ -94,10 +94,10 @@ const QueueMixin = /*@PURE*/ (() => {
                 for (let index = 0; index < newCount;) {
                     const indexValuesIndex = computeIndex(this, index);
                     const leftIndex = (index + 1) * 2 - 1;
-                    const rightIndex = leftIndex + 1;
                     const hasLeft = leftIndex >= 0 && leftIndex < newCount;
                     const leftValuesIndex = computeIndex(this, leftIndex);
                     const left = values[leftValuesIndex];
+                    const rightIndex = leftIndex + 1;
                     const hasRight = rightIndex >= 0 && rightIndex < newCount;
                     const rightValuesIndex = computeIndex(this, rightIndex);
                     const right = values[rightValuesIndex];
@@ -194,12 +194,12 @@ const QueueMixin = /*@PURE*/ (() => {
             const newCount = ++this[QueueLike_count];
             const newTail = (this[QueueMixin_tail] = (tail + 1) & capacityMask);
             // Inline: siftUp
-            for (let index = newCount - 1, parentIndex = floor((index - 1) / 2), parentValuesIndex = computeIndex(this, parentIndex); isSorted &&
-                parentIndex >= 0 &&
-                parentIndex <= newCount &&
-                compare(values[parentValuesIndex], item) > 0; index = parentIndex,
-                parentIndex = floor((index - 1) / 2),
-                parentValuesIndex = computeIndex(this, parentIndex)) {
+            for (let index = newCount - 1, parentIndex = -1, parentValuesIndex = -1; isSorted &&
+                ((parentIndex = floor((index - 1) / 2)),
+                    (parentValuesIndex = computeIndex(this, parentIndex)),
+                    parentIndex >= 0 &&
+                        parentIndex <= newCount &&
+                        compare(values[parentValuesIndex], item) > 0); index = parentIndex) {
                 const parent = values[parentValuesIndex];
                 const itemValuesIndex = computeIndex(this, index);
                 values[parentValuesIndex] = item;
