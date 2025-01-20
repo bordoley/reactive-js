@@ -39,7 +39,7 @@ import {
   SerialDisposableLike_current,
 } from "../utils.js";
 import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
-import SchedulerMixin, {
+import {
   SchedulerContinuation,
   SchedulerContinuationLike,
   SchedulerContinuationLike_dueTime,
@@ -208,12 +208,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   };
 
   const createHostSchedulerInstance = mixInstanceFactory(
-    include(
-      CurrentTimeSchedulerMixin,
-      SchedulerMixin,
-      SerialDisposableMixin(),
-      QueueMixin(),
-    ),
+    include(CurrentTimeSchedulerMixin, SerialDisposableMixin(), QueueMixin()),
     function HostScheduler(
       instance: Omit<SchedulerMixinBaseLike, typeof SchedulerLike_now> &
         Mutable<TProperties>,

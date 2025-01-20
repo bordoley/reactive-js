@@ -11,7 +11,7 @@ import QueueMixin from "../utils/__mixins__/QueueMixin.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, SerialDisposableLike_current, } from "../utils.js";
 import CurrentTimeSchedulerMixin from "./__mixins__/CurrentTimeSchedulerMixin.js";
-import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinBaseLike_schedule, SchedulerMixinBaseLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
+import { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinBaseLike_schedule, SchedulerMixinBaseLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
 export const create = /*@PURE__*/ (() => {
     const HostScheduler_hostSchedulerContinuationDueTime = Symbol("HostScheduler_hostSchedulerContinuationDueTime");
     const HostScheduler_activeContinuation = Symbol("HostScheduler_activeContinuation");
@@ -84,7 +84,7 @@ export const create = /*@PURE__*/ (() => {
             pipe(disposable, Disposable.addTo(instance), DisposableContainer.onDisposed(cleanup));
         }
     };
-    const createHostSchedulerInstance = mixInstanceFactory(include(CurrentTimeSchedulerMixin, SchedulerMixin, SerialDisposableMixin(), QueueMixin()), function HostScheduler(instance, maxYieldInterval) {
+    const createHostSchedulerInstance = mixInstanceFactory(include(CurrentTimeSchedulerMixin, SerialDisposableMixin(), QueueMixin()), function HostScheduler(instance, maxYieldInterval) {
         instance[SchedulerLike_maxYieldInterval] = maxYieldInterval;
         init(CurrentTimeSchedulerMixin, instance);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
