@@ -6,6 +6,7 @@ export const __DENO__ = isSome(globalObject.Deno);
 export const DescribeType = 1;
 export const TestType = 2;
 export const TestAsyncType = 3;
+export const TestDebugType = 4;
 export const describe = (name, ...tests) => ({
     type: DescribeType,
     name,
@@ -13,6 +14,14 @@ export const describe = (name, ...tests) => ({
 });
 export const test = (name, f) => ({
     type: TestType,
+    name,
+    f: (ctx) => () => {
+        ignore(ctx);
+        f();
+    },
+});
+export const testDebug = (name, f) => ({
+    type: TestDebugType,
     name,
     f: (ctx) => () => {
         ignore(ctx);
@@ -138,13 +147,13 @@ export const expectPromiseToThrow = async (promise) => {
         raise("expected function to throw");
     }
 };
-const createTests = (testGroup, parents) => {
+const createTests = (testGroup, parents, debug = false) => {
     const path = [...parents, testGroup.name];
     if (testGroup.type === DescribeType) {
         const forEachCreateTests = () => {
             const { tests } = testGroup;
             for (const test of tests) {
-                createTests(test, path);
+                createTests(test, path, debug);
             }
         };
         if (__DENO__) {
@@ -156,7 +165,7 @@ const createTests = (testGroup, parents) => {
             });
         }
     }
-    else {
+    else if (!debug || testGroup.type === TestDebugType) {
         const name = path.join(":");
         if (__DENO__) {
             globalObject.Deno?.test(name, testGroup.f(name));
@@ -168,4 +177,7 @@ const createTests = (testGroup, parents) => {
 };
 export const testModule = (name, ...testGroups) => {
     createTests(describe(name, ...testGroups), []);
+};
+export const testDebugModule = (name, ...testGroups) => {
+    createTests(describe(name, ...testGroups), [], true);
 };

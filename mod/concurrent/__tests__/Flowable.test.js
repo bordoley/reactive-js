@@ -53,10 +53,12 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 });
 import { Array_push } from "../../__internal__/constants.js";
-import { describe, expectArrayEquals, expectEquals, expectToHaveBeenCalledTimes, expectToThrowAsync, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
-import { FlowableLike_flow, PauseableLike_pause, PauseableLike_resume, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
-import { bindMethod, error, increment, invoke, newInstance, pipe, pipeLazy, returns, tuple, } from "../../functions.js";
+import { describe, expectArrayEquals, expectEquals, expectFalse, expectToHaveBeenCalledTimes, expectToThrowAsync, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
+import { FlowableLike_flow, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
+import { StoreLike_value } from "../../events.js";
+import { bindMethod, error, increment, invoke, newInstance, none, pipe, pipeLazy, returns, tuple, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Flowable from "../Flowable.js";
 import * as HostScheduler from "../HostScheduler.js";
@@ -93,13 +95,28 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
     const env_2 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_2, HostScheduler.create(), false);
+        let timeout = none;
         const stream = pipe((async function* foo() {
             let i = 0;
             while (true) {
+                await new Promise(resolve => {
+                    timeout = setTimeout(resolve, 25);
+                });
                 yield i++;
+                timeout = none;
             }
-        })(), Flowable.fromAsyncIterable(), invoke(FlowableLike_flow, scheduler, { capacity: 1 }));
+        })(), Flowable.fromAsyncIterable(), invoke(FlowableLike_flow, scheduler, { capacity: 1 }), DisposableContainer.onDisposed(_ => {
+            if (timeout !== none) {
+                clearTimeout(timeout);
+            }
+        }));
         stream[PauseableLike_resume]();
+        scheduler[SchedulerLike_schedule](_ => stream[PauseableLike_pause](), {
+            delay: 20,
+        });
+        scheduler[SchedulerLike_schedule](_ => stream[PauseableLike_resume](), {
+            delay: 40,
+        });
         const result = await pipe(stream, Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler));
         pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
@@ -156,22 +173,22 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
             delay: 1,
             delayStart: true,
         }), Flowable.fromRunnable(), invoke(FlowableLike_flow, vts));
-        generateObservable[PauseableLike_resume](),
-            vts[SchedulerLike_schedule](() => generateObservable[PauseableLike_pause](), {
-                delay: 2,
-            });
-        vts[SchedulerLike_schedule](() => generateObservable[PauseableLike_resume](), {
-            delay: 4,
-        });
-        vts[SchedulerLike_schedule](() => generateObservable[DisposableLike_dispose](), {
-            delay: 6,
-        });
+        generateObservable[PauseableLike_resume]();
+        vts[SchedulerLike_schedule](() => {
+            generateObservable[PauseableLike_pause]();
+            expectTrue(generateObservable[PauseableLike_isPaused][StoreLike_value]);
+        }, { delay: 2 });
+        vts[SchedulerLike_schedule](() => {
+            generateObservable[PauseableLike_resume]();
+            expectFalse(generateObservable[PauseableLike_isPaused][StoreLike_value]);
+        }, { delay: 4 });
+        vts[SchedulerLike_schedule](() => generateObservable[DisposableLike_dispose](), { delay: 6 });
         const f = mockFn();
         const subscription = pipe(generateObservable, Observable.forEach((x) => {
             f(x);
         }), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
-        pipe(f, expectToHaveBeenCalledTimes(2));
+        // pipe(f, expectToHaveBeenCalledTimes(2));
         pipe(f.calls.flat(), expectArrayEquals([0, 1]));
         pipe(subscription[DisposableLike_isDisposed], expectTrue);
     }

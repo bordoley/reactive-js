@@ -299,8 +299,8 @@ testModule(
 
       vts[VirtualTimeSchedulerLike_run]();
 
-      pipe(result1, expectArrayEquals([none, 1, 2]));
-      pipe(result2, expectArrayEquals([1]));
+      pipe(result1, expectArrayEquals([none, 1, 2, 3]));
+      pipe(result2, expectArrayEquals([1, 2]));
       pipe(result3, expectArrayEquals([3]));
     }),
   ),
@@ -449,7 +449,7 @@ testModule(
 
       vts[VirtualTimeSchedulerLike_run]();
 
-      pipe(result, expectArrayEquals([-1, 9, 11, 10]));
+      pipe(result, expectArrayEquals([-1, 9, 10, 12]));
     }),
     test("with throttling", () => {
       using vts = VirtualTimeScheduler.create();

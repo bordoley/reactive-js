@@ -21,6 +21,8 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
+  ObserverLike_notify,
+  SchedulerLike_inContinuation,
   SubjectLike,
 } from "../concurrent.js";
 import { EventListenerLike_notify } from "../events.js";
@@ -115,7 +117,11 @@ export const create: <T>(options?: {
 
         for (const observer of this[Subject_observers]) {
           try {
-            observer[QueueableLike_enqueue](next);
+            if (observer[SchedulerLike_inContinuation]) {
+              observer[ObserverLike_notify](next);
+            } else {
+              observer[QueueableLike_enqueue](next);
+            }
           } catch (e) {
             observer[DisposableLike_dispose](error(e));
           }

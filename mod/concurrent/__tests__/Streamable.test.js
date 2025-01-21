@@ -247,8 +247,8 @@ testModule("Streamable", describe("animationGroup", test("blocking mode", () => 
             vts[SchedulerLike_schedule](f, { delay: time });
         }));
         vts[VirtualTimeSchedulerLike_run]();
-        pipe(result1, expectArrayEquals([none, 1, 2]));
-        pipe(result2, expectArrayEquals([1]));
+        pipe(result1, expectArrayEquals([none, 1, 2, 3]));
+        pipe(result2, expectArrayEquals([1, 2]));
         pipe(result3, expectArrayEquals([3]));
     }
     catch (e_6) {
@@ -356,7 +356,7 @@ testModule("Streamable", describe("animationGroup", test("blocking mode", () => 
         const result = [];
         pipe(stream, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
-        pipe(result, expectArrayEquals([-1, 9, 11, 10]));
+        pipe(result, expectArrayEquals([-1, 9, 10, 12]));
     }
     catch (e_10) {
         env_10.error = e_10;

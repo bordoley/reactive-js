@@ -19,9 +19,6 @@ testModule(
       Observable.firstAsync(scheduler),
     );
     const end = scheduler[SchedulerLike_now];
-
-    console.log(end - start);
-
     expectTrue(end - start >= 20);
   }),
 );

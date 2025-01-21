@@ -3,6 +3,7 @@ export declare const __DENO__: boolean;
 export declare const DescribeType = 1;
 export declare const TestType = 2;
 export declare const TestAsyncType = 3;
+export declare const TestDebugType = 4;
 export type Describe = {
     readonly type: typeof DescribeType;
     readonly name: string;
@@ -13,14 +14,20 @@ export type Test = {
     readonly name: string;
     readonly f: Function1<string, SideEffect>;
 };
+export type TestDebug = {
+    readonly type: typeof TestDebugType;
+    readonly name: string;
+    readonly f: Function1<string, SideEffect>;
+};
 export type TestAsync = {
     readonly type: typeof TestAsyncType;
     readonly name: string;
     readonly f: Function1<string, Factory<Promise<void>>>;
 };
-export type TestGroup = Describe | Test | TestAsync;
+export type TestGroup = Describe | Test | TestAsync | TestDebug;
 export declare const describe: (name: string, ...tests: TestGroup[]) => Describe;
 export declare const test: (name: string, f: SideEffect) => Test;
+export declare const testDebug: (name: string, f: SideEffect) => TestDebug;
 export declare const testPredicateExpectingTrue: <T>(input: T, predicate: Predicate<T>) => any;
 export declare const testPredicateExpectingFalse: <T>(input: T, predicate: Predicate<T>) => any;
 export declare const testAsync: (name: string, f: Factory<Promise<void>>) => TestAsync;
@@ -46,4 +53,5 @@ export declare const mockFn: (retval?: unknown) => MockFunction;
 export declare const expectToHaveBeenCalledTimes: (times: number) => (fn: MockFunction) => void;
 export declare const expectPromiseToThrow: (promise: PromiseLike<unknown>) => Promise<void>;
 export declare const testModule: (name: string, ...testGroups: TestGroup[]) => void;
+export declare const testDebugModule: (name: string, ...testGroups: TestGroup[]) => void;
 export {};

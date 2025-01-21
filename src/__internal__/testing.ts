@@ -21,6 +21,7 @@ export const __DENO__ = isSome(globalObject.Deno);
 export const DescribeType = 1;
 export const TestType = 2;
 export const TestAsyncType = 3;
+export const TestDebugType = 4;
 
 export type Describe = {
   readonly type: typeof DescribeType;
@@ -34,13 +35,19 @@ export type Test = {
   readonly f: Function1<string, SideEffect>;
 };
 
+export type TestDebug = {
+  readonly type: typeof TestDebugType;
+  readonly name: string;
+  readonly f: Function1<string, SideEffect>;
+};
+
 export type TestAsync = {
   readonly type: typeof TestAsyncType;
   readonly name: string;
   readonly f: Function1<string, Factory<Promise<void>>>;
 };
 
-export type TestGroup = Describe | Test | TestAsync;
+export type TestGroup = Describe | Test | TestAsync | TestDebug;
 
 export const describe = (name: string, ...tests: TestGroup[]): Describe => ({
   type: DescribeType,
@@ -50,6 +57,15 @@ export const describe = (name: string, ...tests: TestGroup[]): Describe => ({
 
 export const test = (name: string, f: SideEffect): Test => ({
   type: TestType,
+  name,
+  f: (ctx: string) => () => {
+    ignore(ctx);
+    f();
+  },
+});
+
+export const testDebug = (name: string, f: SideEffect): TestDebug => ({
+  type: TestDebugType,
   name,
   f: (ctx: string) => () => {
     ignore(ctx);
@@ -243,7 +259,11 @@ export const expectPromiseToThrow = async (promise: PromiseLike<unknown>) => {
   }
 };
 
-const createTests = (testGroup: TestGroup, parents: readonly string[]) => {
+const createTests = (
+  testGroup: TestGroup,
+  parents: readonly string[],
+  debug = false,
+) => {
   const path = [...parents, testGroup.name];
 
   if (testGroup.type === DescribeType) {
@@ -251,7 +271,7 @@ const createTests = (testGroup: TestGroup, parents: readonly string[]) => {
       const { tests } = testGroup;
 
       for (const test of tests) {
-        createTests(test, path);
+        createTests(test, path, debug);
       }
     };
 
@@ -262,7 +282,7 @@ const createTests = (testGroup: TestGroup, parents: readonly string[]) => {
         forEachCreateTests();
       });
     }
-  } else {
+  } else if (!debug || testGroup.type === TestDebugType) {
     const name = path.join(":");
 
     if (__DENO__) {
@@ -275,4 +295,11 @@ const createTests = (testGroup: TestGroup, parents: readonly string[]) => {
 
 export const testModule = (name: string, ...testGroups: TestGroup[]): void => {
   createTests(describe(name, ...testGroups), []);
+};
+
+export const testDebugModule = (
+  name: string,
+  ...testGroups: TestGroup[]
+): void => {
+  createTests(describe(name, ...testGroups), [], true);
 };
