@@ -11,7 +11,7 @@ import {
   ObserverLike_notify,
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
-import { none, partial, pipe } from "../../../functions.js";
+import { Optional, isSome, none, partial, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Queue from "../../../utils/Queue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
@@ -21,6 +21,7 @@ import {
   DropOldestBackpressureStrategy,
   QueueLike,
   QueueLike_count,
+  QueueLike_dequeue,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -61,11 +62,13 @@ const createTakeLastObserver = /*@__PURE__*/ (<T>() => {
           }
 
           delegate[SchedulerLike_schedule](ctx => {
-            for (const v of queue) {
+            let v: Optional<T> = none;
+            while (((v = queue[QueueLike_dequeue]()), isSome(v))) {
               delegate[ObserverLike_notify](v);
 
-              // FIXME: Might be a bug
-              ctx[ContinuationContextLike_yield]();
+              if (queue[QueueLike_count] > 0) {
+                ctx[ContinuationContextLike_yield]();
+              }
             }
 
             delegate[DisposableLike_dispose]();

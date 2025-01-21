@@ -41,7 +41,6 @@ const Box = (props: any) => (
   />
 );
 
-
 const clamp = (min: number, v: number, max: number): number =>
   v > max ? max : v < min ? min : v;
 
