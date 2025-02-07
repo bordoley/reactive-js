@@ -20,9 +20,8 @@ import {
   StreamableLike_stream,
 } from "../../../concurrent.js";
 import * as WritableStore from "../../../events/WritableStore.js";
-import { StoreLike_value, WritableStoreLike } from "../../../events.js";
+import { WritableStoreLike } from "../../../events.js";
 import { Function1, invoke, none, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin, {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
@@ -34,7 +33,6 @@ import {
 } from "../../../utils.js";
 import type * as Flowable from "../../Flowable.js";
 import * as Observable from "../../Observable.js";
-import * as PauseableScheduler from "../../PauseableScheduler.js";
 import * as Streamable from "../../Streamable.js";
 import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 
@@ -71,13 +69,7 @@ const PauseableObservable_create: <T>(
     ): PauseableObservableLike<T> {
       const liftedOp = (mode: PureDeferredObservableLike<boolean>) =>
         Observable.create(observer => {
-          const pauseableScheduler = pipe(
-            observer,
-            PauseableScheduler.create,
-            Disposable.addTo(observer),
-          );
-
-          const multicastedMode = pipe(
+          pipe(
             mode,
             Observable.mergeWith(
               // Initialize to paused state
@@ -89,28 +81,7 @@ const PauseableObservable_create: <T>(
               capacity: 1,
               backpressureStrategy: DropOldestBackpressureStrategy,
             }),
-            Disposable.addTo(observer),
-          );
-
-          pipe(
-            multicastedMode,
-            Observable.forEach((isPaused: boolean) => {
-              instance[PauseableLike_isPaused][StoreLike_value] = isPaused;
-
-              if (isPaused) {
-                pauseableScheduler[PauseableLike_pause]();
-              } else {
-                pauseableScheduler[PauseableLike_resume]();
-              }
-            }),
-            Observable.subscribe(observer),
-            Disposable.addTo(observer),
-          );
-
-          pipe(
-            multicastedMode,
             op,
-            Observable.subscribeOn(pauseableScheduler),
             invoke(ObservableLike_observe, observer),
           );
         });
