@@ -8,18 +8,12 @@ import {
   ObservableLike_observe,
 } from "../../../concurrent.js";
 import { EventListenerLike_notify } from "../../../events.js";
-import {
-  Factory,
-  Function2,
-  bindMethod,
-  invoke,
-  pipe,
-} from "../../../functions.js";
+import { Factory, Function2, invoke, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import * as Subject from "../../Subject.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
-import Observable_forEach from "./Observable.forEach.js";
+import Observable_notify from "./Observable.notify.js";
 import Observable_switchMap from "./Observable.switchMap.js";
 import Observable_zipLatest from "./Observable.zipLatest.js";
 
@@ -64,9 +58,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
               [ObservableLike_isRunnable]: false,
             },
           }),
-          Observable_forEach(
-            bindMethod(accFeedbackStream, EventListenerLike_notify),
-          ),
+          Observable_notify(accFeedbackStream),
           invoke(ObservableLike_observe, observer),
         );
 

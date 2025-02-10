@@ -2,11 +2,11 @@
 
 import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
 import { EventListenerLike_notify } from "../../../events.js";
-import { bindMethod, invoke, pipe, } from "../../../functions.js";
+import { invoke, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Subject from "../../Subject.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
-import Observable_forEach from "./Observable.forEach.js";
+import Observable_notify from "./Observable.notify.js";
 import Observable_switchMap from "./Observable.switchMap.js";
 import Observable_zipLatest from "./Observable.zipLatest.js";
 const Observable_scanMany = ((scanner, initialValue, options) => {
@@ -28,7 +28,7 @@ const Observable_scanMany = ((scanner, initialValue, options) => {
                     [ObservableLike_isPure]: false,
                     [ObservableLike_isRunnable]: false,
                 },
-            }), Observable_forEach(bindMethod(accFeedbackStream, EventListenerLike_notify)), invoke(ObservableLike_observe, observer));
+            }), Observable_notify(accFeedbackStream), invoke(ObservableLike_observe, observer));
             accFeedbackStream[EventListenerLike_notify](initialValue());
         }, {
             [ObservableLike_isDeferred]: true,

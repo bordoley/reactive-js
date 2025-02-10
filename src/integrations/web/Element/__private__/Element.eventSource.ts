@@ -3,7 +3,7 @@ import {
   EventListenerLike_notify,
   EventSourceLike,
 } from "../../../../events.js";
-import { Function1, bindMethod, error, pipe } from "../../../../functions.js";
+import { Function1, error, pipe } from "../../../../functions.js";
 import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../../utils.js";
 
@@ -30,8 +30,6 @@ const Element_eventSource: (
           listener[DisposableLike_dispose](error(e));
         }
       };
-
-      bindMethod(listener, EventListenerLike_notify);
 
       const addEventListenerOptions = {
         capture: options?.capture ?? false,
