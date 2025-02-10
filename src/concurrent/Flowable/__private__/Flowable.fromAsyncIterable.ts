@@ -5,20 +5,19 @@ import {
 } from "../../../__internal__/constants.js";
 import {
   DispatcherLike_complete,
-  ObservableLike,
   ObserverLike,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
+import * as EventSource from "../../../events/EventSource.js";
+import { EventSourceLike } from "../../../events.js";
 import { bindMethod, error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Flowable from "../../Flowable.js";
@@ -28,7 +27,7 @@ import Flowable_create from "./Flowable.create.js";
 const Flowable_fromAsyncIterable: Flowable.Signature["fromAsyncIterable"] =
   <T>() =>
   (iterable: AsyncIterable<T>) =>
-    Flowable_create<T>((modeObs: ObservableLike<boolean>) =>
+    Flowable_create<T>((modeObs: EventSourceLike<boolean>) =>
       Observable.create((observer: ObserverLike<T>) => {
         const iterator = iterable[Symbol.asyncIterator]();
         const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
@@ -66,29 +65,19 @@ const Flowable_fromAsyncIterable: Flowable.Signature["fromAsyncIterable"] =
           }
 
           if (!isPaused) {
-            pipe(
-              observer[SchedulerLike_schedule](continuation),
-              Disposable.addTo(observer),
-            );
+            observer[SchedulerLike_schedule](continuation);
           }
         };
 
         pipe(
           modeObs,
-          Observable.forEach((mode: boolean) => {
+          EventSource.addEventHandler((mode: boolean) => {
             const wasPaused = isPaused;
             isPaused = mode;
 
             if (!isPaused && wasPaused) {
-              pipe(
-                observer[SchedulerLike_schedule](continuation),
-                Disposable.addTo(observer),
-              );
+              observer[SchedulerLike_schedule](continuation);
             }
-          }),
-          Observable.subscribe(observer, {
-            backpressureStrategy: observer[QueueableLike_backpressureStrategy],
-            capacity: observer[QueueableLike_capacity],
           }),
           Disposable.addTo(observer),
           DisposableContainer.onComplete(

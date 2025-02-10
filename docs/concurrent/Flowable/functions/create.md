@@ -16,7 +16,7 @@
 
 ### op
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`boolean`\>, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../../events/interfaces/EventSourceLike.md)\<`boolean`\>, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>\>
 
 ## Returns
 

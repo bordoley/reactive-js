@@ -10,6 +10,7 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
 } from "../../concurrent.js";
+import * as EventSource from "../../events/EventSource.js";
 import {
   Factory,
   Function1,
@@ -103,14 +104,13 @@ export const create: Signature["create"] = factory =>
 
       pipe(
         mode,
-        Observable.forEach(isPaused => {
+        EventSource.addEventHandler(isPaused => {
           if (isPaused) {
             readable.pause();
           } else {
             readable.resume();
           }
         }),
-        Observable.subscribe(observer),
         addToNodeStream(readable),
       );
 

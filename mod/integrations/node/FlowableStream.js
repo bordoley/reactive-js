@@ -3,6 +3,7 @@
 import * as Flowable from "../../concurrent/Flowable.js";
 import * as Observable from "../../concurrent/Observable.js";
 import { DispatcherLike_complete, FlowableLike_flow, ObservableLike_observe, PauseableLike_pause, PauseableLike_resume, } from "../../concurrent.js";
+import * as EventSource from "../../events/EventSource.js";
 import { bindMethod, ignore, invoke, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
@@ -34,14 +35,14 @@ export const create = factory => Flowable.create(mode => Observable.create(obser
     const dispatchDisposable = pipe(Disposable.create(), DisposableContainer.onError(Disposable.toErrorHandler(observer)), DisposableContainer.onComplete(bindMethod(observer, DispatcherLike_complete)));
     const readable = pipe(factory(), addToDisposable(observer), addDisposable(dispatchDisposable));
     readable.pause();
-    pipe(mode, Observable.forEach(isPaused => {
+    pipe(mode, EventSource.addEventHandler(isPaused => {
         if (isPaused) {
             readable.pause();
         }
         else {
             readable.resume();
         }
-    }), Observable.subscribe(observer), addToNodeStream(readable));
+    }), addToNodeStream(readable));
     const onData = bindMethod(observer, QueueableLike_enqueue);
     const onEnd = bindMethod(observer, DispatcherLike_complete);
     readable.on("data", onData);

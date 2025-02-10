@@ -3,9 +3,9 @@ import {
   DeferredObservableWithSideEffectsLike,
   DispatcherLike,
   FlowableLike,
-  MulticastObservableLike,
   RunnableLike,
 } from "../concurrent.js";
+import { EventSourceLike } from "../events.js";
 import { Function1 } from "../functions.js";
 import Flowable_create from "./Flowable/__private__/Flowable.create.js";
 import Flowable_dispatchTo from "./Flowable/__private__/Flowable.dispatchTo.js";
@@ -17,7 +17,7 @@ import Flowable_fromRunnable from "./Flowable/__private__/Flowable.fromRunnable.
  */
 export interface FlowableModule {
   create<T>(
-    op: Function1<MulticastObservableLike<boolean>, DeferredObservableLike<T>>,
+    op: Function1<EventSourceLike<boolean>, DeferredObservableLike<T>>,
   ): FlowableLike<T>;
 
   dispatchTo<T>(

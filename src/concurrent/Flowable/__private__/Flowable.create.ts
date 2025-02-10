@@ -8,7 +8,6 @@ import {
   DeferredObservableLike,
   FlowableLike,
   FlowableLike_flow,
-  MulticastObservableLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -16,7 +15,11 @@ import {
   SchedulerLike,
 } from "../../../concurrent.js";
 import * as WritableStore from "../../../events/WritableStore.js";
-import { StoreLike_value, WritableStoreLike } from "../../../events.js";
+import {
+  EventSourceLike,
+  StoreLike_value,
+  WritableStoreLike,
+} from "../../../events.js";
 import { Function1, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
@@ -26,7 +29,7 @@ import * as Observable from "../../Observable.js";
 import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 
 const PauseableObservable_create: <T>(
-  op: Function1<MulticastObservableLike<boolean>, DeferredObservableLike<T>>,
+  op: Function1<EventSourceLike<boolean>, DeferredObservableLike<T>>,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: BackpressureStrategy;
@@ -45,10 +48,7 @@ const PauseableObservable_create: <T>(
         typeof PauseableLike_pause | typeof PauseableLike_resume
       > &
         TProperties,
-      op: Function1<
-        MulticastObservableLike<boolean>,
-        DeferredObservableLike<T>
-      >,
+      op: Function1<EventSourceLike<boolean>, DeferredObservableLike<T>>,
       scheduler: SchedulerLike,
       multicastOptions?: {
         capacity?: number;
@@ -61,7 +61,6 @@ const PauseableObservable_create: <T>(
 
       const observableDelegate = pipe(
         writableStore,
-        Observable.fromStore(),
         op,
         Observable.multicast(scheduler, multicastOptions),
         Disposable.bindTo(writableStore),
@@ -92,7 +91,7 @@ const PauseableObservable_create: <T>(
 })();
 
 const Flowable_create: Flowable.Signature["create"] = <T>(
-  op: Function1<MulticastObservableLike<boolean>, DeferredObservableLike<T>>,
+  op: Function1<EventSourceLike<boolean>, DeferredObservableLike<T>>,
 ): FlowableLike<T> => ({
   [FlowableLike_flow]: (scheduler, options) =>
     PauseableObservable_create(op, scheduler, options),

@@ -2,10 +2,11 @@
 
 import { Iterator_done, Iterator_next, Iterator_value, } from "../../../__internal__/constants.js";
 import { DispatcherLike_complete, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, } from "../../../concurrent.js";
+import * as EventSource from "../../../events/EventSource.js";
 import { bindMethod, error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import Flowable_create from "./Flowable.create.js";
 const Flowable_fromAsyncIterable = () => (iterable) => Flowable_create((modeObs) => Observable.create((observer) => {
@@ -38,18 +39,15 @@ const Flowable_fromAsyncIterable = () => (iterable) => Flowable_create((modeObs)
             observer[DisposableLike_dispose](error(e));
         }
         if (!isPaused) {
-            pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
+            observer[SchedulerLike_schedule](continuation);
         }
     };
-    pipe(modeObs, Observable.forEach((mode) => {
+    pipe(modeObs, EventSource.addEventHandler((mode) => {
         const wasPaused = isPaused;
         isPaused = mode;
         if (!isPaused && wasPaused) {
-            pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
+            observer[SchedulerLike_schedule](continuation);
         }
-    }), Observable.subscribe(observer, {
-        backpressureStrategy: observer[QueueableLike_backpressureStrategy],
-        capacity: observer[QueueableLike_capacity],
     }), Disposable.addTo(observer), DisposableContainer.onComplete(bindMethod(observer, DispatcherLike_complete)));
 }));
 export default Flowable_fromAsyncIterable;
