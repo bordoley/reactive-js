@@ -12,10 +12,6 @@ Represents a duplex stream
 
 - [`DispatcherLike`](DispatcherLike.md)\<`TReq`\>.[`MulticastObservableLike`](MulticastObservableLike.md)\<`T`\>
 
-## Extended by
-
-- [`CacheLike`](CacheLike.md)
-
 ## Type Parameters
 
 • **TReq**

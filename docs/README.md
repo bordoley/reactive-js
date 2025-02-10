@@ -13,6 +13,7 @@
 - [collections/ReadonlyObjectMap](collections/ReadonlyObjectMap/README.md)
 - [computations](computations/README.md)
 - [concurrent](concurrent/README.md)
+- [concurrent/Cache](concurrent/Cache/README.md)
 - [concurrent/Flowable](concurrent/Flowable/README.md)
 - [concurrent/HostScheduler](concurrent/HostScheduler/README.md)
 - [concurrent/Observable](concurrent/Observable/README.md)

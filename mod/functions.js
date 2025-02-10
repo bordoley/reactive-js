@@ -6,6 +6,10 @@ import { Array, Array_every, Array_length, Error, Function, Number, Promise, Str
  */
 export const alwaysFalse = () => false;
 /**
+ * A function that always returns `none`.
+ */
+export const alwaysNone = () => none;
+/**
  * A function that always returns `true`.
  */
 export const alwaysTrue = () => true;

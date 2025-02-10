@@ -55,6 +55,7 @@
 ## Functions
 
 - [alwaysFalse](functions/alwaysFalse.md)
+- [alwaysNone](functions/alwaysNone.md)
 - [alwaysTrue](functions/alwaysTrue.md)
 - [arrayEquality](functions/arrayEquality.md)
 - [bind](functions/bind.md)

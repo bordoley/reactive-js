@@ -21,7 +21,5 @@
 - [create](functions/create.md)
 - [eventHandler](functions/eventHandler.md)
 - [identity](functions/identity.md)
-- [inMemoryCache](functions/inMemoryCache.md)
-- [persistentCache](functions/persistentCache.md)
 - [stateStore](functions/stateStore.md)
 - [syncState](functions/syncState.md)

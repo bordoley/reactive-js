@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
 import {
   createComponent,
   useDispatcher,
   usePauseable,
-  useStream,
+  useCache,
   useObserve,
 } from "@reactive-js/core/integrations/react";
 import {
@@ -22,7 +22,6 @@ import {
 import {
   increment,
   isNone,
-  isReadonlyArray,
   isSome,
   none,
   Optional,
@@ -58,7 +57,6 @@ import {
   PauseableLike_resume,
   PauseableLike_isPaused,
   PauseableLike_pause,
-  CacheLike_get,
 } from "@reactive-js/core/concurrent";
 import { EventSourceLike, StoreLike_value } from "@reactive-js/core/events";
 import { QueueableLike_enqueue } from "@reactive-js/core/utils";
@@ -66,6 +64,7 @@ import { DictionaryLike_get } from "@reactive-js/core/collections";
 import * as Flowable from "@reactive-js/core/concurrent/Flowable";
 import { useFlow } from "@reactive-js/core/integrations/react";
 import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
+import * as Cache from "@reactive-js/core/concurrent/Cache";
 
 const AnimatedBox = ({
   animation,
@@ -150,23 +149,23 @@ const AnimationGroup = () => {
   );
 };
 
-const Cache = () => {
-  const cache = useStream(() => Streamable.inMemoryCache<string>(), []);
+const CacheComponent = () => {
+  const cache = useCache<string>();
 
-  const values = cache?.[CacheLike_get]("a");
+  const values = cache && Cache.get(cache, "a");
   const value = useObserve(values) ?? "";
 
   const onChange = useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {
       const next = ev.target.value;
-      cache?.[QueueableLike_enqueue]({ a: _ => next });
+      cache && Cache.set(cache, "a", next);
     },
     [values],
   );
 
   return (
     <div>
-      <input type="text" onChange={onChange} value={value}></input>
+      <input type="text" onChange={onChange}></input>
       <span>{value}</span>
     </div>
   );
@@ -378,7 +377,7 @@ ReactDOMClient.createRoot(rootElement as any).render(
     <History />
     <Counter />
     <AnimationGroup />
-    <Cache />
+    <CacheComponent />
     <RxComponent windowLocation={windowLocation} />
     <Wordle />
     <Measure />

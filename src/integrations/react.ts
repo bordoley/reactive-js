@@ -7,9 +7,12 @@ import {
   useState,
 } from "react";
 import { nullObject } from "../__internal__/constants.js";
+import * as Cache from "../concurrent/Cache.js";
 import * as Observable from "../concurrent/Observable.js";
 import * as Subject from "../concurrent/Subject.js";
 import {
+  CacheLike,
+  DeferredObservableLike,
   DispatcherLike,
   DispatcherLike_complete,
   FlowableLike,
@@ -66,6 +69,20 @@ interface ReactModule {
       readonly capacity?: number;
     },
   ): Function1<TProps, React.ReactNode>;
+
+  useCache<T>(options?: {
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly backpressureStrategy?: BackpressureStrategy;
+    readonly capacity?: number;
+    readonly cleanupPriority?: 1 | 2 | 3 | 4 | 5;
+    readonly maxEntries?: number;
+    readonly persistentStore?: {
+      load(
+        keys: ReadonlySet<string>,
+      ): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
+      store(updates: Readonly<Record<string, T>>): DeferredObservableLike<void>;
+    };
+  }): Optional<CacheLike<T>>;
 
   useDispatcher<TReq>(dispatcher: Optional<DispatcherLike<TReq>>): {
     enqueue: Function1<TReq, boolean>;
@@ -347,6 +364,42 @@ export const usePauseable: Signature["usePauseable"] = (
     pause,
     resume,
   };
+};
+
+export const useCache: Signature["useCache"] = <T>(options?: {
+  readonly priority?: 1 | 2 | 3 | 4 | 5;
+  readonly backpressureStrategy?: BackpressureStrategy;
+  readonly capacity?: number;
+  readonly cleanupPriority?: 1 | 2 | 3 | 4 | 5;
+  readonly maxEntries?: number;
+  readonly persistentStore?: {
+    load(
+      keys: ReadonlySet<string>,
+    ): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
+    store(updates: Readonly<Record<string, T>>): DeferredObservableLike<void>;
+  };
+}) => {
+  const {
+    priority,
+    backpressureStrategy,
+    capacity,
+    cleanupPriority,
+    maxEntries,
+    persistentStore,
+  } = options ?? {};
+
+  const cache = useDisposable(
+    () =>
+      Cache.create(ReactScheduler.get(priority), {
+        backpressureStrategy,
+        capacity,
+        cleanupScheduler: ReactScheduler.get(cleanupPriority ?? 4),
+        maxEntries,
+        persistentStore,
+      }),
+    [],
+  );
+  return cache;
 };
 
 export const useStream: Signature["useStream"] = <

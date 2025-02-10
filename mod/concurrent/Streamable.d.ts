@@ -1,7 +1,7 @@
 import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
-import { CacheLike, DeferredObservableLike, PureDeferredObservableLike, PureRunnableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
+import { DeferredObservableLike, PureDeferredObservableLike, PureRunnableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
 import { EventSourceLike } from "../events.js";
-import { Equality, Factory, Function1, Function2, Optional, Reducer, Updater } from "../functions.js";
+import { Equality, Factory, Function1, Function2, Reducer, Updater } from "../functions.js";
 import { BackpressureStrategy } from "../utils.js";
 /**
  * @noInheritDoc
@@ -33,17 +33,6 @@ export interface StreamableModule {
         readonly capacity?: number;
     }): StreamableLike<TEventType, boolean>;
     identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
-    inMemoryCache<T>(options?: {
-        readonly capacity?: number;
-        readonly cleanupScheduler?: SchedulerLike;
-    }): StreamableLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never, CacheLike<T>>;
-    persistentCache<T>(persistentStore: {
-        load(keys: ReadonlySet<string>): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
-        store(updates: Readonly<Record<string, T>>): DeferredObservableLike<void>;
-    }, options?: {
-        readonly capacity?: number;
-        readonly cleanupScheduler?: SchedulerLike;
-    }): StreamableLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never, CacheLike<T>>;
     /**
      * Returns a new `StateStoreLike` instance that stores state which can
      * be updated by notifying the instance with a `StateUpdater` that computes a
@@ -67,7 +56,5 @@ export declare const actionReducer: Signature["actionReducer"];
 export declare const animationGroup: Signature["animationGroup"];
 export declare const eventHandler: Signature["eventHandler"];
 export declare const identity: Signature["identity"];
-export declare const inMemoryCache: Signature["inMemoryCache"];
-export declare const persistentCache: Signature["persistentCache"];
 export declare const stateStore: Signature["stateStore"];
 export declare const syncState: Signature["syncState"];

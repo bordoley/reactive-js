@@ -215,6 +215,8 @@ interface FunctionsModule {
 
   alwaysFalse(..._args: unknown[]): boolean;
 
+  alwaysNone(..._args: unknown[]): typeof none;
+
   alwaysTrue(..._args: unknown[]): true;
 
   arrayEquality<T>(valuesEquality?: Equality<T>): Equality<readonly T[]>;
@@ -1191,6 +1193,11 @@ type Signature = FunctionsModule;
  * A function that always returns `false`.
  */
 export const alwaysFalse: Signature["alwaysFalse"] = () => false;
+
+/**
+ * A function that always returns `none`.
+ */
+export const alwaysNone: Signature["alwaysNone"] = () => none;
 
 /**
  * A function that always returns `true`.

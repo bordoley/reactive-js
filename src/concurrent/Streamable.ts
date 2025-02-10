@@ -1,6 +1,5 @@
 import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
 import {
-  CacheLike,
   DeferredObservableLike,
   PureDeferredObservableLike,
   PureRunnableLike,
@@ -14,7 +13,6 @@ import {
   Factory,
   Function1,
   Function2,
-  Optional,
   Reducer,
   Updater,
 } from "../functions.js";
@@ -24,8 +22,6 @@ import Streamable_animationGroup from "./Streamable/__private__/Streamable.anima
 import Streamable_create from "./Streamable/__private__/Streamable.create.js";
 import Streamable_eventHandler from "./Streamable/__private__/Streamable.eventHandler.js";
 import Streamable_identity from "./Streamable/__private__/Streamable.identity.js";
-import Streamable_inMemoryCache from "./Streamable/__private__/Streamable.inMemoryCache.js";
-import Streamable_persistentCache from "./Streamable/__private__/Streamable.persistentCache.js";
 import Streamable_stateStore from "./Streamable/__private__/Streamable.stateStore.js";
 import Streamable_syncState from "./Streamable/__private__/Streamable.syncState.js";
 
@@ -77,32 +73,6 @@ export interface StreamableModule {
 
   identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
 
-  inMemoryCache<T>(options?: {
-    readonly capacity?: number;
-    readonly cleanupScheduler?: SchedulerLike;
-  }): StreamableLike<
-    ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
-    never,
-    CacheLike<T>
-  >;
-
-  persistentCache<T>(
-    persistentStore: {
-      load(
-        keys: ReadonlySet<string>,
-      ): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
-      store(updates: Readonly<Record<string, T>>): DeferredObservableLike<void>;
-    },
-    options?: {
-      readonly capacity?: number;
-      readonly cleanupScheduler?: SchedulerLike;
-    },
-  ): StreamableLike<
-    ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
-    never,
-    CacheLike<T>
-  >;
-
   /**
    * Returns a new `StateStoreLike` instance that stores state which can
    * be updated by notifying the instance with a `StateUpdater` that computes a
@@ -136,9 +106,5 @@ export const animationGroup: Signature["animationGroup"] =
   Streamable_animationGroup;
 export const eventHandler: Signature["eventHandler"] = Streamable_eventHandler;
 export const identity: Signature["identity"] = Streamable_identity;
-export const inMemoryCache: Signature["inMemoryCache"] =
-  Streamable_inMemoryCache;
-export const persistentCache: Signature["persistentCache"] =
-  Streamable_persistentCache;
 export const stateStore: Signature["stateStore"] = Streamable_stateStore;
 export const syncState: Signature["syncState"] = Streamable_syncState;

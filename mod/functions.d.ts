@@ -117,6 +117,7 @@ export type Updater<T> = Function1<T, T>;
 interface FunctionsModule {
     readonly none: undefined;
     alwaysFalse(..._args: unknown[]): boolean;
+    alwaysNone(..._args: unknown[]): typeof none;
     alwaysTrue(..._args: unknown[]): true;
     arrayEquality<T>(valuesEquality?: Equality<T>): Equality<readonly T[]>;
     bind<F extends Function>(f: F, thiz: unknown): F;
@@ -275,6 +276,10 @@ type Signature = FunctionsModule;
  * A function that always returns `false`.
  */
 export declare const alwaysFalse: Signature["alwaysFalse"];
+/**
+ * A function that always returns `none`.
+ */
+export declare const alwaysNone: Signature["alwaysNone"];
 /**
  * A function that always returns `true`.
  */

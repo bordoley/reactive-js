@@ -6,11 +6,9 @@
 
 # Interface: CacheLike\<T\>
 
-Represents a duplex stream
-
 ## Extends
 
-- [`StreamLike`](StreamLike.md)\<[`ReadonlyObjectMapLike`](../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`string`, [`Function1`](../../functions/type-aliases/Function1.md)\<[`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>\>, `never`\>
+- [`DispatcherLike`](DispatcherLike.md)\<[`ReadonlyObjectMapLike`](../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`string`, [`Updater`](../../functions/type-aliases/Updater.md)\<[`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>\>\>
 
 ## Type Parameters
 

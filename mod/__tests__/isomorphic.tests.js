@@ -9,6 +9,7 @@ import "../collections/__tests__/Dictionary.test.js";
 import "../collections/__tests__/ReadonlyArray.test.js";
 import "../collections/__tests__/ReadonlyMap.test.js";
 import "../collections/__tests__/ReadonlyObjectMap.test.js";
+import "../concurrent/__tests__/Cache.test.js";
 import "../concurrent/__tests__/Flowable.test.js";
 import "../concurrent/__tests__/HostScheduler.test.js";
 import "../concurrent/__tests__/Observable.test.js";
