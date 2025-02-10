@@ -7,7 +7,6 @@ import {
   useRef,
   useState,
 } from "react";
-import type * as React from "react";
 import { nullObject } from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { DictionaryLike, ReadonlyObjectMapLike } from "../../collections.js";

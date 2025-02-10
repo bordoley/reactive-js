@@ -8,8 +8,8 @@
 
 ## Functions
 
+- [CacheProvider](functions/CacheProvider.md)
 - [createComponent](functions/createComponent.md)
-- [useCache](functions/useCache.md)
 - [useDispatcher](functions/useDispatcher.md)
 - [useDisposable](functions/useDisposable.md)
 - [useFlow](functions/useFlow.md)

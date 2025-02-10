@@ -1,5 +1,6 @@
 import {
   ReactElement,
+  createElement,
   useCallback,
   useEffect,
   useMemo,
@@ -58,19 +59,8 @@ import {
 import * as ReactScheduler from "./react/Scheduler.js";
 
 interface ReactModule {
-  createComponent<TProps>(
-    fn: Function1<
-      MulticastObservableLike<TProps>,
-      ObservableLike<ReactElement>
-    >,
-    options?: {
-      readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-    },
-  ): Function1<TProps, React.ReactNode>;
-
-  useCache<T>(options?: {
+  CacheProvider<T>(props: {
+    readonly cacheContext: React.Context<Optional<CacheLike<T>>>;
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
@@ -82,7 +72,20 @@ interface ReactModule {
       ): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
       store(updates: Readonly<Record<string, T>>): DeferredObservableLike<void>;
     };
-  }): Optional<CacheLike<T>>;
+    readonly children: React.ReactNode;
+  }): React.ReactNode;
+
+  createComponent<TProps>(
+    fn: Function1<
+      MulticastObservableLike<TProps>,
+      ObservableLike<ReactElement>
+    >,
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: BackpressureStrategy;
+      readonly capacity?: number;
+    },
+  ): Function1<TProps, React.ReactNode>;
 
   useDispatcher<TReq>(dispatcher: Optional<DispatcherLike<TReq>>): {
     enqueue: Function1<TReq, boolean>;
@@ -366,42 +369,6 @@ export const usePauseable: Signature["usePauseable"] = (
   };
 };
 
-export const useCache: Signature["useCache"] = <T>(options?: {
-  readonly priority?: 1 | 2 | 3 | 4 | 5;
-  readonly backpressureStrategy?: BackpressureStrategy;
-  readonly capacity?: number;
-  readonly cleanupPriority?: 1 | 2 | 3 | 4 | 5;
-  readonly maxEntries?: number;
-  readonly persistentStore?: {
-    load(
-      keys: ReadonlySet<string>,
-    ): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
-    store(updates: Readonly<Record<string, T>>): DeferredObservableLike<void>;
-  };
-}) => {
-  const {
-    priority,
-    backpressureStrategy,
-    capacity,
-    cleanupPriority,
-    maxEntries,
-    persistentStore,
-  } = options ?? {};
-
-  const cache = useDisposable(
-    () =>
-      Cache.create(ReactScheduler.get(priority), {
-        backpressureStrategy,
-        capacity,
-        cleanupScheduler: ReactScheduler.get(cleanupPriority ?? 4),
-        maxEntries,
-        persistentStore,
-      }),
-    [],
-  );
-  return cache;
-};
-
 export const useStream: Signature["useStream"] = <
   TStreamable extends StreamableLike,
 >(
@@ -498,4 +465,57 @@ export const useFlow: Signature["useFlow"] = <T>(
   );
 
   return pauseable;
+};
+
+export const CacheProvider: Signature["CacheProvider"] = <T>(props: {
+  readonly cacheContext: React.Context<Optional<CacheLike<T>>>;
+  readonly priority?: 1 | 2 | 3 | 4 | 5;
+  readonly backpressureStrategy?: BackpressureStrategy;
+  readonly capacity?: number;
+  readonly cleanupPriority?: 1 | 2 | 3 | 4 | 5;
+  readonly maxEntries?: number;
+  readonly persistentStore?: {
+    load(
+      keys: ReadonlySet<string>,
+    ): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
+    store(updates: Readonly<Record<string, T>>): DeferredObservableLike<void>;
+  };
+  children: React.ReactNode;
+}) => {
+  const {
+    cacheContext,
+    priority,
+    backpressureStrategy,
+    capacity,
+    cleanupPriority,
+    maxEntries,
+    persistentStore,
+    children,
+  } = props ?? {};
+  const cache = useDisposable(
+    () =>
+      Cache.create(ReactScheduler.get(priority), {
+        backpressureStrategy,
+        capacity,
+        cleanupScheduler: ReactScheduler.get(cleanupPriority ?? 4),
+        maxEntries,
+        persistentStore,
+      }),
+    [
+      priority,
+      backpressureStrategy,
+      capacity,
+      cleanupPriority,
+      maxEntries,
+      persistentStore,
+    ],
+  );
+
+  return createElement(
+    cacheContext.Provider,
+    {
+      value: cache,
+    },
+    children,
+  );
 };

@@ -1,11 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
 import {
+  CacheProvider,
   createComponent,
   useDispatcher,
   usePauseable,
-  useCache,
   useObserve,
 } from "@reactive-js/core/integrations/react";
 import {
@@ -57,6 +63,7 @@ import {
   PauseableLike_resume,
   PauseableLike_isPaused,
   PauseableLike_pause,
+  CacheLike,
 } from "@reactive-js/core/concurrent";
 import { EventSourceLike, StoreLike_value } from "@reactive-js/core/events";
 import { QueueableLike_enqueue } from "@reactive-js/core/utils";
@@ -149,8 +156,11 @@ const AnimationGroup = () => {
   );
 };
 
+const inMemoryCacheContext =
+  /*@__PURE__*/ createContext<Optional<CacheLike<string>>>(none);
+
 const CacheComponent = () => {
-  const cache = useCache<string>();
+  const cache = useContext(inMemoryCacheContext);
 
   const values = cache && Cache.get(cache, "a");
   const value = useObserve(values) ?? "";
@@ -373,13 +383,15 @@ const windowLocation = WindowLocation.subscribe(ReactScheduler.get());
 const rootElement = document.getElementById("root");
 
 ReactDOMClient.createRoot(rootElement as any).render(
-  <WindowLocationProvider windowLocation={windowLocation}>
-    <History />
-    <Counter />
-    <AnimationGroup />
-    <CacheComponent />
-    <RxComponent windowLocation={windowLocation} />
-    <Wordle />
-    <Measure />
-  </WindowLocationProvider>,
+  <CacheProvider cacheContext={inMemoryCacheContext}>
+    <WindowLocationProvider windowLocation={windowLocation}>
+      <History />
+      <Counter />
+      <AnimationGroup />
+      <CacheComponent />
+      <RxComponent windowLocation={windowLocation} />
+      <Wordle />
+      <Measure />
+    </WindowLocationProvider>
+  </CacheProvider>,
 );
