@@ -9,31 +9,20 @@ import {
   FlowableLike,
   FlowableLike_flow,
   MulticastObservableLike,
-  ObservableLike_observe,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,
-  PureDeferredObservableLike,
   SchedulerLike,
-  StreamLike,
-  StreamableLike_stream,
 } from "../../../concurrent.js";
 import * as WritableStore from "../../../events/WritableStore.js";
-import { WritableStoreLike } from "../../../events.js";
-import { Function1, invoke, none, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin, {
-  DelegatingDisposableLike,
-  DelegatingDisposableLike_delegate,
-} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import {
-  BackpressureStrategy,
-  DropOldestBackpressureStrategy,
-  QueueableLike_enqueue,
-} from "../../../utils.js";
+import { StoreLike_value, WritableStoreLike } from "../../../events.js";
+import { Function1, none, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { BackpressureStrategy } from "../../../utils.js";
 import type * as Flowable from "../../Flowable.js";
 import * as Observable from "../../Observable.js";
-import * as Streamable from "../../Streamable.js";
 import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 
 const PauseableObservable_create: <T>(
@@ -67,32 +56,23 @@ const PauseableObservable_create: <T>(
         replay?: number;
       },
     ): PauseableObservableLike<T> {
-      const liftedOp = (mode: PureDeferredObservableLike<boolean>) =>
-        Observable.create(observer => {
-          pipe(
-            mode,
-            Observable.mergeWith(
-              // Initialize to paused state
-              pipe(true, Observable.fromValue()),
-            ),
-            Observable.distinctUntilChanged<boolean>(),
-            Observable.multicast(observer, {
-              replay: 1,
-              capacity: 1,
-              backpressureStrategy: DropOldestBackpressureStrategy,
-            }),
-            op,
-            invoke(ObservableLike_observe, observer),
-          );
-        });
+      const writableStore = (instance[PauseableLike_isPaused] =
+        WritableStore.create(true));
 
-      const stream = Streamable.create<boolean, T>(liftedOp)[
-        StreamableLike_stream
-      ](scheduler, multicastOptions);
-      init(DelegatingDisposableMixin(), instance, stream);
-      init(DelegatingMulticastObservableMixin<T>(), instance, stream);
+      const observableDelegate = pipe(
+        writableStore,
+        Observable.fromStore(),
+        op,
+        Observable.multicast(scheduler, multicastOptions),
+        Disposable.bindTo(writableStore),
+      );
 
-      instance[PauseableLike_isPaused] = WritableStore.create(true);
+      init(DelegatingDisposableMixin(), instance, writableStore);
+      init(
+        DelegatingMulticastObservableMixin<T>(),
+        instance,
+        observableDelegate,
+      );
 
       return instance;
     },
@@ -100,16 +80,12 @@ const PauseableObservable_create: <T>(
       [PauseableLike_isPaused]: none,
     }),
     {
-      [PauseableLike_pause](
-        this: DelegatingDisposableLike<StreamLike<boolean, T>>,
-      ) {
-        this[DelegatingDisposableLike_delegate][QueueableLike_enqueue](true);
+      [PauseableLike_pause](this: TProperties) {
+        this[PauseableLike_isPaused][StoreLike_value] = true;
       },
 
-      [PauseableLike_resume](
-        this: DelegatingDisposableLike<StreamLike<boolean, T>>,
-      ) {
-        this[DelegatingDisposableLike_delegate][QueueableLike_enqueue](false);
+      [PauseableLike_resume](this: TProperties) {
+        this[PauseableLike_isPaused][StoreLike_value] = false;
       },
     },
   );
