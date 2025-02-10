@@ -16,41 +16,28 @@ const Streamable_eventHandler: Streamable.Signature["eventHandler"] = (<
   } = {},
 ): StreamableLike<TEventType, unknown> => {
   const { mode } = options;
+  const boundedOP = compose(
+    op,
+    Observable.ignoreElements(),
+    Observable.startWith<boolean>(true),
+    Observable.endWith<boolean>(false),
+  );
+
   return Streamable_create<TEventType, unknown>(
     compose(
       mode === "switching"
-        ? Observable.switchMap<TEventType, boolean>(
-            compose(
-              op,
-              Observable.ignoreElements(),
-              Observable.startWith<boolean>(true),
-              Observable.endWith<boolean>(false),
-            ),
-            { innerType: Observable.DeferredObservableWithSideEffectsType },
-          )
+        ? Observable.switchMap<TEventType, boolean>(boundedOP, {
+            innerType: Observable.DeferredObservableWithSideEffectsType,
+          })
         : mode === "blocking"
-          ? Observable.exhaustMap<TEventType, boolean>(
-              compose(
-                op,
-                Observable.ignoreElements<boolean>(),
-                Observable.startWith<boolean>(true),
-                Observable.endWith<boolean>(false),
-              ),
-              { innerType: Observable.DeferredObservableWithSideEffectsType },
-            )
-          : Observable.mergeMap<TEventType, boolean>(
-              compose(
-                op,
-                Observable.ignoreElements<never>(),
-                Observable.startWith<boolean>(true),
-                Observable.endWith<boolean>(false),
-              ),
-              {
-                ...options,
-                concurrency: 1,
-                innerType: Observable.DeferredObservableWithSideEffectsType,
-              },
-            ),
+          ? Observable.exhaustMap<TEventType, boolean>(boundedOP, {
+              innerType: Observable.DeferredObservableWithSideEffectsType,
+            })
+          : Observable.mergeMap<TEventType, boolean>(boundedOP, {
+              ...options,
+              concurrency: 1,
+              innerType: Observable.DeferredObservableWithSideEffectsType,
+            }),
       Observable.mergeWith<boolean>(pipe(false, Observable.fromValue())),
     ),
   );
