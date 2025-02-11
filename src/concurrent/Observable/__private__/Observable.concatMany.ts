@@ -1,4 +1,5 @@
 import { Array_length } from "../../../__internal__/constants.js";
+import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
@@ -8,7 +9,7 @@ import {
   ObservableLike_observe,
   ObserverLike,
 } from "../../../concurrent.js";
-import { bindMethod, pipe } from "../../../functions.js";
+import { bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
@@ -16,7 +17,6 @@ import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
 import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
-import Observable_createWithConfig from "./Observable.createWithConfig.js";
 
 const Observable_concatMany: Observable.Signature["concatMany"] =
   /*@__PURE__*/ (<T>() => {
@@ -39,24 +39,74 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
         }),
       );
 
-    return (observables: readonly ObservableLike<T>[]): ObservableLike<T> => {
-      const onSubscribe = (observer: ObserverLike<T>) => {
-        pipe(
-          createConcatObserver(observer, observables, 1),
-          bindMethod(observables[0], ObservableLike_observe),
-        );
-      };
+    const ConcatObservable_observables = Symbol("ConcatObservable_observables");
 
-      const isRunnable = Observable_allAreRunnable(observables);
-      const isPure = Observable_allArePure(observables);
-
-      return Observable_createWithConfig(onSubscribe, {
-        [ObservableLike_isDeferred]: true,
-        [ObservableLike_isMulticasted]: false,
-        [ObservableLike_isRunnable]: isRunnable,
-        [ObservableLike_isPure]: isPure,
-      });
+    type TProperties<T> = {
+      [ObservableLike_isPure]: boolean;
+      [ObservableLike_isRunnable]: boolean;
+      [ConcatObservable_observables]: readonly ObservableLike<T>[];
     };
+
+    const isConcatObservable = <T>(
+      observable: ObservableLike<T>,
+    ): observable is ObservableLike<T> & TProperties<T> =>
+      isSome((observable as any)[ConcatObservable_observables]);
+
+    const flattenObservables = <T>(
+      observables: readonly ObservableLike<T>[],
+    ): readonly ObservableLike<T>[] =>
+      observables.every(v => !isConcatObservable(v))
+        ? observables
+        : observables.flatMap(observable =>
+            isConcatObservable(observable)
+              ? flattenObservables(observable[ConcatObservable_observables])
+              : observable,
+          );
+
+    const createConcatObservable = mixInstanceFactory(
+      function ConcatObservable(
+        instance: TProperties<T> & ObservableLike<T>,
+        observables: readonly ObservableLike<T>[],
+        config: {
+          readonly [ObservableLike_isPure]: boolean;
+          readonly [ObservableLike_isRunnable]: boolean;
+        },
+      ): ObservableLike<T> {
+        instance[ObservableLike_isPure] = config[ObservableLike_isPure];
+        instance[ObservableLike_isRunnable] = config[ObservableLike_isRunnable];
+        instance[ConcatObservable_observables] =
+          flattenObservables(observables);
+
+        return instance;
+      },
+      props<TProperties<T>>({
+        [ObservableLike_isPure]: false,
+        [ObservableLike_isRunnable]: false,
+        [ConcatObservable_observables]: none,
+      }),
+      {
+        [ObservableLike_isDeferred]: true as const,
+        [ObservableLike_isMulticasted]: false as const,
+
+        [ObservableLike_observe](
+          this: TProperties<T>,
+          observer: ObserverLike<T>,
+        ): void {
+          const { [ConcatObservable_observables]: observables } = this;
+
+          pipe(
+            createConcatObserver(observer, observables, 1),
+            bindMethod(observables[0], ObservableLike_observe),
+          );
+        },
+      },
+    );
+
+    return (observables: readonly ObservableLike<T>[]): ObservableLike<T> =>
+      createConcatObservable(observables, {
+        [ObservableLike_isRunnable]: Observable_allAreRunnable(observables),
+        [ObservableLike_isPure]: Observable_allArePure(observables),
+      });
   })() as Observable.Signature["concatMany"];
 
 export default Observable_concatMany;
