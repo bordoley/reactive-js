@@ -12,6 +12,10 @@ Represents a duplex stream
 
 - [`DispatcherLike`](DispatcherLike.md)\<`TReq`\>.[`MulticastObservableLike`](MulticastObservableLike.md)\<`T`\>
 
+## Extended by
+
+- [`AnimationGroupStreamLike`](AnimationGroupStreamLike.md)
+
 ## Type Parameters
 
 • **TReq**

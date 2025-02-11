@@ -1,4 +1,4 @@
-import { ReadonlyObjectMapLike } from "./collections.js";
+import { DictionaryLike, ReadonlyObjectMapLike } from "./collections.js";
 import { EventListenerLike, EventSourceLike, StoreLike } from "./events.js";
 import { Optional, SideEffect1, Updater } from "./functions.js";
 import {
@@ -331,6 +331,16 @@ export interface StreamLike<TReq, T>
     MulticastObservableLike<T> {}
 
 export const StreamableLike_stream = Symbol("StreamableLike_stream");
+
+/**
+ * @noInheritDoc
+ */
+export interface AnimationGroupStreamLike<
+  T,
+  TEvent = unknown,
+  TKey extends string = string,
+> extends StreamLike<TEvent, boolean>,
+    DictionaryLike<TKey, EventSourceLike<T>> {}
 
 /**
  * A container that supports bi-directional streaming.

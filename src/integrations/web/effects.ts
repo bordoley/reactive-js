@@ -1,6 +1,6 @@
 import { nullObject } from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
-import { DictionaryLike, ReadonlyObjectMapLike } from "../../collections.js";
+import { ReadonlyObjectMapLike } from "../../collections.js";
 import {
   __constant,
   __memo,
@@ -11,9 +11,9 @@ import {
 } from "../../concurrent/Observable/effects.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import {
+  AnimationGroupStreamLike,
   PureRunnableLike,
   SchedulerLike,
-  StreamLike,
 } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import { EventSourceLike } from "../../events.js";
@@ -30,7 +30,6 @@ import {
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import {
-  BackpressureStrategy,
   DisposableLike,
   QueueableLike,
   QueueableLike_enqueue,
@@ -55,15 +54,7 @@ interface WebEffectsModule {
       TKey,
       Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
     >,
-    options?:
-      | { readonly mode: "switching" }
-      | { readonly mode: "blocking" }
-      | {
-          readonly mode: "queueing";
-          readonly backpressureStrategy?: BackpressureStrategy;
-          readonly capacity?: number;
-        },
-  ): StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>;
+  ): AnimationGroupStreamLike<T, TEvent, TKey>;
 }
 
 type Signature = WebEffectsModule;
@@ -126,25 +117,14 @@ export const __animationGroup: Signature["__animationGroup"] = <
     TKey,
     Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
   >,
-  options?:
-    | { readonly mode: "switching"; readonly priority?: 1 | 2 | 3 | 4 | 5 }
-    | { readonly mode: "blocking"; readonly priority?: 1 | 2 | 3 | 4 | 5 }
-    | {
-        readonly mode: "queueing";
-        readonly priority?: 1 | 2 | 3 | 4 | 5;
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-      },
 ) => {
-  const animationFrameScheduler = AnimationFrameScheduler.get();
+  const animationScheduler = AnimationFrameScheduler.get();
 
   const animationGroupStreamable = __constant(
     Streamable.animationGroup(animationGroup, {
-      mode: "switching",
-      ...((options as unknown) ?? {}),
-      scheduler: animationFrameScheduler,
+      animationScheduler,
     }),
-    animationFrameScheduler,
+    animationScheduler,
   );
 
   return __stream(animationGroupStreamable);

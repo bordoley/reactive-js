@@ -42,7 +42,7 @@
 
 ### animationGroup()
 
-> **animationGroup**\<`T`, `TEvent`, `TKey`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`StreamLike`](../../interfaces/StreamLike.md)\<`TEvent`, `boolean`\> & [`DictionaryLike`](../../../collections/interfaces/DictionaryLike.md)\<`TKey`, [`EventSourceLike`](../../../events/interfaces/EventSourceLike.md)\<`T`\>\>\>
+> **animationGroup**\<`T`, `TEvent`, `TKey`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`T`, `TEvent`, `TKey`\>\>
 
 #### Type Parameters
 
@@ -60,11 +60,13 @@
 
 ##### options?
 
-\{ `mode`: `"switching"`; `scheduler`: [`SchedulerLike`](../../interfaces/SchedulerLike.md); \} | \{ `mode`: `"blocking"`; `scheduler`: [`SchedulerLike`](../../interfaces/SchedulerLike.md); \} | \{ `backpressureStrategy`: [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md); `capacity`: `number`; `mode`: `"queueing"`; `scheduler`: [`SchedulerLike`](../../interfaces/SchedulerLike.md); \}
+###### animationScheduler
+
+[`SchedulerLike`](../../interfaces/SchedulerLike.md)
 
 #### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`StreamLike`](../../interfaces/StreamLike.md)\<`TEvent`, `boolean`\> & [`DictionaryLike`](../../../collections/interfaces/DictionaryLike.md)\<`TKey`, [`EventSourceLike`](../../../events/interfaces/EventSourceLike.md)\<`T`\>\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`T`, `TEvent`, `TKey`\>\>
 
 ***
 

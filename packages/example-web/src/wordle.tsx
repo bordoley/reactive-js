@@ -113,21 +113,18 @@ const AnimatedBox = ({
 export const Wordle = () => {
   const [state, updateState] = useState(false);
 
-  const animationGroup = useAnimationGroup(
-    {
-      a: (direction: boolean) =>
-        pipe(
-          Observable.spring({
-            stiffness: 0.0005,
-            damping: 0.0026,
-            precision: 0.1,
-          }),
-          Observable.map(scale(0, 180 * items.length)),
-          Observable.map(value => ({ direction, value })),
-        ),
-    },
-    { mode: "blocking" },
-  );
+  const animationGroup = useAnimationGroup({
+    a: (direction: boolean) =>
+      pipe(
+        Observable.spring({
+          stiffness: 0.0005,
+          damping: 0.0026,
+          precision: 0.1,
+        }),
+        Observable.map(scale(0, 180 * items.length)),
+        Observable.map(value => ({ direction, value })),
+      ),
+  });
 
   const animation = animationGroup?.[DictionaryLike_get]("a");
   const { enqueue } = useDispatcher(animationGroup);

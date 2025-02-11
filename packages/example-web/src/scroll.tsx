@@ -56,24 +56,21 @@ const AnimatedCircle = ({
 };
 
 const ScrollApp = () => {
-  const animationGroup = useAnimationGroup(
-    {
-      spring: (direction: boolean) =>
-        pipe(
-          Observable.concat(
+  const animationGroup = useAnimationGroup({
+    spring: (direction: boolean) =>
+      pipe(
+        Observable.concat(
+          Observable.spring({ precision: 0.1 }),
+          pipe(
             Observable.spring({ precision: 0.1 }),
-            pipe(
-              Observable.spring({ precision: 0.1 }),
-              Observable.map(scale(1, 0)),
-            ),
+            Observable.map(scale(1, 0)),
           ),
-          direction
-            ? Observable.map(scale(1, 1.2))
-            : Observable.map(scale(0, -0.01)),
         ),
-    },
-    { mode: "switching" },
-  );
+        direction
+          ? Observable.map(scale(1, 1.2))
+          : Observable.map(scale(0, -0.01)),
+      ),
+  });
   const { enqueue } = useDispatcher(animationGroup);
 
   const springAnimation = animationGroup?.[DictionaryLike_get]("spring");

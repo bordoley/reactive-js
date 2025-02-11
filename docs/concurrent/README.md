@@ -8,6 +8,7 @@
 
 ## Interfaces
 
+- [AnimationGroupStreamLike](interfaces/AnimationGroupStreamLike.md)
 - [CacheLike](interfaces/CacheLike.md)
 - [ContinuationContextLike](interfaces/ContinuationContextLike.md)
 - [DeferredObservableLike](interfaces/DeferredObservableLike.md)

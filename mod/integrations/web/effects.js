@@ -26,12 +26,10 @@ export const __animate = (animation, selector) => {
     __using(animateHtmlElement, htmlElement, animation, memoizedSelector ?? identity);
     return setRef;
 };
-export const __animationGroup = (animationGroup, options) => {
-    const animationFrameScheduler = AnimationFrameScheduler.get();
+export const __animationGroup = (animationGroup) => {
+    const animationScheduler = AnimationFrameScheduler.get();
     const animationGroupStreamable = __constant(Streamable.animationGroup(animationGroup, {
-        mode: "switching",
-        ...(options ?? {}),
-        scheduler: animationFrameScheduler,
-    }), animationFrameScheduler);
+        animationScheduler,
+    }), animationScheduler);
     return __stream(animationGroupStreamable);
 };

@@ -1,22 +1,13 @@
-import { DictionaryLike, ReadonlyObjectMapLike } from "../../collections.js";
-import { PureRunnableLike, SchedulerLike, StreamLike } from "../../concurrent.js";
+import { ReadonlyObjectMapLike } from "../../collections.js";
+import { AnimationGroupStreamLike, PureRunnableLike, SchedulerLike } from "../../concurrent.js";
 import { EventSourceLike } from "../../events.js";
 import { Function1, Optional, SideEffect1 } from "../../functions.js";
-import { BackpressureStrategy } from "../../utils.js";
 import { CSSStyleMapLike } from "../web.js";
 interface WebEffectsModule {
     __animate(animation: EventSourceLike<CSSStyleMapLike>): SideEffect1<Optional<HTMLElement | null>>;
     __animate<T>(animation: EventSourceLike<T>, selector: (ev: T) => CSSStyleMapLike): SideEffect1<Optional<HTMLElement | null>>;
     __animationFrameScheduler(): SchedulerLike;
-    __animationGroup<T, TEvent = unknown, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>, options?: {
-        readonly mode: "switching";
-    } | {
-        readonly mode: "blocking";
-    } | {
-        readonly mode: "queueing";
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-    }): StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>;
+    __animationGroup<T, TEvent = unknown, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>): AnimationGroupStreamLike<T, TEvent, TKey>;
 }
 type Signature = WebEffectsModule;
 export declare const __animate: Signature["__animate"];

@@ -9,9 +9,9 @@ import * as SingleUseObservable from "../../__internal__/SingleUseObservable.js"
 import { SingleUseObservableLike_observer } from "../../__internal__/SingleUseObservable.js";
 import DelegatingDispatcherMixin from "../../__mixins__/DelegatingDispatcherMixin.js";
 import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
-const Stream_create = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDispatcherMixin(), DelegatingMulticastObservableMixin()), function StreamMixin(instance, op, scheduler, multicastOptions) {
+const Stream_create = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDispatcherMixin(), DelegatingMulticastObservableMixin()), function Stream(instance, op, scheduler, options) {
     const singleUseObservable = SingleUseObservable.create();
-    const delegate = pipe(singleUseObservable, op, Observable.multicast(scheduler, multicastOptions));
+    const delegate = pipe(singleUseObservable, op, Observable.multicast(scheduler, options));
     init(DelegatingDispatcherMixin(), instance, singleUseObservable[SingleUseObservableLike_observer]);
     init(DelegatingMulticastObservableMixin(), instance, delegate);
     pipe(delegate, Disposable.addTo(instance));

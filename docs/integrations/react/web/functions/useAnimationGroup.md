@@ -6,7 +6,7 @@
 
 # Function: useAnimationGroup()
 
-> **useAnimationGroup**\<`T`, `TEvent`, `TKey`\>(`animationGroup`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`StreamLike`](../../../../concurrent/interfaces/StreamLike.md)\<`TEvent`, `boolean`\> & [`DictionaryLike`](../../../../collections/interfaces/DictionaryLike.md)\<`TKey`, [`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<`T`\>\>\>
+> **useAnimationGroup**\<`T`, `TEvent`, `TKey`\>(`animationGroup`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`T`, `TEvent`, `TKey`\>\>
 
 ## Type Parameters
 
@@ -24,8 +24,10 @@
 
 ### options?
 
-\{ `mode`: `"switching"`; `priority`: `2` \| `1` \| `3` \| `4` \| `5`; \} | \{ `mode`: `"blocking"`; `priority`: `2` \| `1` \| `3` \| `4` \| `5`; \} | \{ `backpressureStrategy`: [`BackpressureStrategy`](../../../../utils/type-aliases/BackpressureStrategy.md); `capacity`: `number`; `mode`: `"queueing"`; `priority`: `2` \| `1` \| `3` \| `4` \| `5`; \}
+#### priority
+
+`2` \| `1` \| `3` \| `4` \| `5`
 
 ## Returns
 
-[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`StreamLike`](../../../../concurrent/interfaces/StreamLike.md)\<`TEvent`, `boolean`\> & [`DictionaryLike`](../../../../collections/interfaces/DictionaryLike.md)\<`TKey`, [`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<`T`\>\>\>
+[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`T`, `TEvent`, `TKey`\>\>

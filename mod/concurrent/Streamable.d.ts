@@ -1,6 +1,5 @@
-import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
-import { DeferredObservableLike, PureDeferredObservableLike, PureRunnableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
-import { EventSourceLike } from "../events.js";
+import { ReadonlyObjectMapLike } from "../collections.js";
+import { AnimationGroupStreamLike, DeferredObservableLike, PureDeferredObservableLike, PureRunnableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
 import { Equality, Factory, Function1, Function2, Reducer, Updater } from "../functions.js";
 import { BackpressureStrategy } from "../utils.js";
 /**
@@ -11,17 +10,8 @@ export interface StreamableModule {
         readonly equality?: Equality<T>;
     }): StreamableLike<TAction, T>;
     animationGroup<T, TEvent = unknown, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>, options?: {
-        readonly mode: "switching";
-        readonly scheduler?: SchedulerLike;
-    } | {
-        readonly mode: "blocking";
-        readonly scheduler?: SchedulerLike;
-    } | {
-        readonly mode: "queueing";
-        readonly scheduler?: SchedulerLike;
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-    }): StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
+        readonly animationScheduler?: SchedulerLike;
+    }): StreamableLike<TEvent, boolean, AnimationGroupStreamLike<T, TEvent, TKey>>;
     create<TReq, T>(op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
     eventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>, options?: {
         readonly mode: "switching";

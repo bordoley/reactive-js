@@ -34,14 +34,14 @@ const Stream_create: <TReq, T>(
       DelegatingDispatcherMixin(),
       DelegatingMulticastObservableMixin<T>(),
     ),
-    function StreamMixin(
+    function Stream(
       instance: unknown,
       op: Function1<
         PureDeferredObservableLike<TReq>,
         DeferredObservableLike<T>
       >,
       scheduler: SchedulerLike,
-      multicastOptions?: {
+      options?: {
         replay?: number;
         capacity?: number;
         backpressureStrategy?: BackpressureStrategy;
@@ -52,7 +52,7 @@ const Stream_create: <TReq, T>(
       const delegate = pipe(
         singleUseObservable,
         op,
-        Observable.multicast<T>(scheduler, multicastOptions),
+        Observable.multicast<T>(scheduler, options),
       );
 
       init(

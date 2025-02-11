@@ -9,9 +9,12 @@ import {
 } from "react";
 import { nullObject } from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
-import { DictionaryLike, ReadonlyObjectMapLike } from "../../collections.js";
+import { ReadonlyObjectMapLike } from "../../collections.js";
 import * as Streamable from "../../concurrent/Streamable.js";
-import { PureRunnableLike, StreamLike } from "../../concurrent.js";
+import {
+  AnimationGroupStreamLike,
+  PureRunnableLike,
+} from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import { EventSourceLike, StoreLike_value } from "../../events.js";
 import {
@@ -26,7 +29,6 @@ import {
   pipe,
   pipeSomeLazy,
 } from "../../functions.js";
-import { BackpressureStrategy } from "../../utils.js";
 import { useDisposable, useListen, useObserve, useStream } from "../react.js";
 import * as AnimationFrameScheduler from "../web/AnimationFrameScheduler.js";
 import * as WebElement from "../web/Element.js";
@@ -63,18 +65,8 @@ interface ReactWebModule {
       TKey,
       Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
     >,
-    options?:
-      | { readonly mode: "switching"; readonly priority?: 1 | 2 | 3 | 4 | 5 }
-      | { readonly mode: "blocking"; readonly priority?: 1 | 2 | 3 | 4 | 5 }
-      | {
-          readonly mode: "queueing";
-          readonly priority?: 1 | 2 | 3 | 4 | 5;
-          readonly backpressureStrategy?: BackpressureStrategy;
-          readonly capacity?: number;
-        },
-  ): Optional<
-    StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
-  >;
+    options?: { readonly priority?: 1 | 2 | 3 | 4 | 5 },
+  ): Optional<AnimationGroupStreamLike<T, TEvent, TKey>>;
 
   /**
    */
@@ -146,26 +138,17 @@ export const useAnimationGroup: Signature["useAnimationGroup"] = <
     TKey,
     Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
   >,
-  options?:
-    | { readonly mode: "switching"; readonly priority?: 1 | 2 | 3 | 4 | 5 }
-    | { readonly mode: "blocking"; readonly priority?: 1 | 2 | 3 | 4 | 5 }
-    | {
-        readonly mode: "queueing";
-        readonly priority?: 1 | 2 | 3 | 4 | 5;
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-      },
+  options?: { readonly priority?: 1 | 2 | 3 | 4 | 5 },
 ) => {
-  const animationFrameScheduler = AnimationFrameScheduler.get();
+  const animationScheduler = AnimationFrameScheduler.get();
 
   return useStream(
     () =>
       Streamable.animationGroup(animationGroup, {
-        mode: "switching",
-        ...((options as unknown) ?? {}),
-        scheduler: animationFrameScheduler,
+        animationScheduler,
       }),
-    [animationFrameScheduler],
+    [animationScheduler],
+    options,
   );
 };
 

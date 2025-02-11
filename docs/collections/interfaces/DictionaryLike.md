@@ -6,6 +6,10 @@
 
 # Interface: DictionaryLike\<TKey, T\>
 
+## Extended by
+
+- [`AnimationGroupStreamLike`](../../concurrent/interfaces/AnimationGroupStreamLike.md)
+
 ## Type Parameters
 
 • **TKey** = `unknown`

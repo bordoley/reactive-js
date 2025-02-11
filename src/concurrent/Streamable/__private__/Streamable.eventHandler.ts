@@ -14,7 +14,7 @@ const Streamable_eventHandler: Streamable.Signature["eventHandler"] = (<
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
   } = {},
-): StreamableLike<TEventType, unknown> => {
+): StreamableLike<TEventType, boolean> => {
   const { mode } = options;
   const boundedOP = compose(
     op,
@@ -23,7 +23,7 @@ const Streamable_eventHandler: Streamable.Signature["eventHandler"] = (<
     Observable.endWith<boolean>(false),
   );
 
-  return Streamable_create<TEventType, unknown>(
+  return Streamable_create<TEventType, boolean>(
     compose(
       mode === "switching"
         ? Observable.switchMap<TEventType, boolean>(boundedOP, {

@@ -104,28 +104,25 @@ const AnimatedBox = ({
 };
 
 const AnimationGroup = () => {
-  const animationStream = useAnimationGroup(
-    {
-      a: pipe(
-        Observable.concat(
-          Observable.keyFrame(500),
-          Observable.empty({ delay: 250 }),
-          pipe(Observable.keyFrame(500), Observable.map(scale(1, 0))),
-        ),
-        Observable.repeat(2),
+  const animationStream = useAnimationGroup({
+    a: pipe(
+      Observable.concat(
+        Observable.keyFrame(500),
+        Observable.empty({ delay: 250 }),
+        pipe(Observable.keyFrame(500), Observable.map(scale(1, 0))),
       ),
-      b: _ =>
-        Observable.concat(
-          Observable.keyFrame(500),
-          Observable.empty({ delay: 250 }),
-          pipe(
-            Observable.spring({ stiffness: 0.01, damping: 0.01 }),
-            Observable.map(scale(1, 0)),
-          ),
+      Observable.repeat(2),
+    ),
+    b: _ =>
+      Observable.concat(
+        Observable.keyFrame(500),
+        Observable.empty({ delay: 250 }),
+        pipe(
+          Observable.spring({ stiffness: 0.01, damping: 0.01 }),
+          Observable.map(scale(1, 0)),
         ),
-    },
-    { mode: "blocking" },
-  );
+      ),
+  });
 
   const animationDispatcher = useDispatcher(animationStream);
   const isAnimationRunning = useObserve(animationStream) ?? false;
@@ -264,7 +261,7 @@ const RxComponent = createComponent(
     }>,
   ) => {
     const createAnimationGroupEventHandler = (
-      animationFrameScheduler: SchedulerLike,
+      animationScheduler: SchedulerLike,
     ) =>
       Streamable.animationGroup<CSSStyleMapLike>(
         {
@@ -289,8 +286,7 @@ const RxComponent = createComponent(
             ),
           ),
         },
-
-        { mode: "switching", scheduler: animationFrameScheduler },
+        { animationScheduler },
       );
 
     return Observable.computeDeferred(() => {

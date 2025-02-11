@@ -41,77 +41,11 @@ testModule(
   "Streamable",
   describe(
     "animationGroup",
-    test("blocking mode", () => {
+    test("integration", () => {
       using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
-      const stream = Streamable.animationGroup<number>(
-        {
-          a: Observable.keyFrame(500),
-        },
-        { mode: "blocking" },
-      )[StreamableLike_stream](vts);
-
-      pipe(
-        stream,
-        keySet<DictionaryCollection>(Dictionary.keys),
-        invoke("has", "a"),
-        expectTrue,
-      );
-
-      let result = 0;
-
-      pipeSome(
-        stream[DictionaryLike_get]("a"),
-        EventSource.addEventHandler(ev => {
-          result = ev;
-        }),
-      );
-
-      stream[QueueableLike_enqueue](none);
-
-      vts[VirtualTimeSchedulerLike_run]();
-
-      pipe(result, expectEquals(1));
-    }),
-    test("queueing mode", () => {
-      using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
-
-      const stream = Streamable.animationGroup<number>(
-        {
-          a: Observable.keyFrame(500),
-        },
-        { mode: "queueing" },
-      )[StreamableLike_stream](vts);
-
-      pipe(
-        stream,
-        keySet<DictionaryCollection>(Dictionary.keys),
-        invoke("has", "a"),
-        expectTrue,
-      );
-
-      let result = 0;
-
-      pipeSome(
-        stream[DictionaryLike_get]("a"),
-        EventSource.addEventHandler(ev => {
-          result = ev;
-        }),
-      );
-
-      stream[QueueableLike_enqueue](none);
-
-      vts[VirtualTimeSchedulerLike_run]();
-
-      pipe(result, expectEquals(1));
-    }),
-    test("switching mode", () => {
-      using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
-      const stream = Streamable.animationGroup<number>(
-        {
-          a: Observable.keyFrame(500),
-        },
-        { mode: "switching" },
-      )[StreamableLike_stream](vts);
+      const stream = Streamable.animationGroup<number>({
+        a: Observable.keyFrame(500),
+      })[StreamableLike_stream](vts);
 
       pipe(
         stream,
