@@ -57,23 +57,20 @@ import { describe, expectArrayEquals, expectEquals, expectFalse, expectTrue, tes
 import * as Dictionary from "../../collections/Dictionary.js";
 import { DictionaryLike_get, keySet } from "../../collections.js";
 import { sequence } from "../../computations.js";
-import { DispatcherLike_complete, DispatcherLike_isCompleted, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
+import { AnimationStreamLike_animation, DispatcherLike_complete, DispatcherLike_isCompleted, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import { bindMethod, invoke, none, pipe, pipeSome, returns, } from "../../functions.js";
 import { DropLatestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
-testModule("Streamable", describe("animationGroup", test("integration", () => {
+testModule("Streamable", describe("animation", test("integration", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }), false);
-        const stream = Streamable.animationGroup({
-            a: Observable.keyFrame(500),
-        })[StreamableLike_stream](vts);
-        pipe(stream, keySet(Dictionary.keys), invoke("has", "a"), expectTrue);
+        const stream = Streamable.animation(Observable.keyFrame(500))[StreamableLike_stream](vts);
         let result = 0;
-        pipeSome(stream[DictionaryLike_get]("a"), EventSource.addEventHandler(ev => {
+        pipeSome(stream[AnimationStreamLike_animation], EventSource.addEventHandler(ev => {
             result = ev;
         }));
         stream[QueueableLike_enqueue](none);
@@ -87,10 +84,33 @@ testModule("Streamable", describe("animationGroup", test("integration", () => {
     finally {
         __disposeResources(env_1);
     }
-})), describe("stateStore", test("stateStore", () => {
+})), describe("animationGroup", test("integration", () => {
     const env_2 = { stack: [], error: void 0, hasError: false };
     try {
-        const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create(), false);
+        const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }), false);
+        const stream = Streamable.animationGroup({
+            a: Observable.keyFrame(500),
+        })[StreamableLike_stream](vts);
+        pipe(stream, keySet(Dictionary.keys), invoke("has", "a"), expectTrue);
+        let result = 0;
+        pipeSome(stream[DictionaryLike_get]("a"), EventSource.addEventHandler(ev => {
+            result = ev;
+        }));
+        stream[QueueableLike_enqueue](none);
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(result, expectEquals(1));
+    }
+    catch (e_2) {
+        env_2.error = e_2;
+        env_2.hasError = true;
+    }
+    finally {
+        __disposeResources(env_2);
+    }
+})), describe("stateStore", test("stateStore", () => {
+    const env_3 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_3, VirtualTimeScheduler.create(), false);
         const streamable = Streamable.stateStore(returns(1));
         const stateStream = streamable[StreamableLike_stream](vts, {
             capacity: 20,
@@ -106,17 +126,17 @@ testModule("Streamable", describe("animationGroup", test("integration", () => {
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([1, 2, 3]));
     }
-    catch (e_2) {
-        env_2.error = e_2;
-        env_2.hasError = true;
+    catch (e_3) {
+        env_3.error = e_3;
+        env_3.hasError = true;
     }
     finally {
-        __disposeResources(env_2);
+        __disposeResources(env_3);
     }
 }), test("completing the store", () => {
-    const env_3 = { stack: [], error: void 0, hasError: false };
+    const env_4 = { stack: [], error: void 0, hasError: false };
     try {
-        const vts = __addDisposableResource(env_3, VirtualTimeScheduler.create(), false);
+        const vts = __addDisposableResource(env_4, VirtualTimeScheduler.create(), false);
         const streamable = Streamable.stateStore(returns(1));
         const stateStream = streamable[StreamableLike_stream](vts, {
             capacity: 20,
@@ -126,17 +146,17 @@ testModule("Streamable", describe("animationGroup", test("integration", () => {
         stateStream[DispatcherLike_complete]();
         expectTrue(stateStream[DispatcherLike_isCompleted]);
     }
-    catch (e_3) {
-        env_3.error = e_3;
-        env_3.hasError = true;
+    catch (e_4) {
+        env_4.error = e_4;
+        env_4.hasError = true;
     }
     finally {
-        __disposeResources(env_3);
+        __disposeResources(env_4);
     }
 })), describe("syncState", test("without throttling", () => {
-    const env_4 = { stack: [], error: void 0, hasError: false };
+    const env_5 = { stack: [], error: void 0, hasError: false };
     try {
-        const vts = __addDisposableResource(env_4, VirtualTimeScheduler.create(), false);
+        const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
         const stream = pipe(Streamable.stateStore(returns(-1)), Streamable.syncState(state => pipe(sequence(Observable.generate)(state + 10), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (oldState, newState) => newState !== oldState
             ? Observable.empty({ delay: 0 })
             : Observable.empty({ delay: 0 })), invoke(StreamableLike_stream, vts));
@@ -146,17 +166,17 @@ testModule("Streamable", describe("animationGroup", test("integration", () => {
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([-1, 9, 10, 12]));
     }
-    catch (e_4) {
-        env_4.error = e_4;
-        env_4.hasError = true;
+    catch (e_5) {
+        env_5.error = e_5;
+        env_5.hasError = true;
     }
     finally {
-        __disposeResources(env_4);
+        __disposeResources(env_5);
     }
 }), test("with throttling", () => {
-    const env_5 = { stack: [], error: void 0, hasError: false };
+    const env_6 = { stack: [], error: void 0, hasError: false };
     try {
-        const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
+        const vts = __addDisposableResource(env_6, VirtualTimeScheduler.create(), false);
         let updateCnt = 0;
         const stream = pipe(Streamable.stateStore(returns(-1)), Streamable.syncState(_state => Observable.empty({ delay: 1 }), (oldState, newState) => {
             updateCnt++;
@@ -168,12 +188,12 @@ testModule("Streamable", describe("animationGroup", test("integration", () => {
         vts[VirtualTimeSchedulerLike_run]();
         pipe(updateCnt, expectEquals(2));
     }
-    catch (e_5) {
-        env_5.error = e_5;
-        env_5.hasError = true;
+    catch (e_6) {
+        env_6.error = e_6;
+        env_6.hasError = true;
     }
     finally {
-        __disposeResources(env_5);
+        __disposeResources(env_6);
     }
 })));
 ((_) => { })(Streamable);

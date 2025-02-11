@@ -1,5 +1,5 @@
 import { ReadonlyObjectMapLike } from "../collections.js";
-import { AnimationGroupStreamLike, DeferredObservableLike, PureDeferredObservableLike, PureRunnableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
+import { AnimationGroupStreamLike, AnimationStreamLike, DeferredObservableLike, PureDeferredObservableLike, PureRunnableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
 import { Equality, Factory, Function1, Function2, Reducer, Updater } from "../functions.js";
 import { BackpressureStrategy } from "../utils.js";
 /**
@@ -9,6 +9,9 @@ export interface StreamableModule {
     actionReducer<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
         readonly equality?: Equality<T>;
     }): StreamableLike<TAction, T>;
+    animation<T, TEvent = unknown>(animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>, options?: {
+        readonly animationScheduler?: SchedulerLike;
+    }): StreamableLike<TEvent, boolean, AnimationStreamLike<T, TEvent>>;
     animationGroup<T, TEvent = unknown, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>, options?: {
         readonly animationScheduler?: SchedulerLike;
     }): StreamableLike<TEvent, boolean, AnimationGroupStreamLike<T, TEvent, TKey>>;
@@ -43,6 +46,7 @@ export interface StreamableModule {
 export type Signature = StreamableModule;
 export declare const create: Signature["create"];
 export declare const actionReducer: Signature["actionReducer"];
+export declare const animation: Signature["animation"];
 export declare const animationGroup: Signature["animationGroup"];
 export declare const eventHandler: Signature["eventHandler"];
 export declare const identity: Signature["identity"];

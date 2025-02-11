@@ -9,6 +9,7 @@
 ## Functions
 
 - [useAnimate](functions/useAnimate.md)
+- [useAnimation](functions/useAnimation.md)
 - [useAnimationGroup](functions/useAnimationGroup.md)
 - [useScroll](functions/useScroll.md)
 - [useWindowLocation](functions/useWindowLocation.md)

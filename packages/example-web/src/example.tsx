@@ -21,7 +21,6 @@ import {
   WindowLocationProvider,
 } from "@reactive-js/core/integrations/react/web";
 import {
-  CSSStyleMapLike,
   WindowLocationLike,
   WindowLocationURI,
 } from "@reactive-js/core/integrations/web";
@@ -38,7 +37,6 @@ import {
   scale,
   Tuple2,
 } from "@reactive-js/core/functions";
-import * as Streamable from "@reactive-js/core/concurrent/Streamable";
 import * as Dictionary from "@reactive-js/core/collections/Dictionary";
 import * as ReadonlyArray from "@reactive-js/core/collections/ReadonlyArray";
 import {
@@ -51,7 +49,10 @@ import {
   __stream,
   __using,
 } from "@reactive-js/core/concurrent/Observable/effects";
-import { __animate } from "@reactive-js/core/integrations/web/effects";
+import {
+  __animate,
+  __animation,
+} from "@reactive-js/core/integrations/web/effects";
 import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
@@ -59,15 +60,14 @@ import * as PauseableScheduler from "@reactive-js/core/concurrent/PauseableSched
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import {
   ObservableLike,
-  SchedulerLike,
   PauseableLike_resume,
   PauseableLike_isPaused,
   PauseableLike_pause,
   CacheLike,
+  AnimationStreamLike_animation,
 } from "@reactive-js/core/concurrent";
 import { EventSourceLike, StoreLike_value } from "@reactive-js/core/events";
 import { QueueableLike_enqueue } from "@reactive-js/core/utils";
-import { DictionaryLike_get } from "@reactive-js/core/collections";
 import * as Flowable from "@reactive-js/core/concurrent/Flowable";
 import { useFlow } from "@reactive-js/core/integrations/react";
 import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
@@ -260,35 +260,6 @@ const RxComponent = createComponent(
       windowLocation: WindowLocationLike;
     }>,
   ) => {
-    const createAnimationGroupEventHandler = (
-      animationScheduler: SchedulerLike,
-    ) =>
-      Streamable.animationGroup<CSSStyleMapLike>(
-        {
-          a: Observable.concat(
-            pipe(
-              Observable.keyFrame(1000),
-              Observable.map(scale(0, 50)),
-              Observable.map((v: number) => ({
-                "background-color": "blue",
-                margin: `${50 - v}px`,
-                padding: `${v}px`,
-              })),
-            ),
-            pipe(
-              Observable.spring({ stiffness: 0.01, damping: 0.01 }),
-              Observable.map(scale(50, 0)),
-              Observable.map((v: number) => ({
-                "background-color": "green",
-                margin: `${50 - v}px`,
-                padding: `${v}px`,
-              })),
-            ),
-          ),
-        },
-        { animationScheduler },
-      );
-
     return Observable.computeDeferred(() => {
       const { windowLocation } = __await(props);
       const uri = __await(windowLocation);
@@ -303,13 +274,32 @@ const RxComponent = createComponent(
 
       const pauseableScheduler = __using(createScheduler);
 
-      const streamableAnimation = __memo(
-        createAnimationGroupEventHandler,
-        pauseableScheduler,
-      );
-      const animationGroupEventHandler = __stream(streamableAnimation);
+      const animationStream = __animation(
+        Observable.concat(
+          pipe(
+            Observable.keyFrame(1000),
+            Observable.map(scale(0, 50)),
+            Observable.map((v: number) => ({
+              "background-color": "blue",
+              margin: `${50 - v}px`,
+              padding: `${v}px`,
+            })),
+          ),
+          pipe(
+            Observable.spring({ stiffness: 0.01, damping: 0.01 }),
+            Observable.map(scale(50, 0)),
+            Observable.map((v: number) => ({
+              "background-color": "green",
+              margin: `${50 - v}px`,
+              padding: `${v}px`,
+            })),
+          ),
+        ),
 
-      const isAnimationRunning = __observe(animationGroupEventHandler) ?? false;
+        { animationScheduler: pauseableScheduler },
+      );
+
+      const isAnimationRunning = __observe(animationStream) ?? false;
       const isAnimationPausedObservable: ObservableLike<boolean> = __constant(
         pipe(
           pauseableScheduler[PauseableLike_isPaused],
@@ -322,7 +312,7 @@ const RxComponent = createComponent(
         __observe(isAnimationPausedObservable) ??
         pauseableScheduler[PauseableLike_isPaused][StoreLike_value];
       const runAnimation = __bindMethod(
-        animationGroupEventHandler,
+        animationStream,
         QueueableLike_enqueue,
       );
 
@@ -336,7 +326,7 @@ const RxComponent = createComponent(
       );
 
       const animatedDivRef = __animate(
-        animationGroupEventHandler[DictionaryLike_get]("a")!,
+        animationStream[AnimationStreamLike_animation],
       );
 
       return (

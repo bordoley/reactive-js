@@ -244,12 +244,19 @@ export interface FlowableLike<T> {
  */
 export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableLike<T> {
 }
-export declare const StreamableLike_stream: unique symbol;
 /**
  * @noInheritDoc
  */
 export interface AnimationGroupStreamLike<T, TEvent = unknown, TKey extends string = string> extends StreamLike<TEvent, boolean>, DictionaryLike<TKey, EventSourceLike<T>> {
 }
+export declare const AnimationStreamLike_animation: unique symbol;
+/**
+ * @noInheritDoc
+ */
+export interface AnimationStreamLike<T, TEvent = unknown> extends StreamLike<TEvent, boolean> {
+    [AnimationStreamLike_animation]: EventSourceLike<T>;
+}
+export declare const StreamableLike_stream: unique symbol;
 /**
  * A container that supports bi-directional streaming.
  *

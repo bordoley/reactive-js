@@ -330,8 +330,6 @@ export interface StreamLike<TReq, T>
   extends DispatcherLike<TReq>,
     MulticastObservableLike<T> {}
 
-export const StreamableLike_stream = Symbol("StreamableLike_stream");
-
 /**
  * @noInheritDoc
  */
@@ -341,6 +339,20 @@ export interface AnimationGroupStreamLike<
   TKey extends string = string,
 > extends StreamLike<TEvent, boolean>,
     DictionaryLike<TKey, EventSourceLike<T>> {}
+
+export const AnimationStreamLike_animation = Symbol(
+  "AnimationStreamLike_animation",
+);
+
+/**
+ * @noInheritDoc
+ */
+export interface AnimationStreamLike<T, TEvent = unknown>
+  extends StreamLike<TEvent, boolean> {
+  [AnimationStreamLike_animation]: EventSourceLike<T>;
+}
+
+export const StreamableLike_stream = Symbol("StreamableLike_stream");
 
 /**
  * A container that supports bi-directional streaming.

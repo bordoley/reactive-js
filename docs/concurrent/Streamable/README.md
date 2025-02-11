@@ -17,6 +17,7 @@
 ## Functions
 
 - [actionReducer](functions/actionReducer.md)
+- [animation](functions/animation.md)
 - [animationGroup](functions/animationGroup.md)
 - [create](functions/create.md)
 - [eventHandler](functions/eventHandler.md)

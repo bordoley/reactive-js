@@ -18,29 +18,27 @@ import {
 } from "@reactive-js/core/integrations/react";
 import {
   useAnimate,
-  useAnimationGroup,
+  useAnimation,
 } from "@reactive-js/core/integrations/react/web";
 import * as WebElement from "@reactive-js/core/integrations/web/Element";
 import { Rect } from "@reactive-js/core/integrations/web";
 import { pick } from "@reactive-js/core/computations";
-import { DictionaryLike_get } from "@reactive-js/core/collections";
+import { AnimationStreamLike_animation } from "@reactive-js/core/concurrent";
 
 const Measure = () => {
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
 
-  const animationGroup = useAnimationGroup({
-    a: ({ prevWidth, width }: { prevWidth?: number; width: number }) =>
+  const animationStream = useAnimation(
+    ({ prevWidth, width }: { prevWidth?: number; width: number }) =>
       isSome(prevWidth)
         ? pipe(
             Observable.spring({ precision: 0.2 }),
             Observable.map(scale(prevWidth, width)),
           )
         : Observable.fromValue()(width),
-  });
+  );
 
-  const animation = animationGroup?.[DictionaryLike_get]("a");
-
-  const { enqueue } = useDispatcher(animationGroup);
+  const { enqueue } = useDispatcher(animationStream);
 
   const containerSize = useDisposable(
     pipeSomeLazy(container, WebElement.measure()),
@@ -61,8 +59,10 @@ const Measure = () => {
         Observable.forkMerge(
           compose(
             Observable.withLatestFrom<number, number, Tuple2<number, number>>(
-              pipeSome(animation, Observable.fromEventSource()) ??
-                Observable.never<number>(),
+              pipeSome(
+                animationStream?.[AnimationStreamLike_animation],
+                Observable.fromEventSource(),
+              ) ?? Observable.never<number>(),
               tuple,
             ),
             Observable.forEach<Tuple2<number, number>>(
@@ -78,22 +78,22 @@ const Measure = () => {
           compose(Observable.throttle(50, { mode: "interval" }), x => x),
         ),
       ),
-      [containerSize, animation, enqueue],
+      [containerSize, animationStream, enqueue],
     ) ?? 0;
 
   const width =
     useObserve(
       pipeSomeLazy(
-        animation,
+        animationStream?.[AnimationStreamLike_animation],
         Observable.fromEventSource(),
         Observable.throttle(50),
         Observable.map(Math.floor),
       ),
-      [animation],
+      [animationStream],
     ) ?? 0;
 
   const fillRef: React.Ref<HTMLDivElement> = useAnimate(
-    animation,
+    animationStream?.[AnimationStreamLike_animation],
     value => ({
       width: `${value}px`,
     }),

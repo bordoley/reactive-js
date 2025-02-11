@@ -12,6 +12,7 @@ import {
 import * as Streamable from "../../concurrent/Streamable.js";
 import {
   AnimationGroupStreamLike,
+  AnimationStreamLike,
   PureRunnableLike,
   SchedulerLike,
 } from "../../concurrent.js";
@@ -49,11 +50,21 @@ interface WebEffectsModule {
 
   __animationFrameScheduler(): SchedulerLike;
 
+  __animation<T, TEvent = unknown>(
+    animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
+    options?: {
+      animationScheduler: SchedulerLike;
+    },
+  ): AnimationStreamLike<T, TEvent>;
+
   __animationGroup<T, TEvent = unknown, TKey extends string = string>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
     >,
+    options?: {
+      animationScheduler: SchedulerLike;
+    },
   ): AnimationGroupStreamLike<T, TEvent, TKey>;
 }
 
@@ -108,6 +119,25 @@ export const __animate: Signature["__animate"] = (
   return setRef;
 };
 
+export const __animation: Signature["__animation"] = <T, TEvent = unknown>(
+  animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
+  options?: {
+    animationScheduler: SchedulerLike;
+  },
+) => {
+  const animationScheduler =
+    options?.animationScheduler ?? AnimationFrameScheduler.get();
+
+  const animationStreamable = __constant(
+    Streamable.animation(animation, {
+      animationScheduler,
+    }),
+    animationScheduler,
+  );
+
+  return __stream(animationStreamable);
+};
+
 export const __animationGroup: Signature["__animationGroup"] = <
   T,
   TEvent = unknown,
@@ -117,8 +147,12 @@ export const __animationGroup: Signature["__animationGroup"] = <
     TKey,
     Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
   >,
+  options?: {
+    animationScheduler: SchedulerLike;
+  },
 ) => {
-  const animationScheduler = AnimationFrameScheduler.get();
+  const animationScheduler =
+    options?.animationScheduler ?? AnimationFrameScheduler.get();
 
   const animationGroupStreamable = __constant(
     Streamable.animationGroup(animationGroup, {

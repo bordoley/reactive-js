@@ -26,8 +26,15 @@ export const __animate = (animation, selector) => {
     __using(animateHtmlElement, htmlElement, animation, memoizedSelector ?? identity);
     return setRef;
 };
-export const __animationGroup = (animationGroup) => {
-    const animationScheduler = AnimationFrameScheduler.get();
+export const __animation = (animation, options) => {
+    const animationScheduler = options?.animationScheduler ?? AnimationFrameScheduler.get();
+    const animationStreamable = __constant(Streamable.animation(animation, {
+        animationScheduler,
+    }), animationScheduler);
+    return __stream(animationStreamable);
+};
+export const __animationGroup = (animationGroup, options) => {
+    const animationScheduler = options?.animationScheduler ?? AnimationFrameScheduler.get();
     const animationGroupStreamable = __constant(Streamable.animationGroup(animationGroup, {
         animationScheduler,
     }), animationScheduler);

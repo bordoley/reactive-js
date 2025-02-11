@@ -1,6 +1,7 @@
 /// <reference types="./Streamable.d.ts" />
 
 import Streamable_actionReducer from "./Streamable/__private__/Streamable.actionReducer.js";
+import Streamable_animation from "./Streamable/__private__/Streamable.animation.js";
 import Streamable_animationGroup from "./Streamable/__private__/Streamable.animationGroup.js";
 import Streamable_create from "./Streamable/__private__/Streamable.create.js";
 import Streamable_eventHandler from "./Streamable/__private__/Streamable.eventHandler.js";
@@ -9,6 +10,7 @@ import Streamable_stateStore from "./Streamable/__private__/Streamable.stateStor
 import Streamable_syncState from "./Streamable/__private__/Streamable.syncState.js";
 export const create = Streamable_create;
 export const actionReducer = Streamable_actionReducer;
+export const animation = Streamable_animation;
 export const animationGroup = Streamable_animationGroup;
 export const eventHandler = Streamable_eventHandler;
 export const identity = Streamable_identity;

@@ -1,6 +1,7 @@
 import { ReadonlyObjectMapLike } from "../collections.js";
 import {
   AnimationGroupStreamLike,
+  AnimationStreamLike,
   DeferredObservableLike,
   PureDeferredObservableLike,
   PureRunnableLike,
@@ -18,6 +19,7 @@ import {
 } from "../functions.js";
 import { BackpressureStrategy } from "../utils.js";
 import Streamable_actionReducer from "./Streamable/__private__/Streamable.actionReducer.js";
+import Streamable_animation from "./Streamable/__private__/Streamable.animation.js";
 import Streamable_animationGroup from "./Streamable/__private__/Streamable.animationGroup.js";
 import Streamable_create from "./Streamable/__private__/Streamable.create.js";
 import Streamable_eventHandler from "./Streamable/__private__/Streamable.eventHandler.js";
@@ -34,6 +36,11 @@ export interface StreamableModule {
     initialState: Factory<T>,
     options?: { readonly equality?: Equality<T> },
   ): StreamableLike<TAction, T>;
+
+  animation<T, TEvent = unknown>(
+    animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
+    options?: { readonly animationScheduler?: SchedulerLike },
+  ): StreamableLike<TEvent, boolean, AnimationStreamLike<T, TEvent>>;
 
   animationGroup<T, TEvent = unknown, TKey extends string = string>(
     animationGroup: ReadonlyObjectMapLike<
@@ -90,6 +97,7 @@ export type Signature = StreamableModule;
 export const create: Signature["create"] = Streamable_create;
 export const actionReducer: Signature["actionReducer"] =
   Streamable_actionReducer;
+export const animation: Signature["animation"] = Streamable_animation;
 export const animationGroup: Signature["animationGroup"] =
   Streamable_animationGroup;
 export const eventHandler: Signature["eventHandler"] = Streamable_eventHandler;

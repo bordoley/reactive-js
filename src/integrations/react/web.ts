@@ -13,7 +13,9 @@ import { ReadonlyObjectMapLike } from "../../collections.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import {
   AnimationGroupStreamLike,
+  AnimationStreamLike,
   PureRunnableLike,
+  SchedulerLike,
 } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import { EventSourceLike, StoreLike_value } from "../../events.js";
@@ -60,12 +62,23 @@ interface ReactWebModule {
     deps: readonly unknown[],
   ): React.Ref<TElement>;
 
+  useAnimation<T, TEvent = unknown>(
+    animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly animationScheduler: SchedulerLike;
+    },
+  ): Optional<AnimationStreamLike<T, TEvent>>;
+
   useAnimationGroup<T, TEvent = unknown, TKey extends string = string>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
     >,
-    options?: { readonly priority?: 1 | 2 | 3 | 4 | 5 },
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly animationScheduler: SchedulerLike;
+    },
   ): Optional<AnimationGroupStreamLike<T, TEvent, TKey>>;
 
   /**
@@ -129,6 +142,26 @@ export const useAnimate: Signature["useAnimate"] = <
   return ref;
 };
 
+export const useAnimation: Signature["useAnimation"] = <T, TEvent = unknown>(
+  animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
+  options?: {
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly animationScheduler: SchedulerLike;
+  },
+) => {
+  const animationScheduler =
+    options?.animationScheduler ?? AnimationFrameScheduler.get();
+
+  return useStream(
+    () =>
+      Streamable.animation(animation, {
+        animationScheduler,
+      }),
+    [animationScheduler],
+    options,
+  );
+};
+
 export const useAnimationGroup: Signature["useAnimationGroup"] = <
   T,
   TEvent = unknown,
@@ -138,9 +171,13 @@ export const useAnimationGroup: Signature["useAnimationGroup"] = <
     TKey,
     Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
   >,
-  options?: { readonly priority?: 1 | 2 | 3 | 4 | 5 },
+  options?: {
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly animationScheduler: SchedulerLike;
+  },
 ) => {
-  const animationScheduler = AnimationFrameScheduler.get();
+  const animationScheduler =
+    options?.animationScheduler ?? AnimationFrameScheduler.get();
 
   return useStream(
     () =>

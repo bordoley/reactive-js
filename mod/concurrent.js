@@ -23,5 +23,6 @@ export const ObservableLike_isPure = Symbol("ObservableLike_isPure");
 export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
 export const ObservableLike_observe = Symbol("ObservableLike_observe");
 export const FlowableLike_flow = Symbol("FlowableLike_flow");
+export const AnimationStreamLike_animation = Symbol("AnimationStreamLike_animation");
 export const StreamableLike_stream = Symbol("StreamableLike_stream");
 export const CacheLike_get = Symbol("CacheLike_get");

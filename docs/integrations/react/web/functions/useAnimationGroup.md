@@ -24,6 +24,10 @@
 
 ### options?
 
+#### animationScheduler
+
+[`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+
 #### priority
 
 `2` \| `1` \| `3` \| `4` \| `5`

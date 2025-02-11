@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOMClient from "react-dom/client";
 import {
   useAnimate,
-  useAnimationGroup,
+  useAnimation,
   useScroll,
 } from "@reactive-js/core/integrations/react/web";
 import {
@@ -22,8 +22,8 @@ import {
   EventSourceLike,
 } from "@reactive-js/core/events";
 import * as Publisher from "@reactive-js/core/events/Publisher";
-import { DictionaryLike_get } from "@reactive-js/core/collections";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
+import { AnimationStreamLike_animation } from "@reactive-js/core/concurrent";
 
 const AnimatedCircle = ({
   animation,
@@ -56,25 +56,23 @@ const AnimatedCircle = ({
 };
 
 const ScrollApp = () => {
-  const animationGroup = useAnimationGroup({
-    spring: (direction: boolean) =>
-      pipe(
-        Observable.concat(
+  const animationStream = useAnimation((direction: boolean) =>
+    pipe(
+      Observable.concat(
+        Observable.spring({ precision: 0.1 }),
+        pipe(
           Observable.spring({ precision: 0.1 }),
-          pipe(
-            Observable.spring({ precision: 0.1 }),
-            Observable.map(scale(1, 0)),
-          ),
+          Observable.map(scale(1, 0)),
         ),
-        direction
-          ? Observable.map(scale(1, 1.2))
-          : Observable.map(scale(0, -0.01)),
       ),
-  });
-  const { enqueue } = useDispatcher(animationGroup);
+      direction
+        ? Observable.map(scale(1, 1.2))
+        : Observable.map(scale(0, -0.01)),
+    ),
+  );
+  const { enqueue } = useDispatcher(animationStream);
 
-  const springAnimation = animationGroup?.[DictionaryLike_get]("spring");
-
+  const springAnimation = animationStream?.[AnimationStreamLike_animation];
   const publishedAnimation = useDisposable(Publisher.create, []);
 
   const containerRef = useScroll<HTMLDivElement>(

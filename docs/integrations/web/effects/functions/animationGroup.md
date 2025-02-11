@@ -6,7 +6,7 @@
 
 # Function: \_\_animationGroup()
 
-> **\_\_animationGroup**\<`T`, `TEvent`, `TKey`\>(`animationGroup`): [`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`T`, `TEvent`, `TKey`\>
+> **\_\_animationGroup**\<`T`, `TEvent`, `TKey`\>(`animationGroup`, `options`?): [`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`T`, `TEvent`, `TKey`\>
 
 ## Type Parameters
 
@@ -21,6 +21,12 @@
 ### animationGroup
 
 [`ReadonlyObjectMapLike`](../../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureRunnableLike`](../../../../concurrent/interfaces/PureRunnableLike.md)\<`T`\> \| [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureRunnableLike`](../../../../concurrent/interfaces/PureRunnableLike.md)\<`T`\>\>\>
+
+### options?
+
+#### animationScheduler
+
+[`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
 
 ## Returns
 

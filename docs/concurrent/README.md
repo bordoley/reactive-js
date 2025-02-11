@@ -9,6 +9,7 @@
 ## Interfaces
 
 - [AnimationGroupStreamLike](interfaces/AnimationGroupStreamLike.md)
+- [AnimationStreamLike](interfaces/AnimationStreamLike.md)
 - [CacheLike](interfaces/CacheLike.md)
 - [ContinuationContextLike](interfaces/ContinuationContextLike.md)
 - [DeferredObservableLike](interfaces/DeferredObservableLike.md)
@@ -38,6 +39,7 @@
 
 ## Variables
 
+- [AnimationStreamLike\_animation](variables/AnimationStreamLike_animation.md)
 - [CacheLike\_get](variables/CacheLike_get.md)
 - [ContinuationContextLike\_yield](variables/ContinuationContextLike_yield.md)
 - [DispatcherLike\_complete](variables/DispatcherLike_complete.md)

@@ -9,4 +9,5 @@
 ## Functions
 
 - [\_\_animate](functions/animate.md)
+- [\_\_animation](functions/animation.md)
 - [\_\_animationGroup](functions/animationGroup.md)

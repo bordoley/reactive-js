@@ -13,6 +13,7 @@ import { DictionaryCollection } from "../../collections/Dictionary.js";
 import { DictionaryLike_get, keySet } from "../../collections.js";
 import { sequence } from "../../computations.js";
 import {
+  AnimationStreamLike_animation,
   DispatcherLike_complete,
   DispatcherLike_isCompleted,
   StreamableLike_stream,
@@ -39,6 +40,30 @@ import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
 testModule(
   "Streamable",
+  describe(
+    "animation",
+    test("integration", () => {
+      using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
+      const stream = Streamable.animation<number>(Observable.keyFrame(500))[
+        StreamableLike_stream
+      ](vts);
+
+      let result = 0;
+
+      pipeSome(
+        stream[AnimationStreamLike_animation],
+        EventSource.addEventHandler(ev => {
+          result = ev;
+        }),
+      );
+
+      stream[QueueableLike_enqueue](none);
+
+      vts[VirtualTimeSchedulerLike_run]();
+
+      pipe(result, expectEquals(1));
+    }),
+  ),
   describe(
     "animationGroup",
     test("integration", () => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   useAnimate,
-  useAnimationGroup,
+  useAnimation,
 } from "@reactive-js/core/integrations/react/web";
 import { Property } from "csstype";
 import {
@@ -10,9 +10,9 @@ import {
 } from "@reactive-js/core/integrations/react";
 import { Optional, pipe } from "@reactive-js/core/functions";
 import { EventSourceLike } from "@reactive-js/core/events";
-import { DictionaryLike_get } from "@reactive-js/core/collections";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
 import { scale } from "@reactive-js/core/functions";
+import { AnimationStreamLike_animation } from "@reactive-js/core/concurrent";
 
 const items = ["W", "O", "R", "D", "L", "E"];
 
@@ -113,22 +113,21 @@ const AnimatedBox = ({
 export const Wordle = () => {
   const [state, updateState] = useState(false);
 
-  const animationGroup = useAnimationGroup({
-    a: (direction: boolean) =>
-      pipe(
-        Observable.spring({
-          stiffness: 0.0005,
-          damping: 0.0026,
-          precision: 0.1,
-        }),
-        Observable.map(scale(0, 180 * items.length)),
-        Observable.map(value => ({ direction, value })),
-      ),
-  });
+  const animationStream = useAnimation((direction: boolean) =>
+    pipe(
+      Observable.spring({
+        stiffness: 0.0005,
+        damping: 0.0026,
+        precision: 0.1,
+      }),
+      Observable.map(scale(0, 180 * items.length)),
+      Observable.map(value => ({ direction, value })),
+    ),
+  );
 
-  const animation = animationGroup?.[DictionaryLike_get]("a");
-  const { enqueue } = useDispatcher(animationGroup);
-  const isAnimationRunning = useObserve(animationGroup) ?? false;
+  const animation = animationStream?.[AnimationStreamLike_animation];
+  const { enqueue } = useDispatcher(animationStream);
+  const isAnimationRunning = useObserve(animationStream) ?? false;
 
   useEffect(() => {
     enqueue(state);
