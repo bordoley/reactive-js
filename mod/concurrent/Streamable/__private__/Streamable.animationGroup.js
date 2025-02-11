@@ -6,9 +6,9 @@ import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
 import { StreamableLike_stream, } from "../../../concurrent.js";
 import * as Publisher from "../../../events/Publisher.js";
-import { EventListenerLike_notify, } from "../../../events.js";
 import { compose, isFunction, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import Observable_notify from "../../Observable/__private__/Observable.notify.js";
 import * as Observable from "../../Observable.js";
 import { SingleUseObservableLike_observer } from "../../__internal__/SingleUseObservable.js";
 import * as SingleUseObservable from "../../__internal__/SingleUseObservable.js";
@@ -16,12 +16,12 @@ import DelegatingDispatcherMixin from "../../__mixins__/DelegatingDispatcherMixi
 import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 const AnimationGroupStream_create = /*@__PURE__*/ (() => {
     const AnimationGroupStream_eventSources = Symbol("AnimationGroupStream_delegate");
-    return mixInstanceFactory(include(DelegatingDispatcherMixin(), DelegatingMulticastObservableMixin()), function AnimationStreamMixin(instance, animationGroup, scheduler, animationScheduler, options) {
+    return mixInstanceFactory(include(DelegatingDispatcherMixin(), DelegatingMulticastObservableMixin()), function AnimationGroupStream(instance, animationGroup, scheduler, animationScheduler, options) {
         const singleUseObservable = SingleUseObservable.create();
-        const delegate = pipe(singleUseObservable, Observable.switchMap(compose((event) => Observable.mergeMany(pipe(animationGroup, ReadonlyObjectMap.map((factory, key) => pipe(isFunction(factory) ? factory(event) : factory, Observable.forEach((value) => {
+        const delegate = pipe(singleUseObservable, Observable.switchMap(compose((event) => Observable.mergeMany(pipe(animationGroup, ReadonlyObjectMap.map((factory, key) => {
             const publisher = publishers[key];
-            publisher?.[EventListenerLike_notify](value);
-        }), Observable.ignoreElements(), Observable.subscribeOn(animationScheduler))), ReadonlyObjectMap.values(), ReadonlyArray.fromIterable())), Observable.ignoreElements(), Observable.startWith(true), Observable.endWith(false)), {
+            return pipe(isFunction(factory) ? factory(event) : factory, Observable_notify(publisher));
+        }), ReadonlyObjectMap.values(), ReadonlyArray.fromIterable())), Observable.ignoreElements(), Observable.subscribeOn(animationScheduler), Observable.startWith(true), Observable.endWith(false)), {
             innerType: Observable.DeferredObservableWithSideEffectsType,
         }), Observable.multicast(scheduler, options));
         init(DelegatingDispatcherMixin(), instance, singleUseObservable[SingleUseObservableLike_observer]);

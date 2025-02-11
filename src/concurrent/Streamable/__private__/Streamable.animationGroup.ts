@@ -22,11 +22,7 @@ import {
   StreamableLike_stream,
 } from "../../../concurrent.js";
 import * as Publisher from "../../../events/Publisher.js";
-import {
-  EventListenerLike_notify,
-  EventSourceLike,
-  PublisherLike,
-} from "../../../events.js";
+import { EventSourceLike, PublisherLike } from "../../../events.js";
 import {
   Function1,
   Optional,
@@ -37,6 +33,7 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
+import Observable_notify from "../../Observable/__private__/Observable.notify.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 import { SingleUseObservableLike_observer } from "../../__internal__/SingleUseObservable.js";
@@ -77,7 +74,7 @@ const AnimationGroupStream_create: <TEvent, TKey extends string, T>(
       DelegatingDispatcherMixin(),
       DelegatingMulticastObservableMixin<T>(),
     ),
-    function AnimationStreamMixin(
+    function AnimationGroupStream(
       instance: TProperties &
         Pick<
           DictionaryLike<TKey, EventSourceLike<T>>,
@@ -110,22 +107,20 @@ const AnimationGroupStream_create: <TEvent, TKey extends string, T>(
                     | PureRunnableLike<T>,
                     DeferredObservableLike<T>,
                     string
-                  >((factory, key: string) =>
-                    pipe(
+                  >((factory, key: string) => {
+                    const publisher = publishers[key] as PublisherLike<T>;
+
+                    return pipe(
                       isFunction(factory) ? factory(event) : factory,
-                      Observable.forEach((value: T) => {
-                        const publisher = publishers[key];
-                        publisher?.[EventListenerLike_notify](value);
-                      }),
-                      Observable.ignoreElements<T>(),
-                      Observable.subscribeOn(animationScheduler),
-                    ),
-                  ),
+                      Observable_notify(publisher),
+                    );
+                  }),
                   ReadonlyObjectMap.values(),
-                  ReadonlyArray.fromIterable<DeferredObservableLike<T>>(),
+                  ReadonlyArray.fromIterable(),
                 ),
               ),
             Observable.ignoreElements(),
+            Observable.subscribeOn(animationScheduler),
             Observable.startWith<boolean>(true),
             Observable.endWith<boolean>(false),
           ),

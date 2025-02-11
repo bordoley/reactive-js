@@ -259,7 +259,7 @@ const createPausableAnimationScheduler = () => {
   const scheduler = PauseableScheduler.create(animationScheduler);
   scheduler[PauseableLike_resume]();
   return scheduler;
-}
+};
 
 const RxComponent = createComponent(
   (
@@ -271,7 +271,9 @@ const RxComponent = createComponent(
       const { windowLocation } = __await(props);
       const uri = __await(windowLocation);
 
-      const pausableAnimationScheduler = __using(createPausableAnimationScheduler);
+      const pausableAnimationScheduler = __using(
+        createPausableAnimationScheduler,
+      );
 
       const animationStream = __animation(
         Observable.concat(

@@ -51,7 +51,7 @@ const AnimationStream_create: <TEvent, T>(
       DelegatingDispatcherMixin(),
       DelegatingMulticastObservableMixin<T>(),
     ),
-    function AnimationStreamMixin(
+    function AnimationStream(
       instance: TProperties,
       animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
       scheduler: SchedulerLike,
@@ -74,9 +74,8 @@ const AnimationStream_create: <TEvent, T>(
             (event: TEvent) =>
               isFunction(animation) ? animation(event) : animation,
             Observable_notify(publisher),
-            Observable.ignoreElements<T>(),
-            Observable.subscribeOn(animationScheduler),
             Observable.ignoreElements(),
+            Observable.subscribeOn(animationScheduler),
             Observable.startWith<boolean>(true),
             Observable.endWith<boolean>(false),
           ),

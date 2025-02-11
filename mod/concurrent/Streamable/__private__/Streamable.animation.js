@@ -12,11 +12,11 @@ import * as SingleUseObservable from "../../__internal__/SingleUseObservable.js"
 import DelegatingDispatcherMixin from "../../__mixins__/DelegatingDispatcherMixin.js";
 import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 const AnimationStream_create = /*@__PURE__*/ (() => {
-    return mixInstanceFactory(include(DelegatingDispatcherMixin(), DelegatingMulticastObservableMixin()), function AnimationStreamMixin(instance, animation, scheduler, animationScheduler, options) {
+    return mixInstanceFactory(include(DelegatingDispatcherMixin(), DelegatingMulticastObservableMixin()), function AnimationStream(instance, animation, scheduler, animationScheduler, options) {
         const singleUseObservable = SingleUseObservable.create();
         const publisher = (instance[AnimationStreamLike_animation] =
             Publisher.create());
-        const delegate = pipe(singleUseObservable, Observable.switchMap(compose((event) => isFunction(animation) ? animation(event) : animation, Observable_notify(publisher), Observable.ignoreElements(), Observable.subscribeOn(animationScheduler), Observable.ignoreElements(), Observable.startWith(true), Observable.endWith(false)), {
+        const delegate = pipe(singleUseObservable, Observable.switchMap(compose((event) => isFunction(animation) ? animation(event) : animation, Observable_notify(publisher), Observable.ignoreElements(), Observable.subscribeOn(animationScheduler), Observable.startWith(true), Observable.endWith(false)), {
             innerType: Observable.DeferredObservableWithSideEffectsType,
         }), Observable.multicast(scheduler, options));
         init(DelegatingDispatcherMixin(), instance, singleUseObservable[SingleUseObservableLike_observer]);
