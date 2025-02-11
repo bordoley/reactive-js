@@ -1,7 +1,6 @@
 import { ReadonlyObjectMapLike } from "../collections.js";
 import { AnimationGroupStreamLike, AnimationStreamLike, DeferredObservableLike, PureDeferredObservableLike, PureRunnableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
 import { Equality, Factory, Function1, Function2, Reducer, Updater } from "../functions.js";
-import { BackpressureStrategy } from "../utils.js";
 /**
  * @noInheritDoc
  */
@@ -16,15 +15,6 @@ export interface StreamableModule {
         readonly animationScheduler?: SchedulerLike;
     }): StreamableLike<TEvent, boolean, AnimationGroupStreamLike<T, TEvent, TKey>>;
     create<TReq, T>(op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
-    eventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>, options?: {
-        readonly mode: "switching";
-    } | {
-        readonly mode: "blocking";
-    } | {
-        readonly mode: "queueing";
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-    }): StreamableLike<TEventType, boolean>;
     identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
     /**
      * Returns a new `StateStoreLike` instance that stores state which can
@@ -48,7 +38,6 @@ export declare const create: Signature["create"];
 export declare const actionReducer: Signature["actionReducer"];
 export declare const animation: Signature["animation"];
 export declare const animationGroup: Signature["animationGroup"];
-export declare const eventHandler: Signature["eventHandler"];
 export declare const identity: Signature["identity"];
 export declare const stateStore: Signature["stateStore"];
 export declare const syncState: Signature["syncState"];

@@ -113,15 +113,14 @@ const AnimationGroup = () => {
       ),
       Observable.repeat(2),
     ),
-    b: _ =>
-      Observable.concat(
-        Observable.keyFrame(500),
-        Observable.empty({ delay: 250 }),
-        pipe(
-          Observable.spring({ stiffness: 0.01, damping: 0.01 }),
-          Observable.map(scale(1, 0)),
-        ),
+    b: Observable.concat(
+      Observable.keyFrame(500),
+      Observable.empty({ delay: 250 }),
+      pipe(
+        Observable.spring({ stiffness: 0.01, damping: 0.01 }),
+        Observable.map(scale(1, 0)),
       ),
+    ),
   });
 
   const animationDispatcher = useDispatcher(animationStream);
@@ -259,8 +258,8 @@ const RxComponent = createComponent(
     props: ObservableLike<{
       windowLocation: WindowLocationLike;
     }>,
-  ) => {
-    return Observable.computeDeferred(() => {
+  ) =>
+    Observable.computeDeferred(() => {
       const { windowLocation } = __await(props);
       const uri = __await(windowLocation);
 
@@ -311,10 +310,7 @@ const RxComponent = createComponent(
       const isAnimationPaused =
         __observe(isAnimationPausedObservable) ??
         pauseableScheduler[PauseableLike_isPaused][StoreLike_value];
-      const runAnimation = __bindMethod(
-        animationStream,
-        QueueableLike_enqueue,
-      );
+      const runAnimation = __bindMethod(animationStream, QueueableLike_enqueue);
 
       const pauseAnimation = __bindMethod(
         pauseableScheduler,
@@ -347,21 +343,16 @@ const RxComponent = createComponent(
           />
           <div>
             {isAnimationRunning && isAnimationPaused ? (
-              <button onClick={() => resumeAnimation()}>
-                Resume Animation
-              </button>
+              <button onClick={resumeAnimation}>Resume Animation</button>
             ) : isAnimationRunning && !isAnimationPaused ? (
-              <button onClick={() => pauseAnimation()}>Pause Animation</button>
+              <button onClick={pauseAnimation}>Pause Animation</button>
             ) : (
-              <button onClick={() => runAnimation("animate")}>
-                Run Animation
-              </button>
+              <button onClick={runAnimation}>Run Animation</button>
             )}
           </div>
         </div>
       );
-    });
-  },
+    }),
 );
 
 // Subscribe to the window location using react's normal priority scheduler.

@@ -17,12 +17,10 @@ import {
   Reducer,
   Updater,
 } from "../functions.js";
-import { BackpressureStrategy } from "../utils.js";
 import Streamable_actionReducer from "./Streamable/__private__/Streamable.actionReducer.js";
 import Streamable_animation from "./Streamable/__private__/Streamable.animation.js";
 import Streamable_animationGroup from "./Streamable/__private__/Streamable.animationGroup.js";
 import Streamable_create from "./Streamable/__private__/Streamable.create.js";
-import Streamable_eventHandler from "./Streamable/__private__/Streamable.eventHandler.js";
 import Streamable_identity from "./Streamable/__private__/Streamable.identity.js";
 import Streamable_stateStore from "./Streamable/__private__/Streamable.stateStore.js";
 import Streamable_syncState from "./Streamable/__private__/Streamable.syncState.js";
@@ -53,18 +51,6 @@ export interface StreamableModule {
   create<TReq, T>(
     op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
-
-  eventHandler<TEventType>(
-    op: Function1<TEventType, DeferredObservableLike>,
-    options?:
-      | { readonly mode: "switching" }
-      | { readonly mode: "blocking" }
-      | {
-          readonly mode: "queueing";
-          readonly backpressureStrategy?: BackpressureStrategy;
-          readonly capacity?: number;
-        },
-  ): StreamableLike<TEventType, boolean>;
 
   identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
 
@@ -100,7 +86,6 @@ export const actionReducer: Signature["actionReducer"] =
 export const animation: Signature["animation"] = Streamable_animation;
 export const animationGroup: Signature["animationGroup"] =
   Streamable_animationGroup;
-export const eventHandler: Signature["eventHandler"] = Streamable_eventHandler;
 export const identity: Signature["identity"] = Streamable_identity;
 export const stateStore: Signature["stateStore"] = Streamable_stateStore;
 export const syncState: Signature["syncState"] = Streamable_syncState;
