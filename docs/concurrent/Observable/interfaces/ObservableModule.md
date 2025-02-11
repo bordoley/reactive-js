@@ -4050,6 +4050,26 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ***
 
+### notify()
+
+> **notify**\<`T`\>(`eventListener`): [`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<`T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### eventListener
+
+[`EventListenerLike`](../../../events/interfaces/EventListenerLike.md)\<`T`\>
+
+#### Returns
+
+[`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<`T`, `T`\>
+
+***
+
 ### onSubscribe()
 
 #### Call Signature

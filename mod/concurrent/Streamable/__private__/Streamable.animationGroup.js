@@ -8,7 +8,6 @@ import { StreamableLike_stream, } from "../../../concurrent.js";
 import * as Publisher from "../../../events/Publisher.js";
 import { compose, isFunction, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Observable_notify from "../../Observable/__private__/Observable.notify.js";
 import * as Observable from "../../Observable.js";
 import { SingleUseObservableLike_observer } from "../../__internal__/SingleUseObservable.js";
 import * as SingleUseObservable from "../../__internal__/SingleUseObservable.js";
@@ -20,7 +19,7 @@ const AnimationGroupStream_create = /*@__PURE__*/ (() => {
         const singleUseObservable = SingleUseObservable.create();
         const delegate = pipe(singleUseObservable, Observable.switchMap(compose((event) => Observable.mergeMany(pipe(animationGroup, ReadonlyObjectMap.map((factory, key) => {
             const publisher = publishers[key];
-            return pipe(isFunction(factory) ? factory(event) : factory, Observable_notify(publisher));
+            return pipe(isFunction(factory) ? factory(event) : factory, Observable.notify(publisher));
         }), ReadonlyObjectMap.values(), ReadonlyArray.fromIterable())), Observable.ignoreElements(), Observable.subscribeOn(animationScheduler), Observable.startWith(true), Observable.endWith(false)), {
             innerType: Observable.DeferredObservableWithSideEffectsType,
         }), Observable.multicast(scheduler, options));

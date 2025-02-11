@@ -21,7 +21,7 @@ import {
   RunnableWithSideEffectsLike,
   SchedulerLike,
 } from "../concurrent.js";
-import { EventSourceLike, StoreLike } from "../events.js";
+import { EventListenerLike, EventSourceLike, StoreLike } from "../events.js";
 import {
   Equality,
   Factory,
@@ -102,6 +102,7 @@ import Observable_mergeMap from "./Observable/__private__/Observable.mergeMap.js
 import Observable_mergeWith from "./Observable/__private__/Observable.mergeWith.js";
 import Observable_multicast from "./Observable/__private__/Observable.multicast.js";
 import Observable_never from "./Observable/__private__/Observable.never.js";
+import Observable_notify from "./Observable/__private__/Observable.notify.js";
 import Observable_onSubscribe from "./Observable/__private__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
 import Observable_reduce from "./Observable/__private__/Observable.reduce.js";
@@ -1140,6 +1141,10 @@ export interface ObservableModule {
 
   never<T>(): MulticastObservableLike<T>;
 
+  notify<T>(
+    eventListener: EventListenerLike<T>,
+  ): ObservableOperatorWithSideEffects<T, T>;
+
   onSubscribe<T>(
     f: Factory<DisposableLike>,
   ): ObservableOperatorWithSideEffects<T, T>;
@@ -1697,6 +1702,7 @@ export const mergeMany: Signature["mergeMany"] = Observable_mergeMany;
 export const mergeWith: Signature["mergeWith"] = Observable_mergeWith;
 export const multicast: Signature["multicast"] = Observable_multicast;
 export const never: Signature["never"] = Observable_never;
+export const notify: Signature["notify"] = Observable_notify;
 export const onSubscribe: Signature["onSubscribe"] = Observable_onSubscribe;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const reduce: Signature["reduce"] = Observable_reduce;

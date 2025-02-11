@@ -90,6 +90,7 @@
 - [mergeWith](functions/mergeWith.md)
 - [multicast](functions/multicast.md)
 - [never](functions/never.md)
+- [notify](functions/notify.md)
 - [onSubscribe](functions/onSubscribe.md)
 - [pairwise](functions/pairwise.md)
 - [reduce](functions/reduce.md)

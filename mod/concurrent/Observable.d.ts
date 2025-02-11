@@ -1,6 +1,6 @@
 import { Computation, Computation_T, Computation_type } from "../computations.js";
 import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
-import { EventSourceLike, StoreLike } from "../events.js";
+import { EventListenerLike, EventSourceLike, StoreLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9, Updater } from "../functions.js";
 import { BackpressureStrategy, DisposableLike, QueueableLike } from "../utils.js";
 export type PureStatelessObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends PureRunnableLike<TIn> ? PureRunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends PureDeferredObservableLike<TIn> ? PureDeferredObservableLike<TOut> : TObservableIn extends DeferredObservableWithSideEffectsLike<TIn> ? DeferredObservableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
@@ -318,6 +318,7 @@ export interface ObservableModule {
         readonly backpressureStrategy?: BackpressureStrategy;
     }): Function1<DeferredObservableLike<T>, MulticastObservableLike<T> & DisposableLike>;
     never<T>(): MulticastObservableLike<T>;
+    notify<T>(eventListener: EventListenerLike<T>): ObservableOperatorWithSideEffects<T, T>;
     onSubscribe<T>(f: Factory<DisposableLike>): ObservableOperatorWithSideEffects<T, T>;
     onSubscribe<T>(f: Factory<SideEffect1<Optional<Error>>>): ObservableOperatorWithSideEffects<T, T>;
     onSubscribe<T>(f: SideEffect): ObservableOperatorWithSideEffects<T, T>;
@@ -513,6 +514,7 @@ export declare const mergeMany: Signature["mergeMany"];
 export declare const mergeWith: Signature["mergeWith"];
 export declare const multicast: Signature["multicast"];
 export declare const never: Signature["never"];
+export declare const notify: Signature["notify"];
 export declare const onSubscribe: Signature["onSubscribe"];
 export declare const pairwise: Signature["pairwise"];
 export declare const reduce: Signature["reduce"];

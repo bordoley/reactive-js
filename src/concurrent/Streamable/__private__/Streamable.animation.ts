@@ -24,7 +24,6 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
-import Observable_notify from "../../Observable/__private__/Observable.notify.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 import { SingleUseObservableLike_observer } from "../../__internal__/SingleUseObservable.js";
@@ -73,7 +72,7 @@ const AnimationStream_create: <TEvent, T>(
           compose(
             (event: TEvent) =>
               isFunction(animation) ? animation(event) : animation,
-            Observable_notify(publisher),
+            Observable.notify(publisher),
             Observable.ignoreElements(),
             Observable.subscribeOn(animationScheduler),
             Observable.startWith<boolean>(true),

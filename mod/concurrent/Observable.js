@@ -54,6 +54,7 @@ import Observable_mergeMap from "./Observable/__private__/Observable.mergeMap.js
 import Observable_mergeWith from "./Observable/__private__/Observable.mergeWith.js";
 import Observable_multicast from "./Observable/__private__/Observable.multicast.js";
 import Observable_never from "./Observable/__private__/Observable.never.js";
+import Observable_notify from "./Observable/__private__/Observable.notify.js";
 import Observable_onSubscribe from "./Observable/__private__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
 import Observable_reduce from "./Observable/__private__/Observable.reduce.js";
@@ -162,6 +163,7 @@ export const mergeMany = Observable_mergeMany;
 export const mergeWith = Observable_mergeWith;
 export const multicast = Observable_multicast;
 export const never = Observable_never;
+export const notify = Observable_notify;
 export const onSubscribe = Observable_onSubscribe;
 export const pairwise = Observable_pairwise;
 export const reduce = Observable_reduce;

@@ -33,7 +33,6 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
-import Observable_notify from "../../Observable/__private__/Observable.notify.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 import { SingleUseObservableLike_observer } from "../../__internal__/SingleUseObservable.js";
@@ -112,7 +111,7 @@ const AnimationGroupStream_create: <TEvent, TKey extends string, T>(
 
                     return pipe(
                       isFunction(factory) ? factory(event) : factory,
-                      Observable_notify(publisher),
+                      Observable.notify(publisher),
                     );
                   }),
                   ReadonlyObjectMap.values(),
