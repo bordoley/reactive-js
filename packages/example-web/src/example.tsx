@@ -253,6 +253,14 @@ const History = () => {
   );
 };
 
+const animationScheduler = AnimationFrameScheduler.get();
+
+const createPausableAnimationScheduler = () => {
+  const scheduler = PauseableScheduler.create(animationScheduler);
+  scheduler[PauseableLike_resume]();
+  return scheduler;
+}
+
 const RxComponent = createComponent(
   (
     props: ObservableLike<{
@@ -263,15 +271,7 @@ const RxComponent = createComponent(
       const { windowLocation } = __await(props);
       const uri = __await(windowLocation);
 
-      const animationScheduler = AnimationFrameScheduler.get();
-
-      const createScheduler = __constant(() => {
-        const scheduler = PauseableScheduler.create(animationScheduler);
-        scheduler[PauseableLike_resume]();
-        return scheduler;
-      }, animationScheduler);
-
-      const pauseableScheduler = __using(createScheduler);
+      const pausableAnimationScheduler = __using(createPausableAnimationScheduler);
 
       const animationStream = __animation(
         Observable.concat(
@@ -295,29 +295,29 @@ const RxComponent = createComponent(
           ),
         ),
 
-        { animationScheduler: pauseableScheduler },
+        { animationScheduler: pausableAnimationScheduler },
       );
 
       const isAnimationRunning = __observe(animationStream) ?? false;
       const isAnimationPausedObservable: ObservableLike<boolean> = __constant(
         pipe(
-          pauseableScheduler[PauseableLike_isPaused],
+          pausableAnimationScheduler[PauseableLike_isPaused],
           Observable.fromStore(),
         ),
-        pauseableScheduler,
+        pausableAnimationScheduler,
       );
 
       const isAnimationPaused =
         __observe(isAnimationPausedObservable) ??
-        pauseableScheduler[PauseableLike_isPaused][StoreLike_value];
+        pausableAnimationScheduler[PauseableLike_isPaused][StoreLike_value];
       const runAnimation = __bindMethod(animationStream, QueueableLike_enqueue);
 
       const pauseAnimation = __bindMethod(
-        pauseableScheduler,
+        pausableAnimationScheduler,
         PauseableLike_pause,
       );
       const resumeAnimation = __bindMethod(
-        pauseableScheduler,
+        pausableAnimationScheduler,
         PauseableLike_resume,
       );
 

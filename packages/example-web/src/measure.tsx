@@ -21,7 +21,6 @@ import {
   useAnimation,
 } from "@reactive-js/core/integrations/react/web";
 import * as WebElement from "@reactive-js/core/integrations/web/Element";
-import { Rect } from "@reactive-js/core/integrations/web";
 import { pick } from "@reactive-js/core/computations";
 import { AnimationStreamLike_animation } from "@reactive-js/core/concurrent";
 
@@ -50,12 +49,10 @@ const Measure = () => {
       pipeSomeLazy(
         containerSize,
         Observable.fromStore(),
-        Observable.distinctUntilChanged<Rect>({
-          equality: (a, b) => a.width === b.width,
-        }),
-        pick<Observable.PuredDeferredObservableComputation>(Observable.map)(
+        pick<Observable.MulticastObservableComputation>(Observable.map)(
           "width",
         ),
+        Observable.distinctUntilChanged(),
         Observable.forkMerge(
           compose(
             Observable.withLatestFrom<number, number, Tuple2<number, number>>(
