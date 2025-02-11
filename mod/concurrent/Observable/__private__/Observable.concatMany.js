@@ -22,14 +22,15 @@ const Observable_concatMany =
     }));
     const ConcatObservable_observables = Symbol("ConcatObservable_observables");
     const isConcatObservable = (observable) => isSome(observable[ConcatObservable_observables]);
-    const flattenObservables = (observables) => observables.every(v => !isConcatObservable(v))
-        ? observables
-        : observables.flatMap(observable => isConcatObservable(observable)
+    const flattenObservables = (observables) => observables.some(isConcatObservable)
+        ? observables.flatMap(observable => isConcatObservable(observable)
             ? flattenObservables(observable[ConcatObservable_observables])
-            : observable);
-    const createConcatObservable = mixInstanceFactory(function ConcatObservable(instance, observables, config) {
-        instance[ObservableLike_isPure] = config[ObservableLike_isPure];
-        instance[ObservableLike_isRunnable] = config[ObservableLike_isRunnable];
+            : observable)
+        : observables;
+    return mixInstanceFactory(function ConcatObservable(instance, observables) {
+        instance[ObservableLike_isPure] = Observable_allArePure(observables);
+        instance[ObservableLike_isRunnable] =
+            Observable_allAreRunnable(observables);
         instance[ConcatObservable_observables] =
             flattenObservables(observables);
         return instance;
@@ -44,10 +45,6 @@ const Observable_concatMany =
             const { [ConcatObservable_observables]: observables } = this;
             pipe(createConcatObserver(observer, observables, 1), bindMethod(observables[0], ObservableLike_observe));
         },
-    });
-    return (observables) => createConcatObservable(observables, {
-        [ObservableLike_isRunnable]: Observable_allAreRunnable(observables),
-        [ObservableLike_isPure]: Observable_allArePure(observables),
     });
 })();
 export default Observable_concatMany;
