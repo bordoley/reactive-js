@@ -4,9 +4,10 @@ import { include, init, mixInstanceFactory, props, unsafeCast, } from "../../../
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
+import * as Iterable from "../../../computations/Iterable.js";
 import { StreamableLike_stream, } from "../../../concurrent.js";
 import * as Publisher from "../../../events/Publisher.js";
-import { compose, isFunction, none, pipe, } from "../../../functions.js";
+import { isFunction, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Observable from "../../Observable.js";
 import { SingleUseObservableLike_observer } from "../../__internal__/SingleUseObservable.js";
@@ -17,10 +18,10 @@ const AnimationGroupStream_create = /*@__PURE__*/ (() => {
     const AnimationGroupStream_eventSources = Symbol("AnimationGroupStream_delegate");
     return mixInstanceFactory(include(DelegatingDispatcherMixin(), DelegatingMulticastObservableMixin()), function AnimationGroupStream(instance, animationGroup, scheduler, animationScheduler, options) {
         const singleUseObservable = SingleUseObservable.create();
-        const delegate = pipe(singleUseObservable, Observable.switchMap(compose((event) => Observable.mergeMany(pipe(animationGroup, ReadonlyObjectMap.map((factory, key) => {
+        const delegate = pipe(singleUseObservable, Observable.switchMap((event) => pipe(Observable.mergeMany(pipe(animationGroup, ReadonlyObjectMap.entries(), Iterable.map(([key, factory]) => {
             const publisher = publishers[key];
             return pipe(isFunction(factory) ? factory(event) : factory, Observable.notify(publisher));
-        }), ReadonlyObjectMap.values(), ReadonlyArray.fromIterable())), Observable.ignoreElements(), Observable.subscribeOn(animationScheduler), Observable.startWith(true), Observable.endWith(false)), {
+        }), ReadonlyArray.fromIterable())), Observable.ignoreElements(), Observable.subscribeOn(animationScheduler), Observable.startWith(true), Observable.endWith(false)), {
             innerType: Observable.DeferredObservableWithSideEffectsType,
         }), Observable.multicast(scheduler, options));
         init(DelegatingDispatcherMixin(), instance, singleUseObservable[SingleUseObservableLike_observer]);

@@ -54,6 +54,7 @@
     "./collections/ReadonlyMap": "./collections/ReadonlyMap.js",
     "./collections/ReadonlyObjectMap": "./collections/ReadonlyObjectMap.js",
     "./computations": "./computations.js",
+    "./computations/Iterable": "./computations/Iterable.js",
     "./concurrent": "./concurrent.js",
     "./concurrent/Cache": "./concurrent/Cache.js",
     "./concurrent/Flowable": "./concurrent/Flowable.js",

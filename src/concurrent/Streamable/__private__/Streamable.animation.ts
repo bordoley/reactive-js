@@ -15,13 +15,7 @@ import {
 } from "../../../concurrent.js";
 import * as Publisher from "../../../events/Publisher.js";
 import { EventSourceLike } from "../../../events.js";
-import {
-  Function1,
-  compose,
-  isFunction,
-  none,
-  pipe,
-} from "../../../functions.js";
+import { Function1, isFunction, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
@@ -69,15 +63,15 @@ const AnimationStream_create: <TEvent, T>(
       const delegate = pipe(
         singleUseObservable,
         Observable.switchMap<TEvent, boolean>(
-          compose(
-            (event: TEvent) =>
+          (event: TEvent) =>
+            pipe(
               isFunction(animation) ? animation(event) : animation,
-            Observable.notify(publisher),
-            Observable.ignoreElements(),
-            Observable.subscribeOn(animationScheduler),
-            Observable.startWith<boolean>(true),
-            Observable.endWith<boolean>(false),
-          ),
+              Observable.notify(publisher),
+              Observable.ignoreElements(),
+              Observable.subscribeOn(animationScheduler),
+              Observable.startWith<boolean>(true),
+              Observable.endWith<boolean>(false),
+            ),
           {
             innerType: Observable.DeferredObservableWithSideEffectsType,
           },

@@ -8,6 +8,7 @@
 
 ## Extended by
 
+- [`IterableModule`](../Iterable/interfaces/IterableModule.md)
 - [`EventSourceModule`](../../events/EventSource/interfaces/EventSourceModule.md)
 
 ## Type Parameters

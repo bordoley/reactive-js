@@ -3,7 +3,7 @@
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { AnimationStreamLike_animation, StreamableLike_stream, } from "../../../concurrent.js";
 import * as Publisher from "../../../events/Publisher.js";
-import { compose, isFunction, none, pipe, } from "../../../functions.js";
+import { isFunction, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Observable from "../../Observable.js";
 import { SingleUseObservableLike_observer } from "../../__internal__/SingleUseObservable.js";
@@ -15,7 +15,7 @@ const AnimationStream_create = /*@__PURE__*/ (() => {
         const singleUseObservable = SingleUseObservable.create();
         const publisher = (instance[AnimationStreamLike_animation] =
             Publisher.create());
-        const delegate = pipe(singleUseObservable, Observable.switchMap(compose((event) => isFunction(animation) ? animation(event) : animation, Observable.notify(publisher), Observable.ignoreElements(), Observable.subscribeOn(animationScheduler), Observable.startWith(true), Observable.endWith(false)), {
+        const delegate = pipe(singleUseObservable, Observable.switchMap((event) => pipe(isFunction(animation) ? animation(event) : animation, Observable.notify(publisher), Observable.ignoreElements(), Observable.subscribeOn(animationScheduler), Observable.startWith(true), Observable.endWith(false)), {
             innerType: Observable.DeferredObservableWithSideEffectsType,
         }), Observable.multicast(scheduler, options));
         init(DelegatingDispatcherMixin(), instance, singleUseObservable[SingleUseObservableLike_observer]);

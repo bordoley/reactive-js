@@ -13,9 +13,9 @@ import {
   DictionaryLike_keys,
   ReadonlyObjectMapLike,
 } from "../../../collections.js";
+import * as Iterable from "../../../computations/Iterable.js";
 import {
   AnimationGroupStreamLike,
-  DeferredObservableLike,
   PureRunnableLike,
   SchedulerLike,
   StreamableLike,
@@ -26,7 +26,6 @@ import { EventSourceLike, PublisherLike } from "../../../events.js";
 import {
   Function1,
   Optional,
-  compose,
   isFunction,
   none,
   pipe,
@@ -96,33 +95,27 @@ const AnimationGroupStream_create: <TEvent, TKey extends string, T>(
       const delegate = pipe(
         singleUseObservable,
         Observable.switchMap<TEvent, boolean>(
-          compose(
-            (event: TEvent) =>
+          (event: TEvent) =>
+            pipe(
               Observable.mergeMany(
                 pipe(
                   animationGroup,
-                  ReadonlyObjectMap.map<
-                    | Function1<TEvent, PureRunnableLike<T>>
-                    | PureRunnableLike<T>,
-                    DeferredObservableLike<T>,
-                    string
-                  >((factory, key: string) => {
+                  ReadonlyObjectMap.entries(),
+                  Iterable.map(([key, factory]) => {
                     const publisher = publishers[key] as PublisherLike<T>;
-
                     return pipe(
                       isFunction(factory) ? factory(event) : factory,
                       Observable.notify(publisher),
                     );
                   }),
-                  ReadonlyObjectMap.values(),
                   ReadonlyArray.fromIterable(),
                 ),
               ),
-            Observable.ignoreElements(),
-            Observable.subscribeOn(animationScheduler),
-            Observable.startWith<boolean>(true),
-            Observable.endWith<boolean>(false),
-          ),
+              Observable.ignoreElements(),
+              Observable.subscribeOn(animationScheduler),
+              Observable.startWith<boolean>(true),
+              Observable.endWith<boolean>(false),
+            ),
           {
             innerType: Observable.DeferredObservableWithSideEffectsType,
           },
