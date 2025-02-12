@@ -3,7 +3,7 @@ import { MAX_VALUE, MIN_VALUE } from "../../../../__internal__/constants.js";
 import { clamp } from "../../../../__internal__/math.js";
 import * as EventSource from "../../../../events/EventSource.js";
 import { EventListenerLike_notify } from "../../../../events.js";
-import { pipe } from "../../../../functions.js";
+import { pipe, returns } from "../../../../functions.js";
 import * as Disposable from "../../../../utils/Disposable.js";
 import { ScrollValue } from "../../../web.js";
 import type * as Element from "../../Element.js";
@@ -32,7 +32,7 @@ const createInitialScrollValue = (): ScrollValue => ({
 });
 
 const Element_scrollEventSource: Element.Signature["scrollEventSource"] =
-  () => element =>
+  /*@__PURE__*/ returns(element =>
     EventSource.create(listener => {
       let prev = createInitialScrollValue();
 
@@ -82,6 +82,7 @@ const Element_scrollEventSource: Element.Signature["scrollEventSource"] =
         }),
         Disposable.bindTo(listener),
       );
-    });
+    }),
+  );
 
 export default Element_scrollEventSource;
