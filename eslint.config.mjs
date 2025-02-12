@@ -27,6 +27,7 @@ export default [
       "**/mod",
       "**/node_modules",
       ".sl",
+      "testDeno.js",
     ],
   },
   ...fixupConfigRules(
