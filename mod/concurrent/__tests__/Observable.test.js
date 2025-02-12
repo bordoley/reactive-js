@@ -708,7 +708,10 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     const env_28 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_28, HostScheduler.create(), false);
-        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forkMerge(Observable.flatMapIterable(_ => [1, 2]), Observable.flatMapIterable(_ => [3, 4])), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]));
+        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forkMerge([
+            Observable.flatMapIterable(_ => [1, 2]),
+            Observable.flatMapIterable(_ => [3, 4]),
+        ]), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]));
     }
     catch (e_28) {
         env_28.error = e_28;
@@ -723,7 +726,10 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
         const scheduler = __addDisposableResource(env_29, HostScheduler.create(), false);
         const sideEffect = mockFn();
         const src = pipe(0, Observable.fromValue(), Observable.forEach(sideEffect));
-        await pipeAsync(src, Observable.forkMerge(Observable.flatMapIterable(_ => [1, 2, 3]), Observable.flatMapIterable(_ => [4, 5, 6])), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 5, 6]));
+        await pipeAsync(src, Observable.forkMerge([
+            Observable.flatMapIterable(_ => [1, 2, 3]),
+            Observable.flatMapIterable(_ => [4, 5, 6]),
+        ]), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 5, 6]));
         pipe(sideEffect, expectToHaveBeenCalledTimes(1));
     }
     catch (e_29) {
