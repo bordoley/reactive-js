@@ -3,7 +3,7 @@
 import { Array_every, Array_length, Array_push, } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../concurrent.js";
 import { none, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
@@ -77,7 +77,6 @@ const Observable_latest = /*@__PURE__*/ (() => {
         const isRunnable = Observable_allAreRunnable(observables);
         return Observable_createWithConfig(onSubscribe, {
             [ObservableLike_isDeferred]: true,
-            [ObservableLike_isMulticasted]: false,
             [ObservableLike_isPure]: isPure,
             [ObservableLike_isRunnable]: isRunnable,
         });

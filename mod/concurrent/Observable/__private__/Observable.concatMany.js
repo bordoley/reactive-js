@@ -2,7 +2,7 @@
 
 import { Array_length } from "../../../__internal__/constants.js";
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
 import { bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -40,7 +40,6 @@ const Observable_concatMany =
         [ConcatObservable_observables]: none,
     }), {
         [ObservableLike_isDeferred]: true,
-        [ObservableLike_isMulticasted]: false,
         [ObservableLike_observe](observer) {
             const { [ConcatObservable_observables]: observables } = this;
             pipe(createConcatObserver(observer, observables, 1), bindMethod(observables[0], ObservableLike_observe));

@@ -24,23 +24,12 @@
 
 > `readonly` **\[ObservableLike\_isDeferred\]**: `true`
 
-Indicates if the `ObservableLike` is deferred, ie. cold.
+Indicates if the `ObservableLike` is deferred, ie. cold. If false,
+the observable is multicasted.
 
 #### Overrides
 
 [`DeferredObservableLike`](DeferredObservableLike.md).[`[ObservableLike_isDeferred]`](DeferredObservableLike.md#observablelike_isdeferred)
-
-***
-
-### \[ObservableLike\_isMulticasted\]
-
-> `readonly` **\[ObservableLike\_isMulticasted\]**: `false`
-
-Indicates if the `ObservableLike` is multicasted, ie. hot.
-
-#### Overrides
-
-[`DeferredObservableLike`](DeferredObservableLike.md).[`[ObservableLike_isMulticasted]`](DeferredObservableLike.md#observablelike_ismulticasted)
 
 ***
 

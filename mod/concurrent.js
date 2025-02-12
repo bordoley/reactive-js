@@ -18,7 +18,6 @@ export const ContinuationContextLike_yield = Symbol("ContinuationContextLike_yie
 export const VirtualTimeSchedulerLike_run = Symbol("VirtualTimeSchedulerLike_run");
 export const ObserverLike_notify = Symbol("ObserverLike_notify");
 export const ObservableLike_isDeferred = Symbol("ObservableLike_isDeferred");
-export const ObservableLike_isMulticasted = Symbol("ObservableLike_isMulticasted");
 export const ObservableLike_isPure = Symbol("ObservableLike_isPure");
 export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
 export const ObservableLike_observe = Symbol("ObservableLike_observe");

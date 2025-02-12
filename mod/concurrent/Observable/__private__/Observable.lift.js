@@ -1,9 +1,10 @@
 /// <reference types="./Observable.lift.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
 import { bindMethod, none, pipeUnsafe } from "../../../functions.js";
 import ObservableMixin from "../../__mixins__/ObservableMixin.js";
+import Observable_isMulticasted from "./Observable.isMulticasted.js";
 const LiftedObservableLike_source = Symbol("LiftedObservableMixin_source");
 const LiftedObservableLike_operators = Symbol("LiftedObservableMixin_operators");
 const createLiftedObservable = /*@__PURE__*/ (() => {
@@ -21,20 +22,22 @@ const createLiftedObservable = /*@__PURE__*/ (() => {
         },
     });
 })();
+export const ObservableLift_isStateless = Symbol("ObservableLift_isStateless");
 const Observable_lift = ((config) => (operator) => (source) => {
     const sourceSource = source[LiftedObservableLike_source] ?? source;
     const allFunctions = [
         operator,
         ...(source[LiftedObservableLike_operators] ?? []),
     ];
-    const isDeferred = config[ObservableLike_isDeferred] && source[ObservableLike_isDeferred];
-    const isMulticasted = config[ObservableLike_isMulticasted] &&
-        source[ObservableLike_isMulticasted];
-    const isPure = config[ObservableLike_isPure] && source[ObservableLike_isPure];
+    const isStateless = config[ObservableLift_isStateless] ?? false;
+    const sourceIsMulticasted = Observable_isMulticasted(source);
+    const isDeferred = (sourceIsMulticasted && !isStateless) ||
+        (config[ObservableLike_isDeferred] && source[ObservableLike_isDeferred]);
     const isRunnable = config[ObservableLike_isRunnable] && source[ObservableLike_isRunnable];
+    const isPure = !isDeferred ||
+        (config[ObservableLike_isPure] && source[ObservableLike_isPure]);
     const liftedConfig = {
-        [ObservableLike_isDeferred]: isDeferred || !isMulticasted,
-        [ObservableLike_isMulticasted]: isMulticasted,
+        [ObservableLike_isDeferred]: isDeferred,
         [ObservableLike_isPure]: isPure,
         [ObservableLike_isRunnable]: isRunnable,
     };

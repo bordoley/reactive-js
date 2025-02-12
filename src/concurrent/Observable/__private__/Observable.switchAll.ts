@@ -8,7 +8,6 @@ import {
 import {
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
@@ -30,7 +29,9 @@ import type * as Observable from "../../Observable.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_lift from "./Observable.lift.js";
+import Observable_lift, {
+  ObservableLift_isStateless,
+} from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 const createSwitchAllObserver: <T>(
@@ -115,18 +116,17 @@ const createSwitchAllObserver: <T>(
 const Observable_switchAll: Observable.Signature["switchAll"] = ((options?: {
   readonly innerType?: {
     readonly [ObservableLike_isDeferred]: boolean;
-    readonly [ObservableLike_isMulticasted]: boolean;
     readonly [ObservableLike_isPure]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
   };
 }) =>
-  Observable_lift(
-    options?.innerType ?? {
+  Observable_lift({
+    [ObservableLift_isStateless]: false,
+    ...(options?.innerType ?? {
       [ObservableLike_isDeferred]: true,
-      [ObservableLike_isMulticasted]: false,
       [ObservableLike_isPure]: true,
       [ObservableLike_isRunnable]: true,
-    },
-  )(createSwitchAllObserver)) as Observable.Signature["switchAll"];
+    }),
+  })(createSwitchAllObserver)) as Observable.Signature["switchAll"];
 
 export default Observable_switchAll;

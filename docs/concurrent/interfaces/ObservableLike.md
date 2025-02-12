@@ -21,15 +21,8 @@
 
 > `readonly` **\[ObservableLike\_isDeferred\]**: `boolean`
 
-Indicates if the `ObservableLike` is deferred, ie. cold.
-
-***
-
-### \[ObservableLike\_isMulticasted\]
-
-> `readonly` **\[ObservableLike\_isMulticasted\]**: `boolean`
-
-Indicates if the `ObservableLike` is multicasted, ie. hot.
+Indicates if the `ObservableLike` is deferred, ie. cold. If false,
+the observable is multicasted.
 
 ***
 

@@ -1,6 +1,6 @@
 /// <reference types="./Observable.scanMany.d.ts" />
 
-import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
 import { EventListenerLike_notify } from "../../../events.js";
 import { invoke, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -24,7 +24,6 @@ const Observable_scanMany = ((scanner, initialValue, options) => {
             pipe(Observable_zipLatest(accFeedbackStream, observable), Observable_switchMap(([acc, next]) => scanner(acc, next), {
                 innerType: {
                     [ObservableLike_isDeferred]: true,
-                    [ObservableLike_isMulticasted]: false,
                     [ObservableLike_isPure]: false,
                     [ObservableLike_isRunnable]: false,
                 },
@@ -32,7 +31,6 @@ const Observable_scanMany = ((scanner, initialValue, options) => {
             accFeedbackStream[EventListenerLike_notify](initialValue());
         }, {
             [ObservableLike_isDeferred]: true,
-            [ObservableLike_isMulticasted]: false,
             [ObservableLike_isPure]: isPure,
             [ObservableLike_isRunnable]: isRunnable,
         });

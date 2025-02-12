@@ -14,7 +14,6 @@ import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -147,7 +146,6 @@ const Observable_latest = /*@__PURE__*/ (() => {
 
     return Observable_createWithConfig(onSubscribe, {
       [ObservableLike_isDeferred]: true,
-      [ObservableLike_isMulticasted]: false,
       [ObservableLike_isPure]: isPure,
       [ObservableLike_isRunnable]: isRunnable,
     });

@@ -3,7 +3,6 @@ import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -83,7 +82,6 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
       }),
       {
         [ObservableLike_isDeferred]: true as const,
-        [ObservableLike_isMulticasted]: false as const,
 
         [ObservableLike_observe](
           this: TProperties<T>,

@@ -3,7 +3,6 @@ import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -24,7 +23,6 @@ const Observable_mergeMany: Observable.Signature["mergeMany"] = (<T>() => {
 
   type TProperties<T> = {
     [ObservableLike_isDeferred]: boolean;
-    [ObservableLike_isMulticasted]: boolean;
     [ObservableLike_isPure]: boolean;
     [ObservableLike_isRunnable]: boolean;
     [MergeObservable_observables]: readonly ObservableLike<T>[];
@@ -51,9 +49,8 @@ const Observable_mergeMany: Observable.Signature["mergeMany"] = (<T>() => {
       instance: TProperties<T> & ObservableLike<T>,
       observables: readonly ObservableLike<T>[],
     ): ObservableLike<T> {
-      instance[ObservableLike_isDeferred] = !(instance[
-        ObservableLike_isMulticasted
-      ] = Observable_allAreMulticasted(observables));
+      instance[ObservableLike_isDeferred] =
+        !Observable_allAreMulticasted(observables);
       instance[ObservableLike_isPure] = Observable_allArePure(observables);
       instance[ObservableLike_isRunnable] =
         Observable_allAreRunnable(observables);
@@ -63,7 +60,6 @@ const Observable_mergeMany: Observable.Signature["mergeMany"] = (<T>() => {
     },
     props<TProperties<T>>({
       [ObservableLike_isDeferred]: false,
-      [ObservableLike_isMulticasted]: false,
       [ObservableLike_isPure]: false,
       [ObservableLike_isRunnable]: false,
       [MergeObservable_observables]: none,

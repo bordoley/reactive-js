@@ -180,9 +180,6 @@ export interface ObserverLike<T = unknown>
 }
 
 export const ObservableLike_isDeferred = Symbol("ObservableLike_isDeferred");
-export const ObservableLike_isMulticasted = Symbol(
-  "ObservableLike_isMulticasted",
-);
 export const ObservableLike_isPure = Symbol("ObservableLike_isPure");
 export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
 export const ObservableLike_observe = Symbol("ObservableLike_observe");
@@ -192,14 +189,10 @@ export const ObservableLike_observe = Symbol("ObservableLike_observe");
  */
 export interface ObservableLike<T = unknown> {
   /**
-   * Indicates if the `ObservableLike` is deferred, ie. cold.
+   * Indicates if the `ObservableLike` is deferred, ie. cold. If false,
+   * the observable is multicasted.
    */
   readonly [ObservableLike_isDeferred]: boolean;
-
-  /**
-   * Indicates if the `ObservableLike` is multicasted, ie. hot.
-   */
-  readonly [ObservableLike_isMulticasted]: boolean;
 
   /**
    * Indicates if subscribing to the `ObservableLike` is free of side-effects
@@ -225,7 +218,6 @@ export interface ObservableLike<T = unknown> {
  */
 export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
   readonly [ObservableLike_isDeferred]: true;
-  readonly [ObservableLike_isMulticasted]: false;
 }
 
 /**
@@ -248,7 +240,6 @@ export interface PureObservableLike<T = unknown> extends ObservableLike<T> {
 export interface PureDeferredObservableLike<T = unknown>
   extends DeferredObservableLike<T>,
     PureObservableLike<T> {
-  readonly [ObservableLike_isMulticasted]: false;
   readonly [ObservableLike_isPure]: true;
   readonly [ObservableLike_isDeferred]: true;
 }
@@ -287,7 +278,6 @@ export interface RunnableWithSideEffectsLike<T = unknown>
 export interface MulticastObservableLike<T = unknown>
   extends PureObservableLike<T> {
   readonly [ObservableLike_isDeferred]: false;
-  readonly [ObservableLike_isMulticasted]: true;
   readonly [ObservableLike_isRunnable]: false;
 }
 

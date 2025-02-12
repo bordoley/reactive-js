@@ -1,7 +1,7 @@
 import { Array_every, Array_map } from "../../../__internal__/constants.js";
 import {
+  MulticastObservableLike,
   ObservableLike,
-  ObservableLike_isMulticasted,
 } from "../../../concurrent.js";
 import { TypePredicate, isTrue } from "../../../functions.js";
 import Observable_isMulticasted from "./Observable.isMulticasted.js";
@@ -11,11 +11,7 @@ const Observable_allAreMulticasted = (observables =>
     isTrue,
   )) as TypePredicate<
   ReadonlyArray<ObservableLike>,
-  ReadonlyArray<
-    ObservableLike & {
-      [ObservableLike_isMulticasted]: true;
-    }
-  >
+  ReadonlyArray<MulticastObservableLike>
 >;
 
 export default Observable_allAreMulticasted;

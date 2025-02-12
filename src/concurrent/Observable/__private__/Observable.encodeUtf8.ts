@@ -1,7 +1,6 @@
 import {
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -32,7 +31,6 @@ const Observable_encodeUtf8: Observable.Signature["encodeUtf8"] =
       },
       {
         [ObservableLike_isDeferred]: true,
-        [ObservableLike_isMulticasted]: false,
         [ObservableLike_isPure]: observable[ObservableLike_isPure],
         [ObservableLike_isRunnable]: observable[ObservableLike_isRunnable],
       },

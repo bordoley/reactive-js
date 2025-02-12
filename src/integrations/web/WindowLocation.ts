@@ -12,7 +12,6 @@ import * as Streamable from "../../concurrent/Streamable.js";
 import {
   DeferredObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -187,7 +186,6 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
     }),
     {
       [ObservableLike_isDeferred]: false as const,
-      [ObservableLike_isMulticasted]: true as const,
       [ObservableLike_isRunnable]: false as const,
       [ObservableLike_isPure]: true as const,
 

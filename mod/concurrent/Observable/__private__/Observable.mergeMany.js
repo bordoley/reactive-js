@@ -2,7 +2,7 @@
 
 import { Array_length } from "../../../__internal__/constants.js";
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
 import { bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -20,7 +20,8 @@ const Observable_mergeMany = (() => {
             : observable)
         : observables;
     return mixInstanceFactory(function MergeObservable(instance, observables) {
-        instance[ObservableLike_isDeferred] = !(instance[ObservableLike_isMulticasted] = Observable_allAreMulticasted(observables));
+        instance[ObservableLike_isDeferred] =
+            !Observable_allAreMulticasted(observables);
         instance[ObservableLike_isPure] = Observable_allArePure(observables);
         instance[ObservableLike_isRunnable] =
             Observable_allAreRunnable(observables);
@@ -28,7 +29,6 @@ const Observable_mergeMany = (() => {
         return instance;
     }, props({
         [ObservableLike_isDeferred]: false,
-        [ObservableLike_isMulticasted]: false,
         [ObservableLike_isPure]: false,
         [ObservableLike_isRunnable]: false,
         [MergeObservable_observables]: none,

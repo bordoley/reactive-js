@@ -5,7 +5,6 @@ import {
 } from "../../__internal__/mixins.js";
 import {
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -39,7 +38,6 @@ export const create: <T>() => SingleUseObservableLike<T> = (<T>() => {
     }),
     {
       [ObservableLike_isDeferred]: true as const,
-      [ObservableLike_isMulticasted]: false as const,
       [ObservableLike_isPure]: true as const,
       [ObservableLike_isRunnable]: false as const,
 

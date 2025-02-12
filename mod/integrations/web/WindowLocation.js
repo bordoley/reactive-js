@@ -6,7 +6,7 @@ import { include, init, mixInstanceFactory, props, } from "../../__internal__/mi
 import { pick } from "../../computations.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as Streamable from "../../concurrent/Streamable.js";
-import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, StreamableLike_stream, } from "../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, StreamableLike_stream, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
 import { StoreLike_value } from "../../events.js";
@@ -64,7 +64,6 @@ export const subscribe = /*@__PURE__*/ (() => {
         [WindowLocationLike_canGoBack]: none,
     }), {
         [ObservableLike_isDeferred]: false,
-        [ObservableLike_isMulticasted]: true,
         [ObservableLike_isRunnable]: false,
         [ObservableLike_isPure]: true,
         [WindowLocationLike_push](stateOrUpdater) {

@@ -33,16 +33,6 @@
 
 ***
 
-### \[ObservableLike\_isMulticasted\]
-
-> `readonly` **\[ObservableLike\_isMulticasted\]**: `true`
-
-#### Overrides
-
-`PureObservableLike.[ObservableLike_isMulticasted]`
-
-***
-
 ### \[ObservableLike\_isRunnable\]
 
 > `readonly` **\[ObservableLike\_isRunnable\]**: `false`

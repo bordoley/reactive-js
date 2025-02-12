@@ -1,7 +1,7 @@
 /// <reference types="./Observable.withLatestFrom.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -10,7 +10,7 @@ import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../uti
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_lift from "./Observable.lift.js";
+import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const createWithLatestFromObserver = /*@__PURE__*/ (() => {
     const WithLatestFromObserver_hasLatest = Symbol("WithLatestFromObserver_hasLatest");
@@ -45,8 +45,8 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
     });
 })();
 const Observable_withLatestFrom = ((other, selector) => pipe(createWithLatestFromObserver, partial(other, selector), Observable_lift({
+    [ObservableLift_isStateless]: false,
     [ObservableLike_isDeferred]: true,
-    [ObservableLike_isMulticasted]: false,
     [ObservableLike_isPure]: other[ObservableLike_isPure],
     [ObservableLike_isRunnable]: other[ObservableLike_isRunnable],
 })));

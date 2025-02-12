@@ -7,7 +7,6 @@ import {
   DeferredObservableWithSideEffectsLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
@@ -394,7 +393,6 @@ interface ObservableComputeWithConfig {
     config: Pick<
       RunnableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isMulticasted
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
@@ -405,7 +403,6 @@ interface ObservableComputeWithConfig {
     config: Pick<
       DeferredObservableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isMulticasted
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
@@ -419,7 +416,6 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
     config: Pick<
       DeferredObservableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isMulticasted
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,

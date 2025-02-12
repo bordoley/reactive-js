@@ -10,7 +10,6 @@ import {
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -29,7 +28,6 @@ interface ObservableCreateWithConfig {
     config: Pick<
       PureRunnableLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isMulticasted
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
@@ -40,7 +38,6 @@ interface ObservableCreateWithConfig {
     config: Pick<
       RunnableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isMulticasted
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
@@ -51,7 +48,6 @@ interface ObservableCreateWithConfig {
     config: Pick<
       PureDeferredObservableLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isMulticasted
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
@@ -62,7 +58,6 @@ interface ObservableCreateWithConfig {
     config: Pick<
       DeferredObservableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isMulticasted
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
@@ -73,7 +68,6 @@ interface ObservableCreateWithConfig {
     config: Pick<
       MulticastObservableLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isMulticasted
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
@@ -84,7 +78,6 @@ interface ObservableCreateWithConfig {
     config: Pick<
       ObservableLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isMulticasted
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
@@ -106,7 +99,6 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
         effect: SideEffect1<ObserverLike>,
         config: {
           readonly [ObservableLike_isDeferred]: boolean;
-          readonly [ObservableLike_isMulticasted]: boolean;
           readonly [ObservableLike_isPure]: boolean;
           readonly [ObservableLike_isRunnable]: boolean;
         },

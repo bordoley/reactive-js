@@ -7,7 +7,6 @@ import {
 import {
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
@@ -34,7 +33,9 @@ import type * as Observable from "../../Observable.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_lift from "./Observable.lift.js";
+import Observable_lift, {
+  ObservableLift_isStateless,
+} from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 const createWithLatestFromObserver: <TA, TB, T>(
@@ -129,8 +130,8 @@ const Observable_withLatestFrom: Observable.Signature["withLatestFrom"] = (<
     createWithLatestFromObserver,
     partial(other, selector),
     Observable_lift({
+      [ObservableLift_isStateless]: false,
       [ObservableLike_isDeferred]: true,
-      [ObservableLike_isMulticasted]: false,
       [ObservableLike_isPure]: other[ObservableLike_isPure],
       [ObservableLike_isRunnable]: other[ObservableLike_isRunnable],
     }),

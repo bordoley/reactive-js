@@ -8,7 +8,6 @@ import {
   DeferredObservableWithSideEffectsLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -21,6 +20,7 @@ import type {
   PureStatelessObservableOperator,
 } from "../../Observable.js";
 import ObservableMixin from "../../__mixins__/ObservableMixin.js";
+import Observable_isMulticasted from "./Observable.isMulticasted.js";
 
 const LiftedObservableLike_source = Symbol("LiftedObservableMixin_source");
 const LiftedObservableLike_operators = Symbol(
@@ -41,7 +41,6 @@ const createLiftedObservable: <TA, TB>(
   config: Pick<
     ObservableLike,
     | typeof ObservableLike_isDeferred
-    | typeof ObservableLike_isMulticasted
     | typeof ObservableLike_isPure
     | typeof ObservableLike_isRunnable
   >,
@@ -64,7 +63,6 @@ const createLiftedObservable: <TA, TB>(
       config: Pick<
         ObservableLike,
         | typeof ObservableLike_isDeferred
-        | typeof ObservableLike_isMulticasted
         | typeof ObservableLike_isPure
         | typeof ObservableLike_isRunnable
       >,
@@ -92,10 +90,12 @@ const createLiftedObservable: <TA, TB>(
   );
 })();
 
+export const ObservableLift_isStateless = Symbol("ObservableLift_isStateless");
+
 interface ObservableLift {
   lift(options: {
-    [ObservableLike_isDeferred]: true;
-    [ObservableLike_isMulticasted]: true;
+    [ObservableLift_isStateless]: true;
+    [ObservableLike_isDeferred]: boolean;
     [ObservableLike_isPure]: true;
     [ObservableLike_isRunnable]: true;
   }): <TA, TB>(
@@ -104,7 +104,6 @@ interface ObservableLift {
 
   lift(options: {
     [ObservableLike_isDeferred]: true;
-    [ObservableLike_isMulticasted]: false;
     [ObservableLike_isPure]: true;
     [ObservableLike_isRunnable]: true;
   }): <TA, TB>(
@@ -113,7 +112,6 @@ interface ObservableLift {
 
   lift(options: {
     [ObservableLike_isDeferred]: true;
-    [ObservableLike_isMulticasted]: false;
     [ObservableLike_isPure]: false;
     [ObservableLike_isRunnable]: true;
   }): <TA, TB>(
@@ -122,22 +120,18 @@ interface ObservableLift {
 
   lift(options: {
     [ObservableLike_isDeferred]: true;
-    [ObservableLike_isMulticasted]: false;
     [ObservableLike_isPure]: false;
     [ObservableLike_isRunnable]: false;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
   ) => Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
 
-  lift(
-    options: Pick<
-      ObservableLike,
-      | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isMulticasted
-      | typeof ObservableLike_isPure
-      | typeof ObservableLike_isRunnable
-    >,
-  ): <TA, TB>(
+  lift(options: {
+    [ObservableLift_isStateless]: boolean;
+    [ObservableLike_isDeferred]: boolean;
+    [ObservableLike_isPure]: boolean;
+    [ObservableLike_isRunnable]: boolean;
+  }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
   ) => Function1<ObservableLike<TA>, ObservableLike<TB>>;
 }
@@ -146,10 +140,11 @@ const Observable_lift: ObservableLift["lift"] = ((
     config: Pick<
       ObservableLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isMulticasted
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
-    >,
+    > & {
+      [ObservableLift_isStateless]?: boolean;
+    },
   ) =>
   <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) =>
   (source: ObservableLike<TA>) => {
@@ -159,19 +154,21 @@ const Observable_lift: ObservableLift["lift"] = ((
       ...((source as any)[LiftedObservableLike_operators] ?? []),
     ];
 
+    const isStateless = config[ObservableLift_isStateless] ?? false;
+
+    const sourceIsMulticasted = Observable_isMulticasted(source);
+
     const isDeferred =
-      config[ObservableLike_isDeferred] && source[ObservableLike_isDeferred];
-    const isMulticasted =
-      config[ObservableLike_isMulticasted] &&
-      source[ObservableLike_isMulticasted];
-    const isPure =
-      config[ObservableLike_isPure] && source[ObservableLike_isPure];
+      (sourceIsMulticasted && !isStateless) ||
+      (config[ObservableLike_isDeferred] && source[ObservableLike_isDeferred]);
     const isRunnable =
       config[ObservableLike_isRunnable] && source[ObservableLike_isRunnable];
+    const isPure =
+      !isDeferred ||
+      (config[ObservableLike_isPure] && source[ObservableLike_isPure]);
 
     const liftedConfig = {
-      [ObservableLike_isDeferred]: isDeferred || !isMulticasted,
-      [ObservableLike_isMulticasted]: isMulticasted,
+      [ObservableLike_isDeferred]: isDeferred,
       [ObservableLike_isPure]: isPure,
       [ObservableLike_isRunnable]: isRunnable,
     };

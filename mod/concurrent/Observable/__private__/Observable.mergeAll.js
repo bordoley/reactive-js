@@ -3,7 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger, clampPositiveNonZeroInteger, } from "../../../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
 import { bindMethod, isSome, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -13,7 +13,7 @@ import { DisposableLike_dispose, DisposableLike_isDisposed, OverflowBackpressure
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_lift from "./Observable.lift.js";
+import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
     const MergeAllObserver_activeCount = Symbol("MergeAllObserver_activeCount");
@@ -82,9 +82,9 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
     };
 })();
 const Observable_mergeAll = ((options) => Observable_lift({
+    [ObservableLift_isStateless]: false,
     ...(options?.innerType ?? {
         [ObservableLike_isDeferred]: true,
-        [ObservableLike_isMulticasted]: false,
         [ObservableLike_isPure]: true,
         [ObservableLike_isRunnable]: true,
     }),

@@ -10,7 +10,6 @@ import {
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
@@ -211,12 +210,10 @@ export type ObservableOperatorWithSideEffects<TIn, TOut> = <
 export const PureRunnableType: Pick<
   PureRunnableLike,
   | typeof ObservableLike_isDeferred
-  | typeof ObservableLike_isMulticasted
   | typeof ObservableLike_isPure
   | typeof ObservableLike_isRunnable
 > = {
   [ObservableLike_isDeferred]: true,
-  [ObservableLike_isMulticasted]: false,
   [ObservableLike_isPure]: true,
   [ObservableLike_isRunnable]: true,
 };
@@ -224,12 +221,10 @@ export const PureRunnableType: Pick<
 export const RunnableWithSideEffectsType: Pick<
   RunnableWithSideEffectsLike,
   | typeof ObservableLike_isDeferred
-  | typeof ObservableLike_isMulticasted
   | typeof ObservableLike_isPure
   | typeof ObservableLike_isRunnable
 > = {
   [ObservableLike_isDeferred]: true,
-  [ObservableLike_isMulticasted]: false,
   [ObservableLike_isPure]: false,
   [ObservableLike_isRunnable]: true,
 };
@@ -237,12 +232,10 @@ export const RunnableWithSideEffectsType: Pick<
 export const PureDeferredObservableType: Pick<
   PureDeferredObservableLike,
   | typeof ObservableLike_isDeferred
-  | typeof ObservableLike_isMulticasted
   | typeof ObservableLike_isPure
   | typeof ObservableLike_isRunnable
 > = {
   [ObservableLike_isDeferred]: true,
-  [ObservableLike_isMulticasted]: false,
   [ObservableLike_isPure]: true,
   [ObservableLike_isRunnable]: false,
 };
@@ -250,12 +243,10 @@ export const PureDeferredObservableType: Pick<
 export const DeferredObservableWithSideEffectsType: Pick<
   DeferredObservableWithSideEffectsLike,
   | typeof ObservableLike_isDeferred
-  | typeof ObservableLike_isMulticasted
   | typeof ObservableLike_isPure
   | typeof ObservableLike_isRunnable
 > = {
   [ObservableLike_isDeferred]: true,
-  [ObservableLike_isMulticasted]: false,
   [ObservableLike_isPure]: false,
   [ObservableLike_isRunnable]: false,
 };

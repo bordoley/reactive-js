@@ -1,7 +1,6 @@
 import {
   MulticastObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -19,7 +18,6 @@ const Observable_defer: Observable.Signature["defer"] = <T>(
     },
     {
       [ObservableLike_isDeferred]: true,
-      [ObservableLike_isMulticasted]: false,
       [ObservableLike_isPure]: true,
       [ObservableLike_isRunnable]: false,
     },

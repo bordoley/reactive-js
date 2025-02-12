@@ -2,7 +2,6 @@ import {
   DeferredObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -53,7 +52,6 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
           Observable_switchMap(([acc, next]) => scanner(acc, next), {
             innerType: {
               [ObservableLike_isDeferred]: true,
-              [ObservableLike_isMulticasted]: false,
               [ObservableLike_isPure]: false,
               [ObservableLike_isRunnable]: false,
             },
@@ -66,7 +64,6 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
       },
       {
         [ObservableLike_isDeferred]: true,
-        [ObservableLike_isMulticasted]: false,
         [ObservableLike_isPure]: isPure,
         [ObservableLike_isRunnable]: isRunnable,
       },

@@ -36,7 +36,6 @@ import {
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   PureDeferredObservableLike,
@@ -110,21 +109,18 @@ import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
 const expectIsPureRunnable = (obs: PureRunnableLike) => {
   expectTrue(obs[ObservableLike_isRunnable]);
-  expectFalse(obs[ObservableLike_isMulticasted]);
   expectTrue(obs[ObservableLike_isPure]);
   expectTrue(obs[ObservableLike_isDeferred]);
 };
 
 const expectIsRunnableWithSideEffects = (obs: RunnableWithSideEffectsLike) => {
   expectTrue(obs[ObservableLike_isRunnable]);
-  expectFalse(obs[ObservableLike_isMulticasted]);
   expectFalse(obs[ObservableLike_isPure]);
   expectTrue(obs[ObservableLike_isDeferred]);
 };
 
 const expectIsPureDeferredObservable = (obs: PureDeferredObservableLike) => {
   expectFalse(obs[ObservableLike_isRunnable]);
-  expectFalse(obs[ObservableLike_isMulticasted]);
   expectTrue(obs[ObservableLike_isPure]);
   expectTrue(obs[ObservableLike_isDeferred]);
 };
@@ -133,14 +129,12 @@ const expectIsDeferredObservableWithSideEffects = (
   obs: DeferredObservableWithSideEffectsLike,
 ) => {
   expectFalse(obs[ObservableLike_isRunnable]);
-  expectFalse(obs[ObservableLike_isMulticasted]);
   expectFalse(obs[ObservableLike_isPure]);
   expectTrue(obs[ObservableLike_isDeferred]);
 };
 
 const expectIsMulticastObservable = (obs: MulticastObservableLike) => {
   expectFalse(obs[ObservableLike_isRunnable]);
-  expectTrue(obs[ObservableLike_isMulticasted]);
   expectTrue(obs[ObservableLike_isPure]);
   expectFalse(obs[ObservableLike_isDeferred]);
 };

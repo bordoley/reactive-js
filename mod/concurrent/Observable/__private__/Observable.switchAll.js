@@ -1,7 +1,7 @@
 /// <reference types="./Observable.switchAll.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isMulticasted, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
 import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -11,7 +11,7 @@ import { DisposableLike_dispose, DisposableLike_isDisposed, SerialDisposableLike
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_lift from "./Observable.lift.js";
+import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const createSwitchAllObserver = /*@__PURE__*/ (() => {
     const SwitchAllObserver_currentRef = Symbol("SwitchAllObserver_currentRef");
@@ -42,10 +42,12 @@ const createSwitchAllObserver = /*@__PURE__*/ (() => {
         },
     });
 })();
-const Observable_switchAll = ((options) => Observable_lift(options?.innerType ?? {
-    [ObservableLike_isDeferred]: true,
-    [ObservableLike_isMulticasted]: false,
-    [ObservableLike_isPure]: true,
-    [ObservableLike_isRunnable]: true,
+const Observable_switchAll = ((options) => Observable_lift({
+    [ObservableLift_isStateless]: false,
+    ...(options?.innerType ?? {
+        [ObservableLike_isDeferred]: true,
+        [ObservableLike_isPure]: true,
+        [ObservableLike_isRunnable]: true,
+    }),
 })(createSwitchAllObserver));
 export default Observable_switchAll;

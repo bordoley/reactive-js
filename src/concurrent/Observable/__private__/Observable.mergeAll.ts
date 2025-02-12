@@ -14,7 +14,6 @@ import {
   DeferredObservableWithSideEffectsLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isMulticasted,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
@@ -47,7 +46,9 @@ import type * as Observable from "../../Observable.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_lift from "./Observable.lift.js";
+import Observable_lift, {
+  ObservableLift_isStateless,
+} from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 const createMergeAllObserverOperator: <T>(options?: {
@@ -207,7 +208,6 @@ const createMergeAllObserverOperator: <T>(options?: {
 const Observable_mergeAll: Observable.Signature["mergeAll"] = ((options?: {
   readonly innerType?: {
     readonly [ObservableLike_isDeferred]: boolean;
-    readonly [ObservableLike_isMulticasted]: boolean;
     readonly [ObservableLike_isPure]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
   };
@@ -216,9 +216,9 @@ const Observable_mergeAll: Observable.Signature["mergeAll"] = ((options?: {
   readonly concurrency?: number;
 }) =>
   Observable_lift({
+    [ObservableLift_isStateless]: false,
     ...(options?.innerType ?? {
       [ObservableLike_isDeferred]: true,
-      [ObservableLike_isMulticasted]: false,
       [ObservableLike_isPure]: true,
       [ObservableLike_isRunnable]: true,
     }),
