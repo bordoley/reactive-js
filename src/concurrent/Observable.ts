@@ -812,33 +812,21 @@ export interface ObservableModule {
 
   forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
 
-  /*
   forkMerge<TIn, TOut>(
-    ops: [
-      fst: Function1<MulticastObservableLike<TIn>, PureRunnableLike<TOut>>,
-      snd: Function1<MulticastObservableLike<TIn>, PureRunnableLike<TOut>>,
-      ...tail: readonly Function1<
-        MulticastObservableLike<TIn>,
-        ObservableLike<TOut>
-      >[],
-    ],
-    options: {
-      innerType: typeof PureRunnableType;
-    }
-  ): Function1<
-    PureRunnableLike<TIn>,
-    PureRunnableLike<TOut>
-  >;*/
-
+    fst: Function1<MulticastObservableLike<TIn>, MulticastObservableLike<TOut>>,
+    snd: Function1<MulticastObservableLike<TIn>, MulticastObservableLike<TOut>>,
+    ...tail: readonly Function1<
+      MulticastObservableLike<TIn>,
+      MulticastObservableLike<TOut>
+    >[]
+  ): Function1<MulticastObservableLike<TIn>, MulticastObservableLike<TOut>>;
   forkMerge<TIn, TOut>(
-    ops: [
-      fst: Function1<MulticastObservableLike<TIn>, ObservableLike<TOut>>,
-      snd: Function1<MulticastObservableLike<TIn>, ObservableLike<TOut>>,
-      ...tail: readonly Function1<
-        MulticastObservableLike<TIn>,
-        ObservableLike<TOut>
-      >[],
-    ],
+    fst: Function1<MulticastObservableLike<TIn>, ObservableLike<TOut>>,
+    snd: Function1<MulticastObservableLike<TIn>, ObservableLike<TOut>>,
+    ...tail: readonly Function1<
+      MulticastObservableLike<TIn>,
+      ObservableLike<TOut>
+    >[]
   ): Function1<
     ObservableLike<TIn>,
     DeferredObservableWithSideEffectsLike<TOut>

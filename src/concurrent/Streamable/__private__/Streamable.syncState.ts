@@ -30,7 +30,7 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
 
       pipe(
         stream,
-        Observable.forkMerge([
+        Observable.forkMerge(
           compose(
             Observable.takeFirst(),
             Observable.concatMap(onInit, {
@@ -47,7 +47,7 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
               { innerType: Observable.DeferredObservableWithSideEffectsType },
             ),
           ),
-        ]),
+        ),
         Observable.dispatchTo<Updater<T>>(stream),
         Observable.ignoreElements(),
         Observable.subscribe(scheduler),

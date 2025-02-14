@@ -1460,10 +1460,10 @@ testModule(
         await pipeAsync(
           [1, 2, 3],
           Observable.fromReadonlyArray({ delay: 1 }),
-          Observable.forkMerge([
+          Observable.forkMerge(
             Observable.flatMapIterable(_ => [1, 2]),
             Observable.flatMapIterable(_ => [3, 4]),
-          ]),
+          ),
           Observable.toReadonlyArrayAsync(scheduler),
           expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]),
         );
@@ -1481,10 +1481,10 @@ testModule(
 
       await pipeAsync(
         src,
-        Observable.forkMerge([
+        Observable.forkMerge(
           Observable.flatMapIterable(_ => [1, 2, 3]),
           Observable.flatMapIterable(_ => [4, 5, 6]),
-        ]),
+        ),
         Observable.toReadonlyArrayAsync<number>(scheduler),
         expectArrayEquals([1, 2, 3, 4, 5, 6]),
       );

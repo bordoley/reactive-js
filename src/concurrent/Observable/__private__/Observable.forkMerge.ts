@@ -13,12 +13,12 @@ import Observable_mergeMany from "./Observable.mergeMany.js";
 import Observable_multicast from "./Observable.multicast.js";
 
 const Observable_forkMerge: Observable.Signature["forkMerge"] = (<TIn, TOut>(
-    ops: readonly Function1<
+    ...ops: readonly Function1<
       MulticastObservableLike<TIn>,
       ObservableLike<TOut>
-    >[],
+    >[]
   ) =>
-  (obs: ObservableLike<TIn>) =>
+  (obs: ObservableLike<TIn>): ObservableLike<TOut> =>
     Observable_isDeferred(obs)
       ? Observable_create(observer => {
           const src = pipe(
