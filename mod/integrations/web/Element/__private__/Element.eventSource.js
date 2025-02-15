@@ -16,7 +16,7 @@ const Element_eventSource = ((eventName, options) => (target) => EventSource.cre
     };
     const addEventListenerOptions = {
         capture: options?.capture ?? false,
-        passive: options?.capture ?? true,
+        passive: options?.passive ?? true,
     };
     target.addEventListener(eventName, eventHandler, addEventListenerOptions);
     pipe(listener, DisposableContainer.onDisposed(_ => {

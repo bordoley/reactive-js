@@ -15,7 +15,7 @@ const Element_addEventHandler: Element.Signature["addEventHandler"] =
 
     const addEventListenerOptions = {
       capture: options?.capture ?? false,
-      passive: options?.capture ?? true,
+      passive: options?.passive ?? true,
     };
 
     target.addEventListener(eventName, eventHandler, addEventListenerOptions);

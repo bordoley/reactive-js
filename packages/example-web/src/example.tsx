@@ -17,6 +17,7 @@ import {
 import {
   useAnimate,
   useAnimationGroup,
+  useEventHandler,
   useWindowLocation,
   WindowLocationProvider,
 } from "@reactive-js/core/integrations/react/web";
@@ -26,6 +27,7 @@ import {
 } from "@reactive-js/core/integrations/web";
 import {
   increment,
+  isFunction,
   isNone,
   isSome,
   none,
@@ -361,9 +363,88 @@ const RxComponent = createComponent(
 const windowLocation = WindowLocation.subscribe(ReactScheduler.get());
 const rootElement = document.getElementById("root");
 
+const useMergeRefs = function <T>(...refs: React.Ref<T>[]) {
+  return useCallback((e: T | null) => {
+    for (const ref of refs) {
+      if (isFunction(ref)) {
+        ref(e);
+      } else if (ref != null) {
+        (ref as any).current = e;
+      }
+    }
+  }, refs);
+};
+
+const DragExample = () => {
+  const [state, setState] = useState(true);
+  const dragRef = useEventHandler<HTMLDivElement, "drag">(
+    "drag",
+    _ev => {
+      console.log("dragged");
+    },
+    [],
+  );
+
+  const dropRef = useMergeRefs(
+    useEventHandler<HTMLDivElement, "dragover">(
+      "dragover",
+      ev => {
+        ev.preventDefault();
+      },
+      [],
+      {
+        passive: false,
+      },
+    ),
+    useEventHandler<HTMLDivElement, "drop">(
+      "drop",
+      _ => {
+        console.log("dropped");
+        setState(false);
+      },
+      [],
+    ),
+  );
+
+  return state ? (
+    <div>
+      <div ref={dragRef} draggable="true">
+        TEST DRAG
+      </div>
+      <div
+        ref={dropRef}
+        style={{
+          width: "200px",
+          height: "20px",
+          background: "blueviolet",
+          margin: "10px",
+          padding: "10px",
+        }}
+      >
+        DropTarget
+      </div>
+    </div>
+  ) : (
+    <div>
+      <div
+        style={{
+          width: "200px",
+          height: "20px",
+          background: "blueviolet",
+          margin: "10px",
+          padding: "10px",
+        }}
+      >
+        <div>TEST DRAG</div>
+      </div>
+    </div>
+  );
+};
+
 ReactDOMClient.createRoot(rootElement as any).render(
   <CacheProvider cacheContext={inMemoryCacheContext}>
     <WindowLocationProvider windowLocation={windowLocation}>
+      <DragExample />
       <History />
       <Counter />
       <AnimationGroup />

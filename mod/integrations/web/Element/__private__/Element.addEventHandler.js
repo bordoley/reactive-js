@@ -7,7 +7,7 @@ const Element_addEventHandler = (eventName, eventHandler, options) => target => 
     const disposable = Disposable.create();
     const addEventListenerOptions = {
         capture: options?.capture ?? false,
-        passive: options?.capture ?? true,
+        passive: options?.passive ?? true,
     };
     target.addEventListener(eventName, eventHandler, addEventListenerOptions);
     pipe(disposable, DisposableContainer.onDisposed(_ => {
