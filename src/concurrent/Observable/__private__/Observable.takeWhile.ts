@@ -77,7 +77,7 @@ const Observable_takeWhile: Observable.Signature["takeWhile"] = <T>(
   options: { readonly inclusive?: boolean } = {},
 ) =>
   pipe(
-    createTakeWhileObserver,
+    createTakeWhileObserver<T>,
     partial(predicate, options?.inclusive),
     Observable_liftPureDeferred,
   );

@@ -187,7 +187,7 @@ export const ObservableLike_observe = Symbol("ObservableLike_observe");
 /**
  * @noInheritDoc
  */
-export interface ObservableLike<T = unknown> {
+export interface ObservableLike<out T = unknown> {
   /**
    * Indicates if the `ObservableLike` is deferred, ie. cold. If false,
    * the observable is multicasted.
@@ -216,28 +216,30 @@ export interface ObservableLike<T = unknown> {
 /**
  * @noInheritDoc
  */
-export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
+export interface DeferredObservableLike<out T = unknown>
+  extends ObservableLike<T> {
   readonly [ObservableLike_isDeferred]: true;
 }
 
 /**
  * @noInheritDoc
  */
-export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
+export interface RunnableLike<out T = unknown>
+  extends DeferredObservableLike<T> {
   readonly [ObservableLike_isRunnable]: true;
 }
 
 /**
  * @noInheritDoc
  */
-export interface PureObservableLike<T = unknown> extends ObservableLike<T> {
+export interface PureObservableLike<out T = unknown> extends ObservableLike<T> {
   readonly [ObservableLike_isPure]: true;
 }
 
 /**
  * @noInheritDoc
  */
-export interface PureDeferredObservableLike<T = unknown>
+export interface PureDeferredObservableLike<out T = unknown>
   extends DeferredObservableLike<T>,
     PureObservableLike<T> {
   readonly [ObservableLike_isPure]: true;
@@ -247,7 +249,7 @@ export interface PureDeferredObservableLike<T = unknown>
 /**
  * @noInheritDoc
  */
-export interface DeferredObservableWithSideEffectsLike<T = unknown>
+export interface DeferredObservableWithSideEffectsLike<out T = unknown>
   extends DeferredObservableLike<T> {
   readonly [ObservableLike_isPure]: false;
   readonly [ObservableLike_isRunnable]: false;
@@ -256,7 +258,7 @@ export interface DeferredObservableWithSideEffectsLike<T = unknown>
 /**
  * @noInheritDoc
  */
-export interface PureRunnableLike<T = unknown>
+export interface PureRunnableLike<out T = unknown>
   extends RunnableLike<T>,
     PureDeferredObservableLike<T> {
   readonly [ObservableLike_isDeferred]: true;
@@ -267,7 +269,7 @@ export interface PureRunnableLike<T = unknown>
 /**
  * @noInheritDoc
  */
-export interface RunnableWithSideEffectsLike<T = unknown>
+export interface RunnableWithSideEffectsLike<out T = unknown>
   extends RunnableLike<T> {
   readonly [ObservableLike_isPure]: false;
 }
@@ -275,7 +277,7 @@ export interface RunnableWithSideEffectsLike<T = unknown>
 /**
  * @noInheritDoc
  */
-export interface MulticastObservableLike<T = unknown>
+export interface MulticastObservableLike<out T = unknown>
   extends PureObservableLike<T> {
   readonly [ObservableLike_isDeferred]: false;
   readonly [ObservableLike_isRunnable]: false;
@@ -284,14 +286,14 @@ export interface MulticastObservableLike<T = unknown>
 /**
  * @noInheritDoc
  */
-export interface SubjectLike<T = unknown>
+export interface SubjectLike<out T = unknown>
   extends MulticastObservableLike<T>,
     EventListenerLike<T> {}
 
 /**
  * @noInheritDoc
  */
-export interface PauseableObservableLike<T = unknown>
+export interface PauseableObservableLike<out T = unknown>
   extends MulticastObservableLike<T>,
     PauseableLike {}
 
@@ -300,7 +302,7 @@ export const FlowableLike_flow = Symbol("FlowableLike_flow");
 /**
  * @noInheritDoc
  */
-export interface FlowableLike<T> {
+export interface FlowableLike<out T> {
   [FlowableLike_flow](
     scheduler: SchedulerLike,
     options?: {
@@ -316,18 +318,15 @@ export interface FlowableLike<T> {
  *
  * @noInheritDoc
  */
-export interface StreamLike<TReq, T>
+export interface StreamLike<TReq, out T>
   extends DispatcherLike<TReq>,
     MulticastObservableLike<T> {}
 
 /**
  * @noInheritDoc
  */
-export interface AnimationGroupStreamLike<
-  T,
-  TEvent = unknown,
-  TKey extends string = string,
-> extends StreamLike<TEvent, boolean>,
+export interface AnimationGroupStreamLike<TEvent, TKey extends string, out T>
+  extends StreamLike<TEvent, boolean>,
     DictionaryLike<TKey, EventSourceLike<T>> {}
 
 export const AnimationStreamLike_animation = Symbol(
@@ -337,7 +336,7 @@ export const AnimationStreamLike_animation = Symbol(
 /**
  * @noInheritDoc
  */
-export interface AnimationStreamLike<T, TEvent = unknown>
+export interface AnimationStreamLike<TEvent, out T>
   extends StreamLike<TEvent, boolean> {
   [AnimationStreamLike_animation]: EventSourceLike<T>;
 }
@@ -355,7 +354,7 @@ export const StreamableLike_stream = Symbol("StreamableLike_stream");
  */
 export interface StreamableLike<
   TReq = unknown,
-  T = unknown,
+  out T = unknown,
   TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
 > {
   /**

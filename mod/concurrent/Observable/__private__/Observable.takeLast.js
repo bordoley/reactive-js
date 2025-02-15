@@ -47,5 +47,5 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
         },
     });
 })();
-const Observable_takeLast = (options = {}) => pipe(createTakeLastObserver, partial(clampPositiveInteger(options.count ?? 1)), Observable_liftPureDeferred);
+const Observable_takeLast = (options = {}) => pipe((createTakeLastObserver), partial(clampPositiveInteger(options.count ?? 1)), Observable_liftPureDeferred);
 export default Observable_takeLast;

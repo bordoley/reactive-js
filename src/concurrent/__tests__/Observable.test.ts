@@ -407,7 +407,7 @@ const ObservableOperatorWithSideEffectsTests = (
   );
 
 const AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests = (
-  op: Function1<ObservableLike, DeferredObservableWithSideEffectsLike>,
+  op: Function1<ObservableLike<any>, DeferredObservableWithSideEffectsLike>,
 ) =>
   describe(
     "AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests",
@@ -2741,7 +2741,7 @@ testModule(
     testAsync("with empty non-runnable source", async () => {
       using scheduler = HostScheduler.create();
       await pipeAsync(
-        EventSource.create(l => l[DisposableLike_dispose]()),
+        EventSource.create<number>(l => l[DisposableLike_dispose]()),
         Observable.fromEventSource(),
         Observable.toReadonlyArrayAsync<number>(scheduler),
         expectArrayEquals<number>([]),

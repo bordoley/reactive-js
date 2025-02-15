@@ -14,7 +14,10 @@ import {
 /**
  * @noInheritDoc
  */
-export type ReadonlyObjectMapLike<TKey extends string = string, T = unknown> = {
+export type ReadonlyObjectMapLike<
+  TKey extends string = string,
+  out T = unknown,
+> = {
   readonly [P in TKey]?: T;
 };
 
@@ -24,7 +27,7 @@ export const DictionaryLike_keys = Symbol("DictionaryLike_keys");
 /**
  * @noInheritDoc
  */
-export interface DictionaryLike<TKey = unknown, T = unknown> {
+export interface DictionaryLike<TKey = unknown, out T = unknown> {
   readonly [DictionaryLike_keys]: Iterable<TKey>;
 
   [DictionaryLike_get](index: TKey): Optional<T>;

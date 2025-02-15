@@ -6,32 +6,64 @@
 
 # Function: useAnimationGroup()
 
-> **useAnimationGroup**\<`T`, `TEvent`, `TKey`\>(`animationGroup`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`T`, `TEvent`, `TKey`\>\>
+## Call Signature
 
-## Type Parameters
+> **useAnimationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>\>
+
+### Type Parameters
 
 • **T**
 
-• **TEvent** = `unknown`
-
 • **TKey** *extends* `string` = `string`
 
-## Parameters
+### Parameters
 
-### animationGroup
+#### animationGroup
 
-[`ReadonlyObjectMapLike`](../../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureRunnableLike`](../../../../concurrent/interfaces/PureRunnableLike.md)\<`T`\> \| [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureRunnableLike`](../../../../concurrent/interfaces/PureRunnableLike.md)\<`T`\>\>\>
+[`ReadonlyObjectMapLike`](../../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureRunnableLike`](../../../../concurrent/interfaces/PureRunnableLike.md)\<`T`\>\>
 
-### options?
+#### options?
 
-#### animationScheduler
+##### animationScheduler
 
 [`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
 
-#### priority
+##### priority
 
 `2` \| `1` \| `3` \| `4` \| `5`
 
-## Returns
+### Returns
 
-[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`T`, `TEvent`, `TKey`\>\>
+[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>\>
+
+## Call Signature
+
+> **useAnimationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
+
+### Type Parameters
+
+• **T**
+
+• **TKey** *extends* `string`
+
+• **TEvent**
+
+### Parameters
+
+#### animationGroup
+
+[`ReadonlyObjectMapLike`](../../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureRunnableLike`](../../../../concurrent/interfaces/PureRunnableLike.md)\<`T`\> \| [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureRunnableLike`](../../../../concurrent/interfaces/PureRunnableLike.md)\<`T`\>\>\>
+
+#### options?
+
+##### animationScheduler
+
+[`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+
+##### priority
+
+`2` \| `1` \| `3` \| `4` \| `5`
+
+### Returns
+
+[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>

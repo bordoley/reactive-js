@@ -15,7 +15,7 @@ export declare const EventSourceLike_addEventListener: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface EventSourceLike<T = unknown> {
+export interface EventSourceLike<out T = unknown> {
     [EventSourceLike_addEventListener](listener: EventListenerLike<T>): void;
 }
 /**

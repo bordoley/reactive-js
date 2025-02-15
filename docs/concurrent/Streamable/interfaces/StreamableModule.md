@@ -42,59 +42,113 @@
 
 ### animation()
 
-> **animation**\<`T`, `TEvent`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`T`, `TEvent`\>\>
+#### Call Signature
 
-#### Type Parameters
+> **animation**\<`T`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`void`, `T`\>\>
+
+##### Type Parameters
 
 • **T**
 
-• **TEvent** = `unknown`
+##### Parameters
 
-#### Parameters
+###### animation
 
-##### animation
+[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> | [`Function1`](../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>\>
-
-##### options?
+###### options?
 
 ###### animationScheduler
 
 [`SchedulerLike`](../../interfaces/SchedulerLike.md)
 
-#### Returns
+##### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`T`, `TEvent`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`void`, `T`\>\>
+
+#### Call Signature
+
+> **animation**\<`T`, `TEvent`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>\>
+
+##### Type Parameters
+
+• **T**
+
+• **TEvent**
+
+##### Parameters
+
+###### animation
+
+[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> | [`Function1`](../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>\>
+
+###### options?
+
+###### animationScheduler
+
+[`SchedulerLike`](../../interfaces/SchedulerLike.md)
+
+##### Returns
+
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>\>
 
 ***
 
 ### animationGroup()
 
-> **animationGroup**\<`T`, `TEvent`, `TKey`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`T`, `TEvent`, `TKey`\>\>
+#### Call Signature
 
-#### Type Parameters
+> **animationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`void`, `TKey`, `T`\>\>
+
+##### Type Parameters
 
 • **T**
 
-• **TEvent** = `unknown`
-
 • **TKey** *extends* `string` = `string`
 
-#### Parameters
+##### Parameters
 
-##### animationGroup
+###### animationGroup
 
-[`ReadonlyObjectMapLike`](../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> \| [`Function1`](../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>\>\>
+[`ReadonlyObjectMapLike`](../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>\>
 
-##### options?
+###### options?
 
 ###### animationScheduler
 
 [`SchedulerLike`](../../interfaces/SchedulerLike.md)
 
-#### Returns
+##### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`T`, `TEvent`, `TKey`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`void`, `TKey`, `T`\>\>
+
+#### Call Signature
+
+> **animationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
+
+##### Type Parameters
+
+• **T**
+
+• **TKey** *extends* `string`
+
+• **TEvent**
+
+##### Parameters
+
+###### animationGroup
+
+[`ReadonlyObjectMapLike`](../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> \| [`Function1`](../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>\>\>
+
+###### options?
+
+###### animationScheduler
+
+[`SchedulerLike`](../../interfaces/SchedulerLike.md)
+
+##### Returns
+
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
 
 ***
 

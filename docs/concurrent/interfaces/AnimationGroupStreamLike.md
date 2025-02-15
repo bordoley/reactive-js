@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [concurrent](../README.md) / AnimationGroupStreamLike
 
-# Interface: AnimationGroupStreamLike\<T, TEvent, TKey\>
+# Interface: AnimationGroupStreamLike\<TEvent, TKey, T\>
 
 ## Extends
 
@@ -12,8 +12,8 @@
 
 ## Type Parameters
 
+• **TEvent**
+
+• **TKey** *extends* `string`
+
 • **T**
-
-• **TEvent** = `unknown`
-
-• **TKey** *extends* `string` = `string`

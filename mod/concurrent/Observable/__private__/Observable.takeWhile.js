@@ -31,5 +31,5 @@ const createTakeWhileObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(
         }
     },
 }))();
-const Observable_takeWhile = (predicate, options = {}) => pipe(createTakeWhileObserver, partial(predicate, options?.inclusive), Observable_liftPureDeferred);
+const Observable_takeWhile = (predicate, options = {}) => pipe((createTakeWhileObserver), partial(predicate, options?.inclusive), Observable_liftPureDeferred);
 export default Observable_takeWhile;

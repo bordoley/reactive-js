@@ -17,7 +17,7 @@ export const SingleUseObservableLike_observer = Symbol(
   "SingleUseObservableLike_observer",
 );
 
-export interface SingleUseObservableLike<T>
+export interface SingleUseObservableLike<out T>
   extends PureDeferredObservableLike<T> {
   [SingleUseObservableLike_observer]: Optional<ObserverLike<T>>;
 }

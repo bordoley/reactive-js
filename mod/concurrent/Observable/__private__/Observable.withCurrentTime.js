@@ -25,5 +25,5 @@ const createWithCurrentTimeObserver = /*@__PURE__*/ (() => {
         },
     });
 })();
-const Observable_withCurrentTime = (selector) => pipe(createWithCurrentTimeObserver, partial(selector), Observable_liftPureDeferred);
+const Observable_withCurrentTime = (selector) => pipe((createWithCurrentTimeObserver), partial(selector), Observable_liftPureDeferred);
 export default Observable_withCurrentTime;

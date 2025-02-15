@@ -17,6 +17,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strict": true,
+    "strictFunctionTypes": true,
     "strictNullChecks": true,
     "target": "ES2022"
   }

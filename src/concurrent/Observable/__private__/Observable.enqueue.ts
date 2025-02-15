@@ -8,7 +8,7 @@ const Observable_enqueue: Observable.Signature["enqueue"] = <T>(
   queue: QueueableLike<T>,
 ) =>
   pipe(
-    Observer_createEnqueueObserver,
+    Observer_createEnqueueObserver<T>,
     partial(queue),
     Observable_liftWithSideEffects,
   );

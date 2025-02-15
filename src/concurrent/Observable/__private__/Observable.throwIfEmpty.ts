@@ -22,7 +22,10 @@ import Observer_assertObserverState from "../../Observer/__private__/Observer.as
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
-const createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
+const createThrowIfEmptyObserver: <T>(
+  delegate: ObserverLike<T>,
+  factory: Factory<unknown>,
+) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
   const ThrowIfEmptyObserver_delegate = Symbol("ThrowIfEmptyObserver_delegate");
   const ThrowIfEmptyObserver_isEmpty = Symbol("ThrowIfEmptyObserver_isEmpty");
 
@@ -80,11 +83,11 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
   );
 })();
 
-const Observable_throwIfEmpty: Observable.Signature["throwIfEmpty"] = (
+const Observable_throwIfEmpty: Observable.Signature["throwIfEmpty"] = <T>(
   factory: Factory<unknown>,
 ) =>
   pipe(
-    createThrowIfEmptyObserver,
+    createThrowIfEmptyObserver<T>,
     partial(factory),
     Observable_liftPureDeferred,
   );

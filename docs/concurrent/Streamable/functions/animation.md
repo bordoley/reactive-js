@@ -6,26 +6,52 @@
 
 # Function: animation()
 
-> **animation**\<`T`, `TEvent`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`T`, `TEvent`\>\>
+## Call Signature
 
-## Type Parameters
+> **animation**\<`T`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`void`, `T`\>\>
+
+### Type Parameters
 
 • **T**
 
-• **TEvent** = `unknown`
+### Parameters
 
-## Parameters
+#### animation
 
-### animation
+[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> | [`Function1`](../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>\>
+#### options?
 
-### options?
-
-#### animationScheduler
+##### animationScheduler
 
 [`SchedulerLike`](../../interfaces/SchedulerLike.md)
 
-## Returns
+### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`T`, `TEvent`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`void`, `T`\>\>
+
+## Call Signature
+
+> **animation**\<`T`, `TEvent`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>\>
+
+### Type Parameters
+
+• **T**
+
+• **TEvent**
+
+### Parameters
+
+#### animation
+
+[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> | [`Function1`](../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>\>
+
+#### options?
+
+##### animationScheduler
+
+[`SchedulerLike`](../../interfaces/SchedulerLike.md)
+
+### Returns
+
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>\>

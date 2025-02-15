@@ -6,7 +6,7 @@ export declare const LazyInitEventSourceLike_publisher: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface LazyInitEventSourceLike<T> extends EventSourceLike<T> {
+export interface LazyInitEventSourceLike<out T> extends EventSourceLike<T> {
     readonly [LazyInitEventSourceLike_publisher]: Optional<EventListenerLike<T>>;
 }
 declare const LazyInitEventSourceMixin: <T>() => Mixin<LazyInitEventSourceLike<T>, DisposableLike>;

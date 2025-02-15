@@ -40,5 +40,5 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
         },
     });
 })();
-const Observable_throwIfEmpty = (factory) => pipe(createThrowIfEmptyObserver, partial(factory), Observable_liftPureDeferred);
+const Observable_throwIfEmpty = (factory) => pipe((createThrowIfEmptyObserver), partial(factory), Observable_liftPureDeferred);
 export default Observable_throwIfEmpty;

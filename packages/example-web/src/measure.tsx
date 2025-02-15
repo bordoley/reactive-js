@@ -27,14 +27,16 @@ import { AnimationStreamLike_animation } from "@reactive-js/core/concurrent";
 const Measure = () => {
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
 
-  const animationStream = useAnimation(
-    ({ prevWidth, width }: { prevWidth?: number; width: number }) =>
-      isSome(prevWidth)
-        ? pipe(
-            Observable.spring({ precision: 0.2 }),
-            Observable.map(scale(prevWidth, width)),
-          )
-        : Observable.fromValue()(width),
+  const animationStream = useAnimation<
+    { prevWidth?: number; width: number },
+    number
+  >(({ prevWidth, width }: { prevWidth?: number; width: number }) =>
+    isSome(prevWidth)
+      ? pipe(
+          Observable.spring({ precision: 0.2 }),
+          Observable.map(scale(prevWidth, width)),
+        )
+      : Observable.fromValue<number>()(width),
   );
 
   const { enqueue } = useDispatcher(animationStream);

@@ -2,7 +2,7 @@ import { type Factory, type Function1, type Function2, type Function3, type Opti
 /**
  * @noInheritDoc
  */
-export type ReadonlyObjectMapLike<TKey extends string = string, T = unknown> = {
+export type ReadonlyObjectMapLike<TKey extends string = string, out T = unknown> = {
     readonly [P in TKey]?: T;
 };
 export declare const DictionaryLike_get: unique symbol;
@@ -10,7 +10,7 @@ export declare const DictionaryLike_keys: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface DictionaryLike<TKey = unknown, T = unknown> {
+export interface DictionaryLike<TKey = unknown, out T = unknown> {
     readonly [DictionaryLike_keys]: Iterable<TKey>;
     [DictionaryLike_get](index: TKey): Optional<T>;
 }

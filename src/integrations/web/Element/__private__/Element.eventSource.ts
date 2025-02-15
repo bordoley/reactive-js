@@ -1,13 +1,11 @@
 import * as EventSource from "../../../../events/EventSource.js";
-import {
-  EventListenerLike_notify,
-  EventSourceLike,
-} from "../../../../events.js";
-import { Function1, error, pipe } from "../../../../functions.js";
+import { EventListenerLike_notify } from "../../../../events.js";
+import { error, pipe } from "../../../../functions.js";
 import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../../utils.js";
+import type * as Element from "../../Element.js";
 
-export type EventTarget = {
+type EventTarget = {
   addEventListener(
     eventName: string,
     listener: (ev: unknown) => void,
@@ -16,11 +14,10 @@ export type EventTarget = {
   removeEventListener(eventName: string, listener: (ev: unknown) => void): void;
 };
 
-const Element_eventSource: (
-  eventName: string,
-  options?: { passive?: boolean; capture?: boolean },
-) => Function1<EventTarget, EventSourceLike> =
-  (eventName: string, options?: { passive?: boolean; capture?: boolean }) =>
+const Element_eventSource: Element.Signature["eventSource"] = ((
+    eventName: string,
+    options?: { passive?: boolean; capture?: boolean },
+  ) =>
   (target: EventTarget) =>
     EventSource.create(listener => {
       const eventHandler = (ev: unknown) => {
@@ -44,6 +41,6 @@ const Element_eventSource: (
           target.removeEventListener(eventName, eventHandler);
         }),
       );
-    });
+    })) as Element.Signature["eventSource"];
 
 export default Element_eventSource;

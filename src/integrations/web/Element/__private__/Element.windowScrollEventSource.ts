@@ -23,7 +23,7 @@ const Element_windowScrollEventSource = /*@__PURE__*/ (() => {
 
         pipe(
           window,
-          Element_eventSource("scroll", { capture: true }),
+          Element_eventSource<Window, "scroll">("scroll", { capture: true }),
           invoke(EventSourceLike_addEventListener, listener),
         );
       });

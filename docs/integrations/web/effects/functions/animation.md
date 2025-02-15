@@ -6,26 +6,52 @@
 
 # Function: \_\_animation()
 
-> **\_\_animation**\<`T`, `TEvent`\>(`animation`, `options`?): [`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<`T`, `TEvent`\>
+## Call Signature
 
-## Type Parameters
+> **\_\_animation**\<`T`\>(`animation`, `options`?): [`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<`unknown`, `T`\>
+
+### Type Parameters
 
 • **T**
 
-• **TEvent** = `unknown`
+### Parameters
 
-## Parameters
+#### animation
 
-### animation
+[`PureRunnableLike`](../../../../concurrent/interfaces/PureRunnableLike.md)\<`T`\>
 
-[`PureRunnableLike`](../../../../concurrent/interfaces/PureRunnableLike.md)\<`T`\> | [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureRunnableLike`](../../../../concurrent/interfaces/PureRunnableLike.md)\<`T`\>\>
+#### options?
 
-### options?
-
-#### animationScheduler
+##### animationScheduler
 
 [`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
 
-## Returns
+### Returns
 
-[`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<`T`, `TEvent`\>
+[`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<`unknown`, `T`\>
+
+## Call Signature
+
+> **\_\_animation**\<`TEvent`, `T`\>(`animation`, `options`?): [`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>
+
+### Type Parameters
+
+• **TEvent**
+
+• **T**
+
+### Parameters
+
+#### animation
+
+[`PureRunnableLike`](../../../../concurrent/interfaces/PureRunnableLike.md)\<`T`\> | [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureRunnableLike`](../../../../concurrent/interfaces/PureRunnableLike.md)\<`T`\>\>
+
+#### options?
+
+##### animationScheduler
+
+[`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+
+### Returns
+
+[`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>

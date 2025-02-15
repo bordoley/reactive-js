@@ -48,7 +48,8 @@ export const create: <T>(options?: {
     ): PublisherLike<T> {
       init(DisposableMixin, instance);
 
-      instance[Publisher_listeners] = newInstance<Set<EventListenerLike>>(Set);
+      instance[Publisher_listeners] =
+        newInstance<Set<EventListenerLike<T>>>(Set);
 
       instance[Publisher_autoDispose] = options?.autoDispose ?? false;
 

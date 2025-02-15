@@ -30,5 +30,5 @@ const createTakeFirstObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(
         }
     },
 }))();
-const Observable_takeFirst = (options) => pipe(createTakeFirstObserver, partial(options?.count), Observable_liftPureDeferred);
+const Observable_takeFirst = (options) => pipe((createTakeFirstObserver), partial(options?.count), Observable_liftPureDeferred);
 export default Observable_takeFirst;

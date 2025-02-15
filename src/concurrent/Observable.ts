@@ -135,7 +135,7 @@ import Observable_withCurrentTime from "./Observable/__private__/Observable.with
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 import Observable_zipLatest from "./Observable/__private__/Observable.zipLatest.js";
 
-export type PureStatelessObservableOperator<TIn, TOut> = <
+export type PureStatelessObservableOperator<TIn, out TOut> = <
   TObservableIn extends ObservableLike<TIn>,
 >(
   observable: TObservableIn,
@@ -157,7 +157,7 @@ export type PureStatelessObservableOperator<TIn, TOut> = <
 
 export type PureStatefulObservableOperator<
   TIn,
-  TOut,
+  out TOut,
   TObservableInBase = ObservableLike<TIn>,
 > = <TObservableIn extends TObservableInBase>(
   observable: TObservableIn,
@@ -179,7 +179,7 @@ export type PureStatefulObservableOperator<
 
 export type DeferringObservableOperator<
   TIn,
-  TOut,
+  out TOut,
   TObservableInBase = ObservableLike<TIn>,
 > = <TObservableIn extends TObservableInBase>(
   obs: TObservableIn,
@@ -187,7 +187,7 @@ export type DeferringObservableOperator<
   ? PureDeferredObservableLike<TOut>
   : DeferredObservableWithSideEffectsLike<TOut>;
 
-export type ObservableOperatorWithSideEffects<TIn, TOut> = <
+export type ObservableOperatorWithSideEffects<TIn, out TOut> = <
   TObservableIn extends ObservableLike<TIn>,
 >(
   observable: TObservableIn,

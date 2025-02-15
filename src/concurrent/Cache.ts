@@ -76,9 +76,11 @@ export interface CacheModule {
       readonly persistentStore?: {
         load(
           keys: ReadonlySet<string>,
-        ): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
+        ): DeferredObservableLike<
+          Readonly<ReadonlyObjectMapLike<string, Optional<T>>>
+        >;
         store(
-          updates: Readonly<Record<string, T>>,
+          updates: Readonly<ReadonlyObjectMapLike<string, T>>,
         ): DeferredObservableLike<void>;
       };
     },
@@ -135,9 +137,11 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
         readonly persistentStore?: {
           load(
             keys: ReadonlySet<string>,
-          ): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
+          ): DeferredObservableLike<
+            Readonly<ReadonlyObjectMapLike<string, Optional<T>>>
+          >;
           store(
-            updates: Readonly<Record<string, T>>,
+            updates: Readonly<ReadonlyObjectMapLike<string, T>>,
           ): DeferredObservableLike<void>;
         };
       }>,
@@ -270,6 +274,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
             instance[CacheStream_scheduleCleanup](key);
           }),
         ),
+        x => x,
         isSome(persistentStore)
           ? Observable.concatMap(bindMethod(persistentStore, "store"), {
               innerType: Observable.DeferredObservableWithSideEffectsType,

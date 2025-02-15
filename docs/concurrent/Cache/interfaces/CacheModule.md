@@ -42,7 +42,7 @@
 
 ###### persistentStore
 
-\{ `load`: [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`Readonly`\<`Record`\<`string`, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>\>; `store`: [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`void`\>; \}
+\{ `load`: [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`Readonly`\<[`ReadonlyObjectMapLike`](../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`string`, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>\>; `store`: [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`void`\>; \}
 
 ###### persistentStore.load
 

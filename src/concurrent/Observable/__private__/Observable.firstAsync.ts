@@ -16,7 +16,7 @@ const Observable_firstAsync: Observable.Signature["firstAsync"] =
   (observable: ObservableLike<T>) =>
     pipe(
       observable,
-      Observable_takeFirst(),
+      Observable_takeFirst<T>(),
       Observable_lastAsync(scheduler, options),
     );
 

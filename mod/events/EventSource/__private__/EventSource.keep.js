@@ -20,6 +20,6 @@ const EventSource_keep = /*@__PURE__*/ (() => {
             }
         },
     }))();
-    return (predicate) => pipe(createKeepEventListener, partial(predicate), EventSource_lift);
+    return (predicate) => pipe((createKeepEventListener), partial(predicate), EventSource_lift);
 })();
 export default EventSource_keep;

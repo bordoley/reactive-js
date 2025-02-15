@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [concurrent](../README.md) / AnimationStreamLike
 
-# Interface: AnimationStreamLike\<T, TEvent\>
+# Interface: AnimationStreamLike\<TEvent, T\>
 
 ## Extends
 
@@ -12,9 +12,9 @@
 
 ## Type Parameters
 
-• **T**
+• **TEvent**
 
-• **TEvent** = `unknown`
+• **T**
 
 ## Properties
 

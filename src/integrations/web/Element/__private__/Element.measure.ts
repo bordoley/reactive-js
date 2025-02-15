@@ -77,7 +77,9 @@ const Element_measure: Element.Signature["measure"] = /*@__PURE__*/ returns(
     const windowScrollEventSource = Element_windowScrollEventSource();
     const scrollContainerEventSources = pipe(
       findScrollContainers(element),
-      ReadonlyArray.map(Element_eventSource("scroll")),
+      ReadonlyArray.map(
+        Element_eventSource<HTMLElement | SVGElement, "scroll">("scroll"),
+      ),
     );
 
     pipe(

@@ -13,7 +13,8 @@ export const create = /*@__PURE__*/ (() => {
     const Publisher_listeners = Symbol("Publisher_listeners");
     return mixInstanceFactory(include(DisposableMixin), function EventPublisher(instance, options) {
         init(DisposableMixin, instance);
-        instance[Publisher_listeners] = newInstance(Set);
+        instance[Publisher_listeners] =
+            newInstance(Set);
         instance[Publisher_autoDispose] = options?.autoDispose ?? false;
         pipe(instance, DisposableContainer.onDisposed(e => {
             for (const listener of instance[Publisher_listeners]) {

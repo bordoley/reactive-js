@@ -12,8 +12,8 @@ export interface CacheModule {
         readonly cleanupScheduler?: SchedulerLike;
         readonly maxEntries?: number;
         readonly persistentStore?: {
-            load(keys: ReadonlySet<string>): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
-            store(updates: Readonly<Record<string, T>>): DeferredObservableLike<void>;
+            load(keys: ReadonlySet<string>): DeferredObservableLike<Readonly<ReadonlyObjectMapLike<string, Optional<T>>>>;
+            store(updates: Readonly<ReadonlyObjectMapLike<string, T>>): DeferredObservableLike<void>;
         };
     }): CacheLike<T>;
     get<T>(cache: CacheLike<T>, key: string): ObservableLike<T>;

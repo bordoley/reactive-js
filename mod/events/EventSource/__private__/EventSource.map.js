@@ -19,6 +19,6 @@ const EventSource_map = /*@__PURE__*/ (() => {
             this[DelegatingDisposableLike_delegate][EventListenerLike_notify](mapped);
         },
     }))();
-    return (selector) => pipe(createMapEventListener, partial(selector), EventSource_lift);
+    return (selector) => pipe((createMapEventListener), partial(selector), EventSource_lift);
 })();
 export default EventSource_map;

@@ -38,7 +38,7 @@ const Element_scrollEventSource: Element.Signature["scrollEventSource"] =
 
       pipe(
         element,
-        Element_eventSource("scroll"),
+        Element_eventSource<HTMLElement, "scroll">("scroll"),
         EventSource.mergeWith(Element_windowResizeEventSource()),
         EventSource.addEventHandler(ev => {
           const {

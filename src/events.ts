@@ -21,7 +21,7 @@ export const EventSourceLike_addEventListener = Symbol(
 /**
  * @noInheritDoc
  */
-export interface EventSourceLike<T = unknown> {
+export interface EventSourceLike<out T = unknown> {
   [EventSourceLike_addEventListener](listener: EventListenerLike<T>): void;
 }
 

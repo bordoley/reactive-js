@@ -76,7 +76,7 @@ const Observable_withCurrentTime: Observable.Signature["withCurrentTime"] = <
   selector: Function2<number, TA, TB>,
 ) =>
   pipe(
-    createWithCurrentTimeObserver,
+    createWithCurrentTimeObserver<TA, TB>,
     partial(selector),
     Observable_liftPureDeferred,
   );

@@ -121,7 +121,7 @@ export const Wordle = () => {
         precision: 0.1,
       }),
       Observable.map(scale(0, 180 * items.length)),
-      Observable.map(value => ({ direction, value })),
+      Observable.map((value: number) => ({ direction, value })),
     ),
   );
 

@@ -89,7 +89,7 @@ const createDistinctUntilChangedObserver: <T>(
 const Observable_distinctUntilChanged: Observable.Signature["distinctUntilChanged"] =
   <T>(options?: { readonly equality?: Equality<T> }) =>
     pipe(
-      createDistinctUntilChangedObserver,
+      createDistinctUntilChangedObserver<T>,
       partial(options?.equality ?? strictEquality),
       Observable_liftPureDeferred,
     );

@@ -25,5 +25,5 @@ const createSkipFirstObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(
         }
     },
 }))();
-const Observable_skipFirst = (options) => pipe(createSkipFirstObserver, partial(options?.count), Observable_liftPureDeferred);
+const Observable_skipFirst = (options) => pipe((createSkipFirstObserver), partial(options?.count), Observable_liftPureDeferred);
 export default Observable_skipFirst;

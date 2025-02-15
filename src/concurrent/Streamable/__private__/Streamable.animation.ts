@@ -34,7 +34,7 @@ const AnimationStream_create: <TEvent, T>(
     readonly replay?: number;
     readonly capacity?: number;
   },
-) => AnimationStreamLike<T, TEvent> = /*@__PURE__*/ (<TEvent, T>() => {
+) => AnimationStreamLike<TEvent, T> = /*@__PURE__*/ (<TEvent, T>() => {
   type TProperties = {
     [AnimationStreamLike_animation]: EventSourceLike<T>;
   };
@@ -54,7 +54,7 @@ const AnimationStream_create: <TEvent, T>(
         readonly replay?: number;
         readonly capacity?: number;
       },
-    ): AnimationStreamLike<T, TEvent> {
+    ): AnimationStreamLike<TEvent, T> {
       const singleUseObservable = SingleUseObservable.create<TEvent>();
 
       const publisher = (instance[AnimationStreamLike_animation] =
@@ -104,7 +104,7 @@ const Streamable_animation: Streamable.Signature["animation"] = (<
   creationOptions?: {
     readonly animationScheduler?: SchedulerLike;
   },
-): StreamableLike<TEvent, boolean, AnimationStreamLike<T, TEvent>> => ({
+): StreamableLike<TEvent, boolean, AnimationStreamLike<TEvent, T>> => ({
   [StreamableLike_stream]: (scheduler, options) =>
     AnimationStream_create(
       animationGroup,

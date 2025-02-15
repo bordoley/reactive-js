@@ -17,7 +17,7 @@ export const LazyInitEventSourceLike_publisher = Symbol(
 /**
  * @noInheritDoc
  */
-export interface LazyInitEventSourceLike<T> extends EventSourceLike<T> {
+export interface LazyInitEventSourceLike<out T> extends EventSourceLike<T> {
   readonly [LazyInitEventSourceLike_publisher]: Optional<EventListenerLike<T>>;
 }
 

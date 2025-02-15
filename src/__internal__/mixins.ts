@@ -34,12 +34,13 @@ export type PartialMixin<TPrototype extends object = object> = {
   [Mixin_prototype]: TPrototype;
 };
 
-export interface MixinAny<TReturn, TInstance = unknown> extends PartialMixin {
+export interface MixinAny<out TReturn, TInstance = unknown>
+  extends PartialMixin {
   [Mixin_init]: (instance: TInstance, ...args: readonly any[]) => TReturn;
 }
 
 export interface Mixin<
-  TReturn,
+  out TReturn,
   TInstance = unknown,
   TPrototype extends object = object,
 > extends PartialMixin<TPrototype> {
@@ -47,7 +48,7 @@ export interface Mixin<
 }
 
 export interface Mixin1<
-  TReturn,
+  out TReturn,
   TA,
   TInstance = unknown,
   TPrototype extends object = object,
@@ -56,7 +57,7 @@ export interface Mixin1<
 }
 
 export interface Mixin2<
-  TReturn,
+  out TReturn,
   TA,
   TB,
   TInstance = unknown,
@@ -66,7 +67,7 @@ export interface Mixin2<
 }
 
 export interface Mixin3<
-  TReturn,
+  out TReturn,
   TA,
   TB,
   TC,
@@ -77,7 +78,7 @@ export interface Mixin3<
 }
 
 export interface Mixin4<
-  TReturn,
+  out TReturn,
   TA,
   TB,
   TC,
@@ -88,7 +89,7 @@ export interface Mixin4<
   [Mixin_init](instance: TInstance, a: TA, b: TB, c: TC, d: TD): TReturn;
 }
 export interface Mixin5<
-  TReturn,
+  out TReturn,
   TA,
   TB,
   TC,

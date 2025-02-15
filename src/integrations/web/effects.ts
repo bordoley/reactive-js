@@ -50,14 +50,27 @@ interface WebEffectsModule {
 
   __animationFrameScheduler(): SchedulerLike;
 
-  __animation<T, TEvent = unknown>(
+  __animation<T>(
+    animation: PureRunnableLike<T>,
+    options?: {
+      animationScheduler: SchedulerLike;
+    },
+  ): AnimationStreamLike<unknown, T>;
+
+  __animation<TEvent, T>(
     animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
     options?: {
       animationScheduler: SchedulerLike;
     },
-  ): AnimationStreamLike<T, TEvent>;
+  ): AnimationStreamLike<TEvent, T>;
 
-  __animationGroup<T, TEvent = unknown, TKey extends string = string>(
+  __animationGroup<T, TKey extends string = string>(
+    animationGroup: ReadonlyObjectMapLike<TKey, PureRunnableLike<T>>,
+    options?: {
+      animationScheduler: SchedulerLike;
+    },
+  ): AnimationGroupStreamLike<unknown, TKey, T>;
+  __animationGroup<T, TKey extends string, TEvent>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
@@ -65,7 +78,7 @@ interface WebEffectsModule {
     options?: {
       animationScheduler: SchedulerLike;
     },
-  ): AnimationGroupStreamLike<T, TEvent, TKey>;
+  ): AnimationGroupStreamLike<TEvent, TKey, T>;
 }
 
 type Signature = WebEffectsModule;
@@ -129,7 +142,7 @@ export const __animation: Signature["__animation"] = <T, TEvent = unknown>(
     options?.animationScheduler ?? AnimationFrameScheduler.get();
 
   const animationStreamable = __constant(
-    Streamable.animation(animation, {
+    Streamable.animation<T, TEvent>(animation, {
       animationScheduler,
     }),
     animationScheduler,
@@ -140,8 +153,8 @@ export const __animation: Signature["__animation"] = <T, TEvent = unknown>(
 
 export const __animationGroup: Signature["__animationGroup"] = <
   T,
-  TEvent = unknown,
-  TKey extends string = string,
+  TKey extends string,
+  TEvent,
 >(
   animationGroup: ReadonlyObjectMapLike<
     TKey,

@@ -39,7 +39,7 @@ import * as SingleUseObservable from "../../__internal__/SingleUseObservable.js"
 import DelegatingDispatcherMixin from "../../__mixins__/DelegatingDispatcherMixin.js";
 import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 
-const AnimationGroupStream_create: <TEvent, TKey extends string, T>(
+const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
   animationGroup: ReadonlyObjectMapLike<
     TKey,
     Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
@@ -51,7 +51,7 @@ const AnimationGroupStream_create: <TEvent, TKey extends string, T>(
     readonly replay?: number;
     readonly capacity?: number;
   },
-) => AnimationGroupStreamLike<T, TEvent, TKey> = /*@__PURE__*/ (<
+) => AnimationGroupStreamLike<TEvent, TKey, T> = /*@__PURE__*/ (<
   TEvent,
   TKey extends string,
   T,
@@ -89,7 +89,7 @@ const AnimationGroupStream_create: <TEvent, TKey extends string, T>(
         readonly replay?: number;
         readonly capacity?: number;
       },
-    ): AnimationGroupStreamLike<T, TEvent, TKey> {
+    ): AnimationGroupStreamLike<TEvent, TKey, T> {
       const singleUseObservable = SingleUseObservable.create<TEvent>();
 
       const delegate = pipe(
@@ -178,7 +178,7 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] = (<
 ): StreamableLike<
   TEvent,
   boolean,
-  AnimationGroupStreamLike<T, TEvent, TKey>
+  AnimationGroupStreamLike<TEvent, TKey, T>
 > => ({
   [StreamableLike_stream]: (scheduler, options) =>
     AnimationGroupStream_create(

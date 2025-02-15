@@ -4,11 +4,11 @@ import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createPureRunnable from "./Observable.createPureRunnable.js";
 
-const Observable_throws: Observable.Signature["throws"] = (options?: {
+const Observable_throws: Observable.Signature["throws"] = <T>(options?: {
   readonly delay?: number;
   readonly raise?: Factory<unknown>;
 }) =>
-  Observable_createPureRunnable((observer: ObserverLike) => {
+  Observable_createPureRunnable((observer: ObserverLike<T>) => {
     const { raise: factory = raise, delay = 0 } = options ?? {};
 
     pipe(

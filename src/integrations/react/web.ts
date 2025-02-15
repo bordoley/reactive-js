@@ -62,15 +62,29 @@ interface ReactWebModule {
     deps: readonly unknown[],
   ): React.Ref<TElement>;
 
-  useAnimation<T, TEvent = unknown>(
+  useAnimation<T>(
+    animation: PureRunnableLike<T>,
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly animationScheduler: SchedulerLike;
+    },
+  ): Optional<AnimationStreamLike<unknown, T>>;
+  useAnimation<TEvent, T>(
     animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly animationScheduler: SchedulerLike;
     },
-  ): Optional<AnimationStreamLike<T, TEvent>>;
+  ): Optional<AnimationStreamLike<TEvent, T>>;
 
-  useAnimationGroup<T, TEvent = unknown, TKey extends string = string>(
+  useAnimationGroup<T, TKey extends string = string>(
+    animationGroup: ReadonlyObjectMapLike<TKey, PureRunnableLike<T>>,
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly animationScheduler: SchedulerLike;
+    },
+  ): Optional<AnimationGroupStreamLike<unknown, TKey, T>>;
+  useAnimationGroup<T, TKey extends string, TEvent>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
@@ -79,7 +93,7 @@ interface ReactWebModule {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly animationScheduler: SchedulerLike;
     },
-  ): Optional<AnimationGroupStreamLike<T, TEvent, TKey>>;
+  ): Optional<AnimationGroupStreamLike<TEvent, TKey, T>>;
 
   /**
    */
@@ -164,8 +178,8 @@ export const useAnimation: Signature["useAnimation"] = <T, TEvent = unknown>(
 
 export const useAnimationGroup: Signature["useAnimationGroup"] = <
   T,
-  TEvent = unknown,
   TKey extends string = string,
+  TEvent = unknown,
 >(
   animationGroup: ReadonlyObjectMapLike<
     TKey,

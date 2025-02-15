@@ -31,5 +31,5 @@ const createDistinctUntilChangedObserver = /*@__PURE__*/ (() => mixInstanceFacto
         }
     },
 }))();
-const Observable_distinctUntilChanged = (options) => pipe(createDistinctUntilChangedObserver, partial(options?.equality ?? strictEquality), Observable_liftPureDeferred);
+const Observable_distinctUntilChanged = (options) => pipe((createDistinctUntilChangedObserver), partial(options?.equality ?? strictEquality), Observable_liftPureDeferred);
 export default Observable_distinctUntilChanged;

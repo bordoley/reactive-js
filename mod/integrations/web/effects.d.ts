@@ -7,12 +7,18 @@ interface WebEffectsModule {
     __animate(animation: EventSourceLike<CSSStyleMapLike>): SideEffect1<Optional<HTMLElement | null>>;
     __animate<T>(animation: EventSourceLike<T>, selector: (ev: T) => CSSStyleMapLike): SideEffect1<Optional<HTMLElement | null>>;
     __animationFrameScheduler(): SchedulerLike;
-    __animation<T, TEvent = unknown>(animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>, options?: {
+    __animation<T>(animation: PureRunnableLike<T>, options?: {
         animationScheduler: SchedulerLike;
-    }): AnimationStreamLike<T, TEvent>;
-    __animationGroup<T, TEvent = unknown, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>, options?: {
+    }): AnimationStreamLike<unknown, T>;
+    __animation<TEvent, T>(animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>, options?: {
         animationScheduler: SchedulerLike;
-    }): AnimationGroupStreamLike<T, TEvent, TKey>;
+    }): AnimationStreamLike<TEvent, T>;
+    __animationGroup<T, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, PureRunnableLike<T>>, options?: {
+        animationScheduler: SchedulerLike;
+    }): AnimationGroupStreamLike<unknown, TKey, T>;
+    __animationGroup<T, TKey extends string, TEvent>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>, options?: {
+        animationScheduler: SchedulerLike;
+    }): AnimationGroupStreamLike<TEvent, TKey, T>;
 }
 type Signature = WebEffectsModule;
 export declare const __animate: Signature["__animate"];

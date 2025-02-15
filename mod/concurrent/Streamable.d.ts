@@ -8,12 +8,18 @@ export interface StreamableModule {
     actionReducer<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
         readonly equality?: Equality<T>;
     }): StreamableLike<TAction, T>;
-    animation<T, TEvent = unknown>(animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>, options?: {
+    animation<T>(animation: PureRunnableLike<T>, options?: {
         readonly animationScheduler?: SchedulerLike;
-    }): StreamableLike<TEvent, boolean, AnimationStreamLike<T, TEvent>>;
-    animationGroup<T, TEvent = unknown, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>, options?: {
+    }): StreamableLike<void, boolean, AnimationStreamLike<void, T>>;
+    animation<T, TEvent>(animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>, options?: {
         readonly animationScheduler?: SchedulerLike;
-    }): StreamableLike<TEvent, boolean, AnimationGroupStreamLike<T, TEvent, TKey>>;
+    }): StreamableLike<TEvent, boolean, AnimationStreamLike<TEvent, T>>;
+    animationGroup<T, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, PureRunnableLike<T>>, options?: {
+        readonly animationScheduler?: SchedulerLike;
+    }): StreamableLike<void, boolean, AnimationGroupStreamLike<void, TKey, T>>;
+    animationGroup<T, TKey extends string, TEvent>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>, options?: {
+        readonly animationScheduler?: SchedulerLike;
+    }): StreamableLike<TEvent, boolean, AnimationGroupStreamLike<TEvent, TKey, T>>;
     create<TReq, T>(op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
     identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
     /**

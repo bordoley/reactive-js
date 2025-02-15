@@ -104,7 +104,7 @@ const AnimatedBox = ({
 };
 
 const AnimationGroup = () => {
-  const animationStream = useAnimationGroup({
+  const animationStream = useAnimationGroup<number>({
     a: pipe(
       Observable.concat(
         Observable.keyFrame(500),

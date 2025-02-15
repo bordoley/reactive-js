@@ -25,27 +25,27 @@ export type Comparator<T> = Function2<T, T, number>;
 /**
  * Constructor function with 0 arguments.
  */
-export type Constructor<T> = new () => T;
+export type Constructor<out T> = new () => T;
 
 /**
  * Constructor function with 1 argument.
  */
-export type Constructor1<TA, T> = new (a: TA) => T;
+export type Constructor1<TA, out T> = new (a: TA) => T;
 
 /**
  * Constructor function with 2 arguments.
  */
-export type Constructor2<TA, TB, T> = new (a: TA, b: TB) => T;
+export type Constructor2<TA, TB, out T> = new (a: TA, b: TB) => T;
 
 /**
  * Constructor function with 3 arguments.
  */
-export type Constructor3<TA, TB, TC, T> = new (a: TA, b: TB, c: TC) => T;
+export type Constructor3<TA, TB, TC, out T> = new (a: TA, b: TB, c: TC) => T;
 
 /**
  * Constructor function with 4 arguments.
  */
-export type Constructor4<TA, TB, TC, TD, T> = new (
+export type Constructor4<TA, TB, TC, TD, out T> = new (
   a: TA,
   b: TB,
   c: TC,
@@ -55,20 +55,25 @@ export type Constructor4<TA, TB, TC, TD, T> = new (
 /**
  * A function which instantiates new instances of type `T`.
  */
-export type Factory<T> = () => T;
+export type Factory<out T> = () => T;
 
-export type Function1<TA, T> = (a: TA) => T;
-export type Function2<TA, TB, T> = (a: TA, b: TB) => T;
-export type Function3<TA, TB, TC, T> = (a: TA, b: TB, c: TC) => T;
-export type Function4<TA, TB, TC, TD, T> = (a: TA, b: TB, c: TC, d: TD) => T;
-export type Function5<TA, TB, TC, TD, TE, T> = (
+export type Function1<TA, out T> = (a: TA) => T;
+export type Function2<TA, TB, out T> = (a: TA, b: TB) => T;
+export type Function3<TA, TB, TC, out T> = (a: TA, b: TB, c: TC) => T;
+export type Function4<TA, TB, TC, TD, out T> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+) => T;
+export type Function5<TA, TB, TC, TD, TE, out T> = (
   a: TA,
   b: TB,
   c: TC,
   d: TD,
   e: TE,
 ) => T;
-export type Function6<TA, TB, TC, TD, TE, TF, T> = (
+export type Function6<TA, TB, TC, TD, TE, TF, out T> = (
   a: TA,
   b: TB,
   c: TC,
@@ -76,7 +81,7 @@ export type Function6<TA, TB, TC, TD, TE, TF, T> = (
   e: TE,
   f: TF,
 ) => T;
-export type Function7<TA, TB, TC, TD, TE, TF, TG, T> = (
+export type Function7<TA, TB, TC, TD, TE, TF, TG, out T> = (
   a: TA,
   b: TB,
   c: TC,
@@ -85,7 +90,7 @@ export type Function7<TA, TB, TC, TD, TE, TF, TG, T> = (
   f: TF,
   g: TG,
 ) => T;
-export type Function8<TA, TB, TC, TD, TE, TF, TG, TH, T> = (
+export type Function8<TA, TB, TC, TD, TE, TF, TG, TH, out T> = (
   a: TA,
   b: TB,
   c: TC,
@@ -95,7 +100,7 @@ export type Function8<TA, TB, TC, TD, TE, TF, TG, TH, T> = (
   g: TG,
   h: TH,
 ) => T;
-export type Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T> = (
+export type Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, out T> = (
   a: TA,
   b: TB,
   c: TC,

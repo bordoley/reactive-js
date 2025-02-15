@@ -23,7 +23,7 @@ const Element_windowResizeEventSource = /*@__PURE__*/ (() => {
 
         pipe(
           window,
-          Element_eventSource("resize"),
+          Element_eventSource<Window, "resize">("resize"),
           invoke(EventSourceLike_addEventListener, listener),
         );
       });

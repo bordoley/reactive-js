@@ -13,25 +13,25 @@ export type PartialMixin<TPrototype extends object = object> = {
     [Mixin_properties]: object;
     [Mixin_prototype]: TPrototype;
 };
-export interface MixinAny<TReturn, TInstance = unknown> extends PartialMixin {
+export interface MixinAny<out TReturn, TInstance = unknown> extends PartialMixin {
     [Mixin_init]: (instance: TInstance, ...args: readonly any[]) => TReturn;
 }
-export interface Mixin<TReturn, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
+export interface Mixin<out TReturn, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
     [Mixin_init](instance: TInstance): TReturn;
 }
-export interface Mixin1<TReturn, TA, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
+export interface Mixin1<out TReturn, TA, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
     [Mixin_init](instance: TInstance, a: TA): TReturn;
 }
-export interface Mixin2<TReturn, TA, TB, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
+export interface Mixin2<out TReturn, TA, TB, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
     [Mixin_init](instance: TInstance, a: TA, b: TB): TReturn;
 }
-export interface Mixin3<TReturn, TA, TB, TC, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
+export interface Mixin3<out TReturn, TA, TB, TC, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
     [Mixin_init](instance: TInstance, a: TA, b: TB, c: TC): TReturn;
 }
-export interface Mixin4<TReturn, TA, TB, TC, TD, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
+export interface Mixin4<out TReturn, TA, TB, TC, TD, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
     [Mixin_init](instance: TInstance, a: TA, b: TB, c: TC, d: TD): TReturn;
 }
-export interface Mixin5<TReturn, TA, TB, TC, TD, TE, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
+export interface Mixin5<out TReturn, TA, TB, TC, TD, TE, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
     [Mixin_init](instance: TInstance, a: TA, b: TB, c: TC, d: TD, e: TE): TReturn;
 }
 export interface MixinDecorator {

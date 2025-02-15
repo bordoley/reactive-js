@@ -81,6 +81,6 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
 const Observable_throttle = (duration, options = {}) => {
     const { mode = ThrottleIntervalMode } = options;
     const durationObservable = pipeLazy(none, Observable_fromValue({ delay: duration }));
-    return pipe(createThrottleObserver, partial(durationObservable, mode), Observable_liftPureDeferred);
+    return pipe((createThrottleObserver), partial(durationObservable, mode), Observable_liftPureDeferred);
 };
 export default Observable_throttle;
