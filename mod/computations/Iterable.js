@@ -3,6 +3,11 @@
 import { mixInstanceFactory, props } from "../__internal__/mixins.js";
 import { Computation_type, } from "../computations.js";
 import { none } from "../functions.js";
+export const forEach = (effect) => (iterable) => {
+    for (const v of iterable) {
+        effect(v);
+    }
+};
 export const keep = (() => {
     const KeepIterable_predicate = Symbol("KeepIterable_predicate");
     const KeepIterable_delegate = Symbol("KeepIterable_delegate");

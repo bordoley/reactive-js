@@ -17,5 +17,6 @@
 
 ## Functions
 
+- [forEach](functions/forEach.md)
 - [keep](functions/keep.md)
 - [map](functions/map.md)

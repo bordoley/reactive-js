@@ -18,6 +18,7 @@ import {
   useAnimate,
   useAnimationGroup,
   useEventHandler,
+  useEventHandlers,
   useWindowLocation,
   WindowLocationProvider,
 } from "@reactive-js/core/integrations/react/web";
@@ -27,7 +28,6 @@ import {
 } from "@reactive-js/core/integrations/web";
 import {
   increment,
-  isFunction,
   isNone,
   isSome,
   none,
@@ -363,18 +363,6 @@ const RxComponent = createComponent(
 const windowLocation = WindowLocation.subscribe(ReactScheduler.get());
 const rootElement = document.getElementById("root");
 
-const useMergeRefs = function <T>(...refs: React.Ref<T>[]) {
-  return useCallback((e: T | null) => {
-    for (const ref of refs) {
-      if (isFunction(ref)) {
-        ref(e);
-      } else if (ref != null) {
-        (ref as any).current = e;
-      }
-    }
-  }, refs);
-};
-
 const DragExample = () => {
   const [state, setState] = useState(true);
   const dragRef = useEventHandler<HTMLDivElement, "drag">(
@@ -385,25 +373,21 @@ const DragExample = () => {
     [],
   );
 
-  const dropRef = useMergeRefs(
-    useEventHandler<HTMLDivElement, "dragover">(
-      "dragover",
-      ev => {
+  const dropRef = useEventHandlers<HTMLDivElement>(
+    {
+      click: _ => {
+        console.log("clicked");
+      },
+      dragover: ev => {
         ev.preventDefault();
       },
-      [],
-      {
-        passive: false,
-      },
-    ),
-    useEventHandler<HTMLDivElement, "drop">(
-      "drop",
-      _ => {
+      drop: _ => {
         console.log("dropped");
         setState(false);
       },
-      [],
-    ),
+    },
+    [],
+    { dragover: { passive: false } },
   );
 
   return state ? (

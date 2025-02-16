@@ -5,7 +5,7 @@ import {
   Computation_type,
   PureStatelessComputationModule,
 } from "../computations.js";
-import { Function1, Predicate, none } from "../functions.js";
+import { Function1, Predicate, SideEffect1, none } from "../functions.js";
 
 /**
  * @noInheritDoc
@@ -15,9 +15,19 @@ export interface IterableComputation extends Computation {
 }
 
 export interface IterableModule
-  extends PureStatelessComputationModule<IterableComputation> {}
+  extends PureStatelessComputationModule<IterableComputation> {
+  forEach<T>(effect: SideEffect1<T>): SideEffect1<Iterable<T>>;
+}
 
 export type Signature = IterableModule;
+
+export const forEach: Signature["forEach"] =
+  <T>(effect: SideEffect1<T>) =>
+  (iterable: Iterable<T>) => {
+    for (const v of iterable) {
+      effect(v);
+    }
+  };
 
 export const keep: Signature["keep"] = (<T>() => {
   const KeepIterable_predicate = Symbol("KeepIterable_predicate");

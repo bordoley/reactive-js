@@ -15,6 +15,12 @@
 - [WindowLocationLike](interfaces/WindowLocationLike.md)
 - [WindowLocationURI](interfaces/WindowLocationURI.md)
 
+## Type Aliases
+
+- [DOMEventTarget](type-aliases/DOMEventTarget.md)
+- [EventKeysOf](type-aliases/EventKeysOf.md)
+- [EventMapOf](type-aliases/EventMapOf.md)
+
 ## Variables
 
 - [WindowLocationLike\_canGoBack](variables/WindowLocationLike_canGoBack.md)
