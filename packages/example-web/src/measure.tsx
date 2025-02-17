@@ -1,6 +1,5 @@
 import {
   Tuple2,
-  compose,
   isSome,
   none,
   pipe,
@@ -40,46 +39,36 @@ const Measure = () => {
 
   const { enqueue } = useDispatcher(animationStream);
 
-  const boxWidth =
-    useObserve<number>(
-      pipeSomeLazy(
-        container ?? none,
-        WebElement.measure({ autoDispose: true }),
-        Observable.fromStore(),
-        pick<Observable.MulticastObservableComputation>(Observable.map)(
-          "width",
-        ),
-        Observable.distinctUntilChanged(),
-        Observable.forkMerge(
-          compose(
-            Observable.withLatestFrom<number, number, Tuple2<number, number>>(
-              pipeSome(
-                animationStream?.[AnimationStreamLike_animation],
-                Observable.fromEventSource(),
-              ) ?? Observable.never<number>(),
-              tuple,
-            ),
-            Observable.forEach<Tuple2<number, number>>(
-              ([boxWidth, currentWidth]) => {
-                if (currentWidth > 0) {
-                  enqueue({ width: boxWidth });
-                }
-              },
-            ),
-            Observable.ignoreElements(),
-          ),
-          Observable.throttle(50, { mode: "interval" }),
-        ),
+  useObserve(
+    pipeSomeLazy(
+      container ?? none,
+      WebElement.measure({ autoDispose: true }),
+      Observable.fromStore(),
+      pick<Observable.MulticastObservableComputation>(Observable.map)("width"),
+      Observable.distinctUntilChanged(),
+      Observable.withLatestFrom<number, number, Tuple2<number, number>>(
+        pipeSome(
+          animationStream?.[AnimationStreamLike_animation],
+          Observable.fromEventSource(),
+        ) ?? Observable.never<number>(),
+        tuple,
       ),
-      [animationStream, enqueue],
-    ) ?? 0;
+      Observable.forEach<Tuple2<number, number>>(([boxWidth, currentWidth]) => {
+        if (currentWidth > 0) {
+          enqueue({ width: boxWidth });
+        }
+      }),
+      Observable.ignoreElements(),
+    ),
+    [animationStream, enqueue],
+  );
 
   const width =
     useObserve(
       pipeSomeLazy(
         animationStream?.[AnimationStreamLike_animation],
         Observable.fromEventSource(),
-        Observable.throttle(50),
+        Observable.throttle(15, { mode: "last"}),
         Observable.map(Math.floor),
       ),
       [animationStream],
@@ -113,6 +102,7 @@ const Measure = () => {
           overflow: "hidden",
         }}
         onClick={() => {
+          const boxWidth = container?.getBoundingClientRect().width ?? 0;
           enqueue(
             width > 0
               ? { prevWidth: width, width: 0 }
