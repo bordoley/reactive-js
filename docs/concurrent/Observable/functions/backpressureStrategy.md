@@ -6,7 +6,7 @@
 
 # Function: backpressureStrategy()
 
-> **backpressureStrategy**\<`T`\>(`capacity`, `backpressureStrategy`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+> **backpressureStrategy**\<`T`\>(`capacity`, `backpressureStrategy`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
 
 ## Type Parameters
 
@@ -24,4 +24,4 @@
 
 ## Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>

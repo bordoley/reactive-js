@@ -6,7 +6,7 @@
 
 # Function: entries()
 
-> **entries**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>\>
+> **entries**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>, `any`, `any`\>\>
 
 ## Type Parameters
 
@@ -18,14 +18,14 @@
 
 ### options?
 
-#### count
+#### count?
 
 `number`
 
-#### start
+#### start?
 
 `number`
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>, `any`, `any`\>\>

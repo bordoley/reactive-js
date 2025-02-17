@@ -6,7 +6,7 @@
 
 # Function: throttle()
 
-> **throttle**\<`T`\>(`duration`, `options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+> **throttle**\<`T`\>(`duration`, `options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
 
 ## Type Parameters
 
@@ -20,10 +20,10 @@
 
 ### options?
 
-#### mode
+#### mode?
 
 [`ThrottleMode`](../type-aliases/ThrottleMode.md)
 
 ## Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>

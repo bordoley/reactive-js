@@ -12,15 +12,15 @@
 
 ### options?
 
-#### damping
+#### damping?
 
 `number`
 
-#### precision
+#### precision?
 
 `number`
 
-#### stiffness
+#### stiffness?
 
 `number`
 

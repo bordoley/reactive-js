@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **mergeWith**\<`T`\>(`snd`, ...`tail`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+> **mergeWith**\<`T`\>(`snd`, ...`tail`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
 
 ### Type Parameters
 
@@ -26,7 +26,7 @@
 
 ### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
 
 ## Call Signature
 
@@ -52,7 +52,7 @@
 
 ## Call Signature
 
-> **mergeWith**\<`T`\>(`snd`, ...`tail`): [`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<`T`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+> **mergeWith**\<`T`\>(`snd`, ...`tail`): [`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<`T`, `T`\>
 
 ### Type Parameters
 
@@ -70,11 +70,11 @@
 
 ### Returns
 
-[`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<`T`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+[`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<`T`, `T`\>
 
 ## Call Signature
 
-> **mergeWith**\<`T`\>(`snd`, ...`tail`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+> **mergeWith**\<`T`\>(`snd`, ...`tail`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
 
 ### Type Parameters
 
@@ -92,7 +92,7 @@
 
 ### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
 
 ## Call Signature
 

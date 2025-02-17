@@ -14,7 +14,7 @@
 
 ### \[Computation\_type\]?
 
-> `readonly` `optional` **\[Computation\_type\]**: [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)
+> `readonly` `optional` **\[Computation\_type\]**: [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`unknown`\>
 
 #### Overrides
 

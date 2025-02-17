@@ -6,7 +6,7 @@
 
 # Function: scan()
 
-> **scan**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `TAcc`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+> **scan**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `TAcc`\>
 
 ## Type Parameters
 
@@ -26,4 +26,4 @@
 
 ## Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `TAcc`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `TAcc`\>

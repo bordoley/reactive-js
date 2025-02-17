@@ -24,7 +24,7 @@
 
 ##### options?
 
-###### count
+###### count?
 
 `number`
 
@@ -42,15 +42,15 @@
 
 ##### options?
 
-###### charset
+###### charset?
 
 `string`
 
-###### fatal
+###### fatal?
 
 `boolean`
 
-###### ignoreBOM
+###### ignoreBOM?
 
 `boolean`
 
@@ -72,7 +72,7 @@
 
 ##### options?
 
-###### equality
+###### equality?
 
 [`Equality`](../../functions/type-aliases/Equality.md)\<`T`\>
 
@@ -134,7 +134,7 @@
 
 ##### options?
 
-###### count
+###### count?
 
 `number`
 
@@ -156,7 +156,7 @@
 
 ##### options?
 
-###### count
+###### count?
 
 `number`
 
@@ -182,7 +182,7 @@
 
 ##### options?
 
-###### inclusive
+###### inclusive?
 
 `boolean`
 

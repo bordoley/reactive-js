@@ -14,7 +14,7 @@
 
 ### \[Computation\_type\]?
 
-> `readonly` `optional` **\[Computation\_type\]**: [`EventSourceLike`](../../interfaces/EventSourceLike.md)
+> `readonly` `optional` **\[Computation\_type\]**: [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>
 
 #### Overrides
 

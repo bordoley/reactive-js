@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **exhaust**\<`T`\>(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>\>\>
+> **exhaust**\<`T`\>(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
 
 ### Type Parameters
 
@@ -16,11 +16,11 @@
 
 ### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>\>\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
 
 ## Call Signature
 
-> **exhaust**\<`T`\>(`options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>\>\>
+> **exhaust**\<`T`\>(`options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
 
 ### Type Parameters
 
@@ -32,11 +32,11 @@
 
 ##### innerType
 
-`Pick`\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md), *typeof* [`ObservableLike_isDeferred`](../../variables/ObservableLike_isDeferred.md) \| *typeof* [`ObservableLike_isPure`](../../variables/ObservableLike_isPure.md) \| *typeof* [`ObservableLike_isRunnable`](../../variables/ObservableLike_isRunnable.md)\>
+`Pick`\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>, *typeof* [`ObservableLike_isDeferred`](../../variables/ObservableLike_isDeferred.md) \| *typeof* [`ObservableLike_isPure`](../../variables/ObservableLike_isPure.md) \| *typeof* [`ObservableLike_isRunnable`](../../variables/ObservableLike_isRunnable.md)\>
 
 ### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>\>\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
 
 ## Call Signature
 
@@ -52,7 +52,7 @@
 
 ##### innerType
 
-`Pick`\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md), *typeof* [`ObservableLike_isDeferred`](../../variables/ObservableLike_isDeferred.md) \| *typeof* [`ObservableLike_isPure`](../../variables/ObservableLike_isPure.md) \| *typeof* [`ObservableLike_isRunnable`](../../variables/ObservableLike_isRunnable.md)\>
+`Pick`\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ObservableLike_isDeferred`](../../variables/ObservableLike_isDeferred.md) \| *typeof* [`ObservableLike_isPure`](../../variables/ObservableLike_isPure.md) \| *typeof* [`ObservableLike_isRunnable`](../../variables/ObservableLike_isRunnable.md)\>
 
 ### Returns
 
@@ -60,7 +60,7 @@
 
 ## Call Signature
 
-> **exhaust**\<`T`\>(`options`): [`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>\>\>
+> **exhaust**\<`T`\>(`options`): [`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`\>
 
 ### Type Parameters
 
@@ -72,11 +72,11 @@
 
 ##### innerType
 
-`Pick`\<[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md), *typeof* [`ObservableLike_isDeferred`](../../variables/ObservableLike_isDeferred.md) \| *typeof* [`ObservableLike_isPure`](../../variables/ObservableLike_isPure.md) \| *typeof* [`ObservableLike_isRunnable`](../../variables/ObservableLike_isRunnable.md)\>
+`Pick`\<[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`unknown`\>, *typeof* [`ObservableLike_isDeferred`](../../variables/ObservableLike_isDeferred.md) \| *typeof* [`ObservableLike_isPure`](../../variables/ObservableLike_isPure.md) \| *typeof* [`ObservableLike_isRunnable`](../../variables/ObservableLike_isRunnable.md)\>
 
 ### Returns
 
-[`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>\>\>
+[`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`\>
 
 ## Call Signature
 
@@ -92,7 +92,7 @@
 
 ##### innerType
 
-`Pick`\<[`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md), *typeof* [`ObservableLike_isDeferred`](../../variables/ObservableLike_isDeferred.md) \| *typeof* [`ObservableLike_isPure`](../../variables/ObservableLike_isPure.md) \| *typeof* [`ObservableLike_isRunnable`](../../variables/ObservableLike_isRunnable.md)\>
+`Pick`\<[`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ObservableLike_isDeferred`](../../variables/ObservableLike_isDeferred.md) \| *typeof* [`ObservableLike_isPure`](../../variables/ObservableLike_isPure.md) \| *typeof* [`ObservableLike_isRunnable`](../../variables/ObservableLike_isRunnable.md)\>
 
 ### Returns
 

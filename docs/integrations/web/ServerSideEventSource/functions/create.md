@@ -6,7 +6,7 @@
 
 # Function: create()
 
-> **create**(`url`, `options`?): [`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<`MessageEvent`\>
+> **create**(`url`, `options`?): [`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<`MessageEvent`\<`any`\>\>
 
 ## Parameters
 
@@ -20,4 +20,4 @@
 
 ## Returns
 
-[`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<`MessageEvent`\>
+[`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<`MessageEvent`\<`any`\>\>

@@ -14,7 +14,7 @@
 
 ### forEach()
 
-> **forEach**\<`T`\>(`effect`): [`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<`Iterable`\<`T`\>\>
+> **forEach**\<`T`\>(`effect`): [`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<`Iterable`\<`T`, `any`, `any`\>\>
 
 #### Type Parameters
 
@@ -28,7 +28,7 @@
 
 #### Returns
 
-[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<`Iterable`\<`T`\>\>
+[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<`Iterable`\<`T`, `any`, `any`\>\>
 
 ***
 

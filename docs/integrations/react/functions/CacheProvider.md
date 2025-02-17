@@ -16,7 +16,7 @@
 
 ### props
 
-#### backpressureStrategy
+#### backpressureStrategy?
 
 [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
 
@@ -24,7 +24,7 @@
 
 `Context`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<[`CacheLike`](../../../concurrent/interfaces/CacheLike.md)\<`T`\>\>\>
 
-#### capacity
+#### capacity?
 
 `number`
 
@@ -32,15 +32,15 @@
 
 `ReactNode`
 
-#### cleanupPriority
+#### cleanupPriority?
 
 `2` \| `1` \| `3` \| `4` \| `5`
 
-#### maxEntries
+#### maxEntries?
 
 `number`
 
-#### persistentStore
+#### persistentStore?
 
 \{ `load`: [`DeferredObservableLike`](../../../concurrent/interfaces/DeferredObservableLike.md)\<`Readonly`\<`Record`\<`string`, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>\>; `store`: [`DeferredObservableLike`](../../../concurrent/interfaces/DeferredObservableLike.md)\<`void`\>; \}
 
@@ -48,7 +48,7 @@
 
 #### persistentStore.store
 
-#### priority
+#### priority?
 
 `2` \| `1` \| `3` \| `4` \| `5`
 

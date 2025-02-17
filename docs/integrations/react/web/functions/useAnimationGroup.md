@@ -28,7 +28,7 @@
 
 [`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
 
-##### priority
+##### priority?
 
 `2` \| `1` \| `3` \| `4` \| `5`
 
@@ -60,7 +60,7 @@
 
 [`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
 
-##### priority
+##### priority?
 
 `2` \| `1` \| `3` \| `4` \| `5`
 

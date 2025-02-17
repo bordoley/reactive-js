@@ -14,7 +14,7 @@
 
 ### \[Computation\_type\]?
 
-> `readonly` `optional` **\[Computation\_type\]**: [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)
+> `readonly` `optional` **\[Computation\_type\]**: [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`unknown`\>
 
 #### Overrides
 

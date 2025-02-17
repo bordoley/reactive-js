@@ -6,7 +6,7 @@
 
 # Function: keep()
 
-> **keep**\<`T`, `TKey`\>(`predicate`): [`CollectionOperator`](../../type-aliases/CollectionOperator.md)\<[`ReadonlyObjectMapCollection`](../interfaces/ReadonlyObjectMapCollection.md), `T`, `T`, `TKey`\>
+> **keep**\<`T`, `TKey`\>(`predicate`): [`CollectionOperator`](../../type-aliases/CollectionOperator.md)\<[`ReadonlyObjectMapCollection`](../interfaces/ReadonlyObjectMapCollection.md)\<`string`\>, `T`, `T`, `TKey`\>
 
 ## Type Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`CollectionOperator`](../../type-aliases/CollectionOperator.md)\<[`ReadonlyObjectMapCollection`](../interfaces/ReadonlyObjectMapCollection.md), `T`, `T`, `TKey`\>
+[`CollectionOperator`](../../type-aliases/CollectionOperator.md)\<[`ReadonlyObjectMapCollection`](../interfaces/ReadonlyObjectMapCollection.md)\<`string`\>, `T`, `T`, `TKey`\>

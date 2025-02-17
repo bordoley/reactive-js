@@ -20,7 +20,7 @@
 
 ### options?
 
-#### mode
+#### mode?
 
 [`ComputeMode`](../type-aliases/ComputeMode.md)
 

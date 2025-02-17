@@ -130,7 +130,7 @@
 
 #### tail
 
-...readonly [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)[]
+...readonly [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`unknown`\>[]
 
 ### Returns
 
@@ -156,7 +156,7 @@
 
 #### tail
 
-...readonly [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)[]
+...readonly [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>[]
 
 ### Returns
 

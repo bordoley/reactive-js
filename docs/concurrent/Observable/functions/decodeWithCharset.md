@@ -6,24 +6,24 @@
 
 # Function: decodeWithCharset()
 
-> **decodeWithCharset**(`options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`ArrayBuffer`, `string`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`ArrayBuffer`\>\>
+> **decodeWithCharset**(`options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`ArrayBuffer`, `string`\>
 
 ## Parameters
 
 ### options?
 
-#### charset
+#### charset?
 
 `string`
 
-#### fatal
+#### fatal?
 
 `boolean`
 
-#### ignoreBOM
+#### ignoreBOM?
 
 `boolean`
 
 ## Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`ArrayBuffer`, `string`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`ArrayBuffer`\>\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`ArrayBuffer`, `string`\>

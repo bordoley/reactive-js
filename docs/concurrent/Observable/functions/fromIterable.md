@@ -6,7 +6,7 @@
 
 # Function: fromIterable()
 
-> **fromIterable**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`\>, [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>\>
+> **fromIterable**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>\>
 
 ## Type Parameters
 
@@ -20,10 +20,10 @@
 
 `number`
 
-#### delayStart
+#### delayStart?
 
 `boolean`
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`\>, [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>\>

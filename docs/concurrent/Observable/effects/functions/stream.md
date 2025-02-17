@@ -10,7 +10,7 @@
 
 ## Type Parameters
 
-• **TStreamable** *extends* [`StreamableLike`](../../../interfaces/StreamableLike.md)\<[`StreamLike`](../../../interfaces/StreamLike.md)\<`unknown`, `unknown`\>\>
+• **TStreamable** *extends* [`StreamableLike`](../../../interfaces/StreamableLike.md)\<`unknown`, `unknown`, [`StreamLike`](../../../interfaces/StreamLike.md)\<`unknown`, `unknown`\>\>
 
 ## Parameters
 
@@ -20,19 +20,19 @@
 
 ### \_\_namedParameters?
 
-#### backpressureStrategy
+#### backpressureStrategy?
 
 [`BackpressureStrategy`](../../../../utils/type-aliases/BackpressureStrategy.md)
 
-#### capacity
+#### capacity?
 
 `number`
 
-#### replay
+#### replay?
 
 `number`
 
-#### scheduler
+#### scheduler?
 
 [`SchedulerLike`](../../../interfaces/SchedulerLike.md)
 

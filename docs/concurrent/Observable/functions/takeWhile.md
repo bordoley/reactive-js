@@ -6,7 +6,7 @@
 
 # Function: takeWhile()
 
-> **takeWhile**\<`T`\>(`predicate`, `options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+> **takeWhile**\<`T`\>(`predicate`, `options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
 
 ## Type Parameters
 
@@ -20,10 +20,10 @@
 
 ### options?
 
-#### inclusive
+#### inclusive?
 
 `boolean`
 
 ## Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>

@@ -6,7 +6,7 @@
 
 # Function: withCurrentTime()
 
-> **withCurrentTime**\<`TA`, `TB`\>(`selector`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TA`\>\>
+> **withCurrentTime**\<`TA`, `TB`\>(`selector`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
 
 ## Type Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TA`\>\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>

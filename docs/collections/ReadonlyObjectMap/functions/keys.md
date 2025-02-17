@@ -6,7 +6,7 @@
 
 # Function: keys()
 
-> **keys**\<`TKey`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ReadonlyObjectMapLike`](../../type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, `unknown`\>, `Iterable`\<`TKey`\>\>
+> **keys**\<`TKey`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ReadonlyObjectMapLike`](../../type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, `unknown`\>, `Iterable`\<`TKey`, `any`, `any`\>\>
 
 ## Type Parameters
 
@@ -14,4 +14,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ReadonlyObjectMapLike`](../../type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, `unknown`\>, `Iterable`\<`TKey`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ReadonlyObjectMapLike`](../../type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, `unknown`\>, `Iterable`\<`TKey`, `any`, `any`\>\>

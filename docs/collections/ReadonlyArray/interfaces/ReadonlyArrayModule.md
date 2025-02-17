@@ -14,7 +14,7 @@
 
 ### entries()
 
-> **entries**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>\>
+> **entries**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>, `any`, `any`\>\>
 
 #### Type Parameters
 
@@ -26,17 +26,17 @@
 
 ##### options?
 
-###### count
+###### count?
 
 `number`
 
-###### start
+###### start?
 
 `number`
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>, `any`, `any`\>\>
 
 #### Overrides
 
@@ -46,7 +46,7 @@
 
 ### fromIterable()
 
-> **fromIterable**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`\>, readonly `T`[]\>
+> **fromIterable**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, readonly `T`[]\>
 
 #### Type Parameters
 
@@ -54,7 +54,7 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`\>, readonly `T`[]\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, readonly `T`[]\>
 
 ***
 
@@ -70,11 +70,11 @@
 
 ##### options?
 
-###### count
+###### count?
 
 `number`
 
-###### start
+###### start?
 
 `number`
 
@@ -86,7 +86,7 @@
 
 ### values()
 
-> **values**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<`T`\>\>
+> **values**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<`T`, `any`, `any`\>\>
 
 #### Type Parameters
 
@@ -98,17 +98,17 @@
 
 ##### options?
 
-###### count
+###### count?
 
 `number`
 
-###### start
+###### start?
 
 `number`
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<`T`, `any`, `any`\>\>
 
 #### Overrides
 

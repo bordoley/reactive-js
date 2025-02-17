@@ -6,7 +6,7 @@
 
 # Function: buffer()
 
-> **buffer**\<`T`\>(`options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, readonly `T`[], [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+> **buffer**\<`T`\>(`options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, readonly `T`[]\>
 
 ## Type Parameters
 
@@ -16,10 +16,10 @@
 
 ### options?
 
-#### count
+#### count?
 
 `number`
 
 ## Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, readonly `T`[], [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, readonly `T`[]\>

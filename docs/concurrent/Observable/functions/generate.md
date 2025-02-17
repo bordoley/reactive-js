@@ -24,11 +24,11 @@
 
 ### options?
 
-#### delay
+#### delay?
 
 `number`
 
-#### delayStart
+#### delayStart?
 
 `boolean`
 

@@ -18,7 +18,7 @@
 
 ### fromEntries()
 
-> **fromEntries**\<`T`, `TKey`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`Iterable`\<[`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>, [`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `T`, `TKey`\>\>
+> **fromEntries**\<`T`, `TKey`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`Iterable`\<[`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>, `any`, `any`\>, [`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `T`, `TKey`\>\>
 
 #### Type Parameters
 
@@ -28,7 +28,7 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<`Iterable`\<[`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>, [`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `T`, `TKey`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<`Iterable`\<[`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>, `any`, `any`\>, [`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `T`, `TKey`\>\>
 
 ***
 

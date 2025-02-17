@@ -6,7 +6,7 @@
 
 # Function: writeTo()
 
-> **writeTo**(`writable`): [`Function1`](../../../../functions/type-aliases/Function1.md)\<[`FlowableLike`](../../../../concurrent/interfaces/FlowableLike.md)\<`Uint8Array`\>, [`DeferredObservableWithSideEffectsLike`](../../../../concurrent/interfaces/DeferredObservableWithSideEffectsLike.md)\<`Uint8Array`\>\>
+> **writeTo**(`writable`): [`Function1`](../../../../functions/type-aliases/Function1.md)\<[`FlowableLike`](../../../../concurrent/interfaces/FlowableLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\>, [`DeferredObservableWithSideEffectsLike`](../../../../concurrent/interfaces/DeferredObservableWithSideEffectsLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\>\>
 
 ## Parameters
 
@@ -16,4 +16,4 @@
 
 ## Returns
 
-[`Function1`](../../../../functions/type-aliases/Function1.md)\<[`FlowableLike`](../../../../concurrent/interfaces/FlowableLike.md)\<`Uint8Array`\>, [`DeferredObservableWithSideEffectsLike`](../../../../concurrent/interfaces/DeferredObservableWithSideEffectsLike.md)\<`Uint8Array`\>\>
+[`Function1`](../../../../functions/type-aliases/Function1.md)\<[`FlowableLike`](../../../../concurrent/interfaces/FlowableLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\>, [`DeferredObservableWithSideEffectsLike`](../../../../concurrent/interfaces/DeferredObservableWithSideEffectsLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\>\>

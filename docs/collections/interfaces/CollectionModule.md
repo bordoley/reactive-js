@@ -37,7 +37,7 @@ Return an Collection that emits no items.
 
 ### entries()
 
-> **entries**\<`T`, `TKey`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `T`, `TKey`\>, `Iterable`\<[`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>\>
+> **entries**\<`T`, `TKey`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `T`, `TKey`\>, `Iterable`\<[`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>, `any`, `any`\>\>
 
 #### Type Parameters
 
@@ -47,7 +47,7 @@ Return an Collection that emits no items.
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `T`, `TKey`\>, `Iterable`\<[`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `T`, `TKey`\>, `Iterable`\<[`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>, `any`, `any`\>\>
 
 ***
 
@@ -97,7 +97,7 @@ Return an Collection that emits no items.
 
 ### keys()
 
-> **keys**\<`TKey`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `unknown`, `TKey`\>, `Iterable`\<`TKey`\>\>
+> **keys**\<`TKey`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `unknown`, `TKey`\>, `Iterable`\<`TKey`, `any`, `any`\>\>
 
 #### Type Parameters
 
@@ -105,7 +105,7 @@ Return an Collection that emits no items.
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `unknown`, `TKey`\>, `Iterable`\<`TKey`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `unknown`, `TKey`\>, `Iterable`\<`TKey`, `any`, `any`\>\>
 
 ***
 
@@ -208,7 +208,7 @@ TB - The inner type of the mapped container
 
 ### values()
 
-> **values**\<`T`, `TKey`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `T`, `TKey`\>, `Iterable`\<`T`\>\>
+> **values**\<`T`, `TKey`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `T`, `TKey`\>, `Iterable`\<`T`, `any`, `any`\>\>
 
 #### Type Parameters
 
@@ -218,4 +218,4 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `T`, `TKey`\>, `Iterable`\<`T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `T`, `TKey`\>, `Iterable`\<`T`, `any`, `any`\>\>

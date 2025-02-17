@@ -20,19 +20,19 @@
 
 ### options?
 
-#### capacity
+#### capacity?
 
 `number`
 
-#### equality
+#### equality?
 
 [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`Equality`](../../../../functions/type-aliases/Equality.md)\<`T`\>\>
 
-#### replay
+#### replay?
 
 `number`
 
-#### scheduler
+#### scheduler?
 
 [`SchedulerLike`](../../../interfaces/SchedulerLike.md)
 

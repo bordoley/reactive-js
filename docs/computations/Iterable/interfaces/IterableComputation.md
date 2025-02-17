@@ -14,7 +14,7 @@
 
 ### \[Computation\_type\]?
 
-> `readonly` `optional` **\[Computation\_type\]**: `Iterable`\<`unknown`\>
+> `readonly` `optional` **\[Computation\_type\]**: `Iterable`\<`unknown`, `any`, `any`\>
 
 #### Overrides
 

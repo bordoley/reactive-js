@@ -16,15 +16,15 @@
 
 ### options?
 
-#### backpressureStrategy
+#### backpressureStrategy?
 
 [`BackpressureStrategy`](../../type-aliases/BackpressureStrategy.md)
 
-#### capacity
+#### capacity?
 
 `number`
 
-#### comparator
+#### comparator?
 
 [`Comparator`](../../../functions/type-aliases/Comparator.md)\<`T`\>
 

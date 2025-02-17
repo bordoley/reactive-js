@@ -24,23 +24,23 @@
 
 ##### options?
 
-###### backpressureStrategy
+###### backpressureStrategy?
 
 [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
 
-###### capacity
+###### capacity?
 
 `number`
 
-###### cleanupScheduler
+###### cleanupScheduler?
 
 [`SchedulerLike`](../../interfaces/SchedulerLike.md)
 
-###### maxEntries
+###### maxEntries?
 
 `number`
 
-###### persistentStore
+###### persistentStore?
 
 \{ `load`: [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`Readonly`\<[`ReadonlyObjectMapLike`](../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`string`, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>\>; `store`: [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`void`\>; \}
 

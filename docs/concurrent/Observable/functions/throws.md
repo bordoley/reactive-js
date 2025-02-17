@@ -16,11 +16,11 @@
 
 ### options?
 
-#### delay
+#### delay?
 
 `number`
 
-#### raise
+#### raise?
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
 

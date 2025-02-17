@@ -6,7 +6,7 @@
 
 # Function: values()
 
-> **values**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<`T`\>\>
+> **values**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<`T`, `any`, `any`\>\>
 
 ## Type Parameters
 
@@ -18,14 +18,14 @@
 
 ### options?
 
-#### count
+#### count?
 
 `number`
 
-#### start
+#### start?
 
 `number`
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<`T`, `any`, `any`\>\>

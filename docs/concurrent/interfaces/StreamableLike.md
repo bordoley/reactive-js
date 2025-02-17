@@ -46,17 +46,17 @@ The scheduler to subscribe to the stream with.
 
 ##### options?
 
-###### backpressureStrategy
+###### backpressureStrategy?
 
 [`BackpressureStrategy`](../../utils/type-aliases/BackpressureStrategy.md)
 
-###### capacity
+###### capacity?
 
 `number`
 
 The capacity of the stream's request queue.
 
-###### replay
+###### replay?
 
 `number`
 

@@ -6,7 +6,7 @@
 
 # Function: actionReducer()
 
-> **actionReducer**\<`TAction`, `T`\>(`reducer`, `initialState`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TAction`, `T`, [`StreamLike`](../../interfaces/StreamLike.md)\<`TAction`, `T`\>\>
+> **actionReducer**\<`TAction`, `T`\>(`reducer`, `initialState`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TAction`, `T`\>
 
 ## Type Parameters
 
@@ -26,10 +26,10 @@
 
 ### options?
 
-#### equality
+#### equality?
 
 [`Equality`](../../../functions/type-aliases/Equality.md)\<`T`\>
 
 ## Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TAction`, `T`, [`StreamLike`](../../interfaces/StreamLike.md)\<`TAction`, `T`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TAction`, `T`\>

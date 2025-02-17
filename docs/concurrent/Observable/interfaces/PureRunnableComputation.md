@@ -14,7 +14,7 @@
 
 ### \[Computation\_type\]?
 
-> `readonly` `optional` **\[Computation\_type\]**: [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)
+> `readonly` `optional` **\[Computation\_type\]**: [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>
 
 #### Overrides
 

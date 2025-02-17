@@ -14,7 +14,7 @@
 
 ### \[Computation\_type\]?
 
-> `readonly` `optional` **\[Computation\_type\]**: [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)
+> `readonly` `optional` **\[Computation\_type\]**: [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`unknown`\>
 
 #### Overrides
 

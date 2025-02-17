@@ -84,7 +84,7 @@ The continuation to run on the scheduler.
 
 ##### options?
 
-###### delay
+###### delay?
 
 `number`
 

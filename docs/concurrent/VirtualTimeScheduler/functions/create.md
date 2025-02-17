@@ -12,7 +12,7 @@
 
 ### options?
 
-#### maxMicroTaskTicks
+#### maxMicroTaskTicks?
 
 `number`
 

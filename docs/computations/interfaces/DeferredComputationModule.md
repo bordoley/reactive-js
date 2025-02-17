@@ -24,11 +24,11 @@
 
 ##### options?
 
-###### count
+###### count?
 
 `number`
 
-###### start
+###### start?
 
 `number`
 

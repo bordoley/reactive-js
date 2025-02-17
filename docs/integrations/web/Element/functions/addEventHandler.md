@@ -26,11 +26,11 @@
 
 ### options?
 
-#### capture
+#### capture?
 
 `boolean`
 
-#### passive
+#### passive?
 
 `boolean`
 

@@ -28,7 +28,7 @@
 
 ### \[Collection\_type\]?
 
-> `readonly` `optional` **\[Collection\_type\]**: [`DictionaryLike`](../../interfaces/DictionaryLike.md)\<`TKey` & `object`\>
+> `readonly` `optional` **\[Collection\_type\]**: [`DictionaryLike`](../../interfaces/DictionaryLike.md)\<`TKey` & `object`, `unknown`\>
 
 #### Overrides
 

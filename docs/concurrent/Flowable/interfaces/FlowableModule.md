@@ -50,7 +50,7 @@
 
 ### fromAsyncIterable()
 
-> **fromAsyncIterable**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`AsyncIterable`\<`T`\>, [`FlowableLike`](../../interfaces/FlowableLike.md)\<`T`\>\>
+> **fromAsyncIterable**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`AsyncIterable`\<`T`, `any`, `any`\>, [`FlowableLike`](../../interfaces/FlowableLike.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -58,7 +58,7 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`AsyncIterable`\<`T`\>, [`FlowableLike`](../../interfaces/FlowableLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`AsyncIterable`\<`T`, `any`, `any`\>, [`FlowableLike`](../../interfaces/FlowableLike.md)\<`T`\>\>
 
 ***
 

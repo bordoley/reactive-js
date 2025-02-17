@@ -24,7 +24,7 @@
 
 ### options?
 
-#### throttleDuration
+#### throttleDuration?
 
 `number`
 

@@ -16,19 +16,19 @@
 
 ### fn
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`MulticastObservableLike`](../../../concurrent/interfaces/MulticastObservableLike.md)\<`TProps`\>, [`ObservableLike`](../../../concurrent/interfaces/ObservableLike.md)\<`ReactElement`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`MulticastObservableLike`](../../../concurrent/interfaces/MulticastObservableLike.md)\<`TProps`\>, [`ObservableLike`](../../../concurrent/interfaces/ObservableLike.md)\<`ReactElement`\<`unknown`, `string` \| `JSXElementConstructor`\<`any`\>\>\>\>
 
 ### options?
 
-#### backpressureStrategy
+#### backpressureStrategy?
 
 [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
 
-#### capacity
+#### capacity?
 
 `number`
 
-#### priority
+#### priority?
 
 `2` \| `1` \| `3` \| `4` \| `5`
 

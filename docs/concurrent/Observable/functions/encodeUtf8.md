@@ -6,8 +6,8 @@
 
 # Function: encodeUtf8()
 
-> **encodeUtf8**(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`string`, `Uint8Array`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`string`\>\>
+> **encodeUtf8**(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`string`, `Uint8Array`\<`ArrayBufferLike`\>\>
 
 ## Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`string`, `Uint8Array`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`string`\>\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`string`, `Uint8Array`\<`ArrayBufferLike`\>\>

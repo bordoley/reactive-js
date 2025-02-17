@@ -16,7 +16,7 @@
 
 ### options?
 
-#### autoDispose
+#### autoDispose?
 
 `boolean`
 

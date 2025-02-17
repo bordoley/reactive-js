@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TA`\>\>
+> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `T`\>
 
 ### Type Parameters
 
@@ -30,7 +30,7 @@
 
 ### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TA`\>\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `T`\>
 
 ## Call Signature
 
@@ -86,7 +86,7 @@
 
 ## Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<`TA`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TA`\>\>
+> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<`TA`, `T`\>
 
 ### Type Parameters
 
@@ -108,4 +108,4 @@
 
 ### Returns
 
-[`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<`TA`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TA`\>\>
+[`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<`TA`, `T`\>

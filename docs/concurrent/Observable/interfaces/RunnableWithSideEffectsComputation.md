@@ -14,7 +14,7 @@
 
 ### \[Computation\_type\]?
 
-> `readonly` `optional` **\[Computation\_type\]**: [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)
+> `readonly` `optional` **\[Computation\_type\]**: [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>
 
 #### Overrides
 

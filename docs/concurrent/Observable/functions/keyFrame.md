@@ -16,7 +16,7 @@
 
 ### options?
 
-#### easing
+#### easing?
 
 [`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number`\>
 

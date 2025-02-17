@@ -16,11 +16,11 @@
 
 ### options?
 
-#### autoDispose
+#### autoDispose?
 
 `boolean`
 
-#### replay
+#### replay?
 
 `number`
 

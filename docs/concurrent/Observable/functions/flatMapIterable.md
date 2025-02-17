@@ -18,7 +18,7 @@
 
 ### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, `Iterable`\<`TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, `Iterable`\<`TB`, `any`, `any`\>\>
 
 ## Returns
 

@@ -6,7 +6,7 @@
 
 # Function: map()
 
-> **map**\<`TA`, `TB`, `TKey`\>(`selector`): [`CollectionOperator`](../../type-aliases/CollectionOperator.md)\<[`DictionaryCollection`](../interfaces/DictionaryCollection.md), `TA`, `TB`, `TKey`\>
+> **map**\<`TA`, `TB`, `TKey`\>(`selector`): [`CollectionOperator`](../../type-aliases/CollectionOperator.md)\<[`DictionaryCollection`](../interfaces/DictionaryCollection.md)\<`unknown`\>, `TA`, `TB`, `TKey`\>
 
 Returns a CollectionOperator that applies the `selector` function to each
 value emitted by the source.
@@ -29,7 +29,7 @@ A pure map function that is applied each value emitted by the source
 
 ## Returns
 
-[`CollectionOperator`](../../type-aliases/CollectionOperator.md)\<[`DictionaryCollection`](../interfaces/DictionaryCollection.md), `TA`, `TB`, `TKey`\>
+[`CollectionOperator`](../../type-aliases/CollectionOperator.md)\<[`DictionaryCollection`](../interfaces/DictionaryCollection.md)\<`unknown`\>, `TA`, `TB`, `TKey`\>
 
 ## Typeparam
 

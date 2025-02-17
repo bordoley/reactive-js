@@ -6,7 +6,7 @@
 
 # Function: values()
 
-> **values**\<`T`, `TKey`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`DictionaryLike`](../../interfaces/DictionaryLike.md)\<`TKey`, `T`\>, `Iterable`\<`T`\>\>
+> **values**\<`T`, `TKey`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`DictionaryLike`](../../interfaces/DictionaryLike.md)\<`TKey`, `T`\>, `Iterable`\<`T`, `any`, `any`\>\>
 
 ## Type Parameters
 
@@ -16,4 +16,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`DictionaryLike`](../../interfaces/DictionaryLike.md)\<`TKey`, `T`\>, `Iterable`\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`DictionaryLike`](../../interfaces/DictionaryLike.md)\<`TKey`, `T`\>, `Iterable`\<`T`, `any`, `any`\>\>

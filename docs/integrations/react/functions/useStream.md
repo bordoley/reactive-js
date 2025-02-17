@@ -12,7 +12,7 @@
 
 ### Type Parameters
 
-• **TStreamable** *extends* [`StreamableLike`](../../../concurrent/interfaces/StreamableLike.md)\<[`StreamLike`](../../../concurrent/interfaces/StreamLike.md)\<`unknown`, `unknown`\>\>
+• **TStreamable** *extends* [`StreamableLike`](../../../concurrent/interfaces/StreamableLike.md)\<`unknown`, `unknown`, [`StreamLike`](../../../concurrent/interfaces/StreamLike.md)\<`unknown`, `unknown`\>\>
 
 ### Parameters
 
@@ -22,19 +22,19 @@
 
 #### options?
 
-##### backpressureStrategy
+##### backpressureStrategy?
 
 [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
 
-##### capacity
+##### capacity?
 
 `number`
 
-##### priority
+##### priority?
 
 `2` \| `1` \| `3` \| `4` \| `5`
 
-##### replay
+##### replay?
 
 `number`
 
@@ -48,7 +48,7 @@
 
 ### Type Parameters
 
-• **TStreamable** *extends* [`StreamableLike`](../../../concurrent/interfaces/StreamableLike.md)\<[`StreamLike`](../../../concurrent/interfaces/StreamLike.md)\<`unknown`, `unknown`\>\>
+• **TStreamable** *extends* [`StreamableLike`](../../../concurrent/interfaces/StreamableLike.md)\<`unknown`, `unknown`, [`StreamLike`](../../../concurrent/interfaces/StreamLike.md)\<`unknown`, `unknown`\>\>
 
 ### Parameters
 
@@ -62,19 +62,19 @@ readonly `unknown`[]
 
 #### options?
 
-##### backpressureStrategy
+##### backpressureStrategy?
 
 [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
 
-##### capacity
+##### capacity?
 
 `number`
 
-##### priority
+##### priority?
 
 `2` \| `1` \| `3` \| `4` \| `5`
 
-##### replay
+##### replay?
 
 `number`
 

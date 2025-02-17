@@ -16,19 +16,19 @@
 
 ### options?
 
-#### count
+#### count?
 
 `number`
 
-#### delay
+#### delay?
 
 `number`
 
-#### delayStart
+#### delayStart?
 
 `boolean`
 
-#### start
+#### start?
 
 `number`
 

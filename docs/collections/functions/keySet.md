@@ -10,13 +10,13 @@
 
 ## Type Parameters
 
-• **C** *extends* [`Collection`](../interfaces/Collection.md)
+• **C** *extends* [`Collection`](../interfaces/Collection.md)\<`unknown`\>
 
 ## Parameters
 
 ### keys
 
-\<`TKey`\>() => [`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `unknown`, `TKey`\>, `Iterable`\<`TKey`\>\>
+\<`TKey`\>() => [`Function1`](../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../type-aliases/CollectionOf.md)\<`C`, `unknown`, `TKey`\>, `Iterable`\<`TKey`, `any`, `any`\>\>
 
 ## Returns
 

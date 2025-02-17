@@ -22,19 +22,19 @@
 
 #### options?
 
-##### backpressureStrategy
+##### backpressureStrategy?
 
 [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
 
-##### capacity
+##### capacity?
 
 `number`
 
-##### priority
+##### priority?
 
 `2` \| `1` \| `3` \| `4` \| `5`
 
-##### replay
+##### replay?
 
 `number`
 
@@ -62,19 +62,19 @@ readonly `unknown`[]
 
 #### options?
 
-##### backpressureStrategy
+##### backpressureStrategy?
 
 [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
 
-##### capacity
+##### capacity?
 
 `number`
 
-##### priority
+##### priority?
 
 `2` \| `1` \| `3` \| `4` \| `5`
 
-##### replay
+##### replay?
 
 `number`
 

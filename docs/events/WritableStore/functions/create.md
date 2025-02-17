@@ -20,7 +20,7 @@
 
 ### options?
 
-#### equality
+#### equality?
 
 [`Equality`](../../../functions/type-aliases/Equality.md)\<`T`\>
 
