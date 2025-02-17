@@ -6,21 +6,26 @@ import {
   unsafeCast,
 } from "../__internal__/mixins.js";
 import {
+  EventListenerLike,
   EventListenerLike_notify,
+  EventSourceLike,
+  EventSourceLike_addEventListener,
+  PublisherLike,
   StoreLike_value,
   WritableStoreLike,
 } from "../events.js";
 import { Equality, none, strictEquality } from "../functions.js";
-import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
-import LazyInitEventSourceMixin, {
-  LazyInitEventSourceLike,
-  LazyInitEventSourceLike_publisher,
-} from "./__mixins__/LazyInitEventSourceMixin.js";
+import DelegatingDisposableMixin, {
+  DelegatingDisposableLike,
+  DelegatingDisposableLike_delegate,
+} from "../utils/__mixins__/DelegatingDisposableMixin.js";
+import * as Publisher from "./Publisher.js";
 
 export const create: <T>(
   initialValue: T,
   options?: {
     readonly equality?: Equality<T>;
+    readonly autoDispose?: boolean;
   },
 ) => WritableStoreLike<T> = /*@__PURE__*/ (<T>() => {
   const WritableStore_equality = Symbol("WritableStore_equality");
@@ -31,18 +36,20 @@ export const create: <T>(
     [WritableStore_value]: T;
   };
   return mixInstanceFactory(
-    include(LazyInitEventSourceMixin(), DisposableMixin),
+    include(DelegatingDisposableMixin()),
     function WritableStore(
       instance: {
         [StoreLike_value]: T;
-      } & TProperties,
+      } & TProperties &
+        EventSourceLike<T>,
       initialValue: T,
       options?: {
         readonly equality?: Equality<T>;
+        readonly autoDispose?: boolean;
       },
     ): WritableStoreLike<T> {
-      init(DisposableMixin, instance);
-      init(LazyInitEventSourceMixin(), instance);
+      const publisher = Publisher.create(options);
+      init(DelegatingDisposableMixin(), instance, publisher);
 
       instance[WritableStore_value] = initialValue;
       instance[WritableStore_equality] = options?.equality ?? strictEquality;
@@ -59,14 +66,24 @@ export const create: <T>(
         return this[WritableStore_value];
       },
       set [StoreLike_value](value: T) {
-        unsafeCast<TProperties & LazyInitEventSourceLike<T>>(this);
+        unsafeCast<TProperties & DelegatingDisposableLike<PublisherLike<T>>>(
+          this,
+        );
 
         if (!this[WritableStore_equality](this[WritableStore_value], value)) {
           this[WritableStore_value] = value;
-          this[LazyInitEventSourceLike_publisher]?.[EventListenerLike_notify](
+          this[DelegatingDisposableLike_delegate][EventListenerLike_notify](
             value,
           );
         }
+      },
+      [EventSourceLike_addEventListener](
+        this: TProperties & DelegatingDisposableLike<PublisherLike<T>>,
+        listener: EventListenerLike<T>,
+      ): void {
+        this[DelegatingDisposableLike_delegate][
+          EventSourceLike_addEventListener
+        ](listener);
       },
     },
   );

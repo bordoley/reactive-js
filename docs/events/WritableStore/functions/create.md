@@ -20,6 +20,10 @@
 
 ### options?
 
+#### autoDispose?
+
+`boolean`
+
 #### equality?
 
 [`Equality`](../../../functions/type-aliases/Equality.md)\<`T`\>

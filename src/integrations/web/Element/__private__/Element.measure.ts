@@ -3,7 +3,7 @@ import * as ReadonlyArray from "../../../../collections/ReadonlyArray.js";
 import * as EventSource from "../../../../events/EventSource.js";
 import * as WritableStore from "../../../../events/WritableStore.js";
 import { StoreLike_value } from "../../../../events.js";
-import { isNull, pipe, pipeLazy, returns } from "../../../../functions.js";
+import { isNull, pipe, pipeLazy } from "../../../../functions.js";
 import * as Disposable from "../../../../utils/Disposable.js";
 import { Rect } from "../../../web.js";
 import type * as Element from "../../Element.js";
@@ -67,10 +67,11 @@ const measureElement = (element: HTMLElement | SVGElement): Rect => {
   };
 };
 
-const Element_measure: Element.Signature["measure"] = /*@__PURE__*/ returns(
-  (element: HTMLElement | SVGElement) => {
+const Element_measure: Element.Signature["measure"] =
+  options => (element: HTMLElement | SVGElement) => {
     const store = WritableStore.create(measureElement(element), {
       equality: areBoundsEqual,
+      ...(options ?? {}),
     });
 
     const windowResizeEventSource = Element_windowResizeEventSource();
@@ -96,7 +97,6 @@ const Element_measure: Element.Signature["measure"] = /*@__PURE__*/ returns(
     );
 
     return store;
-  },
-);
+  };
 
 export default Element_measure;

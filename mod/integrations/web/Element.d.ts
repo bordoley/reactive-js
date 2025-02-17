@@ -17,7 +17,9 @@ export interface WebElementModule {
         capture?: boolean;
     }): Function1<TEventTarget, EventSourceLike<EventMapOf<TEventTarget>[TEventName]>>;
     intersectionEventSource(parent?: Document | Element): Function1<Element, EventSourceLike<IntersectionObserverEntry>>;
-    measure<TElement extends HTMLElement | SVGElement>(): Function1<TElement, StoreLike<Rect> & DisposableLike>;
+    measure<TElement extends HTMLElement | SVGElement>(options?: {
+        autoDispose?: boolean;
+    }): Function1<TElement, StoreLike<Rect> & DisposableLike>;
     resizeEventSource<TElement extends Element>(options?: ResizeObserverOptions): Function1<TElement, EventSourceLike<ResizeObserverEntry>>;
     scrollEventSource<TElement extends HTMLElement>(): Function1<TElement, EventSourceLike<ScrollValue>>;
 }

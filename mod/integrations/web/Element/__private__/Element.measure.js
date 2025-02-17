@@ -5,7 +5,7 @@ import * as ReadonlyArray from "../../../../collections/ReadonlyArray.js";
 import * as EventSource from "../../../../events/EventSource.js";
 import * as WritableStore from "../../../../events/WritableStore.js";
 import { StoreLike_value } from "../../../../events.js";
-import { isNull, pipe, pipeLazy, returns } from "../../../../functions.js";
+import { isNull, pipe, pipeLazy } from "../../../../functions.js";
 import * as Disposable from "../../../../utils/Disposable.js";
 import Element_eventSource from "./Element.eventSource.js";
 import Element_windowResizeEventSource from "./Element.windowResizeEventSource.js";
@@ -51,9 +51,10 @@ const measureElement = (element) => {
         y,
     };
 };
-const Element_measure = /*@__PURE__*/ returns((element) => {
+const Element_measure = options => (element) => {
     const store = WritableStore.create(measureElement(element), {
         equality: areBoundsEqual,
+        ...(options ?? {}),
     });
     const windowResizeEventSource = Element_windowResizeEventSource();
     const windowScrollEventSource = Element_windowScrollEventSource();
@@ -66,5 +67,5 @@ const Element_measure = /*@__PURE__*/ returns((element) => {
         store[StoreLike_value] = rect;
     }), Disposable.bindTo(store));
     return store;
-});
+};
 export default Element_measure;

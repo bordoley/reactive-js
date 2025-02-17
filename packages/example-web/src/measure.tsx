@@ -1,8 +1,8 @@
 import {
-  Optional,
   Tuple2,
   compose,
   isSome,
+  none,
   pipe,
   pipeSome,
   pipeSomeLazy,
@@ -13,7 +13,6 @@ import React, { useState } from "react";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
 import {
   useDispatcher,
-  useDisposable,
   useObserve,
 } from "@reactive-js/core/integrations/react";
 import {
@@ -25,7 +24,7 @@ import { pick } from "@reactive-js/core/computations";
 import { AnimationStreamLike_animation } from "@reactive-js/core/concurrent";
 
 const Measure = () => {
-  const [container, setContainer] = useState<Optional<HTMLDivElement>>();
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
 
   const animationStream = useAnimation<
     { prevWidth?: number; width: number },
@@ -41,15 +40,11 @@ const Measure = () => {
 
   const { enqueue } = useDispatcher(animationStream);
 
-  const containerSize = useDisposable(
-    pipeSomeLazy(container, WebElement.measure()),
-    [container],
-  );
-
   const boxWidth =
     useObserve<number>(
       pipeSomeLazy(
-        containerSize,
+        container ?? none,
+        WebElement.measure({ autoDispose: true }),
         Observable.fromStore(),
         pick<Observable.MulticastObservableComputation>(Observable.map)(
           "width",
@@ -73,11 +68,10 @@ const Measure = () => {
             ),
             Observable.ignoreElements(),
           ),
-
-          compose(Observable.throttle(50, { mode: "interval" }), x => x),
+          Observable.throttle(50, { mode: "interval" }),
         ),
       ),
-      [containerSize, animationStream, enqueue],
+      [animationStream, enqueue],
     ) ?? 0;
 
   const width =
@@ -108,7 +102,7 @@ const Measure = () => {
       }}
     >
       <div
-        ref={setContainer as React.Ref<HTMLDivElement>}
+        ref={setContainer}
         style={{
           position: "relative",
           width: "1000px",
@@ -119,11 +113,11 @@ const Measure = () => {
           overflow: "hidden",
         }}
         onClick={() => {
-          if (width > 0) {
-            enqueue({ prevWidth: width, width: 0 });
-          } else {
-            enqueue({ prevWidth: 0, width: boxWidth });
-          }
+          enqueue(
+            width > 0
+              ? { prevWidth: width, width: 0 }
+              : { prevWidth: 0, width: boxWidth },
+          );
         }}
       >
         <div

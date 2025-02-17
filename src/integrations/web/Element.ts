@@ -54,10 +54,9 @@ export interface WebElementModule {
     parent?: Document | Element,
   ): Function1<Element, EventSourceLike<IntersectionObserverEntry>>;
 
-  measure<TElement extends HTMLElement | SVGElement>(): Function1<
-    TElement,
-    StoreLike<Rect> & DisposableLike
-  >;
+  measure<TElement extends HTMLElement | SVGElement>(options?: {
+    autoDispose?: boolean;
+  }): Function1<TElement, StoreLike<Rect> & DisposableLike>;
 
   resizeEventSource<TElement extends Element>(
     options?: ResizeObserverOptions,
