@@ -17,13 +17,12 @@ const Observer_createEnqueueObserver = /*@__PURE__*/ (() => {
     }, props({
         [EnqueueObserver_queue]: none,
     }), {
-        [ObserverLike_notify](next) {
-            Observer_assertObserverState(this);
+        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             if (!this[EnqueueObserver_queue][QueueableLike_enqueue](next)) {
                 this[SchedulerLike_requestYield]();
             }
             this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
-        },
+        }),
     });
 })();
 export default Observer_createEnqueueObserver;

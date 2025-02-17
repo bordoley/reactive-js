@@ -49,14 +49,12 @@ const createTakeFirstObserver: <T>(
       [TakeFirstObserver_count]: 0,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties &
           DelegatingDisposableLike<ObserverLike<T>> &
           ObserverLike<T>,
         next: T,
       ) {
-        Observer_assertObserverState(this);
-
         this[TakeFirstObserver_count] = max(
           this[TakeFirstObserver_count] - 1,
           -1,
@@ -65,7 +63,7 @@ const createTakeFirstObserver: <T>(
         if (this[TakeFirstObserver_count] <= 0) {
           this[DisposableLike_dispose]();
         }
-      },
+      }),
     },
   ))();
 

@@ -47,19 +47,17 @@ const Observer_createEnqueueObserver: <T>(
       [EnqueueObserver_queue]: none,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties &
           DelegatingDisposableLike<ObserverLike<T>> &
           ObserverLike<T>,
         next: T,
       ) {
-        Observer_assertObserverState(this);
-
         if (!this[EnqueueObserver_queue][QueueableLike_enqueue](next)) {
           this[SchedulerLike_requestYield]();
         }
         this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
-      },
+      }),
     },
   );
 })();

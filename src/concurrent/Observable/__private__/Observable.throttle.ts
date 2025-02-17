@@ -147,9 +147,10 @@ const createThrottleObserver: <T>(
       [ThrottleObserver_onNotify]: none,
     }),
     {
-      [ObserverLike_notify](this: ObserverLike<T> & TProperties, next: T) {
-        Observer_assertObserverState(this);
-
+      [ObserverLike_notify]: Observer_assertObserverState(function (
+        this: ObserverLike<T> & TProperties,
+        next: T,
+      ) {
         this[ThrottleObserver_value] = next;
         this[ThrottleObserver_hasValue] = true;
 
@@ -166,7 +167,7 @@ const createThrottleObserver: <T>(
         } else if (durationSubscriptionDisposableIsDisposed) {
           setupDurationSubscription(this, next);
         }
-      },
+      }),
     },
   );
 })();

@@ -20,8 +20,7 @@ const createTakeWhileObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(
     [TakeWhileObserver_predicate]: none,
     [TakeWhileObserver_inclusive]: none,
 }), {
-    [ObserverLike_notify](next) {
-        Observer_assertObserverState(this);
+    [ObserverLike_notify]: Observer_assertObserverState(function (next) {
         const satisfiesPredicate = this[TakeWhileObserver_predicate](next);
         if (satisfiesPredicate || this[TakeWhileObserver_inclusive]) {
             this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
@@ -29,7 +28,7 @@ const createTakeWhileObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(
         if (!satisfiesPredicate) {
             this[DisposableLike_dispose]();
         }
-    },
+    }),
 }))();
 const Observable_takeWhile = (predicate, options = {}) => pipe((createTakeWhileObserver), partial(predicate, options?.inclusive), Observable_liftPureDeferred);
 export default Observable_takeWhile;

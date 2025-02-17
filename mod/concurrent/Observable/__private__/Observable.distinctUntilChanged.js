@@ -20,8 +20,7 @@ const createDistinctUntilChangedObserver = /*@__PURE__*/ (() => mixInstanceFacto
     [DistinctUntilChangedObserver_prev]: none,
     [DistinctUntilChangedObserver_hasValue]: false,
 }), {
-    [ObserverLike_notify](next) {
-        Observer_assertObserverState(this);
+    [ObserverLike_notify]: Observer_assertObserverState(function (next) {
         const shouldEmit = !this[DistinctUntilChangedObserver_hasValue] ||
             !this[DistinctUntilChangedObserver_equality](this[DistinctUntilChangedObserver_prev], next);
         if (shouldEmit) {
@@ -29,7 +28,7 @@ const createDistinctUntilChangedObserver = /*@__PURE__*/ (() => mixInstanceFacto
             this[DistinctUntilChangedObserver_hasValue] = true;
             this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
         }
-    },
+    }),
 }))();
 const Observable_distinctUntilChanged = (options) => pipe((createDistinctUntilChangedObserver), partial(options?.equality ?? strictEquality), Observable_liftPureDeferred);
 export default Observable_distinctUntilChanged;

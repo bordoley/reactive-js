@@ -17,12 +17,11 @@ const createWithCurrentTimeObserver = /*@__PURE__*/ (() => {
     }, props({
         [WithCurrentTimeObserver_selector]: none,
     }), {
-        [ObserverLike_notify](next) {
-            Observer_assertObserverState(this);
+        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             const currentTime = this[SchedulerLike_now];
             const mapped = this[WithCurrentTimeObserver_selector](currentTime, next);
             this[DelegatingDisposableLike_delegate][ObserverLike_notify](mapped);
-        },
+        }),
     });
 })();
 const Observable_withCurrentTime = (selector) => pipe((createWithCurrentTimeObserver), partial(selector), Observable_liftPureDeferred);

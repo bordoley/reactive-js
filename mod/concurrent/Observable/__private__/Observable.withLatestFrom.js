@@ -34,14 +34,13 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
         [WithLatestFromObserver_otherLatest]: none,
         [WithLatestFromObserver_selector]: none,
     }), {
-        [ObserverLike_notify](next) {
-            Observer_assertObserverState(this);
+        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             if (!this[DisposableLike_isDisposed] &&
                 this[WithLatestFromObserver_hasLatest]) {
                 const result = this[WithLatestFromObserver_selector](next, this[WithLatestFromObserver_otherLatest]);
                 this[DelegatingDisposableLike_delegate][ObserverLike_notify](result);
             }
-        },
+        }),
     });
 })();
 const Observable_withLatestFrom = ((other, selector) => pipe(createWithLatestFromObserver, partial(other, selector), Observable_lift({

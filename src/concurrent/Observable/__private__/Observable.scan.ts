@@ -63,21 +63,19 @@ const createScanObserver: <T, TAcc>(
       [ScanObserver_reducer]: none,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties<T, TAcc> &
           DelegatingDisposableLike<ObserverLike<TAcc>> &
           ObserverLike<T>,
         next: T,
       ) {
-        Observer_assertObserverState(this);
-
         const nextAcc = this[ScanObserver_reducer](
           this[ScanObserver_acc],
           next,
         );
         this[ScanObserver_acc] = nextAcc;
         this[DelegatingDisposableLike_delegate][ObserverLike_notify](nextAcc);
-      },
+      }),
     },
   );
 })();

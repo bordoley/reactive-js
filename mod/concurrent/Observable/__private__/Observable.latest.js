@@ -39,8 +39,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         [LatestObserver_latest]: none,
         [LatestObserver_ctx]: none,
     }), {
-        [ObserverLike_notify](next) {
-            Observer_assertObserverState(this);
+        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             const ctx = this[LatestObserver_ctx];
             const mode = ctx[LatestCtx_mode];
             const observers = ctx[LatestCtx_observers];
@@ -57,7 +56,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
                     }
                 }
             }
-        },
+        }),
     });
     return (observables, mode) => {
         const onSubscribe = (delegate) => {

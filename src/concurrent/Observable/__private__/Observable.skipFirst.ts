@@ -44,14 +44,12 @@ const createSkipFirstObserver: <T>(
       [SkipFirstObserver_count]: 0,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties &
           DelegatingDisposableLike<ObserverLike<T>> &
           ObserverLike<T>,
         next: T,
       ) {
-        Observer_assertObserverState(this);
-
         this[SkipFirstObserver_count] = max(
           this[SkipFirstObserver_count] - 1,
           -1,
@@ -59,7 +57,7 @@ const createSkipFirstObserver: <T>(
         if (this[SkipFirstObserver_count] < 0) {
           this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
         }
-      },
+      }),
     },
   ))();
 

@@ -26,12 +26,11 @@ const createScanObserver = /*@__PURE__*/ (() => {
         [ScanObserver_acc]: none,
         [ScanObserver_reducer]: none,
     }), {
-        [ObserverLike_notify](next) {
-            Observer_assertObserverState(this);
+        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             const nextAcc = this[ScanObserver_reducer](this[ScanObserver_acc], next);
             this[ScanObserver_acc] = nextAcc;
             this[DelegatingDisposableLike_delegate][ObserverLike_notify](nextAcc);
-        },
+        }),
     });
 })();
 const Observable_scan = (reducer, initialValue) => pipe((createScanObserver), partial(reducer, initialValue), Observable_liftPureDeferred);

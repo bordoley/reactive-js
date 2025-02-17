@@ -17,11 +17,10 @@ const createForEachObserver = /*@__PURE__*/ (() => {
     }, props({
         [ForEachObserver_effect]: none,
     }), {
-        [ObserverLike_notify](next) {
-            Observer_assertObserverState(this);
+        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             this[ForEachObserver_effect](next);
             this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
-        },
+        }),
     });
 })();
 const Observable_forEach = (effect) => pipe((createForEachObserver), partial(effect), Observable_liftWithSideEffects);

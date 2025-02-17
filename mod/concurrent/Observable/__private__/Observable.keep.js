@@ -16,12 +16,11 @@ const createKeepObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(Deleg
 }, props({
     [KeepObserver_predicate]: none,
 }), {
-    [ObserverLike_notify](next) {
-        Observer_assertObserverState(this);
+    [ObserverLike_notify]: Observer_assertObserverState(function (next) {
         if (this[KeepObserver_predicate](next)) {
             this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
         }
-    },
+    }),
 }))();
 const Observable_keep = (predicate) => pipe((createKeepObserver), partial(predicate), Observable_liftPure);
 export default Observable_keep;

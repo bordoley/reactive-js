@@ -50,14 +50,12 @@ const createPairwiseObserver: <T>(
       [PairwiseObserver_hasPrev]: false,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties<T> &
           DelegatingDisposableLike<ObserverLike<Tuple2<T, T>>> &
           ObserverLike<T>,
         next: T,
       ) {
-        Observer_assertObserverState(this);
-
         const prev = this[PairwiseObserver_prev];
 
         if (this[PairwiseObserver_hasPrev]) {
@@ -68,7 +66,7 @@ const createPairwiseObserver: <T>(
 
         this[PairwiseObserver_hasPrev] = true;
         this[PairwiseObserver_prev] = next;
-      },
+      }),
     },
   ))();
 

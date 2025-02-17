@@ -162,14 +162,12 @@ const createMergeAllObserverOperator: <T>(options?: {
       [MergeAllObserver_observablesQueue]: none,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties &
           ObserverLike<DeferredObservableWithSideEffectsLike<T>> &
           QueueLike<DeferredObservableWithSideEffectsLike<T>>,
         next: DeferredObservableWithSideEffectsLike<T>,
       ) {
-        Observer_assertObserverState(this);
-
         if (
           this[MergeAllObserver_activeCount] <
           this[MergeAllObserver_concurrency]
@@ -178,7 +176,7 @@ const createMergeAllObserverOperator: <T>(options?: {
         } else {
           this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
         }
-      },
+      }),
     },
   );
 

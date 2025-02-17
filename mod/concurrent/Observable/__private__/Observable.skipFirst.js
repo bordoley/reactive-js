@@ -17,13 +17,12 @@ const createSkipFirstObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(
 }, props({
     [SkipFirstObserver_count]: 0,
 }), {
-    [ObserverLike_notify](next) {
-        Observer_assertObserverState(this);
+    [ObserverLike_notify]: Observer_assertObserverState(function (next) {
         this[SkipFirstObserver_count] = max(this[SkipFirstObserver_count] - 1, -1);
         if (this[SkipFirstObserver_count] < 0) {
             this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
         }
-    },
+    }),
 }))();
 const Observable_skipFirst = (options) => pipe((createSkipFirstObserver), partial(options?.count), Observable_liftPureDeferred);
 export default Observable_skipFirst;

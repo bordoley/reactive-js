@@ -44,18 +44,16 @@ const createKeepObserver: <T>(
       [KeepObserver_predicate]: none,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties<T> &
           DelegatingDisposableLike<ObserverLike<T>> &
           ObserverLike<T>,
         next: T,
       ) {
-        Observer_assertObserverState(this);
-
         if (this[KeepObserver_predicate](next)) {
           this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
         }
-      },
+      }),
     },
   ))();
 

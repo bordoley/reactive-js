@@ -17,15 +17,14 @@ const createPairwiseObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(D
     [PairwiseObserver_prev]: none,
     [PairwiseObserver_hasPrev]: false,
 }), {
-    [ObserverLike_notify](next) {
-        Observer_assertObserverState(this);
+    [ObserverLike_notify]: Observer_assertObserverState(function (next) {
         const prev = this[PairwiseObserver_prev];
         if (this[PairwiseObserver_hasPrev]) {
             this[DelegatingDisposableLike_delegate][ObserverLike_notify](tuple(prev, next));
         }
         this[PairwiseObserver_hasPrev] = true;
         this[PairwiseObserver_prev] = next;
-    },
+    }),
 }))();
 const Observable_pairwise = () => Observable_liftPureDeferred((createPairwiseObserver));
 export default Observable_pairwise;

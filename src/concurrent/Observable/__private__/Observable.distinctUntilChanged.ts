@@ -62,14 +62,12 @@ const createDistinctUntilChangedObserver: <T>(
       [DistinctUntilChangedObserver_hasValue]: false,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProps<T> &
           ObserverLike<T> &
           DelegatingDisposableLike<ObserverLike<T>>,
         next: T,
       ) {
-        Observer_assertObserverState(this);
-
         const shouldEmit =
           !this[DistinctUntilChangedObserver_hasValue] ||
           !this[DistinctUntilChangedObserver_equality](
@@ -82,7 +80,7 @@ const createDistinctUntilChangedObserver: <T>(
           this[DistinctUntilChangedObserver_hasValue] = true;
           this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
         }
-      },
+      }),
     },
   ))();
 

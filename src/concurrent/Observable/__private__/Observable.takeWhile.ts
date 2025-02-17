@@ -51,14 +51,12 @@ const createTakeWhileObserver: <T>(
       [TakeWhileObserver_inclusive]: none,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties<T> &
           DelegatingDisposableLike<ObserverLike<T>> &
           ObserverLike<T>,
         next: T,
       ) {
-        Observer_assertObserverState(this);
-
         const satisfiesPredicate = this[TakeWhileObserver_predicate](next);
 
         if (satisfiesPredicate || this[TakeWhileObserver_inclusive]) {
@@ -68,7 +66,7 @@ const createTakeWhileObserver: <T>(
         if (!satisfiesPredicate) {
           this[DisposableLike_dispose]();
         }
-      },
+      }),
     },
   ))();
 

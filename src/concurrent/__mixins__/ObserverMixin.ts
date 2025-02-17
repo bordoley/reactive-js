@@ -265,9 +265,10 @@ const ObserverMixin: <T>() => Mixin2<
           }
         },
 
-        [ObserverLike_notify](this: ObserverLike, _: T) {
-          Observer_assertObserverState(this);
-        },
+        [ObserverLike_notify]: Observer_assertObserverState(function (
+          this: ObserverLike,
+          _: T,
+        ) {}),
 
         [EventSourceLike_addEventListener](
           this: EventSourceLike<

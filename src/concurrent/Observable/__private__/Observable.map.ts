@@ -44,17 +44,15 @@ const createMapObserver: <TA, TB>(
       [MapObserver_selector]: none,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties<TA, TB> &
           DelegatingDisposableLike<ObserverLike<TB>> &
           ObserverLike<TA>,
         next: TA,
       ) {
-        Observer_assertObserverState(this);
-
         const mapped = this[MapObserver_selector](next);
         this[DelegatingDisposableLike_delegate][ObserverLike_notify](mapped);
-      },
+      }),
     },
   ))();
 

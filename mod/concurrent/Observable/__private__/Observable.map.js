@@ -16,11 +16,10 @@ const createMapObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(Delega
 }, props({
     [MapObserver_selector]: none,
 }), {
-    [ObserverLike_notify](next) {
-        Observer_assertObserverState(this);
+    [ObserverLike_notify]: Observer_assertObserverState(function (next) {
         const mapped = this[MapObserver_selector](next);
         this[DelegatingDisposableLike_delegate][ObserverLike_notify](mapped);
-    },
+    }),
 }))();
 const Observable_map = (selector) => pipe((createMapObserver), partial(selector), Observable_liftPure);
 export default Observable_map;

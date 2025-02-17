@@ -21,14 +21,13 @@ const createTakeFirstObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(
 }, props({
     [TakeFirstObserver_count]: 0,
 }), {
-    [ObserverLike_notify](next) {
-        Observer_assertObserverState(this);
+    [ObserverLike_notify]: Observer_assertObserverState(function (next) {
         this[TakeFirstObserver_count] = max(this[TakeFirstObserver_count] - 1, -1);
         this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
         if (this[TakeFirstObserver_count] <= 0) {
             this[DisposableLike_dispose]();
         }
-    },
+    }),
 }))();
 const Observable_takeFirst = (options) => pipe((createTakeFirstObserver), partial(options?.count), Observable_liftPureDeferred);
 export default Observable_takeFirst;

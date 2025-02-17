@@ -64,8 +64,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         [MergeAllObserver_onDispose]: none,
         [MergeAllObserver_observablesQueue]: none,
     }), {
-        [ObserverLike_notify](next) {
-            Observer_assertObserverState(this);
+        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             if (this[MergeAllObserver_activeCount] <
                 this[MergeAllObserver_concurrency]) {
                 subscribeToObservable(this, next);
@@ -73,7 +72,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
             else {
                 this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
             }
-        },
+        }),
     });
     return (options = {}) => {
         const concurrency = clampPositiveNonZeroInteger(options.concurrency ?? MAX_SAFE_INTEGER);

@@ -36,15 +36,14 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         [DecodeWithCharsetObserver_delegate]: none,
         [DecodeWithCharsetObserver_textDecoder]: none,
     }), {
-        [ObserverLike_notify](next) {
-            Observer_assertObserverState(this);
+        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             const data = this[DecodeWithCharsetObserver_textDecoder].decode(next, {
                 stream: true,
             });
             if (data[Array_length] > 0) {
                 this[DecodeWithCharsetObserver_delegate][ObserverLike_notify](data);
             }
-        },
+        }),
     });
 })();
 const Observable_decodeWithCharset = options => pipe(createDecodeWithCharsetObserver, partial(options?.charset ?? "utf-8", options), Observable_liftPureDeferred);

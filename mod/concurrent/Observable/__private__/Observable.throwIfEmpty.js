@@ -33,11 +33,10 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
         [ThrowIfEmptyObserver_delegate]: none,
         [ThrowIfEmptyObserver_isEmpty]: true,
     }), {
-        [ObserverLike_notify](next) {
-            Observer_assertObserverState(this);
+        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             this[ThrowIfEmptyObserver_isEmpty] = false;
             this[ThrowIfEmptyObserver_delegate][ObserverLike_notify](next);
-        },
+        }),
     });
 })();
 const Observable_throwIfEmpty = (factory) => pipe((createThrowIfEmptyObserver), partial(factory), Observable_liftPureDeferred);

@@ -38,8 +38,7 @@ const createBufferObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(Dis
     [BufferObserver_buffer]: none,
     [BufferObserver_count]: 0,
 }), {
-    [ObserverLike_notify](next) {
-        Observer_assertObserverState(this);
+    [ObserverLike_notify]: Observer_assertObserverState(function (next) {
         const buffer = this[BufferObserver_buffer];
         const count = this[BufferObserver_count];
         buffer[Array_push](next);
@@ -47,7 +46,7 @@ const createBufferObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(Dis
             this[BufferObserver_buffer] = [];
             this[BufferObserver_delegate][ObserverLike_notify](buffer);
         }
-    },
+    }),
 }))();
 const Observable_buffer = (options) => pipe((createBufferObserver), partial(options?.count), Observable_liftPureDeferred);
 export default Observable_buffer;

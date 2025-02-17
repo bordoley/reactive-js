@@ -32,14 +32,13 @@ const createSwitchAllObserver = /*@__PURE__*/ (() => {
         [SwitchAllObserver_currentRef]: none,
         [SwitchAllObserver_delegate]: none,
     }), {
-        [ObserverLike_notify](next) {
-            Observer_assertObserverState(this);
+        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             this[SwitchAllObserver_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(bindMethod(this[SwitchAllObserver_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(this[SwitchAllObserver_delegate], this), Disposable.addTo(this[SwitchAllObserver_delegate]), DisposableContainer.onComplete(() => {
                 if (this[DisposableLike_isDisposed]) {
                     this[SwitchAllObserver_delegate][DisposableLike_dispose]();
                 }
             }));
-        },
+        }),
     });
 })();
 const Observable_switchAll = ((options) => Observable_lift({

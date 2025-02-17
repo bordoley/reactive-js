@@ -84,14 +84,12 @@ const createSwitchAllObserver: <T>(
       [SwitchAllObserver_delegate]: none,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties &
           ObserverLike<ObservableLike<T>> &
           SerialDisposableLike,
         next: ObservableLike<T>,
       ) {
-        Observer_assertObserverState(this);
-
         this[SwitchAllObserver_currentRef][SerialDisposableLike_current] = pipe(
           next,
           Observable_forEach(
@@ -108,7 +106,7 @@ const createSwitchAllObserver: <T>(
             }
           }),
         );
-      },
+      }),
     },
   );
 })();

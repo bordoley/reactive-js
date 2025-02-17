@@ -88,9 +88,10 @@ const Observable_latest = /*@__PURE__*/ (() => {
       [LatestObserver_ctx]: none,
     }),
     {
-      [ObserverLike_notify](this: TProperties & ObserverLike, next: unknown) {
-        Observer_assertObserverState(this);
-
+      [ObserverLike_notify]: Observer_assertObserverState(function (
+        this: TProperties & ObserverLike,
+        next: unknown,
+      ) {
         const ctx = this[LatestObserver_ctx];
         const mode = ctx[LatestCtx_mode];
         const observers = ctx[LatestCtx_observers];
@@ -114,7 +115,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
             }
           }
         }
-      },
+      }),
     },
   );
 

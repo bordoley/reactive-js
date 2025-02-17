@@ -82,9 +82,10 @@ const createBufferObserver: <T>(
       [BufferObserver_count]: 0,
     }),
     {
-      [ObserverLike_notify](this: TProps<T> & ObserverLike<T>, next: T) {
-        Observer_assertObserverState(this);
-
+      [ObserverLike_notify]: Observer_assertObserverState(function (
+        this: TProps<T> & ObserverLike<T>,
+        next: T,
+      ) {
         const buffer = this[BufferObserver_buffer];
         const count = this[BufferObserver_count];
 
@@ -94,7 +95,7 @@ const createBufferObserver: <T>(
           this[BufferObserver_buffer] = [];
           this[BufferObserver_delegate][ObserverLike_notify](buffer);
         }
-      },
+      }),
     },
   ))();
 

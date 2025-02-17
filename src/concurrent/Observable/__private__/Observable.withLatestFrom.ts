@@ -95,14 +95,12 @@ const createWithLatestFromObserver: <TA, TB, T>(
       [WithLatestFromObserver_selector]: none,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties &
           ObserverLike<TA> &
           DelegatingDisposableLike<ObserverLike<T>>,
         next: TA,
       ) {
-        Observer_assertObserverState(this);
-
         if (
           !this[DisposableLike_isDisposed] &&
           this[WithLatestFromObserver_hasLatest]
@@ -113,7 +111,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
           );
           this[DelegatingDisposableLike_delegate][ObserverLike_notify](result);
         }
-      },
+      }),
     },
   );
 })();

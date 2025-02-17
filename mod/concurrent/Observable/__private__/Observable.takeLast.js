@@ -41,10 +41,9 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
     }, props({
         [TakeLastObserver_queue]: none,
     }), {
-        [ObserverLike_notify](next) {
-            Observer_assertObserverState(this);
+        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             this[TakeLastObserver_queue][QueueableLike_enqueue](next);
-        },
+        }),
     });
 })();
 const Observable_takeLast = (options = {}) => pipe((createTakeLastObserver), partial(clampPositiveInteger(options.count ?? 1)), Observable_liftPureDeferred);

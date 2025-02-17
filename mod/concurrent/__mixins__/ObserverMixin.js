@@ -93,9 +93,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
                 this[DisposableLike_dispose]();
             }
         },
-        [ObserverLike_notify](_) {
-            Observer_assertObserverState(this);
-        },
+        [ObserverLike_notify]: Observer_assertObserverState(function (_) { }),
         [EventSourceLike_addEventListener](listener) {
             const publisher = this[ObserverMixin_publisher] ??
                 (() => {

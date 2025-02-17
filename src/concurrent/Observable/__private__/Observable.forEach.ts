@@ -42,17 +42,15 @@ const createForEachObserver: <T>(
       [ForEachObserver_effect]: none,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties &
           DelegatingDisposableLike<ObserverLike<T>> &
           ObserverLike<T>,
         next: T,
       ) {
-        Observer_assertObserverState(this);
-
         this[ForEachObserver_effect](next);
         this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
-      },
+      }),
     },
   );
 })();

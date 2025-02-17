@@ -50,21 +50,19 @@ const createWithCurrentTimeObserver: <TA, TB>(
       [WithCurrentTimeObserver_selector]: none,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties &
           DelegatingDisposableLike<ObserverLike<TB>> &
           ObserverLike<TA>,
         next: TA,
       ) {
-        Observer_assertObserverState(this);
-
         const currentTime = this[SchedulerLike_now];
         const mapped = this[WithCurrentTimeObserver_selector](
           currentTime,
           next,
         );
         this[DelegatingDisposableLike_delegate][ObserverLike_notify](mapped);
-      },
+      }),
     },
   );
 })();

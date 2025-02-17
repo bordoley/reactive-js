@@ -70,15 +70,13 @@ const createThrowIfEmptyObserver: <T>(
       [ThrowIfEmptyObserver_isEmpty]: true,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties & DisposableLike & ObserverLike<T>,
         next: T,
       ) {
-        Observer_assertObserverState(this);
-
         this[ThrowIfEmptyObserver_isEmpty] = false;
         this[ThrowIfEmptyObserver_delegate][ObserverLike_notify](next);
-      },
+      }),
     },
   );
 })();

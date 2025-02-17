@@ -78,19 +78,17 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
       [DecodeWithCharsetObserver_textDecoder]: none,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties & ObserverLike<ArrayBuffer>,
         next: ArrayBuffer,
       ) {
-        Observer_assertObserverState(this);
-
         const data = this[DecodeWithCharsetObserver_textDecoder].decode(next, {
           stream: true,
         });
         if (data[Array_length] > 0) {
           this[DecodeWithCharsetObserver_delegate][ObserverLike_notify](data);
         }
-      },
+      }),
     },
   );
 })();

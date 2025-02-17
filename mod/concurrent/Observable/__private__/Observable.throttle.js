@@ -63,8 +63,7 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
         [ThrottleObserver_mode]: ThrottleIntervalMode,
         [ThrottleObserver_onNotify]: none,
     }), {
-        [ObserverLike_notify](next) {
-            Observer_assertObserverState(this);
+        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             this[ThrottleObserver_value] = next;
             this[ThrottleObserver_hasValue] = true;
             const durationSubscriptionDisposableIsDisposed = this[ThrottleObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed];
@@ -75,7 +74,7 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
             else if (durationSubscriptionDisposableIsDisposed) {
                 setupDurationSubscription(this, next);
             }
-        },
+        }),
     });
 })();
 const Observable_throttle = (duration, options = {}) => {

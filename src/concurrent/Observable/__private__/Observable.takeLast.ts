@@ -85,14 +85,12 @@ const createTakeLastObserver: <T>(
       [TakeLastObserver_queue]: none,
     }),
     {
-      [ObserverLike_notify](
+      [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties & DisposableLike & QueueLike<T> & ObserverLike<T>,
         next: T,
       ) {
-        Observer_assertObserverState(this);
-
         this[TakeLastObserver_queue][QueueableLike_enqueue](next);
-      },
+      }),
     },
   );
 })();
