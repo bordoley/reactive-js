@@ -68,7 +68,7 @@ const Measure = () => {
       pipeSomeLazy(
         animationStream?.[AnimationStreamLike_animation],
         Observable.fromEventSource(),
-        Observable.throttle(15, { mode: "last"}),
+        Observable.throttle(15, { mode: "last" }),
         Observable.map(Math.floor),
       ),
       [animationStream],

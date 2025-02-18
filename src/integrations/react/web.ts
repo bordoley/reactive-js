@@ -29,18 +29,13 @@ import {
   isNull,
   none,
   pipe,
-  pipeSome,
   pipeSomeLazy,
 } from "../../functions.js";
-import * as Disposable from "../../utils/Disposable.js";
 import { useDisposable, useListen, useObserve, useStream } from "../react.js";
 import * as AnimationFrameScheduler from "../web/AnimationFrameScheduler.js";
 import * as WebElement from "../web/Element.js";
 import {
   CSSStyleMapLike,
-  DOMEventTarget,
-  EventKeysOf,
-  EventMapOf,
   ScrollValue,
   WindowLocationLike,
   WindowLocationLike_canGoBack,
@@ -99,31 +94,6 @@ interface ReactWebModule {
       readonly animationScheduler: SchedulerLike;
     },
   ): Optional<AnimationGroupStreamLike<TEvent, TKey, T>>;
-
-  useEventHandler<
-    TEventTarget extends DOMEventTarget,
-    TEventName extends EventKeysOf<TEventTarget>,
-  >(
-    eventName: TEventName,
-    eventHandler: SideEffect1<EventMapOf<TEventTarget>[TEventName]>,
-    deps: readonly unknown[],
-    options?: { passive?: boolean; capture?: boolean },
-  ): React.Ref<TEventTarget>;
-
-  useEventHandlers<TEventTarget extends DOMEventTarget>(
-    events: {
-      [TEventName in EventKeysOf<TEventTarget>]?: SideEffect1<
-        EventMapOf<TEventTarget>[TEventName]
-      >;
-    },
-    deps: readonly unknown[],
-    options?: {
-      [TEventName in EventKeysOf<TEventTarget>]?: {
-        passive?: boolean;
-        capture?: boolean;
-      };
-    },
-  ): React.Ref<TEventTarget>;
 
   /**
    */
@@ -231,84 +201,6 @@ export const useAnimationGroup: Signature["useAnimationGroup"] = <
     [animationScheduler],
     options,
   );
-};
-
-export const useEventHandler: Signature["useEventHandler"] = <
-  TEventTarget extends DOMEventTarget,
-  TEventName extends EventKeysOf<TEventTarget>,
->(
-  eventName: TEventName,
-  callback: SideEffect1<EventMapOf<TEventTarget>[TEventName]>,
-  deps: readonly unknown[],
-  options?: { passive?: boolean; capture?: boolean },
-) => {
-  const [element, setElement] = useState<TEventTarget | null>(null);
-
-  const memoizedCallback = useCallback(callback, deps);
-
-  useDisposable(
-    pipeSomeLazy(
-      element ?? none,
-      WebElement.addEventHandler<TEventTarget, TEventName>(
-        eventName,
-        memoizedCallback,
-        options,
-      ),
-    ),
-    [element, eventName, memoizedCallback],
-  );
-
-  return setElement as React.Ref<TEventTarget>;
-};
-
-export const useEventHandlers: Signature["useEventHandlers"] = <
-  TEventTarget extends DOMEventTarget,
->(
-  events: {
-    [TEventName in EventKeysOf<TEventTarget>]?: SideEffect1<
-      EventMapOf<TEventTarget>[TEventName]
-    >;
-  },
-  deps: readonly unknown[],
-  options?: {
-    [TEventName in EventKeysOf<TEventTarget>]?: {
-      passive?: boolean;
-      capture?: boolean;
-    };
-  },
-) => {
-  const [element, setElement] = useState<TEventTarget | null>(null);
-
-  useDisposable(() => {
-    const disposable = Disposable.create();
-    const listenerOptions: ReadonlyObjectMapLike<
-      string,
-      {
-        passive?: boolean;
-        capture?: boolean;
-      }
-    > = options ?? {};
-
-    pipe(
-      events,
-      ReadonlyObjectMap.map(
-        (listener, eventName: string) =>
-          pipeSome(
-            element ?? none,
-            WebElement.addEventHandler<TEventTarget, any>(
-              eventName,
-              listener,
-              listenerOptions[eventName],
-            ),
-          ) ?? Disposable.disposed,
-      ),
-      ReadonlyObjectMap.forEach(Disposable.addTo(disposable)),
-    );
-
-    return disposable;
-  }, [element, ...deps]);
-
-  return setElement as React.Ref<TEventTarget>;
 };
 
 export const useScroll: Signature["useScroll"] = <TElement extends HTMLElement>(

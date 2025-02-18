@@ -17,8 +17,6 @@ import {
 import {
   useAnimate,
   useAnimationGroup,
-  useEventHandler,
-  useEventHandlers,
   useWindowLocation,
   WindowLocationProvider,
 } from "@reactive-js/core/integrations/react/web";
@@ -363,72 +361,9 @@ const RxComponent = createComponent(
 const windowLocation = WindowLocation.subscribe(ReactScheduler.get());
 const rootElement = document.getElementById("root");
 
-const DragExample = () => {
-  const [state, setState] = useState(true);
-  const dragRef = useEventHandler<HTMLDivElement, "drag">(
-    "drag",
-    _ev => {
-      console.log("dragged");
-    },
-    [],
-  );
-
-  const dropRef = useEventHandlers<HTMLDivElement>(
-    {
-      click: _ => {
-        console.log("clicked");
-      },
-      dragover: ev => {
-        ev.preventDefault();
-      },
-      drop: _ => {
-        console.log("dropped");
-        setState(false);
-      },
-    },
-    [],
-    { dragover: { passive: false } },
-  );
-
-  return state ? (
-    <div>
-      <div ref={dragRef} draggable="true">
-        TEST DRAG
-      </div>
-      <div
-        ref={dropRef}
-        style={{
-          width: "200px",
-          height: "20px",
-          background: "blueviolet",
-          margin: "10px",
-          padding: "10px",
-        }}
-      >
-        DropTarget
-      </div>
-    </div>
-  ) : (
-    <div>
-      <div
-        style={{
-          width: "200px",
-          height: "20px",
-          background: "blueviolet",
-          margin: "10px",
-          padding: "10px",
-        }}
-      >
-        <div>TEST DRAG</div>
-      </div>
-    </div>
-  );
-};
-
 ReactDOMClient.createRoot(rootElement as any).render(
   <CacheProvider cacheContext={inMemoryCacheContext}>
     <WindowLocationProvider windowLocation={windowLocation}>
-      <DragExample />
       <History />
       <Counter />
       <AnimationGroup />
