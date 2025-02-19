@@ -5,8 +5,7 @@ import { mix, props } from "../../__internal__/mixins.js";
 import { isFunction, isSome, newInstance, none, } from "../../functions.js";
 import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
 const DisposableMixin_disposables = Symbol("DisposableMixin_disposables");
-const doDispose = (instance, disposable) => {
-    const error = instance[DisposableLike_error];
+const doDispose = (disposable, error) => {
     if (isFunction(disposable)) {
         try {
             disposable(error);
@@ -26,8 +25,6 @@ const isDisposableContainer = (disposable) => {
         isSome(disposable[DisposableContainerLike_add]));
 };
 const DisposableMixin = /*@__PURE__*/ mix(function DisposableMixin(instance) {
-    instance[DisposableMixin_disposables] =
-        newInstance(Set);
     return instance;
 }, props({
     [DisposableLike_error]: none,
@@ -39,27 +36,57 @@ const DisposableMixin = /*@__PURE__*/ mix(function DisposableMixin(instance) {
             this[DisposableLike_error] = error;
             this[DisposableLike_isDisposed] = true;
             const disposables = this[DisposableMixin_disposables];
-            for (const disposable of disposables) {
-                disposables[Set_delete](disposable);
-                doDispose(this, disposable);
+            this[DisposableMixin_disposables] = none;
+            if (disposables instanceof Set) {
+                for (const disposable of disposables) {
+                    disposables[Set_delete](disposable);
+                    doDispose(disposable, error);
+                }
+            }
+            else if (isSome(disposables)) {
+                doDispose(disposables, error);
             }
         }
     },
     [DisposableContainerLike_add](disposable) {
         const disposables = this[DisposableMixin_disposables];
-        if (this === disposable) {
+        const containsDisposable = (disposables instanceof Set && disposables[Set_has](disposable)) ||
+            disposables === disposable;
+        if (this === disposable || containsDisposable) {
             return;
         }
         else if (this[DisposableLike_isDisposed]) {
-            doDispose(this, disposable);
+            doDispose(disposable, this[DisposableLike_error]);
+            return;
         }
-        else if (!disposables[Set_has](disposable)) {
+        if (disposables instanceof Set) {
             disposables[Set_add](disposable);
-            if (isDisposableContainer(disposable)) {
-                disposable[DisposableContainerLike_add](_ => {
+        }
+        else if (isSome(disposables)) {
+            const newDisposables = (this[DisposableMixin_disposables] =
+                newInstance(Set));
+            newDisposables[Set_add](disposables);
+            newDisposables[Set_add](disposable);
+        }
+        else {
+            this[DisposableMixin_disposables] = disposable;
+        }
+        if (isDisposableContainer(disposable)) {
+            disposable[DisposableContainerLike_add](_ => {
+                const disposables = this[DisposableMixin_disposables];
+                const disposablesIsSet = disposables instanceof Set;
+                if (disposables === disposable) {
+                    this[DisposableMixin_disposables] = none;
+                }
+                else if (disposablesIsSet) {
                     disposables[Set_delete](disposable);
-                });
-            }
+                }
+                if (disposablesIsSet && disposables.size === 1) {
+                    this[DisposableMixin_disposables] = disposables
+                        .values()
+                        .next().value;
+                }
+            });
         }
     },
 });

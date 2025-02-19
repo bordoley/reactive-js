@@ -4,7 +4,7 @@ import {
   Set_delete,
   Set_has,
 } from "../../__internal__/constants.js";
-import { Mixin, Mutable, mix, props } from "../../__internal__/mixins.js";
+import { Mixin, mix, props } from "../../__internal__/mixins.js";
 import {
   Optional,
   SideEffect1,
@@ -25,10 +25,9 @@ import {
 const DisposableMixin_disposables = Symbol("DisposableMixin_disposables");
 
 const doDispose = (
-  instance: DisposableLike,
   disposable: Disposable | SideEffect1<Optional<Error>>,
+  error?: Error,
 ) => {
-  const error = instance[DisposableLike_error];
   if (isFunction(disposable)) {
     try {
       disposable(error);
@@ -45,9 +44,11 @@ const doDispose = (
 type TProperties = {
   [DisposableLike_error]: Optional<Error>;
   [DisposableLike_isDisposed]: boolean;
-  readonly [DisposableMixin_disposables]: Set<
-    Disposable | SideEffect1<Optional<Error>>
-  >;
+  [DisposableMixin_disposables]:
+    | Disposable
+    | SideEffect1<Optional<Error>>
+    | Set<Disposable | SideEffect1<Optional<Error>>>
+    | typeof none;
 };
 
 const isDisposableContainer = (
@@ -65,11 +66,8 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
       DisposableLike,
       typeof DisposableLike_dispose | typeof DisposableContainerLike_add
     > &
-      Mutable<TProperties>,
+      TProperties,
   ): DisposableLike {
-    instance[DisposableMixin_disposables] =
-      newInstance<Set<DisposableLike | SideEffect1<Optional<Error>>>>(Set);
-
     return instance;
   },
   props<TProperties>({
@@ -87,10 +85,15 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
         this[DisposableLike_isDisposed] = true;
 
         const disposables = this[DisposableMixin_disposables];
+        this[DisposableMixin_disposables] = none;
 
-        for (const disposable of disposables) {
-          disposables[Set_delete](disposable);
-          doDispose(this, disposable);
+        if (disposables instanceof Set) {
+          for (const disposable of disposables) {
+            disposables[Set_delete](disposable);
+            doDispose(disposable, error);
+          }
+        } else if (isSome(disposables)) {
+          doDispose(disposables, error);
         }
       }
     },
@@ -100,18 +103,45 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
     ) {
       const disposables = this[DisposableMixin_disposables];
 
-      if ((this as unknown) === disposable) {
+      const containsDisposable =
+        (disposables instanceof Set && disposables[Set_has](disposable)) ||
+        disposables === disposable;
+
+      if ((this as unknown) === disposable || containsDisposable) {
         return;
       } else if (this[DisposableLike_isDisposed]) {
-        doDispose(this, disposable);
-      } else if (!disposables[Set_has](disposable)) {
-        disposables[Set_add](disposable);
+        doDispose(disposable, this[DisposableLike_error]);
+        return;
+      }
 
-        if (isDisposableContainer(disposable)) {
-          disposable[DisposableContainerLike_add](_ => {
+      if (disposables instanceof Set) {
+        disposables[Set_add](disposable);
+      } else if (isSome(disposables)) {
+        const newDisposables = (this[DisposableMixin_disposables] =
+          newInstance<Set<Disposable | SideEffect1<Optional<Error>>>>(Set));
+        newDisposables[Set_add](disposables);
+        newDisposables[Set_add](disposable);
+      } else {
+        this[DisposableMixin_disposables] = disposable;
+      }
+
+      if (isDisposableContainer(disposable)) {
+        disposable[DisposableContainerLike_add](_ => {
+          const disposables = this[DisposableMixin_disposables];
+          const disposablesIsSet = disposables instanceof Set;
+
+          if (disposables === disposable) {
+            this[DisposableMixin_disposables] = none;
+          } else if (disposablesIsSet) {
             disposables[Set_delete](disposable);
-          });
-        }
+          }
+
+          if (disposablesIsSet && disposables.size === 1) {
+            this[DisposableMixin_disposables] = disposables
+              .values()
+              .next().value;
+          }
+        });
       }
     },
   },
