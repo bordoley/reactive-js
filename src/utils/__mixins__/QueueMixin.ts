@@ -14,6 +14,7 @@ import {
 import {
   Comparator,
   Optional,
+  isNone,
   isSome,
   newInstance,
   none,
@@ -64,12 +65,12 @@ const QueueMixin: <T>() => Mixin1<
     [QueueMixin_head]: number;
     [QueueMixin_tail]: number;
     [QueueMixin_capacityMask]: number;
-    [QueueMixin_values]: Optional<T>[];
+    [QueueMixin_values]: Optional<Optional<T>[]>;
     readonly [QueueMixin_comparator]: Optional<Comparator<T>>;
   };
 
   const computeIndex = (thiz: TProperties & QueueLike<T>, index: number) => {
-    const valuesLength = thiz[QueueMixin_values][Array_length];
+    const valuesLength = thiz[QueueMixin_values]?.[Array_length] ?? 0;
     const head = thiz[QueueMixin_head];
     const headOffsetIndex = index + head;
     const tailOffsetIndex = headOffsetIndex - valuesLength;
@@ -127,12 +128,7 @@ const QueueMixin: <T>() => Mixin1<
         );
 
         instance[QueueMixin_comparator] = config?.comparator;
-
-        instance[QueueMixin_capacityMask] = 31;
-        instance[QueueMixin_values] = newInstance<Array<Optional<T>>, number>(
-          Array,
-          32,
-        );
+        instance[QueueMixin_values] = none;
 
         return instance;
       },
@@ -142,7 +138,7 @@ const QueueMixin: <T>() => Mixin1<
         [QueueableLike_capacity]: MAX_SAFE_INTEGER,
         [QueueMixin_head]: 0,
         [QueueMixin_tail]: 0,
-        [QueueMixin_capacityMask]: 0,
+        [QueueMixin_capacityMask]: 31,
         [QueueMixin_values]: none,
         [QueueMixin_comparator]: none,
       }),
@@ -152,7 +148,7 @@ const QueueMixin: <T>() => Mixin1<
           const head = this[QueueMixin_head];
           const values = this[QueueMixin_values];
 
-          return head === this[QueueMixin_tail] ? none : values[head];
+          return head === this[QueueMixin_tail] ? none : values?.[head];
         },
 
         /*get [QueueLike_tail]() {
@@ -170,15 +166,16 @@ const QueueMixin: <T>() => Mixin1<
           const isSorted = isSome(this[QueueMixin_comparator]);
           const tail = this[QueueMixin_tail];
           const values = this[QueueMixin_values];
+
+          if (isNone(values) || count === 0) {
+            return none;
+          }
+
           const valuesLength = values[Array_length];
           const head = this[QueueMixin_head];
           const item = values[head];
           const compare = this[QueueMixin_comparator] as Comparator<T>;
           const capacityMask = this[QueueMixin_capacityMask];
-
-          if (count === 0) {
-            return none;
-          }
 
           const newCount = --this[QueueLike_count];
 
@@ -230,12 +227,23 @@ const QueueMixin: <T>() => Mixin1<
           const newTail = this[QueueMixin_tail];
           const newValuesLength = valuesLength >> 1;
           const shouldShrink = newCount < newValuesLength && valuesLength > 32;
-          const newCapacityMask = shouldShrink
-            ? newValuesLength - 1
-            : capacityMask;
+          const newCapacityMask =
+            newCount === 0
+              ? 31
+              : shouldShrink
+                ? newValuesLength - 1
+                : capacityMask;
 
           // Inline: shrink
-          if (shouldShrink && newTail >= newHead && newTail < newValuesLength) {
+          if (newCount === 0) {
+            this[QueueMixin_values] = none;
+            this[QueueMixin_head] = 0;
+            this[QueueMixin_tail] = newCount;
+          } else if (
+            shouldShrink &&
+            newTail >= newHead &&
+            newTail < newValuesLength
+          ) {
             values[Array_length] = newValuesLength;
           } else if (shouldShrink) {
             this[QueueMixin_values] = copyArray(
@@ -257,6 +265,11 @@ const QueueMixin: <T>() => Mixin1<
           const head = this[QueueMixin_head];
           const tail = this[QueueMixin_tail];
           const values = this[QueueMixin_values];
+
+          if (isNone(values)) {
+            return;
+          }
+
           const valuesLength = values[Array_length];
 
           const headCount = head <= tail ? tail : valuesLength;
@@ -276,15 +289,7 @@ const QueueMixin: <T>() => Mixin1<
         ): boolean {
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
           const capacity = this[QueueableLike_capacity];
-          const compare = this[QueueMixin_comparator] as Comparator<T>;
-          const count = this[QueueLike_count];
-          const isSorted = isSome(this[QueueMixin_comparator]);
-          const values = this[QueueMixin_values];
-          const valuesLength = values[Array_length];
-          const capacityMask = this[QueueMixin_capacityMask];
-          const head = this[QueueMixin_head];
-          const tail = this[QueueMixin_tail];
-          const applyBackpressure = count >= capacity;
+          const applyBackpressure = this[QueueLike_count] >= capacity;
 
           if (
             (backpressureStrategy === DropLatestBackpressureStrategy &&
@@ -310,6 +315,22 @@ const QueueMixin: <T>() => Mixin1<
               newInstance(BackPressureError, capacity, backpressureStrategy),
             );
           }
+
+          // Assign these after applying backpressure because backpressure
+          // can mutate the state of the queue.
+          const compare = this[QueueMixin_comparator] as Comparator<T>;
+          const values =
+            this[QueueMixin_values] ??
+            ((this[QueueMixin_capacityMask] = 31),
+            (this[QueueMixin_values] = newInstance<Array<Optional<T>>, number>(
+              Array,
+              32,
+            )));
+          const valuesLength = values?.[Array_length] ?? 0;
+          const capacityMask = this[QueueMixin_capacityMask];
+          const head = this[QueueMixin_head];
+          const tail = this[QueueMixin_tail];
+          const isSorted = isSome(this[QueueMixin_comparator]);
 
           values[tail] = item;
           const newCount = ++this[QueueLike_count];
