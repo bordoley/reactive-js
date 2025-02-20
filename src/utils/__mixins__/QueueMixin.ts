@@ -74,7 +74,7 @@ const QueueMixin: <T>() => Mixin1<
     head: number,
     index: number,
   ) => {
-    const valuesLength = values[Array_length] ?? 0;
+    const valuesLength = values[Array_length];
     const headOffsetIndex = index + head;
     const tailOffsetIndex = headOffsetIndex - valuesLength;
 
@@ -257,12 +257,9 @@ const QueueMixin: <T>() => Mixin1<
           const newTail = this[QueueMixin_tail];
           const newValuesLength = valuesLength >> 1;
           const shouldShrink = newCount < newValuesLength && valuesLength > 32;
-          const newCapacityMask =
-            newCount === 0
-              ? 31
-              : shouldShrink
-                ? newValuesLength - 1
-                : capacityMask;
+          const newCapacityMask = shouldShrink
+            ? newValuesLength - 1
+            : capacityMask;
 
           // Inline: shrink
           if (shouldShrink && newTail >= newHead && newTail < newValuesLength) {
@@ -363,7 +360,7 @@ const QueueMixin: <T>() => Mixin1<
                 this[QueueMixin_values]))
               : (oldValues as Optional<T>[]);
 
-          const valuesLength = values?.[Array_length] ?? 0;
+          const valuesLength = values[Array_length];
           const capacityMask = this[QueueMixin_capacityMask];
           const head = this[QueueMixin_head];
           const tail = this[QueueMixin_tail];

@@ -12,7 +12,7 @@ const QueueMixin = /*@PURE*/ (() => {
     const QueueMixin_values = Symbol("QueueMixin_values");
     const QueueMixin_comparator = Symbol("QueueMixin_comparator");
     const computeIndex = (values, count, head, index) => {
-        const valuesLength = values[Array_length] ?? 0;
+        const valuesLength = values[Array_length];
         const headOffsetIndex = index + head;
         const tailOffsetIndex = headOffsetIndex - valuesLength;
         return index < 0 || index >= count
@@ -140,11 +140,9 @@ const QueueMixin = /*@PURE*/ (() => {
             const newTail = this[QueueMixin_tail];
             const newValuesLength = valuesLength >> 1;
             const shouldShrink = newCount < newValuesLength && valuesLength > 32;
-            const newCapacityMask = newCount === 0
-                ? 31
-                : shouldShrink
-                    ? newValuesLength - 1
-                    : capacityMask;
+            const newCapacityMask = shouldShrink
+                ? newValuesLength - 1
+                : capacityMask;
             // Inline: shrink
             if (shouldShrink && newTail >= newHead && newTail < newValuesLength) {
                 values[Array_length] = newValuesLength;
@@ -217,7 +215,7 @@ const QueueMixin = /*@PURE*/ (() => {
                         (this[QueueMixin_values][0] = oldValues),
                         this[QueueMixin_values]))
                 : oldValues;
-            const valuesLength = values?.[Array_length] ?? 0;
+            const valuesLength = values[Array_length];
             const capacityMask = this[QueueMixin_capacityMask];
             const head = this[QueueMixin_head];
             const tail = this[QueueMixin_tail];
