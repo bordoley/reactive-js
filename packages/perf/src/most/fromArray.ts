@@ -1,3 +1,10 @@
+import {
+  ContinuationContextLike_yield,
+  SchedulerLike_schedule,
+  VirtualTimeSchedulerLike_run,
+} from "@reactive-js/core/concurrent";
+import * as VirtualTimeScheduler from "@reactive-js/core/concurrent/VirtualTimeScheduler";
+
 class FromArrayTask<T> {
   private active = true;
   constructor(
@@ -7,11 +14,24 @@ class FromArrayTask<T> {
 
   run(t: any) {
     const length = this.array.length;
-    for (let i = 0; i < length && this.active; i++) {
-      this.sink.event(t, this.array[i]);
-    }
 
-    this.active && this.sink.end(t);
+    // The idea here is to create a comparison that removes the cost of the
+    // scheduler framework from the equation so that we can improved reactive-js
+    // operators to attempt to match that of most.
+    const scheduler = VirtualTimeScheduler.create();
+
+    let i = 0;
+    scheduler[SchedulerLike_schedule](ctx => {
+      while (i < length && this.active) {
+        this.sink.event(t, this.array[i]);
+        i++;
+        ctx[ContinuationContextLike_yield]();
+      }
+
+      this.active && this.sink.end(t);
+    });
+
+    scheduler[VirtualTimeSchedulerLike_run]();
   }
 
   error(t: any, e: any) {

@@ -189,8 +189,11 @@ const SchedulerMixin: Mixin<
       const scheduler = continuation[QueueableContinuation_scheduler];
       const parent = findNearestNonDisposedParent(continuation);
 
-      let head: Optional<QueueableSchedulerContinuationLike> = none;
-      while (((head = continuation[QueueLike_dequeue]()), isSome(head))) {
+      for (
+        let head: Optional<QueueableSchedulerContinuationLike> = none;
+        (head = continuation[QueueLike_dequeue]()), isSome(head);
+
+      ) {
         if (head[DisposableLike_isDisposed]) {
           // continue
         } else if (isSome(parent)) {

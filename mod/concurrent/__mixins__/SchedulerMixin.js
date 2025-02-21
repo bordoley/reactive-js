@@ -60,8 +60,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
         const rescheduleChildrenOnParentOrScheduler = (continuation) => {
             const scheduler = continuation[QueueableContinuation_scheduler];
             const parent = findNearestNonDisposedParent(continuation);
-            let head = none;
-            while (((head = continuation[QueueLike_dequeue]()), isSome(head))) {
+            for (let head = none; (head = continuation[QueueLike_dequeue]()), isSome(head);) {
                 if (head[DisposableLike_isDisposed]) {
                     // continue
                 }
