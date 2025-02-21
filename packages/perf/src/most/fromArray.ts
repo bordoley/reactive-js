@@ -6,7 +6,7 @@ class FromArrayTask<T> {
   ) {}
 
   run(t: any) {
-    const length =  this.array.length;
+    const length = this.array.length;
     for (let i = 0; i < length && this.active; i++) {
       this.sink.event(t, this.array[i]);
     }

@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "dependencies": {
+    "rxjs": "7.8.1",
     "@most/core": "1.6.1 ",
     "@most/scheduler": "1.3.0 ",
     "@reactive-js/core": "^0.128.0",
