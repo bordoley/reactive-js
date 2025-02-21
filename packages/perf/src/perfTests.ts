@@ -38,13 +38,26 @@ export const map = (n: number) =>
       pipeLazy(
         src,
         Observable.fromReadonlyArray(),
-        Observable.map(increment),
-        Observable.toReadonlyArray(),
+        //Observable.map(increment),
+        Observable.reduce((_, x)=>x, () => 0),
       ),
     ),
     benchmarkTest("array methods", async src => {
       return () => src.map(increment);
     }),
+    benchmarkTest("most", async src => {
+      const { map } = await import("@most/core");
+      const { reduce } = await import("./most/reduce.js");
+      const { fromArray } = await import("./most/fromArray.js");
+
+      return pipeLazy(
+        src,
+        fromArray,
+        x => map(increment, x),
+        x => reduce((_, x: number)=>x, 0, x),
+      );
+    }),
+    
   );
 
 export const filterMapFusion = (n: number) =>
@@ -60,7 +73,7 @@ export const filterMapFusion = (n: number) =>
         Observable.map(increment),
         Observable.map(increment),
         Observable.keep(isEven),
-        Observable.toReadonlyArray(),
+        Observable.reduce(sum, () => 0)
       ),
     ),
     benchmarkTest(
@@ -74,6 +87,21 @@ export const filterMapFusion = (n: number) =>
           .filter(isEven)
           .reduce((a, b) => sum(a, b), 0),
     ),
+    benchmarkTest("most", async src => {
+      const { map, filter } = await import("@most/core");
+      const { reduce } = await import("./most/reduce.js");
+      const { fromArray } = await import("./most/fromArray.js");
+
+      return pipeLazy(
+        src,
+        fromArray,
+        x => map(increment, x),
+        x => filter(isOdd, x),
+        x => map(increment, x),
+        x => map(increment, x),
+        x => reduce(sum, 0, x),
+      );
+    }),
   );
 
 export const filterMapReduce = (n: number) =>
@@ -86,7 +114,7 @@ export const filterMapReduce = (n: number) =>
         Observable.fromReadonlyArray(),
         Observable.keep(isEven),
         Observable.map(increment),
-        Observable.toReadonlyArray(),
+        Observable.reduce(sum, () => 0),
       ),
     ),
     benchmarkTest(
@@ -98,8 +126,13 @@ export const filterMapReduce = (n: number) =>
       const { reduce } = await import("./most/reduce.js");
       const { fromArray } = await import("./most/fromArray.js");
 
-      return () =>
-        reduce(sum, 0, map(increment, filter(isEven, fromArray(src))));
+      return pipeLazy(
+        src,
+        fromArray,
+        x => filter(isEven, x),
+        x => map(increment, x),
+        x => reduce(sum, 0, x),
+      );
     }),
   );
 
@@ -112,7 +145,7 @@ export const scanReduce = (n: number) =>
         src,
         Observable.fromReadonlyArray(),
         Observable.scan(sum, returns(0)),
-        Observable.toReadonlyArray(),
+        Observable.reduce(passthrough, () => 0),
       ),
     ),
     benchmarkTest("most", async src => {
@@ -120,7 +153,11 @@ export const scanReduce = (n: number) =>
       const { reduce } = await import("./most/reduce.js");
       const { fromArray } = await import("./most/fromArray.js");
 
-      return () =>
-        reduce<number, number>(passthrough, 0, scan(sum, 0, fromArray(src)));
+      return pipeLazy(
+        src,
+        fromArray,
+        x => scan(sum, 0, x),
+        x => reduce(passthrough, 0, x),
+      );
     }),
   );

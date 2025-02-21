@@ -1,5 +1,3 @@
-import { asap } from "@most/scheduler";
-
 class FromArrayTask<T> {
   private active = true;
   constructor(
@@ -8,7 +6,8 @@ class FromArrayTask<T> {
   ) {}
 
   run(t: any) {
-    for (let i = 0, l = this.array.length; i < l && this.active; ++i) {
+    const length =  this.array.length;
+    for (let i = 0; i < length && this.active; i++) {
       this.sink.event(t, this.array[i]);
     }
 
@@ -28,8 +27,10 @@ class FromArray<T> {
   constructor(private array: readonly T[]) {
     this.array = array;
   }
-  run(sink: any, scheduler: any) {
-    return asap(new FromArrayTask(this.array, sink), scheduler);
+  run(sink: any, _scheduler: any) {
+    const task = new FromArrayTask(this.array, sink);
+    task.run(0);
+    return task;
   }
 }
 
