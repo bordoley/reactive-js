@@ -38,7 +38,7 @@ export const map = (n: number) =>
       pipeLazy(
         src,
         Observable.fromReadonlyArray(),
-        //Observable.map(increment),
+        Observable.map(increment),
         Observable.reduce((_, x)=>x, () => 0),
       ),
     ),
