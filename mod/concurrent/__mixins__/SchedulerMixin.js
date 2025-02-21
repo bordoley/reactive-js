@@ -73,56 +73,6 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 }
             }
         };
-        const runContinuation = (thiz) => {
-            const scheduler = thiz[QueueableContinuation_scheduler];
-            // Run any inner continuations first.
-            let head = none;
-            while (((head = thiz[QueueLike_dequeue]()), isSome(head))) {
-                head[QueueableSchedulerContinuationLike_parent] = thiz;
-                head[SchedulerContinuationLike_run]();
-                head[QueueableSchedulerContinuationLike_parent] = none;
-                if (scheduler[SchedulerLike_shouldYield] &&
-                    !thiz[DisposableLike_isDisposed]) {
-                    rescheduleContinuation(thiz);
-                    return;
-                }
-            }
-            if (thiz[DisposableLike_isDisposed]) {
-                return;
-            }
-            let err = none;
-            let yieldError = none;
-            try {
-                thiz[QueueableContinuation_effect](thiz);
-            }
-            catch (e) {
-                if (e instanceof ContinuationYieldError) {
-                    yieldError = e;
-                }
-                else {
-                    err = error(e);
-                }
-            }
-            if (isSome(yieldError) && !thiz[DisposableLike_isDisposed]) {
-                const { delay } = yieldError;
-                if (delay > 0) {
-                    // Bump the taskID so that the yielded with delay continuation is run
-                    // at a lower relative priority to other previously scheduled continuations
-                    // with the same due time.
-                    thiz[SchedulerContinuationLike_id] = ++scheduler[SchedulerMixinLike_taskIDCounter];
-                    thiz[SchedulerContinuationLike_dueTime] =
-                        scheduler[SchedulerLike_now] + delay;
-                    rescheduleChildrenOnParentOrScheduler(thiz);
-                    scheduler[SchedulerMixinLike_schedule](thiz);
-                }
-                else {
-                    rescheduleContinuation(thiz);
-                }
-            }
-            else {
-                thiz[DisposableLike_dispose](err);
-            }
-        };
         return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function QueueableContinuation(instance, scheduler, effect, dueTime) {
             init(DisposableMixin, instance);
             init(QueueMixin(), instance, none);
@@ -166,7 +116,56 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                         scheduler[SchedulerLike_now];
                     scheduler[SchedulerMixinLike_yieldRequested] = false;
                 }
-                runContinuation(this);
+                // Flag whether the continuation has been rescheduled
+                let rescheduled = false;
+                // Run any inner continuations first.
+                for (let head = none; (head = this[QueueLike_dequeue]()), isSome(head);) {
+                    head[QueueableSchedulerContinuationLike_parent] = this;
+                    head[SchedulerContinuationLike_run]();
+                    head[QueueableSchedulerContinuationLike_parent] = none;
+                    if (scheduler[SchedulerLike_shouldYield] &&
+                        !this[DisposableLike_isDisposed]) {
+                        rescheduleContinuation(this);
+                        rescheduled = true;
+                        break;
+                    }
+                }
+                let err = none;
+                let yieldError = none;
+                if (!rescheduled && !this[DisposableLike_isDisposed]) {
+                    try {
+                        this[QueueableContinuation_effect](this);
+                    }
+                    catch (e) {
+                        if (e instanceof ContinuationYieldError) {
+                            yieldError = e;
+                        }
+                        else {
+                            err = error(e);
+                        }
+                    }
+                }
+                // Reschedule the continuation if yielded
+                if (isSome(yieldError)) {
+                    const { delay } = yieldError;
+                    if (delay > 0) {
+                        // Bump the taskID so that the yielded with delay continuation is run
+                        // at a lower relative priority to other previously scheduled continuations
+                        // with the same due time.
+                        this[SchedulerContinuationLike_id] = ++scheduler[SchedulerMixinLike_taskIDCounter];
+                        this[SchedulerContinuationLike_dueTime] =
+                            scheduler[SchedulerLike_now] + delay;
+                        rescheduleChildrenOnParentOrScheduler(this);
+                        scheduler[SchedulerMixinLike_schedule](this);
+                    }
+                    else {
+                        rescheduleContinuation(this);
+                    }
+                    rescheduled = true;
+                }
+                if (!rescheduled) {
+                    this[DisposableLike_dispose](err);
+                }
                 scheduler[SchedulerMixinLike_currentContinuation] =
                     oldCurrentContinuation;
             },
