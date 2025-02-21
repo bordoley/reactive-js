@@ -44,6 +44,7 @@ import {
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import QueueMixin from "../../utils/__mixins__/QueueMixin.js";
+import SerialDisposableMixin from "../../utils/__mixins__/SerialDisposableMixin.js";
 import {
   DisposableContainerLike,
   DisposableLike,
@@ -56,6 +57,8 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
+  SerialDisposableLike,
+  SerialDisposableLike_current,
 } from "../../utils.js";
 import Observer_assertObserverState from "../Observer/__private__/Observer.assertObserverState.js";
 
@@ -68,16 +71,11 @@ const ObserverMixin: <T>() => Mixin2<
   >,
   DisposableLike
 > = /*@__PURE__*/ (<T>() => {
-  const ObserverMixin_dispatchSubscription = Symbol(
-    "ObserverMixin_dispatchSubscription",
-  );
   const ObserverMixin_scheduler = Symbol("ObserverMixin_scheduler");
-
   const ObserverMixin_publisher = Symbol("ObserverMixin_publisher");
 
   type TProperties = {
     [DispatcherLike_isCompleted]: boolean;
-    [ObserverMixin_dispatchSubscription]: DisposableLike;
     [ObserverMixin_scheduler]: SchedulerLike;
     [ObserverMixin_publisher]: Optional<
       PublisherLike<
@@ -89,11 +87,12 @@ const ObserverMixin: <T>() => Mixin2<
   };
 
   const scheduleDrainQueue = (
-    observer: TProperties & ObserverLike<T> & QueueLike<T>,
+    observer: TProperties &
+      ObserverLike<T> &
+      QueueLike<T> &
+      SerialDisposableLike,
   ) => {
-    if (
-      observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]
-    ) {
+    if (observer[SerialDisposableLike_current][DisposableLike_isDisposed]) {
       const continuation = (ctx: ContinuationContextLike) => {
         while (observer[QueueLike_count] > 0) {
           const next = observer[QueueLike_dequeue]() as T;
@@ -113,10 +112,8 @@ const ObserverMixin: <T>() => Mixin2<
         }
       };
 
-      observer[ObserverMixin_dispatchSubscription] = pipe(
-        observer[SchedulerLike_schedule](continuation),
-        Disposable.addTo(observer),
-      );
+      observer[SerialDisposableLike_current] =
+        observer[SchedulerLike_schedule](continuation);
     }
   };
 
@@ -142,7 +139,7 @@ const ObserverMixin: <T>() => Mixin2<
         | typeof QueueableLike_backpressureStrategy
       >
     >(
-      include(QueueMixin()),
+      include(QueueMixin(), SerialDisposableMixin()),
       function ObserverMixin(
         instance: Omit<SchedulerLike, keyof DisposableContainerLike> &
           DisposableLike &
@@ -166,13 +163,14 @@ const ObserverMixin: <T>() => Mixin2<
           capacity: config[QueueableLike_capacity],
         });
 
+        init(SerialDisposableMixin(), instance, Disposable.disposed);
+
         instance[ObserverMixin_scheduler] = scheduler;
 
         return instance;
       },
       props<TProperties>({
         [DispatcherLike_isCompleted]: false,
-        [ObserverMixin_dispatchSubscription]: Disposable.disposed,
         [ObserverMixin_scheduler]: none,
         [ObserverMixin_publisher]: none,
       }),
@@ -218,7 +216,10 @@ const ObserverMixin: <T>() => Mixin2<
         },
 
         [QueueableLike_enqueue](
-          this: TProperties & ObserverLike<T> & QueueLike<T>,
+          this: TProperties &
+            ObserverLike<T> &
+            QueueLike<T> &
+            SerialDisposableLike,
           next: T,
         ): boolean {
           if (
@@ -244,7 +245,10 @@ const ObserverMixin: <T>() => Mixin2<
         },
 
         [DispatcherLike_complete](
-          this: TProperties & ObserverLike<T> & QueueLike<T>,
+          this: TProperties &
+            ObserverLike<T> &
+            QueueLike<T> &
+            SerialDisposableLike,
         ) {
           const isCompleted = this[DispatcherLike_isCompleted];
           this[DispatcherLike_isCompleted] = true;
@@ -256,9 +260,7 @@ const ObserverMixin: <T>() => Mixin2<
           }
 
           if (
-            this[ObserverMixin_dispatchSubscription][
-              DisposableLike_isDisposed
-            ] &&
+            this[SerialDisposableLike_current][DisposableLike_isDisposed] &&
             !isCompleted
           ) {
             this[DisposableLike_dispose]();
