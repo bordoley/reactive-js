@@ -484,7 +484,8 @@ testModule(
   PureStatefulComputationModuleTests(
     Observable as PureStatefulComputationModule<Observable.RunnableComputation> &
       DeferredComputationModule<Observable.RunnableComputation> &
-      SynchronousComputationModule<Observable.RunnableComputation>,
+      SynchronousComputationModule<Observable.RunnableComputation> &
+      ComputationWithSideEffectsModule<Observable.RunnableComputation>,
   ),
   ComputationWithSideEffectsModuleTests(
     Observable as DeferredComputationModule<Observable.RunnableComputation> &
@@ -1609,16 +1610,6 @@ testModule(
   ),
   describe(
     "ignoreElements",
-    test(
-      "ignores all elements",
-      pipeLazy(
-        [1, 2, 3],
-        Observable.fromReadonlyArray(),
-        Observable.ignoreElements<number>(),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([] as number[]),
-      ),
-    ),
     PureStatelessObservableOperatorTests(Observable.ignoreElements()),
   ),
   describe(

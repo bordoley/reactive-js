@@ -79,6 +79,7 @@ export interface PureStatefulComputationModule<C extends Computation> {
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): ComputationOperator<C, T, T>;
+    ignoreElements<T>(): ComputationOperator<C, unknown, T>;
     pairwise<T>(): ComputationOperator<C, T, Tuple2<T, T>>;
     skipFirst<T>(options?: {
         readonly count?: number;

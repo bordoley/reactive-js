@@ -422,6 +422,24 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 
 ***
 
+### ignoreElements()
+
+> **ignoreElements**\<`T`\>(): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `unknown`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `unknown`, `T`\>
+
+#### Inherited from
+
+[`PureStatefulComputationModule`](../../interfaces/PureStatefulComputationModule.md).[`ignoreElements`](../../interfaces/PureStatefulComputationModule.md#ignoreelements)
+
+***
+
 ### keep()
 
 > **keep**\<`T`\>(`predicate`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>

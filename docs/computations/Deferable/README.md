@@ -32,6 +32,7 @@
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
 - [fromValue](functions/fromValue.md)
 - [generate](functions/generate.md)
+- [ignoreElements](functions/ignoreElements.md)
 - [keep](functions/keep.md)
 - [last](functions/last.md)
 - [map](functions/map.md)

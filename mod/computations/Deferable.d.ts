@@ -23,6 +23,7 @@ export declare const fromIterable: Signature["fromIterable"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const fromValue: Signature["fromValue"];
 export declare const generate: Signature["generate"];
+export declare const ignoreElements: Signature["ignoreElements"];
 export declare const keep: Signature["keep"];
 export declare const last: Signature["last"];
 export declare const map: Signature["map"];

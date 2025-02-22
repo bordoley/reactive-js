@@ -2,11 +2,14 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
+  expectToHaveBeenCalledTimes,
   expectToThrowError,
+  mockFn,
   test,
 } from "../../../__internal__/testing.js";
 import {
   Computation,
+  ComputationWithSideEffectsModule,
   DeferredComputationModule,
   PureStatefulComputationModule,
   SynchronousComputationModule,
@@ -23,7 +26,8 @@ import {
 const PureStatefulComputationModuleTests = <C extends Computation>(
   m: PureStatefulComputationModule<C> &
     DeferredComputationModule<C> &
-    SynchronousComputationModule<C>,
+    SynchronousComputationModule<C> &
+    ComputationWithSideEffectsModule<C>,
 ) =>
   describe(
     "PureStatefulComputationModule",
@@ -193,6 +197,33 @@ const PureStatefulComputationModuleTests = <C extends Computation>(
           expectArrayEquals([1]),
         ),
       ),
+    ),
+    describe(
+      "ignoreElements",
+      test(
+        "ignores all elements",
+        pipeLazy(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.ignoreElements<number>(),
+          m.toReadonlyArray(),
+          expectArrayEquals([] as number[]),
+        ),
+      ),
+      test("invokes all side-effects", () => {
+        const f = mockFn();
+
+        pipe(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.forEach(f),
+          m.ignoreElements<number>(),
+          m.toReadonlyArray(),
+          expectArrayEquals([] as number[]),
+        );
+
+        pipe(f, expectToHaveBeenCalledTimes(3));
+      }),
     ),
     describe(
       "pairwise",
