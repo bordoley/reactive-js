@@ -133,3 +133,25 @@
 #### Returns
 
 [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+***
+
+### takeLast()
+
+> **takeLast**\<`T`\>(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### count?
+
+`number`
+
+#### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>

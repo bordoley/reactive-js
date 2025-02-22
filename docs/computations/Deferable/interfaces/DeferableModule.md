@@ -754,6 +754,32 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 
 ***
 
+### takeLast()
+
+> **takeLast**\<`T`\>(`options`?): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### count?
+
+`number`
+
+#### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[`PureStatefulComputationModule`](../../interfaces/PureStatefulComputationModule.md).[`takeLast`](../../interfaces/PureStatefulComputationModule.md#takelast)
+
+***
+
 ### takeWhile()
 
 > **takeWhile**\<`T`\>(`predicate`, `options`?): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>

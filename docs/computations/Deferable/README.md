@@ -44,6 +44,7 @@
 - [skipFirst](functions/skipFirst.md)
 - [startWith](functions/startWith.md)
 - [takeFirst](functions/takeFirst.md)
+- [takeLast](functions/takeLast.md)
 - [takeWhile](functions/takeWhile.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [throws](functions/throws.md)

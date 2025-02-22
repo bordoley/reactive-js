@@ -296,6 +296,61 @@ const PureStatefulComputationModuleTests = <C extends Computation>(
         ),
       ),
     ),
+
+    describe(
+      "takeLast",
+      test(
+        "with default count",
+        pipeLazy(
+          [1, 2, 3, 4, 5],
+          m.fromReadonlyArray(),
+          m.takeLast(),
+          m.toReadonlyArray<number>(),
+          expectArrayEquals([5]),
+        ),
+      ),
+      test(
+        "when count is 0",
+        pipeLazy(
+          [1, 2, 3, 4, 5],
+          m.fromReadonlyArray(),
+          // Some implementations special case this
+          m.takeLast({ count: 0 }),
+          m.toReadonlyArray<number>(),
+          expectArrayEquals([] as number[]),
+        ),
+      ),
+      test(
+        "when count is less than the total number of elements",
+        pipeLazy(
+          [1, 2, 3, 4, 5],
+          m.fromReadonlyArray(),
+          m.takeLast({ count: 3 }),
+          m.toReadonlyArray<number>(),
+          expectArrayEquals([3, 4, 5]),
+        ),
+      ),
+      test(
+        "when count is greater than the total number of elements",
+        pipeLazy(
+          [1, 2, 3, 4, 5],
+          m.fromReadonlyArray(),
+          m.takeLast({ count: 10 }),
+          m.toReadonlyArray<number>(),
+          expectArrayEquals([1, 2, 3, 4, 5]),
+        ),
+      ),
+      test(
+        "with default count",
+        pipeLazy(
+          [1, 2, 3, 4, 5],
+          m.fromReadonlyArray(),
+          m.takeLast(),
+          m.toReadonlyArray<number>(),
+          expectArrayEquals([5]),
+        ),
+      ),
+    ),
   );
 
 export default PureStatefulComputationModuleTests;

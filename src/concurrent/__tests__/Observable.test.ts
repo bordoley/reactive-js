@@ -1519,19 +1519,6 @@ testModule(
         expectArrayEquals([2, 4, 6, 8]),
       ),
     ),
-    test(
-      "when the iterable throws",
-      pipeLazy(
-        pipeLazy(
-          (function* Generator() {
-            throw newInstance(Error);
-          })(),
-          Observable.fromIterable(),
-          Observable.run(),
-        ),
-        expectToThrow,
-      ),
-    ),
     testIsRunnableWithSideEffects(
       pipe(
         (function* Generator() {
@@ -2257,62 +2244,7 @@ testModule(
     ),
   ),
   describe("takeFirst", PureStatefulObservableOperator(Observable.takeFirst())),
-  describe(
-    "takeLast",
-    test(
-      "with default count",
-      pipeLazy(
-        [1, 2, 3, 4, 5],
-        Observable.fromReadonlyArray(),
-        Observable.takeLast(),
-        Observable.toReadonlyArray<number>(),
-        expectArrayEquals([5]),
-      ),
-    ),
-    test(
-      "when count is 0",
-      pipeLazy(
-        [1, 2, 3, 4, 5],
-        Observable.fromReadonlyArray(),
-
-        // Some implementations special case this
-        Observable.takeLast({ count: 0 }),
-        Observable.toReadonlyArray<number>(),
-        expectArrayEquals([] as number[]),
-      ),
-    ),
-    test(
-      "when count is less than the total number of elements",
-      pipeLazy(
-        [1, 2, 3, 4, 5],
-        Observable.fromReadonlyArray(),
-        Observable.takeLast({ count: 3 }),
-        Observable.toReadonlyArray<number>(),
-        expectArrayEquals([3, 4, 5]),
-      ),
-    ),
-    test(
-      "when count is greater than the total number of elements",
-      pipeLazy(
-        [1, 2, 3, 4, 5],
-        Observable.fromReadonlyArray(),
-        Observable.takeLast({ count: 10 }),
-        Observable.toReadonlyArray<number>(),
-        expectArrayEquals([1, 2, 3, 4, 5]),
-      ),
-    ),
-    test(
-      "with default count",
-      pipeLazy(
-        [1, 2, 3, 4, 5],
-        Observable.fromReadonlyArray(),
-        Observable.takeLast(),
-        Observable.toReadonlyArray<number>(),
-        expectArrayEquals([5]),
-      ),
-    ),
-    PureStatefulObservableOperator(Observable.takeLast()),
-  ),
+  describe("takeLast", PureStatefulObservableOperator(Observable.takeLast())),
   describe(
     "takeUntil",
     test(

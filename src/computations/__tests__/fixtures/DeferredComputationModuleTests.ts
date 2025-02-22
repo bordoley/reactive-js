@@ -19,6 +19,7 @@ import {
   alwaysTrue,
   increment,
   lessThan,
+  newInstance,
   none,
   pipe,
   pipeLazy,
@@ -91,6 +92,19 @@ const DeferredComputationModuleTests = <C extends Computation>(
           m.fromIterable(),
           m.toReadonlyArray(),
           expectArrayEquals([1, 2, 3]),
+        ),
+      ),
+      test(
+        "when the iterable throws",
+        pipeLazy(
+          pipeLazy(
+            (function* Generator() {
+              throw newInstance(Error);
+            })(),
+            m.fromIterable(),
+            m.last(),
+          ),
+          expectToThrow,
         ),
       ),
     ),

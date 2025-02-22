@@ -35,6 +35,7 @@ export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const startWith: Signature["startWith"];
 export declare const takeFirst: Signature["takeFirst"];
+export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const throws: Signature["throws"];

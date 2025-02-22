@@ -85,6 +85,9 @@ export interface PureStatefulComputationModule<C extends Computation> {
     skipFirst<T>(options?: {
         readonly count?: number;
     }): ComputationOperator<C, T, T>;
+    takeLast<T>(options?: {
+        readonly count?: number;
+    }): ComputationOperator<C, T, T>;
 }
 export interface Pick<C extends Computation> {
     <T, TKeyOfT extends keyof T>(key: TKeyOfT): ComputationOperator<C, T, T[TKeyOfT]>;
