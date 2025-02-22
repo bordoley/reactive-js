@@ -1274,7 +1274,6 @@ export interface ObservableModule {
 
   throwIfEmpty<T>(
     factory: Factory<unknown>,
-    options?: undefined,
   ): PureStatefulObservableOperator<T, T>;
 
   throws<T>(options?: {

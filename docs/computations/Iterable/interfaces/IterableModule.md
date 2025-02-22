@@ -140,6 +140,34 @@ readonly \[`Iterable`\<`T`, `any`, `any`\>, `Iterable`\<`T`, `any`, `any`\>\]
 
 ***
 
+### endWith()
+
+> **endWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### value
+
+`T`
+
+##### values
+
+...readonly `T`[]
+
+#### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`endWith`](../../interfaces/DeferredComputationModule.md#endwith)
+
+***
+
 ### forEach()
 
 > **forEach**\<`T`\>(`sideEffect`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>
@@ -209,6 +237,24 @@ readonly \[`Iterable`\<`T`, `any`, `any`\>, `Iterable`\<`T`, `any`, `any`\>\]
 #### Inherited from
 
 [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`fromReadonlyArray`](../../interfaces/DeferredComputationModule.md#fromreadonlyarray)
+
+***
+
+### fromValue()
+
+> **fromValue**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, `Iterable`\<`T`, `any`, `any`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, `Iterable`\<`T`, `any`, `any`\>\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`fromValue`](../../interfaces/DeferredComputationModule.md#fromvalue)
 
 ***
 
@@ -326,6 +372,34 @@ readonly \[`Iterable`\<`T`, `any`, `any`\>, `Iterable`\<`T`, `any`, `any`\>\]
 
 ***
 
+### startWith()
+
+> **startWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### value
+
+`T`
+
+##### values
+
+...readonly `T`[]
+
+#### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`startWith`](../../interfaces/DeferredComputationModule.md#startwith)
+
+***
+
 ### takeFirst()
 
 > **takeFirst**\<`T`\>(`options`?): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>
@@ -379,6 +453,32 @@ readonly \[`Iterable`\<`T`, `any`, `any`\>, `Iterable`\<`T`, `any`, `any`\>\]
 #### Inherited from
 
 [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`takeWhile`](../../interfaces/DeferredComputationModule.md#takewhile)
+
+***
+
+### throws()
+
+> **throws**\<`T`\>(`options`?): `Iterable`\<`T`, `any`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### raise?
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+#### Returns
+
+`Iterable`\<`T`, `any`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`throws`](../../interfaces/DeferredComputationModule.md#throws)
 
 ***
 

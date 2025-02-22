@@ -125,6 +125,30 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 ***
 
+### endWith()
+
+> **endWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### value
+
+`T`
+
+##### values
+
+...readonly `T`[]
+
+#### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+***
+
 ### fromIterable()
 
 > **fromIterable**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\>
@@ -165,6 +189,20 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 ***
 
+### fromValue()
+
+> **fromValue**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\>
+
+***
+
 ### generate()
 
 > **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
@@ -192,6 +230,30 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 #### Returns
 
 [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+
+***
+
+### startWith()
+
+> **startWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### value
+
+`T`
+
+##### values
+
+...readonly `T`[]
+
+#### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
 
 ***
 
@@ -240,3 +302,25 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 #### Returns
 
 [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+***
+
+### throws()
+
+> **throws**\<`T`\>(`options`?): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### raise?
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+#### Returns
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>

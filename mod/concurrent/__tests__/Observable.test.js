@@ -624,7 +624,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     finally {
         __disposeResources(env_24);
     }
-}), testIsPureRunnable(Observable.empty({ delay: 1 }))), describe("encodeUtf8", PureStatefulObservableOperator(Observable.encodeUtf8())), describe("endWith", test("appends the additional values to the end of the container", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.endWith(2, 3, 4), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4]))), PureStatefulObservableOperator(Observable.endWith(1))), describe("enqueue", ObservableOperatorWithSideEffectsTests(Observable.enqueue(Queue.create()))), describe("exhaust", test("when the initial observable never disposes", pipeLazy([
+}), testIsPureRunnable(Observable.empty({ delay: 1 }))), describe("encodeUtf8", PureStatefulObservableOperator(Observable.encodeUtf8())), describe("endWith", PureStatefulObservableOperator(Observable.endWith(1))), describe("enqueue", ObservableOperatorWithSideEffectsTests(Observable.enqueue(Queue.create()))), describe("exhaust", test("when the initial observable never disposes", pipeLazy([
     pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
     pipe([4, 5, 6], Observable.fromReadonlyArray()),
     pipe([7, 8, 9], Observable.fromReadonlyArray()),
@@ -1100,17 +1100,12 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     finally {
         __disposeResources(env_49);
     }
-}), ObservableOperatorWithSideEffectsTests(Observable.onSubscribe(ignore))), describe("pairwise", PureStatefulObservableOperator(Observable.pairwise())), describe("repeat", test("when repeating forever.", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.repeat(), Observable.takeFirst({ count: 8 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2]))), test("when repeating a finite amount of times.", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.repeat(3), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("when repeating a finite amount of times, with delayed source.", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.repeat(3), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("when repeating with a predicate", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.repeat(lessThan(1)), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("when repeating with a predicate with delayed source", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }), Observable.repeat(lessThan(1)), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("when the repeat function throws", () => {
-    const err = new Error();
-    pipe(pipeLazy([1, 1], Observable.fromReadonlyArray(), Observable.repeat(_ => {
-        throw err;
-    }), Observable.toReadonlyArray()), expectToThrowError(err));
-}), test("when the repeat function throws with delayed source", () => {
+}), ObservableOperatorWithSideEffectsTests(Observable.onSubscribe(ignore))), describe("pairwise", PureStatefulObservableOperator(Observable.pairwise())), describe("repeat", test("when repeating a finite amount of times, with delayed source.", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.repeat(3), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("when repeating with a predicate with delayed source", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }), Observable.repeat(lessThan(1)), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("when the repeat function throws with delayed source", () => {
     const err = new Error();
     pipe(pipeLazy([1, 1], Observable.fromReadonlyArray({ delay: 3 }), Observable.repeat(_ => {
         throw err;
     }), Observable.toReadonlyArray()), expectToThrowError(err));
-}), PureDeferredObservableOperatorWithDeferredObservableBaseTests(Observable.repeat())), describe("retry", test("retrys the container on an exception", pipeLazy(Observable.concat(pipe(Observable.generate(increment, returns(0)), Observable.takeFirst({ count: 3 })), Observable.throws()), Observable.retry(alwaysTrue), Observable.takeFirst({ count: 6 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("retrys with the default predicate", pipeLazy(Observable.concat(pipe(Observable.generate(increment, returns(0)), Observable.takeFirst({ count: 3 })), Observable.throws()), Observable.retry(), Observable.takeFirst({ count: 6 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("when source and the retry predicate throw", pipeLazy(pipeLazy(Observable.throws(), Observable.retry(raise), Observable.toReadonlyArray()), expectToThrow)), PureDeferredObservableOperatorWithDeferredObservableBaseTests(Observable.retry(raise))), describe("scan", PureStatefulObservableOperator(Observable.scan((acc, _) => acc, returns(none)))), describe("scanMany", test("slow source, fast scan function", pipeLazy(Observable.generate(increment, returns(-1), { delay: 10 }), Observable.takeFirst({ count: 10 }), Observable.scanMany((_acc, next) => pipe(next, Observable.fromValue({ delay: 2 })), returns(0)), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]))), PureStatefulObservableOperator(Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none))), DeferringObservableOperatorTests(Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
+}), PureDeferredObservableOperatorWithDeferredObservableBaseTests(Observable.repeat())), describe("retry", PureDeferredObservableOperatorWithDeferredObservableBaseTests(Observable.retry(raise))), describe("scan", PureStatefulObservableOperator(Observable.scan((acc, _) => acc, returns(none)))), describe("scanMany", test("slow source, fast scan function", pipeLazy(Observable.generate(increment, returns(-1), { delay: 10 }), Observable.takeFirst({ count: 10 }), Observable.scanMany((_acc, next) => pipe(next, Observable.fromValue({ delay: 2 })), returns(0)), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]))), PureStatefulObservableOperator(Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none))), DeferringObservableOperatorTests(Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
     innerType: PureDeferredObservableType,
 })), ObservableOperatorWithSideEffectsTests(Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
     innerType: RunnableWithSideEffectsType,
@@ -1129,7 +1124,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     finally {
         __disposeResources(env_50);
     }
-})), describe("startWith", test("appends the additional values to the start of the container", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.startWith(2, 3, 4), Observable.toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1]))), PureStatefulObservableOperator(Observable.startWith(1, 2, 3))), describe("subscribeOn", testIsPureDeferredObservable((() => {
+})), describe("startWith", PureStatefulObservableOperator(Observable.startWith(1, 2, 3))), describe("subscribeOn", testIsPureDeferredObservable((() => {
     const env_51 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_51, VirtualTimeScheduler.create(), false);
@@ -1204,23 +1199,15 @@ Observable.takeLast({ count: 0 }), Observable.toReadonlyArray(), expectArrayEqua
 }), Observable.takeFirst({ count: 200 }), Observable.throttle(50, { mode: "last" }), Observable.toReadonlyArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", pipeLazy(Observable.generate(increment, returns(-1), {
     delay: 1,
     delayStart: true,
-}), Observable.takeFirst({ count: 200 }), Observable.throttle(75, { mode: "interval" }), Observable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199]))), PureStatefulObservableOperator(Observable.throttle(1))), describe("throws", testIsPureRunnable(Observable.throws())), describe("throwIfEmpty", test("when source is empty", () => {
-    const error = new Error();
-    pipe(pipeLazy([], Observable.fromReadonlyArray(), Observable.throwIfEmpty(() => error), Observable.toReadonlyArray()), expectToThrowError(error));
-}), test("when source is empty and delayed", () => {
+}), Observable.takeFirst({ count: 200 }), Observable.throttle(75, { mode: "interval" }), Observable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199]))), PureStatefulObservableOperator(Observable.throttle(1))), describe("throws", testIsPureRunnable(Observable.throws())), describe("throwIfEmpty", test("when source is empty and delayed", () => {
     const error = new Error();
     pipe(pipeLazy([], Observable.fromReadonlyArray({ delay: 1 }), Observable.throwIfEmpty(() => error), Observable.run()), expectToThrowError(error));
-}), test("when factory throw", () => {
-    const error = new Error();
-    pipe(pipeLazy([], Observable.fromReadonlyArray(), Observable.throwIfEmpty(() => {
-        throw error;
-    }), Observable.toReadonlyArray()), expectToThrowError(error));
 }), test("when factory throws after a delay", () => {
     const error = new Error();
     pipe(pipeLazy([], Observable.fromReadonlyArray({ delay: 1 }), Observable.throwIfEmpty(() => {
         throw error;
     }), Observable.run()), expectToThrowError(error));
-}), test("when source is not empty", pipeLazy([1], Observable.fromReadonlyArray(), Observable.throwIfEmpty(returns(none)), Observable.toReadonlyArray(), expectArrayEquals([1]))), test("when source is not empty with delay", pipeLazy([1], Observable.fromReadonlyArray({ delay: 1 }), Observable.throwIfEmpty(returns(none)), Observable.toReadonlyArray(), expectArrayEquals([1]))), PureStatefulObservableOperator(Observable.throwIfEmpty(() => newInstance(Error)))), describe("toDeferable", test("when deferable sinkcompletes early", pipeLazy(Observable.generate(increment, returns(0)), Observable.toDeferable(), Deferable.takeFirst({ count: 3 }), Deferable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))), describe("toEventSource", test("when the source completes without error", () => {
+}), test("when source is not empty with delay", pipeLazy([1], Observable.fromReadonlyArray({ delay: 1 }), Observable.throwIfEmpty(returns(none)), Observable.toReadonlyArray(), expectArrayEquals([1]))), PureStatefulObservableOperator(Observable.throwIfEmpty(() => newInstance(Error)))), describe("toDeferable", test("when deferable sinkcompletes early", pipeLazy(Observable.generate(increment, returns(0)), Observable.toDeferable(), Deferable.takeFirst({ count: 3 }), Deferable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))), describe("toEventSource", test("when the source completes without error", () => {
     const env_54 = { stack: [], error: void 0, hasError: false };
     try {
         const result = [];

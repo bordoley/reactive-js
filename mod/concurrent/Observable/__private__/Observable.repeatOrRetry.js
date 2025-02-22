@@ -1,7 +1,7 @@
 /// <reference types="./Observable.repeatOrRetry.d.ts" />
 
 import { ObserverLike_notify, } from "../../../concurrent.js";
-import { bindMethod, error, isSome, partial, pipe, } from "../../../functions.js";
+import { bindMethod, error, isSome, none, partial, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
@@ -16,6 +16,7 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
             let shouldComplete = false;
             try {
                 shouldComplete = !shouldRepeat(count, err);
+                err = none;
             }
             catch (e) {
                 shouldComplete = true;

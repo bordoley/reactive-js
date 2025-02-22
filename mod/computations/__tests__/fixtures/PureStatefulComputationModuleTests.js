@@ -1,8 +1,8 @@
 /// <reference types="./PureStatefulComputationModuleTests.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, } from "../../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectToThrow, expectToThrowError, test, } from "../../../__internal__/testing.js";
 import * as Observable from "../../../concurrent/Observable.js";
-import { arrayEquality, pipe, pipeLazy, returns, tuple, } from "../../../functions.js";
+import { alwaysTrue, arrayEquality, increment, lessThan, none, pipe, pipeLazy, raise, returns, tuple, } from "../../../functions.js";
 const PureStatefulComputationModuleTests = (m) => describe("PureStatefulComputationModule", describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],
@@ -46,7 +46,12 @@ const PureStatefulComputationModuleTests = (m) => describe("PureStatefulComputat
     tuple(8, 9),
 ], { valuesEquality: arrayEquality() }))), test("when the input only provides 1 value", pipeLazy([0], m.fromReadonlyArray(), m.pairwise(), m.toReadonlyArray(), expectArrayEquals([], {
     valuesEquality: arrayEquality(),
-})))), describe("scan", test("sums all the values in the array emitting intermediate values.", pipeLazy([1, 1, 1], m.fromReadonlyArray(), m.scan((a, b) => a + b, returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("throws when the scan function throws", () => {
+})))), describe("repeat", test("when repeating forever.", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.repeat(), m.takeFirst({ count: 8 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2]))), test("when repeating a finite amount of times.", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.repeat(3), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("when repeating with a predicate", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.repeat(lessThan(1)), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("when the repeat function throws", () => {
+    const err = new Error();
+    pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.repeat(_ => {
+        throw err;
+    }), m.toReadonlyArray()), expectToThrowError(err));
+})), describe("retry", test("retrys the container on an exception", pipeLazy(m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()), m.retry(alwaysTrue), m.takeFirst({ count: 6 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("retrys with the default predicate", pipeLazy(m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()), m.retry(), m.takeFirst({ count: 6 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("when source and the retry predicate throw", pipeLazy(pipeLazy(m.throws(), m.retry(raise), m.toReadonlyArray()), expectToThrow)), test("retrys only twice", pipeLazy(m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()), m.retry((count, _) => count < 2), m.takeFirst({ count: 10 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("scan", test("sums all the values in the array emitting intermediate values.", pipeLazy([1, 1, 1], m.fromReadonlyArray(), m.scan((a, b) => a + b, returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("throws when the scan function throws", () => {
     const err = new Error();
     const scanner = (_acc, _next) => {
         throw err;
@@ -58,5 +63,13 @@ const PureStatefulComputationModuleTests = (m) => describe("PureStatefulComputat
         throw err;
     };
     pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.scan((a, b) => a + b, initialValue), m.toReadonlyArray()), expectToThrowError(err));
-})), describe("skipFirst", test("with default count", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.skipFirst(), m.toReadonlyArray(), expectArrayEquals([2, 3]))), test("when skipped source has additional elements", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.skipFirst({ count: 2 }), m.toReadonlyArray(), expectArrayEquals([3]))), test("when all elements are skipped", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.skipFirst({ count: 4 }), m.toReadonlyArray(), expectArrayEquals([])))));
+})), describe("skipFirst", test("with default count", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.skipFirst(), m.toReadonlyArray(), expectArrayEquals([2, 3]))), test("when skipped source has additional elements", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.skipFirst({ count: 2 }), m.toReadonlyArray(), expectArrayEquals([3]))), test("when all elements are skipped", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.skipFirst({ count: 4 }), m.toReadonlyArray(), expectArrayEquals([])))), describe("throwIfEmpty", test("when source is empty", () => {
+    const error = new Error();
+    pipe(pipeLazy([], m.fromReadonlyArray(), m.throwIfEmpty(() => error), m.toReadonlyArray()), expectToThrowError(error));
+}), test("when factory throw", () => {
+    const error = new Error();
+    pipe(pipeLazy([], m.fromReadonlyArray(), m.throwIfEmpty(() => {
+        throw error;
+    }), m.toReadonlyArray()), expectToThrowError(error));
+}), test("when source is not empty", pipeLazy([1], m.fromReadonlyArray(), m.throwIfEmpty(returns(none)), m.toReadonlyArray(), expectArrayEquals([1])))));
 export default PureStatefulComputationModuleTests;

@@ -1,7 +1,10 @@
 import {
   describe,
   expectArrayEquals,
+  expectEquals,
+  expectFalse,
   expectToThrowError,
+  expectTrue,
   test,
 } from "../../../__internal__/testing.js";
 import {
@@ -33,6 +36,13 @@ const DeferredComputationModuleTests = <C extends Computation>(
           m.toReadonlyArray(),
           expectArrayEquals([1, 2, 3]),
         ),
+      ),
+    ),
+    describe(
+      "fromValue",
+      test(
+        "with array",
+        pipeLazy(1, m.fromValue(), m.toReadonlyArray(), expectArrayEquals([1])),
       ),
     ),
     describe(
@@ -179,6 +189,32 @@ const DeferredComputationModuleTests = <C extends Computation>(
       ),
     ),
     describe(
+      "endWith",
+      test(
+        "appends the additional values to the end of the container",
+        pipeLazy(
+          [0, 1],
+          m.fromReadonlyArray(),
+          m.endWith(2, 3, 4),
+          m.toReadonlyArray(),
+          expectArrayEquals([0, 1, 2, 3, 4]),
+        ),
+      ),
+    ),
+    describe(
+      "startWith",
+      test(
+        "appends the additional values to the start of the container",
+        pipeLazy(
+          [0, 1],
+          m.fromReadonlyArray(),
+          m.startWith(2, 3, 4),
+          m.toReadonlyArray(),
+          expectArrayEquals([2, 3, 4, 0, 1]),
+        ),
+      ),
+    ),
+    describe(
       "takeFirst",
       test(
         "with default count",
@@ -303,6 +339,49 @@ const DeferredComputationModuleTests = <C extends Computation>(
           ),
           expectToThrowError(err),
         );
+      }),
+    ),
+    describe(
+      "throws",
+      test("when raise function returns an value", () => {
+        const e1 = "e1";
+
+        try {
+          pipe(m.throws({ raise: () => e1 }), m.toReadonlyArray());
+          expectFalse(true);
+        } catch (e) {
+          expectTrue(e instanceof Error);
+          pipe((e as Error).message, expectEquals(e1));
+        }
+      }),
+      test("when raise function throws an exception", () => {
+        const e1 = new Error();
+
+        try {
+          pipe(
+            m.throws({
+              raise: () => {
+                throw e1;
+              },
+            }),
+            m.toReadonlyArray(),
+          );
+          expectFalse(true);
+        } catch (e) {
+          expectTrue(e instanceof Error);
+          pipe(e, expectEquals<unknown>(e1));
+        }
+      }),
+      test("when raise function returns an exception", () => {
+        const e1 = new Error();
+
+        try {
+          pipe(m.throws({ raise: () => e1 }), m.toReadonlyArray());
+          expectFalse(true);
+        } catch (e) {
+          expectTrue(e instanceof Error);
+          pipe(e, expectEquals<unknown>(e1));
+        }
       }),
     ),
   );

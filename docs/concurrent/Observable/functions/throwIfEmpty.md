@@ -6,7 +6,7 @@
 
 # Function: throwIfEmpty()
 
-> **throwIfEmpty**\<`T`\>(`factory`, `options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **throwIfEmpty**\<`T`\>(`factory`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
 
 ## Type Parameters
 
@@ -17,10 +17,6 @@
 ### factory
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
-
-### options?
-
-`undefined`
 
 ## Returns
 

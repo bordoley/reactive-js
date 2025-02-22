@@ -409,7 +409,7 @@ export interface ObservableModule {
     throttle<T>(duration: number, options?: {
         readonly mode?: ThrottleMode;
     }): PureStatefulObservableOperator<T, T>;
-    throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): PureStatefulObservableOperator<T, T>;
+    throwIfEmpty<T>(factory: Factory<unknown>): PureStatefulObservableOperator<T, T>;
     throws<T>(options?: {
         readonly raise?: Factory<unknown>;
         readonly delay?: number;

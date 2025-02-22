@@ -4810,7 +4810,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### throwIfEmpty()
 
-> **throwIfEmpty**\<`T`\>(`factory`, `options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **throwIfEmpty**\<`T`\>(`factory`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
 
 #### Type Parameters
 
@@ -4821,10 +4821,6 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 ##### factory
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
-
-##### options?
-
-`undefined`
 
 #### Returns
 

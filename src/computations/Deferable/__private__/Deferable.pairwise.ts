@@ -6,7 +6,6 @@ import {
   none,
   tuple,
 } from "../../../functions.js";
-
 import type * as Deferable from "../../Deferable.js";
 import AbstractSink, {
   AbstractSink_delegate,

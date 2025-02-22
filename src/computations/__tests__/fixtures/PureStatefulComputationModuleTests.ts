@@ -2,6 +2,7 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
+  expectToThrow,
   expectToThrowError,
   test,
 } from "../../../__internal__/testing.js";
@@ -14,9 +15,14 @@ import {
 import * as Observable from "../../../concurrent/Observable.js";
 import {
   Tuple2,
+  alwaysTrue,
   arrayEquality,
+  increment,
+  lessThan,
+  none,
   pipe,
   pipeLazy,
+  raise,
   returns,
   tuple,
 } from "../../../functions.js";
@@ -234,6 +240,95 @@ const PureStatefulComputationModuleTests = <C extends Computation>(
       ),
     ),
     describe(
+      "repeat",
+      test(
+        "when repeating forever.",
+        pipeLazy(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.repeat<number>(),
+          m.takeFirst<number>({ count: 8 }),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2]),
+        ),
+      ),
+      test(
+        "when repeating a finite amount of times.",
+        pipeLazy(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.repeat<number>(3),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
+        ),
+      ),
+      test(
+        "when repeating with a predicate",
+        pipeLazy(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.repeat<number>(lessThan(1)),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3]),
+        ),
+      ),
+      test("when the repeat function throws", () => {
+        const err = new Error();
+        pipe(
+          pipeLazy(
+            [1, 1],
+            m.fromReadonlyArray(),
+            m.repeat(_ => {
+              throw err;
+            }),
+            m.toReadonlyArray(),
+          ),
+          expectToThrowError(err),
+        );
+      }),
+    ),
+    describe(
+      "retry",
+      test(
+        "retrys the container on an exception",
+        pipeLazy(
+          m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()),
+          m.retry(alwaysTrue),
+          m.takeFirst<number>({ count: 6 }),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3, 1, 2, 3]),
+        ),
+      ),
+      test(
+        "retrys with the default predicate",
+        pipeLazy(
+          m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()),
+          m.retry(),
+          m.takeFirst<number>({ count: 6 }),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3, 1, 2, 3]),
+        ),
+      ),
+      test(
+        "when source and the retry predicate throw",
+        pipeLazy(
+          pipeLazy(m.throws(), m.retry(raise), m.toReadonlyArray()),
+          expectToThrow,
+        ),
+      ),
+
+      test(
+        "retrys only twice",
+        pipeLazy(
+          m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()),
+          m.retry((count, _) => count < 2),
+          m.takeFirst<number>({ count: 10 }),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3, 1, 2, 3]),
+        ),
+      ),
+    ),
+    describe(
       "scan",
       test(
         "sums all the values in the array emitting intermediate values.",
@@ -308,6 +403,45 @@ const PureStatefulComputationModuleTests = <C extends Computation>(
           m.skipFirst({ count: 4 }),
           m.toReadonlyArray(),
           expectArrayEquals([] as number[]),
+        ),
+      ),
+    ),
+    describe(
+      "throwIfEmpty",
+      test("when source is empty", () => {
+        const error = new Error();
+        pipe(
+          pipeLazy(
+            [],
+            m.fromReadonlyArray(),
+            m.throwIfEmpty(() => error),
+            m.toReadonlyArray(),
+          ),
+          expectToThrowError(error),
+        );
+      }),
+      test("when factory throw", () => {
+        const error = new Error();
+        pipe(
+          pipeLazy(
+            [],
+            m.fromReadonlyArray(),
+            m.throwIfEmpty(() => {
+              throw error;
+            }),
+            m.toReadonlyArray(),
+          ),
+          expectToThrowError(error),
+        );
+      }),
+      test(
+        "when source is not empty",
+        pipeLazy(
+          [1],
+          m.fromReadonlyArray(),
+          m.throwIfEmpty(returns(none)),
+          m.toReadonlyArray<number>(),
+          expectArrayEquals([1]),
         ),
       ),
     ),

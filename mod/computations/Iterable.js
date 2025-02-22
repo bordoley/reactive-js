@@ -4,7 +4,7 @@ import { clampPositiveInteger } from "../__internal__/math.js";
 import { mixInstanceFactory, props } from "../__internal__/mixins.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import { Computation_type, } from "../computations.js";
-import { identity, newInstance, none, pipe, returns, } from "../functions.js";
+import { error, identity, newInstance, none, pipe, raise, returns, tuple, } from "../functions.js";
 export const concat = (...iterables) => concatMany(iterables);
 class ConcatAllIterable {
     s;
@@ -23,6 +23,7 @@ export const concatAll = /*@PURE*/ (() => returns((iterable) => newInstance(Conc
 export const concatMap = (selector) => (obs) => pipe(obs, map(selector), concatAll());
 export const concatMany = concatAll();
 export const concatWith = (...tail) => (fst) => concatMany([fst, ...tail]);
+export const endWith = (...values) => (iterable) => pipe(iterable, concatWith(pipe(values, fromReadonlyArray())));
 export const forEach = /*@PURE*/ (() => {
     const ForEachIterable_effect = Symbol("ForEachIterable_effect");
     const ForEachIterable_delegate = Symbol("ForEachIterable_delegate");
@@ -46,6 +47,7 @@ export const forEach = /*@PURE*/ (() => {
     return (effect) => (iterable) => createForEachIterable(iterable, effect);
 })();
 export const fromIterable = /*@PURE*/ returns(identity);
+export const fromValue = /*@PURE*/ returns(tuple);
 class FromReadonlyArrayIterable {
     arr;
     count;
@@ -140,6 +142,7 @@ export const reduce = (reducer, initialValue) => (iterable) => {
     }
     return acc;
 };
+export const startWith = (...values) => (iter) => pipe(values, fromReadonlyArray(), concatWith(iter));
 class TakeFirstIterable {
     s;
     c;
@@ -183,4 +186,17 @@ class TakeWhileIterable {
     }
 }
 export const takeWhile = (predicate, options) => (iterable) => newInstance(TakeWhileIterable, iterable, predicate, options?.inclusive ?? false);
+class ThrowsIterable {
+    r;
+    constructor(r) {
+        this.r = r;
+    }
+    *[Symbol.iterator]() {
+        raise(error(this.r()));
+    }
+}
+export const throws = (options) => {
+    const { raise: factory = raise } = options ?? {};
+    return newInstance((ThrowsIterable), factory);
+};
 export const toReadonlyArray = () => (iterable) => Array.from(iterable);

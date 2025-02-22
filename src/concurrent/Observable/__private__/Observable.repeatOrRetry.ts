@@ -8,6 +8,7 @@ import {
   bindMethod,
   error,
   isSome,
+  none,
   partial,
   pipe,
 } from "../../../functions.js";
@@ -38,6 +39,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
       let shouldComplete = false;
       try {
         shouldComplete = !shouldRepeat(count, err);
+        err = none;
       } catch (e) {
         shouldComplete = true;
         err = isSome(err) ? error([error(e), err]) : error(e);

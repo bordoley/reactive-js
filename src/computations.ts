@@ -67,12 +67,16 @@ export interface DeferredComputationModule<C extends Computation> {
     ...tail: readonly ComputationOf<C, T>[]
   ): ComputationOperator<C, T, T>;
 
+  endWith<T>(value: T, ...values: readonly T[]): ComputationOperator<C, T, T>;
+
+  fromIterable<T>(): Function1<Iterable<T>, ComputationOf<C, T>>;
+
   fromReadonlyArray<T>(options?: {
     readonly count?: number;
     readonly start?: number;
   }): Function1<readonly T[], ComputationOf<C, T>>;
 
-  fromIterable<T>(): Function1<Iterable<T>, ComputationOf<C, T>>;
+  fromValue<T>(): Function1<T, ComputationOf<C, T>>;
 
   generate<T>(
     generator: Updater<T>,
@@ -82,6 +86,8 @@ export interface DeferredComputationModule<C extends Computation> {
     },
   ): ComputationOf<C, T>;
 
+  startWith<T>(value: T, ...values: readonly T[]): ComputationOperator<C, T, T>;
+
   takeFirst<T>(options?: {
     readonly count?: number;
   }): ComputationOperator<C, T, T>;
@@ -90,6 +96,10 @@ export interface DeferredComputationModule<C extends Computation> {
     predicate: Predicate<T>,
     options?: { readonly inclusive?: boolean },
   ): ComputationOperator<C, T, T>;
+
+  throws<T>(options?: {
+    readonly raise?: Factory<unknown>;
+  }): ComputationOf<C, T>;
 }
 
 export interface ComputationWithSideEffectsModule<C extends Computation> {
@@ -128,6 +138,14 @@ export interface PureStatefulComputationModule<C extends Computation> {
 
   pairwise<T>(): ComputationOperator<C, T, Tuple2<T, T>>;
 
+  repeat<T>(predicate: Predicate<number>): ComputationOperator<C, T, T>;
+  repeat<T>(count: number): ComputationOperator<C, T, T>;
+  repeat<T>(): ComputationOperator<C, T, T>;
+
+  retry<T>(
+    shouldRetry?: (count: number, error: Error) => boolean,
+  ): ComputationOperator<C, T, T>;
+
   scan<T, TAcc>(
     scanner: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
@@ -136,6 +154,11 @@ export interface PureStatefulComputationModule<C extends Computation> {
   skipFirst<T>(options?: {
     readonly count?: number;
   }): ComputationOperator<C, T, T>;
+
+  throwIfEmpty<T>(
+    factory: Factory<unknown>,
+    options?: undefined,
+  ): ComputationOperator<C, T, T>;
 }
 
 export interface Pick<C extends Computation> {

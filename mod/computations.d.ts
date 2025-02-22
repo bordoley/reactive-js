@@ -26,20 +26,26 @@ export interface DeferredComputationModule<C extends Computation> {
         ...(readonly ComputationOf<C, T>[])
     ]): ComputationOf<C, T>;
     concatWith<T>(snd: ComputationOf<C, T>, ...tail: readonly ComputationOf<C, T>[]): ComputationOperator<C, T, T>;
+    endWith<T>(value: T, ...values: readonly T[]): ComputationOperator<C, T, T>;
+    fromIterable<T>(): Function1<Iterable<T>, ComputationOf<C, T>>;
     fromReadonlyArray<T>(options?: {
         readonly count?: number;
         readonly start?: number;
     }): Function1<readonly T[], ComputationOf<C, T>>;
-    fromIterable<T>(): Function1<Iterable<T>, ComputationOf<C, T>>;
+    fromValue<T>(): Function1<T, ComputationOf<C, T>>;
     generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
         readonly count?: number;
     }): ComputationOf<C, T>;
+    startWith<T>(value: T, ...values: readonly T[]): ComputationOperator<C, T, T>;
     takeFirst<T>(options?: {
         readonly count?: number;
     }): ComputationOperator<C, T, T>;
     takeWhile<T>(predicate: Predicate<T>, options?: {
         readonly inclusive?: boolean;
     }): ComputationOperator<C, T, T>;
+    throws<T>(options?: {
+        readonly raise?: Factory<unknown>;
+    }): ComputationOf<C, T>;
 }
 export interface ComputationWithSideEffectsModule<C extends Computation> {
     forEach<T>(sideEffect: SideEffect1<T>): ComputationOperator<C, T, T>;
@@ -65,10 +71,15 @@ export interface PureStatefulComputationModule<C extends Computation> {
         readonly equality?: Equality<T>;
     }): ComputationOperator<C, T, T>;
     pairwise<T>(): ComputationOperator<C, T, Tuple2<T, T>>;
+    repeat<T>(predicate: Predicate<number>): ComputationOperator<C, T, T>;
+    repeat<T>(count: number): ComputationOperator<C, T, T>;
+    repeat<T>(): ComputationOperator<C, T, T>;
+    retry<T>(shouldRetry?: (count: number, error: Error) => boolean): ComputationOperator<C, T, T>;
     scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ComputationOperator<C, T, TAcc>;
     skipFirst<T>(options?: {
         readonly count?: number;
     }): ComputationOperator<C, T, T>;
+    throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): ComputationOperator<C, T, T>;
 }
 export interface Pick<C extends Computation> {
     <T, TKeyOfT extends keyof T>(key: TKeyOfT): ComputationOperator<C, T, T[TKeyOfT]>;

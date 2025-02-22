@@ -15,13 +15,17 @@ import {
   Function1,
   Predicate,
   Reducer,
+  SideEffect,
   SideEffect1,
   Updater,
+  error,
   identity,
   newInstance,
   none,
   pipe,
+  raise,
   returns,
+  tuple,
 } from "../functions.js";
 
 /**
@@ -71,6 +75,11 @@ export const concatWith: Signature["concatWith"] =
   (fst: Iterable<T>) =>
     concatMany([fst, ...tail]);
 
+export const endWith: Signature["endWith"] =
+  <T>(...values: readonly T[]) =>
+  (iterable: Iterable<T>) =>
+    pipe(iterable, concatWith<T>(pipe(values, fromReadonlyArray())));
+
 export const forEach: Signature["forEach"] = /*@PURE*/ (<T>() => {
   const ForEachIterable_effect = Symbol("ForEachIterable_effect");
   const ForEachIterable_delegate = Symbol("ForEachIterable_delegate");
@@ -114,6 +123,8 @@ export const forEach: Signature["forEach"] = /*@PURE*/ (<T>() => {
 export const fromIterable: Signature["fromIterable"] = /*@PURE*/ returns(
   identity,
 ) as Signature["fromIterable"];
+
+export const fromValue: Signature["fromValue"] = /*@PURE*/ returns(tuple);
 
 class FromReadonlyArrayIterable<T> {
   constructor(
@@ -259,6 +270,11 @@ export const reduce: Signature["reduce"] =
     return acc;
   };
 
+export const startWith: Signature["startWith"] =
+  <T>(...values: readonly T[]) =>
+  (iter: Iterable<T>) =>
+    pipe(values, fromReadonlyArray(), concatWith<T>(iter));
+
 class TakeFirstIterable<T> {
   constructor(
     private s: Iterable<T>,
@@ -326,6 +342,20 @@ export const takeWhile: Signature["takeWhile"] =
       predicate,
       options?.inclusive ?? false,
     );
+
+class ThrowsIterable<T> {
+  constructor(private r: SideEffect) {}
+
+  *[Symbol.iterator](): Iterator<T> {
+    raise(error(this.r()));
+  }
+}
+export const throws: Signature["throws"] = <T>(options?: {
+  readonly raise?: SideEffect;
+}) => {
+  const { raise: factory = raise } = options ?? {};
+  return newInstance(ThrowsIterable<T>, factory);
+};
 
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   <T>() =>

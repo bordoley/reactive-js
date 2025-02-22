@@ -222,6 +222,34 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 
 ***
 
+### endWith()
+
+> **endWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### value
+
+`T`
+
+##### values
+
+...readonly `T`[]
+
+#### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`endWith`](../../interfaces/DeferredComputationModule.md#endwith)
+
+***
+
 ### forEach()
 
 > **forEach**\<`T`\>(`sideEffect`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
@@ -291,6 +319,24 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 #### Inherited from
 
 [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`fromReadonlyArray`](../../interfaces/DeferredComputationModule.md#fromreadonlyarray)
+
+***
+
+### fromValue()
+
+> **fromValue**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`fromValue`](../../interfaces/DeferredComputationModule.md#fromvalue)
 
 ***
 
@@ -426,6 +472,94 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 
 ***
 
+### repeat()
+
+#### Call Signature
+
+> **repeat**\<`T`\>(`predicate`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### predicate
+
+[`Predicate`](../../../functions/type-aliases/Predicate.md)\<`number`\>
+
+##### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+##### Inherited from
+
+[`PureStatefulComputationModule`](../../interfaces/PureStatefulComputationModule.md).[`repeat`](../../interfaces/PureStatefulComputationModule.md#repeat)
+
+#### Call Signature
+
+> **repeat**\<`T`\>(`count`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### count
+
+`number`
+
+##### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+##### Inherited from
+
+[`PureStatefulComputationModule`](../../interfaces/PureStatefulComputationModule.md).[`repeat`](../../interfaces/PureStatefulComputationModule.md#repeat)
+
+#### Call Signature
+
+> **repeat**\<`T`\>(): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+##### Inherited from
+
+[`PureStatefulComputationModule`](../../interfaces/PureStatefulComputationModule.md).[`repeat`](../../interfaces/PureStatefulComputationModule.md#repeat)
+
+***
+
+### retry()
+
+> **retry**\<`T`\>(`shouldRetry`?): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### shouldRetry?
+
+(`count`, `error`) => `boolean`
+
+#### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[`PureStatefulComputationModule`](../../interfaces/PureStatefulComputationModule.md).[`retry`](../../interfaces/PureStatefulComputationModule.md#retry)
+
+***
+
 ### scan()
 
 > **scan**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `TAcc`\>
@@ -482,6 +616,34 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 
 ***
 
+### startWith()
+
+> **startWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### value
+
+`T`
+
+##### values
+
+...readonly `T`[]
+
+#### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`startWith`](../../interfaces/DeferredComputationModule.md#startwith)
+
+***
+
 ### takeFirst()
 
 > **takeFirst**\<`T`\>(`options`?): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
@@ -535,6 +697,60 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 #### Inherited from
 
 [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`takeWhile`](../../interfaces/DeferredComputationModule.md#takewhile)
+
+***
+
+### throwIfEmpty()
+
+> **throwIfEmpty**\<`T`\>(`factory`, `options`?): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### factory
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+##### options?
+
+`undefined`
+
+#### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[`PureStatefulComputationModule`](../../interfaces/PureStatefulComputationModule.md).[`throwIfEmpty`](../../interfaces/PureStatefulComputationModule.md#throwifempty)
+
+***
+
+### throws()
+
+> **throws**\<`T`\>(`options`?): [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### raise?
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+#### Returns
+
+[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`throws`](../../interfaces/DeferredComputationModule.md#throws)
 
 ***
 

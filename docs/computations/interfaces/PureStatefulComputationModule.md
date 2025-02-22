@@ -100,6 +100,78 @@
 
 ***
 
+### repeat()
+
+#### Call Signature
+
+> **repeat**\<`T`\>(`predicate`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### predicate
+
+[`Predicate`](../../functions/type-aliases/Predicate.md)\<`number`\>
+
+##### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+#### Call Signature
+
+> **repeat**\<`T`\>(`count`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### count
+
+`number`
+
+##### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+#### Call Signature
+
+> **repeat**\<`T`\>(): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+***
+
+### retry()
+
+> **retry**\<`T`\>(`shouldRetry`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### shouldRetry?
+
+(`count`, `error`) => `boolean`
+
+#### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+***
+
 ### scan()
 
 > **scan**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `TAcc`\>
@@ -141,6 +213,30 @@
 ###### count?
 
 `number`
+
+#### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+***
+
+### throwIfEmpty()
+
+> **throwIfEmpty**\<`T`\>(`factory`, `options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### factory
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+##### options?
+
+`undefined`
 
 #### Returns
 
