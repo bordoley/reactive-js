@@ -27,6 +27,7 @@ export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
 export declare const startWith: Signature["startWith"];
 export declare const takeFirst: Signature["takeFirst"];
+export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throws: Signature["throws"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];

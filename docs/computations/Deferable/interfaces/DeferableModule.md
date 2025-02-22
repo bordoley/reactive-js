@@ -742,7 +742,7 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 
 #### Inherited from
 
-[`PureStatefulComputationModule`](../../interfaces/PureStatefulComputationModule.md).[`throwIfEmpty`](../../interfaces/PureStatefulComputationModule.md#throwifempty)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`throwIfEmpty`](../../interfaces/DeferredComputationModule.md#throwifempty)
 
 ***
 

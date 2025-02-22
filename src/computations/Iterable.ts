@@ -413,6 +413,30 @@ class TakeWhileIterable<T> {
   }
 }
 
+class ThrowIfEmptyIterable<T> {
+  constructor(
+    private readonly i: Iterable<T>,
+    private readonly f: Factory<unknown>,
+  ) {}
+
+  *[Symbol.iterator]() {
+    let isEmpty = true;
+    for (const v of this.i) {
+      isEmpty = false;
+      yield v;
+    }
+
+    if (isEmpty) {
+      raise(error(this.f()));
+    }
+  }
+}
+
+export const throwIfEmpty: Signature["throwIfEmpty"] =
+  <T>(factory: Factory<unknown>) =>
+  (iter: Iterable<T>) =>
+    newInstance(ThrowIfEmptyIterable, iter, factory);
+
 export const takeWhile: Signature["takeWhile"] =
   <T>(
     predicate: Predicate<T>,

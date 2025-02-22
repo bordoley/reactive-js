@@ -252,6 +252,25 @@ class TakeWhileIterable {
         }
     }
 }
+class ThrowIfEmptyIterable {
+    i;
+    f;
+    constructor(i, f) {
+        this.i = i;
+        this.f = f;
+    }
+    *[Symbol.iterator]() {
+        let isEmpty = true;
+        for (const v of this.i) {
+            isEmpty = false;
+            yield v;
+        }
+        if (isEmpty) {
+            raise(error(this.f()));
+        }
+    }
+}
+export const throwIfEmpty = (factory) => (iter) => newInstance(ThrowIfEmptyIterable, iter, factory);
 export const takeWhile = (predicate, options) => (iterable) => newInstance(TakeWhileIterable, iterable, predicate, options?.inclusive ?? false);
 class ThrowsIterable {
     r;

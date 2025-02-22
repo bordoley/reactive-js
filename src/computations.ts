@@ -109,6 +109,11 @@ export interface DeferredComputationModule<C extends Computation> {
   throws<T>(options?: {
     readonly raise?: Factory<unknown>;
   }): ComputationOf<C, T>;
+
+  throwIfEmpty<T>(
+    factory: Factory<unknown>,
+    options?: undefined,
+  ): ComputationOperator<C, T, T>;
 }
 
 export interface ComputationWithSideEffectsModule<C extends Computation> {
@@ -157,11 +162,6 @@ export interface PureStatefulComputationModule<C extends Computation> {
   skipFirst<T>(options?: {
     readonly count?: number;
   }): ComputationOperator<C, T, T>;
-
-  throwIfEmpty<T>(
-    factory: Factory<unknown>,
-    options?: undefined,
-  ): ComputationOperator<C, T, T>;
 }
 
 export interface Pick<C extends Computation> {

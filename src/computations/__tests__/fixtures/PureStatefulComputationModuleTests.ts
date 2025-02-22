@@ -15,7 +15,6 @@ import * as Observable from "../../../concurrent/Observable.js";
 import {
   Tuple2,
   arrayEquality,
-  none,
   pipe,
   pipeLazy,
   returns,
@@ -309,45 +308,6 @@ const PureStatefulComputationModuleTests = <C extends Computation>(
           m.skipFirst({ count: 4 }),
           m.toReadonlyArray(),
           expectArrayEquals([] as number[]),
-        ),
-      ),
-    ),
-    describe(
-      "throwIfEmpty",
-      test("when source is empty", () => {
-        const error = new Error();
-        pipe(
-          pipeLazy(
-            [],
-            m.fromReadonlyArray(),
-            m.throwIfEmpty(() => error),
-            m.toReadonlyArray(),
-          ),
-          expectToThrowError(error),
-        );
-      }),
-      test("when factory throw", () => {
-        const error = new Error();
-        pipe(
-          pipeLazy(
-            [],
-            m.fromReadonlyArray(),
-            m.throwIfEmpty(() => {
-              throw error;
-            }),
-            m.toReadonlyArray(),
-          ),
-          expectToThrowError(error),
-        );
-      }),
-      test(
-        "when source is not empty",
-        pipeLazy(
-          [1],
-          m.fromReadonlyArray(),
-          m.throwIfEmpty(returns(none)),
-          m.toReadonlyArray<number>(),
-          expectArrayEquals([1]),
         ),
       ),
     ),

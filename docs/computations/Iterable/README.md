@@ -37,5 +37,6 @@
 - [startWith](functions/startWith.md)
 - [takeFirst](functions/takeFirst.md)
 - [takeWhile](functions/takeWhile.md)
+- [throwIfEmpty](functions/throwIfEmpty.md)
 - [throws](functions/throws.md)
 - [toReadonlyArray](functions/toReadonlyArray.md)

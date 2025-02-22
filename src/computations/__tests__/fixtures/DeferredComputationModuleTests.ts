@@ -17,6 +17,7 @@ import {
   alwaysTrue,
   increment,
   lessThan,
+  none,
   pipe,
   pipeLazy,
   raise,
@@ -431,6 +432,45 @@ const DeferredComputationModuleTests = <C extends Computation>(
           expectToThrowError(err),
         );
       }),
+    ),
+    describe(
+      "throwIfEmpty",
+      test("when source is empty", () => {
+        const error = new Error();
+        pipe(
+          pipeLazy(
+            [],
+            m.fromReadonlyArray(),
+            m.throwIfEmpty(() => error),
+            m.toReadonlyArray(),
+          ),
+          expectToThrowError(error),
+        );
+      }),
+      test("when factory throw", () => {
+        const error = new Error();
+        pipe(
+          pipeLazy(
+            [],
+            m.fromReadonlyArray(),
+            m.throwIfEmpty(() => {
+              throw error;
+            }),
+            m.toReadonlyArray(),
+          ),
+          expectToThrowError(error),
+        );
+      }),
+      test(
+        "when source is not empty",
+        pipeLazy(
+          [1],
+          m.fromReadonlyArray(),
+          m.throwIfEmpty(returns(none)),
+          m.toReadonlyArray<number>(),
+          expectArrayEquals([1]),
+        ),
+      ),
     ),
     describe(
       "throws",

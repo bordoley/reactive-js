@@ -377,6 +377,30 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 ***
 
+### throwIfEmpty()
+
+> **throwIfEmpty**\<`T`\>(`factory`, `options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### factory
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+##### options?
+
+`undefined`
+
+#### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+***
+
 ### throws()
 
 > **throws**\<`T`\>(`options`?): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
