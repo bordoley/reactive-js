@@ -17,6 +17,114 @@
 
 ## Methods
 
+### concat()
+
+> **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### fst
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+
+##### snd
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+
+##### tail
+
+...readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>[]
+
+#### Returns
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+
+***
+
+### concatAll()
+
+> **concatAll**\<`T`\>(): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, `T`\>
+
+***
+
+### concatMany()
+
+> **concatMany**\<`T`\>(`computations`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### computations
+
+readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\]
+
+#### Returns
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+
+***
+
+### concatMap()
+
+> **concatMap**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `TA`, `TB`\>
+
+#### Type Parameters
+
+• **TA**
+
+• **TB**
+
+#### Parameters
+
+##### selector
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<`TA`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `TB`\>\>
+
+#### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `TA`, `TB`\>
+
+***
+
+### concatWith()
+
+> **concatWith**\<`T`\>(`snd`, ...`tail`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### snd
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+
+##### tail
+
+...readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>[]
+
+#### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+***
+
 ### fromIterable()
 
 > **fromIterable**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\>
@@ -84,3 +192,51 @@
 #### Returns
 
 [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+
+***
+
+### takeFirst()
+
+> **takeFirst**\<`T`\>(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### count?
+
+`number`
+
+#### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+***
+
+### takeWhile()
+
+> **takeWhile**\<`T`\>(`predicate`, `options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### predicate
+
+[`Predicate`](../../functions/type-aliases/Predicate.md)\<`T`\>
+
+##### options?
+
+###### inclusive?
+
+`boolean`
+
+#### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>

@@ -9,6 +9,11 @@ export interface DeferableModule extends PureStatelessComputationModule<Deferabl
 }
 export type Signature = DeferableModule;
 export declare const buffer: Signature["buffer"];
+export declare const concat: Signature["concat"];
+export declare const concatAll: Signature["concatAll"];
+export declare const concatMap: Signature["concatMap"];
+export declare const concatMany: Signature["concatMany"];
+export declare const concatWith: Signature["concatWith"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const forEach: Signature["forEach"];

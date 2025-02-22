@@ -43,6 +43,30 @@ export type ComputationOperator<C extends Computation, TA, TB> = Function1<
 >;
 
 export interface DeferredComputationModule<C extends Computation> {
+  concat<T>(
+    fst: ComputationOf<C, T>,
+    snd: ComputationOf<C, T>,
+    ...tail: readonly ComputationOf<C, T>[]
+  ): ComputationOf<C, T>;
+
+  concatAll<T>(): ComputationOperator<C, ComputationOf<C, T>, T>;
+
+  concatMap<TA, TB>(
+    selector: Function1<TA, ComputationOf<C, TB>>,
+  ): ComputationOperator<C, TA, TB>;
+
+  concatMany<T>(
+    computations: readonly [
+      ComputationOf<C, T>,
+      ...(readonly ComputationOf<C, T>[]),
+    ],
+  ): ComputationOf<C, T>;
+
+  concatWith<T>(
+    snd: ComputationOf<C, T>,
+    ...tail: readonly ComputationOf<C, T>[]
+  ): ComputationOperator<C, T, T>;
+
   fromReadonlyArray<T>(options?: {
     readonly count?: number;
     readonly start?: number;
@@ -57,6 +81,15 @@ export interface DeferredComputationModule<C extends Computation> {
       readonly count?: number;
     },
   ): ComputationOf<C, T>;
+
+  takeFirst<T>(options?: {
+    readonly count?: number;
+  }): ComputationOperator<C, T, T>;
+
+  takeWhile<T>(
+    predicate: Predicate<T>,
+    options?: { readonly inclusive?: boolean },
+  ): ComputationOperator<C, T, T>;
 }
 
 export interface ComputationWithSideEffectsModule<C extends Computation> {
@@ -103,15 +136,6 @@ export interface PureStatefulComputationModule<C extends Computation> {
   skipFirst<T>(options?: {
     readonly count?: number;
   }): ComputationOperator<C, T, T>;
-
-  takeFirst<T>(options?: {
-    readonly count?: number;
-  }): ComputationOperator<C, T, T>;
-
-  takeWhile<T>(
-    predicate: Predicate<T>,
-    options?: { readonly inclusive?: boolean },
-  ): ComputationOperator<C, T, T>;
 }
 
 export interface Pick<C extends Computation> {

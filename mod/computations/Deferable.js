@@ -2,6 +2,11 @@
 
 import { Computation_type, } from "../computations.js";
 import Deferable_buffer from "./Deferable/__private__/Deferable.buffer.js";
+import Deferable_concat from "./Deferable/__private__/Deferable.concat.js";
+import Deferable_concatAll from "./Deferable/__private__/Deferable.concatAll.js";
+import Deferable_concatMany from "./Deferable/__private__/Deferable.concatMany.js";
+import Deferable_concatMap from "./Deferable/__private__/Deferable.concatMap.js";
+import Deferable_concatWith from "./Deferable/__private__/Deferable.concatWith.js";
 import Deferable_decodeWithCharset from "./Deferable/__private__/Deferable.decodeWithCharset.js";
 import Deferable_distinctUntilChanged from "./Deferable/__private__/Deferable.distinctUntilChanged.js";
 import Deferable_forEach from "./Deferable/__private__/Deferable.forEach.js";
@@ -18,6 +23,11 @@ import Deferable_takeFirst from "./Deferable/__private__/Deferable.takeFirst.js"
 import Deferable_takeWhile from "./Deferable/__private__/Deferable.takeWhile.js";
 import Deferable_toReadonlyArray from "./Deferable/__private__/Deferable.toReadonlyArray.js";
 export const buffer = Deferable_buffer;
+export const concat = Deferable_concat;
+export const concatAll = Deferable_concatAll;
+export const concatMap = Deferable_concatMap;
+export const concatMany = Deferable_concatMany;
+export const concatWith = Deferable_concatWith;
 export const decodeWithCharset = Deferable_decodeWithCharset;
 export const distinctUntilChanged = Deferable_distinctUntilChanged;
 export const forEach = Deferable_forEach;

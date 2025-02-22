@@ -18,9 +18,13 @@ import {
 } from "../../../functions.js";
 
 const PureStatelessComputationModuleTests = <C extends Computation>(
-  m: PureStatelessComputationModule<C>,
-  fromReadonlyArray: <T>() => Function1<ReadonlyArray<T>, ComputationOf<C, T>>,
-  toReadonlyArray: <T>() => Function1<ComputationOf<C, T>, ReadonlyArray<T>>,
+  m: PureStatelessComputationModule<C> & {
+    fromReadonlyArray: <T>() => Function1<
+      ReadonlyArray<T>,
+      ComputationOf<C, T>
+    >;
+    toReadonlyArray: <T>() => Function1<ComputationOf<C, T>, ReadonlyArray<T>>;
+  },
 ) =>
   describe(
     "PureStatelessComputationModule",
@@ -30,9 +34,9 @@ const PureStatelessComputationModuleTests = <C extends Computation>(
         "keeps only values greater than 5",
         pipeLazy(
           [4, 8, 10, 7],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.keep(greaterThan(5)),
-          toReadonlyArray(),
+          m.toReadonlyArray(),
           expectArrayEquals([8, 10, 7]),
         ),
       ),
@@ -45,9 +49,9 @@ const PureStatelessComputationModuleTests = <C extends Computation>(
         pipe(
           pipeLazy(
             [1, 1],
-            fromReadonlyArray(),
+            m.fromReadonlyArray(),
             m.keep(predicate),
-            toReadonlyArray(),
+            m.toReadonlyArray(),
           ),
 
           expectToThrowError(err),
@@ -61,9 +65,9 @@ const PureStatelessComputationModuleTests = <C extends Computation>(
 
         pipeLazy(
           [1, 2, 3],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.map(increment),
-          toReadonlyArray(),
+          m.toReadonlyArray(),
           expectArrayEquals([2, 3, 4]),
         ),
       ),
@@ -76,9 +80,9 @@ const PureStatelessComputationModuleTests = <C extends Computation>(
         pipe(
           pipeLazy(
             [1, 1],
-            fromReadonlyArray(),
+            m.fromReadonlyArray(),
             m.map(selector),
-            toReadonlyArray(),
+            m.toReadonlyArray(),
           ),
 
           expectToThrowError(err),

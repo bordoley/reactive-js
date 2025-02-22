@@ -17,6 +17,11 @@
 
 ## Functions
 
+- [concat](functions/concat.md)
+- [concatAll](functions/concatAll.md)
+- [concatMany](functions/concatMany.md)
+- [concatMap](functions/concatMap.md)
+- [concatWith](functions/concatWith.md)
 - [forEach](functions/forEach.md)
 - [fromIterable](functions/fromIterable.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
@@ -24,4 +29,6 @@
 - [keep](functions/keep.md)
 - [map](functions/map.md)
 - [reduce](functions/reduce.md)
+- [takeFirst](functions/takeFirst.md)
+- [takeWhile](functions/takeWhile.md)
 - [toReadonlyArray](functions/toReadonlyArray.md)

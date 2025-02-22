@@ -1,3 +1,4 @@
+import { clampPositiveInteger } from "../__internal__/math.js";
 import { mixInstanceFactory, props } from "../__internal__/mixins.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import {
@@ -19,6 +20,7 @@ import {
   identity,
   newInstance,
   none,
+  pipe,
   returns,
 } from "../functions.js";
 
@@ -36,6 +38,38 @@ export interface IterableModule
     SynchronousComputationModule<IterableComputation> {}
 
 export type Signature = IterableModule;
+
+export const concat: Signature["concat"] = <T>(
+  ...iterables: readonly Iterable<T>[]
+) => concatMany(iterables as readonly [Iterable<T>, ...Iterable<T>[]]);
+
+class ConcatAllIterable<T> {
+  constructor(private readonly s: Iterable<Iterable<T>>) {}
+
+  *[Symbol.iterator]() {
+    for (const iter of this.s) {
+      for (const v of iter) {
+        yield v;
+      }
+    }
+  }
+}
+export const concatAll: Signature["concatAll"] = /*@PURE*/ (<T>() =>
+  returns((iterable: Iterable<Iterable<T>>) =>
+    newInstance(ConcatAllIterable, iterable),
+  ))();
+
+export const concatMap: Signature["concatMap"] =
+  <TA, TB>(selector: Function1<TA, Iterable<TB>>) =>
+  (obs: Iterable<TA>) =>
+    pipe(obs, map(selector), concatAll<TB>());
+
+export const concatMany: Signature["concatMany"] = concatAll();
+
+export const concatWith: Signature["concatWith"] =
+  <T>(...tail: Iterable<T>[]) =>
+  (fst: Iterable<T>) =>
+    concatMany([fst, ...tail]);
 
 export const forEach: Signature["forEach"] = /*@PURE*/ (<T>() => {
   const ForEachIterable_effect = Symbol("ForEachIterable_effect");
@@ -224,6 +258,74 @@ export const reduce: Signature["reduce"] =
 
     return acc;
   };
+
+class TakeFirstIterable<T> {
+  constructor(
+    private s: Iterable<T>,
+    private c: number,
+  ) {}
+
+  *[Symbol.iterator]() {
+    const takeCount = this.c;
+    let count = 0;
+
+    for (const v of this.s) {
+      if (count < takeCount) {
+        yield v;
+      }
+      count++;
+    }
+  }
+}
+
+export const takeFirst: Signature["takeFirst"] =
+  <T>(options?: { readonly count?: number }) =>
+  (iterable: Iterable<T>) =>
+    newInstance(
+      TakeFirstIterable,
+      iterable,
+      clampPositiveInteger(options?.count ?? 1),
+    );
+
+class TakeWhileIterable<T> {
+  constructor(
+    private s: Iterable<T>,
+    private p: Predicate<T>,
+    private i: boolean,
+  ) {}
+
+  *[Symbol.iterator]() {
+    const predicate = this.p;
+    const inclusive = this.i;
+
+    for (const next of this.s) {
+      const satisfiesPredicate = predicate(next);
+
+      if (satisfiesPredicate || inclusive) {
+        yield next;
+      }
+
+      if (!satisfiesPredicate) {
+        break;
+      }
+    }
+  }
+}
+
+export const takeWhile: Signature["takeWhile"] =
+  <T>(
+    predicate: Predicate<T>,
+    options?: {
+      readonly inclusive?: boolean;
+    },
+  ) =>
+  (iterable: Iterable<T>) =>
+    newInstance(
+      TakeWhileIterable,
+      iterable,
+      predicate,
+      options?.inclusive ?? false,
+    );
 
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   <T>() =>

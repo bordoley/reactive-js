@@ -1,9 +1,28 @@
 /// <reference types="./Iterable.d.ts" />
 
+import { clampPositiveInteger } from "../__internal__/math.js";
 import { mixInstanceFactory, props } from "../__internal__/mixins.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import { Computation_type, } from "../computations.js";
-import { identity, newInstance, none, returns, } from "../functions.js";
+import { identity, newInstance, none, pipe, returns, } from "../functions.js";
+export const concat = (...iterables) => concatMany(iterables);
+class ConcatAllIterable {
+    s;
+    constructor(s) {
+        this.s = s;
+    }
+    *[Symbol.iterator]() {
+        for (const iter of this.s) {
+            for (const v of iter) {
+                yield v;
+            }
+        }
+    }
+}
+export const concatAll = /*@PURE*/ (() => returns((iterable) => newInstance(ConcatAllIterable, iterable)))();
+export const concatMap = (selector) => (obs) => pipe(obs, map(selector), concatAll());
+export const concatMany = concatAll();
+export const concatWith = (...tail) => (fst) => concatMany([fst, ...tail]);
 export const forEach = /*@PURE*/ (() => {
     const ForEachIterable_effect = Symbol("ForEachIterable_effect");
     const ForEachIterable_delegate = Symbol("ForEachIterable_delegate");
@@ -121,4 +140,47 @@ export const reduce = (reducer, initialValue) => (iterable) => {
     }
     return acc;
 };
+class TakeFirstIterable {
+    s;
+    c;
+    constructor(s, c) {
+        this.s = s;
+        this.c = c;
+    }
+    *[Symbol.iterator]() {
+        const takeCount = this.c;
+        let count = 0;
+        for (const v of this.s) {
+            if (count < takeCount) {
+                yield v;
+            }
+            count++;
+        }
+    }
+}
+export const takeFirst = (options) => (iterable) => newInstance(TakeFirstIterable, iterable, clampPositiveInteger(options?.count ?? 1));
+class TakeWhileIterable {
+    s;
+    p;
+    i;
+    constructor(s, p, i) {
+        this.s = s;
+        this.p = p;
+        this.i = i;
+    }
+    *[Symbol.iterator]() {
+        const predicate = this.p;
+        const inclusive = this.i;
+        for (const next of this.s) {
+            const satisfiesPredicate = predicate(next);
+            if (satisfiesPredicate || inclusive) {
+                yield next;
+            }
+            if (!satisfiesPredicate) {
+                break;
+            }
+        }
+    }
+}
+export const takeWhile = (predicate, options) => (iterable) => newInstance(TakeWhileIterable, iterable, predicate, options?.inclusive ?? false);
 export const toReadonlyArray = () => (iterable) => Array.from(iterable);

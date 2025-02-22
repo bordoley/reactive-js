@@ -7,5 +7,5 @@ import ComputationWithSideEffectsModuleTests from "./fixtures/ComputationWithSid
 import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
 import PureStatefulComputationModuleTests from "./fixtures/PureStatefulComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
-testModule("Deferable", PureStatelessComputationModuleTests(Deferable, Deferable.fromReadonlyArray, Deferable.toReadonlyArray), DeferredComputationModuleTests(Deferable), PureStatefulComputationModuleTests(Deferable, Deferable.toReadonlyArray), ComputationWithSideEffectsModuleTests(Deferable), SynchronousComputationModuleTests(Deferable));
+testModule("Deferable", PureStatelessComputationModuleTests(Deferable), DeferredComputationModuleTests(Deferable), PureStatefulComputationModuleTests(Deferable), ComputationWithSideEffectsModuleTests(Deferable), SynchronousComputationModuleTests(Deferable));
 ((_) => { })(Deferable);

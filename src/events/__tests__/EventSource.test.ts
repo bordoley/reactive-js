@@ -37,19 +37,20 @@ import * as EventSource from "../EventSource.js";
 
 testModule(
   "EventSource",
-  PureStatelessComputationModuleTests(
-    EventSource,
-    <T>() =>
-      (arr: readonly T[]) => ({
+  PureStatelessComputationModuleTests({
+    ...EventSource,
+    fromReadonlyArray<T>() {
+      return (arr: readonly T[]) => ({
         [EventSourceLike_addEventListener](listener: EventListenerLike<T>) {
           for (let i = 0; i < arr[Array_length]; i++) {
             listener[EventListenerLike_notify](arr[i]);
           }
           listener[DisposableLike_dispose]();
         },
-      }),
-    <T>() =>
-      (eventSource: EventSourceLike<T>) => {
+      });
+    },
+    toReadonlyArray<T>() {
+      return (eventSource: EventSourceLike<T>) => {
         const result: T[] = [];
         const subscription = pipe(
           eventSource,
@@ -61,8 +62,9 @@ testModule(
         }
 
         return result;
-      },
-  ),
+      };
+    },
+  }),
   describe(
     "create",
     test(

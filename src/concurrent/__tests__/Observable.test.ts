@@ -477,14 +477,14 @@ testModule(
       SynchronousComputationModule<Observable.RunnableComputation>,
   ),
   PureStatelesssComputationModuleTests(
-    Observable as PureStatelessComputationModule<Observable.PureRunnableComputation>,
-    Observable.fromReadonlyArray,
-    Observable.toReadonlyArray,
+    Observable as PureStatelessComputationModule<Observable.RunnableComputation> &
+      DeferredComputationModule<Observable.RunnableComputation> &
+      SynchronousComputationModule<Observable.RunnableComputation>,
   ),
   PureStatefulComputationModuleTests(
     Observable as PureStatefulComputationModule<Observable.RunnableComputation> &
-      DeferredComputationModule<Observable.RunnableComputation>,
-    Observable.toReadonlyArray,
+      DeferredComputationModule<Observable.RunnableComputation> &
+      SynchronousComputationModule<Observable.RunnableComputation>,
   ),
   ComputationWithSideEffectsModuleTests(
     Observable as DeferredComputationModule<Observable.RunnableComputation> &
@@ -880,17 +880,6 @@ testModule(
   describe(
     "concat",
     test(
-      "concats the input containers in order",
-      pipeLazy(
-        Observable.concat(
-          pipe([1, 2, 3], Observable.fromReadonlyArray()),
-          pipe([4, 5, 6], Observable.fromReadonlyArray()),
-        ),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([1, 2, 3, 4, 5, 6]),
-      ),
-    ),
-    test(
       "concats the input containers in order, when sources have delay",
       pipeLazy(
         Observable.concat(
@@ -904,19 +893,6 @@ testModule(
   ),
   describe(
     "concatAll",
-    test(
-      "concating pure Runnables",
-      pipeLazy(
-        [
-          pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
-          pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 2 })),
-        ],
-        Observable.fromReadonlyArray<PureRunnableLike<number>>(),
-        Observable.concatAll<number>(),
-        Observable.toReadonlyArray<number>(),
-        expectArrayEquals([1, 2, 3, 4, 5, 6]),
-      ),
-    ),
     PureStatefulObservableOperator(Observable.concatAll()),
     DeferringObservableOperatorTests(
       Observable.concatAll({
@@ -987,21 +963,6 @@ testModule(
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
       );
     }),
-    test(
-      "maps each value to a container and flattens",
-      pipeLazy(
-        [0, 1],
-        Observable.fromReadonlyArray(),
-        Observable.concatMap(
-          pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
-          {
-            innerType: Observable.PureRunnableType,
-          },
-        ),
-        Observable.toReadonlyArray<number>(),
-        expectArrayEquals([1, 2, 3, 1, 2, 3]),
-      ),
-    ),
     PureStatefulObservableOperator(
       Observable.concatMap(_ => Observable.empty({ delay: 1 })),
     ),
@@ -1029,16 +990,6 @@ testModule(
   ),
   describe(
     "concatWith",
-    test(
-      "concats two containers together",
-      pipeLazy(
-        [0, 1],
-        Observable.fromReadonlyArray(),
-        Observable.concatWith(pipe([2, 3, 4], Observable.fromReadonlyArray())),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([0, 1, 2, 3, 4]),
-      ),
-    ),
     PureStatefulObservableOperator(
       Observable.concatWith(
         Observable.empty({ delay: 1 }),

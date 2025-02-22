@@ -38,6 +38,134 @@
 
 ***
 
+### concat()
+
+> **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### fst
+
+[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
+
+##### snd
+
+[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
+
+##### tail
+
+...readonly [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>[]
+
+#### Returns
+
+[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concat`](../../interfaces/DeferredComputationModule.md#concat)
+
+***
+
+### concatAll()
+
+> **concatAll**\<`T`\>(): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, `T`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatAll`](../../interfaces/DeferredComputationModule.md#concatall)
+
+***
+
+### concatMany()
+
+> **concatMany**\<`T`\>(`computations`): [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### computations
+
+readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>\]
+
+#### Returns
+
+[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatMany`](../../interfaces/DeferredComputationModule.md#concatmany)
+
+***
+
+### concatMap()
+
+> **concatMap**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `TA`, `TB`\>
+
+#### Type Parameters
+
+• **TA**
+
+• **TB**
+
+#### Parameters
+
+##### selector
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`DeferableLike`](../../interfaces/DeferableLike.md)\<`TB`\>\>
+
+#### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `TA`, `TB`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatMap`](../../interfaces/DeferredComputationModule.md#concatmap)
+
+***
+
+### concatWith()
+
+> **concatWith**\<`T`\>(`snd`, ...`tail`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### snd
+
+[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
+
+##### tail
+
+...readonly [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>[]
+
+#### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatWith`](../../interfaces/DeferredComputationModule.md#concatwith)
+
+***
+
 ### decodeWithCharset()
 
 > **decodeWithCharset**(`options`?): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `ArrayBuffer`, `string`\>
@@ -376,7 +504,7 @@
 
 #### Inherited from
 
-[`PureStatefulComputationModule`](../../interfaces/PureStatefulComputationModule.md).[`takeFirst`](../../interfaces/PureStatefulComputationModule.md#takefirst)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`takeFirst`](../../interfaces/DeferredComputationModule.md#takefirst)
 
 ***
 
@@ -406,7 +534,7 @@
 
 #### Inherited from
 
-[`PureStatefulComputationModule`](../../interfaces/PureStatefulComputationModule.md).[`takeWhile`](../../interfaces/PureStatefulComputationModule.md#takewhile)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`takeWhile`](../../interfaces/DeferredComputationModule.md#takewhile)
 
 ***
 

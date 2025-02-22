@@ -8,16 +8,9 @@ import SynchronousComputationModuleTests from "./fixtures/SynchronousComputation
 
 testModule(
   "Deferable",
-  PureStatelessComputationModuleTests(
-    Deferable,
-    Deferable.fromReadonlyArray,
-    Deferable.toReadonlyArray,
-  ),
+  PureStatelessComputationModuleTests(Deferable),
   DeferredComputationModuleTests<Deferable.DeferableComputation>(Deferable),
-  PureStatefulComputationModuleTests<Deferable.DeferableComputation>(
-    Deferable,
-    Deferable.toReadonlyArray,
-  ),
+  PureStatefulComputationModuleTests<Deferable.DeferableComputation>(Deferable),
   ComputationWithSideEffectsModuleTests(Deferable),
   SynchronousComputationModuleTests<Deferable.DeferableComputation>(Deferable),
 );

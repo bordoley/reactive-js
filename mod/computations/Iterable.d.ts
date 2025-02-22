@@ -8,6 +8,11 @@ export interface IterableComputation extends Computation {
 export interface IterableModule extends PureStatelessComputationModule<IterableComputation>, DeferredComputationModule<IterableComputation>, ComputationWithSideEffectsModule<IterableComputation>, SynchronousComputationModule<IterableComputation> {
 }
 export type Signature = IterableModule;
+export declare const concat: Signature["concat"];
+export declare const concatAll: Signature["concatAll"];
+export declare const concatMap: Signature["concatMap"];
+export declare const concatMany: Signature["concatMany"];
+export declare const concatWith: Signature["concatWith"];
 export declare const forEach: Signature["forEach"];
 export declare const fromIterable: Signature["fromIterable"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
@@ -15,4 +20,6 @@ export declare const generate: Signature["generate"];
 export declare const keep: Signature["keep"];
 export declare const map: Signature["map"];
 export declare const reduce: Signature["reduce"];
+export declare const takeFirst: Signature["takeFirst"];
+export declare const takeWhile: Signature["takeWhile"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];

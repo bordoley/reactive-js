@@ -7,11 +7,16 @@ import {
 
 export const AbstractSink_delegate = Symbol("AbstractSink_delegate");
 
-abstract class AbstractSink<TA, TB = TA> implements SinkLike<TA> {
+abstract class AbstractSink<
+  TA,
+  TB = TA,
+  TDelegate extends SinkLike<TB> = SinkLike<TB>,
+> implements SinkLike<TA>
+{
   public [SinkLike_isComplete] = false;
-  public [AbstractSink_delegate]: SinkLike<TB>;
+  public [AbstractSink_delegate]: TDelegate;
 
-  constructor(sink: SinkLike<TB>) {
+  constructor(sink: TDelegate) {
     this[AbstractSink_delegate] = sink;
   }
 

@@ -18,6 +18,11 @@
 ## Functions
 
 - [buffer](functions/buffer.md)
+- [concat](functions/concat.md)
+- [concatAll](functions/concatAll.md)
+- [concatMany](functions/concatMany.md)
+- [concatMap](functions/concatMap.md)
+- [concatWith](functions/concatWith.md)
 - [decodeWithCharset](functions/decodeWithCharset.md)
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [forEach](functions/forEach.md)

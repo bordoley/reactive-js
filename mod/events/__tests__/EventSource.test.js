@@ -63,20 +63,28 @@ import { EventListenerLike_notify, EventSourceLike_addEventListener, } from "../
 import { bindMethod, compose, ignore, isSome, newInstance, none, pick, pipe, pipeLazy, raise, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
-testModule("EventSource", PureStatelessComputationModuleTests(EventSource, () => (arr) => ({
-    [EventSourceLike_addEventListener](listener) {
-        for (let i = 0; i < arr[Array_length]; i++) {
-            listener[EventListenerLike_notify](arr[i]);
-        }
-        listener[DisposableLike_dispose]();
+testModule("EventSource", PureStatelessComputationModuleTests({
+    ...EventSource,
+    fromReadonlyArray() {
+        return (arr) => ({
+            [EventSourceLike_addEventListener](listener) {
+                for (let i = 0; i < arr[Array_length]; i++) {
+                    listener[EventListenerLike_notify](arr[i]);
+                }
+                listener[DisposableLike_dispose]();
+            },
+        });
     },
-}), () => (eventSource) => {
-    const result = [];
-    const subscription = pipe(eventSource, EventSource.addEventHandler(bindMethod(result, Array_push)));
-    if (isSome(subscription[DisposableLike_error])) {
-        throw subscription[DisposableLike_error];
-    }
-    return result;
+    toReadonlyArray() {
+        return (eventSource) => {
+            const result = [];
+            const subscription = pipe(eventSource, EventSource.addEventHandler(bindMethod(result, Array_push)));
+            if (isSome(subscription[DisposableLike_error])) {
+                throw subscription[DisposableLike_error];
+            }
+            return result;
+        };
+    },
 }), describe("create", test("when the setup function throws", pipeLazy(EventSource.create(_ => raise()), EventSource.addEventHandler(ignore), pick(DisposableLike_error), expectIsSome))), describe("fromPromise", testAsync("when the promise resolves", async () => {
     const promise = Promise.resolve(1);
     let result = none;

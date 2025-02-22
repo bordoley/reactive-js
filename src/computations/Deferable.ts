@@ -10,6 +10,11 @@ import {
   SynchronousComputationModule,
 } from "../computations.js";
 import Deferable_buffer from "./Deferable/__private__/Deferable.buffer.js";
+import Deferable_concat from "./Deferable/__private__/Deferable.concat.js";
+import Deferable_concatAll from "./Deferable/__private__/Deferable.concatAll.js";
+import Deferable_concatMany from "./Deferable/__private__/Deferable.concatMany.js";
+import Deferable_concatMap from "./Deferable/__private__/Deferable.concatMap.js";
+import Deferable_concatWith from "./Deferable/__private__/Deferable.concatWith.js";
 import Deferable_decodeWithCharset from "./Deferable/__private__/Deferable.decodeWithCharset.js";
 import Deferable_distinctUntilChanged from "./Deferable/__private__/Deferable.distinctUntilChanged.js";
 import Deferable_forEach from "./Deferable/__private__/Deferable.forEach.js";
@@ -43,6 +48,11 @@ export interface DeferableModule
 export type Signature = DeferableModule;
 
 export const buffer: Signature["buffer"] = Deferable_buffer;
+export const concat: Signature["concat"] = Deferable_concat;
+export const concatAll: Signature["concatAll"] = Deferable_concatAll;
+export const concatMap: Signature["concatMap"] = Deferable_concatMap;
+export const concatMany: Signature["concatMany"] = Deferable_concatMany;
+export const concatWith: Signature["concatWith"] = Deferable_concatWith;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Deferable_decodeWithCharset;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
