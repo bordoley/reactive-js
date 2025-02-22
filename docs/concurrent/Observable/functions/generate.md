@@ -24,6 +24,10 @@
 
 ### options?
 
+#### count?
+
+`number`
+
 #### delay?
 
 `number`

@@ -346,6 +346,16 @@ const PureStatefulComputationModuleTests = <C extends Computation>(
         ),
       ),
       test(
+        "from iterable source",
+        pipeLazy(
+          [1, 2, 3, 4],
+          m.fromIterable(),
+          m.takeFirst({ count: 2 }),
+          toReadonlyArray(),
+          expectArrayEquals([1, 2]),
+        ),
+      ),
+      test(
         "when source is empty",
         pipeLazy(
           [],

@@ -270,6 +270,13 @@ export interface RunnableWithSideEffectsComputation extends Computation {
 /**
  * @noInheritDoc
  */
+export interface RunnableComputation extends Computation {
+  readonly [Computation_type]?: RunnableLike<this[typeof Computation_T]>;
+}
+
+/**
+ * @noInheritDoc
+ */
 export interface PuredDeferredObservableComputation extends Computation {
   readonly [Computation_type]?: PureDeferredObservableLike<
     this[typeof Computation_T]
@@ -871,6 +878,7 @@ export interface ObservableModule {
     generator: Updater<T>,
     initialValue: Factory<T>,
     options?: {
+      readonly count?: number;
       readonly delay?: number;
       readonly delayStart?: boolean;
     },

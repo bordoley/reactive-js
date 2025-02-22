@@ -8,6 +8,7 @@
 
 ## Extended by
 
+- [`DeferableModule`](../Deferable/interfaces/DeferableModule.md)
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
 - [`EventSourceModule`](../../events/EventSource/interfaces/EventSourceModule.md)
 

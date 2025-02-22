@@ -1,4 +1,4 @@
-import { Equality, Factory, Function1, Predicate, Reducer, Tuple2, TypePredicate, Updater } from "./functions.js";
+import { Equality, Factory, Function1, Predicate, Reducer, SideEffect1, Tuple2, TypePredicate, Updater } from "./functions.js";
 export declare const Computation_T: unique symbol;
 export declare const Computation_type: unique symbol;
 /**
@@ -22,11 +22,21 @@ export interface DeferredComputationModule<C extends Computation> {
         readonly count?: number;
         readonly start?: number;
     }): Function1<readonly T[], ComputationOf<C, T>>;
-    generate<T>(generator: Updater<T>, initialValue: Factory<T>): ComputationOf<C, T>;
+    fromIterable<T>(): Function1<Iterable<T>, ComputationOf<C, T>>;
+    generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
+        readonly count?: number;
+    }): ComputationOf<C, T>;
+}
+export interface ComputationWithSideEffectsModule<C extends Computation> {
+    forEach<T>(sideEffect: SideEffect1<T>): ComputationOperator<C, T, T>;
 }
 export interface PureStatelessComputationModule<C extends Computation> {
     keep<T>(predicate: Predicate<T>): ComputationOperator<C, T, T>;
     map<TA, TB>(selector: Function1<TA, TB>): ComputationOperator<C, TA, TB>;
+}
+export interface SynchronousComputationModule<C extends Computation> {
+    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ComputationOf<C, T>, TAcc>;
+    toReadonlyArray<T>(): Function1<ComputationOf<C, T>, ReadonlyArray<T>>;
 }
 export interface PureStatefulComputationModule<C extends Computation> {
     buffer<T>(options?: {
@@ -56,6 +66,29 @@ export interface Pick<C extends Computation> {
     <T, TKeyOfT extends keyof T>(key: TKeyOfT): ComputationOperator<C, T, T[TKeyOfT]>;
     <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(keyA: TKeyOfTA, keyB: TKeyOfTB): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB]>;
     <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA], TKeyOfTC extends keyof T[TKeyOfTA][TKeyOfTB]>(keyA: TKeyOfTA, keyB: TKeyOfTB, keyC: TKeyOfTC): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
+}
+export declare const SinkLike_next: unique symbol;
+export declare const SinkLike_complete: unique symbol;
+export declare const SinkLike_isComplete: unique symbol;
+/**
+ * @noInheritDoc
+ */
+export interface SinkLike<T = unknown> {
+    readonly [SinkLike_isComplete]: boolean;
+    /**
+     * Notifies the EventListener of the next notification produced by the source.
+     *
+     * @param next - The next notification value.
+     */
+    [SinkLike_next](next: T): void;
+    [SinkLike_complete](): void;
+}
+export declare const DeferableLike_eval: unique symbol;
+/**
+ * Represents a deferred computation that is synchronously evaluated.
+ */
+export interface DeferableLike<T = unknown> {
+    [DeferableLike_eval](sink: SinkLike<T>): void;
 }
 interface Signature {
     keepType<C extends Computation>(keep: PureStatelessComputationModule<C>["keep"]): <TA, TB>(predicate: TypePredicate<TA, TB>) => ComputationOperator<C, TA, TB>;

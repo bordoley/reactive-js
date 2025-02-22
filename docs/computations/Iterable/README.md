@@ -18,5 +18,10 @@
 ## Functions
 
 - [forEach](functions/forEach.md)
+- [fromIterable](functions/fromIterable.md)
+- [fromReadonlyArray](functions/fromReadonlyArray.md)
+- [generate](functions/generate.md)
 - [keep](functions/keep.md)
 - [map](functions/map.md)
+- [reduce](functions/reduce.md)
+- [toReadonlyArray](functions/toReadonlyArray.md)

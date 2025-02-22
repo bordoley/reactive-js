@@ -1,0 +1,35 @@
+/// <reference types="./Deferable.d.ts" />
+
+import { Computation_type, } from "../computations.js";
+import Deferable_buffer from "./Deferable/__private__/Deferable.buffer.js";
+import Deferable_decodeWithCharset from "./Deferable/__private__/Deferable.decodeWithCharset.js";
+import Deferable_distinctUntilChanged from "./Deferable/__private__/Deferable.distinctUntilChanged.js";
+import Deferable_forEach from "./Deferable/__private__/Deferable.forEach.js";
+import Deferable_fromIterable from "./Deferable/__private__/Deferable.fromIterable.js";
+import Deferable_fromReadonlyArray from "./Deferable/__private__/Deferable.fromReadonlyArray.js";
+import Deferable_generate from "./Deferable/__private__/Deferable.generate.js";
+import Deferable_keep from "./Deferable/__private__/Deferable.keep.js";
+import Deferable_map from "./Deferable/__private__/Deferable.map.js";
+import Deferable_pairwise from "./Deferable/__private__/Deferable.pairwise.js";
+import Deferable_reduce from "./Deferable/__private__/Deferable.reduce.js";
+import Deferable_scan from "./Deferable/__private__/Deferable.scan.js";
+import Deferable_skipFirst from "./Deferable/__private__/Deferable.skipFirst.js";
+import Deferable_takeFirst from "./Deferable/__private__/Deferable.takeFirst.js";
+import Deferable_takeWhile from "./Deferable/__private__/Deferable.takeWhile.js";
+import Deferable_toReadonlyArray from "./Deferable/__private__/Deferable.toReadonlyArray.js";
+export const buffer = Deferable_buffer;
+export const decodeWithCharset = Deferable_decodeWithCharset;
+export const distinctUntilChanged = Deferable_distinctUntilChanged;
+export const forEach = Deferable_forEach;
+export const fromIterable = Deferable_fromIterable;
+export const fromReadonlyArray = Deferable_fromReadonlyArray;
+export const generate = Deferable_generate;
+export const keep = Deferable_keep;
+export const map = Deferable_map;
+export const pairwise = Deferable_pairwise;
+export const reduce = Deferable_reduce;
+export const scan = Deferable_scan;
+export const skipFirst = Deferable_skipFirst;
+export const takeFirst = Deferable_takeFirst;
+export const takeWhile = Deferable_takeWhile;
+export const toReadonlyArray = Deferable_toReadonlyArray;

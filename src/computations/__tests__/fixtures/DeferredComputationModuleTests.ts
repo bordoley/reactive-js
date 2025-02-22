@@ -5,17 +5,39 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   Computation,
-  ComputationOf,
   DeferredComputationModule,
+  SynchronousComputationModule,
 } from "../../../computations.js";
-import { Function1, pipeLazy } from "../../../functions.js";
+import { increment, pipeLazy, returns } from "../../../functions.js";
 
 const DeferredComputationModuleTests = <C extends Computation>(
-  m: DeferredComputationModule<C>,
-  toReadonlyArray: <T>() => Function1<ComputationOf<C, T>, ReadonlyArray<T>>,
+  m: DeferredComputationModule<C> & SynchronousComputationModule<C>,
 ) =>
   describe(
     "DeferredComputationModule",
+    describe(
+      "fromIterable",
+      test(
+        "with array",
+        pipeLazy(
+          [1, 2, 3],
+          m.fromIterable(),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3]),
+        ),
+      ),
+    ),
+    describe(
+      "generate",
+      test(
+        "with count",
+        pipeLazy(
+          m.generate(increment, returns(0), { count: 10 }),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+        ),
+      ),
+    ),
     describe(
       "fromReadonlyArray",
       test(
@@ -23,7 +45,7 @@ const DeferredComputationModuleTests = <C extends Computation>(
         pipeLazy(
           [1, 2, 3, 4],
           m.fromReadonlyArray({ start: 1 }),
-          toReadonlyArray(),
+          m.toReadonlyArray(),
           expectArrayEquals([2, 3, 4]),
         ),
       ),
@@ -32,7 +54,7 @@ const DeferredComputationModuleTests = <C extends Computation>(
         pipeLazy(
           [1, 2, 3, 4],
           m.fromReadonlyArray({ start: 1, count: 2 }),
-          toReadonlyArray(),
+          m.toReadonlyArray(),
           expectArrayEquals([2, 3]),
         ),
       ),
@@ -41,7 +63,7 @@ const DeferredComputationModuleTests = <C extends Computation>(
         pipeLazy(
           [1, 2, 3, 4],
           m.fromReadonlyArray({ start: 1, count: 10 }),
-          toReadonlyArray(),
+          m.toReadonlyArray(),
           expectArrayEquals([2, 3, 4]),
         ),
       ),
@@ -50,7 +72,7 @@ const DeferredComputationModuleTests = <C extends Computation>(
         pipeLazy(
           [1, 2, 3, 4],
           m.fromReadonlyArray({ count: -2 }),
-          toReadonlyArray(),
+          m.toReadonlyArray(),
           expectArrayEquals([4, 3]),
         ),
       ),
@@ -59,7 +81,7 @@ const DeferredComputationModuleTests = <C extends Computation>(
         pipeLazy(
           [1, 2, 3, 4],
           m.fromReadonlyArray({ start: 2, count: -2 }),
-          toReadonlyArray(),
+          m.toReadonlyArray(),
           expectArrayEquals([3, 2]),
         ),
       ),

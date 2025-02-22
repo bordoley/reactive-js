@@ -18,13 +18,17 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
+import ComputationWithSideEffectsModuleTests from "../../computations/__tests__/fixtures/ComputationWithSideEffectsModuleTests.js";
 import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
 import PureStatefulComputationModuleTests from "../../computations/__tests__/fixtures/PureStatefulComputationModuleTests.js";
 import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
+import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
 import {
+  ComputationWithSideEffectsModule,
   DeferredComputationModule,
   PureStatefulComputationModule,
   PureStatelessComputationModule,
+  SynchronousComputationModule,
   keepType,
 } from "../../computations.js";
 import {
@@ -467,9 +471,9 @@ testModule(
       expectToThrow(() => __constant(0));
     }),
   ),
-  DeferredComputationModuleTests(
-    Observable as DeferredComputationModule<Observable.PureRunnableComputation>,
-    Observable.toReadonlyArray,
+  DeferredComputationModuleTests<Observable.RunnableComputation>(
+    Observable as DeferredComputationModule<Observable.RunnableComputation> &
+      SynchronousComputationModule<Observable.RunnableComputation>,
   ),
   PureStatelesssComputationModuleTests(
     Observable as PureStatelessComputationModule<Observable.PureRunnableComputation>,
@@ -477,9 +481,18 @@ testModule(
     Observable.toReadonlyArray,
   ),
   PureStatefulComputationModuleTests(
-    Observable as PureStatefulComputationModule<Observable.PureRunnableComputation> &
-      DeferredComputationModule<Observable.PureRunnableComputation>,
+    Observable as PureStatefulComputationModule<Observable.RunnableComputation> &
+      DeferredComputationModule<Observable.RunnableComputation>,
     Observable.toReadonlyArray,
+  ),
+  ComputationWithSideEffectsModuleTests(
+    Observable as DeferredComputationModule<Observable.RunnableComputation> &
+      ComputationWithSideEffectsModule<Observable.RunnableComputation> &
+      SynchronousComputationModule<Observable.RunnableComputation>,
+  ),
+  SynchronousComputationModuleTests<Observable.RunnableComputation>(
+    Observable as DeferredComputationModule<Observable.RunnableComputation> &
+      SynchronousComputationModule<Observable.RunnableComputation>,
   ),
   describe(
     "backpressureStrategy",
@@ -1422,33 +1435,6 @@ testModule(
   ),
   describe(
     "forEach",
-    test("invokes the effect for each notified value", () => {
-      const result: number[] = [];
-
-      pipe(
-        [1, 2, 3],
-        Observable.fromReadonlyArray(),
-        Observable.forEach((x: number) => {
-          result[Array_push](x + 10);
-        }),
-        Observable.run(),
-      ),
-        pipe(result, expectArrayEquals([11, 12, 13]));
-    }),
-    test("when the effect function throws", () => {
-      const err = new Error();
-      pipe(
-        pipeLazy(
-          [1, 1],
-          Observable.fromReadonlyArray({ delay: 3 }),
-          Observable.forEach(_ => {
-            throw err;
-          }),
-          Observable.toReadonlyArray(),
-        ),
-        expectToThrowError(err),
-      );
-    }),
     ObservableOperatorWithSideEffectsTests(Observable.forEach(ignore)),
   ),
   describe(
@@ -2120,21 +2106,6 @@ testModule(
     ObservableOperatorWithSideEffectsTests(Observable.onSubscribe(ignore)),
   ),
   describe("pairwise", PureStatefulObservableOperator(Observable.pairwise())),
-  describe(
-    "reduce",
-    test(
-      "summing all values from delayed source",
-      pipeLazy(
-        [1, 2, 3],
-        Observable.fromReadonlyArray({ delay: 3 }),
-        Observable.reduce<number, number>(
-          (acc, next) => acc + next,
-          returns(0),
-        ),
-        expectEquals(6),
-      ),
-    ),
-  ),
   describe(
     "repeat",
     test(

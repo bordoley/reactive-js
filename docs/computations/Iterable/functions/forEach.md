@@ -6,7 +6,7 @@
 
 # Function: forEach()
 
-> **forEach**\<`T`\>(`effect`): [`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<`Iterable`\<`T`, `any`, `any`\>\>
+> **forEach**\<`T`\>(`sideEffect`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>
 
 ## Type Parameters
 
@@ -14,10 +14,10 @@
 
 ## Parameters
 
-### effect
+### sideEffect
 
 [`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<`T`\>
 
 ## Returns
 
-[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<`Iterable`\<`T`, `any`, `any`\>\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>

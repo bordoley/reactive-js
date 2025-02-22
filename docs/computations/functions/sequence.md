@@ -16,7 +16,7 @@
 
 ### generate
 
-\<`T`\>(`generator`, `initialValue`) => [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+\<`T`\>(`generator`, `initialValue`, `options`?) => [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
 
 ## Returns
 

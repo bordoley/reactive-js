@@ -6,6 +6,10 @@
 
 # Interface: PureStatefulComputationModule\<C\>
 
+## Extended by
+
+- [`DeferableModule`](../Deferable/interfaces/DeferableModule.md)
+
 ## Type Parameters
 
 • **C** *extends* [`Computation`](Computation.md)

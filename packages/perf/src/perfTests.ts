@@ -50,6 +50,21 @@ export const map = (n: number) =>
         ),
       );
     }),
+    benchmarkTest("Deferable", async (src: readonly number[]) => {
+      const Deferable = await import(
+        "@reactive-js/core/computations/Deferable"
+      );
+
+      return pipeLazy(
+        src,
+        Deferable.fromReadonlyArray(),
+        Deferable.map(increment),
+        Deferable.reduce(
+          (_, x) => x,
+          () => 0,
+        ),
+      );
+    }),
     benchmarkTest("rx-js Observable", async (src: readonly number[]) => {
       const Observable = await import("rxjs");
 
@@ -101,6 +116,22 @@ export const filterMapFusion = (n: number) =>
         Observable.map(increment),
         Observable.keep(isEven),
         Observable.reduce(sum, () => 0),
+      );
+    }),
+    benchmarkTest("Deferable", async (src: readonly number[]) => {
+      const Deferable = await import(
+        "@reactive-js/core/computations/Deferable"
+      );
+
+      return pipeLazy(
+        src,
+        Deferable.fromReadonlyArray(),
+        Deferable.map(increment),
+        Deferable.keep(isOdd),
+        Deferable.map(increment),
+        Deferable.map(increment),
+        Deferable.keep(isEven),
+        Deferable.reduce(sum, () => 0),
       );
     }),
     benchmarkTest("rx-js Observable", async (src: readonly number[]) => {
@@ -169,6 +200,18 @@ export const filterMapReduce = (n: number) =>
         Observable.reduce(sum, () => 0),
       );
     }),
+    benchmarkTest("Deferable", async (src: readonly number[]) => {
+      const Deferable = await import(
+        "@reactive-js/core/computations/Deferable"
+      );
+      return pipeLazy(
+        src,
+        Deferable.fromReadonlyArray(),
+        Deferable.keep(isEven),
+        Deferable.map(increment),
+        Deferable.reduce(sum, () => 0),
+      );
+    }),
     benchmarkTest("rx-js Observable", async (src: readonly number[]) => {
       const Observable = await import("rxjs");
 
@@ -223,6 +266,17 @@ export const scanReduce = (n: number) =>
         Observable.fromReadonlyArray(),
         Observable.scan(sum, returns(0)),
         Observable.reduce(passthrough, () => 0),
+      );
+    }),
+    benchmarkTest("Deferable", async (src: readonly number[]) => {
+      const Deferable = await import(
+        "@reactive-js/core/computations/Deferable"
+      );
+      return pipeLazy(
+        src,
+        Deferable.fromReadonlyArray(),
+        Deferable.scan(sum, returns(0)),
+        Deferable.reduce(passthrough, () => 0),
       );
     }),
     benchmarkTest("rx-js Observable", async (src: readonly number[]) => {

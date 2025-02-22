@@ -13,6 +13,7 @@
 - [ObservableModule](interfaces/ObservableModule.md)
 - [PuredDeferredObservableComputation](interfaces/PuredDeferredObservableComputation.md)
 - [PureRunnableComputation](interfaces/PureRunnableComputation.md)
+- [RunnableComputation](interfaces/RunnableComputation.md)
 - [RunnableWithSideEffectsComputation](interfaces/RunnableWithSideEffectsComputation.md)
 
 ## Type Aliases

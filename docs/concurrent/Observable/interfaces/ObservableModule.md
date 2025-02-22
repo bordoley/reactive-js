@@ -2926,6 +2926,10 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### options?
 
+###### count?
+
+`number`
+
 ###### delay?
 
 `number`

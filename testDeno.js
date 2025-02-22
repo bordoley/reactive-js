@@ -8,6 +8,7 @@ import "./mod/collections/__tests__/Dictionary.test.js";
 import "./mod/collections/__tests__/ReadonlyArray.test.js";
 import "./mod/collections/__tests__/ReadonlyMap.test.js";
 import "./mod/collections/__tests__/ReadonlyObjectMap.test.js";
+import "./mod/computations/__tests__/Deferable.test.js";
 import "./mod/computations/__tests__/Iterable.test.js";
 import "./mod/concurrent/__tests__/Cache.test.js";
 import "./mod/concurrent/__tests__/Flowable.test.js";

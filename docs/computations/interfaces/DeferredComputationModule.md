@@ -6,11 +6,30 @@
 
 # Interface: DeferredComputationModule\<C\>
 
+## Extended by
+
+- [`DeferableModule`](../Deferable/interfaces/DeferableModule.md)
+- [`IterableModule`](../Iterable/interfaces/IterableModule.md)
+
 ## Type Parameters
 
 • **C** *extends* [`Computation`](Computation.md)
 
 ## Methods
+
+### fromIterable()
+
+> **fromIterable**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\>
+
+***
 
 ### fromReadonlyArray()
 
@@ -40,7 +59,7 @@
 
 ### generate()
 
-> **generate**\<`T`\>(`generator`, `initialValue`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
 
 #### Type Parameters
 
@@ -55,6 +74,12 @@
 ##### initialValue
 
 [`Factory`](../../functions/type-aliases/Factory.md)\<`T`\>
+
+##### options?
+
+###### count?
+
+`number`
 
 #### Returns
 

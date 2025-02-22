@@ -4,6 +4,7 @@ import {
   Function1,
   Predicate,
   Reducer,
+  SideEffect1,
   Tuple2,
   TypePredicate,
   Updater,
@@ -47,16 +48,34 @@ export interface DeferredComputationModule<C extends Computation> {
     readonly start?: number;
   }): Function1<readonly T[], ComputationOf<C, T>>;
 
+  fromIterable<T>(): Function1<Iterable<T>, ComputationOf<C, T>>;
+
   generate<T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
+    options?: {
+      readonly count?: number;
+    },
   ): ComputationOf<C, T>;
+}
+
+export interface ComputationWithSideEffectsModule<C extends Computation> {
+  forEach<T>(sideEffect: SideEffect1<T>): ComputationOperator<C, T, T>;
 }
 
 export interface PureStatelessComputationModule<C extends Computation> {
   keep<T>(predicate: Predicate<T>): ComputationOperator<C, T, T>;
 
   map<TA, TB>(selector: Function1<TA, TB>): ComputationOperator<C, TA, TB>;
+}
+
+export interface SynchronousComputationModule<C extends Computation> {
+  reduce<T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): Function1<ComputationOf<C, T>, TAcc>;
+
+  toReadonlyArray<T>(): Function1<ComputationOf<C, T>, ReadonlyArray<T>>;
 }
 
 export interface PureStatefulComputationModule<C extends Computation> {
@@ -113,6 +132,35 @@ export interface Pick<C extends Computation> {
     keyB: TKeyOfTB,
     keyC: TKeyOfTC,
   ): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
+}
+
+export const SinkLike_next = Symbol("SinkLike_next");
+export const SinkLike_complete = Symbol("SinkLike_complete");
+export const SinkLike_isComplete = Symbol("SinkLike_isComplete");
+
+/**
+ * @noInheritDoc
+ */
+export interface SinkLike<T = unknown> {
+  readonly [SinkLike_isComplete]: boolean;
+
+  /**
+   * Notifies the EventListener of the next notification produced by the source.
+   *
+   * @param next - The next notification value.
+   */
+  [SinkLike_next](next: T): void;
+
+  [SinkLike_complete](): void;
+}
+
+export const DeferableLike_eval = Symbol("DeferableLike_eval");
+
+/**
+ * Represents a deferred computation that is synchronously evaluated.
+ */
+export interface DeferableLike<T = unknown> {
+  [DeferableLike_eval](sink: SinkLike<T>): void;
 }
 
 interface Signature {

@@ -8,9 +8,11 @@
 
 ## Extended by
 
+- [`DeferableComputation`](../Deferable/interfaces/DeferableComputation.md)
 - [`IterableComputation`](../Iterable/interfaces/IterableComputation.md)
 - [`PureRunnableComputation`](../../concurrent/Observable/interfaces/PureRunnableComputation.md)
 - [`RunnableWithSideEffectsComputation`](../../concurrent/Observable/interfaces/RunnableWithSideEffectsComputation.md)
+- [`RunnableComputation`](../../concurrent/Observable/interfaces/RunnableComputation.md)
 - [`PuredDeferredObservableComputation`](../../concurrent/Observable/interfaces/PuredDeferredObservableComputation.md)
 - [`DeferredObservableWithSideEffectsComputation`](../../concurrent/Observable/interfaces/DeferredObservableWithSideEffectsComputation.md)
 - [`MulticastObservableComputation`](../../concurrent/Observable/interfaces/MulticastObservableComputation.md)
