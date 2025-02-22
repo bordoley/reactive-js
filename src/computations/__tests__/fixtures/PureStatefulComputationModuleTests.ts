@@ -162,11 +162,10 @@ const PureStatefulComputationModuleTests = <C extends Computation>(
       test(
         "when source is empty",
         pipeLazy(
-          [],
-          m.fromReadonlyArray(),
+          m.empty<number>(),
           m.distinctUntilChanged(),
           m.toReadonlyArray(),
-          expectArrayEquals([]),
+          expectArrayEquals<number>([]),
         ),
       ),
       test("when equality operator throws", () => {

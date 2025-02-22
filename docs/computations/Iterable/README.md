@@ -23,6 +23,7 @@
 - [concatMany](functions/concatMany.md)
 - [concatMap](functions/concatMap.md)
 - [concatWith](functions/concatWith.md)
+- [empty](functions/empty.md)
 - [endWith](functions/endWith.md)
 - [forEach](functions/forEach.md)
 - [fromIterable](functions/fromIterable.md)

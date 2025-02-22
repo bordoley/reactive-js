@@ -5,7 +5,7 @@ import { clampPositiveInteger, floor } from "../../__internal__/math.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { isSome, newInstance, none, raiseError, returns, } from "../../functions.js";
 import { BackPressureError, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, ThrowBackpressureStrategy, } from "../../utils.js";
-const QueueMixin = /*@PURE*/ (() => {
+const QueueMixin = /*@__PURE__*/ (() => {
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
     const QueueMixin_head = Symbol("QueueMixin_head");
     const QueueMixin_tail = Symbol("QueueMixin_tail");

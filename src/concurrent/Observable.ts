@@ -747,7 +747,7 @@ export interface ObservableModule {
     readonly equality?: Equality<T>;
   }): PureStatefulObservableOperator<T, T>;
 
-  empty<T>(): MulticastObservableLike<T>;
+  empty<T>(): PureRunnableLike<T>;
   empty<T>(options?: { readonly delay: number }): PureRunnableLike<T>;
 
   encodeUtf8(): PureStatefulObservableOperator<string, Uint8Array>;

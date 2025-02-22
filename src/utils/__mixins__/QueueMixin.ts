@@ -50,7 +50,7 @@ const QueueMixin: <T>() => Mixin1<
     | typeof QueueLike_count
     | typeof QueueableLike_capacity
   >
-> = /*@PURE*/ (<T>() => {
+> = /*@__PURE__*/ (<T>() => {
   const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
   const QueueMixin_head = Symbol("QueueMixin_head");
   const QueueMixin_tail = Symbol("QueueMixin_tail");

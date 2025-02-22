@@ -18,6 +18,7 @@ export declare const concatAll: Signature["concatAll"];
 export declare const concatMap: Signature["concatMap"];
 export declare const concatMany: Signature["concatMany"];
 export declare const concatWith: Signature["concatWith"];
+export declare const empty: Signature["empty"];
 export declare const endWith: Signature["endWith"];
 export declare const forEach: Signature["forEach"];
 export declare const fromIterable: Signature["fromIterable"];

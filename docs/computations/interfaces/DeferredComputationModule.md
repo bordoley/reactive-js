@@ -165,6 +165,20 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 ***
 
+### empty()
+
+> **empty**\<`T`\>(): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+
+***
+
 ### endWith()
 
 > **endWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>

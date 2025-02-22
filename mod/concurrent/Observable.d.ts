@@ -162,7 +162,7 @@ export interface ObservableModule {
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): PureStatefulObservableOperator<T, T>;
-    empty<T>(): MulticastObservableLike<T>;
+    empty<T>(): PureRunnableLike<T>;
     empty<T>(options?: {
         readonly delay: number;
     }): PureRunnableLike<T>;

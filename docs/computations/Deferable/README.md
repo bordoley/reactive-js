@@ -26,6 +26,7 @@
 - [concatWith](functions/concatWith.md)
 - [decodeWithCharset](functions/decodeWithCharset.md)
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
+- [empty](functions/empty.md)
 - [endWith](functions/endWith.md)
 - [forEach](functions/forEach.md)
 - [fromIterable](functions/fromIterable.md)

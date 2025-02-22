@@ -73,6 +73,8 @@ export interface DeferredComputationModule<C extends Computation> {
     ...tail: readonly ComputationOf<C, T>[]
   ): ComputationOperator<C, T, T>;
 
+  empty<T>(): ComputationOf<C, T>;
+
   endWith<T>(value: T, ...values: readonly T[]): ComputationOperator<C, T, T>;
 
   fromIterable<T>(): Function1<Iterable<T>, ComputationOf<C, T>>;

@@ -270,6 +270,24 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 
 ***
 
+### empty()
+
+> **empty**\<`T`\>(): [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`empty`](../../interfaces/DeferredComputationModule.md#empty)
+
+***
+
 ### endWith()
 
 > **endWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>

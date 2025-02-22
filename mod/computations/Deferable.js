@@ -11,6 +11,7 @@ import Deferable_concatMap from "./Deferable/__private__/Deferable.concatMap.js"
 import Deferable_concatWith from "./Deferable/__private__/Deferable.concatWith.js";
 import Deferable_decodeWithCharset from "./Deferable/__private__/Deferable.decodeWithCharset.js";
 import Deferable_distinctUntilChanged from "./Deferable/__private__/Deferable.distinctUntilChanged.js";
+import Deferable_empty from "./Deferable/__private__/Deferable.empty.js";
 import Deferable_endWith from "./Deferable/__private__/Deferable.endWith.js";
 import Deferable_forEach from "./Deferable/__private__/Deferable.forEach.js";
 import Deferable_fromIterable from "./Deferable/__private__/Deferable.fromIterable.js";
@@ -43,6 +44,7 @@ export const concatMany = Deferable_concatMany;
 export const concatWith = Deferable_concatWith;
 export const decodeWithCharset = Deferable_decodeWithCharset;
 export const distinctUntilChanged = Deferable_distinctUntilChanged;
+export const empty = Deferable_empty;
 export const endWith = Deferable_endWith;
 export const forEach = Deferable_forEach;
 export const fromIterable = Deferable_fromIterable;
@@ -66,5 +68,5 @@ export const takeWhile = Deferable_takeWhile;
 export const throwIfEmpty = Deferable_throwIfEmpty;
 export const throws = Deferable_throws;
 export const toDeferable = 
-/*@PURE*/ returns(identity);
+/*@__PURE__*/ returns(identity);
 export const toReadonlyArray = Deferable_toReadonlyArray;

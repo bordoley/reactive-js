@@ -188,6 +188,24 @@ readonly \[`Iterable`\<`T`, `any`, `any`\>, `Iterable`\<`T`, `any`, `any`\>\]
 
 ***
 
+### empty()
+
+> **empty**\<`T`\>(): `Iterable`\<`T`, `any`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+`Iterable`\<`T`, `any`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`empty`](../../interfaces/DeferredComputationModule.md#empty)
+
+***
+
 ### endWith()
 
 > **endWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>

@@ -259,6 +259,17 @@ const DeferredComputationModuleTests = <C extends Computation>(
       ),
     ),
     describe(
+      "empty",
+      test(
+        "produces no results",
+        pipeLazy(
+          m.empty<number>(),
+          m.toReadonlyArray(),
+          expectArrayEquals<number>([]),
+        ),
+      ),
+    ),
+    describe(
       "endWith",
       test(
         "appends the additional values to the end of the container",

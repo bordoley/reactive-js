@@ -1779,7 +1779,7 @@ testModule(
       ]),
     ),
     testIsMulticastObservable(
-      Observable.mergeMany([Subject.create(), Observable.empty()]),
+      Observable.mergeMany([Subject.create(), Subject.create()]),
     ),
     testIsPureDeferredObservable(
       Observable.mergeMany([Subject.create(), Observable.empty({ delay: 1 })]),

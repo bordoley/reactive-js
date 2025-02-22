@@ -2290,7 +2290,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Call Signature
 
-> **empty**\<`T`\>(): [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>
+> **empty**\<`T`\>(): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
 
 ##### Type Parameters
 
@@ -2298,7 +2298,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### Returns
 
-[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>
+[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
 
 #### Call Signature
 

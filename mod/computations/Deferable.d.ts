@@ -17,6 +17,7 @@ export declare const concatMany: Signature["concatMany"];
 export declare const concatWith: Signature["concatWith"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
+export declare const empty: Signature["empty"];
 export declare const endWith: Signature["endWith"];
 export declare const forEach: Signature["forEach"];
 export declare const fromIterable: Signature["fromIterable"];

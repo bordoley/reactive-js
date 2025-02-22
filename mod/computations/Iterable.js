@@ -51,12 +51,13 @@ class ConcatAllIterable {
         }
     }
 }
-export const concatAll = /*@PURE*/ (() => returns((iterable) => newInstance(ConcatAllIterable, iterable)))();
+export const concatAll = /*@__PURE__*/ (() => returns((iterable) => newInstance(ConcatAllIterable, iterable)))();
 export const concatMap = (selector) => (obs) => pipe(obs, map(selector), concatAll());
 export const concatMany = concatAll();
 export const concatWith = (...tail) => (fst) => concatMany([fst, ...tail]);
+export const empty = /*@__PURE__*/ returns([]);
 export const endWith = (...values) => (iterable) => pipe(iterable, concatWith(pipe(values, fromReadonlyArray())));
-export const forEach = /*@PURE*/ (() => {
+export const forEach = /*@__PURE__*/ (() => {
     const ForEachIterable_effect = Symbol("ForEachIterable_effect");
     const ForEachIterable_delegate = Symbol("ForEachIterable_delegate");
     const createForEachIterable = mixInstanceFactory(function KeepIterable(instance, delegate, effect) {
@@ -78,8 +79,8 @@ export const forEach = /*@PURE*/ (() => {
     });
     return (effect) => (iterable) => createForEachIterable(iterable, effect);
 })();
-export const fromIterable = /*@PURE*/ returns(identity);
-export const fromValue = /*@PURE*/ returns(tuple);
+export const fromIterable = /*@__PURE__*/ returns(identity);
+export const fromValue = /*@__PURE__*/ returns(tuple);
 class FromReadonlyArrayIterable {
     arr;
     count;
@@ -123,7 +124,7 @@ class GeneratorIterable {
     }
 }
 export const generate = (generator, initialValue, options) => newInstance(GeneratorIterable, generator, initialValue, options?.count);
-export const keep = /*@PURE*/ (() => {
+export const keep = /*@__PURE__*/ (() => {
     const KeepIterable_predicate = Symbol("KeepIterable_predicate");
     const KeepIterable_delegate = Symbol("KeepIterable_delegate");
     const createKeepIterable = mixInstanceFactory(function KeepIterable(instance, delegate, predicate) {
@@ -153,7 +154,7 @@ export const last = () => (iter) => {
     }
     return result;
 };
-export const map = /*@PURE*/ (() => {
+export const map = /*@__PURE__*/ (() => {
     const MapIterable_mapper = Symbol("MapIterable_mapper");
     const MapIterable_delegate = Symbol("MapIterable_delegate");
     const createMapIterable = mixInstanceFactory(function MapIterable(instance, delegate, mapper) {

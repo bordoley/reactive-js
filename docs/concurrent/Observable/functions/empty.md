@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **empty**\<`T`\>(): [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>
+> **empty**\<`T`\>(): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
 
 ### Type Parameters
 
@@ -16,7 +16,7 @@
 
 ### Returns
 
-[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>
+[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
 
 ## Call Signature
 

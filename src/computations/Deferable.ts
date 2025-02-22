@@ -19,6 +19,7 @@ import Deferable_concatMap from "./Deferable/__private__/Deferable.concatMap.js"
 import Deferable_concatWith from "./Deferable/__private__/Deferable.concatWith.js";
 import Deferable_decodeWithCharset from "./Deferable/__private__/Deferable.decodeWithCharset.js";
 import Deferable_distinctUntilChanged from "./Deferable/__private__/Deferable.distinctUntilChanged.js";
+import Deferable_empty from "./Deferable/__private__/Deferable.empty.js";
 import Deferable_endWith from "./Deferable/__private__/Deferable.endWith.js";
 import Deferable_forEach from "./Deferable/__private__/Deferable.forEach.js";
 import Deferable_fromIterable from "./Deferable/__private__/Deferable.fromIterable.js";
@@ -70,6 +71,7 @@ export const decodeWithCharset: Signature["decodeWithCharset"] =
   Deferable_decodeWithCharset;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Deferable_distinctUntilChanged;
+export const empty: Signature["empty"] = Deferable_empty;
 export const endWith: Signature["endWith"] = Deferable_endWith;
 export const forEach: Signature["forEach"] = Deferable_forEach;
 export const fromIterable: Signature["fromIterable"] = Deferable_fromIterable;
@@ -95,6 +97,6 @@ export const takeWhile: Signature["takeWhile"] = Deferable_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Deferable_throwIfEmpty;
 export const throws: Signature["throws"] = Deferable_throws;
 export const toDeferable: Signature["toDeferable"] =
-  /*@PURE*/ returns(identity);
+  /*@__PURE__*/ returns(identity);
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Deferable_toReadonlyArray;

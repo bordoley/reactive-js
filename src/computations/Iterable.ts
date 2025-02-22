@@ -117,7 +117,7 @@ class ConcatAllIterable<T> {
     }
   }
 }
-export const concatAll: Signature["concatAll"] = /*@PURE*/ (<T>() =>
+export const concatAll: Signature["concatAll"] = /*@__PURE__*/ (<T>() =>
   returns((iterable: Iterable<Iterable<T>>) =>
     newInstance(ConcatAllIterable, iterable),
   ))();
@@ -134,12 +134,14 @@ export const concatWith: Signature["concatWith"] =
   (fst: Iterable<T>) =>
     concatMany([fst, ...tail]);
 
+export const empty: Signature["empty"] = /*@__PURE__*/ returns([]);
+
 export const endWith: Signature["endWith"] =
   <T>(...values: readonly T[]) =>
   (iterable: Iterable<T>) =>
     pipe(iterable, concatWith<T>(pipe(values, fromReadonlyArray())));
 
-export const forEach: Signature["forEach"] = /*@PURE*/ (<T>() => {
+export const forEach: Signature["forEach"] = /*@__PURE__*/ (<T>() => {
   const ForEachIterable_effect = Symbol("ForEachIterable_effect");
   const ForEachIterable_delegate = Symbol("ForEachIterable_delegate");
 
@@ -179,11 +181,11 @@ export const forEach: Signature["forEach"] = /*@PURE*/ (<T>() => {
     createForEachIterable(iterable, effect);
 })();
 
-export const fromIterable: Signature["fromIterable"] = /*@PURE*/ returns(
+export const fromIterable: Signature["fromIterable"] = /*@__PURE__*/ returns(
   identity,
 ) as Signature["fromIterable"];
 
-export const fromValue: Signature["fromValue"] = /*@PURE*/ returns(tuple);
+export const fromValue: Signature["fromValue"] = /*@__PURE__*/ returns(tuple);
 
 class FromReadonlyArrayIterable<T> {
   constructor(
@@ -238,7 +240,7 @@ export const generate: Signature["generate"] = <T>(
   },
 ) => newInstance(GeneratorIterable, generator, initialValue, options?.count);
 
-export const keep: Signature["keep"] = /*@PURE*/ (<T>() => {
+export const keep: Signature["keep"] = /*@__PURE__*/ (<T>() => {
   const KeepIterable_predicate = Symbol("KeepIterable_predicate");
   const KeepIterable_delegate = Symbol("KeepIterable_delegate");
 
@@ -289,7 +291,7 @@ export const last: Signature["last"] =
     return result;
   };
 
-export const map: Signature["map"] = /*@PURE*/ (<TA, TB>() => {
+export const map: Signature["map"] = /*@__PURE__*/ (<TA, TB>() => {
   const MapIterable_mapper = Symbol("MapIterable_mapper");
   const MapIterable_delegate = Symbol("MapIterable_delegate");
 

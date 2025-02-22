@@ -938,7 +938,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
 })()), testIsRunnableWithSideEffects(Observable.mergeMany([
     pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
     Observable.empty({ delay: 1 }),
-])), testIsMulticastObservable(Observable.mergeMany([Subject.create(), Observable.empty()])), testIsPureDeferredObservable(Observable.mergeMany([Subject.create(), Observable.empty({ delay: 1 })])), testIsDeferredObservableWithSideEffects(Observable.mergeMany([
+])), testIsMulticastObservable(Observable.mergeMany([Subject.create(), Subject.create()])), testIsPureDeferredObservable(Observable.mergeMany([Subject.create(), Observable.empty({ delay: 1 })])), testIsDeferredObservableWithSideEffects(Observable.mergeMany([
     Observable.create(ignore),
     Subject.create(),
     Observable.empty({ delay: 1 }),
