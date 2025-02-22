@@ -1,4 +1,4 @@
-import { Equality, Factory, Function1, Predicate, Reducer, SideEffect1, Tuple2, TypePredicate, Updater } from "./functions.js";
+import { Equality, Factory, Function1, Optional, Predicate, Reducer, SideEffect1, Tuple2, TypePredicate, Updater } from "./functions.js";
 export declare const Computation_T: unique symbol;
 export declare const Computation_type: unique symbol;
 /**
@@ -55,6 +55,7 @@ export interface PureStatelessComputationModule<C extends Computation> {
     map<TA, TB>(selector: Function1<TA, TB>): ComputationOperator<C, TA, TB>;
 }
 export interface SynchronousComputationModule<C extends Computation> {
+    last<T>(): Function1<ComputationOf<C, T>, Optional<T>>;
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ComputationOf<C, T>, TAcc>;
     toReadonlyArray<T>(): Function1<ComputationOf<C, T>, ReadonlyArray<T>>;
 }

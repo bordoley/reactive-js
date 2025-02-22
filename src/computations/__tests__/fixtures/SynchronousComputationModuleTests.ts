@@ -4,13 +4,25 @@ import {
   DeferredComputationModule,
   SynchronousComputationModule,
 } from "../../../computations.js";
-import { pipeLazy, returns } from "../../../functions.js";
+import { Optional, pipeLazy, returns } from "../../../functions.js";
 
 const SynchronousComputationModuleTests = <C extends Computation>(
   m: DeferredComputationModule<C> & SynchronousComputationModule<C>,
 ) =>
   describe(
     "SynchronousComputationModule",
+    describe(
+      "last",
+      test(
+        "returns the last value in the computation",
+        pipeLazy(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.last(),
+          expectEquals<Optional<number>>(3),
+        ),
+      ),
+    ),
     describe(
       "reduce",
       test(

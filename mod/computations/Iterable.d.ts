@@ -20,6 +20,7 @@ export declare const fromValue: Signature["fromValue"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const generate: Signature["generate"];
 export declare const keep: Signature["keep"];
+export declare const last: Signature["last"];
 export declare const map: Signature["map"];
 export declare const reduce: Signature["reduce"];
 export declare const startWith: Signature["startWith"];

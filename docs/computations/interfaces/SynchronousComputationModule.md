@@ -17,6 +17,20 @@
 
 ## Methods
 
+### last()
+
+> **last**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+***
+
 ### reduce()
 
 > **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, `TAcc`\>

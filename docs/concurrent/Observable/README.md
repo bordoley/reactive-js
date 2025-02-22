@@ -81,6 +81,7 @@
 - [ignoreElements](functions/ignoreElements.md)
 - [keep](functions/keep.md)
 - [keyFrame](functions/keyFrame.md)
+- [last](functions/last.md)
 - [lastAsync](functions/lastAsync.md)
 - [log](functions/log.md)
 - [map](functions/map.md)

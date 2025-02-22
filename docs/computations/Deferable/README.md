@@ -32,6 +32,7 @@
 - [fromValue](functions/fromValue.md)
 - [generate](functions/generate.md)
 - [keep](functions/keep.md)
+- [last](functions/last.md)
 - [map](functions/map.md)
 - [pairwise](functions/pairwise.md)
 - [reduce](functions/reduce.md)

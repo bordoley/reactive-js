@@ -44,6 +44,7 @@ import Observable_generate from "./Observable/__private__/Observable.generate.js
 import Observable_ignoreElements from "./Observable/__private__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
 import Observable_keyFrame from "./Observable/__private__/Observable.keyFrame.js";
+import Observable_last from "./Observable/__private__/Observable.last.js";
 import Observable_lastAsync from "./Observable/__private__/Observable.lastAsync.js";
 import Observable_log from "./Observable/__private__/Observable.log.js";
 import Observable_map from "./Observable/__private__/Observable.map.js";
@@ -150,6 +151,7 @@ export const generate = Observable_generate;
 export const ignoreElements = Observable_ignoreElements;
 export const keep = Observable_keep;
 export const keyFrame = Observable_keyFrame;
+export const last = Observable_last;
 export const lastAsync = Observable_lastAsync;
 export const log = Observable_log;
 export const map = Observable_map;

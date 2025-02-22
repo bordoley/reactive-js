@@ -3000,6 +3000,36 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ***
 
+### last()
+
+> **last**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### backpressureStrategy?
+
+[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
+
+###### capacity?
+
+`number`
+
+###### maxMicroTaskTicks?
+
+`number`
+
+#### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+***
+
 ### lastAsync()
 
 > **lastAsync**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, `Promise`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>

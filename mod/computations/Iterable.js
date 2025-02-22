@@ -114,6 +114,13 @@ export const keep = /*@PURE*/ (() => {
     });
     return (predicate) => (iterable) => createKeepIterable(iterable, predicate);
 })();
+export const last = () => (iter) => {
+    let result = none;
+    for (const v of iter) {
+        result = v;
+    }
+    return result;
+};
 export const map = /*@PURE*/ (() => {
     const MapIterable_mapper = Symbol("MapIterable_mapper");
     const MapIterable_delegate = Symbol("MapIterable_delegate");

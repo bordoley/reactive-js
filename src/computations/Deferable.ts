@@ -24,6 +24,7 @@ import Deferable_fromReadonlyArray from "./Deferable/__private__/Deferable.fromR
 import Deferable_fromValue from "./Deferable/__private__/Deferable.fromValue.js";
 import Deferable_generate from "./Deferable/__private__/Deferable.generate.js";
 import Deferable_keep from "./Deferable/__private__/Deferable.keep.js";
+import Deferable_last from "./Deferable/__private__/Deferable.last.js";
 import Deferable_map from "./Deferable/__private__/Deferable.map.js";
 import Deferable_pairwise from "./Deferable/__private__/Deferable.pairwise.js";
 import Deferable_reduce from "./Deferable/__private__/Deferable.reduce.js";
@@ -72,6 +73,7 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
 export const fromValue: Signature["fromValue"] = Deferable_fromValue;
 export const generate: Signature["generate"] = Deferable_generate;
 export const keep: Signature["keep"] = Deferable_keep;
+export const last: Signature["last"] = Deferable_last;
 export const map: Signature["map"] = Deferable_map;
 export const pairwise: Signature["pairwise"] = Deferable_pairwise;
 export const reduce: Signature["reduce"] = Deferable_reduce;

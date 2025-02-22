@@ -232,6 +232,11 @@ export interface ObservableModule {
     keyFrame(duration: number, options?: {
         readonly easing?: Function1<number, number>;
     }): PureRunnableLike<number>;
+    last<T>(options?: {
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+        readonly maxMicroTaskTicks?: number;
+    }): Function1<RunnableLike<T>, Optional<T>>;
     lastAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
         readonly backpressureStrategy?: BackpressureStrategy;
@@ -512,6 +517,7 @@ export declare const generate: Signature["generate"];
 export declare const ignoreElements: Signature["ignoreElements"];
 export declare const keep: Signature["keep"];
 export declare const keyFrame: Signature["keyFrame"];
+export declare const last: Signature["last"];
 export declare const lastAsync: Signature["lastAsync"];
 export declare const log: Signature["log"];
 export declare const map: Signature["map"];

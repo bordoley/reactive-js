@@ -2,6 +2,7 @@ import {
   Equality,
   Factory,
   Function1,
+  Optional,
   Predicate,
   Reducer,
   SideEffect1,
@@ -113,6 +114,8 @@ export interface PureStatelessComputationModule<C extends Computation> {
 }
 
 export interface SynchronousComputationModule<C extends Computation> {
+  last<T>(): Function1<ComputationOf<C, T>, Optional<T>>;
+
   reduce<T, TAcc>(
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,

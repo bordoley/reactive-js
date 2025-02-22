@@ -13,6 +13,7 @@ import {
 import {
   Factory,
   Function1,
+  Optional,
   Predicate,
   Reducer,
   SideEffect,
@@ -219,6 +220,16 @@ export const keep: Signature["keep"] = /*@PURE*/ (<T>() => {
   return (predicate: Predicate<T>) => (iterable: Iterable<T>) =>
     createKeepIterable(iterable, predicate);
 })();
+
+export const last: Signature["last"] =
+  <T>() =>
+  (iter: Iterable<T>) => {
+    let result: Optional<T> = none;
+    for (const v of iter) {
+      result = v;
+    }
+    return result;
+  };
 
 export const map: Signature["map"] = /*@PURE*/ (<TA, TB>() => {
   const MapIterable_mapper = Symbol("MapIterable_mapper");

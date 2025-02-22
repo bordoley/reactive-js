@@ -38,7 +38,9 @@ class ConcatAllSink<T> extends AbstractSink<
   }
 }
 
-const Deferable_concatAll: Deferable.Signature["concatAll"] = (<T>() =>
+const Deferable_concatAll: Deferable.Signature["concatAll"] = /*@__PURE__*/ (<
+  T,
+>() =>
   returns(
     Deferable_lift((sink: SinkLike<T>) => {
       const innerSink = newInstance(DelegatingNonCompletingSink, sink);

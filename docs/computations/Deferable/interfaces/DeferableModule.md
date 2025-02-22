@@ -398,6 +398,24 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 
 ***
 
+### last()
+
+> **last**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`last`](../../interfaces/SynchronousComputationModule.md#last)
+
+***
+
 ### map()
 
 > **map**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `TA`, `TB`\>
