@@ -838,6 +838,24 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 
 ***
 
+### toDeferable()
+
+> **toDeferable**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`toDeferable`](../../interfaces/SynchronousComputationModule.md#todeferable)
+
+***
+
 ### toReadonlyArray()
 
 > **toReadonlyArray**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, readonly `T`[]\>

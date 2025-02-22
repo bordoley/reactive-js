@@ -57,6 +57,20 @@
 
 ***
 
+### toDeferable()
+
+> **toDeferable**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`DeferableLike`](DeferableLike.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`DeferableLike`](DeferableLike.md)\<`T`\>\>
+
+***
+
 ### toReadonlyArray()
 
 > **toReadonlyArray**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, readonly `T`[]\>

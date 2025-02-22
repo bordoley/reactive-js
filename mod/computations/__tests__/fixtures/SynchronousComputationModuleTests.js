@@ -1,6 +1,7 @@
 /// <reference types="./SynchronousComputationModuleTests.d.ts" />
 
-import { describe, expectEquals, test } from "../../../__internal__/testing.js";
-import { pipeLazy, returns } from "../../../functions.js";
-const SynchronousComputationModuleTests = (m) => describe("SynchronousComputationModule", describe("last", test("returns the last value in the computation", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.last(), expectEquals(3)))), describe("reduce", test("summing all values from delayed source", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.reduce((acc, next) => acc + next, returns(0)), expectEquals(6)))));
+import { describe, expectArrayEquals, expectEquals, test, } from "../../../__internal__/testing.js";
+import { increment, pipeLazy, returns } from "../../../functions.js";
+import * as Deferable from "../../Deferable.js";
+const SynchronousComputationModuleTests = (m) => describe("SynchronousComputationModule", describe("last", test("returns the last value in the computation", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.last(), expectEquals(3)))), describe("reduce", test("summing all values from delayed source", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.reduce((acc, next) => acc + next, returns(0)), expectEquals(6)))), describe("toDeferable", test("when deferable sinkcompletes early", pipeLazy(m.generate(increment, returns(0)), m.toDeferable(), Deferable.takeFirst({ count: 3 }), Deferable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))));
 export default SynchronousComputationModuleTests;

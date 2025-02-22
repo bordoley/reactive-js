@@ -65,6 +65,7 @@ export interface PureStatelessComputationModule<C extends Computation> {
 export interface SynchronousComputationModule<C extends Computation> {
     last<T>(): Function1<ComputationOf<C, T>, Optional<T>>;
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ComputationOf<C, T>, TAcc>;
+    toDeferable<T>(): Function1<ComputationOf<C, T>, DeferableLike<T>>;
     toReadonlyArray<T>(): Function1<ComputationOf<C, T>, ReadonlyArray<T>>;
 }
 export interface PureStatefulComputationModule<C extends Computation> {

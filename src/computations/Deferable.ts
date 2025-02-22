@@ -9,6 +9,7 @@ import {
   PureStatelessComputationModule,
   SynchronousComputationModule,
 } from "../computations.js";
+import { identity, returns } from "../functions.js";
 import Deferable_buffer from "./Deferable/__private__/Deferable.buffer.js";
 import Deferable_catchError from "./Deferable/__private__/Deferable.catchError.js";
 import Deferable_concat from "./Deferable/__private__/Deferable.concat.js";
@@ -91,5 +92,7 @@ export const takeFirst: Signature["takeFirst"] = Deferable_takeFirst;
 export const takeWhile: Signature["takeWhile"] = Deferable_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Deferable_throwIfEmpty;
 export const throws: Signature["throws"] = Deferable_throws;
+export const toDeferable: Signature["toDeferable"] =
+  /*@PURE*/ returns(identity);
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Deferable_toReadonlyArray;

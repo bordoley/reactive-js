@@ -18,7 +18,6 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
-import * as Deferable from "../../computations/Deferable.js";
 import ComputationWithSideEffectsModuleTests from "../../computations/__tests__/fixtures/ComputationWithSideEffectsModuleTests.js";
 import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
 import PureStatefulComputationModuleTests from "../../computations/__tests__/fixtures/PureStatefulComputationModuleTests.js";
@@ -2439,19 +2438,6 @@ testModule(
     ),
     PureStatefulObservableOperator(
       Observable.throwIfEmpty(() => newInstance(Error)),
-    ),
-  ),
-  describe(
-    "toDeferable",
-    test(
-      "when deferable sinkcompletes early",
-      pipeLazy(
-        Observable.generate(increment, returns(0)),
-        Observable.toDeferable(),
-        Deferable.takeFirst({ count: 3 }),
-        Deferable.toReadonlyArray(),
-        expectArrayEquals([1, 2, 3]),
-      ),
     ),
   ),
   describe(

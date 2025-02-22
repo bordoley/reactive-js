@@ -1,6 +1,7 @@
 /// <reference types="./Deferable.d.ts" />
 
 import { Computation_type, } from "../computations.js";
+import { identity, returns } from "../functions.js";
 import Deferable_buffer from "./Deferable/__private__/Deferable.buffer.js";
 import Deferable_catchError from "./Deferable/__private__/Deferable.catchError.js";
 import Deferable_concat from "./Deferable/__private__/Deferable.concat.js";
@@ -62,4 +63,6 @@ export const takeFirst = Deferable_takeFirst;
 export const takeWhile = Deferable_takeWhile;
 export const throwIfEmpty = Deferable_throwIfEmpty;
 export const throws = Deferable_throws;
+export const toDeferable = 
+/*@PURE*/ returns(identity);
 export const toReadonlyArray = Deferable_toReadonlyArray;

@@ -5,6 +5,7 @@ import { mixInstanceFactory, props } from "../__internal__/mixins.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import { Computation_type, } from "../computations.js";
 import { alwaysTrue, error, identity, isFunction, isNone, isSome, newInstance, none, pipe, raise, returns, tuple, } from "../functions.js";
+import Deferable_fromIterable from "./Deferable/__private__/Deferable.fromIterable.js";
 class CatchErrorIterable {
     s;
     onError;
@@ -335,4 +336,5 @@ export const throws = (options) => {
     const { raise: factory = raise } = options ?? {};
     return newInstance((ThrowsIterable), factory);
 };
+export const toDeferable = Deferable_fromIterable;
 export const toReadonlyArray = () => (iterable) => Array.from(iterable);

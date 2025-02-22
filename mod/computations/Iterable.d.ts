@@ -32,4 +32,5 @@ export declare const takeFirst: Signature["takeFirst"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throws: Signature["throws"];
+export declare const toDeferable: Signature["toDeferable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];

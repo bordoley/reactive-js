@@ -1,10 +1,16 @@
-import { describe, expectEquals, test } from "../../../__internal__/testing.js";
+import {
+  describe,
+  expectArrayEquals,
+  expectEquals,
+  test,
+} from "../../../__internal__/testing.js";
 import {
   Computation,
   DeferredComputationModule,
   SynchronousComputationModule,
 } from "../../../computations.js";
-import { Optional, pipeLazy, returns } from "../../../functions.js";
+import { Optional, increment, pipeLazy, returns } from "../../../functions.js";
+import * as Deferable from "../../Deferable.js";
 
 const SynchronousComputationModuleTests = <C extends Computation>(
   m: DeferredComputationModule<C> & SynchronousComputationModule<C>,
@@ -32,6 +38,19 @@ const SynchronousComputationModuleTests = <C extends Computation>(
           m.fromReadonlyArray(),
           m.reduce<number, number>((acc, next) => acc + next, returns(0)),
           expectEquals(6),
+        ),
+      ),
+    ),
+    describe(
+      "toDeferable",
+      test(
+        "when deferable sinkcompletes early",
+        pipeLazy(
+          m.generate(increment, returns(0)),
+          m.toDeferable(),
+          Deferable.takeFirst({ count: 3 }),
+          Deferable.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3]),
         ),
       ),
     ),

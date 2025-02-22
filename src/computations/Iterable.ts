@@ -32,6 +32,7 @@ import {
   returns,
   tuple,
 } from "../functions.js";
+import Deferable_fromIterable from "./Deferable/__private__/Deferable.fromIterable.js";
 
 /**
  * @noInheritDoc
@@ -525,6 +526,8 @@ export const throws: Signature["throws"] = <T>(options?: {
   const { raise: factory = raise } = options ?? {};
   return newInstance(ThrowsIterable<T>, factory);
 };
+
+export const toDeferable: Signature["toDeferable"] = Deferable_fromIterable;
 
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   <T>() =>

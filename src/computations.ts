@@ -144,6 +144,8 @@ export interface SynchronousComputationModule<C extends Computation> {
     initialValue: Factory<TAcc>,
   ): Function1<ComputationOf<C, T>, TAcc>;
 
+  toDeferable<T>(): Function1<ComputationOf<C, T>, DeferableLike<T>>;
+
   toReadonlyArray<T>(): Function1<ComputationOf<C, T>, ReadonlyArray<T>>;
 }
 
