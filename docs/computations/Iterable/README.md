@@ -33,6 +33,7 @@
 - [map](functions/map.md)
 - [reduce](functions/reduce.md)
 - [repeat](functions/repeat.md)
+- [retry](functions/retry.md)
 - [startWith](functions/startWith.md)
 - [takeFirst](functions/takeFirst.md)
 - [takeWhile](functions/takeWhile.md)

@@ -2,7 +2,6 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
-  expectToThrow,
   expectToThrowError,
   test,
 } from "../../../__internal__/testing.js";
@@ -15,13 +14,10 @@ import {
 import * as Observable from "../../../concurrent/Observable.js";
 import {
   Tuple2,
-  alwaysTrue,
   arrayEquality,
-  increment,
   none,
   pipe,
   pipeLazy,
-  raise,
   returns,
   tuple,
 } from "../../../functions.js";
@@ -235,47 +231,6 @@ const PureStatefulComputationModuleTests = <C extends Computation>(
           expectArrayEquals<Tuple2<number, number>>([], {
             valuesEquality: arrayEquality(),
           }),
-        ),
-      ),
-    ),
-    describe(
-      "retry",
-      test(
-        "retrys the container on an exception",
-        pipeLazy(
-          m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()),
-          m.retry(alwaysTrue),
-          m.takeFirst<number>({ count: 6 }),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 1, 2, 3]),
-        ),
-      ),
-      test(
-        "retrys with the default predicate",
-        pipeLazy(
-          m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()),
-          m.retry(),
-          m.takeFirst<number>({ count: 6 }),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 1, 2, 3]),
-        ),
-      ),
-      test(
-        "when source and the retry predicate throw",
-        pipeLazy(
-          pipeLazy(m.throws(), m.retry(raise), m.toReadonlyArray()),
-          expectToThrow,
-        ),
-      ),
-
-      test(
-        "retrys only twice",
-        pipeLazy(
-          m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()),
-          m.retry((count, _) => count < 2),
-          m.takeFirst<number>({ count: 10 }),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 1, 2, 3]),
         ),
       ),
     ),

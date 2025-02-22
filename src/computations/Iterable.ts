@@ -321,6 +321,38 @@ export const repeat: Signature["repeat"] = <T>(
     newInstance(RepeateIterable, src, repeatPredicate);
 };
 
+class RetryIterable<T> {
+  constructor(
+    private i: Iterable<T>,
+    private p: (count: number, error: Error) => boolean,
+  ) {}
+
+  *[Symbol.iterator]() {
+    const iterable = this.i;
+    const predicate = this.p;
+
+    let cnt = 0;
+
+    while (true) {
+      try {
+        for (const v of iterable) {
+          yield v;
+        }
+      } catch (e) {
+        cnt++;
+        if (!predicate(cnt, error(e))) {
+          break;
+        }
+      }
+    }
+  }
+}
+
+export const retry: Signature["retry"] =
+  <T>(shouldRetry?: (count: number, error: Error) => boolean) =>
+  (deferable: Iterable<T>) =>
+    newInstance(RetryIterable, deferable, shouldRetry ?? alwaysTrue);
+
 export const startWith: Signature["startWith"] =
   <T>(...values: readonly T[]) =>
   (iter: Iterable<T>) =>

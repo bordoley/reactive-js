@@ -100,26 +100,6 @@
 
 ***
 
-### retry()
-
-> **retry**\<`T`\>(`shouldRetry`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### shouldRetry?
-
-(`count`, `error`) => `boolean`
-
-#### Returns
-
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
-
-***
-
 ### scan()
 
 > **scan**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `TAcc`\>

@@ -3,6 +3,7 @@ import {
   expectArrayEquals,
   expectEquals,
   expectFalse,
+  expectToThrow,
   expectToThrowError,
   expectTrue,
   test,
@@ -18,6 +19,7 @@ import {
   lessThan,
   pipe,
   pipeLazy,
+  raise,
   returns,
 } from "../../../functions.js";
 
@@ -248,6 +250,47 @@ const DeferredComputationModuleTests = <C extends Computation>(
           expectToThrowError(err),
         );
       }),
+    ),
+    describe(
+      "retry",
+      test(
+        "retrys the container on an exception",
+        pipeLazy(
+          m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()),
+          m.retry(alwaysTrue),
+          m.takeFirst<number>({ count: 6 }),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3, 1, 2, 3]),
+        ),
+      ),
+      test(
+        "retrys with the default predicate",
+        pipeLazy(
+          m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()),
+          m.retry(),
+          m.takeFirst<number>({ count: 6 }),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3, 1, 2, 3]),
+        ),
+      ),
+      test(
+        "when source and the retry predicate throw",
+        pipeLazy(
+          pipeLazy(m.throws(), m.retry(raise), m.toReadonlyArray()),
+          expectToThrow,
+        ),
+      ),
+
+      test(
+        "retrys only twice",
+        pipeLazy(
+          m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()),
+          m.retry((count, _) => count < 2),
+          m.takeFirst<number>({ count: 10 }),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3, 1, 2, 3]),
+        ),
+      ),
     ),
     describe(
       "startWith",

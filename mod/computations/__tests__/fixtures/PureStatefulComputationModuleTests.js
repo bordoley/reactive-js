@@ -1,8 +1,8 @@
 /// <reference types="./PureStatefulComputationModuleTests.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, expectToThrow, expectToThrowError, test, } from "../../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, } from "../../../__internal__/testing.js";
 import * as Observable from "../../../concurrent/Observable.js";
-import { alwaysTrue, arrayEquality, increment, none, pipe, pipeLazy, raise, returns, tuple, } from "../../../functions.js";
+import { arrayEquality, none, pipe, pipeLazy, returns, tuple, } from "../../../functions.js";
 const PureStatefulComputationModuleTests = (m) => describe("PureStatefulComputationModule", describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],
@@ -46,7 +46,7 @@ const PureStatefulComputationModuleTests = (m) => describe("PureStatefulComputat
     tuple(8, 9),
 ], { valuesEquality: arrayEquality() }))), test("when the input only provides 1 value", pipeLazy([0], m.fromReadonlyArray(), m.pairwise(), m.toReadonlyArray(), expectArrayEquals([], {
     valuesEquality: arrayEquality(),
-})))), describe("retry", test("retrys the container on an exception", pipeLazy(m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()), m.retry(alwaysTrue), m.takeFirst({ count: 6 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("retrys with the default predicate", pipeLazy(m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()), m.retry(), m.takeFirst({ count: 6 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("when source and the retry predicate throw", pipeLazy(pipeLazy(m.throws(), m.retry(raise), m.toReadonlyArray()), expectToThrow)), test("retrys only twice", pipeLazy(m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()), m.retry((count, _) => count < 2), m.takeFirst({ count: 10 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("scan", test("sums all the values in the array emitting intermediate values.", pipeLazy([1, 1, 1], m.fromReadonlyArray(), m.scan((a, b) => a + b, returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("throws when the scan function throws", () => {
+})))), describe("scan", test("sums all the values in the array emitting intermediate values.", pipeLazy([1, 1, 1], m.fromReadonlyArray(), m.scan((a, b) => a + b, returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("throws when the scan function throws", () => {
     const err = new Error();
     const scanner = (_acc, _next) => {
         throw err;

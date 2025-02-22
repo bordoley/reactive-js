@@ -179,6 +179,33 @@ export const repeat = (predicate) => {
             : (count) => count < predicate;
     return (src) => newInstance(RepeateIterable, src, repeatPredicate);
 };
+class RetryIterable {
+    i;
+    p;
+    constructor(i, p) {
+        this.i = i;
+        this.p = p;
+    }
+    *[Symbol.iterator]() {
+        const iterable = this.i;
+        const predicate = this.p;
+        let cnt = 0;
+        while (true) {
+            try {
+                for (const v of iterable) {
+                    yield v;
+                }
+            }
+            catch (e) {
+                cnt++;
+                if (!predicate(cnt, error(e))) {
+                    break;
+                }
+            }
+        }
+    }
+}
+export const retry = (shouldRetry) => (deferable) => newInstance(RetryIterable, deferable, shouldRetry ?? alwaysTrue);
 export const startWith = (...values) => (iter) => pipe(values, fromReadonlyArray(), concatWith(iter));
 class TakeFirstIterable {
     s;
