@@ -19,8 +19,11 @@ import {
   SideEffect,
   SideEffect1,
   Updater,
+  alwaysTrue,
   error,
   identity,
+  isFunction,
+  isNone,
   newInstance,
   none,
   pipe,
@@ -281,6 +284,43 @@ export const reduce: Signature["reduce"] =
     return acc;
   };
 
+class RepeateIterable<T> {
+  constructor(
+    private i: Iterable<T>,
+    private p: Predicate<number>,
+  ) {}
+
+  *[Symbol.iterator]() {
+    const iterable = this.i;
+    const predicate = this.p;
+
+    let cnt = 0;
+
+    while (true) {
+      for (const v of iterable) {
+        yield v;
+      }
+      cnt++;
+      if (!predicate(cnt)) {
+        break;
+      }
+    }
+  }
+}
+
+export const repeat: Signature["repeat"] = <T>(
+  predicate?: Predicate<number> | number,
+) => {
+  const repeatPredicate = isFunction(predicate)
+    ? predicate
+    : isNone(predicate)
+      ? alwaysTrue
+      : (count: number) => count < predicate;
+
+  return (src: Iterable<T>) =>
+    newInstance(RepeateIterable, src, repeatPredicate);
+};
+
 export const startWith: Signature["startWith"] =
   <T>(...values: readonly T[]) =>
   (iter: Iterable<T>) =>
@@ -299,6 +339,8 @@ class TakeFirstIterable<T> {
     for (const v of this.s) {
       if (count < takeCount) {
         yield v;
+      } else {
+        break;
       }
       count++;
     }

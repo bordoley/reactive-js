@@ -18,7 +18,6 @@ import {
   alwaysTrue,
   arrayEquality,
   increment,
-  lessThan,
   none,
   pipe,
   pipeLazy,
@@ -238,54 +237,6 @@ const PureStatefulComputationModuleTests = <C extends Computation>(
           }),
         ),
       ),
-    ),
-    describe(
-      "repeat",
-      test(
-        "when repeating forever.",
-        pipeLazy(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.repeat<number>(),
-          m.takeFirst<number>({ count: 8 }),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2]),
-        ),
-      ),
-      test(
-        "when repeating a finite amount of times.",
-        pipeLazy(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.repeat<number>(3),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
-        ),
-      ),
-      test(
-        "when repeating with a predicate",
-        pipeLazy(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.repeat<number>(lessThan(1)),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3]),
-        ),
-      ),
-      test("when the repeat function throws", () => {
-        const err = new Error();
-        pipe(
-          pipeLazy(
-            [1, 1],
-            m.fromReadonlyArray(),
-            m.repeat(_ => {
-              throw err;
-            }),
-            m.toReadonlyArray(),
-          ),
-          expectToThrowError(err),
-        );
-      }),
     ),
     describe(
       "retry",

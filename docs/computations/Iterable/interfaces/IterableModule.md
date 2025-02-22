@@ -390,6 +390,70 @@ readonly \[`Iterable`\<`T`, `any`, `any`\>, `Iterable`\<`T`, `any`, `any`\>\]
 
 ***
 
+### repeat()
+
+#### Call Signature
+
+> **repeat**\<`T`\>(`predicate`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### predicate
+
+[`Predicate`](../../../functions/type-aliases/Predicate.md)\<`number`\>
+
+##### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>
+
+##### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
+
+#### Call Signature
+
+> **repeat**\<`T`\>(`count`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### count
+
+`number`
+
+##### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>
+
+##### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
+
+#### Call Signature
+
+> **repeat**\<`T`\>(): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>
+
+##### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
+
+***
+
 ### startWith()
 
 > **startWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>

@@ -4,7 +4,7 @@ import { clampPositiveInteger } from "../__internal__/math.js";
 import { mixInstanceFactory, props } from "../__internal__/mixins.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import { Computation_type, } from "../computations.js";
-import { error, identity, newInstance, none, pipe, raise, returns, tuple, } from "../functions.js";
+import { alwaysTrue, error, identity, isFunction, isNone, newInstance, none, pipe, raise, returns, tuple, } from "../functions.js";
 export const concat = (...iterables) => concatMany(iterables);
 class ConcatAllIterable {
     s;
@@ -149,6 +149,36 @@ export const reduce = (reducer, initialValue) => (iterable) => {
     }
     return acc;
 };
+class RepeateIterable {
+    i;
+    p;
+    constructor(i, p) {
+        this.i = i;
+        this.p = p;
+    }
+    *[Symbol.iterator]() {
+        const iterable = this.i;
+        const predicate = this.p;
+        let cnt = 0;
+        while (true) {
+            for (const v of iterable) {
+                yield v;
+            }
+            cnt++;
+            if (!predicate(cnt)) {
+                break;
+            }
+        }
+    }
+}
+export const repeat = (predicate) => {
+    const repeatPredicate = isFunction(predicate)
+        ? predicate
+        : isNone(predicate)
+            ? alwaysTrue
+            : (count) => count < predicate;
+    return (src) => newInstance(RepeateIterable, src, repeatPredicate);
+};
 export const startWith = (...values) => (iter) => pipe(values, fromReadonlyArray(), concatWith(iter));
 class TakeFirstIterable {
     s;
@@ -163,6 +193,9 @@ class TakeFirstIterable {
         for (const v of this.s) {
             if (count < takeCount) {
                 yield v;
+            }
+            else {
+                break;
             }
             count++;
         }

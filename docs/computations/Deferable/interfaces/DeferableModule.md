@@ -512,7 +512,7 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 
 ##### Inherited from
 
-[`PureStatefulComputationModule`](../../interfaces/PureStatefulComputationModule.md).[`repeat`](../../interfaces/PureStatefulComputationModule.md#repeat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
 
 #### Call Signature
 
@@ -534,7 +534,7 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 
 ##### Inherited from
 
-[`PureStatefulComputationModule`](../../interfaces/PureStatefulComputationModule.md).[`repeat`](../../interfaces/PureStatefulComputationModule.md#repeat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
 
 #### Call Signature
 
@@ -550,7 +550,7 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 
 ##### Inherited from
 
-[`PureStatefulComputationModule`](../../interfaces/PureStatefulComputationModule.md).[`repeat`](../../interfaces/PureStatefulComputationModule.md#repeat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
 
 ***
 

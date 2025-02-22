@@ -23,6 +23,7 @@ export declare const keep: Signature["keep"];
 export declare const last: Signature["last"];
 export declare const map: Signature["map"];
 export declare const reduce: Signature["reduce"];
+export declare const repeat: Signature["repeat"];
 export declare const startWith: Signature["startWith"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeWhile: Signature["takeWhile"];

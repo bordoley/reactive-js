@@ -87,6 +87,10 @@ export interface DeferredComputationModule<C extends Computation> {
     },
   ): ComputationOf<C, T>;
 
+  repeat<T>(predicate: Predicate<number>): ComputationOperator<C, T, T>;
+  repeat<T>(count: number): ComputationOperator<C, T, T>;
+  repeat<T>(): ComputationOperator<C, T, T>;
+
   startWith<T>(value: T, ...values: readonly T[]): ComputationOperator<C, T, T>;
 
   takeFirst<T>(options?: {
@@ -140,10 +144,6 @@ export interface PureStatefulComputationModule<C extends Computation> {
   }): ComputationOperator<C, T, T>;
 
   pairwise<T>(): ComputationOperator<C, T, Tuple2<T, T>>;
-
-  repeat<T>(predicate: Predicate<number>): ComputationOperator<C, T, T>;
-  repeat<T>(count: number): ComputationOperator<C, T, T>;
-  repeat<T>(): ComputationOperator<C, T, T>;
 
   retry<T>(
     shouldRetry?: (count: number, error: Error) => boolean,

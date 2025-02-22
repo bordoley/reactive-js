@@ -233,6 +233,58 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 ***
 
+### repeat()
+
+#### Call Signature
+
+> **repeat**\<`T`\>(`predicate`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### predicate
+
+[`Predicate`](../../functions/type-aliases/Predicate.md)\<`number`\>
+
+##### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+#### Call Signature
+
+> **repeat**\<`T`\>(`count`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### count
+
+`number`
+
+##### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+#### Call Signature
+
+> **repeat**\<`T`\>(): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+***
+
 ### startWith()
 
 > **startWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>

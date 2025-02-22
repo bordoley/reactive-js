@@ -36,6 +36,9 @@ export interface DeferredComputationModule<C extends Computation> {
     generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
         readonly count?: number;
     }): ComputationOf<C, T>;
+    repeat<T>(predicate: Predicate<number>): ComputationOperator<C, T, T>;
+    repeat<T>(count: number): ComputationOperator<C, T, T>;
+    repeat<T>(): ComputationOperator<C, T, T>;
     startWith<T>(value: T, ...values: readonly T[]): ComputationOperator<C, T, T>;
     takeFirst<T>(options?: {
         readonly count?: number;
@@ -72,9 +75,6 @@ export interface PureStatefulComputationModule<C extends Computation> {
         readonly equality?: Equality<T>;
     }): ComputationOperator<C, T, T>;
     pairwise<T>(): ComputationOperator<C, T, Tuple2<T, T>>;
-    repeat<T>(predicate: Predicate<number>): ComputationOperator<C, T, T>;
-    repeat<T>(count: number): ComputationOperator<C, T, T>;
-    repeat<T>(): ComputationOperator<C, T, T>;
     retry<T>(shouldRetry?: (count: number, error: Error) => boolean): ComputationOperator<C, T, T>;
     scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ComputationOperator<C, T, TAcc>;
     skipFirst<T>(options?: {
