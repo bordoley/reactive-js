@@ -4858,6 +4858,36 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ***
 
+### toDeferable()
+
+> **toDeferable**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, [`DeferableLike`](../../../computations/interfaces/DeferableLike.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### backpressureStrategy?
+
+[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
+
+###### capacity?
+
+`number`
+
+###### maxMicroTaskTicks?
+
+`number`
+
+#### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, [`DeferableLike`](../../../computations/interfaces/DeferableLike.md)\<`T`\>\>
+
+***
+
 ### toEventSource()
 
 > **toEventSource**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`EventSourceLike`](../../../events/interfaces/EventSourceLike.md)\<`T`\>\>

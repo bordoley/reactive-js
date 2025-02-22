@@ -1,4 +1,4 @@
-import { Computation, Computation_T, Computation_type } from "../computations.js";
+import { Computation, Computation_T, Computation_type, DeferableLike } from "../computations.js";
 import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
 import { EventListenerLike, EventSourceLike, StoreLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9, Updater } from "../functions.js";
@@ -414,6 +414,11 @@ export interface ObservableModule {
         readonly raise?: Factory<unknown>;
         readonly delay?: number;
     }): PureRunnableLike<T>;
+    toDeferable<T>(options?: {
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+        readonly maxMicroTaskTicks?: number;
+    }): Function1<RunnableLike<T>, DeferableLike<T>>;
     toEventSource<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
@@ -540,6 +545,7 @@ export declare const takeWhile: Signature["takeWhile"];
 export declare const throttle: Signature["throttle"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const throws: Signature["throws"];
+export declare const toDeferable: Signature["toDeferable"];
 export declare const toEventSource: Signature["toEventSource"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];

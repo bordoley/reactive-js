@@ -114,6 +114,7 @@
 - [throttle](functions/throttle.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [throws](functions/throws.md)
+- [toDeferable](functions/toDeferable.md)
 - [toEventSource](functions/toEventSource.md)
 - [toReadonlyArray](functions/toReadonlyArray.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

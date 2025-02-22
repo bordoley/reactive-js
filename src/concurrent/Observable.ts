@@ -2,6 +2,7 @@ import {
   Computation,
   Computation_T,
   Computation_type,
+  DeferableLike,
 } from "../computations.js";
 import {
   DeferredObservableLike,
@@ -128,6 +129,7 @@ import Observable_throttle, {
 } from "./Observable/__private__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
 import Observable_throws from "./Observable/__private__/Observable.throws.js";
+import Observable_toDeferable from "./Observable/__private__/Observable.toDeferable.js";
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
 import Observable_toReadonlyArray from "./Observable/__private__/Observable.toReadonlyArray.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
@@ -1280,6 +1282,12 @@ export interface ObservableModule {
     readonly delay?: number;
   }): PureRunnableLike<T>;
 
+  toDeferable<T>(options?: {
+    readonly backpressureStrategy?: BackpressureStrategy;
+    readonly capacity?: number;
+    readonly maxMicroTaskTicks?: number;
+  }): Function1<RunnableLike<T>, DeferableLike<T>>;
+
   toEventSource<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -1660,6 +1668,7 @@ export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throttle: Signature["throttle"] = Observable_throttle;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
 export const throws: Signature["throws"] = Observable_throws;
+export const toDeferable: Signature["toDeferable"] = Observable_toDeferable;
 export const toEventSource: Signature["toEventSource"] =
   Observable_toEventSource;
 export const toReadonlyArray: Signature["toReadonlyArray"] =

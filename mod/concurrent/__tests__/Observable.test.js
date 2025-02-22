@@ -55,6 +55,7 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
+import * as Deferable from "../../computations/Deferable.js";
 import ComputationWithSideEffectsModuleTests from "../../computations/__tests__/fixtures/ComputationWithSideEffectsModuleTests.js";
 import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
 import PureStatefulComputationModuleTests from "../../computations/__tests__/fixtures/PureStatefulComputationModuleTests.js";
@@ -1224,7 +1225,7 @@ Observable.takeLast({ count: 0 }), Observable.toReadonlyArray(), expectArrayEqua
     pipe(pipeLazy([], Observable.fromReadonlyArray({ delay: 1 }), Observable.throwIfEmpty(() => {
         throw error;
     }), Observable.run()), expectToThrowError(error));
-}), test("when source is not empty", pipeLazy([1], Observable.fromReadonlyArray(), Observable.throwIfEmpty(returns(none)), Observable.toReadonlyArray(), expectArrayEquals([1]))), test("when source is not empty with delay", pipeLazy([1], Observable.fromReadonlyArray({ delay: 1 }), Observable.throwIfEmpty(returns(none)), Observable.toReadonlyArray(), expectArrayEquals([1]))), PureStatefulObservableOperator(Observable.throwIfEmpty(() => newInstance(Error)))), describe("toEventSource", test("when the source completes without error", () => {
+}), test("when source is not empty", pipeLazy([1], Observable.fromReadonlyArray(), Observable.throwIfEmpty(returns(none)), Observable.toReadonlyArray(), expectArrayEquals([1]))), test("when source is not empty with delay", pipeLazy([1], Observable.fromReadonlyArray({ delay: 1 }), Observable.throwIfEmpty(returns(none)), Observable.toReadonlyArray(), expectArrayEquals([1]))), PureStatefulObservableOperator(Observable.throwIfEmpty(() => newInstance(Error)))), describe("toDeferable", test("when deferable sinkcompletes early", pipeLazy(Observable.generate(increment, returns(0)), Observable.toDeferable(), Deferable.takeFirst({ count: 3 }), Deferable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))), describe("toEventSource", test("when the source completes without error", () => {
     const env_54 = { stack: [], error: void 0, hasError: false };
     try {
         const result = [];
