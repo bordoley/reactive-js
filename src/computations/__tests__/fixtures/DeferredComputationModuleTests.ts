@@ -294,6 +294,51 @@ const DeferredComputationModuleTests = <C extends Computation>(
       ),
     ),
     describe(
+      "scan",
+      test(
+        "sums all the values in the array emitting intermediate values.",
+        pipeLazy(
+          [1, 1, 1],
+          m.fromReadonlyArray(),
+          m.scan<number, number>((a, b) => a + b, returns(0)),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3]),
+        ),
+      ),
+      test("throws when the scan function throws", () => {
+        const err = new Error();
+        const scanner = <T>(_acc: T, _next: T): T => {
+          throw err;
+        };
+
+        pipe(
+          pipeLazy(
+            [1, 1],
+            m.fromReadonlyArray(),
+            m.scan(scanner, returns(0)),
+            m.toReadonlyArray(),
+          ),
+          expectToThrowError(err),
+        );
+      }),
+      test("throws when the initial value function throws", () => {
+        const err = new Error();
+        const initialValue = (): number => {
+          throw err;
+        };
+
+        pipe(
+          pipeLazy(
+            [1, 1],
+            m.fromReadonlyArray(),
+            m.scan((a, b) => a + b, initialValue),
+            m.toReadonlyArray(),
+          ),
+          expectToThrowError(err),
+        );
+      }),
+    ),
+    describe(
       "startWith",
       test(
         "appends the additional values to the start of the container",

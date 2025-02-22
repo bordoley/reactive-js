@@ -478,6 +478,36 @@ readonly \[`Iterable`\<`T`, `any`, `any`\>, `Iterable`\<`T`, `any`, `any`\>\]
 
 ***
 
+### scan()
+
+> **scan**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `TAcc`\>
+
+#### Type Parameters
+
+• **T**
+
+• **TAcc**
+
+#### Parameters
+
+##### scanner
+
+[`Reducer`](../../../functions/type-aliases/Reducer.md)\<`T`, `TAcc`\>
+
+##### initialValue
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+#### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `TAcc`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`scan`](../../interfaces/DeferredComputationModule.md#scan)
+
+***
+
 ### startWith()
 
 > **startWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>

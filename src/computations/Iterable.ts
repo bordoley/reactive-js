@@ -353,6 +353,29 @@ export const retry: Signature["retry"] =
   (deferable: Iterable<T>) =>
     newInstance(RetryIterable, deferable, shouldRetry ?? alwaysTrue);
 
+class ScanIterable<T, TAcc> {
+  constructor(
+    private readonly s: Iterable<T>,
+    private readonly r: Reducer<T, TAcc>,
+    private readonly iv: Factory<TAcc>,
+  ) {}
+
+  *[Symbol.iterator]() {
+    const reducer = this.r;
+    let acc = this.iv();
+
+    for (const v of this.s) {
+      acc = reducer(acc, v);
+      yield acc;
+    }
+  }
+}
+
+export const scan: Signature["scan"] =
+  <T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
+  (iter: Iterable<T>) =>
+    newInstance(ScanIterable, iter, scanner, initialValue);
+
 export const startWith: Signature["startWith"] =
   <T>(...values: readonly T[]) =>
   (iter: Iterable<T>) =>

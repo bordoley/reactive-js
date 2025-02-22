@@ -604,7 +604,7 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 
 #### Inherited from
 
-[`PureStatefulComputationModule`](../../interfaces/PureStatefulComputationModule.md).[`scan`](../../interfaces/PureStatefulComputationModule.md#scan)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`scan`](../../interfaces/DeferredComputationModule.md#scan)
 
 ***
 

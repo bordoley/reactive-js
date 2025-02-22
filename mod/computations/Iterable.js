@@ -206,6 +206,25 @@ class RetryIterable {
     }
 }
 export const retry = (shouldRetry) => (deferable) => newInstance(RetryIterable, deferable, shouldRetry ?? alwaysTrue);
+class ScanIterable {
+    s;
+    r;
+    iv;
+    constructor(s, r, iv) {
+        this.s = s;
+        this.r = r;
+        this.iv = iv;
+    }
+    *[Symbol.iterator]() {
+        const reducer = this.r;
+        let acc = this.iv();
+        for (const v of this.s) {
+            acc = reducer(acc, v);
+            yield acc;
+        }
+    }
+}
+export const scan = (scanner, initialValue) => (iter) => newInstance(ScanIterable, iter, scanner, initialValue);
 export const startWith = (...values) => (iter) => pipe(values, fromReadonlyArray(), concatWith(iter));
 class TakeFirstIterable {
     s;
