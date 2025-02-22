@@ -43,3 +43,4 @@
 - [throws](functions/throws.md)
 - [toDeferable](functions/toDeferable.md)
 - [toReadonlyArray](functions/toReadonlyArray.md)
+- [zip](functions/zip.md)

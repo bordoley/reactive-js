@@ -4,7 +4,7 @@ import { clampPositiveInteger } from "../__internal__/math.js";
 import { mixInstanceFactory, props } from "../__internal__/mixins.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import { Computation_type, } from "../computations.js";
-import { alwaysTrue, error, identity, isFunction, isNone, isSome, newInstance, none, pipe, raise, returns, tuple, } from "../functions.js";
+import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pipe, raise, returns, tuple, } from "../functions.js";
 import Deferable_fromIterable from "./Deferable/__private__/Deferable.fromIterable.js";
 class CatchErrorIterable {
     s;
@@ -338,3 +338,20 @@ export const throws = (options) => {
 };
 export const toDeferable = Deferable_fromIterable;
 export const toReadonlyArray = () => (iterable) => Array.from(iterable);
+class ZipIterable {
+    iters;
+    constructor(iters) {
+        this.iters = iters;
+    }
+    *[Symbol.iterator]() {
+        const iterators = this.iters.map(invoke(Symbol.iterator));
+        while (true) {
+            const next = iterators.map(x => x.next());
+            if (next.some(x => x.done ?? false)) {
+                break;
+            }
+            yield next.map(x => x.value);
+        }
+    }
+}
+export const zip = ((...iters) => newInstance(ZipIterable, iters));

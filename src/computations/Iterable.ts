@@ -18,10 +18,14 @@ import {
   Reducer,
   SideEffect,
   SideEffect1,
+  Tuple2,
+  Tuple3,
+  Tuple4,
   Updater,
   alwaysTrue,
   error,
   identity,
+  invoke,
   isFunction,
   isNone,
   isSome,
@@ -45,7 +49,20 @@ export interface IterableModule
   extends PureStatelessComputationModule<IterableComputation>,
     DeferredComputationModule<IterableComputation>,
     ComputationWithSideEffectsModule<IterableComputation>,
-    SynchronousComputationModule<IterableComputation> {}
+    SynchronousComputationModule<IterableComputation> {
+  zip<TA, TB>(a: Iterable<TA>, b: Iterable<TB>): Iterable<Tuple2<TA, TB>>;
+  zip<TA, TB, TC>(
+    a: Iterable<TA>,
+    b: Iterable<TB>,
+    c: Iterable<TC>,
+  ): Iterable<Tuple3<TA, TB, TC>>;
+  zip<TA, TB, TC, TD>(
+    a: Iterable<TA>,
+    b: Iterable<TB>,
+    c: Iterable<TC>,
+    d: Iterable<TD>,
+  ): Iterable<Tuple4<TA, TB, TC, TD>>;
+}
 
 export type Signature = IterableModule;
 
@@ -533,3 +550,22 @@ export const toReadonlyArray: Signature["toReadonlyArray"] =
   <T>() =>
   (iterable: Iterable<T>) =>
     Array.from(iterable);
+
+class ZipIterable {
+  constructor(private readonly iters: readonly Iterable<any>[]) {}
+
+  *[Symbol.iterator]() {
+    const iterators = this.iters.map(invoke(Symbol.iterator));
+
+    while (true) {
+      const next = iterators.map(x => x.next());
+      if (next.some(x => x.done ?? false)) {
+        break;
+      }
+      yield next.map(x => x.value);
+    }
+  }
+}
+
+export const zip: Signature["zip"] = ((...iters: readonly Iterable<any>[]) =>
+  newInstance(ZipIterable, iters)) as Signature["zip"];
