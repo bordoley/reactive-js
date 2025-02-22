@@ -2,6 +2,7 @@
 
 import { Computation_type, } from "../computations.js";
 import Deferable_buffer from "./Deferable/__private__/Deferable.buffer.js";
+import Deferable_catchError from "./Deferable/__private__/Deferable.catchError.js";
 import Deferable_concat from "./Deferable/__private__/Deferable.concat.js";
 import Deferable_concatAll from "./Deferable/__private__/Deferable.concatAll.js";
 import Deferable_concatMany from "./Deferable/__private__/Deferable.concatMany.js";
@@ -31,6 +32,7 @@ import Deferable_throwIfEmpty from "./Deferable/__private__/Deferable.throwIfEmp
 import Deferable_throws from "./Deferable/__private__/Deferable.throws.js";
 import Deferable_toReadonlyArray from "./Deferable/__private__/Deferable.toReadonlyArray.js";
 export const buffer = Deferable_buffer;
+export const catchError = Deferable_catchError;
 export const concat = Deferable_concat;
 export const concatAll = Deferable_concatAll;
 export const concatMap = Deferable_concatMap;

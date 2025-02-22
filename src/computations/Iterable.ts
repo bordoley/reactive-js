@@ -24,6 +24,7 @@ import {
   identity,
   isFunction,
   isNone,
+  isSome,
   newInstance,
   none,
   pipe,
@@ -46,6 +47,42 @@ export interface IterableModule
     SynchronousComputationModule<IterableComputation> {}
 
 export type Signature = IterableModule;
+
+class CatchErrorIterable<T> {
+  constructor(
+    private readonly s: Iterable<T>,
+    private readonly onError:
+      | SideEffect1<Error>
+      | Function1<Error, Iterable<T>>,
+  ) {}
+
+  *[Symbol.iterator]() {
+    try {
+      for (const v of this.s) {
+        yield v;
+      }
+    } catch (e) {
+      const err = error(e);
+      let action: Optional<Iterable<T>> = none;
+      try {
+        action = this.onError(err) as Optional<Iterable<T>>;
+      } catch (e) {
+        throw error([error(e), err]);
+      }
+
+      if (isSome(action)) {
+        for (const v of action) {
+          yield v;
+        }
+      }
+    }
+  }
+}
+
+export const catchError: Signature["catchError"] =
+  <T>(onError: SideEffect1<Error> | Function1<Error, Iterable<T>>) =>
+  (iter: Iterable<T>) =>
+    newInstance(CatchErrorIterable, iter, onError);
 
 export const concat: Signature["concat"] = <T>(
   ...iterables: readonly Iterable<T>[]

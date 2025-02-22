@@ -17,6 +17,46 @@
 
 ## Methods
 
+### catchError()
+
+#### Call Signature
+
+> **catchError**\<`T`\>(`onError`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### onError
+
+[`SideEffect1`](../../functions/type-aliases/SideEffect1.md)\<`Error`\>
+
+##### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+#### Call Signature
+
+> **catchError**\<`T`\>(`onError`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### onError
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<`Error`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\>
+
+##### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+
+***
+
 ### concat()
 
 > **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>

@@ -259,24 +259,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
     finally {
         __disposeResources(env_9);
     }
-}), test("it passes through notifications", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.backpressureStrategy(1, DropLatestBackpressureStrategy), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), PureStatefulObservableOperator(Observable.backpressureStrategy(10, DropLatestBackpressureStrategy))), describe("buffer", PureStatefulObservableOperator(Observable.buffer())), describe("catchError", test("when the source throws", () => {
-    const e1 = "e1";
-    let result = none;
-    pipe(Observable.throws({ raise: () => e1 }), Observable.catchError((e) => {
-        result = e.message;
-    }), Observable.toReadonlyArray());
-    pipe(result, expectEquals(e1));
-}), test("when the error handler throws an error", () => {
-    const e1 = "e1";
-    const e2 = "e2";
-    let result = none;
-    pipe(Observable.throws({ raise: () => e1 }), Observable.catchError(_ => {
-        throw e2;
-    }), Observable.catchError(e => {
-        result = e["cause"];
-    }), Observable.toReadonlyArray());
-    pipe(result, ReadonlyArray.map(x => x.message), expectArrayEquals(["e2", "e1"]));
-}), test("when the error handler throws an error from a delayed source", () => {
+}), test("it passes through notifications", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.backpressureStrategy(1, DropLatestBackpressureStrategy), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), PureStatefulObservableOperator(Observable.backpressureStrategy(10, DropLatestBackpressureStrategy))), describe("buffer", PureStatefulObservableOperator(Observable.buffer())), describe("catchError", test("when the error handler throws an error from a delayed source", () => {
     const e1 = "e1";
     const e2 = "e2";
     let result = none;

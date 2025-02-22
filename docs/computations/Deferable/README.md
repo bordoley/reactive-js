@@ -18,6 +18,7 @@
 ## Functions
 
 - [buffer](functions/buffer.md)
+- [catchError](functions/catchError.md)
 - [concat](functions/concat.md)
 - [concatAll](functions/concatAll.md)
 - [concatMany](functions/concatMany.md)

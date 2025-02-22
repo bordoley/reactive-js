@@ -10,6 +10,7 @@ import {
   SynchronousComputationModule,
 } from "../computations.js";
 import Deferable_buffer from "./Deferable/__private__/Deferable.buffer.js";
+import Deferable_catchError from "./Deferable/__private__/Deferable.catchError.js";
 import Deferable_concat from "./Deferable/__private__/Deferable.concat.js";
 import Deferable_concatAll from "./Deferable/__private__/Deferable.concatAll.js";
 import Deferable_concatMany from "./Deferable/__private__/Deferable.concatMany.js";
@@ -56,6 +57,7 @@ export interface DeferableModule
 export type Signature = DeferableModule;
 
 export const buffer: Signature["buffer"] = Deferable_buffer;
+export const catchError: Signature["catchError"] = Deferable_catchError;
 export const concat: Signature["concat"] = Deferable_concat;
 export const concatAll: Signature["concatAll"] = Deferable_concatAll;
 export const concatMap: Signature["concatMap"] = Deferable_concatMap;

@@ -4,7 +4,38 @@ import { clampPositiveInteger } from "../__internal__/math.js";
 import { mixInstanceFactory, props } from "../__internal__/mixins.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import { Computation_type, } from "../computations.js";
-import { alwaysTrue, error, identity, isFunction, isNone, newInstance, none, pipe, raise, returns, tuple, } from "../functions.js";
+import { alwaysTrue, error, identity, isFunction, isNone, isSome, newInstance, none, pipe, raise, returns, tuple, } from "../functions.js";
+class CatchErrorIterable {
+    s;
+    onError;
+    constructor(s, onError) {
+        this.s = s;
+        this.onError = onError;
+    }
+    *[Symbol.iterator]() {
+        try {
+            for (const v of this.s) {
+                yield v;
+            }
+        }
+        catch (e) {
+            const err = error(e);
+            let action = none;
+            try {
+                action = this.onError(err);
+            }
+            catch (e) {
+                throw error([error(e), err]);
+            }
+            if (isSome(action)) {
+                for (const v of action) {
+                    yield v;
+                }
+            }
+        }
+    }
+}
+export const catchError = (onError) => (iter) => newInstance(CatchErrorIterable, iter, onError);
 export const concat = (...iterables) => concatMany(iterables);
 class ConcatAllIterable {
     s;

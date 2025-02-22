@@ -8,6 +8,7 @@ export interface IterableComputation extends Computation {
 export interface IterableModule extends PureStatelessComputationModule<IterableComputation>, DeferredComputationModule<IterableComputation>, ComputationWithSideEffectsModule<IterableComputation>, SynchronousComputationModule<IterableComputation> {
 }
 export type Signature = IterableModule;
+export declare const catchError: Signature["catchError"];
 export declare const concat: Signature["concat"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concatMap: Signature["concatMap"];

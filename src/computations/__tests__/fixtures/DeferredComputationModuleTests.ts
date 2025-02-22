@@ -8,12 +8,14 @@ import {
   expectTrue,
   test,
 } from "../../../__internal__/testing.js";
+import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import {
   Computation,
   DeferredComputationModule,
   SynchronousComputationModule,
 } from "../../../computations.js";
 import {
+  Optional,
   alwaysTrue,
   increment,
   lessThan,
@@ -29,6 +31,57 @@ const DeferredComputationModuleTests = <C extends Computation>(
 ) =>
   describe(
     "DeferredComputationModule",
+    describe(
+      "catchError",
+      test("when the source throws", () => {
+        const e1 = "e1";
+        let result: Optional<string> = none;
+        pipe(
+          m.throws<number>({ raise: () => e1 }),
+          m.catchError<number>((e: Error) => {
+            result = e.message;
+          }),
+          m.toReadonlyArray(),
+        );
+
+        pipe(result, expectEquals<Optional<string>>(e1));
+      }),
+      test("when the error handler throws an error", () => {
+        const e1 = "e1";
+        const e2 = "e2";
+
+        let result: Optional<unknown> = none;
+
+        pipe(
+          m.throws<number>({ raise: () => e1 }),
+          m.catchError(_ => {
+            throw e2;
+          }),
+          m.catchError<number>(e => {
+            result = e.cause;
+          }),
+          m.toReadonlyArray(),
+        );
+
+        pipe(
+          result as ReadonlyArray<Error>,
+          ReadonlyArray.map(x => x.message),
+          expectArrayEquals(["e2", "e1"]),
+        );
+      }),
+
+      test(
+        "when error handler returns a computation",
+        pipeLazy(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.concatWith(m.throws()),
+          m.catchError(pipeLazy([4, 5, 6], m.fromReadonlyArray())),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3, 4, 5, 6]),
+        ),
+      ),
+    ),
     describe(
       "fromIterable",
       test(

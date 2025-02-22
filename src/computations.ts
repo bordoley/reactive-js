@@ -44,6 +44,11 @@ export type ComputationOperator<C extends Computation, TA, TB> = Function1<
 >;
 
 export interface DeferredComputationModule<C extends Computation> {
+  catchError<T>(onError: SideEffect1<Error>): ComputationOperator<C, T, T>;
+  catchError<T>(
+    onError: Function1<Error, ComputationOf<C, T>>,
+  ): ComputationOperator<C, T, T>;
+
   concat<T>(
     fst: ComputationOf<C, T>,
     snd: ComputationOf<C, T>,

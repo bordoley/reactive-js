@@ -556,42 +556,6 @@ testModule(
   describe("buffer", PureStatefulObservableOperator(Observable.buffer())),
   describe(
     "catchError",
-    test("when the source throws", () => {
-      const e1 = "e1";
-      let result: Optional<string> = none;
-      pipe(
-        Observable.throws({ raise: () => e1 }),
-        Observable.catchError<number>((e: Error) => {
-          result = e.message;
-        }),
-        Observable.toReadonlyArray(),
-      );
-
-      pipe(result, expectEquals<Optional<string>>(e1));
-    }),
-    test("when the error handler throws an error", () => {
-      const e1 = "e1";
-      const e2 = "e2";
-
-      let result: Optional<unknown> = none;
-
-      pipe(
-        Observable.throws({ raise: () => e1 }),
-        Observable.catchError(_ => {
-          throw e2;
-        }),
-        Observable.catchError<number>(e => {
-          result = e["cause"];
-        }),
-        Observable.toReadonlyArray(),
-      );
-
-      pipe(
-        result as ReadonlyArray<Error>,
-        ReadonlyArray.map(x => x.message),
-        expectArrayEquals(["e2", "e1"]),
-      );
-    }),
     test("when the error handler throws an error from a delayed source", () => {
       const e1 = "e1";
       const e2 = "e2";

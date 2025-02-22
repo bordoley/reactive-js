@@ -38,6 +38,54 @@
 
 ***
 
+### catchError()
+
+#### Call Signature
+
+> **catchError**\<`T`\>(`onError`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### onError
+
+[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<`Error`\>
+
+##### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+##### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`catchError`](../../interfaces/DeferredComputationModule.md#catcherror)
+
+#### Call Signature
+
+> **catchError**\<`T`\>(`onError`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### onError
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Error`, [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>\>
+
+##### Returns
+
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`DeferableComputation`](DeferableComputation.md), `T`, `T`\>
+
+##### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`catchError`](../../interfaces/DeferredComputationModule.md#catcherror)
+
+***
+
 ### concat()
 
 > **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
