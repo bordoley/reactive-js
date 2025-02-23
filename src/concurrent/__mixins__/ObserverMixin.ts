@@ -165,7 +165,9 @@ const ObserverMixin: <T>() => Mixin2<
 
         init(SerialDisposableMixin(), instance, Disposable.disposed);
 
-        instance[ObserverMixin_scheduler] = scheduler;
+        instance[ObserverMixin_scheduler] =
+          (scheduler as unknown as TProperties)[ObserverMixin_scheduler] ??
+          scheduler;
 
         return instance;
       },

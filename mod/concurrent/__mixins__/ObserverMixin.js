@@ -42,7 +42,9 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             capacity: config[QueueableLike_capacity],
         });
         init(SerialDisposableMixin(), instance, Disposable.disposed);
-        instance[ObserverMixin_scheduler] = scheduler;
+        instance[ObserverMixin_scheduler] =
+            scheduler[ObserverMixin_scheduler] ??
+                scheduler;
         return instance;
     }, props({
         [DispatcherLike_isCompleted]: false,
