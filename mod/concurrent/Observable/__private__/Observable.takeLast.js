@@ -10,13 +10,13 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose, DropOldestBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../__mixins__/LiftedObserverMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createTakeLastObserver = /*@__PURE__*/ (() => {
     const TakeLastObserver_queue = Symbol("TakeLastObserver_queue");
-    const TakeLastObserver_delegate = Symbol("TakeLastObserver_delegate");
     function notifyDelegate(ctx) {
         const queue = this[TakeLastObserver_queue];
-        const delegate = this[TakeLastObserver_delegate];
+        const delegate = this[LiftedObserverLike_delegate];
         let v = none;
         while (((v = queue[QueueLike_dequeue]()), isSome(v))) {
             delegate[ObserverLike_notify](v);
@@ -31,12 +31,12 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
         if (count === 0) {
             return;
         }
-        this[TakeLastObserver_delegate][SchedulerLike_schedule](bind(notifyDelegate, this));
+        this[LiftedObserverLike_delegate][SchedulerLike_schedule](bind(notifyDelegate, this));
     }
-    return mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin()), function TakeLastObserver(instance, delegate, takeLastCount) {
+    return mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()), function TakeLastObserver(instance, delegate, takeLastCount) {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
-        instance[TakeLastObserver_delegate] = delegate;
+        init(LiftedObserverMixin(), instance, delegate);
         instance[TakeLastObserver_queue] = Queue.create({
             capacity: takeLastCount,
             backpressureStrategy: DropOldestBackpressureStrategy,
@@ -45,7 +45,6 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
         return instance;
     }, props({
         [TakeLastObserver_queue]: none,
-        [TakeLastObserver_delegate]: none,
     }), {
         [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             this[TakeLastObserver_queue][QueueableLike_enqueue](next);

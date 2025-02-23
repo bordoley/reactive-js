@@ -19,7 +19,6 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
-  DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   SerialDisposableLike,
@@ -28,6 +27,10 @@ import {
 import type * as Observable from "../../Observable.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_delegate,
+} from "../../__mixins__/LiftedObserverMixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, {
   ObservableLift_isStateless,
@@ -38,33 +41,37 @@ const createSwitchAllObserver: <T>(
   o: ObserverLike<T>,
 ) => ObserverLike<ObservableLike<T>> = /*@__PURE__*/ (<T>() => {
   const SwitchAllObserver_currentRef = Symbol("SwitchAllObserver_currentRef");
-  const SwitchAllObserver_delegate = Symbol("SwitchAllObserver_delegate");
 
   type TProperties = {
     readonly [SwitchAllObserver_currentRef]: SerialDisposableLike;
-    readonly [SwitchAllObserver_delegate]: ObserverLike<T>;
   };
 
-  function onSwitchAllObserverComplete(this: TProperties & DisposableLike) {
+  function onSwitchAllObserverComplete(
+    this: TProperties & LiftedObserverLike<ObservableLike<T>, T>,
+  ) {
     if (
       this[SwitchAllObserver_currentRef][SerialDisposableLike_current][
         DisposableLike_isDisposed
       ]
     ) {
-      this[SwitchAllObserver_delegate][DisposableLike_dispose]();
+      this[LiftedObserverLike_delegate][DisposableLike_dispose]();
     }
   }
 
   function onSwitchAllObserverInnerObservableComplete(
-    this: TProperties & DisposableLike,
+    this: TProperties & LiftedObserverLike<ObservableLike<T>, T>,
   ) {
     if (this[DisposableLike_isDisposed]) {
-      this[SwitchAllObserver_delegate][DisposableLike_dispose]();
+      this[LiftedObserverLike_delegate][DisposableLike_dispose]();
     }
   }
 
   return mixInstanceFactory(
-    include(DisposableMixin, DelegatingObserverMixin<ObservableLike<T>>()),
+    include(
+      DisposableMixin,
+      DelegatingObserverMixin<ObservableLike<T>>(),
+      LiftedObserverMixin(),
+    ),
     function SwitchAllObserver(
       instance: Pick<
         ObserverLike<ObservableLike<T>>,
@@ -75,8 +82,7 @@ const createSwitchAllObserver: <T>(
     ): ObserverLike<ObservableLike<T>> {
       init(DisposableMixin, instance);
       init(DelegatingObserverMixin(), instance, delegate);
-
-      instance[SwitchAllObserver_delegate] = delegate;
+      init(LiftedObserverMixin(), instance, delegate);
 
       instance[SwitchAllObserver_currentRef] = pipe(
         SerialDisposable.create(),
@@ -92,25 +98,24 @@ const createSwitchAllObserver: <T>(
     },
     props<TProperties>({
       [SwitchAllObserver_currentRef]: none,
-      [SwitchAllObserver_delegate]: none,
     }),
     {
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties &
-          ObserverLike<ObservableLike<T>> &
+          LiftedObserverLike<ObservableLike<T>, T> &
           SerialDisposableLike,
         next: ObservableLike<T>,
       ) {
         this[SwitchAllObserver_currentRef][SerialDisposableLike_current] = pipe(
           next,
           Observable_forEach(
-            bindMethod(this[SwitchAllObserver_delegate], ObserverLike_notify),
+            bindMethod(this[LiftedObserverLike_delegate], ObserverLike_notify),
           ),
           Observable_subscribeWithConfig(
-            this[SwitchAllObserver_delegate],
+            this[LiftedObserverLike_delegate],
             this,
           ),
-          Disposable.addTo(this[SwitchAllObserver_delegate]),
+          Disposable.addTo(this[LiftedObserverLike_delegate]),
           DisposableContainer.onComplete(
             bind(onSwitchAllObserverInnerObservableComplete, this),
           ),

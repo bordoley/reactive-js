@@ -6,12 +6,13 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ObserverLike, ObserverLike_notify } from "../../../concurrent.js";
 import { Function1, none, partial, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin, {
-  DelegatingDisposableLike,
-  DelegatingDisposableLike_delegate,
-} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_delegate,
+} from "../../__mixins__/LiftedObserverMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
@@ -26,15 +27,20 @@ const createMapObserver: <TA, TB>(
   selector: Function1<TA, TB>,
 ) => ObserverLike<TA> = /*@__PURE__*/ (<TA, TB>() =>
   mixInstanceFactory(
-    include(DelegatingDisposableMixin<ObserverLike<TB>>(), ObserverMixin()),
+    include(
+      DelegatingDisposableMixin(),
+      ObserverMixin(),
+      LiftedObserverMixin(),
+    ),
     function MapObserver(
       instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
         TProperties<TA, TB>,
       delegate: ObserverLike<TB>,
       selector: Function1<TA, TB>,
     ): ObserverLike<TA> {
-      init(DelegatingDisposableMixin<ObserverLike<TB>>(), instance, delegate);
+      init(DelegatingDisposableMixin(), instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
+      init(LiftedObserverMixin(), instance, delegate);
 
       instance[MapObserver_selector] = selector;
 
@@ -45,13 +51,11 @@ const createMapObserver: <TA, TB>(
     }),
     {
       [ObserverLike_notify]: Observer_assertObserverState(function (
-        this: TProperties<TA, TB> &
-          DelegatingDisposableLike<ObserverLike<TB>> &
-          ObserverLike<TA>,
+        this: TProperties<TA, TB> & LiftedObserverLike<TA, TB>,
         next: TA,
       ) {
         const mapped = this[MapObserver_selector](next);
-        this[DelegatingDisposableLike_delegate][ObserverLike_notify](mapped);
+        this[LiftedObserverLike_delegate][ObserverLike_notify](mapped);
       }),
     },
   ))();

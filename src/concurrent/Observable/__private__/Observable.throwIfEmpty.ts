@@ -16,29 +16,33 @@ import {
 } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import { DisposableLike, DisposableLike_dispose } from "../../../utils.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_delegate,
+} from "../../__mixins__/LiftedObserverMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const createThrowIfEmptyObserver: <T>(
   delegate: ObserverLike<T>,
   factory: Factory<unknown>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
-  const ThrowIfEmptyObserver_delegate = Symbol("ThrowIfEmptyObserver_delegate");
   const ThrowIfEmptyObserver_isEmpty = Symbol("ThrowIfEmptyObserver_isEmpty");
   const ThrowIfEmptyObserver_factory = Symbol("ThrowIfEmptyObserver_factory");
 
   type TProperties = {
-    [ThrowIfEmptyObserver_delegate]: ObserverLike<T>;
     [ThrowIfEmptyObserver_isEmpty]: boolean;
     [ThrowIfEmptyObserver_factory]: Factory<unknown>;
   };
 
-  function onThrowIfEmptyObserverComplete(this: TProperties) {
+  function onThrowIfEmptyObserverComplete(
+    this: TProperties & LiftedObserverLike<T>,
+  ) {
     const factory = this[ThrowIfEmptyObserver_factory];
-    const delegate = this[ThrowIfEmptyObserver_delegate];
+    const delegate = this[LiftedObserverLike_delegate];
 
     let err: Optional<Error> = none;
     if (this[ThrowIfEmptyObserver_isEmpty]) {
@@ -52,7 +56,11 @@ const createThrowIfEmptyObserver: <T>(
   }
 
   return mixInstanceFactory(
-    include(DisposableMixin, DelegatingObserverMixin<T>()),
+    include(
+      DisposableMixin,
+      DelegatingObserverMixin<T>(),
+      LiftedObserverMixin(),
+    ),
     function ThrowIfEmptyObserver(
       instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
@@ -61,9 +69,9 @@ const createThrowIfEmptyObserver: <T>(
     ): ObserverLike<T> {
       init(DisposableMixin, instance);
       init(DelegatingObserverMixin(), instance, delegate);
+      init(LiftedObserverMixin(), instance, delegate);
 
       instance[ThrowIfEmptyObserver_factory] = factory;
-      instance[ThrowIfEmptyObserver_delegate] = delegate;
 
       pipe(
         instance,
@@ -73,17 +81,16 @@ const createThrowIfEmptyObserver: <T>(
       return instance;
     },
     props<TProperties>({
-      [ThrowIfEmptyObserver_delegate]: none,
       [ThrowIfEmptyObserver_isEmpty]: true,
       [ThrowIfEmptyObserver_factory]: none,
     }),
     {
       [ObserverLike_notify]: Observer_assertObserverState(function (
-        this: TProperties & DisposableLike & ObserverLike<T>,
+        this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
         this[ThrowIfEmptyObserver_isEmpty] = false;
-        this[ThrowIfEmptyObserver_delegate][ObserverLike_notify](next);
+        this[LiftedObserverLike_delegate][ObserverLike_notify](next);
       }),
     },
   );

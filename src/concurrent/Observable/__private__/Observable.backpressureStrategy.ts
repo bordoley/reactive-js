@@ -6,10 +6,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ObserverLike, ObserverLike_notify } from "../../../concurrent.js";
 import { partial, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin, {
-  DelegatingDisposableLike,
-  DelegatingDisposableLike_delegate,
-} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   BackpressureStrategy,
   QueueableLike,
@@ -17,6 +14,10 @@ import {
   QueueableLike_capacity,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_delegate,
+} from "../../__mixins__/LiftedObserverMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
@@ -28,7 +29,11 @@ const createBackpressureObserver: <T>(
   >,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(ObserverMixin<T>(), DelegatingDisposableMixin<ObserverLike<T>>()),
+    include(
+      ObserverMixin<T>(),
+      DelegatingDisposableMixin(),
+      LiftedObserverMixin(),
+    ),
     function EnqueueObserver(
       instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
       delegate: ObserverLike<T>,
@@ -38,18 +43,16 @@ const createBackpressureObserver: <T>(
         | typeof QueueableLike_backpressureStrategy
       >,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin<ObserverLike<T>>(), instance, delegate);
+      init(DelegatingDisposableMixin(), instance, delegate);
       init(ObserverMixin<T>(), instance, delegate, config);
+      init(LiftedObserverMixin(), instance, delegate);
 
       return instance;
     },
     props(),
     {
-      [ObserverLike_notify](
-        this: DelegatingDisposableLike<ObserverLike<T>>,
-        next: T,
-      ) {
-        this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
+      [ObserverLike_notify](this: LiftedObserverLike<T>, next: T) {
+        this[LiftedObserverLike_delegate][ObserverLike_notify](next);
       },
     },
   ))();

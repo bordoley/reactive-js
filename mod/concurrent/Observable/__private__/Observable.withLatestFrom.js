@@ -5,9 +5,10 @@ import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunn
 import { bind, none, partial, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
+import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../__mixins__/LiftedObserverMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
@@ -25,9 +26,10 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
         this[WithLatestFromObserver_hasLatest] = true;
         this[WithLatestFromObserver_otherLatest] = next;
     }
-    return mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin()), function WithLatestFromObserver(instance, delegate, other, selector) {
+    return mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin(), LiftedObserverMixin()), function WithLatestFromObserver(instance, delegate, other, selector) {
         init(DelegatingDisposableMixin(), instance, delegate);
         init(ObserverMixin(), instance, delegate, delegate);
+        init(LiftedObserverMixin(), instance, delegate);
         instance[WithLatestFromObserver_selector] = selector;
         pipe(other, Observable_forEach(bind(onOtherNotify, instance)), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(instance), DisposableContainer.onComplete(bind(onWithLatestFromObserverOtherSubscriptionComplete, instance)));
         return instance;
@@ -40,7 +42,7 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
             if (!this[DisposableLike_isDisposed] &&
                 this[WithLatestFromObserver_hasLatest]) {
                 const result = this[WithLatestFromObserver_selector](next, this[WithLatestFromObserver_otherLatest]);
-                this[DelegatingDisposableLike_delegate][ObserverLike_notify](result);
+                this[LiftedObserverLike_delegate][ObserverLike_notify](result);
             }
         }),
     });

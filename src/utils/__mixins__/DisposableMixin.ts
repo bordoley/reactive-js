@@ -47,7 +47,9 @@ const doDispose = (
 };
 
 type TProperties = {
-  [DisposableMixin_onChildDisposed]: Method1<DisposableLike, Optional<Error>>;
+  [DisposableMixin_onChildDisposed]: Optional<
+    Method1<DisposableLike, Optional<Error>>
+  >;
   [DisposableLike_error]: Optional<Error>;
   [DisposableLike_isDisposed]: boolean;
   [DisposableMixin_disposables]:
@@ -74,24 +76,6 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
     > &
       TProperties,
   ): DisposableLike {
-    instance[DisposableMixin_onChildDisposed] =
-      function disposableMixinOnChildDisposed(this: DisposableLike) {
-        const disposables = instance[DisposableMixin_disposables];
-        const disposablesIsSet = disposables instanceof Set;
-
-        if (disposables === this) {
-          instance[DisposableMixin_disposables] = none;
-        } else if (disposablesIsSet) {
-          disposables[Set_delete](this);
-        }
-
-        if (disposablesIsSet && disposables.size === 1) {
-          instance[DisposableMixin_disposables] = disposables
-            .values()
-            .next().value;
-        }
-      };
-
     return instance;
   },
   props<TProperties>({
@@ -111,6 +95,7 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
 
         const disposables = this[DisposableMixin_disposables];
         this[DisposableMixin_disposables] = none;
+        this[DisposableMixin_onChildDisposed] = none;
 
         if (disposables instanceof Set) {
           for (const disposable of disposables) {
@@ -151,6 +136,27 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
       }
 
       if (isDisposableContainer(disposable)) {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const instance = this;
+        this[DisposableMixin_onChildDisposed] =
+          this[DisposableMixin_onChildDisposed] ??
+          function disposableMixinOnChildDisposed(this: DisposableLike) {
+            const disposables = instance[DisposableMixin_disposables];
+            const disposablesIsSet = disposables instanceof Set;
+
+            if (disposables === this) {
+              instance[DisposableMixin_disposables] = none;
+            } else if (disposablesIsSet) {
+              disposables[Set_delete](this);
+            }
+
+            if (disposablesIsSet && disposables.size === 1) {
+              instance[DisposableMixin_disposables] = disposables
+                .values()
+                .next().value;
+            }
+          };
+
         disposable[DisposableContainerLike_add](
           this[DisposableMixin_onChildDisposed],
         );

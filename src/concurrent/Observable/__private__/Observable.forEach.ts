@@ -6,12 +6,13 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ObserverLike, ObserverLike_notify } from "../../../concurrent.js";
 import { SideEffect1, none, partial, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin, {
-  DelegatingDisposableLike,
-  DelegatingDisposableLike_delegate,
-} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_delegate,
+} from "../../__mixins__/LiftedObserverMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 
@@ -26,14 +27,19 @@ const createForEachObserver: <T>(
   }
 
   return mixInstanceFactory(
-    include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<T>>()),
+    include(
+      ObserverMixin(),
+      DelegatingDisposableMixin(),
+      LiftedObserverMixin(),
+    ),
     function ForEachObserver(
       instance: TProperties,
       delegate: ObserverLike<T>,
       effect: SideEffect1<T>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin<ObserverLike<T>>(), instance, delegate);
+      init(DelegatingDisposableMixin(), instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
+      init(LiftedObserverMixin(), instance, delegate);
       instance[ForEachObserver_effect] = effect;
 
       return instance;
@@ -43,13 +49,11 @@ const createForEachObserver: <T>(
     }),
     {
       [ObserverLike_notify]: Observer_assertObserverState(function (
-        this: TProperties &
-          DelegatingDisposableLike<ObserverLike<T>> &
-          ObserverLike<T>,
+        this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
         this[ForEachObserver_effect](next);
-        this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
+        this[LiftedObserverLike_delegate][ObserverLike_notify](next);
       }),
     },
   );

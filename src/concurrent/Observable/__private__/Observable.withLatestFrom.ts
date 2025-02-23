@@ -22,10 +22,8 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DelegatingDisposableMixin, {
-  DelegatingDisposableLike,
-  DelegatingDisposableLike_delegate,
-} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -33,6 +31,10 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_delegate,
+} from "../../__mixins__/LiftedObserverMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, {
@@ -75,7 +77,11 @@ const createWithLatestFromObserver: <TA, TB, T>(
   }
 
   return mixInstanceFactory(
-    include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<T>>()),
+    include(
+      ObserverMixin(),
+      DelegatingDisposableMixin(),
+      LiftedObserverMixin(),
+    ),
     function WithLatestFromObserver(
       instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
         TProperties,
@@ -83,8 +89,9 @@ const createWithLatestFromObserver: <TA, TB, T>(
       other: ObservableLike<TB>,
       selector: Function2<TA, TB, T>,
     ): ObserverLike<TA> {
-      init(DelegatingDisposableMixin<ObserverLike<T>>(), instance, delegate);
+      init(DelegatingDisposableMixin(), instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
+      init(LiftedObserverMixin(), instance, delegate);
 
       instance[WithLatestFromObserver_selector] = selector;
 
@@ -107,9 +114,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
     }),
     {
       [ObserverLike_notify]: Observer_assertObserverState(function (
-        this: TProperties &
-          ObserverLike<TA> &
-          DelegatingDisposableLike<ObserverLike<T>>,
+        this: TProperties & LiftedObserverLike<TA, T>,
         next: TA,
       ) {
         if (
@@ -120,7 +125,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
             next,
             this[WithLatestFromObserver_otherLatest] as TB,
           );
-          this[DelegatingDisposableLike_delegate][ObserverLike_notify](result);
+          this[LiftedObserverLike_delegate][ObserverLike_notify](result);
         }
       }),
     },

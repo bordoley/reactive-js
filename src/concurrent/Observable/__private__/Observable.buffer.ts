@@ -25,21 +25,25 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_delegate,
+} from "../../__mixins__/LiftedObserverMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
-const BufferObserver_delegate = Symbol("BufferObserver_delegate");
 const BufferObserver_buffer = Symbol("BufferObserver_buffer");
 const BufferObserver_count = Symbol("BufferingLike_count");
 
 interface TProps<T> {
-  [BufferObserver_delegate]: ObserverLike<readonly T[]>;
   [BufferObserver_buffer]: T[];
   [BufferObserver_count]: number;
 }
 
-function onBufferObserverCompleted<T>(this: TProps<T>) {
-  const delegate = this[BufferObserver_delegate];
+function onBufferObserverCompleted<T>(
+  this: TProps<T> & LiftedObserverLike<T, readonly T[]>,
+) {
+  const delegate = this[LiftedObserverLike_delegate];
   const buffer = this[BufferObserver_buffer];
   this[BufferObserver_buffer] = [];
 
@@ -56,7 +60,7 @@ const createBufferObserver: <T>(
   count: Optional<number>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(DisposableMixin, ObserverMixin()),
+    include(DisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function BufferObserver(
       instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProps<T>,
       delegate: ObserverLike<readonly T[]>,
@@ -64,8 +68,8 @@ const createBufferObserver: <T>(
     ): ObserverLike<T> {
       init(DisposableMixin, instance);
       init(ObserverMixin(), instance, delegate, delegate);
+      init(LiftedObserverMixin(), instance, delegate);
 
-      instance[BufferObserver_delegate] = delegate;
       instance[BufferObserver_count] = clampPositiveNonZeroInteger(
         count ?? MAX_SAFE_INTEGER,
       );
@@ -80,13 +84,12 @@ const createBufferObserver: <T>(
       return instance;
     },
     props<TProps<T>>({
-      [BufferObserver_delegate]: none,
       [BufferObserver_buffer]: none,
       [BufferObserver_count]: 0,
     }),
     {
       [ObserverLike_notify]: Observer_assertObserverState(function (
-        this: TProps<T> & ObserverLike<T>,
+        this: TProps<T> & LiftedObserverLike<T, readonly T[]>,
         next: T,
       ) {
         const buffer = this[BufferObserver_buffer];
@@ -96,7 +99,7 @@ const createBufferObserver: <T>(
 
         if (buffer[Array_length] === count) {
           this[BufferObserver_buffer] = [];
-          this[BufferObserver_delegate][ObserverLike_notify](buffer);
+          this[LiftedObserverLike_delegate][ObserverLike_notify](buffer);
         }
       }),
     },

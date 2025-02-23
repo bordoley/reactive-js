@@ -11,12 +11,14 @@ import {
   SchedulerLike_now,
 } from "../../../concurrent.js";
 import { Function2, none, partial, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin, {
-  DelegatingDisposableLike,
-  DelegatingDisposableLike_delegate,
-} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+
 import type * as Observable from "../../Observable.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_delegate,
+} from "../../__mixins__/LiftedObserverMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
@@ -33,15 +35,21 @@ const createWithCurrentTimeObserver: <TA, TB>(
   };
 
   return mixInstanceFactory(
-    include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<TB>>()),
+    include(
+      ObserverMixin(),
+      DelegatingDisposableMixin(),
+      LiftedObserverMixin(),
+    ),
     function WithCurrentTimeObserver(
       instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<TB>,
       selector: Function2<number, TA, TB>,
     ): ObserverLike<TA> {
-      init(DelegatingDisposableMixin<ObserverLike<TB>>(), instance, delegate);
+      init(DelegatingDisposableMixin(), instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
+      init(LiftedObserverMixin(), instance, delegate);
+
       instance[WithCurrentTimeObserver_selector] = selector;
 
       return instance;
@@ -51,9 +59,7 @@ const createWithCurrentTimeObserver: <TA, TB>(
     }),
     {
       [ObserverLike_notify]: Observer_assertObserverState(function (
-        this: TProperties &
-          DelegatingDisposableLike<ObserverLike<TB>> &
-          ObserverLike<TA>,
+        this: TProperties & LiftedObserverLike<TA, TB>,
         next: TA,
       ) {
         const currentTime = this[SchedulerLike_now];
@@ -61,7 +67,7 @@ const createWithCurrentTimeObserver: <TA, TB>(
           currentTime,
           next,
         );
-        this[DelegatingDisposableLike_delegate][ObserverLike_notify](mapped);
+        this[LiftedObserverLike_delegate][ObserverLike_notify](mapped);
       }),
     },
   );

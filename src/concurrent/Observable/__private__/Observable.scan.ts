@@ -13,13 +13,15 @@ import {
   partial,
   pipe,
 } from "../../../functions.js";
-import DelegatingDisposableMixin, {
-  DelegatingDisposableLike,
-  DelegatingDisposableLike_delegate,
-} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+
 import { DisposableLike_dispose } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_delegate,
+} from "../../__mixins__/LiftedObserverMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
@@ -37,7 +39,11 @@ const createScanObserver: <T, TAcc>(
   initialValue: Factory<TAcc>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T, TAcc>() => {
   return mixInstanceFactory(
-    include(DelegatingDisposableMixin<ObserverLike<TAcc>>(), ObserverMixin()),
+    include(
+      DelegatingDisposableMixin(),
+      ObserverMixin(),
+      LiftedObserverMixin(),
+    ),
     function ScanObserver(
       instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
         TProperties<T, TAcc>,
@@ -45,8 +51,9 @@ const createScanObserver: <T, TAcc>(
       reducer: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin<ObserverLike<TAcc>>(), instance, delegate);
+      init(DelegatingDisposableMixin(), instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
+      init(LiftedObserverMixin(), instance, delegate);
 
       instance[ScanObserver_reducer] = reducer;
 
@@ -64,9 +71,7 @@ const createScanObserver: <T, TAcc>(
     }),
     {
       [ObserverLike_notify]: Observer_assertObserverState(function (
-        this: TProperties<T, TAcc> &
-          DelegatingDisposableLike<ObserverLike<TAcc>> &
-          ObserverLike<T>,
+        this: TProperties<T, TAcc> & LiftedObserverLike<T, TAcc>,
         next: T,
       ) {
         const nextAcc = this[ScanObserver_reducer](
@@ -74,7 +79,7 @@ const createScanObserver: <T, TAcc>(
           next,
         );
         this[ScanObserver_acc] = nextAcc;
-        this[DelegatingDisposableLike_delegate][ObserverLike_notify](nextAcc);
+        this[LiftedObserverLike_delegate][ObserverLike_notify](nextAcc);
       }),
     },
   );

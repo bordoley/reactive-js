@@ -12,12 +12,13 @@ import {
   pipe,
   strictEquality,
 } from "../../../functions.js";
-import DelegatingDisposableMixin, {
-  DelegatingDisposableLike,
-  DelegatingDisposableLike_delegate,
-} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_delegate,
+} from "../../__mixins__/LiftedObserverMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
@@ -42,15 +43,19 @@ const createDistinctUntilChangedObserver: <T>(
   equality: Equality<T>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<T>>()),
+    include(
+      ObserverMixin(),
+      DelegatingDisposableMixin(),
+      LiftedObserverMixin(),
+    ),
     function DistinctUntilChangedObserver(
       instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProps<T>,
       delegate: ObserverLike<T>,
       equality: Equality<T>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin<ObserverLike<T>>(), instance, delegate);
-
+      init(DelegatingDisposableMixin(), instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
+      init(LiftedObserverMixin(), instance, delegate);
 
       instance[DistinctUntilChangedObserver_equality] = equality;
 
@@ -63,9 +68,7 @@ const createDistinctUntilChangedObserver: <T>(
     }),
     {
       [ObserverLike_notify]: Observer_assertObserverState(function (
-        this: TProps<T> &
-          ObserverLike<T> &
-          DelegatingDisposableLike<ObserverLike<T>>,
+        this: TProps<T> & LiftedObserverLike<T>,
         next: T,
       ) {
         const shouldEmit =
@@ -78,7 +81,7 @@ const createDistinctUntilChangedObserver: <T>(
         if (shouldEmit) {
           this[DistinctUntilChangedObserver_prev] = next;
           this[DistinctUntilChangedObserver_hasValue] = true;
-          this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
+          this[LiftedObserverLike_delegate][ObserverLike_notify](next);
         }
       }),
     },

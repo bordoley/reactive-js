@@ -34,6 +34,10 @@ import {
 import type * as Observable from "../../Observable.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_delegate,
+} from "../../__mixins__/LiftedObserverMixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_fromValue from "./Observable.fromValue.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -57,7 +61,6 @@ const createThrottleObserver: <T>(
     "ThrottleObserver_durationFunction",
   );
   const ThrottleObserver_mode = Symbol("ThrottleObserver_mode");
-  const ThrottleObserver_delegate = Symbol("ThrottleObserver_delegate");
 
   type TProperties = {
     [ThrottleObserver_value]: Optional<T>;
@@ -65,14 +68,13 @@ const createThrottleObserver: <T>(
     readonly [ThrottleObserver_durationSubscription]: SerialDisposableLike;
     readonly [ThrottleObserver_durationFunction]: Function1<T, ObservableLike>;
     readonly [ThrottleObserver_mode]: Observable.ThrottleMode;
-    [ThrottleObserver_delegate]: ObserverLike<T>;
   };
 
   function notifyThrottleObserverDelegate(
-    this: ObserverLike<T> & TProperties,
+    this: LiftedObserverLike<T> & TProperties,
     _?: unknown,
   ) {
-    const delegate = this[ThrottleObserver_delegate];
+    const delegate = this[LiftedObserverLike_delegate];
 
     if (this[ThrottleObserver_hasValue]) {
       const value = this[ThrottleObserver_value] as T;
@@ -86,7 +88,7 @@ const createThrottleObserver: <T>(
   }
 
   const setupDurationSubscription = (
-    observer: ObserverLike<T> & TProperties,
+    observer: LiftedObserverLike<T> & TProperties,
     next: T,
   ) => {
     observer[ThrottleObserver_durationSubscription][
@@ -95,15 +97,17 @@ const createThrottleObserver: <T>(
       observer[ThrottleObserver_durationFunction](next),
       Observable_forEach(bind(notifyThrottleObserverDelegate, observer)),
       Observable_subscribeWithConfig(
-        observer[ThrottleObserver_delegate],
+        observer[LiftedObserverLike_delegate],
         observer,
       ),
-      Disposable.addTo(observer[ThrottleObserver_delegate]),
+      Disposable.addTo(observer[LiftedObserverLike_delegate]),
     );
   };
 
-  function onThrottleObserverComplete(this: TProperties) {
-    const delegate = this[ThrottleObserver_delegate];
+  function onThrottleObserverComplete(
+    this: TProperties & LiftedObserverLike<T>,
+  ) {
+    const delegate = this[LiftedObserverLike_delegate];
     if (
       this[ThrottleObserver_mode] !== ThrottleFirstMode &&
       this[ThrottleObserver_hasValue] &&
@@ -116,7 +120,7 @@ const createThrottleObserver: <T>(
   }
 
   return mixInstanceFactory(
-    include(DisposableMixin, DelegatingObserverMixin()),
+    include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()),
     function ThrottleObserver(
       instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
@@ -125,8 +129,8 @@ const createThrottleObserver: <T>(
       mode: Observable.ThrottleMode,
     ): ObserverLike<T> {
       init(DisposableMixin, instance);
-      instance[ThrottleObserver_delegate] = delegate;
       init(DelegatingObserverMixin(), instance, delegate);
+      init(LiftedObserverMixin(), instance, delegate);
 
       instance[ThrottleObserver_durationFunction] = durationFunction;
       instance[ThrottleObserver_mode] = mode;
@@ -146,14 +150,13 @@ const createThrottleObserver: <T>(
     props<TProperties>({
       [ThrottleObserver_value]: none,
       [ThrottleObserver_hasValue]: false,
-      [ThrottleObserver_delegate]: none,
       [ThrottleObserver_durationSubscription]: none,
       [ThrottleObserver_durationFunction]: none,
       [ThrottleObserver_mode]: ThrottleIntervalMode,
     }),
     {
       [ObserverLike_notify]: Observer_assertObserverState(function (
-        this: ObserverLike<T> & TProperties,
+        this: LiftedObserverLike<T> & TProperties,
         next: T,
       ) {
         this[ThrottleObserver_value] = next;

@@ -12,20 +12,20 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../__mixins__/LiftedObserverMixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
     const MergeAllObserver_activeCount = Symbol("MergeAllObserver_activeCount");
     const MergeAllObserver_concurrency = Symbol("MergeAllObserver_concurrency");
-    const MergeAllObserver_delegate = Symbol("MergeAllObserver_delegate");
     const MergeAllObserver_observablesQueue = Symbol("MergeAllObserver_observablesQueue");
     const subscribeToObservable = (observer, nextObs) => {
         observer[MergeAllObserver_activeCount]++;
-        pipe(nextObs, Observable_forEach(bindMethod(observer[MergeAllObserver_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(observer[MergeAllObserver_delegate], observer), Disposable.addTo(observer[MergeAllObserver_delegate]), DisposableContainer.onComplete(bind(onMergeAllObserverInnerObservableComplete, observer)));
+        pipe(nextObs, Observable_forEach(bindMethod(observer[LiftedObserverLike_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(observer[LiftedObserverLike_delegate], observer), Disposable.addTo(observer[LiftedObserverLike_delegate]), DisposableContainer.onComplete(bind(onMergeAllObserverInnerObservableComplete, observer)));
     };
     function onMergeAllObserverComplete() {
-        const delegate = this[MergeAllObserver_delegate];
+        const delegate = this[LiftedObserverLike_delegate];
         if (delegate[DisposableLike_isDisposed]) {
             // FIXME: Clear the queue
         }
@@ -43,25 +43,24 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         }
         else if (this[DisposableLike_isDisposed] &&
             this[MergeAllObserver_activeCount] <= 0) {
-            this[MergeAllObserver_delegate][DisposableLike_dispose]();
+            this[LiftedObserverLike_delegate][DisposableLike_dispose]();
         }
     }
-    const createMergeAllObserver = mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
+    const createMergeAllObserver = mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
+        init(LiftedObserverMixin(), instance, delegate);
         instance[MergeAllObserver_observablesQueue] = Queue.create({
             capacity,
             backpressureStrategy,
         });
         instance[MergeAllObserver_concurrency] = concurrency;
-        instance[MergeAllObserver_delegate] = delegate;
         instance[MergeAllObserver_activeCount] = 0;
         pipe(instance, DisposableContainer.onComplete(onMergeAllObserverComplete));
         return instance;
     }, props({
         [MergeAllObserver_activeCount]: 0,
         [MergeAllObserver_concurrency]: 0,
-        [MergeAllObserver_delegate]: none,
         [MergeAllObserver_observablesQueue]: none,
     }), {
         [ObserverLike_notify]: Observer_assertObserverState(function (next) {

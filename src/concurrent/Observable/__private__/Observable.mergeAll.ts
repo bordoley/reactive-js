@@ -45,6 +45,10 @@ import {
 import type * as Observable from "../../Observable.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_delegate,
+} from "../../__mixins__/LiftedObserverMixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, {
   ObservableLift_isStateless,
@@ -61,7 +65,6 @@ const createMergeAllObserverOperator: <T>(options?: {
 > = /*@__PURE__*/ (<T>() => {
   const MergeAllObserver_activeCount = Symbol("MergeAllObserver_activeCount");
   const MergeAllObserver_concurrency = Symbol("MergeAllObserver_concurrency");
-  const MergeAllObserver_delegate = Symbol("MergeAllObserver_delegate");
   const MergeAllObserver_observablesQueue = Symbol(
     "MergeAllObserver_observablesQueue",
   );
@@ -69,12 +72,11 @@ const createMergeAllObserverOperator: <T>(options?: {
   type TProperties = {
     [MergeAllObserver_activeCount]: number;
     readonly [MergeAllObserver_concurrency]: number;
-    readonly [MergeAllObserver_delegate]: ObserverLike<T>;
     readonly [MergeAllObserver_observablesQueue]: QueueLike<ObservableLike<T>>;
   };
 
   const subscribeToObservable = (
-    observer: ObserverLike<ObservableLike<T>> & TProperties,
+    observer: LiftedObserverLike<ObservableLike<T>, T> & TProperties,
     nextObs: ObservableLike<T>,
   ) => {
     observer[MergeAllObserver_activeCount]++;
@@ -82,13 +84,13 @@ const createMergeAllObserverOperator: <T>(options?: {
     pipe(
       nextObs,
       Observable_forEach(
-        bindMethod(observer[MergeAllObserver_delegate], ObserverLike_notify),
+        bindMethod(observer[LiftedObserverLike_delegate], ObserverLike_notify),
       ),
       Observable_subscribeWithConfig(
-        observer[MergeAllObserver_delegate],
+        observer[LiftedObserverLike_delegate],
         observer,
       ),
-      Disposable.addTo(observer[MergeAllObserver_delegate]),
+      Disposable.addTo(observer[LiftedObserverLike_delegate]),
       DisposableContainer.onComplete(
         bind(onMergeAllObserverInnerObservableComplete, observer),
       ),
@@ -96,9 +98,9 @@ const createMergeAllObserverOperator: <T>(options?: {
   };
 
   function onMergeAllObserverComplete(
-    this: ObserverLike<ObservableLike<T>> & TProperties,
+    this: LiftedObserverLike<ObservableLike<T>, T> & TProperties,
   ) {
-    const delegate = this[MergeAllObserver_delegate];
+    const delegate = this[LiftedObserverLike_delegate];
     if (delegate[DisposableLike_isDisposed]) {
       // FIXME: Clear the queue
     } else if (
@@ -111,7 +113,7 @@ const createMergeAllObserverOperator: <T>(options?: {
   }
 
   function onMergeAllObserverInnerObservableComplete(
-    this: ObserverLike<ObservableLike<T>> & TProperties,
+    this: LiftedObserverLike<ObservableLike<T>, T> & TProperties,
   ) {
     this[MergeAllObserver_activeCount]--;
     const nextObs: Optional<ObservableLike<T>> =
@@ -123,7 +125,7 @@ const createMergeAllObserverOperator: <T>(options?: {
       this[DisposableLike_isDisposed] &&
       this[MergeAllObserver_activeCount] <= 0
     ) {
-      this[MergeAllObserver_delegate][DisposableLike_dispose]();
+      this[LiftedObserverLike_delegate][DisposableLike_dispose]();
     }
   }
 
@@ -131,6 +133,7 @@ const createMergeAllObserverOperator: <T>(options?: {
     include(
       DisposableMixin,
       DelegatingObserverMixin<DeferredObservableWithSideEffectsLike<T>>(),
+      LiftedObserverMixin(),
     ),
     function MergeAllObserver(
       instance: Pick<
@@ -145,13 +148,13 @@ const createMergeAllObserverOperator: <T>(options?: {
     ): ObserverLike<ObservableLike<T>> {
       init(DisposableMixin, instance);
       init(DelegatingObserverMixin(), instance, delegate);
+      init(LiftedObserverMixin(), instance, delegate);
 
       instance[MergeAllObserver_observablesQueue] = Queue.create({
         capacity,
         backpressureStrategy,
       });
       instance[MergeAllObserver_concurrency] = concurrency;
-      instance[MergeAllObserver_delegate] = delegate;
 
       instance[MergeAllObserver_activeCount] = 0;
 
@@ -165,14 +168,12 @@ const createMergeAllObserverOperator: <T>(options?: {
     props<TProperties>({
       [MergeAllObserver_activeCount]: 0,
       [MergeAllObserver_concurrency]: 0,
-      [MergeAllObserver_delegate]: none,
       [MergeAllObserver_observablesQueue]: none,
     }),
     {
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties &
-          ObserverLike<DeferredObservableWithSideEffectsLike<T>> &
-          QueueLike<DeferredObservableWithSideEffectsLike<T>>,
+          LiftedObserverLike<DeferredObservableWithSideEffectsLike<T>, T>,
         next: DeferredObservableWithSideEffectsLike<T>,
       ) {
         if (

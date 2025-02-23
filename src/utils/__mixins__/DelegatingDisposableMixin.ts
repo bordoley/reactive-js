@@ -17,22 +17,13 @@ import {
 } from "../../utils.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 
-export const DelegatingDisposableLike_delegate = Symbol(
-  "DelegatingDisposableLike_delegate",
-);
-
-export interface DelegatingDisposableLike<
-  TDisposable extends DisposableLike = DisposableLike,
-> extends DisposableLike {
-  readonly [DelegatingDisposableLike_delegate]: TDisposable;
-}
-
-const DelegatingDisposableMixin: <
-  TDisposable extends DisposableLike = DisposableLike,
->() => Mixin1<DelegatingDisposableLike<TDisposable>, TDisposable> =
+const DelegatingDisposableMixin: () => Mixin1<DisposableLike, DisposableLike> =
   /*@__PURE__*/ (<TDisposable extends DisposableLike = DisposableLike>() => {
+    const DelegatingDisposable_delegate = Symbol(
+      "DelegatingDisposable_delegate",
+    );
     type TProperties = {
-      [DelegatingDisposableLike_delegate]: TDisposable;
+      [DelegatingDisposable_delegate]: TDisposable;
       [DisposableLike_isDisposed]: boolean;
     };
 
@@ -51,8 +42,13 @@ const DelegatingDisposableMixin: <
           > &
             TProperties,
           delegate: TDisposable,
-        ): DelegatingDisposableLike<TDisposable> {
-          instance[DelegatingDisposableLike_delegate] = delegate;
+        ): DisposableLike {
+          instance[DelegatingDisposable_delegate] = delegate;
+
+          instance[DelegatingDisposable_delegate] =
+            (delegate as unknown as TProperties)[
+              DelegatingDisposable_delegate
+            ] ?? delegate;
 
           pipe(
             instance,
@@ -62,23 +58,19 @@ const DelegatingDisposableMixin: <
           return instance;
         },
         props<TProperties>({
-          [DelegatingDisposableLike_delegate]: none,
+          [DelegatingDisposable_delegate]: none,
           [DisposableLike_isDisposed]: false,
         }),
         {
           get [DisposableLike_error](): Optional<Error> {
             unsafeCast<TProperties>(this);
-            return this[DelegatingDisposableLike_delegate][
-              DisposableLike_error
-            ];
+            return this[DelegatingDisposable_delegate][DisposableLike_error];
           },
           [DisposableContainerLike_add](
             this: TProperties,
             disposable: Disposable | SideEffect1<Optional<Error>>,
           ) {
-            this[DelegatingDisposableLike_delegate][
-              DisposableContainerLike_add
-            ](
+            this[DelegatingDisposable_delegate][DisposableContainerLike_add](
               // Cast to make the typechecker happy even though its a lie.
               (isFunction(disposable)
                 ? bind(disposable, this)
@@ -86,9 +78,7 @@ const DelegatingDisposableMixin: <
             );
           },
           [DisposableLike_dispose](this: TProperties, error?: Error) {
-            this[DelegatingDisposableLike_delegate][DisposableLike_dispose](
-              error,
-            );
+            this[DelegatingDisposable_delegate][DisposableLike_dispose](error);
           },
         },
       ),

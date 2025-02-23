@@ -11,11 +11,13 @@ import {
   SchedulerLike_requestYield,
 } from "../../../concurrent.js";
 import { none } from "../../../functions.js";
-import DelegatingDisposableMixin, {
-  DelegatingDisposableLike,
-  DelegatingDisposableLike_delegate,
-} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+
 import { QueueableLike, QueueableLike_enqueue } from "../../../utils.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_delegate,
+} from "../../__mixins__/LiftedObserverMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observer_assertObserverState from "./Observer.assertObserverState.js";
 
@@ -30,15 +32,20 @@ const Observer_createEnqueueObserver: <T>(
   };
 
   return mixInstanceFactory(
-    include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<T>>()),
+    include(
+      ObserverMixin(),
+      DelegatingDisposableMixin(),
+      LiftedObserverMixin(),
+    ),
     function EnqueueObserver(
       instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
       queue: QueueableLike<T>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin<ObserverLike<T>>(), instance, delegate);
+      init(DelegatingDisposableMixin(), instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
+      init(LiftedObserverMixin(), instance, delegate);
       instance[EnqueueObserver_queue] = queue;
 
       return instance;
@@ -48,15 +55,13 @@ const Observer_createEnqueueObserver: <T>(
     }),
     {
       [ObserverLike_notify]: Observer_assertObserverState(function (
-        this: TProperties &
-          DelegatingDisposableLike<ObserverLike<T>> &
-          ObserverLike<T>,
+        this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
         if (!this[EnqueueObserver_queue][QueueableLike_enqueue](next)) {
           this[SchedulerLike_requestYield]();
         }
-        this[DelegatingDisposableLike_delegate][ObserverLike_notify](next);
+        this[LiftedObserverLike_delegate][ObserverLike_notify](next);
       }),
     },
   );
