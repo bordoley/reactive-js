@@ -1718,6 +1718,32 @@ testModule(
         expectToThrow,
       ),
     ),
+    test(
+      "merging merged observable",
+      pipeLazy(
+        Observable.merge(
+          Observable.merge(
+            pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
+            Observable.concat(
+              Observable.empty({ delay: 3 }),
+              pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 })),
+            ),
+          ),
+          Observable.merge(
+            Observable.concat(
+              Observable.empty({ delay: 6 }),
+              pipe([7, 8, 9], Observable.fromReadonlyArray({ delay: 1 })),
+            ),
+            Observable.concat(
+              Observable.empty({ delay: 9 }),
+              pipe([10, 11, 12], Observable.fromReadonlyArray({ delay: 1 })),
+            ),
+          ),
+        ),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
+      ),
+    ),
   ),
   describe(
     "mergeAll",
