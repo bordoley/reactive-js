@@ -11,16 +11,17 @@ import { DisposableLike_dispose, DisposableLike_isDisposed } from "../utils.js";
 export const create = /*@__PURE__*/ (() => {
     const Publisher_autoDispose = Symbol("Publisher_autoDispose");
     const Publisher_listeners = Symbol("Publisher_listeners");
+    function onEventPublisherDisposed(e) {
+        for (const listener of this[Publisher_listeners]) {
+            listener[DisposableLike_dispose](e);
+        }
+    }
     return mixInstanceFactory(include(DisposableMixin), function EventPublisher(instance, options) {
         init(DisposableMixin, instance);
         instance[Publisher_listeners] =
             newInstance(Set);
         instance[Publisher_autoDispose] = options?.autoDispose ?? false;
-        pipe(instance, DisposableContainer.onDisposed(e => {
-            for (const listener of instance[Publisher_listeners]) {
-                listener[DisposableLike_dispose](e);
-            }
-        }));
+        pipe(instance, DisposableContainer.onDisposed(onEventPublisherDisposed));
         return instance;
     }, props({
         [Publisher_autoDispose]: false,

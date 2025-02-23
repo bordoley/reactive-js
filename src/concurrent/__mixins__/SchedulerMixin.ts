@@ -204,6 +204,21 @@ const SchedulerMixin: Mixin<
       }
     };
 
+    function onContinuationDisposed(
+      this: TProperties & QueueableSchedulerContinuationLike,
+    ) {
+      rescheduleChildrenOnParentOrScheduler(this);
+
+      // A continuation could be disposed and yet retained
+      // by a scheduler in a queue so free all references
+      // to avoid retaining memory.
+      this[QueueableSchedulerContinuationLike_parent] = none;
+      this[QueueableContinuation_scheduler] =
+        none as unknown as SchedulerMixinLike;
+      this[QueueableContinuation_effect] =
+        none as unknown as SideEffect1<ContinuationContextLike>;
+    }
+
     return mixInstanceFactory(
       include(
         DisposableMixin,
@@ -233,21 +248,7 @@ const SchedulerMixin: Mixin<
         instance[QueueableContinuation_scheduler] = scheduler;
         instance[QueueableContinuation_effect] = effect;
 
-        pipe(
-          instance,
-          DisposableContainer.onDisposed(_ => {
-            rescheduleChildrenOnParentOrScheduler(instance);
-
-            // A continuation could be disposed and yet retained
-            // by a scheduler in a queue so free all references
-            // to avoid retaining memory.
-            instance[QueueableSchedulerContinuationLike_parent] = none;
-            instance[QueueableContinuation_scheduler] =
-              none as unknown as SchedulerMixinLike;
-            instance[QueueableContinuation_effect] =
-              none as unknown as SideEffect1<ContinuationContextLike>;
-          }),
-        );
+        pipe(instance, DisposableContainer.onDisposed(onContinuationDisposed));
 
         return instance;
       },

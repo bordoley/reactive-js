@@ -20,7 +20,7 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../concurrent.js";
-import { none, pipe } from "../../../functions.js";
+import { none, pick, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose } from "../../../utils.js";
@@ -46,16 +46,16 @@ const Observable_latest = /*@__PURE__*/ (() => {
     [LatestCtx_observers]: TProperties[];
   };
 
-  const onCompleted = (instance: LatestCtx) => () => {
-    instance[LatestCtx_completedCount]++;
+  function onLatestObserverCompleted(this: TProperties) {
+    const ctx = this[LatestObserver_ctx];
+    ctx[LatestCtx_completedCount]++;
 
     if (
-      instance[LatestCtx_completedCount] ===
-      instance[LatestCtx_observers][Array_length]
+      ctx[LatestCtx_completedCount] === ctx[LatestCtx_observers][Array_length]
     ) {
-      instance[LatestCtx_delegate][DisposableLike_dispose]();
+      ctx[LatestCtx_delegate][DisposableLike_dispose]();
     }
-  };
+  }
 
   const LatestObserver_ctx = Symbol("LatestObserver_ctx");
   const LatestObserver_latest = Symbol("LatestObserver_latest");
@@ -80,6 +80,8 @@ const Observable_latest = /*@__PURE__*/ (() => {
 
       instance[LatestObserver_ctx] = ctx;
 
+      pipe(instance, DisposableContainer.onComplete(onLatestObserverCompleted));
+
       return instance;
     },
     props<TProperties>({
@@ -99,12 +101,12 @@ const Observable_latest = /*@__PURE__*/ (() => {
         this[LatestObserver_latest] = next;
         this[LatestObserver_ready] = true;
 
-        const isReady = observers[Array_every](x => x[LatestObserver_ready]);
+        const isReady = observers[Array_every](pick(LatestObserver_ready));
 
         if (isReady) {
           const result = pipe(
             observers,
-            ReadonlyArray.map(observer => observer[LatestObserver_latest]),
+            ReadonlyArray.map(pick(LatestObserver_latest)),
           );
           ctx[LatestCtx_delegate][ObserverLike_notify](result);
 
@@ -132,10 +134,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
       };
 
       for (const observable of observables) {
-        const innerObserver = pipe(
-          createLatestObserver(ctx, delegate),
-          DisposableContainer.onComplete(onCompleted(ctx)),
-        );
+        const innerObserver = createLatestObserver(ctx, delegate);
 
         ctx[LatestCtx_observers][Array_push](innerObserver);
         observable[ObservableLike_observe](innerObserver);

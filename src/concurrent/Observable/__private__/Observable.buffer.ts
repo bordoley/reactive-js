@@ -38,6 +38,19 @@ interface TProps<T> {
   [BufferObserver_count]: number;
 }
 
+function onBufferObserverCompleted<T>(this: TProps<T>) {
+  const delegate = this[BufferObserver_delegate];
+  const buffer = this[BufferObserver_buffer];
+  this[BufferObserver_buffer] = [];
+
+  if (buffer[Array_length] > 0) {
+    delegate[QueueableLike_enqueue](buffer);
+    delegate[DispatcherLike_complete]();
+  } else {
+    delegate[DisposableLike_dispose]();
+  }
+}
+
 const createBufferObserver: <T>(
   delegate: ObserverLike<readonly T[]>,
   count: Optional<number>,
@@ -61,17 +74,7 @@ const createBufferObserver: <T>(
       pipe(
         instance,
         Disposable.addTo(delegate),
-        DisposableContainer.onComplete(() => {
-          const buffer = instance[BufferObserver_buffer];
-          instance[BufferObserver_buffer] = [];
-
-          if (buffer[Array_length] > 0) {
-            delegate[QueueableLike_enqueue](buffer);
-            delegate[DispatcherLike_complete]();
-          } else {
-            delegate[DisposableLike_dispose]();
-          }
-        }),
+        DisposableContainer.onComplete(onBufferObserverCompleted),
       );
 
       return instance;

@@ -25,7 +25,14 @@ import {
   SubjectLike,
 } from "../concurrent.js";
 import { EventListenerLike_notify } from "../events.js";
-import { error, isSome, newInstance, none, pipe } from "../functions.js";
+import {
+  Optional,
+  error,
+  isSome,
+  newInstance,
+  none,
+  pipe,
+} from "../functions.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import QueueMixin from "../utils/__mixins__/QueueMixin.js";
@@ -49,6 +56,16 @@ export const create: <T>(options?: {
     readonly [Subject_autoDispose]: boolean;
     readonly [Subject_observers]: Set<ObserverLike<T>>;
   };
+
+  function onSubjectDisposed(this: TProperties, e: Optional<Error>) {
+    for (const observer of this[Subject_observers]) {
+      if (isSome(e)) {
+        observer[DisposableLike_dispose](e);
+      } else {
+        observer[DispatcherLike_complete]();
+      }
+    }
+  }
 
   return mixInstanceFactory(
     include(DisposableMixin, QueueMixin()),
@@ -78,18 +95,7 @@ export const create: <T>(options?: {
       instance[Subject_observers] = newInstance<Set<ObserverLike>>(Set);
       instance[Subject_autoDispose] = options?.autoDispose ?? false;
 
-      pipe(
-        instance,
-        DisposableContainer.onDisposed(e => {
-          for (const observer of instance[Subject_observers]) {
-            if (isSome(e)) {
-              observer[DisposableLike_dispose](e);
-            } else {
-              observer[DispatcherLike_complete]();
-            }
-          }
-        }),
-      );
+      pipe(instance, DisposableContainer.onDisposed(onSubjectDisposed));
 
       return instance;
     },

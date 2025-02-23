@@ -15,6 +15,7 @@ import {
 import {
   Function2,
   Optional,
+  bind,
   none,
   partial,
   pipe,
@@ -26,6 +27,7 @@ import DelegatingDisposableMixin, {
   DelegatingDisposableLike_delegate,
 } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
+  DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
 } from "../../../utils.js";
@@ -58,6 +60,20 @@ const createWithLatestFromObserver: <TA, TB, T>(
     [WithLatestFromObserver_otherLatest]: Optional<TB>;
     [WithLatestFromObserver_selector]: Function2<TA, TB, T>;
   };
+
+  function onWithLatestFromObserverOtherSubscriptionComplete(
+    this: TProperties & DisposableLike,
+  ) {
+    if (!this[WithLatestFromObserver_hasLatest]) {
+      this[DisposableLike_dispose]();
+    }
+  }
+
+  function onOtherNotify(this: TProperties, next: TB) {
+    this[WithLatestFromObserver_hasLatest] = true;
+    this[WithLatestFromObserver_otherLatest] = next;
+  }
+
   return mixInstanceFactory(
     include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<T>>()),
     function WithLatestFromObserver(
@@ -74,17 +90,12 @@ const createWithLatestFromObserver: <TA, TB, T>(
 
       pipe(
         other,
-        Observable_forEach((next: TB) => {
-          instance[WithLatestFromObserver_hasLatest] = true;
-          instance[WithLatestFromObserver_otherLatest] = next;
-        }),
+        Observable_forEach(bind(onOtherNotify, instance)),
         Observable_subscribeWithConfig(delegate, delegate),
         Disposable.addTo(instance),
-        DisposableContainer.onComplete(() => {
-          if (!instance[WithLatestFromObserver_hasLatest]) {
-            instance[DisposableLike_dispose]();
-          }
-        }),
+        DisposableContainer.onComplete(
+          bind(onWithLatestFromObserverOtherSubscriptionComplete, instance),
+        ),
       );
 
       return instance;

@@ -35,6 +35,23 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
     [DecodeWithCharsetObserver_textDecoder]: TextDecoder;
   };
 
+  function onDecodeWithCharsetObserverComplete(this: TProperties) {
+    const delegate = this[DecodeWithCharsetObserver_delegate];
+    const data = this[DecodeWithCharsetObserver_textDecoder].decode(
+      newInstance(Uint8Array, []),
+      {
+        stream: false,
+      },
+    );
+
+    if (data[Array_length] > 0) {
+      delegate[QueueableLike_enqueue](data);
+      delegate[DispatcherLike_complete]();
+    } else {
+      delegate[DisposableLike_dispose]();
+    }
+  }
+
   return mixInstanceFactory(
     include(DisposableMixin, DelegatingObserverMixin<ArrayBuffer>()),
     function DecodeWithCharsetObserver(
@@ -57,18 +74,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
 
       pipe(
         instance,
-        DisposableContainer.onComplete(() => {
-          const data = textDecoder.decode(newInstance(Uint8Array, []), {
-            stream: false,
-          });
-
-          if (data[Array_length] > 0) {
-            delegate[QueueableLike_enqueue](data);
-            delegate[DispatcherLike_complete]();
-          } else {
-            delegate[DisposableLike_dispose]();
-          }
-        }),
+        DisposableContainer.onComplete(onDecodeWithCharsetObserverComplete),
       );
 
       return instance;

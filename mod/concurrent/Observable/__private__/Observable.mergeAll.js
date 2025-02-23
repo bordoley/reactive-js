@@ -4,7 +4,7 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger, clampPositiveNonZeroInteger, } from "../../../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
-import { bindMethod, isSome, none, pipe, } from "../../../functions.js";
+import { bind, bindMethod, isSome, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Queue from "../../../utils/Queue.js";
@@ -19,12 +19,33 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
     const MergeAllObserver_activeCount = Symbol("MergeAllObserver_activeCount");
     const MergeAllObserver_concurrency = Symbol("MergeAllObserver_concurrency");
     const MergeAllObserver_delegate = Symbol("MergeAllObserver_delegate");
-    const MergeAllObserver_onDispose = Symbol("MergeAllObserver_onDispose");
     const MergeAllObserver_observablesQueue = Symbol("MergeAllObserver_observablesQueue");
     const subscribeToObservable = (observer, nextObs) => {
         observer[MergeAllObserver_activeCount]++;
-        pipe(nextObs, Observable_forEach(bindMethod(observer[MergeAllObserver_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(observer[MergeAllObserver_delegate], observer), Disposable.addTo(observer[MergeAllObserver_delegate]), DisposableContainer.onComplete(observer[MergeAllObserver_onDispose]));
+        pipe(nextObs, Observable_forEach(bindMethod(observer[MergeAllObserver_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(observer[MergeAllObserver_delegate], observer), Disposable.addTo(observer[MergeAllObserver_delegate]), DisposableContainer.onComplete(bind(onMergeAllObserverInnerObservableComplete, observer)));
     };
+    function onMergeAllObserverComplete() {
+        const delegate = this[MergeAllObserver_delegate];
+        if (delegate[DisposableLike_isDisposed]) {
+            // FIXME: Clear the queue
+        }
+        else if (this[MergeAllObserver_observablesQueue][QueueLike_count] +
+            this[MergeAllObserver_activeCount] ===
+            0) {
+            delegate[DisposableLike_dispose]();
+        }
+    }
+    function onMergeAllObserverInnerObservableComplete() {
+        this[MergeAllObserver_activeCount]--;
+        const nextObs = this[MergeAllObserver_observablesQueue][QueueLike_dequeue]();
+        if (isSome(nextObs)) {
+            subscribeToObservable(this, nextObs);
+        }
+        else if (this[DisposableLike_isDisposed] &&
+            this[MergeAllObserver_activeCount] <= 0) {
+            this[MergeAllObserver_delegate][DisposableLike_dispose]();
+        }
+    }
     const createMergeAllObserver = mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
@@ -35,33 +56,12 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         instance[MergeAllObserver_concurrency] = concurrency;
         instance[MergeAllObserver_delegate] = delegate;
         instance[MergeAllObserver_activeCount] = 0;
-        instance[MergeAllObserver_onDispose] = () => {
-            instance[MergeAllObserver_activeCount]--;
-            const nextObs = instance[MergeAllObserver_observablesQueue][QueueLike_dequeue]();
-            if (isSome(nextObs)) {
-                subscribeToObservable(instance, nextObs);
-            }
-            else if (instance[DisposableLike_isDisposed] &&
-                instance[MergeAllObserver_activeCount] <= 0) {
-                instance[MergeAllObserver_delegate][DisposableLike_dispose]();
-            }
-        };
-        pipe(instance, DisposableContainer.onComplete(() => {
-            if (delegate[DisposableLike_isDisposed]) {
-                // FIXME: Clear the queue
-            }
-            else if (instance[MergeAllObserver_observablesQueue][QueueLike_count] +
-                instance[MergeAllObserver_activeCount] ===
-                0) {
-                delegate[DisposableLike_dispose]();
-            }
-        }));
+        pipe(instance, DisposableContainer.onComplete(onMergeAllObserverComplete));
         return instance;
     }, props({
         [MergeAllObserver_activeCount]: 0,
         [MergeAllObserver_concurrency]: 0,
         [MergeAllObserver_delegate]: none,
-        [MergeAllObserver_onDispose]: none,
         [MergeAllObserver_observablesQueue]: none,
     }), {
         [ObserverLike_notify]: Observer_assertObserverState(function (next) {

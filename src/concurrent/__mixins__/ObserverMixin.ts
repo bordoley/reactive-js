@@ -36,6 +36,7 @@ import {
 import {
   Optional,
   SideEffect1,
+  bind,
   call,
   none,
   pipe,
@@ -118,6 +119,10 @@ const ObserverMixin: <T>() => Mixin2<
   };
 
   const queueProtoype = getPrototype(QueueMixin<T>());
+
+  function onPublisherDisposed(this: TProperties) {
+    this[ObserverMixin_publisher] = none;
+  }
 
   return returns(
     mix<
@@ -294,9 +299,7 @@ const ObserverMixin: <T>() => Mixin2<
               const publisher = pipe(
                 Publisher.create({ autoDispose: true }),
                 Disposable.addTo(this),
-                DisposableContainer.onComplete(
-                  () => (this[ObserverMixin_publisher] = none),
-                ),
+                DisposableContainer.onDisposed(bind(onPublisherDisposed, this)),
               );
               this[ObserverMixin_publisher] = publisher;
               return publisher;

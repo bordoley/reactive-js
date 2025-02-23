@@ -5,10 +5,10 @@ import { mix, props } from "../../__internal__/mixins.js";
 import { isFunction, isSome, newInstance, none, } from "../../functions.js";
 import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
 const DisposableMixin_disposables = Symbol("DisposableMixin_disposables");
-const doDispose = (disposable, error) => {
+const doDispose = (instance, disposable, error) => {
     if (isFunction(disposable)) {
         try {
-            disposable(error);
+            disposable.call(instance, error);
         }
         catch (_) {
             /* Proactively catch Errors thrown in teardown logic. Teardown functions
@@ -40,11 +40,11 @@ const DisposableMixin = /*@__PURE__*/ mix(function DisposableMixin(instance) {
             if (disposables instanceof Set) {
                 for (const disposable of disposables) {
                     disposables[Set_delete](disposable);
-                    doDispose(disposable, error);
+                    doDispose(this, disposable, error);
                 }
             }
             else if (isSome(disposables)) {
-                doDispose(disposables, error);
+                doDispose(this, disposables, error);
             }
         }
     },
@@ -56,7 +56,7 @@ const DisposableMixin = /*@__PURE__*/ mix(function DisposableMixin(instance) {
             return;
         }
         else if (this[DisposableLike_isDisposed]) {
-            doDispose(disposable, this[DisposableLike_error]);
+            doDispose(this, disposable, this[DisposableLike_error]);
             return;
         }
         if (disposables instanceof Set) {

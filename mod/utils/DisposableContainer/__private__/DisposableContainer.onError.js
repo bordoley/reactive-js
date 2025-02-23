@@ -2,12 +2,15 @@
 
 import { isSome } from "../../../functions.js";
 import { DisposableContainerLike_add, } from "../../../utils.js";
-const DisposableContainer_onError = (teardown) => disposable => {
-    disposable[DisposableContainerLike_add](e => {
+const DisposableContainer_onError = (teardown) => {
+    function onDisposableContainerOnErrorDisposed(e) {
         if (isSome(e)) {
-            teardown(e);
+            teardown.call(this, e);
         }
-    });
-    return disposable;
+    }
+    return disposable => {
+        disposable[DisposableContainerLike_add](onDisposableContainerOnErrorDisposed);
+        return disposable;
+    };
 };
 export default DisposableContainer_onError;

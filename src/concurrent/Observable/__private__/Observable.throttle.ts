@@ -14,7 +14,7 @@ import {
 import {
   Function1,
   Optional,
-  SideEffect,
+  bind,
   isSome,
   none,
   partial,
@@ -57,7 +57,6 @@ const createThrottleObserver: <T>(
     "ThrottleObserver_durationFunction",
   );
   const ThrottleObserver_mode = Symbol("ThrottleObserver_mode");
-  const ThrottleObserver_onNotify = Symbol("ThrottleObserver_onNotify");
   const ThrottleObserver_delegate = Symbol("ThrottleObserver_delegate");
 
   type TProperties = {
@@ -66,9 +65,25 @@ const createThrottleObserver: <T>(
     readonly [ThrottleObserver_durationSubscription]: SerialDisposableLike;
     readonly [ThrottleObserver_durationFunction]: Function1<T, ObservableLike>;
     readonly [ThrottleObserver_mode]: Observable.ThrottleMode;
-    readonly [ThrottleObserver_onNotify]: SideEffect;
     [ThrottleObserver_delegate]: ObserverLike<T>;
   };
+
+  function notifyThrottleObserverDelegate(
+    this: ObserverLike<T> & TProperties,
+    _?: unknown,
+  ) {
+    const delegate = this[ThrottleObserver_delegate];
+
+    if (this[ThrottleObserver_hasValue]) {
+      const value = this[ThrottleObserver_value] as T;
+      this[ThrottleObserver_value] = none;
+      this[ThrottleObserver_hasValue] = false;
+
+      delegate[ObserverLike_notify](value);
+
+      setupDurationSubscription(this, value);
+    }
+  }
 
   const setupDurationSubscription = (
     observer: ObserverLike<T> & TProperties,
@@ -78,7 +93,7 @@ const createThrottleObserver: <T>(
       SerialDisposableLike_current
     ] = pipe(
       observer[ThrottleObserver_durationFunction](next),
-      Observable_forEach(observer[ThrottleObserver_onNotify]),
+      Observable_forEach(bind(notifyThrottleObserverDelegate, observer)),
       Observable_subscribeWithConfig(
         observer[ThrottleObserver_delegate],
         observer,
@@ -86,6 +101,19 @@ const createThrottleObserver: <T>(
       Disposable.addTo(observer[ThrottleObserver_delegate]),
     );
   };
+
+  function onThrottleObserverComplete(this: TProperties) {
+    const delegate = this[ThrottleObserver_delegate];
+    if (
+      this[ThrottleObserver_mode] !== ThrottleFirstMode &&
+      this[ThrottleObserver_hasValue] &&
+      !delegate[DisposableLike_isDisposed] &&
+      isSome(this[ThrottleObserver_value])
+    ) {
+      delegate[QueueableLike_enqueue](this[ThrottleObserver_value]);
+      delegate[DispatcherLike_complete]();
+    }
+  }
 
   return mixInstanceFactory(
     include(DisposableMixin, DelegatingObserverMixin()),
@@ -108,31 +136,9 @@ const createThrottleObserver: <T>(
         Disposable.addTo(delegate),
       );
 
-      instance[ThrottleObserver_onNotify] = (_?: unknown) => {
-        if (instance[ThrottleObserver_hasValue]) {
-          const value = instance[ThrottleObserver_value] as T;
-          instance[ThrottleObserver_value] = none;
-          instance[ThrottleObserver_hasValue] = false;
-
-          delegate[ObserverLike_notify](value);
-
-          setupDurationSubscription(instance, value);
-        }
-      };
-
       pipe(
         instance,
-        DisposableContainer.onComplete(() => {
-          if (
-            instance[ThrottleObserver_mode] !== ThrottleFirstMode &&
-            instance[ThrottleObserver_hasValue] &&
-            !delegate[DisposableLike_isDisposed] &&
-            isSome(instance[ThrottleObserver_value])
-          ) {
-            delegate[QueueableLike_enqueue](instance[ThrottleObserver_value]);
-            delegate[DispatcherLike_complete]();
-          }
-        }),
+        DisposableContainer.onComplete(onThrottleObserverComplete),
       );
 
       return instance;
@@ -144,7 +150,6 @@ const createThrottleObserver: <T>(
       [ThrottleObserver_durationSubscription]: none,
       [ThrottleObserver_durationFunction]: none,
       [ThrottleObserver_mode]: ThrottleIntervalMode,
-      [ThrottleObserver_onNotify]: none,
     }),
     {
       [ObserverLike_notify]: Observer_assertObserverState(function (
@@ -163,7 +168,7 @@ const createThrottleObserver: <T>(
           durationSubscriptionDisposableIsDisposed &&
           this[ThrottleObserver_mode] !== ThrottleLastMode
         ) {
-          this[ThrottleObserver_onNotify]();
+          notifyThrottleObserverDelegate.call(this);
         } else if (durationSubscriptionDisposableIsDisposed) {
           setupDurationSubscription(this, next);
         }

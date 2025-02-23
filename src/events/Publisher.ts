@@ -18,7 +18,7 @@ import {
   EventSourceLike_addEventListener,
   PublisherLike,
 } from "../events.js";
-import { error, newInstance, none, pipe } from "../functions.js";
+import { Optional, error, newInstance, none, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
@@ -34,6 +34,12 @@ export const create: <T>(options?: {
     readonly [Publisher_autoDispose]: boolean;
     readonly [Publisher_listeners]: Set<EventListenerLike<T>>;
   };
+
+  function onEventPublisherDisposed(this: TProperties, e: Optional<Error>) {
+    for (const listener of this[Publisher_listeners]) {
+      listener[DisposableLike_dispose](e);
+    }
+  }
 
   return mixInstanceFactory(
     include(DisposableMixin),
@@ -53,14 +59,7 @@ export const create: <T>(options?: {
 
       instance[Publisher_autoDispose] = options?.autoDispose ?? false;
 
-      pipe(
-        instance,
-        DisposableContainer.onDisposed(e => {
-          for (const listener of instance[Publisher_listeners]) {
-            listener[DisposableLike_dispose](e);
-          }
-        }),
-      );
+      pipe(instance, DisposableContainer.onDisposed(onEventPublisherDisposed));
 
       return instance;
     },

@@ -15,23 +15,25 @@ import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const BufferObserver_delegate = Symbol("BufferObserver_delegate");
 const BufferObserver_buffer = Symbol("BufferObserver_buffer");
 const BufferObserver_count = Symbol("BufferingLike_count");
+function onBufferObserverCompleted() {
+    const delegate = this[BufferObserver_delegate];
+    const buffer = this[BufferObserver_buffer];
+    this[BufferObserver_buffer] = [];
+    if (buffer[Array_length] > 0) {
+        delegate[QueueableLike_enqueue](buffer);
+        delegate[DispatcherLike_complete]();
+    }
+    else {
+        delegate[DisposableLike_dispose]();
+    }
+}
 const createBufferObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DisposableMixin, ObserverMixin()), function BufferObserver(instance, delegate, count) {
     init(DisposableMixin, instance);
     init(ObserverMixin(), instance, delegate, delegate);
     instance[BufferObserver_delegate] = delegate;
     instance[BufferObserver_count] = clampPositiveNonZeroInteger(count ?? MAX_SAFE_INTEGER);
     instance[BufferObserver_buffer] = [];
-    pipe(instance, Disposable.addTo(delegate), DisposableContainer.onComplete(() => {
-        const buffer = instance[BufferObserver_buffer];
-        instance[BufferObserver_buffer] = [];
-        if (buffer[Array_length] > 0) {
-            delegate[QueueableLike_enqueue](buffer);
-            delegate[DispatcherLike_complete]();
-        }
-        else {
-            delegate[DisposableLike_dispose]();
-        }
-    }));
+    pipe(instance, Disposable.addTo(delegate), DisposableContainer.onComplete(onBufferObserverCompleted));
     return instance;
 }, props({
     [BufferObserver_delegate]: none,

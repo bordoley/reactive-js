@@ -25,12 +25,13 @@ import {
 const DisposableMixin_disposables = Symbol("DisposableMixin_disposables");
 
 const doDispose = (
+  instance: Disposable,
   disposable: Disposable | SideEffect1<Optional<Error>>,
   error?: Error,
 ) => {
   if (isFunction(disposable)) {
     try {
-      disposable(error);
+      disposable.call(instance, error);
     } catch (_) {
       /* Proactively catch Errors thrown in teardown logic. Teardown functions
        * shouldn't throw, so this is to prevent unexpected Errors.
@@ -90,10 +91,10 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
         if (disposables instanceof Set) {
           for (const disposable of disposables) {
             disposables[Set_delete](disposable);
-            doDispose(disposable, error);
+            doDispose(this, disposable, error);
           }
         } else if (isSome(disposables)) {
-          doDispose(disposables, error);
+          doDispose(this, disposables, error);
         }
       }
     },
@@ -110,7 +111,7 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
       if ((this as unknown) === disposable || containsDisposable) {
         return;
       } else if (this[DisposableLike_isDisposed]) {
-        doDispose(disposable, this[DisposableLike_error]);
+        doDispose(this, disposable, this[DisposableLike_error]);
         return;
       }
 

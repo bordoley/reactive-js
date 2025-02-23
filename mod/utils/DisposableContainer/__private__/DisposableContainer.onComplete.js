@@ -2,12 +2,15 @@
 
 import { isNone } from "../../../functions.js";
 import { DisposableContainerLike_add, } from "../../../utils.js";
-const DisposableContainer_onComplete = (teardown) => disposable => {
-    disposable[DisposableContainerLike_add](e => {
+const DisposableContainer_onComplete = (teardown) => {
+    function onDisposableContainerOnCompleteDisposed(e) {
         if (isNone(e)) {
-            teardown();
+            teardown.call(this);
         }
-    });
-    return disposable;
+    }
+    return (disposable) => {
+        disposable[DisposableContainerLike_add](onDisposableContainerOnCompleteDisposed);
+        return disposable;
+    };
 };
 export default DisposableContainer_onComplete;

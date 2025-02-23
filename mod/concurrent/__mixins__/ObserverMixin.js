@@ -4,7 +4,7 @@ import { getPrototype, include, init, mix, props, unsafeCast, } from "../../__in
 import { ContinuationContextLike_yield, DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, DispatcherLike_isCompleted, ObserverLike_notify, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import * as Publisher from "../../events/Publisher.js";
 import { EventListenerLike_notify, EventSourceLike_addEventListener, } from "../../events.js";
-import { call, none, pipe, returns, } from "../../functions.js";
+import { bind, call, none, pipe, returns, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import QueueMixin from "../../utils/__mixins__/QueueMixin.js";
@@ -36,6 +36,9 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         }
     };
     const queueProtoype = getPrototype(QueueMixin());
+    function onPublisherDisposed() {
+        this[ObserverMixin_publisher] = none;
+    }
     return returns(mix(include(QueueMixin(), SerialDisposableMixin()), function ObserverMixin(instance, scheduler, config) {
         init(QueueMixin(), instance, {
             backpressureStrategy: config[QueueableLike_backpressureStrategy],
@@ -100,7 +103,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         [EventSourceLike_addEventListener](listener) {
             const publisher = this[ObserverMixin_publisher] ??
                 (() => {
-                    const publisher = pipe(Publisher.create({ autoDispose: true }), Disposable.addTo(this), DisposableContainer.onComplete(() => (this[ObserverMixin_publisher] = none)));
+                    const publisher = pipe(Publisher.create({ autoDispose: true }), Disposable.addTo(this), DisposableContainer.onDisposed(bind(onPublisherDisposed, this)));
                     this[ObserverMixin_publisher] = publisher;
                     return publisher;
                 })();

@@ -2,7 +2,7 @@
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
-import { none, partial, pipe, } from "../../../functions.js";
+import { bind, none, partial, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
@@ -16,18 +16,20 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
     const WithLatestFromObserver_hasLatest = Symbol("WithLatestFromObserver_hasLatest");
     const WithLatestFromObserver_otherLatest = Symbol("WithLatestFromObserver_otherLatest");
     const WithLatestFromObserver_selector = Symbol("WithLatestFromObserver_selector");
+    function onWithLatestFromObserverOtherSubscriptionComplete() {
+        if (!this[WithLatestFromObserver_hasLatest]) {
+            this[DisposableLike_dispose]();
+        }
+    }
+    function onOtherNotify(next) {
+        this[WithLatestFromObserver_hasLatest] = true;
+        this[WithLatestFromObserver_otherLatest] = next;
+    }
     return mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin()), function WithLatestFromObserver(instance, delegate, other, selector) {
         init(DelegatingDisposableMixin(), instance, delegate);
         init(ObserverMixin(), instance, delegate, delegate);
         instance[WithLatestFromObserver_selector] = selector;
-        pipe(other, Observable_forEach((next) => {
-            instance[WithLatestFromObserver_hasLatest] = true;
-            instance[WithLatestFromObserver_otherLatest] = next;
-        }), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(instance), DisposableContainer.onComplete(() => {
-            if (!instance[WithLatestFromObserver_hasLatest]) {
-                instance[DisposableLike_dispose]();
-            }
-        }));
+        pipe(other, Observable_forEach(bind(onOtherNotify, instance)), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(instance), DisposableContainer.onComplete(bind(onWithLatestFromObserverOtherSubscriptionComplete, instance)));
         return instance;
     }, props({
         [WithLatestFromObserver_hasLatest]: false,

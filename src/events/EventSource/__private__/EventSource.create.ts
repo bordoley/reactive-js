@@ -28,6 +28,10 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
     [CreateEventSource_setup]: SideEffect1<EventListenerLike<T>>;
   };
 
+  function onCreateEventSourcePublisherDisposed(this: TProperties) {
+    this[CreateEventSource_delegate] = none;
+  }
+
   return mixInstanceFactory(
     function CreateEventSource(
       instance: Pick<
@@ -56,9 +60,9 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
               Publisher.create<T>({
                 autoDispose: true,
               }),
-              DisposableContainer.onDisposed(() => {
-                this[CreateEventSource_delegate] = none;
-              }),
+              DisposableContainer.onDisposed(
+                onCreateEventSourcePublisherDisposed,
+              ),
             );
 
             this[CreateEventSource_delegate] = delegate;

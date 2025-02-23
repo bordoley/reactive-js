@@ -6,12 +6,20 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  ContinuationContextLike,
   ContinuationContextLike_yield,
   ObserverLike,
   ObserverLike_notify,
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
-import { Optional, isSome, none, partial, pipe } from "../../../functions.js";
+import {
+  Optional,
+  bind,
+  isSome,
+  none,
+  partial,
+  pipe,
+} from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Queue from "../../../utils/Queue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
@@ -34,10 +42,40 @@ const createTakeLastObserver: <T>(
   takeLastCount: number,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
   const TakeLastObserver_queue = Symbol("TakeLastObserver_queue");
+  const TakeLastObserver_delegate = Symbol("TakeLastObserver_delegate");
 
   type TProperties = {
     [TakeLastObserver_queue]: QueueLike<T>;
+    [TakeLastObserver_delegate]: ObserverLike<T>;
   };
+
+  function notifyDelegate(this: TProperties, ctx: ContinuationContextLike) {
+    const queue = this[TakeLastObserver_queue];
+    const delegate = this[TakeLastObserver_delegate];
+
+    let v: Optional<T> = none;
+    while (((v = queue[QueueLike_dequeue]()), isSome(v))) {
+      delegate[ObserverLike_notify](v);
+
+      if (queue[QueueLike_count] > 0) {
+        ctx[ContinuationContextLike_yield]();
+      }
+    }
+
+    delegate[DisposableLike_dispose]();
+  }
+
+  function onTakeLastObserverComplete(this: TProperties) {
+    const count = this[TakeLastObserver_queue][QueueLike_count];
+
+    if (count === 0) {
+      return;
+    }
+
+    this[TakeLastObserver_delegate][SchedulerLike_schedule](
+      bind(notifyDelegate, this),
+    );
+  }
 
   return mixInstanceFactory(
     include(DisposableMixin, DelegatingObserverMixin()),
@@ -49,6 +87,7 @@ const createTakeLastObserver: <T>(
       init(DisposableMixin, instance);
       init(DelegatingObserverMixin(), instance, delegate);
 
+      instance[TakeLastObserver_delegate] = delegate;
       instance[TakeLastObserver_queue] = Queue.create({
         capacity: takeLastCount,
         backpressureStrategy: DropOldestBackpressureStrategy,
@@ -56,33 +95,14 @@ const createTakeLastObserver: <T>(
 
       pipe(
         instance,
-        DisposableContainer.onComplete(() => {
-          const queue = instance[TakeLastObserver_queue];
-          const count = queue[QueueLike_count];
-
-          if (count === 0) {
-            return;
-          }
-
-          delegate[SchedulerLike_schedule](ctx => {
-            let v: Optional<T> = none;
-            while (((v = queue[QueueLike_dequeue]()), isSome(v))) {
-              delegate[ObserverLike_notify](v);
-
-              if (queue[QueueLike_count] > 0) {
-                ctx[ContinuationContextLike_yield]();
-              }
-            }
-
-            delegate[DisposableLike_dispose]();
-          });
-        }),
+        DisposableContainer.onComplete(onTakeLastObserverComplete),
       );
 
       return instance;
     },
     props<TProperties>({
       [TakeLastObserver_queue]: none,
+      [TakeLastObserver_delegate]: none,
     }),
     {
       [ObserverLike_notify]: Observer_assertObserverState(function (

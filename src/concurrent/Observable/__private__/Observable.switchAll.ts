@@ -45,12 +45,20 @@ const createSwitchAllObserver: <T>(
     readonly [SwitchAllObserver_delegate]: ObserverLike<T>;
   };
 
-  function onDispose(this: TProperties & DisposableLike) {
+  function onSwitchAllObserverComplete(this: TProperties & DisposableLike) {
     if (
       this[SwitchAllObserver_currentRef][SerialDisposableLike_current][
         DisposableLike_isDisposed
       ]
     ) {
+      this[SwitchAllObserver_delegate][DisposableLike_dispose]();
+    }
+  }
+
+  function onSwitchAllObserverInnerObservableComplete(
+    this: TProperties & DisposableLike,
+  ) {
+    if (this[DisposableLike_isDisposed]) {
       this[SwitchAllObserver_delegate][DisposableLike_dispose]();
     }
   }
@@ -75,7 +83,10 @@ const createSwitchAllObserver: <T>(
         Disposable.addTo(delegate),
       );
 
-      pipe(instance, DisposableContainer.onComplete(bind(onDispose, instance)));
+      pipe(
+        instance,
+        DisposableContainer.onComplete(onSwitchAllObserverComplete),
+      );
 
       return instance;
     },
@@ -100,11 +111,9 @@ const createSwitchAllObserver: <T>(
             this,
           ),
           Disposable.addTo(this[SwitchAllObserver_delegate]),
-          DisposableContainer.onComplete(() => {
-            if (this[DisposableLike_isDisposed]) {
-              this[SwitchAllObserver_delegate][DisposableLike_dispose]();
-            }
-          }),
+          DisposableContainer.onComplete(
+            bind(onSwitchAllObserverInnerObservableComplete, this),
+          ),
         );
       }),
     },
