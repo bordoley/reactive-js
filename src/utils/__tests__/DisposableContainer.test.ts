@@ -43,6 +43,18 @@ testModule(
 
       pipe(callback, expectToHaveBeenCalledTimes(0));
     }),
+    test("adding the same callback multiple times is memoized", () => {
+      const teardown = mockFn();
+      const disposable = pipe(
+        Disposable.create(),
+        DisposableContainer.onComplete(teardown),
+        DisposableContainer.onComplete(teardown),
+        DisposableContainer.onComplete(teardown),
+      );
+
+      disposable[DisposableLike_dispose]();
+      pipe(teardown, expectToHaveBeenCalledTimes(1));
+    }),
   ),
   describe(
     "onDisposed",
@@ -83,6 +95,21 @@ testModule(
       );
       pipe(childTeardown, expectToHaveBeenCalledTimes(1));
       pipe(childTeardown.calls[0], expectArrayEquals([err]));
+    }),
+  ),
+  describe(
+    "onError",
+    test("adding the same callback multiple times is memoized", () => {
+      const teardown = mockFn();
+      const disposable = pipe(
+        Disposable.create(),
+        DisposableContainer.onError(teardown),
+        DisposableContainer.onError(teardown),
+        DisposableContainer.onError(teardown),
+      );
+
+      disposable[DisposableLike_dispose](newInstance(Error));
+      pipe(teardown, expectToHaveBeenCalledTimes(1));
     }),
   ),
   describe(

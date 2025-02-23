@@ -17,6 +17,11 @@ testModule("DisposableContainer", describe("onComplete", test("disposing the par
     pipe(disposable, DisposableContainer.onComplete(callback));
     disposable[DisposableLike_dispose](newInstance(Error));
     pipe(callback, expectToHaveBeenCalledTimes(0));
+}), test("adding the same callback multiple times is memoized", () => {
+    const teardown = mockFn();
+    const disposable = pipe(Disposable.create(), DisposableContainer.onComplete(teardown), DisposableContainer.onComplete(teardown), DisposableContainer.onComplete(teardown));
+    disposable[DisposableLike_dispose]();
+    pipe(teardown, expectToHaveBeenCalledTimes(1));
 })), describe("onDisposed", test("disposes teardown function exactly once when disposed", () => {
     const teardown = mockFn();
     const disposable = pipe(Disposable.create(), DisposableContainer.onDisposed(teardown), DisposableContainer.onDisposed(teardown));
@@ -35,6 +40,11 @@ testModule("DisposableContainer", describe("onComplete", test("disposing the par
     pipe(disposable[DisposableLike_error], expectEquals(err));
     pipe(childTeardown, expectToHaveBeenCalledTimes(1));
     pipe(childTeardown.calls[0], expectArrayEquals([err]));
+})), describe("onError", test("adding the same callback multiple times is memoized", () => {
+    const teardown = mockFn();
+    const disposable = pipe(Disposable.create(), DisposableContainer.onError(teardown), DisposableContainer.onError(teardown), DisposableContainer.onError(teardown));
+    disposable[DisposableLike_dispose](newInstance(Error));
+    pipe(teardown, expectToHaveBeenCalledTimes(1));
 })), describe("toAbortSignal", test("disposing the disposable invokes the abort signal", () => {
     const disposable = Disposable.create();
     const signal = pipe(disposable, DisposableContainer.toAbortSignal);

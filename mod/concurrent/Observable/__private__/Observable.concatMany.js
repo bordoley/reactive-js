@@ -3,7 +3,7 @@
 import { Array_length } from "../../../__internal__/constants.js";
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
 import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
-import { bindMethod, isSome, none, pipe } from "../../../functions.js";
+import { bind, bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
@@ -12,14 +12,25 @@ import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 const Observable_concatMany = 
 /*@__PURE__*/ (() => {
-    const createConcatObserver = (delegate, observables, next) => pipe(Observer_createWithDelegate(delegate), Disposable.addTo(delegate), DisposableContainer.onComplete(() => {
+    const ConcatObserverCtx_delegate = Symbol("ConcatObserverCtx_delegate");
+    const ConcatObserverCtx_observables = Symbol("ConcatObserverCtx_observables");
+    const ConcatObserverCtx_nextIndex = Symbol("ConcatObserverCtx_nextIndex");
+    function onConcatObserverComplete() {
+        const delegate = this[ConcatObserverCtx_delegate];
+        const observables = this[ConcatObserverCtx_observables];
+        const next = this[ConcatObserverCtx_nextIndex];
         if (next < observables[Array_length]) {
-            observables[next][ObservableLike_observe](createConcatObserver(delegate, observables, next + 1));
+            this[ConcatObserverCtx_nextIndex]++;
+            observables[next][ObservableLike_observe](createConcatObserver(this));
         }
         else {
             delegate[DisposableLike_dispose]();
         }
-    }));
+    }
+    const createConcatObserver = (ctx) => {
+        const delegate = ctx[ConcatObserverCtx_delegate];
+        return pipe(Observer_createWithDelegate(delegate), Disposable.addTo(delegate), DisposableContainer.onComplete(bind(onConcatObserverComplete, ctx)));
+    };
     const ConcatObservable_observables = Symbol("ConcatObservable_observables");
     const isConcatObservable = (observable) => isSome(observable[ConcatObservable_observables]);
     const flattenObservables = (observables) => observables.some(isConcatObservable)
@@ -42,7 +53,11 @@ const Observable_concatMany =
         [ObservableLike_isDeferred]: true,
         [ObservableLike_observe](observer) {
             const { [ConcatObservable_observables]: observables } = this;
-            pipe(createConcatObserver(observer, observables, 1), bindMethod(observables[0], ObservableLike_observe));
+            pipe(createConcatObserver({
+                [ConcatObserverCtx_delegate]: observer,
+                [ConcatObserverCtx_observables]: observables,
+                [ConcatObserverCtx_nextIndex]: 1,
+            }), bindMethod(observables[0], ObservableLike_observe));
         },
     });
 })();

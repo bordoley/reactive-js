@@ -5,8 +5,10 @@ import {
 } from "../../../concurrent.js";
 import {
   Function1,
+  Method1,
   Optional,
   SideEffect1,
+  bind,
   bindMethod,
   error,
   isSome,
@@ -22,33 +24,38 @@ import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const Observable_catchError: Observable.Signature["catchError"] =
   /*@__PURE__*/ (<T>() => {
     const createCatchErrorObserver =
-      (
-        errorHandler: SideEffect1<Error> | Function1<Error, ObservableLike<T>>,
-      ) =>
+      (onErrorHandler: Method1<ObserverLike<T>, Error>) =>
       (delegate: ObserverLike<T>) =>
         pipe(
           Observer_createWithDelegate<T>(delegate),
           DisposableContainer.onComplete(
             bindMethod(delegate, DisposableLike_dispose),
           ),
-          DisposableContainer.onError((err: Error) => {
-            let action: Optional<ObservableLike<T>> = none;
-            try {
-              action = errorHandler(err) as Optional<ObservableLike<T>>;
-            } catch (e) {
-              delegate[DisposableLike_dispose](error([error(e), err]));
-            }
-
-            if (isSome(action)) {
-              action[ObservableLike_observe](delegate);
-            } else {
-              delegate[DisposableLike_dispose]();
-            }
-          }),
+          DisposableContainer.onError(bind(onErrorHandler, delegate)),
         );
 
-    return (errorHandler: SideEffect1<Error>) =>
-      Observable_liftPureDeferred(createCatchErrorObserver(errorHandler));
+    return (
+      errorHandler: SideEffect1<Error> | Function1<Error, ObservableLike<T>>,
+    ) => {
+      function onErrorHandler(this: ObserverLike<T>, err: Error) {
+        let action: Optional<ObservableLike<T>> = none;
+        try {
+          action = errorHandler(err) as Optional<ObservableLike<T>>;
+        } catch (e) {
+          this[DisposableLike_dispose](error([error(e), err]));
+        }
+
+        if (isSome(action)) {
+          action[ObservableLike_observe](this);
+        } else {
+          this[DisposableLike_dispose]();
+        }
+      }
+
+      return Observable_liftPureDeferred(
+        createCatchErrorObserver(onErrorHandler),
+      );
+    };
   })();
 
 export default Observable_catchError;

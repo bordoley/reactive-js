@@ -8,7 +8,7 @@ import {
   ObservableLike_observe,
   ObserverLike,
 } from "../../../concurrent.js";
-import { bindMethod, isSome, none, pipe } from "../../../functions.js";
+import { bind, bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
@@ -19,24 +19,38 @@ import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 
 const Observable_concatMany: Observable.Signature["concatMany"] =
   /*@__PURE__*/ (<T>() => {
-    const createConcatObserver = <T>(
-      delegate: ObserverLike<T>,
-      observables: readonly ObservableLike<T>[],
-      next: number,
-    ) =>
-      pipe(
+    const ConcatObserverCtx_delegate = Symbol("ConcatObserverCtx_delegate");
+    const ConcatObserverCtx_observables = Symbol(
+      "ConcatObserverCtx_observables",
+    );
+    const ConcatObserverCtx_nextIndex = Symbol("ConcatObserverCtx_nextIndex");
+
+    type ConcatObserverCtx = {
+      readonly [ConcatObserverCtx_delegate]: ObserverLike<T>;
+      readonly [ConcatObserverCtx_observables]: readonly ObservableLike<T>[];
+      [ConcatObserverCtx_nextIndex]: number;
+    };
+
+    function onConcatObserverComplete(this: ConcatObserverCtx) {
+      const delegate = this[ConcatObserverCtx_delegate];
+      const observables = this[ConcatObserverCtx_observables];
+      const next = this[ConcatObserverCtx_nextIndex];
+      if (next < observables[Array_length]) {
+        this[ConcatObserverCtx_nextIndex]++;
+        observables[next][ObservableLike_observe](createConcatObserver(this));
+      } else {
+        delegate[DisposableLike_dispose]();
+      }
+    }
+
+    const createConcatObserver = (ctx: ConcatObserverCtx) => {
+      const delegate = ctx[ConcatObserverCtx_delegate];
+      return pipe(
         Observer_createWithDelegate(delegate),
         Disposable.addTo(delegate),
-        DisposableContainer.onComplete(() => {
-          if (next < observables[Array_length]) {
-            observables[next][ObservableLike_observe](
-              createConcatObserver(delegate, observables, next + 1),
-            );
-          } else {
-            delegate[DisposableLike_dispose]();
-          }
-        }),
+        DisposableContainer.onComplete(bind(onConcatObserverComplete, ctx)),
       );
+    };
 
     const ConcatObservable_observables = Symbol("ConcatObservable_observables");
 
@@ -90,7 +104,11 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
           const { [ConcatObservable_observables]: observables } = this;
 
           pipe(
-            createConcatObserver(observer, observables, 1),
+            createConcatObserver({
+              [ConcatObserverCtx_delegate]: observer,
+              [ConcatObserverCtx_observables]: observables,
+              [ConcatObserverCtx_nextIndex]: 1,
+            }),
             bindMethod(observables[0], ObservableLike_observe),
           );
         },
