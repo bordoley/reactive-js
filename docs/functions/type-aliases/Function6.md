@@ -22,7 +22,7 @@
 
 • **TF**
 
-• **T**
+• **T** = `void`
 
 ## Parameters
 

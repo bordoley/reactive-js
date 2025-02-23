@@ -6,18 +6,38 @@
 
 # Function: onComplete()
 
+## Call Signature
+
 > **onComplete**\<`TDisposable`\>(`teardown`): [`Updater`](../../../functions/type-aliases/Updater.md)\<`TDisposable`\>
 
-## Type Parameters
+### Type Parameters
 
 • **TDisposable** *extends* [`DisposableContainerLike`](../../interfaces/DisposableContainerLike.md)
 
-## Parameters
+### Parameters
 
-### teardown
+#### teardown
 
 [`SideEffect`](../../../functions/type-aliases/SideEffect.md)
 
-## Returns
+### Returns
+
+[`Updater`](../../../functions/type-aliases/Updater.md)\<`TDisposable`\>
+
+## Call Signature
+
+> **onComplete**\<`TDisposable`\>(`teardown`): [`Updater`](../../../functions/type-aliases/Updater.md)\<`TDisposable`\>
+
+### Type Parameters
+
+• **TDisposable** *extends* [`DisposableContainerLike`](../../interfaces/DisposableContainerLike.md)
+
+### Parameters
+
+#### teardown
+
+[`Method`](../../../functions/type-aliases/Method.md)\<`TDisposable`, `void`\>
+
+### Returns
 
 [`Updater`](../../../functions/type-aliases/Updater.md)\<`TDisposable`\>

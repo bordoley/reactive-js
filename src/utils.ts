@@ -1,5 +1,5 @@
 import { Error, Symbol as GlobalSymbol } from "./__internal__/constants.js";
-import { Optional, SideEffect1, isNone } from "./functions.js";
+import { Method1, Optional, SideEffect1, isNone } from "./functions.js";
 
 export const DisposableContainerLike_add = Symbol(
   "DisposableContainerLike_add",
@@ -19,6 +19,13 @@ export interface DisposableContainerLike {
    * @param teardown - The teardown function to add.
    */
   [DisposableContainerLike_add](teardown: SideEffect1<Optional<Error>>): void;
+
+  /**
+   * Adds the given teardown function to this container or disposes it if the container has been disposed.
+   *
+   * @param teardown - The teardown function to add.
+   */
+  [DisposableContainerLike_add](teardown: Method1<this, Optional<Error>>): void;
 }
 
 export const DisposableLike_dispose: typeof Symbol.dispose =

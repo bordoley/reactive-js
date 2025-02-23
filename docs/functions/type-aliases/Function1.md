@@ -12,7 +12,7 @@
 
 • **TA**
 
-• **T**
+• **T** = `void`
 
 ## Parameters
 

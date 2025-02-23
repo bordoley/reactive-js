@@ -24,7 +24,7 @@
 
 • **TG**
 
-• **T**
+• **T** = `void`
 
 ## Parameters
 

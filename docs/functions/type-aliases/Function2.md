@@ -14,7 +14,7 @@
 
 • **TB**
 
-• **T**
+• **T** = `void`
 
 ## Parameters
 

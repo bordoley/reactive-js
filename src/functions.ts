@@ -52,28 +52,36 @@ export type Constructor4<TA, TB, TC, TD, out T> = new (
   d: TD,
 ) => T;
 
-/**
- * A function which instantiates new instances of type `T`.
- */
-export type Factory<out T> = () => T;
-
-export type Function1<TA, out T> = (a: TA) => T;
-export type Function2<TA, TB, out T> = (a: TA, b: TB) => T;
-export type Function3<TA, TB, TC, out T> = (a: TA, b: TB, c: TC) => T;
-export type Function4<TA, TB, TC, TD, out T> = (
+export type Method<TThis, out T = void> = (this: TThis) => T;
+export type Method1<TThis, TA, out T = void> = (this: TThis, a: TA) => T;
+export type Method2<TThis, TA, TB, out T = void> = (
+  this: TThis,
+  a: TA,
+  b: TB,
+) => T;
+export type Method3<TThis, TA, TB, TC, out T = void> = (
+  this: TThis,
+  a: TA,
+  b: TB,
+  c: TC,
+) => T;
+export type Method4<TThis, TA, TB, TC, TD, out T = void> = (
+  this: TThis,
   a: TA,
   b: TB,
   c: TC,
   d: TD,
 ) => T;
-export type Function5<TA, TB, TC, TD, TE, out T> = (
+export type Method5<TThis, TA, TB, TC, TD, TE, out T = void> = (
+  this: TThis,
   a: TA,
   b: TB,
   c: TC,
   d: TD,
   e: TE,
 ) => T;
-export type Function6<TA, TB, TC, TD, TE, TF, out T> = (
+export type Method6<TThis, TA, TB, TC, TD, TE, TF, out T = void> = (
+  this: TThis,
   a: TA,
   b: TB,
   c: TC,
@@ -81,7 +89,8 @@ export type Function6<TA, TB, TC, TD, TE, TF, out T> = (
   e: TE,
   f: TF,
 ) => T;
-export type Function7<TA, TB, TC, TD, TE, TF, TG, out T> = (
+export type Method7<TThis, TA, TB, TC, TD, TE, TF, TG, out T = void> = (
+  this: TThis,
   a: TA,
   b: TB,
   c: TC,
@@ -90,7 +99,8 @@ export type Function7<TA, TB, TC, TD, TE, TF, TG, out T> = (
   f: TF,
   g: TG,
 ) => T;
-export type Function8<TA, TB, TC, TD, TE, TF, TG, TH, out T> = (
+export type Method8<TThis, TA, TB, TC, TD, TE, TF, TG, TH, out T = void> = (
+  this: TThis,
   a: TA,
   b: TB,
   c: TC,
@@ -100,7 +110,68 @@ export type Function8<TA, TB, TC, TD, TE, TF, TG, TH, out T> = (
   g: TG,
   h: TH,
 ) => T;
-export type Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, out T> = (
+export type Method9<TThis, TA, TB, TC, TD, TE, TF, TG, TH, TI, out T = void> = (
+  this: TThis,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+  g: TG,
+  h: TH,
+  i: TI,
+) => T;
+
+/**
+ * A function which instantiates new instances of type `T`.
+ */
+export type Factory<out T> = () => T;
+
+export type Function1<TA, out T = void> = (a: TA) => T;
+export type Function2<TA, TB, out T = void> = (a: TA, b: TB) => T;
+export type Function3<TA, TB, TC, out T = void> = (a: TA, b: TB, c: TC) => T;
+export type Function4<TA, TB, TC, TD, out T = void> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+) => T;
+export type Function5<TA, TB, TC, TD, TE, out T = void> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+) => T;
+export type Function6<TA, TB, TC, TD, TE, TF, out T = void> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+) => T;
+export type Function7<TA, TB, TC, TD, TE, TF, TG, out T = void> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+  g: TG,
+) => T;
+export type Function8<TA, TB, TC, TD, TE, TF, TG, TH, out T = void> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+  g: TG,
+  h: TH,
+) => T;
+export type Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, out T = void> = (
   a: TA,
   b: TB,
   c: TC,
@@ -136,34 +207,28 @@ export type Predicate<T> = Function1<T, boolean>;
 export type Reducer<T, TAcc> = Function2<TAcc, T, TAcc>;
 
 export type SideEffect = () => void;
-export type SideEffect1<TA> = (a: TA) => void;
-export type SideEffect2<TA, TB> = (a: TA, b: TB) => void;
-export type SideEffect3<TA, TB, TC> = (a: TA, b: TB, c: TC) => void;
-export type SideEffect4<TA, TB, TC, TD> = (a: TA, b: TB, c: TC, d: TD) => void;
-export type SideEffect5<TA, TB, TC, TD, TE> = (
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-  e: TE,
-) => void;
-export type SideEffect6<TA, TB, TC, TD, TE, TF> = (
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-  e: TE,
-  f: TF,
-) => void;
-export type SideEffect7<TA, TB, TC, TD, TE, TF, TG> = (
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-  e: TE,
-  f: TF,
-  g: TG,
-) => void;
+export type SideEffect1<TA> = Function1<TA>;
+export type SideEffect2<TA, TB> = Function2<TA, TB>;
+export type SideEffect3<TA, TB, TC> = Function3<TA, TB, TC>;
+export type SideEffect4<TA, TB, TC, TD> = Function4<TA, TB, TC, TD>;
+export type SideEffect5<TA, TB, TC, TD, TE> = Function5<TA, TB, TC, TD, TE>;
+export type SideEffect6<TA, TB, TC, TD, TE, TF> = Function6<
+  TA,
+  TB,
+  TC,
+  TD,
+  TE,
+  TF
+>;
+export type SideEffect7<TA, TB, TC, TD, TE, TF, TG> = Function7<
+  TA,
+  TB,
+  TC,
+  TD,
+  TE,
+  TF,
+  TG
+>;
 
 export type Tuple1<TA> = readonly [TA];
 export type Tuple2<TA, TB> = readonly [TA, TB];

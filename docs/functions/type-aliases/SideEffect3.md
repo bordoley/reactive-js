@@ -4,9 +4,9 @@
 
 [Reactive-JS](../../README.md) / [functions](../README.md) / SideEffect3
 
-# Type Alias: SideEffect3()\<TA, TB, TC\>
+# Type Alias: SideEffect3\<TA, TB, TC\>
 
-> **SideEffect3**\<`TA`, `TB`, `TC`\>: (`a`, `b`, `c`) => `void`
+> **SideEffect3**\<`TA`, `TB`, `TC`\>: [`Function3`](Function3.md)\<`TA`, `TB`, `TC`\>
 
 ## Type Parameters
 
@@ -15,21 +15,3 @@
 • **TB**
 
 • **TC**
-
-## Parameters
-
-### a
-
-`TA`
-
-### b
-
-`TB`
-
-### c
-
-`TC`
-
-## Returns
-
-`void`

@@ -20,7 +20,7 @@
 
 • **TE**
 
-• **T**
+• **T** = `void`
 
 ## Parameters
 

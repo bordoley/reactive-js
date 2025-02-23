@@ -50,3 +50,21 @@ The teardown function to add.
 ##### Returns
 
 `void`
+
+#### Call Signature
+
+> **\[DisposableContainerLike\_add\]**(`teardown`): `void`
+
+Adds the given teardown function to this container or disposes it if the container has been disposed.
+
+##### Parameters
+
+###### teardown
+
+[`Method1`](../../functions/type-aliases/Method1.md)\<[`DisposableContainerLike`](DisposableContainerLike.md), [`Optional`](../../functions/type-aliases/Optional.md)\<`Error`\>\>
+
+The teardown function to add.
+
+##### Returns
+
+`void`
