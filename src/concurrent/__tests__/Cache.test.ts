@@ -67,7 +67,7 @@ testModule(
       pipe(
         [
           tuple(0, () => Cache.set(cache, "abc", 1)),
-          tuple(1, () => Cache.remove(cache, "abc")),
+          tuple(1, () => Cache.removeMany(cache, ["abc"])),
           tuple(2, () => {
             pipe(
               Cache.get(cache, "abc"),

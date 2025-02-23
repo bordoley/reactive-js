@@ -14,6 +14,7 @@ import * as HostScheduler from "../../../concurrent/HostScheduler.js";
 import * as Observable from "../../../concurrent/Observable.js";
 import {
   FlowableLike_flow,
+  PauseableLike_pause,
   PauseableLike_resume,
 } from "../../../concurrent.js";
 import {
@@ -52,6 +53,8 @@ testModule(
         Disposable.addTo(scheduler),
       );
 
+      flowed[PauseableLike_resume]();
+      flowed[PauseableLike_pause]();
       flowed[PauseableLike_resume]();
 
       await pipeAsync(

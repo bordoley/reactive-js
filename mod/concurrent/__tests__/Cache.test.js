@@ -94,7 +94,7 @@ testModule("Cache", describe("inMemory", test("it publishes none on subscribe wh
         const result = [];
         pipe([
             tuple(0, () => Cache.set(cache, "abc", 1)),
-            tuple(1, () => Cache.remove(cache, "abc")),
+            tuple(1, () => Cache.removeMany(cache, ["abc"])),
             tuple(2, () => {
                 pipe(Cache.get(cache, "abc"), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
             }),

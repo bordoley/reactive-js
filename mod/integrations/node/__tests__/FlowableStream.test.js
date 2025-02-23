@@ -58,7 +58,7 @@ import { describe, expectEquals, expectFalse, expectPromiseToThrow, expectTrue, 
 import * as Flowable from "../../../concurrent/Flowable.js";
 import * as HostScheduler from "../../../concurrent/HostScheduler.js";
 import * as Observable from "../../../concurrent/Observable.js";
-import { FlowableLike_flow, PauseableLike_resume, } from "../../../concurrent.js";
+import { FlowableLike_flow, PauseableLike_pause, PauseableLike_resume, } from "../../../concurrent.js";
 import { invoke, newInstance, pipe, pipeAsync, returns, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { DisposableLike_isDisposed } from "../../../utils.js";
@@ -75,6 +75,8 @@ testModule("FlowableStream", describe("create", testAsync("reading from readable
             autoDestroy: false,
         });
         const flowed = pipe(readable, returns, FlowableStream.create, invoke(FlowableLike_flow, scheduler), Disposable.addTo(scheduler));
+        flowed[PauseableLike_resume]();
+        flowed[PauseableLike_pause]();
         flowed[PauseableLike_resume]();
         await pipeAsync(flowed, Observable.decodeWithCharset(), Observable.scan((acc, next) => acc + next, returns("")), Observable.lastAsync(scheduler), expectEquals("abcdefg"));
         expectTrue(readable.destroyed);
