@@ -300,11 +300,6 @@ export declare const alwaysTrue: Signature["alwaysTrue"];
  */
 export declare const arrayEquality: Signature["arrayEquality"];
 /**
- * Creates a new function that, when called, calls `f` with its
- * this keyword set to the provided value.
- */
-export declare const bind: Signature["bind"];
-/**
  * Creates a new function that, when called, invokes the method
  * `thiz[key]` with the provided arguments.
  */
@@ -396,6 +391,11 @@ export declare const log: Signature["log"];
  */
 export declare const negate: Signature["negate"];
 export declare const newInstance: Signature["newInstance"];
+/**
+ * Creates a new function that, when called, calls `f` with its
+ * this keyword set to the provided value.
+ */
+export declare const bind: Signature["bind"];
 /**
  * An alias for undefined.
  */

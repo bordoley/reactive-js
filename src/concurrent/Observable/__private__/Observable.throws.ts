@@ -12,8 +12,7 @@ const Observable_throws: Observable.Signature["throws"] = <T>(options?: {
     const { raise: factory = raise, delay = 0 } = options ?? {};
 
     pipe(
-      observer[SchedulerLike_schedule](
-        compose(factory, error, raise), {
+      observer[SchedulerLike_schedule](compose(factory, error, raise), {
         delay,
       }),
       Disposable.addTo(observer),

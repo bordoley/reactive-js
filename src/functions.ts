@@ -1309,14 +1309,6 @@ export const arrayEquality: Signature["arrayEquality"] = <T>(
           a[Array_every]((v, i) => valuesEquality(b[i], v)));
 
 /**
- * Creates a new function that, when called, calls `f` with its
- * this keyword set to the provided value.
- */
-
-export const bind: Signature["bind"] = (f: Function, thiz: unknown) =>
-  f.bind(thiz);
-
-/**
  * Creates a new function that, when called, invokes the method
  * `thiz[key]` with the provided arguments.
  */
@@ -1544,6 +1536,43 @@ export const newInstance: Signature["newInstance"] = (
   Constructor: new (...args: readonly any[]) => unknown,
   ...args: readonly unknown[]
 ): unknown => new Constructor(...args);
+
+/**
+ * Creates a new function that, when called, calls `f` with its
+ * this keyword set to the provided value.
+ */
+
+export const bind: Signature["bind"] = /*@__PURE__*/ (() => {
+  const bindCache: WeakMap<Function, WeakMap<object, Function>> = newInstance<
+    WeakMap<Function, WeakMap<object, Function>>
+  >(WeakMap);
+
+  const boundFunctions: WeakSet<Function> = newInstance(WeakSet);
+
+  return (f: Function, thiz: object) => {
+    let objectMap: Optional<WeakMap<object, Function>> = none;
+
+    // ignore functions already bound to a this argument
+    return !boundFunctions.has(f)
+      ? ((objectMap =
+          bindCache.get(f) ??
+          (() => {
+            const objectMap = newInstance<WeakMap<object, Function>>(WeakMap);
+            bindCache.set(f, objectMap);
+            return objectMap;
+          })()),
+        objectMap.get(thiz) ??
+          (() => {
+            const memoizedF = f.bind(thiz);
+
+            boundFunctions.add(memoizedF);
+            objectMap.set(thiz, memoizedF);
+
+            return memoizedF;
+          })())
+      : f;
+  };
+})();
 
 /**
  * An alias for undefined.

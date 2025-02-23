@@ -38,11 +38,6 @@ export const arrayEquality = (valuesEquality = strictEquality) => valuesEquality
         (a[Array_length] === b[Array_length] &&
             a[Array_every]((v, i) => valuesEquality(b[i], v)));
 /**
- * Creates a new function that, when called, calls `f` with its
- * this keyword set to the provided value.
- */
-export const bind = (f, thiz) => f.bind(thiz);
-/**
  * Creates a new function that, when called, invokes the method
  * `thiz[key]` with the provided arguments.
  */
@@ -162,6 +157,34 @@ export const log = (v) => {
  */
 export const negate = (v) => !v;
 export const newInstance = (Constructor, ...args) => new Constructor(...args);
+/**
+ * Creates a new function that, when called, calls `f` with its
+ * this keyword set to the provided value.
+ */
+export const bind = /*@__PURE__*/ (() => {
+    const bindCache = newInstance(WeakMap);
+    const boundFunctions = newInstance(WeakSet);
+    return (f, thiz) => {
+        let objectMap = none;
+        // ignore functions already bound to a this argument
+        return !boundFunctions.has(f)
+            ? ((objectMap =
+                bindCache.get(f) ??
+                    (() => {
+                        const objectMap = newInstance(WeakMap);
+                        bindCache.set(f, objectMap);
+                        return objectMap;
+                    })()),
+                objectMap.get(thiz) ??
+                    (() => {
+                        const memoizedF = f.bind(thiz);
+                        boundFunctions.add(memoizedF);
+                        objectMap.set(thiz, memoizedF);
+                        return memoizedF;
+                    })())
+            : f;
+    };
+})();
 /**
  * An alias for undefined.
  */
