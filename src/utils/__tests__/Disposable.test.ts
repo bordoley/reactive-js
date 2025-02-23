@@ -49,6 +49,8 @@ testModule(
     test("ignores when it is added to itself", () => {
       const disposable = Disposable.create();
       pipe(disposable, Disposable.addTo(disposable));
+      pipe(disposable, Disposable.addTo(disposable));
+      pipe(disposable, Disposable.addTo(disposable));
       disposable[DisposableLike_dispose]();
     }),
   ),

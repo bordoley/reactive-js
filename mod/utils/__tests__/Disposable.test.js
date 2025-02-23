@@ -25,6 +25,8 @@ testModule("Disposable", describe("add", test("disposes child disposable when di
 })), describe("addTo", test("ignores when it is added to itself", () => {
     const disposable = Disposable.create();
     pipe(disposable, Disposable.addTo(disposable));
+    pipe(disposable, Disposable.addTo(disposable));
+    pipe(disposable, Disposable.addTo(disposable));
     disposable[DisposableLike_dispose]();
 })), describe("bindTo", test("disposing the child disposable disposes the parent", () => {
     const parent = Disposable.create();

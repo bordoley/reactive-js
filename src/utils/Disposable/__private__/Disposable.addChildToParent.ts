@@ -10,10 +10,12 @@ const Disposable_addChildToParent = (
   parent: DisposableLike,
   child: DisposableLike,
 ) => {
-  parent[DisposableContainerLike_add](child);
-  pipe(
-    child,
-    DisposableContainer.onError(bindMethod(parent, DisposableLike_dispose)),
-  );
+  if (parent !== child) {
+    parent[DisposableContainerLike_add](child);
+    pipe(
+      child,
+      DisposableContainer.onError(bindMethod(parent, DisposableLike_dispose)),
+    );
+  }
 };
 export default Disposable_addChildToParent;
