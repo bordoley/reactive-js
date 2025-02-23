@@ -84,6 +84,13 @@ export const create = /*@PURE__*/ (() => {
             pipe(disposable, Disposable.addTo(instance), DisposableContainer.onDisposed(cleanup));
         }
     };
+    function onHostSchedulerDisposed() {
+        const channel = this[HostScheduler_messageChannel];
+        if (isSome(channel)) {
+            channel.port1.close();
+            channel.port2.close();
+        }
+    }
     const createHostSchedulerInstance = mixInstanceFactory(include(CurrentTimeSchedulerMixin, SerialDisposableMixin(), QueueMixin()), function HostScheduler(instance, maxYieldInterval) {
         instance[SchedulerLike_maxYieldInterval] = maxYieldInterval;
         init(CurrentTimeSchedulerMixin, instance);
@@ -97,10 +104,7 @@ export const create = /*@PURE__*/ (() => {
             const channel = newInstance(MessageChannel);
             instance[HostScheduler_messageChannel] = channel;
             channel.port1.onmessage = () => hostSchedulerContinuation(instance, Disposable.disposed);
-            pipe(instance, DisposableContainer.onDisposed(_ => {
-                channel.port1.close();
-                channel.port2.close();
-            }));
+            pipe(instance, DisposableContainer.onDisposed(onHostSchedulerDisposed));
         }
         return instance;
     }, props({

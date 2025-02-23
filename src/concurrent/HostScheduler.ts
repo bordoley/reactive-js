@@ -207,6 +207,14 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     }
   };
 
+  function onHostSchedulerDisposed(this: TProperties) {
+    const channel = this[HostScheduler_messageChannel];
+    if (isSome(channel)) {
+      channel.port1.close();
+      channel.port2.close();
+    }
+  }
+
   const createHostSchedulerInstance = mixInstanceFactory(
     include(CurrentTimeSchedulerMixin, SerialDisposableMixin(), QueueMixin()),
     function HostScheduler(
@@ -231,13 +239,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         channel.port1.onmessage = () =>
           hostSchedulerContinuation(instance, Disposable.disposed);
 
-        pipe(
-          instance,
-          DisposableContainer.onDisposed(_ => {
-            channel.port1.close();
-            channel.port2.close();
-          }),
-        );
+        pipe(instance, DisposableContainer.onDisposed(onHostSchedulerDisposed));
       }
 
       return instance;
