@@ -20,6 +20,7 @@ import {
   partial,
   pipe,
 } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Queue from "../../../utils/Queue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
@@ -78,8 +79,10 @@ const createTakeLastObserver: <T>(
       return;
     }
 
-    this[LiftedObserverLike_delegate][SchedulerLike_schedule](
-      bind(notifyDelegate, this),
+    const delegate = this[LiftedObserverLike_delegate];
+    pipe(
+      delegate[SchedulerLike_schedule](bind(notifyDelegate, this)),
+      Disposable.addTo(delegate),
     );
   }
 

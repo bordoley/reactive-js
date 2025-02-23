@@ -39,14 +39,14 @@ const Flowable_fromAsyncIterable = () => (iterable) => Flowable_create((modeObs)
             observer[DisposableLike_dispose](error(e));
         }
         if (!isPaused) {
-            observer[SchedulerLike_schedule](continuation);
+            pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
         }
     };
     pipe(modeObs, EventSource.addEventHandler((mode) => {
         const wasPaused = isPaused;
         isPaused = mode;
         if (!isPaused && wasPaused) {
-            observer[SchedulerLike_schedule](continuation);
+            pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
         }
     }), Disposable.addTo(observer), DisposableContainer.onComplete(bindMethod(observer, DispatcherLike_complete)));
 }));

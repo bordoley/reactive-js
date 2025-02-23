@@ -4,6 +4,7 @@ import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { ContinuationContextLike_yield, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { bind, isSome, none, partial, pipe, } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Queue from "../../../utils/Queue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
@@ -31,7 +32,8 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
         if (count === 0) {
             return;
         }
-        this[LiftedObserverLike_delegate][SchedulerLike_schedule](bind(notifyDelegate, this));
+        const delegate = this[LiftedObserverLike_delegate];
+        pipe(delegate[SchedulerLike_schedule](bind(notifyDelegate, this)), Disposable.addTo(delegate));
     }
     return mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()), function TakeLastObserver(instance, delegate, takeLastCount) {
         init(DisposableMixin, instance);

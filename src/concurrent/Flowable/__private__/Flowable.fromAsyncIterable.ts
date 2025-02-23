@@ -65,7 +65,10 @@ const Flowable_fromAsyncIterable: Flowable.Signature["fromAsyncIterable"] =
           }
 
           if (!isPaused) {
-            observer[SchedulerLike_schedule](continuation);
+            pipe(
+              observer[SchedulerLike_schedule](continuation),
+              Disposable.addTo(observer),
+            );
           }
         };
 
@@ -76,7 +79,10 @@ const Flowable_fromAsyncIterable: Flowable.Signature["fromAsyncIterable"] =
             isPaused = mode;
 
             if (!isPaused && wasPaused) {
-              observer[SchedulerLike_schedule](continuation);
+              pipe(
+                observer[SchedulerLike_schedule](continuation),
+                Disposable.addTo(observer),
+              );
             }
           }),
           Disposable.addTo(observer),
