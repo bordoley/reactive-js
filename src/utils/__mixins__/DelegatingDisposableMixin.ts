@@ -1,5 +1,13 @@
 import { Mixin1, mix, props, unsafeCast } from "../../__internal__/mixins.js";
-import { Optional, SideEffect1, none, pipe, returns } from "../../functions.js";
+import {
+  Optional,
+  SideEffect1,
+  bind,
+  isFunction,
+  none,
+  pipe,
+  returns,
+} from "../../functions.js";
 import {
   DisposableContainerLike_add,
   DisposableLike,
@@ -28,6 +36,10 @@ const DelegatingDisposableMixin: <
       [DisposableLike_isDisposed]: boolean;
     };
 
+    function onDelegatingDisposableMixinDisposed(this: TProperties) {
+      this[DisposableLike_isDisposed] = true;
+    }
+
     return returns(
       mix(
         function DelegatingDisposableMixin(
@@ -43,10 +55,8 @@ const DelegatingDisposableMixin: <
           instance[DelegatingDisposableLike_delegate] = delegate;
 
           pipe(
-            delegate,
-            DisposableContainer.onDisposed(_ => {
-              instance[DisposableLike_isDisposed] = true;
-            }),
+            instance,
+            DisposableContainer.onDisposed(onDelegatingDisposableMixinDisposed),
           );
 
           return instance;
@@ -70,7 +80,9 @@ const DelegatingDisposableMixin: <
               DisposableContainerLike_add
             ](
               // Cast to make the typechecker happy even though its a lie.
-              disposable as Disposable,
+              (isFunction(disposable)
+                ? bind(disposable, this)
+                : disposable) as Disposable,
             );
           },
           [DisposableLike_dispose](this: TProperties, error?: Error) {
