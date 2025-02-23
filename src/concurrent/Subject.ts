@@ -26,6 +26,7 @@ import {
 } from "../concurrent.js";
 import { EventListenerLike_notify } from "../events.js";
 import {
+  Method,
   Optional,
   error,
   isSome,
@@ -51,10 +52,12 @@ export const create: <T>(options?: {
 }) => SubjectLike<T> = /*@__PURE__*/ (<T>() => {
   const Subject_autoDispose = Symbol("Subject_autoDispose");
   const Subject_observers = Symbol("Subject_observers");
+  const Subject_onObserverDisposed = Symbol("Subject_onObserverDisposed");
 
   type TProperties = {
     readonly [Subject_autoDispose]: boolean;
     readonly [Subject_observers]: Set<ObserverLike<T>>;
+    readonly [Subject_onObserverDisposed]: Method<ObserverLike<T>>;
   };
 
   function onSubjectDisposed(this: TProperties, e: Optional<Error>) {
@@ -94,6 +97,19 @@ export const create: <T>(options?: {
 
       instance[Subject_observers] = newInstance<Set<ObserverLike>>(Set);
       instance[Subject_autoDispose] = options?.autoDispose ?? false;
+      instance[Subject_onObserverDisposed] = function onObserverDisposed(
+        this: ObserverLike<T>,
+      ) {
+        const observers = instance[Subject_observers];
+        observers[Set_delete](this);
+
+        if (
+          instance[Subject_autoDispose] &&
+          instance[Subject_observers][Set_size] === 0
+        ) {
+          instance[DisposableLike_dispose]();
+        }
+      };
 
       pipe(instance, DisposableContainer.onDisposed(onSubjectDisposed));
 
@@ -102,6 +118,7 @@ export const create: <T>(options?: {
     props<TProperties>({
       [Subject_autoDispose]: false,
       [Subject_observers]: none,
+      [Subject_onObserverDisposed]: none,
     }),
     {
       [ObservableLike_isDeferred]: false as const,
@@ -149,16 +166,7 @@ export const create: <T>(options?: {
 
         pipe(
           observer,
-          DisposableContainer.onDisposed(_ => {
-            observers[Set_delete](observer);
-
-            if (
-              this[Subject_autoDispose] &&
-              this[Subject_observers][Set_size] === 0
-            ) {
-              this[DisposableLike_dispose]();
-            }
-          }),
+          DisposableContainer.onDisposed(this[Subject_onObserverDisposed]),
         );
 
         for (const next of this) {

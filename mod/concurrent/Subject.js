@@ -13,6 +13,7 @@ import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed
 export const create = /*@__PURE__*/ (() => {
     const Subject_autoDispose = Symbol("Subject_autoDispose");
     const Subject_observers = Symbol("Subject_observers");
+    const Subject_onObserverDisposed = Symbol("Subject_onObserverDisposed");
     function onSubjectDisposed(e) {
         for (const observer of this[Subject_observers]) {
             if (isSome(e)) {
@@ -32,11 +33,20 @@ export const create = /*@__PURE__*/ (() => {
         });
         instance[Subject_observers] = newInstance(Set);
         instance[Subject_autoDispose] = options?.autoDispose ?? false;
+        instance[Subject_onObserverDisposed] = function onObserverDisposed() {
+            const observers = instance[Subject_observers];
+            observers[Set_delete](this);
+            if (instance[Subject_autoDispose] &&
+                instance[Subject_observers][Set_size] === 0) {
+                instance[DisposableLike_dispose]();
+            }
+        };
         pipe(instance, DisposableContainer.onDisposed(onSubjectDisposed));
         return instance;
     }, props({
         [Subject_autoDispose]: false,
         [Subject_observers]: none,
+        [Subject_onObserverDisposed]: none,
     }), {
         [ObservableLike_isDeferred]: false,
         [ObservableLike_isPure]: true,
@@ -69,13 +79,7 @@ export const create = /*@__PURE__*/ (() => {
                 return;
             }
             observers[Set_add](observer);
-            pipe(observer, DisposableContainer.onDisposed(_ => {
-                observers[Set_delete](observer);
-                if (this[Subject_autoDispose] &&
-                    this[Subject_observers][Set_size] === 0) {
-                    this[DisposableLike_dispose]();
-                }
-            }));
+            pipe(observer, DisposableContainer.onDisposed(this[Subject_onObserverDisposed]));
             for (const next of this) {
                 observer[QueueableLike_enqueue](next);
             }

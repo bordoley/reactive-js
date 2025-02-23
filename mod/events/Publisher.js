@@ -3,7 +3,7 @@
 import { Set, Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { EventListenerLike_notify, EventSourceLike_addEventListener, } from "../events.js";
-import { error, newInstance, none, pipe } from "../functions.js";
+import { error, newInstance, none, pipe, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
@@ -11,6 +11,7 @@ import { DisposableLike_dispose, DisposableLike_isDisposed } from "../utils.js";
 export const create = /*@__PURE__*/ (() => {
     const Publisher_autoDispose = Symbol("Publisher_autoDispose");
     const Publisher_listeners = Symbol("Publisher_listeners");
+    const Publisher_onListenerDisposed = Symbol("Publisher_onListenerDisposed");
     function onEventPublisherDisposed(e) {
         for (const listener of this[Publisher_listeners]) {
             listener[DisposableLike_dispose](e);
@@ -22,10 +23,18 @@ export const create = /*@__PURE__*/ (() => {
             newInstance(Set);
         instance[Publisher_autoDispose] = options?.autoDispose ?? false;
         pipe(instance, DisposableContainer.onDisposed(onEventPublisherDisposed));
+        instance[Publisher_onListenerDisposed] = function onListenerDisposed() {
+            const listeners = instance[Publisher_listeners];
+            listeners[Set_delete](this);
+            if (instance[Publisher_autoDispose] && listeners[Set_size] === 0) {
+                instance[DisposableLike_dispose]();
+            }
+        };
         return instance;
     }, props({
         [Publisher_autoDispose]: false,
         [Publisher_listeners]: none,
+        [Publisher_onListenerDisposed]: none,
     }), {
         [EventListenerLike_notify](next) {
             if (this[DisposableLike_isDisposed]) {
@@ -51,13 +60,7 @@ export const create = /*@__PURE__*/ (() => {
                 return;
             }
             listeners[Set_add](listener);
-            pipe(listener, DisposableContainer.onDisposed(_ => {
-                listeners[Set_delete](listener);
-                if (this[Publisher_autoDispose] &&
-                    this[Publisher_listeners][Set_size] === 0) {
-                    this[DisposableLike_dispose]();
-                }
-            }));
+            pipe(listener, DisposableContainer.onDisposed(this[Publisher_onListenerDisposed]));
         },
     });
 })();

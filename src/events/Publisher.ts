@@ -18,7 +18,14 @@ import {
   EventSourceLike_addEventListener,
   PublisherLike,
 } from "../events.js";
-import { Optional, error, newInstance, none, pipe } from "../functions.js";
+import {
+  Method,
+  Optional,
+  error,
+  newInstance,
+  none,
+  pipe,
+} from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
@@ -29,10 +36,12 @@ export const create: <T>(options?: {
 }) => PublisherLike<T> = /*@__PURE__*/ (<T>() => {
   const Publisher_autoDispose = Symbol("Publisher_autoDispose");
   const Publisher_listeners = Symbol("Publisher_listeners");
+  const Publisher_onListenerDisposed = Symbol("Publisher_onListenerDisposed");
 
   type TProperties = {
     readonly [Publisher_autoDispose]: boolean;
     readonly [Publisher_listeners]: Set<EventListenerLike<T>>;
+    readonly [Publisher_onListenerDisposed]: Method<EventListenerLike<T>>;
   };
 
   function onEventPublisherDisposed(this: TProperties, e: Optional<Error>) {
@@ -61,11 +70,23 @@ export const create: <T>(options?: {
 
       pipe(instance, DisposableContainer.onDisposed(onEventPublisherDisposed));
 
+      instance[Publisher_onListenerDisposed] = function onListenerDisposed(
+        this: EventListenerLike<T>,
+      ) {
+        const listeners = instance[Publisher_listeners];
+        listeners[Set_delete](this);
+
+        if (instance[Publisher_autoDispose] && listeners[Set_size] === 0) {
+          instance[DisposableLike_dispose]();
+        }
+      };
+
       return instance;
     },
     props<TProperties>({
       [Publisher_autoDispose]: false,
       [Publisher_listeners]: none,
+      [Publisher_onListenerDisposed]: none,
     }),
     {
       [EventListenerLike_notify](
@@ -105,16 +126,7 @@ export const create: <T>(options?: {
         listeners[Set_add](listener);
         pipe(
           listener,
-          DisposableContainer.onDisposed(_ => {
-            listeners[Set_delete](listener);
-
-            if (
-              this[Publisher_autoDispose] &&
-              this[Publisher_listeners][Set_size] === 0
-            ) {
-              this[DisposableLike_dispose]();
-            }
-          }),
+          DisposableContainer.onDisposed(this[Publisher_onListenerDisposed]),
         );
       },
     },
