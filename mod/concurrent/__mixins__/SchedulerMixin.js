@@ -26,6 +26,7 @@ export const SchedulerMixinHostLike_shouldYield = Symbol("SchedulerMixinHostLike
 export const SchedulerMixinHostLike_schedule = Symbol("SchedulerMixinHostLike_schedule");
 const SchedulerMixin = /*@__PURE__*/ (() => {
     const QueueableSchedulerContinuationLike_parent = Symbol("QueueableSchedulerContinuationLike_parent");
+    const QueueableSchedulerContinuationLike_isReschedulingChildren = Symbol("QueueableSchedulerContinuationLike_isReschedulingChildren");
     const SchedulerMixinLike_schedule = Symbol("SchedulerMixinLike_schedule");
     const SchedulerMixinLike_taskIDCounter = Symbol("SchedulerMixinLike_taskIDCounter");
     const SchedulerMixinLike_currentContinuation = Symbol("SchedulerMixinLike_currentContinuation");
@@ -58,6 +59,8 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
             }
         };
         const rescheduleChildrenOnParentOrScheduler = (continuation) => {
+            continuation[QueueableSchedulerContinuationLike_isReschedulingChildren] =
+                true;
             const scheduler = continuation[QueueableContinuation_scheduler];
             const parent = findNearestNonDisposedParent(continuation);
             for (let head = none; (head = continuation[QueueLike_dequeue]()), isSome(head);) {
@@ -71,6 +74,8 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                     scheduler[SchedulerMixinLike_schedule](head);
                 }
             }
+            continuation[QueueableSchedulerContinuationLike_isReschedulingChildren] =
+                false;
         };
         function onContinuationDisposed() {
             rescheduleChildrenOnParentOrScheduler(this);
@@ -94,6 +99,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
             return instance;
         }, props({
             [QueueableSchedulerContinuationLike_parent]: none,
+            [QueueableSchedulerContinuationLike_isReschedulingChildren]: false,
             [QueueableContinuation_scheduler]: none,
             [QueueableContinuation_effect]: none,
             [SchedulerContinuationLike_dueTime]: 0,
@@ -229,7 +235,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 activeContinuation === continuation ||
                 // Occurs when an active continuation is rescheduling its
                 // children because it has been rescheduled in the future.
-                activeContinuation[SchedulerContinuationLike_dueTime] > now) {
+                activeContinuation[QueueableSchedulerContinuationLike_isReschedulingChildren]) {
                 this[SchedulerMixinHostLike_schedule](continuation);
             }
             else {

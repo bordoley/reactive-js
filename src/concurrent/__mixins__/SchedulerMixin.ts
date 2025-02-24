@@ -101,10 +101,15 @@ const SchedulerMixin: Mixin<
     "QueueableSchedulerContinuationLike_parent",
   );
 
+  const QueueableSchedulerContinuationLike_isReschedulingChildren = Symbol(
+    "QueueableSchedulerContinuationLike_isReschedulingChildren",
+  );
+
   interface QueueableSchedulerContinuationLike
     extends SchedulerContinuationLike,
       QueueLike<QueueableSchedulerContinuationLike> {
     [QueueableSchedulerContinuationLike_parent]: Optional<QueueableSchedulerContinuationLike>;
+    readonly [QueueableSchedulerContinuationLike_isReschedulingChildren]: boolean;
   }
 
   const SchedulerMixinLike_schedule = Symbol("SchedulerMixinLike_schedule");
@@ -154,6 +159,7 @@ const SchedulerMixin: Mixin<
 
     type TProperties = {
       [QueueableSchedulerContinuationLike_parent]: Optional<QueueableSchedulerContinuationLike>;
+      [QueueableSchedulerContinuationLike_isReschedulingChildren]: boolean;
       [QueueableContinuation_scheduler]: SchedulerMixinLike;
       [QueueableContinuation_effect]: SideEffect1<ContinuationContextLike>;
       [SchedulerContinuationLike_dueTime]: number;
@@ -186,6 +192,8 @@ const SchedulerMixin: Mixin<
     const rescheduleChildrenOnParentOrScheduler = (
       continuation: QueueableSchedulerContinuationLike & TProperties,
     ) => {
+      continuation[QueueableSchedulerContinuationLike_isReschedulingChildren] =
+        true;
       const scheduler = continuation[QueueableContinuation_scheduler];
       const parent = findNearestNonDisposedParent(continuation);
 
@@ -202,6 +210,9 @@ const SchedulerMixin: Mixin<
           scheduler[SchedulerMixinLike_schedule](head);
         }
       }
+
+      continuation[QueueableSchedulerContinuationLike_isReschedulingChildren] =
+        false;
     };
 
     function onContinuationDisposed(
@@ -254,6 +265,7 @@ const SchedulerMixin: Mixin<
       },
       props<TProperties>({
         [QueueableSchedulerContinuationLike_parent]: none,
+        [QueueableSchedulerContinuationLike_isReschedulingChildren]: false,
         [QueueableContinuation_scheduler]: none,
         [QueueableContinuation_effect]: none,
         [SchedulerContinuationLike_dueTime]: 0,
@@ -486,7 +498,9 @@ const SchedulerMixin: Mixin<
           activeContinuation === continuation ||
           // Occurs when an active continuation is rescheduling its
           // children because it has been rescheduled in the future.
-          activeContinuation[SchedulerContinuationLike_dueTime] > now
+          activeContinuation[
+            QueueableSchedulerContinuationLike_isReschedulingChildren
+          ]
         ) {
           this[SchedulerMixinHostLike_schedule](continuation);
         } else {
