@@ -1085,7 +1085,10 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureRunnable(Observable.currentTime)
     pipe(pipeLazy([1, 1], Observable.fromReadonlyArray({ delay: 3 }), Observable.repeat(_ => {
         throw err;
     }), Observable.toReadonlyArray()), expectToThrowError(err));
-}), PureDeferredObservableOperatorWithDeferredObservableBaseTests(Observable.repeat())), describe("retry", PureDeferredObservableOperatorWithDeferredObservableBaseTests(Observable.retry(raise))), describe("scan", PureStatefulObservableOperator(Observable.scan((acc, _) => acc, returns(none)))), describe("scanMany", test("slow source, fast scan function", pipeLazy(Observable.generate(increment, returns(-1), { delay: 10 }), Observable.takeFirst({ count: 10 }), Observable.scanMany((_acc, next) => pipe(next, Observable.fromValue({ delay: 2 })), returns(0)), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]))), PureStatefulObservableOperator(Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none))), DeferringObservableOperatorTests(Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
+}), PureDeferredObservableOperatorWithDeferredObservableBaseTests(Observable.repeat())), describe("retry", PureDeferredObservableOperatorWithDeferredObservableBaseTests(Observable.retry(raise))), describe("scan", PureStatefulObservableOperator(Observable.scan((acc, _) => acc, returns(none)))), describe("scanMany", test("slow source, fast scan function", pipeLazy(Observable.generate(increment, returns(-1), {
+    delay: 10,
+    delayStart: true,
+}), Observable.takeFirst({ count: 10 }), Observable.scanMany((_acc, next) => pipe(next, Observable.fromValue({ delay: 2 })), returns(0)), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]))), PureStatefulObservableOperator(Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none))), DeferringObservableOperatorTests(Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
     innerType: PureDeferredObservableType,
 })), ObservableOperatorWithSideEffectsTests(Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
     innerType: RunnableWithSideEffectsType,

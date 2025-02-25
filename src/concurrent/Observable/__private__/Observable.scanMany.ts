@@ -14,7 +14,7 @@ import * as Subject from "../../Subject.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_notify from "./Observable.notify.js";
 import Observable_switchMap from "./Observable.switchMap.js";
-import Observable_zipLatest from "./Observable.zipLatest.js";
+import Observable_withLatestFrom from "./Observable.withLatestFrom.js";
 
 const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
   scanner: Function2<TAcc, T, DeferredObservableLike<TAcc>>,
@@ -48,8 +48,9 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
         );
 
         pipe(
-          Observable_zipLatest<TAcc, T>(accFeedbackStream, observable),
-          Observable_switchMap(([acc, next]) => scanner(acc, next), {
+          observable,
+          Observable_withLatestFrom<T, TAcc>(accFeedbackStream),
+          Observable_switchMap(([next, acc]) => scanner(acc, next), {
             innerType: {
               [ObservableLike_isDeferred]: true,
               [ObservableLike_isPure]: false,

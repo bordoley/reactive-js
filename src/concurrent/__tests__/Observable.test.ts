@@ -2069,7 +2069,10 @@ testModule(
     test(
       "slow source, fast scan function",
       pipeLazy(
-        Observable.generate(increment, returns(-1), { delay: 10 }),
+        Observable.generate(increment, returns(-1), {
+          delay: 10,
+          delayStart: true,
+        }),
         Observable.takeFirst({ count: 10 }),
         Observable.scanMany(
           (_acc: number, next: number) =>

@@ -8,7 +8,7 @@ import * as Subject from "../../Subject.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_notify from "./Observable.notify.js";
 import Observable_switchMap from "./Observable.switchMap.js";
-import Observable_zipLatest from "./Observable.zipLatest.js";
+import Observable_withLatestFrom from "./Observable.withLatestFrom.js";
 const Observable_scanMany = ((scanner, initialValue, options) => {
     const innerType = options?.innerType ?? {
         [ObservableLike_isDeferred]: true,
@@ -21,7 +21,7 @@ const Observable_scanMany = ((scanner, initialValue, options) => {
             observable[ObservableLike_isRunnable];
         return Observable_createWithConfig(observer => {
             const accFeedbackStream = pipe(Subject.create(), Disposable.addTo(observer));
-            pipe(Observable_zipLatest(accFeedbackStream, observable), Observable_switchMap(([acc, next]) => scanner(acc, next), {
+            pipe(observable, Observable_withLatestFrom(accFeedbackStream), Observable_switchMap(([next, acc]) => scanner(acc, next), {
                 innerType: {
                     [ObservableLike_isDeferred]: true,
                     [ObservableLike_isPure]: false,
