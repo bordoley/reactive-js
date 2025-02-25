@@ -1320,18 +1320,33 @@ export interface ObservableModule {
     selector: Function2<number, TA, TB>,
   ): PureStatefulObservableOperator<TA, TB>;
 
+  withLatestFrom<TA, TB>(
+    other: PureRunnableLike<TB>,
+  ): PureStatefulObservableOperator<TA, Tuple2<TA, TB>>;
   withLatestFrom<TA, TB, T>(
     other: PureRunnableLike<TB>,
     selector: Function2<TA, TB, T>,
   ): PureStatefulObservableOperator<TA, T>;
+  withLatestFrom<TA, TB>(
+    other: RunnableWithSideEffectsLike<TB>,
+  ): ObservableOperatorWithSideEffects<TA, Tuple2<TA, TB>>;
   withLatestFrom<TA, TB, T>(
     other: RunnableWithSideEffectsLike<TB>,
     selector: Function2<TA, TB, T>,
   ): ObservableOperatorWithSideEffects<TA, T>;
+  withLatestFrom<TA, TB>(
+    other: DeferredObservableWithSideEffectsLike<TB>,
+  ): Function1<
+    ObservableLike<TA>,
+    DeferredObservableWithSideEffectsLike<Tuple2<TA, TB>>
+  >;
   withLatestFrom<TA, TB, T>(
     other: DeferredObservableWithSideEffectsLike<TB>,
     selector: Function2<TA, TB, T>,
   ): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<T>>;
+  withLatestFrom<TA, TB>(
+    other: MulticastObservableLike<TB>,
+  ): DeferringObservableOperator<TA, Tuple2<TA, TB>>;
   withLatestFrom<TA, TB, T>(
     other: MulticastObservableLike<TB>,
     selector: Function2<TA, TB, T>,

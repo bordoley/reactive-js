@@ -438,9 +438,13 @@ export interface ObservableModule {
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): PureStatefulObservableOperator<TA, TB>;
+    withLatestFrom<TA, TB>(other: PureRunnableLike<TB>): PureStatefulObservableOperator<TA, Tuple2<TA, TB>>;
     withLatestFrom<TA, TB, T>(other: PureRunnableLike<TB>, selector: Function2<TA, TB, T>): PureStatefulObservableOperator<TA, T>;
+    withLatestFrom<TA, TB>(other: RunnableWithSideEffectsLike<TB>): ObservableOperatorWithSideEffects<TA, Tuple2<TA, TB>>;
     withLatestFrom<TA, TB, T>(other: RunnableWithSideEffectsLike<TB>, selector: Function2<TA, TB, T>): ObservableOperatorWithSideEffects<TA, T>;
+    withLatestFrom<TA, TB>(other: DeferredObservableWithSideEffectsLike<TB>): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<Tuple2<TA, TB>>>;
     withLatestFrom<TA, TB, T>(other: DeferredObservableWithSideEffectsLike<TB>, selector: Function2<TA, TB, T>): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<T>>;
+    withLatestFrom<TA, TB>(other: MulticastObservableLike<TB>): DeferringObservableOperator<TA, Tuple2<TA, TB>>;
     withLatestFrom<TA, TB, T>(other: MulticastObservableLike<TB>, selector: Function2<TA, TB, T>): DeferringObservableOperator<TA, T>;
     zipLatest<TA, TB>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>): PureRunnableLike<Tuple2<TA, TB>>;
     zipLatest<TA, TB, TC>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>, c: PureRunnableLike<TC>): PureRunnableLike<Tuple3<TA, TB, TC>>;

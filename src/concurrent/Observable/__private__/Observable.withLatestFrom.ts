@@ -19,11 +19,11 @@ import {
   none,
   partial,
   pipe,
+  tuple,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -138,7 +138,7 @@ const Observable_withLatestFrom: Observable.Signature["withLatestFrom"] = (<
   T,
 >(
   other: ObservableLike<TB>,
-  selector: Function2<TA, TB, T>,
+  selector: Function2<TA, TB, T> = tuple as unknown as Function2<TA, TB, T>,
 ) =>
   pipe(
     createWithLatestFromObserver,

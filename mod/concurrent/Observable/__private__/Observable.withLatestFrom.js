@@ -2,7 +2,7 @@
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
-import { bind, none, partial, pipe, } from "../../../functions.js";
+import { bind, none, partial, pipe, tuple, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
@@ -47,7 +47,7 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
         }),
     });
 })();
-const Observable_withLatestFrom = ((other, selector) => pipe(createWithLatestFromObserver, partial(other, selector), Observable_lift({
+const Observable_withLatestFrom = ((other, selector = tuple) => pipe(createWithLatestFromObserver, partial(other, selector), Observable_lift({
     [ObservableLift_isStateless]: false,
     [ObservableLike_isDeferred]: true,
     [ObservableLike_isPure]: other[ObservableLike_isPure],
