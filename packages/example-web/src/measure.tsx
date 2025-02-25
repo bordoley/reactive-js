@@ -1,5 +1,5 @@
 import { pipeSomeLazy } from "@reactive-js/core/functions";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
 import { useObserve } from "@reactive-js/core/integrations/react";
 import {
@@ -15,11 +15,12 @@ const Measure = () => {
   const [boxRef, rect] = useMeasure();
   const boxWidth = rect?.width ?? 0;
 
+  const [state, updateState] = useState(false);
+  const springIsAnimating = useObserve(spring) ?? false;
+
   useEffect(() => {
-    spring?.[QueueableLike_enqueue](currentWidth =>
-      currentWidth > 0 ? boxWidth : 0,
-    );
-  }, [boxWidth]);
+    spring?.[QueueableLike_enqueue](_ => (state ? boxWidth : 0));
+  }, [boxWidth, state]);
 
   const width =
     useObserve(
@@ -56,9 +57,7 @@ const Measure = () => {
           overflow: "hidden",
         }}
         onClick={() => {
-          spring?.[QueueableLike_enqueue](width =>
-            Math.floor(width) > 0 ? 0 : boxWidth,
-          );
+          updateState(f => !f);
         }}
       >
         <div
@@ -88,6 +87,7 @@ const Measure = () => {
           {Math.floor(width)}
         </div>
       </div>
+      {springIsAnimating ? "Animation is running" : ""}
     </div>
   );
 };

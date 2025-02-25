@@ -7,7 +7,8 @@ import {
 import {
   AnimationStreamLike,
   AnimationStreamLike_animation,
-  ObservableLike,
+  DeferredObservableLike,
+  DeferredObservableWithSideEffectsLike,
   SchedulerLike,
   StreamableLike,
   StreamableLike_stream,
@@ -15,12 +16,14 @@ import {
 import * as Publisher from "../../../events/Publisher.js";
 import { EventListenerLike_notify, EventSourceLike } from "../../../events.js";
 import {
+  Function1,
   Tuple2,
   Updater,
   compose,
   none,
   pipe,
   scale,
+  tuple,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
@@ -69,30 +72,45 @@ const SpringStream_create: (
       const publisher = (instance[AnimationStreamLike_animation] =
         Publisher.create<number>());
 
-      const accFeedbackStream = Subject.create();
+      const accFeedbackStream = Subject.create<number>({ replay: 1 });
 
-      const operator = compose(
-        (src: ObservableLike<Updater<number>>) =>
-          Observable.zipLatest<number, Updater<number>>(accFeedbackStream, src),
-        Observable.switchMap<Tuple2<number, Updater<number>>, boolean>(
-          ([acc, update]) =>
-            pipe(
-              Observable.spring(springOptions),
-              Observable.map(scale(acc, update(acc))),
-              Observable.notify(publisher),
-              Observable.notify(accFeedbackStream),
-              Observable.ignoreElements(),
-              Observable.subscribeOn(animationScheduler),
-              Observable.startWith<boolean>(true),
-              Observable.endWith<boolean>(false),
-            ),
+      const operator: Function1<
+        DeferredObservableLike<Updater<number>>,
+        DeferredObservableWithSideEffectsLike<boolean>
+      > = compose(
+        Observable.withLatestFrom<
+          Updater<number>,
+          number,
+          Tuple2<number, number>
+        >(accFeedbackStream, (updater, acc) => tuple(updater(acc), acc)),
+        Observable.switchMap<Tuple2<number, number>, boolean>(
+          ([updated, acc]) =>
+            updated !== acc
+              ? pipe(
+                  Observable.spring(springOptions),
+                  Observable.map(scale(acc, updated)),
+                  Observable.notify(publisher),
+                  Observable.notify(accFeedbackStream),
+                  Observable.ignoreElements(),
+                  Observable.subscribeOn(animationScheduler),
+                  Observable.startWith<boolean>(true),
+                  Observable.endWith<boolean>(false),
+                )
+              : Observable.empty(),
+
           {
             innerType: Observable.DeferredObservableWithSideEffectsType,
           },
         ),
       );
 
-      init(StreamMixin(), instance, operator, scheduler, options);
+      init(
+        StreamMixin<Updater<number>, boolean>(),
+        instance,
+        operator,
+        scheduler,
+        options,
+      );
 
       pipe(
         instance,
