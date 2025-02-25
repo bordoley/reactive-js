@@ -1,5 +1,5 @@
 import { __DEV__ } from "../../__internal__/constants.js";
-import { clampPositiveInteger } from "../../__internal__/math.js";
+import { abs, clampPositiveInteger, floor } from "../../__internal__/math.js";
 import {
   Mixin,
   Mutable,
@@ -68,7 +68,7 @@ export const SchedulerContinuation = {
     const diff =
       a[SchedulerContinuationLike_dueTime] -
       b[SchedulerContinuationLike_dueTime];
-    return diff !== 0
+    return floor(abs(diff)) !== 0
       ? diff
       : a[SchedulerContinuationLike_id] - b[SchedulerContinuationLike_id];
   },
@@ -185,6 +185,8 @@ const SchedulerMixin: Mixin<
       if (isSome(parent)) {
         parent[QueueableLike_enqueue](continuation);
       } else {
+        continuation[SchedulerContinuationLike_dueTime] =
+          scheduler[SchedulerLike_now];
         scheduler[SchedulerMixinLike_schedule](continuation);
       }
     };

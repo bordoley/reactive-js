@@ -1,7 +1,7 @@
 /// <reference types="./SchedulerMixin.d.ts" />
 
 import { __DEV__ } from "../../__internal__/constants.js";
-import { clampPositiveInteger } from "../../__internal__/math.js";
+import { abs, clampPositiveInteger, floor } from "../../__internal__/math.js";
 import { include, init, mix, mixInstanceFactory, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { ContinuationContextLike_yield, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import { error, isNone, isSome, newInstance, none, pipe, raiseIf, } from "../../functions.js";
@@ -17,7 +17,7 @@ export const SchedulerContinuation = {
     compare: (a, b) => {
         const diff = a[SchedulerContinuationLike_dueTime] -
             b[SchedulerContinuationLike_dueTime];
-        return diff !== 0
+        return floor(abs(diff)) !== 0
             ? diff
             : a[SchedulerContinuationLike_id] - b[SchedulerContinuationLike_id];
     },
@@ -55,6 +55,8 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 parent[QueueableLike_enqueue](continuation);
             }
             else {
+                continuation[SchedulerContinuationLike_dueTime] =
+                    scheduler[SchedulerLike_now];
                 scheduler[SchedulerMixinLike_schedule](continuation);
             }
         };
