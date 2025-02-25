@@ -190,7 +190,7 @@
 
 ### spring()
 
-> **spring**(`initialValue`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<[`Updater`](../../../functions/type-aliases/Updater.md)\<`number`\>, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<[`Updater`](../../../functions/type-aliases/Updater.md)\<`number`\>, `number`\>\>
+> **spring**(`initialValue`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `number`\>\>
 
 #### Parameters
 
@@ -218,7 +218,7 @@
 
 #### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<[`Updater`](../../../functions/type-aliases/Updater.md)\<`number`\>, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<[`Updater`](../../../functions/type-aliases/Updater.md)\<`number`\>, `number`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `number`\>\>
 
 ***
 

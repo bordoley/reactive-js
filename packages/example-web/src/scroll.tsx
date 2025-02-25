@@ -1,29 +1,25 @@
-import React from "react";
+import React, { useMemo } from "react";
 import ReactDOMClient from "react-dom/client";
 import {
   useAnimate,
-  useAnimation,
   useScroll,
+  useSpring,
 } from "@reactive-js/core/integrations/react/web";
-import {
-  useDispatcher,
-  useDisposable,
-} from "@reactive-js/core/integrations/react";
+import { useDisposable } from "@reactive-js/core/integrations/react";
 import { ScrollValue } from "@reactive-js/core/integrations/web";
-import {
-  Optional,
-  pipe,
-  pipeSomeLazy,
-  scale,
-} from "@reactive-js/core/functions";
+import { Optional } from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/events/EventSource";
 import {
   EventListenerLike_notify,
   EventSourceLike,
 } from "@reactive-js/core/events";
 import * as Publisher from "@reactive-js/core/events/Publisher";
-import * as Observable from "@reactive-js/core/concurrent/Observable";
-import { AnimationStreamLike_animation } from "@reactive-js/core/concurrent";
+import {
+  AnimationStreamLike_animation,
+  PauseableLike_pause,
+  PauseableLike_resume,
+} from "@reactive-js/core/concurrent";
+import { QueueableLike_enqueue } from "@reactive-js/core/utils";
 
 const AnimatedCircle = ({
   animation,
@@ -56,56 +52,45 @@ const AnimatedCircle = ({
 };
 
 const ScrollApp = () => {
-  const animationStream = useAnimation((direction: boolean) =>
-    pipe(
-      Observable.concat(
-        Observable.spring({ precision: 0.1 }),
-        pipe(
-          Observable.spring({ precision: 0.1 }),
-          Observable.map(scale(1, 0)),
-        ),
-      ),
-      direction
-        ? Observable.map(scale(1, 1.2))
-        : Observable.map(scale(0, -0.01)),
-    ),
-  );
-  const { enqueue } = useDispatcher(animationStream);
+  const spring = useSpring(0, { precision: 0.1, priority: 1});
 
-  const springAnimation = animationStream?.[AnimationStreamLike_animation];
   const publishedAnimation = useDisposable(Publisher.create, []);
 
   const containerRef = useScroll<HTMLDivElement>(
-    ({ y }: ScrollValue) => {
+    ({ y, done }: ScrollValue) => {
       const pos = y.progress;
-      const velocity = y.velocity;
+      const { velocity } = y;
 
-      publishedAnimation?.[EventListenerLike_notify](pos);
+      spring?.[PauseableLike_pause]();
 
-      if (pos === 1 && Math.abs(velocity) > 0.5) {
-        // FIXME: To make this really right, we should measure the velocity
-        // and dispatch that so we can adjust the size of the overshoot
-        // in the animation.
-        enqueue(true);
-      }
-
-      if (pos === 0 && Math.abs(velocity) > 0.5) {
-        // FIXME: To make this really right, we should measure the velocity
-        // and dispatch that so we can adjust the size of the overshoot
-        // in the animation.
-        enqueue(false);
+      if (!done && velocity > 0) {
+        spring?.[QueueableLike_enqueue](_ => ({
+          from: pos,
+          to: [pos + 0.05, pos],
+        }));
+      } else if (!done && velocity < 0) {
+        spring?.[QueueableLike_enqueue](_ => ({
+          from: pos,
+          to: [pos - 0.01, pos],
+        }));
+      } 
+      
+      if (!done) {  
+        publishedAnimation?.[EventListenerLike_notify](pos);
+      } else {
+        spring?.[PauseableLike_resume]()
       }
     },
-    [publishedAnimation, enqueue],
+    [publishedAnimation],
   );
 
-  useDisposable(
-    pipeSomeLazy(
-      springAnimation,
-      EventSource.addEventHandler(v =>
-        publishedAnimation?.[EventListenerLike_notify](v),
-      ),
-    ),
+  const springAnimation = spring?.[AnimationStreamLike_animation];
+
+  const circleAnimtation = useMemo(
+    () =>
+      springAnimation &&
+      publishedAnimation &&
+      EventSource.merge<number>(springAnimation, publishedAnimation),
     [springAnimation, publishedAnimation],
   );
 
@@ -130,7 +115,7 @@ const ScrollApp = () => {
           zIndex: "0",
         }}
       >
-        <AnimatedCircle animation={publishedAnimation} />
+        <AnimatedCircle animation={circleAnimtation} />
       </div>
 
       <div

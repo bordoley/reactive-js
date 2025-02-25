@@ -1,10 +1,11 @@
 /// <reference types="./Streamable.spring.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import * as Iterable from "../../../computations/Iterable.js";
 import { AnimationStreamLike_animation, PauseableLike_resume, StreamableLike_stream, } from "../../../concurrent.js";
 import * as Publisher from "../../../events/Publisher.js";
 import { EventListenerLike_notify } from "../../../events.js";
-import { compose, none, pipe, scale, tuple, } from "../../../functions.js";
+import { compose, isNumber, isReadonlyArray, none, pipe, returns, scale, tuple, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Observable from "../../Observable.js";
 import * as PauseableScheduler from "../../PauseableScheduler.js";
@@ -17,9 +18,27 @@ const SpringStream_create = /*@__PURE__*/ (() => {
         const publisher = (instance[AnimationStreamLike_animation] =
             Publisher.create());
         const accFeedbackStream = Subject.create({ replay: 1 });
-        const operator = compose(Observable.withLatestFrom(accFeedbackStream, (updater, acc) => tuple(updater(acc), acc)), Observable.switchMap(([updated, acc]) => updated !== acc
-            ? pipe(Observable.spring(springOptions), Observable.map(scale(acc, updated)), Observable.notify(publisher), Observable.notify(accFeedbackStream), Observable.ignoreElements(), Observable.subscribeOn(pauseableScheduler), Observable.startWith(true), Observable.endWith(false))
-            : Observable.empty(), {
+        const operator = compose(Observable.withLatestFrom(accFeedbackStream, (updater, acc) => tuple(updater(acc), acc)), Observable.switchMap(([updated, acc]) => {
+            const initialValue = isNumber(updated) || isReadonlyArray(updated)
+                ? acc
+                : updated.from;
+            const destinations = isNumber(updated)
+                ? [updated]
+                : isReadonlyArray(updated)
+                    ? updated
+                    : isNumber(updated.to)
+                        ? [updated.to]
+                        : updated.to;
+            const sources = pipe(destinations, Iterable.scan(([, prev], v) => tuple(prev, v), returns(tuple(initialValue, initialValue))), Iterable.reduce((animations, [prev, next]) => {
+                if (prev !== next) {
+                    animations.push(pipe(Observable.spring(springOptions), Observable.map(scale(prev, next))));
+                }
+                return animations;
+            }, () => []));
+            return sources.length > 0
+                ? pipe(sources, x => Observable.concatMany(x), Observable.notify(publisher), Observable.notify(accFeedbackStream), Observable.ignoreElements(), Observable.subscribeOn(pauseableScheduler), Observable.startWith(true), Observable.endWith(false))
+                : Observable.empty();
+        }, {
             innerType: Observable.DeferredObservableWithSideEffectsType,
         }));
         init(StreamMixin(), instance, operator, scheduler, options);

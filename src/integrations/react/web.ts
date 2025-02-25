@@ -74,14 +74,14 @@ interface ReactWebModule {
     animation: PureRunnableLike<T>,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly animationScheduler: SchedulerLike;
+      readonly animationScheduler?: SchedulerLike;
     },
   ): Optional<AnimationStreamLike<unknown, T>>;
   useAnimation<TEvent, T>(
     animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly animationScheduler: SchedulerLike;
+      readonly animationScheduler?: SchedulerLike;
     },
   ): Optional<AnimationStreamLike<TEvent, T>>;
 
@@ -89,7 +89,7 @@ interface ReactWebModule {
     animationGroup: ReadonlyObjectMapLike<TKey, PureRunnableLike<T>>,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly animationScheduler: SchedulerLike;
+      readonly animationScheduler?: SchedulerLike;
     },
   ): Optional<AnimationGroupStreamLike<unknown, TKey, T>>;
   useAnimationGroup<T, TKey extends string, TEvent>(
@@ -99,7 +99,7 @@ interface ReactWebModule {
     >,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly animationScheduler: SchedulerLike;
+      readonly animationScheduler?: SchedulerLike;
     },
   ): Optional<AnimationGroupStreamLike<TEvent, TKey, T>>;
 
@@ -114,12 +114,22 @@ interface ReactWebModule {
     initialValue: number,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly animationScheduler: SchedulerLike;
+      readonly animationScheduler?: SchedulerLike;
       readonly stiffness?: number;
       readonly damping?: number;
       readonly precision?: number;
     },
-  ): Optional<AnimationStreamLike<Updater<number>, number>>;
+  ): Optional<
+    AnimationStreamLike<
+      Function1<
+        number,
+        | number
+        | { from: number; to: number | ReadonlyArray<number> }
+        | ReadonlyArray<number>
+      >,
+      number
+    >
+  >;
 
   /**
    */
@@ -179,7 +189,7 @@ export const useAnimation: Signature["useAnimation"] = <T, TEvent = unknown>(
   animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
   options?: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly animationScheduler: SchedulerLike;
+    readonly animationScheduler?: SchedulerLike;
   },
 ) => {
   const animationScheduler =
@@ -206,7 +216,7 @@ export const useAnimationGroup: Signature["useAnimationGroup"] = <
   >,
   options?: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly animationScheduler: SchedulerLike;
+    readonly animationScheduler?: SchedulerLike;
   },
 ) => {
   const animationScheduler =
@@ -259,7 +269,7 @@ export const useSpring: Signature["useSpring"] = (
   initialValue: number,
   options?: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly animationScheduler: SchedulerLike;
+    readonly animationScheduler?: SchedulerLike;
     readonly stiffness?: number;
     readonly damping?: number;
     readonly precision?: number;
@@ -274,7 +284,7 @@ export const useSpring: Signature["useSpring"] = (
         ...options,
         animationScheduler,
       }),
-    [animationScheduler],
+    [initialValue, animationScheduler],
     options,
   );
 };

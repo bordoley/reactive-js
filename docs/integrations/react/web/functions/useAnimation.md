@@ -22,7 +22,7 @@
 
 #### options?
 
-##### animationScheduler
+##### animationScheduler?
 
 [`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
 
@@ -52,7 +52,7 @@
 
 #### options?
 
-##### animationScheduler
+##### animationScheduler?
 
 [`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
 

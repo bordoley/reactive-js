@@ -79,6 +79,7 @@ export interface ScrollValue {
   readonly time: number;
   readonly x: ScrollState;
   readonly y: ScrollState;
+  readonly done: boolean;
 }
 
 /**

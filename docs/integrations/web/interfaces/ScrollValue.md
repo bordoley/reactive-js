@@ -8,6 +8,12 @@
 
 ## Properties
 
+### done
+
+> `readonly` **done**: `boolean`
+
+***
+
 ### time
 
 > `readonly` **time**: `number`

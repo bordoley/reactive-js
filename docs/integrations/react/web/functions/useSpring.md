@@ -6,7 +6,7 @@
 
 # Function: useSpring()
 
-> **useSpring**(`initialValue`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<[`Updater`](../../../../functions/type-aliases/Updater.md)\<`number`\>, `number`\>\>
+> **useSpring**(`initialValue`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<[`Function1`](../../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `number`\>\>
 
 ## Parameters
 
@@ -16,7 +16,7 @@
 
 ### options?
 
-#### animationScheduler
+#### animationScheduler?
 
 [`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
 
@@ -38,4 +38,4 @@
 
 ## Returns
 
-[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<[`Updater`](../../../../functions/type-aliases/Updater.md)\<`number`\>, `number`\>\>
+[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<[`Function1`](../../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `number`\>\>

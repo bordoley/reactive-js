@@ -26,11 +26,12 @@ const createInitialScrollValue = () => ({
         velocity: 0,
         acceleration: 0,
     },
+    done: false,
 });
 const Element_scrollEventSource = 
 /*@__PURE__*/ returns(element => EventSource.create(listener => {
     let prev = createInitialScrollValue();
-    pipe(element, Element_eventSource("scroll"), EventSource.mergeWith(Element_windowResizeEventSource()), EventSource.addEventHandler(ev => {
+    pipe(EventSource.merge(pipe(element, Element_eventSource("scroll")), pipe(element, Element_eventSource("scrollend")), Element_windowResizeEventSource()), EventSource.addEventHandler(ev => {
         const { x: prevX, y: prevY, time: prevTime, } = ev.type === "resize" ? createInitialScrollValue() : prev;
         const now = CurrentTime.now();
         const dt = clamp(0, now - prevTime, MAX_VALUE);
@@ -56,7 +57,7 @@ const Element_scrollEventSource =
             velocity: yVelocity,
             acceleration: yAcceleration,
         };
-        prev = { x, y, time: now };
+        prev = { x, y, time: now, done: ev.type === "scrollend" };
         listener[EventListenerLike_notify](prev);
     }), Disposable.bindTo(listener));
 }));

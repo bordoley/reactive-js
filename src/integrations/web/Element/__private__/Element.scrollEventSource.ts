@@ -29,6 +29,7 @@ const createInitialScrollValue = (): ScrollValue => ({
     velocity: 0,
     acceleration: 0,
   },
+  done: false,
 });
 
 const Element_scrollEventSource: Element.Signature["scrollEventSource"] =
@@ -37,9 +38,14 @@ const Element_scrollEventSource: Element.Signature["scrollEventSource"] =
       let prev = createInitialScrollValue();
 
       pipe(
-        element,
-        Element_eventSource<HTMLElement, "scroll">("scroll"),
-        EventSource.mergeWith(Element_windowResizeEventSource()),
+        EventSource.merge(
+          pipe(element, Element_eventSource<HTMLElement, "scroll">("scroll")),
+          pipe(
+            element,
+            Element_eventSource<HTMLElement, "scrollend">("scrollend"),
+          ),
+          Element_windowResizeEventSource(),
+        ),
         EventSource.addEventHandler(ev => {
           const {
             x: prevX,
@@ -76,7 +82,7 @@ const Element_scrollEventSource: Element.Signature["scrollEventSource"] =
             acceleration: yAcceleration,
           };
 
-          prev = { x, y, time: now };
+          prev = { x, y, time: now, done: ev.type === "scrollend" };
 
           listener[EventListenerLike_notify](prev);
         }),

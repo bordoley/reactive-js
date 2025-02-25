@@ -10,6 +10,7 @@ import { DisposableLike_dispose } from "../../../utils.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
 import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
+import Observable_empty from "./Observable.empty.js";
 const Observable_concatMany = 
 /*@__PURE__*/ (() => {
     const ConcatObserverCtx_delegate = Symbol("ConcatObserverCtx_delegate");
@@ -38,7 +39,7 @@ const Observable_concatMany =
             ? flattenObservables(observable[ConcatObservable_observables])
             : observable)
         : observables;
-    return mixInstanceFactory(function ConcatObservable(instance, observables) {
+    const createConcatObservable = mixInstanceFactory(function ConcatObservable(instance, observables) {
         instance[ObservableLike_isPure] = Observable_allArePure(observables);
         instance[ObservableLike_isRunnable] =
             Observable_allAreRunnable(observables);
@@ -60,5 +61,10 @@ const Observable_concatMany =
             }), bindMethod(observables[0], ObservableLike_observe));
         },
     });
+    return (observables) => observables.length === 0
+        ? Observable_empty()
+        : observables.length === 1
+            ? observables[0]
+            : createConcatObservable(observables);
 })();
 export default Observable_concatMany;

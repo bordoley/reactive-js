@@ -27,7 +27,13 @@ export interface StreamableModule {
         readonly stiffness?: number;
         readonly damping?: number;
         readonly precision?: number;
-    }): StreamableLike<Updater<number>, boolean, AnimationStreamLike<Updater<number>, number>>;
+    }): StreamableLike<Function1<number, number | {
+        from: number;
+        to: number | ReadonlyArray<number>;
+    } | ReadonlyArray<number>>, boolean, AnimationStreamLike<Function1<number, number | {
+        from: number;
+        to: number | ReadonlyArray<number>;
+    } | ReadonlyArray<number>>, number>>;
     /**
      * Returns a new `StateStoreLike` instance that stores state which can
      * be updated by notifying the instance with a `StateUpdater` that computes a

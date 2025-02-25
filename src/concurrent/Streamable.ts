@@ -72,9 +72,22 @@ export interface StreamableModule {
       readonly precision?: number;
     },
   ): StreamableLike<
-    Updater<number>,
+    Function1<
+      number,
+      | number
+      | { from: number; to: number | ReadonlyArray<number> }
+      | ReadonlyArray<number>
+    >,
     boolean,
-    AnimationStreamLike<Updater<number>, number>
+    AnimationStreamLike<
+      Function1<
+        number,
+        | number
+        | { from: number; to: number | ReadonlyArray<number> }
+        | ReadonlyArray<number>
+      >,
+      number
+    >
   >;
 
   /**

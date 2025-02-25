@@ -4,12 +4,14 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
+import * as Iterable from "../../../computations/Iterable.js";
 import {
   AnimationStreamLike,
   AnimationStreamLike_animation,
   DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
   PauseableLike_resume,
+  PureRunnableLike,
   SchedulerLike,
   StreamableLike,
   StreamableLike_stream,
@@ -19,10 +21,12 @@ import { EventListenerLike_notify, EventSourceLike } from "../../../events.js";
 import {
   Function1,
   Tuple2,
-  Updater,
   compose,
+  isNumber,
+  isReadonlyArray,
   none,
   pipe,
+  returns,
   scale,
   tuple,
 } from "../../../functions.js";
@@ -49,7 +53,15 @@ const SpringStream_create: (
     readonly replay?: number;
     readonly capacity?: number;
   },
-) => AnimationStreamLike<Updater<number>, number> = /*@__PURE__*/ (() => {
+) => AnimationStreamLike<
+  Function1<
+    number,
+    | number
+    | { from: number; to: number | ReadonlyArray<number> }
+    | ReadonlyArray<number>
+  >,
+  number
+> = /*@__PURE__*/ (() => {
   type TProperties = {
     [AnimationStreamLike_animation]: EventSourceLike<number>;
   };
@@ -71,7 +83,10 @@ const SpringStream_create: (
         readonly replay?: number;
         readonly capacity?: number;
       },
-    ): AnimationStreamLike<Updater<number>, number> {
+    ): AnimationStreamLike<
+      Function1<number, number | ReadonlyArray<number>>,
+      number
+    > {
       const pauseableScheduler = PauseableScheduler.create(animationScheduler);
 
       const publisher = (instance[AnimationStreamLike_animation] =
@@ -80,20 +95,80 @@ const SpringStream_create: (
       const accFeedbackStream = Subject.create<number>({ replay: 1 });
 
       const operator: Function1<
-        DeferredObservableLike<Updater<number>>,
+        DeferredObservableLike<
+          Function1<
+            number,
+            | number
+            | { from: number; to: number | ReadonlyArray<number> }
+            | ReadonlyArray<number>
+          >
+        >,
         DeferredObservableWithSideEffectsLike<boolean>
       > = compose(
         Observable.withLatestFrom<
-          Updater<number>,
+          Function1<
+            number,
+            | number
+            | { from: number; to: number | ReadonlyArray<number> }
+            | ReadonlyArray<number>
+          >,
           number,
-          Tuple2<number, number>
+          Tuple2<
+            | number
+            | ReadonlyArray<number>
+            | { from: number; to: number | ReadonlyArray<number> },
+            number
+          >
         >(accFeedbackStream, (updater, acc) => tuple(updater(acc), acc)),
-        Observable.switchMap<Tuple2<number, number>, boolean>(
-          ([updated, acc]) =>
-            updated !== acc
+        Observable.switchMap<
+          Tuple2<
+            | number
+            | ReadonlyArray<number>
+            | { from: number; to: number | ReadonlyArray<number> },
+            number
+          >,
+          boolean
+        >(
+          ([updated, acc]) => {
+            const initialValue =
+              isNumber(updated) || isReadonlyArray(updated)
+                ? acc
+                : updated.from;
+
+            const destinations = isNumber(updated)
+              ? [updated]
+              : isReadonlyArray(updated)
+                ? updated
+                : isNumber(updated.to)
+                  ? [updated.to]
+                  : updated.to;
+
+            const sources = pipe(
+              destinations,
+              Iterable.scan<number, Tuple2<number, number>>(
+                ([, prev], v) => tuple(prev, v),
+                returns(tuple(initialValue, initialValue)),
+              ),
+              Iterable.reduce(
+                (animations: Array<PureRunnableLike<number>>, [prev, next]) => {
+                  if (prev !== next) {
+                    animations.push(
+                      pipe(
+                        Observable.spring(springOptions),
+                        Observable.map(scale(prev, next)),
+                      ),
+                    );
+                  }
+                  return animations;
+                },
+                (): Array<PureRunnableLike<number>> => [],
+              ),
+            );
+
+            return sources.length > 0
               ? pipe(
-                  Observable.spring(springOptions),
-                  Observable.map(scale(acc, updated)),
+                  sources,
+                  x => Observable.concatMany<number>(x),
                   Observable.notify(publisher),
                   Observable.notify(accFeedbackStream),
                   Observable.ignoreElements(),
@@ -101,7 +176,8 @@ const SpringStream_create: (
                   Observable.startWith<boolean>(true),
                   Observable.endWith<boolean>(false),
                 )
-              : Observable.empty(),
+              : Observable.empty();
+          },
 
           {
             innerType: Observable.DeferredObservableWithSideEffectsType,
@@ -110,7 +186,10 @@ const SpringStream_create: (
       );
 
       init(
-        StreamMixin<Updater<number>, boolean>(),
+        StreamMixin<
+          Function1<number, number | ReadonlyArray<number>>,
+          boolean
+        >(),
         instance,
         operator,
         scheduler,
@@ -147,9 +226,14 @@ const Streamable_spring: Streamable.Signature["spring"] = (
     readonly precision?: number;
   },
 ): StreamableLike<
-  Updater<number>,
+  Function1<
+    number,
+    | number
+    | { from: number; to: number | ReadonlyArray<number> }
+    | ReadonlyArray<number>
+  >,
   boolean,
-  AnimationStreamLike<Updater<number>, number>
+  AnimationStreamLike<Function1<number, number | ReadonlyArray<number>>, number>
 > => ({
   [StreamableLike_stream]: (scheduler, options) =>
     SpringStream_create(

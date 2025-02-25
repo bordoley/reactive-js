@@ -16,6 +16,7 @@ import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
 import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
+import Observable_empty from "./Observable.empty.js";
 
 const Observable_concatMany: Observable.Signature["concatMany"] =
   /*@__PURE__*/ (<T>() => {
@@ -76,7 +77,7 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
           )
         : observables;
 
-    return mixInstanceFactory(
+    const createConcatObservable = mixInstanceFactory(
       function ConcatObservable(
         instance: TProperties<T> & ObservableLike<T>,
         observables: readonly ObservableLike<T>[],
@@ -114,6 +115,13 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
         },
       },
     );
+
+    return (observables: readonly ObservableLike<T>[]) =>
+      observables.length === 0
+        ? Observable_empty()
+        : observables.length === 1
+          ? observables[0]
+          : createConcatObservable(observables);
   })() as Observable.Signature["concatMany"];
 
 export default Observable_concatMany;
