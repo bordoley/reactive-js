@@ -22,6 +22,7 @@ import Streamable_animation from "./Streamable/__private__/Streamable.animation.
 import Streamable_animationGroup from "./Streamable/__private__/Streamable.animationGroup.js";
 import Streamable_create from "./Streamable/__private__/Streamable.create.js";
 import Streamable_identity from "./Streamable/__private__/Streamable.identity.js";
+import Streamable_spring from "./Streamable/__private__/Streamable.spring.js";
 import Streamable_stateStore from "./Streamable/__private__/Streamable.stateStore.js";
 import Streamable_syncState from "./Streamable/__private__/Streamable.syncState.js";
 
@@ -62,6 +63,20 @@ export interface StreamableModule {
 
   identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
 
+  spring(
+    initialValue: number,
+    options?: {
+      readonly animationScheduler?: SchedulerLike;
+      readonly stiffness?: number;
+      readonly damping?: number;
+      readonly precision?: number;
+    },
+  ): StreamableLike<
+    Updater<number>,
+    boolean,
+    AnimationStreamLike<Updater<number>, number>
+  >;
+
   /**
    * Returns a new `StateStoreLike` instance that stores state which can
    * be updated by notifying the instance with a `StateUpdater` that computes a
@@ -95,5 +110,6 @@ export const animation: Signature["animation"] = Streamable_animation;
 export const animationGroup: Signature["animationGroup"] =
   Streamable_animationGroup;
 export const identity: Signature["identity"] = Streamable_identity;
+export const spring: Signature["spring"] = Streamable_spring;
 export const stateStore: Signature["stateStore"] = Streamable_stateStore;
 export const syncState: Signature["syncState"] = Streamable_syncState;

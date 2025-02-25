@@ -1,85 +1,39 @@
-import {
-  Tuple2,
-  isSome,
-  none,
-  pipe,
-  pipeSome,
-  pipeSomeLazy,
-  scale,
-  tuple,
-} from "@reactive-js/core/functions";
-import React, { useState } from "react";
+import { pipeSomeLazy } from "@reactive-js/core/functions";
+import React, { useEffect } from "react";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
-import {
-  useDispatcher,
-  useObserve,
-} from "@reactive-js/core/integrations/react";
+import { useObserve } from "@reactive-js/core/integrations/react";
 import {
   useAnimate,
-  useAnimation,
+  useMeasure,
+  useSpring,
 } from "@reactive-js/core/integrations/react/web";
-import * as WebElement from "@reactive-js/core/integrations/web/Element";
-import { pick } from "@reactive-js/core/computations";
 import { AnimationStreamLike_animation } from "@reactive-js/core/concurrent";
+import { QueueableLike_enqueue } from "@reactive-js/core/utils";
 
 const Measure = () => {
-  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  const spring = useSpring(0);
+  const [boxRef, rect] = useMeasure();
+  const boxWidth = rect?.width ?? 0;
 
-  const animationStream = useAnimation<
-    { prevWidth?: number; width: number },
-    number
-  >(({ prevWidth, width }: { prevWidth?: number; width: number }) =>
-    isSome(prevWidth)
-      ? pipe(
-          Observable.spring({ precision: 0.2 }),
-          Observable.map(scale(prevWidth, width)),
-        )
-      : Observable.fromValue<number>()(width),
-  );
-
-  const { enqueue } = useDispatcher(animationStream);
-
-  useObserve(
-    pipeSomeLazy(
-      container ?? none,
-      WebElement.measure({ autoDispose: true }),
-      Observable.fromStore(),
-      pick<Observable.MulticastObservableComputation>(Observable.map)("width"),
-      Observable.distinctUntilChanged(),
-      Observable.withLatestFrom<number, number, Tuple2<number, number>>(
-        pipeSome(
-          animationStream?.[AnimationStreamLike_animation],
-          Observable.fromEventSource(),
-        ) ?? Observable.never<number>(),
-        tuple,
-      ),
-      Observable.forEach<Tuple2<number, number>>(([boxWidth, currentWidth]) => {
-        if (currentWidth > 0) {
-          enqueue({ width: boxWidth });
-        }
-      }),
-      Observable.ignoreElements(),
-    ),
-    [animationStream, enqueue],
-  );
+  useEffect(() => {
+    spring?.[QueueableLike_enqueue](currentWidth =>
+      currentWidth > 0 ? boxWidth : 0,
+    );
+  }, [boxWidth]);
 
   const width =
     useObserve(
       pipeSomeLazy(
-        animationStream?.[AnimationStreamLike_animation],
+        spring?.[AnimationStreamLike_animation],
         Observable.fromEventSource(),
-        Observable.throttle(15, { mode: "last" }),
-        Observable.map(Math.floor),
+        Observable.throttle<number>(50, { mode: "last" }),
       ),
-      [animationStream],
+      [spring],
     ) ?? 0;
 
   const fillRef: React.Ref<HTMLDivElement> = useAnimate(
-    animationStream?.[AnimationStreamLike_animation],
-    value => ({
-      width: `${value}px`,
-    }),
-    [],
+    spring?.[AnimationStreamLike_animation],
+    value => ({ width: `${value}px` }),
   );
 
   return (
@@ -91,7 +45,7 @@ const Measure = () => {
       }}
     >
       <div
-        ref={setContainer}
+        ref={boxRef}
         style={{
           position: "relative",
           width: "1000px",
@@ -102,11 +56,8 @@ const Measure = () => {
           overflow: "hidden",
         }}
         onClick={() => {
-          const boxWidth = container?.getBoundingClientRect().width ?? 0;
-          enqueue(
-            width > 0
-              ? { prevWidth: width, width: 0 }
-              : { prevWidth: 0, width: boxWidth },
+          spring?.[QueueableLike_enqueue](width =>
+            Math.floor(width) > 0 ? 0 : boxWidth,
           );
         }}
       >
@@ -134,7 +85,7 @@ const Measure = () => {
             color: "#272727",
           }}
         >
-          {width}
+          {Math.floor(width)}
         </div>
       </div>
     </div>

@@ -34,10 +34,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
-import { SingleUseObservableLike_observer } from "../../__internal__/SingleUseObservable.js";
-import * as SingleUseObservable from "../../__internal__/SingleUseObservable.js";
-import DelegatingDispatcherMixin from "../../__mixins__/DelegatingDispatcherMixin.js";
-import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
+import StreamMixin from "../../__mixins__/StreamMixin.js";
 
 const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
   animationGroup: ReadonlyObjectMapLike<
@@ -68,10 +65,7 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
   };
 
   return mixInstanceFactory(
-    include(
-      DelegatingDispatcherMixin(),
-      DelegatingMulticastObservableMixin<T>(),
-    ),
+    include(StreamMixin()),
     function AnimationGroupStream(
       instance: TProperties &
         Pick<
@@ -90,45 +84,40 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
         readonly capacity?: number;
       },
     ): AnimationGroupStreamLike<TEvent, TKey, T> {
-      const singleUseObservable = SingleUseObservable.create<TEvent>();
-
-      const delegate = pipe(
-        singleUseObservable,
-        Observable.switchMap<TEvent, boolean>(
-          (event: TEvent) =>
-            pipe(
-              Observable.mergeMany(
-                pipe(
-                  animationGroup,
-                  ReadonlyObjectMap.entries(),
-                  Iterable.map(([key, factory]) => {
-                    const publisher = publishers[key] as PublisherLike<T>;
-                    return pipe(
-                      isFunction(factory) ? factory(event) : factory,
-                      Observable.notify(publisher),
-                    );
-                  }),
-                  ReadonlyArray.fromIterable(),
-                ),
+      const operator = Observable.switchMap<TEvent, boolean>(
+        (event: TEvent) =>
+          pipe(
+            Observable.mergeMany(
+              pipe(
+                animationGroup,
+                ReadonlyObjectMap.entries(),
+                Iterable.map(([key, factory]) => {
+                  const publisher = publishers[key] as PublisherLike<T>;
+                  return pipe(
+                    isFunction(factory) ? factory(event) : factory,
+                    Observable.notify(publisher),
+                  );
+                }),
+                ReadonlyArray.fromIterable(),
               ),
-              Observable.ignoreElements(),
-              Observable.subscribeOn(animationScheduler),
-              Observable.startWith<boolean>(true),
-              Observable.endWith<boolean>(false),
             ),
-          {
-            innerType: Observable.DeferredObservableWithSideEffectsType,
-          },
-        ),
-        Observable.multicast<boolean>(scheduler, options),
+            Observable.ignoreElements(),
+            Observable.subscribeOn(animationScheduler),
+            Observable.startWith<boolean>(true),
+            Observable.endWith<boolean>(false),
+          ),
+        {
+          innerType: Observable.DeferredObservableWithSideEffectsType,
+        },
       );
 
       init(
-        DelegatingDispatcherMixin<TEvent>(),
+        StreamMixin<TEvent, boolean>(),
         instance,
-        singleUseObservable[SingleUseObservableLike_observer],
+        operator,
+        scheduler,
+        options,
       );
-      init(DelegatingMulticastObservableMixin<boolean>(), instance, delegate);
 
       const publishers = (instance[AnimationGroupStream_eventSources] = pipe(
         animationGroup,
@@ -136,8 +125,6 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
           pipe(Publisher.create<T>(), Disposable.addTo(instance)),
         ),
       ));
-
-      pipe(delegate, Disposable.addTo(instance));
 
       return instance;
     },

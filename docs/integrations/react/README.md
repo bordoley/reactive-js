@@ -16,4 +16,5 @@
 - [useListen](functions/useListen.md)
 - [useObserve](functions/useObserve.md)
 - [usePauseable](functions/usePauseable.md)
+- [useStore](functions/useStore.md)
 - [useStream](functions/useStream.md)

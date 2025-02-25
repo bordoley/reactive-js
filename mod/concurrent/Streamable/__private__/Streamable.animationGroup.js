@@ -10,24 +10,18 @@ import * as Publisher from "../../../events/Publisher.js";
 import { isFunction, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Observable from "../../Observable.js";
-import { SingleUseObservableLike_observer } from "../../__internal__/SingleUseObservable.js";
-import * as SingleUseObservable from "../../__internal__/SingleUseObservable.js";
-import DelegatingDispatcherMixin from "../../__mixins__/DelegatingDispatcherMixin.js";
-import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
+import StreamMixin from "../../__mixins__/StreamMixin.js";
 const AnimationGroupStream_create = /*@__PURE__*/ (() => {
     const AnimationGroupStream_eventSources = Symbol("AnimationGroupStream_delegate");
-    return mixInstanceFactory(include(DelegatingDispatcherMixin(), DelegatingMulticastObservableMixin()), function AnimationGroupStream(instance, animationGroup, scheduler, animationScheduler, options) {
-        const singleUseObservable = SingleUseObservable.create();
-        const delegate = pipe(singleUseObservable, Observable.switchMap((event) => pipe(Observable.mergeMany(pipe(animationGroup, ReadonlyObjectMap.entries(), Iterable.map(([key, factory]) => {
+    return mixInstanceFactory(include(StreamMixin()), function AnimationGroupStream(instance, animationGroup, scheduler, animationScheduler, options) {
+        const operator = Observable.switchMap((event) => pipe(Observable.mergeMany(pipe(animationGroup, ReadonlyObjectMap.entries(), Iterable.map(([key, factory]) => {
             const publisher = publishers[key];
             return pipe(isFunction(factory) ? factory(event) : factory, Observable.notify(publisher));
         }), ReadonlyArray.fromIterable())), Observable.ignoreElements(), Observable.subscribeOn(animationScheduler), Observable.startWith(true), Observable.endWith(false)), {
             innerType: Observable.DeferredObservableWithSideEffectsType,
-        }), Observable.multicast(scheduler, options));
-        init(DelegatingDispatcherMixin(), instance, singleUseObservable[SingleUseObservableLike_observer]);
-        init(DelegatingMulticastObservableMixin(), instance, delegate);
+        });
+        init(StreamMixin(), instance, operator, scheduler, options);
         const publishers = (instance[AnimationGroupStream_eventSources] = pipe(animationGroup, ReadonlyObjectMap.map(_ => pipe(Publisher.create(), Disposable.addTo(instance)))));
-        pipe(delegate, Disposable.addTo(instance));
         return instance;
     }, props({
         [AnimationGroupStream_eventSources]: none,

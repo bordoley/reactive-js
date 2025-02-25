@@ -26,7 +26,7 @@
 
 ## Call Signature
 
-> **useAnimate**\<`TElement`, `T`\>(`animation`, `selector`, `deps`): `Ref`\<`TElement`\>
+> **useAnimate**\<`TElement`, `T`\>(`animation`, `selector`, `deps`?): `Ref`\<`TElement`\>
 
 ### Type Parameters
 
@@ -44,7 +44,7 @@
 
 [`Function1`](../../../../functions/type-aliases/Function1.md)\<`T`, [`CSSStyleMapLike`](../../../web/interfaces/CSSStyleMapLike.md)\>
 
-#### deps
+#### deps?
 
 readonly `unknown`[]
 

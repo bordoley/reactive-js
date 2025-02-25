@@ -21,5 +21,6 @@
 - [animationGroup](functions/animationGroup.md)
 - [create](functions/create.md)
 - [identity](functions/identity.md)
+- [spring](functions/spring.md)
 - [stateStore](functions/stateStore.md)
 - [syncState](functions/syncState.md)

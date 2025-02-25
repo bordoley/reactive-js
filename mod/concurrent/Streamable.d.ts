@@ -22,6 +22,12 @@ export interface StreamableModule {
     }): StreamableLike<TEvent, boolean, AnimationGroupStreamLike<TEvent, TKey, T>>;
     create<TReq, T>(op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
     identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
+    spring(initialValue: number, options?: {
+        readonly animationScheduler?: SchedulerLike;
+        readonly stiffness?: number;
+        readonly damping?: number;
+        readonly precision?: number;
+    }): StreamableLike<Updater<number>, boolean, AnimationStreamLike<Updater<number>, number>>;
     /**
      * Returns a new `StateStoreLike` instance that stores state which can
      * be updated by notifying the instance with a `StateUpdater` that computes a
@@ -45,5 +51,6 @@ export declare const actionReducer: Signature["actionReducer"];
 export declare const animation: Signature["animation"];
 export declare const animationGroup: Signature["animationGroup"];
 export declare const identity: Signature["identity"];
+export declare const spring: Signature["spring"];
 export declare const stateStore: Signature["stateStore"];
 export declare const syncState: Signature["syncState"];

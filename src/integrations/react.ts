@@ -33,6 +33,7 @@ import * as EventSource from "../events/EventSource.js";
 import {
   EventListenerLike_notify,
   EventSourceLike,
+  StoreLike,
   StoreLike_value,
 } from "../events.js";
 import {
@@ -156,6 +157,12 @@ interface ReactModule {
     pause: SideEffect;
     resume: SideEffect;
   };
+
+  useStore<T>(store: Optional<StoreLike<T>>): Optional<T>;
+  useStore<T>(
+    factory: Factory<Optional<StoreLike>>,
+    deps: readonly unknown[],
+  ): Optional<T>;
 
   /**
    */
@@ -367,6 +374,33 @@ export const usePauseable: Signature["usePauseable"] = (
     pause,
     resume,
   };
+};
+
+export const useStore: Signature["useStore"] = <T>(
+  storeOrFactory: Optional<StoreLike<T>> | Factory<Optional<StoreLike<T>>>,
+  depsOrNone?: readonly unknown[],
+) => {
+  const [state, updateState] = useState<Optional<T>>(none);
+  const [error, updateError] = useState<Optional<Error>>(none);
+
+  const store = isFunction(storeOrFactory)
+    ? useMemo(storeOrFactory, depsOrNone as readonly unknown[])
+    : storeOrFactory;
+
+  useEffect(() => {
+    updateState(_ => store?.[StoreLike_value]);
+  }, [store, updateState]);
+
+  useDisposable(
+    pipeSomeLazy(
+      store,
+      EventSource.addEventHandler(v => updateState(_ => v)),
+      DisposableContainer.onError(updateError),
+    ),
+    [store, updateState, updateError],
+  );
+
+  return isSome(error) ? raiseError<T>(error) : state;
 };
 
 export const useStream: Signature["useStream"] = <

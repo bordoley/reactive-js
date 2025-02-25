@@ -23,6 +23,7 @@ import {
   Function1,
   Optional,
   SideEffect1,
+  Tuple2,
   Updater,
   identity,
   isFunction,
@@ -31,11 +32,18 @@ import {
   pipe,
   pipeSomeLazy,
 } from "../../functions.js";
-import { useDisposable, useListen, useObserve, useStream } from "../react.js";
+import {
+  useDisposable,
+  useListen,
+  useObserve,
+  useStore,
+  useStream,
+} from "../react.js";
 import * as AnimationFrameScheduler from "../web/AnimationFrameScheduler.js";
 import * as WebElement from "../web/Element.js";
 import {
   CSSStyleMapLike,
+  Rect,
   ScrollValue,
   WindowLocationLike,
   WindowLocationLike_canGoBack,
@@ -59,7 +67,7 @@ interface ReactWebModule {
   useAnimate<TElement extends HTMLElement, T>(
     animation: Optional<EventSourceLike<T>>,
     selector: Function1<T, CSSStyleMapLike>,
-    deps: readonly unknown[],
+    deps?: readonly unknown[],
   ): React.Ref<TElement>;
 
   useAnimation<T>(
@@ -101,6 +109,17 @@ interface ReactWebModule {
     callback: SideEffect1<ScrollValue>,
     deps: readonly unknown[],
   ): React.Ref<TElement>;
+
+  useSpring(
+    initialValue: number,
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly animationScheduler: SchedulerLike;
+      readonly stiffness?: number;
+      readonly damping?: number;
+      readonly precision?: number;
+    },
+  ): Optional<AnimationStreamLike<Updater<number>, number>>;
 
   /**
    */
@@ -203,6 +222,20 @@ export const useAnimationGroup: Signature["useAnimationGroup"] = <
   );
 };
 
+export const useMeasure = (): Tuple2<
+  React.Ref<HTMLDivElement>,
+  Optional<Rect>
+> => {
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+
+  const rect = useStore<Rect>(
+    pipeSomeLazy(container ?? none, WebElement.measure()),
+    [container],
+  );
+
+  return [setContainer, rect];
+};
+
 export const useScroll: Signature["useScroll"] = <TElement extends HTMLElement>(
   callback: SideEffect1<ScrollValue>,
   deps: readonly unknown[],
@@ -220,6 +253,30 @@ export const useScroll: Signature["useScroll"] = <TElement extends HTMLElement>(
   );
 
   return setElement as React.Ref<TElement>;
+};
+
+export const useSpring: Signature["useSpring"] = (
+  initialValue: number,
+  options?: {
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly animationScheduler: SchedulerLike;
+    readonly stiffness?: number;
+    readonly damping?: number;
+    readonly precision?: number;
+  },
+) => {
+  const animationScheduler =
+    options?.animationScheduler ?? AnimationFrameScheduler.get();
+
+  return useStream(
+    () =>
+      Streamable.spring(initialValue, {
+        ...options,
+        animationScheduler,
+      }),
+    [animationScheduler],
+    options,
+  );
 };
 
 export const useWindowLocation: Signature["useWindowLocation"] = () => {
