@@ -14,6 +14,8 @@
 
 - [`PauseableSchedulerLike`](PauseableSchedulerLike.md)
 - [`PauseableObservableLike`](PauseableObservableLike.md)
+- [`AnimationGroupStreamLike`](AnimationGroupStreamLike.md)
+- [`AnimationStreamLike`](AnimationStreamLike.md)
 
 ## Properties
 

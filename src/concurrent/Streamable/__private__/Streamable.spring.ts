@@ -9,6 +9,7 @@ import {
   AnimationStreamLike_animation,
   DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
+  PauseableLike_resume,
   SchedulerLike,
   StreamableLike,
   StreamableLike_stream,
@@ -28,8 +29,10 @@ import {
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
+import * as PauseableScheduler from "../../PauseableScheduler.js";
 import type * as Streamable from "../../Streamable.js";
 import * as Subject from "../../Subject.js";
+import DelegatingPauseableMixin from "../../__mixins__/DelegatingPauseableMixin.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 
 const SpringStream_create: (
@@ -52,7 +55,7 @@ const SpringStream_create: (
   };
 
   return mixInstanceFactory(
-    include(StreamMixin()),
+    include(StreamMixin(), DelegatingPauseableMixin),
     function AnimationStream(
       instance: TProperties,
       initialValue: number,
@@ -69,6 +72,8 @@ const SpringStream_create: (
         readonly capacity?: number;
       },
     ): AnimationStreamLike<Updater<number>, number> {
+      const pauseableScheduler = PauseableScheduler.create(animationScheduler);
+
       const publisher = (instance[AnimationStreamLike_animation] =
         Publisher.create<number>());
 
@@ -92,7 +97,7 @@ const SpringStream_create: (
                   Observable.notify(publisher),
                   Observable.notify(accFeedbackStream),
                   Observable.ignoreElements(),
-                  Observable.subscribeOn(animationScheduler),
+                  Observable.subscribeOn(pauseableScheduler),
                   Observable.startWith<boolean>(true),
                   Observable.endWith<boolean>(false),
                 )
@@ -112,11 +117,16 @@ const SpringStream_create: (
         options,
       );
 
+      init(DelegatingPauseableMixin, instance, pauseableScheduler);
+
       pipe(
         instance,
         Disposable.add(publisher),
         Disposable.add(accFeedbackStream),
+        Disposable.add(pauseableScheduler),
       );
+
+      instance[PauseableLike_resume]();
 
       accFeedbackStream[EventListenerLike_notify](initialValue);
 

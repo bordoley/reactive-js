@@ -16,6 +16,7 @@ import {
 import * as Iterable from "../../../computations/Iterable.js";
 import {
   AnimationGroupStreamLike,
+  PauseableLike_resume,
   PureRunnableLike,
   SchedulerLike,
   StreamableLike,
@@ -33,7 +34,9 @@ import {
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
+import * as PauseableScheduler from "../../PauseableScheduler.js";
 import type * as Streamable from "../../Streamable.js";
+import DelegatingPauseableMixin from "../../__mixins__/DelegatingPauseableMixin.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 
 const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
@@ -65,7 +68,7 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
   };
 
   return mixInstanceFactory(
-    include(StreamMixin()),
+    include(StreamMixin(), DelegatingPauseableMixin),
     function AnimationGroupStream(
       instance: TProperties &
         Pick<
@@ -84,6 +87,7 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
         readonly capacity?: number;
       },
     ): AnimationGroupStreamLike<TEvent, TKey, T> {
+      const pauseableScheduler = PauseableScheduler.create(animationScheduler);
       const operator = Observable.switchMap<TEvent, boolean>(
         (event: TEvent) =>
           pipe(
@@ -96,13 +100,14 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
                   return pipe(
                     isFunction(factory) ? factory(event) : factory,
                     Observable.notify(publisher),
+                    Observable.subscribeOn(pauseableScheduler),
                   );
                 }),
                 ReadonlyArray.fromIterable(),
               ),
             ),
             Observable.ignoreElements(),
-            Observable.subscribeOn(animationScheduler),
+
             Observable.startWith<boolean>(true),
             Observable.endWith<boolean>(false),
           ),
@@ -119,12 +124,18 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
         options,
       );
 
+      init(DelegatingPauseableMixin, instance, pauseableScheduler);
+
+      pipe(instance, Disposable.add(pauseableScheduler));
+
       const publishers = (instance[AnimationGroupStream_eventSources] = pipe(
         animationGroup,
         ReadonlyObjectMap.map<unknown, PublisherLike<T>, string>(_ =>
           pipe(Publisher.create<T>(), Disposable.addTo(instance)),
         ),
       ));
+
+      instance[PauseableLike_resume]();
 
       return instance;
     },

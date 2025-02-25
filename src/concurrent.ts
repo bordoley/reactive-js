@@ -327,7 +327,8 @@ export interface StreamLike<TReq, out T>
  */
 export interface AnimationGroupStreamLike<TEvent, TKey extends string, out T>
   extends StreamLike<TEvent, boolean>,
-    DictionaryLike<TKey, EventSourceLike<T>> {}
+    DictionaryLike<TKey, EventSourceLike<T>>,
+    PauseableLike {}
 
 export const AnimationStreamLike_animation = Symbol(
   "AnimationStreamLike_animation",
@@ -337,7 +338,8 @@ export const AnimationStreamLike_animation = Symbol(
  * @noInheritDoc
  */
 export interface AnimationStreamLike<TEvent, out T>
-  extends StreamLike<TEvent, boolean> {
+  extends StreamLike<TEvent, boolean>,
+    PauseableLike {
   [AnimationStreamLike_animation]: EventSourceLike<T>;
 }
 

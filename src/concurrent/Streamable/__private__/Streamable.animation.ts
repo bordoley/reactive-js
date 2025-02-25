@@ -7,18 +7,21 @@ import {
 import {
   AnimationStreamLike,
   AnimationStreamLike_animation,
+  PauseableLike_resume,
   PureRunnableLike,
   SchedulerLike,
   StreamableLike,
   StreamableLike_stream,
 } from "../../../concurrent.js";
 import * as Publisher from "../../../events/Publisher.js";
-import { EventSourceLike, PublisherLike } from "../../../events.js";
+import { EventSourceLike } from "../../../events.js";
 import { Function1, isFunction, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
+import * as PauseableScheduler from "../../PauseableScheduler.js";
 import type * as Streamable from "../../Streamable.js";
+import DelegatingPauseableMixin from "../../__mixins__/DelegatingPauseableMixin.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 
 const AnimationStream_create: <TEvent, T>(
@@ -36,7 +39,7 @@ const AnimationStream_create: <TEvent, T>(
   };
 
   return mixInstanceFactory(
-    include(StreamMixin()),
+    include(StreamMixin(), DelegatingPauseableMixin),
     function AnimationStream(
       instance: TProperties,
       animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
@@ -48,13 +51,17 @@ const AnimationStream_create: <TEvent, T>(
         readonly capacity?: number;
       },
     ): AnimationStreamLike<TEvent, T> {
+      const pauseableScheduler = PauseableScheduler.create(animationScheduler);
+      const publisher = (instance[AnimationStreamLike_animation] =
+        Publisher.create());
+
       const operator = Observable.switchMap<TEvent, boolean>(
         (event: TEvent) =>
           pipe(
             isFunction(animation) ? animation(event) : animation,
             Observable.notify(publisher),
             Observable.ignoreElements(),
-            Observable.subscribeOn(animationScheduler),
+            Observable.subscribeOn(pauseableScheduler),
             Observable.startWith<boolean>(true),
             Observable.endWith<boolean>(false),
           ),
@@ -71,12 +78,15 @@ const AnimationStream_create: <TEvent, T>(
         options,
       );
 
-      const publisher: PublisherLike<T> = pipe(
-        Publisher.create<T>(),
-        Disposable.addTo(instance),
+      init(DelegatingPauseableMixin, instance, pauseableScheduler);
+
+      pipe(
+        instance,
+        Disposable.add(publisher),
+        Disposable.add(pauseableScheduler),
       );
 
-      instance[AnimationStreamLike_animation] = publisher;
+      instance[PauseableLike_resume]();
 
       return instance;
     },

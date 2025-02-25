@@ -240,13 +240,13 @@ export interface StreamLike<TReq, out T> extends DispatcherLike<TReq>, Multicast
 /**
  * @noInheritDoc
  */
-export interface AnimationGroupStreamLike<TEvent, TKey extends string, out T> extends StreamLike<TEvent, boolean>, DictionaryLike<TKey, EventSourceLike<T>> {
+export interface AnimationGroupStreamLike<TEvent, TKey extends string, out T> extends StreamLike<TEvent, boolean>, DictionaryLike<TKey, EventSourceLike<T>>, PauseableLike {
 }
 export declare const AnimationStreamLike_animation: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface AnimationStreamLike<TEvent, out T> extends StreamLike<TEvent, boolean> {
+export interface AnimationStreamLike<TEvent, out T> extends StreamLike<TEvent, boolean>, PauseableLike {
     [AnimationStreamLike_animation]: EventSourceLike<T>;
 }
 export declare const StreamableLike_stream: unique symbol;

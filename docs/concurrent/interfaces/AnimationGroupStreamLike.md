@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`StreamLike`](StreamLike.md)\<`TEvent`, `boolean`\>.[`DictionaryLike`](../../collections/interfaces/DictionaryLike.md)\<`TKey`, [`EventSourceLike`](../../events/interfaces/EventSourceLike.md)\<`T`\>\>
+- [`StreamLike`](StreamLike.md)\<`TEvent`, `boolean`\>.[`DictionaryLike`](../../collections/interfaces/DictionaryLike.md)\<`TKey`, [`EventSourceLike`](../../events/interfaces/EventSourceLike.md)\<`T`\>\>.[`PauseableLike`](PauseableLike.md)
 
 ## Type Parameters
 

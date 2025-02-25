@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`StreamLike`](StreamLike.md)\<`TEvent`, `boolean`\>
+- [`StreamLike`](StreamLike.md)\<`TEvent`, `boolean`\>.[`PauseableLike`](PauseableLike.md)
 
 ## Type Parameters
 
