@@ -24,13 +24,7 @@ import {
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
 } from "../../concurrent.js";
-import {
-  bindMethod,
-  ignore,
-  newInstance,
-  none,
-  pipe,
-} from "../../functions.js";
+import { bindMethod, ignore, newInstance, pipe } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { DisposableLike } from "../../utils.js";
 
@@ -98,7 +92,7 @@ const createPostTaskScheduler = /*@__PURE__*/ (() => {
 
         postTaskScheduler
           .postTask(bindMethod(continuation, SchedulerContinuationLike_run), {
-            delay: delay >= 15 ? 15 : none,
+            delay,
             priority: this[PostTaskScheduler_priority],
             signal,
           })

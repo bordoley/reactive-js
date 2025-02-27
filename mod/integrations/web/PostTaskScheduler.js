@@ -5,7 +5,7 @@ import { include, init, mixInstanceFactory, props, } from "../../__internal__/mi
 import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
 import { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../../concurrent/__mixins__/SchedulerMixin.js";
 import { SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../../concurrent.js";
-import { bindMethod, ignore, newInstance, none, pipe, } from "../../functions.js";
+import { bindMethod, ignore, newInstance, pipe } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 const createPostTaskScheduler = /*@__PURE__*/ (() => {
     const postTaskScheduler = globalThis.scheduler;
@@ -26,7 +26,7 @@ const createPostTaskScheduler = /*@__PURE__*/ (() => {
             const signal = pipe(continuation, DisposableContainer.toAbortSignal);
             postTaskScheduler
                 .postTask(bindMethod(continuation, SchedulerContinuationLike_run), {
-                delay: delay >= 15 ? 15 : none,
+                delay,
                 priority: this[PostTaskScheduler_priority],
                 signal,
             })
