@@ -1,5 +1,5 @@
 <script>
-import * as HostScheduler from "@reactive-js/core/concurrent/HostScheduler";
+import * as PostTaskScheduler from "@reactive-js/core/integrations/web/PostTaskScheduler";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
 import { subscribe } from "@reactive-js/core/integrations/svelte";
 import {
@@ -17,7 +17,7 @@ import {
 } from "@reactive-js/core/concurrent";
 import * as Flowable from "@reactive-js/core/concurrent/Flowable";
 
-  const scheduler = HostScheduler.get();
+  const scheduler = PostTaskScheduler.get();
 
   const counter = pipe(
     Observable.generate(increment, returns(-1), {delay: 500}),

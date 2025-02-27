@@ -80,6 +80,7 @@
     "./integrations/web/effects": "./integrations/web/effects.js",
     "./integrations/web/AnimationFrameScheduler": "./integrations/web/AnimationFrameScheduler.js",
     "./integrations/web/Element": "./integrations/web/Element.js",
+    "./integrations/web/PostTaskScheduler": "./integrations/web/PostTaskScheduler.js",
     "./integrations/web/ServerSideEventSource": "./integrations/web/ServerSideEventSource.js",
     "./integrations/web/WindowLocation": "./integrations/web/WindowLocation.js",
     "./utils": "./utils.js",

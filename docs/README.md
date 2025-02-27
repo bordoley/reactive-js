@@ -38,6 +38,7 @@
 - [integrations/web/AnimationFrameScheduler](integrations/web/AnimationFrameScheduler/README.md)
 - [integrations/web/effects](integrations/web/effects/README.md)
 - [integrations/web/Element](integrations/web/Element/README.md)
+- [integrations/web/PostTaskScheduler](integrations/web/PostTaskScheduler/README.md)
 - [integrations/web/ServerSideEventSource](integrations/web/ServerSideEventSource/README.md)
 - [integrations/web/WindowLocation](integrations/web/WindowLocation/README.md)
 - [utils](utils/README.md)
