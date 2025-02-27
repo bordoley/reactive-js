@@ -4,7 +4,7 @@ import { clampPositiveInteger } from "../__internal__/math.js";
 import { mixInstanceFactory, props } from "../__internal__/mixins.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import { Computation_type, } from "../computations.js";
-import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pipe, raise, returns, tuple, } from "../functions.js";
+import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pipe, raise as raiseError, returns, tuple, } from "../functions.js";
 import Deferable_fromIterable from "./Deferable/__private__/Deferable.fromIterable.js";
 class CatchErrorIterable {
     s;
@@ -175,6 +175,19 @@ export const map = /*@__PURE__*/ (() => {
     });
     return (mapper) => (iterable) => createMapIterable(iterable, mapper);
 })();
+class RaiseIterable {
+    r;
+    constructor(r) {
+        this.r = r;
+    }
+    *[Symbol.iterator]() {
+        raiseError(error(this.r()));
+    }
+}
+export const raise = (options) => {
+    const { raise: factory = raise } = options ?? {};
+    return newInstance((RaiseIterable), factory);
+};
 export const reduce = (reducer, initialValue) => (iterable) => {
     let acc = initialValue();
     for (let v of iterable) {
@@ -318,25 +331,12 @@ class ThrowIfEmptyIterable {
             yield v;
         }
         if (isEmpty) {
-            raise(error(this.f()));
+            raiseError(error(this.f()));
         }
     }
 }
 export const throwIfEmpty = (factory) => (iter) => newInstance(ThrowIfEmptyIterable, iter, factory);
 export const takeWhile = (predicate, options) => (iterable) => newInstance(TakeWhileIterable, iterable, predicate, options?.inclusive ?? false);
-class ThrowsIterable {
-    r;
-    constructor(r) {
-        this.r = r;
-    }
-    *[Symbol.iterator]() {
-        raise(error(this.r()));
-    }
-}
-export const throws = (options) => {
-    const { raise: factory = raise } = options ?? {};
-    return newInstance((ThrowsIterable), factory);
-};
 export const toDeferable = Deferable_fromIterable;
 export const toReadonlyArray = () => (iterable) => Array.from(iterable);
 class ZipIterable {

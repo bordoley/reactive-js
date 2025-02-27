@@ -106,6 +106,7 @@ import Observable_never from "./Observable/__private__/Observable.never.js";
 import Observable_notify from "./Observable/__private__/Observable.notify.js";
 import Observable_onSubscribe from "./Observable/__private__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
+import Observable_raise from "./Observable/__private__/Observable.raise.js";
 import Observable_reduce from "./Observable/__private__/Observable.reduce.js";
 import Observable_repeat from "./Observable/__private__/Observable.repeat.js";
 import Observable_retry from "./Observable/__private__/Observable.retry.js";
@@ -129,7 +130,6 @@ import Observable_throttle, {
   ThrottleLastMode as ObservableThrottle_ThrottleLastMode,
 } from "./Observable/__private__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
-import Observable_throws from "./Observable/__private__/Observable.throws.js";
 import Observable_toDeferable from "./Observable/__private__/Observable.toDeferable.js";
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
 import Observable_toReadonlyArray from "./Observable/__private__/Observable.toReadonlyArray.js";
@@ -1099,6 +1099,11 @@ export interface ObservableModule {
 
   pairwise<T>(): PureStatefulObservableOperator<T, Tuple2<T, T>>;
 
+  raise<T>(options?: {
+    readonly raise?: Factory<unknown>;
+    readonly delay?: number;
+  }): PureRunnableLike<T>;
+
   reduce<T, TAcc>(
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
@@ -1282,11 +1287,6 @@ export interface ObservableModule {
   throwIfEmpty<T>(
     factory: Factory<unknown>,
   ): PureStatefulObservableOperator<T, T>;
-
-  throws<T>(options?: {
-    readonly raise?: Factory<unknown>;
-    readonly delay?: number;
-  }): PureRunnableLike<T>;
 
   toDeferable<T>(options?: {
     readonly backpressureStrategy?: BackpressureStrategy;
@@ -1670,6 +1670,7 @@ export const never: Signature["never"] = Observable_never;
 export const notify: Signature["notify"] = Observable_notify;
 export const onSubscribe: Signature["onSubscribe"] = Observable_onSubscribe;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
+export const raise: Signature["raise"] = Observable_raise;
 export const reduce: Signature["reduce"] = Observable_reduce;
 export const repeat: Signature["repeat"] = Observable_repeat;
 export const retry: Signature["retry"] = Observable_retry;
@@ -1689,7 +1690,6 @@ export const takeUntil: Signature["takeUntil"] = Observable_takeUntil;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throttle: Signature["throttle"] = Observable_throttle;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
-export const throws: Signature["throws"] = Observable_throws;
 export const toDeferable: Signature["toDeferable"] = Observable_toDeferable;
 export const toEventSource: Signature["toEventSource"] =
   Observable_toEventSource;

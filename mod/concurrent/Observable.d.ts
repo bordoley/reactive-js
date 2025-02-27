@@ -331,6 +331,10 @@ export interface ObservableModule {
     onSubscribe<T>(f: Factory<SideEffect1<Optional<Error>>>): ObservableOperatorWithSideEffects<T, T>;
     onSubscribe<T>(f: SideEffect): ObservableOperatorWithSideEffects<T, T>;
     pairwise<T>(): PureStatefulObservableOperator<T, Tuple2<T, T>>;
+    raise<T>(options?: {
+        readonly raise?: Factory<unknown>;
+        readonly delay?: number;
+    }): PureRunnableLike<T>;
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<RunnableLike<T>, TAcc>;
     repeat<T>(predicate: Predicate<number>): PureStatefulObservableOperator<T, T, DeferredObservableLike<T>>;
     repeat<T>(count: number): PureStatefulObservableOperator<T, T, DeferredObservableLike<T>>;
@@ -415,10 +419,6 @@ export interface ObservableModule {
         readonly mode?: ThrottleMode;
     }): PureStatefulObservableOperator<T, T>;
     throwIfEmpty<T>(factory: Factory<unknown>): PureStatefulObservableOperator<T, T>;
-    throws<T>(options?: {
-        readonly raise?: Factory<unknown>;
-        readonly delay?: number;
-    }): PureRunnableLike<T>;
     toDeferable<T>(options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
@@ -535,6 +535,7 @@ export declare const never: Signature["never"];
 export declare const notify: Signature["notify"];
 export declare const onSubscribe: Signature["onSubscribe"];
 export declare const pairwise: Signature["pairwise"];
+export declare const raise: Signature["raise"];
 export declare const reduce: Signature["reduce"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
@@ -554,7 +555,6 @@ export declare const takeUntil: Signature["takeUntil"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throttle: Signature["throttle"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
-export declare const throws: Signature["throws"];
 export declare const toDeferable: Signature["toDeferable"];
 export declare const toEventSource: Signature["toEventSource"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];

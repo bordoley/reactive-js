@@ -4,7 +4,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createPureRunnable from "./Observable.createPureRunnable.js";
 
-const Observable_throws: Observable.Signature["throws"] = <T>(options?: {
+const Observable_raise: Observable.Signature["raise"] = <T>(options?: {
   readonly delay?: number;
   readonly raise?: Factory<unknown>;
 }) =>
@@ -19,4 +19,4 @@ const Observable_throws: Observable.Signature["throws"] = <T>(options?: {
     );
   });
 
-export default Observable_throws;
+export default Observable_raise;

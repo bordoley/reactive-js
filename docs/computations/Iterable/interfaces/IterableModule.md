@@ -426,6 +426,32 @@ readonly \[`Iterable`\<`T`, `any`, `any`\>, `Iterable`\<`T`, `any`, `any`\>\]
 
 ***
 
+### raise()
+
+> **raise**\<`T`\>(`options`?): `Iterable`\<`T`, `any`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### raise?
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+#### Returns
+
+`Iterable`\<`T`, `any`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`raise`](../../interfaces/DeferredComputationModule.md#raise)
+
+***
+
 ### reduce()
 
 > **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, `TAcc`\>
@@ -683,32 +709,6 @@ readonly \[`Iterable`\<`T`, `any`, `any`\>, `Iterable`\<`T`, `any`, `any`\>\]
 #### Inherited from
 
 [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`throwIfEmpty`](../../interfaces/DeferredComputationModule.md#throwifempty)
-
-***
-
-### throws()
-
-> **throws**\<`T`\>(`options`?): `Iterable`\<`T`, `any`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### raise?
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
-
-#### Returns
-
-`Iterable`\<`T`, `any`\>
-
-#### Inherited from
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`throws`](../../interfaces/DeferredComputationModule.md#throws)
 
 ***
 

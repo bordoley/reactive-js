@@ -228,7 +228,7 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
     try {
         const vts = __addDisposableResource(env_7, VirtualTimeScheduler.create(), false);
         const error = newInstance(Error);
-        const flowed = pipe(Observable.throws({ raise: () => error }), Flowable.fromRunnable(), invoke(FlowableLike_flow, vts), Disposable.addTo(vts));
+        const flowed = pipe(Observable.raise({ raise: () => error }), Flowable.fromRunnable(), invoke(FlowableLike_flow, vts), Disposable.addTo(vts));
         flowed[PauseableLike_resume]();
         vts[VirtualTimeSchedulerLike_run]();
         pipe(flowed[DisposableLike_error], expectEquals(error));

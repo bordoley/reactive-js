@@ -94,6 +94,10 @@ export interface DeferredComputationModule<C extends Computation> {
     },
   ): ComputationOf<C, T>;
 
+  raise<T>(options?: {
+    readonly raise?: Factory<unknown>;
+  }): ComputationOf<C, T>;
+
   repeat<T>(predicate: Predicate<number>): ComputationOperator<C, T, T>;
   repeat<T>(count: number): ComputationOperator<C, T, T>;
   repeat<T>(): ComputationOperator<C, T, T>;
@@ -117,10 +121,6 @@ export interface DeferredComputationModule<C extends Computation> {
     predicate: Predicate<T>,
     options?: { readonly inclusive?: boolean },
   ): ComputationOperator<C, T, T>;
-
-  throws<T>(options?: {
-    readonly raise?: Factory<unknown>;
-  }): ComputationOf<C, T>;
 
   throwIfEmpty<T>(
     factory: Factory<unknown>,

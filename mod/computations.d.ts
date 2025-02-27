@@ -39,6 +39,9 @@ export interface DeferredComputationModule<C extends Computation> {
     generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
         readonly count?: number;
     }): ComputationOf<C, T>;
+    raise<T>(options?: {
+        readonly raise?: Factory<unknown>;
+    }): ComputationOf<C, T>;
     repeat<T>(predicate: Predicate<number>): ComputationOperator<C, T, T>;
     repeat<T>(count: number): ComputationOperator<C, T, T>;
     repeat<T>(): ComputationOperator<C, T, T>;
@@ -51,9 +54,6 @@ export interface DeferredComputationModule<C extends Computation> {
     takeWhile<T>(predicate: Predicate<T>, options?: {
         readonly inclusive?: boolean;
     }): ComputationOperator<C, T, T>;
-    throws<T>(options?: {
-        readonly raise?: Factory<unknown>;
-    }): ComputationOf<C, T>;
     throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): ComputationOperator<C, T, T>;
 }
 export interface ComputationWithSideEffectsModule<C extends Computation> {

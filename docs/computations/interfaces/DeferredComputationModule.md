@@ -287,6 +287,28 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 ***
 
+### raise()
+
+> **raise**\<`T`\>(`options`?): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### raise?
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+#### Returns
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+
+***
+
 ### repeat()
 
 #### Call Signature
@@ -478,25 +500,3 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 #### Returns
 
 [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
-
-***
-
-### throws()
-
-> **throws**\<`T`\>(`options`?): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### raise?
-
-[`Factory`](../../functions/type-aliases/Factory.md)\<`unknown`\>
-
-#### Returns
-
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>

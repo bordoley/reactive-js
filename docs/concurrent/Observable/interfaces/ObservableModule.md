@@ -3994,6 +3994,32 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ***
 
+### raise()
+
+> **raise**\<`T`\>(`options`?): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### delay?
+
+`number`
+
+###### raise?
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+#### Returns
+
+[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+
+***
+
 ### reduce()
 
 > **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `TAcc`\>
@@ -4855,32 +4881,6 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 #### Returns
 
 [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
-
-***
-
-### throws()
-
-> **throws**\<`T`\>(`options`?): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### delay?
-
-`number`
-
-###### raise?
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
-
-#### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
 
 ***
 

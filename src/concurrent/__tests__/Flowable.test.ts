@@ -269,7 +269,7 @@ testModule(
       const error = newInstance(Error);
 
       const flowed = pipe(
-        Observable.throws({ raise: () => error }),
+        Observable.raise({ raise: () => error }),
         Flowable.fromRunnable(),
         invoke(FlowableLike_flow, vts),
         Disposable.addTo(vts),

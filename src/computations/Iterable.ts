@@ -32,7 +32,7 @@ import {
   newInstance,
   none,
   pipe,
-  raise,
+  raise as raiseError,
   returns,
   tuple,
 } from "../functions.js";
@@ -330,6 +330,20 @@ export const map: Signature["map"] = /*@__PURE__*/ (<TA, TB>() => {
     createMapIterable(iterable, mapper);
 })();
 
+class RaiseIterable<T> {
+  constructor(private r: SideEffect) {}
+
+  *[Symbol.iterator](): Iterator<T> {
+    raiseError(error(this.r()));
+  }
+}
+export const raise: Signature["raise"] = <T>(options?: {
+  readonly raise?: SideEffect;
+}) => {
+  const { raise: factory = raise } = options ?? {};
+  return newInstance(RaiseIterable<T>, factory);
+};
+
 export const reduce: Signature["reduce"] =
   <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
   (iterable: Iterable<T>) => {
@@ -507,7 +521,7 @@ class ThrowIfEmptyIterable<T> {
     }
 
     if (isEmpty) {
-      raise(error(this.f()));
+      raiseError(error(this.f()));
     }
   }
 }
@@ -531,20 +545,6 @@ export const takeWhile: Signature["takeWhile"] =
       predicate,
       options?.inclusive ?? false,
     );
-
-class ThrowsIterable<T> {
-  constructor(private r: SideEffect) {}
-
-  *[Symbol.iterator](): Iterator<T> {
-    raise(error(this.r()));
-  }
-}
-export const throws: Signature["throws"] = <T>(options?: {
-  readonly raise?: SideEffect;
-}) => {
-  const { raise: factory = raise } = options ?? {};
-  return newInstance(ThrowsIterable<T>, factory);
-};
 
 export const toDeferable: Signature["toDeferable"] = Deferable_fromIterable;
 

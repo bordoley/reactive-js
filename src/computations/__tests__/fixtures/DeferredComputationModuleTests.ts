@@ -38,7 +38,7 @@ const DeferredComputationModuleTests = <C extends Computation>(
         const e1 = "e1";
         let result: Optional<string> = none;
         pipe(
-          m.throws<number>({ raise: () => e1 }),
+          m.raise<number>({ raise: () => e1 }),
           m.catchError<number>((e: Error) => {
             result = e.message;
           }),
@@ -54,7 +54,7 @@ const DeferredComputationModuleTests = <C extends Computation>(
         let result: Optional<unknown> = none;
 
         pipe(
-          m.throws<number>({ raise: () => e1 }),
+          m.raise<number>({ raise: () => e1 }),
           m.catchError(_ => {
             throw e2;
           }),
@@ -76,7 +76,7 @@ const DeferredComputationModuleTests = <C extends Computation>(
         pipeLazy(
           [1, 2, 3],
           m.fromReadonlyArray(),
-          m.concatWith(m.throws()),
+          m.concatWith(m.raise()),
           m.catchError(pipeLazy([4, 5, 6], m.fromReadonlyArray())),
           m.toReadonlyArray(),
           expectArrayEquals([1, 2, 3, 4, 5, 6]),
@@ -283,6 +283,49 @@ const DeferredComputationModuleTests = <C extends Computation>(
       ),
     ),
     describe(
+      "raise",
+      test("when raise function returns an value", () => {
+        const e1 = "e1";
+
+        try {
+          pipe(m.raise({ raise: () => e1 }), m.toReadonlyArray());
+          expectFalse(true);
+        } catch (e) {
+          expectTrue(e instanceof Error);
+          pipe((e as Error).message, expectEquals(e1));
+        }
+      }),
+      test("when raise function throws an exception", () => {
+        const e1 = new Error();
+
+        try {
+          pipe(
+            m.raise({
+              raise: () => {
+                throw e1;
+              },
+            }),
+            m.toReadonlyArray(),
+          );
+          expectFalse(true);
+        } catch (e) {
+          expectTrue(e instanceof Error);
+          pipe(e, expectEquals<unknown>(e1));
+        }
+      }),
+      test("when raise function returns an exception", () => {
+        const e1 = new Error();
+
+        try {
+          pipe(m.raise({ raise: () => e1 }), m.toReadonlyArray());
+          expectFalse(true);
+        } catch (e) {
+          expectTrue(e instanceof Error);
+          pipe(e, expectEquals<unknown>(e1));
+        }
+      }),
+    ),
+    describe(
       "repeat",
       test(
         "when repeating forever.",
@@ -335,7 +378,7 @@ const DeferredComputationModuleTests = <C extends Computation>(
       test(
         "retrys the container on an exception",
         pipeLazy(
-          m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()),
+          m.concat(m.generate(increment, returns(0), { count: 3 }), m.raise()),
           m.retry(alwaysTrue),
           m.takeFirst<number>({ count: 6 }),
           m.toReadonlyArray(),
@@ -345,7 +388,7 @@ const DeferredComputationModuleTests = <C extends Computation>(
       test(
         "retrys with the default predicate",
         pipeLazy(
-          m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()),
+          m.concat(m.generate(increment, returns(0), { count: 3 }), m.raise()),
           m.retry(),
           m.takeFirst<number>({ count: 6 }),
           m.toReadonlyArray(),
@@ -355,7 +398,7 @@ const DeferredComputationModuleTests = <C extends Computation>(
       test(
         "when source and the retry predicate throw",
         pipeLazy(
-          pipeLazy(m.throws(), m.retry(raise), m.toReadonlyArray()),
+          pipeLazy(m.raise(), m.retry(raise), m.toReadonlyArray()),
           expectToThrow,
         ),
       ),
@@ -363,7 +406,7 @@ const DeferredComputationModuleTests = <C extends Computation>(
       test(
         "retrys only twice",
         pipeLazy(
-          m.concat(m.generate(increment, returns(0), { count: 3 }), m.throws()),
+          m.concat(m.generate(increment, returns(0), { count: 3 }), m.raise()),
           m.retry((count, _) => count < 2),
           m.takeFirst<number>({ count: 10 }),
           m.toReadonlyArray(),
@@ -594,49 +637,6 @@ const DeferredComputationModuleTests = <C extends Computation>(
           expectArrayEquals([1]),
         ),
       ),
-    ),
-    describe(
-      "throws",
-      test("when raise function returns an value", () => {
-        const e1 = "e1";
-
-        try {
-          pipe(m.throws({ raise: () => e1 }), m.toReadonlyArray());
-          expectFalse(true);
-        } catch (e) {
-          expectTrue(e instanceof Error);
-          pipe((e as Error).message, expectEquals(e1));
-        }
-      }),
-      test("when raise function throws an exception", () => {
-        const e1 = new Error();
-
-        try {
-          pipe(
-            m.throws({
-              raise: () => {
-                throw e1;
-              },
-            }),
-            m.toReadonlyArray(),
-          );
-          expectFalse(true);
-        } catch (e) {
-          expectTrue(e instanceof Error);
-          pipe(e, expectEquals<unknown>(e1));
-        }
-      }),
-      test("when raise function returns an exception", () => {
-        const e1 = new Error();
-
-        try {
-          pipe(m.throws({ raise: () => e1 }), m.toReadonlyArray());
-          expectFalse(true);
-        } catch (e) {
-          expectTrue(e instanceof Error);
-          pipe(e, expectEquals<unknown>(e1));
-        }
-      }),
     ),
   );
 

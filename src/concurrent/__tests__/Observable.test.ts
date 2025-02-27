@@ -564,7 +564,7 @@ testModule(
 
       pipe(
         Observable.empty({ delay: 1 }),
-        Observable.concatWith(Observable.throws({ raise: () => e1 })),
+        Observable.concatWith(Observable.raise({ raise: () => e1 })),
         Observable.catchError(_ => {
           throw e2;
         }),
@@ -1711,7 +1711,7 @@ testModule(
         pipeLazy(
           Observable.merge(
             pipe([1, 4, 7], Observable.fromReadonlyArray({ delay: 2 })),
-            Observable.throws({ delay: 5 }),
+            Observable.raise({ delay: 5 }),
           ),
           Observable.run(),
         ),
@@ -2012,6 +2012,7 @@ testModule(
     ObservableOperatorWithSideEffectsTests(Observable.onSubscribe(ignore)),
   ),
   describe("pairwise", PureStatefulObservableOperator(Observable.pairwise())),
+  describe("raise", testIsPureRunnable(Observable.raise())),
   describe(
     "repeat",
     test(
@@ -2357,7 +2358,6 @@ testModule(
     ),
     PureStatefulObservableOperator(Observable.throttle(1)),
   ),
-  describe("throws", testIsPureRunnable(Observable.throws())),
   describe(
     "throwIfEmpty",
     test("when source is empty and delayed", () => {
@@ -2483,7 +2483,7 @@ testModule(
           [0],
           Observable.fromReadonlyArray({ delay: 1 }),
           Observable.withLatestFrom(
-            Observable.throws<number>({ raise: returns(error) }),
+            Observable.raise<number>({ raise: returns(error) }),
             returns(1),
           ),
           Observable.run(),

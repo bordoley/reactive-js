@@ -31,6 +31,7 @@ import Deferable_keep from "./Deferable/__private__/Deferable.keep.js";
 import Deferable_last from "./Deferable/__private__/Deferable.last.js";
 import Deferable_map from "./Deferable/__private__/Deferable.map.js";
 import Deferable_pairwise from "./Deferable/__private__/Deferable.pairwise.js";
+import Deferable_raise from "./Deferable/__private__/Deferable.raise.js";
 import Deferable_reduce from "./Deferable/__private__/Deferable.reduce.js";
 import Deferable_repeat from "./Deferable/__private__/Deferable.repeat.js";
 import Deferable_retry from "./Deferable/__private__/Deferable.retry.js";
@@ -41,7 +42,6 @@ import Deferable_takeFirst from "./Deferable/__private__/Deferable.takeFirst.js"
 import Deferable_takeLast from "./Deferable/__private__/Deferable.takeLast.js";
 import Deferable_takeWhile from "./Deferable/__private__/Deferable.takeWhile.js";
 import Deferable_throwIfEmpty from "./Deferable/__private__/Deferable.throwIfEmpty.js";
-import Deferable_throws from "./Deferable/__private__/Deferable.throws.js";
 import Deferable_toReadonlyArray from "./Deferable/__private__/Deferable.toReadonlyArray.js";
 
 /**
@@ -85,6 +85,7 @@ export const keep: Signature["keep"] = Deferable_keep;
 export const last: Signature["last"] = Deferable_last;
 export const map: Signature["map"] = Deferable_map;
 export const pairwise: Signature["pairwise"] = Deferable_pairwise;
+export const raise: Signature["raise"] = Deferable_raise;
 export const reduce: Signature["reduce"] = Deferable_reduce;
 export const repeat: Signature["repeat"] = Deferable_repeat;
 export const retry: Signature["retry"] = Deferable_retry;
@@ -95,7 +96,6 @@ export const takeFirst: Signature["takeFirst"] = Deferable_takeFirst;
 export const takeLast: Signature["takeLast"] = Deferable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Deferable_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Deferable_throwIfEmpty;
-export const throws: Signature["throws"] = Deferable_throws;
 export const toDeferable: Signature["toDeferable"] =
   /*@__PURE__*/ returns(identity);
 export const toReadonlyArray: Signature["toReadonlyArray"] =

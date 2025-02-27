@@ -52,7 +52,7 @@ const AnimatedCircle = ({
 };
 
 const ScrollApp = () => {
-  const spring = useSpring(0, { precision: 0.1, priority: 1});
+  const spring = useSpring(0, { precision: 0.1, priority: 1 });
 
   const publishedAnimation = useDisposable(Publisher.create, []);
 
@@ -73,12 +73,12 @@ const ScrollApp = () => {
           from: pos,
           to: [pos - 0.01, pos],
         }));
-      } 
-      
-      if (!done) {  
+      }
+
+      if (!done) {
         publishedAnimation?.[EventListenerLike_notify](pos);
       } else {
-        spring?.[PauseableLike_resume]()
+        spring?.[PauseableLike_resume]();
       }
     },
     [publishedAnimation],

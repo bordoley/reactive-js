@@ -544,6 +544,32 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 
 ***
 
+### raise()
+
+> **raise**\<`T`\>(`options`?): [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### raise?
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+#### Returns
+
+[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`raise`](../../interfaces/DeferredComputationModule.md#raise)
+
+***
+
 ### reduce()
 
 > **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, `TAcc`\>
@@ -853,32 +879,6 @@ readonly \[[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>, [`Defera
 #### Inherited from
 
 [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`throwIfEmpty`](../../interfaces/DeferredComputationModule.md#throwifempty)
-
-***
-
-### throws()
-
-> **throws**\<`T`\>(`options`?): [`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### raise?
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
-
-#### Returns
-
-[`DeferableLike`](../../interfaces/DeferableLike.md)\<`T`\>
-
-#### Inherited from
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`throws`](../../interfaces/DeferredComputationModule.md#throws)
 
 ***
 
