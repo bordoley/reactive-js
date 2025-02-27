@@ -1,5 +1,6 @@
 import { Array_every, Array_map } from "../../../__internal__/constants.js";
-import { ObservableLike, ObservableLike_isPure } from "../../../concurrent.js";
+import { ComputationLike_isPure } from "../../../computations.js";
+import { ObservableLike } from "../../../concurrent.js";
 import { TypePredicate, isTrue } from "../../../functions.js";
 import Observable_isPure from "./Observable.isPure.js";
 
@@ -10,7 +11,7 @@ const Observable_allArePure = (observables =>
   ReadonlyArray<ObservableLike>,
   ReadonlyArray<
     ObservableLike & {
-      [ObservableLike_isPure]: true;
+      [ComputationLike_isPure]: true;
     }
   >
 >;

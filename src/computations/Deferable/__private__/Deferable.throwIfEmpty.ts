@@ -37,8 +37,9 @@ class ThrowIfEmptySink<T> implements SinkLike<T> {
 const Deferable_throwIfEmpty: Deferable.Signature["throwIfEmpty"] = <T>(
   factory: Factory<unknown>,
 ) =>
-  Deferable_lift((sink: SinkLike<T>) =>
-    newInstance(ThrowIfEmptySink<T>, sink, factory),
+  Deferable_lift(
+    (sink: SinkLike<T>) => newInstance(ThrowIfEmptySink<T>, sink, factory),
+    true,
   );
 
 export default Deferable_throwIfEmpty;

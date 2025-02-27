@@ -1,9 +1,10 @@
 /// <reference types="./Deferable.raise.d.ts" />
 
-import { DeferableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isPure, DeferableLike_eval, } from "../../../computations.js";
 import { error, newInstance, raise } from "../../../functions.js";
 class RaiseDeferable {
     r;
+    [ComputationLike_isPure] = true;
     constructor(r) {
         this.r = r;
     }

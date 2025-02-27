@@ -9,6 +9,8 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   Computation,
+  ComputationLike,
+  ComputationWithSideEffectsLike,
   ComputationWithSideEffectsModule,
   DeferredComputationModule,
   PureStatefulComputationModule,
@@ -23,11 +25,21 @@ import {
   tuple,
 } from "../../../functions.js";
 
-const PureStatefulComputationModuleTests = <C extends Computation>(
-  m: PureStatefulComputationModule<C> &
-    DeferredComputationModule<C> &
-    SynchronousComputationModule<C> &
-    ComputationWithSideEffectsModule<C>,
+const PureStatefulComputationModuleTests = <
+  Type extends ComputationLike,
+  C extends Computation<Type>,
+  TypeWithSideEffects extends ComputationWithSideEffectsLike & Type,
+  CWithSideEffects extends Computation<TypeWithSideEffects> & C,
+>(
+  m: PureStatefulComputationModule<Type, C> &
+    DeferredComputationModule<Type, C> &
+    SynchronousComputationModule<Type, C> &
+    ComputationWithSideEffectsModule<
+      Type,
+      C,
+      TypeWithSideEffects,
+      CWithSideEffects
+    >,
 ) =>
   describe(
     "PureStatefulComputationModule",
@@ -215,7 +227,8 @@ const PureStatefulComputationModuleTests = <C extends Computation>(
         pipe(
           [1, 2, 3],
           m.fromReadonlyArray(),
-          m.forEach(f),
+          m.forEach<number>(f),
+          x => x,
           m.ignoreElements<number>(),
           m.toReadonlyArray(),
           expectArrayEquals([] as number[]),

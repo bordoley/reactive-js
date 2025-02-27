@@ -16,13 +16,13 @@
 
 ## Properties
 
-### \[ObservableLike\_isPure\]
+### \[ComputationLike\_isPure\]
 
-> `readonly` **\[ObservableLike\_isPure\]**: `false`
+> `readonly` **\[ComputationLike\_isPure\]**: `false`
 
 #### Overrides
 
-`DeferredObservableLike.[ObservableLike_isPure]`
+`DeferredObservableLike.[ComputationLike_isPure]`
 
 ***
 

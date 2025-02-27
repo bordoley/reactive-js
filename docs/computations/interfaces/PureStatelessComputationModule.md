@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / PureStatelessComputationModule
 
-# Interface: PureStatelessComputationModule\<C\>
+# Interface: PureStatelessComputationModule\<Type, C\>
 
 ## Extended by
 
@@ -14,13 +14,15 @@
 
 ## Type Parameters
 
-• **C** *extends* [`Computation`](Computation.md)
+• **Type** *extends* [`ComputationLike`](ComputationLike.md)
+
+• **C** *extends* [`Computation`](Computation.md)\<`Type`\>
 
 ## Methods
 
 ### keep()
 
-> **keep**\<`T`\>(`predicate`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+> **keep**\<`T`\>(`predicate`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -34,13 +36,13 @@
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 ***
 
 ### map()
 
-> **map**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `TA`, `TB`\>
+> **map**\<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `TA`, `TB`\>
 
 #### Type Parameters
 
@@ -56,4 +58,4 @@
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `TA`, `TB`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `TA`, `TB`\>

@@ -16,5 +16,5 @@ class PairwiseSink extends AbstractSink {
         this.prev = next;
     }
 }
-const Deferable_pairwise = () => Deferable_lift((sink) => newInstance((PairwiseSink), sink));
+const Deferable_pairwise = () => Deferable_lift((sink) => newInstance((PairwiseSink), sink), true);
 export default Deferable_pairwise;

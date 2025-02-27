@@ -1,14 +1,16 @@
 /// <reference types="./Deferable.repeat.d.ts" />
 
-import { DeferableLike_eval, SinkLike_complete, SinkLike_isComplete, } from "../../../computations.js";
+import { ComputationLike_isPure, DeferableLike_eval, SinkLike_complete, SinkLike_isComplete, } from "../../../computations.js";
 import { alwaysTrue, isFunction, isNone, newInstance, } from "../../../functions.js";
 import DelegatingNonCompletingSink from "../../Sink/__internal__/DelegatingNonCompletingSink.js";
 class RepeatDeferable {
     s;
     p;
+    [ComputationLike_isPure];
     constructor(s, p) {
         this.s = s;
         this.p = p;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
     }
     [DeferableLike_eval](sink) {
         const source = this.s;

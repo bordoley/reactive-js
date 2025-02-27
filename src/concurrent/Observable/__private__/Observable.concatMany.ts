@@ -1,9 +1,9 @@
 import { Array_length } from "../../../__internal__/constants.js";
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
+import { ComputationLike_isPure } from "../../../computations.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
@@ -56,7 +56,7 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
     const ConcatObservable_observables = Symbol("ConcatObservable_observables");
 
     type TProperties<T> = {
-      [ObservableLike_isPure]: boolean;
+      [ComputationLike_isPure]: boolean;
       [ObservableLike_isRunnable]: boolean;
       [ConcatObservable_observables]: readonly ObservableLike<T>[];
     };
@@ -82,7 +82,7 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
         instance: TProperties<T> & ObservableLike<T>,
         observables: readonly ObservableLike<T>[],
       ): ObservableLike<T> {
-        instance[ObservableLike_isPure] = Observable_allArePure(observables);
+        instance[ComputationLike_isPure] = Observable_allArePure(observables);
         instance[ObservableLike_isRunnable] =
           Observable_allAreRunnable(observables);
         instance[ConcatObservable_observables] =
@@ -91,7 +91,7 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
         return instance;
       },
       props<TProperties<T>>({
-        [ObservableLike_isPure]: false,
+        [ComputationLike_isPure]: false,
         [ObservableLike_isRunnable]: false,
         [ConcatObservable_observables]: none,
       }),

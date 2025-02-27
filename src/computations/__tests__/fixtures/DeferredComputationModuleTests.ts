@@ -11,6 +11,7 @@ import {
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import {
   Computation,
+  ComputationLike,
   DeferredComputationModule,
   SynchronousComputationModule,
 } from "../../../computations.js";
@@ -27,8 +28,11 @@ import {
   returns,
 } from "../../../functions.js";
 
-const DeferredComputationModuleTests = <C extends Computation>(
-  m: DeferredComputationModule<C> & SynchronousComputationModule<C>,
+const DeferredComputationModuleTests = <
+  Type extends ComputationLike,
+  C extends Computation<Type>,
+>(
+  m: DeferredComputationModule<Type, C> & SynchronousComputationModule<Type, C>,
 ) =>
   describe(
     "DeferredComputationModule",
@@ -89,7 +93,7 @@ const DeferredComputationModuleTests = <C extends Computation>(
         "with array",
         pipeLazy(
           [1, 2, 3],
-          m.fromIterable(),
+          m.fromIterable<number>(),
           m.toReadonlyArray(),
           expectArrayEquals([1, 2, 3]),
         ),
@@ -508,7 +512,7 @@ const DeferredComputationModuleTests = <C extends Computation>(
         "from iterable source",
         pipeLazy(
           [1, 2, 3, 4],
-          m.fromIterable(),
+          m.fromIterable<number>(),
           m.takeFirst({ count: 2 }),
           m.toReadonlyArray(),
           expectArrayEquals([1, 2]),

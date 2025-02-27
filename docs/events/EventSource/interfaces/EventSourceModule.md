@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`PureStatelessComputationModule`](../../../computations/interfaces/PureStatelessComputationModule.md)\<[`EventSourceComputation`](EventSourceComputation.md)\>
+- [`PureStatelessComputationModule`](../../../computations/interfaces/PureStatelessComputationModule.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md), [`EventSourceComputation`](EventSourceComputation.md)\>
 
 ## Methods
 

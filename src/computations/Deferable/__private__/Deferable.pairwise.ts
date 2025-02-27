@@ -29,8 +29,9 @@ class PairwiseSink<T> extends AbstractSink<T, Tuple2<T, T>> {
 }
 
 const Deferable_pairwise: Deferable.Signature["pairwise"] = <T>() =>
-  Deferable_lift((sink: SinkLike<Tuple2<T, T>>) =>
-    newInstance(PairwiseSink<T>, sink),
+  Deferable_lift(
+    (sink: SinkLike<Tuple2<T, T>>) => newInstance(PairwiseSink<T>, sink),
+    true,
   );
 
 export default Deferable_pairwise;

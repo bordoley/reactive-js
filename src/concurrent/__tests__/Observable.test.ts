@@ -24,6 +24,7 @@ import PureStatefulComputationModuleTests from "../../computations/__tests__/fix
 import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
 import {
+  ComputationLike_isPure,
   ComputationWithSideEffectsModule,
   DeferredComputationModule,
   PureStatefulComputationModule,
@@ -40,7 +41,6 @@ import {
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   PureDeferredObservableLike,
   PureRunnableLike,
@@ -113,19 +113,19 @@ import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
 const expectIsPureRunnable = (obs: PureRunnableLike) => {
   expectTrue(obs[ObservableLike_isRunnable]);
-  expectTrue(obs[ObservableLike_isPure]);
+  expectTrue(obs[ComputationLike_isPure] ?? true);
   expectTrue(obs[ObservableLike_isDeferred]);
 };
 
 const expectIsRunnableWithSideEffects = (obs: RunnableWithSideEffectsLike) => {
   expectTrue(obs[ObservableLike_isRunnable]);
-  expectFalse(obs[ObservableLike_isPure]);
+  expectFalse(obs[ComputationLike_isPure]);
   expectTrue(obs[ObservableLike_isDeferred]);
 };
 
 const expectIsPureDeferredObservable = (obs: PureDeferredObservableLike) => {
   expectFalse(obs[ObservableLike_isRunnable]);
-  expectTrue(obs[ObservableLike_isPure]);
+  expectTrue(obs[ComputationLike_isPure] ?? true);
   expectTrue(obs[ObservableLike_isDeferred]);
 };
 
@@ -133,13 +133,13 @@ const expectIsDeferredObservableWithSideEffects = (
   obs: DeferredObservableWithSideEffectsLike,
 ) => {
   expectFalse(obs[ObservableLike_isRunnable]);
-  expectFalse(obs[ObservableLike_isPure]);
+  expectFalse(obs[ComputationLike_isPure]);
   expectTrue(obs[ObservableLike_isDeferred]);
 };
 
 const expectIsMulticastObservable = (obs: MulticastObservableLike) => {
   expectFalse(obs[ObservableLike_isRunnable]);
-  expectTrue(obs[ObservableLike_isPure]);
+  expectTrue(obs[ComputationLike_isPure] ?? true);
   expectFalse(obs[ObservableLike_isDeferred]);
 };
 
@@ -471,29 +471,72 @@ testModule(
       expectToThrow(() => __constant(0));
     }),
   ),
-  DeferredComputationModuleTests<Observable.RunnableComputation>(
-    Observable as DeferredComputationModule<Observable.RunnableComputation> &
-      SynchronousComputationModule<Observable.RunnableComputation>,
+  DeferredComputationModuleTests<RunnableLike, Observable.RunnableComputation>(
+    Observable as DeferredComputationModule<
+      RunnableLike,
+      Observable.RunnableComputation
+    > &
+      SynchronousComputationModule<
+        RunnableLike,
+        Observable.RunnableComputation
+      >,
   ),
   PureStatelesssComputationModuleTests(
-    Observable as PureStatelessComputationModule<Observable.RunnableComputation> &
-      DeferredComputationModule<Observable.RunnableComputation> &
-      SynchronousComputationModule<Observable.RunnableComputation>,
+    Observable as PureStatelessComputationModule<
+      RunnableLike,
+      Observable.RunnableComputation
+    > &
+      DeferredComputationModule<RunnableLike, Observable.RunnableComputation> &
+      SynchronousComputationModule<
+        RunnableLike,
+        Observable.RunnableComputation
+      >,
   ),
   PureStatefulComputationModuleTests(
-    Observable as PureStatefulComputationModule<Observable.RunnableComputation> &
-      DeferredComputationModule<Observable.RunnableComputation> &
-      SynchronousComputationModule<Observable.RunnableComputation> &
-      ComputationWithSideEffectsModule<Observable.RunnableComputation>,
+    Observable as PureStatefulComputationModule<
+      RunnableLike,
+      Observable.RunnableComputation
+    > &
+      DeferredComputationModule<RunnableLike, Observable.RunnableComputation> &
+      SynchronousComputationModule<
+        RunnableLike,
+        Observable.RunnableComputation
+      > &
+      ComputationWithSideEffectsModule<
+        RunnableLike,
+        Observable.RunnableComputation,
+        RunnableWithSideEffectsLike,
+        Observable.RunnableWithSideEffectsComputation
+      >,
   ),
   ComputationWithSideEffectsModuleTests(
-    Observable as DeferredComputationModule<Observable.RunnableComputation> &
-      ComputationWithSideEffectsModule<Observable.RunnableComputation> &
-      SynchronousComputationModule<Observable.RunnableComputation>,
+    Observable as DeferredComputationModule<
+      RunnableLike,
+      Observable.RunnableComputation
+    > &
+      ComputationWithSideEffectsModule<
+        RunnableLike,
+        Observable.RunnableComputation,
+        RunnableWithSideEffectsLike,
+        Observable.RunnableWithSideEffectsComputation
+      > &
+      SynchronousComputationModule<
+        RunnableLike,
+        Observable.RunnableComputation
+      >,
   ),
-  SynchronousComputationModuleTests<Observable.RunnableComputation>(
-    Observable as DeferredComputationModule<Observable.RunnableComputation> &
-      SynchronousComputationModule<Observable.RunnableComputation>,
+  SynchronousComputationModuleTests<
+    RunnableLike,
+    Observable.RunnableComputation
+  >(
+    Observable as DeferredComputationModule<
+      RunnableLike,
+      Observable.RunnableComputation
+    > &
+      SynchronousComputationModule<
+        RunnableLike,
+        Observable.RunnableComputation
+      >,
   ),
   describe(
     "backpressureStrategy",
@@ -750,7 +793,7 @@ testModule(
           },
           { mode: "combine-latest" },
         ),
-        keepType<Observable.RunnableWithSideEffectsComputation>(
+        keepType<RunnableLike, Observable.RunnableWithSideEffectsComputation>(
           Observable.keep,
         )(isSome),
         Observable.forEach<number>(bindMethod(result, Array_push)),

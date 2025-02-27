@@ -8,9 +8,28 @@
 
 Represents a deferred computation that is synchronously evaluated.
 
+## Extends
+
+- [`ComputationLike`](ComputationLike.md)
+
+## Extended by
+
+- [`PureDeferableLike`](PureDeferableLike.md)
+- [`DeferableWithSideEffectsLike`](DeferableWithSideEffectsLike.md)
+
 ## Type Parameters
 
 • **T** = `unknown`
+
+## Properties
+
+### \[ComputationLike\_isPure\]
+
+> **\[ComputationLike\_isPure\]**: `boolean`
+
+#### Overrides
+
+[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isPure]`](ComputationLike.md#computationlike_ispure)
 
 ## Methods
 

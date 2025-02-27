@@ -19,7 +19,7 @@ import EventSource_mergeWith from "./EventSource/__private__/EventSource.mergeWi
 /**
  * @noInheritDoc
  */
-export interface EventSourceComputation extends Computation {
+export interface EventSourceComputation extends Computation<EventSourceLike> {
   readonly [Computation_type]?: EventSourceLike<this[typeof Computation_T]>;
 }
 
@@ -27,7 +27,10 @@ export interface EventSourceComputation extends Computation {
  * @noInheritDoc
  */
 export interface EventSourceModule
-  extends PureStatelessComputationModule<EventSourceComputation> {
+  extends PureStatelessComputationModule<
+    EventSourceLike,
+    EventSourceComputation
+  > {
   addEventHandler<T>(
     handler: SideEffect1<T>,
   ): Function1<EventSourceLike<T>, DisposableLike>;

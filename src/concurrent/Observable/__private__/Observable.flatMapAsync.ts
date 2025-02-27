@@ -1,6 +1,6 @@
+import { ComputationLike_isPure } from "../../../computations.js";
 import {
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
 } from "../../../concurrent.js";
 import { Function2, pipe } from "../../../functions.js";
@@ -20,7 +20,7 @@ const Observable_flatMapAsync: Observable.Signature["flatMapAsync"] = <TA, TB>(
   return Observable_concatMap(mapper, {
     innerType: {
       [ObservableLike_isDeferred]: true,
-      [ObservableLike_isPure]: false,
+      [ComputationLike_isPure]: false,
       [ObservableLike_isRunnable]: false,
     },
   });

@@ -16,6 +16,16 @@
 
 ## Properties
 
+### \[ComputationLike\_isPure\]?
+
+> `readonly` `optional` **\[ComputationLike\_isPure\]**: `true`
+
+#### Overrides
+
+[`PureDeferredObservableLike`](PureDeferredObservableLike.md).[`[ComputationLike_isPure]`](PureDeferredObservableLike.md#computationlike_ispure)
+
+***
+
 ### \[ObservableLike\_isDeferred\]
 
 > `readonly` **\[ObservableLike\_isDeferred\]**: `true`
@@ -26,18 +36,6 @@ the observable is multicasted.
 #### Overrides
 
 [`PureDeferredObservableLike`](PureDeferredObservableLike.md).[`[ObservableLike_isDeferred]`](PureDeferredObservableLike.md#observablelike_isdeferred)
-
-***
-
-### \[ObservableLike\_isPure\]
-
-> `readonly` **\[ObservableLike\_isPure\]**: `true`
-
-Indicates if subscribing to the `ObservableLike` is free of side-effects
-
-#### Overrides
-
-[`PureDeferredObservableLike`](PureDeferredObservableLike.md).[`[ObservableLike_isPure]`](PureDeferredObservableLike.md#observablelike_ispure)
 
 ***
 

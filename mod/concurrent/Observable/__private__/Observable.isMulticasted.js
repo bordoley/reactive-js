@@ -1,5 +1,6 @@
 /// <reference types="./Observable.isMulticasted.d.ts" />
 
-import { ObservableLike_isDeferred, ObservableLike_isPure, } from "../../../concurrent.js";
-const Observable_isMulticasted = (obs) => !obs[ObservableLike_isDeferred] && obs[ObservableLike_isPure];
+import { ComputationLike_isPure } from "../../../computations.js";
+import { ObservableLike_isDeferred, } from "../../../concurrent.js";
+const Observable_isMulticasted = (obs) => !obs[ObservableLike_isDeferred] && (obs[ComputationLike_isPure] ?? true);
 export default Observable_isMulticasted;

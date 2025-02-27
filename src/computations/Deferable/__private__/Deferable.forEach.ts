@@ -23,6 +23,9 @@ class ForEachSink<T> extends AbstractSink<T> {
 const Deferable_forEach: Deferable.Signature["forEach"] = <T>(
   ef: SideEffect1<T>,
 ) =>
-  Deferable_lift((sink: SinkLike<T>) => newInstance(ForEachSink<T>, sink, ef));
+  Deferable_lift(
+    (sink: SinkLike<T>) => newInstance(ForEachSink<T>, sink, ef),
+    false,
+  );
 
 export default Deferable_forEach;

@@ -15,5 +15,5 @@ class ForEachSink extends AbstractSink {
         this[AbstractSink_delegate][SinkLike_next](next);
     }
 }
-const Deferable_forEach = (ef) => Deferable_lift((sink) => newInstance((ForEachSink), sink, ef));
+const Deferable_forEach = (ef) => Deferable_lift((sink) => newInstance((ForEachSink), sink, ef), false);
 export default Deferable_forEach;

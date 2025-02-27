@@ -1,6 +1,6 @@
+import { ComputationLike_isPure } from "../../../computations.js";
 import {
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
 } from "../../../concurrent.js";
 import { none } from "../../../functions.js";
@@ -10,7 +10,7 @@ import Observable_mergeAll from "./Observable.mergeAll.js";
 const Observable_concatAll: Observable.Signature["concatAll"] = ((options?: {
   readonly innerType?: {
     readonly [ObservableLike_isDeferred]?: boolean;
-    readonly [ObservableLike_isPure]?: boolean;
+    readonly [ComputationLike_isPure]?: boolean;
     readonly [ObservableLike_isRunnable]?: boolean;
   };
 }) =>

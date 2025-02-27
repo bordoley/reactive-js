@@ -26,8 +26,10 @@ const Deferable_scan: Deferable.Signature["scan"] = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ) =>
-  Deferable_lift((sink: SinkLike<TAcc>) =>
-    newInstance(ScanSink<T, TAcc>, sink, reducer, initialValue()),
+  Deferable_lift(
+    (sink: SinkLike<TAcc>) =>
+      newInstance(ScanSink<T, TAcc>, sink, reducer, initialValue()),
+    true,
   );
 
 export default Deferable_scan;

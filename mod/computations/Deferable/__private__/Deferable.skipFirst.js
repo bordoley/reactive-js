@@ -18,5 +18,5 @@ class SkipFirstSink extends AbstractSink {
         }
     }
 }
-const Deferable_skipFirst = (options) => Deferable_lift((sink) => newInstance((SkipFirstSink), sink, clampPositiveInteger(options?.count ?? 1)));
+const Deferable_skipFirst = (options) => Deferable_lift((sink) => newInstance((SkipFirstSink), sink, clampPositiveInteger(options?.count ?? 1)), true);
 export default Deferable_skipFirst;

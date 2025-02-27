@@ -4,12 +4,14 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / ComputationOf
 
-# Type Alias: ComputationOf\<C, T\>
+# Type Alias: ComputationOf\<Type, C, T\>
 
-> **ComputationOf**\<`C`, `T`\>: `C` *extends* `object` ? `NonNullable`\<`C` & `object`\[*typeof* [`Computation_type`](../variables/Computation_type.md)\]\> : `object`
+> **ComputationOf**\<`Type`, `C`, `T`\>: `C` *extends* `object` ? `NonNullable`\<`C` & `object`\[*typeof* [`Computation_type`](../variables/Computation_type.md)\] & `Pick`\<`Type`, *typeof* [`ComputationLike_isPure`](../variables/ComputationLike_isPure.md)\>\> : `object`
 
 ## Type Parameters
 
-• **C** *extends* [`Computation`](../interfaces/Computation.md)
+• **Type** *extends* [`ComputationLike`](../interfaces/ComputationLike.md)
+
+• **C** *extends* [`Computation`](../interfaces/Computation.md)\<`Type`\>
 
 • **T**

@@ -1,6 +1,7 @@
 /// <reference types="./Observable.flatMapAsync.d.ts" />
 
-import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, } from "../../../concurrent.js";
+import { ComputationLike_isPure } from "../../../computations.js";
+import { ObservableLike_isDeferred, ObservableLike_isRunnable, } from "../../../concurrent.js";
 import { pipe } from "../../../functions.js";
 import Observable_concatMap from "./Observable.concatMap.js";
 import Observable_fromAsyncFactory from "./Observable.fromAsyncFactory.js";
@@ -9,7 +10,7 @@ const Observable_flatMapAsync = (f) => {
     return Observable_concatMap(mapper, {
         innerType: {
             [ObservableLike_isDeferred]: true,
-            [ObservableLike_isPure]: false,
+            [ComputationLike_isPure]: false,
             [ObservableLike_isRunnable]: false,
         },
     });

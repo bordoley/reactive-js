@@ -10,6 +10,7 @@
 
 - [DeferableComputation](interfaces/DeferableComputation.md)
 - [DeferableModule](interfaces/DeferableModule.md)
+- [DeferableWithSideEffectsComputation](interfaces/DeferableWithSideEffectsComputation.md)
 
 ## Type Aliases
 

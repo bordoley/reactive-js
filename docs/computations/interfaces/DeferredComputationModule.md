@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / DeferredComputationModule
 
-# Interface: DeferredComputationModule\<C\>
+# Interface: DeferredComputationModule\<Type, C\>
 
 ## Extended by
 
@@ -13,7 +13,9 @@
 
 ## Type Parameters
 
-• **C** *extends* [`Computation`](Computation.md)
+• **Type** *extends* [`ComputationLike`](ComputationLike.md)
+
+• **C** *extends* [`Computation`](Computation.md)\<`Type`\>
 
 ## Methods
 
@@ -21,7 +23,7 @@
 
 #### Call Signature
 
-> **catchError**\<`T`\>(`onError`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+> **catchError**\<`T`\>(`onError`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -35,11 +37,11 @@
 
 ##### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 #### Call Signature
 
-> **catchError**\<`T`\>(`onError`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+> **catchError**\<`T`\>(`onError`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -49,17 +51,17 @@
 
 ###### onError
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<`Error`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<`Error`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>\>
 
 ##### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 ***
 
 ### concat()
 
-> **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+> **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>
 
 #### Type Parameters
 
@@ -69,25 +71,25 @@
 
 ##### fst
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>
 
 ##### snd
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>
 
 ##### tail
 
-...readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>[]
+...readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>[]
 
 #### Returns
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>
 
 ***
 
 ### concatAll()
 
-> **concatAll**\<`T`\>(): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, `T`\>
+> **concatAll**\<`T`\>(): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>, `T`\>
 
 #### Type Parameters
 
@@ -95,13 +97,13 @@
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>, `T`\>
 
 ***
 
 ### concatMany()
 
-> **concatMany**\<`T`\>(`computations`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+> **concatMany**\<`T`\>(`computations`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>
 
 #### Type Parameters
 
@@ -111,17 +113,17 @@
 
 ##### computations
 
-readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\]
+readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>\]
 
 #### Returns
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>
 
 ***
 
 ### concatMap()
 
-> **concatMap**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `TA`, `TB`\>
+> **concatMap**\<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `TA`, `TB`\>
 
 #### Type Parameters
 
@@ -133,17 +135,17 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 ##### selector
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<`TA`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `TB`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<`TA`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `TB`\>\>
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `TA`, `TB`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `TA`, `TB`\>
 
 ***
 
 ### concatWith()
 
-> **concatWith**\<`T`\>(`snd`, ...`tail`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+> **concatWith**\<`T`\>(`snd`, ...`tail`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -153,21 +155,21 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 ##### snd
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>
 
 ##### tail
 
-...readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>[]
+...readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>[]
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 ***
 
 ### empty()
 
-> **empty**\<`T`\>(): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+> **empty**\<`T`\>(): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>
 
 #### Type Parameters
 
@@ -175,13 +177,13 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 #### Returns
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>
 
 ***
 
 ### endWith()
 
-> **endWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+> **endWith**\<`T`\>(`value`, ...`values`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -199,27 +201,29 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 ***
 
 ### fromIterable()
 
-> **fromIterable**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\>
+> **fromIterable**\<`T`, `TIterable`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`TIterable`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>\>
 
 #### Type Parameters
 
 • **T**
 
+• **TIterable** *extends* [`IterableLike`](IterableLike.md)\<`T`\> = [`IterableLike`](IterableLike.md)\<`T`\>
+
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<`TIterable`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>\>
 
 ***
 
 ### fromReadonlyArray()
 
-> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\>
+> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>\>
 
 #### Type Parameters
 
@@ -239,13 +243,13 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>\>
 
 ***
 
 ### fromValue()
 
-> **fromValue**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\>
+> **fromValue**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>\>
 
 #### Type Parameters
 
@@ -253,13 +257,13 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>\>
 
 ***
 
 ### generate()
 
-> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>
 
 #### Type Parameters
 
@@ -283,13 +287,13 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 #### Returns
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>
 
 ***
 
 ### raise()
 
-> **raise**\<`T`\>(`options`?): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+> **raise**\<`T`\>(`options`?): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>
 
 #### Type Parameters
 
@@ -305,7 +309,7 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 #### Returns
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>
 
 ***
 
@@ -313,7 +317,7 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 #### Call Signature
 
-> **repeat**\<`T`\>(`predicate`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+> **repeat**\<`T`\>(`predicate`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -327,11 +331,11 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 ##### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 #### Call Signature
 
-> **repeat**\<`T`\>(`count`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+> **repeat**\<`T`\>(`count`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -345,11 +349,11 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 ##### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 #### Call Signature
 
-> **repeat**\<`T`\>(): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+> **repeat**\<`T`\>(): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -357,13 +361,13 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 ##### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 ***
 
 ### retry()
 
-> **retry**\<`T`\>(`shouldRetry`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+> **retry**\<`T`\>(`shouldRetry`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -377,13 +381,13 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 ***
 
 ### scan()
 
-> **scan**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `TAcc`\>
+> **scan**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `TAcc`\>
 
 #### Type Parameters
 
@@ -403,13 +407,13 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `TAcc`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `TAcc`\>
 
 ***
 
 ### startWith()
 
-> **startWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+> **startWith**\<`T`\>(`value`, ...`values`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -427,13 +431,13 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 ***
 
 ### takeFirst()
 
-> **takeFirst**\<`T`\>(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+> **takeFirst**\<`T`\>(`options`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -449,13 +453,13 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 ***
 
 ### takeWhile()
 
-> **takeWhile**\<`T`\>(`predicate`, `options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+> **takeWhile**\<`T`\>(`predicate`, `options`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -475,13 +479,13 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 ***
 
 ### throwIfEmpty()
 
-> **throwIfEmpty**\<`T`\>(`factory`, `options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+> **throwIfEmpty**\<`T`\>(`factory`, `options`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -499,4 +503,4 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>, [`Co
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>

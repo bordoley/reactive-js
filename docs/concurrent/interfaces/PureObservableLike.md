@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ObservableLike`](ObservableLike.md)\<`T`\>
+- [`ObservableLike`](ObservableLike.md)\<`T`\>.[`PureComputationLike`](../../computations/interfaces/PureComputationLike.md)
 
 ## Extended by
 
@@ -21,12 +21,10 @@
 
 ## Properties
 
-### \[ObservableLike\_isPure\]
+### \[ComputationLike\_isPure\]?
 
-> `readonly` **\[ObservableLike\_isPure\]**: `true`
-
-Indicates if subscribing to the `ObservableLike` is free of side-effects
+> `readonly` `optional` **\[ComputationLike\_isPure\]**: `true`
 
 #### Overrides
 
-[`ObservableLike`](ObservableLike.md).[`[ObservableLike_isPure]`](ObservableLike.md#observablelike_ispure)
+[`PureComputationLike`](../../computations/interfaces/PureComputationLike.md).[`[ComputationLike_isPure]`](../../computations/interfaces/PureComputationLike.md#computationlike_ispure)

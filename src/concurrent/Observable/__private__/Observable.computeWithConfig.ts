@@ -3,11 +3,11 @@ import {
   Array_push,
   __DEV__,
 } from "../../../__internal__/constants.js";
+import { ComputationLike_isPure } from "../../../computations.js";
 import {
   DeferredObservableWithSideEffectsLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
@@ -393,7 +393,7 @@ interface ObservableComputeWithConfig {
     config: Pick<
       RunnableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isPure
+      | typeof ComputationLike_isPure
       | typeof ObservableLike_isRunnable
     >,
     options?: { readonly mode?: Observable.ComputeMode },
@@ -403,7 +403,7 @@ interface ObservableComputeWithConfig {
     config: Pick<
       DeferredObservableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isPure
+      | typeof ComputationLike_isPure
       | typeof ObservableLike_isRunnable
     >,
     options?: { readonly mode?: Observable.ComputeMode },
@@ -416,7 +416,7 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
     config: Pick<
       DeferredObservableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isPure
+      | typeof ComputationLike_isPure
       | typeof ObservableLike_isRunnable
     >,
     {

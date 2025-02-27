@@ -1,3 +1,4 @@
+import { PureComputationLike } from "./computations.js";
 import { DisposableLike } from "./utils.js";
 export declare const EventListenerLike_notify: unique symbol;
 /**
@@ -15,7 +16,7 @@ export declare const EventSourceLike_addEventListener: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface EventSourceLike<out T = unknown> {
+export interface EventSourceLike<out T = unknown> extends PureComputationLike {
     [EventSourceLike_addEventListener](listener: EventListenerLike<T>): void;
 }
 /**

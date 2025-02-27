@@ -34,5 +34,5 @@ class DecodeWithCharsetSink {
         }
     }
 }
-const Deferable_decodeWithCharset = (options) => Deferable_lift((sink) => newInstance(DecodeWithCharsetSink, sink, options?.charset ?? "utf-8", options));
+const Deferable_decodeWithCharset = (options) => Deferable_lift((sink) => newInstance(DecodeWithCharsetSink, sink, options?.charset ?? "utf-8", options), true);
 export default Deferable_decodeWithCharset;

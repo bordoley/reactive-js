@@ -6,17 +6,19 @@
 
 # Function: sequence()
 
-> **sequence**\<`C`\>(`generate`): (`start`) => [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `number`\>
+> **sequence**\<`Type`, `C`\>(`generate`): (`start`) => [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `number`\>
 
 ## Type Parameters
 
-• **C** *extends* [`Computation`](../interfaces/Computation.md)
+• **Type** *extends* [`ComputationLike`](../interfaces/ComputationLike.md)
+
+• **C** *extends* [`Computation`](../interfaces/Computation.md)\<`Type`\>
 
 ## Parameters
 
 ### generate
 
-\<`T`\>(`generator`, `initialValue`, `options`?) => [`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `T`\>
+\<`T`\>(`generator`, `initialValue`, `options`?) => [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>
 
 ## Returns
 
@@ -30,4 +32,4 @@
 
 ### Returns
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`C`, `number`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `number`\>

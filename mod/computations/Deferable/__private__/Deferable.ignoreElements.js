@@ -7,5 +7,5 @@ import Deferable_lift from "./Deferable.lift.js";
 class IgnoreElementsSink extends AbstractSink {
     [SinkLike_next](_) { }
 }
-const Deferable_ignoreElements = () => Deferable_lift((sink) => newInstance((IgnoreElementsSink), sink));
+const Deferable_ignoreElements = () => Deferable_lift((sink) => newInstance((IgnoreElementsSink), sink), true);
 export default Deferable_ignoreElements;

@@ -5,10 +5,10 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
+import { ComputationLike_isPure } from "../../../computations.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
@@ -128,7 +128,7 @@ const createSwitchAllObserver: <T>(
 const Observable_switchAll: Observable.Signature["switchAll"] = ((options?: {
   readonly innerType?: {
     readonly [ObservableLike_isDeferred]: boolean;
-    readonly [ObservableLike_isPure]: boolean;
+    readonly [ComputationLike_isPure]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
   };
 }) =>
@@ -136,7 +136,7 @@ const Observable_switchAll: Observable.Signature["switchAll"] = ((options?: {
     [ObservableLift_isStateless]: false,
     ...(options?.innerType ?? {
       [ObservableLike_isDeferred]: true,
-      [ObservableLike_isPure]: true,
+      [ComputationLike_isPure]: true,
       [ObservableLike_isRunnable]: true,
     }),
   })(createSwitchAllObserver)) as Observable.Signature["switchAll"];

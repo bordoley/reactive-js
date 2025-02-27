@@ -6,17 +6,19 @@
 
 # Function: keepType()
 
-> **keepType**\<`C`\>(`keep`): \<`TA`, `TB`\>(`predicate`) => [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `TA`, `TB`\>
+> **keepType**\<`Type`, `C`\>(`keep`): \<`TA`, `TB`\>(`predicate`) => [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `TA`, `TB`\>
 
 ## Type Parameters
 
-• **C** *extends* [`Computation`](../interfaces/Computation.md)
+• **Type** *extends* [`ComputationLike`](../interfaces/ComputationLike.md)
+
+• **C** *extends* [`Computation`](../interfaces/Computation.md)\<`Type`\>
 
 ## Parameters
 
 ### keep
 
-\<`T`\>(`predicate`) => [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `T`, `T`\>
+\<`T`\>(`predicate`) => [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
 
 ## Returns
 
@@ -36,4 +38,4 @@
 
 ### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `TA`, `TB`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `TA`, `TB`\>

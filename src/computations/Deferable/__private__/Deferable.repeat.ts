@@ -1,4 +1,5 @@
 import {
+  ComputationLike_isPure,
   DeferableLike,
   DeferableLike_eval,
   SinkLike,
@@ -16,10 +17,13 @@ import type * as Deferable from "../../Deferable.js";
 import DelegatingNonCompletingSink from "../../Sink/__internal__/DelegatingNonCompletingSink.js";
 
 class RepeatDeferable<T> implements DeferableLike<T> {
+  readonly [ComputationLike_isPure]: boolean;
   constructor(
     private readonly s: DeferableLike<T>,
     private readonly p: Predicate<number>,
-  ) {}
+  ) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
 
   [DeferableLike_eval](sink: SinkLike<T>): void {
     const source = this.s;

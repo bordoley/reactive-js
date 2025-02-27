@@ -1,5 +1,5 @@
-import { Computation, Computation_T, Computation_type, DeferableLike } from "../computations.js";
-import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
+import { Computation, ComputationLike_isPure, Computation_T, Computation_type, DeferableLike } from "../computations.js";
+import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isRunnable, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
 import { EventListenerLike, EventSourceLike, StoreLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9, Updater } from "../functions.js";
 import { BackpressureStrategy, DisposableLike, QueueableLike } from "../utils.js";
@@ -7,44 +7,44 @@ export type PureStatelessObservableOperator<TIn, out TOut> = <TObservableIn exte
 export type PureStatefulObservableOperator<TIn, out TOut, TObservableInBase = ObservableLike<TIn>> = <TObservableIn extends TObservableInBase>(observable: TObservableIn) => TObservableIn extends PureRunnableLike<TIn> ? PureRunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends PureDeferredObservableLike<TIn> ? PureDeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? PureDeferredObservableLike<TOut> : TObservableIn extends DeferredObservableWithSideEffectsLike<TIn> ? DeferredObservableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : ObservableLike<TOut>;
 export type DeferringObservableOperator<TIn, out TOut, TObservableInBase = ObservableLike<TIn>> = <TObservableIn extends TObservableInBase>(obs: TObservableIn) => TObservableIn extends PureObservableLike<TIn> ? PureDeferredObservableLike<TOut> : DeferredObservableWithSideEffectsLike<TOut>;
 export type ObservableOperatorWithSideEffects<TIn, out TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends PureRunnableLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends PureDeferredObservableLike<TIn> ? DeferredObservableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableWithSideEffectsLike<TIn> ? DeferredObservableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableWithSideEffectsLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? DeferredObservableWithSideEffectsLike<TOut> : ObservableLike<TOut>;
-export declare const PureRunnableType: Pick<PureRunnableLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>;
-export declare const RunnableWithSideEffectsType: Pick<RunnableWithSideEffectsLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>;
-export declare const PureDeferredObservableType: Pick<PureDeferredObservableLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>;
-export declare const DeferredObservableWithSideEffectsType: Pick<DeferredObservableWithSideEffectsLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>;
+export declare const PureRunnableType: Pick<PureRunnableLike, typeof ObservableLike_isDeferred | typeof ComputationLike_isPure | typeof ObservableLike_isRunnable>;
+export declare const RunnableWithSideEffectsType: Pick<RunnableWithSideEffectsLike, typeof ObservableLike_isDeferred | typeof ComputationLike_isPure | typeof ObservableLike_isRunnable>;
+export declare const PureDeferredObservableType: Pick<PureDeferredObservableLike, typeof ObservableLike_isDeferred | typeof ComputationLike_isPure | typeof ObservableLike_isRunnable>;
+export declare const DeferredObservableWithSideEffectsType: Pick<DeferredObservableWithSideEffectsLike, typeof ObservableLike_isDeferred | typeof ComputationLike_isPure | typeof ObservableLike_isRunnable>;
 /**
  * @noInheritDoc
  */
-export interface PureRunnableComputation extends Computation {
+export interface PureRunnableComputation extends Computation<PureRunnableLike> {
     readonly [Computation_type]?: PureRunnableLike<this[typeof Computation_T]>;
 }
 /**
  * @noInheritDoc
  */
-export interface RunnableWithSideEffectsComputation extends Computation {
+export interface RunnableWithSideEffectsComputation extends Computation<RunnableWithSideEffectsLike> {
     readonly [Computation_type]?: RunnableWithSideEffectsLike<this[typeof Computation_T]>;
 }
 /**
  * @noInheritDoc
  */
-export interface RunnableComputation extends Computation {
+export interface RunnableComputation extends Computation<RunnableLike> {
     readonly [Computation_type]?: RunnableLike<this[typeof Computation_T]>;
 }
 /**
  * @noInheritDoc
  */
-export interface PuredDeferredObservableComputation extends Computation {
+export interface PuredDeferredObservableComputation extends Computation<PureDeferredObservableLike> {
     readonly [Computation_type]?: PureDeferredObservableLike<this[typeof Computation_T]>;
 }
 /**
  * @noInheritDoc
  */
-export interface DeferredObservableWithSideEffectsComputation extends Computation {
+export interface DeferredObservableWithSideEffectsComputation extends Computation<DeferredObservableWithSideEffectsLike> {
     readonly [Computation_type]?: DeferredObservableWithSideEffectsLike<this[typeof Computation_T]>;
 }
 /**
  * @noInheritDoc
  */
-export interface MulticastObservableComputation extends Computation {
+export interface MulticastObservableComputation extends Computation<MulticastObservableLike> {
     readonly [Computation_type]?: MulticastObservableLike<this[typeof Computation_T]>;
 }
 export declare const BatchedComputeMode = "batched";

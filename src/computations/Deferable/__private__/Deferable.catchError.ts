@@ -1,4 +1,5 @@
 import {
+  ComputationLike_isPure,
   DeferableLike,
   DeferableLike_eval,
   SinkLike,
@@ -16,12 +17,16 @@ import {
 import type * as Deferable from "../../Deferable.js";
 
 class CatchErrorDeferable<T> implements DeferableLike<T> {
+  readonly [ComputationLike_isPure]: boolean;
+
   constructor(
     private readonly s: DeferableLike<T>,
     private readonly onError:
       | SideEffect1<Error>
       | Function1<Error, DeferableLike<T>>,
-  ) {}
+  ) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
 
   [DeferableLike_eval](sink: SinkLike<T>): void {
     try {

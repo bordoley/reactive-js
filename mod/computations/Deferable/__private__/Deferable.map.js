@@ -15,5 +15,5 @@ class MapSink extends AbstractSink {
         this[AbstractSink_delegate][SinkLike_next](mapped);
     }
 }
-const Deferable_map = (selector) => Deferable_lift((sink) => newInstance((MapSink), sink, selector));
+const Deferable_map = (selector) => Deferable_lift((sink) => newInstance((MapSink), sink, selector), true);
 export default Deferable_map;

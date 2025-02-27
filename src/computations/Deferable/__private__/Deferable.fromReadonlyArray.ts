@@ -1,7 +1,8 @@
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
 import {
-  DeferableLike,
+  ComputationLike_isPure,
   DeferableLike_eval,
+  PureDeferableLike,
   SinkLike,
   SinkLike_complete,
   SinkLike_isComplete,
@@ -10,7 +11,9 @@ import {
 import { newInstance } from "../../../functions.js";
 import type * as Deferable from "../../Deferable.js";
 
-class FromReadonlyArrayDeferable<T> implements DeferableLike<T> {
+class FromReadonlyArrayDeferable<T> implements PureDeferableLike<T> {
+  readonly [ComputationLike_isPure]: true = true as const;
+
   constructor(
     private readonly arr: readonly T[],
     private readonly count: number,

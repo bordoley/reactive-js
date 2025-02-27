@@ -6,18 +6,20 @@
 
 # Function: pick()
 
-> **pick**\<`C`\>(`map`): [`Pick`](../interfaces/Pick.md)\<`C`\>
+> **pick**\<`Type`, `C`\>(`map`): [`PickOperator`](../interfaces/PickOperator.md)\<`Type`, `C`\>
 
 ## Type Parameters
 
-• **C** *extends* [`Computation`](../interfaces/Computation.md)
+• **Type** *extends* [`ComputationLike`](../interfaces/ComputationLike.md)
+
+• **C** *extends* [`Computation`](../interfaces/Computation.md)\<`Type`\>
 
 ## Parameters
 
 ### map
 
-\<`TA`, `TB`\>(`selector`) => [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`C`, `TA`, `TB`\>
+\<`TA`, `TB`\>(`selector`) => [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `TA`, `TB`\>
 
 ## Returns
 
-[`Pick`](../interfaces/Pick.md)\<`C`\>
+[`PickOperator`](../interfaces/PickOperator.md)\<`Type`, `C`\>

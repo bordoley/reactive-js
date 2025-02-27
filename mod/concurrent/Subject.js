@@ -3,7 +3,8 @@
 import { Set, Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
 import { clampPositiveInteger } from "../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
-import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, SchedulerLike_inContinuation, } from "../concurrent.js";
+import { ComputationLike_isPure } from "../computations.js";
+import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, SchedulerLike_inContinuation, } from "../concurrent.js";
 import { EventListenerLike_notify } from "../events.js";
 import { error, isSome, newInstance, none, pipe, } from "../functions.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
@@ -49,7 +50,7 @@ export const create = /*@__PURE__*/ (() => {
         [Subject_onObserverDisposed]: none,
     }), {
         [ObservableLike_isDeferred]: false,
-        [ObservableLike_isPure]: true,
+        [ComputationLike_isPure]: true,
         [ObservableLike_isRunnable]: false,
         [EventListenerLike_notify](next) {
             if (this[DisposableLike_isDisposed]) {

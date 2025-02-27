@@ -1,12 +1,14 @@
 /// <reference types="./Deferable.concatMany.d.ts" />
 
-import { DeferableLike_eval, SinkLike_complete, SinkLike_isComplete, } from "../../../computations.js";
-import { newInstance } from "../../../functions.js";
+import { ComputationLike_isPure, DeferableLike_eval, SinkLike_complete, SinkLike_isComplete, } from "../../../computations.js";
+import { newInstance, pick } from "../../../functions.js";
 import DelegatingNonCompletingSink from "../../Sink/__internal__/DelegatingNonCompletingSink.js";
 class ConcatManyDeferable {
     s;
+    [ComputationLike_isPure];
     constructor(s) {
         this.s = s;
+        this[ComputationLike_isPure] = s.every(pick(ComputationLike_isPure));
     }
     [DeferableLike_eval](sink) {
         const delegatingSink = newInstance(DelegatingNonCompletingSink, sink);

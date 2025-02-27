@@ -32,5 +32,5 @@ class TakeLastSink {
         sink[SinkLike_complete]();
     }
 }
-const Deferable_takeLast = (options) => Deferable_lift((sink) => newInstance((TakeLastSink), sink, clampPositiveInteger(options?.count ?? 1)));
+const Deferable_takeLast = (options) => Deferable_lift((sink) => newInstance((TakeLastSink), sink, clampPositiveInteger(options?.count ?? 1)), true);
 export default Deferable_takeLast;

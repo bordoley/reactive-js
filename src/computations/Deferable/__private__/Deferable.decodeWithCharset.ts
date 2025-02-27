@@ -57,13 +57,15 @@ const Deferable_decodeWithCharset: Deferable.Signature["decodeWithCharset"] =
     readonly fatal?: boolean;
     readonly ignoreBOM?: boolean;
   }) =>
-    Deferable_lift((sink: SinkLike<string>) =>
-      newInstance(
-        DecodeWithCharsetSink,
-        sink,
-        options?.charset ?? "utf-8",
-        options,
-      ),
+    Deferable_lift(
+      (sink: SinkLike<string>) =>
+        newInstance(
+          DecodeWithCharsetSink,
+          sink,
+          options?.charset ?? "utf-8",
+          options,
+        ),
+      true,
     );
 
 export default Deferable_decodeWithCharset;

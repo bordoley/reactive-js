@@ -6,14 +6,18 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   Computation,
+  ComputationLike,
   DeferredComputationModule,
   SynchronousComputationModule,
 } from "../../../computations.js";
 import { Optional, increment, pipeLazy, returns } from "../../../functions.js";
 import * as Deferable from "../../Deferable.js";
 
-const SynchronousComputationModuleTests = <C extends Computation>(
-  m: DeferredComputationModule<C> & SynchronousComputationModule<C>,
+const SynchronousComputationModuleTests = <
+  Type extends ComputationLike,
+  C extends Computation<Type>,
+>(
+  m: DeferredComputationModule<Type, C> & SynchronousComputationModule<Type, C>,
 ) =>
   describe(
     "SynchronousComputationModule",

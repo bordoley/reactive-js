@@ -5,13 +5,13 @@ import { DisposableLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
-export interface EventSourceComputation extends Computation {
+export interface EventSourceComputation extends Computation<EventSourceLike> {
     readonly [Computation_type]?: EventSourceLike<this[typeof Computation_T]>;
 }
 /**
  * @noInheritDoc
  */
-export interface EventSourceModule extends PureStatelessComputationModule<EventSourceComputation> {
+export interface EventSourceModule extends PureStatelessComputationModule<EventSourceLike, EventSourceComputation> {
     addEventHandler<T>(handler: SideEffect1<T>): Function1<EventSourceLike<T>, DisposableLike>;
     create<T>(setup: SideEffect1<EventListenerLike<T>>): EventSourceLike<T>;
     fromPromise<T>(): Function1<Promise<T>, EventSourceLike<T>>;

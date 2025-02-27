@@ -4,10 +4,10 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
+import { ComputationLike_isPure } from "../../../computations.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
@@ -146,7 +146,7 @@ const Observable_withLatestFrom: Observable.Signature["withLatestFrom"] = (<
     Observable_lift({
       [ObservableLift_isStateless]: false,
       [ObservableLike_isDeferred]: true,
-      [ObservableLike_isPure]: other[ObservableLike_isPure],
+      [ComputationLike_isPure]: other[ComputationLike_isPure] ?? true,
       [ObservableLike_isRunnable]: other[ObservableLike_isRunnable],
     }),
   )) as Observable.Signature["withLatestFrom"];

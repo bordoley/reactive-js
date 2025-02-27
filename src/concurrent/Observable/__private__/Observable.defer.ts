@@ -1,7 +1,7 @@
+import { ComputationLike_isPure } from "../../../computations.js";
 import {
   MulticastObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
 } from "../../../concurrent.js";
@@ -18,7 +18,7 @@ const Observable_defer: Observable.Signature["defer"] = <T>(
     },
     {
       [ObservableLike_isDeferred]: true,
-      [ObservableLike_isPure]: true,
+      [ComputationLike_isPure]: true,
       [ObservableLike_isRunnable]: false,
     },
   );

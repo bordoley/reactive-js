@@ -14,9 +14,9 @@ import SynchronousComputationModuleTests from "./fixtures/SynchronousComputation
 testModule(
   "Iterable",
   PureStatelesssComputationModuleTests(Iterable),
-  DeferredComputationModuleTests<Iterable.IterableComputation>(Iterable),
-  ComputationWithSideEffectsModuleTests<Iterable.IterableComputation>(Iterable),
-  SynchronousComputationModuleTests<Iterable.IterableComputation>(Iterable),
+  DeferredComputationModuleTests(Iterable),
+  ComputationWithSideEffectsModuleTests(Iterable),
+  SynchronousComputationModuleTests(Iterable),
   describe(
     "zip",
     test(

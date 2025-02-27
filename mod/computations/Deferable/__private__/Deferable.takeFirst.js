@@ -22,5 +22,5 @@ class TakeFirstSink extends AbstractSink {
         }
     }
 }
-const Deferable_takeFirst = (options) => Deferable_lift((sink) => newInstance((TakeFirstSink), sink, clampPositiveInteger(options?.count ?? 1)));
+const Deferable_takeFirst = (options) => Deferable_lift((sink) => newInstance((TakeFirstSink), sink, clampPositiveInteger(options?.count ?? 1)), true);
 export default Deferable_takeFirst;

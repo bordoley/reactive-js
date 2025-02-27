@@ -36,12 +36,14 @@ class DistinctUntilChangedSink<T> extends AbstractSink<T> {
 
 const Deferable_distinctUntilChanged: Deferable.Signature["distinctUntilChanged"] =
   <T>(options?: { readonly equality?: Equality<T> }) =>
-    Deferable_lift((sink: SinkLike<T>) =>
-      newInstance(
-        DistinctUntilChangedSink<T>,
-        sink,
-        options?.equality ?? strictEquality,
-      ),
+    Deferable_lift(
+      (sink: SinkLike<T>) =>
+        newInstance(
+          DistinctUntilChangedSink<T>,
+          sink,
+          options?.equality ?? strictEquality,
+        ),
+      true,
     );
 
 export default Deferable_distinctUntilChanged;

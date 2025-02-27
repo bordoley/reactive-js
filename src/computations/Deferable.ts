@@ -4,6 +4,7 @@ import {
   Computation_T,
   Computation_type,
   DeferableLike,
+  DeferableWithSideEffectsLike,
   DeferredComputationModule,
   PureStatefulComputationModule,
   PureStatelessComputationModule,
@@ -47,16 +48,28 @@ import Deferable_toReadonlyArray from "./Deferable/__private__/Deferable.toReado
 /**
  * @noInheritDoc
  */
-export interface DeferableComputation extends Computation {
+export interface DeferableComputation extends Computation<DeferableLike> {
   readonly [Computation_type]?: DeferableLike<this[typeof Computation_T]>;
 }
 
+export interface DeferableWithSideEffectsComputation
+  extends Computation<DeferableWithSideEffectsLike> {
+  readonly [Computation_type]?: DeferableWithSideEffectsLike<
+    this[typeof Computation_T]
+  >;
+}
+
 export interface DeferableModule
-  extends PureStatelessComputationModule<DeferableComputation>,
-    DeferredComputationModule<DeferableComputation>,
-    PureStatefulComputationModule<DeferableComputation>,
-    ComputationWithSideEffectsModule<DeferableComputation>,
-    SynchronousComputationModule<DeferableComputation> {}
+  extends PureStatelessComputationModule<DeferableLike, DeferableComputation>,
+    DeferredComputationModule<DeferableLike, DeferableComputation>,
+    PureStatefulComputationModule<DeferableLike, DeferableComputation>,
+    ComputationWithSideEffectsModule<
+      DeferableLike,
+      DeferableComputation,
+      DeferableWithSideEffectsLike,
+      DeferableWithSideEffectsComputation
+    >,
+    SynchronousComputationModule<DeferableLike, DeferableComputation> {}
 
 export type Signature = DeferableModule;
 

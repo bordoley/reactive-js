@@ -34,5 +34,5 @@ class BufferSink {
         }
     }
 }
-const Deferable_buffer = (options) => Deferable_lift((sink) => newInstance((BufferSink), sink, clampPositiveNonZeroInteger(options?.count ?? MAX_SAFE_INTEGER)));
+const Deferable_buffer = (options) => Deferable_lift((sink) => newInstance((BufferSink), sink, clampPositiveNonZeroInteger(options?.count ?? MAX_SAFE_INTEGER)), true);
 export default Deferable_buffer;

@@ -16,5 +16,5 @@ class KeepSink extends AbstractSink {
         }
     }
 }
-const Deferable_keep = (predicate) => Deferable_lift((sink) => newInstance((KeepSink), sink, predicate));
+const Deferable_keep = (predicate) => Deferable_lift((sink) => newInstance((KeepSink), sink, predicate), true);
 export default Deferable_keep;

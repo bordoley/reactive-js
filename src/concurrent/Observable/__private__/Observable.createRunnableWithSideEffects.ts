@@ -1,6 +1,6 @@
+import { ComputationLike_isPure } from "../../../computations.js";
 import {
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
 } from "../../../concurrent.js";
@@ -12,7 +12,7 @@ const Observable_createPureRunnableWithSideEffects = <T>(
 ) =>
   Observable_createWithConfig(f, {
     [ObservableLike_isDeferred]: true,
-    [ObservableLike_isPure]: false,
+    [ComputationLike_isPure]: false,
     [ObservableLike_isRunnable]: true,
   });
 

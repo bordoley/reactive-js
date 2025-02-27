@@ -23,8 +23,9 @@ class MapSink<TA, TB> extends AbstractSink<TA, TB> {
 const Deferable_map: Deferable.Signature["map"] = <TA, TB>(
   selector: Function1<TA, TB>,
 ) =>
-  Deferable_lift((sink: SinkLike<TB>) =>
-    newInstance(MapSink<TA, TB>, sink, selector),
+  Deferable_lift(
+    (sink: SinkLike<TB>) => newInstance(MapSink<TA, TB>, sink, selector),
+    true,
   );
 
 export default Deferable_map;

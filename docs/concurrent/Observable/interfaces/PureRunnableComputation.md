@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`Computation`](../../../computations/interfaces/Computation.md)
+- [`Computation`](../../../computations/interfaces/Computation.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\>
 
 ## Properties
 

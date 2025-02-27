@@ -1,6 +1,7 @@
 import {
-  DeferableLike,
+  ComputationLike_isPure,
   DeferableLike_eval,
+  PureDeferableLike,
   SinkLike,
   SinkLike_complete,
   SinkLike_next,
@@ -8,7 +9,9 @@ import {
 import { newInstance } from "../../../functions.js";
 import type * as Deferable from "../../Deferable.js";
 
-class FromValueDeferable<T> implements DeferableLike<T> {
+class FromValueDeferable<T> implements PureDeferableLike<T> {
+  readonly [ComputationLike_isPure]: true = true as const;
+
   constructor(private readonly v: T) {}
 
   [DeferableLike_eval](sink: SinkLike<T>): void {

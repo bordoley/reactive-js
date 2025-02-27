@@ -3,9 +3,9 @@ import {
   mixInstanceFactory,
   props,
 } from "../../__internal__/mixins.js";
+import { ComputationLike_isPure } from "../../computations.js";
 import {
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
@@ -38,7 +38,7 @@ export const create: <T>() => SingleUseObservableLike<T> = (<T>() => {
     }),
     {
       [ObservableLike_isDeferred]: true as const,
-      [ObservableLike_isPure]: true as const,
+      [ComputationLike_isPure]: true as const,
       [ObservableLike_isRunnable]: false as const,
 
       [ObservableLike_observe](

@@ -9,10 +9,18 @@
 ## Interfaces
 
 - [Computation](interfaces/Computation.md)
+- [ComputationLike](interfaces/ComputationLike.md)
+- [ComputationWithSideEffectsLike](interfaces/ComputationWithSideEffectsLike.md)
 - [ComputationWithSideEffectsModule](interfaces/ComputationWithSideEffectsModule.md)
 - [DeferableLike](interfaces/DeferableLike.md)
+- [DeferableWithSideEffectsLike](interfaces/DeferableWithSideEffectsLike.md)
 - [DeferredComputationModule](interfaces/DeferredComputationModule.md)
-- [Pick](interfaces/Pick.md)
+- [IterableLike](interfaces/IterableLike.md)
+- [IterableWithSideEffectsLike](interfaces/IterableWithSideEffectsLike.md)
+- [PickOperator](interfaces/PickOperator.md)
+- [PureComputationLike](interfaces/PureComputationLike.md)
+- [PureDeferableLike](interfaces/PureDeferableLike.md)
+- [PureIterableLike](interfaces/PureIterableLike.md)
 - [PureStatefulComputationModule](interfaces/PureStatefulComputationModule.md)
 - [PureStatelessComputationModule](interfaces/PureStatelessComputationModule.md)
 - [SinkLike](interfaces/SinkLike.md)
@@ -21,12 +29,14 @@
 ## Type Aliases
 
 - [ComputationOf](type-aliases/ComputationOf.md)
-- [ComputationOperator](type-aliases/ComputationOperator.md)
+- [ComputationWithSideEffectsOperator](type-aliases/ComputationWithSideEffectsOperator.md)
+- [PureComputationOperator](type-aliases/PureComputationOperator.md)
 
 ## Variables
 
 - [Computation\_T](variables/Computation_T.md)
 - [Computation\_type](variables/Computation_type.md)
+- [ComputationLike\_isPure](variables/ComputationLike_isPure.md)
 - [DeferableLike\_eval](variables/DeferableLike_eval.md)
 - [SinkLike\_complete](variables/SinkLike_complete.md)
 - [SinkLike\_isComplete](variables/SinkLike_isComplete.md)

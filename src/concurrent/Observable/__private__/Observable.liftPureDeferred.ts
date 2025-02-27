@@ -1,13 +1,13 @@
+import { ComputationLike_isPure } from "../../../computations.js";
 import {
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
 } from "../../../concurrent.js";
 import Observable_lift from "./Observable.lift.js";
 
 const Observable_liftPureDeferred = /*@__PURE__*/ Observable_lift({
   [ObservableLike_isDeferred]: true,
-  [ObservableLike_isPure]: true,
+  [ComputationLike_isPure]: true,
   [ObservableLike_isRunnable]: true,
 });
 

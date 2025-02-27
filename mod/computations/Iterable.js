@@ -3,7 +3,7 @@
 import { clampPositiveInteger } from "../__internal__/math.js";
 import { mixInstanceFactory, props } from "../__internal__/mixins.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
-import { Computation_type, } from "../computations.js";
+import { ComputationLike_isPure, Computation_type, } from "../computations.js";
 import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pipe, raise as raiseError, returns, tuple, } from "../functions.js";
 import Deferable_fromIterable from "./Deferable/__private__/Deferable.fromIterable.js";
 class CatchErrorIterable {
@@ -68,6 +68,7 @@ export const forEach = /*@__PURE__*/ (() => {
         [ForEachIterable_delegate]: none,
         [ForEachIterable_effect]: none,
     }), {
+        [ComputationLike_isPure]: false,
         *[Symbol.iterator]() {
             const delegate = this[ForEachIterable_delegate];
             const effect = this[ForEachIterable_effect];

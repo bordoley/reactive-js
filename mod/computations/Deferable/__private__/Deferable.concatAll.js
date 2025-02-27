@@ -21,5 +21,5 @@ class ConcatAllSink extends AbstractSink {
 const Deferable_concatAll = /*@__PURE__*/ (() => returns(Deferable_lift((sink) => {
     const innerSink = newInstance(DelegatingNonCompletingSink, sink);
     return newInstance((ConcatAllSink), innerSink);
-})))();
+}, true)))();
 export default Deferable_concatAll;

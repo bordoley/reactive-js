@@ -1,7 +1,7 @@
+import { ComputationLike_isPure } from "../../../computations.js";
 import {
   DeferredObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   PureRunnableLike,
 } from "../../../concurrent.js";
@@ -15,7 +15,7 @@ const Observable_switchMap: Observable.Signature["switchMap"] = (<TA, TB>(
     options?: {
       readonly innerType?: {
         readonly [ObservableLike_isDeferred]: boolean;
-        readonly [ObservableLike_isPure]: boolean;
+        readonly [ComputationLike_isPure]: boolean;
         readonly [ObservableLike_isRunnable]: boolean;
       };
     },

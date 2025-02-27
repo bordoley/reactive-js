@@ -1,11 +1,12 @@
 /// <reference types="./Deferable.generate.d.ts" />
 
-import { DeferableLike_eval, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
+import { ComputationLike_isPure, DeferableLike_eval, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
 import { newInstance, none, } from "../../../functions.js";
 class GeneratorDeferable {
     generator;
     count;
     initialValue;
+    [ComputationLike_isPure] = true;
     constructor(generator, count, initialValue) {
         this.generator = generator;
         this.count = count;

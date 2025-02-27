@@ -5,12 +5,12 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
+import { ComputationLike_isPure } from "../../../computations.js";
 import {
   DeferredObservableWithSideEffectsLike,
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
@@ -28,7 +28,7 @@ interface ObservableCreateWithConfig {
     config: Pick<
       PureRunnableLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isPure
+      | typeof ComputationLike_isPure
       | typeof ObservableLike_isRunnable
     >,
   ): PureRunnableLike<T>;
@@ -38,7 +38,7 @@ interface ObservableCreateWithConfig {
     config: Pick<
       RunnableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isPure
+      | typeof ComputationLike_isPure
       | typeof ObservableLike_isRunnable
     >,
   ): RunnableWithSideEffectsLike<T>;
@@ -48,7 +48,7 @@ interface ObservableCreateWithConfig {
     config: Pick<
       PureDeferredObservableLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isPure
+      | typeof ComputationLike_isPure
       | typeof ObservableLike_isRunnable
     >,
   ): PureDeferredObservableLike<T>;
@@ -58,7 +58,7 @@ interface ObservableCreateWithConfig {
     config: Pick<
       DeferredObservableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isPure
+      | typeof ComputationLike_isPure
       | typeof ObservableLike_isRunnable
     >,
   ): DeferredObservableWithSideEffectsLike<T>;
@@ -68,7 +68,7 @@ interface ObservableCreateWithConfig {
     config: Pick<
       MulticastObservableLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isPure
+      | typeof ComputationLike_isPure
       | typeof ObservableLike_isRunnable
     >,
   ): MulticastObservableLike<T>;
@@ -78,7 +78,7 @@ interface ObservableCreateWithConfig {
     config: Pick<
       ObservableLike,
       | typeof ObservableLike_isDeferred
-      | typeof ObservableLike_isPure
+      | typeof ComputationLike_isPure
       | typeof ObservableLike_isRunnable
     >,
   ): ObservableLike<T>;
@@ -99,7 +99,7 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
         effect: SideEffect1<ObserverLike>,
         config: {
           readonly [ObservableLike_isDeferred]: boolean;
-          readonly [ObservableLike_isPure]: boolean;
+          readonly [ComputationLike_isPure]: boolean;
           readonly [ObservableLike_isRunnable]: boolean;
         },
       ): ObservableLike {

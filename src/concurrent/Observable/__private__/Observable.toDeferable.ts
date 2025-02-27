@@ -1,4 +1,5 @@
 import {
+  ComputationLike_isPure,
   DeferableLike,
   DeferableLike_eval,
   SinkLike,
@@ -15,6 +16,7 @@ import Observable_run from "./Observable.run.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 
 class RunnableDeferable<T> implements DeferableLike<T> {
+  readonly [ComputationLike_isPure]: boolean;
   constructor(
     private readonly obs: RunnableLike<T>,
     private readonly options?: {
@@ -22,7 +24,9 @@ class RunnableDeferable<T> implements DeferableLike<T> {
       readonly capacity?: number;
       readonly maxMicroTaskTicks?: number;
     },
-  ) {}
+  ) {
+    this[ComputationLike_isPure] = obs[ComputationLike_isPure] ?? true;
+  }
 
   [DeferableLike_eval](sink: SinkLike<T>): void {
     pipe(

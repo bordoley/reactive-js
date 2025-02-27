@@ -1,5 +1,6 @@
 /// <reference types="./concurrent.d.ts" />
 
+import { ComputationLike_isPure, } from "./computations.js";
 export const DispatcherLikeEvent_ready = Symbol("DispatcherLikeEvent_ready");
 export const DispatcherLikeEvent_capacityExceeded = Symbol("DispatcherLikeEvent_capacityExceeded");
 export const DispatcherLikeEvent_completed = Symbol("DispatcherLikeEvent_completed");
@@ -18,7 +19,6 @@ export const ContinuationContextLike_yield = Symbol("ContinuationContextLike_yie
 export const VirtualTimeSchedulerLike_run = Symbol("VirtualTimeSchedulerLike_run");
 export const ObserverLike_notify = Symbol("ObserverLike_notify");
 export const ObservableLike_isDeferred = Symbol("ObservableLike_isDeferred");
-export const ObservableLike_isPure = Symbol("ObservableLike_isPure");
 export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
 export const ObservableLike_observe = Symbol("ObservableLike_observe");
 export const FlowableLike_flow = Symbol("FlowableLike_flow");

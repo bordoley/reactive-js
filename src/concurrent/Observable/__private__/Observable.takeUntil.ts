@@ -1,7 +1,7 @@
+import { ComputationLike_isPure } from "../../../computations.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
 } from "../../../concurrent.js";
@@ -9,7 +9,6 @@ import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
-
 import Observable_lift, {
   ObservableLift_isStateless,
 } from "./Observable.lift.js";
@@ -37,7 +36,7 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = (<T>(
     Observable_lift({
       [ObservableLift_isStateless]: false,
       [ObservableLike_isDeferred]: true,
-      [ObservableLike_isPure]: notifier[ObservableLike_isPure],
+      [ComputationLike_isPure]: notifier[ComputationLike_isPure] ?? true,
       [ObservableLike_isRunnable]: notifier[ObservableLike_isRunnable],
     }),
   );

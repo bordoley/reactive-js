@@ -1,7 +1,8 @@
 /// <reference types="./Observable.switchAll.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
+import { ComputationLike_isPure } from "../../../computations.js";
+import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
 import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -45,7 +46,7 @@ const Observable_switchAll = ((options) => Observable_lift({
     [ObservableLift_isStateless]: false,
     ...(options?.innerType ?? {
         [ObservableLike_isDeferred]: true,
-        [ObservableLike_isPure]: true,
+        [ComputationLike_isPure]: true,
         [ObservableLike_isRunnable]: true,
     }),
 })(createSwitchAllObserver));

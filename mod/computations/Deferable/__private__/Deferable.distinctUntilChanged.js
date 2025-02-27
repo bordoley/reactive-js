@@ -21,5 +21,5 @@ class DistinctUntilChangedSink extends AbstractSink {
         }
     }
 }
-const Deferable_distinctUntilChanged = (options) => Deferable_lift((sink) => newInstance((DistinctUntilChangedSink), sink, options?.equality ?? strictEquality));
+const Deferable_distinctUntilChanged = (options) => Deferable_lift((sink) => newInstance((DistinctUntilChangedSink), sink, options?.equality ?? strictEquality), true);
 export default Deferable_distinctUntilChanged;

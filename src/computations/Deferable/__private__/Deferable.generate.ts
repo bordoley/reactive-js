@@ -1,6 +1,7 @@
 import {
-  DeferableLike,
+  ComputationLike_isPure,
   DeferableLike_eval,
+  PureDeferableLike,
   SinkLike,
   SinkLike_complete,
   SinkLike_isComplete,
@@ -15,7 +16,9 @@ import {
 } from "../../../functions.js";
 import type * as Deferable from "../../Deferable.js";
 
-class GeneratorDeferable<T> implements DeferableLike<T> {
+class GeneratorDeferable<T> implements PureDeferableLike<T> {
+  readonly [ComputationLike_isPure]: true = true as const;
+
   constructor(
     private readonly generator: Updater<T>,
     private readonly count: Optional<number>,

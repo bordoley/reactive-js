@@ -1,13 +1,15 @@
 /// <reference types="./Deferable.catchError.d.ts" />
 
-import { DeferableLike_eval, SinkLike_complete, } from "../../../computations.js";
+import { ComputationLike_isPure, DeferableLike_eval, SinkLike_complete, } from "../../../computations.js";
 import { error, isSome, newInstance, none, } from "../../../functions.js";
 class CatchErrorDeferable {
     s;
     onError;
+    [ComputationLike_isPure];
     constructor(s, onError) {
         this.s = s;
         this.onError = onError;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
     }
     [DeferableLike_eval](sink) {
         try {

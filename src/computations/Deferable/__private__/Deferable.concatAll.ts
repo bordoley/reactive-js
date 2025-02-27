@@ -45,7 +45,7 @@ const Deferable_concatAll: Deferable.Signature["concatAll"] = /*@__PURE__*/ (<
     Deferable_lift((sink: SinkLike<T>) => {
       const innerSink = newInstance(DelegatingNonCompletingSink, sink);
       return newInstance(ConcatAllSink<T>, innerSink);
-    }),
+    }, true),
   ))();
 
 export default Deferable_concatAll;

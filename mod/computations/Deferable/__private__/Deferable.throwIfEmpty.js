@@ -26,5 +26,5 @@ class ThrowIfEmptySink {
         }
     }
 }
-const Deferable_throwIfEmpty = (factory) => Deferable_lift((sink) => newInstance((ThrowIfEmptySink), sink, factory));
+const Deferable_throwIfEmpty = (factory) => Deferable_lift((sink) => newInstance((ThrowIfEmptySink), sink, factory), true);
 export default Deferable_throwIfEmpty;

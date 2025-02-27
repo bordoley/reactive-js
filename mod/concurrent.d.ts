@@ -1,4 +1,5 @@
 import { DictionaryLike, ReadonlyObjectMapLike } from "./collections.js";
+import { ComputationLike, ComputationLike_isPure, PureComputationLike } from "./computations.js";
 import { EventListenerLike, EventSourceLike, StoreLike } from "./events.js";
 import { Optional, SideEffect1, Updater } from "./functions.js";
 import { BackpressureStrategy, DisposableContainerLike, DisposableLike, QueueableLike } from "./utils.js";
@@ -128,22 +129,17 @@ export interface ObserverLike<T = unknown> extends DispatcherLike<T>, SchedulerL
     [ObserverLike_notify](event: T): void;
 }
 export declare const ObservableLike_isDeferred: unique symbol;
-export declare const ObservableLike_isPure: unique symbol;
 export declare const ObservableLike_isRunnable: unique symbol;
 export declare const ObservableLike_observe: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface ObservableLike<out T = unknown> {
+export interface ObservableLike<out T = unknown> extends ComputationLike {
     /**
      * Indicates if the `ObservableLike` is deferred, ie. cold. If false,
      * the observable is multicasted.
      */
     readonly [ObservableLike_isDeferred]: boolean;
-    /**
-     * Indicates if subscribing to the `ObservableLike` is free of side-effects
-     */
-    readonly [ObservableLike_isPure]: boolean;
     /**
      * Indicates if the `ObservableLike` supports being subscribed to
      * on a VirtualTimeScheduler.
@@ -171,21 +167,21 @@ export interface RunnableLike<out T = unknown> extends DeferredObservableLike<T>
 /**
  * @noInheritDoc
  */
-export interface PureObservableLike<out T = unknown> extends ObservableLike<T> {
-    readonly [ObservableLike_isPure]: true;
+export interface PureObservableLike<out T = unknown> extends ObservableLike<T>, PureComputationLike {
+    readonly [ComputationLike_isPure]?: true;
 }
 /**
  * @noInheritDoc
  */
 export interface PureDeferredObservableLike<out T = unknown> extends DeferredObservableLike<T>, PureObservableLike<T> {
-    readonly [ObservableLike_isPure]: true;
+    readonly [ComputationLike_isPure]?: true;
     readonly [ObservableLike_isDeferred]: true;
 }
 /**
  * @noInheritDoc
  */
 export interface DeferredObservableWithSideEffectsLike<out T = unknown> extends DeferredObservableLike<T> {
-    readonly [ObservableLike_isPure]: false;
+    readonly [ComputationLike_isPure]: false;
     readonly [ObservableLike_isRunnable]: false;
 }
 /**
@@ -193,14 +189,14 @@ export interface DeferredObservableWithSideEffectsLike<out T = unknown> extends 
  */
 export interface PureRunnableLike<out T = unknown> extends RunnableLike<T>, PureDeferredObservableLike<T> {
     readonly [ObservableLike_isDeferred]: true;
-    readonly [ObservableLike_isPure]: true;
+    readonly [ComputationLike_isPure]?: true;
     readonly [ObservableLike_isRunnable]: true;
 }
 /**
  * @noInheritDoc
  */
 export interface RunnableWithSideEffectsLike<out T = unknown> extends RunnableLike<T> {
-    readonly [ObservableLike_isPure]: false;
+    readonly [ComputationLike_isPure]: false;
 }
 /**
  * @noInheritDoc

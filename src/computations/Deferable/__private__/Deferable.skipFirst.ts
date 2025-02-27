@@ -26,12 +26,14 @@ class SkipFirstSink<T> extends AbstractSink<T> {
 const Deferable_skipFirst: Deferable.Signature["skipFirst"] = <T>(options?: {
   readonly count?: number;
 }) =>
-  Deferable_lift((sink: SinkLike<T>) =>
-    newInstance(
-      SkipFirstSink<T>,
-      sink,
-      clampPositiveInteger(options?.count ?? 1),
-    ),
+  Deferable_lift(
+    (sink: SinkLike<T>) =>
+      newInstance(
+        SkipFirstSink<T>,
+        sink,
+        clampPositiveInteger(options?.count ?? 1),
+      ),
+    true,
   );
 
 export default Deferable_skipFirst;

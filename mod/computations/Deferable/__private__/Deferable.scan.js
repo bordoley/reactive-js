@@ -18,5 +18,5 @@ class ScanSink extends AbstractSink {
         this[AbstractSink_delegate][SinkLike_next](nextAcc);
     }
 }
-const Deferable_scan = (reducer, initialValue) => Deferable_lift((sink) => newInstance((ScanSink), sink, reducer, initialValue()));
+const Deferable_scan = (reducer, initialValue) => Deferable_lift((sink) => newInstance((ScanSink), sink, reducer, initialValue()), true);
 export default Deferable_scan;

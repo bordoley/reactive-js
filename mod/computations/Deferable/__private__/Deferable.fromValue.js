@@ -1,9 +1,10 @@
 /// <reference types="./Deferable.fromValue.d.ts" />
 
-import { DeferableLike_eval, SinkLike_complete, SinkLike_next, } from "../../../computations.js";
+import { ComputationLike_isPure, DeferableLike_eval, SinkLike_complete, SinkLike_next, } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
 class FromValueDeferable {
     v;
+    [ComputationLike_isPure] = true;
     constructor(v) {
         this.v = v;
     }

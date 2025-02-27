@@ -6,13 +6,13 @@ import {
   mixInstanceFactory,
   props,
 } from "../../__internal__/mixins.js";
-import { pick } from "../../computations.js";
+import { ComputationLike_isPure, pick } from "../../computations.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import {
   DeferredObservableLike,
+  MulticastObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
@@ -187,7 +187,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
     {
       [ObservableLike_isDeferred]: false as const,
       [ObservableLike_isRunnable]: false as const,
-      [ObservableLike_isPure]: true as const,
+      [ComputationLike_isPure]: true as const,
 
       [WindowLocationLike_push](
         this: TProperties,
@@ -233,9 +233,10 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       ): void {
         pipe(
           this[WindowLocation_delegate],
-          pick<Observable.MulticastObservableComputation>(Observable.map)(
-            "uri",
-          ),
+          pick<
+            MulticastObservableLike,
+            Observable.MulticastObservableComputation
+          >(Observable.map)("uri"),
           invoke(ObservableLike_observe, observer),
         );
       },

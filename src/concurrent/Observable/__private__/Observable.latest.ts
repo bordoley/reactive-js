@@ -11,10 +11,10 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
+import { ComputationLike_isPure } from "../../../computations.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
@@ -146,7 +146,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
 
     return Observable_createWithConfig(onSubscribe, {
       [ObservableLike_isDeferred]: true,
-      [ObservableLike_isPure]: isPure,
+      [ComputationLike_isPure]: isPure,
       [ObservableLike_isRunnable]: isRunnable,
     });
   };

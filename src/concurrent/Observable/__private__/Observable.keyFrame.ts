@@ -37,7 +37,9 @@ const Observable_keyFrame = (
       },
       returns(tuple(MAX_VALUE, 0)),
     ),
-    pick<Observable.PureRunnableComputation>(Observable_map)(1),
+    pick<PureRunnableLike, Observable.PureRunnableComputation>(Observable_map)(
+      1,
+    ),
     Observable_takeWhile(isNotEqualTo(1), {
       inclusive: true,
     }),

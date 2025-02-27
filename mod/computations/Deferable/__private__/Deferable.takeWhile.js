@@ -22,5 +22,5 @@ class TakeWhileSink extends AbstractSink {
         }
     }
 }
-const Deferable_takeWhile = (predicate, options = {}) => Deferable_lift((sink) => newInstance((TakeWhileSink), sink, predicate, options?.inclusive ?? false));
+const Deferable_takeWhile = (predicate, options = {}) => Deferable_lift((sink) => newInstance((TakeWhileSink), sink, predicate, options?.inclusive ?? false), true);
 export default Deferable_takeWhile;

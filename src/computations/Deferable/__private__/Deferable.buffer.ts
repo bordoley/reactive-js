@@ -48,12 +48,14 @@ class BufferSink<T> implements SinkLike<T> {
 const Deferable_buffer: Deferable.Signature["buffer"] = <T>(options?: {
   count?: number;
 }) =>
-  Deferable_lift((sink: SinkLike<readonly T[]>) =>
-    newInstance(
-      BufferSink<T>,
-      sink,
-      clampPositiveNonZeroInteger(options?.count ?? MAX_SAFE_INTEGER),
-    ),
+  Deferable_lift(
+    (sink: SinkLike<readonly T[]>) =>
+      newInstance(
+        BufferSink<T>,
+        sink,
+        clampPositiveNonZeroInteger(options?.count ?? MAX_SAFE_INTEGER),
+      ),
+    true,
   );
 
 export default Deferable_buffer;

@@ -6,6 +6,10 @@
 
 # Interface: ObservableLike\<T\>
 
+## Extends
+
+- [`ComputationLike`](../../computations/interfaces/ComputationLike.md)
+
 ## Extended by
 
 - [`DeferredObservableLike`](DeferredObservableLike.md)
@@ -23,14 +27,6 @@
 
 Indicates if the `ObservableLike` is deferred, ie. cold. If false,
 the observable is multicasted.
-
-***
-
-### \[ObservableLike\_isPure\]
-
-> `readonly` **\[ObservableLike\_isPure\]**: `boolean`
-
-Indicates if subscribing to the `ObservableLike` is free of side-effects
 
 ***
 

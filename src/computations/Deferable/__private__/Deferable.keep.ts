@@ -24,8 +24,9 @@ class KeepSink<T> extends AbstractSink<T> {
 const Deferable_keep: Deferable.Signature["keep"] = <T>(
   predicate: Predicate<T>,
 ) =>
-  Deferable_lift((sink: SinkLike<T>) =>
-    newInstance(KeepSink<T>, sink, predicate),
+  Deferable_lift(
+    (sink: SinkLike<T>) => newInstance(KeepSink<T>, sink, predicate),
+    true,
   );
 
 export default Deferable_keep;

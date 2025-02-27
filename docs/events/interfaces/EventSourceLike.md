@@ -6,6 +6,10 @@
 
 # Interface: EventSourceLike\<T\>
 
+## Extends
+
+- [`PureComputationLike`](../../computations/interfaces/PureComputationLike.md)
+
 ## Extended by
 
 - [`DispatcherLike`](../../concurrent/interfaces/DispatcherLike.md)

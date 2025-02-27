@@ -1,14 +1,16 @@
 /// <reference types="./Deferable.retry.d.ts" />
 
-import { DeferableLike_eval, SinkLike_complete, } from "../../../computations.js";
+import { ComputationLike_isPure, DeferableLike_eval, SinkLike_complete, } from "../../../computations.js";
 import { alwaysTrue, error, newInstance } from "../../../functions.js";
 import DelegatingNonCompletingSink from "../../Sink/__internal__/DelegatingNonCompletingSink.js";
 class RetryDeferable {
     s;
     p;
+    [ComputationLike_isPure];
     constructor(s, p) {
         this.s = s;
         this.p = p;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
     }
     [DeferableLike_eval](sink) {
         const source = this.s;

@@ -49,7 +49,6 @@
 - [DispatcherLikeEvent\_ready](variables/DispatcherLikeEvent_ready.md)
 - [FlowableLike\_flow](variables/FlowableLike_flow.md)
 - [ObservableLike\_isDeferred](variables/ObservableLike_isDeferred.md)
-- [ObservableLike\_isPure](variables/ObservableLike_isPure.md)
 - [ObservableLike\_isRunnable](variables/ObservableLike_isRunnable.md)
 - [ObservableLike\_observe](variables/ObservableLike_observe.md)
 - [ObserverLike\_notify](variables/ObserverLike_notify.md)

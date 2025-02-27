@@ -10,6 +10,7 @@
 
 - [IterableComputation](interfaces/IterableComputation.md)
 - [IterableModule](interfaces/IterableModule.md)
+- [IterableWithSideEffectsComputation](interfaces/IterableWithSideEffectsComputation.md)
 
 ## Type Aliases
 

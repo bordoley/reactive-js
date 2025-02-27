@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`Computation`](../../interfaces/Computation.md)
+- [`Computation`](../../interfaces/Computation.md)\<[`DeferableLike`](../../interfaces/DeferableLike.md)\>
 
 ## Properties
 

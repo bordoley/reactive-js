@@ -36,12 +36,14 @@ class TakeFirstSink<T> extends AbstractSink<T> {
 const Deferable_takeFirst: Deferable.Signature["takeFirst"] = <T>(options?: {
   readonly count?: number;
 }) =>
-  Deferable_lift((sink: SinkLike<T>) =>
-    newInstance(
-      TakeFirstSink<T>,
-      sink,
-      clampPositiveInteger(options?.count ?? 1),
-    ),
+  Deferable_lift(
+    (sink: SinkLike<T>) =>
+      newInstance(
+        TakeFirstSink<T>,
+        sink,
+        clampPositiveInteger(options?.count ?? 1),
+      ),
+    true,
   );
 
 export default Deferable_takeFirst;

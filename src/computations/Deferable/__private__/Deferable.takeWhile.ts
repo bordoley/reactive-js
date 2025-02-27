@@ -36,8 +36,15 @@ const Deferable_takeWhile: Deferable.Signature["takeWhile"] = <T>(
   predicate: Predicate<T>,
   options: { readonly inclusive?: boolean } = {},
 ) =>
-  Deferable_lift((sink: SinkLike<T>) =>
-    newInstance(TakeWhileSink<T>, sink, predicate, options?.inclusive ?? false),
+  Deferable_lift(
+    (sink: SinkLike<T>) =>
+      newInstance(
+        TakeWhileSink<T>,
+        sink,
+        predicate,
+        options?.inclusive ?? false,
+      ),
+    true,
   );
 
 export default Deferable_takeWhile;

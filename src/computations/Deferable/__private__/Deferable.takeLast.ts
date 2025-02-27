@@ -54,12 +54,14 @@ class TakeLastSink<T> implements SinkLike<T> {
 const Deferable_takeLast: Deferable.Signature["takeLast"] = <T>(options?: {
   readonly count?: number;
 }) =>
-  Deferable_lift((sink: SinkLike<T>) =>
-    newInstance(
-      TakeLastSink<T>,
-      sink,
-      clampPositiveInteger(options?.count ?? 1),
-    ),
+  Deferable_lift(
+    (sink: SinkLike<T>) =>
+      newInstance(
+        TakeLastSink<T>,
+        sink,
+        clampPositiveInteger(options?.count ?? 1),
+      ),
+    true,
   );
 
 export default Deferable_takeLast;

@@ -6,7 +6,7 @@
 
 # Function: map()
 
-> **map**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../../../computations/type-aliases/ComputationOperator.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `TA`, `TB`\>
+> **map**\<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../../../computations/type-aliases/PureComputationOperator.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>, [`EventSourceComputation`](../interfaces/EventSourceComputation.md), `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`ComputationOperator`](../../../computations/type-aliases/ComputationOperator.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `TA`, `TB`\>
+[`PureComputationOperator`](../../../computations/type-aliases/PureComputationOperator.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>, [`EventSourceComputation`](../interfaces/EventSourceComputation.md), `TA`, `TB`\>

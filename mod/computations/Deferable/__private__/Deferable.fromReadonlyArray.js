@@ -1,12 +1,13 @@
 /// <reference types="./Deferable.fromReadonlyArray.d.ts" />
 
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
-import { DeferableLike_eval, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
+import { ComputationLike_isPure, DeferableLike_eval, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
 class FromReadonlyArrayDeferable {
     arr;
     count;
     start;
+    [ComputationLike_isPure] = true;
     constructor(arr, count, start) {
         this.arr = arr;
         this.count = count;

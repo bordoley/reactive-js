@@ -1,8 +1,8 @@
+import { ComputationLike_isPure } from "../../../computations.js";
 import {
   DeferredObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
 } from "../../../concurrent.js";
@@ -22,20 +22,20 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
   options?: {
     readonly innerType?: {
       readonly [ObservableLike_isDeferred]: boolean;
-      readonly [ObservableLike_isPure]: boolean;
+      readonly [ComputationLike_isPure]: boolean;
       readonly [ObservableLike_isRunnable]: boolean;
     };
   },
 ) => {
   const innerType = options?.innerType ?? {
     [ObservableLike_isDeferred]: true,
-    [ObservableLike_isPure]: true,
+    [ComputationLike_isPure]: true,
     [ObservableLike_isRunnable]: true,
   };
 
   return (observable: ObservableLike<T>) => {
     const isPure =
-      innerType[ObservableLike_isPure] && observable[ObservableLike_isPure];
+      innerType[ComputationLike_isPure] && observable[ComputationLike_isPure];
     const isRunnable =
       innerType[ObservableLike_isRunnable] &&
       observable[ObservableLike_isRunnable];
@@ -53,7 +53,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
           Observable_switchMap(([next, acc]) => scanner(acc, next), {
             innerType: {
               [ObservableLike_isDeferred]: true,
-              [ObservableLike_isPure]: false,
+              [ComputationLike_isPure]: false,
               [ObservableLike_isRunnable]: false,
             },
           }),
@@ -65,7 +65,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
       },
       {
         [ObservableLike_isDeferred]: true,
-        [ObservableLike_isPure]: isPure,
+        [ComputationLike_isPure]: isPure,
         [ObservableLike_isRunnable]: isRunnable,
       },
     );

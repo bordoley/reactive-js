@@ -1,7 +1,7 @@
+import { ComputationLike_isPure } from "../../../computations.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
@@ -43,7 +43,7 @@ const Observable_onSubscribe: Observable.Signature["onSubscribe"] = (<T>(
       {
         [ObservableLike_isRunnable]: obs[ObservableLike_isRunnable],
         [ObservableLike_isDeferred]: true,
-        [ObservableLike_isPure]: false,
+        [ComputationLike_isPure]: false,
       },
     )) as Observable.Signature["onSubscribe"];
 

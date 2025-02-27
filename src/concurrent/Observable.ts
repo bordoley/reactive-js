@@ -1,5 +1,6 @@
 import {
   Computation,
+  ComputationLike_isPure,
   Computation_T,
   Computation_type,
   DeferableLike,
@@ -11,7 +12,6 @@ import {
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
   PureDeferredObservableLike,
@@ -213,58 +213,59 @@ export type ObservableOperatorWithSideEffects<TIn, out TOut> = <
 export const PureRunnableType: Pick<
   PureRunnableLike,
   | typeof ObservableLike_isDeferred
-  | typeof ObservableLike_isPure
+  | typeof ComputationLike_isPure
   | typeof ObservableLike_isRunnable
 > = {
   [ObservableLike_isDeferred]: true,
-  [ObservableLike_isPure]: true,
+  [ComputationLike_isPure]: true,
   [ObservableLike_isRunnable]: true,
 };
 
 export const RunnableWithSideEffectsType: Pick<
   RunnableWithSideEffectsLike,
   | typeof ObservableLike_isDeferred
-  | typeof ObservableLike_isPure
+  | typeof ComputationLike_isPure
   | typeof ObservableLike_isRunnable
 > = {
   [ObservableLike_isDeferred]: true,
-  [ObservableLike_isPure]: false,
+  [ComputationLike_isPure]: false,
   [ObservableLike_isRunnable]: true,
 };
 
 export const PureDeferredObservableType: Pick<
   PureDeferredObservableLike,
   | typeof ObservableLike_isDeferred
-  | typeof ObservableLike_isPure
+  | typeof ComputationLike_isPure
   | typeof ObservableLike_isRunnable
 > = {
   [ObservableLike_isDeferred]: true,
-  [ObservableLike_isPure]: true,
+  [ComputationLike_isPure]: true,
   [ObservableLike_isRunnable]: false,
 };
 
 export const DeferredObservableWithSideEffectsType: Pick<
   DeferredObservableWithSideEffectsLike,
   | typeof ObservableLike_isDeferred
-  | typeof ObservableLike_isPure
+  | typeof ComputationLike_isPure
   | typeof ObservableLike_isRunnable
 > = {
   [ObservableLike_isDeferred]: true,
-  [ObservableLike_isPure]: false,
+  [ComputationLike_isPure]: false,
   [ObservableLike_isRunnable]: false,
 };
 
 /**
  * @noInheritDoc
  */
-export interface PureRunnableComputation extends Computation {
+export interface PureRunnableComputation extends Computation<PureRunnableLike> {
   readonly [Computation_type]?: PureRunnableLike<this[typeof Computation_T]>;
 }
 
 /**
  * @noInheritDoc
  */
-export interface RunnableWithSideEffectsComputation extends Computation {
+export interface RunnableWithSideEffectsComputation
+  extends Computation<RunnableWithSideEffectsLike> {
   readonly [Computation_type]?: RunnableWithSideEffectsLike<
     this[typeof Computation_T]
   >;
@@ -273,14 +274,15 @@ export interface RunnableWithSideEffectsComputation extends Computation {
 /**
  * @noInheritDoc
  */
-export interface RunnableComputation extends Computation {
+export interface RunnableComputation extends Computation<RunnableLike> {
   readonly [Computation_type]?: RunnableLike<this[typeof Computation_T]>;
 }
 
 /**
  * @noInheritDoc
  */
-export interface PuredDeferredObservableComputation extends Computation {
+export interface PuredDeferredObservableComputation
+  extends Computation<PureDeferredObservableLike> {
   readonly [Computation_type]?: PureDeferredObservableLike<
     this[typeof Computation_T]
   >;
@@ -290,7 +292,7 @@ export interface PuredDeferredObservableComputation extends Computation {
  * @noInheritDoc
  */
 export interface DeferredObservableWithSideEffectsComputation
-  extends Computation {
+  extends Computation<DeferredObservableWithSideEffectsLike> {
   readonly [Computation_type]?: DeferredObservableWithSideEffectsLike<
     this[typeof Computation_T]
   >;
@@ -299,7 +301,8 @@ export interface DeferredObservableWithSideEffectsComputation
 /**
  * @noInheritDoc
  */
-export interface MulticastObservableComputation extends Computation {
+export interface MulticastObservableComputation
+  extends Computation<MulticastObservableLike> {
   readonly [Computation_type]?: MulticastObservableLike<
     this[typeof Computation_T]
   >;

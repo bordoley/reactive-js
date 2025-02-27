@@ -10,8 +10,9 @@ class IgnoreElementsSink<T> extends AbstractSink<T> {
 }
 
 const Deferable_ignoreElements: Deferable.Signature["ignoreElements"] = <T>() =>
-  Deferable_lift((sink: SinkLike<T>) =>
-    newInstance(IgnoreElementsSink<T>, sink),
+  Deferable_lift(
+    (sink: SinkLike<T>) => newInstance(IgnoreElementsSink<T>, sink),
+    true,
   );
 
 export default Deferable_ignoreElements;

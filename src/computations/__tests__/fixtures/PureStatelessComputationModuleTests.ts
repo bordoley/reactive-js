@@ -6,6 +6,7 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   Computation,
+  ComputationLike,
   ComputationOf,
   PureStatelessComputationModule,
 } from "../../../computations.js";
@@ -17,13 +18,19 @@ import {
   pipeLazy,
 } from "../../../functions.js";
 
-const PureStatelessComputationModuleTests = <C extends Computation>(
-  m: PureStatelessComputationModule<C> & {
+const PureStatelessComputationModuleTests = <
+  Type extends ComputationLike,
+  C extends Computation<Type>,
+>(
+  m: PureStatelessComputationModule<Type, C> & {
     fromReadonlyArray: <T>() => Function1<
       ReadonlyArray<T>,
-      ComputationOf<C, T>
+      ComputationOf<Type, C, T>
     >;
-    toReadonlyArray: <T>() => Function1<ComputationOf<C, T>, ReadonlyArray<T>>;
+    toReadonlyArray: <T>() => Function1<
+      ComputationOf<Type, C, T>,
+      ReadonlyArray<T>
+    >;
   },
 ) =>
   describe(

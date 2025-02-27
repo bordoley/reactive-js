@@ -1,8 +1,9 @@
 /// <reference types="./Deferable.empty.d.ts" />
 
-import { DeferableLike_eval, SinkLike_complete, } from "../../../computations.js";
+import { ComputationLike_isPure, DeferableLike_eval, SinkLike_complete, } from "../../../computations.js";
 import { newInstance, returns } from "../../../functions.js";
 class EmptyDeferable {
+    [ComputationLike_isPure] = true;
     [DeferableLike_eval](sink) {
         sink[SinkLike_complete]();
     }

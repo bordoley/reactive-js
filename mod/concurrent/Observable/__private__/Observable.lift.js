@@ -1,7 +1,8 @@
 /// <reference types="./Observable.lift.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
+import { ComputationLike_isPure } from "../../../computations.js";
+import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
 import { bindMethod, none, pipeUnsafe } from "../../../functions.js";
 import ObservableMixin from "../../__mixins__/ObservableMixin.js";
 import Observable_isMulticasted from "./Observable.isMulticasted.js";
@@ -35,10 +36,10 @@ const Observable_lift = ((config) => (operator) => (source) => {
         (config[ObservableLike_isDeferred] && source[ObservableLike_isDeferred]);
     const isRunnable = config[ObservableLike_isRunnable] && source[ObservableLike_isRunnable];
     const isPure = !isDeferred ||
-        (config[ObservableLike_isPure] && source[ObservableLike_isPure]);
+        (config[ComputationLike_isPure] && source[ComputationLike_isPure]);
     const liftedConfig = {
         [ObservableLike_isDeferred]: isDeferred,
-        [ObservableLike_isPure]: isPure,
+        [ComputationLike_isPure]: isPure,
         [ObservableLike_isRunnable]: isRunnable,
     };
     return createLiftedObservable(sourceSource, allFunctions, liftedConfig);
