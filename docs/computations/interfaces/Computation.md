@@ -8,10 +8,10 @@
 
 ## Extended by
 
-- [`DeferableComputation`](../Deferable/interfaces/DeferableComputation.md)
-- [`DeferableWithSideEffectsComputation`](../Deferable/interfaces/DeferableWithSideEffectsComputation.md)
 - [`IterableComputation`](../Iterable/interfaces/IterableComputation.md)
 - [`IterableWithSideEffectsComputation`](../Iterable/interfaces/IterableWithSideEffectsComputation.md)
+- [`RunnableComputation`](../Runnable/interfaces/RunnableComputation.md)
+- [`RunnableWithSideEffectsComputation`](../Runnable/interfaces/RunnableWithSideEffectsComputation.md)
 - [`PureSynchronousObservableComputation`](../../concurrent/Observable/interfaces/PureSynchronousObservableComputation.md)
 - [`SynchronousObservableWithSideEffectsComputation`](../../concurrent/Observable/interfaces/SynchronousObservableWithSideEffectsComputation.md)
 - [`SynchronousObservableComputation`](../../concurrent/Observable/interfaces/SynchronousObservableComputation.md)

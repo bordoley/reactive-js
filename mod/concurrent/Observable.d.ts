@@ -1,4 +1,4 @@
-import { Computation, ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_T, Computation_type, DeferableLike } from "../computations.js";
+import { Computation, ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_T, Computation_type, RunnableLike } from "../computations.js";
 import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureSynchronousObservableLike, SchedulerLike, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../concurrent.js";
 import { EventListenerLike, EventSourceLike, StoreLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9, Updater } from "../functions.js";
@@ -419,11 +419,11 @@ export interface ObservableModule {
         readonly mode?: ThrottleMode;
     }): PureStatefulObservableOperator<T, T>;
     throwIfEmpty<T>(factory: Factory<unknown>): PureStatefulObservableOperator<T, T>;
-    toDeferable<T>(options?: {
+    toRunnable<T>(options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly maxMicroTaskTicks?: number;
-    }): Function1<SynchronousObservableLike<T>, DeferableLike<T>>;
+    }): Function1<SynchronousObservableLike<T>, RunnableLike<T>>;
     toEventSource<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
@@ -555,7 +555,7 @@ export declare const takeUntil: Signature["takeUntil"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throttle: Signature["throttle"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
-export declare const toDeferable: Signature["toDeferable"];
+export declare const toRunnable: Signature["toRunnable"];
 export declare const toEventSource: Signature["toEventSource"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];

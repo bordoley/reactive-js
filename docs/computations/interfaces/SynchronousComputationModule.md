@@ -8,8 +8,8 @@
 
 ## Extended by
 
-- [`DeferableModule`](../Deferable/interfaces/DeferableModule.md)
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
+- [`RunnableModule`](../Runnable/interfaces/RunnableModule.md)
 
 ## Type Parameters
 
@@ -59,20 +59,6 @@
 
 ***
 
-### toDeferable()
-
-> **toDeferable**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>, [`DeferableLike`](DeferableLike.md)\<`T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>, [`DeferableLike`](DeferableLike.md)\<`T`\>\>
-
-***
-
 ### toReadonlyArray()
 
 > **toReadonlyArray**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>, readonly `T`[]\>
@@ -84,3 +70,17 @@
 #### Returns
 
 [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>, readonly `T`[]\>
+
+***
+
+### toRunnable()
+
+> **toRunnable**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>, [`RunnableLike`](RunnableLike.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `C`, `T`\>, [`RunnableLike`](RunnableLike.md)\<`T`\>\>

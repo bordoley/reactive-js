@@ -92,7 +92,7 @@ export interface PureStatelessComputationModule<Type extends ComputationLike, C 
 export interface SynchronousComputationModule<Type extends SynchronousComputationLike, C extends Computation<Type>> {
     last<T>(): Function1<ComputationOf<Type, C, T>, Optional<T>>;
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ComputationOf<Type, C, T>, TAcc>;
-    toDeferable<T>(): Function1<ComputationOf<Type, C, T>, DeferableLike<T>>;
+    toRunnable<T>(): Function1<ComputationOf<Type, C, T>, RunnableLike<T>>;
     toReadonlyArray<T>(): Function1<ComputationOf<Type, C, T>, ReadonlyArray<T>>;
 }
 export interface PureStatefulComputationModule<Type extends ComputationLike, C extends Computation<Type>> {
@@ -132,18 +132,18 @@ export interface SinkLike<T = unknown> {
     [SinkLike_next](next: T): void;
     [SinkLike_complete](): void;
 }
-export declare const DeferableLike_eval: unique symbol;
+export declare const RunnableLike_eval: unique symbol;
 /**
  * Represents a deferred computation that is synchronously evaluated.
  */
-export interface DeferableLike<T = unknown> extends SynchronousComputationLike {
+export interface RunnableLike<T = unknown> extends SynchronousComputationLike {
     [ComputationLike_isPure]: boolean;
-    [DeferableLike_eval](sink: SinkLike<T>): void;
+    [RunnableLike_eval](sink: SinkLike<T>): void;
 }
-export interface PureDeferableLike<T = unknown> extends DeferableLike<T> {
+export interface PureRunnableLike<T = unknown> extends RunnableLike<T> {
     readonly [ComputationLike_isPure]: true;
 }
-export interface DeferableWithSideEffectsLike<T = unknown> extends DeferableLike<T> {
+export interface RunnableWithSideEffectsLike<T = unknown> extends RunnableLike<T> {
     readonly [ComputationLike_isPure]: false;
 }
 export interface IterableLike<T = unknown> extends Iterable<T>, SynchronousComputationLike {

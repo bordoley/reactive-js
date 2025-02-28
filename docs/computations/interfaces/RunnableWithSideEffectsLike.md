@@ -1,0 +1,67 @@
+[**Reactive-JS**](../../README.md)
+
+***
+
+[Reactive-JS](../../README.md) / [computations](../README.md) / RunnableWithSideEffectsLike
+
+# Interface: RunnableWithSideEffectsLike\<T\>
+
+Represents a deferred computation that is synchronously evaluated.
+
+## Extends
+
+- [`RunnableLike`](RunnableLike.md)\<`T`\>
+
+## Type Parameters
+
+• **T** = `unknown`
+
+## Properties
+
+### \[ComputationLike\_isDeferred\]?
+
+> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
+
+#### Inherited from
+
+[`RunnableLike`](RunnableLike.md).[`[ComputationLike_isDeferred]`](RunnableLike.md#computationlike_isdeferred)
+
+***
+
+### \[ComputationLike\_isPure\]
+
+> `readonly` **\[ComputationLike\_isPure\]**: `false`
+
+#### Overrides
+
+[`RunnableLike`](RunnableLike.md).[`[ComputationLike_isPure]`](RunnableLike.md#computationlike_ispure)
+
+***
+
+### \[ComputationLike\_isSynchronous\]?
+
+> `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `true`
+
+#### Inherited from
+
+[`RunnableLike`](RunnableLike.md).[`[ComputationLike_isSynchronous]`](RunnableLike.md#computationlike_issynchronous)
+
+## Methods
+
+### \[RunnableLike\_eval\]()
+
+> **\[RunnableLike\_eval\]**(`sink`): `void`
+
+#### Parameters
+
+##### sink
+
+[`SinkLike`](SinkLike.md)\<`T`\>
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[`RunnableLike`](RunnableLike.md).[`[RunnableLike_eval]`](RunnableLike.md#runnablelike_eval)

@@ -39,7 +39,7 @@ import {
   returns,
   tuple,
 } from "../functions.js";
-import Deferable_fromIterable from "./Deferable/__private__/Deferable.fromIterable.js";
+import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 
 /**
  * @noInheritDoc
@@ -563,7 +563,7 @@ export const takeWhile: Signature["takeWhile"] =
       options?.inclusive ?? false,
     );
 
-export const toDeferable: Signature["toDeferable"] = Deferable_fromIterable;
+export const toRunnable: Signature["toRunnable"] = Runnable_fromIterable;
 
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   <T>() =>

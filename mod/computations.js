@@ -8,4 +8,4 @@ export const ComputationLike_isSynchronous = Symbol("ComputationLike_isSynchrono
 export const SinkLike_next = Symbol("SinkLike_next");
 export const SinkLike_complete = Symbol("SinkLike_complete");
 export const SinkLike_isComplete = Symbol("SinkLike_isComplete");
-export const DeferableLike_eval = Symbol("DeferableLike_eval");
+export const RunnableLike_eval = Symbol("RunnableLike_eval");

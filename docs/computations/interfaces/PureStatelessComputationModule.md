@@ -8,8 +8,8 @@
 
 ## Extended by
 
-- [`DeferableModule`](../Deferable/interfaces/DeferableModule.md)
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
+- [`RunnableModule`](../Runnable/interfaces/RunnableModule.md)
 - [`EventSourceModule`](../../events/EventSource/interfaces/EventSourceModule.md)
 
 ## Type Parameters

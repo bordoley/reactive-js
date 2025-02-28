@@ -8,7 +8,7 @@
 
 ## Extended by
 
-- [`DeferableModule`](../Deferable/interfaces/DeferableModule.md)
+- [`RunnableModule`](../Runnable/interfaces/RunnableModule.md)
 
 ## Type Parameters
 

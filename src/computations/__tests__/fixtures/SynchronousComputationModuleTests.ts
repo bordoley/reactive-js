@@ -11,7 +11,7 @@ import {
   SynchronousComputationModule,
 } from "../../../computations.js";
 import { Optional, increment, pipeLazy, returns } from "../../../functions.js";
-import * as Deferable from "../../Deferable.js";
+import * as Runnable from "../../Runnable.js";
 
 const SynchronousComputationModuleTests = <
   Type extends SynchronousComputationLike,
@@ -46,14 +46,14 @@ const SynchronousComputationModuleTests = <
       ),
     ),
     describe(
-      "toDeferable",
+      "toRunnable",
       test(
         "when deferable sinkcompletes early",
         pipeLazy(
           m.generate(increment, returns(0)),
-          m.toDeferable(),
-          Deferable.takeFirst({ count: 3 }),
-          Deferable.toReadonlyArray(),
+          m.toRunnable(),
+          Runnable.takeFirst({ count: 3 }),
+          Runnable.toReadonlyArray(),
           expectArrayEquals([1, 2, 3]),
         ),
       ),

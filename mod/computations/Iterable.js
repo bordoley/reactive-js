@@ -5,7 +5,7 @@ import { mixInstanceFactory, props } from "../__internal__/mixins.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import { ComputationLike_isPure, Computation_type, } from "../computations.js";
 import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pipe, raise as raiseError, returns, tuple, } from "../functions.js";
-import Deferable_fromIterable from "./Deferable/__private__/Deferable.fromIterable.js";
+import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 class CatchErrorIterable {
     s;
     onError;
@@ -338,7 +338,7 @@ class ThrowIfEmptyIterable {
 }
 export const throwIfEmpty = (factory) => (iter) => newInstance(ThrowIfEmptyIterable, iter, factory);
 export const takeWhile = (predicate, options) => (iterable) => newInstance(TakeWhileIterable, iterable, predicate, options?.inclusive ?? false);
-export const toDeferable = Deferable_fromIterable;
+export const toRunnable = Runnable_fromIterable;
 export const toReadonlyArray = () => (iterable) => Array.from(iterable);
 class ZipIterable {
     iters;

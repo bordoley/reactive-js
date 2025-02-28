@@ -5,7 +5,7 @@ import {
   ComputationLike_isSynchronous,
   Computation_T,
   Computation_type,
-  DeferableLike,
+  RunnableLike,
 } from "../computations.js";
 import {
   DeferredObservableLike,
@@ -130,10 +130,10 @@ import Observable_throttle, {
   ThrottleLastMode as ObservableThrottle_ThrottleLastMode,
 } from "./Observable/__private__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
-import Observable_toDeferable from "./Observable/__private__/Observable.toDeferable.js";
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
 import Observable_toReadonlyArray from "./Observable/__private__/Observable.toReadonlyArray.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
+import Observable_toRunnable from "./Observable/__private__/Observable.toRunnable.js";
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 import Observable_zipLatest from "./Observable/__private__/Observable.zipLatest.js";
@@ -1314,11 +1314,11 @@ export interface ObservableModule {
     factory: Factory<unknown>,
   ): PureStatefulObservableOperator<T, T>;
 
-  toDeferable<T>(options?: {
+  toRunnable<T>(options?: {
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
     readonly maxMicroTaskTicks?: number;
-  }): Function1<SynchronousObservableLike<T>, DeferableLike<T>>;
+  }): Function1<SynchronousObservableLike<T>, RunnableLike<T>>;
 
   toEventSource<T>(
     scheduler: SchedulerLike,
@@ -1722,7 +1722,7 @@ export const takeUntil: Signature["takeUntil"] = Observable_takeUntil;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throttle: Signature["throttle"] = Observable_throttle;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
-export const toDeferable: Signature["toDeferable"] = Observable_toDeferable;
+export const toRunnable: Signature["toRunnable"] = Observable_toRunnable;
 export const toEventSource: Signature["toEventSource"] =
   Observable_toEventSource;
 export const toReadonlyArray: Signature["toReadonlyArray"] =

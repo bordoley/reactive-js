@@ -43,6 +43,6 @@
 - [takeFirst](functions/takeFirst.md)
 - [takeWhile](functions/takeWhile.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
-- [toDeferable](functions/toDeferable.md)
 - [toReadonlyArray](functions/toReadonlyArray.md)
+- [toRunnable](functions/toRunnable.md)
 - [zip](functions/zip.md)

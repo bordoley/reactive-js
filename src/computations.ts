@@ -248,7 +248,7 @@ export interface SynchronousComputationModule<
     initialValue: Factory<TAcc>,
   ): Function1<ComputationOf<Type, C, T>, TAcc>;
 
-  toDeferable<T>(): Function1<ComputationOf<Type, C, T>, DeferableLike<T>>;
+  toRunnable<T>(): Function1<ComputationOf<Type, C, T>, RunnableLike<T>>;
 
   toReadonlyArray<T>(): Function1<ComputationOf<Type, C, T>, ReadonlyArray<T>>;
 }
@@ -304,22 +304,22 @@ export interface SinkLike<T = unknown> {
   [SinkLike_complete](): void;
 }
 
-export const DeferableLike_eval = Symbol("DeferableLike_eval");
+export const RunnableLike_eval = Symbol("RunnableLike_eval");
 
 /**
  * Represents a deferred computation that is synchronously evaluated.
  */
-export interface DeferableLike<T = unknown> extends SynchronousComputationLike {
+export interface RunnableLike<T = unknown> extends SynchronousComputationLike {
   [ComputationLike_isPure]: boolean;
-  [DeferableLike_eval](sink: SinkLike<T>): void;
+  [RunnableLike_eval](sink: SinkLike<T>): void;
 }
 
-export interface PureDeferableLike<T = unknown> extends DeferableLike<T> {
+export interface PureRunnableLike<T = unknown> extends RunnableLike<T> {
   readonly [ComputationLike_isPure]: true;
 }
 
-export interface DeferableWithSideEffectsLike<T = unknown>
-  extends DeferableLike<T> {
+export interface RunnableWithSideEffectsLike<T = unknown>
+  extends RunnableLike<T> {
   readonly [ComputationLike_isPure]: false;
 }
 

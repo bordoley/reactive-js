@@ -12,7 +12,7 @@
 
 ## Extended by
 
-- [`DeferableLike`](DeferableLike.md)
+- [`RunnableLike`](RunnableLike.md)
 - [`IterableLike`](IterableLike.md)
 
 ## Properties
