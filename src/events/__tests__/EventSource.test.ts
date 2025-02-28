@@ -10,6 +10,7 @@ import {
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import PureStatelessComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
+import { ComputationLike_isSynchronous } from "../../computations.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as VirtualTimeScheduler from "../../concurrent/VirtualTimeScheduler.js";
 import { VirtualTimeSchedulerLike_run } from "../../concurrent.js";
@@ -41,6 +42,7 @@ testModule(
     ...EventSource,
     fromReadonlyArray<T>() {
       return (arr: readonly T[]) => ({
+        [ComputationLike_isSynchronous]: false as const,
         [EventSourceLike_addEventListener](listener: EventListenerLike<T>) {
           for (let i = 0; i < arr[Array_length]; i++) {
             listener[EventListenerLike_notify](arr[i]);

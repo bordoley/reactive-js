@@ -13,7 +13,7 @@
 
 ## Type Parameters
 
-• **Type** *extends* [`ComputationLike`](ComputationLike.md)
+• **Type** *extends* [`SynchronousComputationLike`](SynchronousComputationLike.md)
 
 • **C** *extends* [`Computation`](Computation.md)\<`Type`\>
 

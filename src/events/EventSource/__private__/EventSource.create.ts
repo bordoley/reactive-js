@@ -1,4 +1,5 @@
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
+import { ComputationLike_isSynchronous } from "../../../computations.js";
 import {
   EventListenerLike,
   EventSourceLike,
@@ -36,7 +37,8 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
     function CreateEventSource(
       instance: Pick<
         EventSourceLike<T>,
-        typeof EventSourceLike_addEventListener
+        | typeof EventSourceLike_addEventListener
+        | typeof ComputationLike_isSynchronous
       > &
         TProperties,
       setup: SideEffect1<EventListenerLike<T>>,
@@ -49,6 +51,7 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
       [CreateEventSource_setup]: none,
     }),
     {
+      [ComputationLike_isSynchronous]: false as const,
       [EventSourceLike_addEventListener](
         this: TProperties,
         listener: EventListenerLike,

@@ -7,6 +7,7 @@ import {
   props,
   unsafeCast,
 } from "../../__internal__/mixins.js";
+import { ComputationLike_isSynchronous } from "../../computations.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
@@ -135,6 +136,7 @@ const ObserverMixin: <T>() => Mixin2<
           | typeof DispatcherLike_complete
           | typeof QueueableLike_enqueue
           | typeof EventSourceLike_addEventListener
+          | typeof ComputationLike_isSynchronous
         >,
       DisposableLike,
       SchedulerLike,
@@ -154,6 +156,7 @@ const ObserverMixin: <T>() => Mixin2<
             | typeof DispatcherLike_complete
             | typeof QueueableLike_enqueue
             | typeof EventSourceLike_addEventListener
+            | typeof ComputationLike_isSynchronous
           > &
           TProperties,
         scheduler: SchedulerLike,
@@ -182,6 +185,8 @@ const ObserverMixin: <T>() => Mixin2<
         [ObserverMixin_publisher]: none,
       }),
       {
+        [ComputationLike_isSynchronous]: false as const,
+
         get [SchedulerLike_inContinuation]() {
           unsafeCast<TProperties>(this);
           return this[ObserverMixin_scheduler][SchedulerLike_inContinuation];

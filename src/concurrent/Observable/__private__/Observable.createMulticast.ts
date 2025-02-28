@@ -1,7 +1,9 @@
-import { ComputationLike_isPure } from "../../../computations.js";
+import {
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../../../computations.js";
 import {
   ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
   ObserverLike,
 } from "../../../concurrent.js";
 import { SideEffect1 } from "../../../functions.js";
@@ -11,7 +13,7 @@ const Observable_createMulticast = <T>(f: SideEffect1<ObserverLike<T>>) =>
   Observable_createWithConfig(f, {
     [ObservableLike_isDeferred]: false,
     [ComputationLike_isPure]: true,
-    [ObservableLike_isRunnable]: false,
+    [ComputationLike_isSynchronous]: false,
   });
 
 export default Observable_createMulticast;

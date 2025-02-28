@@ -1,8 +1,10 @@
-import { ComputationLike_isPure } from "../../../computations.js";
+import {
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../../../computations.js";
 import {
   DeferredObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
   PureRunnableLike,
 } from "../../../concurrent.js";
 import { Function1, pipe } from "../../../functions.js";
@@ -16,7 +18,7 @@ const Observable_switchMap: Observable.Signature["switchMap"] = (<TA, TB>(
       readonly innerType?: {
         readonly [ObservableLike_isDeferred]: boolean;
         readonly [ComputationLike_isPure]: boolean;
-        readonly [ObservableLike_isRunnable]: boolean;
+        readonly [ComputationLike_isSynchronous]: boolean;
       };
     },
   ) =>

@@ -8,7 +8,7 @@
 
 ## Extends
 
-- `Iterable`\<`T`\>.[`ComputationLike`](ComputationLike.md)
+- `Iterable`\<`T`\>.[`SynchronousComputationLike`](SynchronousComputationLike.md)
 
 ## Extended by
 
@@ -27,4 +27,14 @@
 
 #### Inherited from
 
-[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isPure]`](ComputationLike.md#computationlike_ispure)
+[`SynchronousComputationLike`](SynchronousComputationLike.md).[`[ComputationLike_isPure]`](SynchronousComputationLike.md#computationlike_ispure)
+
+***
+
+### \[ComputationLike\_isSynchronous\]?
+
+> `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `true`
+
+#### Inherited from
+
+[`SynchronousComputationLike`](SynchronousComputationLike.md).[`[ComputationLike_isSynchronous]`](SynchronousComputationLike.md#computationlike_issynchronous)

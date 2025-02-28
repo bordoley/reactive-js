@@ -1,9 +1,11 @@
 import { Mixin1, mix, props } from "../../__internal__/mixins.js";
-import { ComputationLike_isPure } from "../../computations.js";
+import {
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../../computations.js";
 import {
   MulticastObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
 } from "../../concurrent.js";
@@ -39,7 +41,7 @@ const DelegatingMulticastObservableMixin: <T>() => Mixin1<
       {
         [ObservableLike_isDeferred]: false as const,
         [ComputationLike_isPure]: true as const,
-        [ObservableLike_isRunnable]: false as const,
+        [ComputationLike_isSynchronous]: false as const,
 
         [ObservableLike_observe](this: TProperties, observer: ObserverLike<T>) {
           this[DelegatingMulticastObservableMixin_delegate][

@@ -1,7 +1,8 @@
 /// <reference types="./Observable.computeWithConfig.d.ts" />
 
 import { Array_length, Array_push, __DEV__, } from "../../../__internal__/constants.js";
-import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
+import { ComputationLike_isSynchronous, } from "../../../computations.js";
+import { ObservableLike_isDeferred, ObserverLike_notify, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseIf, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -112,8 +113,9 @@ class ComputeContext {
     }
     [ComputeContext_awaitOrObserve](observable, shouldAwait) {
         if (__DEV__) {
-            raiseIf(this[ComputeContext_observableConfig][ObservableLike_isRunnable] &&
-                !observable[ObservableLike_isRunnable], "cannot observe a non-runnable observable in a Runnable computation");
+            raiseIf((this[ComputeContext_observableConfig][ComputationLike_isSynchronous] ??
+                true) &&
+                !observable[ComputationLike_isSynchronous], "cannot observe a non-runnable observable in a Runnable computation");
         }
         const effect = shouldAwait
             ? validateComputeEffect(this, Await)

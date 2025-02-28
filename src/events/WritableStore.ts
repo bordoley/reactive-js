@@ -5,6 +5,7 @@ import {
   props,
   unsafeCast,
 } from "../__internal__/mixins.js";
+import { ComputationLike_isSynchronous } from "../computations.js";
 import {
   EventListenerLike,
   EventListenerLike_notify,
@@ -62,6 +63,8 @@ export const create: <T>(
       [WritableStore_publisher]: none,
     }),
     {
+      [ComputationLike_isSynchronous]: false as const,
+
       get [StoreLike_value]() {
         unsafeCast<TProperties>(this);
         return this[WritableStore_value];

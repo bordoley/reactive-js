@@ -7,16 +7,16 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   Computation,
-  ComputationLike,
   ComputationWithSideEffectsLike,
   ComputationWithSideEffectsModule,
   DeferredComputationModule,
+  SynchronousComputationLike,
   SynchronousComputationModule,
 } from "../../../computations.js";
 import { pipe, pipeLazy } from "../../../functions.js";
 
 const ComputationWithSideEffectsModuleTests = <
-  Type extends ComputationLike,
+  Type extends SynchronousComputationLike,
   C extends Computation<Type>,
   TypeWithSideEffects extends ComputationWithSideEffectsLike & Type,
   CWithSideEffects extends Computation<TypeWithSideEffects> & C,

@@ -10,8 +10,8 @@
 
 - [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md)
 - [`PureComputationLike`](PureComputationLike.md)
+- [`SynchronousComputationLike`](SynchronousComputationLike.md)
 - [`DeferableLike`](DeferableLike.md)
-- [`IterableLike`](IterableLike.md)
 - [`ObservableLike`](../../concurrent/interfaces/ObservableLike.md)
 
 ## Properties
@@ -19,3 +19,9 @@
 ### \[ComputationLike\_isPure\]?
 
 > `readonly` `optional` **\[ComputationLike\_isPure\]**: `boolean`
+
+***
+
+### \[ComputationLike\_isSynchronous\]?
+
+> `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `boolean`

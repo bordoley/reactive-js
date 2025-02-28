@@ -26,10 +26,10 @@
 
 ***
 
-### \[ObservableLike\_isRunnable\]
+### \[ComputationLike\_isSynchronous\]
 
-> `readonly` **\[ObservableLike\_isRunnable\]**: `false`
+> `readonly` **\[ComputationLike\_isSynchronous\]**: `false`
 
 #### Overrides
 
-`DeferredObservableLike.[ObservableLike_isRunnable]`
+`DeferredObservableLike.[ComputationLike_isSynchronous]`

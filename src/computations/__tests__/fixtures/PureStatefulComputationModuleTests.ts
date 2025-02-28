@@ -9,11 +9,11 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   Computation,
-  ComputationLike,
   ComputationWithSideEffectsLike,
   ComputationWithSideEffectsModule,
   DeferredComputationModule,
   PureStatefulComputationModule,
+  SynchronousComputationLike,
   SynchronousComputationModule,
 } from "../../../computations.js";
 import * as Observable from "../../../concurrent/Observable.js";
@@ -26,7 +26,7 @@ import {
 } from "../../../functions.js";
 
 const PureStatefulComputationModuleTests = <
-  Type extends ComputationLike,
+  Type extends SynchronousComputationLike,
   C extends Computation<Type>,
   TypeWithSideEffects extends ComputationWithSideEffectsLike & Type,
   CWithSideEffects extends Computation<TypeWithSideEffects> & C,

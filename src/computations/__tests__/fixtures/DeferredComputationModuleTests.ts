@@ -11,8 +11,8 @@ import {
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import {
   Computation,
-  ComputationLike,
   DeferredComputationModule,
+  SynchronousComputationLike,
   SynchronousComputationModule,
 } from "../../../computations.js";
 import {
@@ -29,7 +29,7 @@ import {
 } from "../../../functions.js";
 
 const DeferredComputationModuleTests = <
-  Type extends ComputationLike,
+  Type extends SynchronousComputationLike,
   C extends Computation<Type>,
 >(
   m: DeferredComputationModule<Type, C> & SynchronousComputationModule<Type, C>,

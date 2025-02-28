@@ -1,6 +1,6 @@
+import { ComputationLike_isSynchronous } from "../../computations.js";
 import {
   ObservableLike,
-  ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
   SchedulerLike,
@@ -162,7 +162,7 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
     const observable = ctx[ComputeContext_memoOrUse](
       false,
       deferSideEffect,
-      observableConfig[ObservableLike_isRunnable]
+      observableConfig[ComputationLike_isSynchronous]
         ? Observable_createPureRunnableWithSideEffects
         : Observable.create,
       f,

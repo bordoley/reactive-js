@@ -20,6 +20,16 @@
 
 • **T** = `unknown`
 
+## Properties
+
+### \[ComputationLike\_isSynchronous\]
+
+> `readonly` **\[ComputationLike\_isSynchronous\]**: `false`
+
+#### Overrides
+
+[`PureComputationLike`](../../computations/interfaces/PureComputationLike.md).[`[ComputationLike_isSynchronous]`](../../computations/interfaces/PureComputationLike.md#computationlike_issynchronous)
+
 ## Methods
 
 ### \[EventSourceLike\_addEventListener\]()

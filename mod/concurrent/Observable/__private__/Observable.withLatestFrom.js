@@ -1,8 +1,8 @@
 /// <reference types="./Observable.withLatestFrom.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { ComputationLike_isPure } from "../../../computations.js";
-import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../concurrent.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
+import { ObservableLike_isDeferred, ObserverLike_notify, } from "../../../concurrent.js";
 import { bind, none, partial, pipe, tuple, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -52,6 +52,6 @@ const Observable_withLatestFrom = ((other, selector = tuple) => pipe(createWithL
     [ObservableLift_isStateless]: false,
     [ObservableLike_isDeferred]: true,
     [ComputationLike_isPure]: other[ComputationLike_isPure] ?? true,
-    [ObservableLike_isRunnable]: other[ObservableLike_isRunnable],
+    [ComputationLike_isSynchronous]: other[ComputationLike_isSynchronous] ?? true,
 })));
 export default Observable_withLatestFrom;

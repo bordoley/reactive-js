@@ -1,6 +1,7 @@
 /// <reference types="./WritableStore.d.ts" />
 
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
+import { ComputationLike_isSynchronous } from "../computations.js";
 import { EventListenerLike_notify, EventSourceLike_addEventListener, StoreLike_value, } from "../events.js";
 import { none, strictEquality } from "../functions.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
@@ -21,6 +22,7 @@ export const create = /*@__PURE__*/ (() => {
         [WritableStore_value]: none,
         [WritableStore_publisher]: none,
     }), {
+        [ComputationLike_isSynchronous]: false,
         get [StoreLike_value]() {
             unsafeCast(this);
             return this[WritableStore_value];

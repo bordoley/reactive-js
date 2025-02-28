@@ -13,11 +13,13 @@ import {
   mixInstanceFactory,
   props,
 } from "../__internal__/mixins.js";
-import { ComputationLike_isPure } from "../computations.js";
+import {
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../computations.js";
 import {
   DispatcherLike_complete,
   ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
@@ -78,7 +80,7 @@ export const create: <T>(options?: {
         | typeof ObservableLike_observe
         | typeof ObservableLike_isDeferred
         | typeof ComputationLike_isPure
-        | typeof ObservableLike_isRunnable
+        | typeof ComputationLike_isSynchronous
         | typeof EventListenerLike_notify
       > &
         Mutable<TProperties>,
@@ -123,7 +125,7 @@ export const create: <T>(options?: {
     {
       [ObservableLike_isDeferred]: false as const,
       [ComputationLike_isPure]: true as const,
-      [ObservableLike_isRunnable]: false as const,
+      [ComputationLike_isSynchronous]: false as const,
 
       [EventListenerLike_notify](
         this: TProperties & SubjectLike<T> & QueueLike<T>,

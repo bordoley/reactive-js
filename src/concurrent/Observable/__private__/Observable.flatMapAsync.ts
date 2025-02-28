@@ -1,8 +1,8 @@
-import { ComputationLike_isPure } from "../../../computations.js";
 import {
-  ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
-} from "../../../concurrent.js";
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../../../computations.js";
+import { ObservableLike_isDeferred } from "../../../concurrent.js";
 import { Function2, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
 import Observable_concatMap from "./Observable.concatMap.js";
@@ -21,7 +21,7 @@ const Observable_flatMapAsync: Observable.Signature["flatMapAsync"] = <TA, TB>(
     innerType: {
       [ObservableLike_isDeferred]: true,
       [ComputationLike_isPure]: false,
-      [ObservableLike_isRunnable]: false,
+      [ComputationLike_isSynchronous]: false,
     },
   });
 };

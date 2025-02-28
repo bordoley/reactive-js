@@ -3,12 +3,14 @@ import {
   Array_push,
   __DEV__,
 } from "../../../__internal__/constants.js";
-import { ComputationLike_isPure } from "../../../computations.js";
+import {
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../../../computations.js";
 import {
   DeferredObservableWithSideEffectsLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
   RunnableWithSideEffectsLike,
@@ -210,7 +212,7 @@ class ComputeContext {
   readonly [ComputeContext_effects]: ComputeEffect[] = [];
   readonly [ComputeContext_observableConfig]: {
     readonly [ObservableLike_isDeferred]: boolean;
-    readonly [ObservableLike_isRunnable]: boolean;
+    readonly [ComputationLike_isSynchronous]?: boolean;
   };
   readonly [ComputeContext_observer]: ObserverLike;
 
@@ -245,7 +247,7 @@ class ComputeContext {
     mode: Observable.ComputeMode,
     config: Pick<
       ObservableLike,
-      typeof ObservableLike_isDeferred | typeof ObservableLike_isRunnable
+      typeof ObservableLike_isDeferred | typeof ComputationLike_isSynchronous
     >,
   ) {
     this[ComputeContext_observer] = observer;
@@ -260,8 +262,9 @@ class ComputeContext {
   ): Optional<T> {
     if (__DEV__) {
       raiseIf(
-        this[ComputeContext_observableConfig][ObservableLike_isRunnable] &&
-          !observable[ObservableLike_isRunnable],
+        (this[ComputeContext_observableConfig][ComputationLike_isSynchronous] ??
+          true) &&
+          !observable[ComputationLike_isSynchronous],
         "cannot observe a non-runnable observable in a Runnable computation",
       );
     }
@@ -394,7 +397,7 @@ interface ObservableComputeWithConfig {
       RunnableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
       | typeof ComputationLike_isPure
-      | typeof ObservableLike_isRunnable
+      | typeof ComputationLike_isSynchronous
     >,
     options?: { readonly mode?: Observable.ComputeMode },
   ): RunnableWithSideEffectsLike<T>;
@@ -404,7 +407,7 @@ interface ObservableComputeWithConfig {
       DeferredObservableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
       | typeof ComputationLike_isPure
-      | typeof ObservableLike_isRunnable
+      | typeof ComputationLike_isSynchronous
     >,
     options?: { readonly mode?: Observable.ComputeMode },
   ): DeferredObservableWithSideEffectsLike<T>;
@@ -417,7 +420,7 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
       DeferredObservableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
       | typeof ComputationLike_isPure
-      | typeof ObservableLike_isRunnable
+      | typeof ComputationLike_isSynchronous
     >,
     {
       mode = BatchedComputeMode,

@@ -3,10 +3,10 @@
 import * as Obj from "../../__internal__/Object.js";
 import { Array_length, String } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
-import { ComputationLike_isPure, pick } from "../../computations.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, pick, } from "../../computations.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as Streamable from "../../concurrent/Streamable.js";
-import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObservableLike_observe, StreamableLike_stream, } from "../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_observe, StreamableLike_stream, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
 import { StoreLike_value } from "../../events.js";
@@ -64,7 +64,7 @@ export const subscribe = /*@__PURE__*/ (() => {
         [WindowLocationLike_canGoBack]: none,
     }), {
         [ObservableLike_isDeferred]: false,
-        [ObservableLike_isRunnable]: false,
+        [ComputationLike_isSynchronous]: false,
         [ComputationLike_isPure]: true,
         [WindowLocationLike_push](stateOrUpdater) {
             this[WindowLocation_delegate][QueueableLike_enqueue]((prevState) => {

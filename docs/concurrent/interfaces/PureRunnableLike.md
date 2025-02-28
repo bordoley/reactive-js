@@ -26,6 +26,16 @@
 
 ***
 
+### \[ComputationLike\_isSynchronous\]
+
+> `readonly` **\[ComputationLike\_isSynchronous\]**: `true`
+
+#### Overrides
+
+[`RunnableLike`](RunnableLike.md).[`[ComputationLike_isSynchronous]`](RunnableLike.md#computationlike_issynchronous)
+
+***
+
 ### \[ObservableLike\_isDeferred\]
 
 > `readonly` **\[ObservableLike\_isDeferred\]**: `true`
@@ -36,13 +46,3 @@ the observable is multicasted.
 #### Overrides
 
 [`PureDeferredObservableLike`](PureDeferredObservableLike.md).[`[ObservableLike_isDeferred]`](PureDeferredObservableLike.md#observablelike_isdeferred)
-
-***
-
-### \[ObservableLike\_isRunnable\]
-
-> `readonly` **\[ObservableLike\_isRunnable\]**: `true`
-
-#### Overrides
-
-[`RunnableLike`](RunnableLike.md).[`[ObservableLike_isRunnable]`](RunnableLike.md#observablelike_isrunnable)

@@ -28,15 +28,6 @@
 Indicates if the `ObservableLike` is deferred, ie. cold. If false,
 the observable is multicasted.
 
-***
-
-### \[ObservableLike\_isRunnable\]
-
-> `readonly` **\[ObservableLike\_isRunnable\]**: `boolean`
-
-Indicates if the `ObservableLike` supports being subscribed to
-on a VirtualTimeScheduler.
-
 ## Methods
 
 ### \[ObservableLike\_observe\]()

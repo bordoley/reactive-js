@@ -1,8 +1,10 @@
-import { ComputationLike_isPure } from "../../../computations.js";
+import {
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../../../computations.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
   ObserverLike,
 } from "../../../concurrent.js";
 import { pipe } from "../../../functions.js";
@@ -37,7 +39,8 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = (<T>(
       [ObservableLift_isStateless]: false,
       [ObservableLike_isDeferred]: true,
       [ComputationLike_isPure]: notifier[ComputationLike_isPure] ?? true,
-      [ObservableLike_isRunnable]: notifier[ObservableLike_isRunnable],
+      [ComputationLike_isSynchronous]:
+        notifier[ComputationLike_isSynchronous] ?? true,
     }),
   );
 }) as Observable.Signature["takeUntil"];

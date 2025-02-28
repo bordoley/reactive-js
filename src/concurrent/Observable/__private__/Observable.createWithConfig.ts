@@ -5,13 +5,15 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
-import { ComputationLike_isPure } from "../../../computations.js";
+import {
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../../../computations.js";
 import {
   DeferredObservableWithSideEffectsLike,
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
   PureDeferredObservableLike,
@@ -29,7 +31,7 @@ interface ObservableCreateWithConfig {
       PureRunnableLike,
       | typeof ObservableLike_isDeferred
       | typeof ComputationLike_isPure
-      | typeof ObservableLike_isRunnable
+      | typeof ComputationLike_isSynchronous
     >,
   ): PureRunnableLike<T>;
 
@@ -39,7 +41,7 @@ interface ObservableCreateWithConfig {
       RunnableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
       | typeof ComputationLike_isPure
-      | typeof ObservableLike_isRunnable
+      | typeof ComputationLike_isSynchronous
     >,
   ): RunnableWithSideEffectsLike<T>;
 
@@ -49,7 +51,7 @@ interface ObservableCreateWithConfig {
       PureDeferredObservableLike,
       | typeof ObservableLike_isDeferred
       | typeof ComputationLike_isPure
-      | typeof ObservableLike_isRunnable
+      | typeof ComputationLike_isSynchronous
     >,
   ): PureDeferredObservableLike<T>;
 
@@ -59,7 +61,7 @@ interface ObservableCreateWithConfig {
       DeferredObservableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
       | typeof ComputationLike_isPure
-      | typeof ObservableLike_isRunnable
+      | typeof ComputationLike_isSynchronous
     >,
   ): DeferredObservableWithSideEffectsLike<T>;
 
@@ -69,7 +71,7 @@ interface ObservableCreateWithConfig {
       MulticastObservableLike,
       | typeof ObservableLike_isDeferred
       | typeof ComputationLike_isPure
-      | typeof ObservableLike_isRunnable
+      | typeof ComputationLike_isSynchronous
     >,
   ): MulticastObservableLike<T>;
 
@@ -79,7 +81,7 @@ interface ObservableCreateWithConfig {
       ObservableLike,
       | typeof ObservableLike_isDeferred
       | typeof ComputationLike_isPure
-      | typeof ObservableLike_isRunnable
+      | typeof ComputationLike_isSynchronous
     >,
   ): ObservableLike<T>;
 }
@@ -100,7 +102,7 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
         config: {
           readonly [ObservableLike_isDeferred]: boolean;
           readonly [ComputationLike_isPure]: boolean;
-          readonly [ObservableLike_isRunnable]: boolean;
+          readonly [ComputationLike_isSynchronous]: boolean;
         },
       ): ObservableLike {
         init(ObservableMixin, instance, config);

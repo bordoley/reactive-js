@@ -6,15 +6,15 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   Computation,
-  ComputationLike,
   DeferredComputationModule,
+  SynchronousComputationLike,
   SynchronousComputationModule,
 } from "../../../computations.js";
 import { Optional, increment, pipeLazy, returns } from "../../../functions.js";
 import * as Deferable from "../../Deferable.js";
 
 const SynchronousComputationModuleTests = <
-  Type extends ComputationLike,
+  Type extends SynchronousComputationLike,
   C extends Computation<Type>,
 >(
   m: DeferredComputationModule<Type, C> & SynchronousComputationModule<Type, C>,

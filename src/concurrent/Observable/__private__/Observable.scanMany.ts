@@ -1,9 +1,11 @@
-import { ComputationLike_isPure } from "../../../computations.js";
+import {
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../../../computations.js";
 import {
   DeferredObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
   ObservableLike_observe,
 } from "../../../concurrent.js";
 import { EventListenerLike_notify } from "../../../events.js";
@@ -23,22 +25,22 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
     readonly innerType?: {
       readonly [ObservableLike_isDeferred]: boolean;
       readonly [ComputationLike_isPure]: boolean;
-      readonly [ObservableLike_isRunnable]: boolean;
+      readonly [ComputationLike_isSynchronous]: boolean;
     };
   },
 ) => {
   const innerType = options?.innerType ?? {
     [ObservableLike_isDeferred]: true,
     [ComputationLike_isPure]: true,
-    [ObservableLike_isRunnable]: true,
+    [ComputationLike_isSynchronous]: true,
   };
 
   return (observable: ObservableLike<T>) => {
     const isPure =
       innerType[ComputationLike_isPure] && observable[ComputationLike_isPure];
     const isRunnable =
-      innerType[ObservableLike_isRunnable] &&
-      observable[ObservableLike_isRunnable];
+      innerType[ComputationLike_isSynchronous] &&
+      observable[ComputationLike_isSynchronous];
 
     return Observable_createWithConfig(
       observer => {
@@ -54,7 +56,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
             innerType: {
               [ObservableLike_isDeferred]: true,
               [ComputationLike_isPure]: false,
-              [ObservableLike_isRunnable]: false,
+              [ComputationLike_isSynchronous]: false,
             },
           }),
           Observable_notify(accFeedbackStream),
@@ -66,7 +68,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
       {
         [ObservableLike_isDeferred]: true,
         [ComputationLike_isPure]: isPure,
-        [ObservableLike_isRunnable]: isRunnable,
+        [ComputationLike_isSynchronous]: isRunnable,
       },
     );
   };

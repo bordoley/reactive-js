@@ -1,8 +1,10 @@
-import { ComputationLike_isPure } from "../../../computations.js";
+import {
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../../../computations.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
 } from "../../../concurrent.js";
@@ -41,7 +43,7 @@ const Observable_onSubscribe: Observable.Signature["onSubscribe"] = (<T>(
         );
       },
       {
-        [ObservableLike_isRunnable]: obs[ObservableLike_isRunnable],
+        [ComputationLike_isSynchronous]: obs[ComputationLike_isSynchronous],
         [ObservableLike_isDeferred]: true,
         [ComputationLike_isPure]: false,
       },

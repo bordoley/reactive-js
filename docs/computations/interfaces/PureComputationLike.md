@@ -24,3 +24,13 @@
 #### Overrides
 
 [`ComputationLike`](ComputationLike.md).[`[ComputationLike_isPure]`](ComputationLike.md#computationlike_ispure)
+
+***
+
+### \[ComputationLike\_isSynchronous\]?
+
+> `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `boolean`
+
+#### Inherited from
+
+[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isSynchronous]`](ComputationLike.md#computationlike_issynchronous)

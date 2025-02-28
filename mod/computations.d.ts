@@ -2,14 +2,20 @@ import { Equality, Factory, Function1, Optional, Predicate, Reducer, SideEffect1
 export declare const Computation_T: unique symbol;
 export declare const Computation_type: unique symbol;
 export declare const ComputationLike_isPure: unique symbol;
+export declare const ComputationLike_isDeferred: unique symbol;
+export declare const ComputationLike_isSynchronous: unique symbol;
 export interface ComputationLike {
     readonly [ComputationLike_isPure]?: boolean;
+    readonly [ComputationLike_isSynchronous]?: boolean;
 }
 export interface ComputationWithSideEffectsLike extends ComputationLike {
     readonly [ComputationLike_isPure]: false;
 }
 export interface PureComputationLike extends ComputationLike {
     readonly [ComputationLike_isPure]?: true;
+}
+export interface SynchronousComputationLike extends ComputationLike {
+    readonly [ComputationLike_isSynchronous]?: true;
 }
 /**
  * @noInheritDoc
@@ -74,7 +80,7 @@ export interface PureStatelessComputationModule<Type extends ComputationLike, C 
     keep<T>(predicate: Predicate<T>): PureComputationOperator<Type, C, T, T>;
     map<TA, TB>(selector: Function1<TA, TB>): PureComputationOperator<Type, C, TA, TB>;
 }
-export interface SynchronousComputationModule<Type extends ComputationLike, C extends Computation<Type>> {
+export interface SynchronousComputationModule<Type extends SynchronousComputationLike, C extends Computation<Type>> {
     last<T>(): Function1<ComputationOf<Type, C, T>, Optional<T>>;
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ComputationOf<Type, C, T>, TAcc>;
     toDeferable<T>(): Function1<ComputationOf<Type, C, T>, DeferableLike<T>>;
@@ -127,6 +133,7 @@ export declare const DeferableLike_eval: unique symbol;
  * Represents a deferred computation that is synchronously evaluated.
  */
 export interface DeferableLike<T = unknown> extends ComputationLike {
+    [ComputationLike_isSynchronous]?: true;
     [ComputationLike_isPure]: boolean;
     [DeferableLike_eval](sink: SinkLike<T>): void;
 }
@@ -136,7 +143,7 @@ export interface PureDeferableLike<T = unknown> extends DeferableLike<T> {
 export interface DeferableWithSideEffectsLike<T = unknown> extends DeferableLike<T> {
     readonly [ComputationLike_isPure]: false;
 }
-export interface IterableLike<T = unknown> extends Iterable<T>, ComputationLike {
+export interface IterableLike<T = unknown> extends Iterable<T>, SynchronousComputationLike {
 }
 export interface PureIterableLike<T = unknown> extends IterableLike<T> {
     readonly [ComputationLike_isPure]?: true;

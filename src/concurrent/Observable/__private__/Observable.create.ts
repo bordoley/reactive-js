@@ -1,7 +1,9 @@
-import { ComputationLike_isPure } from "../../../computations.js";
+import {
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../../../computations.js";
 import {
   ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
   ObserverLike,
 } from "../../../concurrent.js";
 import { SideEffect1 } from "../../../functions.js";
@@ -14,7 +16,7 @@ const Observable_create: Observable.Signature["create"] = <T>(
   Observable_createWithConfig(f, {
     [ObservableLike_isDeferred]: true,
     [ComputationLike_isPure]: false,
-    [ObservableLike_isRunnable]: false,
+    [ComputationLike_isSynchronous]: false,
   });
 
 export default Observable_create;

@@ -1,7 +1,7 @@
 /// <reference types="./Observable.scanMany.d.ts" />
 
-import { ComputationLike_isPure } from "../../../computations.js";
-import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
+import { ObservableLike_isDeferred, ObservableLike_observe, } from "../../../concurrent.js";
 import { EventListenerLike_notify } from "../../../events.js";
 import { invoke, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -14,26 +14,26 @@ const Observable_scanMany = ((scanner, initialValue, options) => {
     const innerType = options?.innerType ?? {
         [ObservableLike_isDeferred]: true,
         [ComputationLike_isPure]: true,
-        [ObservableLike_isRunnable]: true,
+        [ComputationLike_isSynchronous]: true,
     };
     return (observable) => {
         const isPure = innerType[ComputationLike_isPure] && observable[ComputationLike_isPure];
-        const isRunnable = innerType[ObservableLike_isRunnable] &&
-            observable[ObservableLike_isRunnable];
+        const isRunnable = innerType[ComputationLike_isSynchronous] &&
+            observable[ComputationLike_isSynchronous];
         return Observable_createWithConfig(observer => {
             const accFeedbackStream = pipe(Subject.create(), Disposable.addTo(observer));
             pipe(observable, Observable_withLatestFrom(accFeedbackStream), Observable_switchMap(([next, acc]) => scanner(acc, next), {
                 innerType: {
                     [ObservableLike_isDeferred]: true,
                     [ComputationLike_isPure]: false,
-                    [ObservableLike_isRunnable]: false,
+                    [ComputationLike_isSynchronous]: false,
                 },
             }), Observable_notify(accFeedbackStream), invoke(ObservableLike_observe, observer));
             accFeedbackStream[EventListenerLike_notify](initialValue());
         }, {
             [ObservableLike_isDeferred]: true,
             [ComputationLike_isPure]: isPure,
-            [ObservableLike_isRunnable]: isRunnable,
+            [ComputationLike_isSynchronous]: isRunnable,
         });
     };
 });

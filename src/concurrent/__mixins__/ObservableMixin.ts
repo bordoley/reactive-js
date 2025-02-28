@@ -1,11 +1,10 @@
 import { __DEV__ } from "../../__internal__/constants.js";
 import { Mixin1, mix, props } from "../../__internal__/mixins.js";
-import { ComputationLike_isPure } from "../../computations.js";
 import {
-  ObservableLike,
-  ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
-} from "../../concurrent.js";
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../../computations.js";
+import { ObservableLike, ObservableLike_isDeferred } from "../../concurrent.js";
 import { raiseIf } from "../../functions.js";
 
 const ObservableMixin: Mixin1<
@@ -13,19 +12,19 @@ const ObservableMixin: Mixin1<
     ObservableLike,
     | typeof ObservableLike_isDeferred
     | typeof ComputationLike_isPure
-    | typeof ObservableLike_isRunnable
+    | typeof ComputationLike_isSynchronous
   >,
   Pick<
     ObservableLike,
     | typeof ObservableLike_isDeferred
     | typeof ComputationLike_isPure
-    | typeof ObservableLike_isRunnable
+    | typeof ComputationLike_isSynchronous
   >
 > = /*@__PURE__*/ (() => {
   type TProperties = {
     [ObservableLike_isDeferred]: boolean;
     [ComputationLike_isPure]: boolean;
-    [ObservableLike_isRunnable]: boolean;
+    [ComputationLike_isSynchronous]: boolean;
   };
 
   return mix(
@@ -35,20 +34,20 @@ const ObservableMixin: Mixin1<
         ObservableLike,
         | typeof ObservableLike_isDeferred
         | typeof ComputationLike_isPure
-        | typeof ObservableLike_isRunnable
+        | typeof ComputationLike_isSynchronous
       >,
     ): Pick<
       ObservableLike,
       | typeof ObservableLike_isDeferred
       | typeof ComputationLike_isPure
-      | typeof ObservableLike_isRunnable
+      | typeof ComputationLike_isSynchronous
     > {
-      const configRunnable = config[ObservableLike_isRunnable];
+      const configRunnable = config[ComputationLike_isSynchronous];
       const configDeferred = config[ObservableLike_isDeferred];
       const configPure = config[ComputationLike_isPure];
 
       if (__DEV__) {
-        const isValidRunnable = configRunnable && configDeferred;
+        const isValidRunnable = (configRunnable ?? true) && configDeferred;
         const isValidDeferred = configDeferred;
         const isValidMulticasted =
           configPure && !configDeferred && !configRunnable;
@@ -65,7 +64,7 @@ const ObservableMixin: Mixin1<
         );
       }
 
-      instance[ObservableLike_isRunnable] = configRunnable;
+      instance[ComputationLike_isSynchronous] = configRunnable ?? true;
       instance[ObservableLike_isDeferred] = configDeferred;
       instance[ComputationLike_isPure] = configPure ?? true;
 
@@ -74,7 +73,7 @@ const ObservableMixin: Mixin1<
     props<TProperties>({
       [ObservableLike_isDeferred]: false,
       [ComputationLike_isPure]: false,
-      [ObservableLike_isRunnable]: false,
+      [ComputationLike_isSynchronous]: false,
     }),
     {},
   );

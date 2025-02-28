@@ -1,7 +1,9 @@
-import { ComputationLike_isPure } from "../../../computations.js";
+import {
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../../../computations.js";
 import {
   ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
   PureRunnableLike,
 } from "../../../concurrent.js";
 import { Function1, none, pipe } from "../../../functions.js";
@@ -14,7 +16,7 @@ const Observable_concatMap: Observable.Signature["concatMap"] = (<TA, TB>(
       readonly innerType?: {
         readonly [ObservableLike_isDeferred]: boolean;
         readonly [ComputationLike_isPure]: boolean;
-        readonly [ObservableLike_isRunnable]: boolean;
+        readonly [ComputationLike_isSynchronous]: boolean;
       };
     },
   ) =>

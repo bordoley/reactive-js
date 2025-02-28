@@ -1,7 +1,7 @@
 /// <reference types="./Observable.encodeUtf8.d.ts" />
 
-import { ComputationLike_isPure } from "../../../computations.js";
-import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
+import { ObservableLike_isDeferred, ObservableLike_observe, } from "../../../concurrent.js";
 import { bindMethod, invoke, newInstance, pipe, returns, } from "../../../functions.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_map from "./Observable.map.js";
@@ -12,6 +12,6 @@ const Observable_encodeUtf8 =
 }, {
     [ObservableLike_isDeferred]: true,
     [ComputationLike_isPure]: observable[ComputationLike_isPure],
-    [ObservableLike_isRunnable]: observable[ObservableLike_isRunnable],
+    [ComputationLike_isSynchronous]: observable[ComputationLike_isSynchronous],
 }));
 export default Observable_encodeUtf8;

@@ -6,6 +6,7 @@ import {
   props,
   unsafeCast,
 } from "../../__internal__/mixins.js";
+import { ComputationLike_isSynchronous } from "../../computations.js";
 import {
   DispatcherLike,
   DispatcherLikeEvent_capacityExceeded,
@@ -50,6 +51,7 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
           | typeof QueueableLike_backpressureStrategy
           | typeof QueueableLike_capacity
           | typeof QueueableLike_enqueue
+          | typeof ComputationLike_isSynchronous
         > &
           TProperties,
         delegate: DispatcherLike<TReq>,
@@ -63,6 +65,8 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
         [DelegatingDispatcherMixin_delegate]: none,
       }),
       {
+        [ComputationLike_isSynchronous]: false as const,
+
         get [DispatcherLike_isCompleted]() {
           unsafeCast<TProperties>(this);
           return this[DelegatingDispatcherMixin_delegate][

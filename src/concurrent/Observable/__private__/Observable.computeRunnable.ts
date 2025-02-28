@@ -1,8 +1,8 @@
-import { ComputationLike_isPure } from "../../../computations.js";
 import {
-  ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
-} from "../../../concurrent.js";
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../../../computations.js";
+import { ObservableLike_isDeferred } from "../../../concurrent.js";
 import { Factory } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
 import Observable_computeWithConfig from "./Observable.computeWithConfig.js";
@@ -16,7 +16,7 @@ const Observable_computeRunnable: Observable.Signature["computeRunnable"] = <T>(
     {
       [ObservableLike_isDeferred]: true,
       [ComputationLike_isPure]: false,
-      [ObservableLike_isRunnable]: true,
+      [ComputationLike_isSynchronous]: true,
     },
     options,
   );

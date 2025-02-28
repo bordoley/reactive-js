@@ -18,9 +18,15 @@ export const Computation_T = Symbol("Computation_T");
 export const Computation_type = Symbol("Computation_type");
 
 export const ComputationLike_isPure = Symbol("ComputationLike_isPure");
+export const ComputationLike_isDeferred = Symbol("ComputationLike_isDeferred");
+export const ComputationLike_isSynchronous = Symbol(
+  "ComputationLike_isSynchronous",
+);
+
 export interface ComputationLike {
   // defaults to true when not specified so that Arrays are classified as PureIterables
   readonly [ComputationLike_isPure]?: boolean;
+  readonly [ComputationLike_isSynchronous]?: boolean;
 }
 
 export interface ComputationWithSideEffectsLike extends ComputationLike {
@@ -29,6 +35,10 @@ export interface ComputationWithSideEffectsLike extends ComputationLike {
 
 export interface PureComputationLike extends ComputationLike {
   readonly [ComputationLike_isPure]?: true;
+}
+
+export interface SynchronousComputationLike extends ComputationLike {
+  readonly [ComputationLike_isSynchronous]?: true;
 }
 
 /**
@@ -216,7 +226,7 @@ export interface PureStatelessComputationModule<
 }
 
 export interface SynchronousComputationModule<
-  Type extends ComputationLike,
+  Type extends SynchronousComputationLike,
   C extends Computation<Type>,
 > {
   last<T>(): Function1<ComputationOf<Type, C, T>, Optional<T>>;
@@ -311,6 +321,7 @@ export const DeferableLike_eval = Symbol("DeferableLike_eval");
  * Represents a deferred computation that is synchronously evaluated.
  */
 export interface DeferableLike<T = unknown> extends ComputationLike {
+  [ComputationLike_isSynchronous]?: true;
   [ComputationLike_isPure]: boolean;
   [DeferableLike_eval](sink: SinkLike<T>): void;
 }
@@ -326,7 +337,7 @@ export interface DeferableWithSideEffectsLike<T = unknown>
 
 export interface IterableLike<T = unknown>
   extends Iterable<T>,
-    ComputationLike {}
+    SynchronousComputationLike {}
 
 export interface PureIterableLike<T = unknown> extends IterableLike<T> {
   readonly [ComputationLike_isPure]?: true;

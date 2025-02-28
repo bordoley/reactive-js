@@ -2,6 +2,7 @@ import { DictionaryLike, ReadonlyObjectMapLike } from "./collections.js";
 import {
   ComputationLike,
   ComputationLike_isPure,
+  ComputationLike_isSynchronous,
   PureComputationLike,
 } from "./computations.js";
 import { EventListenerLike, EventSourceLike, StoreLike } from "./events.js";
@@ -185,7 +186,6 @@ export interface ObserverLike<T = unknown>
 }
 
 export const ObservableLike_isDeferred = Symbol("ObservableLike_isDeferred");
-export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
 export const ObservableLike_observe = Symbol("ObservableLike_observe");
 
 /**
@@ -197,12 +197,6 @@ export interface ObservableLike<out T = unknown> extends ComputationLike {
    * the observable is multicasted.
    */
   readonly [ObservableLike_isDeferred]: boolean;
-
-  /**
-   * Indicates if the `ObservableLike` supports being subscribed to
-   * on a VirtualTimeScheduler.
-   */
-  readonly [ObservableLike_isRunnable]: boolean;
 
   /**
    * Subscribes the given `ObserverLike` to the `ObservableLike` source.
@@ -225,7 +219,7 @@ export interface DeferredObservableLike<out T = unknown>
  */
 export interface RunnableLike<out T = unknown>
   extends DeferredObservableLike<T> {
-  readonly [ObservableLike_isRunnable]: true;
+  readonly [ComputationLike_isSynchronous]: true;
 }
 
 /**
@@ -253,7 +247,7 @@ export interface PureDeferredObservableLike<out T = unknown>
 export interface DeferredObservableWithSideEffectsLike<out T = unknown>
   extends DeferredObservableLike<T> {
   readonly [ComputationLike_isPure]: false;
-  readonly [ObservableLike_isRunnable]: false;
+  readonly [ComputationLike_isSynchronous]: false;
 }
 
 /**
@@ -264,7 +258,7 @@ export interface PureRunnableLike<out T = unknown>
     PureDeferredObservableLike<T> {
   readonly [ObservableLike_isDeferred]: true;
   readonly [ComputationLike_isPure]?: true;
-  readonly [ObservableLike_isRunnable]: true;
+  readonly [ComputationLike_isSynchronous]: true;
 }
 
 /**
@@ -281,7 +275,7 @@ export interface RunnableWithSideEffectsLike<out T = unknown>
 export interface MulticastObservableLike<out T = unknown>
   extends PureObservableLike<T> {
   readonly [ObservableLike_isDeferred]: false;
-  readonly [ObservableLike_isRunnable]: false;
+  readonly [ComputationLike_isSynchronous]: false;
 }
 
 /**

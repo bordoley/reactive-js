@@ -1,7 +1,7 @@
 /// <reference types="./Observable.onSubscribe.d.ts" />
 
-import { ComputationLike_isPure } from "../../../computations.js";
-import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
+import { ObservableLike_isDeferred, ObservableLike_observe, } from "../../../concurrent.js";
 import { identity, isFunction, isSome, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -15,7 +15,7 @@ const Observable_onSubscribe = ((f) => (obs) => Observable_createWithConfig((obs
             ? Disposable.add(disposable)
             : identity);
 }, {
-    [ObservableLike_isRunnable]: obs[ObservableLike_isRunnable],
+    [ComputationLike_isSynchronous]: obs[ComputationLike_isSynchronous],
     [ObservableLike_isDeferred]: true,
     [ComputationLike_isPure]: false,
 }));

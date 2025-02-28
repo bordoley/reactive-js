@@ -60,8 +60,8 @@ import DeferredComputationModuleTests from "../../computations/__tests__/fixture
 import PureStatefulComputationModuleTests from "../../computations/__tests__/fixtures/PureStatefulComputationModuleTests.js";
 import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
-import { ComputationLike_isPure, keepType, } from "../../computations.js";
-import { DispatcherLikeEvent_completed, DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isRunnable, SchedulerLike_now, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, keepType, } from "../../computations.js";
+import { DispatcherLikeEvent_completed, DispatcherLike_complete, ObservableLike_isDeferred, SchedulerLike_now, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
 import { EventListenerLike_notify, StoreLike_value } from "../../events.js";
@@ -78,27 +78,27 @@ import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 const expectIsPureRunnable = (obs) => {
-    expectTrue(obs[ObservableLike_isRunnable]);
+    expectTrue(obs[ComputationLike_isSynchronous]);
     expectTrue(obs[ComputationLike_isPure] ?? true);
     expectTrue(obs[ObservableLike_isDeferred]);
 };
 const expectIsRunnableWithSideEffects = (obs) => {
-    expectTrue(obs[ObservableLike_isRunnable]);
+    expectTrue(obs[ComputationLike_isSynchronous]);
     expectFalse(obs[ComputationLike_isPure]);
     expectTrue(obs[ObservableLike_isDeferred]);
 };
 const expectIsPureDeferredObservable = (obs) => {
-    expectFalse(obs[ObservableLike_isRunnable]);
+    expectFalse(obs[ComputationLike_isSynchronous] ?? true);
     expectTrue(obs[ComputationLike_isPure] ?? true);
     expectTrue(obs[ObservableLike_isDeferred]);
 };
 const expectIsDeferredObservableWithSideEffects = (obs) => {
-    expectFalse(obs[ObservableLike_isRunnable]);
+    expectFalse(obs[ComputationLike_isSynchronous]);
     expectFalse(obs[ComputationLike_isPure]);
     expectTrue(obs[ObservableLike_isDeferred]);
 };
 const expectIsMulticastObservable = (obs) => {
-    expectFalse(obs[ObservableLike_isRunnable]);
+    expectFalse(obs[ComputationLike_isSynchronous]);
     expectTrue(obs[ComputationLike_isPure] ?? true);
     expectFalse(obs[ObservableLike_isDeferred]);
 };

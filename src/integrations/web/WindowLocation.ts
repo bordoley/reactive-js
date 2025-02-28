@@ -6,14 +6,17 @@ import {
   mixInstanceFactory,
   props,
 } from "../../__internal__/mixins.js";
-import { ComputationLike_isPure, pick } from "../../computations.js";
+import {
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+  pick,
+} from "../../computations.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import {
   DeferredObservableLike,
   MulticastObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
   SchedulerLike,
@@ -186,7 +189,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
     }),
     {
       [ObservableLike_isDeferred]: false as const,
-      [ObservableLike_isRunnable]: false as const,
+      [ComputationLike_isSynchronous]: false as const,
       [ComputationLike_isPure]: true as const,
 
       [WindowLocationLike_push](

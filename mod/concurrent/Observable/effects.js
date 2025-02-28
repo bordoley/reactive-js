@@ -1,6 +1,7 @@
 /// <reference types="./effects.d.ts" />
 
-import { ObservableLike_isRunnable, ObserverLike_notify, SchedulerLike_schedule, StreamableLike_stream, } from "../../concurrent.js";
+import { ComputationLike_isSynchronous } from "../../computations.js";
+import { ObserverLike_notify, SchedulerLike_schedule, StreamableLike_stream, } from "../../concurrent.js";
 import { bindMethod, isSome, none, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import { DisposableLike_dispose, } from "../../utils.js";
@@ -37,7 +38,7 @@ export const __do = /*@__PURE__*/ (() => {
         const ctx = assertCurrentContext();
         const scheduler = ctx[ComputeContext_observer];
         const observableConfig = ctx[ComputeContext_observableConfig];
-        const observable = ctx[ComputeContext_memoOrUse](false, deferSideEffect, observableConfig[ObservableLike_isRunnable]
+        const observable = ctx[ComputeContext_memoOrUse](false, deferSideEffect, observableConfig[ComputationLike_isSynchronous]
             ? Observable_createPureRunnableWithSideEffects
             : Observable.create, f, ...args);
         const subscribeOnScheduler = ctx[ComputeContext_memoOrUse](false, Observable.subscribe, scheduler);

@@ -26,6 +26,16 @@ Represents a deferred computation that is synchronously evaluated.
 
 [`DeferableLike`](DeferableLike.md).[`[ComputationLike_isPure]`](DeferableLike.md#computationlike_ispure)
 
+***
+
+### \[ComputationLike\_isSynchronous\]?
+
+> `optional` **\[ComputationLike\_isSynchronous\]**: `true`
+
+#### Inherited from
+
+[`DeferableLike`](DeferableLike.md).[`[ComputationLike_isSynchronous]`](DeferableLike.md#computationlike_issynchronous)
+
 ## Methods
 
 ### \[DeferableLike\_eval\]()

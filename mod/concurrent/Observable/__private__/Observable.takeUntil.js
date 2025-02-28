@@ -1,7 +1,7 @@
 /// <reference types="./Observable.takeUntil.d.ts" />
 
-import { ComputationLike_isPure } from "../../../computations.js";
-import { ObservableLike_isDeferred, ObservableLike_isRunnable, } from "../../../concurrent.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
+import { ObservableLike_isDeferred, } from "../../../concurrent.js";
 import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
@@ -14,7 +14,7 @@ const Observable_takeUntil = ((notifier) => {
         [ObservableLift_isStateless]: false,
         [ObservableLike_isDeferred]: true,
         [ComputationLike_isPure]: notifier[ComputationLike_isPure] ?? true,
-        [ObservableLike_isRunnable]: notifier[ObservableLike_isRunnable],
+        [ComputationLike_isSynchronous]: notifier[ComputationLike_isSynchronous] ?? true,
     }));
 });
 export default Observable_takeUntil;

@@ -1,8 +1,8 @@
 /// <reference types="./Observable.createWithConfig.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { ComputationLike_isPure } from "../../../computations.js";
-import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
+import { ObservableLike_isDeferred, ObservableLike_observe, } from "../../../concurrent.js";
 import { error, none } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import ObservableMixin from "../../__mixins__/ObservableMixin.js";

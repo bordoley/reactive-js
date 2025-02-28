@@ -10,12 +10,14 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
-import { ComputationLike_isPure } from "../../../computations.js";
+import {
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../../../computations.js";
 import {
   DeferredObservableWithSideEffectsLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../concurrent.js";
@@ -215,7 +217,7 @@ const Observable_mergeAll: Observable.Signature["mergeAll"] = ((options?: {
   readonly innerType?: {
     readonly [ObservableLike_isDeferred]: boolean;
     readonly [ComputationLike_isPure]: boolean;
-    readonly [ObservableLike_isRunnable]: boolean;
+    readonly [ComputationLike_isSynchronous]: boolean;
   };
   readonly backpressureStrategy?: BackpressureStrategy;
   readonly capacity?: number;
@@ -226,7 +228,7 @@ const Observable_mergeAll: Observable.Signature["mergeAll"] = ((options?: {
     ...(options?.innerType ?? {
       [ObservableLike_isDeferred]: true,
       [ComputationLike_isPure]: true,
-      [ObservableLike_isRunnable]: true,
+      [ComputationLike_isSynchronous]: true,
     }),
   })(
     createMergeAllObserverOperator(options),

@@ -1,8 +1,8 @@
 /// <reference types="./DelegatingMulticastObservableMixin.d.ts" />
 
 import { mix, props } from "../../__internal__/mixins.js";
-import { ComputationLike_isPure } from "../../computations.js";
-import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObservableLike_observe, } from "../../concurrent.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../computations.js";
+import { ObservableLike_isDeferred, ObservableLike_observe, } from "../../concurrent.js";
 import { none, returns } from "../../functions.js";
 const DelegatingMulticastObservableMixin = /*@__PURE__*/ (() => {
     const DelegatingMulticastObservableMixin_delegate = Symbol("DelegatingMulticastObservableMixin_delegate");
@@ -14,7 +14,7 @@ const DelegatingMulticastObservableMixin = /*@__PURE__*/ (() => {
     }), {
         [ObservableLike_isDeferred]: false,
         [ComputationLike_isPure]: true,
-        [ObservableLike_isRunnable]: false,
+        [ComputationLike_isSynchronous]: false,
         [ObservableLike_observe](observer) {
             this[DelegatingMulticastObservableMixin_delegate][ObservableLike_observe](observer);
         },

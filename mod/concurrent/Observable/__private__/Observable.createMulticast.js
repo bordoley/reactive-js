@@ -1,11 +1,11 @@
 /// <reference types="./Observable.createMulticast.d.ts" />
 
-import { ComputationLike_isPure } from "../../../computations.js";
-import { ObservableLike_isDeferred, ObservableLike_isRunnable, } from "../../../concurrent.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
+import { ObservableLike_isDeferred, } from "../../../concurrent.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 const Observable_createMulticast = (f) => Observable_createWithConfig(f, {
     [ObservableLike_isDeferred]: false,
     [ComputationLike_isPure]: true,
-    [ObservableLike_isRunnable]: false,
+    [ComputationLike_isSynchronous]: false,
 });
 export default Observable_createMulticast;

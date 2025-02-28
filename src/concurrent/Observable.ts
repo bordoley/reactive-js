@@ -1,6 +1,7 @@
 import {
   Computation,
   ComputationLike_isPure,
+  ComputationLike_isSynchronous,
   Computation_T,
   Computation_type,
   DeferableLike,
@@ -12,7 +13,6 @@ import {
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
   ObserverLike,
   PureDeferredObservableLike,
   PureObservableLike,
@@ -214,44 +214,44 @@ export const PureRunnableType: Pick<
   PureRunnableLike,
   | typeof ObservableLike_isDeferred
   | typeof ComputationLike_isPure
-  | typeof ObservableLike_isRunnable
+  | typeof ComputationLike_isSynchronous
 > = {
   [ObservableLike_isDeferred]: true,
   [ComputationLike_isPure]: true,
-  [ObservableLike_isRunnable]: true,
+  [ComputationLike_isSynchronous]: true,
 };
 
 export const RunnableWithSideEffectsType: Pick<
   RunnableWithSideEffectsLike,
   | typeof ObservableLike_isDeferred
   | typeof ComputationLike_isPure
-  | typeof ObservableLike_isRunnable
+  | typeof ComputationLike_isSynchronous
 > = {
   [ObservableLike_isDeferred]: true,
   [ComputationLike_isPure]: false,
-  [ObservableLike_isRunnable]: true,
+  [ComputationLike_isSynchronous]: true,
 };
 
 export const PureDeferredObservableType: Pick<
   PureDeferredObservableLike,
   | typeof ObservableLike_isDeferred
   | typeof ComputationLike_isPure
-  | typeof ObservableLike_isRunnable
+  | typeof ComputationLike_isSynchronous
 > = {
   [ObservableLike_isDeferred]: true,
   [ComputationLike_isPure]: true,
-  [ObservableLike_isRunnable]: false,
+  [ComputationLike_isSynchronous]: false,
 };
 
 export const DeferredObservableWithSideEffectsType: Pick<
   DeferredObservableWithSideEffectsLike,
   | typeof ObservableLike_isDeferred
   | typeof ComputationLike_isPure
-  | typeof ObservableLike_isRunnable
+  | typeof ComputationLike_isSynchronous
 > = {
   [ObservableLike_isDeferred]: true,
   [ComputationLike_isPure]: false,
-  [ObservableLike_isRunnable]: false,
+  [ComputationLike_isSynchronous]: false,
 };
 
 /**

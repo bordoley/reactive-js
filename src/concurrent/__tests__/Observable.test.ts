@@ -25,6 +25,7 @@ import PureStatelesssComputationModuleTests from "../../computations/__tests__/f
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
 import {
   ComputationLike_isPure,
+  ComputationLike_isSynchronous,
   ComputationWithSideEffectsModule,
   DeferredComputationModule,
   PureStatefulComputationModule,
@@ -41,7 +42,6 @@ import {
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isRunnable,
   PureDeferredObservableLike,
   PureRunnableLike,
   RunnableLike,
@@ -112,19 +112,19 @@ import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
 const expectIsPureRunnable = (obs: PureRunnableLike) => {
-  expectTrue(obs[ObservableLike_isRunnable]);
+  expectTrue(obs[ComputationLike_isSynchronous]);
   expectTrue(obs[ComputationLike_isPure] ?? true);
   expectTrue(obs[ObservableLike_isDeferred]);
 };
 
 const expectIsRunnableWithSideEffects = (obs: RunnableWithSideEffectsLike) => {
-  expectTrue(obs[ObservableLike_isRunnable]);
+  expectTrue(obs[ComputationLike_isSynchronous]);
   expectFalse(obs[ComputationLike_isPure]);
   expectTrue(obs[ObservableLike_isDeferred]);
 };
 
 const expectIsPureDeferredObservable = (obs: PureDeferredObservableLike) => {
-  expectFalse(obs[ObservableLike_isRunnable]);
+  expectFalse(obs[ComputationLike_isSynchronous] ?? true);
   expectTrue(obs[ComputationLike_isPure] ?? true);
   expectTrue(obs[ObservableLike_isDeferred]);
 };
@@ -132,13 +132,13 @@ const expectIsPureDeferredObservable = (obs: PureDeferredObservableLike) => {
 const expectIsDeferredObservableWithSideEffects = (
   obs: DeferredObservableWithSideEffectsLike,
 ) => {
-  expectFalse(obs[ObservableLike_isRunnable]);
+  expectFalse(obs[ComputationLike_isSynchronous]);
   expectFalse(obs[ComputationLike_isPure]);
   expectTrue(obs[ObservableLike_isDeferred]);
 };
 
 const expectIsMulticastObservable = (obs: MulticastObservableLike) => {
-  expectFalse(obs[ObservableLike_isRunnable]);
+  expectFalse(obs[ComputationLike_isSynchronous]);
   expectTrue(obs[ComputationLike_isPure] ?? true);
   expectFalse(obs[ObservableLike_isDeferred]);
 };

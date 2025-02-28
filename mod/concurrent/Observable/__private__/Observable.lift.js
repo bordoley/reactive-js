@@ -1,8 +1,8 @@
 /// <reference types="./Observable.lift.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { ComputationLike_isPure } from "../../../computations.js";
-import { ObservableLike_isDeferred, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
+import { ObservableLike_isDeferred, ObservableLike_observe, } from "../../../concurrent.js";
 import { bindMethod, none, pipeUnsafe } from "../../../functions.js";
 import ObservableMixin from "../../__mixins__/ObservableMixin.js";
 import Observable_isMulticasted from "./Observable.isMulticasted.js";
@@ -34,13 +34,14 @@ const Observable_lift = ((config) => (operator) => (source) => {
     const sourceIsMulticasted = Observable_isMulticasted(source);
     const isDeferred = (sourceIsMulticasted && !isStateless) ||
         (config[ObservableLike_isDeferred] && source[ObservableLike_isDeferred]);
-    const isRunnable = config[ObservableLike_isRunnable] && source[ObservableLike_isRunnable];
+    const isRunnable = config[ComputationLike_isSynchronous] &&
+        source[ComputationLike_isSynchronous];
     const isPure = !isDeferred ||
         (config[ComputationLike_isPure] && source[ComputationLike_isPure]);
     const liftedConfig = {
         [ObservableLike_isDeferred]: isDeferred,
         [ComputationLike_isPure]: isPure,
-        [ObservableLike_isRunnable]: isRunnable,
+        [ComputationLike_isSynchronous]: isRunnable,
     };
     return createLiftedObservable(sourceSource, allFunctions, liftedConfig);
 });

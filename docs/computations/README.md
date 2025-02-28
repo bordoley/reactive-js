@@ -24,6 +24,7 @@
 - [PureStatefulComputationModule](interfaces/PureStatefulComputationModule.md)
 - [PureStatelessComputationModule](interfaces/PureStatelessComputationModule.md)
 - [SinkLike](interfaces/SinkLike.md)
+- [SynchronousComputationLike](interfaces/SynchronousComputationLike.md)
 - [SynchronousComputationModule](interfaces/SynchronousComputationModule.md)
 
 ## Type Aliases
@@ -36,7 +37,9 @@
 
 - [Computation\_T](variables/Computation_T.md)
 - [Computation\_type](variables/Computation_type.md)
+- [ComputationLike\_isDeferred](variables/ComputationLike_isDeferred.md)
 - [ComputationLike\_isPure](variables/ComputationLike_isPure.md)
+- [ComputationLike\_isSynchronous](variables/ComputationLike_isSynchronous.md)
 - [DeferableLike\_eval](variables/DeferableLike_eval.md)
 - [SinkLike\_complete](variables/SinkLike_complete.md)
 - [SinkLike\_isComplete](variables/SinkLike_isComplete.md)
