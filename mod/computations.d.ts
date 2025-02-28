@@ -1,4 +1,4 @@
-import { Equality, Factory, Function1, Optional, Predicate, Reducer, SideEffect1, Tuple2, TypePredicate, Updater } from "./functions.js";
+import { Equality, Factory, Function1, Optional, Predicate, Reducer, SideEffect1, Tuple2, Updater } from "./functions.js";
 export declare const Computation_T: unique symbol;
 export declare const Computation_type: unique symbol;
 export declare const ComputationLike_isPure: unique symbol;
@@ -15,8 +15,16 @@ export interface ComputationWithSideEffectsLike extends ComputationLike {
 export interface PureComputationLike extends ComputationLike {
     readonly [ComputationLike_isPure]?: true;
 }
-export interface SynchronousComputationLike extends ComputationLike {
+export interface DeferredComputationLike extends ComputationLike {
+    readonly [ComputationLike_isDeferred]?: true;
+}
+export interface SynchronousComputationLike extends DeferredComputationLike {
     readonly [ComputationLike_isSynchronous]?: true;
+}
+export interface MulticastComputationLike extends ComputationLike {
+    readonly [ComputationLike_isSynchronous]: false;
+    readonly [ComputationLike_isDeferred]: false;
+    readonly [ComputationLike_isPure]?: true;
 }
 /**
  * @noInheritDoc
@@ -29,7 +37,7 @@ export type ComputationOf<Type extends ComputationLike, C extends Computation<Ty
     readonly [Computation_type]?: unknown;
 } ? NonNullable<(C & {
     readonly [Computation_T]: T;
-})[typeof Computation_type] & Pick<Type, typeof ComputationLike_isPure>> : {
+})[typeof Computation_type] & Pick<Type, typeof ComputationLike_isPure | typeof ComputationLike_isDeferred | typeof ComputationLike_isSynchronous>> : {
     readonly _C: C;
     readonly _T: () => T;
 };
@@ -133,8 +141,7 @@ export declare const DeferableLike_eval: unique symbol;
 /**
  * Represents a deferred computation that is synchronously evaluated.
  */
-export interface DeferableLike<T = unknown> extends ComputationLike {
-    [ComputationLike_isSynchronous]?: true;
+export interface DeferableLike<T = unknown> extends SynchronousComputationLike {
     [ComputationLike_isPure]: boolean;
     [DeferableLike_eval](sink: SinkLike<T>): void;
 }
@@ -152,14 +159,3 @@ export interface PureIterableLike<T = unknown> extends IterableLike<T> {
 export interface IterableWithSideEffectsLike<T = unknown> extends IterableLike<T> {
     readonly [ComputationLike_isPure]: false;
 }
-interface Signature {
-    keepType<Type extends ComputationLike, C extends Computation<Type>>(keep: PureStatelessComputationModule<Type, C>["keep"]): <TA, TB>(predicate: TypePredicate<TA, TB>) => PureComputationOperator<Type, C, TA, TB>;
-    mapTo<Type extends ComputationLike, C extends Computation<Type>>(map: PureStatelessComputationModule<Type, C>["map"]): <T>(value: T) => PureComputationOperator<Type, C, unknown, T>;
-    pick<Type extends ComputationLike, C extends Computation<Type>>(map: PureStatelessComputationModule<Type, C>["map"]): PickOperator<Type, C>;
-    sequence<Type extends ComputationLike, C extends Computation<Type>>(generate: DeferredComputationModule<Type, C>["generate"]): (start: number) => ComputationOf<Type, C, number>;
-}
-export declare const keepType: Signature["keepType"];
-export declare const mapTo: Signature["mapTo"];
-export declare const pick: Signature["pick"];
-export declare const sequence: Signature["sequence"];
-export {};

@@ -14,9 +14,11 @@
 - [ComputationWithSideEffectsModule](interfaces/ComputationWithSideEffectsModule.md)
 - [DeferableLike](interfaces/DeferableLike.md)
 - [DeferableWithSideEffectsLike](interfaces/DeferableWithSideEffectsLike.md)
+- [DeferredComputationLike](interfaces/DeferredComputationLike.md)
 - [DeferredComputationModule](interfaces/DeferredComputationModule.md)
 - [IterableLike](interfaces/IterableLike.md)
 - [IterableWithSideEffectsLike](interfaces/IterableWithSideEffectsLike.md)
+- [MulticastComputationLike](interfaces/MulticastComputationLike.md)
 - [PickOperator](interfaces/PickOperator.md)
 - [PureComputationLike](interfaces/PureComputationLike.md)
 - [PureDeferableLike](interfaces/PureDeferableLike.md)
@@ -44,10 +46,3 @@
 - [SinkLike\_complete](variables/SinkLike_complete.md)
 - [SinkLike\_isComplete](variables/SinkLike_isComplete.md)
 - [SinkLike\_next](variables/SinkLike_next.md)
-
-## Functions
-
-- [keepType](functions/keepType.md)
-- [mapTo](functions/mapTo.md)
-- [pick](functions/pick.md)
-- [sequence](functions/sequence.md)

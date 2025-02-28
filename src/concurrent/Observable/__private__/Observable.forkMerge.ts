@@ -1,4 +1,5 @@
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
+import * as Computation from "../../../computations/Computation.js";
 import {
   MulticastObservableLike,
   ObservableLike,
@@ -8,7 +9,6 @@ import { Function1, invoke, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_create from "./Observable.create.js";
-import Observable_isDeferred from "./Observable.isDeferred.js";
 import Observable_mergeMany from "./Observable.mergeMany.js";
 import Observable_multicast from "./Observable.multicast.js";
 
@@ -19,7 +19,7 @@ const Observable_forkMerge: Observable.Signature["forkMerge"] = (<TIn, TOut>(
     >[]
   ) =>
   (obs: ObservableLike<TIn>): ObservableLike<TOut> =>
-    Observable_isDeferred(obs)
+    Computation.isDeferred(obs)
       ? Observable_create(observer => {
           const src = pipe(
             obs,

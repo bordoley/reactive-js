@@ -18,6 +18,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
+import * as Computation from "../../computations/Computation.js";
 import ComputationWithSideEffectsModuleTests from "../../computations/__tests__/fixtures/ComputationWithSideEffectsModuleTests.js";
 import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
 import PureStatefulComputationModuleTests from "../../computations/__tests__/fixtures/PureStatefulComputationModuleTests.js";
@@ -32,7 +33,6 @@ import {
   PureStatefulComputationModule,
   PureStatelessComputationModule,
   SynchronousComputationModule,
-  keepType,
 } from "../../computations.js";
 import {
   DeferredObservableLike,
@@ -112,35 +112,35 @@ import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
 const expectIsPureRunnable = (obs: PureRunnableLike) => {
-  expectTrue(obs[ComputationLike_isSynchronous]);
+  expectTrue(obs[ComputationLike_isSynchronous] ?? true);
   expectTrue(obs[ComputationLike_isPure] ?? true);
-  expectTrue(obs[ComputationLike_isDeferred]);
+  expectTrue(obs[ComputationLike_isDeferred] ?? true);
 };
 
 const expectIsRunnableWithSideEffects = (obs: RunnableWithSideEffectsLike) => {
-  expectTrue(obs[ComputationLike_isSynchronous]);
-  expectFalse(obs[ComputationLike_isPure]);
-  expectTrue(obs[ComputationLike_isDeferred]);
+  expectTrue(obs[ComputationLike_isSynchronous] ?? true);
+  expectFalse(obs[ComputationLike_isPure] ?? true);
+  expectTrue(obs[ComputationLike_isDeferred] ?? true);
 };
 
 const expectIsPureDeferredObservable = (obs: PureDeferredObservableLike) => {
   expectFalse(obs[ComputationLike_isSynchronous] ?? true);
   expectTrue(obs[ComputationLike_isPure] ?? true);
-  expectTrue(obs[ComputationLike_isDeferred]);
+  expectTrue(obs[ComputationLike_isDeferred] ?? true);
 };
 
 const expectIsDeferredObservableWithSideEffects = (
   obs: DeferredObservableWithSideEffectsLike,
 ) => {
-  expectFalse(obs[ComputationLike_isSynchronous]);
-  expectFalse(obs[ComputationLike_isPure]);
-  expectTrue(obs[ComputationLike_isDeferred]);
+  expectFalse(obs[ComputationLike_isSynchronous] ?? true);
+  expectFalse(obs[ComputationLike_isPure] ?? true);
+  expectTrue(obs[ComputationLike_isDeferred] ?? true);
 };
 
 const expectIsMulticastObservable = (obs: MulticastObservableLike) => {
-  expectFalse(obs[ComputationLike_isSynchronous]);
+  expectFalse(obs[ComputationLike_isSynchronous] ?? true);
   expectTrue(obs[ComputationLike_isPure] ?? true);
-  expectFalse(obs[ComputationLike_isDeferred]);
+  expectFalse(obs[ComputationLike_isDeferred] ?? true);
 };
 
 const testIsPureRunnable = (obs: PureRunnableLike) =>
@@ -793,9 +793,10 @@ testModule(
           },
           { mode: "combine-latest" },
         ),
-        keepType<RunnableLike, Observable.RunnableWithSideEffectsComputation>(
-          Observable.keep,
-        )(isSome),
+        Computation.keepType<
+          RunnableLike,
+          Observable.RunnableWithSideEffectsComputation
+        >(Observable.keep)(isSome),
         Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.run(),
       );

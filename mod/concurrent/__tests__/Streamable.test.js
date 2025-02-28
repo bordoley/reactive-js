@@ -56,7 +56,7 @@ import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import * as Dictionary from "../../collections/Dictionary.js";
 import { DictionaryLike_get, keySet } from "../../collections.js";
-import { sequence } from "../../computations.js";
+import * as Computation from "../../computations/Computation.js";
 import { AnimationStreamLike_animation, DispatcherLike_complete, DispatcherLike_isCompleted, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import { bindMethod, invoke, none, pipe, pipeSome, returns, } from "../../functions.js";
@@ -157,7 +157,7 @@ testModule("Streamable", describe("animation", test("integration", () => {
     const env_5 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
-        const stream = pipe(Streamable.stateStore(returns(-1)), Streamable.syncState(state => pipe(sequence(Observable.generate)(state + 10), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (oldState, newState) => newState !== oldState
+        const stream = pipe(Streamable.stateStore(returns(-1)), Streamable.syncState(state => pipe(Computation.sequence(Observable.generate)(state + 10), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (oldState, newState) => newState !== oldState
             ? Observable.empty({ delay: 0 })
             : Observable.empty({ delay: 0 })), invoke(StreamableLike_stream, vts));
         pipe((x) => x + 2, Observable.fromValue({ delay: 5 }), Observable.enqueue(stream), Observable.subscribe(vts));

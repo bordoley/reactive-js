@@ -1,11 +1,11 @@
 /// <reference types="./Observable.lift.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import * as Computation from "../../../computations/Computation.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { ObservableLike_observe, } from "../../../concurrent.js";
 import { bindMethod, none, pipeUnsafe } from "../../../functions.js";
 import ObservableMixin from "../../__mixins__/ObservableMixin.js";
-import Observable_isMulticasted from "./Observable.isMulticasted.js";
 const LiftedObservableLike_source = Symbol("LiftedObservableMixin_source");
 const LiftedObservableLike_operators = Symbol("LiftedObservableMixin_operators");
 const createLiftedObservable = /*@__PURE__*/ (() => {
@@ -31,7 +31,7 @@ const Observable_lift = ((config) => (operator) => (source) => {
         ...(source[LiftedObservableLike_operators] ?? []),
     ];
     const isStateless = config[ObservableLift_isStateless] ?? false;
-    const sourceIsMulticasted = Observable_isMulticasted(source);
+    const sourceIsMulticasted = Computation.isMulticasted(source);
     const isDeferred = (sourceIsMulticasted && !isStateless) ||
         (config[ComputationLike_isDeferred] &&
             source[ComputationLike_isDeferred]);

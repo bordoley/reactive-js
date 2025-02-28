@@ -20,9 +20,9 @@
 
 ## Properties
 
-### \[ComputationLike\_isDeferred\]
+### \[ComputationLike\_isDeferred\]?
 
-> `readonly` **\[ComputationLike\_isDeferred\]**: `true`
+> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
 
 #### Overrides
 

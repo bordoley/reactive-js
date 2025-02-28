@@ -16,9 +16,9 @@
 
 ## Properties
 
-### \[ComputationLike\_isDeferred\]
+### \[ComputationLike\_isDeferred\]?
 
-> `readonly` **\[ComputationLike\_isDeferred\]**: `true`
+> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
 
 #### Overrides
 
@@ -36,9 +36,9 @@
 
 ***
 
-### \[ComputationLike\_isSynchronous\]
+### \[ComputationLike\_isSynchronous\]?
 
-> `readonly` **\[ComputationLike\_isSynchronous\]**: `true`
+> `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `true`
 
 #### Overrides
 

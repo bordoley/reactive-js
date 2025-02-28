@@ -11,7 +11,7 @@ import {
 import * as Dictionary from "../../collections/Dictionary.js";
 import { DictionaryCollection } from "../../collections/Dictionary.js";
 import { DictionaryLike_get, keySet } from "../../collections.js";
-import { sequence } from "../../computations.js";
+import * as Computation from "../../computations/Computation.js";
 import {
   AnimationStreamLike_animation,
   DispatcherLike_complete,
@@ -153,9 +153,10 @@ testModule(
         Streamable.syncState(
           state =>
             pipe(
-              sequence<PureRunnableLike, Observable.PureRunnableComputation>(
-                Observable.generate,
-              )(state + 10),
+              Computation.sequence<
+                PureRunnableLike,
+                Observable.PureRunnableComputation
+              >(Observable.generate)(state + 10),
               Observable.map(x => (_: number) => x),
               Observable.takeFirst({ count: 2 }),
             ),

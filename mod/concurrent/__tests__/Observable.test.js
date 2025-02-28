@@ -55,12 +55,13 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
+import * as Computation from "../../computations/Computation.js";
 import ComputationWithSideEffectsModuleTests from "../../computations/__tests__/fixtures/ComputationWithSideEffectsModuleTests.js";
 import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
 import PureStatefulComputationModuleTests from "../../computations/__tests__/fixtures/PureStatefulComputationModuleTests.js";
 import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, keepType, } from "../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../computations.js";
 import { DispatcherLikeEvent_completed, DispatcherLike_complete, SchedulerLike_now, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
@@ -78,29 +79,29 @@ import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 const expectIsPureRunnable = (obs) => {
-    expectTrue(obs[ComputationLike_isSynchronous]);
+    expectTrue(obs[ComputationLike_isSynchronous] ?? true);
     expectTrue(obs[ComputationLike_isPure] ?? true);
-    expectTrue(obs[ComputationLike_isDeferred]);
+    expectTrue(obs[ComputationLike_isDeferred] ?? true);
 };
 const expectIsRunnableWithSideEffects = (obs) => {
-    expectTrue(obs[ComputationLike_isSynchronous]);
-    expectFalse(obs[ComputationLike_isPure]);
-    expectTrue(obs[ComputationLike_isDeferred]);
+    expectTrue(obs[ComputationLike_isSynchronous] ?? true);
+    expectFalse(obs[ComputationLike_isPure] ?? true);
+    expectTrue(obs[ComputationLike_isDeferred] ?? true);
 };
 const expectIsPureDeferredObservable = (obs) => {
     expectFalse(obs[ComputationLike_isSynchronous] ?? true);
     expectTrue(obs[ComputationLike_isPure] ?? true);
-    expectTrue(obs[ComputationLike_isDeferred]);
+    expectTrue(obs[ComputationLike_isDeferred] ?? true);
 };
 const expectIsDeferredObservableWithSideEffects = (obs) => {
-    expectFalse(obs[ComputationLike_isSynchronous]);
-    expectFalse(obs[ComputationLike_isPure]);
-    expectTrue(obs[ComputationLike_isDeferred]);
+    expectFalse(obs[ComputationLike_isSynchronous] ?? true);
+    expectFalse(obs[ComputationLike_isPure] ?? true);
+    expectTrue(obs[ComputationLike_isDeferred] ?? true);
 };
 const expectIsMulticastObservable = (obs) => {
-    expectFalse(obs[ComputationLike_isSynchronous]);
+    expectFalse(obs[ComputationLike_isSynchronous] ?? true);
     expectTrue(obs[ComputationLike_isPure] ?? true);
-    expectFalse(obs[ComputationLike_isDeferred]);
+    expectFalse(obs[ComputationLike_isDeferred] ?? true);
 };
 const testIsPureRunnable = (obs) => test("is PureRunnableLike", pipeLazy(obs, expectIsPureRunnable));
 const testIsRunnableWithSideEffects = (obs) => test("is PureRunnableLike", pipeLazy(obs, expectIsRunnableWithSideEffects));
@@ -364,7 +365,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         const v = __await(oneTwoThreeDelayed);
         const next = __memo(createOneTwoThree, v);
         return __await(next);
-    }, { mode: "combine-latest" }), keepType(Observable.keep)(isSome), Observable.forEach(bindMethod(result, Array_push)), Observable.run());
+    }, { mode: "combine-latest" }), Computation.keepType(Observable.keep)(isSome), Observable.forEach(bindMethod(result, Array_push)), Observable.run());
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }), test("when compute function throws", () => {
     const env_14 = { stack: [], error: void 0, hasError: false };

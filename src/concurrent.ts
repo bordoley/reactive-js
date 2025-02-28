@@ -205,7 +205,7 @@ export interface ObservableLike<out T = unknown> extends ComputationLike {
  */
 export interface DeferredObservableLike<out T = unknown>
   extends ObservableLike<T> {
-  readonly [ComputationLike_isDeferred]: true;
+  readonly [ComputationLike_isDeferred]?: true;
 }
 
 /**
@@ -213,7 +213,7 @@ export interface DeferredObservableLike<out T = unknown>
  */
 export interface RunnableLike<out T = unknown>
   extends DeferredObservableLike<T> {
-  readonly [ComputationLike_isSynchronous]: true;
+  readonly [ComputationLike_isSynchronous]?: true;
 }
 
 /**
@@ -232,7 +232,7 @@ export interface PureDeferredObservableLike<out T = unknown>
   extends DeferredObservableLike<T>,
     PureObservableLike<T> {
   readonly [ComputationLike_isPure]?: true;
-  readonly [ComputationLike_isDeferred]: true;
+  readonly [ComputationLike_isDeferred]?: true;
 }
 
 /**
@@ -250,9 +250,9 @@ export interface DeferredObservableWithSideEffectsLike<out T = unknown>
 export interface PureRunnableLike<out T = unknown>
   extends RunnableLike<T>,
     PureDeferredObservableLike<T> {
-  readonly [ComputationLike_isDeferred]: true;
+  readonly [ComputationLike_isDeferred]?: true;
   readonly [ComputationLike_isPure]?: true;
-  readonly [ComputationLike_isSynchronous]: true;
+  readonly [ComputationLike_isSynchronous]?: true;
 }
 
 /**

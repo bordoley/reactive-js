@@ -12,6 +12,7 @@
 - [collections/ReadonlyMap](collections/ReadonlyMap/README.md)
 - [collections/ReadonlyObjectMap](collections/ReadonlyObjectMap/README.md)
 - [computations](computations/README.md)
+- [computations/Computation](computations/Computation/README.md)
 - [computations/Deferable](computations/Deferable/README.md)
 - [computations/Iterable](computations/Iterable/README.md)
 - [concurrent](concurrent/README.md)

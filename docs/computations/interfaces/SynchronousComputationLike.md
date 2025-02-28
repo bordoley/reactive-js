@@ -8,21 +8,22 @@
 
 ## Extends
 
-- [`ComputationLike`](ComputationLike.md)
+- [`DeferredComputationLike`](DeferredComputationLike.md)
 
 ## Extended by
 
+- [`DeferableLike`](DeferableLike.md)
 - [`IterableLike`](IterableLike.md)
 
 ## Properties
 
 ### \[ComputationLike\_isDeferred\]?
 
-> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `boolean`
+> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
 
 #### Inherited from
 
-[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isDeferred]`](ComputationLike.md#computationlike_isdeferred)
+[`DeferredComputationLike`](DeferredComputationLike.md).[`[ComputationLike_isDeferred]`](DeferredComputationLike.md#computationlike_isdeferred)
 
 ***
 
@@ -32,7 +33,7 @@
 
 #### Inherited from
 
-[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isPure]`](ComputationLike.md#computationlike_ispure)
+[`DeferredComputationLike`](DeferredComputationLike.md).[`[ComputationLike_isPure]`](DeferredComputationLike.md#computationlike_ispure)
 
 ***
 
@@ -42,4 +43,4 @@
 
 #### Overrides
 
-[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isSynchronous]`](ComputationLike.md#computationlike_issynchronous)
+[`DeferredComputationLike`](DeferredComputationLike.md).[`[ComputationLike_isSynchronous]`](DeferredComputationLike.md#computationlike_issynchronous)

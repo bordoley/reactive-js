@@ -4,6 +4,7 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
+import * as Computation from "../../../computations/Computation.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
@@ -22,7 +23,6 @@ import type {
   PureStatelessObservableOperator,
 } from "../../Observable.js";
 import ObservableMixin from "../../__mixins__/ObservableMixin.js";
-import Observable_isMulticasted from "./Observable.isMulticasted.js";
 
 const LiftedObservableLike_source = Symbol("LiftedObservableMixin_source");
 const LiftedObservableLike_operators = Symbol(
@@ -158,7 +158,7 @@ const Observable_lift: ObservableLift["lift"] = ((
 
     const isStateless = config[ObservableLift_isStateless] ?? false;
 
-    const sourceIsMulticasted = Observable_isMulticasted(source);
+    const sourceIsMulticasted = Computation.isMulticasted(source);
 
     const isDeferred =
       (sourceIsMulticasted && !isStateless) ||

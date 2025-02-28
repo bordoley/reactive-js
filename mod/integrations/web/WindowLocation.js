@@ -3,7 +3,8 @@
 import * as Obj from "../../__internal__/Object.js";
 import { Array_length, String } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, pick, } from "../../computations.js";
+import * as Computation from "../../computations/Computation.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../computations.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import { ObservableLike_observe, StreamableLike_stream, } from "../../concurrent.js";
@@ -86,7 +87,7 @@ export const subscribe = /*@__PURE__*/ (() => {
             history.back();
         },
         [ObservableLike_observe](observer) {
-            pipe(this[WindowLocation_delegate], pick(Observable.map)("uri"), invoke(ObservableLike_observe, observer));
+            pipe(this[WindowLocation_delegate], Computation.pick(Observable.map)("uri"), invoke(ObservableLike_observe, observer));
         },
     });
     let currentWindowLocationObservable = none;

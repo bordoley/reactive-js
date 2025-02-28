@@ -21,9 +21,9 @@
 
 ## Properties
 
-### \[ComputationLike\_isSynchronous\]
+### \[ComputationLike\_isSynchronous\]?
 
-> `readonly` **\[ComputationLike\_isSynchronous\]**: `true`
+> `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `true`
 
 #### Overrides
 

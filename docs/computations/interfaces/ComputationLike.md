@@ -10,8 +10,8 @@
 
 - [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md)
 - [`PureComputationLike`](PureComputationLike.md)
-- [`SynchronousComputationLike`](SynchronousComputationLike.md)
-- [`DeferableLike`](DeferableLike.md)
+- [`DeferredComputationLike`](DeferredComputationLike.md)
+- [`MulticastComputationLike`](MulticastComputationLike.md)
 - [`ObservableLike`](../../concurrent/interfaces/ObservableLike.md)
 
 ## Properties

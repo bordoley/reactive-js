@@ -144,13 +144,13 @@ export interface ObservableLike<out T = unknown> extends ComputationLike {
  * @noInheritDoc
  */
 export interface DeferredObservableLike<out T = unknown> extends ObservableLike<T> {
-    readonly [ComputationLike_isDeferred]: true;
+    readonly [ComputationLike_isDeferred]?: true;
 }
 /**
  * @noInheritDoc
  */
 export interface RunnableLike<out T = unknown> extends DeferredObservableLike<T> {
-    readonly [ComputationLike_isSynchronous]: true;
+    readonly [ComputationLike_isSynchronous]?: true;
 }
 /**
  * @noInheritDoc
@@ -163,7 +163,7 @@ export interface PureObservableLike<out T = unknown> extends ObservableLike<T>, 
  */
 export interface PureDeferredObservableLike<out T = unknown> extends DeferredObservableLike<T>, PureObservableLike<T> {
     readonly [ComputationLike_isPure]?: true;
-    readonly [ComputationLike_isDeferred]: true;
+    readonly [ComputationLike_isDeferred]?: true;
 }
 /**
  * @noInheritDoc
@@ -176,9 +176,9 @@ export interface DeferredObservableWithSideEffectsLike<out T = unknown> extends 
  * @noInheritDoc
  */
 export interface PureRunnableLike<out T = unknown> extends RunnableLike<T>, PureDeferredObservableLike<T> {
-    readonly [ComputationLike_isDeferred]: true;
+    readonly [ComputationLike_isDeferred]?: true;
     readonly [ComputationLike_isPure]?: true;
-    readonly [ComputationLike_isSynchronous]: true;
+    readonly [ComputationLike_isSynchronous]?: true;
 }
 /**
  * @noInheritDoc

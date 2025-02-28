@@ -1,13 +1,13 @@
 import { Array_every, Array_map } from "../../../__internal__/constants.js";
+import * as Computation from "../../../computations/Computation.js";
 import {
   MulticastObservableLike,
   ObservableLike,
 } from "../../../concurrent.js";
 import { TypePredicate, isTrue } from "../../../functions.js";
-import Observable_isMulticasted from "./Observable.isMulticasted.js";
 
 const Observable_allAreMulticasted = (observables =>
-  observables[Array_map](Observable_isMulticasted)[Array_every](
+  observables[Array_map](Computation.isMulticasted)[Array_every](
     isTrue,
   )) as TypePredicate<
   ReadonlyArray<ObservableLike>,

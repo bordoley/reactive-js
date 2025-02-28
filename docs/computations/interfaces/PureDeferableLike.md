@@ -20,7 +20,7 @@ Represents a deferred computation that is synchronously evaluated.
 
 ### \[ComputationLike\_isDeferred\]?
 
-> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `boolean`
+> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
 
 #### Inherited from
 
@@ -40,7 +40,7 @@ Represents a deferred computation that is synchronously evaluated.
 
 ### \[ComputationLike\_isSynchronous\]?
 
-> `optional` **\[ComputationLike\_isSynchronous\]**: `true`
+> `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `true`
 
 #### Inherited from
 

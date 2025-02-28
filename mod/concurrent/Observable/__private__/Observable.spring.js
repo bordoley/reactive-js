@@ -2,7 +2,7 @@
 
 import { MAX_VALUE } from "../../../__internal__/constants.js";
 import { abs, clamp, min } from "../../../__internal__/math.js";
-import { pick } from "../../../computations.js";
+import * as Computation from "../../../computations/Computation.js";
 import { isNotEqualTo, pipe, returns, tuple, } from "../../../functions.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
@@ -24,7 +24,7 @@ const Observable_spring = (options) => {
         const d = (velocity + acceleration) * dt;
         const newValue = abs(d) < precision && abs(delta) < precision ? 1 : value + d;
         return tuple(now, value, newValue);
-    }, returns(tuple(MAX_VALUE, 0, 0))), pick(Observable_map)(2), Observable_takeWhile(isNotEqualTo(1), {
+    }, returns(tuple(MAX_VALUE, 0, 0))), Computation.pick(Observable_map)(2), Observable_takeWhile(isNotEqualTo(1), {
         inclusive: true,
     }));
 };
