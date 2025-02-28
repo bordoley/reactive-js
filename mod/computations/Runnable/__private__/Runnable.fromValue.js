@@ -1,10 +1,11 @@
 /// <reference types="./Runnable.fromValue.d.ts" />
 
-import { ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, SinkLike_next, } from "../../../computations.js";
+import { ComputationLike_isInteractive, ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, SinkLike_next, } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
 class FromValueRunnable {
     v;
     [ComputationLike_isPure] = true;
+    [ComputationLike_isInteractive] = false;
     constructor(v) {
         this.v = v;
     }

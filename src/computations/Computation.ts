@@ -2,6 +2,7 @@ import {
   Computation,
   ComputationLike,
   ComputationLike_isDeferred,
+  ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ComputationModule,
@@ -9,6 +10,7 @@ import {
   ComputationOperator,
   DeferredComputationLike,
   DeferredComputationModule,
+  InteractiveComputationLike,
   MulticastComputationLike,
   PureComputationLike,
   SynchronousComputationLike,
@@ -48,6 +50,10 @@ interface Signature {
     computations: readonly TComputation[],
   ): computations is readonly (TComputation & DeferredComputationLike)[];
 
+  areAllInteractive<TComputation extends ComputationLike>(
+    computations: readonly TComputation[],
+  ): computations is readonly (TComputation & InteractiveComputationLike)[];
+
   areAllMulticasted<TComputation extends ComputationLike>(
     computations: readonly TComputation[],
   ): computations is readonly (TComputation & MulticastComputationLike)[];
@@ -63,6 +69,10 @@ interface Signature {
   isDeferred<TComputation extends ComputationLike>(
     computation: TComputation,
   ): computation is TComputation & DeferredComputationLike;
+
+  isInteractive<TComputation extends ComputationLike>(
+    computation: TComputation,
+  ): computation is TComputation & InteractiveComputationLike;
 
   isMulticasted<TComputation extends ComputationLike>(
     computation: TComputation,
@@ -108,6 +118,13 @@ export const areAllDeferred: Signature["areAllDeferred"] = <
 ): computations is readonly (TComputation & DeferredComputationLike)[] =>
   computations.every(isDeferred);
 
+export const areAllInteractive: Signature["areAllInteractive"] = <
+  TComputation extends ComputationLike,
+>(
+  computations: readonly TComputation[],
+): computations is readonly (TComputation & InteractiveComputationLike)[] =>
+  computations.every(isInteractive);
+
 export const areAllMulticasted: Signature["areAllMulticasted"] = <
   TComputation extends ComputationLike,
 >(
@@ -135,6 +152,13 @@ export const isDeferred: Signature["isDeferred"] = <
   computation: TComputation,
 ): computation is TComputation & DeferredComputationLike =>
   computation[ComputationLike_isDeferred] ?? true;
+
+export const isInteractive: Signature["isInteractive"] = <
+  TComputation extends ComputationLike,
+>(
+  computation: TComputation,
+): computation is TComputation & InteractiveComputationLike =>
+  computation[ComputationLike_isInteractive] ?? true;
 
 export const isMulticasted: Signature["isMulticasted"] = <
   TComputation extends ComputationLike,

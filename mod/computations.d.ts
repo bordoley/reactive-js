@@ -4,10 +4,12 @@ export declare const Computation_type: unique symbol;
 export declare const ComputationLike_isPure: unique symbol;
 export declare const ComputationLike_isDeferred: unique symbol;
 export declare const ComputationLike_isSynchronous: unique symbol;
+export declare const ComputationLike_isInteractive: unique symbol;
 export interface ComputationLike {
     readonly [ComputationLike_isPure]?: boolean;
     readonly [ComputationLike_isSynchronous]?: boolean;
     readonly [ComputationLike_isDeferred]?: boolean;
+    readonly [ComputationLike_isInteractive]?: boolean;
 }
 export interface ComputationWithSideEffectsLike extends ComputationLike {
     readonly [ComputationLike_isPure]: false;
@@ -32,6 +34,17 @@ export interface PureSynchronousComputationLike extends SynchronousComputationLi
 }
 export interface SynchronousComputationWithSideEffectsLike extends SynchronousComputationLike {
     readonly [ComputationLike_isPure]: false;
+}
+export interface InteractiveComputationLike extends SynchronousComputationLike {
+    readonly [ComputationLike_isInteractive]?: true;
+}
+export interface ReactiveComputationLike extends ComputationLike {
+    readonly [ComputationLike_isInteractive]: false;
+}
+export interface RunnableComputationLike extends SynchronousComputationLike, ReactiveComputationLike {
+    readonly [ComputationLike_isDeferred]?: true;
+    readonly [ComputationLike_isInteractive]: false;
+    readonly [ComputationLike_isSynchronous]?: true;
 }
 export interface MulticastComputationLike extends ComputationLike {
     readonly [ComputationLike_isSynchronous]: false;
@@ -107,12 +120,12 @@ export interface SynchronousComputationModule<Type extends SynchronousComputatio
     toRunnable<T>(): Function1<ComputationOf<Type, TComputation, T>, RunnableLike<T>>;
     toReadonlyArray<T>(): Function1<ComputationOf<Type, TComputation, T>, ReadonlyArray<T>>;
 }
-export interface InteractiveComputationModule<Type extends DeferredComputationLike, TComputation extends Computation<Type>> {
+export interface InteractiveComputationModule<Type extends InteractiveComputationLike, TComputation extends Computation<Type>> {
     zip<TA, TB>(a: ComputationOf<Type, TComputation, TA>, b: ComputationOf<Type, TComputation, TB>): ComputationOf<Type, TComputation, Tuple2<TA, TB>>;
     zip<TA, TB, TC>(a: ComputationOf<Type, TComputation, TA>, b: ComputationOf<Type, TComputation, TB>, c: ComputationOf<Type, TComputation, TC>): ComputationOf<Type, TComputation, Tuple3<TA, TB, TC>>;
     zip<TA, TB, TC, TD>(a: ComputationOf<Type, TComputation, TA>, b: ComputationOf<Type, TComputation, TB>, c: ComputationOf<Type, TComputation, TC>, d: ComputationOf<Type, TComputation, TD>): ComputationOf<Type, TComputation, Tuple4<TA, TB, TC, TD>>;
 }
-export interface ReactiveComputationModule<Type extends DeferredComputationLike, TComputation extends Computation<Type>> {
+export interface DeferredReactiveComputationModule<Type extends DeferredComputationLike & ReactiveComputationLike, TComputation extends Computation<Type>> {
     buffer<T>(options?: {
         count?: number;
     }): ComputationOperator<Type, TComputation, T, readonly T[]>;
@@ -153,7 +166,7 @@ export declare const RunnableLike_eval: unique symbol;
 /**
  * Represents a deferred computation that is synchronously evaluated.
  */
-export interface RunnableLike<T = unknown> extends SynchronousComputationLike {
+export interface RunnableLike<T = unknown> extends RunnableComputationLike {
     [RunnableLike_eval](sink: SinkLike<T>): void;
 }
 export interface PureRunnableLike<T = unknown> extends RunnableLike<T> {
@@ -162,7 +175,7 @@ export interface PureRunnableLike<T = unknown> extends RunnableLike<T> {
 export interface RunnableWithSideEffectsLike<T = unknown> extends RunnableLike<T> {
     readonly [ComputationLike_isPure]: false;
 }
-export interface IterableLike<T = unknown> extends Iterable<T>, SynchronousComputationLike {
+export interface IterableLike<T = unknown> extends Iterable<T>, InteractiveComputationLike {
 }
 export interface PureIterableLike<T = unknown> extends IterableLike<T> {
     readonly [ComputationLike_isPure]?: true;

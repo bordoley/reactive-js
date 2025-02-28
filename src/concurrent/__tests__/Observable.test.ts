@@ -22,7 +22,7 @@ import * as Computation from "../../computations/Computation.js";
 import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/ComputationModuleTests.js";
 import ComputationWithSideEffectsModuleTests from "../../computations/__tests__/fixtures/ComputationWithSideEffectsModuleTests.js";
 import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
-import ReactiveComputationModuleTests from "../../computations/__tests__/fixtures/ReactiveComputationModuleTests.js";
+import DeferredReactiveComputationModuleTests from "../../computations/__tests__/fixtures/DeferredReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
 import {
   ComputationLike_isDeferred,
@@ -32,9 +32,9 @@ import {
   ComputationWithSideEffectsModule,
   DeferredComputationModule,
   DeferredComputationWithSideEffectsType,
+  DeferredReactiveComputationModule,
   PureDeferredComputationType,
   PureSynchronousComputationType,
-  ReactiveComputationModule,
   SynchronousComputationModule,
   SynchronousComputationWithSideEffectsType,
 } from "../../computations.js";
@@ -522,8 +522,8 @@ testModule(
         SynchronousObservableComputation
       >,
   ),
-  ReactiveComputationModuleTests(
-    Observable as ReactiveComputationModule<
+  DeferredReactiveComputationModuleTests(
+    Observable as DeferredReactiveComputationModule<
       SynchronousObservableLike,
       SynchronousObservableComputation
     > &

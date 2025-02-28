@@ -1,10 +1,13 @@
 import { DictionaryLike, ReadonlyObjectMapLike } from "./collections.js";
 import {
-  ComputationLike,
   ComputationLike_isDeferred,
+  ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
+  DeferredComputationLike,
   PureComputationLike,
+  ReactiveComputationLike,
+  RunnableComputationLike,
 } from "./computations.js";
 import { EventListenerLike, EventSourceLike, StoreLike } from "./events.js";
 import { Optional, SideEffect1, Updater } from "./functions.js";
@@ -191,7 +194,8 @@ export const ObservableLike_observe = Symbol("ObservableLike_observe");
 /**
  * @noInheritDoc
  */
-export interface ObservableLike<out T = unknown> extends ComputationLike {
+export interface ObservableLike<out T = unknown>
+  extends ReactiveComputationLike {
   /**
    * Subscribes the given `ObserverLike` to the `ObservableLike` source.
    *
@@ -204,15 +208,18 @@ export interface ObservableLike<out T = unknown> extends ComputationLike {
  * @noInheritDoc
  */
 export interface DeferredObservableLike<out T = unknown>
-  extends ObservableLike<T> {
+  extends ObservableLike<T>,
+    DeferredComputationLike {
   readonly [ComputationLike_isDeferred]?: true;
+  readonly [ComputationLike_isInteractive]: false;
 }
 
 /**
  * @noInheritDoc
  */
 export interface SynchronousObservableLike<out T = unknown>
-  extends DeferredObservableLike<T> {
+  extends DeferredObservableLike<T>,
+    RunnableComputationLike {
   readonly [ComputationLike_isSynchronous]?: true;
 }
 
@@ -222,6 +229,7 @@ export interface SynchronousObservableLike<out T = unknown>
 export interface PureObservableLike<out T = unknown>
   extends ObservableLike<T>,
     PureComputationLike {
+  readonly [ComputationLike_isInteractive]: false;
   readonly [ComputationLike_isPure]?: true;
 }
 
@@ -241,7 +249,6 @@ export interface PureDeferredObservableLike<out T = unknown>
 export interface DeferredObservableWithSideEffectsLike<out T = unknown>
   extends DeferredObservableLike<T> {
   readonly [ComputationLike_isPure]: false;
-  readonly [ComputationLike_isSynchronous]: false;
 }
 
 /**
@@ -259,8 +266,11 @@ export interface PureSynchronousObservableLike<out T = unknown>
  * @noInheritDoc
  */
 export interface SynchronousObservableWithSideEffectsLike<out T = unknown>
-  extends SynchronousObservableLike<T> {
+  extends SynchronousObservableLike<T>,
+    DeferredObservableWithSideEffectsLike<T> {
+  readonly [ComputationLike_isDeferred]?: true;
   readonly [ComputationLike_isPure]: false;
+  readonly [ComputationLike_isSynchronous]?: true;
 }
 
 /**

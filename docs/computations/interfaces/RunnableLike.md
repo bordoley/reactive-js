@@ -10,7 +10,7 @@ Represents a deferred computation that is synchronously evaluated.
 
 ## Extends
 
-- [`SynchronousComputationLike`](SynchronousComputationLike.md)
+- [`RunnableComputationLike`](RunnableComputationLike.md)
 
 ## Extended by
 
@@ -29,7 +29,17 @@ Represents a deferred computation that is synchronously evaluated.
 
 #### Inherited from
 
-[`SynchronousComputationLike`](SynchronousComputationLike.md).[`[ComputationLike_isDeferred]`](SynchronousComputationLike.md#computationlike_isdeferred)
+[`RunnableComputationLike`](RunnableComputationLike.md).[`[ComputationLike_isDeferred]`](RunnableComputationLike.md#computationlike_isdeferred)
+
+***
+
+### \[ComputationLike\_isInteractive\]
+
+> `readonly` **\[ComputationLike\_isInteractive\]**: `false`
+
+#### Inherited from
+
+[`RunnableComputationLike`](RunnableComputationLike.md).[`[ComputationLike_isInteractive]`](RunnableComputationLike.md#computationlike_isinteractive)
 
 ***
 
@@ -39,7 +49,7 @@ Represents a deferred computation that is synchronously evaluated.
 
 #### Inherited from
 
-[`SynchronousComputationLike`](SynchronousComputationLike.md).[`[ComputationLike_isPure]`](SynchronousComputationLike.md#computationlike_ispure)
+[`RunnableComputationLike`](RunnableComputationLike.md).[`[ComputationLike_isPure]`](RunnableComputationLike.md#computationlike_ispure)
 
 ***
 
@@ -49,7 +59,7 @@ Represents a deferred computation that is synchronously evaluated.
 
 #### Inherited from
 
-[`SynchronousComputationLike`](SynchronousComputationLike.md).[`[ComputationLike_isSynchronous]`](SynchronousComputationLike.md#computationlike_issynchronous)
+[`RunnableComputationLike`](RunnableComputationLike.md).[`[ComputationLike_isSynchronous]`](RunnableComputationLike.md#computationlike_issynchronous)
 
 ## Methods
 

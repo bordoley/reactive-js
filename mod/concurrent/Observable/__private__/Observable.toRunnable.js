@@ -1,6 +1,6 @@
 /// <reference types="./Observable.toRunnable.d.ts" />
 
-import { ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
+import { ComputationLike_isInteractive, ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
 import { bindMethod, newInstance, pipe } from "../../../functions.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_run from "./Observable.run.js";
@@ -9,6 +9,7 @@ class SynchronousObservableRunnable {
     obs;
     options;
     [ComputationLike_isPure];
+    [ComputationLike_isInteractive] = false;
     constructor(obs, options) {
         this.obs = obs;
         this.options = options;

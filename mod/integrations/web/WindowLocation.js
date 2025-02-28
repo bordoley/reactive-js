@@ -4,7 +4,7 @@ import * as Obj from "../../__internal__/Object.js";
 import { Array_length, String } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import * as Computation from "../../computations/Computation.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isInteractive, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../computations.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import { ObservableLike_observe, StreamableLike_stream, } from "../../concurrent.js";
@@ -67,6 +67,7 @@ export const subscribe = /*@__PURE__*/ (() => {
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
         [ComputationLike_isPure]: true,
+        [ComputationLike_isInteractive]: false,
         [WindowLocationLike_push](stateOrUpdater) {
             this[WindowLocation_delegate][QueueableLike_enqueue]((prevState) => {
                 const uri = createSerializableWindowLocationURI(isFunction(stateOrUpdater)

@@ -10,6 +10,10 @@
 
 - [`DeferredObservableLike`](DeferredObservableLike.md)\<`T`\>
 
+## Extended by
+
+- [`SynchronousObservableWithSideEffectsLike`](SynchronousObservableWithSideEffectsLike.md)
+
 ## Type Parameters
 
 • **T** = `unknown`
@@ -23,13 +27,3 @@
 #### Overrides
 
 `DeferredObservableLike.[ComputationLike_isPure]`
-
-***
-
-### \[ComputationLike\_isSynchronous\]
-
-> `readonly` **\[ComputationLike\_isSynchronous\]**: `false`
-
-#### Overrides
-
-`DeferredObservableLike.[ComputationLike_isSynchronous]`

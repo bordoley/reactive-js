@@ -1,4 +1,5 @@
 import {
+  ComputationLike_isInteractive,
   ComputationLike_isPure,
   RunnableLike,
   RunnableLike_eval,
@@ -11,6 +12,7 @@ import DelegatingNonCompletingSink from "../../Sink/__internal__/DelegatingNonCo
 
 class RetryRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
+  readonly [ComputationLike_isInteractive]: false = false as const;
 
   constructor(
     private readonly s: RunnableLike<T>,

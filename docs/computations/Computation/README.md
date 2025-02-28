@@ -13,10 +13,12 @@
 ## Functions
 
 - [areAllDeferred](functions/areAllDeferred.md)
+- [areAllInteractive](functions/areAllInteractive.md)
 - [areAllMulticasted](functions/areAllMulticasted.md)
 - [areAllPure](functions/areAllPure.md)
 - [areAllSynchronous](functions/areAllSynchronous.md)
 - [isDeferred](functions/isDeferred.md)
+- [isInteractive](functions/isInteractive.md)
 - [isMulticasted](functions/isMulticasted.md)
 - [isPure](functions/isPure.md)
 - [isSynchronous](functions/isSynchronous.md)

@@ -1,4 +1,5 @@
 import {
+  ComputationLike_isInteractive,
   ComputationLike_isPure,
   IterableLike,
   RunnableLike,
@@ -13,6 +14,7 @@ import type * as Runnable from "../../Runnable.js";
 
 class FromIterableRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
+  readonly [ComputationLike_isInteractive]: false = false as const;
 
   constructor(private readonly i: IterableLike<T>) {
     this[ComputationLike_isPure] = i[ComputationLike_isPure] ?? true;

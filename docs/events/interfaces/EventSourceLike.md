@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`PureComputationLike`](../../computations/interfaces/PureComputationLike.md)
+- [`PureComputationLike`](../../computations/interfaces/PureComputationLike.md).[`ReactiveComputationLike`](../../computations/interfaces/ReactiveComputationLike.md)
 
 ## Extended by
 
@@ -28,7 +28,27 @@
 
 #### Overrides
 
-[`PureComputationLike`](../../computations/interfaces/PureComputationLike.md).[`[ComputationLike_isDeferred]`](../../computations/interfaces/PureComputationLike.md#computationlike_isdeferred)
+[`ReactiveComputationLike`](../../computations/interfaces/ReactiveComputationLike.md).[`[ComputationLike_isDeferred]`](../../computations/interfaces/ReactiveComputationLike.md#computationlike_isdeferred)
+
+***
+
+### \[ComputationLike\_isInteractive\]
+
+> `readonly` **\[ComputationLike\_isInteractive\]**: `false`
+
+#### Overrides
+
+[`ReactiveComputationLike`](../../computations/interfaces/ReactiveComputationLike.md).[`[ComputationLike_isInteractive]`](../../computations/interfaces/ReactiveComputationLike.md#computationlike_isinteractive)
+
+***
+
+### \[ComputationLike\_isPure\]?
+
+> `readonly` `optional` **\[ComputationLike\_isPure\]**: `true`
+
+#### Overrides
+
+[`ReactiveComputationLike`](../../computations/interfaces/ReactiveComputationLike.md).[`[ComputationLike_isPure]`](../../computations/interfaces/ReactiveComputationLike.md#computationlike_ispure)
 
 ***
 
@@ -38,7 +58,7 @@
 
 #### Overrides
 
-[`PureComputationLike`](../../computations/interfaces/PureComputationLike.md).[`[ComputationLike_isSynchronous]`](../../computations/interfaces/PureComputationLike.md#computationlike_issynchronous)
+[`ReactiveComputationLike`](../../computations/interfaces/ReactiveComputationLike.md).[`[ComputationLike_isSynchronous]`](../../computations/interfaces/ReactiveComputationLike.md#computationlike_issynchronous)
 
 ## Methods
 

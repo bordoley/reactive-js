@@ -1,4 +1,4 @@
-import { Computation, ComputationModule, ComputationWithSideEffectsModule, Computation_T, Computation_type, DeferredComputationModule, ReactiveComputationModule, RunnableLike, RunnableWithSideEffectsLike, SynchronousComputationModule } from "../computations.js";
+import { Computation, ComputationModule, ComputationWithSideEffectsModule, Computation_T, Computation_type, DeferredComputationModule, DeferredReactiveComputationModule, RunnableLike, RunnableWithSideEffectsLike, SynchronousComputationModule } from "../computations.js";
 /**
  * @noInheritDoc
  */
@@ -8,7 +8,7 @@ export interface RunnableComputation extends Computation<RunnableLike> {
 export interface RunnableWithSideEffectsComputation extends Computation<RunnableWithSideEffectsLike> {
     readonly [Computation_type]?: RunnableWithSideEffectsLike<this[typeof Computation_T]>;
 }
-export interface RunnableModule extends ComputationModule<RunnableLike, RunnableComputation>, DeferredComputationModule<RunnableLike, RunnableComputation>, ReactiveComputationModule<RunnableLike, RunnableComputation>, ComputationWithSideEffectsModule<RunnableLike, RunnableComputation, RunnableWithSideEffectsLike, RunnableWithSideEffectsComputation>, SynchronousComputationModule<RunnableLike, RunnableComputation> {
+export interface RunnableModule extends ComputationModule<RunnableLike, RunnableComputation>, DeferredComputationModule<RunnableLike, RunnableComputation>, DeferredReactiveComputationModule<RunnableLike, RunnableComputation>, ComputationWithSideEffectsModule<RunnableLike, RunnableComputation, RunnableWithSideEffectsLike, RunnableWithSideEffectsComputation>, SynchronousComputationModule<RunnableLike, RunnableComputation> {
 }
 export type Signature = RunnableModule;
 export declare const buffer: Signature["buffer"];

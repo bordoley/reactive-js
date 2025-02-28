@@ -12,6 +12,7 @@ import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import ComputationModuleTests from "../../computations/__tests__/fixtures/ComputationModuleTests.js";
 import {
   ComputationLike_isDeferred,
+  ComputationLike_isInteractive,
   ComputationLike_isSynchronous,
 } from "../../computations.js";
 import * as Observable from "../../concurrent/Observable.js";
@@ -47,6 +48,8 @@ testModule(
       return (arr: readonly T[]) => ({
         [ComputationLike_isDeferred]: false as const,
         [ComputationLike_isSynchronous]: false as const,
+        [ComputationLike_isInteractive]: false as const,
+
         [EventSourceLike_addEventListener](listener: EventListenerLike<T>) {
           for (let i = 0; i < arr[Array_length]; i++) {
             listener[EventListenerLike_notify](arr[i]);

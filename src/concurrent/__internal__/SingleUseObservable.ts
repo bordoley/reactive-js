@@ -5,6 +5,7 @@ import {
 } from "../../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
+  ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../computations.js";
@@ -42,6 +43,7 @@ export const create: <T>() => SingleUseObservableLike<T> = (<T>() => {
       [ComputationLike_isDeferred]: true as const,
       [ComputationLike_isPure]: true as const,
       [ComputationLike_isSynchronous]: false as const,
+      [ComputationLike_isInteractive]: false as const,
 
       [ObservableLike_observe](
         this: TProperties & SingleUseObservableLike<T>,

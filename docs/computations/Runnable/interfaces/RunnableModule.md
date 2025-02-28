@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputation`](RunnableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputation`](RunnableComputation.md)\>.[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputation`](RunnableComputation.md)\>.[`ComputationWithSideEffectsModule`](../../interfaces/ComputationWithSideEffectsModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputation`](RunnableComputation.md), [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md), [`RunnableWithSideEffectsComputation`](RunnableWithSideEffectsComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputation`](RunnableComputation.md)\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputation`](RunnableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputation`](RunnableComputation.md)\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputation`](RunnableComputation.md)\>.[`ComputationWithSideEffectsModule`](../../interfaces/ComputationWithSideEffectsModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputation`](RunnableComputation.md), [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md), [`RunnableWithSideEffectsComputation`](RunnableWithSideEffectsComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputation`](RunnableComputation.md)\>
 
 ## Methods
 
@@ -34,7 +34,7 @@
 
 #### Inherited from
 
-[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`buffer`](../../interfaces/ReactiveComputationModule.md#buffer)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`buffer`](../../interfaces/DeferredReactiveComputationModule.md#buffer)
 
 ***
 
@@ -240,7 +240,7 @@ readonly \[[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[
 
 #### Inherited from
 
-[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`decodeWithCharset`](../../interfaces/ReactiveComputationModule.md#decodewithcharset)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`decodeWithCharset`](../../interfaces/DeferredReactiveComputationModule.md#decodewithcharset)
 
 ***
 
@@ -266,7 +266,7 @@ readonly \[[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[
 
 #### Inherited from
 
-[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`distinctUntilChanged`](../../interfaces/ReactiveComputationModule.md#distinctuntilchanged)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`distinctUntilChanged`](../../interfaces/DeferredReactiveComputationModule.md#distinctuntilchanged)
 
 ***
 
@@ -456,7 +456,7 @@ readonly \[[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[
 
 #### Inherited from
 
-[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`ignoreElements`](../../interfaces/ReactiveComputationModule.md#ignoreelements)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`ignoreElements`](../../interfaces/DeferredReactiveComputationModule.md#ignoreelements)
 
 ***
 
@@ -542,7 +542,7 @@ readonly \[[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[
 
 #### Inherited from
 
-[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`pairwise`](../../interfaces/ReactiveComputationModule.md#pairwise)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`pairwise`](../../interfaces/DeferredReactiveComputationModule.md#pairwise)
 
 ***
 
@@ -742,7 +742,7 @@ readonly \[[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[
 
 #### Inherited from
 
-[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`skipFirst`](../../interfaces/ReactiveComputationModule.md#skipfirst)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`skipFirst`](../../interfaces/DeferredReactiveComputationModule.md#skipfirst)
 
 ***
 
@@ -822,7 +822,7 @@ readonly \[[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[
 
 #### Inherited from
 
-[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`takeLast`](../../interfaces/ReactiveComputationModule.md#takelast)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`takeLast`](../../interfaces/DeferredReactiveComputationModule.md#takelast)
 
 ***
 

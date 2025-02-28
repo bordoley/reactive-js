@@ -5,7 +5,7 @@ import {
   Computation_T,
   Computation_type,
   DeferredComputationModule,
-  ReactiveComputationModule,
+  DeferredReactiveComputationModule,
   RunnableLike,
   RunnableWithSideEffectsLike,
   SynchronousComputationModule,
@@ -62,7 +62,7 @@ export interface RunnableWithSideEffectsComputation
 export interface RunnableModule
   extends ComputationModule<RunnableLike, RunnableComputation>,
     DeferredComputationModule<RunnableLike, RunnableComputation>,
-    ReactiveComputationModule<RunnableLike, RunnableComputation>,
+    DeferredReactiveComputationModule<RunnableLike, RunnableComputation>,
     ComputationWithSideEffectsModule<
       RunnableLike,
       RunnableComputation,

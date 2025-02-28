@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationLike`](../../computations/interfaces/ComputationLike.md)
+- [`ReactiveComputationLike`](../../computations/interfaces/ReactiveComputationLike.md)
 
 ## Extended by
 

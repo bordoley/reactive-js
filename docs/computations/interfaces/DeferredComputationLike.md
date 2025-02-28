@@ -15,6 +15,7 @@
 - [`PureDeferredComputationLike`](PureDeferredComputationLike.md)
 - [`DeferredComputationWithSideEffectsLike`](DeferredComputationWithSideEffectsLike.md)
 - [`SynchronousComputationLike`](SynchronousComputationLike.md)
+- [`DeferredObservableLike`](../../concurrent/interfaces/DeferredObservableLike.md)
 
 ## Properties
 
@@ -25,6 +26,16 @@
 #### Overrides
 
 [`ComputationLike`](ComputationLike.md).[`[ComputationLike_isDeferred]`](ComputationLike.md#computationlike_isdeferred)
+
+***
+
+### \[ComputationLike\_isInteractive\]?
+
+> `readonly` `optional` **\[ComputationLike\_isInteractive\]**: `boolean`
+
+#### Inherited from
+
+[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isInteractive]`](ComputationLike.md#computationlike_isinteractive)
 
 ***
 

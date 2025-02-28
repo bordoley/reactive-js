@@ -3,7 +3,7 @@
 import { Set, Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
 import { clampPositiveInteger } from "../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isInteractive, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../computations.js";
 import { DispatcherLike_complete, ObservableLike_observe, ObserverLike_notify, SchedulerLike_inContinuation, } from "../concurrent.js";
 import { EventListenerLike_notify } from "../events.js";
 import { error, isSome, newInstance, none, pipe, } from "../functions.js";
@@ -52,6 +52,7 @@ export const create = /*@__PURE__*/ (() => {
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isPure]: true,
         [ComputationLike_isSynchronous]: false,
+        [ComputationLike_isInteractive]: false,
         [EventListenerLike_notify](next) {
             if (this[DisposableLike_isDisposed]) {
                 return;

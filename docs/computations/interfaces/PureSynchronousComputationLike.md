@@ -22,6 +22,16 @@
 
 ***
 
+### \[ComputationLike\_isInteractive\]?
+
+> `readonly` `optional` **\[ComputationLike\_isInteractive\]**: `boolean`
+
+#### Inherited from
+
+[`SynchronousComputationLike`](SynchronousComputationLike.md).[`[ComputationLike_isInteractive]`](SynchronousComputationLike.md#computationlike_isinteractive)
+
+***
+
 ### \[ComputationLike\_isPure\]?
 
 > `readonly` `optional` **\[ComputationLike\_isPure\]**: `true`

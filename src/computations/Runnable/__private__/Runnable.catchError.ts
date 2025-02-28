@@ -1,4 +1,5 @@
 import {
+  ComputationLike_isInteractive,
   ComputationLike_isPure,
   RunnableLike,
   RunnableLike_eval,
@@ -18,6 +19,7 @@ import type * as Runnable from "../../Runnable.js";
 
 class CatchErrorRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
+  readonly [ComputationLike_isInteractive]: false = false as const;
 
   constructor(
     private readonly s: RunnableLike<T>,

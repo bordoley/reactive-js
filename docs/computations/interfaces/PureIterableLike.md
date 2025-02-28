@@ -26,6 +26,16 @@
 
 ***
 
+### \[ComputationLike\_isInteractive\]?
+
+> `readonly` `optional` **\[ComputationLike\_isInteractive\]**: `true`
+
+#### Inherited from
+
+[`IterableLike`](IterableLike.md).[`[ComputationLike_isInteractive]`](IterableLike.md#computationlike_isinteractive)
+
+***
+
 ### \[ComputationLike\_isPure\]?
 
 > `readonly` `optional` **\[ComputationLike\_isPure\]**: `true`

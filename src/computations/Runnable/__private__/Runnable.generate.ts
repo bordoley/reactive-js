@@ -1,4 +1,5 @@
 import {
+  ComputationLike_isInteractive,
   ComputationLike_isPure,
   PureRunnableLike,
   RunnableLike_eval,
@@ -18,6 +19,7 @@ import type * as Runnable from "../../Runnable.js";
 
 class GeneratorRunnable<T> implements PureRunnableLike<T> {
   readonly [ComputationLike_isPure]: true = true as const;
+  readonly [ComputationLike_isInteractive]: false = false as const;
 
   constructor(
     private readonly generator: Updater<T>,

@@ -1,12 +1,13 @@
 /// <reference types="./Runnable.generate.d.ts" />
 
-import { ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
+import { ComputationLike_isInteractive, ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
 import { newInstance, none, } from "../../../functions.js";
 class GeneratorRunnable {
     generator;
     count;
     initialValue;
     [ComputationLike_isPure] = true;
+    [ComputationLike_isInteractive] = false;
     constructor(generator, count, initialValue) {
         this.generator = generator;
         this.count = count;

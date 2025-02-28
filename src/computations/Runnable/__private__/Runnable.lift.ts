@@ -1,4 +1,5 @@
 import {
+  ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationOperator,
   ComputationWithSideEffectsOperator,
@@ -15,6 +16,7 @@ import type {
 
 class LiftedRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
+  readonly [ComputationLike_isInteractive]: false = false as const;
 
   constructor(
     public readonly src: RunnableLike<any>,

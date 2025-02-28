@@ -1,11 +1,12 @@
 /// <reference types="./Runnable.catchError.d.ts" />
 
-import { ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, } from "../../../computations.js";
+import { ComputationLike_isInteractive, ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, } from "../../../computations.js";
 import { error, isSome, newInstance, none, } from "../../../functions.js";
 class CatchErrorRunnable {
     s;
     onError;
     [ComputationLike_isPure];
+    [ComputationLike_isInteractive] = false;
     constructor(s, onError) {
         this.s = s;
         this.onError = onError;

@@ -1,11 +1,12 @@
 /// <reference types="./Runnable.lift.d.ts" />
 
-import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isInteractive, ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { newInstance, pipeUnsafe } from "../../../functions.js";
 class LiftedRunnable {
     src;
     ops;
     [ComputationLike_isPure];
+    [ComputationLike_isInteractive] = false;
     constructor(src, ops, isPure) {
         this.src = src;
         this.ops = ops;

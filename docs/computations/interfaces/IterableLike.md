@@ -8,7 +8,7 @@
 
 ## Extends
 
-- `Iterable`\<`T`\>.[`SynchronousComputationLike`](SynchronousComputationLike.md)
+- `Iterable`\<`T`\>.[`InteractiveComputationLike`](InteractiveComputationLike.md)
 
 ## Extended by
 
@@ -27,7 +27,17 @@
 
 #### Inherited from
 
-[`SynchronousComputationLike`](SynchronousComputationLike.md).[`[ComputationLike_isDeferred]`](SynchronousComputationLike.md#computationlike_isdeferred)
+[`InteractiveComputationLike`](InteractiveComputationLike.md).[`[ComputationLike_isDeferred]`](InteractiveComputationLike.md#computationlike_isdeferred)
+
+***
+
+### \[ComputationLike\_isInteractive\]?
+
+> `readonly` `optional` **\[ComputationLike\_isInteractive\]**: `true`
+
+#### Inherited from
+
+[`InteractiveComputationLike`](InteractiveComputationLike.md).[`[ComputationLike_isInteractive]`](InteractiveComputationLike.md#computationlike_isinteractive)
 
 ***
 
@@ -37,7 +47,7 @@
 
 #### Inherited from
 
-[`SynchronousComputationLike`](SynchronousComputationLike.md).[`[ComputationLike_isPure]`](SynchronousComputationLike.md#computationlike_ispure)
+[`InteractiveComputationLike`](InteractiveComputationLike.md).[`[ComputationLike_isPure]`](InteractiveComputationLike.md#computationlike_ispure)
 
 ***
 
@@ -47,4 +57,4 @@
 
 #### Inherited from
 
-[`SynchronousComputationLike`](SynchronousComputationLike.md).[`[ComputationLike_isSynchronous]`](SynchronousComputationLike.md#computationlike_issynchronous)
+[`InteractiveComputationLike`](InteractiveComputationLike.md).[`[ComputationLike_isSynchronous]`](InteractiveComputationLike.md#computationlike_issynchronous)

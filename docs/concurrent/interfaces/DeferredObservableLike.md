@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ObservableLike`](ObservableLike.md)\<`T`\>
+- [`ObservableLike`](ObservableLike.md)\<`T`\>.[`DeferredComputationLike`](../../computations/interfaces/DeferredComputationLike.md)
 
 ## Extended by
 
@@ -28,4 +28,14 @@
 
 #### Overrides
 
-`ObservableLike.[ComputationLike_isDeferred]`
+[`DeferredComputationLike`](../../computations/interfaces/DeferredComputationLike.md).[`[ComputationLike_isDeferred]`](../../computations/interfaces/DeferredComputationLike.md#computationlike_isdeferred)
+
+***
+
+### \[ComputationLike\_isInteractive\]
+
+> `readonly` **\[ComputationLike\_isInteractive\]**: `false`
+
+#### Overrides
+
+[`DeferredComputationLike`](../../computations/interfaces/DeferredComputationLike.md).[`[ComputationLike_isInteractive]`](../../computations/interfaces/DeferredComputationLike.md#computationlike_isinteractive)

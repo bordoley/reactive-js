@@ -2,7 +2,7 @@
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isInteractive, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { ObservableLike_observe, } from "../../../concurrent.js";
 import { bindMethod, none, pipeUnsafe } from "../../../functions.js";
 import ObservableMixin from "../../__mixins__/ObservableMixin.js";
@@ -18,6 +18,7 @@ const createLiftedObservable = /*@__PURE__*/ (() => {
         [LiftedObservableLike_source]: none,
         [LiftedObservableLike_operators]: none,
     }), {
+        [ComputationLike_isInteractive]: false,
         [ObservableLike_observe](observer) {
             pipeUnsafe(observer, ...this[LiftedObservableLike_operators], bindMethod(this[LiftedObservableLike_source], ObservableLike_observe));
         },

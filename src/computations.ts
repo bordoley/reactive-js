@@ -20,12 +20,16 @@ export const ComputationLike_isDeferred = Symbol("ComputationLike_isDeferred");
 export const ComputationLike_isSynchronous = Symbol(
   "ComputationLike_isSynchronous",
 );
+export const ComputationLike_isInteractive = Symbol(
+  "ComputationLike_isInteractive",
+);
 
 export interface ComputationLike {
   // defaults to true when not specified so that Arrays are classified as PureIterables
   readonly [ComputationLike_isPure]?: boolean;
   readonly [ComputationLike_isSynchronous]?: boolean;
   readonly [ComputationLike_isDeferred]?: boolean;
+  readonly [ComputationLike_isInteractive]?: boolean;
 }
 
 export interface ComputationWithSideEffectsLike extends ComputationLike {
@@ -61,6 +65,22 @@ export interface PureSynchronousComputationLike
 export interface SynchronousComputationWithSideEffectsLike
   extends SynchronousComputationLike {
   readonly [ComputationLike_isPure]: false;
+}
+
+export interface InteractiveComputationLike extends SynchronousComputationLike {
+  readonly [ComputationLike_isInteractive]?: true;
+}
+
+export interface ReactiveComputationLike extends ComputationLike {
+  readonly [ComputationLike_isInteractive]: false;
+}
+
+export interface RunnableComputationLike
+  extends SynchronousComputationLike,
+    ReactiveComputationLike {
+  readonly [ComputationLike_isDeferred]?: true;
+  readonly [ComputationLike_isInteractive]: false;
+  readonly [ComputationLike_isSynchronous]?: true;
 }
 
 export interface MulticastComputationLike extends ComputationLike {
@@ -286,7 +306,7 @@ export interface SynchronousComputationModule<
 }
 
 export interface InteractiveComputationModule<
-  Type extends DeferredComputationLike,
+  Type extends InteractiveComputationLike,
   TComputation extends Computation<Type>,
 > {
   zip<TA, TB>(
@@ -306,8 +326,8 @@ export interface InteractiveComputationModule<
   ): ComputationOf<Type, TComputation, Tuple4<TA, TB, TC, TD>>;
 }
 
-export interface ReactiveComputationModule<
-  Type extends DeferredComputationLike,
+export interface DeferredReactiveComputationModule<
+  Type extends DeferredComputationLike & ReactiveComputationLike,
   TComputation extends Computation<Type>,
 > {
   buffer<T>(options?: {
@@ -362,7 +382,7 @@ export const RunnableLike_eval = Symbol("RunnableLike_eval");
 /**
  * Represents a deferred computation that is synchronously evaluated.
  */
-export interface RunnableLike<T = unknown> extends SynchronousComputationLike {
+export interface RunnableLike<T = unknown> extends RunnableComputationLike {
   [RunnableLike_eval](sink: SinkLike<T>): void;
 }
 
@@ -377,7 +397,7 @@ export interface RunnableWithSideEffectsLike<T = unknown>
 
 export interface IterableLike<T = unknown>
   extends Iterable<T>,
-    SynchronousComputationLike {}
+    InteractiveComputationLike {}
 
 export interface PureIterableLike<T = unknown> extends IterableLike<T> {
   readonly [ComputationLike_isPure]?: true;

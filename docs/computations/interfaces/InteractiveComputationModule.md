@@ -12,7 +12,7 @@
 
 ## Type Parameters
 
-• **Type** *extends* [`DeferredComputationLike`](DeferredComputationLike.md)
+• **Type** *extends* [`InteractiveComputationLike`](InteractiveComputationLike.md)
 
 • **TComputation** *extends* [`Computation`](Computation.md)\<`Type`\>
 

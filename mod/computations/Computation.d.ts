@@ -1,4 +1,4 @@
-import { Computation, ComputationLike, ComputationModule, ComputationOf, ComputationOperator, DeferredComputationLike, DeferredComputationModule, MulticastComputationLike, PureComputationLike, SynchronousComputationLike } from "../computations.js";
+import { Computation, ComputationLike, ComputationModule, ComputationOf, ComputationOperator, DeferredComputationLike, DeferredComputationModule, InteractiveComputationLike, MulticastComputationLike, PureComputationLike, SynchronousComputationLike } from "../computations.js";
 import { TypePredicate } from "../functions.js";
 export interface PickOperator<Type extends ComputationLike, TComputation extends Computation<Type>> {
     <T, TKeyOfT extends keyof T>(key: TKeyOfT): ComputationOperator<Type, TComputation, T, T[TKeyOfT]>;
@@ -7,10 +7,12 @@ export interface PickOperator<Type extends ComputationLike, TComputation extends
 }
 interface Signature {
     areAllDeferred<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & DeferredComputationLike)[];
+    areAllInteractive<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & InteractiveComputationLike)[];
     areAllMulticasted<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & MulticastComputationLike)[];
     areAllPure<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & PureComputationLike)[];
     areAllSynchronous<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & SynchronousComputationLike)[];
     isDeferred<TComputation extends ComputationLike>(computation: TComputation): computation is TComputation & DeferredComputationLike;
+    isInteractive<TComputation extends ComputationLike>(computation: TComputation): computation is TComputation & InteractiveComputationLike;
     isMulticasted<TComputation extends ComputationLike>(computation: TComputation): computation is TComputation & MulticastComputationLike;
     isPure<TComputation extends ComputationLike>(computation: TComputation): computation is TComputation & PureComputationLike;
     isSynchronous<TComputation extends ComputationLike>(computation: TComputation): computation is TComputation & SynchronousComputationLike;
@@ -20,10 +22,12 @@ interface Signature {
     sequence<Type extends DeferredComputationLike, TComputation extends Computation<Type>>(generate: DeferredComputationModule<Type, TComputation>["generate"]): (start: number) => ComputationOf<Type, TComputation, number>;
 }
 export declare const areAllDeferred: Signature["areAllDeferred"];
+export declare const areAllInteractive: Signature["areAllInteractive"];
 export declare const areAllMulticasted: Signature["areAllMulticasted"];
 export declare const areAllPure: Signature["areAllPure"];
 export declare const areAllSynchronous: Signature["areAllSynchronous"];
 export declare const isDeferred: Signature["isDeferred"];
+export declare const isInteractive: Signature["isInteractive"];
 export declare const isMulticasted: Signature["isMulticasted"];
 export declare const isPure: Signature["isPure"];
 export declare const isSynchronous: Signature["isSynchronous"];

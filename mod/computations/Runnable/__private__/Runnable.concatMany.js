@@ -1,11 +1,12 @@
 /// <reference types="./Runnable.concatMany.d.ts" />
 
-import { ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, SinkLike_isComplete, } from "../../../computations.js";
+import { ComputationLike_isInteractive, ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, SinkLike_isComplete, } from "../../../computations.js";
 import { newInstance, pick } from "../../../functions.js";
 import DelegatingNonCompletingSink from "../../Sink/__internal__/DelegatingNonCompletingSink.js";
 class ConcatManyRunnable {
     s;
     [ComputationLike_isPure];
+    [ComputationLike_isInteractive] = false;
     constructor(s) {
         this.s = s;
         this[ComputationLike_isPure] = s.every(pick(ComputationLike_isPure));

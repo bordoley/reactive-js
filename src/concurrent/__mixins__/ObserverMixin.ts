@@ -9,6 +9,7 @@ import {
 } from "../../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
+  ComputationLike_isInteractive,
   ComputationLike_isSynchronous,
 } from "../../computations.js";
 import {
@@ -141,6 +142,7 @@ const ObserverMixin: <T>() => Mixin2<
           | typeof EventSourceLike_addEventListener
           | typeof ComputationLike_isSynchronous
           | typeof ComputationLike_isDeferred
+          | typeof ComputationLike_isInteractive
         >,
       DisposableLike,
       SchedulerLike,
@@ -162,6 +164,7 @@ const ObserverMixin: <T>() => Mixin2<
             | typeof EventSourceLike_addEventListener
             | typeof ComputationLike_isSynchronous
             | typeof ComputationLike_isDeferred
+            | typeof ComputationLike_isInteractive
           > &
           TProperties,
         scheduler: SchedulerLike,
@@ -192,6 +195,7 @@ const ObserverMixin: <T>() => Mixin2<
       {
         [ComputationLike_isDeferred]: false as const,
         [ComputationLike_isSynchronous]: false as const,
+        [ComputationLike_isInteractive]: false as const,
 
         get [SchedulerLike_inContinuation]() {
           unsafeCast<TProperties>(this);

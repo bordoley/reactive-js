@@ -14,8 +14,8 @@
 
 - [`PureSynchronousComputationLike`](PureSynchronousComputationLike.md)
 - [`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md)
-- [`RunnableLike`](RunnableLike.md)
-- [`IterableLike`](IterableLike.md)
+- [`InteractiveComputationLike`](InteractiveComputationLike.md)
+- [`RunnableComputationLike`](RunnableComputationLike.md)
 
 ## Properties
 
@@ -26,6 +26,16 @@
 #### Inherited from
 
 [`DeferredComputationLike`](DeferredComputationLike.md).[`[ComputationLike_isDeferred]`](DeferredComputationLike.md#computationlike_isdeferred)
+
+***
+
+### \[ComputationLike\_isInteractive\]?
+
+> `readonly` `optional` **\[ComputationLike\_isInteractive\]**: `boolean`
+
+#### Inherited from
+
+[`DeferredComputationLike`](DeferredComputationLike.md).[`[ComputationLike_isInteractive]`](DeferredComputationLike.md#computationlike_isinteractive)
 
 ***
 
