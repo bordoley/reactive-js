@@ -6,7 +6,7 @@
 
 # Function: ignoreElements()
 
-> **ignoreElements**\<`T`\>(): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, [`RunnableComputation`](../interfaces/RunnableComputation.md), `any`, `T`\>
+> **ignoreElements**\<`T`\>(): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, [`RunnableComputation`](../interfaces/RunnableComputation.md), `any`, `T`\>
 
 ## Type Parameters
 
@@ -14,4 +14,4 @@
 
 ## Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, [`RunnableComputation`](../interfaces/RunnableComputation.md), `any`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, [`RunnableComputation`](../interfaces/RunnableComputation.md), `any`, `T`\>

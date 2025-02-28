@@ -6,7 +6,7 @@
 
 # Function: decodeWithCharset()
 
-> **decodeWithCharset**(`options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, [`RunnableComputation`](../interfaces/RunnableComputation.md), `ArrayBuffer`, `string`\>
+> **decodeWithCharset**(`options`?): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, [`RunnableComputation`](../interfaces/RunnableComputation.md), `ArrayBuffer`, `string`\>
 
 ## Parameters
 
@@ -26,4 +26,4 @@
 
 ## Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, [`RunnableComputation`](../interfaces/RunnableComputation.md), `ArrayBuffer`, `string`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, [`RunnableComputation`](../interfaces/RunnableComputation.md), `ArrayBuffer`, `string`\>

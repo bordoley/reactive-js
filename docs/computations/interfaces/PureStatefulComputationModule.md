@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / PureStatefulComputationModule
 
-# Interface: PureStatefulComputationModule\<Type, C\>
+# Interface: PureStatefulComputationModule\<Type, TComputation\>
 
 ## Extended by
 
@@ -14,13 +14,13 @@
 
 • **Type** *extends* [`ComputationLike`](ComputationLike.md)
 
-• **C** *extends* [`Computation`](Computation.md)\<`Type`\>
+• **TComputation** *extends* [`Computation`](Computation.md)\<`Type`\>
 
 ## Methods
 
 ### buffer()
 
-> **buffer**\<`T`\>(`options`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, readonly `T`[]\>
+> **buffer**\<`T`\>(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, readonly `T`[]\>
 
 #### Type Parameters
 
@@ -36,13 +36,13 @@
 
 #### Returns
 
-[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, readonly `T`[]\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, readonly `T`[]\>
 
 ***
 
 ### decodeWithCharset()
 
-> **decodeWithCharset**(`options`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `ArrayBuffer`, `string`\>
+> **decodeWithCharset**(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -62,13 +62,13 @@
 
 #### Returns
 
-[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `ArrayBuffer`, `string`\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `ArrayBuffer`, `string`\>
 
 ***
 
 ### distinctUntilChanged()
 
-> **distinctUntilChanged**\<`T`\>(`options`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
+> **distinctUntilChanged**\<`T`\>(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -84,13 +84,13 @@
 
 #### Returns
 
-[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
 
 ***
 
 ### ignoreElements()
 
-> **ignoreElements**\<`T`\>(): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `any`, `T`\>
+> **ignoreElements**\<`T`\>(): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `any`, `T`\>
 
 #### Type Parameters
 
@@ -98,13 +98,13 @@
 
 #### Returns
 
-[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `any`, `T`\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `any`, `T`\>
 
 ***
 
 ### pairwise()
 
-> **pairwise**\<`T`\>(): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
+> **pairwise**\<`T`\>(): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
 
 #### Type Parameters
 
@@ -112,13 +112,13 @@
 
 #### Returns
 
-[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
 
 ***
 
 ### skipFirst()
 
-> **skipFirst**\<`T`\>(`options`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
+> **skipFirst**\<`T`\>(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -134,13 +134,13 @@
 
 #### Returns
 
-[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
 
 ***
 
 ### takeLast()
 
-> **takeLast**\<`T`\>(`options`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
+> **takeLast**\<`T`\>(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -156,4 +156,4 @@
 
 #### Returns
 
-[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>

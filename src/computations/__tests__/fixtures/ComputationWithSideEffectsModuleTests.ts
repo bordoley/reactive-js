@@ -17,17 +17,18 @@ import { pipe, pipeLazy } from "../../../functions.js";
 
 const ComputationWithSideEffectsModuleTests = <
   Type extends SynchronousComputationLike,
-  C extends Computation<Type>,
+  TComputation extends Computation<Type>,
   TypeWithSideEffects extends ComputationWithSideEffectsLike & Type,
-  CWithSideEffects extends Computation<TypeWithSideEffects> & C,
+  TComputationWithSideEffects extends Computation<TypeWithSideEffects> &
+    TComputation,
 >(
-  m: DeferredComputationModule<Type, C> &
-    SynchronousComputationModule<Type, C> &
+  m: DeferredComputationModule<Type, TComputation> &
+    SynchronousComputationModule<Type, TComputation> &
     ComputationWithSideEffectsModule<
       Type,
-      C,
+      TComputation,
       TypeWithSideEffects,
-      CWithSideEffects
+      TComputationWithSideEffects
     >,
 ) =>
   describe(

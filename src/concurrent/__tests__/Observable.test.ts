@@ -30,9 +30,13 @@ import {
   ComputationLike_isSynchronous,
   ComputationWithSideEffectsModule,
   DeferredComputationModule,
+  DeferredComputationWithSideEffectsType,
+  PureDeferredComputationType,
   PureStatefulComputationModule,
   PureStatelessComputationModule,
+  PureSynchronousComputationType,
   SynchronousComputationModule,
+  SynchronousComputationWithSideEffectsType,
 } from "../../computations.js";
 import {
   DeferredObservableLike,
@@ -101,11 +105,6 @@ import {
   __state,
   __stream,
 } from "../Observable/effects.js";
-import {
-  DeferredObservableWithSideEffectsType,
-  PureDeferredObservableType,
-  SynchronousObservableWithSideEffectsType,
-} from "../Observable.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
@@ -939,17 +938,17 @@ testModule(
     PureStatefulObservableOperator(Observable.concatAll()),
     DeferringObservableOperatorTests(
       Observable.concatAll({
-        innerType: Observable.PureDeferredObservableType,
+        innerType: PureDeferredComputationType,
       }),
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.concatAll({
-        innerType: Observable.SynchronousObservableWithSideEffectsType,
+        innerType: SynchronousComputationWithSideEffectsType,
       }),
     ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
       Observable.concatAll({
-        innerType: Observable.DeferredObservableWithSideEffectsType,
+        innerType: DeferredComputationWithSideEffectsType,
       }),
     ),
   ),
@@ -1011,14 +1010,14 @@ testModule(
     ),
     DeferringObservableOperatorTests(
       Observable.concatMap(_ => Observable.empty({ delay: 1 }), {
-        innerType: Observable.PureDeferredObservableType,
+        innerType: PureDeferredComputationType,
       }),
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.concatMap(
         _ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
         {
-          innerType: Observable.SynchronousObservableWithSideEffectsType,
+          innerType: SynchronousComputationWithSideEffectsType,
         },
       ),
     ),
@@ -1026,7 +1025,7 @@ testModule(
       Observable.concatMap(
         _ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
         {
-          innerType: Observable.DeferredObservableWithSideEffectsType,
+          innerType: DeferredComputationWithSideEffectsType,
         },
       ),
     ),
@@ -1278,7 +1277,7 @@ testModule(
         ],
         Observable.fromReadonlyArray(),
         Observable.exhaust<number>({
-          innerType: Observable.PureSynchronousObservableType,
+          innerType: PureSynchronousComputationType,
         }),
         Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
@@ -1287,17 +1286,17 @@ testModule(
     PureStatefulObservableOperator(Observable.exhaust()),
     DeferringObservableOperatorTests(
       Observable.exhaust({
-        innerType: Observable.PureDeferredObservableType,
+        innerType: PureDeferredComputationType,
       }),
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.exhaust({
-        innerType: Observable.SynchronousObservableWithSideEffectsType,
+        innerType: SynchronousComputationWithSideEffectsType,
       }),
     ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
       Observable.exhaust({
-        innerType: Observable.DeferredObservableWithSideEffectsType,
+        innerType: DeferredComputationWithSideEffectsType,
       }),
     ),
   ),
@@ -1312,7 +1311,7 @@ testModule(
           _ =>
             pipe([1, 2, 3], Observable.fromReadonlyArray<number>({ delay: 1 })),
           {
-            innerType: Observable.PureSynchronousObservableType,
+            innerType: PureSynchronousComputationType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -1324,14 +1323,14 @@ testModule(
     ),
     DeferringObservableOperatorTests(
       Observable.exhaustMap(_ => Observable.empty({ delay: 1 }), {
-        innerType: Observable.PureDeferredObservableType,
+        innerType: PureDeferredComputationType,
       }),
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.exhaustMap(
         _ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
         {
-          innerType: Observable.SynchronousObservableWithSideEffectsType,
+          innerType: SynchronousComputationWithSideEffectsType,
         },
       ),
     ),
@@ -1339,7 +1338,7 @@ testModule(
       Observable.exhaustMap(
         _ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
         {
-          innerType: Observable.DeferredObservableWithSideEffectsType,
+          innerType: DeferredComputationWithSideEffectsType,
         },
       ),
     ),
@@ -1847,7 +1846,7 @@ testModule(
         Observable.fromReadonlyArray(),
         Observable.mergeAll<number>({
           concurrency: 2,
-          innerType: Observable.PureSynchronousObservableType,
+          innerType: PureSynchronousComputationType,
         }),
         Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]),
@@ -1856,17 +1855,17 @@ testModule(
     PureStatefulObservableOperator(Observable.mergeAll()),
     DeferringObservableOperatorTests(
       Observable.mergeAll({
-        innerType: Observable.PureDeferredObservableType,
+        innerType: PureDeferredComputationType,
       }),
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.mergeAll({
-        innerType: Observable.SynchronousObservableWithSideEffectsType,
+        innerType: SynchronousComputationWithSideEffectsType,
       }),
     ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
       Observable.mergeAll({
-        innerType: Observable.DeferredObservableWithSideEffectsType,
+        innerType: DeferredComputationWithSideEffectsType,
       }),
     ),
   ),
@@ -1932,7 +1931,7 @@ testModule(
         Observable.mergeMap<number, number>(
           x => pipe([x, x, x], Observable.fromReadonlyArray<number>()),
           {
-            innerType: Observable.PureSynchronousObservableType,
+            innerType: PureSynchronousComputationType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -1944,14 +1943,14 @@ testModule(
     ),
     DeferringObservableOperatorTests(
       Observable.mergeMap(_ => Observable.empty({ delay: 1 }), {
-        innerType: Observable.PureDeferredObservableType,
+        innerType: PureDeferredComputationType,
       }),
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.mergeMap(
         _ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
         {
-          innerType: Observable.SynchronousObservableWithSideEffectsType,
+          innerType: SynchronousComputationWithSideEffectsType,
         },
       ),
     ),
@@ -1959,7 +1958,7 @@ testModule(
       Observable.mergeMap(
         _ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
         {
-          innerType: Observable.DeferredObservableWithSideEffectsType,
+          innerType: DeferredComputationWithSideEffectsType,
         },
       ),
     ),
@@ -2178,17 +2177,17 @@ testModule(
     ),
     DeferringObservableOperatorTests(
       Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
-        innerType: PureDeferredObservableType,
+        innerType: PureDeferredComputationType,
       }),
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
-        innerType: SynchronousObservableWithSideEffectsType,
+        innerType: SynchronousComputationWithSideEffectsType,
       }),
     ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
       Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
-        innerType: DeferredObservableWithSideEffectsType,
+        innerType: DeferredComputationWithSideEffectsType,
       }),
     ),
   ),
@@ -2244,7 +2243,7 @@ testModule(
       pipeLazy(
         Observable.empty({ delay: 1 }),
         Observable.switchAll<number>({
-          innerType: Observable.PureSynchronousObservableType,
+          innerType: PureSynchronousComputationType,
         }),
         Observable.toReadonlyArray(),
         expectArrayEquals([] as readonly number[]),
@@ -2253,17 +2252,17 @@ testModule(
     PureStatefulObservableOperator(Observable.switchAll()),
     DeferringObservableOperatorTests(
       Observable.switchAll({
-        innerType: Observable.PureDeferredObservableType,
+        innerType: PureDeferredComputationType,
       }),
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.switchAll({
-        innerType: Observable.SynchronousObservableWithSideEffectsType,
+        innerType: SynchronousComputationWithSideEffectsType,
       }),
     ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
       Observable.switchAll({
-        innerType: Observable.DeferredObservableWithSideEffectsType,
+        innerType: DeferredComputationWithSideEffectsType,
       }),
     ),
   ),
@@ -2277,7 +2276,7 @@ testModule(
         Observable.switchMap<number, number>(
           _ => pipe([1, 2, 3], Observable.fromReadonlyArray()),
           {
-            innerType: Observable.PureSynchronousObservableType,
+            innerType: PureSynchronousComputationType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -2299,7 +2298,7 @@ testModule(
               }),
             ),
           {
-            innerType: Observable.PureSynchronousObservableType,
+            innerType: PureSynchronousComputationType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -2314,7 +2313,7 @@ testModule(
         Observable.switchMap<void, number>(
           _ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
           {
-            innerType: Observable.PureSynchronousObservableType,
+            innerType: PureSynchronousComputationType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -2330,7 +2329,7 @@ testModule(
         Observable.switchMap<number, number>(
           _ => pipe([1, 2, 3], Observable.fromReadonlyArray()),
           {
-            innerType: Observable.PureSynchronousObservableType,
+            innerType: PureSynchronousComputationType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -2342,14 +2341,14 @@ testModule(
     ),
     DeferringObservableOperatorTests(
       Observable.switchMap(_ => Observable.empty({ delay: 1 }), {
-        innerType: Observable.PureDeferredObservableType,
+        innerType: PureDeferredComputationType,
       }),
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.switchMap(
         _ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
         {
-          innerType: Observable.SynchronousObservableWithSideEffectsType,
+          innerType: SynchronousComputationWithSideEffectsType,
         },
       ),
     ),
@@ -2357,7 +2356,7 @@ testModule(
       Observable.switchMap(
         _ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
         {
-          innerType: Observable.DeferredObservableWithSideEffectsType,
+          innerType: DeferredComputationWithSideEffectsType,
         },
       ),
     ),

@@ -1,3 +1,4 @@
+import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
 import {
   DeferredObservableLike,
   ObservableLike,
@@ -34,7 +35,7 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
           compose(
             Observable.takeFirst(),
             Observable.concatMap(onInit, {
-              innerType: Observable.DeferredObservableWithSideEffectsType,
+              innerType: DeferredComputationWithSideEffectsType,
             }),
           ),
           compose(
@@ -44,7 +45,7 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
             Observable.pairwise(),
             Observable.concatMap<Tuple2<T, T>, Updater<T>>(
               ([oldValue, newValue]) => onChange(oldValue, newValue),
-              { innerType: Observable.DeferredObservableWithSideEffectsType },
+              { innerType: DeferredComputationWithSideEffectsType },
             ),
           ),
         ),

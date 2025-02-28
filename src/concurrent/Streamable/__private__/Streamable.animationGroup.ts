@@ -14,6 +14,7 @@ import {
   ReadonlyObjectMapLike,
 } from "../../../collections.js";
 import * as Iterable from "../../../computations/Iterable.js";
+import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
 import {
   AnimationGroupStreamLike,
   PauseableLike_resume,
@@ -114,7 +115,7 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
             Observable.endWith<boolean>(false),
           ),
         {
-          innerType: Observable.DeferredObservableWithSideEffectsType,
+          innerType: DeferredComputationWithSideEffectsType,
         },
       );
 

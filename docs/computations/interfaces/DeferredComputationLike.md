@@ -12,6 +12,8 @@
 
 ## Extended by
 
+- [`PureDeferredComputationLike`](PureDeferredComputationLike.md)
+- [`DeferredComputationWithSideEffectsLike`](DeferredComputationWithSideEffectsLike.md)
 - [`SynchronousComputationLike`](SynchronousComputationLike.md)
 
 ## Properties

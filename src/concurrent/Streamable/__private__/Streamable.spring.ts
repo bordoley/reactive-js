@@ -5,6 +5,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import * as Iterable from "../../../computations/Iterable.js";
+import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
 import {
   AnimationStreamLike,
   AnimationStreamLike_animation,
@@ -183,7 +184,7 @@ const SpringStream_create: (
           },
 
           {
-            innerType: Observable.DeferredObservableWithSideEffectsType,
+            innerType: DeferredComputationWithSideEffectsType,
           },
         ),
       );

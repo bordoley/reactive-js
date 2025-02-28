@@ -1,7 +1,7 @@
 import {
   ComputationLike_isPure,
+  ComputationOperator,
   ComputationWithSideEffectsOperator,
-  PureComputationOperator,
   RunnableLike,
   RunnableLike_eval,
   RunnableWithSideEffectsLike,
@@ -33,7 +33,7 @@ interface RunnableLift {
   lift<TA, TB, TComputationType extends RunnableLike = RunnableLike>(
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
     isPure: true,
-  ): PureComputationOperator<RunnableLike, RunnableComputation, TA, TB>;
+  ): ComputationOperator<RunnableLike, RunnableComputation, TA, TB>;
   lift<TA, TB>(
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
     isPure: false,

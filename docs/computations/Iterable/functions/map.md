@@ -6,7 +6,7 @@
 
 # Function: map()
 
-> **map**\<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](../interfaces/IterableComputation.md), `TA`, `TB`\>
+> **map**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](../interfaces/IterableComputation.md), `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](../interfaces/IterableComputation.md), `TA`, `TB`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](../interfaces/IterableComputation.md), `TA`, `TB`\>

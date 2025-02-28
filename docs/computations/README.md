@@ -14,25 +14,29 @@
 - [ComputationWithSideEffectsModule](interfaces/ComputationWithSideEffectsModule.md)
 - [DeferredComputationLike](interfaces/DeferredComputationLike.md)
 - [DeferredComputationModule](interfaces/DeferredComputationModule.md)
+- [DeferredComputationWithSideEffectsLike](interfaces/DeferredComputationWithSideEffectsLike.md)
 - [IterableLike](interfaces/IterableLike.md)
 - [IterableWithSideEffectsLike](interfaces/IterableWithSideEffectsLike.md)
 - [MulticastComputationLike](interfaces/MulticastComputationLike.md)
 - [PureComputationLike](interfaces/PureComputationLike.md)
+- [PureDeferredComputationLike](interfaces/PureDeferredComputationLike.md)
 - [PureIterableLike](interfaces/PureIterableLike.md)
 - [PureRunnableLike](interfaces/PureRunnableLike.md)
 - [PureStatefulComputationModule](interfaces/PureStatefulComputationModule.md)
 - [PureStatelessComputationModule](interfaces/PureStatelessComputationModule.md)
+- [PureSynchronousComputationLike](interfaces/PureSynchronousComputationLike.md)
 - [RunnableLike](interfaces/RunnableLike.md)
 - [RunnableWithSideEffectsLike](interfaces/RunnableWithSideEffectsLike.md)
 - [SinkLike](interfaces/SinkLike.md)
 - [SynchronousComputationLike](interfaces/SynchronousComputationLike.md)
 - [SynchronousComputationModule](interfaces/SynchronousComputationModule.md)
+- [SynchronousComputationWithSideEffectsLike](interfaces/SynchronousComputationWithSideEffectsLike.md)
 
 ## Type Aliases
 
 - [ComputationOf](type-aliases/ComputationOf.md)
+- [ComputationOperator](type-aliases/ComputationOperator.md)
 - [ComputationWithSideEffectsOperator](type-aliases/ComputationWithSideEffectsOperator.md)
-- [PureComputationOperator](type-aliases/PureComputationOperator.md)
 
 ## Variables
 
@@ -41,7 +45,11 @@
 - [ComputationLike\_isDeferred](variables/ComputationLike_isDeferred.md)
 - [ComputationLike\_isPure](variables/ComputationLike_isPure.md)
 - [ComputationLike\_isSynchronous](variables/ComputationLike_isSynchronous.md)
+- [DeferredComputationWithSideEffectsType](variables/DeferredComputationWithSideEffectsType.md)
+- [PureDeferredComputationType](variables/PureDeferredComputationType.md)
+- [PureSynchronousComputationType](variables/PureSynchronousComputationType.md)
 - [RunnableLike\_eval](variables/RunnableLike_eval.md)
 - [SinkLike\_complete](variables/SinkLike_complete.md)
 - [SinkLike\_isComplete](variables/SinkLike_isComplete.md)
 - [SinkLike\_next](variables/SinkLike_next.md)
+- [SynchronousComputationWithSideEffectsType](variables/SynchronousComputationWithSideEffectsType.md)

@@ -1,4 +1,4 @@
-import { Computation, ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_T, Computation_type, RunnableLike } from "../computations.js";
+import { Computation, Computation_T, Computation_type, DeferredComputationWithSideEffectsType, PureDeferredComputationType, PureSynchronousComputationType, RunnableLike, SynchronousComputationWithSideEffectsType } from "../computations.js";
 import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureSynchronousObservableLike, SchedulerLike, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../concurrent.js";
 import { EventListenerLike, EventSourceLike, StoreLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9, Updater } from "../functions.js";
@@ -7,10 +7,6 @@ export type PureStatelessObservableOperator<TIn, out TOut> = <TObservableIn exte
 export type PureStatefulObservableOperator<TIn, out TOut, TObservableInBase = ObservableLike<TIn>> = <TObservableIn extends TObservableInBase>(observable: TObservableIn) => TObservableIn extends PureSynchronousObservableLike<TIn> ? PureSynchronousObservableLike<TOut> : TObservableIn extends SynchronousObservableWithSideEffectsLike<TIn> ? SynchronousObservableWithSideEffectsLike<TOut> : TObservableIn extends SynchronousObservableLike<TIn> ? SynchronousObservableLike<TOut> : TObservableIn extends PureDeferredObservableLike<TIn> ? PureDeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? PureDeferredObservableLike<TOut> : TObservableIn extends DeferredObservableWithSideEffectsLike<TIn> ? DeferredObservableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : ObservableLike<TOut>;
 export type DeferringObservableOperator<TIn, out TOut, TObservableInBase = ObservableLike<TIn>> = <TObservableIn extends TObservableInBase>(obs: TObservableIn) => TObservableIn extends PureObservableLike<TIn> ? PureDeferredObservableLike<TOut> : DeferredObservableWithSideEffectsLike<TOut>;
 export type ObservableOperatorWithSideEffects<TIn, out TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends PureSynchronousObservableLike<TIn> ? SynchronousObservableWithSideEffectsLike<TOut> : TObservableIn extends SynchronousObservableWithSideEffectsLike<TIn> ? SynchronousObservableWithSideEffectsLike<TOut> : TObservableIn extends SynchronousObservableLike<TIn> ? SynchronousObservableWithSideEffectsLike<TOut> : TObservableIn extends PureDeferredObservableLike<TIn> ? DeferredObservableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableWithSideEffectsLike<TIn> ? DeferredObservableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableWithSideEffectsLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? DeferredObservableWithSideEffectsLike<TOut> : ObservableLike<TOut>;
-export declare const PureSynchronousObservableType: Pick<PureSynchronousObservableLike, typeof ComputationLike_isDeferred | typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>;
-export declare const SynchronousObservableWithSideEffectsType: Pick<SynchronousObservableWithSideEffectsLike, typeof ComputationLike_isDeferred | typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>;
-export declare const PureDeferredObservableType: Pick<PureDeferredObservableLike, typeof ComputationLike_isDeferred | typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>;
-export declare const DeferredObservableWithSideEffectsType: Pick<DeferredObservableWithSideEffectsLike, typeof ComputationLike_isDeferred | typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>;
 /**
  * @noInheritDoc
  */
@@ -109,16 +105,16 @@ export interface ObservableModule {
     concat<T>(fst: MulticastObservableLike<T>, snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike[]): DeferredObservableWithSideEffectsLike<T>;
     concatAll<T>(): PureStatefulObservableOperator<PureSynchronousObservableLike<T>, T>;
     concatAll<T>(options: {
-        readonly innerType: typeof PureSynchronousObservableType;
+        readonly innerType: typeof PureSynchronousComputationType;
     }): PureStatefulObservableOperator<PureSynchronousObservableLike<T>, T>;
     concatAll<T>(options: {
-        readonly innerType: typeof SynchronousObservableWithSideEffectsType;
+        readonly innerType: typeof SynchronousComputationWithSideEffectsType;
     }): ObservableOperatorWithSideEffects<SynchronousObservableLike<T>, T>;
     concatAll<T>(options: {
-        readonly innerType: typeof PureDeferredObservableType;
+        readonly innerType: typeof PureDeferredComputationType;
     }): DeferringObservableOperator<PureDeferredObservableLike<T>, T>;
     concatAll<T>(options: {
-        readonly innerType: typeof DeferredObservableWithSideEffectsType;
+        readonly innerType: typeof DeferredComputationWithSideEffectsType;
     }): Function1<ObservableLike<DeferredObservableLike<T>>, DeferredObservableWithSideEffectsLike<T>>;
     concatMany<T>(observables: readonly PureSynchronousObservableLike<T>[]): PureSynchronousObservableLike<T>;
     concatMany<T>(observables: readonly PureDeferredObservableLike<T>[]): PureDeferredObservableLike<T>;
@@ -134,16 +130,16 @@ export interface ObservableModule {
     ]): DeferredObservableWithSideEffectsLike<T>;
     concatMap<TA, TB>(selector: Function1<TA, PureSynchronousObservableLike<TB>>): PureStatefulObservableOperator<TA, TB>;
     concatMap<TA, TB>(selector: Function1<TA, PureSynchronousObservableLike<TB>>, options: {
-        readonly innerType: typeof PureSynchronousObservableType;
+        readonly innerType: typeof PureSynchronousComputationType;
     }): PureStatefulObservableOperator<TA, TB>;
     concatMap<TA, TB>(selector: Function1<TA, SynchronousObservableLike<TB>>, options: {
-        readonly innerType: typeof SynchronousObservableWithSideEffectsType;
+        readonly innerType: typeof SynchronousComputationWithSideEffectsType;
     }): ObservableOperatorWithSideEffects<TA, TB>;
     concatMap<TA, TB>(selector: Function1<TA, PureDeferredObservableLike<TB>>, options: {
-        readonly innerType: typeof PureDeferredObservableType;
+        readonly innerType: typeof PureDeferredComputationType;
     }): DeferringObservableOperator<TA, TB>;
     concatMap<TA, TB>(selector: Function1<TA, DeferredObservableLike<TB>>, options: {
-        readonly innerType: typeof DeferredObservableWithSideEffectsType;
+        readonly innerType: typeof DeferredComputationWithSideEffectsType;
     }): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
     concatWith<T>(snd: PureSynchronousObservableLike<T>, ...tail: readonly PureSynchronousObservableLike<T>[]): PureStatefulObservableOperator<T, T>;
     concatWith<T>(snd: SynchronousObservableLike<T>, ...tail: readonly SynchronousObservableLike<T>[]): ObservableOperatorWithSideEffects<T, T>;
@@ -171,29 +167,29 @@ export interface ObservableModule {
     enqueue<T>(queue: QueueableLike<T>): ObservableOperatorWithSideEffects<T, T>;
     exhaust<T>(): PureStatefulObservableOperator<PureSynchronousObservableLike<T>, T>;
     exhaust<T>(options: {
-        readonly innerType: typeof PureSynchronousObservableType;
+        readonly innerType: typeof PureSynchronousComputationType;
     }): PureStatefulObservableOperator<PureSynchronousObservableLike<T>, T>;
     exhaust<T>(options: {
-        readonly innerType: typeof SynchronousObservableWithSideEffectsType;
+        readonly innerType: typeof SynchronousComputationWithSideEffectsType;
     }): ObservableOperatorWithSideEffects<SynchronousObservableLike<T>, T>;
     exhaust<T>(options: {
-        readonly innerType: typeof PureDeferredObservableType;
+        readonly innerType: typeof PureDeferredComputationType;
     }): DeferringObservableOperator<SynchronousObservableLike<T>, T>;
     exhaust<T>(options: {
-        readonly innerType: typeof DeferredObservableWithSideEffectsType;
+        readonly innerType: typeof DeferredComputationWithSideEffectsType;
     }): Function1<ObservableLike<DeferredObservableLike<T>>, DeferredObservableWithSideEffectsLike<T>>;
     exhaustMap<TA, TB>(selector: Function1<TA, PureSynchronousObservableLike<TB>>): PureStatefulObservableOperator<TA, TB>;
     exhaustMap<TA, TB>(selector: Function1<TA, PureSynchronousObservableLike<TB>>, options: {
-        readonly innerType: typeof PureSynchronousObservableType;
+        readonly innerType: typeof PureSynchronousComputationType;
     }): PureStatefulObservableOperator<TA, TB>;
     exhaustMap<TA, TB>(selector: Function1<TA, SynchronousObservableLike<TB>>, options: {
-        readonly innerType: typeof SynchronousObservableWithSideEffectsType;
+        readonly innerType: typeof SynchronousComputationWithSideEffectsType;
     }): ObservableOperatorWithSideEffects<TA, TB>;
     exhaustMap<TA, TB>(selector: Function1<TA, PureDeferredObservableLike<TB>>, options: {
-        readonly innerType: typeof PureDeferredObservableType;
+        readonly innerType: typeof PureDeferredComputationType;
     }): DeferringObservableOperator<TA, TB>;
     exhaustMap<TA, TB>(selector: Function1<TA, DeferredObservableLike<TB>>, options: {
-        readonly innerType: typeof DeferredObservableWithSideEffectsType;
+        readonly innerType: typeof DeferredComputationWithSideEffectsType;
     }): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
     firstAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
@@ -255,25 +251,25 @@ export interface ObservableModule {
         readonly concurrency?: number;
     }): PureStatefulObservableOperator<PureSynchronousObservableLike<T>, T>;
     mergeAll<T>(options: {
-        readonly innerType: typeof PureSynchronousObservableType;
+        readonly innerType: typeof PureSynchronousComputationType;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): PureStatefulObservableOperator<PureSynchronousObservableLike<T>, T>;
     mergeAll<T>(options: {
-        readonly innerType: typeof SynchronousObservableWithSideEffectsType;
+        readonly innerType: typeof SynchronousComputationWithSideEffectsType;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): ObservableOperatorWithSideEffects<SynchronousObservableLike<T>, T>;
     mergeAll<T>(options: {
-        readonly innerType: typeof PureDeferredObservableType;
+        readonly innerType: typeof PureDeferredComputationType;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): DeferringObservableOperator<PureDeferredObservableLike<T>, T>;
     mergeAll<T>(options?: {
-        readonly innerType: typeof DeferredObservableWithSideEffectsType;
+        readonly innerType: typeof DeferredComputationWithSideEffectsType;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
@@ -291,25 +287,25 @@ export interface ObservableModule {
         readonly concurrency?: number;
     }): PureStatefulObservableOperator<TA, TB>;
     mergeMap<TA, TB>(selector: Function1<TA, PureSynchronousObservableLike<TB>>, options: {
-        readonly innerType: typeof PureSynchronousObservableType;
+        readonly innerType: typeof PureSynchronousComputationType;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): PureStatefulObservableOperator<TA, TB>;
     mergeMap<TA, TB>(selector: Function1<TA, SynchronousObservableLike<TB>>, options: {
-        readonly innerType: typeof SynchronousObservableWithSideEffectsType;
+        readonly innerType: typeof SynchronousComputationWithSideEffectsType;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): ObservableOperatorWithSideEffects<TA, TB>;
     mergeMap<TA, TB>(selector: Function1<TA, PureDeferredObservableLike<TB>>, options: {
-        readonly innerType: typeof PureDeferredObservableType;
+        readonly innerType: typeof PureDeferredComputationType;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
     }): DeferringObservableOperator<TA, TB>;
     mergeMap<TA, TB>(selector: Function1<TA, DeferredObservableLike<TB>>, options: {
-        readonly innerType: typeof DeferredObservableWithSideEffectsType;
+        readonly innerType: typeof DeferredComputationWithSideEffectsType;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
@@ -348,16 +344,16 @@ export interface ObservableModule {
     scan<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): PureStatefulObservableOperator<T, TAcc>;
     scanMany<T, TAcc>(scanner: Function2<TAcc, T, PureSynchronousObservableLike<TAcc>>, initialValue: Factory<TAcc>): PureStatefulObservableOperator<T, TAcc>;
     scanMany<T, TAcc>(scanner: Function2<TAcc, T, PureSynchronousObservableLike<TAcc>>, initialValue: Factory<TAcc>, options: {
-        readonly innerType: typeof PureSynchronousObservableType;
+        readonly innerType: typeof PureSynchronousComputationType;
     }): PureStatefulObservableOperator<T, TAcc>;
     scanMany<T, TAcc>(scanner: Function2<TAcc, T, SynchronousObservableLike<TAcc>>, initialValue: Factory<TAcc>, options: {
-        readonly innerType: typeof SynchronousObservableWithSideEffectsType;
+        readonly innerType: typeof SynchronousComputationWithSideEffectsType;
     }): ObservableOperatorWithSideEffects<T, TAcc>;
     scanMany<T, TAcc>(scanner: Function2<TAcc, T, PureDeferredObservableLike<TAcc>>, initialValue: Factory<TAcc>, options: {
-        readonly innerType: typeof PureDeferredObservableType;
+        readonly innerType: typeof PureDeferredComputationType;
     }): DeferringObservableOperator<T, TAcc>;
     scanMany<T, TAcc>(scanner: Function2<TAcc, T, DeferredObservableLike<TAcc>>, initialValue: Factory<TAcc>, options: {
-        readonly innerType: typeof DeferredObservableWithSideEffectsType;
+        readonly innerType: typeof DeferredComputationWithSideEffectsType;
     }): Function1<ObservableLike<T>, DeferredObservableWithSideEffectsLike<TAcc>>;
     skipFirst<T>(options?: {
         readonly count?: number;
@@ -378,29 +374,29 @@ export interface ObservableModule {
     }): <TObservableIn extends ObservableLike<T>>(observable: TObservableIn) => TObservableIn extends PureDeferredObservableLike<T> ? PureDeferredObservableLike<T> : TObservableIn extends MulticastObservableLike<T> ? MulticastObservableLike<T> : TObservableIn extends SynchronousObservableWithSideEffectsLike<T> ? DeferredObservableWithSideEffectsLike<T> : TObservableIn extends DeferredObservableWithSideEffectsLike<T> ? DeferredObservableWithSideEffectsLike<T> : TObservableIn extends DeferredObservableLike<T> ? DeferredObservableLike<T> : ObservableLike<T>;
     switchAll<T>(): PureStatefulObservableOperator<PureSynchronousObservableLike<T>, T>;
     switchAll<T>(options: {
-        readonly innerType: typeof PureSynchronousObservableType;
+        readonly innerType: typeof PureSynchronousComputationType;
     }): PureStatefulObservableOperator<PureSynchronousObservableLike<T>, T>;
     switchAll<T>(options: {
-        readonly innerType: typeof SynchronousObservableWithSideEffectsType;
+        readonly innerType: typeof SynchronousComputationWithSideEffectsType;
     }): ObservableOperatorWithSideEffects<SynchronousObservableLike<T>, T>;
     switchAll<T>(options: {
-        readonly innerType: typeof PureDeferredObservableType;
+        readonly innerType: typeof PureDeferredComputationType;
     }): DeferringObservableOperator<PureDeferredObservableLike<T>, T>;
     switchAll<T>(options: {
-        readonly innerType: typeof DeferredObservableWithSideEffectsType;
+        readonly innerType: typeof DeferredComputationWithSideEffectsType;
     }): Function1<ObservableLike<DeferredObservableLike<T>>, DeferredObservableWithSideEffectsLike<T>>;
     switchMap<TA, TB>(selector: Function1<TA, PureSynchronousObservableLike<TB>>): PureStatefulObservableOperator<TA, TB>;
     switchMap<TA, TB>(selector: Function1<TA, PureSynchronousObservableLike<TB>>, options: {
-        readonly innerType: typeof PureSynchronousObservableType;
+        readonly innerType: typeof PureSynchronousComputationType;
     }): PureStatefulObservableOperator<TA, TB>;
     switchMap<TA, TB>(selector: Function1<TA, SynchronousObservableLike<TB>>, options: {
-        readonly innerType: typeof SynchronousObservableWithSideEffectsType;
+        readonly innerType: typeof SynchronousComputationWithSideEffectsType;
     }): ObservableOperatorWithSideEffects<TA, TB>;
     switchMap<TA, TB>(selector: Function1<TA, PureDeferredObservableLike<TB>>, options: {
-        readonly innerType: typeof PureDeferredObservableType;
+        readonly innerType: typeof PureDeferredComputationType;
     }): DeferringObservableOperator<TA, TB>;
     switchMap<TA, TB>(selector: Function1<TA, DeferredObservableLike<TB>>, options: {
-        readonly innerType: typeof DeferredObservableWithSideEffectsType;
+        readonly innerType: typeof DeferredComputationWithSideEffectsType;
     }): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
     takeFirst<T>(options?: {
         readonly count?: number;

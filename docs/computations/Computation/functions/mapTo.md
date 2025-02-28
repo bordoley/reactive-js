@@ -6,19 +6,19 @@
 
 # Function: mapTo()
 
-> **mapTo**\<`Type`, `C`\>(`map`): \<`T`\>(`value`) => [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `unknown`, `T`\>
+> **mapTo**\<`Type`, `TComputation`\>(`map`): \<`T`\>(`value`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `unknown`, `T`\>
 
 ## Type Parameters
 
 • **Type** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
 
-• **C** *extends* [`Computation`](../../interfaces/Computation.md)\<`Type`\>
+• **TComputation** *extends* [`Computation`](../../interfaces/Computation.md)\<`Type`\>
 
 ## Parameters
 
 ### map
 
-\<`TA`, `TB`\>(`selector`) => [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `TA`, `TB`\>
+\<`TA`, `TB`\>(`selector`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `TA`, `TB`\>
 
 ## Returns
 
@@ -36,4 +36,4 @@
 
 ### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `unknown`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `unknown`, `T`\>

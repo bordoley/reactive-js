@@ -16,7 +16,7 @@
 
 #### Call Signature
 
-> **catchError**\<`T`\>(`onError`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+> **catchError**\<`T`\>(`onError`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 ##### Type Parameters
 
@@ -30,7 +30,7 @@
 
 ##### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 ##### Inherited from
 
@@ -38,7 +38,7 @@
 
 #### Call Signature
 
-> **catchError**\<`T`\>(`onError`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+> **catchError**\<`T`\>(`onError`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 ##### Type Parameters
 
@@ -52,7 +52,7 @@
 
 ##### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 ##### Inherited from
 
@@ -94,7 +94,7 @@
 
 ### concatAll()
 
-> **concatAll**\<`T`\>(): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md)\>, `T`\>
+> **concatAll**\<`T`\>(): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md)\>, `T`\>
 
 #### Type Parameters
 
@@ -102,7 +102,7 @@
 
 #### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md)\>, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md)\>, `T`\>
 
 #### Inherited from
 
@@ -136,7 +136,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 ### concatMap()
 
-> **concatMap**\<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `TA`, `TB`\>
+> **concatMap**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `TA`, `TB`\>
 
 #### Type Parameters
 
@@ -152,7 +152,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `TA`, `TB`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -162,7 +162,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 ### concatWith()
 
-> **concatWith**\<`T`\>(`snd`, ...`tail`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+> **concatWith**\<`T`\>(`snd`, ...`tail`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -180,7 +180,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -208,7 +208,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 ### endWith()
 
-> **endWith**\<`T`\>(`value`, ...`values`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+> **endWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -226,7 +226,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -362,7 +362,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 ### keep()
 
-> **keep**\<`T`\>(`predicate`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+> **keep**\<`T`\>(`predicate`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -376,7 +376,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -404,7 +404,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 ### map()
 
-> **map**\<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `TA`, `TB`\>
+> **map**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `TA`, `TB`\>
 
 #### Type Parameters
 
@@ -420,7 +420,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `TA`, `TB`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -488,7 +488,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Call Signature
 
-> **repeat**\<`T`\>(`predicate`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+> **repeat**\<`T`\>(`predicate`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 ##### Type Parameters
 
@@ -502,7 +502,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 ##### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 ##### Inherited from
 
@@ -510,7 +510,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Call Signature
 
-> **repeat**\<`T`\>(`count`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+> **repeat**\<`T`\>(`count`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 ##### Type Parameters
 
@@ -524,7 +524,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 ##### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 ##### Inherited from
 
@@ -532,7 +532,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Call Signature
 
-> **repeat**\<`T`\>(): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+> **repeat**\<`T`\>(): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 ##### Type Parameters
 
@@ -540,7 +540,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 ##### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 ##### Inherited from
 
@@ -550,7 +550,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 ### retry()
 
-> **retry**\<`T`\>(`shouldRetry`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+> **retry**\<`T`\>(`shouldRetry`?): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -564,7 +564,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -574,7 +574,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 ### scan()
 
-> **scan**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `TAcc`\>
+> **scan**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `TAcc`\>
 
 #### Type Parameters
 
@@ -594,7 +594,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `TAcc`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `TAcc`\>
 
 #### Inherited from
 
@@ -604,7 +604,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 ### startWith()
 
-> **startWith**\<`T`\>(`value`, ...`values`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+> **startWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -622,7 +622,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -632,7 +632,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 ### takeFirst()
 
-> **takeFirst**\<`T`\>(`options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+> **takeFirst**\<`T`\>(`options`?): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -648,7 +648,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -658,7 +658,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 ### takeWhile()
 
-> **takeWhile**\<`T`\>(`predicate`, `options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+> **takeWhile**\<`T`\>(`predicate`, `options`?): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -678,7 +678,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -688,7 +688,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 ### throwIfEmpty()
 
-> **throwIfEmpty**\<`T`\>(`factory`, `options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+> **throwIfEmpty**\<`T`\>(`factory`, `options`?): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -706,7 +706,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](IterableComputation.md), `T`, `T`\>
 
 #### Inherited from
 

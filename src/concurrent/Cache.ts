@@ -18,6 +18,7 @@ import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import { ReadonlyObjectMapCollection } from "../collections/ReadonlyObjectMap.js";
 import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
 import { ReadonlyObjectMapLike, keySet } from "../collections.js";
+import { DeferredComputationWithSideEffectsType } from "../computations.js";
 import {
   CacheLike,
   CacheLike_get,
@@ -228,7 +229,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
                   : pipe(next, Observable.fromValue());
               },
               {
-                innerType: Observable.DeferredObservableWithSideEffectsType,
+                innerType: DeferredComputationWithSideEffectsType,
               },
             )
           : (identity as Function1<
@@ -277,7 +278,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
         x => x,
         isSome(persistentStore)
           ? Observable.concatMap(bindMethod(persistentStore, "store"), {
-              innerType: Observable.DeferredObservableWithSideEffectsType,
+              innerType: DeferredComputationWithSideEffectsType,
             })
           : Observable.ignoreElements(),
         Observable.subscribe(scheduler, options),

@@ -4,19 +4,19 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / ComputationWithSideEffectsOperator
 
-# Type Alias: ComputationWithSideEffectsOperator\<Type, C, TypeWithSideEffects, CWithSideEffects, TA, TB\>
+# Type Alias: ComputationWithSideEffectsOperator\<Type, TComputation, TypeWithSideEffects, TComputationWithSideEffects, TA, TB\>
 
-> **ComputationWithSideEffectsOperator**\<`Type`, `C`, `TypeWithSideEffects`, `CWithSideEffects`, `TA`, `TB`\>: [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](ComputationOf.md)\<`Type`, `C`, `TA`\>, [`ComputationOf`](ComputationOf.md)\<`TypeWithSideEffects`, `CWithSideEffects`, `TB`\>\>
+> **ComputationWithSideEffectsOperator**\<`Type`, `TComputation`, `TypeWithSideEffects`, `TComputationWithSideEffects`, `TA`, `TB`\>: [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](ComputationOf.md)\<`Type`, `TComputation`, `TA`\>, [`ComputationOf`](ComputationOf.md)\<`TypeWithSideEffects`, `TComputationWithSideEffects`, `TB`\>\>
 
 ## Type Parameters
 
 • **Type** *extends* [`ComputationLike`](../interfaces/ComputationLike.md)
 
-• **C** *extends* [`Computation`](../interfaces/Computation.md)\<`Type`\>
+• **TComputation** *extends* [`Computation`](../interfaces/Computation.md)\<`Type`\>
 
 • **TypeWithSideEffects** *extends* [`ComputationWithSideEffectsLike`](../interfaces/ComputationWithSideEffectsLike.md) & `Type`
 
-• **CWithSideEffects** *extends* [`Computation`](../interfaces/Computation.md)\<`TypeWithSideEffects`\>
+• **TComputationWithSideEffects** *extends* [`Computation`](../interfaces/Computation.md)\<`TypeWithSideEffects`\>
 
 • **TA**
 

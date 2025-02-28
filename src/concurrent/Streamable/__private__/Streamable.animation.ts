@@ -4,6 +4,7 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
+import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
 import {
   AnimationStreamLike,
   AnimationStreamLike_animation,
@@ -70,7 +71,7 @@ const AnimationStream_create: <TEvent, T>(
             Observable.endWith<boolean>(false),
           ),
         {
-          innerType: Observable.DeferredObservableWithSideEffectsType,
+          innerType: DeferredComputationWithSideEffectsType,
         },
       );
 

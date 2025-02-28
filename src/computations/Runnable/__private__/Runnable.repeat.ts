@@ -22,7 +22,7 @@ class RepeatRunnable<T> implements RunnableLike<T> {
     private readonly s: RunnableLike<T>,
     private readonly p: Predicate<number>,
   ) {
-    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+    this[ComputationLike_isPure] = s[ComputationLike_isPure] ?? true;
   }
 
   [RunnableLike_eval](sink: SinkLike<T>): void {

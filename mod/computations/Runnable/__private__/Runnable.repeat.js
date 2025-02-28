@@ -10,7 +10,7 @@ class RepeatRunnable {
     constructor(s, p) {
         this.s = s;
         this.p = p;
-        this[ComputationLike_isPure] = s[ComputationLike_isPure];
+        this[ComputationLike_isPure] = s[ComputationLike_isPure] ?? true;
     }
     [RunnableLike_eval](sink) {
         const source = this.s;

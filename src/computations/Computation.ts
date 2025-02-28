@@ -5,11 +5,11 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ComputationOf,
+  ComputationOperator,
   DeferredComputationLike,
   DeferredComputationModule,
   MulticastComputationLike,
   PureComputationLike,
-  PureComputationOperator,
   PureStatelessComputationModule,
   SynchronousComputationLike,
 } from "../computations.js";
@@ -17,15 +17,15 @@ import { TypePredicate, increment, pickUnsafe, returns } from "../functions.js";
 
 export interface PickOperator<
   Type extends ComputationLike,
-  C extends Computation<Type>,
+  TComputation extends Computation<Type>,
 > {
   <T, TKeyOfT extends keyof T>(
     key: TKeyOfT,
-  ): PureComputationOperator<Type, C, T, T[TKeyOfT]>;
+  ): ComputationOperator<Type, TComputation, T, T[TKeyOfT]>;
   <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(
     keyA: TKeyOfTA,
     keyB: TKeyOfTB,
-  ): PureComputationOperator<Type, C, T, T[TKeyOfTA][TKeyOfTB]>;
+  ): ComputationOperator<Type, TComputation, T, T[TKeyOfTA][TKeyOfTB]>;
   <
     T,
     TKeyOfTA extends keyof T,
@@ -35,7 +35,12 @@ export interface PickOperator<
     keyA: TKeyOfTA,
     keyB: TKeyOfTB,
     keyC: TKeyOfTC,
-  ): PureComputationOperator<Type, C, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
+  ): ComputationOperator<
+    Type,
+    TComputation,
+    T,
+    T[TKeyOfTA][TKeyOfTB][TKeyOfTC]
+  >;
 }
 
 interface Signature {
@@ -71,23 +76,29 @@ interface Signature {
     computation: TComputation,
   ): computation is TComputation & SynchronousComputationLike;
 
-  keepType<Type extends ComputationLike, C extends Computation<Type>>(
-    keep: PureStatelessComputationModule<Type, C>["keep"],
+  keepType<
+    Type extends ComputationLike,
+    TComputation extends Computation<Type>,
+  >(
+    keep: PureStatelessComputationModule<Type, TComputation>["keep"],
   ): <TA, TB>(
     predicate: TypePredicate<TA, TB>,
-  ) => PureComputationOperator<Type, C, TA, TB>;
+  ) => ComputationOperator<Type, TComputation, TA, TB>;
 
-  mapTo<Type extends ComputationLike, C extends Computation<Type>>(
-    map: PureStatelessComputationModule<Type, C>["map"],
-  ): <T>(value: T) => PureComputationOperator<Type, C, unknown, T>;
+  mapTo<Type extends ComputationLike, TComputation extends Computation<Type>>(
+    map: PureStatelessComputationModule<Type, TComputation>["map"],
+  ): <T>(value: T) => ComputationOperator<Type, TComputation, unknown, T>;
 
-  pick<Type extends ComputationLike, C extends Computation<Type>>(
-    map: PureStatelessComputationModule<Type, C>["map"],
-  ): PickOperator<Type, C>;
+  pick<Type extends ComputationLike, TComputation extends Computation<Type>>(
+    map: PureStatelessComputationModule<Type, TComputation>["map"],
+  ): PickOperator<Type, TComputation>;
 
-  sequence<Type extends ComputationLike, C extends Computation<Type>>(
-    generate: DeferredComputationModule<Type, C>["generate"],
-  ): (start: number) => ComputationOf<Type, C, number>;
+  sequence<
+    Type extends ComputationLike,
+    TComputation extends Computation<Type>,
+  >(
+    generate: DeferredComputationModule<Type, TComputation>["generate"],
+  ): (start: number) => ComputationOf<Type, TComputation, number>;
 }
 
 export const areAllDeferred: Signature["areAllDeferred"] = <
@@ -151,32 +162,32 @@ export const isSynchronous: Signature["isSynchronous"] = <
 
 export const keepType: Signature["keepType"] = (<
     Type extends ComputationLike,
-    C extends Computation<Type>,
+    TComputation extends Computation<Type>,
   >(
-    keep: PureStatelessComputationModule<Type, C>["keep"],
+    keep: PureStatelessComputationModule<Type, TComputation>["keep"],
   ) =>
   <TA, TB>(predicate: TypePredicate<TA, TB>) =>
     keep(predicate)) as unknown as Signature["keepType"];
 
 export const mapTo: Signature["mapTo"] =
-  <Type extends ComputationLike, C extends Computation<Type>>(
-    map: PureStatelessComputationModule<Type, C>["map"],
+  <Type extends ComputationLike, TComputation extends Computation<Type>>(
+    map: PureStatelessComputationModule<Type, TComputation>["map"],
   ) =>
   <T>(v: T) =>
     map(returns(v));
 
 export const pick: Signature["pick"] = (<
     Type extends ComputationLike,
-    C extends Computation<Type>,
+    TComputation extends Computation<Type>,
   >(
-    map: PureStatelessComputationModule<Type, C>["map"],
+    map: PureStatelessComputationModule<Type, TComputation>["map"],
   ) =>
   (...keys: (string | number | symbol)[]) =>
     map(pickUnsafe(...keys))) as Signature["pick"];
 
 export const sequence: Signature["sequence"] =
-  <Type extends ComputationLike, C extends Computation<Type>>(
-    generate: DeferredComputationModule<Type, C>["generate"],
+  <Type extends ComputationLike, TComputation extends Computation<Type>>(
+    generate: DeferredComputationModule<Type, TComputation>["generate"],
   ) =>
   (start: number) =>
     generate<number>(increment, returns(start - 1));

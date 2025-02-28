@@ -9,7 +9,7 @@ class CatchErrorRunnable {
     constructor(s, onError) {
         this.s = s;
         this.onError = onError;
-        this[ComputationLike_isPure] = s[ComputationLike_isPure];
+        this[ComputationLike_isPure] = s[ComputationLike_isPure] ?? true;
     }
     [RunnableLike_eval](sink) {
         try {

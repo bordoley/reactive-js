@@ -27,18 +27,19 @@ import {
 
 const PureStatefulComputationModuleTests = <
   Type extends SynchronousComputationLike,
-  C extends Computation<Type>,
+  TComputation extends Computation<Type>,
   TypeWithSideEffects extends ComputationWithSideEffectsLike & Type,
-  CWithSideEffects extends Computation<TypeWithSideEffects> & C,
+  TComputationWithSideEffects extends Computation<TypeWithSideEffects> &
+    TComputation,
 >(
-  m: PureStatefulComputationModule<Type, C> &
-    DeferredComputationModule<Type, C> &
-    SynchronousComputationModule<Type, C> &
+  m: PureStatefulComputationModule<Type, TComputation> &
+    DeferredComputationModule<Type, TComputation> &
+    SynchronousComputationModule<Type, TComputation> &
     ComputationWithSideEffectsModule<
       Type,
-      C,
+      TComputation,
       TypeWithSideEffects,
-      CWithSideEffects
+      TComputationWithSideEffects
     >,
 ) =>
   describe(

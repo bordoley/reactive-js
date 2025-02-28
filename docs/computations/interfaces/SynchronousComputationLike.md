@@ -12,6 +12,8 @@
 
 ## Extended by
 
+- [`PureSynchronousComputationLike`](PureSynchronousComputationLike.md)
+- [`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md)
 - [`RunnableLike`](RunnableLike.md)
 - [`IterableLike`](IterableLike.md)
 

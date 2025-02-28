@@ -1,6 +1,7 @@
 /// <reference types="./Streamable.animation.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
 import { AnimationStreamLike_animation, PauseableLike_resume, StreamableLike_stream, } from "../../../concurrent.js";
 import * as Publisher from "../../../events/Publisher.js";
 import { isFunction, none, pipe } from "../../../functions.js";
@@ -15,7 +16,7 @@ const AnimationStream_create = /*@__PURE__*/ (() => {
         const publisher = (instance[AnimationStreamLike_animation] =
             Publisher.create());
         const operator = Observable.switchMap((event) => pipe(isFunction(animation) ? animation(event) : animation, Observable.notify(publisher), Observable.ignoreElements(), Observable.subscribeOn(pauseableScheduler), Observable.startWith(true), Observable.endWith(false)), {
-            innerType: Observable.DeferredObservableWithSideEffectsType,
+            innerType: DeferredComputationWithSideEffectsType,
         });
         init(StreamMixin(), instance, operator, scheduler, options);
         init(DelegatingPauseableMixin, instance, pauseableScheduler);

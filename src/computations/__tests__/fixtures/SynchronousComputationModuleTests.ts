@@ -15,9 +15,10 @@ import * as Runnable from "../../Runnable.js";
 
 const SynchronousComputationModuleTests = <
   Type extends SynchronousComputationLike,
-  C extends Computation<Type>,
+  TComputation extends Computation<Type>,
 >(
-  m: DeferredComputationModule<Type, C> & SynchronousComputationModule<Type, C>,
+  m: DeferredComputationModule<Type, TComputation> &
+    SynchronousComputationModule<Type, TComputation>,
 ) =>
   describe(
     "SynchronousComputationModule",

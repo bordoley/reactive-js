@@ -2,6 +2,7 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
+  PureSynchronousComputationType,
 } from "../../../computations.js";
 import {
   DeferredObservableLike,
@@ -28,7 +29,7 @@ const Observable_switchMap: Observable.Signature["switchMap"] = (<TA, TB>(
       Observable_map(selector),
       Observable_switchAll<TB>(
         options as {
-          innerType: typeof Observable.PureSynchronousObservableType;
+          innerType: typeof PureSynchronousComputationType;
         },
       ),
     )) as Observable.Signature["switchMap"];

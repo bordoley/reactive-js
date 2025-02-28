@@ -33,11 +33,11 @@ Represents a deferred computation that is synchronously evaluated.
 
 ***
 
-### \[ComputationLike\_isPure\]
+### \[ComputationLike\_isPure\]?
 
-> **\[ComputationLike\_isPure\]**: `boolean`
+> `readonly` `optional` **\[ComputationLike\_isPure\]**: `boolean`
 
-#### Overrides
+#### Inherited from
 
 [`SynchronousComputationLike`](SynchronousComputationLike.md).[`[ComputationLike_isPure]`](SynchronousComputationLike.md#computationlike_ispure)
 

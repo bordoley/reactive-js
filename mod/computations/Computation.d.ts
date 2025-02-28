@@ -1,9 +1,9 @@
-import { Computation, ComputationLike, ComputationOf, DeferredComputationLike, DeferredComputationModule, MulticastComputationLike, PureComputationLike, PureComputationOperator, PureStatelessComputationModule, SynchronousComputationLike } from "../computations.js";
+import { Computation, ComputationLike, ComputationOf, ComputationOperator, DeferredComputationLike, DeferredComputationModule, MulticastComputationLike, PureComputationLike, PureStatelessComputationModule, SynchronousComputationLike } from "../computations.js";
 import { TypePredicate } from "../functions.js";
-export interface PickOperator<Type extends ComputationLike, C extends Computation<Type>> {
-    <T, TKeyOfT extends keyof T>(key: TKeyOfT): PureComputationOperator<Type, C, T, T[TKeyOfT]>;
-    <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(keyA: TKeyOfTA, keyB: TKeyOfTB): PureComputationOperator<Type, C, T, T[TKeyOfTA][TKeyOfTB]>;
-    <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA], TKeyOfTC extends keyof T[TKeyOfTA][TKeyOfTB]>(keyA: TKeyOfTA, keyB: TKeyOfTB, keyC: TKeyOfTC): PureComputationOperator<Type, C, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
+export interface PickOperator<Type extends ComputationLike, TComputation extends Computation<Type>> {
+    <T, TKeyOfT extends keyof T>(key: TKeyOfT): ComputationOperator<Type, TComputation, T, T[TKeyOfT]>;
+    <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(keyA: TKeyOfTA, keyB: TKeyOfTB): ComputationOperator<Type, TComputation, T, T[TKeyOfTA][TKeyOfTB]>;
+    <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA], TKeyOfTC extends keyof T[TKeyOfTA][TKeyOfTB]>(keyA: TKeyOfTA, keyB: TKeyOfTB, keyC: TKeyOfTC): ComputationOperator<Type, TComputation, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
 }
 interface Signature {
     areAllDeferred<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & DeferredComputationLike)[];
@@ -14,10 +14,10 @@ interface Signature {
     isMulticasted<TComputation extends ComputationLike>(computation: TComputation): computation is TComputation & MulticastComputationLike;
     isPure<TComputation extends ComputationLike>(computation: TComputation): computation is TComputation & PureComputationLike;
     isSynchronous<TComputation extends ComputationLike>(computation: TComputation): computation is TComputation & SynchronousComputationLike;
-    keepType<Type extends ComputationLike, C extends Computation<Type>>(keep: PureStatelessComputationModule<Type, C>["keep"]): <TA, TB>(predicate: TypePredicate<TA, TB>) => PureComputationOperator<Type, C, TA, TB>;
-    mapTo<Type extends ComputationLike, C extends Computation<Type>>(map: PureStatelessComputationModule<Type, C>["map"]): <T>(value: T) => PureComputationOperator<Type, C, unknown, T>;
-    pick<Type extends ComputationLike, C extends Computation<Type>>(map: PureStatelessComputationModule<Type, C>["map"]): PickOperator<Type, C>;
-    sequence<Type extends ComputationLike, C extends Computation<Type>>(generate: DeferredComputationModule<Type, C>["generate"]): (start: number) => ComputationOf<Type, C, number>;
+    keepType<Type extends ComputationLike, TComputation extends Computation<Type>>(keep: PureStatelessComputationModule<Type, TComputation>["keep"]): <TA, TB>(predicate: TypePredicate<TA, TB>) => ComputationOperator<Type, TComputation, TA, TB>;
+    mapTo<Type extends ComputationLike, TComputation extends Computation<Type>>(map: PureStatelessComputationModule<Type, TComputation>["map"]): <T>(value: T) => ComputationOperator<Type, TComputation, unknown, T>;
+    pick<Type extends ComputationLike, TComputation extends Computation<Type>>(map: PureStatelessComputationModule<Type, TComputation>["map"]): PickOperator<Type, TComputation>;
+    sequence<Type extends ComputationLike, TComputation extends Computation<Type>>(generate: DeferredComputationModule<Type, TComputation>["generate"]): (start: number) => ComputationOf<Type, TComputation, number>;
 }
 export declare const areAllDeferred: Signature["areAllDeferred"];
 export declare const areAllMulticasted: Signature["areAllMulticasted"];

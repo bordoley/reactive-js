@@ -4,15 +4,15 @@
 
 [Reactive-JS](../../../README.md) / [computations/Computation](../README.md) / PickOperator
 
-# Interface: PickOperator()\<Type, C\>
+# Interface: PickOperator()\<Type, TComputation\>
 
 ## Type Parameters
 
 • **Type** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
 
-• **C** *extends* [`Computation`](../../interfaces/Computation.md)\<`Type`\>
+• **TComputation** *extends* [`Computation`](../../interfaces/Computation.md)\<`Type`\>
 
-> **PickOperator**\<`T`, `TKeyOfT`\>(`key`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\[`TKeyOfT`\]\>
+> **PickOperator**\<`T`, `TKeyOfT`\>(`key`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\[`TKeyOfT`\]\>
 
 ## Type Parameters
 
@@ -28,9 +28,9 @@
 
 ## Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\[`TKeyOfT`\]\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\[`TKeyOfT`\]\>
 
-> **PickOperator**\<`T`, `TKeyOfTA`, `TKeyOfTB`\>(`keyA`, `keyB`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\>
+> **PickOperator**\<`T`, `TKeyOfTA`, `TKeyOfTB`\>(`keyA`, `keyB`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\>
 
 ## Type Parameters
 
@@ -52,9 +52,9 @@
 
 ## Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\>
 
-> **PickOperator**\<`T`, `TKeyOfTA`, `TKeyOfTB`, `TKeyOfTC`\>(`keyA`, `keyB`, `keyC`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\[`TKeyOfTC`\]\>
+> **PickOperator**\<`T`, `TKeyOfTA`, `TKeyOfTB`, `TKeyOfTC`\>(`keyA`, `keyB`, `keyC`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\[`TKeyOfTC`\]\>
 
 ## Type Parameters
 
@@ -82,4 +82,4 @@
 
 ## Returns
 
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`Type`, `C`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\[`TKeyOfTC`\]\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\[`TKeyOfTC`\]\>

@@ -20,15 +20,15 @@ import {
 
 const PureStatelessComputationModuleTests = <
   Type extends ComputationLike,
-  C extends Computation<Type>,
+  TComputation extends Computation<Type>,
 >(
-  m: PureStatelessComputationModule<Type, C> & {
+  m: PureStatelessComputationModule<Type, TComputation> & {
     fromReadonlyArray: <T>() => Function1<
       ReadonlyArray<T>,
-      ComputationOf<Type, C, T>
+      ComputationOf<Type, TComputation, T>
     >;
     toReadonlyArray: <T>() => Function1<
-      ComputationOf<Type, C, T>,
+      ComputationOf<Type, TComputation, T>,
       ReadonlyArray<T>
     >;
   },

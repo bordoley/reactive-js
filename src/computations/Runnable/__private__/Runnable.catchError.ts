@@ -25,7 +25,7 @@ class CatchErrorRunnable<T> implements RunnableLike<T> {
       | SideEffect1<Error>
       | Function1<Error, RunnableLike<T>>,
   ) {
-    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+    this[ComputationLike_isPure] = s[ComputationLike_isPure] ?? true;
   }
 
   [RunnableLike_eval](sink: SinkLike<T>): void {

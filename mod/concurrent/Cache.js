@@ -5,6 +5,7 @@ import { include, init, mixInstanceFactory, props, } from "../__internal__/mixin
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
 import { keySet } from "../collections.js";
+import { DeferredComputationWithSideEffectsType } from "../computations.js";
 import { CacheLike_get, ContinuationContextLike_yield, SchedulerLike_schedule, } from "../concurrent.js";
 import { EventListenerLike_notify } from "../events.js";
 import { alwaysNone, bindMethod, identity, isNone, isSome, newInstance, none, pipe, returns, tuple, } from "../functions.js";
@@ -47,7 +48,7 @@ export const create = /*@__PURE__*/ (() => {
                     ? pipe(persistentStore.load(keys), Observable.map((persistedValues) => tuple(updaters, pipe(values, ReadonlyObjectMap.union(persistedValues)))))
                     : pipe(next, Observable.fromValue());
             }, {
-                innerType: Observable.DeferredObservableWithSideEffectsType,
+                innerType: DeferredComputationWithSideEffectsType,
             })
             : identity, Observable.map(([updaters, values]) => pipe(updaters, ReadonlyObjectMap.map((updater, k) => 
         // This could be the cached value or the value
@@ -71,7 +72,7 @@ export const create = /*@__PURE__*/ (() => {
             instance[CacheStream_scheduleCleanup](key);
         })), x => x, isSome(persistentStore)
             ? Observable.concatMap(bindMethod(persistentStore, "store"), {
-                innerType: Observable.DeferredObservableWithSideEffectsType,
+                innerType: DeferredComputationWithSideEffectsType,
             })
             : Observable.ignoreElements(), Observable.subscribe(scheduler, options));
         let cleanupJob = Disposable.disposed;

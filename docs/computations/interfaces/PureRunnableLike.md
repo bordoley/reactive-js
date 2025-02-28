@@ -28,9 +28,9 @@ Represents a deferred computation that is synchronously evaluated.
 
 ***
 
-### \[ComputationLike\_isPure\]
+### \[ComputationLike\_isPure\]?
 
-> `readonly` **\[ComputationLike\_isPure\]**: `true`
+> `readonly` `optional` **\[ComputationLike\_isPure\]**: `true`
 
 #### Overrides
 
