@@ -1,4 +1,4 @@
-import { Computation, ComputationWithSideEffectsModule, Computation_T, Computation_type, DeferredComputationModule, IterableLike, IterableWithSideEffectsLike, PureStatelessComputationModule, SynchronousComputationModule } from "../computations.js";
+import { Computation, ComputationWithSideEffectsModule, Computation_T, Computation_type, DeferredComputationModule, IterableLike, IterableWithSideEffectsLike, StatelessComputationModule, SynchronousComputationModule } from "../computations.js";
 import { Tuple2, Tuple3, Tuple4 } from "../functions.js";
 /**
  * @noInheritDoc
@@ -9,7 +9,7 @@ export interface IterableComputation extends Computation<IterableLike> {
 export interface IterableWithSideEffectsComputation extends Computation<IterableWithSideEffectsLike> {
     readonly [Computation_type]?: IterableWithSideEffectsLike<this[typeof Computation_T]>;
 }
-export interface IterableModule extends PureStatelessComputationModule<IterableLike, IterableComputation>, DeferredComputationModule<IterableLike, IterableComputation>, ComputationWithSideEffectsModule<IterableLike, IterableComputation, IterableWithSideEffectsLike, IterableWithSideEffectsComputation>, SynchronousComputationModule<IterableLike, IterableComputation> {
+export interface IterableModule extends StatelessComputationModule<IterableLike, IterableComputation>, DeferredComputationModule<IterableLike, IterableComputation>, ComputationWithSideEffectsModule<IterableLike, IterableComputation, IterableWithSideEffectsLike, IterableWithSideEffectsComputation>, SynchronousComputationModule<IterableLike, IterableComputation> {
     zip<TA, TB>(a: Iterable<TA>, b: Iterable<TB>): Iterable<Tuple2<TA, TB>>;
     zip<TA, TB, TC>(a: Iterable<TA>, b: Iterable<TB>, c: Iterable<TC>): Iterable<Tuple3<TA, TB, TC>>;
     zip<TA, TB, TC, TD>(a: Iterable<TA>, b: Iterable<TB>, c: Iterable<TC>, d: Iterable<TD>): Iterable<Tuple4<TA, TB, TC, TD>>;

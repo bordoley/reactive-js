@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`PureStatelessComputationModule`](../../interfaces/PureStatelessComputationModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputation`](IterableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputation`](IterableComputation.md)\>.[`ComputationWithSideEffectsModule`](../../interfaces/ComputationWithSideEffectsModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputation`](IterableComputation.md), [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md), [`IterableWithSideEffectsComputation`](IterableWithSideEffectsComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputation`](IterableComputation.md)\>
+- [`StatelessComputationModule`](../../interfaces/StatelessComputationModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputation`](IterableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputation`](IterableComputation.md)\>.[`ComputationWithSideEffectsModule`](../../interfaces/ComputationWithSideEffectsModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputation`](IterableComputation.md), [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md), [`IterableWithSideEffectsComputation`](IterableWithSideEffectsComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputation`](IterableComputation.md)\>
 
 ## Methods
 
@@ -380,7 +380,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Inherited from
 
-[`PureStatelessComputationModule`](../../interfaces/PureStatelessComputationModule.md).[`keep`](../../interfaces/PureStatelessComputationModule.md#keep)
+[`StatelessComputationModule`](../../interfaces/StatelessComputationModule.md).[`keep`](../../interfaces/StatelessComputationModule.md#keep)
 
 ***
 
@@ -424,7 +424,7 @@ readonly \[`Iterable`\<`T`, `any`, `any`\> & `Pick`\<[`IterableLike`](../../inte
 
 #### Inherited from
 
-[`PureStatelessComputationModule`](../../interfaces/PureStatelessComputationModule.md).[`map`](../../interfaces/PureStatelessComputationModule.md#map)
+[`StatelessComputationModule`](../../interfaces/StatelessComputationModule.md).[`map`](../../interfaces/StatelessComputationModule.md#map)
 
 ***
 

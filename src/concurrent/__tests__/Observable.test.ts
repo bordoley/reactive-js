@@ -21,8 +21,8 @@ import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as Computation from "../../computations/Computation.js";
 import ComputationWithSideEffectsModuleTests from "../../computations/__tests__/fixtures/ComputationWithSideEffectsModuleTests.js";
 import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
-import PureStatefulComputationModuleTests from "../../computations/__tests__/fixtures/PureStatefulComputationModuleTests.js";
-import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
+import StatefulComputationModuleTests from "../../computations/__tests__/fixtures/StatefulComputationModuleTests.js";
+import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/StatelessComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
 import {
   ComputationLike_isDeferred,
@@ -32,9 +32,9 @@ import {
   DeferredComputationModule,
   DeferredComputationWithSideEffectsType,
   PureDeferredComputationType,
-  PureStatefulComputationModule,
-  PureStatelessComputationModule,
   PureSynchronousComputationType,
+  StatefulComputationModule,
+  StatelessComputationModule,
   SynchronousComputationModule,
   SynchronousComputationWithSideEffectsType,
 } from "../../computations.js";
@@ -106,6 +106,7 @@ import {
   __stream,
 } from "../Observable/effects.js";
 import * as Observable from "../Observable.js";
+import { SynchronousObservableComputation } from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
@@ -496,47 +497,47 @@ testModule(
   ),
   DeferredComputationModuleTests<
     SynchronousObservableLike,
-    Observable.SynchronousObservableComputation
+    SynchronousObservableComputation
   >(
     Observable as DeferredComputationModule<
       SynchronousObservableLike,
-      Observable.SynchronousObservableComputation
+      SynchronousObservableComputation
     > &
       SynchronousComputationModule<
         SynchronousObservableLike,
-        Observable.SynchronousObservableComputation
+        SynchronousObservableComputation
       >,
   ),
   PureStatelesssComputationModuleTests(
-    Observable as PureStatelessComputationModule<
+    Observable as StatelessComputationModule<
       SynchronousObservableLike,
-      Observable.SynchronousObservableComputation
+      SynchronousObservableComputation
     > &
       DeferredComputationModule<
         SynchronousObservableLike,
-        Observable.SynchronousObservableComputation
+        SynchronousObservableComputation
       > &
       SynchronousComputationModule<
         SynchronousObservableLike,
-        Observable.SynchronousObservableComputation
+        SynchronousObservableComputation
       >,
   ),
-  PureStatefulComputationModuleTests(
-    Observable as PureStatefulComputationModule<
+  StatefulComputationModuleTests(
+    Observable as StatefulComputationModule<
       SynchronousObservableLike,
-      Observable.SynchronousObservableComputation
+      SynchronousObservableComputation
     > &
       DeferredComputationModule<
         SynchronousObservableLike,
-        Observable.SynchronousObservableComputation
+        SynchronousObservableComputation
       > &
       SynchronousComputationModule<
         SynchronousObservableLike,
-        Observable.SynchronousObservableComputation
+        SynchronousObservableComputation
       > &
       ComputationWithSideEffectsModule<
         SynchronousObservableLike,
-        Observable.SynchronousObservableComputation,
+        SynchronousObservableComputation,
         SynchronousObservableWithSideEffectsLike,
         Observable.SynchronousObservableWithSideEffectsComputation
       >,
@@ -544,30 +545,30 @@ testModule(
   ComputationWithSideEffectsModuleTests(
     Observable as DeferredComputationModule<
       SynchronousObservableLike,
-      Observable.SynchronousObservableComputation
+      SynchronousObservableComputation
     > &
       ComputationWithSideEffectsModule<
         SynchronousObservableLike,
-        Observable.SynchronousObservableComputation,
+        SynchronousObservableComputation,
         SynchronousObservableWithSideEffectsLike,
         Observable.SynchronousObservableWithSideEffectsComputation
       > &
       SynchronousComputationModule<
         SynchronousObservableLike,
-        Observable.SynchronousObservableComputation
+        SynchronousObservableComputation
       >,
   ),
   SynchronousComputationModuleTests<
     SynchronousObservableLike,
-    Observable.SynchronousObservableComputation
+    SynchronousObservableComputation
   >(
     Observable as DeferredComputationModule<
       SynchronousObservableLike,
-      Observable.SynchronousObservableComputation
+      SynchronousObservableComputation
     > &
       SynchronousComputationModule<
         SynchronousObservableLike,
-        Observable.SynchronousObservableComputation
+        SynchronousObservableComputation
       >,
   ),
   describe(

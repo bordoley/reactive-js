@@ -8,7 +8,7 @@ import { pipeLazy } from "../../functions.js";
 import * as Iterable from "../Iterable.js";
 import ComputationWithSideEffectsModuleTests from "./fixtures/ComputationWithSideEffectsModuleTests.js";
 import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
-import PureStatelesssComputationModuleTests from "./fixtures/PureStatelessComputationModuleTests.js";
+import PureStatelesssComputationModuleTests from "./fixtures/StatelessComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 
 testModule(

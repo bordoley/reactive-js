@@ -9,7 +9,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
-import PureStatelessComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
+import StatelessComputationModuleTests from "../../computations/__tests__/fixtures/StatelessComputationModuleTests.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
@@ -41,7 +41,7 @@ import * as EventSource from "../EventSource.js";
 
 testModule(
   "EventSource",
-  PureStatelessComputationModuleTests({
+  StatelessComputationModuleTests({
     ...EventSource,
     fromReadonlyArray<T>() {
       return (arr: readonly T[]) => ({

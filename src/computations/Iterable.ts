@@ -10,7 +10,7 @@ import {
   DeferredComputationModule,
   IterableLike,
   IterableWithSideEffectsLike,
-  PureStatelessComputationModule,
+  StatelessComputationModule,
   SynchronousComputationModule,
 } from "../computations.js";
 import {
@@ -56,7 +56,7 @@ export interface IterableWithSideEffectsComputation
 }
 
 export interface IterableModule
-  extends PureStatelessComputationModule<IterableLike, IterableComputation>,
+  extends StatelessComputationModule<IterableLike, IterableComputation>,
     DeferredComputationModule<IterableLike, IterableComputation>,
     ComputationWithSideEffectsModule<
       IterableLike,

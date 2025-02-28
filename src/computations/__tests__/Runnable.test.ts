@@ -3,15 +3,15 @@ import { RunnableLike } from "../../computations.js";
 import * as Runnable from "../Runnable.js";
 import ComputationWithSideEffectsModuleTests from "./fixtures/ComputationWithSideEffectsModuleTests.js";
 import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
-import PureStatefulComputationModuleTests from "./fixtures/PureStatefulComputationModuleTests.js";
-import PureStatelessComputationModuleTests from "./fixtures/PureStatelessComputationModuleTests.js";
+import StatefulComputationModuleTests from "./fixtures/StatefulComputationModuleTests.js";
+import StatelessComputationModuleTests from "./fixtures/StatelessComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 
 testModule(
   "Runnable",
-  PureStatelessComputationModuleTests(Runnable),
+  StatelessComputationModuleTests(Runnable),
   DeferredComputationModuleTests(Runnable),
-  PureStatefulComputationModuleTests(Runnable),
+  StatefulComputationModuleTests(Runnable),
   ComputationWithSideEffectsModuleTests(Runnable),
   SynchronousComputationModuleTests<RunnableLike, Runnable.RunnableComputation>(
     Runnable,

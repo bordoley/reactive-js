@@ -36,6 +36,7 @@ import {
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Observable from "../Observable.js";
+import { PureSynchronousObservableComputation } from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
@@ -155,7 +156,7 @@ testModule(
             pipe(
               Computation.sequence<
                 PureSynchronousObservableLike,
-                Observable.PureSynchronousObservableComputation
+                PureSynchronousObservableComputation
               >(Observable.generate)(state + 10),
               Observable.map(x => (_: number) => x),
               Observable.takeFirst({ count: 2 }),

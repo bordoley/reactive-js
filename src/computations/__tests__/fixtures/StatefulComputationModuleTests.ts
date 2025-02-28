@@ -12,7 +12,7 @@ import {
   ComputationWithSideEffectsLike,
   ComputationWithSideEffectsModule,
   DeferredComputationModule,
-  PureStatefulComputationModule,
+  StatefulComputationModule,
   SynchronousComputationLike,
   SynchronousComputationModule,
 } from "../../../computations.js";
@@ -25,14 +25,14 @@ import {
   tuple,
 } from "../../../functions.js";
 
-const PureStatefulComputationModuleTests = <
+const StatefulComputationModuleTests = <
   Type extends SynchronousComputationLike,
   TComputation extends Computation<Type>,
   TypeWithSideEffects extends ComputationWithSideEffectsLike & Type,
   TComputationWithSideEffects extends Computation<TypeWithSideEffects> &
     TComputation,
 >(
-  m: PureStatefulComputationModule<Type, TComputation> &
+  m: StatefulComputationModule<Type, TComputation> &
     DeferredComputationModule<Type, TComputation> &
     SynchronousComputationModule<Type, TComputation> &
     ComputationWithSideEffectsModule<
@@ -43,7 +43,7 @@ const PureStatefulComputationModuleTests = <
     >,
 ) =>
   describe(
-    "PureStatefulComputationModule",
+    "StatefulComputationModule",
     describe(
       "buffer",
       test(
@@ -366,4 +366,4 @@ const PureStatefulComputationModuleTests = <
     ),
   );
 
-export default PureStatefulComputationModuleTests;
+export default StatefulComputationModuleTests;

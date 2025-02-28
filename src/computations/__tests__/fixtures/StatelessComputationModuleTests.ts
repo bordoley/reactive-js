@@ -8,7 +8,7 @@ import {
   Computation,
   ComputationLike,
   ComputationOf,
-  PureStatelessComputationModule,
+  StatelessComputationModule,
 } from "../../../computations.js";
 import {
   Function1,
@@ -18,11 +18,11 @@ import {
   pipeLazy,
 } from "../../../functions.js";
 
-const PureStatelessComputationModuleTests = <
+const StatelessComputationModuleTests = <
   Type extends ComputationLike,
   TComputation extends Computation<Type>,
 >(
-  m: PureStatelessComputationModule<Type, TComputation> & {
+  m: StatelessComputationModule<Type, TComputation> & {
     fromReadonlyArray: <T>() => Function1<
       ReadonlyArray<T>,
       ComputationOf<Type, TComputation, T>
@@ -34,7 +34,7 @@ const PureStatelessComputationModuleTests = <
   },
 ) =>
   describe(
-    "PureStatelessComputationModule",
+    "StatelessComputationModule",
     describe(
       "keep",
       test(
@@ -98,4 +98,4 @@ const PureStatelessComputationModuleTests = <
     ),
   );
 
-export default PureStatelessComputationModuleTests;
+export default StatelessComputationModuleTests;

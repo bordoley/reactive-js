@@ -9,7 +9,7 @@ import {
   returns,
   tuple,
 } from "../../../functions.js";
-import type * as Observable from "../../Observable.js";
+import type { PureSynchronousObservableComputation } from "../../Observable.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
 import Observable_scan from "./Observable.scan.js";
@@ -49,7 +49,7 @@ const Observable_spring = (options?: {
     ),
     Computation.pick<
       PureSynchronousObservableLike,
-      Observable.PureSynchronousObservableComputation
+      PureSynchronousObservableComputation
     >(Observable_map)(2),
     Observable_takeWhile(isNotEqualTo(1), {
       inclusive: true,

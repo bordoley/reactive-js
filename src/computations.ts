@@ -121,7 +121,7 @@ export type ComputationWithSideEffectsOperator<
 >;
 
 export interface DeferredComputationModule<
-  Type extends ComputationLike,
+  Type extends DeferredComputationLike,
   TComputation extends Computation<Type>,
 > {
   catchError<T>(
@@ -248,7 +248,7 @@ export interface ComputationWithSideEffectsModule<
   >;
 }
 
-export interface PureStatelessComputationModule<
+export interface StatelessComputationModule<
   Type extends ComputationLike,
   TComputation extends Computation<Type>,
 > {
@@ -284,8 +284,8 @@ export interface SynchronousComputationModule<
 }
 
 // FIXME: Does using these operator on non-deferred Types make sense?
-export interface PureStatefulComputationModule<
-  Type extends ComputationLike,
+export interface StatefulComputationModule<
+  Type extends DeferredComputationLike,
   TComputation extends Computation<Type>,
 > {
   buffer<T>(options?: {

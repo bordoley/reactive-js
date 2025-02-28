@@ -2,7 +2,7 @@ import {
   Computation,
   Computation_T,
   Computation_type,
-  PureStatelessComputationModule,
+  StatelessComputationModule,
 } from "../computations.js";
 import { EventListenerLike, EventSourceLike } from "../events.js";
 import { Function1, SideEffect1 } from "../functions.js";
@@ -27,10 +27,7 @@ export interface EventSourceComputation extends Computation<EventSourceLike> {
  * @noInheritDoc
  */
 export interface EventSourceModule
-  extends PureStatelessComputationModule<
-    EventSourceLike,
-    EventSourceComputation
-  > {
+  extends StatelessComputationModule<EventSourceLike, EventSourceComputation> {
   addEventHandler<T>(
     handler: SideEffect1<T>,
   ): Function1<EventSourceLike<T>, DisposableLike>;
