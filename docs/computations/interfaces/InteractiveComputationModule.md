@@ -34,11 +34,11 @@
 
 ###### a
 
-`Iterable`\<`TA`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TA`\>
 
 ###### b
 
-`Iterable`\<`TB`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TB`\>
 
 ##### Returns
 
@@ -60,15 +60,15 @@
 
 ###### a
 
-`Iterable`\<`TA`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TA`\>
 
 ###### b
 
-`Iterable`\<`TB`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TB`\>
 
 ###### c
 
-`Iterable`\<`TC`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TC`\>
 
 ##### Returns
 
@@ -92,19 +92,19 @@
 
 ###### a
 
-`Iterable`\<`TA`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TA`\>
 
 ###### b
 
-`Iterable`\<`TB`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TB`\>
 
 ###### c
 
-`Iterable`\<`TC`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TC`\>
 
 ###### d
 
-`Iterable`\<`TD`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TD`\>
 
 ##### Returns
 

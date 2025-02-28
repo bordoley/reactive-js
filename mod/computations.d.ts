@@ -55,6 +55,13 @@ export type ComputationOf<Type extends ComputationLike, TComputation extends Com
 };
 export type ComputationOperator<Type extends ComputationLike, TComputation extends Computation<Type>, TA, TB> = Function1<ComputationOf<Type, TComputation, TA>, ComputationOf<Type, TComputation, TB>>;
 export type ComputationWithSideEffectsOperator<Type extends ComputationLike, TComputation extends Computation<Type>, TypeWithSideEffects extends ComputationWithSideEffectsLike & Type, TComputationWithSideEffects extends Computation<TypeWithSideEffects>, TA, TB> = Function1<ComputationOf<Type, TComputation, TA>, ComputationOf<TypeWithSideEffects, TComputationWithSideEffects, TB>>;
+export interface ComputationModule<Type extends ComputationLike, TComputation extends Computation<Type>> {
+    keep<T>(predicate: Predicate<T>): ComputationOperator<Type, TComputation, T, T>;
+    map<TA, TB>(selector: Function1<TA, TB>): ComputationOperator<Type, TComputation, TA, TB>;
+}
+export interface ComputationWithSideEffectsModule<Type extends ComputationLike, TComputation extends Computation<Type>, TypeWithSideEffects extends ComputationWithSideEffectsLike & Type, ComputationWithSideEffect extends Computation<TypeWithSideEffects>> {
+    forEach<T>(sideEffect: SideEffect1<T>): ComputationWithSideEffectsOperator<Type, TComputation, TypeWithSideEffects, ComputationWithSideEffect, T, T>;
+}
 export interface DeferredComputationModule<Type extends DeferredComputationLike, TComputation extends Computation<Type>> {
     catchError<T>(onError: SideEffect1<Error>): ComputationOperator<Type, TComputation, T, T>;
     catchError<T>(onError: Function1<Error, ComputationOf<Type, TComputation, T>>): ComputationOperator<Type, TComputation, T, T>;
@@ -94,13 +101,6 @@ export interface DeferredComputationModule<Type extends DeferredComputationLike,
     }): ComputationOperator<Type, TComputation, T, T>;
     throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): ComputationOperator<Type, TComputation, T, T>;
 }
-export interface ComputationWithSideEffectsModule<Type extends ComputationLike, TComputation extends Computation<Type>, TypeWithSideEffects extends ComputationWithSideEffectsLike & Type, ComputationWithSideEffect extends Computation<TypeWithSideEffects>> {
-    forEach<T>(sideEffect: SideEffect1<T>): ComputationWithSideEffectsOperator<Type, TComputation, TypeWithSideEffects, ComputationWithSideEffect, T, T>;
-}
-export interface ComputationModule<Type extends ComputationLike, TComputation extends Computation<Type>> {
-    keep<T>(predicate: Predicate<T>): ComputationOperator<Type, TComputation, T, T>;
-    map<TA, TB>(selector: Function1<TA, TB>): ComputationOperator<Type, TComputation, TA, TB>;
-}
 export interface SynchronousComputationModule<Type extends SynchronousComputationLike, TComputation extends Computation<Type>> {
     last<T>(): Function1<ComputationOf<Type, TComputation, T>, Optional<T>>;
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ComputationOf<Type, TComputation, T>, TAcc>;
@@ -108,9 +108,9 @@ export interface SynchronousComputationModule<Type extends SynchronousComputatio
     toReadonlyArray<T>(): Function1<ComputationOf<Type, TComputation, T>, ReadonlyArray<T>>;
 }
 export interface InteractiveComputationModule<Type extends DeferredComputationLike, TComputation extends Computation<Type>> {
-    zip<TA, TB>(a: Iterable<TA>, b: Iterable<TB>): ComputationOf<Type, TComputation, Tuple2<TA, TB>>;
-    zip<TA, TB, TC>(a: Iterable<TA>, b: Iterable<TB>, c: Iterable<TC>): ComputationOf<Type, TComputation, Tuple3<TA, TB, TC>>;
-    zip<TA, TB, TC, TD>(a: Iterable<TA>, b: Iterable<TB>, c: Iterable<TC>, d: Iterable<TD>): ComputationOf<Type, TComputation, Tuple4<TA, TB, TC, TD>>;
+    zip<TA, TB>(a: ComputationOf<Type, TComputation, TA>, b: ComputationOf<Type, TComputation, TB>): ComputationOf<Type, TComputation, Tuple2<TA, TB>>;
+    zip<TA, TB, TC>(a: ComputationOf<Type, TComputation, TA>, b: ComputationOf<Type, TComputation, TB>, c: ComputationOf<Type, TComputation, TC>): ComputationOf<Type, TComputation, Tuple3<TA, TB, TC>>;
+    zip<TA, TB, TC, TD>(a: ComputationOf<Type, TComputation, TA>, b: ComputationOf<Type, TComputation, TB>, c: ComputationOf<Type, TComputation, TC>, d: ComputationOf<Type, TComputation, TD>): ComputationOf<Type, TComputation, Tuple4<TA, TB, TC, TD>>;
 }
 export interface ReactiveComputationModule<Type extends DeferredComputationLike, TComputation extends Computation<Type>> {
     buffer<T>(options?: {
