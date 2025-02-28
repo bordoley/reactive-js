@@ -17,7 +17,7 @@ import * as Iterable from "../../../computations/Iterable.js";
 import {
   AnimationGroupStreamLike,
   PauseableLike_resume,
-  PureRunnableLike,
+  PureSynchronousObservableLike,
   SchedulerLike,
   StreamableLike,
   StreamableLike_stream,
@@ -42,7 +42,8 @@ import StreamMixin from "../../__mixins__/StreamMixin.js";
 const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
   animationGroup: ReadonlyObjectMapLike<
     TKey,
-    Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
+    | Function1<TEvent, PureSynchronousObservableLike<T>>
+    | PureSynchronousObservableLike<T>
   >,
   scheduler: SchedulerLike,
   animationScheduler: SchedulerLike,
@@ -77,7 +78,8 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
         >,
       animationGroup: ReadonlyObjectMapLike<
         TKey,
-        Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
+        | Function1<TEvent, PureSynchronousObservableLike<T>>
+        | PureSynchronousObservableLike<T>
       >,
       scheduler: SchedulerLike,
       animationScheduler: SchedulerLike,
@@ -168,7 +170,8 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] = (<
 >(
   animationGroup: ReadonlyObjectMapLike<
     TKey,
-    Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
+    | Function1<TEvent, PureSynchronousObservableLike<T>>
+    | PureSynchronousObservableLike<T>
   >,
   creationOptions?: {
     readonly animationScheduler?: SchedulerLike;

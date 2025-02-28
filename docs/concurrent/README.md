@@ -24,13 +24,13 @@
 - [PauseableSchedulerLike](interfaces/PauseableSchedulerLike.md)
 - [PureDeferredObservableLike](interfaces/PureDeferredObservableLike.md)
 - [PureObservableLike](interfaces/PureObservableLike.md)
-- [PureRunnableLike](interfaces/PureRunnableLike.md)
-- [RunnableLike](interfaces/RunnableLike.md)
-- [RunnableWithSideEffectsLike](interfaces/RunnableWithSideEffectsLike.md)
+- [PureSynchronousObservableLike](interfaces/PureSynchronousObservableLike.md)
 - [SchedulerLike](interfaces/SchedulerLike.md)
 - [StreamableLike](interfaces/StreamableLike.md)
 - [StreamLike](interfaces/StreamLike.md)
 - [SubjectLike](interfaces/SubjectLike.md)
+- [SynchronousObservableLike](interfaces/SynchronousObservableLike.md)
+- [SynchronousObservableWithSideEffectsLike](interfaces/SynchronousObservableWithSideEffectsLike.md)
 - [VirtualTimeSchedulerLike](interfaces/VirtualTimeSchedulerLike.md)
 
 ## Type Aliases

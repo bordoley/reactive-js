@@ -136,7 +136,7 @@ testModule(
           Observable.fromReadonlyArray(),
           Observable.keep(x => x !== "xyz"),
           Observable.encodeUtf8(),
-          Flowable.fromRunnable(),
+          Flowable.fromSynchronousObservable(),
           FlowableStream.writeTo(writable),
           Observable.lastAsync(scheduler),
         );
@@ -162,7 +162,7 @@ testModule(
         ["abc", "defg"],
         Observable.fromReadonlyArray(),
         Observable.encodeUtf8(),
-        Flowable.fromRunnable(),
+        Flowable.fromSynchronousObservable(),
         FlowableStream.writeTo(writable),
         Observable.lastAsync(scheduler),
         expectPromiseToThrow,
@@ -194,7 +194,7 @@ testModule(
         ["abc", "defg"],
         Observable.fromReadonlyArray(),
         Observable.encodeUtf8(),
-        Flowable.fromRunnable(),
+        Flowable.fromSynchronousObservable(),
         FlowableStream.writeTo(compressionPipeline),
         Observable.lastAsync(scheduler),
       );

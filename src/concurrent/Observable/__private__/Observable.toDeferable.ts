@@ -7,7 +7,7 @@ import {
   SinkLike_isComplete,
   SinkLike_next,
 } from "../../../computations.js";
-import { RunnableLike } from "../../../concurrent.js";
+import { SynchronousObservableLike } from "../../../concurrent.js";
 import { bindMethod, newInstance, pipe } from "../../../functions.js";
 import { BackpressureStrategy } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -15,10 +15,10 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_run from "./Observable.run.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 
-class RunnableDeferable<T> implements DeferableLike<T> {
+class SynchronousObservableDeferable<T> implements DeferableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
   constructor(
-    private readonly obs: RunnableLike<T>,
+    private readonly obs: SynchronousObservableLike<T>,
     private readonly options?: {
       readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
@@ -46,7 +46,7 @@ const Observable_toDeferable: Observable.Signature["toDeferable"] =
     readonly capacity?: number;
     readonly maxMicroTaskTicks?: number;
   }) =>
-  (runnable: RunnableLike<T>) =>
-    newInstance(RunnableDeferable, runnable, options);
+  (runnable: SynchronousObservableLike<T>) =>
+    newInstance(SynchronousObservableDeferable, runnable, options);
 
 export default Observable_toDeferable;

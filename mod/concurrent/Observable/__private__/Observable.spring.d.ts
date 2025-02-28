@@ -1,7 +1,7 @@
-import { PureRunnableLike } from "../../../concurrent.js";
+import { PureSynchronousObservableLike } from "../../../concurrent.js";
 declare const Observable_spring: (options?: {
     readonly stiffness?: number;
     readonly damping?: number;
     readonly precision?: number;
-}) => PureRunnableLike<number>;
+}) => PureSynchronousObservableLike<number>;
 export default Observable_spring;

@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **concatMany**\<`T`\>(`observables`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+> **concatMany**\<`T`\>(`observables`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ### Type Parameters
 
@@ -18,11 +18,11 @@
 
 #### observables
 
-readonly [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>[]
+readonly [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>[]
 
 ### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ## Call Signature
 
@@ -44,7 +44,7 @@ readonly [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableL
 
 ## Call Signature
 
-> **concatMany**\<`T`\>(`observables`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>
+> **concatMany**\<`T`\>(`observables`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 ### Type Parameters
 
@@ -54,11 +54,11 @@ readonly [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableL
 
 #### observables
 
-readonly [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>[]
+readonly [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>[]
 
 ### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 ## Call Signature
 

@@ -49,7 +49,7 @@ import {
   ComputeContext_observer,
   assertCurrentContext,
 } from "./__private__/Observable.computeWithConfig.js";
-import Observable_createPureRunnableWithSideEffects from "./__private__/Observable.createRunnableWithSideEffects.js";
+import Observable_createSynchronousObservableWithSideEffects from "./__private__/Observable.createSynchronousObservableWithSideEffects.js";
 
 interface __Memo {
   __memo<T>(fn: Factory<T>): T;
@@ -163,7 +163,7 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
       false,
       deferSideEffect,
       observableConfig[ComputationLike_isSynchronous]
-        ? Observable_createPureRunnableWithSideEffects
+        ? Observable_createSynchronousObservableWithSideEffects
         : Observable.create,
       f,
       ...args,

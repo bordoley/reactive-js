@@ -12,7 +12,7 @@
 
 ## Extended by
 
-- [`PureRunnableLike`](PureRunnableLike.md)
+- [`PureSynchronousObservableLike`](PureSynchronousObservableLike.md)
 
 ## Type Parameters
 

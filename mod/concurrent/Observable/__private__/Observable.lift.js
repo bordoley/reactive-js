@@ -35,14 +35,14 @@ const Observable_lift = ((config) => (operator) => (source) => {
     const isDeferred = (sourceIsMulticasted && !isStateless) ||
         (config[ComputationLike_isDeferred] &&
             source[ComputationLike_isDeferred]);
-    const isRunnable = config[ComputationLike_isSynchronous] &&
+    const isSynchronousObservable = config[ComputationLike_isSynchronous] &&
         source[ComputationLike_isSynchronous];
     const isPure = !isDeferred ||
         (config[ComputationLike_isPure] && source[ComputationLike_isPure]);
     const liftedConfig = {
         [ComputationLike_isDeferred]: isDeferred,
         [ComputationLike_isPure]: isPure,
-        [ComputationLike_isSynchronous]: isRunnable,
+        [ComputationLike_isSynchronous]: isSynchronousObservable,
     };
     return createLiftedObservable(sourceSource, allFunctions, liftedConfig);
 });

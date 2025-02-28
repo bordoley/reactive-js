@@ -115,7 +115,7 @@ class ComputeContext {
         if (__DEV__) {
             raiseIf((this[ComputeContext_observableConfig][ComputationLike_isSynchronous] ??
                 true) &&
-                !observable[ComputationLike_isSynchronous], "cannot observe a non-runnable observable in a Runnable computation");
+                !observable[ComputationLike_isSynchronous], "cannot observe a non-runnable observable in a SynchronousObservable computation");
         }
         const effect = shouldAwait
             ? validateComputeEffect(this, Await)

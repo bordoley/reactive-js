@@ -1,4 +1,4 @@
-import { RunnableLike } from "../../../concurrent.js";
+import { SynchronousObservableLike } from "../../../concurrent.js";
 import { Factory, Reducer, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -6,7 +6,7 @@ import Observable_run from "./Observable.run.js";
 
 const Observable_reduce: Observable.Signature["reduce"] =
   <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
-  (runnable: RunnableLike<T>) => {
+  (runnable: SynchronousObservableLike<T>) => {
     let acc = initialValue();
 
     pipe(

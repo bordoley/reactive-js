@@ -6,7 +6,7 @@
 
 # Function: keyFrame()
 
-> **keyFrame**(`duration`, `options`?): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`number`\>
+> **keyFrame**(`duration`, `options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
 
 ## Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`number`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>

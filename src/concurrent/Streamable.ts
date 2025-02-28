@@ -4,7 +4,7 @@ import {
   AnimationStreamLike,
   DeferredObservableLike,
   PureDeferredObservableLike,
-  PureRunnableLike,
+  PureSynchronousObservableLike,
   SchedulerLike,
   StreamLike,
   StreamableLike,
@@ -37,22 +37,28 @@ export interface StreamableModule {
   ): StreamableLike<TAction, T>;
 
   animation<T>(
-    animation: PureRunnableLike<T>,
+    animation: PureSynchronousObservableLike<T>,
     options?: { readonly animationScheduler?: SchedulerLike },
   ): StreamableLike<void, boolean, AnimationStreamLike<void, T>>;
   animation<T, TEvent>(
-    animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
+    animation:
+      | Function1<TEvent, PureSynchronousObservableLike<T>>
+      | PureSynchronousObservableLike<T>,
     options?: { readonly animationScheduler?: SchedulerLike },
   ): StreamableLike<TEvent, boolean, AnimationStreamLike<TEvent, T>>;
 
   animationGroup<T, TKey extends string = string>(
-    animationGroup: ReadonlyObjectMapLike<TKey, PureRunnableLike<T>>,
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      PureSynchronousObservableLike<T>
+    >,
     options?: { readonly animationScheduler?: SchedulerLike },
   ): StreamableLike<void, boolean, AnimationGroupStreamLike<void, TKey, T>>;
   animationGroup<T, TKey extends string, TEvent>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
+      | Function1<TEvent, PureSynchronousObservableLike<T>>
+      | PureSynchronousObservableLike<T>
     >,
     options?: { readonly animationScheduler?: SchedulerLike },
   ): StreamableLike<TEvent, boolean, AnimationGroupStreamLike<TEvent, TKey, T>>;

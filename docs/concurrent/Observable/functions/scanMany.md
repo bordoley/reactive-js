@@ -20,7 +20,7 @@
 
 #### scanner
 
-[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TAcc`\>\>
+[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TAcc`\>\>
 
 #### initialValue
 
@@ -44,7 +44,7 @@
 
 #### scanner
 
-[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TAcc`\>\>
+[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TAcc`\>\>
 
 #### initialValue
 
@@ -54,7 +54,7 @@
 
 ##### innerType
 
-`Pick`\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ### Returns
 
@@ -74,7 +74,7 @@
 
 #### scanner
 
-[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`RunnableLike`](../../interfaces/RunnableLike.md)\<`TAcc`\>\>
+[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TAcc`\>\>
 
 #### initialValue
 
@@ -84,7 +84,7 @@
 
 ##### innerType
 
-`Pick`\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ### Returns
 

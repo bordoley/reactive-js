@@ -3,14 +3,14 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
-import { PureRunnableLike } from "../../../concurrent.js";
+import { PureSynchronousObservableLike } from "../../../concurrent.js";
 import { Function1, pipe } from "../../../functions.js";
 import { DropLatestBackpressureStrategy } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_mergeMap from "./Observable.mergeMap.js";
 
 const Observable_exhaustMap: Observable.Signature["exhaustMap"] = (<TA, TB>(
-    selector: Function1<TA, PureRunnableLike<TB>>,
+    selector: Function1<TA, PureSynchronousObservableLike<TB>>,
     options?: {
       readonly innerType?: {
         readonly [ComputationLike_isDeferred]?: boolean;
@@ -19,7 +19,7 @@ const Observable_exhaustMap: Observable.Signature["exhaustMap"] = (<TA, TB>(
       };
     },
   ) =>
-  (obs: PureRunnableLike<TA>) =>
+  (obs: PureSynchronousObservableLike<TA>) =>
     pipe(
       obs,
       Observable_mergeMap(selector, {

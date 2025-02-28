@@ -18,11 +18,11 @@
 
 #### snd
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 #### tail
 
-...readonly [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>[]
+...readonly [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>[]
 
 ### Returns
 
@@ -40,11 +40,11 @@
 
 #### snd
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>
 
 #### tail
 
-...readonly [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>[]
+...readonly [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>[]
 
 ### Returns
 

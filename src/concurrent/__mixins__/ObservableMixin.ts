@@ -43,29 +43,36 @@ const ObservableMixin: Mixin1<
       | typeof ComputationLike_isPure
       | typeof ComputationLike_isSynchronous
     > {
-      const configRunnable = config[ComputationLike_isSynchronous] ?? true;
+      const configSynchronousObservable =
+        config[ComputationLike_isSynchronous] ?? true;
       const configDeferred = config[ComputationLike_isDeferred] ?? true;
       const configPure = config[ComputationLike_isPure] ?? true;
 
       if (__DEV__) {
-        const isValidRunnable = configRunnable && configDeferred;
+        const isValidSynchronousObservable =
+          configSynchronousObservable && configDeferred;
         const isValidDeferred = configDeferred;
         const isValidMulticasted =
-          configPure && !configDeferred && !configRunnable;
+          configPure && !configDeferred && !configSynchronousObservable;
 
         raiseIf(
-          !(isValidRunnable || isValidDeferred || isValidMulticasted),
+          !(
+            isValidSynchronousObservable ||
+            isValidDeferred ||
+            isValidMulticasted
+          ),
           `Attempting to create an observable in an illegal state: ${JSON.stringify(
             {
               isDeferred: configDeferred,
               isPure: configPure,
-              isRunnable: configRunnable,
+              isSynchronousObservable: configSynchronousObservable,
             },
           )}`,
         );
       }
 
-      instance[ComputationLike_isSynchronous] = configRunnable ?? true;
+      instance[ComputationLike_isSynchronous] =
+        configSynchronousObservable ?? true;
       instance[ComputationLike_isDeferred] = configDeferred ?? true;
       instance[ComputationLike_isPure] = configPure ?? true;
 

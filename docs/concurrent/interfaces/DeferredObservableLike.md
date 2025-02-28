@@ -12,7 +12,7 @@
 
 ## Extended by
 
-- [`RunnableLike`](RunnableLike.md)
+- [`SynchronousObservableLike`](SynchronousObservableLike.md)
 - [`PureDeferredObservableLike`](PureDeferredObservableLike.md)
 - [`DeferredObservableWithSideEffectsLike`](DeferredObservableWithSideEffectsLike.md)
 

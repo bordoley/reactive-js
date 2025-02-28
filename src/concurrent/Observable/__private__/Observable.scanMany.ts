@@ -38,7 +38,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
   return (observable: ObservableLike<T>) => {
     const isPure =
       innerType[ComputationLike_isPure] && observable[ComputationLike_isPure];
-    const isRunnable =
+    const isSynchronousObservable =
       innerType[ComputationLike_isSynchronous] &&
       observable[ComputationLike_isSynchronous];
 
@@ -68,7 +68,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
       {
         [ComputationLike_isDeferred]: true,
         [ComputationLike_isPure]: isPure,
-        [ComputationLike_isSynchronous]: isRunnable,
+        [ComputationLike_isSynchronous]: isSynchronousObservable,
       },
     );
   };

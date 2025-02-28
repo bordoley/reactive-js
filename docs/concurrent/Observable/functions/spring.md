@@ -6,7 +6,7 @@
 
 # Function: spring()
 
-> **spring**(`options`?): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`number`\>
+> **spring**(`options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
 
 ## Parameters
 
@@ -26,4 +26,4 @@
 
 ## Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`number`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>

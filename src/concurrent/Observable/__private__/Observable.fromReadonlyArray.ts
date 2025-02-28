@@ -13,7 +13,7 @@ import {
   DisposableLike_isDisposed,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_createPureRunnable from "./Observable.createPureRunnable.js";
+import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
 
 const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
   <T>(options?: {
@@ -23,7 +23,7 @@ const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
     start?: number;
   }) =>
   (arr: readonly T[]) =>
-    Observable_createPureRunnable((observer: ObserverLike<T>) => {
+    Observable_createPureSynchronousObservable((observer: ObserverLike<T>) => {
       const { delay = 0, delayStart = false } = options ?? {};
 
       let [start, count] = parseArrayBounds(arr, options);

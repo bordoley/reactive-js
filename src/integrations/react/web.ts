@@ -14,7 +14,7 @@ import * as Streamable from "../../concurrent/Streamable.js";
 import {
   AnimationGroupStreamLike,
   AnimationStreamLike,
-  PureRunnableLike,
+  PureSynchronousObservableLike,
   SchedulerLike,
 } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
@@ -71,14 +71,16 @@ interface ReactWebModule {
   ): React.Ref<TElement>;
 
   useAnimation<T>(
-    animation: PureRunnableLike<T>,
+    animation: PureSynchronousObservableLike<T>,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly animationScheduler?: SchedulerLike;
     },
   ): Optional<AnimationStreamLike<unknown, T>>;
   useAnimation<TEvent, T>(
-    animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
+    animation:
+      | Function1<TEvent, PureSynchronousObservableLike<T>>
+      | PureSynchronousObservableLike<T>,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly animationScheduler?: SchedulerLike;
@@ -86,7 +88,10 @@ interface ReactWebModule {
   ): Optional<AnimationStreamLike<TEvent, T>>;
 
   useAnimationGroup<T, TKey extends string = string>(
-    animationGroup: ReadonlyObjectMapLike<TKey, PureRunnableLike<T>>,
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      PureSynchronousObservableLike<T>
+    >,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly animationScheduler?: SchedulerLike;
@@ -95,7 +100,8 @@ interface ReactWebModule {
   useAnimationGroup<T, TKey extends string, TEvent>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
+      | Function1<TEvent, PureSynchronousObservableLike<T>>
+      | PureSynchronousObservableLike<T>
     >,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
@@ -186,7 +192,9 @@ export const useAnimate: Signature["useAnimate"] = <
 };
 
 export const useAnimation: Signature["useAnimation"] = <T, TEvent = unknown>(
-  animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
+  animation:
+    | Function1<TEvent, PureSynchronousObservableLike<T>>
+    | PureSynchronousObservableLike<T>,
   options?: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly animationScheduler?: SchedulerLike;
@@ -212,7 +220,8 @@ export const useAnimationGroup: Signature["useAnimationGroup"] = <
 >(
   animationGroup: ReadonlyObjectMapLike<
     TKey,
-    Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
+    | Function1<TEvent, PureSynchronousObservableLike<T>>
+    | PureSynchronousObservableLike<T>
   >,
   options?: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;

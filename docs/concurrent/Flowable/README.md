@@ -19,4 +19,4 @@
 - [create](functions/create.md)
 - [dispatchTo](functions/dispatchTo.md)
 - [fromAsyncIterable](functions/fromAsyncIterable.md)
-- [fromRunnable](functions/fromRunnable.md)
+- [fromSynchronousObservable](functions/fromSynchronousObservable.md)

@@ -164,7 +164,7 @@ const Observable_lift: ObservableLift["lift"] = ((
       (sourceIsMulticasted && !isStateless) ||
       (config[ComputationLike_isDeferred] &&
         source[ComputationLike_isDeferred]);
-    const isRunnable =
+    const isSynchronousObservable =
       config[ComputationLike_isSynchronous] &&
       source[ComputationLike_isSynchronous];
     const isPure =
@@ -174,7 +174,7 @@ const Observable_lift: ObservableLift["lift"] = ((
     const liftedConfig = {
       [ComputationLike_isDeferred]: isDeferred,
       [ComputationLike_isPure]: isPure,
-      [ComputationLike_isSynchronous]: isRunnable,
+      [ComputationLike_isSynchronous]: isSynchronousObservable,
     };
 
     return createLiftedObservable<TA, TB>(

@@ -72,7 +72,7 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
         const src = pipe(Observable.generate(increment, returns(-1), {
             delay: 1,
             delayStart: true,
-        }), Observable.takeFirst({ count: 5 }), Flowable.fromRunnable());
+        }), Observable.takeFirst({ count: 5 }), Flowable.fromSynchronousObservable());
         const dest = Streamable.identity()[StreamableLike_stream](vts, {
             backpressureStrategy: ThrowBackpressureStrategy,
             capacity: 1,
@@ -165,14 +165,14 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
     finally {
         __disposeResources(env_4);
     }
-}, expectToThrowAsync))), describe("fromRunnable", test("a source with delay", () => {
+}, expectToThrowAsync))), describe("fromSynchronousObservable", test("a source with delay", () => {
     const env_5 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
         const generateObservable = pipe(Observable.generate(increment, returns(-1), {
             delay: 1,
             delayStart: true,
-        }), Flowable.fromRunnable(), invoke(FlowableLike_flow, vts));
+        }), Flowable.fromSynchronousObservable(), invoke(FlowableLike_flow, vts));
         generateObservable[PauseableLike_resume]();
         vts[SchedulerLike_schedule](() => {
             generateObservable[PauseableLike_pause]();
@@ -203,7 +203,7 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
     const env_6 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_6, VirtualTimeScheduler.create(), false);
-        const flowed = pipe([0, 1, 2], Observable.fromReadonlyArray(), Flowable.fromRunnable(), invoke(FlowableLike_flow, vts), Disposable.addTo(vts));
+        const flowed = pipe([0, 1, 2], Observable.fromReadonlyArray(), Flowable.fromSynchronousObservable(), invoke(FlowableLike_flow, vts), Disposable.addTo(vts));
         vts[SchedulerLike_schedule](() => flowed[PauseableLike_resume](), {
             delay: 2,
         });
@@ -228,7 +228,7 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
     try {
         const vts = __addDisposableResource(env_7, VirtualTimeScheduler.create(), false);
         const error = newInstance(Error);
-        const flowed = pipe(Observable.raise({ raise: () => error }), Flowable.fromRunnable(), invoke(FlowableLike_flow, vts), Disposable.addTo(vts));
+        const flowed = pipe(Observable.raise({ raise: () => error }), Flowable.fromSynchronousObservable(), invoke(FlowableLike_flow, vts), Disposable.addTo(vts));
         flowed[PauseableLike_resume]();
         vts[VirtualTimeSchedulerLike_run]();
         pipe(flowed[DisposableLike_error], expectEquals(error));

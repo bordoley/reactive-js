@@ -6,7 +6,7 @@
 
 # Function: toDeferable()
 
-> **toDeferable**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, [`DeferableLike`](../../../computations/interfaces/DeferableLike.md)\<`T`\>\>
+> **toDeferable**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, [`DeferableLike`](../../../computations/interfaces/DeferableLike.md)\<`T`\>\>
 
 ## Type Parameters
 
@@ -30,4 +30,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, [`DeferableLike`](../../../computations/interfaces/DeferableLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, [`DeferableLike`](../../../computations/interfaces/DeferableLike.md)\<`T`\>\>

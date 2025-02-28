@@ -10,7 +10,7 @@
 
 ### currentTime
 
-> **currentTime**: [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`number`\>
+> **currentTime**: [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
 
 ## Methods
 
@@ -84,7 +84,7 @@
 
 #### Call Signature
 
-> **combineLatest**\<`TA`, `TB`\>(`a`, `b`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **combineLatest**\<`TA`, `TB`\>(`a`, `b`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ##### Type Parameters
 
@@ -96,379 +96,19 @@
 
 ###### a
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ##### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 #### Call Signature
 
-> **combineLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-##### Parameters
-
-###### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-###### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-###### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-##### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
-
-#### Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-##### Parameters
-
-###### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-###### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-###### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-###### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-##### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
-
-#### Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-• **TE**
-
-##### Parameters
-
-###### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-###### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-###### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-###### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-###### e
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TE`\>
-
-##### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
-
-#### Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-• **TE**
-
-• **TF**
-
-##### Parameters
-
-###### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-###### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-###### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-###### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-###### e
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TE`\>
-
-###### f
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TF`\>
-
-##### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
-
-#### Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-• **TE**
-
-• **TF**
-
-• **TG**
-
-##### Parameters
-
-###### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-###### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-###### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-###### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-###### e
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TE`\>
-
-###### f
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TF`\>
-
-###### g
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TG`\>
-
-##### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
-
-#### Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-• **TE**
-
-• **TF**
-
-• **TG**
-
-• **TH**
-
-##### Parameters
-
-###### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-###### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-###### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-###### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-###### e
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TE`\>
-
-###### f
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TF`\>
-
-###### g
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TG`\>
-
-###### h
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TH`\>
-
-##### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
-
-#### Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-• **TE**
-
-• **TF**
-
-• **TG**
-
-• **TH**
-
-• **TI**
-
-##### Parameters
-
-###### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-###### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-###### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-###### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-###### e
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TE`\>
-
-###### f
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TF`\>
-
-###### g
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TG`\>
-
-###### h
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TH`\>
-
-###### i
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TI`\>
-
-##### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
-
-#### Call Signature
-
-> **combineLatest**\<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-##### Parameters
-
-###### a
-
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
-
-###### b
-
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
-
-##### Returns
-
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
-
-#### Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+> **combineLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
 
 ##### Type Parameters
 
@@ -482,23 +122,23 @@
 
 ###### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ###### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
 
 #### Call Signature
 
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
 
 ##### Type Parameters
 
@@ -514,27 +154,27 @@
 
 ###### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ###### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 ###### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Call Signature
 
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 ##### Type Parameters
 
@@ -552,31 +192,31 @@
 
 ###### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ###### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 ###### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 ###### e
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TE`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TE`\>
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Call Signature
 
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 ##### Type Parameters
 
@@ -596,35 +236,35 @@
 
 ###### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ###### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 ###### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 ###### e
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TE`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TE`\>
 
 ###### f
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TF`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TF`\>
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Call Signature
 
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 ##### Type Parameters
 
@@ -646,39 +286,39 @@
 
 ###### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ###### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 ###### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 ###### e
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TE`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TE`\>
 
 ###### f
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TF`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TF`\>
 
 ###### g
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TG`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TG`\>
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Call Signature
 
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 ##### Type Parameters
 
@@ -702,43 +342,43 @@
 
 ###### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ###### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 ###### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 ###### e
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TE`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TE`\>
 
 ###### f
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TF`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TF`\>
 
 ###### g
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TG`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TG`\>
 
 ###### h
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TH`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TH`\>
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Call Signature
 
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 ##### Type Parameters
 
@@ -764,43 +404,403 @@
 
 ###### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ###### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 ###### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 ###### e
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TE`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TE`\>
 
 ###### f
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TF`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TF`\>
 
 ###### g
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TG`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TG`\>
 
 ###### h
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TH`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TH`\>
 
 ###### i
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TI`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TI`\>
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`\>(`a`, `b`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+###### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+###### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+###### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+• **TE**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+###### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+###### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+###### e
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TE`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+• **TE**
+
+• **TF**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+###### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+###### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+###### e
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TE`\>
+
+###### f
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TF`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+• **TE**
+
+• **TF**
+
+• **TG**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+###### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+###### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+###### e
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TE`\>
+
+###### f
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TF`\>
+
+###### g
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TG`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+• **TE**
+
+• **TF**
+
+• **TG**
+
+• **TH**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+###### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+###### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+###### e
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TE`\>
+
+###### f
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TF`\>
+
+###### g
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TG`\>
+
+###### h
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TH`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+• **TE**
+
+• **TF**
+
+• **TG**
+
+• **TH**
+
+• **TI**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+###### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+###### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+###### e
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TE`\>
+
+###### f
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TF`\>
+
+###### g
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TG`\>
+
+###### h
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TH`\>
+
+###### i
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TI`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Call Signature
 
@@ -1550,9 +1550,9 @@
 
 ***
 
-### computeRunnable()
+### computeSynchronousObservable()
 
-> **computeRunnable**\<`T`\>(`computation`, `options`?): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>
+> **computeSynchronousObservable**\<`T`\>(`computation`, `options`?): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 #### Type Parameters
 
@@ -1572,7 +1572,7 @@
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 ***
 
@@ -1580,7 +1580,7 @@
 
 #### Call Signature
 
-> **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+> **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ##### Type Parameters
 
@@ -1590,19 +1590,19 @@
 
 ###### fst
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ###### snd
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ###### tail
 
-...readonly [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>[]
+...readonly [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 #### Call Signature
 
@@ -1632,7 +1632,7 @@
 
 #### Call Signature
 
-> **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>
+> **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 ##### Type Parameters
 
@@ -1642,19 +1642,19 @@
 
 ###### fst
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>
 
 ###### snd
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>
 
 ###### tail
 
-...readonly [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>[]
+...readonly [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 #### Call Signature
 
@@ -1740,7 +1740,7 @@
 
 #### Call Signature
 
-> **concatAll**\<`T`\>(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
+> **concatAll**\<`T`\>(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -1748,11 +1748,11 @@
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
-> **concatAll**\<`T`\>(`options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
+> **concatAll**\<`T`\>(`options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -1764,15 +1764,15 @@
 
 ###### innerType
 
-`Pick`\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
-> **concatAll**\<`T`\>(`options`): [`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`\>
+> **concatAll**\<`T`\>(`options`): [`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -1784,11 +1784,11 @@
 
 ###### innerType
 
-`Pick`\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
-[`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`\>
+[`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
@@ -1836,7 +1836,7 @@
 
 #### Call Signature
 
-> **concatMany**\<`T`\>(`observables`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+> **concatMany**\<`T`\>(`observables`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ##### Type Parameters
 
@@ -1846,11 +1846,11 @@
 
 ###### observables
 
-readonly [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>[]
+readonly [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 #### Call Signature
 
@@ -1872,7 +1872,7 @@ readonly [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableL
 
 #### Call Signature
 
-> **concatMany**\<`T`\>(`observables`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>
+> **concatMany**\<`T`\>(`observables`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 ##### Type Parameters
 
@@ -1882,11 +1882,11 @@ readonly [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableL
 
 ###### observables
 
-readonly [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>[]
+readonly [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 #### Call Signature
 
@@ -1960,7 +1960,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ###### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>\>
 
 ##### Returns
 
@@ -1980,13 +1980,13 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ###### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>\>
 
 ###### options
 
 ###### innerType
 
-`Pick`\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
@@ -2006,13 +2006,13 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ###### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>\>
 
 ###### options
 
 ###### innerType
 
-`Pick`\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
@@ -2086,11 +2086,11 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ###### snd
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ###### tail
 
-...readonly [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>[]
+...readonly [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
@@ -2108,11 +2108,11 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ###### snd
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>
 
 ###### tail
 
-...readonly [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>[]
+...readonly [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
@@ -2290,7 +2290,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Call Signature
 
-> **empty**\<`T`\>(): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+> **empty**\<`T`\>(): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ##### Type Parameters
 
@@ -2298,11 +2298,11 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 #### Call Signature
 
-> **empty**\<`T`\>(`options`?): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+> **empty**\<`T`\>(`options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ##### Type Parameters
 
@@ -2318,7 +2318,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ***
 
@@ -2380,7 +2380,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Call Signature
 
-> **exhaust**\<`T`\>(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
+> **exhaust**\<`T`\>(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -2388,31 +2388,11 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
-> **exhaust**\<`T`\>(`options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### options
-
-###### innerType
-
-`Pick`\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
-
-##### Returns
-
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
-
-#### Call Signature
-
-> **exhaust**\<`T`\>(`options`): [`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`\>
+> **exhaust**\<`T`\>(`options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -2424,15 +2404,35 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ###### innerType
 
-`Pick`\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
-[`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
-> **exhaust**\<`T`\>(`options`): [`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`\>
+> **exhaust**\<`T`\>(`options`): [`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### options
+
+###### innerType
+
+`Pick`\<[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+
+##### Returns
+
+[`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, `T`\>
+
+#### Call Signature
+
+> **exhaust**\<`T`\>(`options`): [`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -2448,7 +2448,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### Returns
 
-[`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`\>
+[`DeferringObservableOperator`](../type-aliases/DeferringObservableOperator.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
@@ -2488,7 +2488,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ###### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>\>
 
 ##### Returns
 
@@ -2508,13 +2508,13 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ###### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>\>
 
 ###### options
 
 ###### innerType
 
-`Pick`\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
@@ -2534,13 +2534,13 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ###### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>\>
 
 ###### options
 
 ###### innerType
 
-`Pick`\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
@@ -2798,7 +2798,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ### fromIterable()
 
-> **fromIterable**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>\>
+> **fromIterable**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -2818,7 +2818,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>\>
 
 ***
 
@@ -2838,7 +2838,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ### fromReadonlyArray()
 
-> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>\>
+> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -2866,7 +2866,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
 
 ***
 
@@ -2886,7 +2886,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ### fromValue()
 
-> **fromValue**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>\>
+> **fromValue**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -2902,13 +2902,13 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
 
 ***
 
 ### generate()
 
-> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 #### Type Parameters
 
@@ -2940,7 +2940,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ***
 
@@ -2980,7 +2980,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ### keyFrame()
 
-> **keyFrame**(`duration`, `options`?): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`number`\>
+> **keyFrame**(`duration`, `options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
 
 #### Parameters
 
@@ -2996,13 +2996,13 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`number`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
 
 ***
 
 ### last()
 
-> **last**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+> **last**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -3026,7 +3026,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
 
 ***
 
@@ -3100,7 +3100,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Call Signature
 
-> **merge**\<`T`\>(`fst`, `snd`, ...`tail`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+> **merge**\<`T`\>(`fst`, `snd`, ...`tail`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ##### Type Parameters
 
@@ -3110,19 +3110,19 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ###### fst
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ###### snd
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ###### tail
 
-...readonly [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>[]
+...readonly [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 #### Call Signature
 
@@ -3152,7 +3152,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Call Signature
 
-> **merge**\<`T`\>(`fst`, `snd`, ...`tail`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>
+> **merge**\<`T`\>(`fst`, `snd`, ...`tail`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 ##### Type Parameters
 
@@ -3162,19 +3162,19 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ###### fst
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>
 
 ###### snd
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>
 
 ###### tail
 
-...readonly [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>[]
+...readonly [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 #### Call Signature
 
@@ -3260,7 +3260,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Call Signature
 
-> **mergeAll**\<`T`\>(`options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
+> **mergeAll**\<`T`\>(`options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -3284,11 +3284,11 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
-> **mergeAll**\<`T`\>(`options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
+> **mergeAll**\<`T`\>(`options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -3312,15 +3312,15 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ###### innerType
 
-`Pick`\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
-> **mergeAll**\<`T`\>(`options`): [`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`\>
+> **mergeAll**\<`T`\>(`options`): [`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -3344,11 +3344,11 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ###### innerType
 
-`Pick`\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
-[`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`\>
+[`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
@@ -3420,7 +3420,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Call Signature
 
-> **mergeMany**\<`T`\>(`observables`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+> **mergeMany**\<`T`\>(`observables`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ##### Type Parameters
 
@@ -3430,11 +3430,11 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ###### observables
 
-readonly [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>[]
+readonly [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 #### Call Signature
 
@@ -3456,7 +3456,7 @@ readonly [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableL
 
 #### Call Signature
 
-> **mergeMany**\<`T`\>(`observables`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>
+> **mergeMany**\<`T`\>(`observables`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 ##### Type Parameters
 
@@ -3466,11 +3466,11 @@ readonly [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableL
 
 ###### observables
 
-readonly [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>[]
+readonly [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 #### Call Signature
 
@@ -3562,7 +3562,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>\>
 
 ###### options?
 
@@ -3596,7 +3596,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>\>
 
 ###### options
 
@@ -3614,7 +3614,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### innerType
 
-`Pick`\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
@@ -3634,7 +3634,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>\>
 
 ###### options
 
@@ -3652,7 +3652,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### innerType
 
-`Pick`\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
@@ -3750,11 +3750,11 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### snd
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ###### tail
 
-...readonly [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>[]
+...readonly [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
@@ -3772,11 +3772,11 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### snd
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>
 
 ###### tail
 
-...readonly [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>[]
+...readonly [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
@@ -3996,7 +3996,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### raise()
 
-> **raise**\<`T`\>(`options`?): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+> **raise**\<`T`\>(`options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 #### Type Parameters
 
@@ -4016,13 +4016,13 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ***
 
 ### reduce()
 
-> **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `TAcc`\>
+> **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, `TAcc`\>
 
 #### Type Parameters
 
@@ -4042,7 +4042,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `TAcc`\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, `TAcc`\>
 
 ***
 
@@ -4120,7 +4120,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### run()
 
-> **run**\<`T`\>(`options`?): [`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>\>
+> **run**\<`T`\>(`options`?): [`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -4144,7 +4144,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>\>
+[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>\>
 
 ***
 
@@ -4190,7 +4190,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### scanner
 
-[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TAcc`\>\>
+[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TAcc`\>\>
 
 ###### initialValue
 
@@ -4214,7 +4214,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### scanner
 
-[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TAcc`\>\>
+[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TAcc`\>\>
 
 ###### initialValue
 
@@ -4224,7 +4224,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### innerType
 
-`Pick`\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
@@ -4244,7 +4244,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### scanner
 
-[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`RunnableLike`](../../interfaces/RunnableLike.md)\<`TAcc`\>\>
+[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TAcc`\>\>
 
 ###### initialValue
 
@@ -4254,7 +4254,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### innerType
 
-`Pick`\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
@@ -4346,7 +4346,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### spring()
 
-> **spring**(`options`?): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`number`\>
+> **spring**(`options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
 
 #### Parameters
 
@@ -4366,7 +4366,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`number`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
 
 ***
 
@@ -4426,7 +4426,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### subscribeOn()
 
-> **subscribeOn**\<`T`\>(`scheduler`, `options`?): \<`TObservableIn`\>(`observable`) => `TObservableIn` *extends* [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> ? [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> : `TObservableIn` *extends* [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> ? [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> : `TObservableIn` *extends* [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> ? [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `TObservableIn` *extends* [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> ? [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `TObservableIn` *extends* [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\> ? [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\> : [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
+> **subscribeOn**\<`T`\>(`scheduler`, `options`?): \<`TObservableIn`\>(`observable`) => `TObservableIn` *extends* [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> ? [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> : `TObservableIn` *extends* [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> ? [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> : `TObservableIn` *extends* [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> ? [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `TObservableIn` *extends* [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> ? [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `TObservableIn` *extends* [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\> ? [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\> : [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
 
 #### Type Parameters
 
@@ -4464,7 +4464,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-`TObservableIn` *extends* [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> ? [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> : `TObservableIn` *extends* [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> ? [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> : `TObservableIn` *extends* [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> ? [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `TObservableIn` *extends* [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> ? [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `TObservableIn` *extends* [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\> ? [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\> : [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
+`TObservableIn` *extends* [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> ? [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> : `TObservableIn` *extends* [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> ? [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> : `TObservableIn` *extends* [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> ? [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `TObservableIn` *extends* [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> ? [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `TObservableIn` *extends* [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\> ? [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\> : [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
 
 ***
 
@@ -4472,7 +4472,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Call Signature
 
-> **switchAll**\<`T`\>(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
+> **switchAll**\<`T`\>(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -4480,11 +4480,11 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
-> **switchAll**\<`T`\>(`options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
+> **switchAll**\<`T`\>(`options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -4496,15 +4496,15 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### innerType
 
-`Pick`\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>, `T`\>
+[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
-> **switchAll**\<`T`\>(`options`): [`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`\>
+> **switchAll**\<`T`\>(`options`): [`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -4516,11 +4516,11 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### innerType
 
-`Pick`\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
-[`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`\>
+[`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
@@ -4580,7 +4580,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>\>
 
 ##### Returns
 
@@ -4600,13 +4600,13 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>\>
 
 ###### options
 
 ###### innerType
 
-`Pick`\<[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
@@ -4626,13 +4626,13 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>\>
 
 ###### options
 
 ###### innerType
 
-`Pick`\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
+`Pick`\<[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ##### Returns
 
@@ -4750,7 +4750,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### notifier
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)
 
 ##### Returns
 
@@ -4768,7 +4768,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### notifier
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)
 
 ##### Returns
 
@@ -4886,7 +4886,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### toDeferable()
 
-> **toDeferable**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, [`DeferableLike`](../../../computations/interfaces/DeferableLike.md)\<`T`\>\>
+> **toDeferable**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, [`DeferableLike`](../../../computations/interfaces/DeferableLike.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -4910,7 +4910,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, [`DeferableLike`](../../../computations/interfaces/DeferableLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, [`DeferableLike`](../../../computations/interfaces/DeferableLike.md)\<`T`\>\>
 
 ***
 
@@ -4946,7 +4946,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### toReadonlyArray()
 
-> **toReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, readonly `T`[]\>
+> **toReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, readonly `T`[]\>
 
 #### Type Parameters
 
@@ -4970,7 +4970,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, readonly `T`[]\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, readonly `T`[]\>
 
 ***
 
@@ -5042,7 +5042,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### other
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ##### Returns
 
@@ -5064,7 +5064,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### other
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ###### selector
 
@@ -5088,7 +5088,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### other
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`TB`\>
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`TB`\>
 
 ##### Returns
 
@@ -5110,7 +5110,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### other
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`TB`\>
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`TB`\>
 
 ###### selector
 
@@ -5218,7 +5218,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Call Signature
 
-> **zipLatest**\<`TA`, `TB`\>(`a`, `b`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **zipLatest**\<`TA`, `TB`\>(`a`, `b`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ##### Type Parameters
 
@@ -5230,379 +5230,19 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### a
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ##### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 #### Call Signature
 
-> **zipLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-##### Parameters
-
-###### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-###### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-###### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-##### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
-
-#### Call Signature
-
-> **zipLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-##### Parameters
-
-###### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-###### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-###### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-###### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-##### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
-
-#### Call Signature
-
-> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-• **TE**
-
-##### Parameters
-
-###### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-###### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-###### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-###### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-###### e
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TE`\>
-
-##### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
-
-#### Call Signature
-
-> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-• **TE**
-
-• **TF**
-
-##### Parameters
-
-###### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-###### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-###### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-###### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-###### e
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TE`\>
-
-###### f
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TF`\>
-
-##### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
-
-#### Call Signature
-
-> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-• **TE**
-
-• **TF**
-
-• **TG**
-
-##### Parameters
-
-###### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-###### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-###### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-###### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-###### e
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TE`\>
-
-###### f
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TF`\>
-
-###### g
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TG`\>
-
-##### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
-
-#### Call Signature
-
-> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-• **TE**
-
-• **TF**
-
-• **TG**
-
-• **TH**
-
-##### Parameters
-
-###### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-###### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-###### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-###### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-###### e
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TE`\>
-
-###### f
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TF`\>
-
-###### g
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TG`\>
-
-###### h
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TH`\>
-
-##### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
-
-#### Call Signature
-
-> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-• **TE**
-
-• **TF**
-
-• **TG**
-
-• **TH**
-
-• **TI**
-
-##### Parameters
-
-###### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-###### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-###### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-###### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-###### e
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TE`\>
-
-###### f
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TF`\>
-
-###### g
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TG`\>
-
-###### h
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TH`\>
-
-###### i
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TI`\>
-
-##### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
-
-#### Call Signature
-
-> **zipLatest**\<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-##### Parameters
-
-###### a
-
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
-
-###### b
-
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
-
-##### Returns
-
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
-
-#### Call Signature
-
-> **zipLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+> **zipLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
 
 ##### Type Parameters
 
@@ -5616,23 +5256,23 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ###### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
 
 #### Call Signature
 
-> **zipLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
 
 ##### Type Parameters
 
@@ -5648,27 +5288,27 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ###### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 ###### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Call Signature
 
-> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 ##### Type Parameters
 
@@ -5686,31 +5326,31 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ###### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 ###### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 ###### e
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TE`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TE`\>
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Call Signature
 
-> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 ##### Type Parameters
 
@@ -5730,35 +5370,35 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ###### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 ###### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 ###### e
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TE`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TE`\>
 
 ###### f
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TF`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TF`\>
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Call Signature
 
-> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 ##### Type Parameters
 
@@ -5780,39 +5420,39 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ###### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 ###### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 ###### e
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TE`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TE`\>
 
 ###### f
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TF`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TF`\>
 
 ###### g
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TG`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TG`\>
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Call Signature
 
-> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 ##### Type Parameters
 
@@ -5836,43 +5476,43 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ###### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 ###### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 ###### e
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TE`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TE`\>
 
 ###### f
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TF`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TF`\>
 
 ###### g
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TG`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TG`\>
 
 ###### h
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TH`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TH`\>
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Call Signature
 
-> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 ##### Type Parameters
 
@@ -5898,43 +5538,403 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ###### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 ###### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ###### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 ###### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 ###### e
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TE`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TE`\>
 
 ###### f
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TF`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TF`\>
 
 ###### g
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TG`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TG`\>
 
 ###### h
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TH`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TH`\>
 
 ###### i
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TI`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TI`\>
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+#### Call Signature
+
+> **zipLatest**\<`TA`, `TB`\>(`a`, `b`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+
+#### Call Signature
+
+> **zipLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+###### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+
+#### Call Signature
+
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+###### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+###### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+#### Call Signature
+
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+• **TE**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+###### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+###### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+###### e
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TE`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+#### Call Signature
+
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+• **TE**
+
+• **TF**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+###### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+###### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+###### e
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TE`\>
+
+###### f
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TF`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+#### Call Signature
+
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+• **TE**
+
+• **TF**
+
+• **TG**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+###### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+###### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+###### e
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TE`\>
+
+###### f
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TF`\>
+
+###### g
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TG`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+#### Call Signature
+
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+• **TE**
+
+• **TF**
+
+• **TG**
+
+• **TH**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+###### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+###### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+###### e
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TE`\>
+
+###### f
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TF`\>
+
+###### g
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TG`\>
+
+###### h
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TH`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+#### Call Signature
+
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+• **TE**
+
+• **TF**
+
+• **TG**
+
+• **TH**
+
+• **TI**
+
+##### Parameters
+
+###### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+###### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+###### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+###### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+###### e
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TE`\>
+
+###### f
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TF`\>
+
+###### g
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TG`\>
+
+###### h
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TH`\>
+
+###### i
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TI`\>
+
+##### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Call Signature
 

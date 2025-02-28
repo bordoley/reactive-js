@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+> **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ### Type Parameters
 
@@ -18,19 +18,19 @@
 
 #### fst
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 #### snd
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 #### tail
 
-...readonly [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>[]
+...readonly [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>[]
 
 ### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 ## Call Signature
 
@@ -60,7 +60,7 @@
 
 ## Call Signature
 
-> **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>
+> **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 ### Type Parameters
 
@@ -70,19 +70,19 @@
 
 #### fst
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>
 
 #### snd
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>
 
 #### tail
 
-...readonly [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>[]
+...readonly [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>[]
 
 ### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\>
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 ## Call Signature
 

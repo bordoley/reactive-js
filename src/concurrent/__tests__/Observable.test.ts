@@ -43,11 +43,11 @@ import {
   MulticastObservableLike,
   ObservableLike,
   PureDeferredObservableLike,
-  PureRunnableLike,
-  RunnableLike,
-  RunnableWithSideEffectsLike,
+  PureSynchronousObservableLike,
   SchedulerLike_now,
   StreamableLike_stream,
+  SynchronousObservableLike,
+  SynchronousObservableWithSideEffectsLike,
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
@@ -104,20 +104,24 @@ import {
 import {
   DeferredObservableWithSideEffectsType,
   PureDeferredObservableType,
-  RunnableWithSideEffectsType,
+  SynchronousObservableWithSideEffectsType,
 } from "../Observable.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
-const expectIsPureRunnable = (obs: PureRunnableLike) => {
+const expectIsPureSynchronousObservable = (
+  obs: PureSynchronousObservableLike,
+) => {
   expectTrue(obs[ComputationLike_isSynchronous] ?? true);
   expectTrue(obs[ComputationLike_isPure] ?? true);
   expectTrue(obs[ComputationLike_isDeferred] ?? true);
 };
 
-const expectIsRunnableWithSideEffects = (obs: RunnableWithSideEffectsLike) => {
+const expectIsSynchronousObservableWithSideEffects = (
+  obs: SynchronousObservableWithSideEffectsLike,
+) => {
   expectTrue(obs[ComputationLike_isSynchronous] ?? true);
   expectFalse(obs[ComputationLike_isPure] ?? true);
   expectTrue(obs[ComputationLike_isDeferred] ?? true);
@@ -143,11 +147,19 @@ const expectIsMulticastObservable = (obs: MulticastObservableLike) => {
   expectFalse(obs[ComputationLike_isDeferred] ?? true);
 };
 
-const testIsPureRunnable = (obs: PureRunnableLike) =>
-  test("is PureRunnableLike", pipeLazy(obs, expectIsPureRunnable));
+const testIsPureSynchronousObservable = (obs: PureSynchronousObservableLike) =>
+  test(
+    "is PureSynchronousObservableLike",
+    pipeLazy(obs, expectIsPureSynchronousObservable),
+  );
 
-const testIsRunnableWithSideEffects = (obs: RunnableWithSideEffectsLike) =>
-  test("is PureRunnableLike", pipeLazy(obs, expectIsRunnableWithSideEffects));
+const testIsSynchronousObservableWithSideEffects = (
+  obs: SynchronousObservableWithSideEffectsLike,
+) =>
+  test(
+    "is PureSynchronousObservableLike",
+    pipeLazy(obs, expectIsSynchronousObservableWithSideEffects),
+  );
 
 const testIsDeferredObservableWithSideEffects = (
   obs: DeferredObservableWithSideEffectsLike,
@@ -175,16 +187,20 @@ const PureStatelessObservableOperatorTests = (
   describe(
     "PureStatelessObservableOperator",
     test(
-      "with PureRunnableLike",
-      pipeLazy(Observable.empty({ delay: 1 }), op, expectIsPureRunnable),
+      "with PureSynchronousObservableLike",
+      pipeLazy(
+        Observable.empty({ delay: 1 }),
+        op,
+        expectIsPureSynchronousObservable,
+      ),
     ),
     test(
-      "with RunnableWithSideEffectsLike",
+      "with SynchronousObservableWithSideEffectsLike",
       pipeLazy(
         Observable.empty({ delay: 1 }),
         Observable.forEach(ignore),
         op,
-        expectIsRunnableWithSideEffects,
+        expectIsSynchronousObservableWithSideEffects,
       ),
     ),
     test("with PureDeferredObservableLike", () => {
@@ -225,16 +241,20 @@ const PureStatefulObservableOperator = (
   describe(
     "PureStatefulObservableOperator",
     test(
-      "with PureRunnableLike",
-      pipeLazy(Observable.empty({ delay: 1 }), op, expectIsPureRunnable),
+      "with PureSynchronousObservableLike",
+      pipeLazy(
+        Observable.empty({ delay: 1 }),
+        op,
+        expectIsPureSynchronousObservable,
+      ),
     ),
     test(
-      "with RunnableWithSideEffectsLike",
+      "with SynchronousObservableWithSideEffectsLike",
       pipeLazy(
         Observable.empty({ delay: 1 }),
         Observable.forEach(ignore),
         op,
-        expectIsRunnableWithSideEffects,
+        expectIsSynchronousObservableWithSideEffects,
       ),
     ),
     test("with PureDeferredObservableLike", () => {
@@ -278,16 +298,20 @@ const PureDeferredObservableOperatorWithDeferredObservableBaseTests = (
   describe(
     "PureStatelessObservableOperatorWithDeferredObservableBaseTests",
     test(
-      "with PureRunnableLike",
-      pipeLazy(Observable.empty({ delay: 1 }), op, expectIsPureRunnable),
+      "with PureSynchronousObservableLike",
+      pipeLazy(
+        Observable.empty({ delay: 1 }),
+        op,
+        expectIsPureSynchronousObservable,
+      ),
     ),
     test(
-      "with RunnableWithSideEffectsLike",
+      "with SynchronousObservableWithSideEffectsLike",
       pipeLazy(
         Observable.empty({ delay: 1 }),
         Observable.forEach(ignore),
         op,
-        expectIsRunnableWithSideEffects,
+        expectIsSynchronousObservableWithSideEffects,
       ),
     ),
     test("with PureDeferredObservableLike", () => {
@@ -318,7 +342,7 @@ const DeferringObservableOperatorTests = (
   describe(
     "DeferringObservableOperatorTests",
     test(
-      "with PureRunnableLike",
+      "with PureSynchronousObservableLike",
       pipeLazy(
         Observable.empty({ delay: 1 }),
         op,
@@ -326,7 +350,7 @@ const DeferringObservableOperatorTests = (
       ),
     ),
     test(
-      "with RunnableWithSideEffectsLike",
+      "with SynchronousObservableWithSideEffectsLike",
       pipeLazy(
         Observable.empty({ delay: 1 }),
         Observable.forEach(ignore),
@@ -362,20 +386,20 @@ const ObservableOperatorWithSideEffectsTests = (
   describe(
     "ObservableOperatorWithSideEffects",
     test(
-      "with PureRunnableLike",
+      "with PureSynchronousObservableLike",
       pipeLazy(
         Observable.empty({ delay: 1 }),
         op,
-        expectIsRunnableWithSideEffects,
+        expectIsSynchronousObservableWithSideEffects,
       ),
     ),
     test(
-      "with RunnableWithSideEffectsLike",
+      "with SynchronousObservableWithSideEffectsLike",
       pipeLazy(
         Observable.empty({ delay: 1 }),
         Observable.forEach(ignore),
         op,
-        expectIsRunnableWithSideEffects,
+        expectIsSynchronousObservableWithSideEffects,
       ),
     ),
     test("with PureDeferredObservableLike", () => {
@@ -416,7 +440,7 @@ const AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests = (
   describe(
     "AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests",
     test(
-      "with PureRunnableLike",
+      "with PureSynchronousObservableLike",
       pipeLazy(
         Observable.empty({ delay: 1 }),
         op,
@@ -424,7 +448,7 @@ const AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests = (
       ),
     ),
     test(
-      "with RunnableWithSideEffectsLike",
+      "with SynchronousObservableWithSideEffectsLike",
       pipeLazy(
         Observable.empty({ delay: 1 }),
         Observable.forEach(ignore),
@@ -471,71 +495,80 @@ testModule(
       expectToThrow(() => __constant(0));
     }),
   ),
-  DeferredComputationModuleTests<RunnableLike, Observable.RunnableComputation>(
+  DeferredComputationModuleTests<
+    SynchronousObservableLike,
+    Observable.SynchronousObservableComputation
+  >(
     Observable as DeferredComputationModule<
-      RunnableLike,
-      Observable.RunnableComputation
+      SynchronousObservableLike,
+      Observable.SynchronousObservableComputation
     > &
       SynchronousComputationModule<
-        RunnableLike,
-        Observable.RunnableComputation
+        SynchronousObservableLike,
+        Observable.SynchronousObservableComputation
       >,
   ),
   PureStatelesssComputationModuleTests(
     Observable as PureStatelessComputationModule<
-      RunnableLike,
-      Observable.RunnableComputation
+      SynchronousObservableLike,
+      Observable.SynchronousObservableComputation
     > &
-      DeferredComputationModule<RunnableLike, Observable.RunnableComputation> &
+      DeferredComputationModule<
+        SynchronousObservableLike,
+        Observable.SynchronousObservableComputation
+      > &
       SynchronousComputationModule<
-        RunnableLike,
-        Observable.RunnableComputation
+        SynchronousObservableLike,
+        Observable.SynchronousObservableComputation
       >,
   ),
   PureStatefulComputationModuleTests(
     Observable as PureStatefulComputationModule<
-      RunnableLike,
-      Observable.RunnableComputation
+      SynchronousObservableLike,
+      Observable.SynchronousObservableComputation
     > &
-      DeferredComputationModule<RunnableLike, Observable.RunnableComputation> &
+      DeferredComputationModule<
+        SynchronousObservableLike,
+        Observable.SynchronousObservableComputation
+      > &
       SynchronousComputationModule<
-        RunnableLike,
-        Observable.RunnableComputation
+        SynchronousObservableLike,
+        Observable.SynchronousObservableComputation
       > &
       ComputationWithSideEffectsModule<
-        RunnableLike,
-        Observable.RunnableComputation,
-        RunnableWithSideEffectsLike,
-        Observable.RunnableWithSideEffectsComputation
+        SynchronousObservableLike,
+        Observable.SynchronousObservableComputation,
+        SynchronousObservableWithSideEffectsLike,
+        Observable.SynchronousObservableWithSideEffectsComputation
       >,
   ),
   ComputationWithSideEffectsModuleTests(
     Observable as DeferredComputationModule<
-      RunnableLike,
-      Observable.RunnableComputation
+      SynchronousObservableLike,
+      Observable.SynchronousObservableComputation
     > &
       ComputationWithSideEffectsModule<
-        RunnableLike,
-        Observable.RunnableComputation,
-        RunnableWithSideEffectsLike,
-        Observable.RunnableWithSideEffectsComputation
+        SynchronousObservableLike,
+        Observable.SynchronousObservableComputation,
+        SynchronousObservableWithSideEffectsLike,
+        Observable.SynchronousObservableWithSideEffectsComputation
       > &
       SynchronousComputationModule<
-        RunnableLike,
-        Observable.RunnableComputation
+        SynchronousObservableLike,
+        Observable.SynchronousObservableComputation
       >,
   ),
   SynchronousComputationModuleTests<
-    RunnableLike,
-    Observable.RunnableComputation
+    SynchronousObservableLike,
+    Observable.SynchronousObservableComputation
   >(
     Observable as DeferredComputationModule<
-      RunnableLike,
-      Observable.RunnableComputation
+      SynchronousObservableLike,
+      Observable.SynchronousObservableComputation
     > &
       SynchronousComputationModule<
-        RunnableLike,
-        Observable.RunnableComputation
+        SynchronousObservableLike,
+        Observable.SynchronousObservableComputation
       >,
   ),
   describe(
@@ -647,7 +680,7 @@ testModule(
         ),
       ),
     ),
-    testIsPureRunnable(
+    testIsPureSynchronousObservable(
       Observable.combineLatest(
         Observable.empty({ delay: 1 }),
         Observable.empty({ delay: 1 }),
@@ -662,7 +695,7 @@ testModule(
         );
       })(),
     ),
-    testIsRunnableWithSideEffects(
+    testIsSynchronousObservableWithSideEffects(
       Observable.combineLatest(
         Observable.empty({ delay: 1 }),
         pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
@@ -750,13 +783,13 @@ testModule(
     ),
   ),
   describe(
-    "computeRunnable",
+    "computeSynchronousObservable",
     test("batch mode", () => {
       const result: number[] = [];
       pipe(
-        Observable.computeRunnable(() => {
+        Observable.computeSynchronousObservable(() => {
           const fromValueWithDelay = __constant(
-            (delay: number, value: number): RunnableLike<number> =>
+            (delay: number, value: number): SynchronousObservableLike<number> =>
               pipe([value], Observable.fromReadonlyArray({ delay })),
           );
           const obs1 = __memo(fromValueWithDelay, 10, 5);
@@ -778,7 +811,7 @@ testModule(
     test("combined-latest mode", () => {
       const result: number[] = [];
       pipe(
-        Observable.computeRunnable(
+        Observable.computeSynchronousObservable(
           () => {
             const oneTwoThreeDelayed = __constant(
               pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
@@ -794,8 +827,8 @@ testModule(
           { mode: "combine-latest" },
         ),
         Computation.keepType<
-          RunnableLike,
-          Observable.RunnableWithSideEffectsComputation
+          SynchronousObservableLike,
+          Observable.SynchronousObservableWithSideEffectsComputation
         >(Observable.keep)(isSome),
         Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.run(),
@@ -808,7 +841,7 @@ testModule(
       const error = newInstance(Error);
 
       const subscription = pipe(
-        Observable.computeRunnable(() => {
+        Observable.computeSynchronousObservable(() => {
           raise(error);
         }),
         Observable.subscribe(vts),
@@ -824,7 +857,7 @@ testModule(
     test(
       "conditional hooks",
       pipeLazy(
-        Observable.computeRunnable(
+        Observable.computeSynchronousObservable(
           () => {
             const src = __constant(
               pipe(
@@ -853,7 +886,7 @@ testModule(
     test(
       "conditional await",
       pipeLazy(
-        Observable.computeRunnable<number>(() => {
+        Observable.computeSynchronousObservable<number>(() => {
           const src = __constant(
             pipe(
               [0, 1, 2, 3, 4, 5],
@@ -883,7 +916,9 @@ testModule(
         expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]),
       ),
     ),
-    testIsRunnableWithSideEffects(Observable.computeRunnable(() => {})),
+    testIsSynchronousObservableWithSideEffects(
+      Observable.computeSynchronousObservable(() => {}),
+    ),
   ),
   describe(
     "concat",
@@ -909,7 +944,7 @@ testModule(
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.concatAll({
-        innerType: Observable.RunnableWithSideEffectsType,
+        innerType: Observable.SynchronousObservableWithSideEffectsType,
       }),
     ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
@@ -920,7 +955,7 @@ testModule(
   ),
   describe(
     "concatMany",
-    testIsPureRunnable(
+    testIsPureSynchronousObservable(
       Observable.concatMany([
         Observable.empty({ delay: 1 }),
         Observable.empty({ delay: 1 }),
@@ -935,7 +970,7 @@ testModule(
         ]);
       })(),
     ),
-    testIsRunnableWithSideEffects(
+    testIsSynchronousObservableWithSideEffects(
       Observable.concatMany([
         pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
         Observable.empty({ delay: 1 }),
@@ -983,7 +1018,7 @@ testModule(
       Observable.concatMap(
         _ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
         {
-          innerType: Observable.RunnableWithSideEffectsType,
+          innerType: Observable.SynchronousObservableWithSideEffectsType,
         },
       ),
     ),
@@ -1020,7 +1055,7 @@ testModule(
     describe(
       "concat with DeferredObservableWithSideEffectsLikes",
       test(
-        "with PureRunnableLike",
+        "with PureSynchronousObservableLike",
         pipeLazy(
           Observable.empty({ delay: 1 }),
           Observable.concatWith(
@@ -1032,7 +1067,7 @@ testModule(
         ),
       ),
       test(
-        "with RunnableWithSideEffectsLike",
+        "with SynchronousObservableWithSideEffectsLike",
         pipeLazy(
           Observable.empty({ delay: 1 }),
           Observable.forEach(ignore),
@@ -1102,7 +1137,7 @@ testModule(
         expectArrayEquals([0, 0, 0, 0, 0]),
       ),
     ),
-    testIsPureRunnable(Observable.currentTime),
+    testIsPureSynchronousObservable(Observable.currentTime),
   ),
   describe("debug", ObservableOperatorWithSideEffectsTests(Observable.debug())),
   describe(
@@ -1220,7 +1255,7 @@ testModule(
 
       pipe(disposedTime, expectEquals(5));
     }),
-    testIsPureRunnable(Observable.empty({ delay: 1 })),
+    testIsPureSynchronousObservable(Observable.empty({ delay: 1 })),
   ),
   describe(
     "encodeUtf8",
@@ -1243,7 +1278,7 @@ testModule(
         ],
         Observable.fromReadonlyArray(),
         Observable.exhaust<number>({
-          innerType: Observable.PureRunnableType,
+          innerType: Observable.PureSynchronousObservableType,
         }),
         Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
@@ -1257,7 +1292,7 @@ testModule(
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.exhaust({
-        innerType: Observable.RunnableWithSideEffectsType,
+        innerType: Observable.SynchronousObservableWithSideEffectsType,
       }),
     ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
@@ -1277,7 +1312,7 @@ testModule(
           _ =>
             pipe([1, 2, 3], Observable.fromReadonlyArray<number>({ delay: 1 })),
           {
-            innerType: Observable.PureRunnableType,
+            innerType: Observable.PureSynchronousObservableType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -1296,7 +1331,7 @@ testModule(
       Observable.exhaustMap(
         _ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
         {
-          innerType: Observable.RunnableWithSideEffectsType,
+          innerType: Observable.SynchronousObservableWithSideEffectsType,
         },
       ),
     ),
@@ -1563,7 +1598,7 @@ testModule(
         expectArrayEquals([2, 4, 6, 8]),
       ),
     ),
-    testIsRunnableWithSideEffects(
+    testIsSynchronousObservableWithSideEffects(
       pipe(
         (function* Generator() {
           throw newInstance(Error);
@@ -1600,7 +1635,9 @@ testModule(
   ),
   describe(
     "fromReadonlyArray",
-    testIsPureRunnable(pipe([], Observable.fromReadonlyArray({ delay: 1 }))),
+    testIsPureSynchronousObservable(
+      pipe([], Observable.fromReadonlyArray({ delay: 1 })),
+    ),
   ),
   describe(
     "fromStore",
@@ -1636,7 +1673,9 @@ testModule(
   ),
   describe(
     "fromValue",
-    testIsPureRunnable(pipe("a", Observable.fromValue({ delay: 1 }))),
+    testIsPureSynchronousObservable(
+      pipe("a", Observable.fromValue({ delay: 1 })),
+    ),
   ),
   describe(
     "ignoreElements",
@@ -1689,7 +1728,7 @@ testModule(
   describe(
     "merge",
     test("validate output runtime type", () => {
-      const pureRunnable = pipe(
+      const pureSynchronousObservable = pipe(
         [1, 2, 3],
         Observable.fromReadonlyArray({ delay: 2 }),
       );
@@ -1705,29 +1744,35 @@ testModule(
       const multicast = Subject.create();
 
       const merged1 = Observable.merge(
-        pureRunnable,
+        pureSynchronousObservable,
         runnableWithSideEffects,
         deferred,
         multicast,
       );
       expectIsDeferredObservableWithSideEffects(merged1);
 
-      const merged2 = Observable.merge(pureRunnable, multicast);
+      const merged2 = Observable.merge(pureSynchronousObservable, multicast);
       expectIsPureDeferredObservable(merged2);
 
       const merged3 = Observable.merge(
-        pureRunnable,
+        pureSynchronousObservable,
         runnableWithSideEffects,
         deferred,
         Observable.never(),
       );
       expectIsDeferredObservableWithSideEffects(merged3);
 
-      const merged4 = Observable.merge(pureRunnable, runnableWithSideEffects);
-      expectIsRunnableWithSideEffects(merged4);
+      const merged4 = Observable.merge(
+        pureSynchronousObservable,
+        runnableWithSideEffects,
+      );
+      expectIsSynchronousObservableWithSideEffects(merged4);
 
-      const merged7 = Observable.merge(pureRunnable, pureRunnable);
-      expectIsPureRunnable(merged7);
+      const merged7 = Observable.merge(
+        pureSynchronousObservable,
+        pureSynchronousObservable,
+      );
+      expectIsPureSynchronousObservable(merged7);
 
       const merged8 = Observable.merge(Subject.create(), Subject.create());
       expectIsMulticastObservable(merged8);
@@ -1802,7 +1847,7 @@ testModule(
         Observable.fromReadonlyArray(),
         Observable.mergeAll<number>({
           concurrency: 2,
-          innerType: Observable.PureRunnableType,
+          innerType: Observable.PureSynchronousObservableType,
         }),
         Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]),
@@ -1816,7 +1861,7 @@ testModule(
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.mergeAll({
-        innerType: Observable.RunnableWithSideEffectsType,
+        innerType: Observable.SynchronousObservableWithSideEffectsType,
       }),
     ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
@@ -1827,7 +1872,7 @@ testModule(
   ),
   describe(
     "mergeMany",
-    testIsPureRunnable(
+    testIsPureSynchronousObservable(
       Observable.mergeMany([
         Observable.empty({ delay: 1 }),
         Observable.empty({ delay: 1 }),
@@ -1842,7 +1887,7 @@ testModule(
         ]);
       })(),
     ),
-    testIsRunnableWithSideEffects(
+    testIsSynchronousObservableWithSideEffects(
       Observable.mergeMany([
         pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
         Observable.empty({ delay: 1 }),
@@ -1887,7 +1932,7 @@ testModule(
         Observable.mergeMap<number, number>(
           x => pipe([x, x, x], Observable.fromReadonlyArray<number>()),
           {
-            innerType: Observable.PureRunnableType,
+            innerType: Observable.PureSynchronousObservableType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -1906,7 +1951,7 @@ testModule(
       Observable.mergeMap(
         _ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
         {
-          innerType: Observable.RunnableWithSideEffectsType,
+          innerType: Observable.SynchronousObservableWithSideEffectsType,
         },
       ),
     ),
@@ -2056,7 +2101,7 @@ testModule(
     ObservableOperatorWithSideEffectsTests(Observable.onSubscribe(ignore)),
   ),
   describe("pairwise", PureStatefulObservableOperator(Observable.pairwise())),
-  describe("raise", testIsPureRunnable(Observable.raise())),
+  describe("raise", testIsPureSynchronousObservable(Observable.raise())),
   describe(
     "repeat",
     test(
@@ -2138,7 +2183,7 @@ testModule(
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
-        innerType: RunnableWithSideEffectsType,
+        innerType: SynchronousObservableWithSideEffectsType,
       }),
     ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
@@ -2199,7 +2244,7 @@ testModule(
       pipeLazy(
         Observable.empty({ delay: 1 }),
         Observable.switchAll<number>({
-          innerType: Observable.PureRunnableType,
+          innerType: Observable.PureSynchronousObservableType,
         }),
         Observable.toReadonlyArray(),
         expectArrayEquals([] as readonly number[]),
@@ -2213,7 +2258,7 @@ testModule(
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.switchAll({
-        innerType: Observable.RunnableWithSideEffectsType,
+        innerType: Observable.SynchronousObservableWithSideEffectsType,
       }),
     ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
@@ -2232,7 +2277,7 @@ testModule(
         Observable.switchMap<number, number>(
           _ => pipe([1, 2, 3], Observable.fromReadonlyArray()),
           {
-            innerType: Observable.PureRunnableType,
+            innerType: Observable.PureSynchronousObservableType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -2254,7 +2299,7 @@ testModule(
               }),
             ),
           {
-            innerType: Observable.PureRunnableType,
+            innerType: Observable.PureSynchronousObservableType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -2269,7 +2314,7 @@ testModule(
         Observable.switchMap<void, number>(
           _ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
           {
-            innerType: Observable.PureRunnableType,
+            innerType: Observable.PureSynchronousObservableType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -2285,7 +2330,7 @@ testModule(
         Observable.switchMap<number, number>(
           _ => pipe([1, 2, 3], Observable.fromReadonlyArray()),
           {
-            innerType: Observable.PureRunnableType,
+            innerType: Observable.PureSynchronousObservableType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -2304,7 +2349,7 @@ testModule(
       Observable.switchMap(
         _ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
         {
-          innerType: Observable.RunnableWithSideEffectsType,
+          innerType: Observable.SynchronousObservableWithSideEffectsType,
         },
       ),
     ),
@@ -2578,7 +2623,7 @@ testModule(
         expectArrayEquals([2, 5, 8, 11]),
       ),
     ),
-    testIsPureRunnable(
+    testIsPureSynchronousObservable(
       Observable.zipLatest(
         Observable.empty({ delay: 1 }),
         Observable.empty({ delay: 1 }),
@@ -2593,7 +2638,7 @@ testModule(
         );
       })(),
     ),
-    testIsRunnableWithSideEffects(
+    testIsSynchronousObservableWithSideEffects(
       Observable.zipLatest(
         Observable.empty({ delay: 1 }),
         pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),

@@ -18,7 +18,7 @@ const Observable_scanMany = ((scanner, initialValue, options) => {
     };
     return (observable) => {
         const isPure = innerType[ComputationLike_isPure] && observable[ComputationLike_isPure];
-        const isRunnable = innerType[ComputationLike_isSynchronous] &&
+        const isSynchronousObservable = innerType[ComputationLike_isSynchronous] &&
             observable[ComputationLike_isSynchronous];
         return Observable_createWithConfig(observer => {
             const accFeedbackStream = pipe(Subject.create(), Disposable.addTo(observer));
@@ -33,7 +33,7 @@ const Observable_scanMany = ((scanner, initialValue, options) => {
         }, {
             [ComputationLike_isDeferred]: true,
             [ComputationLike_isPure]: isPure,
-            [ComputationLike_isSynchronous]: isRunnable,
+            [ComputationLike_isSynchronous]: isSynchronousObservable,
         });
     };
 });

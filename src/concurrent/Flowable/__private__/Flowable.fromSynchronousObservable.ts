@@ -10,8 +10,8 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,
-  RunnableLike,
   SchedulerLike,
+  SynchronousObservableLike,
 } from "../../../concurrent.js";
 import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -23,8 +23,8 @@ import * as PauseableScheduler from "../../PauseableScheduler.js";
 import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 import DelegatingPauseableMixin from "../../__mixins__/DelegatingPauseableMixin.js";
 
-const PauseableRunnable_create: <T>(
-  obs: RunnableLike<T>,
+const PauseableSynchronousObservable_create: <T>(
+  obs: SynchronousObservableLike<T>,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: BackpressureStrategy;
@@ -37,14 +37,14 @@ const PauseableRunnable_create: <T>(
       DelegatingMulticastObservableMixin(),
       DelegatingPauseableMixin,
     ),
-    function PauseableRunnable(
+    function PauseableSynchronousObservable(
       instance: Pick<
         PauseableObservableLike<T>,
         | typeof PauseableLike_pause
         | typeof PauseableLike_resume
         | typeof PauseableLike_isPaused
       >,
-      obs: RunnableLike<T>,
+      obs: SynchronousObservableLike<T>,
       scheduler: SchedulerLike,
       multicastOptions?: {
         capacity?: number;
@@ -69,11 +69,12 @@ const PauseableRunnable_create: <T>(
   );
 })();
 
-const Flowable_fromRunnable: Flowable.Signature["fromRunnable"] =
-  <T>() =>
-  (obs: RunnableLike<T>): FlowableLike<T> => ({
-    [FlowableLike_flow]: (scheduler, options) =>
-      PauseableRunnable_create(obs, scheduler, options),
-  });
+const Flowable_fromSynchronousObservable: Flowable.Signature["fromSynchronousObservable"] =
 
-export default Flowable_fromRunnable;
+    <T>() =>
+    (obs: SynchronousObservableLike<T>): FlowableLike<T> => ({
+      [FlowableLike_flow]: (scheduler, options) =>
+        PauseableSynchronousObservable_create(obs, scheduler, options),
+    });
+
+export default Flowable_fromSynchronousObservable;

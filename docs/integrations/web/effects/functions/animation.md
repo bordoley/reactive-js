@@ -18,7 +18,7 @@
 
 #### animation
 
-[`PureRunnableLike`](../../../../concurrent/interfaces/PureRunnableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../../../concurrent/interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 #### options?
 
@@ -44,7 +44,7 @@
 
 #### animation
 
-[`PureRunnableLike`](../../../../concurrent/interfaces/PureRunnableLike.md)\<`T`\> | [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureRunnableLike`](../../../../concurrent/interfaces/PureRunnableLike.md)\<`T`\>\>
+[`PureSynchronousObservableLike`](../../../../concurrent/interfaces/PureSynchronousObservableLike.md)\<`T`\> | [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureSynchronousObservableLike`](../../../../concurrent/interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
 
 #### options?
 

@@ -11,7 +11,7 @@ import {
   DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
   PauseableLike_resume,
-  PureRunnableLike,
+  PureSynchronousObservableLike,
   SchedulerLike,
   StreamableLike,
   StreamableLike_stream,
@@ -150,7 +150,10 @@ const SpringStream_create: (
                 returns(tuple(initialValue, initialValue)),
               ),
               Iterable.reduce(
-                (animations: Array<PureRunnableLike<number>>, [prev, next]) => {
+                (
+                  animations: Array<PureSynchronousObservableLike<number>>,
+                  [prev, next],
+                ) => {
                   if (prev !== next) {
                     animations.push(
                       pipe(
@@ -161,7 +164,7 @@ const SpringStream_create: (
                   }
                   return animations;
                 },
-                (): Array<PureRunnableLike<number>> => [],
+                (): Array<PureSynchronousObservableLike<number>> => [],
               ),
             );
 

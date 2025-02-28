@@ -20,7 +20,7 @@
 
 #### other
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ### Returns
 
@@ -42,7 +42,7 @@
 
 #### other
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 #### selector
 
@@ -66,7 +66,7 @@
 
 #### other
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`TB`\>
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`TB`\>
 
 ### Returns
 
@@ -88,7 +88,7 @@
 
 #### other
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`TB`\>
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`TB`\>
 
 #### selector
 

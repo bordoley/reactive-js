@@ -18,7 +18,7 @@
 
 #### notifier
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)
 
 ### Returns
 
@@ -36,7 +36,7 @@
 
 #### notifier
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)
 
 ### Returns
 

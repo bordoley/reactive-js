@@ -1,5 +1,5 @@
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous } from "../../../computations.js";
-import { DeferredObservableWithSideEffectsLike, ObservableLike, ObserverLike, RunnableWithSideEffectsLike } from "../../../concurrent.js";
+import { DeferredObservableWithSideEffectsLike, ObservableLike, ObserverLike, SynchronousObservableWithSideEffectsLike } from "../../../concurrent.js";
 import { Factory, Optional } from "../../../functions.js";
 import { DisposableLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -82,9 +82,9 @@ declare class ComputeContext {
 }
 export declare const assertCurrentContext: () => ComputeContext;
 interface ObservableComputeWithConfig {
-    computeWithConfig<T>(computation: Factory<T>, config: Pick<RunnableWithSideEffectsLike, typeof ComputationLike_isDeferred | typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>, options?: {
+    computeWithConfig<T>(computation: Factory<T>, config: Pick<SynchronousObservableWithSideEffectsLike, typeof ComputationLike_isDeferred | typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>, options?: {
         readonly mode?: Observable.ComputeMode;
-    }): RunnableWithSideEffectsLike<T>;
+    }): SynchronousObservableWithSideEffectsLike<T>;
     computeWithConfig<T>(computation: Factory<T>, config: Pick<DeferredObservableWithSideEffectsLike, typeof ComputationLike_isDeferred | typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>, options?: {
         readonly mode?: Observable.ComputeMode;
     }): DeferredObservableWithSideEffectsLike<T>;

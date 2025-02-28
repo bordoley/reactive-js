@@ -13,8 +13,8 @@ import {
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
-  RunnableWithSideEffectsLike,
   SchedulerLike_schedule,
+  SynchronousObservableWithSideEffectsLike,
 } from "../../../concurrent.js";
 import {
   Factory,
@@ -265,7 +265,7 @@ class ComputeContext {
         (this[ComputeContext_observableConfig][ComputationLike_isSynchronous] ??
           true) &&
           !observable[ComputationLike_isSynchronous],
-        "cannot observe a non-runnable observable in a Runnable computation",
+        "cannot observe a non-runnable observable in a SynchronousObservable computation",
       );
     }
 
@@ -394,13 +394,13 @@ interface ObservableComputeWithConfig {
   computeWithConfig<T>(
     computation: Factory<T>,
     config: Pick<
-      RunnableWithSideEffectsLike,
+      SynchronousObservableWithSideEffectsLike,
       | typeof ComputationLike_isDeferred
       | typeof ComputationLike_isPure
       | typeof ComputationLike_isSynchronous
     >,
     options?: { readonly mode?: Observable.ComputeMode },
-  ): RunnableWithSideEffectsLike<T>;
+  ): SynchronousObservableWithSideEffectsLike<T>;
   computeWithConfig<T>(
     computation: Factory<T>,
     config: Pick<

@@ -6,7 +6,7 @@ import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__private__/Observable.combineLatest.js";
 import Observable_computeDeferred from "./Observable/__private__/Observable.computeDeferred.js";
-import Observable_computeRunnable from "./Observable/__private__/Observable.computeRunnable.js";
+import Observable_computeSynchronousObservable from "./Observable/__private__/Observable.computeSynchronousObservable.js";
 import { BatchedComputeMode as ObservableCompute_BatchedComputeMode, CombineLatestComputeMode as ObservableCompute_CombineLatestComputeMode, } from "./Observable/__private__/Observable.computeWithConfig.js";
 import Observable_concat from "./Observable/__private__/Observable.concat.js";
 import Observable_concatAll from "./Observable/__private__/Observable.concatAll.js";
@@ -84,12 +84,12 @@ import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 import Observable_zipLatest from "./Observable/__private__/Observable.zipLatest.js";
-export const PureRunnableType = {
+export const PureSynchronousObservableType = {
     [ComputationLike_isDeferred]: true,
     [ComputationLike_isPure]: true,
     [ComputationLike_isSynchronous]: true,
 };
-export const RunnableWithSideEffectsType = {
+export const SynchronousObservableWithSideEffectsType = {
     [ComputationLike_isDeferred]: true,
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: true,
@@ -114,7 +114,7 @@ export const buffer = Observable_buffer;
 export const catchError = Observable_catchError;
 export const combineLatest = Observable_combineLatest;
 export const computeDeferred = Observable_computeDeferred;
-export const computeRunnable = Observable_computeRunnable;
+export const computeSynchronousObservable = Observable_computeSynchronousObservable;
 export const concat = Observable_concat;
 export const concatAll = Observable_concatAll;
 export const concatMany = Observable_concatMany;

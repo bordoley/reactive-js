@@ -5,8 +5,8 @@ import { ContinuationContextLike_yield, ObserverLike_notify, SchedulerLike_sched
 import { error, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
-import Observable_createPureRunnableWithSideEffects from "./Observable.createRunnableWithSideEffects.js";
-const Observable_fromIterable = (options) => (iterable) => Observable_createPureRunnableWithSideEffects((observer) => {
+import Observable_createSynchronousObservableWithSideEffects from "./Observable.createSynchronousObservableWithSideEffects.js";
+const Observable_fromIterable = (options) => (iterable) => Observable_createSynchronousObservableWithSideEffects((observer) => {
     const { delay = 0, delayStart = false } = options ?? {};
     const iterator = iterable[Symbol.iterator]();
     const continuation = (ctx) => {

@@ -142,7 +142,7 @@ testModule("FlowableStream", describe("create", testAsync("reading from readable
                 callback();
             },
         });
-        await pipe(["abc", "defg", "xyz"], Observable.fromReadonlyArray(), Observable.keep(x => x !== "xyz"), Observable.encodeUtf8(), Flowable.fromRunnable(), FlowableStream.writeTo(writable), Observable.lastAsync(scheduler));
+        await pipe(["abc", "defg", "xyz"], Observable.fromReadonlyArray(), Observable.keep(x => x !== "xyz"), Observable.encodeUtf8(), Flowable.fromSynchronousObservable(), FlowableStream.writeTo(writable), Observable.lastAsync(scheduler));
         expectFalse(writable.destroyed);
         pipe(data, expectEquals("abcdefg"));
         writable.destroy();
@@ -166,7 +166,7 @@ testModule("FlowableStream", describe("create", testAsync("reading from readable
                 callback(err);
             },
         });
-        await pipe(["abc", "defg"], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Flowable.fromRunnable(), FlowableStream.writeTo(writable), Observable.lastAsync(scheduler), expectPromiseToThrow);
+        await pipe(["abc", "defg"], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Flowable.fromSynchronousObservable(), FlowableStream.writeTo(writable), Observable.lastAsync(scheduler), expectPromiseToThrow);
         pipe(writable.destroyed, expectEquals(true));
     }
     catch (e_5) {
@@ -190,7 +190,7 @@ testModule("FlowableStream", describe("create", testAsync("reading from readable
             },
         });
         const compressionPipeline = pipeline(zlib.createGzip(), zlib.createGunzip(), writable, Disposable.toErrorHandler(scheduler));
-        await pipe(["abc", "defg"], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Flowable.fromRunnable(), FlowableStream.writeTo(compressionPipeline), Observable.lastAsync(scheduler));
+        await pipe(["abc", "defg"], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Flowable.fromSynchronousObservable(), FlowableStream.writeTo(compressionPipeline), Observable.lastAsync(scheduler));
         pipe(writable.destroyed, expectEquals(true));
         pipe(data, expectEquals("abcdefg"));
     }

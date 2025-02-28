@@ -13,7 +13,7 @@ import * as Streamable from "../../concurrent/Streamable.js";
 import {
   AnimationGroupStreamLike,
   AnimationStreamLike,
-  PureRunnableLike,
+  PureSynchronousObservableLike,
   SchedulerLike,
 } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
@@ -51,21 +51,26 @@ interface WebEffectsModule {
   __animationFrameScheduler(): SchedulerLike;
 
   __animation<T>(
-    animation: PureRunnableLike<T>,
+    animation: PureSynchronousObservableLike<T>,
     options?: {
       animationScheduler: SchedulerLike;
     },
   ): AnimationStreamLike<unknown, T>;
 
   __animation<TEvent, T>(
-    animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
+    animation:
+      | Function1<TEvent, PureSynchronousObservableLike<T>>
+      | PureSynchronousObservableLike<T>,
     options?: {
       animationScheduler: SchedulerLike;
     },
   ): AnimationStreamLike<TEvent, T>;
 
   __animationGroup<T, TKey extends string = string>(
-    animationGroup: ReadonlyObjectMapLike<TKey, PureRunnableLike<T>>,
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      PureSynchronousObservableLike<T>
+    >,
     options?: {
       animationScheduler: SchedulerLike;
     },
@@ -73,7 +78,8 @@ interface WebEffectsModule {
   __animationGroup<T, TKey extends string, TEvent>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
+      | Function1<TEvent, PureSynchronousObservableLike<T>>
+      | PureSynchronousObservableLike<T>
     >,
     options?: {
       animationScheduler: SchedulerLike;
@@ -133,7 +139,9 @@ export const __animate: Signature["__animate"] = (
 };
 
 export const __animation: Signature["__animation"] = <T, TEvent = unknown>(
-  animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
+  animation:
+    | Function1<TEvent, PureSynchronousObservableLike<T>>
+    | PureSynchronousObservableLike<T>,
   options?: {
     animationScheduler: SchedulerLike;
   },
@@ -158,7 +166,8 @@ export const __animationGroup: Signature["__animationGroup"] = <
 >(
   animationGroup: ReadonlyObjectMapLike<
     TKey,
-    Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>
+    | Function1<TEvent, PureSynchronousObservableLike<T>>
+    | PureSynchronousObservableLike<T>
   >,
   options?: {
     animationScheduler: SchedulerLike;

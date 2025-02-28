@@ -5,7 +5,7 @@ import { bindMethod, newInstance, pipe } from "../../../functions.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_run from "./Observable.run.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
-class RunnableDeferable {
+class SynchronousObservableDeferable {
     obs;
     options;
     [ComputationLike_isPure];
@@ -19,5 +19,5 @@ class RunnableDeferable {
         sink[SinkLike_complete]();
     }
 }
-const Observable_toDeferable = (options) => (runnable) => newInstance(RunnableDeferable, runnable, options);
+const Observable_toDeferable = (options) => (runnable) => newInstance(SynchronousObservableDeferable, runnable, options);
 export default Observable_toDeferable;

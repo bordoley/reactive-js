@@ -1,5 +1,5 @@
 import { ReadonlyObjectMapLike } from "../collections.js";
-import { AnimationGroupStreamLike, AnimationStreamLike, DeferredObservableLike, PureDeferredObservableLike, PureRunnableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
+import { AnimationGroupStreamLike, AnimationStreamLike, DeferredObservableLike, PureDeferredObservableLike, PureSynchronousObservableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
 import { Equality, Factory, Function1, Function2, Reducer, Updater } from "../functions.js";
 /**
  * @noInheritDoc
@@ -8,16 +8,16 @@ export interface StreamableModule {
     actionReducer<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
         readonly equality?: Equality<T>;
     }): StreamableLike<TAction, T>;
-    animation<T>(animation: PureRunnableLike<T>, options?: {
+    animation<T>(animation: PureSynchronousObservableLike<T>, options?: {
         readonly animationScheduler?: SchedulerLike;
     }): StreamableLike<void, boolean, AnimationStreamLike<void, T>>;
-    animation<T, TEvent>(animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>, options?: {
+    animation<T, TEvent>(animation: Function1<TEvent, PureSynchronousObservableLike<T>> | PureSynchronousObservableLike<T>, options?: {
         readonly animationScheduler?: SchedulerLike;
     }): StreamableLike<TEvent, boolean, AnimationStreamLike<TEvent, T>>;
-    animationGroup<T, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, PureRunnableLike<T>>, options?: {
+    animationGroup<T, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, PureSynchronousObservableLike<T>>, options?: {
         readonly animationScheduler?: SchedulerLike;
     }): StreamableLike<void, boolean, AnimationGroupStreamLike<void, TKey, T>>;
-    animationGroup<T, TKey extends string, TEvent>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>>, options?: {
+    animationGroup<T, TKey extends string, TEvent>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureSynchronousObservableLike<T>> | PureSynchronousObservableLike<T>>, options?: {
         readonly animationScheduler?: SchedulerLike;
     }): StreamableLike<TEvent, boolean, AnimationGroupStreamLike<TEvent, TKey, T>>;
     create<TReq, T>(op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;

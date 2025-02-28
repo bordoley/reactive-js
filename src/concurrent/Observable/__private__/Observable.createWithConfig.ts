@@ -17,8 +17,8 @@ import {
   ObservableLike_observe,
   ObserverLike,
   PureDeferredObservableLike,
-  PureRunnableLike,
-  RunnableWithSideEffectsLike,
+  PureSynchronousObservableLike,
+  SynchronousObservableWithSideEffectsLike,
 } from "../../../concurrent.js";
 import { SideEffect1, error, none } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
@@ -28,22 +28,22 @@ interface ObservableCreateWithConfig {
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
     config: Pick<
-      PureRunnableLike,
+      PureSynchronousObservableLike,
       | typeof ComputationLike_isDeferred
       | typeof ComputationLike_isPure
       | typeof ComputationLike_isSynchronous
     >,
-  ): PureRunnableLike<T>;
+  ): PureSynchronousObservableLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
     config: Pick<
-      RunnableWithSideEffectsLike,
+      SynchronousObservableWithSideEffectsLike,
       | typeof ComputationLike_isDeferred
       | typeof ComputationLike_isPure
       | typeof ComputationLike_isSynchronous
     >,
-  ): RunnableWithSideEffectsLike<T>;
+  ): SynchronousObservableWithSideEffectsLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,

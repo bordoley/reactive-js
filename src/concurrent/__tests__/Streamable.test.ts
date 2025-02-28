@@ -16,7 +16,7 @@ import {
   AnimationStreamLike_animation,
   DispatcherLike_complete,
   DispatcherLike_isCompleted,
-  PureRunnableLike,
+  PureSynchronousObservableLike,
   StreamableLike_stream,
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
@@ -154,8 +154,8 @@ testModule(
           state =>
             pipe(
               Computation.sequence<
-                PureRunnableLike,
-                Observable.PureRunnableComputation
+                PureSynchronousObservableLike,
+                Observable.PureSynchronousObservableComputation
               >(Observable.generate)(state + 10),
               Observable.map(x => (_: number) => x),
               Observable.takeFirst({ count: 2 }),

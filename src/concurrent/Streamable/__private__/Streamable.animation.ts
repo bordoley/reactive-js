@@ -8,7 +8,7 @@ import {
   AnimationStreamLike,
   AnimationStreamLike_animation,
   PauseableLike_resume,
-  PureRunnableLike,
+  PureSynchronousObservableLike,
   SchedulerLike,
   StreamableLike,
   StreamableLike_stream,
@@ -25,7 +25,9 @@ import DelegatingPauseableMixin from "../../__mixins__/DelegatingPauseableMixin.
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 
 const AnimationStream_create: <TEvent, T>(
-  animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
+  animation:
+    | Function1<TEvent, PureSynchronousObservableLike<T>>
+    | PureSynchronousObservableLike<T>,
   scheduler: SchedulerLike,
   animationScheduler: SchedulerLike,
   options?: {
@@ -42,7 +44,9 @@ const AnimationStream_create: <TEvent, T>(
     include(StreamMixin(), DelegatingPauseableMixin),
     function AnimationStream(
       instance: TProperties,
-      animation: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
+      animation:
+        | Function1<TEvent, PureSynchronousObservableLike<T>>
+        | PureSynchronousObservableLike<T>,
       scheduler: SchedulerLike,
       animationScheduler: SchedulerLike,
       options?: {
@@ -100,7 +104,9 @@ const Streamable_animation: Streamable.Signature["animation"] = (<
   T,
   TEvent = unknown,
 >(
-  animationGroup: Function1<TEvent, PureRunnableLike<T>> | PureRunnableLike<T>,
+  animationGroup:
+    | Function1<TEvent, PureSynchronousObservableLike<T>>
+    | PureSynchronousObservableLike<T>,
   creationOptions?: {
     readonly animationScheduler?: SchedulerLike;
   },

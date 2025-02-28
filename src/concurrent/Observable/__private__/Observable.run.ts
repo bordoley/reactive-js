@@ -1,5 +1,5 @@
 import {
-  RunnableLike,
+  SynchronousObservableLike,
   VirtualTimeSchedulerLike_run,
 } from "../../../concurrent.js";
 import { pipe } from "../../../functions.js";
@@ -16,7 +16,7 @@ const Observable_run: Observable.Signature["run"] =
     readonly capacity?: number;
     readonly maxMicroTaskTicks?: number;
   }) =>
-  (observable: RunnableLike<T>) => {
+  (observable: SynchronousObservableLike<T>) => {
     const scheduler = VirtualTimeScheduler.create(options);
 
     const subscription = pipe(

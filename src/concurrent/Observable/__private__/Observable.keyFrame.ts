@@ -1,7 +1,7 @@
 import { MAX_VALUE } from "../../../__internal__/constants.js";
 import { min } from "../../../__internal__/math.js";
 import * as Computation from "../../../computations/Computation.js";
-import { PureRunnableLike } from "../../../concurrent.js";
+import { PureSynchronousObservableLike } from "../../../concurrent.js";
 import {
   Function1,
   Tuple2,
@@ -22,7 +22,7 @@ const Observable_keyFrame = (
   options?: {
     readonly easing?: Function1<number, number>;
   },
-): PureRunnableLike<number> => {
+): PureSynchronousObservableLike<number> => {
   const { easing = identity } = options ?? {};
 
   return pipe(
@@ -37,9 +37,10 @@ const Observable_keyFrame = (
       },
       returns(tuple(MAX_VALUE, 0)),
     ),
-    Computation.pick<PureRunnableLike, Observable.PureRunnableComputation>(
-      Observable_map,
-    )(1),
+    Computation.pick<
+      PureSynchronousObservableLike,
+      Observable.PureSynchronousObservableComputation
+    >(Observable_map)(1),
     Observable_takeWhile(isNotEqualTo(1), {
       inclusive: true,
     }),

@@ -4,8 +4,8 @@ import { ContinuationContextLike_yield, ObserverLike_notify, SchedulerLike_sched
 import { none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
-import Observable_createPureRunnable from "./Observable.createPureRunnable.js";
-const Observable_generate = (generator, initialValue, options) => Observable_createPureRunnable((observer) => {
+import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
+const Observable_generate = (generator, initialValue, options) => Observable_createPureSynchronousObservable((observer) => {
     const { count, delay = 0, delayStart = false } = options ?? {};
     let acc = initialValue();
     let cnt = 0;

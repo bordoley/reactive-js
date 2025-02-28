@@ -5,7 +5,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as Observable from "../../concurrent/Observable.js";
-import { PureRunnableLike } from "../../concurrent.js";
+import { PureSynchronousObservableLike } from "../../concurrent.js";
 import {
   Optional,
   isSome,
@@ -26,8 +26,8 @@ testModule(
         ["b", none, "v"],
         Observable.fromReadonlyArray(),
         Computation.keepType<
-          PureRunnableLike,
-          Observable.PureRunnableComputation
+          PureSynchronousObservableLike,
+          Observable.PureSynchronousObservableComputation
         >(Observable.keep)<Optional<string>, string>(isSome),
         Observable.toReadonlyArray(),
         expectArrayEquals(["b", "v"]),
@@ -45,9 +45,10 @@ testModule(
           ["e", "f"],
         ],
         Observable.fromReadonlyArray(),
-        Computation.mapTo<PureRunnableLike, Observable.PureRunnableComputation>(
-          Observable.map,
-        )(2),
+        Computation.mapTo<
+          PureSynchronousObservableLike,
+          Observable.PureSynchronousObservableComputation
+        >(Observable.map)(2),
         Observable.toReadonlyArray(),
         expectArrayEquals([2, 2, 2]),
       ),
@@ -68,9 +69,10 @@ testModule(
       pipe(
         [obj],
         Observable.fromReadonlyArray(),
-        Computation.pick<PureRunnableLike, Observable.PureRunnableComputation>(
-          Observable.map,
-        )(keyA, keyB),
+        Computation.pick<
+          PureSynchronousObservableLike,
+          Observable.PureSynchronousObservableComputation
+        >(Observable.map)(keyA, keyB),
         Observable.toReadonlyArray<string>(),
         expectArrayEquals<string>(["value"]),
       );
@@ -85,9 +87,10 @@ testModule(
       pipe(
         [obj],
         Observable.fromReadonlyArray(),
-        Computation.pick<PureRunnableLike, Observable.PureRunnableComputation>(
-          Observable.map,
-        )("keyA", "keyB"),
+        Computation.pick<
+          PureSynchronousObservableLike,
+          Observable.PureSynchronousObservableComputation
+        >(Observable.map)("keyA", "keyB"),
         Observable.toReadonlyArray<string>(),
         expectArrayEquals<string>(["value"]),
       );
@@ -98,9 +101,10 @@ testModule(
       pipe(
         [obj],
         Observable.fromReadonlyArray(),
-        Computation.pick<PureRunnableLike, Observable.PureRunnableComputation>(
-          Observable.map,
-        )(3),
+        Computation.pick<
+          PureSynchronousObservableLike,
+          Observable.PureSynchronousObservableComputation
+        >(Observable.map)(3),
         Observable.toReadonlyArray<number>(),
         expectArrayEquals<number>([4]),
       );

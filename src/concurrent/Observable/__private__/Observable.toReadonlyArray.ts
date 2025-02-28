@@ -1,5 +1,5 @@
 import { Array_push } from "../../../__internal__/constants.js";
-import { RunnableLike } from "../../../concurrent.js";
+import { SynchronousObservableLike } from "../../../concurrent.js";
 import { Function1, bindMethod, pipe } from "../../../functions.js";
 import { BackpressureStrategy } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -11,7 +11,7 @@ const Observable_toReadonlyArray: Observable.Signature["toReadonlyArray"] =
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
     readonly maxMicroTaskTicks?: number;
-  }): Function1<RunnableLike<T>, ReadonlyArray<T>> =>
+  }): Function1<SynchronousObservableLike<T>, ReadonlyArray<T>> =>
   observable => {
     const result: T[] = [];
 

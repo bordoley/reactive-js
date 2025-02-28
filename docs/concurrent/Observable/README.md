@@ -12,9 +12,9 @@
 - [MulticastObservableComputation](interfaces/MulticastObservableComputation.md)
 - [ObservableModule](interfaces/ObservableModule.md)
 - [PuredDeferredObservableComputation](interfaces/PuredDeferredObservableComputation.md)
-- [PureRunnableComputation](interfaces/PureRunnableComputation.md)
-- [RunnableComputation](interfaces/RunnableComputation.md)
-- [RunnableWithSideEffectsComputation](interfaces/RunnableWithSideEffectsComputation.md)
+- [PureSynchronousObservableComputation](interfaces/PureSynchronousObservableComputation.md)
+- [SynchronousObservableComputation](interfaces/SynchronousObservableComputation.md)
+- [SynchronousObservableWithSideEffectsComputation](interfaces/SynchronousObservableWithSideEffectsComputation.md)
 
 ## Type Aliases
 
@@ -33,8 +33,8 @@
 - [currentTime](variables/currentTime.md)
 - [DeferredObservableWithSideEffectsType](variables/DeferredObservableWithSideEffectsType.md)
 - [PureDeferredObservableType](variables/PureDeferredObservableType.md)
-- [PureRunnableType](variables/PureRunnableType.md)
-- [RunnableWithSideEffectsType](variables/RunnableWithSideEffectsType.md)
+- [PureSynchronousObservableType](variables/PureSynchronousObservableType.md)
+- [SynchronousObservableWithSideEffectsType](variables/SynchronousObservableWithSideEffectsType.md)
 - [ThrottleFirstMode](variables/ThrottleFirstMode.md)
 - [ThrottleIntervalMode](variables/ThrottleIntervalMode.md)
 - [ThrottleLastMode](variables/ThrottleLastMode.md)
@@ -46,7 +46,7 @@
 - [catchError](functions/catchError.md)
 - [combineLatest](functions/combineLatest.md)
 - [computeDeferred](functions/computeDeferred.md)
-- [computeRunnable](functions/computeRunnable.md)
+- [computeSynchronousObservable](functions/computeSynchronousObservable.md)
 - [concat](functions/concat.md)
 - [concatAll](functions/concatAll.md)
 - [concatMany](functions/concatMany.md)

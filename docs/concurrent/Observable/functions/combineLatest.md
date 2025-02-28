@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **combineLatest**\<`TA`, `TB`\>(`a`, `b`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **combineLatest**\<`TA`, `TB`\>(`a`, `b`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ### Type Parameters
 
@@ -20,379 +20,19 @@
 
 #### a
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 #### b
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 ### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ## Call Signature
 
-> **combineLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-### Parameters
-
-#### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-#### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-#### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
-
-## Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-### Parameters
-
-#### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-#### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-#### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-#### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
-
-## Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-• **TE**
-
-### Parameters
-
-#### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-#### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-#### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-#### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-#### e
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TE`\>
-
-### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
-
-## Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-• **TE**
-
-• **TF**
-
-### Parameters
-
-#### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-#### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-#### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-#### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-#### e
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TE`\>
-
-#### f
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TF`\>
-
-### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
-
-## Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-• **TE**
-
-• **TF**
-
-• **TG**
-
-### Parameters
-
-#### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-#### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-#### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-#### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-#### e
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TE`\>
-
-#### f
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TF`\>
-
-#### g
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TG`\>
-
-### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
-
-## Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-• **TE**
-
-• **TF**
-
-• **TG**
-
-• **TH**
-
-### Parameters
-
-#### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-#### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-#### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-#### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-#### e
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TE`\>
-
-#### f
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TF`\>
-
-#### g
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TG`\>
-
-#### h
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TH`\>
-
-### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
-
-## Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-• **TE**
-
-• **TF**
-
-• **TG**
-
-• **TH**
-
-• **TI**
-
-### Parameters
-
-#### a
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TA`\>
-
-#### b
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TB`\>
-
-#### c
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TC`\>
-
-#### d
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TD`\>
-
-#### e
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TE`\>
-
-#### f
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TF`\>
-
-#### g
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TG`\>
-
-#### h
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TH`\>
-
-#### i
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`TI`\>
-
-### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
-
-## Call Signature
-
-> **combineLatest**\<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-### Parameters
-
-#### a
-
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
-
-#### b
-
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
-
-### Returns
-
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
-
-## Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+> **combineLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
 
 ### Type Parameters
 
@@ -406,23 +46,23 @@
 
 #### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 #### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 #### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 ### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
 
 ## Call Signature
 
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
 
 ### Type Parameters
 
@@ -438,27 +78,27 @@
 
 #### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 #### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 #### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 #### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 ### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
 
 ## Call Signature
 
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 ### Type Parameters
 
@@ -476,31 +116,31 @@
 
 #### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 #### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 #### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 #### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 #### e
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TE`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TE`\>
 
 ### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 ## Call Signature
 
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 ### Type Parameters
 
@@ -520,35 +160,35 @@
 
 #### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 #### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 #### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 #### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 #### e
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TE`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TE`\>
 
 #### f
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TF`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TF`\>
 
 ### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 ## Call Signature
 
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 ### Type Parameters
 
@@ -570,39 +210,39 @@
 
 #### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 #### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 #### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 #### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 #### e
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TE`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TE`\>
 
 #### f
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TF`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TF`\>
 
 #### g
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TG`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TG`\>
 
 ### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 ## Call Signature
 
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 ### Type Parameters
 
@@ -626,43 +266,43 @@
 
 #### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 #### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 #### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 #### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 #### e
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TE`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TE`\>
 
 #### f
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TF`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TF`\>
 
 #### g
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TG`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TG`\>
 
 #### h
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TH`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TH`\>
 
 ### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 ## Call Signature
 
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 ### Type Parameters
 
@@ -688,43 +328,403 @@
 
 #### a
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TA`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TA`\>
 
 #### b
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
 
 #### c
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TC`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TC`\>
 
 #### d
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TD`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TD`\>
 
 #### e
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TE`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TE`\>
 
 #### f
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TF`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TF`\>
 
 #### g
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TG`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TG`\>
 
 #### h
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TH`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TH`\>
 
 #### i
 
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`TI`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TI`\>
 
 ### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+## Call Signature
+
+> **combineLatest**\<`TA`, `TB`\>(`a`, `b`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+### Parameters
+
+#### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+#### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+
+## Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+### Parameters
+
+#### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+#### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+#### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+
+## Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+### Parameters
+
+#### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+#### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+#### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+#### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+## Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+• **TE**
+
+### Parameters
+
+#### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+#### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+#### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+#### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+#### e
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TE`\>
+
+### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple5`](../../../functions/type-aliases/Tuple5.md)\<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+## Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+• **TE**
+
+• **TF**
+
+### Parameters
+
+#### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+#### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+#### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+#### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+#### e
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TE`\>
+
+#### f
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TF`\>
+
+### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple6`](../../../functions/type-aliases/Tuple6.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+## Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+• **TE**
+
+• **TF**
+
+• **TG**
+
+### Parameters
+
+#### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+#### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+#### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+#### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+#### e
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TE`\>
+
+#### f
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TF`\>
+
+#### g
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TG`\>
+
+### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple7`](../../../functions/type-aliases/Tuple7.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+## Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+• **TE**
+
+• **TF**
+
+• **TG**
+
+• **TH**
+
+### Parameters
+
+#### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+#### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+#### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+#### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+#### e
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TE`\>
+
+#### f
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TF`\>
+
+#### g
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TG`\>
+
+#### h
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TH`\>
+
+### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple8`](../../../functions/type-aliases/Tuple8.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+## Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+• **TE**
+
+• **TF**
+
+• **TG**
+
+• **TH**
+
+• **TI**
+
+### Parameters
+
+#### a
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TA`\>
+
+#### b
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TB`\>
+
+#### c
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TC`\>
+
+#### d
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TD`\>
+
+#### e
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TE`\>
+
+#### f
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TF`\>
+
+#### g
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TG`\>
+
+#### h
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TH`\>
+
+#### i
+
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`TI`\>
+
+### Returns
+
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<[`Tuple9`](../../../functions/type-aliases/Tuple9.md)\<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 ## Call Signature
 

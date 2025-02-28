@@ -10,10 +10,10 @@ import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { DisposableLike_isDisposed } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_createPureRunnable from "./Observable.createPureRunnable.js";
+import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
 
 const Observable_currentTime: Observable.Signature["currentTime"] =
-  /*@__PURE__*/ Observable_createPureRunnable(
+  /*@__PURE__*/ Observable_createPureSynchronousObservable(
     (observer: ObserverLike<number>) => {
       const continuation = (ctx: ContinuationContextLike) => {
         while (!observer[DisposableLike_isDisposed]) {

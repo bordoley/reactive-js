@@ -5,7 +5,7 @@ import {
 } from "../../../computations.js";
 import {
   DeferredObservableLike,
-  PureRunnableLike,
+  PureSynchronousObservableLike,
 } from "../../../concurrent.js";
 import { Function1, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
@@ -22,12 +22,14 @@ const Observable_switchMap: Observable.Signature["switchMap"] = (<TA, TB>(
       };
     },
   ) =>
-  (obs: PureRunnableLike<TA>) =>
+  (obs: PureSynchronousObservableLike<TA>) =>
     pipe(
       obs,
       Observable_map(selector),
       Observable_switchAll<TB>(
-        options as { innerType: typeof Observable.PureRunnableType },
+        options as {
+          innerType: typeof Observable.PureSynchronousObservableType;
+        },
       ),
     )) as Observable.Signature["switchMap"];
 

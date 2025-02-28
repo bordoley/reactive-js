@@ -63,7 +63,7 @@ testModule(
           delayStart: true,
         }),
         Observable.takeFirst<number>({ count: 5 }),
-        Flowable.fromRunnable(),
+        Flowable.fromSynchronousObservable(),
       );
 
       const dest = Streamable.identity<number>()[StreamableLike_stream](vts, {
@@ -175,7 +175,7 @@ testModule(
     ),
   ),
   describe(
-    "fromRunnable",
+    "fromSynchronousObservable",
     test("a source with delay", () => {
       using vts = VirtualTimeScheduler.create();
 
@@ -184,7 +184,7 @@ testModule(
           delay: 1,
           delayStart: true,
         }),
-        Flowable.fromRunnable(),
+        Flowable.fromSynchronousObservable(),
         invoke(FlowableLike_flow, vts),
       );
 
@@ -237,7 +237,7 @@ testModule(
       const flowed = pipe(
         [0, 1, 2],
         Observable.fromReadonlyArray(),
-        Flowable.fromRunnable(),
+        Flowable.fromSynchronousObservable(),
         invoke(FlowableLike_flow, vts),
         Disposable.addTo(vts),
       );
@@ -270,7 +270,7 @@ testModule(
 
       const flowed = pipe(
         Observable.raise({ raise: () => error }),
-        Flowable.fromRunnable(),
+        Flowable.fromSynchronousObservable(),
         invoke(FlowableLike_flow, vts),
         Disposable.addTo(vts),
       );
