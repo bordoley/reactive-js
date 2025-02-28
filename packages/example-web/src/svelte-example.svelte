@@ -21,7 +21,7 @@ import * as Flowable from "@reactive-js/core/concurrent/Flowable";
 
   const counter = pipe(
     Observable.generate(increment, returns(-1), {delay: 500}),
-    Flowable.fromRunnable(),
+    Flowable.fromSynchronousObservable(),
     invoke(FlowableLike_flow, scheduler)
   );
 

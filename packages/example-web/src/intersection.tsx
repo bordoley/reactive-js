@@ -10,7 +10,7 @@ import {
   pipeSomeLazy,
 } from "@reactive-js/core/functions";
 import { useDisposable } from "@reactive-js/core/integrations/react";
-import { pick } from "@reactive-js/core/computations";
+import * as Computation from "@reactive-js/core/computations/Computation";
 import * as EventSource from "@reactive-js/core/events/EventSource";
 
 const IntersectionApp = () => {
@@ -21,7 +21,7 @@ const IntersectionApp = () => {
     pipeSomeLazy(
       endOfPageRef,
       WebElement.intersectionEventSource(document),
-      pick(EventSource.map)("isIntersecting"),
+      Computation.pick(EventSource.map)("isIntersecting"),
       EventSource.keep(isTrue),
       EventSource.addEventHandler(pipeLazy(incrementBy(10), updateCount)),
     ),

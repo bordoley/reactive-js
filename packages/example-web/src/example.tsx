@@ -199,7 +199,7 @@ const Counter = () => {
           query: `v=${value}`,
         })),
       ),
-      Flowable.fromRunnable(),
+      Flowable.fromSynchronousObservable(),
     ),
     [history.replace, counterInitialValue],
   );
