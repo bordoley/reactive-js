@@ -17,6 +17,22 @@ import {
 import { TypePredicate, increment, pickUnsafe, returns } from "../functions.js";
 
 interface Signature {
+  areAllDeferred<TComputation extends ComputationLike>(
+    computations: readonly TComputation[],
+  ): computations is readonly (TComputation & DeferredComputationLike)[];
+
+  areAllMulticasted<TComputation extends ComputationLike>(
+    computations: readonly TComputation[],
+  ): computations is readonly (TComputation & MulticastComputationLike)[];
+
+  areAllPure<TComputation extends ComputationLike>(
+    computations: readonly TComputation[],
+  ): computations is readonly (TComputation & PureComputationLike)[];
+
+  areAllSynchronous<TComputation extends ComputationLike>(
+    computations: readonly TComputation[],
+  ): computations is readonly (TComputation & SynchronousComputationLike)[];
+
   isDeferred<TComputation extends ComputationLike>(
     computation: TComputation,
   ): computation is TComputation & DeferredComputationLike;
@@ -52,24 +68,60 @@ interface Signature {
   ): (start: number) => ComputationOf<Type, C, number>;
 }
 
-export const isDeferred = <TComputation extends ComputationLike>(
+export const areAllDeferred: Signature["areAllDeferred"] = <
+  TComputation extends ComputationLike,
+>(
+  computations: readonly TComputation[],
+): computations is readonly (TComputation & DeferredComputationLike)[] =>
+  computations.every(isDeferred);
+
+export const areAllMulticasted: Signature["areAllMulticasted"] = <
+  TComputation extends ComputationLike,
+>(
+  computations: readonly TComputation[],
+): computations is readonly (TComputation & MulticastComputationLike)[] =>
+  computations.every(isMulticasted);
+
+export const areAllPure: Signature["areAllPure"] = <
+  TComputation extends ComputationLike,
+>(
+  computations: readonly TComputation[],
+): computations is readonly (TComputation & PureComputationLike)[] =>
+  computations.every(isPure);
+
+export const areAllSynchronous: Signature["areAllSynchronous"] = <
+  TComputation extends ComputationLike,
+>(
+  computations: readonly TComputation[],
+): computations is readonly (TComputation & SynchronousComputationLike)[] =>
+  computations.every(isSynchronous);
+
+export const isDeferred: Signature["isDeferred"] = <
+  TComputation extends ComputationLike,
+>(
   computation: TComputation,
 ): computation is TComputation & DeferredComputationLike =>
   computation[ComputationLike_isDeferred] ?? true;
 
-export const isMulticasted = <TComputation extends ComputationLike>(
+export const isMulticasted: Signature["isMulticasted"] = <
+  TComputation extends ComputationLike,
+>(
   computation: TComputation,
 ): computation is TComputation & MulticastComputationLike =>
   !(computation[ComputationLike_isDeferred] ?? true) &&
   (computation[ComputationLike_isPure] ?? true) &&
   !(computation[ComputationLike_isSynchronous] ?? true);
 
-export const isPure = <TComputation extends ComputationLike>(
+export const isPure: Signature["isPure"] = <
+  TComputation extends ComputationLike,
+>(
   computation: TComputation,
 ): computation is TComputation & PureComputationLike =>
   computation[ComputationLike_isPure] ?? true;
 
-export const isSynchronous = <TComputation extends ComputationLike>(
+export const isSynchronous: Signature["isSynchronous"] = <
+  TComputation extends ComputationLike,
+>(
   computation: TComputation,
 ): computation is TComputation & SynchronousComputationLike =>
   (computation[ComputationLike_isSynchronous] ?? true) &&

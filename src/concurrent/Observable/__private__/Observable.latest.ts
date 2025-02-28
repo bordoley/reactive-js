@@ -11,6 +11,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
+import * as Computation from "../../../computations/Computation.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
@@ -28,8 +29,6 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
-import Observable_allArePure from "./Observable.allArePure.js";
-import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 
 type LatestMode = 1 | 2;
@@ -143,13 +142,13 @@ const Observable_latest = /*@__PURE__*/ (() => {
       }
     };
 
-    const isPure = Observable_allArePure(observables);
-    const isRunnable = Observable_allAreRunnable(observables);
+    const isPure = Computation.areAllPure(observables);
+    const isSynchronous = Computation.areAllSynchronous(observables);
 
     return Observable_createWithConfig(onSubscribe, {
       [ComputationLike_isDeferred]: true,
       [ComputationLike_isPure]: isPure,
-      [ComputationLike_isSynchronous]: isRunnable,
+      [ComputationLike_isSynchronous]: isSynchronous,
     });
   };
 })();

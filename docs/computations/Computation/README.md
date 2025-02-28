@@ -8,6 +8,10 @@
 
 ## Functions
 
+- [areAllDeferred](functions/areAllDeferred.md)
+- [areAllMulticasted](functions/areAllMulticasted.md)
+- [areAllPure](functions/areAllPure.md)
+- [areAllSynchronous](functions/areAllSynchronous.md)
 - [isDeferred](functions/isDeferred.md)
 - [isMulticasted](functions/isMulticasted.md)
 - [isPure](functions/isPure.md)

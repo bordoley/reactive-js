@@ -1,5 +1,6 @@
 import { Array_length } from "../../../__internal__/constants.js";
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
+import * as Computation from "../../../computations/Computation.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
@@ -16,9 +17,6 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
-import Observable_allAreMulticasted from "./Observable.allAreMulticasted.js";
-import Observable_allArePure from "./Observable.allArePure.js";
-import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 
 const Observable_mergeMany: Observable.Signature["mergeMany"] = (<T>() => {
   const MergeObservable_observables = Symbol("MergeObservable_observables");
@@ -52,10 +50,10 @@ const Observable_mergeMany: Observable.Signature["mergeMany"] = (<T>() => {
       observables: readonly ObservableLike<T>[],
     ): ObservableLike<T> {
       instance[ComputationLike_isDeferred] =
-        !Observable_allAreMulticasted(observables);
-      instance[ComputationLike_isPure] = Observable_allArePure(observables);
+        !Computation.areAllMulticasted(observables);
+      instance[ComputationLike_isPure] = Computation.areAllPure(observables);
       instance[ComputationLike_isSynchronous] =
-        Observable_allAreRunnable(observables);
+        Computation.areAllSynchronous(observables);
       instance[MergeObservable_observables] = flattenObservables(observables);
 
       return instance;

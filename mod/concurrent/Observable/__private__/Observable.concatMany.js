@@ -2,6 +2,7 @@
 
 import { Array_length } from "../../../__internal__/constants.js";
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
+import * as Computation from "../../../computations/Computation.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { ObservableLike_observe, } from "../../../concurrent.js";
 import { bind, bindMethod, isSome, none, pipe } from "../../../functions.js";
@@ -9,8 +10,6 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
-import Observable_allArePure from "./Observable.allArePure.js";
-import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_empty from "./Observable.empty.js";
 const Observable_concatMany = 
 /*@__PURE__*/ (() => {
@@ -41,9 +40,9 @@ const Observable_concatMany =
             : observable)
         : observables;
     const createConcatObservable = mixInstanceFactory(function ConcatObservable(instance, observables) {
-        instance[ComputationLike_isPure] = Observable_allArePure(observables);
+        instance[ComputationLike_isPure] = Computation.areAllPure(observables);
         instance[ComputationLike_isSynchronous] =
-            Observable_allAreRunnable(observables);
+            Computation.areAllSynchronous(observables);
         instance[ConcatObservable_observables] =
             flattenObservables(observables);
         return instance;
