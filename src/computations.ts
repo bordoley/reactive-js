@@ -7,6 +7,8 @@ import {
   Reducer,
   SideEffect1,
   Tuple2,
+  Tuple3,
+  Tuple4,
   Updater,
 } from "./functions.js";
 
@@ -248,7 +250,7 @@ export interface ComputationWithSideEffectsModule<
   >;
 }
 
-export interface StatelessComputationModule<
+export interface ComputationModule<
   Type extends ComputationLike,
   TComputation extends Computation<Type>,
 > {
@@ -283,8 +285,28 @@ export interface SynchronousComputationModule<
   >;
 }
 
-// FIXME: Does using these operator on non-deferred Types make sense?
-export interface StatefulComputationModule<
+export interface InteractiveComputationModule<
+  Type extends DeferredComputationLike,
+  TComputation extends Computation<Type>,
+> {
+  zip<TA, TB>(
+    a: Iterable<TA>,
+    b: Iterable<TB>,
+  ): ComputationOf<Type, TComputation, Tuple2<TA, TB>>;
+  zip<TA, TB, TC>(
+    a: Iterable<TA>,
+    b: Iterable<TB>,
+    c: Iterable<TC>,
+  ): ComputationOf<Type, TComputation, Tuple3<TA, TB, TC>>;
+  zip<TA, TB, TC, TD>(
+    a: Iterable<TA>,
+    b: Iterable<TB>,
+    c: Iterable<TC>,
+    d: Iterable<TD>,
+  ): ComputationOf<Type, TComputation, Tuple4<TA, TB, TC, TD>>;
+}
+
+export interface ReactiveComputationModule<
   Type extends DeferredComputationLike,
   TComputation extends Computation<Type>,
 > {

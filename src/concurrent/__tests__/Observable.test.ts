@@ -19,22 +19,22 @@ import {
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as Computation from "../../computations/Computation.js";
+import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/ComputationModuleTests.js";
 import ComputationWithSideEffectsModuleTests from "../../computations/__tests__/fixtures/ComputationWithSideEffectsModuleTests.js";
 import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
-import StatefulComputationModuleTests from "../../computations/__tests__/fixtures/StatefulComputationModuleTests.js";
-import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/StatelessComputationModuleTests.js";
+import ReactiveComputationModuleTests from "../../computations/__tests__/fixtures/ReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
+  ComputationModule,
   ComputationWithSideEffectsModule,
   DeferredComputationModule,
   DeferredComputationWithSideEffectsType,
   PureDeferredComputationType,
   PureSynchronousComputationType,
-  StatefulComputationModule,
-  StatelessComputationModule,
+  ReactiveComputationModule,
   SynchronousComputationModule,
   SynchronousComputationWithSideEffectsType,
 } from "../../computations.js";
@@ -509,7 +509,7 @@ testModule(
       >,
   ),
   PureStatelesssComputationModuleTests(
-    Observable as StatelessComputationModule<
+    Observable as ComputationModule<
       SynchronousObservableLike,
       SynchronousObservableComputation
     > &
@@ -522,8 +522,8 @@ testModule(
         SynchronousObservableComputation
       >,
   ),
-  StatefulComputationModuleTests(
-    Observable as StatefulComputationModule<
+  ReactiveComputationModuleTests(
+    Observable as ReactiveComputationModule<
       SynchronousObservableLike,
       SynchronousObservableComputation
     > &

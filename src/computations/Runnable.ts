@@ -1,13 +1,13 @@
 import {
   Computation,
+  ComputationModule,
   ComputationWithSideEffectsModule,
   Computation_T,
   Computation_type,
   DeferredComputationModule,
+  ReactiveComputationModule,
   RunnableLike,
   RunnableWithSideEffectsLike,
-  StatefulComputationModule,
-  StatelessComputationModule,
   SynchronousComputationModule,
 } from "../computations.js";
 import { identity, returns } from "../functions.js";
@@ -60,9 +60,9 @@ export interface RunnableWithSideEffectsComputation
 }
 
 export interface RunnableModule
-  extends StatelessComputationModule<RunnableLike, RunnableComputation>,
+  extends ComputationModule<RunnableLike, RunnableComputation>,
     DeferredComputationModule<RunnableLike, RunnableComputation>,
-    StatefulComputationModule<RunnableLike, RunnableComputation>,
+    ReactiveComputationModule<RunnableLike, RunnableComputation>,
     ComputationWithSideEffectsModule<
       RunnableLike,
       RunnableComputation,

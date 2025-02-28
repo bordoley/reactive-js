@@ -1,17 +1,17 @@
 import { testModule } from "../../__internal__/testing.js";
 import { RunnableLike } from "../../computations.js";
 import * as Runnable from "../Runnable.js";
+import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ComputationWithSideEffectsModuleTests from "./fixtures/ComputationWithSideEffectsModuleTests.js";
 import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
-import StatefulComputationModuleTests from "./fixtures/StatefulComputationModuleTests.js";
-import StatelessComputationModuleTests from "./fixtures/StatelessComputationModuleTests.js";
+import ReactiveComputationModuleTests from "./fixtures/ReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 
 testModule(
   "Runnable",
-  StatelessComputationModuleTests(Runnable),
+  ComputationModuleTests(Runnable),
   DeferredComputationModuleTests(Runnable),
-  StatefulComputationModuleTests(Runnable),
+  ReactiveComputationModuleTests(Runnable),
   ComputationWithSideEffectsModuleTests(Runnable),
   SynchronousComputationModuleTests<RunnableLike, Runnable.RunnableComputation>(
     Runnable,

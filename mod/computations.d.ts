@@ -1,4 +1,4 @@
-import { Equality, Factory, Function1, Optional, Predicate, Reducer, SideEffect1, Tuple2, Updater } from "./functions.js";
+import { Equality, Factory, Function1, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4, Updater } from "./functions.js";
 export declare const Computation_T: unique symbol;
 export declare const Computation_type: unique symbol;
 export declare const ComputationLike_isPure: unique symbol;
@@ -97,7 +97,7 @@ export interface DeferredComputationModule<Type extends DeferredComputationLike,
 export interface ComputationWithSideEffectsModule<Type extends ComputationLike, TComputation extends Computation<Type>, TypeWithSideEffects extends ComputationWithSideEffectsLike & Type, ComputationWithSideEffect extends Computation<TypeWithSideEffects>> {
     forEach<T>(sideEffect: SideEffect1<T>): ComputationWithSideEffectsOperator<Type, TComputation, TypeWithSideEffects, ComputationWithSideEffect, T, T>;
 }
-export interface StatelessComputationModule<Type extends ComputationLike, TComputation extends Computation<Type>> {
+export interface ComputationModule<Type extends ComputationLike, TComputation extends Computation<Type>> {
     keep<T>(predicate: Predicate<T>): ComputationOperator<Type, TComputation, T, T>;
     map<TA, TB>(selector: Function1<TA, TB>): ComputationOperator<Type, TComputation, TA, TB>;
 }
@@ -107,7 +107,12 @@ export interface SynchronousComputationModule<Type extends SynchronousComputatio
     toRunnable<T>(): Function1<ComputationOf<Type, TComputation, T>, RunnableLike<T>>;
     toReadonlyArray<T>(): Function1<ComputationOf<Type, TComputation, T>, ReadonlyArray<T>>;
 }
-export interface StatefulComputationModule<Type extends DeferredComputationLike, TComputation extends Computation<Type>> {
+export interface InteractiveComputationModule<Type extends DeferredComputationLike, TComputation extends Computation<Type>> {
+    zip<TA, TB>(a: Iterable<TA>, b: Iterable<TB>): ComputationOf<Type, TComputation, Tuple2<TA, TB>>;
+    zip<TA, TB, TC>(a: Iterable<TA>, b: Iterable<TB>, c: Iterable<TC>): ComputationOf<Type, TComputation, Tuple3<TA, TB, TC>>;
+    zip<TA, TB, TC, TD>(a: Iterable<TA>, b: Iterable<TB>, c: Iterable<TC>, d: Iterable<TD>): ComputationOf<Type, TComputation, Tuple4<TA, TB, TC, TD>>;
+}
+export interface ReactiveComputationModule<Type extends DeferredComputationLike, TComputation extends Computation<Type>> {
     buffer<T>(options?: {
         count?: number;
     }): ComputationOperator<Type, TComputation, T, readonly T[]>;

@@ -4,13 +4,14 @@ import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import {
   Computation,
   ComputationLike_isPure,
+  ComputationModule,
   ComputationWithSideEffectsModule,
   Computation_T,
   Computation_type,
   DeferredComputationModule,
+  InteractiveComputationModule,
   IterableLike,
   IterableWithSideEffectsLike,
-  StatelessComputationModule,
   SynchronousComputationModule,
 } from "../computations.js";
 import {
@@ -21,9 +22,6 @@ import {
   Reducer,
   SideEffect,
   SideEffect1,
-  Tuple2,
-  Tuple3,
-  Tuple4,
   Updater,
   alwaysTrue,
   error,
@@ -56,7 +54,7 @@ export interface IterableWithSideEffectsComputation
 }
 
 export interface IterableModule
-  extends StatelessComputationModule<IterableLike, IterableComputation>,
+  extends ComputationModule<IterableLike, IterableComputation>,
     DeferredComputationModule<IterableLike, IterableComputation>,
     ComputationWithSideEffectsModule<
       IterableLike,
@@ -64,20 +62,8 @@ export interface IterableModule
       IterableWithSideEffectsLike,
       IterableWithSideEffectsComputation
     >,
-    SynchronousComputationModule<IterableLike, IterableComputation> {
-  zip<TA, TB>(a: Iterable<TA>, b: Iterable<TB>): Iterable<Tuple2<TA, TB>>;
-  zip<TA, TB, TC>(
-    a: Iterable<TA>,
-    b: Iterable<TB>,
-    c: Iterable<TC>,
-  ): Iterable<Tuple3<TA, TB, TC>>;
-  zip<TA, TB, TC, TD>(
-    a: Iterable<TA>,
-    b: Iterable<TB>,
-    c: Iterable<TC>,
-    d: Iterable<TD>,
-  ): Iterable<Tuple4<TA, TB, TC, TD>>;
-}
+    SynchronousComputationModule<IterableLike, IterableComputation>,
+    InteractiveComputationModule<IterableLike, IterableComputation> {}
 
 export type Signature = IterableModule;
 

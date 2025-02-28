@@ -55,7 +55,7 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 import { Array_length, Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectIsSome, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
-import StatelessComputationModuleTests from "../../computations/__tests__/fixtures/StatelessComputationModuleTests.js";
+import ComputationModuleTests from "../../computations/__tests__/fixtures/ComputationModuleTests.js";
 import { ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../../computations.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as VirtualTimeScheduler from "../../concurrent/VirtualTimeScheduler.js";
@@ -64,7 +64,7 @@ import { EventListenerLike_notify, EventSourceLike_addEventListener, } from "../
 import { bindMethod, compose, ignore, isSome, newInstance, none, pick, pipe, pipeLazy, raise, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
-testModule("EventSource", StatelessComputationModuleTests({
+testModule("EventSource", ComputationModuleTests({
     ...EventSource,
     fromReadonlyArray() {
         return (arr) => ({

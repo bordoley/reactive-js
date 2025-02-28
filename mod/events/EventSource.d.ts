@@ -1,4 +1,4 @@
-import { Computation, Computation_T, Computation_type, StatelessComputationModule } from "../computations.js";
+import { Computation, ComputationModule, Computation_T, Computation_type } from "../computations.js";
 import { EventListenerLike, EventSourceLike } from "../events.js";
 import { Function1, SideEffect1 } from "../functions.js";
 import { DisposableLike } from "../utils.js";
@@ -11,7 +11,7 @@ export interface EventSourceComputation extends Computation<EventSourceLike> {
 /**
  * @noInheritDoc
  */
-export interface EventSourceModule extends StatelessComputationModule<EventSourceLike, EventSourceComputation> {
+export interface EventSourceModule extends ComputationModule<EventSourceLike, EventSourceComputation> {
     addEventHandler<T>(handler: SideEffect1<T>): Function1<EventSourceLike<T>, DisposableLike>;
     create<T>(setup: SideEffect1<EventListenerLike<T>>): EventSourceLike<T>;
     fromPromise<T>(): Function1<Promise<T>, EventSourceLike<T>>;

@@ -6,14 +6,14 @@ import {
 } from "../../__internal__/testing.js";
 import { pipeLazy } from "../../functions.js";
 import * as Iterable from "../Iterable.js";
+import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ComputationWithSideEffectsModuleTests from "./fixtures/ComputationWithSideEffectsModuleTests.js";
 import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
-import PureStatelesssComputationModuleTests from "./fixtures/StatelessComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 
 testModule(
   "Iterable",
-  PureStatelesssComputationModuleTests(Iterable),
+  ComputationModuleTests(Iterable),
   DeferredComputationModuleTests(Iterable),
   ComputationWithSideEffectsModuleTests(Iterable),
   SynchronousComputationModuleTests(Iterable),
