@@ -1,5 +1,10 @@
-import { Computation, ComputationLike, ComputationOf, DeferredComputationLike, DeferredComputationModule, MulticastComputationLike, PickOperator, PureComputationLike, PureComputationOperator, PureStatelessComputationModule, SynchronousComputationLike } from "../computations.js";
+import { Computation, ComputationLike, ComputationOf, DeferredComputationLike, DeferredComputationModule, MulticastComputationLike, PureComputationLike, PureComputationOperator, PureStatelessComputationModule, SynchronousComputationLike } from "../computations.js";
 import { TypePredicate } from "../functions.js";
+export interface PickOperator<Type extends ComputationLike, C extends Computation<Type>> {
+    <T, TKeyOfT extends keyof T>(key: TKeyOfT): PureComputationOperator<Type, C, T, T[TKeyOfT]>;
+    <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(keyA: TKeyOfTA, keyB: TKeyOfTB): PureComputationOperator<Type, C, T, T[TKeyOfTA][TKeyOfTB]>;
+    <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA], TKeyOfTC extends keyof T[TKeyOfTA][TKeyOfTB]>(keyA: TKeyOfTA, keyB: TKeyOfTB, keyC: TKeyOfTC): PureComputationOperator<Type, C, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
+}
 interface Signature {
     areAllDeferred<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & DeferredComputationLike)[];
     areAllMulticasted<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & MulticastComputationLike)[];

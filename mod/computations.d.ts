@@ -116,11 +116,6 @@ export interface PureStatefulComputationModule<Type extends ComputationLike, C e
         readonly count?: number;
     }): PureComputationOperator<Type, C, T, T>;
 }
-export interface PickOperator<Type extends ComputationLike, C extends Computation<Type>> {
-    <T, TKeyOfT extends keyof T>(key: TKeyOfT): PureComputationOperator<Type, C, T, T[TKeyOfT]>;
-    <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(keyA: TKeyOfTA, keyB: TKeyOfTB): PureComputationOperator<Type, C, T, T[TKeyOfTA][TKeyOfTB]>;
-    <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA], TKeyOfTC extends keyof T[TKeyOfTA][TKeyOfTB]>(keyA: TKeyOfTA, keyB: TKeyOfTB, keyC: TKeyOfTC): PureComputationOperator<Type, C, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
-}
 export declare const SinkLike_next: unique symbol;
 export declare const SinkLike_complete: unique symbol;
 export declare const SinkLike_isComplete: unique symbol;

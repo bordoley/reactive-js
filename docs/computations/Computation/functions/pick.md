@@ -6,7 +6,7 @@
 
 # Function: pick()
 
-> **pick**\<`Type`, `C`\>(`map`): [`PickOperator`](../../interfaces/PickOperator.md)\<`Type`, `C`\>
+> **pick**\<`Type`, `C`\>(`map`): [`PickOperator`](../interfaces/PickOperator.md)\<`Type`, `C`\>
 
 ## Type Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`PickOperator`](../../interfaces/PickOperator.md)\<`Type`, `C`\>
+[`PickOperator`](../interfaces/PickOperator.md)\<`Type`, `C`\>

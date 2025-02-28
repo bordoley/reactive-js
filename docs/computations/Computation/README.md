@@ -6,6 +6,10 @@
 
 # computations/Computation
 
+## Interfaces
+
+- [PickOperator](interfaces/PickOperator.md)
+
 ## Functions
 
 - [areAllDeferred](functions/areAllDeferred.md)

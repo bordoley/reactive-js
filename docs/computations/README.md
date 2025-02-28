@@ -19,7 +19,6 @@
 - [IterableLike](interfaces/IterableLike.md)
 - [IterableWithSideEffectsLike](interfaces/IterableWithSideEffectsLike.md)
 - [MulticastComputationLike](interfaces/MulticastComputationLike.md)
-- [PickOperator](interfaces/PickOperator.md)
 - [PureComputationLike](interfaces/PureComputationLike.md)
 - [PureDeferableLike](interfaces/PureDeferableLike.md)
 - [PureIterableLike](interfaces/PureIterableLike.md)
