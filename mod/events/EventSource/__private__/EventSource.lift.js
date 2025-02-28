@@ -1,7 +1,7 @@
 /// <reference types="./EventSource.lift.d.ts" />
 
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
-import { ComputationLike_isSynchronous } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { EventSourceLike_addEventListener, } from "../../../events.js";
 import { bindMethod, none, pipeUnsafe } from "../../../functions.js";
 const LiftedEventSource_source = Symbol("LiftedEventSource_source");
@@ -15,6 +15,7 @@ const createLiftedEventSource = /*@__PURE__*/ (() => {
         [LiftedEventSource_source]: none,
         [LiftedEventSource_operators]: none,
     }), {
+        [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
         [EventSourceLike_addEventListener](listener) {
             pipeUnsafe(listener, ...this[LiftedEventSource_operators], bindMethod(this[LiftedEventSource_source], EventSourceLike_addEventListener));

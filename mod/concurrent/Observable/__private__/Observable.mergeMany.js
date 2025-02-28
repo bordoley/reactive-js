@@ -2,8 +2,8 @@
 
 import { Array_length } from "../../../__internal__/constants.js";
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
-import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
-import { ObservableLike_isDeferred, ObservableLike_observe, } from "../../../concurrent.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
+import { ObservableLike_observe, } from "../../../concurrent.js";
 import { bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -21,7 +21,7 @@ const Observable_mergeMany = (() => {
             : observable)
         : observables;
     return mixInstanceFactory(function MergeObservable(instance, observables) {
-        instance[ObservableLike_isDeferred] =
+        instance[ComputationLike_isDeferred] =
             !Observable_allAreMulticasted(observables);
         instance[ComputationLike_isPure] = Observable_allArePure(observables);
         instance[ComputationLike_isSynchronous] =
@@ -29,7 +29,7 @@ const Observable_mergeMany = (() => {
         instance[MergeObservable_observables] = flattenObservables(observables);
         return instance;
     }, props({
-        [ObservableLike_isDeferred]: false,
+        [ComputationLike_isDeferred]: false,
         [ComputationLike_isPure]: false,
         [ComputationLike_isSynchronous]: false,
         [MergeObservable_observables]: none,

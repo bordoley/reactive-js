@@ -4,13 +4,13 @@ import {
   __DEV__,
 } from "../../../__internal__/constants.js";
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
 import {
   DeferredObservableWithSideEffectsLike,
   ObservableLike,
-  ObservableLike_isDeferred,
   ObserverLike,
   ObserverLike_notify,
   RunnableWithSideEffectsLike,
@@ -211,7 +211,7 @@ class ComputeContext {
   [ComputeContext_index] = 0;
   readonly [ComputeContext_effects]: ComputeEffect[] = [];
   readonly [ComputeContext_observableConfig]: {
-    readonly [ObservableLike_isDeferred]: boolean;
+    readonly [ComputationLike_isDeferred]?: boolean;
     readonly [ComputationLike_isSynchronous]?: boolean;
   };
   readonly [ComputeContext_observer]: ObserverLike;
@@ -247,7 +247,7 @@ class ComputeContext {
     mode: Observable.ComputeMode,
     config: Pick<
       ObservableLike,
-      typeof ObservableLike_isDeferred | typeof ComputationLike_isSynchronous
+      typeof ComputationLike_isDeferred | typeof ComputationLike_isSynchronous
     >,
   ) {
     this[ComputeContext_observer] = observer;
@@ -395,7 +395,7 @@ interface ObservableComputeWithConfig {
     computation: Factory<T>,
     config: Pick<
       RunnableWithSideEffectsLike,
-      | typeof ObservableLike_isDeferred
+      | typeof ComputationLike_isDeferred
       | typeof ComputationLike_isPure
       | typeof ComputationLike_isSynchronous
     >,
@@ -405,7 +405,7 @@ interface ObservableComputeWithConfig {
     computation: Factory<T>,
     config: Pick<
       DeferredObservableWithSideEffectsLike,
-      | typeof ObservableLike_isDeferred
+      | typeof ComputationLike_isDeferred
       | typeof ComputationLike_isPure
       | typeof ComputationLike_isSynchronous
     >,
@@ -418,7 +418,7 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
     computation: Factory<T>,
     config: Pick<
       DeferredObservableWithSideEffectsLike,
-      | typeof ObservableLike_isDeferred
+      | typeof ComputationLike_isDeferred
       | typeof ComputationLike_isPure
       | typeof ComputationLike_isSynchronous
     >,

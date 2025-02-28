@@ -1,7 +1,7 @@
 /// <reference types="./ObserverMixin.d.ts" />
 
 import { getPrototype, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
-import { ComputationLike_isSynchronous } from "../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../../computations.js";
 import { ContinuationContextLike_yield, DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, DispatcherLike_isCompleted, ObserverLike_notify, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import * as Publisher from "../../events/Publisher.js";
 import { EventListenerLike_notify, EventSourceLike_addEventListener, } from "../../events.js";
@@ -55,6 +55,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         [ObserverMixin_scheduler]: none,
         [ObserverMixin_publisher]: none,
     }), {
+        [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
         get [SchedulerLike_inContinuation]() {
             unsafeCast(this);

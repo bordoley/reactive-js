@@ -2,7 +2,7 @@
 
 import { Set, Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
-import { ComputationLike_isSynchronous } from "../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../computations.js";
 import { EventListenerLike_notify, EventSourceLike_addEventListener, } from "../events.js";
 import { error, newInstance, none, pipe, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
@@ -37,6 +37,7 @@ export const create = /*@__PURE__*/ (() => {
         [Publisher_listeners]: none,
         [Publisher_onListenerDisposed]: none,
     }), {
+        [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
         [EventListenerLike_notify](next) {
             if (this[DisposableLike_isDisposed]) {

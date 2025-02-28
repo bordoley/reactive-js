@@ -22,13 +22,10 @@
 
 ## Properties
 
-### \[ObservableLike\_isDeferred\]
+### \[ComputationLike\_isDeferred\]
 
-> `readonly` **\[ObservableLike\_isDeferred\]**: `true`
-
-Indicates if the `ObservableLike` is deferred, ie. cold. If false,
-the observable is multicasted.
+> `readonly` **\[ComputationLike\_isDeferred\]**: `true`
 
 #### Overrides
 
-[`ObservableLike`](ObservableLike.md).[`[ObservableLike_isDeferred]`](ObservableLike.md#observablelike_isdeferred)
+`ObservableLike.[ComputationLike_isDeferred]`

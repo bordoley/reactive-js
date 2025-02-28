@@ -18,6 +18,16 @@ Represents a deferred computation that is synchronously evaluated.
 
 ## Properties
 
+### \[ComputationLike\_isDeferred\]?
+
+> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `boolean`
+
+#### Inherited from
+
+[`DeferableLike`](DeferableLike.md).[`[ComputationLike_isDeferred]`](DeferableLike.md#computationlike_isdeferred)
+
+***
+
 ### \[ComputationLike\_isPure\]
 
 > `readonly` **\[ComputationLike\_isPure\]**: `true`

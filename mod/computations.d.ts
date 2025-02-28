@@ -7,6 +7,7 @@ export declare const ComputationLike_isSynchronous: unique symbol;
 export interface ComputationLike {
     readonly [ComputationLike_isPure]?: boolean;
     readonly [ComputationLike_isSynchronous]?: boolean;
+    readonly [ComputationLike_isDeferred]?: boolean;
 }
 export interface ComputationWithSideEffectsLike extends ComputationLike {
     readonly [ComputationLike_isPure]: false;

@@ -14,12 +14,12 @@ import {
   props,
 } from "../__internal__/mixins.js";
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../computations.js";
 import {
   DispatcherLike_complete,
-  ObservableLike_isDeferred,
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
@@ -78,7 +78,7 @@ export const create: <T>(options?: {
       instance: Pick<
         SubjectLike<T>,
         | typeof ObservableLike_observe
-        | typeof ObservableLike_isDeferred
+        | typeof ComputationLike_isDeferred
         | typeof ComputationLike_isPure
         | typeof ComputationLike_isSynchronous
         | typeof EventListenerLike_notify
@@ -123,7 +123,7 @@ export const create: <T>(options?: {
       [Subject_onObserverDisposed]: none,
     }),
     {
-      [ObservableLike_isDeferred]: false as const,
+      [ComputationLike_isDeferred]: false as const,
       [ComputationLike_isPure]: true as const,
       [ComputationLike_isSynchronous]: false as const,
 

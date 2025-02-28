@@ -27,6 +27,7 @@ export interface ComputationLike {
   // defaults to true when not specified so that Arrays are classified as PureIterables
   readonly [ComputationLike_isPure]?: boolean;
   readonly [ComputationLike_isSynchronous]?: boolean;
+  readonly [ComputationLike_isDeferred]?: boolean;
 }
 
 export interface ComputationWithSideEffectsLike extends ComputationLike {

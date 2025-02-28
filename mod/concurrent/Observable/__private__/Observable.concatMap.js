@@ -1,7 +1,6 @@
 /// <reference types="./Observable.concatMap.d.ts" />
 
-import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
-import { ObservableLike_isDeferred, } from "../../../concurrent.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { none, pipe } from "../../../functions.js";
 import Observable_mergeMap from "./Observable.mergeMap.js";
 const Observable_concatMap = ((selector, options) => (obs) => pipe(obs, Observable_mergeMap(selector, {

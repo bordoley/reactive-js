@@ -1,7 +1,7 @@
 /// <reference types="./DelegatingDispatcherMixin.d.ts" />
 
 import { include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
-import { ComputationLike_isSynchronous } from "../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../../computations.js";
 import { DispatcherLike_complete, DispatcherLike_isCompleted, } from "../../concurrent.js";
 import { EventSourceLike_addEventListener, } from "../../events.js";
 import { none, returns } from "../../functions.js";
@@ -16,6 +16,7 @@ const DelegatingDispatcherMixin = /*@__PURE__*/ (() => {
     }, props({
         [DelegatingDispatcherMixin_delegate]: none,
     }), {
+        [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
         get [DispatcherLike_isCompleted]() {
             unsafeCast(this);

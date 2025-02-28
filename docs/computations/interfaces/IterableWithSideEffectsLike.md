@@ -16,6 +16,16 @@
 
 ## Properties
 
+### \[ComputationLike\_isDeferred\]?
+
+> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `boolean`
+
+#### Inherited from
+
+[`IterableLike`](IterableLike.md).[`[ComputationLike_isDeferred]`](IterableLike.md#computationlike_isdeferred)
+
+***
+
 ### \[ComputationLike\_isPure\]
 
 > `readonly` **\[ComputationLike\_isPure\]**: `false`

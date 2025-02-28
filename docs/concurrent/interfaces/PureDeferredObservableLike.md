@@ -20,6 +20,16 @@
 
 ## Properties
 
+### \[ComputationLike\_isDeferred\]
+
+> `readonly` **\[ComputationLike\_isDeferred\]**: `true`
+
+#### Overrides
+
+[`DeferredObservableLike`](DeferredObservableLike.md).[`[ComputationLike_isDeferred]`](DeferredObservableLike.md#computationlike_isdeferred)
+
+***
+
 ### \[ComputationLike\_isPure\]?
 
 > `readonly` `optional` **\[ComputationLike\_isPure\]**: `true`
@@ -27,16 +37,3 @@
 #### Overrides
 
 [`PureObservableLike`](PureObservableLike.md).[`[ComputationLike_isPure]`](PureObservableLike.md#computationlike_ispure)
-
-***
-
-### \[ObservableLike\_isDeferred\]
-
-> `readonly` **\[ObservableLike\_isDeferred\]**: `true`
-
-Indicates if the `ObservableLike` is deferred, ie. cold. If false,
-the observable is multicasted.
-
-#### Overrides
-
-[`DeferredObservableLike`](DeferredObservableLike.md).[`[ObservableLike_isDeferred]`](DeferredObservableLike.md#observablelike_isdeferred)

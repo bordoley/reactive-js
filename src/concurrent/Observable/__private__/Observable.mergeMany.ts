@@ -1,12 +1,12 @@
 import { Array_length } from "../../../__internal__/constants.js";
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
 import {
   ObservableLike,
-  ObservableLike_isDeferred,
   ObservableLike_observe,
   ObserverLike,
 } from "../../../concurrent.js";
@@ -24,7 +24,7 @@ const Observable_mergeMany: Observable.Signature["mergeMany"] = (<T>() => {
   const MergeObservable_observables = Symbol("MergeObservable_observables");
 
   type TProperties<T> = {
-    [ObservableLike_isDeferred]: boolean;
+    [ComputationLike_isDeferred]: boolean;
     [ComputationLike_isPure]: boolean;
     [ComputationLike_isSynchronous]: boolean;
     [MergeObservable_observables]: readonly ObservableLike<T>[];
@@ -51,7 +51,7 @@ const Observable_mergeMany: Observable.Signature["mergeMany"] = (<T>() => {
       instance: TProperties<T> & ObservableLike<T>,
       observables: readonly ObservableLike<T>[],
     ): ObservableLike<T> {
-      instance[ObservableLike_isDeferred] =
+      instance[ComputationLike_isDeferred] =
         !Observable_allAreMulticasted(observables);
       instance[ComputationLike_isPure] = Observable_allArePure(observables);
       instance[ComputationLike_isSynchronous] =
@@ -61,7 +61,7 @@ const Observable_mergeMany: Observable.Signature["mergeMany"] = (<T>() => {
       return instance;
     },
     props<TProperties<T>>({
-      [ObservableLike_isDeferred]: false,
+      [ComputationLike_isDeferred]: false,
       [ComputationLike_isPure]: false,
       [ComputationLike_isSynchronous]: false,
       [MergeObservable_observables]: none,

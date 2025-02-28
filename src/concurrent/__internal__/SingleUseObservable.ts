@@ -4,11 +4,11 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../computations.js";
 import {
-  ObservableLike_isDeferred,
   ObservableLike_observe,
   ObserverLike,
   PureDeferredObservableLike,
@@ -39,7 +39,7 @@ export const create: <T>() => SingleUseObservableLike<T> = (<T>() => {
       [SingleUseObservableLike_observer]: none,
     }),
     {
-      [ObservableLike_isDeferred]: true as const,
+      [ComputationLike_isDeferred]: true as const,
       [ComputationLike_isPure]: true as const,
       [ComputationLike_isSynchronous]: false as const,
 

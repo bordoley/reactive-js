@@ -5,7 +5,10 @@ import {
   props,
   unsafeCast,
 } from "../__internal__/mixins.js";
-import { ComputationLike_isSynchronous } from "../computations.js";
+import {
+  ComputationLike_isDeferred,
+  ComputationLike_isSynchronous,
+} from "../computations.js";
 import {
   EventListenerLike,
   EventListenerLike_notify,
@@ -63,6 +66,7 @@ export const create: <T>(
       [WritableStore_publisher]: none,
     }),
     {
+      [ComputationLike_isDeferred]: false as const,
       [ComputationLike_isSynchronous]: false as const,
 
       get [StoreLike_value]() {

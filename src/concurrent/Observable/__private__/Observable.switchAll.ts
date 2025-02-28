@@ -6,12 +6,12 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
 import {
   ObservableLike,
-  ObservableLike_isDeferred,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../concurrent.js";
@@ -129,7 +129,7 @@ const createSwitchAllObserver: <T>(
 
 const Observable_switchAll: Observable.Signature["switchAll"] = ((options?: {
   readonly innerType?: {
-    readonly [ObservableLike_isDeferred]: boolean;
+    readonly [ComputationLike_isDeferred]: boolean;
     readonly [ComputationLike_isPure]: boolean;
     readonly [ComputationLike_isSynchronous]: boolean;
   };
@@ -137,7 +137,7 @@ const Observable_switchAll: Observable.Signature["switchAll"] = ((options?: {
   Observable_lift({
     [ObservableLift_isStateless]: false,
     ...(options?.innerType ?? {
-      [ObservableLike_isDeferred]: true,
+      [ComputationLike_isDeferred]: true,
       [ComputationLike_isPure]: true,
       [ComputationLike_isSynchronous]: true,
     }),

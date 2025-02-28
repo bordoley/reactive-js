@@ -1,10 +1,10 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
 import {
   MulticastObservableLike,
-  ObservableLike_isDeferred,
   ObservableLike_observe,
 } from "../../../concurrent.js";
 import { Factory, invoke, pipe } from "../../../functions.js";
@@ -19,7 +19,7 @@ const Observable_defer: Observable.Signature["defer"] = <T>(
       pipe(factory(), invoke(ObservableLike_observe, observer));
     },
     {
-      [ObservableLike_isDeferred]: true,
+      [ComputationLike_isDeferred]: true,
       [ComputationLike_isPure]: true,
       [ComputationLike_isSynchronous]: false,
     },

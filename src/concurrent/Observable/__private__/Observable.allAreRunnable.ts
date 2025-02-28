@@ -1,9 +1,9 @@
 import { Array_every, Array_map } from "../../../__internal__/constants.js";
-import { ComputationLike_isSynchronous } from "../../../computations.js";
 import {
-  ObservableLike,
-  ObservableLike_isDeferred,
-} from "../../../concurrent.js";
+  ComputationLike_isDeferred,
+  ComputationLike_isSynchronous,
+} from "../../../computations.js";
+import { ObservableLike } from "../../../concurrent.js";
 import { TypePredicate, isTrue } from "../../../functions.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
 
@@ -14,7 +14,7 @@ const Observable_allAreRunnable = (observables =>
   ReadonlyArray<ObservableLike>,
   ReadonlyArray<
     ObservableLike & {
-      [ObservableLike_isDeferred]: true;
+      [ComputationLike_isDeferred]: true;
       [ComputationLike_isSynchronous]: true;
     }
   >

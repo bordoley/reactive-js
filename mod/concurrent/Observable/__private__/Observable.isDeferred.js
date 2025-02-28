@@ -1,5 +1,5 @@
 /// <reference types="./Observable.isDeferred.d.ts" />
 
-import { ObservableLike_isDeferred, } from "../../../concurrent.js";
-const Observable_isDeferred = (obs) => obs[ObservableLike_isDeferred];
+import { ComputationLike_isDeferred } from "../../../computations.js";
+const Observable_isDeferred = (obs) => obs[ComputationLike_isDeferred] ?? true;
 export default Observable_isDeferred;

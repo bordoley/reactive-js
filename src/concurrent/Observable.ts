@@ -1,5 +1,6 @@
 import {
   Computation,
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   Computation_T,
@@ -12,7 +13,6 @@ import {
   DispatcherLike,
   MulticastObservableLike,
   ObservableLike,
-  ObservableLike_isDeferred,
   ObserverLike,
   PureDeferredObservableLike,
   PureObservableLike,
@@ -212,44 +212,44 @@ export type ObservableOperatorWithSideEffects<TIn, out TOut> = <
 
 export const PureRunnableType: Pick<
   PureRunnableLike,
-  | typeof ObservableLike_isDeferred
+  | typeof ComputationLike_isDeferred
   | typeof ComputationLike_isPure
   | typeof ComputationLike_isSynchronous
 > = {
-  [ObservableLike_isDeferred]: true,
+  [ComputationLike_isDeferred]: true,
   [ComputationLike_isPure]: true,
   [ComputationLike_isSynchronous]: true,
 };
 
 export const RunnableWithSideEffectsType: Pick<
   RunnableWithSideEffectsLike,
-  | typeof ObservableLike_isDeferred
+  | typeof ComputationLike_isDeferred
   | typeof ComputationLike_isPure
   | typeof ComputationLike_isSynchronous
 > = {
-  [ObservableLike_isDeferred]: true,
+  [ComputationLike_isDeferred]: true,
   [ComputationLike_isPure]: false,
   [ComputationLike_isSynchronous]: true,
 };
 
 export const PureDeferredObservableType: Pick<
   PureDeferredObservableLike,
-  | typeof ObservableLike_isDeferred
+  | typeof ComputationLike_isDeferred
   | typeof ComputationLike_isPure
   | typeof ComputationLike_isSynchronous
 > = {
-  [ObservableLike_isDeferred]: true,
+  [ComputationLike_isDeferred]: true,
   [ComputationLike_isPure]: true,
   [ComputationLike_isSynchronous]: false,
 };
 
 export const DeferredObservableWithSideEffectsType: Pick<
   DeferredObservableWithSideEffectsLike,
-  | typeof ObservableLike_isDeferred
+  | typeof ComputationLike_isDeferred
   | typeof ComputationLike_isPure
   | typeof ComputationLike_isSynchronous
 > = {
-  [ObservableLike_isDeferred]: true,
+  [ComputationLike_isDeferred]: true,
   [ComputationLike_isPure]: false,
   [ComputationLike_isSynchronous]: false,
 };

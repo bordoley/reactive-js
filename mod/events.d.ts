@@ -1,4 +1,4 @@
-import { ComputationLike_isSynchronous, PureComputationLike } from "./computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, PureComputationLike } from "./computations.js";
 import { DisposableLike } from "./utils.js";
 export declare const EventListenerLike_notify: unique symbol;
 /**
@@ -17,6 +17,7 @@ export declare const EventSourceLike_addEventListener: unique symbol;
  * @noInheritDoc
  */
 export interface EventSourceLike<out T = unknown> extends PureComputationLike {
+    readonly [ComputationLike_isDeferred]: false;
     readonly [ComputationLike_isSynchronous]: false;
     [EventSourceLike_addEventListener](listener: EventListenerLike<T>): void;
 }

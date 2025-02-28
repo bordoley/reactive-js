@@ -23,6 +23,16 @@ Represents a deferred computation that is synchronously evaluated.
 
 ## Properties
 
+### \[ComputationLike\_isDeferred\]?
+
+> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `boolean`
+
+#### Inherited from
+
+[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isDeferred]`](ComputationLike.md#computationlike_isdeferred)
+
+***
+
 ### \[ComputationLike\_isPure\]
 
 > **\[ComputationLike\_isPure\]**: `boolean`

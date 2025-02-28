@@ -24,6 +24,7 @@ import PureStatefulComputationModuleTests from "../../computations/__tests__/fix
 import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ComputationWithSideEffectsModule,
@@ -41,7 +42,6 @@ import {
   DispatcherLike_complete,
   MulticastObservableLike,
   ObservableLike,
-  ObservableLike_isDeferred,
   PureDeferredObservableLike,
   PureRunnableLike,
   RunnableLike,
@@ -114,19 +114,19 @@ import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 const expectIsPureRunnable = (obs: PureRunnableLike) => {
   expectTrue(obs[ComputationLike_isSynchronous]);
   expectTrue(obs[ComputationLike_isPure] ?? true);
-  expectTrue(obs[ObservableLike_isDeferred]);
+  expectTrue(obs[ComputationLike_isDeferred]);
 };
 
 const expectIsRunnableWithSideEffects = (obs: RunnableWithSideEffectsLike) => {
   expectTrue(obs[ComputationLike_isSynchronous]);
   expectFalse(obs[ComputationLike_isPure]);
-  expectTrue(obs[ObservableLike_isDeferred]);
+  expectTrue(obs[ComputationLike_isDeferred]);
 };
 
 const expectIsPureDeferredObservable = (obs: PureDeferredObservableLike) => {
   expectFalse(obs[ComputationLike_isSynchronous] ?? true);
   expectTrue(obs[ComputationLike_isPure] ?? true);
-  expectTrue(obs[ObservableLike_isDeferred]);
+  expectTrue(obs[ComputationLike_isDeferred]);
 };
 
 const expectIsDeferredObservableWithSideEffects = (
@@ -134,13 +134,13 @@ const expectIsDeferredObservableWithSideEffects = (
 ) => {
   expectFalse(obs[ComputationLike_isSynchronous]);
   expectFalse(obs[ComputationLike_isPure]);
-  expectTrue(obs[ObservableLike_isDeferred]);
+  expectTrue(obs[ComputationLike_isDeferred]);
 };
 
 const expectIsMulticastObservable = (obs: MulticastObservableLike) => {
   expectFalse(obs[ComputationLike_isSynchronous]);
   expectTrue(obs[ComputationLike_isPure] ?? true);
-  expectFalse(obs[ObservableLike_isDeferred]);
+  expectFalse(obs[ComputationLike_isDeferred]);
 };
 
 const testIsPureRunnable = (obs: PureRunnableLike) =>

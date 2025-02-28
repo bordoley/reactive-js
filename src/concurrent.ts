@@ -1,6 +1,7 @@
 import { DictionaryLike, ReadonlyObjectMapLike } from "./collections.js";
 import {
   ComputationLike,
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   PureComputationLike,
@@ -185,19 +186,12 @@ export interface ObserverLike<T = unknown>
   [ObserverLike_notify](event: T): void;
 }
 
-export const ObservableLike_isDeferred = Symbol("ObservableLike_isDeferred");
 export const ObservableLike_observe = Symbol("ObservableLike_observe");
 
 /**
  * @noInheritDoc
  */
 export interface ObservableLike<out T = unknown> extends ComputationLike {
-  /**
-   * Indicates if the `ObservableLike` is deferred, ie. cold. If false,
-   * the observable is multicasted.
-   */
-  readonly [ObservableLike_isDeferred]: boolean;
-
   /**
    * Subscribes the given `ObserverLike` to the `ObservableLike` source.
    *
@@ -211,7 +205,7 @@ export interface ObservableLike<out T = unknown> extends ComputationLike {
  */
 export interface DeferredObservableLike<out T = unknown>
   extends ObservableLike<T> {
-  readonly [ObservableLike_isDeferred]: true;
+  readonly [ComputationLike_isDeferred]: true;
 }
 
 /**
@@ -238,7 +232,7 @@ export interface PureDeferredObservableLike<out T = unknown>
   extends DeferredObservableLike<T>,
     PureObservableLike<T> {
   readonly [ComputationLike_isPure]?: true;
-  readonly [ObservableLike_isDeferred]: true;
+  readonly [ComputationLike_isDeferred]: true;
 }
 
 /**
@@ -256,7 +250,7 @@ export interface DeferredObservableWithSideEffectsLike<out T = unknown>
 export interface PureRunnableLike<out T = unknown>
   extends RunnableLike<T>,
     PureDeferredObservableLike<T> {
-  readonly [ObservableLike_isDeferred]: true;
+  readonly [ComputationLike_isDeferred]: true;
   readonly [ComputationLike_isPure]?: true;
   readonly [ComputationLike_isSynchronous]: true;
 }
@@ -274,7 +268,7 @@ export interface RunnableWithSideEffectsLike<out T = unknown>
  */
 export interface MulticastObservableLike<out T = unknown>
   extends PureObservableLike<T> {
-  readonly [ObservableLike_isDeferred]: false;
+  readonly [ComputationLike_isDeferred]: false;
   readonly [ComputationLike_isSynchronous]: false;
 }
 

@@ -1,12 +1,12 @@
 import { Array_length } from "../../../__internal__/constants.js";
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
 import {
   ObservableLike,
-  ObservableLike_isDeferred,
   ObservableLike_observe,
   ObserverLike,
 } from "../../../concurrent.js";
@@ -98,7 +98,7 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
         [ConcatObservable_observables]: none,
       }),
       {
-        [ObservableLike_isDeferred]: true as const,
+        [ComputationLike_isDeferred]: true as const,
 
         [ObservableLike_observe](
           this: TProperties<T>,

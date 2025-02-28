@@ -5,13 +5,13 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
 import {
   DeferredObservableWithSideEffectsLike,
   ObservableLike,
-  ObservableLike_isDeferred,
   ObservableLike_observe,
   ObserverLike,
 } from "../../../concurrent.js";
@@ -42,7 +42,7 @@ const createLiftedObservable: <TA, TB>(
   ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
   config: Pick<
     ObservableLike,
-    | typeof ObservableLike_isDeferred
+    | typeof ComputationLike_isDeferred
     | typeof ComputationLike_isPure
     | typeof ComputationLike_isSynchronous
   >,
@@ -64,7 +64,7 @@ const createLiftedObservable: <TA, TB>(
       ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
       config: Pick<
         ObservableLike,
-        | typeof ObservableLike_isDeferred
+        | typeof ComputationLike_isDeferred
         | typeof ComputationLike_isPure
         | typeof ComputationLike_isSynchronous
       >,
@@ -97,7 +97,7 @@ export const ObservableLift_isStateless = Symbol("ObservableLift_isStateless");
 interface ObservableLift {
   lift(options: {
     [ObservableLift_isStateless]: true;
-    [ObservableLike_isDeferred]: boolean;
+    [ComputationLike_isDeferred]: boolean;
     [ComputationLike_isPure]: true;
     [ComputationLike_isSynchronous]: true;
   }): <TA, TB>(
@@ -105,7 +105,7 @@ interface ObservableLift {
   ) => PureStatelessObservableOperator<TA, TB>;
 
   lift(options: {
-    [ObservableLike_isDeferred]: true;
+    [ComputationLike_isDeferred]: true;
     [ComputationLike_isPure]: true;
     [ComputationLike_isSynchronous]: true;
   }): <TA, TB>(
@@ -113,7 +113,7 @@ interface ObservableLift {
   ) => PureStatefulObservableOperator<TA, TB>;
 
   lift(options: {
-    [ObservableLike_isDeferred]: true;
+    [ComputationLike_isDeferred]: true;
     [ComputationLike_isPure]: false;
     [ComputationLike_isSynchronous]: true;
   }): <TA, TB>(
@@ -121,7 +121,7 @@ interface ObservableLift {
   ) => ObservableOperatorWithSideEffects<TA, TB>;
 
   lift(options: {
-    [ObservableLike_isDeferred]: true;
+    [ComputationLike_isDeferred]: true;
     [ComputationLike_isPure]: false;
     [ComputationLike_isSynchronous]: false;
   }): <TA, TB>(
@@ -130,7 +130,7 @@ interface ObservableLift {
 
   lift(options: {
     [ObservableLift_isStateless]: boolean;
-    [ObservableLike_isDeferred]: boolean;
+    [ComputationLike_isDeferred]: boolean;
     [ComputationLike_isPure]: boolean;
     [ComputationLike_isSynchronous]: boolean;
   }): <TA, TB>(
@@ -141,7 +141,7 @@ interface ObservableLift {
 const Observable_lift: ObservableLift["lift"] = ((
     config: Pick<
       ObservableLike,
-      | typeof ObservableLike_isDeferred
+      | typeof ComputationLike_isDeferred
       | typeof ComputationLike_isPure
       | typeof ComputationLike_isSynchronous
     > & {
@@ -162,7 +162,8 @@ const Observable_lift: ObservableLift["lift"] = ((
 
     const isDeferred =
       (sourceIsMulticasted && !isStateless) ||
-      (config[ObservableLike_isDeferred] && source[ObservableLike_isDeferred]);
+      (config[ComputationLike_isDeferred] &&
+        source[ComputationLike_isDeferred]);
     const isRunnable =
       config[ComputationLike_isSynchronous] &&
       source[ComputationLike_isSynchronous];
@@ -171,7 +172,7 @@ const Observable_lift: ObservableLift["lift"] = ((
       (config[ComputationLike_isPure] && source[ComputationLike_isPure]);
 
     const liftedConfig = {
-      [ObservableLike_isDeferred]: isDeferred,
+      [ComputationLike_isDeferred]: isDeferred,
       [ComputationLike_isPure]: isPure,
       [ComputationLike_isSynchronous]: isRunnable,
     };

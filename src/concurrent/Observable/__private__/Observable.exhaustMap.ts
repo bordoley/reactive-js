@@ -1,11 +1,9 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
-import {
-  ObservableLike_isDeferred,
-  PureRunnableLike,
-} from "../../../concurrent.js";
+import { PureRunnableLike } from "../../../concurrent.js";
 import { Function1, pipe } from "../../../functions.js";
 import { DropLatestBackpressureStrategy } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -15,7 +13,7 @@ const Observable_exhaustMap: Observable.Signature["exhaustMap"] = (<TA, TB>(
     selector: Function1<TA, PureRunnableLike<TB>>,
     options?: {
       readonly innerType?: {
-        readonly [ObservableLike_isDeferred]?: boolean;
+        readonly [ComputationLike_isDeferred]?: boolean;
         readonly [ComputationLike_isPure]?: boolean;
         readonly [ComputationLike_isSynchronous]?: boolean;
       };

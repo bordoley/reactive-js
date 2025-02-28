@@ -2,16 +2,15 @@
 
 import { __DEV__ } from "../../__internal__/constants.js";
 import { mix, props } from "../../__internal__/mixins.js";
-import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../computations.js";
-import { ObservableLike_isDeferred } from "../../concurrent.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../computations.js";
 import { raiseIf } from "../../functions.js";
 const ObservableMixin = /*@__PURE__*/ (() => {
     return mix(function ObservableMixin(instance, config) {
-        const configRunnable = config[ComputationLike_isSynchronous];
-        const configDeferred = config[ObservableLike_isDeferred];
-        const configPure = config[ComputationLike_isPure];
+        const configRunnable = config[ComputationLike_isSynchronous] ?? true;
+        const configDeferred = config[ComputationLike_isDeferred] ?? true;
+        const configPure = config[ComputationLike_isPure] ?? true;
         if (__DEV__) {
-            const isValidRunnable = (configRunnable ?? true) && configDeferred;
+            const isValidRunnable = configRunnable && configDeferred;
             const isValidDeferred = configDeferred;
             const isValidMulticasted = configPure && !configDeferred && !configRunnable;
             raiseIf(!(isValidRunnable || isValidDeferred || isValidMulticasted), `Attempting to create an observable in an illegal state: ${JSON.stringify({
@@ -21,11 +20,11 @@ const ObservableMixin = /*@__PURE__*/ (() => {
             })}`);
         }
         instance[ComputationLike_isSynchronous] = configRunnable ?? true;
-        instance[ObservableLike_isDeferred] = configDeferred;
+        instance[ComputationLike_isDeferred] = configDeferred ?? true;
         instance[ComputationLike_isPure] = configPure ?? true;
         return instance;
     }, props({
-        [ObservableLike_isDeferred]: false,
+        [ComputationLike_isDeferred]: false,
         [ComputationLike_isPure]: false,
         [ComputationLike_isSynchronous]: false,
     }), {});

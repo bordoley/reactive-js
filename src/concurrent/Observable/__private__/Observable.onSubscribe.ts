@@ -1,10 +1,10 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
 import {
   ObservableLike,
-  ObservableLike_isDeferred,
   ObservableLike_observe,
   ObserverLike,
 } from "../../../concurrent.js";
@@ -44,7 +44,7 @@ const Observable_onSubscribe: Observable.Signature["onSubscribe"] = (<T>(
       },
       {
         [ComputationLike_isSynchronous]: obs[ComputationLike_isSynchronous],
-        [ObservableLike_isDeferred]: true,
+        [ComputationLike_isDeferred]: true,
         [ComputationLike_isPure]: false,
       },
     )) as Observable.Signature["onSubscribe"];

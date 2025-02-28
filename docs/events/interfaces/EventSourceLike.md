@@ -22,6 +22,16 @@
 
 ## Properties
 
+### \[ComputationLike\_isDeferred\]
+
+> `readonly` **\[ComputationLike\_isDeferred\]**: `false`
+
+#### Overrides
+
+[`PureComputationLike`](../../computations/interfaces/PureComputationLike.md).[`[ComputationLike_isDeferred]`](../../computations/interfaces/PureComputationLike.md#computationlike_isdeferred)
+
+***
+
 ### \[ComputationLike\_isSynchronous\]
 
 > `readonly` **\[ComputationLike\_isSynchronous\]**: `false`

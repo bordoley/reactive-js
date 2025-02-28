@@ -1,11 +1,9 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
-import {
-  ObservableLike,
-  ObservableLike_isDeferred,
-} from "../../../concurrent.js";
+import { ObservableLike } from "../../../concurrent.js";
 import { Function1, compose, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
 import Observable_concatMap from "./Observable.concatMap.js";
@@ -25,7 +23,7 @@ const Observable_flatMapIterable: Observable.Signature["flatMapIterable"] = (<
       Observable_concatMap(mapper, {
         innerType: {
           [ComputationLike_isPure]: false,
-          [ObservableLike_isDeferred]: observable[ObservableLike_isDeferred],
+          [ComputationLike_isDeferred]: observable[ComputationLike_isDeferred],
           [ComputationLike_isSynchronous]:
             observable[ComputationLike_isSynchronous],
         } as typeof Observable.DeferredObservableWithSideEffectsType,

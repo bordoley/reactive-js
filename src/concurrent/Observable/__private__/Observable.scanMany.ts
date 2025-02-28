@@ -1,11 +1,11 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
 import {
   DeferredObservableLike,
   ObservableLike,
-  ObservableLike_isDeferred,
   ObservableLike_observe,
 } from "../../../concurrent.js";
 import { EventListenerLike_notify } from "../../../events.js";
@@ -23,14 +23,14 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
   initialValue: Factory<TAcc>,
   options?: {
     readonly innerType?: {
-      readonly [ObservableLike_isDeferred]: boolean;
+      readonly [ComputationLike_isDeferred]: boolean;
       readonly [ComputationLike_isPure]: boolean;
       readonly [ComputationLike_isSynchronous]: boolean;
     };
   },
 ) => {
   const innerType = options?.innerType ?? {
-    [ObservableLike_isDeferred]: true,
+    [ComputationLike_isDeferred]: true,
     [ComputationLike_isPure]: true,
     [ComputationLike_isSynchronous]: true,
   };
@@ -54,7 +54,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
           Observable_withLatestFrom<T, TAcc>(accFeedbackStream),
           Observable_switchMap(([next, acc]) => scanner(acc, next), {
             innerType: {
-              [ObservableLike_isDeferred]: true,
+              [ComputationLike_isDeferred]: true,
               [ComputationLike_isPure]: false,
               [ComputationLike_isSynchronous]: false,
             },
@@ -66,7 +66,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
         accFeedbackStream[EventListenerLike_notify](initialValue());
       },
       {
-        [ObservableLike_isDeferred]: true,
+        [ComputationLike_isDeferred]: true,
         [ComputationLike_isPure]: isPure,
         [ComputationLike_isSynchronous]: isRunnable,
       },

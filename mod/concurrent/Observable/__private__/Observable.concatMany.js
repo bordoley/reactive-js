@@ -2,8 +2,8 @@
 
 import { Array_length } from "../../../__internal__/constants.js";
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
-import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
-import { ObservableLike_isDeferred, ObservableLike_observe, } from "../../../concurrent.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
+import { ObservableLike_observe, } from "../../../concurrent.js";
 import { bind, bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -52,7 +52,7 @@ const Observable_concatMany =
         [ComputationLike_isSynchronous]: false,
         [ConcatObservable_observables]: none,
     }), {
-        [ObservableLike_isDeferred]: true,
+        [ComputationLike_isDeferred]: true,
         [ObservableLike_observe](observer) {
             const { [ConcatObservable_observables]: observables } = this;
             pipe(createConcatObserver({

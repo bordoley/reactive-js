@@ -1,12 +1,9 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
-import {
-  ObservableLike,
-  ObservableLike_isDeferred,
-  SchedulerLike,
-} from "../../../concurrent.js";
+import { ObservableLike, SchedulerLike } from "../../../concurrent.js";
 import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import {
@@ -42,7 +39,7 @@ const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
           Disposable.addTo(observer),
         ),
       {
-        [ObservableLike_isDeferred]: observable[ObservableLike_isDeferred],
+        [ComputationLike_isDeferred]: observable[ComputationLike_isDeferred],
         [ComputationLike_isPure]: observable[ComputationLike_isPure],
         [ComputationLike_isSynchronous]: false,
       },

@@ -1,7 +1,6 @@
 /// <reference types="./Observable.d.ts" />
 
-import { ComputationLike_isPure, ComputationLike_isSynchronous, Computation_type, } from "../computations.js";
-import { ObservableLike_isDeferred, } from "../concurrent.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_type, } from "../computations.js";
 import Observable_backpressureStrategy from "./Observable/__private__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
@@ -86,22 +85,22 @@ import Observable_withCurrentTime from "./Observable/__private__/Observable.with
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 import Observable_zipLatest from "./Observable/__private__/Observable.zipLatest.js";
 export const PureRunnableType = {
-    [ObservableLike_isDeferred]: true,
+    [ComputationLike_isDeferred]: true,
     [ComputationLike_isPure]: true,
     [ComputationLike_isSynchronous]: true,
 };
 export const RunnableWithSideEffectsType = {
-    [ObservableLike_isDeferred]: true,
+    [ComputationLike_isDeferred]: true,
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: true,
 };
 export const PureDeferredObservableType = {
-    [ObservableLike_isDeferred]: true,
+    [ComputationLike_isDeferred]: true,
     [ComputationLike_isPure]: true,
     [ComputationLike_isSynchronous]: false,
 };
 export const DeferredObservableWithSideEffectsType = {
-    [ObservableLike_isDeferred]: true,
+    [ComputationLike_isDeferred]: true,
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: false,
 };

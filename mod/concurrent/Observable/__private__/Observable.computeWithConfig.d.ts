@@ -1,5 +1,5 @@
-import { ComputationLike_isPure, ComputationLike_isSynchronous } from "../../../computations.js";
-import { DeferredObservableWithSideEffectsLike, ObservableLike, ObservableLike_isDeferred, ObserverLike, RunnableWithSideEffectsLike } from "../../../concurrent.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous } from "../../../computations.js";
+import { DeferredObservableWithSideEffectsLike, ObservableLike, ObserverLike, RunnableWithSideEffectsLike } from "../../../concurrent.js";
 import { Factory, Optional } from "../../../functions.js";
 import { DisposableLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -66,7 +66,7 @@ declare class ComputeContext {
     [ComputeContext_index]: number;
     readonly [ComputeContext_effects]: ComputeEffect[];
     readonly [ComputeContext_observableConfig]: {
-        readonly [ObservableLike_isDeferred]: boolean;
+        readonly [ComputationLike_isDeferred]?: boolean;
         readonly [ComputationLike_isSynchronous]?: boolean;
     };
     readonly [ComputeContext_observer]: ObserverLike;
@@ -74,7 +74,7 @@ declare class ComputeContext {
     private readonly [ComputeContext_runComputation];
     private readonly [ComputeContext_mode];
     private readonly [ComputeContext_cleanup];
-    constructor(observer: ObserverLike, runComputation: () => void, mode: Observable.ComputeMode, config: Pick<ObservableLike, typeof ObservableLike_isDeferred | typeof ComputationLike_isSynchronous>);
+    constructor(observer: ObserverLike, runComputation: () => void, mode: Observable.ComputeMode, config: Pick<ObservableLike, typeof ComputationLike_isDeferred | typeof ComputationLike_isSynchronous>);
     [ComputeContext_awaitOrObserve]<T>(observable: ObservableLike<T>, shouldAwait: boolean): Optional<T>;
     [ComputeContext_constant]<T>(value: T, ...args: unknown[]): T;
     [ComputeContext_memoOrUse]<T>(shouldUse: false, f: (...args: any[]) => T, ...args: unknown[]): T;
@@ -82,10 +82,10 @@ declare class ComputeContext {
 }
 export declare const assertCurrentContext: () => ComputeContext;
 interface ObservableComputeWithConfig {
-    computeWithConfig<T>(computation: Factory<T>, config: Pick<RunnableWithSideEffectsLike, typeof ObservableLike_isDeferred | typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>, options?: {
+    computeWithConfig<T>(computation: Factory<T>, config: Pick<RunnableWithSideEffectsLike, typeof ComputationLike_isDeferred | typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>, options?: {
         readonly mode?: Observable.ComputeMode;
     }): RunnableWithSideEffectsLike<T>;
-    computeWithConfig<T>(computation: Factory<T>, config: Pick<DeferredObservableWithSideEffectsLike, typeof ObservableLike_isDeferred | typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>, options?: {
+    computeWithConfig<T>(computation: Factory<T>, config: Pick<DeferredObservableWithSideEffectsLike, typeof ComputationLike_isDeferred | typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>, options?: {
         readonly mode?: Observable.ComputeMode;
     }): DeferredObservableWithSideEffectsLike<T>;
 }

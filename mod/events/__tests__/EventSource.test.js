@@ -56,7 +56,7 @@ import { Array_length, Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectIsSome, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import PureStatelessComputationModuleTests from "../../computations/__tests__/fixtures/PureStatelessComputationModuleTests.js";
-import { ComputationLike_isSynchronous } from "../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../../computations.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as VirtualTimeScheduler from "../../concurrent/VirtualTimeScheduler.js";
 import { VirtualTimeSchedulerLike_run } from "../../concurrent.js";
@@ -68,6 +68,7 @@ testModule("EventSource", PureStatelessComputationModuleTests({
     ...EventSource,
     fromReadonlyArray() {
         return (arr) => ({
+            [ComputationLike_isDeferred]: false,
             [ComputationLike_isSynchronous]: false,
             [EventSourceLike_addEventListener](listener) {
                 for (let i = 0; i < arr[Array_length]; i++) {

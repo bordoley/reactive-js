@@ -7,6 +7,7 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   pick,
@@ -16,7 +17,6 @@ import * as Streamable from "../../concurrent/Streamable.js";
 import {
   DeferredObservableLike,
   MulticastObservableLike,
-  ObservableLike_isDeferred,
   ObservableLike_observe,
   ObserverLike,
   SchedulerLike,
@@ -188,7 +188,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       [WindowLocationLike_canGoBack]: none,
     }),
     {
-      [ObservableLike_isDeferred]: false as const,
+      [ComputationLike_isDeferred]: false as const,
       [ComputationLike_isSynchronous]: false as const,
       [ComputationLike_isPure]: true as const,
 

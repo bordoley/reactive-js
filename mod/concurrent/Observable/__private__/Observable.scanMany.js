@@ -1,7 +1,7 @@
 /// <reference types="./Observable.scanMany.d.ts" />
 
-import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
-import { ObservableLike_isDeferred, ObservableLike_observe, } from "../../../concurrent.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
+import { ObservableLike_observe, } from "../../../concurrent.js";
 import { EventListenerLike_notify } from "../../../events.js";
 import { invoke, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -12,7 +12,7 @@ import Observable_switchMap from "./Observable.switchMap.js";
 import Observable_withLatestFrom from "./Observable.withLatestFrom.js";
 const Observable_scanMany = ((scanner, initialValue, options) => {
     const innerType = options?.innerType ?? {
-        [ObservableLike_isDeferred]: true,
+        [ComputationLike_isDeferred]: true,
         [ComputationLike_isPure]: true,
         [ComputationLike_isSynchronous]: true,
     };
@@ -24,14 +24,14 @@ const Observable_scanMany = ((scanner, initialValue, options) => {
             const accFeedbackStream = pipe(Subject.create(), Disposable.addTo(observer));
             pipe(observable, Observable_withLatestFrom(accFeedbackStream), Observable_switchMap(([next, acc]) => scanner(acc, next), {
                 innerType: {
-                    [ObservableLike_isDeferred]: true,
+                    [ComputationLike_isDeferred]: true,
                     [ComputationLike_isPure]: false,
                     [ComputationLike_isSynchronous]: false,
                 },
             }), Observable_notify(accFeedbackStream), invoke(ObservableLike_observe, observer));
             accFeedbackStream[EventListenerLike_notify](initialValue());
         }, {
-            [ObservableLike_isDeferred]: true,
+            [ComputationLike_isDeferred]: true,
             [ComputationLike_isPure]: isPure,
             [ComputationLike_isSynchronous]: isRunnable,
         });

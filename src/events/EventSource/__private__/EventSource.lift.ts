@@ -1,5 +1,8 @@
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
-import { ComputationLike_isSynchronous } from "../../../computations.js";
+import {
+  ComputationLike_isDeferred,
+  ComputationLike_isSynchronous,
+} from "../../../computations.js";
 import {
   EventListenerLike,
   EventSourceLike,
@@ -28,6 +31,7 @@ const createLiftedEventSource: <TIn, TOut>(
           EventSourceLike,
           | typeof EventSourceLike_addEventListener
           | typeof ComputationLike_isSynchronous
+          | typeof ComputationLike_isDeferred
         >,
       source: EventSourceLike<TIn>,
       ops: readonly Function1<EventListenerLike<any>, EventListenerLike<any>>[],
@@ -42,6 +46,7 @@ const createLiftedEventSource: <TIn, TOut>(
       [LiftedEventSource_operators]: none,
     }),
     {
+      [ComputationLike_isDeferred]: false as const,
       [ComputationLike_isSynchronous]: false as const,
       [EventSourceLike_addEventListener](
         this: TProperties,

@@ -12,7 +12,10 @@ import {
   mixInstanceFactory,
   props,
 } from "../__internal__/mixins.js";
-import { ComputationLike_isSynchronous } from "../computations.js";
+import {
+  ComputationLike_isDeferred,
+  ComputationLike_isSynchronous,
+} from "../computations.js";
 import {
   EventListenerLike,
   EventListenerLike_notify,
@@ -59,6 +62,7 @@ export const create: <T>(options?: {
         | typeof EventSourceLike_addEventListener
         | typeof EventListenerLike_notify
         | typeof ComputationLike_isSynchronous
+        | typeof ComputationLike_isDeferred
       > &
         Mutable<TProperties>,
       options?: { readonly autoDispose?: boolean },
@@ -91,6 +95,7 @@ export const create: <T>(options?: {
       [Publisher_onListenerDisposed]: none,
     }),
     {
+      [ComputationLike_isDeferred]: false as const,
       [ComputationLike_isSynchronous]: false as const,
 
       [EventListenerLike_notify](

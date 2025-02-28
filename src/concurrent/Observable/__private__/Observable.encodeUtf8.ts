@@ -1,12 +1,9 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
-import {
-  ObservableLike,
-  ObservableLike_isDeferred,
-  ObservableLike_observe,
-} from "../../../concurrent.js";
+import { ObservableLike, ObservableLike_observe } from "../../../concurrent.js";
 import {
   bindMethod,
   invoke,
@@ -31,7 +28,7 @@ const Observable_encodeUtf8: Observable.Signature["encodeUtf8"] =
         );
       },
       {
-        [ObservableLike_isDeferred]: true,
+        [ComputationLike_isDeferred]: true,
         [ComputationLike_isPure]: observable[ComputationLike_isPure],
         [ComputationLike_isSynchronous]:
           observable[ComputationLike_isSynchronous],

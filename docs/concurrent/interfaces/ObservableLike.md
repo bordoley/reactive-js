@@ -19,15 +19,6 @@
 
 • **T** = `unknown`
 
-## Properties
-
-### \[ObservableLike\_isDeferred\]
-
-> `readonly` **\[ObservableLike\_isDeferred\]**: `boolean`
-
-Indicates if the `ObservableLike` is deferred, ie. cold. If false,
-the observable is multicasted.
-
 ## Methods
 
 ### \[ObservableLike\_observe\]()

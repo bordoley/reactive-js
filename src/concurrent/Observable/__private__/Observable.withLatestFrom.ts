@@ -5,12 +5,12 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
 import {
   ObservableLike,
-  ObservableLike_isDeferred,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../concurrent.js";
@@ -147,7 +147,7 @@ const Observable_withLatestFrom: Observable.Signature["withLatestFrom"] = (<
     partial(other, selector),
     Observable_lift({
       [ObservableLift_isStateless]: false,
-      [ObservableLike_isDeferred]: true,
+      [ComputationLike_isDeferred]: true,
       [ComputationLike_isPure]: other[ComputationLike_isPure] ?? true,
       [ComputationLike_isSynchronous]:
         other[ComputationLike_isSynchronous] ?? true,

@@ -23,6 +23,16 @@
 
 ## Properties
 
+### \[ComputationLike\_isDeferred\]
+
+> `readonly` **\[ComputationLike\_isDeferred\]**: `false`
+
+#### Overrides
+
+`PureObservableLike.[ComputationLike_isDeferred]`
+
+***
+
 ### \[ComputationLike\_isSynchronous\]
 
 > `readonly` **\[ComputationLike\_isSynchronous\]**: `false`
@@ -30,13 +40,3 @@
 #### Overrides
 
 `PureObservableLike.[ComputationLike_isSynchronous]`
-
-***
-
-### \[ObservableLike\_isDeferred\]
-
-> `readonly` **\[ObservableLike\_isDeferred\]**: `false`
-
-#### Overrides
-
-`PureObservableLike.[ObservableLike_isDeferred]`

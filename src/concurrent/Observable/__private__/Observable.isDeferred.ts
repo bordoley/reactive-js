@@ -1,11 +1,8 @@
-import {
-  DeferredObservableLike,
-  ObservableLike,
-  ObservableLike_isDeferred,
-} from "../../../concurrent.js";
+import { ComputationLike_isDeferred } from "../../../computations.js";
+import { DeferredObservableLike, ObservableLike } from "../../../concurrent.js";
 
 const Observable_isDeferred = <T = unknown>(
   obs: ObservableLike<T>,
-): obs is DeferredObservableLike<T> => obs[ObservableLike_isDeferred];
+): obs is DeferredObservableLike<T> => obs[ComputationLike_isDeferred] ?? true;
 
 export default Observable_isDeferred;

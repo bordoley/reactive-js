@@ -12,12 +12,12 @@ import {
 } from "../../../__internal__/mixins.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
 import {
   ObservableLike,
-  ObservableLike_isDeferred,
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
@@ -147,7 +147,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
     const isRunnable = Observable_allAreRunnable(observables);
 
     return Observable_createWithConfig(onSubscribe, {
-      [ObservableLike_isDeferred]: true,
+      [ComputationLike_isDeferred]: true,
       [ComputationLike_isPure]: isPure,
       [ComputationLike_isSynchronous]: isRunnable,
     });

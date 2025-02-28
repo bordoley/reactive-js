@@ -1,7 +1,7 @@
 /// <reference types="./EventSource.create.d.ts" />
 
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
-import { ComputationLike_isSynchronous } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { EventSourceLike_addEventListener, } from "../../../events.js";
 import { error, none, pipe, } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -20,6 +20,7 @@ const EventSource_create = /*@__PURE__*/ (() => {
         [CreateEventSource_delegate]: none,
         [CreateEventSource_setup]: none,
     }), {
+        [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
         [EventSourceLike_addEventListener](listener) {
             const delegate = this[CreateEventSource_delegate] ??
