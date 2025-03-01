@@ -12,7 +12,7 @@
 
 • **Type** *extends* [`DeferredComputationLike`](../../interfaces/DeferredComputationLike.md)
 
-• **TComputation** *extends* [`Computation`](../../interfaces/Computation.md)\<`Type`\>
+• **TComputation** *extends* [`Computation`](../../interfaces/Computation.md)
 
 ## Parameters
 

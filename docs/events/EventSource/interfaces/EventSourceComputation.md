@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`Computation`](../../../computations/interfaces/Computation.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\>
+- [`Computation`](../../../computations/interfaces/Computation.md)
 
 ## Properties
 

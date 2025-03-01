@@ -4,15 +4,11 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / Computation
 
-# Interface: Computation\<_Type\>
+# Interface: Computation
 
 ## Extended by
 
 - [`EventSourceComputation`](../../events/EventSource/interfaces/EventSourceComputation.md)
-
-## Type Parameters
-
-• **_Type** *extends* [`ComputationLike`](ComputationLike.md)
 
 ## Properties
 

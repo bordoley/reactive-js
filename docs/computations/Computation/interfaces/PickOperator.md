@@ -10,7 +10,7 @@
 
 • **Type** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
 
-• **TComputation** *extends* [`Computation`](../../interfaces/Computation.md)\<`Type`\>
+• **TComputation** *extends* [`Computation`](../../interfaces/Computation.md)
 
 > **PickOperator**\<`T`, `TKeyOfT`\>(`key`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\[`TKeyOfT`\]\>
 

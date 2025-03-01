@@ -15,7 +15,7 @@
 
 • **Type** *extends* [`DeferredComputationLike`](DeferredComputationLike.md)
 
-• **TComputation** *extends* [`Computation`](Computation.md)\<`Type`\>
+• **TComputation** *extends* [`Computation`](Computation.md)
 
 ## Methods
 

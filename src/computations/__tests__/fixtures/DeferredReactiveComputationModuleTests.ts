@@ -28,10 +28,9 @@ import {
 
 const DeferredReactiveComputationModuleTests = <
   Type extends SynchronousComputationLike & ReactiveComputationLike,
-  TComputation extends Computation<Type>,
+  TComputation extends Computation,
   TypeWithSideEffects extends ComputationWithSideEffectsLike & Type,
-  TComputationWithSideEffects extends Computation<TypeWithSideEffects> &
-    TComputation,
+  TComputationWithSideEffects extends Computation & TComputation,
 >(
   m: DeferredReactiveComputationModule<Type, TComputation> &
     DeferredComputationModule<Type, TComputation> &

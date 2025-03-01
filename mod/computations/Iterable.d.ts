@@ -2,13 +2,13 @@ import { Computation, ComputationModule, ComputationOf, ComputationWithSideEffec
 /**
  * @noInheritDoc
  */
-interface IterableComputation extends Computation<IterableLike> {
+interface IterableComputation extends Computation {
     readonly [Computation_type]?: IterableLike<this[typeof Computation_T]>;
 }
-interface IterableWithSideEffectsComputation extends Computation<IterableWithSideEffectsLike> {
+interface IterableWithSideEffectsComputation extends Computation {
     readonly [Computation_type]?: IterableWithSideEffectsLike<this[typeof Computation_T]>;
 }
-interface PuredIterableComputation extends Computation<PureIterableLike> {
+interface PuredIterableComputation extends Computation {
     readonly [Computation_type]?: PureIterableLike<this[typeof Computation_T]>;
 }
 export type IterableComputationFor<Type extends IterableLike> = Type extends PureIterableLike ? PuredIterableComputation : Type extends IterableWithSideEffectsLike ? IterableWithSideEffectsComputation : IterableComputation;

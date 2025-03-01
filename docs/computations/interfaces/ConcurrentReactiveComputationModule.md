@@ -14,7 +14,7 @@
 
 • **Type** *extends* [`ReactiveComputationLike`](ReactiveComputationLike.md)
 
-• **TComputation** *extends* [`Computation`](Computation.md)\<`Type`\>
+• **TComputation** *extends* [`Computation`](Computation.md)
 
 ## Methods
 

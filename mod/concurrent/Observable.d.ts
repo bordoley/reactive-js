@@ -12,49 +12,49 @@ export type ObservableComputationOf<Type extends ObservableLike, T> = Computatio
 /**
  * @noInheritDoc
  */
-interface PureSynchronousObservableComputation extends Computation<PureSynchronousObservableLike> {
+interface PureSynchronousObservableComputation extends Computation {
     readonly [Computation_type]?: PureSynchronousObservableLike<this[typeof Computation_T]>;
 }
 /**
  * @noInheritDoc
  */
-interface SynchronousObservableWithSideEffectsComputation extends Computation<SynchronousObservableWithSideEffectsLike> {
+interface SynchronousObservableWithSideEffectsComputation extends Computation {
     readonly [Computation_type]?: SynchronousObservableWithSideEffectsLike<this[typeof Computation_T]>;
 }
 /**
  * @noInheritDoc
  */
-interface SynchronousObservableComputation extends Computation<SynchronousObservableLike> {
+interface SynchronousObservableComputation extends Computation {
     readonly [Computation_type]?: SynchronousObservableLike<this[typeof Computation_T]>;
 }
 /**
  * @noInheritDoc
  */
-interface PuredDeferredObservableComputation extends Computation<PureDeferredObservableLike> {
+interface PuredDeferredObservableComputation extends Computation {
     readonly [Computation_type]?: PureDeferredObservableLike<this[typeof Computation_T]>;
 }
 /**
  * @noInheritDoc
  */
-interface DeferredObservableWithSideEffectsComputation extends Computation<DeferredObservableWithSideEffectsLike> {
+interface DeferredObservableWithSideEffectsComputation extends Computation {
     readonly [Computation_type]?: DeferredObservableWithSideEffectsLike<this[typeof Computation_T]>;
 }
 /**
  * @noInheritDoc
  */
-interface DeferredObservableComputation extends Computation<DeferredObservableLike> {
+interface DeferredObservableComputation extends Computation {
     readonly [Computation_type]?: DeferredObservableLike<this[typeof Computation_T]>;
 }
 /**
  * @noInheritDoc
  */
-interface ObservableComputation extends Computation<ObservableLike> {
+interface ObservableComputation extends Computation {
     readonly [Computation_type]?: ObservableLike<this[typeof Computation_T]>;
 }
 /**
  * @noInheritDoc
  */
-interface MulticastObservableComputation extends Computation<MulticastObservableLike> {
+interface MulticastObservableComputation extends Computation {
     readonly [Computation_type]?: MulticastObservableLike<this[typeof Computation_T]>;
 }
 export declare const BatchedComputeMode = "batched";

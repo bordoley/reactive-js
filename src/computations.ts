@@ -12,9 +12,6 @@ import {
   Updater,
 } from "./functions.js";
 
-export const Computation_T = Symbol("Computation_T");
-export const Computation_type = Symbol("Computation_type");
-
 export const ComputationLike_isPure = Symbol("ComputationLike_isPure");
 export const ComputationLike_isDeferred = Symbol("ComputationLike_isDeferred");
 export const ComputationLike_isSynchronous = Symbol(
@@ -89,17 +86,20 @@ export interface MulticastComputationLike extends ComputationLike {
   readonly [ComputationLike_isPure]?: true;
 }
 
+export const Computation_T = Symbol("Computation_T");
+export const Computation_type = Symbol("Computation_type");
+
 /**
  * @noInheritDoc
  */
-export interface Computation<_Type extends ComputationLike> {
+export interface Computation {
   readonly [Computation_T]?: unknown;
   readonly [Computation_type]?: unknown;
 }
 
 export type ComputationOf<
   Type extends ComputationLike,
-  TComputation extends Computation<Type>,
+  TComputation extends Computation,
   T,
 > = TComputation extends {
   readonly [Computation_type]?: unknown;
@@ -123,7 +123,7 @@ export type ComputationOf<
 
 export type ComputationOperator<
   Type extends ComputationLike,
-  TComputation extends Computation<Type>,
+  TComputation extends Computation,
   TA,
   TB,
 > = Function1<
@@ -133,9 +133,9 @@ export type ComputationOperator<
 
 export type ComputationWithSideEffectsOperator<
   Type extends ComputationLike,
-  TComputation extends Computation<Type>,
+  TComputation extends Computation,
   TypeWithSideEffects extends ComputationWithSideEffectsLike & Type,
-  TComputationWithSideEffects extends Computation<TypeWithSideEffects>,
+  TComputationWithSideEffects extends Computation,
   TA,
   TB,
 > = Function1<
@@ -145,7 +145,7 @@ export type ComputationWithSideEffectsOperator<
 
 export interface ComputationModule<
   Type extends ComputationLike,
-  TComputation extends Computation<Type>,
+  TComputation extends Computation,
 > {
   keep<T>(
     predicate: Predicate<T>,
@@ -158,9 +158,9 @@ export interface ComputationModule<
 
 export interface ComputationWithSideEffectsModule<
   Type extends ComputationLike,
-  TComputation extends Computation<Type>,
+  TComputation extends Computation,
   TypeWithSideEffects extends ComputationWithSideEffectsLike & Type,
-  ComputationWithSideEffect extends Computation<TypeWithSideEffects>,
+  ComputationWithSideEffect extends Computation,
 > {
   forEach<T>(
     sideEffect: SideEffect1<T>,
@@ -176,7 +176,7 @@ export interface ComputationWithSideEffectsModule<
 
 export interface DeferredComputationModule<
   Type extends DeferredComputationLike,
-  TComputation extends Computation<Type>,
+  TComputation extends Computation,
 > {
   catchError<T>(
     onError: SideEffect1<Error>,
@@ -286,7 +286,7 @@ export interface DeferredComputationModule<
 
 export interface SynchronousComputationModule<
   Type extends SynchronousComputationLike,
-  TComputation extends Computation<Type>,
+  TComputation extends Computation,
 > {
   last<T>(): Function1<ComputationOf<Type, TComputation, T>, Optional<T>>;
 
@@ -308,7 +308,7 @@ export interface SynchronousComputationModule<
 
 export interface InteractiveComputationModule<
   Type extends InteractiveComputationLike,
-  TComputation extends Computation<Type>,
+  TComputation extends Computation,
 > {
   zip<TA, TB>(
     a: ComputationOf<Type, TComputation, TA>,
@@ -329,7 +329,7 @@ export interface InteractiveComputationModule<
 
 export interface DeferredReactiveComputationModule<
   Type extends DeferredComputationLike & ReactiveComputationLike,
-  TComputation extends Computation<Type>,
+  TComputation extends Computation,
 > {
   buffer<T>(options?: {
     count?: number;
@@ -360,7 +360,7 @@ export interface DeferredReactiveComputationModule<
 
 export interface ConcurrentReactiveComputationModule<
   Type extends ReactiveComputationLike,
-  TComputation extends Computation<Type>,
+  TComputation extends Computation,
 > {
   fromPromise<T>(): Function1<Promise<T>, ComputationOf<Type, TComputation, T>>;
 

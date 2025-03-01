@@ -5,7 +5,7 @@ import { DisposableLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
-export interface EventSourceComputation extends Computation<EventSourceLike> {
+export interface EventSourceComputation extends Computation {
     readonly [Computation_type]?: EventSourceLike<this[typeof Computation_T]>;
 }
 /**

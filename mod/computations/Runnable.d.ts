@@ -2,13 +2,13 @@ import { Computation, ComputationModule, ComputationWithSideEffectsModule, Compu
 /**
  * @noInheritDoc
  */
-interface RunnableComputation extends Computation<RunnableLike> {
+interface RunnableComputation extends Computation {
     readonly [Computation_type]?: RunnableLike<this[typeof Computation_T]>;
 }
-interface PureRunnableComputation extends Computation<PureRunnableLike> {
+interface PureRunnableComputation extends Computation {
     readonly [Computation_type]?: PureRunnableLike<this[typeof Computation_T]>;
 }
-interface RunnableWithSideEffectsComputation extends Computation<RunnableWithSideEffectsLike> {
+interface RunnableWithSideEffectsComputation extends Computation {
     readonly [Computation_type]?: RunnableWithSideEffectsLike<this[typeof Computation_T]>;
 }
 export type RunnableComputationFor<Type extends RunnableLike> = Type extends PureRunnableLike ? PureRunnableComputation : Type extends RunnableWithSideEffectsLike ? RunnableWithSideEffectsComputation : RunnableComputation;

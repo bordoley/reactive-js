@@ -26,7 +26,7 @@ import { TypePredicate, increment, pickUnsafe, returns } from "../functions.js";
 
 export interface PickOperator<
   Type extends ComputationLike,
-  TComputation extends Computation<Type>,
+  TComputation extends Computation,
 > {
   <T, TKeyOfT extends keyof T>(
     key: TKeyOfT,
@@ -121,26 +121,23 @@ interface Signature {
     computation: TComputation,
   ): computation is TComputation & SynchronousComputationWithSideEffectsLike;
 
-  keepType<
-    Type extends ComputationLike,
-    TComputation extends Computation<Type>,
-  >(
+  keepType<Type extends ComputationLike, TComputation extends Computation>(
     keep: ComputationModule<Type, TComputation>["keep"],
   ): <TA, TB>(
     predicate: TypePredicate<TA, TB>,
   ) => ComputationOperator<Type, TComputation, TA, TB>;
 
-  mapTo<Type extends ComputationLike, TComputation extends Computation<Type>>(
+  mapTo<Type extends ComputationLike, TComputation extends Computation>(
     map: ComputationModule<Type, TComputation>["map"],
   ): <T>(value: T) => ComputationOperator<Type, TComputation, unknown, T>;
 
-  pick<Type extends ComputationLike, TComputation extends Computation<Type>>(
+  pick<Type extends ComputationLike, TComputation extends Computation>(
     map: ComputationModule<Type, TComputation>["map"],
   ): PickOperator<Type, TComputation>;
 
   sequence<
     Type extends DeferredComputationLike,
-    TComputation extends Computation<Type>,
+    TComputation extends Computation,
   >(
     generate: DeferredComputationModule<Type, TComputation>["generate"],
   ): (start: number) => ComputationOf<Type, TComputation, number>;
@@ -276,7 +273,7 @@ export const isSynchronousWithSideEffects: Signature["isSynchronousWithSideEffec
 
 export const keepType: Signature["keepType"] = (<
     Type extends ComputationLike,
-    TComputation extends Computation<Type>,
+    TComputation extends Computation,
   >(
     keep: ComputationModule<Type, TComputation>["keep"],
   ) =>
@@ -284,7 +281,7 @@ export const keepType: Signature["keepType"] = (<
     keep(predicate)) as unknown as Signature["keepType"];
 
 export const mapTo: Signature["mapTo"] =
-  <Type extends ComputationLike, TComputation extends Computation<Type>>(
+  <Type extends ComputationLike, TComputation extends Computation>(
     map: ComputationModule<Type, TComputation>["map"],
   ) =>
   <T>(v: T) =>
@@ -292,7 +289,7 @@ export const mapTo: Signature["mapTo"] =
 
 export const pick: Signature["pick"] = (<
     Type extends ComputationLike,
-    TComputation extends Computation<Type>,
+    TComputation extends Computation,
   >(
     map: ComputationModule<Type, TComputation>["map"],
   ) =>
@@ -300,10 +297,7 @@ export const pick: Signature["pick"] = (<
     map(pickUnsafe(...keys))) as Signature["pick"];
 
 export const sequence: Signature["sequence"] =
-  <
-    Type extends DeferredComputationLike,
-    TComputation extends Computation<Type>,
-  >(
+  <Type extends DeferredComputationLike, TComputation extends Computation>(
     generate: DeferredComputationModule<Type, TComputation>["generate"],
   ) =>
   (start: number) =>

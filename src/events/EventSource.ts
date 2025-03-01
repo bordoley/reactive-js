@@ -20,7 +20,7 @@ import EventSource_mergeWith from "./EventSource/__private__/EventSource.mergeWi
 /**
  * @noInheritDoc
  */
-export interface EventSourceComputation extends Computation<EventSourceLike> {
+export interface EventSourceComputation extends Computation {
   readonly [Computation_type]?: EventSourceLike<this[typeof Computation_T]>;
 }
 

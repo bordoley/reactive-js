@@ -15,11 +15,11 @@
 
 • **Type** *extends* [`ComputationLike`](ComputationLike.md)
 
-• **TComputation** *extends* [`Computation`](Computation.md)\<`Type`\>
+• **TComputation** *extends* [`Computation`](Computation.md)
 
 • **TypeWithSideEffects** *extends* [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md) & `Type`
 
-• **ComputationWithSideEffect** *extends* [`Computation`](Computation.md)\<`TypeWithSideEffects`\>
+• **ComputationWithSideEffect** *extends* [`Computation`](Computation.md)
 
 ## Methods
 

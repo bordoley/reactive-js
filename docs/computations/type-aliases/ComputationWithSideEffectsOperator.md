@@ -12,11 +12,11 @@
 
 • **Type** *extends* [`ComputationLike`](../interfaces/ComputationLike.md)
 
-• **TComputation** *extends* [`Computation`](../interfaces/Computation.md)\<`Type`\>
+• **TComputation** *extends* [`Computation`](../interfaces/Computation.md)
 
 • **TypeWithSideEffects** *extends* [`ComputationWithSideEffectsLike`](../interfaces/ComputationWithSideEffectsLike.md) & `Type`
 
-• **TComputationWithSideEffects** *extends* [`Computation`](../interfaces/Computation.md)\<`TypeWithSideEffects`\>
+• **TComputationWithSideEffects** *extends* [`Computation`](../interfaces/Computation.md)
 
 • **TA**
 

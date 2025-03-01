@@ -20,7 +20,7 @@ import {
 
 const ComputationModuleTests = <
   Type extends ComputationLike,
-  TComputation extends Computation<Type>,
+  TComputation extends Computation,
 >(
   m: ComputationModule<Type, TComputation> & {
     fromReadonlyArray: <T>() => Function1<
