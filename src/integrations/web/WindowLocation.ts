@@ -14,7 +14,7 @@ import {
   ComputationLike_isSynchronous,
 } from "../../computations.js";
 import * as Observable from "../../concurrent/Observable.js";
-import { MulticastObservableComputation } from "../../concurrent/Observable.js";
+import { ObservableComputationFor } from "../../concurrent/Observable.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import {
   DeferredObservableLike,
@@ -241,7 +241,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
           this[WindowLocation_delegate],
           Computation.pick<
             MulticastObservableLike,
-            MulticastObservableComputation
+            ObservableComputationFor<MulticastObservableLike>
           >(Observable.map)("uri"),
           invoke(ObservableLike_observe, observer),
         );

@@ -275,7 +275,6 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
             instance[CacheStream_scheduleCleanup](key);
           }),
         ),
-        x => x,
         isSome(persistentStore)
           ? Observable.concatMap(bindMethod(persistentStore, "store"), {
               innerType: DeferredComputationWithSideEffectsType,

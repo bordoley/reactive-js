@@ -104,7 +104,7 @@ import {
   __stream,
 } from "../Observable/effects.js";
 import * as Observable from "../Observable.js";
-import { SynchronousObservableComputation } from "../Observable.js";
+import { ObservableComputationFor, ObservableOperator } from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
@@ -168,11 +168,11 @@ const testIsMulticastObservable = (obs: MulticastObservableLike) =>
     pipeLazy(obs, expectIsMulticastObservable),
   );
 
-const PureStatelessObservableOperatorTests = (
-  op: Observable.PureStatelessObservableOperator<unknown, unknown>,
+const ObservableOperatorTests = (
+  op: Observable.ObservableOperator<unknown, unknown>,
 ) =>
   describe(
-    "PureStatelessObservableOperator",
+    "ObservableOperator",
     test(
       "with PureSynchronousObservableLike",
       pipeLazy(
@@ -222,11 +222,11 @@ const PureStatelessObservableOperatorTests = (
     ),
   );
 
-const PureStatefulObservableOperator = (
-  op: Observable.PureStatefulObservableOperator<unknown, unknown>,
+const DeferredReactiveObservableOperator = (
+  op: Observable.DeferredReactiveObservableOperator<unknown, unknown>,
 ) =>
   describe(
-    "PureStatefulObservableOperator",
+    "DeferredReactiveObservableOperator",
     test(
       "with PureSynchronousObservableLike",
       pipeLazy(
@@ -275,15 +275,11 @@ const PureStatefulObservableOperator = (
     ),
   );
 
-const PureDeferredObservableOperatorWithDeferredObservableBaseTests = (
-  op: Observable.PureStatefulObservableOperator<
-    unknown,
-    unknown,
-    DeferredObservableLike
-  >,
+const DeferredObservableOperatorWithDeferredObservableBaseTests = (
+  op: ObservableOperator<unknown, unknown, DeferredObservableLike>,
 ) =>
   describe(
-    "PureStatelessObservableOperatorWithDeferredObservableBaseTests",
+    "ObservableOperatorWithDeferredObservableBaseTests",
     test(
       "with PureSynchronousObservableLike",
       pipeLazy(
@@ -394,7 +390,6 @@ const ObservableOperatorWithSideEffectsTests = (
       pipe(
         Observable.empty({ delay: 1 }),
         Observable.subscribeOn(vts),
-        x => x,
         op,
         expectIsDeferredObservableWithSideEffects,
       );
@@ -484,78 +479,78 @@ testModule(
   ),
   DeferredComputationModuleTests<
     SynchronousObservableLike,
-    SynchronousObservableComputation
+    ObservableComputationFor<SynchronousObservableLike>
   >(
     Observable as DeferredComputationModule<
       SynchronousObservableLike,
-      SynchronousObservableComputation
+      ObservableComputationFor<SynchronousObservableLike>
     > &
       SynchronousComputationModule<
         SynchronousObservableLike,
-        SynchronousObservableComputation
+        ObservableComputationFor<SynchronousObservableLike>
       >,
   ),
   PureStatelesssComputationModuleTests(
     Observable as ComputationModule<
       SynchronousObservableLike,
-      SynchronousObservableComputation
+      ObservableComputationFor<SynchronousObservableLike>
     > &
       DeferredComputationModule<
         SynchronousObservableLike,
-        SynchronousObservableComputation
+        ObservableComputationFor<SynchronousObservableLike>
       > &
       SynchronousComputationModule<
         SynchronousObservableLike,
-        SynchronousObservableComputation
+        ObservableComputationFor<SynchronousObservableLike>
       >,
   ),
   DeferredReactiveComputationModuleTests(
     Observable as DeferredReactiveComputationModule<
       SynchronousObservableLike,
-      SynchronousObservableComputation
+      ObservableComputationFor<SynchronousObservableLike>
     > &
       DeferredComputationModule<
         SynchronousObservableLike,
-        SynchronousObservableComputation
+        ObservableComputationFor<SynchronousObservableLike>
       > &
       SynchronousComputationModule<
         SynchronousObservableLike,
-        SynchronousObservableComputation
+        ObservableComputationFor<SynchronousObservableLike>
       > &
       ComputationWithSideEffectsModule<
         SynchronousObservableLike,
-        SynchronousObservableComputation,
+        ObservableComputationFor<SynchronousObservableLike>,
         SynchronousObservableWithSideEffectsLike,
-        Observable.SynchronousObservableWithSideEffectsComputation
+        ObservableComputationFor<SynchronousObservableWithSideEffectsLike>
       >,
   ),
   ComputationWithSideEffectsModuleTests(
     Observable as DeferredComputationModule<
       SynchronousObservableLike,
-      SynchronousObservableComputation
+      ObservableComputationFor<SynchronousObservableLike>
     > &
       ComputationWithSideEffectsModule<
         SynchronousObservableLike,
-        SynchronousObservableComputation,
+        ObservableComputationFor<SynchronousObservableLike>,
         SynchronousObservableWithSideEffectsLike,
-        Observable.SynchronousObservableWithSideEffectsComputation
+        ObservableComputationFor<SynchronousObservableWithSideEffectsLike>
       > &
       SynchronousComputationModule<
         SynchronousObservableLike,
-        SynchronousObservableComputation
+        ObservableComputationFor<SynchronousObservableLike>
       >,
   ),
   SynchronousComputationModuleTests<
     SynchronousObservableLike,
-    SynchronousObservableComputation
+    ObservableComputationFor<SynchronousObservableLike>
   >(
     Observable as DeferredComputationModule<
       SynchronousObservableLike,
-      SynchronousObservableComputation
+      ObservableComputationFor<SynchronousObservableLike>
     > &
       SynchronousComputationModule<
         SynchronousObservableLike,
-        SynchronousObservableComputation
+        ObservableComputationFor<SynchronousObservableLike>
       >,
   ),
   describe(
@@ -612,11 +607,11 @@ testModule(
         expectArrayEquals([1, 2, 3]),
       ),
     ),
-    PureStatefulObservableOperator(
+    DeferredReactiveObservableOperator(
       Observable.backpressureStrategy(10, DropLatestBackpressureStrategy),
     ),
   ),
-  describe("buffer", PureStatefulObservableOperator(Observable.buffer())),
+  describe("buffer", DeferredReactiveObservableOperator(Observable.buffer())),
   describe(
     "catchError",
     test("when the error handler throws an error from a delayed source", () => {
@@ -643,7 +638,7 @@ testModule(
         expectArrayEquals(["e2", "e1"]),
       );
     }),
-    PureStatefulObservableOperator(Observable.catchError(ignore)),
+    DeferredReactiveObservableOperator(Observable.catchError(ignore)),
   ),
   describe(
     "combineLatest",
@@ -719,7 +714,6 @@ testModule(
           return result;
         }),
         Observable.takeFirst<number>({ count: 10 }),
-        x => x,
         Observable.buffer<number>(),
         Observable.lastAsync(scheduler),
         x => x ?? [],
@@ -815,7 +809,7 @@ testModule(
         ),
         Computation.keepType<
           SynchronousObservableLike,
-          Observable.SynchronousObservableWithSideEffectsComputation
+          ObservableComputationFor<SynchronousObservableLike>
         >(Observable.keep)(isSome),
         Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.run(),
@@ -923,7 +917,7 @@ testModule(
   ),
   describe(
     "concatAll",
-    PureStatefulObservableOperator(Observable.concatAll()),
+    DeferredReactiveObservableOperator(Observable.concatAll()),
     DeferringObservableOperatorTests(
       Observable.concatAll({
         innerType: PureDeferredComputationType,
@@ -993,7 +987,7 @@ testModule(
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
       );
     }),
-    PureStatefulObservableOperator(
+    DeferredReactiveObservableOperator(
       Observable.concatMap(_ => Observable.empty({ delay: 1 })),
     ),
     DeferringObservableOperatorTests(
@@ -1020,7 +1014,7 @@ testModule(
   ),
   describe(
     "concatWith",
-    PureStatefulObservableOperator(
+    DeferredReactiveObservableOperator(
       Observable.concatWith(
         Observable.empty({ delay: 1 }),
         Observable.empty({ delay: 1 }),
@@ -1129,7 +1123,7 @@ testModule(
   describe("debug", ObservableOperatorWithSideEffectsTests(Observable.debug())),
   describe(
     "decodeWithCharset",
-    PureStatefulObservableOperator(Observable.decodeWithCharset()),
+    DeferredReactiveObservableOperator(Observable.decodeWithCharset()),
   ),
   describe(
     "defer",
@@ -1223,7 +1217,7 @@ testModule(
   ),
   describe(
     "distinctUntilChanged",
-    PureStatefulObservableOperator(Observable.distinctUntilChanged()),
+    DeferredReactiveObservableOperator(Observable.distinctUntilChanged()),
   ),
   describe(
     "empty",
@@ -1246,9 +1240,12 @@ testModule(
   ),
   describe(
     "encodeUtf8",
-    PureStatefulObservableOperator(Observable.encodeUtf8()),
+    DeferredReactiveObservableOperator(Observable.encodeUtf8()),
   ),
-  describe("endWith", PureStatefulObservableOperator(Observable.endWith(1))),
+  describe(
+    "endWith",
+    DeferredReactiveObservableOperator(Observable.endWith(1)),
+  ),
   describe(
     "enqueue",
     ObservableOperatorWithSideEffectsTests(Observable.enqueue(Queue.create())),
@@ -1271,7 +1268,7 @@ testModule(
         expectArrayEquals([1, 2, 3]),
       ),
     ),
-    PureStatefulObservableOperator(Observable.exhaust()),
+    DeferredReactiveObservableOperator(Observable.exhaust()),
     DeferringObservableOperatorTests(
       Observable.exhaust({
         innerType: PureDeferredComputationType,
@@ -1306,7 +1303,7 @@ testModule(
         expectArrayEquals([1, 2, 3]),
       ),
     ),
-    PureStatefulObservableOperator(
+    DeferredReactiveObservableOperator(
       Observable.exhaustMap(_ => Observable.empty({ delay: 1 })),
     ),
     DeferringObservableOperatorTests(
@@ -1666,12 +1663,9 @@ testModule(
   ),
   describe(
     "ignoreElements",
-    PureStatelessObservableOperatorTests(Observable.ignoreElements()),
+    ObservableOperatorTests(Observable.ignoreElements()),
   ),
-  describe(
-    "keep",
-    PureStatelessObservableOperatorTests(Observable.keep(alwaysTrue)),
-  ),
+  describe("keep", ObservableOperatorTests(Observable.keep(alwaysTrue))),
   describe(
     "keyFrame",
     test(
@@ -1708,10 +1702,7 @@ testModule(
     }),
   ),
   describe("log", ObservableOperatorWithSideEffectsTests(Observable.log())),
-  describe(
-    "map",
-    PureStatelessObservableOperatorTests(Observable.map(returns(none))),
-  ),
+  describe("map", ObservableOperatorTests(Observable.map(returns(none)))),
   describe(
     "merge",
     test("validate output runtime type", () => {
@@ -1840,7 +1831,7 @@ testModule(
         expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]),
       ),
     ),
-    PureStatefulObservableOperator(Observable.mergeAll()),
+    DeferredReactiveObservableOperator(Observable.mergeAll()),
     DeferringObservableOperatorTests(
       Observable.mergeAll({
         innerType: PureDeferredComputationType,
@@ -1926,7 +1917,7 @@ testModule(
         expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
       ),
     ),
-    PureStatefulObservableOperator(
+    DeferredReactiveObservableOperator(
       Observable.mergeMap(_ => Observable.empty({ delay: 1 })),
     ),
     DeferringObservableOperatorTests(
@@ -1953,7 +1944,7 @@ testModule(
   ),
   describe(
     "mergeWith",
-    PureStatefulObservableOperator(
+    DeferredReactiveObservableOperator(
       Observable.mergeWith(Observable.empty({ delay: 1 })),
     ),
     ObservableOperatorWithSideEffectsTests(
@@ -2087,7 +2078,10 @@ testModule(
     }),
     ObservableOperatorWithSideEffectsTests(Observable.onSubscribe(ignore)),
   ),
-  describe("pairwise", PureStatefulObservableOperator(Observable.pairwise())),
+  describe(
+    "pairwise",
+    DeferredReactiveObservableOperator(Observable.pairwise()),
+  ),
   describe("raise", testIsPureSynchronousObservable(Observable.raise())),
   describe(
     "repeat",
@@ -2125,19 +2119,19 @@ testModule(
         expectToThrowError(err),
       );
     }),
-    PureDeferredObservableOperatorWithDeferredObservableBaseTests(
+    DeferredObservableOperatorWithDeferredObservableBaseTests(
       Observable.repeat(),
     ),
   ),
   describe(
     "retry",
-    PureDeferredObservableOperatorWithDeferredObservableBaseTests(
+    DeferredObservableOperatorWithDeferredObservableBaseTests(
       Observable.retry(raise),
     ),
   ),
   describe(
     "scan",
-    PureStatefulObservableOperator(
+    DeferredReactiveObservableOperator(
       Observable.scan((acc, _) => acc, returns(none)),
     ),
   ),
@@ -2160,7 +2154,7 @@ testModule(
         expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
       ),
     ),
-    PureStatefulObservableOperator(
+    DeferredReactiveObservableOperator(
       Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none)),
     ),
     DeferringObservableOperatorTests(
@@ -2179,7 +2173,10 @@ testModule(
       }),
     ),
   ),
-  describe("skipFirst", PureStatefulObservableOperator(Observable.skipFirst())),
+  describe(
+    "skipFirst",
+    DeferredReactiveObservableOperator(Observable.skipFirst()),
+  ),
   describe(
     "spring",
     testAsync("test with spring", async () => {
@@ -2194,7 +2191,7 @@ testModule(
   ),
   describe(
     "startWith",
-    PureStatefulObservableOperator(Observable.startWith(1, 2, 3)),
+    DeferredReactiveObservableOperator(Observable.startWith(1, 2, 3)),
   ),
   describe(
     "subscribeOn",
@@ -2237,7 +2234,7 @@ testModule(
         expectArrayEquals([] as readonly number[]),
       ),
     ),
-    PureStatefulObservableOperator(Observable.switchAll()),
+    DeferredReactiveObservableOperator(Observable.switchAll()),
     DeferringObservableOperatorTests(
       Observable.switchAll({
         innerType: PureDeferredComputationType,
@@ -2324,7 +2321,7 @@ testModule(
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
       ),
     ),
-    PureStatefulObservableOperator(
+    DeferredReactiveObservableOperator(
       Observable.switchMap(_ => Observable.empty({ delay: 1 })),
     ),
     DeferringObservableOperatorTests(
@@ -2349,8 +2346,14 @@ testModule(
       ),
     ),
   ),
-  describe("takeFirst", PureStatefulObservableOperator(Observable.takeFirst())),
-  describe("takeLast", PureStatefulObservableOperator(Observable.takeLast())),
+  describe(
+    "takeFirst",
+    DeferredReactiveObservableOperator(Observable.takeFirst()),
+  ),
+  describe(
+    "takeLast",
+    DeferredReactiveObservableOperator(Observable.takeLast()),
+  ),
   describe(
     "takeUntil",
     test(
@@ -2368,7 +2371,7 @@ testModule(
         expectArrayEquals([1, 2, 3]),
       ),
     ),
-    PureStatefulObservableOperator(
+    DeferredReactiveObservableOperator(
       Observable.takeUntil(Observable.empty({ delay: 1 })),
     ),
     ObservableOperatorWithSideEffectsTests(
@@ -2389,7 +2392,7 @@ testModule(
   ),
   describe(
     "takeWhile",
-    PureStatefulObservableOperator(Observable.takeWhile(alwaysTrue)),
+    DeferredReactiveObservableOperator(Observable.takeWhile(alwaysTrue)),
   ),
   describe(
     "throttle",
@@ -2432,7 +2435,7 @@ testModule(
         expectArrayEquals([0, 74, 149, 199]),
       ),
     ),
-    PureStatefulObservableOperator(Observable.throttle(1)),
+    DeferredReactiveObservableOperator(Observable.throttle(1)),
   ),
   describe(
     "throwIfEmpty",
@@ -2473,7 +2476,7 @@ testModule(
         expectArrayEquals([1]),
       ),
     ),
-    PureStatefulObservableOperator(
+    DeferredReactiveObservableOperator(
       Observable.throwIfEmpty(() => newInstance(Error)),
     ),
   ),
@@ -2518,7 +2521,7 @@ testModule(
   ),
   describe(
     "withCurrentTime",
-    PureStatefulObservableOperator(Observable.withCurrentTime(returns)),
+    DeferredReactiveObservableOperator(Observable.withCurrentTime(returns)),
   ),
   describe(
     "withLatestFrom",
@@ -2567,7 +2570,7 @@ testModule(
         expectToThrowError(error),
       );
     }),
-    PureStatefulObservableOperator(
+    DeferredReactiveObservableOperator(
       Observable.withLatestFrom(Observable.empty({ delay: 1 }), returns),
     ),
     ObservableOperatorWithSideEffectsTests(

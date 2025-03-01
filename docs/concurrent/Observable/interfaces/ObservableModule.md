@@ -16,7 +16,7 @@
 
 ### backpressureStrategy()
 
-> **backpressureStrategy**\<`T`\>(`capacity`, `backpressureStrategy`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **backpressureStrategy**\<`T`\>(`capacity`, `backpressureStrategy`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 #### Type Parameters
 
@@ -34,13 +34,13 @@
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ***
 
 ### buffer()
 
-> **buffer**\<`T`\>(`options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, readonly `T`[]\>
+> **buffer**\<`T`\>(`options`?): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, readonly `T`[]\>
 
 #### Type Parameters
 
@@ -56,13 +56,13 @@
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, readonly `T`[]\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, readonly `T`[]\>
 
 ***
 
 ### catchError()
 
-> **catchError**\<`T`\>(`onError`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **catchError**\<`T`\>(`onError`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 #### Type Parameters
 
@@ -76,7 +76,7 @@
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ***
 
@@ -1740,7 +1740,7 @@
 
 #### Call Signature
 
-> **concatAll**\<`T`\>(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+> **concatAll**\<`T`\>(): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -1748,11 +1748,11 @@
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
-> **concatAll**\<`T`\>(`options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+> **concatAll**\<`T`\>(`options`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -1768,7 +1768,7 @@
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
@@ -1948,7 +1948,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Call Signature
 
-> **concatMap**\<`TA`, `TB`\>(`selector`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+> **concatMap**\<`TA`, `TB`\>(`selector`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 ##### Type Parameters
 
@@ -1964,11 +1964,11 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 #### Call Signature
 
-> **concatMap**\<`TA`, `TB`\>(`selector`, `options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+> **concatMap**\<`TA`, `TB`\>(`selector`, `options`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 ##### Type Parameters
 
@@ -1990,7 +1990,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 #### Call Signature
 
@@ -2076,7 +2076,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Call Signature
 
-> **concatWith**\<`T`\>(`snd`, ...`tail`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **concatWith**\<`T`\>(`snd`, ...`tail`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ##### Type Parameters
 
@@ -2094,7 +2094,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 #### Call Signature
 
@@ -2200,7 +2200,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ### decodeWithCharset()
 
-> **decodeWithCharset**(`options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`ArrayBuffer`, `string`\>
+> **decodeWithCharset**(`options`?): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -2220,7 +2220,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`ArrayBuffer`, `string`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`ArrayBuffer`, `string`\>
 
 ***
 
@@ -2266,7 +2266,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ### distinctUntilChanged()
 
-> **distinctUntilChanged**\<`T`\>(`options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **distinctUntilChanged**\<`T`\>(`options`?): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 #### Type Parameters
 
@@ -2282,7 +2282,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ***
 
@@ -2324,17 +2324,17 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ### encodeUtf8()
 
-> **encodeUtf8**(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+> **encodeUtf8**(): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`string`, `Uint8Array`\<`ArrayBufferLike`\>\>
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`string`, `Uint8Array`\<`ArrayBufferLike`\>\>
 
 ***
 
 ### endWith()
 
-> **endWith**\<`T`\>(`value`, ...`values`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **endWith**\<`T`\>(`value`, ...`values`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 #### Type Parameters
 
@@ -2352,7 +2352,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ***
 
@@ -2380,7 +2380,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Call Signature
 
-> **exhaust**\<`T`\>(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+> **exhaust**\<`T`\>(): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -2388,11 +2388,11 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
-> **exhaust**\<`T`\>(`options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+> **exhaust**\<`T`\>(`options`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -2408,7 +2408,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
@@ -2476,7 +2476,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Call Signature
 
-> **exhaustMap**\<`TA`, `TB`\>(`selector`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+> **exhaustMap**\<`TA`, `TB`\>(`selector`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 ##### Type Parameters
 
@@ -2492,11 +2492,11 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 #### Call Signature
 
-> **exhaustMap**\<`TA`, `TB`\>(`selector`, `options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+> **exhaustMap**\<`TA`, `TB`\>(`selector`, `options`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 ##### Type Parameters
 
@@ -2518,7 +2518,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 #### Call Signature
 
@@ -2946,7 +2946,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ### ignoreElements()
 
-> **ignoreElements**\<`T`\>(): [`PureStatelessObservableOperator`](../type-aliases/PureStatelessObservableOperator.md)\<`unknown`, `T`\>
+> **ignoreElements**\<`T`\>(): [`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`unknown`, `T`\>
 
 #### Type Parameters
 
@@ -2954,13 +2954,13 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Returns
 
-[`PureStatelessObservableOperator`](../type-aliases/PureStatelessObservableOperator.md)\<`unknown`, `T`\>
+[`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`unknown`, `T`\>
 
 ***
 
 ### keep()
 
-> **keep**\<`T`\>(`predicate`): [`PureStatelessObservableOperator`](../type-aliases/PureStatelessObservableOperator.md)\<`T`, `T`\>
+> **keep**\<`T`\>(`predicate`): [`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`\>
 
 #### Type Parameters
 
@@ -2974,7 +2974,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Returns
 
-[`PureStatelessObservableOperator`](../type-aliases/PureStatelessObservableOperator.md)\<`T`, `T`\>
+[`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`\>
 
 ***
 
@@ -3076,7 +3076,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ### map()
 
-> **map**\<`TA`, `TB`\>(`selector`): [`PureStatelessObservableOperator`](../type-aliases/PureStatelessObservableOperator.md)\<`TA`, `TB`\>
+> **map**\<`TA`, `TB`\>(`selector`): [`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`TA`, `TB`\>
 
 #### Type Parameters
 
@@ -3092,7 +3092,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Returns
 
-[`PureStatelessObservableOperator`](../type-aliases/PureStatelessObservableOperator.md)\<`TA`, `TB`\>
+[`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`TA`, `TB`\>
 
 ***
 
@@ -3260,7 +3260,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 #### Call Signature
 
-> **mergeAll**\<`T`\>(`options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+> **mergeAll**\<`T`\>(`options`?): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -3284,11 +3284,11 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
-> **mergeAll**\<`T`\>(`options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+> **mergeAll**\<`T`\>(`options`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -3316,7 +3316,7 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
@@ -3550,7 +3550,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Call Signature
 
-> **mergeMap**\<`TA`, `TB`\>(`selector`, `options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+> **mergeMap**\<`TA`, `TB`\>(`selector`, `options`?): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 ##### Type Parameters
 
@@ -3580,11 +3580,11 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 #### Call Signature
 
-> **mergeMap**\<`TA`, `TB`\>(`selector`, `options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+> **mergeMap**\<`TA`, `TB`\>(`selector`, `options`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 ##### Type Parameters
 
@@ -3618,7 +3618,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 #### Call Signature
 
@@ -3740,7 +3740,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Call Signature
 
-> **mergeWith**\<`T`\>(`snd`, ...`tail`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **mergeWith**\<`T`\>(`snd`, ...`tail`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ##### Type Parameters
 
@@ -3758,7 +3758,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 #### Call Signature
 
@@ -3806,7 +3806,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Call Signature
 
-> **mergeWith**\<`T`\>(`snd`, ...`tail`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **mergeWith**\<`T`\>(`snd`, ...`tail`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ##### Type Parameters
 
@@ -3824,7 +3824,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 #### Call Signature
 
@@ -3982,7 +3982,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### pairwise()
 
-> **pairwise**\<`T`\>(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
+> **pairwise**\<`T`\>(): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
 
 #### Type Parameters
 
@@ -3990,7 +3990,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
 
 ***
 
@@ -4050,7 +4050,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Call Signature
 
-> **repeat**\<`T`\>(`predicate`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>\>
+> **repeat**\<`T`\>(`predicate`): [`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
 
 ##### Type Parameters
 
@@ -4064,11 +4064,11 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>\>
+[`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
 
 #### Call Signature
 
-> **repeat**\<`T`\>(`count`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>\>
+> **repeat**\<`T`\>(`count`): [`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
 
 ##### Type Parameters
 
@@ -4082,11 +4082,11 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>\>
+[`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
 
 #### Call Signature
 
-> **repeat**\<`T`\>(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>\>
+> **repeat**\<`T`\>(): [`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
 
 ##### Type Parameters
 
@@ -4094,13 +4094,13 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>\>
+[`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
 
 ***
 
 ### retry()
 
-> **retry**\<`T`\>(`shouldRetry`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>\>
+> **retry**\<`T`\>(`shouldRetry`?): [`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
 
 #### Type Parameters
 
@@ -4114,7 +4114,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>\>
+[`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
 
 ***
 
@@ -4150,7 +4150,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### scan()
 
-> **scan**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `TAcc`\>
+> **scan**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `TAcc`\>
 
 #### Type Parameters
 
@@ -4170,7 +4170,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `TAcc`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `TAcc`\>
 
 ***
 
@@ -4178,7 +4178,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Call Signature
 
-> **scanMany**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `TAcc`\>
+> **scanMany**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `TAcc`\>
 
 ##### Type Parameters
 
@@ -4198,11 +4198,11 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `TAcc`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `TAcc`\>
 
 #### Call Signature
 
-> **scanMany**\<`T`, `TAcc`\>(`scanner`, `initialValue`, `options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `TAcc`\>
+> **scanMany**\<`T`, `TAcc`\>(`scanner`, `initialValue`, `options`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `TAcc`\>
 
 ##### Type Parameters
 
@@ -4228,7 +4228,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `TAcc`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `TAcc`\>
 
 #### Call Signature
 
@@ -4324,7 +4324,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### skipFirst()
 
-> **skipFirst**\<`T`\>(`options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **skipFirst**\<`T`\>(`options`?): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 #### Type Parameters
 
@@ -4340,7 +4340,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ***
 
@@ -4372,7 +4372,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### startWith()
 
-> **startWith**\<`T`\>(`value`, ...`values`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **startWith**\<`T`\>(`value`, ...`values`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 #### Type Parameters
 
@@ -4390,7 +4390,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ***
 
@@ -4472,7 +4472,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Call Signature
 
-> **switchAll**\<`T`\>(): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+> **switchAll**\<`T`\>(): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -4480,11 +4480,11 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
-> **switchAll**\<`T`\>(`options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+> **switchAll**\<`T`\>(`options`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 ##### Type Parameters
 
@@ -4500,7 +4500,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>, `T`\>
 
 #### Call Signature
 
@@ -4568,7 +4568,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Call Signature
 
-> **switchMap**\<`TA`, `TB`\>(`selector`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+> **switchMap**\<`TA`, `TB`\>(`selector`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 ##### Type Parameters
 
@@ -4584,11 +4584,11 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 #### Call Signature
 
-> **switchMap**\<`TA`, `TB`\>(`selector`, `options`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+> **switchMap**\<`TA`, `TB`\>(`selector`, `options`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 ##### Type Parameters
 
@@ -4610,7 +4610,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 #### Call Signature
 
@@ -4694,7 +4694,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### takeFirst()
 
-> **takeFirst**\<`T`\>(`options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **takeFirst**\<`T`\>(`options`?): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 #### Type Parameters
 
@@ -4710,13 +4710,13 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ***
 
 ### takeLast()
 
-> **takeLast**\<`T`\>(`options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **takeLast**\<`T`\>(`options`?): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 #### Type Parameters
 
@@ -4732,7 +4732,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ***
 
@@ -4740,7 +4740,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Call Signature
 
-> **takeUntil**\<`T`\>(`notifier`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **takeUntil**\<`T`\>(`notifier`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ##### Type Parameters
 
@@ -4754,7 +4754,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 #### Call Signature
 
@@ -4814,7 +4814,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### takeWhile()
 
-> **takeWhile**\<`T`\>(`predicate`, `options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **takeWhile**\<`T`\>(`predicate`, `options`?): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 #### Type Parameters
 
@@ -4834,13 +4834,13 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ***
 
 ### throttle()
 
-> **throttle**\<`T`\>(`duration`, `options`?): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **throttle**\<`T`\>(`duration`, `options`?): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 #### Type Parameters
 
@@ -4860,13 +4860,13 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ***
 
 ### throwIfEmpty()
 
-> **throwIfEmpty**\<`T`\>(`factory`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+> **throwIfEmpty**\<`T`\>(`factory`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 #### Type Parameters
 
@@ -4880,7 +4880,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`T`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ***
 
@@ -5006,7 +5006,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### withCurrentTime()
 
-> **withCurrentTime**\<`TA`, `TB`\>(`selector`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+> **withCurrentTime**\<`TA`, `TB`\>(`selector`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 #### Type Parameters
 
@@ -5022,7 +5022,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `TB`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `TB`\>
 
 ***
 
@@ -5030,7 +5030,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ##### Type Parameters
 
@@ -5046,11 +5046,11 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `T`\>
+> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `T`\>
 
 ##### Type Parameters
 
@@ -5072,7 +5072,7 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureStatefulObservableOperator`](../type-aliases/PureStatefulObservableOperator.md)\<`TA`, `T`\>
+[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`TA`, `T`\>
 
 #### Call Signature
 

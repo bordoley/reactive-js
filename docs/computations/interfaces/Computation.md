@@ -12,12 +12,6 @@
 - [`IterableWithSideEffectsComputation`](../Iterable/interfaces/IterableWithSideEffectsComputation.md)
 - [`RunnableComputation`](../Runnable/interfaces/RunnableComputation.md)
 - [`RunnableWithSideEffectsComputation`](../Runnable/interfaces/RunnableWithSideEffectsComputation.md)
-- [`PureSynchronousObservableComputation`](../../concurrent/Observable/interfaces/PureSynchronousObservableComputation.md)
-- [`SynchronousObservableWithSideEffectsComputation`](../../concurrent/Observable/interfaces/SynchronousObservableWithSideEffectsComputation.md)
-- [`SynchronousObservableComputation`](../../concurrent/Observable/interfaces/SynchronousObservableComputation.md)
-- [`PuredDeferredObservableComputation`](../../concurrent/Observable/interfaces/PuredDeferredObservableComputation.md)
-- [`DeferredObservableWithSideEffectsComputation`](../../concurrent/Observable/interfaces/DeferredObservableWithSideEffectsComputation.md)
-- [`MulticastObservableComputation`](../../concurrent/Observable/interfaces/MulticastObservableComputation.md)
 - [`EventSourceComputation`](../../events/EventSource/interfaces/EventSourceComputation.md)
 
 ## Type Parameters

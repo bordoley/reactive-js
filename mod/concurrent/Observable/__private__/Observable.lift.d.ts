@@ -1,7 +1,7 @@
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous } from "../../../computations.js";
 import { DeferredObservableWithSideEffectsLike, ObservableLike, ObserverLike } from "../../../concurrent.js";
 import { Function1 } from "../../../functions.js";
-import type { ObservableOperatorWithSideEffects, PureStatefulObservableOperator, PureStatelessObservableOperator } from "../../Observable.js";
+import type { DeferredReactiveObservableOperator, ObservableOperator, ObservableOperatorWithSideEffects } from "../../Observable.js";
 export declare const ObservableLift_isStateless: unique symbol;
 interface ObservableLift {
     lift(options: {
@@ -9,12 +9,12 @@ interface ObservableLift {
         [ComputationLike_isDeferred]: boolean;
         [ComputationLike_isPure]: true;
         [ComputationLike_isSynchronous]: true;
-    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => PureStatelessObservableOperator<TA, TB>;
+    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => ObservableOperator<TA, TB>;
     lift(options: {
         [ComputationLike_isDeferred]: true;
         [ComputationLike_isPure]: true;
         [ComputationLike_isSynchronous]: true;
-    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => PureStatefulObservableOperator<TA, TB>;
+    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => DeferredReactiveObservableOperator<TA, TB>;
     lift(options: {
         [ComputationLike_isDeferred]: true;
         [ComputationLike_isPure]: false;

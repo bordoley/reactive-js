@@ -8,21 +8,17 @@
 
 ## Interfaces
 
-- [DeferredObservableWithSideEffectsComputation](interfaces/DeferredObservableWithSideEffectsComputation.md)
-- [MulticastObservableComputation](interfaces/MulticastObservableComputation.md)
 - [ObservableModule](interfaces/ObservableModule.md)
-- [PuredDeferredObservableComputation](interfaces/PuredDeferredObservableComputation.md)
-- [PureSynchronousObservableComputation](interfaces/PureSynchronousObservableComputation.md)
-- [SynchronousObservableComputation](interfaces/SynchronousObservableComputation.md)
-- [SynchronousObservableWithSideEffectsComputation](interfaces/SynchronousObservableWithSideEffectsComputation.md)
 
 ## Type Aliases
 
 - [ComputeMode](type-aliases/ComputeMode.md)
+- [DeferredReactiveObservableOperator](type-aliases/DeferredReactiveObservableOperator.md)
 - [DeferringObservableOperator](type-aliases/DeferringObservableOperator.md)
+- [ObservableComputationFor](type-aliases/ObservableComputationFor.md)
+- [ObservableComputationOf](type-aliases/ObservableComputationOf.md)
+- [ObservableOperator](type-aliases/ObservableOperator.md)
 - [ObservableOperatorWithSideEffects](type-aliases/ObservableOperatorWithSideEffects.md)
-- [PureStatefulObservableOperator](type-aliases/PureStatefulObservableOperator.md)
-- [PureStatelessObservableOperator](type-aliases/PureStatelessObservableOperator.md)
 - [Signature](type-aliases/Signature.md)
 - [ThrottleMode](type-aliases/ThrottleMode.md)
 

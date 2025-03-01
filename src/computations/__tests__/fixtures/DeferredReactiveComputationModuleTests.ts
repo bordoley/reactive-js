@@ -230,7 +230,6 @@ const DeferredReactiveComputationModuleTests = <
           [1, 2, 3],
           m.fromReadonlyArray(),
           m.forEach<number>(f),
-          x => x,
           m.ignoreElements<number>(),
           m.toReadonlyArray(),
           expectArrayEquals([] as number[]),

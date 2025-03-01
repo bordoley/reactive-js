@@ -6,7 +6,7 @@
 
 # Function: map()
 
-> **map**\<`TA`, `TB`\>(`selector`): [`PureStatelessObservableOperator`](../type-aliases/PureStatelessObservableOperator.md)\<`TA`, `TB`\>
+> **map**\<`TA`, `TB`\>(`selector`): [`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`TA`, `TB`\>
 
 ## Type Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`PureStatelessObservableOperator`](../type-aliases/PureStatelessObservableOperator.md)\<`TA`, `TB`\>
+[`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`TA`, `TB`\>

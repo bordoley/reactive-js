@@ -36,7 +36,7 @@ const DeferredReactiveComputationModuleTests = (m) => describe("DeferredReactive
     equality: () => true,
 }), m.toReadonlyArray(), expectArrayEquals([1])))), describe("ignoreElements", test("ignores all elements", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.ignoreElements(), m.toReadonlyArray(), expectArrayEquals([]))), test("invokes all side-effects", () => {
     const f = mockFn();
-    pipe([1, 2, 3], m.fromReadonlyArray(), m.forEach(f), x => x, m.ignoreElements(), m.toReadonlyArray(), expectArrayEquals([]));
+    pipe([1, 2, 3], m.fromReadonlyArray(), m.forEach(f), m.ignoreElements(), m.toReadonlyArray(), expectArrayEquals([]));
     pipe(f, expectToHaveBeenCalledTimes(3));
 })), describe("pairwise", test("when there are more than one input value", pipeLazy([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.pairwise(), m.toReadonlyArray(), expectArrayEquals([
     tuple(0, 1),

@@ -5,7 +5,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as Observable from "../../concurrent/Observable.js";
-import { PureSynchronousObservableComputation } from "../../concurrent/Observable.js";
+import { ObservableComputationFor } from "../../concurrent/Observable.js";
 import { PureSynchronousObservableLike } from "../../concurrent.js";
 import {
   Optional,
@@ -28,7 +28,7 @@ testModule(
         Observable.fromReadonlyArray(),
         Computation.keepType<
           PureSynchronousObservableLike,
-          PureSynchronousObservableComputation
+          ObservableComputationFor<PureSynchronousObservableLike>
         >(Observable.keep)<Optional<string>, string>(isSome),
         Observable.toReadonlyArray(),
         expectArrayEquals(["b", "v"]),
@@ -48,7 +48,7 @@ testModule(
         Observable.fromReadonlyArray(),
         Computation.mapTo<
           PureSynchronousObservableLike,
-          PureSynchronousObservableComputation
+          ObservableComputationFor<PureSynchronousObservableLike>
         >(Observable.map)(2),
         Observable.toReadonlyArray(),
         expectArrayEquals([2, 2, 2]),
@@ -72,7 +72,7 @@ testModule(
         Observable.fromReadonlyArray(),
         Computation.pick<
           PureSynchronousObservableLike,
-          PureSynchronousObservableComputation
+          ObservableComputationFor<PureSynchronousObservableLike>
         >(Observable.map)(keyA, keyB),
         Observable.toReadonlyArray<string>(),
         expectArrayEquals<string>(["value"]),
@@ -90,7 +90,7 @@ testModule(
         Observable.fromReadonlyArray(),
         Computation.pick<
           PureSynchronousObservableLike,
-          PureSynchronousObservableComputation
+          ObservableComputationFor<PureSynchronousObservableLike>
         >(Observable.map)("keyA", "keyB"),
         Observable.toReadonlyArray<string>(),
         expectArrayEquals<string>(["value"]),
@@ -104,7 +104,7 @@ testModule(
         Observable.fromReadonlyArray(),
         Computation.pick<
           PureSynchronousObservableLike,
-          PureSynchronousObservableComputation
+          ObservableComputationFor<PureSynchronousObservableLike>
         >(Observable.map)(3),
         Observable.toReadonlyArray<number>(),
         expectArrayEquals<number>([4]),

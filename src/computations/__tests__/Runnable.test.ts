@@ -1,5 +1,4 @@
 import { testModule } from "../../__internal__/testing.js";
-import { RunnableLike } from "../../computations.js";
 import * as Runnable from "../Runnable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ComputationWithSideEffectsModuleTests from "./fixtures/ComputationWithSideEffectsModuleTests.js";
@@ -13,9 +12,7 @@ testModule(
   DeferredComputationModuleTests(Runnable),
   DeferredReactiveComputationModuleTests(Runnable),
   ComputationWithSideEffectsModuleTests(Runnable),
-  SynchronousComputationModuleTests<RunnableLike, Runnable.RunnableComputation>(
-    Runnable,
-  ),
+  SynchronousComputationModuleTests(Runnable),
 );
 
 ((_: Runnable.Signature) => {})(Runnable);

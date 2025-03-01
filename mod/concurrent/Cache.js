@@ -70,7 +70,7 @@ export const create = /*@__PURE__*/ (() => {
                 return;
             }
             instance[CacheStream_scheduleCleanup](key);
-        })), x => x, isSome(persistentStore)
+        })), isSome(persistentStore)
             ? Observable.concatMap(bindMethod(persistentStore, "store"), {
                 innerType: DeferredComputationWithSideEffectsType,
             })

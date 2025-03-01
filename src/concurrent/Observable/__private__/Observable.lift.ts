@@ -19,9 +19,9 @@ import {
 } from "../../../concurrent.js";
 import { Function1, bindMethod, none, pipeUnsafe } from "../../../functions.js";
 import type {
+  DeferredReactiveObservableOperator,
+  ObservableOperator,
   ObservableOperatorWithSideEffects,
-  PureStatefulObservableOperator,
-  PureStatelessObservableOperator,
 } from "../../Observable.js";
 import ObservableMixin from "../../__mixins__/ObservableMixin.js";
 
@@ -108,7 +108,7 @@ interface ObservableLift {
     [ComputationLike_isSynchronous]: true;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => PureStatelessObservableOperator<TA, TB>;
+  ) => ObservableOperator<TA, TB>;
 
   lift(options: {
     [ComputationLike_isDeferred]: true;
@@ -116,7 +116,7 @@ interface ObservableLift {
     [ComputationLike_isSynchronous]: true;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => PureStatefulObservableOperator<TA, TB>;
+  ) => DeferredReactiveObservableOperator<TA, TB>;
 
   lift(options: {
     [ComputationLike_isDeferred]: true;

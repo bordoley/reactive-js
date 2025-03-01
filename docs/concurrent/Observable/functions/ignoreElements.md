@@ -6,7 +6,7 @@
 
 # Function: ignoreElements()
 
-> **ignoreElements**\<`T`\>(): [`PureStatelessObservableOperator`](../type-aliases/PureStatelessObservableOperator.md)\<`unknown`, `T`\>
+> **ignoreElements**\<`T`\>(): [`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`unknown`, `T`\>
 
 ## Type Parameters
 
@@ -14,4 +14,4 @@
 
 ## Returns
 
-[`PureStatelessObservableOperator`](../type-aliases/PureStatelessObservableOperator.md)\<`unknown`, `T`\>
+[`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`unknown`, `T`\>

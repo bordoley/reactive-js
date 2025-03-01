@@ -15,7 +15,7 @@ import {
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
-import type * as Observable from "../../Observable.js";
+import type { ObservableOperator } from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_liftPure from "./Observable.liftPure.js";
@@ -23,7 +23,7 @@ import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js"
 
 type ObservableRepeatOrRetry = <T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
-) => Observable.PureStatefulObservableOperator<T, T, DeferredObservableLike<T>>;
+) => ObservableOperator<T, T, DeferredObservableLike>;
 
 const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
   T,

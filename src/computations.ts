@@ -113,6 +113,7 @@ export type ComputationOf<
           | typeof ComputationLike_isPure
           | typeof ComputationLike_isDeferred
           | typeof ComputationLike_isSynchronous
+          | typeof ComputationLike_isInteractive
         >
     >
   : {

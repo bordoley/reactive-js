@@ -4,9 +4,9 @@
 
 [Reactive-JS](../../../README.md) / [concurrent/Observable](../README.md) / DeferringObservableOperator
 
-# Type Alias: DeferringObservableOperator()\<TIn, TOut, TObservableInBase\>
+# Type Alias: DeferringObservableOperator()\<TIn, TOut\>
 
-> **DeferringObservableOperator**\<`TIn`, `TOut`, `TObservableInBase`\>: \<`TObservableIn`\>(`obs`) => `TObservableIn` *extends* [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`TIn`\> ? [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`TOut`\> : [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`TOut`\>
+> **DeferringObservableOperator**\<`TIn`, `TOut`\>: \<`TObservableIn`\>(`obs`) => `TObservableIn` *extends* [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`TIn`\> ? [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`TOut`\> : [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`TOut`\>
 
 ## Type Parameters
 
@@ -14,11 +14,9 @@
 
 • **TOut**
 
-• **TObservableInBase** = [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TIn`\>
-
 ## Type Parameters
 
-• **TObservableIn** *extends* `TObservableInBase`
+• **TObservableIn** *extends* [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TIn`\>
 
 ## Parameters
 

@@ -62,7 +62,7 @@ export type ComputationOf<Type extends ComputationLike, TComputation extends Com
     readonly [Computation_type]?: unknown;
 } ? NonNullable<(TComputation & {
     readonly [Computation_T]: T;
-})[typeof Computation_type] & Pick<Type, typeof ComputationLike_isPure | typeof ComputationLike_isDeferred | typeof ComputationLike_isSynchronous>> : {
+})[typeof Computation_type] & Pick<Type, typeof ComputationLike_isPure | typeof ComputationLike_isDeferred | typeof ComputationLike_isSynchronous | typeof ComputationLike_isInteractive>> : {
     readonly _C: TComputation;
     readonly _T: () => T;
 };
