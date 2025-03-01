@@ -6,7 +6,7 @@
 
 # Function: forEach()
 
-> **forEach**\<`T`\>(`sideEffect`): [`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](../interfaces/IterableComputation.md), [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`unknown`\>, [`IterableWithSideEffectsComputation`](../interfaces/IterableWithSideEffectsComputation.md), `T`, `T`\>
+> **forEach**\<`T`\>(`sideEffect`): [`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, `IterableComputation`, [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`unknown`\>, `IterableWithSideEffectsComputation`, `T`, `T`\>
 
 ## Type Parameters
 
@@ -20,4 +20,4 @@
 
 ## Returns
 
-[`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, [`IterableComputation`](../interfaces/IterableComputation.md), [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`unknown`\>, [`IterableWithSideEffectsComputation`](../interfaces/IterableWithSideEffectsComputation.md), `T`, `T`\>
+[`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, `IterableComputation`, [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`unknown`\>, `IterableWithSideEffectsComputation`, `T`, `T`\>

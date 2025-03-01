@@ -6,6 +6,7 @@ import {
   Computation_type,
   DeferredComputationModule,
   DeferredReactiveComputationModule,
+  PureRunnableLike,
   RunnableLike,
   RunnableWithSideEffectsLike,
   SynchronousComputationModule,
@@ -48,28 +49,48 @@ import Runnable_toReadonlyArray from "./Runnable/__private__/Runnable.toReadonly
 /**
  * @noInheritDoc
  */
-export interface RunnableComputation extends Computation<RunnableLike> {
+interface RunnableComputation extends Computation<RunnableLike> {
   readonly [Computation_type]?: RunnableLike<this[typeof Computation_T]>;
 }
 
-export interface RunnableWithSideEffectsComputation
+interface PureRunnableComputation extends Computation<PureRunnableLike> {
+  readonly [Computation_type]?: PureRunnableLike<this[typeof Computation_T]>;
+}
+
+interface RunnableWithSideEffectsComputation
   extends Computation<RunnableWithSideEffectsLike> {
   readonly [Computation_type]?: RunnableWithSideEffectsLike<
     this[typeof Computation_T]
   >;
 }
 
+export type RunnableComputationFor<Type extends RunnableLike> =
+  Type extends PureRunnableLike
+    ? PureRunnableComputation
+    : Type extends RunnableWithSideEffectsLike
+      ? RunnableWithSideEffectsComputation
+      : RunnableComputation;
+
 export interface RunnableModule
-  extends ComputationModule<RunnableLike, RunnableComputation>,
-    DeferredComputationModule<RunnableLike, RunnableComputation>,
-    DeferredReactiveComputationModule<RunnableLike, RunnableComputation>,
+  extends ComputationModule<RunnableLike, RunnableComputationFor<RunnableLike>>,
+    DeferredComputationModule<
+      RunnableLike,
+      RunnableComputationFor<RunnableLike>
+    >,
+    DeferredReactiveComputationModule<
+      RunnableLike,
+      RunnableComputationFor<RunnableLike>
+    >,
     ComputationWithSideEffectsModule<
       RunnableLike,
-      RunnableComputation,
+      RunnableComputationFor<RunnableLike>,
       RunnableWithSideEffectsLike,
-      RunnableWithSideEffectsComputation
+      RunnableComputationFor<RunnableWithSideEffectsLike>
     >,
-    SynchronousComputationModule<RunnableLike, RunnableComputation> {}
+    SynchronousComputationModule<
+      RunnableLike,
+      RunnableComputationFor<RunnableLike>
+    > {}
 
 export type Signature = RunnableModule;
 

@@ -8,12 +8,11 @@
 
 ## Interfaces
 
-- [RunnableComputation](interfaces/RunnableComputation.md)
 - [RunnableModule](interfaces/RunnableModule.md)
-- [RunnableWithSideEffectsComputation](interfaces/RunnableWithSideEffectsComputation.md)
 
 ## Type Aliases
 
+- [RunnableComputationFor](type-aliases/RunnableComputationFor.md)
 - [Signature](type-aliases/Signature.md)
 
 ## Functions

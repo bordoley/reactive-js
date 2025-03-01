@@ -9,10 +9,7 @@ import {
   SinkLike,
 } from "../../../computations.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
-import type {
-  RunnableComputation,
-  RunnableWithSideEffectsComputation,
-} from "../../Runnable.js";
+import type { RunnableComputationFor } from "../../Runnable.js";
 
 class LiftedRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
@@ -35,15 +32,20 @@ interface RunnableLift {
   lift<TA, TB, TComputationType extends RunnableLike = RunnableLike>(
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
     isPure: true,
-  ): ComputationOperator<RunnableLike, RunnableComputation, TA, TB>;
+  ): ComputationOperator<
+    RunnableLike,
+    RunnableComputationFor<RunnableLike>,
+    TA,
+    TB
+  >;
   lift<TA, TB>(
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
     isPure: false,
   ): ComputationWithSideEffectsOperator<
     RunnableLike,
-    RunnableComputation,
+    RunnableComputationFor<RunnableLike>,
     RunnableWithSideEffectsLike,
-    RunnableWithSideEffectsComputation,
+    RunnableComputationFor<RunnableWithSideEffectsLike>,
     TA,
     TB
   >;

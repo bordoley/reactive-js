@@ -1,14 +1,18 @@
-import { Computation, ComputationModule, ComputationWithSideEffectsModule, Computation_T, Computation_type, DeferredComputationModule, DeferredReactiveComputationModule, RunnableLike, RunnableWithSideEffectsLike, SynchronousComputationModule } from "../computations.js";
+import { Computation, ComputationModule, ComputationWithSideEffectsModule, Computation_T, Computation_type, DeferredComputationModule, DeferredReactiveComputationModule, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike, SynchronousComputationModule } from "../computations.js";
 /**
  * @noInheritDoc
  */
-export interface RunnableComputation extends Computation<RunnableLike> {
+interface RunnableComputation extends Computation<RunnableLike> {
     readonly [Computation_type]?: RunnableLike<this[typeof Computation_T]>;
 }
-export interface RunnableWithSideEffectsComputation extends Computation<RunnableWithSideEffectsLike> {
+interface PureRunnableComputation extends Computation<PureRunnableLike> {
+    readonly [Computation_type]?: PureRunnableLike<this[typeof Computation_T]>;
+}
+interface RunnableWithSideEffectsComputation extends Computation<RunnableWithSideEffectsLike> {
     readonly [Computation_type]?: RunnableWithSideEffectsLike<this[typeof Computation_T]>;
 }
-export interface RunnableModule extends ComputationModule<RunnableLike, RunnableComputation>, DeferredComputationModule<RunnableLike, RunnableComputation>, DeferredReactiveComputationModule<RunnableLike, RunnableComputation>, ComputationWithSideEffectsModule<RunnableLike, RunnableComputation, RunnableWithSideEffectsLike, RunnableWithSideEffectsComputation>, SynchronousComputationModule<RunnableLike, RunnableComputation> {
+export type RunnableComputationFor<Type extends RunnableLike> = Type extends PureRunnableLike ? PureRunnableComputation : Type extends RunnableWithSideEffectsLike ? RunnableWithSideEffectsComputation : RunnableComputation;
+export interface RunnableModule extends ComputationModule<RunnableLike, RunnableComputationFor<RunnableLike>>, DeferredComputationModule<RunnableLike, RunnableComputationFor<RunnableLike>>, DeferredReactiveComputationModule<RunnableLike, RunnableComputationFor<RunnableLike>>, ComputationWithSideEffectsModule<RunnableLike, RunnableComputationFor<RunnableLike>, RunnableWithSideEffectsLike, RunnableComputationFor<RunnableWithSideEffectsLike>>, SynchronousComputationModule<RunnableLike, RunnableComputationFor<RunnableLike>> {
 }
 export type Signature = RunnableModule;
 export declare const buffer: Signature["buffer"];
@@ -45,3 +49,4 @@ export declare const takeWhile: Signature["takeWhile"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const toRunnable: Signature["toRunnable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
+export {};

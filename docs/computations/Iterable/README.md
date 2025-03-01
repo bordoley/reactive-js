@@ -8,12 +8,12 @@
 
 ## Interfaces
 
-- [IterableComputation](interfaces/IterableComputation.md)
 - [IterableModule](interfaces/IterableModule.md)
-- [IterableWithSideEffectsComputation](interfaces/IterableWithSideEffectsComputation.md)
 
 ## Type Aliases
 
+- [IterableComputationFor](type-aliases/IterableComputationFor.md)
+- [IterableComputationOf](type-aliases/IterableComputationOf.md)
 - [Signature](type-aliases/Signature.md)
 
 ## Functions

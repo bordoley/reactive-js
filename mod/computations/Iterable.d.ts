@@ -1,14 +1,19 @@
-import { Computation, ComputationModule, ComputationWithSideEffectsModule, Computation_T, Computation_type, DeferredComputationModule, InteractiveComputationModule, IterableLike, IterableWithSideEffectsLike, SynchronousComputationModule } from "../computations.js";
+import { Computation, ComputationModule, ComputationOf, ComputationWithSideEffectsModule, Computation_T, Computation_type, DeferredComputationModule, InteractiveComputationModule, IterableLike, IterableWithSideEffectsLike, PureIterableLike, SynchronousComputationModule } from "../computations.js";
 /**
  * @noInheritDoc
  */
-export interface IterableComputation extends Computation<IterableLike> {
-    readonly [Computation_type]?: Iterable<this[typeof Computation_T]>;
+interface IterableComputation extends Computation<IterableLike> {
+    readonly [Computation_type]?: IterableLike<this[typeof Computation_T]>;
 }
-export interface IterableWithSideEffectsComputation extends Computation<IterableWithSideEffectsLike> {
+interface IterableWithSideEffectsComputation extends Computation<IterableWithSideEffectsLike> {
     readonly [Computation_type]?: IterableWithSideEffectsLike<this[typeof Computation_T]>;
 }
-export interface IterableModule extends ComputationModule<IterableLike, IterableComputation>, DeferredComputationModule<IterableLike, IterableComputation>, ComputationWithSideEffectsModule<IterableLike, IterableComputation, IterableWithSideEffectsLike, IterableWithSideEffectsComputation>, SynchronousComputationModule<IterableLike, IterableComputation>, InteractiveComputationModule<IterableLike, IterableComputation> {
+interface PuredIterableComputation extends Computation<PureIterableLike> {
+    readonly [Computation_type]?: PureIterableLike<this[typeof Computation_T]>;
+}
+export type IterableComputationFor<Type extends IterableLike> = Type extends PureIterableLike ? PuredIterableComputation : Type extends IterableWithSideEffectsLike ? IterableWithSideEffectsComputation : IterableComputation;
+export type IterableComputationOf<Type extends IterableLike, T> = ComputationOf<Type, IterableComputationFor<Type>, T>;
+export interface IterableModule extends ComputationModule<IterableLike, IterableComputationFor<IterableLike>>, DeferredComputationModule<IterableLike, IterableComputationFor<IterableLike>>, ComputationWithSideEffectsModule<IterableLike, IterableComputationFor<IterableLike>, IterableWithSideEffectsLike, IterableComputationFor<IterableWithSideEffectsLike>>, SynchronousComputationModule<IterableLike, IterableComputationFor<IterableLike>>, InteractiveComputationModule<IterableLike, IterableComputationFor<IterableLike>> {
 }
 export type Signature = IterableModule;
 export declare const catchError: Signature["catchError"];
@@ -39,3 +44,4 @@ export declare const takeWhile: Signature["takeWhile"];
 export declare const toRunnable: Signature["toRunnable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const zip: Signature["zip"];
+export {};

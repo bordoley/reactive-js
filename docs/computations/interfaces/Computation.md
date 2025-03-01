@@ -8,10 +8,6 @@
 
 ## Extended by
 
-- [`IterableComputation`](../Iterable/interfaces/IterableComputation.md)
-- [`IterableWithSideEffectsComputation`](../Iterable/interfaces/IterableWithSideEffectsComputation.md)
-- [`RunnableComputation`](../Runnable/interfaces/RunnableComputation.md)
-- [`RunnableWithSideEffectsComputation`](../Runnable/interfaces/RunnableWithSideEffectsComputation.md)
 - [`EventSourceComputation`](../../events/EventSource/interfaces/EventSourceComputation.md)
 
 ## Type Parameters
