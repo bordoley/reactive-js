@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../../computations/interfaces/ComputationModule.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md), [`EventSourceComputation`](EventSourceComputation.md)\>
+- [`ComputationModule`](../../../computations/interfaces/ComputationModule.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md), [`EventSourceComputation`](EventSourceComputation.md)\>.[`ConcurrentReactiveComputationModule`](../../../computations/interfaces/ConcurrentReactiveComputationModule.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md), [`EventSourceComputation`](EventSourceComputation.md)\>
 
 ## Methods
 
@@ -49,89 +49,3 @@
 #### Returns
 
 [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>
-
-***
-
-### fromPromise()
-
-> **fromPromise**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>\>
-
-***
-
-### merge()
-
-> **merge**\<`T`\>(`fst`, `snd`, ...`tail`): [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### fst
-
-[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>
-
-##### snd
-
-[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>
-
-##### tail
-
-...readonly [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>[]
-
-#### Returns
-
-[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>
-
-***
-
-### mergeMany()
-
-> **mergeMany**\<`T`\>(`eventSources`): [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### eventSources
-
-readonly [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>[]
-
-#### Returns
-
-[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>
-
-***
-
-### mergeWith()
-
-> **mergeWith**\<`T`\>(`snd`, ...`tail`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>, [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### snd
-
-[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>
-
-##### tail
-
-...readonly [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>[]
-
-#### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>, [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>\>

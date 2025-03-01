@@ -3,6 +3,7 @@ import {
   ComputationModule,
   Computation_T,
   Computation_type,
+  ConcurrentReactiveComputationModule,
 } from "../computations.js";
 import { EventListenerLike, EventSourceLike } from "../events.js";
 import { Function1, SideEffect1 } from "../functions.js";
@@ -27,27 +28,16 @@ export interface EventSourceComputation extends Computation<EventSourceLike> {
  * @noInheritDoc
  */
 export interface EventSourceModule
-  extends ComputationModule<EventSourceLike, EventSourceComputation> {
+  extends ComputationModule<EventSourceLike, EventSourceComputation>,
+    ConcurrentReactiveComputationModule<
+      EventSourceLike,
+      EventSourceComputation
+    > {
   addEventHandler<T>(
     handler: SideEffect1<T>,
   ): Function1<EventSourceLike<T>, DisposableLike>;
 
   create<T>(setup: SideEffect1<EventListenerLike<T>>): EventSourceLike<T>;
-
-  fromPromise<T>(): Function1<Promise<T>, EventSourceLike<T>>;
-
-  merge<T>(
-    fst: EventSourceLike<T>,
-    snd: EventSourceLike<T>,
-    ...tail: readonly EventSourceLike<T>[]
-  ): EventSourceLike<T>;
-
-  mergeMany<T>(eventSources: readonly EventSourceLike<T>[]): EventSourceLike<T>;
-
-  mergeWith<T>(
-    snd: EventSourceLike<T>,
-    ...tail: readonly EventSourceLike<T>[]
-  ): Function1<EventSourceLike<T>, EventSourceLike<T>>;
 }
 
 export type Signature = EventSourceModule;

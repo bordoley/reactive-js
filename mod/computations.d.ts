@@ -146,6 +146,12 @@ export interface DeferredReactiveComputationModule<Type extends DeferredComputat
         readonly count?: number;
     }): ComputationOperator<Type, TComputation, T, T>;
 }
+export interface ConcurrentReactiveComputationModule<Type extends ReactiveComputationLike, TComputation extends Computation<Type>> {
+    fromPromise<T>(): Function1<Promise<T>, ComputationOf<Type, TComputation, T>>;
+    merge<T>(fst: ComputationOf<Type, TComputation, T>, snd: ComputationOf<Type, TComputation, T>, ...tail: readonly ComputationOf<Type, TComputation, T>[]): ComputationOf<Type, TComputation, T>;
+    mergeMany<T>(eventSources: readonly ComputationOf<Type, TComputation, T>[]): ComputationOf<Type, TComputation, T>;
+    mergeWith<T>(snd: ComputationOf<Type, TComputation, T>, ...tail: readonly ComputationOf<Type, TComputation, T>[]): Function1<ComputationOf<Type, TComputation, T>, ComputationOf<Type, TComputation, T>>;
+}
 export declare const SinkLike_next: unique symbol;
 export declare const SinkLike_complete: unique symbol;
 export declare const SinkLike_isComplete: unique symbol;

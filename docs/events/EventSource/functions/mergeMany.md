@@ -6,7 +6,7 @@
 
 # Function: mergeMany()
 
-> **mergeMany**\<`T`\>(`eventSources`): [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>
+> **mergeMany**\<`T`\>(`eventSources`): [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & `Pick`\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>
 
 ## Type Parameters
 
@@ -16,8 +16,8 @@
 
 ### eventSources
 
-readonly [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>[]
+readonly [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & `Pick`\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>[]
 
 ## Returns
 
-[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>
+[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & `Pick`\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\>

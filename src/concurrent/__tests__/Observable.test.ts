@@ -25,9 +25,6 @@ import DeferredComputationModuleTests from "../../computations/__tests__/fixture
 import DeferredReactiveComputationModuleTests from "../../computations/__tests__/fixtures/DeferredReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
 import {
-  ComputationLike_isDeferred,
-  ComputationLike_isPure,
-  ComputationLike_isSynchronous,
   ComputationModule,
   ComputationWithSideEffectsModule,
   DeferredComputationModule,
@@ -114,27 +111,27 @@ import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
 const expectIsPureSynchronousObservable = compose(
   Computation.isPureSynchronous<ObservableLike>,
-  expectTrue
+  expectTrue,
 );
 
-const expectIsSynchronousObservableWithSideEffects =compose(
+const expectIsSynchronousObservableWithSideEffects = compose(
   Computation.isSynchronousWithSideEffects<ObservableLike>,
-  expectTrue
+  expectTrue,
 );
 
 const expectIsPureDeferredObservable = compose(
   Computation.isPureDeferred<ObservableLike>,
-  expectTrue
+  expectTrue,
 );
 
 const expectIsDeferredObservableWithSideEffects = compose(
   Computation.isDeferredWithSideEffects<ObservableLike>,
-  expectTrue
+  expectTrue,
 );
 
 const expectIsMulticastObservable = compose(
   Computation.isMulticasted<ObservableLike>,
-  expectTrue
+  expectTrue,
 );
 
 const testIsPureSynchronousObservable = (obs: PureSynchronousObservableLike) =>

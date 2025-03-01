@@ -61,12 +61,12 @@ import ComputationWithSideEffectsModuleTests from "../../computations/__tests__/
 import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
 import DeferredReactiveComputationModuleTests from "../../computations/__tests__/fixtures/DeferredReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, DeferredComputationWithSideEffectsType, PureDeferredComputationType, PureSynchronousComputationType, SynchronousComputationWithSideEffectsType, } from "../../computations.js";
+import { DeferredComputationWithSideEffectsType, PureDeferredComputationType, PureSynchronousComputationType, SynchronousComputationWithSideEffectsType, } from "../../computations.js";
 import { DispatcherLikeEvent_completed, DispatcherLike_complete, SchedulerLike_now, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
 import { EventListenerLike_notify, StoreLike_value } from "../../events.js";
-import { alwaysTrue, arrayEquality, bindMethod, error, ignore, increment, incrementBy, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, scale, tuple, } from "../../functions.js";
+import { alwaysTrue, arrayEquality, bindMethod, compose, error, ignore, increment, incrementBy, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, scale, tuple, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Queue from "../../utils/Queue.js";
@@ -77,31 +77,11 @@ import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
-const expectIsPureSynchronousObservable = (obs) => {
-    expectTrue(obs[ComputationLike_isSynchronous] ?? true);
-    expectTrue(obs[ComputationLike_isPure] ?? true);
-    expectTrue(obs[ComputationLike_isDeferred] ?? true);
-};
-const expectIsSynchronousObservableWithSideEffects = (obs) => {
-    expectTrue(obs[ComputationLike_isSynchronous] ?? true);
-    expectFalse(obs[ComputationLike_isPure] ?? true);
-    expectTrue(obs[ComputationLike_isDeferred] ?? true);
-};
-const expectIsPureDeferredObservable = (obs) => {
-    expectFalse(obs[ComputationLike_isSynchronous] ?? true);
-    expectTrue(obs[ComputationLike_isPure] ?? true);
-    expectTrue(obs[ComputationLike_isDeferred] ?? true);
-};
-const expectIsDeferredObservableWithSideEffects = (obs) => {
-    expectFalse(obs[ComputationLike_isSynchronous] ?? true);
-    expectFalse(obs[ComputationLike_isPure] ?? true);
-    expectTrue(obs[ComputationLike_isDeferred] ?? true);
-};
-const expectIsMulticastObservable = (obs) => {
-    expectFalse(obs[ComputationLike_isSynchronous] ?? true);
-    expectTrue(obs[ComputationLike_isPure] ?? true);
-    expectFalse(obs[ComputationLike_isDeferred] ?? true);
-};
+const expectIsPureSynchronousObservable = compose((Computation.isPureSynchronous), expectTrue);
+const expectIsSynchronousObservableWithSideEffects = compose((Computation.isSynchronousWithSideEffects), expectTrue);
+const expectIsPureDeferredObservable = compose((Computation.isPureDeferred), expectTrue);
+const expectIsDeferredObservableWithSideEffects = compose((Computation.isDeferredWithSideEffects), expectTrue);
+const expectIsMulticastObservable = compose((Computation.isMulticasted), expectTrue);
 const testIsPureSynchronousObservable = (obs) => test("is PureSynchronousObservableLike", pipeLazy(obs, expectIsPureSynchronousObservable));
 const testIsSynchronousObservableWithSideEffects = (obs) => test("is PureSynchronousObservableLike", pipeLazy(obs, expectIsSynchronousObservableWithSideEffects));
 const testIsDeferredObservableWithSideEffects = (obs) => test("is DeferredObservableWithSideEffectsLike", pipeLazy(obs, expectIsDeferredObservableWithSideEffects));
