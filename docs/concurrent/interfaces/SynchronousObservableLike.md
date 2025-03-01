@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`DeferredObservableLike`](DeferredObservableLike.md)\<`T`\>.[`RunnableComputationLike`](../../computations/interfaces/RunnableComputationLike.md)
+- [`DeferredObservableLike`](DeferredObservableLike.md)\<`T`\>.[`SynchronousReactiveComputation`](../../computations/interfaces/SynchronousReactiveComputation.md)
 
 ## Extended by
 
@@ -27,4 +27,4 @@
 
 #### Overrides
 
-[`RunnableComputationLike`](../../computations/interfaces/RunnableComputationLike.md).[`[ComputationLike_isSynchronous]`](../../computations/interfaces/RunnableComputationLike.md#computationlike_issynchronous)
+[`SynchronousReactiveComputation`](../../computations/interfaces/SynchronousReactiveComputation.md).[`[ComputationLike_isSynchronous]`](../../computations/interfaces/SynchronousReactiveComputation.md#computationlike_issynchronous)

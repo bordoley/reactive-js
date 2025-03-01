@@ -28,13 +28,13 @@
 - [PureRunnableLike](interfaces/PureRunnableLike.md)
 - [PureSynchronousComputationLike](interfaces/PureSynchronousComputationLike.md)
 - [ReactiveComputationLike](interfaces/ReactiveComputationLike.md)
-- [RunnableComputationLike](interfaces/RunnableComputationLike.md)
 - [RunnableLike](interfaces/RunnableLike.md)
 - [RunnableWithSideEffectsLike](interfaces/RunnableWithSideEffectsLike.md)
 - [SinkLike](interfaces/SinkLike.md)
 - [SynchronousComputationLike](interfaces/SynchronousComputationLike.md)
 - [SynchronousComputationModule](interfaces/SynchronousComputationModule.md)
 - [SynchronousComputationWithSideEffectsLike](interfaces/SynchronousComputationWithSideEffectsLike.md)
+- [SynchronousReactiveComputation](interfaces/SynchronousReactiveComputation.md)
 
 ## Type Aliases
 

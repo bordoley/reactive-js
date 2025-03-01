@@ -15,7 +15,7 @@
 - [`PureSynchronousComputationLike`](PureSynchronousComputationLike.md)
 - [`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md)
 - [`InteractiveComputationLike`](InteractiveComputationLike.md)
-- [`RunnableComputationLike`](RunnableComputationLike.md)
+- [`SynchronousReactiveComputation`](SynchronousReactiveComputation.md)
 
 ## Properties
 

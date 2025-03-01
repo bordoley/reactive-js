@@ -1,5 +1,5 @@
 import { DictionaryLike, ReadonlyObjectMapLike } from "./collections.js";
-import { ComputationLike_isDeferred, ComputationLike_isInteractive, ComputationLike_isPure, ComputationLike_isSynchronous, DeferredComputationLike, PureComputationLike, ReactiveComputationLike, RunnableComputationLike } from "./computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isInteractive, ComputationLike_isPure, ComputationLike_isSynchronous, DeferredComputationLike, PureComputationLike, ReactiveComputationLike, SynchronousReactiveComputation } from "./computations.js";
 import { EventListenerLike, EventSourceLike, StoreLike } from "./events.js";
 import { Optional, SideEffect1, Updater } from "./functions.js";
 import { BackpressureStrategy, DisposableContainerLike, DisposableLike, QueueableLike } from "./utils.js";
@@ -150,7 +150,7 @@ export interface DeferredObservableLike<out T = unknown> extends ObservableLike<
 /**
  * @noInheritDoc
  */
-export interface SynchronousObservableLike<out T = unknown> extends DeferredObservableLike<T>, RunnableComputationLike {
+export interface SynchronousObservableLike<out T = unknown> extends DeferredObservableLike<T>, SynchronousReactiveComputation {
     readonly [ComputationLike_isSynchronous]?: true;
 }
 /**

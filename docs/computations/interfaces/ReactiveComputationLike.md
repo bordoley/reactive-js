@@ -12,7 +12,7 @@
 
 ## Extended by
 
-- [`RunnableComputationLike`](RunnableComputationLike.md)
+- [`SynchronousReactiveComputation`](SynchronousReactiveComputation.md)
 - [`ObservableLike`](../../concurrent/interfaces/ObservableLike.md)
 - [`EventSourceLike`](../../events/interfaces/EventSourceLike.md)
 

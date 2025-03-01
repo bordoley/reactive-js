@@ -75,7 +75,7 @@ export interface ReactiveComputationLike extends ComputationLike {
   readonly [ComputationLike_isInteractive]: false;
 }
 
-export interface RunnableComputationLike
+export interface SynchronousReactiveComputation
   extends SynchronousComputationLike,
     ReactiveComputationLike {
   readonly [ComputationLike_isDeferred]?: true;
@@ -382,7 +382,8 @@ export const RunnableLike_eval = Symbol("RunnableLike_eval");
 /**
  * Represents a deferred computation that is synchronously evaluated.
  */
-export interface RunnableLike<T = unknown> extends RunnableComputationLike {
+export interface RunnableLike<T = unknown>
+  extends SynchronousReactiveComputation {
   [RunnableLike_eval](sink: SinkLike<T>): void;
 }
 

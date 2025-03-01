@@ -64,6 +64,7 @@ import {
   alwaysTrue,
   arrayEquality,
   bindMethod,
+  compose,
   error,
   ignore,
   increment,
@@ -111,41 +112,30 @@ import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
-const expectIsPureSynchronousObservable = (
-  obs: PureSynchronousObservableLike,
-) => {
-  expectTrue(obs[ComputationLike_isSynchronous] ?? true);
-  expectTrue(obs[ComputationLike_isPure] ?? true);
-  expectTrue(obs[ComputationLike_isDeferred] ?? true);
-};
+const expectIsPureSynchronousObservable = compose(
+  Computation.isPureSynchronous<ObservableLike>,
+  expectTrue
+);
 
-const expectIsSynchronousObservableWithSideEffects = (
-  obs: SynchronousObservableWithSideEffectsLike,
-) => {
-  expectTrue(obs[ComputationLike_isSynchronous] ?? true);
-  expectFalse(obs[ComputationLike_isPure] ?? true);
-  expectTrue(obs[ComputationLike_isDeferred] ?? true);
-};
+const expectIsSynchronousObservableWithSideEffects =compose(
+  Computation.isSynchronousWithSideEffects<ObservableLike>,
+  expectTrue
+);
 
-const expectIsPureDeferredObservable = (obs: PureDeferredObservableLike) => {
-  expectFalse(obs[ComputationLike_isSynchronous] ?? true);
-  expectTrue(obs[ComputationLike_isPure] ?? true);
-  expectTrue(obs[ComputationLike_isDeferred] ?? true);
-};
+const expectIsPureDeferredObservable = compose(
+  Computation.isPureDeferred<ObservableLike>,
+  expectTrue
+);
 
-const expectIsDeferredObservableWithSideEffects = (
-  obs: DeferredObservableWithSideEffectsLike,
-) => {
-  expectFalse(obs[ComputationLike_isSynchronous] ?? true);
-  expectFalse(obs[ComputationLike_isPure] ?? true);
-  expectTrue(obs[ComputationLike_isDeferred] ?? true);
-};
+const expectIsDeferredObservableWithSideEffects = compose(
+  Computation.isDeferredWithSideEffects<ObservableLike>,
+  expectTrue
+);
 
-const expectIsMulticastObservable = (obs: MulticastObservableLike) => {
-  expectFalse(obs[ComputationLike_isSynchronous] ?? true);
-  expectTrue(obs[ComputationLike_isPure] ?? true);
-  expectFalse(obs[ComputationLike_isDeferred] ?? true);
-};
+const expectIsMulticastObservable = compose(
+  Computation.isMulticasted<ObservableLike>,
+  expectTrue
+);
 
 const testIsPureSynchronousObservable = (obs: PureSynchronousObservableLike) =>
   test(

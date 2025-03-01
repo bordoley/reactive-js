@@ -7,7 +7,7 @@ import {
   DeferredComputationLike,
   PureComputationLike,
   ReactiveComputationLike,
-  RunnableComputationLike,
+  SynchronousReactiveComputation,
 } from "./computations.js";
 import { EventListenerLike, EventSourceLike, StoreLike } from "./events.js";
 import { Optional, SideEffect1, Updater } from "./functions.js";
@@ -219,7 +219,7 @@ export interface DeferredObservableLike<out T = unknown>
  */
 export interface SynchronousObservableLike<out T = unknown>
   extends DeferredObservableLike<T>,
-    RunnableComputationLike {
+    SynchronousReactiveComputation {
   readonly [ComputationLike_isSynchronous]?: true;
 }
 
