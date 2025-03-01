@@ -6,7 +6,7 @@
 
 # Type Alias: ObservableOperatorWithSideEffects()\<TIn, TOut\>
 
-> **ObservableOperatorWithSideEffects**\<`TIn`, `TOut`\>: \<`TObservableIn`\>(`observable`) => [`ObservableComputationOf`](ObservableComputationOf.md)\<`TObservableIn` *extends* [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md) ? `Omit`\<`TObservableIn`, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md)\> & [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md) : [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md), `TOut`\>
+> **ObservableOperatorWithSideEffects**\<`TIn`, `TOut`\>: \<`TObservableIn`\>(`observable`) => [`ObservableComputationOf`](ObservableComputationOf.md)\<`TObservableIn` *extends* [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md) ? [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md) & `Pick`\<`TObservableIn`, *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\> : [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md), `TOut`\>
 
 ## Type Parameters
 
@@ -26,4 +26,4 @@
 
 ## Returns
 
-[`ObservableComputationOf`](ObservableComputationOf.md)\<`TObservableIn` *extends* [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md) ? `Omit`\<`TObservableIn`, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md)\> & [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md) : [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md), `TOut`\>
+[`ObservableComputationOf`](ObservableComputationOf.md)\<`TObservableIn` *extends* [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md) ? [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md) & `Pick`\<`TObservableIn`, *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md)\> : [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md), `TOut`\>

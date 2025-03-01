@@ -1,6 +1,6 @@
 import {
   Computation,
-  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
   ComputationOf,
   Computation_T,
   Computation_type,
@@ -155,8 +155,8 @@ export type ObservableOperatorWithSideEffects<TIn, out TOut> = <
   observable: TObservableIn,
 ) => ObservableComputationOf<
   TObservableIn extends DeferredObservableLike
-    ? Omit<TObservableIn, typeof ComputationLike_isPure> &
-        DeferredObservableWithSideEffectsLike
+    ? DeferredObservableWithSideEffectsLike &
+        Pick<TObservableIn, typeof ComputationLike_isSynchronous>
     : DeferredObservableWithSideEffectsLike,
   TOut
 >;
