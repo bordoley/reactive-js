@@ -1,6 +1,6 @@
 /// <reference types="./DeferredReactiveComputationModuleTests.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, expectToHaveBeenCalledTimes, expectToThrowError, mockFn, test, } from "../../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, } from "../../../__internal__/testing.js";
 import * as Observable from "../../../concurrent/Observable.js";
 import { arrayEquality, pipe, pipeLazy, tuple, } from "../../../functions.js";
 const DeferredReactiveComputationModuleTests = (m) => describe("DeferredReactiveComputationModule", describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([
@@ -34,11 +34,7 @@ const DeferredReactiveComputationModuleTests = (m) => describe("DeferredReactive
     pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.distinctUntilChanged({ equality }), m.toReadonlyArray()), expectToThrowError(err));
 }), test("with custom equality functions", pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], m.fromReadonlyArray(), m.distinctUntilChanged({
     equality: () => true,
-}), m.toReadonlyArray(), expectArrayEquals([1])))), describe("ignoreElements", test("ignores all elements", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.ignoreElements(), m.toReadonlyArray(), expectArrayEquals([]))), test("invokes all side-effects", () => {
-    const f = mockFn();
-    pipe([1, 2, 3], m.fromReadonlyArray(), m.forEach(f), m.ignoreElements(), m.toReadonlyArray(), expectArrayEquals([]));
-    pipe(f, expectToHaveBeenCalledTimes(3));
-})), describe("pairwise", test("when there are more than one input value", pipeLazy([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.pairwise(), m.toReadonlyArray(), expectArrayEquals([
+}), m.toReadonlyArray(), expectArrayEquals([1])))), describe("pairwise", test("when there are more than one input value", pipeLazy([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.pairwise(), m.toReadonlyArray(), expectArrayEquals([
     tuple(0, 1),
     tuple(1, 2),
     tuple(2, 3),

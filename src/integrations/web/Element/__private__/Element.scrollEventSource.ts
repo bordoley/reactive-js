@@ -1,8 +1,13 @@
 import * as CurrentTime from "../../../../__internal__/CurrentTime.js";
 import { MAX_VALUE, MIN_VALUE } from "../../../../__internal__/constants.js";
 import { clamp } from "../../../../__internal__/math.js";
+import * as Computation from "../../../../computations/Computation.js";
 import * as EventSource from "../../../../events/EventSource.js";
-import { EventListenerLike_notify } from "../../../../events.js";
+import { EventSourceComputation } from "../../../../events/EventSource.js";
+import {
+  EventListenerLike_notify,
+  EventSourceLike,
+} from "../../../../events.js";
 import { pipe, returns } from "../../../../functions.js";
 import * as Disposable from "../../../../utils/Disposable.js";
 import { ScrollValue } from "../../../web.js";
@@ -38,7 +43,9 @@ const Element_scrollEventSource: Element.Signature["scrollEventSource"] =
       let prev = createInitialScrollValue();
 
       pipe(
-        EventSource.merge(
+        Computation.merge<EventSourceLike, EventSourceComputation>({
+          mergeMany: EventSource.mergeMany,
+        })(
           pipe(element, Element_eventSource<HTMLElement, "scroll">("scroll")),
           pipe(
             element,

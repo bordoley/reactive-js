@@ -6,7 +6,7 @@
 
 # Function: sequence()
 
-> **sequence**\<`Type`, `TComputation`\>(`generate`): (`start`) => [`ComputationOf`](../../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `number`\>
+> **sequence**\<`Type`, `TComputation`\>(`m`): (`start`) => [`ComputationOf`](../../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `number`\>
 
 ## Type Parameters
 
@@ -16,9 +16,9 @@
 
 ## Parameters
 
-### generate
+### m
 
-\<`T`\>(`generator`, `initialValue`, `options`?) => [`ComputationOf`](../../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>
+`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`Type`, `TComputation`\>, `"generate"`\>
 
 ## Returns
 

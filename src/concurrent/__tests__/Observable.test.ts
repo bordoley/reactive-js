@@ -810,7 +810,7 @@ testModule(
         Computation.keepType<
           SynchronousObservableLike,
           ObservableComputationFor<SynchronousObservableLike>
-        >(Observable.keep)(isSome),
+        >(Observable)(isSome),
         Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.run(),
       );

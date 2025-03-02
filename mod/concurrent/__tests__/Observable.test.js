@@ -344,7 +344,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         const v = __await(oneTwoThreeDelayed);
         const next = __memo(createOneTwoThree, v);
         return __await(next);
-    }, { mode: "combine-latest" }), Computation.keepType(Observable.keep)(isSome), Observable.forEach(bindMethod(result, Array_push)), Observable.run());
+    }, { mode: "combine-latest" }), Computation.keepType(Observable)(isSome), Observable.forEach(bindMethod(result, Array_push)), Observable.run());
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }), test("when compute function throws", () => {
     const env_14 = { stack: [], error: void 0, hasError: false };

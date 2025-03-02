@@ -9,10 +9,12 @@ import {
   ComputationOf,
   ComputationOperator,
   ComputationWithSideEffectsLike,
+  ConcurrentReactiveComputationModule,
   DeferredComputationLike,
   DeferredComputationModule,
   DeferredComputationWithSideEffectsLike,
   InteractiveComputationLike,
+  IterableLike,
   MulticastComputationLike,
   PureComputationLike,
   PureDeferredComputationLike,
@@ -22,7 +24,15 @@ import {
   SynchronousComputationWithSideEffectsLike,
   SynchronousReactiveComputation,
 } from "../computations.js";
-import { TypePredicate, increment, pickUnsafe, returns } from "../functions.js";
+import {
+  Function1,
+  TypePredicate,
+  alwaysFalse,
+  compose,
+  increment,
+  pickUnsafe,
+  returns,
+} from "../functions.js";
 
 export interface PickOperator<
   Type extends ComputationLike,
@@ -52,7 +62,7 @@ export interface PickOperator<
   >;
 }
 
-interface Signature {
+export interface Signature {
   areAllDeferred<TComputation extends ComputationLike>(
     computations: readonly TComputation[],
   ): computations is readonly (TComputation & DeferredComputationLike)[];
@@ -73,9 +83,76 @@ interface Signature {
     computations: readonly TComputation[],
   ): computations is readonly (TComputation & SynchronousComputationLike)[];
 
+  concat<
+    Type extends DeferredComputationLike,
+    TComputation extends Computation,
+  >(
+    m: Pick<DeferredComputationModule<Type, TComputation>, "concatMany">,
+  ): <T>(
+    ...computations: ComputationOf<Type, TComputation, T>[]
+  ) => ComputationOf<Type, TComputation, T>;
+
+  concatMap<
+    Type extends DeferredComputationLike,
+    TComputation extends Computation,
+  >(
+    m: Pick<DeferredComputationModule<Type, TComputation>, "concatAll" | "map">,
+  ): <TA, TB>(
+    selector: Function1<TA, ComputationOf<Type, TComputation, TB>>,
+    //FIXME: We'll need to add an options object to switch based upon the
+    // inner computation type
+  ) => ComputationOperator<Type, TComputation, TA, TB>;
+
+  concatMapIterable<
+    Type extends DeferredComputationLike,
+    TComputation extends Computation,
+  >(
+    m: Pick<
+      DeferredComputationModule<Type, TComputation>,
+      "concatAll" | "map" | "fromIterable"
+    >,
+  ): <TA, TB>(
+    selector: Function1<TA, IterableLike<TB>>,
+    //FIXME: We'll need to add an options object to switch based upon the
+    // inner computation type
+  ) => ComputationOperator<Type, TComputation, TA, TB>;
+
+  concatWith<
+    Type extends DeferredComputationLike,
+    TComputation extends Computation,
+  >(
+    m: Pick<DeferredComputationModule<Type, TComputation>, "concatMany">,
+  ): <T>(
+    snd: ComputationOf<Type, TComputation, T>,
+    ...tail: readonly ComputationOf<Type, TComputation, T>[]
+  ) => Function1<
+    ComputationOf<Type, TComputation, T>,
+    ComputationOf<Type, TComputation, T>
+  >;
+
+  endWith<
+    Type extends DeferredComputationLike,
+    TComputation extends Computation,
+  >(
+    m: Pick<
+      DeferredComputationModule<Type, TComputation>,
+      "concatMany" | "fromReadonlyArray"
+    >,
+  ): <T>(
+    value: T,
+    ...values: readonly T[]
+  ) => ComputationOperator<Type, TComputation, T, T>;
+
   hasSideEffects<TComputation extends ComputationLike>(
     computation: TComputation,
   ): computation is TComputation & ComputationWithSideEffectsLike;
+
+  ignoreElements<
+    Type extends DeferredComputationLike,
+    TComputation extends Computation,
+  >(
+    m: Pick<ComputationModule<Type, TComputation>, "keep">,
+  ): <T>() => ComputationOperator<Type, TComputation, any, T>;
 
   isDeferred<TComputation extends ComputationLike>(
     computation: TComputation,
@@ -122,25 +199,60 @@ interface Signature {
   ): computation is TComputation & SynchronousComputationWithSideEffectsLike;
 
   keepType<Type extends ComputationLike, TComputation extends Computation>(
-    keep: ComputationModule<Type, TComputation>["keep"],
+    m: Pick<ComputationModule<Type, TComputation>, "keep">,
   ): <TA, TB>(
     predicate: TypePredicate<TA, TB>,
   ) => ComputationOperator<Type, TComputation, TA, TB>;
 
   mapTo<Type extends ComputationLike, TComputation extends Computation>(
-    map: ComputationModule<Type, TComputation>["map"],
+    m: Pick<ComputationModule<Type, TComputation>, "map">,
   ): <T>(value: T) => ComputationOperator<Type, TComputation, unknown, T>;
 
+  merge<Type extends ReactiveComputationLike, TComputation extends Computation>(
+    m: Pick<
+      ConcurrentReactiveComputationModule<Type, TComputation>,
+      "mergeMany"
+    >,
+  ): <T>(
+    ...computations: ComputationOf<Type, TComputation, T>[]
+  ) => ComputationOf<Type, TComputation, T>;
+
+  mergeWith<
+    Type extends ReactiveComputationLike,
+    TComputation extends Computation,
+  >(
+    m: Pick<
+      ConcurrentReactiveComputationModule<Type, TComputation>,
+      "mergeMany"
+    >,
+  ): <T>(
+    snd: ComputationOf<Type, TComputation, T>,
+    ...tail: readonly ComputationOf<Type, TComputation, T>[]
+  ) => ComputationOperator<Type, TComputation, T, T>;
+
   pick<Type extends ComputationLike, TComputation extends Computation>(
-    map: ComputationModule<Type, TComputation>["map"],
+    m: Pick<ComputationModule<Type, TComputation>, "map">,
   ): PickOperator<Type, TComputation>;
 
   sequence<
     Type extends DeferredComputationLike,
     TComputation extends Computation,
   >(
-    generate: DeferredComputationModule<Type, TComputation>["generate"],
+    m: Pick<DeferredComputationModule<Type, TComputation>, "generate">,
   ): (start: number) => ComputationOf<Type, TComputation, number>;
+
+  startWith<
+    Type extends DeferredComputationLike,
+    TComputation extends Computation,
+  >(
+    m: Pick<
+      DeferredComputationModule<Type, TComputation>,
+      "concatMany" | "fromReadonlyArray"
+    >,
+  ): <T>(
+    value: T,
+    ...values: readonly T[]
+  ) => ComputationOperator<Type, TComputation, T, T>;
 }
 
 export const areAllDeferred: Signature["areAllDeferred"] = <
@@ -178,12 +290,72 @@ export const areAllSynchronous: Signature["areAllSynchronous"] = <
 ): computations is readonly (TComputation & SynchronousComputationLike)[] =>
   computations.every(isSynchronous);
 
+export const concat: Signature["concat"] =
+  <Type extends DeferredComputationLike, TComputation extends Computation>(
+    m: Pick<DeferredComputationModule<Type, TComputation>, "concatMany">,
+  ) =>
+  <T>(...computations: ComputationOf<Type, TComputation, T>[]) =>
+    m.concatMany<T>(computations);
+
+export const concatMap: Signature["concatMap"] =
+  <Type extends DeferredComputationLike, TComputation extends Computation>(
+    m: Pick<DeferredComputationModule<Type, TComputation>, "concatAll" | "map">,
+  ) =>
+  <TA, TB>(
+    selector: Function1<TA, ComputationOf<Type, TComputation, TB>>,
+    //FIXME: We'll need to add an options object to switch based upon the
+    // inner computation type
+  ) =>
+    compose(m.map(selector), m.concatAll<TB>());
+
+export const concatMapIterable: Signature["concatMapIterable"] =
+  <Type extends DeferredComputationLike, TComputation extends Computation>(
+    m: Pick<
+      DeferredComputationModule<Type, TComputation>,
+      "concatAll" | "map" | "fromIterable"
+    >,
+  ) =>
+  <TA, TB>(
+    selector: Function1<TA, IterableLike<TB>>,
+    //FIXME: We'll need to add an options object to switch based upon the
+    // inner computation type
+  ) => {
+    const mapper = compose(selector, m.fromIterable<TB>());
+    return concatMap(m)(mapper /* FIXME: pass in options here */);
+  };
+
+export const concatWith: Signature["concatWith"] =
+  <Type extends DeferredComputationLike, TComputation extends Computation>(
+    m: Pick<DeferredComputationModule<Type, TComputation>, "concatMany">,
+  ) =>
+  <T>(...tail: ComputationOf<Type, TComputation, T>[]) =>
+  (fst: ComputationOf<Type, TComputation, T>) =>
+    m.concatMany([fst, ...tail]);
+
+export const endWith: Signature["endWith"] =
+  <Type extends DeferredComputationLike, TComputation extends Computation>(
+    m: Pick<
+      DeferredComputationModule<Type, TComputation>,
+      "concatMany" | "fromReadonlyArray"
+    >,
+  ) =>
+  <T>(...values: readonly T[]) =>
+  (computation: ComputationOf<Type, TComputation, T>) =>
+    m.concatMany([computation, m.fromReadonlyArray<T>()(values)]);
+
 export const hasSideEffects: Signature["hasSideEffects"] = <
   TComputation extends ComputationLike,
 >(
   computation: TComputation,
 ): computation is TComputation & ComputationWithSideEffectsLike =>
   !(computation[ComputationLike_isPure] ?? true);
+
+export const ignoreElements: Signature["ignoreElements"] =
+  <Type extends DeferredComputationLike, TComputation extends Computation>(
+    m: Pick<ComputationModule<Type, TComputation>, "keep">,
+  ) =>
+  <T>() =>
+    m.keep(alwaysFalse) as ComputationOperator<Type, TComputation, any, T>;
 
 export const isDeferred: Signature["isDeferred"] = <
   TComputation extends ComputationLike,
@@ -275,30 +447,62 @@ export const keepType: Signature["keepType"] = (<
     Type extends ComputationLike,
     TComputation extends Computation,
   >(
-    keep: ComputationModule<Type, TComputation>["keep"],
+    m: Pick<ComputationModule<Type, TComputation>, "keep">,
   ) =>
   <TA, TB>(predicate: TypePredicate<TA, TB>) =>
-    keep(predicate)) as unknown as Signature["keepType"];
+    m.keep(predicate)) as unknown as Signature["keepType"];
 
 export const mapTo: Signature["mapTo"] =
   <Type extends ComputationLike, TComputation extends Computation>(
-    map: ComputationModule<Type, TComputation>["map"],
+    m: Pick<ComputationModule<Type, TComputation>, "map">,
   ) =>
   <T>(v: T) =>
-    map(returns(v));
+    m.map(returns(v));
+
+export const merge: Signature["merge"] =
+  <Type extends ReactiveComputationLike, TComputation extends Computation>(
+    m: Pick<
+      ConcurrentReactiveComputationModule<Type, TComputation>,
+      "mergeMany"
+    >,
+  ) =>
+  <T>(...computations: ComputationOf<Type, TComputation, T>[]) =>
+    m.mergeMany<T>(computations);
+
+export const mergeWith: Signature["mergeWith"] =
+  <Type extends ReactiveComputationLike, TComputation extends Computation>(
+    m: Pick<
+      ConcurrentReactiveComputationModule<Type, TComputation>,
+      "mergeMany"
+    >,
+  ) =>
+  <T>(...tail: ComputationOf<Type, TComputation, T>[]) =>
+  (fst: ComputationOf<Type, TComputation, T>) =>
+    m.mergeMany([fst, ...tail]);
 
 export const pick: Signature["pick"] = (<
     Type extends ComputationLike,
     TComputation extends Computation,
   >(
-    map: ComputationModule<Type, TComputation>["map"],
+    m: Pick<ComputationModule<Type, TComputation>, "map">,
   ) =>
   (...keys: (string | number | symbol)[]) =>
-    map(pickUnsafe(...keys))) as Signature["pick"];
+    m.map(pickUnsafe(...keys))) as Signature["pick"];
 
 export const sequence: Signature["sequence"] =
   <Type extends DeferredComputationLike, TComputation extends Computation>(
-    generate: DeferredComputationModule<Type, TComputation>["generate"],
+    m: Pick<DeferredComputationModule<Type, TComputation>, "generate">,
   ) =>
   (start: number) =>
-    generate<number>(increment, returns(start - 1));
+    m.generate<number>(increment, returns(start - 1));
+
+export const startWith: Signature["startWith"] =
+  <Type extends DeferredComputationLike, TComputation extends Computation>(
+    m: Pick<
+      DeferredComputationModule<Type, TComputation>,
+      "concatMany" | "fromReadonlyArray"
+    >,
+  ) =>
+  <T>(...values: readonly T[]) =>
+  (computation: ComputationOf<Type, TComputation, T>) =>
+    m.concatMany([m.fromReadonlyArray<T>()(values), computation]);

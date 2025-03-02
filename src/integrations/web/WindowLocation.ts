@@ -242,7 +242,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
           Computation.pick<
             MulticastObservableLike,
             ObservableComputationFor<MulticastObservableLike>
-          >(Observable.map)("uri"),
+          >({map: Observable.map})("uri"),
           invoke(ObservableLike_observe, observer),
         );
       },

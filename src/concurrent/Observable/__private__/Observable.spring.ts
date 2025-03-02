@@ -50,7 +50,7 @@ const Observable_spring = (options?: {
     Computation.pick<
       PureSynchronousObservableLike,
       ObservableComputationFor<PureSynchronousObservableLike>
-    >(Observable_map)(2),
+    >({ map: Observable_map })(2),
     Observable_takeWhile(isNotEqualTo(1), {
       inclusive: true,
     }),

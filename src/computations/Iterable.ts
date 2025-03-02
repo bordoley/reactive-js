@@ -4,7 +4,6 @@ import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import {
   Computation,
   ComputationLike_isPure,
-  ComputationModule,
   ComputationOf,
   ComputationWithSideEffectsModule,
   Computation_T,
@@ -34,7 +33,6 @@ import {
   isSome,
   newInstance,
   none,
-  pipe,
   raise as raiseError,
   returns,
   tuple,
@@ -72,8 +70,7 @@ export type IterableComputationOf<Type extends IterableLike, T> = ComputationOf<
 >;
 
 export interface IterableModule
-  extends ComputationModule<IterableLike, IterableComputationFor<IterableLike>>,
-    DeferredComputationModule<
+  extends DeferredComputationModule<
       IterableLike,
       IterableComputationFor<IterableLike>
     >,
@@ -130,10 +127,6 @@ export const catchError: Signature["catchError"] =
   (iter: Iterable<T>) =>
     newInstance(CatchErrorIterable, iter, onError);
 
-export const concat: Signature["concat"] = <T>(
-  ...iterables: readonly Iterable<T>[]
-) => concatMany(iterables as readonly [Iterable<T>, ...Iterable<T>[]]);
-
 class ConcatAllIterable<T> {
   constructor(private readonly s: Iterable<Iterable<T>>) {}
 
@@ -150,24 +143,9 @@ export const concatAll: Signature["concatAll"] = /*@__PURE__*/ (<T>() =>
     newInstance(ConcatAllIterable, iterable),
   ))();
 
-export const concatMap: Signature["concatMap"] =
-  <TA, TB>(selector: Function1<TA, Iterable<TB>>) =>
-  (obs: Iterable<TA>) =>
-    pipe(obs, map(selector), concatAll<TB>());
-
 export const concatMany: Signature["concatMany"] = concatAll();
 
-export const concatWith: Signature["concatWith"] =
-  <T>(...tail: Iterable<T>[]) =>
-  (fst: Iterable<T>) =>
-    concatMany([fst, ...tail]);
-
 export const empty: Signature["empty"] = /*@__PURE__*/ returns([]);
-
-export const endWith: Signature["endWith"] =
-  <T>(...values: readonly T[]) =>
-  (iterable: Iterable<T>) =>
-    pipe(iterable, concatWith<T>(pipe(values, fromReadonlyArray())));
 
 export const forEach: Signature["forEach"] = /*@__PURE__*/ (<T>() => {
   const ForEachIterable_effect = Symbol("ForEachIterable_effect");
@@ -476,11 +454,6 @@ export const scan: Signature["scan"] =
   <T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
   (iter: Iterable<T>) =>
     newInstance(ScanIterable, iter, scanner, initialValue);
-
-export const startWith: Signature["startWith"] =
-  <T>(...values: readonly T[]) =>
-  (iter: Iterable<T>) =>
-    pipe(values, fromReadonlyArray(), concatWith<T>(iter));
 
 class TakeFirstIterable<T> {
   constructor(

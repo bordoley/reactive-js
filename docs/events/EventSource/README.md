@@ -22,6 +22,4 @@
 - [fromPromise](functions/fromPromise.md)
 - [keep](functions/keep.md)
 - [map](functions/map.md)
-- [merge](functions/merge.md)
 - [mergeMany](functions/mergeMany.md)
-- [mergeWith](functions/mergeWith.md)

@@ -2,9 +2,7 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
-  expectToHaveBeenCalledTimes,
   expectToThrowError,
-  mockFn,
   test,
 } from "../../../__internal__/testing.js";
 import {
@@ -209,33 +207,6 @@ const DeferredReactiveComputationModuleTests = <
           expectArrayEquals([1]),
         ),
       ),
-    ),
-    describe(
-      "ignoreElements",
-      test(
-        "ignores all elements",
-        pipeLazy(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.ignoreElements<number>(),
-          m.toReadonlyArray(),
-          expectArrayEquals([] as number[]),
-        ),
-      ),
-      test("invokes all side-effects", () => {
-        const f = mockFn();
-
-        pipe(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.forEach<number>(f),
-          m.ignoreElements<number>(),
-          m.toReadonlyArray(),
-          expectArrayEquals([] as number[]),
-        );
-
-        pipe(f, expectToHaveBeenCalledTimes(3));
-      }),
     ),
     describe(
       "pairwise",

@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputationFor`](../type-aliases/IterableComputationFor.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\>\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputationFor`](../type-aliases/IterableComputationFor.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\>\>.[`ComputationWithSideEffectsModule`](../../interfaces/ComputationWithSideEffectsModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputationFor`](../type-aliases/IterableComputationFor.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\>, [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md), [`IterableComputationFor`](../type-aliases/IterableComputationFor.md)\<[`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\>\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputationFor`](../type-aliases/IterableComputationFor.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\>\>.[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputationFor`](../type-aliases/IterableComputationFor.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\>\>
+- [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputationFor`](../type-aliases/IterableComputationFor.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\>\>.[`ComputationWithSideEffectsModule`](../../interfaces/ComputationWithSideEffectsModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputationFor`](../type-aliases/IterableComputationFor.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\>, [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md), [`IterableComputationFor`](../type-aliases/IterableComputationFor.md)\<[`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\>\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputationFor`](../type-aliases/IterableComputationFor.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\>\>.[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`IterableComputationFor`](../type-aliases/IterableComputationFor.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\>\>
 
 ## Methods
 
@@ -60,38 +60,6 @@
 
 ***
 
-### concat()
-
-> **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### fst
-
-[`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>
-
-##### snd
-
-[`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>
-
-##### tail
-
-...readonly [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>[]
-
-#### Returns
-
-[`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>
-
-#### Inherited from
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concat`](../../interfaces/DeferredComputationModule.md#concat)
-
-***
-
 ### concatAll()
 
 > **concatAll**\<`T`\>(): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, `IterableComputation`, [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>, `T`\>
@@ -122,7 +90,7 @@
 
 ##### computations
 
-readonly \[[`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>, [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>\]
+readonly [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>[]
 
 #### Returns
 
@@ -131,60 +99,6 @@ readonly \[[`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[
 #### Inherited from
 
 [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatMany`](../../interfaces/DeferredComputationModule.md#concatmany)
-
-***
-
-### concatMap()
-
-> **concatMap**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, `IterableComputation`, `TA`, `TB`\>
-
-#### Type Parameters
-
-• **TA**
-
-• **TB**
-
-#### Parameters
-
-##### selector
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`IterableLike`](../../interfaces/IterableLike.md)\<`TB`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>\>
-
-#### Returns
-
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, `IterableComputation`, `TA`, `TB`\>
-
-#### Inherited from
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatMap`](../../interfaces/DeferredComputationModule.md#concatmap)
-
-***
-
-### concatWith()
-
-> **concatWith**\<`T`\>(`snd`, ...`tail`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, `IterableComputation`, `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### snd
-
-[`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>
-
-##### tail
-
-...readonly [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>[]
-
-#### Returns
-
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, `IterableComputation`, `T`, `T`\>
-
-#### Inherited from
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatWith`](../../interfaces/DeferredComputationModule.md#concatwith)
 
 ***
 
@@ -203,34 +117,6 @@ readonly \[[`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[
 #### Inherited from
 
 [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`empty`](../../interfaces/DeferredComputationModule.md#empty)
-
-***
-
-### endWith()
-
-> **endWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, `IterableComputation`, `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### value
-
-`T`
-
-##### values
-
-...readonly `T`[]
-
-#### Returns
-
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, `IterableComputation`, `T`, `T`\>
-
-#### Inherited from
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`endWith`](../../interfaces/DeferredComputationModule.md#endwith)
 
 ***
 
@@ -380,7 +266,7 @@ readonly \[[`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[
 
 #### Inherited from
 
-[`ComputationModule`](../../interfaces/ComputationModule.md).[`keep`](../../interfaces/ComputationModule.md#keep)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`keep`](../../interfaces/DeferredComputationModule.md#keep)
 
 ***
 
@@ -424,7 +310,7 @@ readonly \[[`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[
 
 #### Inherited from
 
-[`ComputationModule`](../../interfaces/ComputationModule.md).[`map`](../../interfaces/ComputationModule.md#map)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`map`](../../interfaces/DeferredComputationModule.md#map)
 
 ***
 
@@ -599,34 +485,6 @@ readonly \[[`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & `Pick`\<[
 #### Inherited from
 
 [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`scan`](../../interfaces/DeferredComputationModule.md#scan)
-
-***
-
-### startWith()
-
-> **startWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, `IterableComputation`, `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### value
-
-`T`
-
-##### values
-
-...readonly `T`[]
-
-#### Returns
-
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>, `IterableComputation`, `T`, `T`\>
-
-#### Inherited from
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`startWith`](../../interfaces/DeferredComputationModule.md#startwith)
 
 ***
 

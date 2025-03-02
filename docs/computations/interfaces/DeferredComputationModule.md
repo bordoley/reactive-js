@@ -6,6 +6,10 @@
 
 # Interface: DeferredComputationModule\<Type, TComputation\>
 
+## Extends
+
+- [`ComputationModule`](ComputationModule.md)\<`Type`, `TComputation`\>
+
 ## Extended by
 
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
@@ -59,34 +63,6 @@
 
 ***
 
-### concat()
-
-> **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### fst
-
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>
-
-##### snd
-
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>
-
-##### tail
-
-...readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>[]
-
-#### Returns
-
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>
-
-***
-
 ### concatAll()
 
 > **concatAll**\<`T`\>(): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>, `T`\>
@@ -113,57 +89,11 @@
 
 ##### computations
 
-readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>\]
+readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>[]
 
 #### Returns
 
 [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>
-
-***
-
-### concatMap()
-
-> **concatMap**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `TA`, `TB`\>
-
-#### Type Parameters
-
-• **TA**
-
-• **TB**
-
-#### Parameters
-
-##### selector
-
-[`Function1`](../../functions/type-aliases/Function1.md)\<`TA`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TB`\>\>
-
-#### Returns
-
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `TA`, `TB`\>
-
-***
-
-### concatWith()
-
-> **concatWith**\<`T`\>(`snd`, ...`tail`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### snd
-
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>
-
-##### tail
-
-...readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>[]
-
-#### Returns
-
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
 
 ***
 
@@ -178,30 +108,6 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComput
 #### Returns
 
 [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>
-
-***
-
-### endWith()
-
-> **endWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### value
-
-`T`
-
-##### values
-
-...readonly `T`[]
-
-#### Returns
-
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
 
 ***
 
@@ -288,6 +194,56 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComput
 #### Returns
 
 [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>
+
+***
+
+### keep()
+
+> **keep**\<`T`\>(`predicate`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### predicate
+
+[`Predicate`](../../functions/type-aliases/Predicate.md)\<`T`\>
+
+#### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
+
+#### Inherited from
+
+[`ComputationModule`](ComputationModule.md).[`keep`](ComputationModule.md#keep)
+
+***
+
+### map()
+
+> **map**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `TA`, `TB`\>
+
+#### Type Parameters
+
+• **TA**
+
+• **TB**
+
+#### Parameters
+
+##### selector
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<`TA`, `TB`\>
+
+#### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `TA`, `TB`\>
+
+#### Inherited from
+
+[`ComputationModule`](ComputationModule.md).[`map`](ComputationModule.md#map)
 
 ***
 
@@ -408,30 +364,6 @@ readonly \[[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComput
 #### Returns
 
 [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `TAcc`\>
-
-***
-
-### startWith()
-
-> **startWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### value
-
-`T`
-
-##### values
-
-...readonly `T`[]
-
-#### Returns
-
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
 
 ***
 

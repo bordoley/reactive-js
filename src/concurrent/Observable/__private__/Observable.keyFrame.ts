@@ -40,7 +40,7 @@ const Observable_keyFrame = (
     Computation.pick<
       PureSynchronousObservableLike,
       ObservableComputationFor<PureSynchronousObservableLike>
-    >(Observable_map)(1),
+    >({ map: Observable_map })(1),
     Observable_takeWhile(isNotEqualTo(1), {
       inclusive: true,
     }),

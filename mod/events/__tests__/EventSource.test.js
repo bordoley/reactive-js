@@ -106,7 +106,7 @@ testModule("EventSource", ComputationModuleTests({
     }
     catch (e) { }
     pipe(subscription[DisposableLike_error], expectEquals(error));
-})), describe("merge", test("with source that have different delays", () => {
+})), describe("mergeMany", test("with source that have different delays", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);
@@ -116,7 +116,7 @@ testModule("EventSource", ComputationModuleTests({
             [2, 5, 8],
             [3, 6, 9],
         ], ReadonlyArray.map(compose(Observable.fromReadonlyArray({ delay: 3 }), Observable.toEventSource(vts))));
-        pipe(EventSource.merge(ev1, ev2, ev3), EventSource.addEventHandler(bindMethod(result, Array_push)));
+        pipe(EventSource.mergeMany([ev1, ev2, ev3]), EventSource.addEventHandler(bindMethod(result, Array_push)));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
@@ -126,26 +126,6 @@ testModule("EventSource", ComputationModuleTests({
     }
     finally {
         __disposeResources(env_1);
-    }
-})), describe("mergeWith", test("with source that have different delays", () => {
-    const env_2 = { stack: [], error: void 0, hasError: false };
-    try {
-        const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create(), false);
-        const result = [];
-        const [ev1, ev2] = pipe([
-            [1, 3, 5],
-            [2, 4, 6],
-        ], ReadonlyArray.map(compose(Observable.fromReadonlyArray({ delay: 3 }), Observable.toEventSource(vts))));
-        pipe(ev1, EventSource.mergeWith(ev2), EventSource.addEventHandler(bindMethod(result, Array_push)));
-        vts[VirtualTimeSchedulerLike_run]();
-        pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
-    }
-    catch (e_2) {
-        env_2.error = e_2;
-        env_2.hasError = true;
-    }
-    finally {
-        __disposeResources(env_2);
     }
 })));
 ((_) => { })(EventSource);

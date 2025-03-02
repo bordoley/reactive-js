@@ -6,7 +6,7 @@
 
 # Function: keepType()
 
-> **keepType**\<`Type`, `TComputation`\>(`keep`): \<`TA`, `TB`\>(`predicate`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `TA`, `TB`\>
+> **keepType**\<`Type`, `TComputation`\>(`m`): \<`TA`, `TB`\>(`predicate`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -16,9 +16,9 @@
 
 ## Parameters
 
-### keep
+### m
 
-\<`T`\>(`predicate`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
+`Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<`Type`, `TComputation`\>, `"keep"`\>
 
 ## Returns
 

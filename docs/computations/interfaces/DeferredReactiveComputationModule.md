@@ -88,20 +88,6 @@
 
 ***
 
-### ignoreElements()
-
-> **ignoreElements**\<`T`\>(): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `any`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `any`, `T`\>
-
-***
-
 ### pairwise()
 
 > **pairwise**\<`T`\>(): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>

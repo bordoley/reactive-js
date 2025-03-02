@@ -126,7 +126,7 @@ testModule(
     }),
   ),
   describe(
-    "merge",
+    "mergeMany",
     test("with source that have different delays", () => {
       using vts = VirtualTimeScheduler.create();
 
@@ -146,43 +146,13 @@ testModule(
       );
 
       pipe(
-        EventSource.merge(ev1, ev2, ev3),
+        EventSource.mergeMany([ev1, ev2, ev3]),
         EventSource.addEventHandler(bindMethod(result, Array_push)),
       );
 
       vts[VirtualTimeSchedulerLike_run]();
 
       pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]));
-    }),
-  ),
-  describe(
-    "mergeWith",
-    test("with source that have different delays", () => {
-      using vts = VirtualTimeScheduler.create();
-
-      const result: number[] = [];
-      const [ev1, ev2] = pipe(
-        [
-          [1, 3, 5],
-          [2, 4, 6],
-        ],
-        ReadonlyArray.map<number[], EventSourceLike<number>, number>(
-          compose(
-            Observable.fromReadonlyArray({ delay: 3 }),
-            Observable.toEventSource(vts),
-          ),
-        ),
-      );
-
-      pipe(
-        ev1,
-        EventSource.mergeWith(ev2),
-        EventSource.addEventHandler(bindMethod(result, Array_push)),
-      );
-
-      vts[VirtualTimeSchedulerLike_run]();
-
-      pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
     }),
   ),
 );

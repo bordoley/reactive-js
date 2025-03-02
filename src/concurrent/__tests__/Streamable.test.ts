@@ -157,7 +157,7 @@ testModule(
               Computation.sequence<
                 PureSynchronousObservableLike,
                 ObservableComputationFor<PureSynchronousObservableLike>
-              >(Observable.generate)(state + 10),
+              >(Observable)(state + 10),
               Observable.map(x => (_: number) => x),
               Observable.takeFirst({ count: 2 }),
             ),

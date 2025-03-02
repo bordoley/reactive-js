@@ -1,6 +1,5 @@
 import {
   Computation,
-  ComputationModule,
   ComputationWithSideEffectsModule,
   Computation_T,
   Computation_type,
@@ -14,21 +13,16 @@ import {
 import { identity, returns } from "../functions.js";
 import Runnable_buffer from "./Runnable/__private__/Runnable.buffer.js";
 import Runnable_catchError from "./Runnable/__private__/Runnable.catchError.js";
-import Runnable_concat from "./Runnable/__private__/Runnable.concat.js";
 import Runnable_concatAll from "./Runnable/__private__/Runnable.concatAll.js";
 import Runnable_concatMany from "./Runnable/__private__/Runnable.concatMany.js";
-import Runnable_concatMap from "./Runnable/__private__/Runnable.concatMap.js";
-import Runnable_concatWith from "./Runnable/__private__/Runnable.concatWith.js";
 import Runnable_decodeWithCharset from "./Runnable/__private__/Runnable.decodeWithCharset.js";
 import Runnable_distinctUntilChanged from "./Runnable/__private__/Runnable.distinctUntilChanged.js";
 import Runnable_empty from "./Runnable/__private__/Runnable.empty.js";
-import Runnable_endWith from "./Runnable/__private__/Runnable.endWith.js";
 import Runnable_forEach from "./Runnable/__private__/Runnable.forEach.js";
 import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 import Runnable_fromReadonlyArray from "./Runnable/__private__/Runnable.fromReadonlyArray.js";
 import Runnable_fromValue from "./Runnable/__private__/Runnable.fromValue.js";
 import Runnable_generate from "./Runnable/__private__/Runnable.generate.js";
-import Runnable_ignoreElements from "./Runnable/__private__/Runnable.ignoreElements.js";
 import Runnable_keep from "./Runnable/__private__/Runnable.keep.js";
 import Runnable_last from "./Runnable/__private__/Runnable.last.js";
 import Runnable_map from "./Runnable/__private__/Runnable.map.js";
@@ -39,7 +33,6 @@ import Runnable_repeat from "./Runnable/__private__/Runnable.repeat.js";
 import Runnable_retry from "./Runnable/__private__/Runnable.retry.js";
 import Runnable_scan from "./Runnable/__private__/Runnable.scan.js";
 import Runnable_skipFirst from "./Runnable/__private__/Runnable.skipFirst.js";
-import Runnable_startWith from "./Runnable/__private__/Runnable.startWith.js";
 import Runnable_takeFirst from "./Runnable/__private__/Runnable.takeFirst.js";
 import Runnable_takeLast from "./Runnable/__private__/Runnable.takeLast.js";
 import Runnable_takeWhile from "./Runnable/__private__/Runnable.takeWhile.js";
@@ -71,8 +64,7 @@ export type RunnableComputationFor<Type extends RunnableLike> =
       : RunnableComputation;
 
 export interface RunnableModule
-  extends ComputationModule<RunnableLike, RunnableComputationFor<RunnableLike>>,
-    DeferredComputationModule<
+  extends DeferredComputationModule<
       RunnableLike,
       RunnableComputationFor<RunnableLike>
     >,
@@ -95,25 +87,19 @@ export type Signature = RunnableModule;
 
 export const buffer: Signature["buffer"] = Runnable_buffer;
 export const catchError: Signature["catchError"] = Runnable_catchError;
-export const concat: Signature["concat"] = Runnable_concat;
 export const concatAll: Signature["concatAll"] = Runnable_concatAll;
-export const concatMap: Signature["concatMap"] = Runnable_concatMap;
 export const concatMany: Signature["concatMany"] = Runnable_concatMany;
-export const concatWith: Signature["concatWith"] = Runnable_concatWith;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Runnable_decodeWithCharset;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Runnable_distinctUntilChanged;
 export const empty: Signature["empty"] = Runnable_empty;
-export const endWith: Signature["endWith"] = Runnable_endWith;
 export const forEach: Signature["forEach"] = Runnable_forEach;
 export const fromIterable: Signature["fromIterable"] = Runnable_fromIterable;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   Runnable_fromReadonlyArray;
 export const fromValue: Signature["fromValue"] = Runnable_fromValue;
 export const generate: Signature["generate"] = Runnable_generate;
-export const ignoreElements: Signature["ignoreElements"] =
-  Runnable_ignoreElements;
 export const keep: Signature["keep"] = Runnable_keep;
 export const last: Signature["last"] = Runnable_last;
 export const map: Signature["map"] = Runnable_map;
@@ -124,7 +110,6 @@ export const repeat: Signature["repeat"] = Runnable_repeat;
 export const retry: Signature["retry"] = Runnable_retry;
 export const scan: Signature["scan"] = Runnable_scan;
 export const skipFirst: Signature["skipFirst"] = Runnable_skipFirst;
-export const startWith: Signature["startWith"] = Runnable_startWith;
 export const takeFirst: Signature["takeFirst"] = Runnable_takeFirst;
 export const takeLast: Signature["takeLast"] = Runnable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Runnable_takeWhile;

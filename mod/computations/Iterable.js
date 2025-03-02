@@ -4,7 +4,7 @@ import { clampPositiveInteger } from "../__internal__/math.js";
 import { mixInstanceFactory, props } from "../__internal__/mixins.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import { ComputationLike_isPure, Computation_type, } from "../computations.js";
-import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pipe, raise as raiseError, returns, tuple, } from "../functions.js";
+import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, raise as raiseError, returns, tuple, } from "../functions.js";
 import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 class CatchErrorIterable {
     s;
@@ -37,7 +37,6 @@ class CatchErrorIterable {
     }
 }
 export const catchError = (onError) => (iter) => newInstance(CatchErrorIterable, iter, onError);
-export const concat = (...iterables) => concatMany(iterables);
 class ConcatAllIterable {
     s;
     constructor(s) {
@@ -52,11 +51,8 @@ class ConcatAllIterable {
     }
 }
 export const concatAll = /*@__PURE__*/ (() => returns((iterable) => newInstance(ConcatAllIterable, iterable)))();
-export const concatMap = (selector) => (obs) => pipe(obs, map(selector), concatAll());
 export const concatMany = concatAll();
-export const concatWith = (...tail) => (fst) => concatMany([fst, ...tail]);
 export const empty = /*@__PURE__*/ returns([]);
-export const endWith = (...values) => (iterable) => pipe(iterable, concatWith(pipe(values, fromReadonlyArray())));
 export const forEach = /*@__PURE__*/ (() => {
     const ForEachIterable_effect = Symbol("ForEachIterable_effect");
     const ForEachIterable_delegate = Symbol("ForEachIterable_delegate");
@@ -272,7 +268,6 @@ class ScanIterable {
     }
 }
 export const scan = (scanner, initialValue) => (iter) => newInstance(ScanIterable, iter, scanner, initialValue);
-export const startWith = (...values) => (iter) => pipe(values, fromReadonlyArray(), concatWith(iter));
 class TakeFirstIterable {
     s;
     c;

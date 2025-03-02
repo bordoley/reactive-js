@@ -5,7 +5,6 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   Computation,
-  ComputationModule,
   ComputationOf,
   DeferredComputationLike,
   DeferredComputationModule,
@@ -13,14 +12,14 @@ import {
   InteractiveComputationModule,
 } from "../../../computations.js";
 import { Function1, pipeLazy } from "../../../functions.js";
+import * as ComputationM from "../../Computation.js";
 
 const InteractiveComputationModuleTests = <
   Type extends DeferredComputationLike & InteractiveComputationLike,
   TComputation extends Computation,
 >(
   m: InteractiveComputationModule<Type, TComputation> &
-    DeferredComputationModule<Type, TComputation> &
-    ComputationModule<Type, TComputation> & {
+    DeferredComputationModule<Type, TComputation> & {
       fromReadonlyArray: <T>() => Function1<
         ReadonlyArray<T>,
         ComputationOf<Type, TComputation, T>
@@ -43,7 +42,7 @@ const InteractiveComputationModuleTests = <
             m.fromReadonlyArray<number>()([0, 1, 2]),
             m.fromReadonlyArray<number>()([0, 1, 2, 3]),
           ),
-          m.concatMap(m.fromReadonlyArray()),
+          ComputationM.concatMap(m)(m.fromReadonlyArray()),
           m.toReadonlyArray(),
           expectArrayEquals([0, 0, 0, 1, 1, 1, 2, 2, 2]),
         ),
@@ -56,7 +55,7 @@ const InteractiveComputationModuleTests = <
             m.fromReadonlyArray<number>()([]),
             m.fromReadonlyArray<number>()([0, 1, 2, 3]),
           ),
-          m.concatMap(m.fromReadonlyArray()),
+          ComputationM.concatMap(m)(m.fromReadonlyArray()),
           m.toReadonlyArray(),
           expectArrayEquals<number>([]),
         ),

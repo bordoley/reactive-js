@@ -88,7 +88,7 @@ export const subscribe = /*@__PURE__*/ (() => {
             history.back();
         },
         [ObservableLike_observe](observer) {
-            pipe(this[WindowLocation_delegate], Computation.pick(Observable.map)("uri"), invoke(ObservableLike_observe, observer));
+            pipe(this[WindowLocation_delegate], Computation.pick(Observable)("uri"), invoke(ObservableLike_observe, observer));
         },
     });
     let currentWindowLocationObservable = none;
@@ -102,7 +102,7 @@ export const subscribe = /*@__PURE__*/ (() => {
             // Initialize the counter to -1 so that the initized start value
             // get pushed through the updater.
             counter: -1,
-        }), { equality: areWindowLocationStatesEqual }), Streamable.syncState(state => 
+        }), { equality: areWindowLocationStatesEqual }), Streamable.syncState(state => Observable.defer(() => 
         // Initialize the history state on page load
         pipe(window, Element.eventSource("popstate"), EventSource.map((e) => {
             const { counter, title } = e.state;
@@ -111,11 +111,13 @@ export const subscribe = /*@__PURE__*/ (() => {
                 title,
             });
             return { counter, replace: true, uri };
-        }), Observable.fromEventSource(), Observable.mergeWith(pipe({
+        }), Observable.fromEventSource(), Computation.mergeWith({
+            mergeMany: Observable.mergeMany,
+        })(pipe({
             counter: 0,
             replace: true,
             uri: state.uri,
-        }, Observable.fromValue())), Observable.map(returns)), (oldState, state) => {
+        }, Observable.fromValue())), x => x, Observable.map(returns))), (oldState, state) => {
             const locationChanged = !areURIsEqual(state.uri, oldState.uri);
             const titleChanged = oldState.uri.title !== state.uri.title;
             let { replace } = state;

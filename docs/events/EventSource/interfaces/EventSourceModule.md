@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../../computations/interfaces/ComputationModule.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md), [`EventSourceComputation`](EventSourceComputation.md)\>.[`ConcurrentReactiveComputationModule`](../../../computations/interfaces/ConcurrentReactiveComputationModule.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md), [`EventSourceComputation`](EventSourceComputation.md)\>
+- [`ConcurrentReactiveComputationModule`](../../../computations/interfaces/ConcurrentReactiveComputationModule.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md), [`EventSourceComputation`](EventSourceComputation.md)\>
 
 ## Methods
 

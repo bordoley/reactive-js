@@ -6,7 +6,7 @@
 
 # Function: pick()
 
-> **pick**\<`Type`, `TComputation`\>(`map`): [`PickOperator`](../interfaces/PickOperator.md)\<`Type`, `TComputation`\>
+> **pick**\<`Type`, `TComputation`\>(`m`): [`PickOperator`](../interfaces/PickOperator.md)\<`Type`, `TComputation`\>
 
 ## Type Parameters
 
@@ -16,9 +16,9 @@
 
 ## Parameters
 
-### map
+### m
 
-\<`TA`, `TB`\>(`selector`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `TA`, `TB`\>
+`Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<`Type`, `TComputation`\>, `"map"`\>
 
 ## Returns
 

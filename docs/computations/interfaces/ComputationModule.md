@@ -8,9 +8,8 @@
 
 ## Extended by
 
-- [`IterableModule`](../Iterable/interfaces/IterableModule.md)
-- [`RunnableModule`](../Runnable/interfaces/RunnableModule.md)
-- [`EventSourceModule`](../../events/EventSource/interfaces/EventSourceModule.md)
+- [`DeferredComputationModule`](DeferredComputationModule.md)
+- [`ConcurrentReactiveComputationModule`](ConcurrentReactiveComputationModule.md)
 
 ## Type Parameters
 

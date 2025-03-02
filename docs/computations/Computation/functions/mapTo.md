@@ -6,7 +6,7 @@
 
 # Function: mapTo()
 
-> **mapTo**\<`Type`, `TComputation`\>(`map`): \<`T`\>(`value`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `unknown`, `T`\>
+> **mapTo**\<`Type`, `TComputation`\>(`m`): \<`T`\>(`value`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `unknown`, `T`\>
 
 ## Type Parameters
 
@@ -16,9 +16,9 @@
 
 ## Parameters
 
-### map
+### m
 
-\<`TA`, `TB`\>(`selector`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `TA`, `TB`\>
+`Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<`Type`, `TComputation`\>, `"map"`\>
 
 ## Returns
 

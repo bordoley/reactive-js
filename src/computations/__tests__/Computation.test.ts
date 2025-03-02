@@ -1,36 +1,146 @@
 import {
   describe,
   expectArrayEquals,
+  expectToHaveBeenCalledTimes,
+  mockFn,
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Observable from "../../concurrent/Observable.js";
-import { ObservableComputationFor } from "../../concurrent/Observable.js";
-import { PureSynchronousObservableLike } from "../../concurrent.js";
-import {
-  Optional,
-  isSome,
-  none,
-  pipe,
-  pipeLazy,
-  tuple,
-} from "../../functions.js";
+import { IterableLike } from "../../computations.js";
+import { Optional, isSome, none, pipe, pipeLazy } from "../../functions.js";
 import * as Computation from "../Computation.js";
+import * as Iterable from "../Iterable.js";
+import { IterableComputationFor } from "../Iterable.js";
 
 testModule(
   "Computation",
+  describe(
+    "concat",
+    test(
+      "concats the input containers in order",
+      pipeLazy(
+        Computation.concat<IterableLike, IterableComputationFor<IterableLike>>(
+          Iterable,
+        )([1, 2, 3], [4, 5, 6]),
+        Iterable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6]),
+      ),
+    ),
+    test(
+      "only consume partial number of events",
+      pipeLazy(
+        Computation.concat<IterableLike, IterableComputationFor<IterableLike>>(
+          Iterable,
+        )([1, 2, 3], [4, 5, 6], [7, 8, 8]),
+        Iterable.takeFirst({ count: 5 }),
+        Iterable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4, 5]),
+      ),
+    ),
+  ),
+  describe(
+    "concatMap",
+    test(
+      "maps each value to a container and flattens",
+      pipeLazy(
+        [0, 1],
+        Computation.concatMap(Iterable)(() => [1, 2, 3]),
+        Iterable.toReadonlyArray<number>(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+  ),
+  describe(
+    "concatMapIterable",
+    test(
+      "maps the incoming value with the inline generator function",
+      pipeLazy(
+        [none, none],
+        Computation.concatMapIterable(Iterable)(function* (_) {
+          yield 1;
+          yield 2;
+          yield 3;
+        }),
+        Iterable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+    test(
+      "maps the incoming value with the inline generator function, with delayed source",
+      pipeLazy(
+        [none, none],
+        Computation.concatMapIterable(Iterable)(function* (_) {
+          yield 1;
+          yield 2;
+          yield 3;
+        }),
+        Iterable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+  ),
+  describe(
+    "concatWith",
+    test(
+      "concats two containers together",
+      pipeLazy(
+        [0, 1],
+        Computation.concatWith<
+          IterableLike,
+          IterableComputationFor<IterableLike>
+        >(Iterable)([2, 3, 4]),
+        Iterable.toReadonlyArray(),
+        expectArrayEquals([0, 1, 2, 3, 4]),
+      ),
+    ),
+  ),
+  describe(
+    "endWith",
+    test(
+      "appends the additional values to the end of the container",
+      pipeLazy(
+        [0, 1],
+        Computation.endWith<IterableLike, IterableComputationFor<IterableLike>>(
+          Iterable,
+        )(2, 3, 4),
+        Iterable.toReadonlyArray(),
+        expectArrayEquals([0, 1, 2, 3, 4]),
+      ),
+    ),
+  ),
+  describe(
+    "ignoreElements",
+    test(
+      "ignores all elements",
+      pipeLazy(
+        [1, 2, 3],
+        Computation.ignoreElements(Iterable)<number>(),
+        Iterable.toReadonlyArray(),
+        expectArrayEquals([] as number[]),
+      ),
+    ),
+    test("invokes all side-effects", () => {
+      const f = mockFn();
+
+      pipe(
+        [1, 2, 3],
+        Iterable.forEach<number>(f),
+        Computation.ignoreElements(Iterable)<number>(),
+        Iterable.toReadonlyArray(),
+        expectArrayEquals([] as number[]),
+      );
+
+      pipe(f, expectToHaveBeenCalledTimes(3));
+    }),
+  ),
   describe(
     "keepType",
     test(
       "filters null values",
       pipeLazy(
         ["b", none, "v"],
-        Observable.fromReadonlyArray(),
-        Computation.keepType<
-          PureSynchronousObservableLike,
-          ObservableComputationFor<PureSynchronousObservableLike>
-        >(Observable.keep)<Optional<string>, string>(isSome),
-        Observable.toReadonlyArray(),
+        Computation.keepType(Iterable)<Optional<string>, string>(isSome),
+        Iterable.toReadonlyArray(),
         expectArrayEquals(["b", "v"]),
       ),
     ),
@@ -45,12 +155,8 @@ testModule(
           ["c", "d"],
           ["e", "f"],
         ],
-        Observable.fromReadonlyArray(),
-        Computation.mapTo<
-          PureSynchronousObservableLike,
-          ObservableComputationFor<PureSynchronousObservableLike>
-        >(Observable.map)(2),
-        Observable.toReadonlyArray(),
+        Computation.mapTo(Iterable)(2),
+        Iterable.toReadonlyArray(),
         expectArrayEquals([2, 2, 2]),
       ),
     ),
@@ -69,46 +175,51 @@ testModule(
 
       pipe(
         [obj],
-        Observable.fromReadonlyArray(),
-        Computation.pick<
-          PureSynchronousObservableLike,
-          ObservableComputationFor<PureSynchronousObservableLike>
-        >(Observable.map)(keyA, keyB),
-        Observable.toReadonlyArray<string>(),
+        Computation.pick(Iterable)(keyA, keyB),
+        Iterable.toReadonlyArray<string>(),
         expectArrayEquals<string>(["value"]),
       );
     }),
-    test("with object and string keys", () => {
-      const obj = {
-        keyA: {
-          keyB: "value",
-        },
-      };
-
-      pipe(
-        [obj],
-        Observable.fromReadonlyArray(),
-        Computation.pick<
-          PureSynchronousObservableLike,
-          ObservableComputationFor<PureSynchronousObservableLike>
-        >(Observable.map)("keyA", "keyB"),
-        Observable.toReadonlyArray<string>(),
+    test(
+      "with object and string keys",
+      pipeLazy(
+        [
+          {
+            keyA: {
+              keyB: "value",
+            },
+          },
+        ],
+        Computation.pick(Iterable)("keyA", "keyB"),
+        Iterable.toReadonlyArray<string>(),
         expectArrayEquals<string>(["value"]),
-      );
-    }),
-    test("with array", () => {
-      const obj = tuple(1, 2, 3, 4, 5, 6);
-
-      pipe(
-        [obj],
-        Observable.fromReadonlyArray(),
-        Computation.pick<
-          PureSynchronousObservableLike,
-          ObservableComputationFor<PureSynchronousObservableLike>
-        >(Observable.map)(3),
-        Observable.toReadonlyArray<number>(),
+      ),
+    ),
+    test(
+      "with array",
+      pipeLazy(
+        [[1, 2, 3, 4, 5, 6]],
+        Computation.pick(Iterable)(3),
+        Iterable.toReadonlyArray<number>(),
         expectArrayEquals<number>([4]),
-      );
-    }),
+      ),
+    ),
+  ),
+  describe(
+    "startWith",
+    test(
+      "appends the additional values to the start of the container",
+      pipeLazy(
+        [0, 1],
+        Computation.startWith<
+          IterableLike,
+          IterableComputationFor<IterableLike>
+        >(Iterable)(2, 3, 4),
+        Iterable.toReadonlyArray(),
+        expectArrayEquals([2, 3, 4, 0, 1]),
+      ),
+    ),
   ),
 );
+
+((_: Computation.Signature) => {})(Computation);

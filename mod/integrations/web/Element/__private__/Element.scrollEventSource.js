@@ -3,8 +3,9 @@
 import * as CurrentTime from "../../../../__internal__/CurrentTime.js";
 import { MAX_VALUE, MIN_VALUE } from "../../../../__internal__/constants.js";
 import { clamp } from "../../../../__internal__/math.js";
+import * as Computation from "../../../../computations/Computation.js";
 import * as EventSource from "../../../../events/EventSource.js";
-import { EventListenerLike_notify } from "../../../../events.js";
+import { EventListenerLike_notify, } from "../../../../events.js";
 import { pipe, returns } from "../../../../functions.js";
 import * as Disposable from "../../../../utils/Disposable.js";
 import Element_eventSource from "./Element.eventSource.js";
@@ -31,7 +32,9 @@ const createInitialScrollValue = () => ({
 const Element_scrollEventSource = 
 /*@__PURE__*/ returns(element => EventSource.create(listener => {
     let prev = createInitialScrollValue();
-    pipe(EventSource.merge(pipe(element, Element_eventSource("scroll")), pipe(element, Element_eventSource("scrollend")), Element_windowResizeEventSource()), EventSource.addEventHandler(ev => {
+    pipe(Computation.merge({
+        mergeMany: EventSource.mergeMany,
+    })(pipe(element, Element_eventSource("scroll")), pipe(element, Element_eventSource("scrollend")), Element_windowResizeEventSource()), EventSource.addEventHandler(ev => {
         const { x: prevX, y: prevY, time: prevTime, } = ev.type === "resize" ? createInitialScrollValue() : prev;
         const now = CurrentTime.now();
         const dt = clamp(0, now - prevTime, MAX_VALUE);

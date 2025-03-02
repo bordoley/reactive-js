@@ -177,19 +177,13 @@ export interface ComputationWithSideEffectsModule<
 export interface DeferredComputationModule<
   Type extends DeferredComputationLike,
   TComputation extends Computation,
-> {
+> extends ComputationModule<Type, TComputation> {
   catchError<T>(
     onError: SideEffect1<Error>,
   ): ComputationOperator<Type, TComputation, T, T>;
   catchError<T>(
     onError: Function1<Error, ComputationOf<Type, TComputation, T>>,
   ): ComputationOperator<Type, TComputation, T, T>;
-
-  concat<T>(
-    fst: ComputationOf<Type, TComputation, T>,
-    snd: ComputationOf<Type, TComputation, T>,
-    ...tail: readonly ComputationOf<Type, TComputation, T>[]
-  ): ComputationOf<Type, TComputation, T>;
 
   concatAll<T>(): ComputationOperator<
     Type,
@@ -198,28 +192,11 @@ export interface DeferredComputationModule<
     T
   >;
 
-  concatMap<TA, TB>(
-    selector: Function1<TA, ComputationOf<Type, TComputation, TB>>,
-  ): ComputationOperator<Type, TComputation, TA, TB>;
-
   concatMany<T>(
-    computations: readonly [
-      ComputationOf<Type, TComputation, T>,
-      ...(readonly ComputationOf<Type, TComputation, T>[]),
-    ],
+    computations: readonly ComputationOf<Type, TComputation, T>[],
   ): ComputationOf<Type, TComputation, T>;
 
-  concatWith<T>(
-    snd: ComputationOf<Type, TComputation, T>,
-    ...tail: readonly ComputationOf<Type, TComputation, T>[]
-  ): ComputationOperator<Type, TComputation, T, T>;
-
   empty<T>(): ComputationOf<Type, TComputation, T>;
-
-  endWith<T>(
-    value: T,
-    ...values: readonly T[]
-  ): ComputationOperator<Type, TComputation, T, T>;
 
   fromIterable<
     T,
@@ -263,11 +240,6 @@ export interface DeferredComputationModule<
     scanner: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ): ComputationOperator<Type, TComputation, T, TAcc>;
-
-  startWith<T>(
-    value: T,
-    ...values: readonly T[]
-  ): ComputationOperator<Type, TComputation, T, T>;
 
   takeFirst<T>(options?: {
     readonly count?: number;
@@ -345,8 +317,6 @@ export interface DeferredReactiveComputationModule<
     readonly equality?: Equality<T>;
   }): ComputationOperator<Type, TComputation, T, T>;
 
-  ignoreElements<T>(): ComputationOperator<Type, TComputation, any, T>;
-
   pairwise<T>(): ComputationOperator<Type, TComputation, T, Tuple2<T, T>>;
 
   skipFirst<T>(options?: {
@@ -361,26 +331,12 @@ export interface DeferredReactiveComputationModule<
 export interface ConcurrentReactiveComputationModule<
   Type extends ReactiveComputationLike,
   TComputation extends Computation,
-> {
+> extends ComputationModule<Type, TComputation> {
   fromPromise<T>(): Function1<Promise<T>, ComputationOf<Type, TComputation, T>>;
-
-  merge<T>(
-    fst: ComputationOf<Type, TComputation, T>,
-    snd: ComputationOf<Type, TComputation, T>,
-    ...tail: readonly ComputationOf<Type, TComputation, T>[]
-  ): ComputationOf<Type, TComputation, T>;
 
   mergeMany<T>(
     eventSources: readonly ComputationOf<Type, TComputation, T>[],
   ): ComputationOf<Type, TComputation, T>;
-
-  mergeWith<T>(
-    snd: ComputationOf<Type, TComputation, T>,
-    ...tail: readonly ComputationOf<Type, TComputation, T>[]
-  ): Function1<
-    ComputationOf<Type, TComputation, T>,
-    ComputationOf<Type, TComputation, T>
-  >;
 }
 
 export const SinkLike_next = Symbol("SinkLike_next");

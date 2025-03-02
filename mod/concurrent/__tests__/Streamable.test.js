@@ -157,7 +157,7 @@ testModule("Streamable", describe("animation", test("integration", () => {
     const env_5 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
-        const stream = pipe(Streamable.stateStore(returns(-1)), Streamable.syncState(state => pipe(Computation.sequence(Observable.generate)(state + 10), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (oldState, newState) => newState !== oldState
+        const stream = pipe(Streamable.stateStore(returns(-1)), Streamable.syncState(state => pipe(Computation.sequence(Observable)(state + 10), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (oldState, newState) => newState !== oldState
             ? Observable.empty({ delay: 0 })
             : Observable.empty({ delay: 0 })), invoke(StreamableLike_stream, vts));
         pipe((x) => x + 2, Observable.fromValue({ delay: 5 }), Observable.enqueue(stream), Observable.subscribe(vts));

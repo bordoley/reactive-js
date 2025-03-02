@@ -27,6 +27,7 @@ import {
   raise,
   returns,
 } from "../../../functions.js";
+import * as ComputationM from "../../Computation.js";
 
 const DeferredComputationModuleTests = <
   Type extends SynchronousComputationLike,
@@ -81,7 +82,7 @@ const DeferredComputationModuleTests = <
         pipeLazy(
           [1, 2, 3],
           m.fromReadonlyArray(),
-          m.concatWith(m.raise()),
+          ComputationM.concatWith(m)(m.raise()),
           m.catchError(pipeLazy([4, 5, 6], m.fromReadonlyArray())),
           m.toReadonlyArray(),
           expectArrayEquals([1, 2, 3, 4, 5, 6]),
@@ -180,14 +181,14 @@ const DeferredComputationModuleTests = <
       ),
     ),
     describe(
-      "concat",
+      "concatMany",
       test(
         "concats the input containers in order",
         pipeLazy(
-          m.concat(
+          m.concatMany([
             pipe([1, 2, 3], m.fromReadonlyArray()),
             pipe([4, 5, 6], m.fromReadonlyArray()),
-          ),
+          ]),
           m.toReadonlyArray(),
           expectArrayEquals([1, 2, 3, 4, 5, 6]),
         ),
@@ -195,11 +196,11 @@ const DeferredComputationModuleTests = <
       test(
         "only consume partial number of events",
         pipeLazy(
-          m.concat(
+          m.concatMany([
             pipe([1, 2, 3], m.fromReadonlyArray()),
             pipe([4, 5, 6], m.fromReadonlyArray()),
             pipe([7, 8, 8], m.fromReadonlyArray()),
-          ),
+          ]),
           m.takeFirst({ count: 5 }),
           m.toReadonlyArray(),
           expectArrayEquals([1, 2, 3, 4, 5]),
@@ -238,32 +239,6 @@ const DeferredComputationModuleTests = <
       ),
     ),
     describe(
-      "concatMap",
-      test(
-        "maps each value to a container and flattens",
-        pipeLazy(
-          [0, 1],
-          m.fromReadonlyArray(),
-          m.concatMap(pipeLazy([1, 2, 3], m.fromReadonlyArray())),
-          m.toReadonlyArray<number>(),
-          expectArrayEquals([1, 2, 3, 1, 2, 3]),
-        ),
-      ),
-    ),
-    describe(
-      "concatWith",
-      test(
-        "concats two containers together",
-        pipeLazy(
-          [0, 1],
-          m.fromReadonlyArray(),
-          m.concatWith(pipe([2, 3, 4], m.fromReadonlyArray())),
-          m.toReadonlyArray(),
-          expectArrayEquals([0, 1, 2, 3, 4]),
-        ),
-      ),
-    ),
-    describe(
       "empty",
       test(
         "produces no results",
@@ -271,19 +246,6 @@ const DeferredComputationModuleTests = <
           m.empty<number>(),
           m.toReadonlyArray(),
           expectArrayEquals<number>([]),
-        ),
-      ),
-    ),
-    describe(
-      "endWith",
-      test(
-        "appends the additional values to the end of the container",
-        pipeLazy(
-          [0, 1],
-          m.fromReadonlyArray(),
-          m.endWith(2, 3, 4),
-          m.toReadonlyArray(),
-          expectArrayEquals([0, 1, 2, 3, 4]),
         ),
       ),
     ),
@@ -383,7 +345,10 @@ const DeferredComputationModuleTests = <
       test(
         "retrys the container on an exception",
         pipeLazy(
-          m.concat(m.generate(increment, returns(0), { count: 3 }), m.raise()),
+          ComputationM.concat(m)(
+            m.generate(increment, returns(0), { count: 3 }),
+            m.raise(),
+          ),
           m.retry(alwaysTrue),
           m.takeFirst<number>({ count: 6 }),
           m.toReadonlyArray(),
@@ -393,7 +358,10 @@ const DeferredComputationModuleTests = <
       test(
         "retrys with the default predicate",
         pipeLazy(
-          m.concat(m.generate(increment, returns(0), { count: 3 }), m.raise()),
+          ComputationM.concat(m)(
+            m.generate(increment, returns(0), { count: 3 }),
+            m.raise(),
+          ),
           m.retry(),
           m.takeFirst<number>({ count: 6 }),
           m.toReadonlyArray(),
@@ -411,7 +379,10 @@ const DeferredComputationModuleTests = <
       test(
         "retrys only twice",
         pipeLazy(
-          m.concat(m.generate(increment, returns(0), { count: 3 }), m.raise()),
+          ComputationM.concat(m)(
+            m.generate(increment, returns(0), { count: 3 }),
+            m.raise(),
+          ),
           m.retry((count, _) => count < 2),
           m.takeFirst<number>({ count: 10 }),
           m.toReadonlyArray(),
@@ -471,7 +442,7 @@ const DeferredComputationModuleTests = <
         pipeLazy(
           [0, 1],
           m.fromReadonlyArray(),
-          m.startWith(2, 3, 4),
+          ComputationM.startWith(m)(2, 3, 4),
           m.toReadonlyArray(),
           expectArrayEquals([2, 3, 4, 0, 1]),
         ),

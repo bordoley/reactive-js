@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputationFor`](../type-aliases/RunnableComputationFor.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\>\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputationFor`](../type-aliases/RunnableComputationFor.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\>\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputationFor`](../type-aliases/RunnableComputationFor.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\>\>.[`ComputationWithSideEffectsModule`](../../interfaces/ComputationWithSideEffectsModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputationFor`](../type-aliases/RunnableComputationFor.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\>, [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md), [`RunnableComputationFor`](../type-aliases/RunnableComputationFor.md)\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\>\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputationFor`](../type-aliases/RunnableComputationFor.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\>\>
+- [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputationFor`](../type-aliases/RunnableComputationFor.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\>\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputationFor`](../type-aliases/RunnableComputationFor.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\>\>.[`ComputationWithSideEffectsModule`](../../interfaces/ComputationWithSideEffectsModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputationFor`](../type-aliases/RunnableComputationFor.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\>, [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md), [`RunnableComputationFor`](../type-aliases/RunnableComputationFor.md)\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\>\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md), [`RunnableComputationFor`](../type-aliases/RunnableComputationFor.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\>\>
 
 ## Methods
 
@@ -86,38 +86,6 @@
 
 ***
 
-### concat()
-
-> **concat**\<`T`\>(`fst`, `snd`, ...`tail`): [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### fst
-
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>
-
-##### snd
-
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>
-
-##### tail
-
-...readonly [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>[]
-
-#### Returns
-
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>
-
-#### Inherited from
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concat`](../../interfaces/DeferredComputationModule.md#concat)
-
-***
-
 ### concatAll()
 
 > **concatAll**\<`T`\>(): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, `RunnableComputation`, [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>, `T`\>
@@ -148,7 +116,7 @@
 
 ##### computations
 
-readonly \[[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>, [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>\]
+readonly [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>[]
 
 #### Returns
 
@@ -157,60 +125,6 @@ readonly \[[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[
 #### Inherited from
 
 [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatMany`](../../interfaces/DeferredComputationModule.md#concatmany)
-
-***
-
-### concatMap()
-
-> **concatMap**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, `RunnableComputation`, `TA`, `TB`\>
-
-#### Type Parameters
-
-• **TA**
-
-• **TB**
-
-#### Parameters
-
-##### selector
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`RunnableLike`](../../interfaces/RunnableLike.md)\<`TB`\> & `Pick`\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>\>
-
-#### Returns
-
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, `RunnableComputation`, `TA`, `TB`\>
-
-#### Inherited from
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatMap`](../../interfaces/DeferredComputationModule.md#concatmap)
-
-***
-
-### concatWith()
-
-> **concatWith**\<`T`\>(`snd`, ...`tail`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, `RunnableComputation`, `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### snd
-
-[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>
-
-##### tail
-
-...readonly [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../variables/ComputationLike_isInteractive.md)\>[]
-
-#### Returns
-
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, `RunnableComputation`, `T`, `T`\>
-
-#### Inherited from
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatWith`](../../interfaces/DeferredComputationModule.md#concatwith)
 
 ***
 
@@ -285,34 +199,6 @@ readonly \[[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[
 #### Inherited from
 
 [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`empty`](../../interfaces/DeferredComputationModule.md#empty)
-
-***
-
-### endWith()
-
-> **endWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, `RunnableComputation`, `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### value
-
-`T`
-
-##### values
-
-...readonly `T`[]
-
-#### Returns
-
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, `RunnableComputation`, `T`, `T`\>
-
-#### Inherited from
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`endWith`](../../interfaces/DeferredComputationModule.md#endwith)
 
 ***
 
@@ -442,24 +328,6 @@ readonly \[[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[
 
 ***
 
-### ignoreElements()
-
-> **ignoreElements**\<`T`\>(): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, `RunnableComputation`, `any`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, `RunnableComputation`, `any`, `T`\>
-
-#### Inherited from
-
-[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`ignoreElements`](../../interfaces/DeferredReactiveComputationModule.md#ignoreelements)
-
-***
-
 ### keep()
 
 > **keep**\<`T`\>(`predicate`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, `RunnableComputation`, `T`, `T`\>
@@ -480,7 +348,7 @@ readonly \[[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[
 
 #### Inherited from
 
-[`ComputationModule`](../../interfaces/ComputationModule.md).[`keep`](../../interfaces/ComputationModule.md#keep)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`keep`](../../interfaces/DeferredComputationModule.md#keep)
 
 ***
 
@@ -524,7 +392,7 @@ readonly \[[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[
 
 #### Inherited from
 
-[`ComputationModule`](../../interfaces/ComputationModule.md).[`map`](../../interfaces/ComputationModule.md#map)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`map`](../../interfaces/DeferredComputationModule.md#map)
 
 ***
 
@@ -743,34 +611,6 @@ readonly \[[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & `Pick`\<[
 #### Inherited from
 
 [`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`skipFirst`](../../interfaces/DeferredReactiveComputationModule.md#skipfirst)
-
-***
-
-### startWith()
-
-> **startWith**\<`T`\>(`value`, ...`values`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, `RunnableComputation`, `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### value
-
-`T`
-
-##### values
-
-...readonly `T`[]
-
-#### Returns
-
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>, `RunnableComputation`, `T`, `T`\>
-
-#### Inherited from
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`startWith`](../../interfaces/DeferredComputationModule.md#startwith)
 
 ***
 
