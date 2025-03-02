@@ -68,11 +68,8 @@ import {
   BatchedComputeMode as ObservableCompute_BatchedComputeMode,
   CombineLatestComputeMode as ObservableCompute_CombineLatestComputeMode,
 } from "./Observable/__private__/Observable.computeWithConfig.js";
-import Observable_concat from "./Observable/__private__/Observable.concat.js";
 import Observable_concatAll from "./Observable/__private__/Observable.concatAll.js";
 import Observable_concatMany from "./Observable/__private__/Observable.concatMany.js";
-import Observable_concatMap from "./Observable/__private__/Observable.concatMap.js";
-import Observable_concatWith from "./Observable/__private__/Observable.concatWith.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_currentTime from "./Observable/__private__/Observable.currentTime.js";
 import Observable_debug from "./Observable/__private__/Observable.debug.js";
@@ -548,37 +545,6 @@ export interface ObservableModule {
     },
   ): SynchronousObservableWithSideEffectsLike<T>;
 
-  concat<T>(
-    fst: PureSynchronousObservableLike<T>,
-    snd: PureSynchronousObservableLike<T>,
-    ...tail: readonly PureSynchronousObservableLike<T>[]
-  ): PureSynchronousObservableLike<T>;
-  concat<T>(
-    fst: PureDeferredObservableLike<T>,
-    snd: PureDeferredObservableLike<T>,
-    ...tail: readonly PureDeferredObservableLike<T>[]
-  ): PureDeferredObservableLike<T>;
-  concat<T>(
-    fst: SynchronousObservableLike<T>,
-    snd: SynchronousObservableLike<T>,
-    ...tail: readonly SynchronousObservableLike<T>[]
-  ): SynchronousObservableWithSideEffectsLike<T>;
-  concat<T>(
-    fst: DeferredObservableLike<T>,
-    snd: DeferredObservableLike<T>,
-    ...tail: readonly DeferredObservableLike<T>[]
-  ): DeferredObservableWithSideEffectsLike<T>;
-  concat<T>(
-    fst: MulticastObservableLike<T>,
-    snd: PureDeferredObservableLike<T>,
-    ...tail: readonly PureDeferredObservableLike[]
-  ): MulticastObservableLike<T>;
-  concat<T>(
-    fst: MulticastObservableLike<T>,
-    snd: DeferredObservableLike<T>,
-    ...tail: readonly DeferredObservableLike[]
-  ): DeferredObservableWithSideEffectsLike<T>;
-
   concatAll<T>(): DeferredReactiveObservableOperator<
     PureSynchronousObservableLike<T>,
     T
@@ -623,54 +589,6 @@ export interface ObservableModule {
       ...(readonly DeferredObservableLike<T>[]),
     ],
   ): DeferredObservableWithSideEffectsLike<T>;
-
-  concatMap<TA, TB>(
-    selector: Function1<TA, PureSynchronousObservableLike<TB>>,
-  ): DeferredReactiveObservableOperator<TA, TB>;
-  concatMap<TA, TB>(
-    selector: Function1<TA, PureSynchronousObservableLike<TB>>,
-    options: {
-      readonly innerType: typeof PureSynchronousComputationType;
-    },
-  ): DeferredReactiveObservableOperator<TA, TB>;
-  concatMap<TA, TB>(
-    selector: Function1<TA, SynchronousObservableLike<TB>>,
-    options: {
-      readonly innerType: typeof SynchronousComputationWithSideEffectsType;
-    },
-  ): ObservableOperatorWithSideEffects<TA, TB>;
-  concatMap<TA, TB>(
-    selector: Function1<TA, PureDeferredObservableLike<TB>>,
-    options: {
-      readonly innerType: typeof PureDeferredComputationType;
-    },
-  ): DeferringObservableOperator<TA, TB>;
-  concatMap<TA, TB>(
-    selector: Function1<TA, DeferredObservableLike<TB>>,
-    options: {
-      readonly innerType: typeof DeferredComputationWithSideEffectsType;
-    },
-  ): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
-
-  concatWith<T>(
-    snd: PureSynchronousObservableLike<T>,
-    ...tail: readonly PureSynchronousObservableLike<T>[]
-  ): DeferredReactiveObservableOperator<T, T>;
-  concatWith<T>(
-    snd: SynchronousObservableLike<T>,
-    ...tail: readonly SynchronousObservableLike<T>[]
-  ): ObservableOperatorWithSideEffects<T, T>;
-  concatWith<T>(
-    snd: PureDeferredObservableLike<T>,
-    ...tail: readonly PureDeferredObservableLike<T>[]
-  ): DeferringObservableOperator<T, T>;
-  concatWith<T>(
-    snd: DeferredObservableLike<T>,
-    ...tail: readonly DeferredObservableLike<T>[]
-  ): Function1<
-    DeferredObservableLike<T> | MulticastObservableLike<T>,
-    DeferredObservableWithSideEffectsLike<T>
-  >;
 
   create<T>(
     f: SideEffect1<ObserverLike<T>>,
@@ -764,7 +682,10 @@ export interface ObservableModule {
 
   flatMapAsync<TA, TB>(
     f: Function2<TA, AbortSignal, Promise<TB>>,
-  ): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
+  ): Function1<
+    DeferredObservableLike<TA>,
+    DeferredObservableWithSideEffectsLike<TB>
+  >;
 
   flatMapIterable<TA, TB>(
     selector: Function1<TA, Iterable<TB>>,
@@ -1570,11 +1491,8 @@ export const computeDeferred: Signature["computeDeferred"] =
   Observable_computeDeferred;
 export const computeSynchronousObservable: Signature["computeSynchronousObservable"] =
   Observable_computeSynchronousObservable;
-export const concat: Signature["concat"] = Observable_concat;
 export const concatAll: Signature["concatAll"] = Observable_concatAll;
 export const concatMany: Signature["concatMany"] = Observable_concatMany;
-export const concatMap: Signature["concatMap"] = Observable_concatMap;
-export const concatWith: Signature["concatWith"] = Observable_concatWith;
 export const create: Signature["create"] = Observable_create;
 export const currentTime: Signature["currentTime"] = Observable_currentTime;
 export const debug: Signature["debug"] = Observable_debug;

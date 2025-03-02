@@ -28,7 +28,7 @@
 
 [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
 
-> **ConcatMapOperator**\<`TA`, `TB`\>(`selector`, `options`?): [`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, [`ComputationOf`](../../type-aliases/ComputationOf.md)\<`TComputation`, `TA`\>, `TB`\>
+> **ConcatMapOperator**\<`TA`, `TB`\>(`selector`, `options`?): [`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -50,4 +50,4 @@
 
 ## Returns
 
-[`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, [`ComputationOf`](../../type-aliases/ComputationOf.md)\<`TComputation`, `TA`\>, `TB`\>
+[`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `TA`, `TB`\>

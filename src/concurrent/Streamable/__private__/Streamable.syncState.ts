@@ -1,3 +1,4 @@
+import * as Computation from "../../../computations/Computation.js";
 import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
 import {
   DeferredObservableLike,
@@ -13,6 +14,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DeferredObservable from "../../DeferredObservable.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 
@@ -34,7 +36,10 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
         Observable.forkMerge(
           compose(
             Observable.takeFirst(),
-            Observable.concatMap(onInit, {
+            Computation.concatMap({
+              concatAll: DeferredObservable.concatAll,
+              map: DeferredObservable.map,
+            })(onInit, {
               innerType: DeferredComputationWithSideEffectsType,
             }),
           ),
@@ -42,10 +47,15 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
             throttleDuration > 0
               ? Observable.throttle(throttleDuration)
               : identity<ObservableLike<T>>,
-            Observable.pairwise(),
-            Observable.concatMap<Tuple2<T, T>, Updater<T>>(
+            Observable.pairwise<T>(),
+            Computation.concatMap({
+              concatAll: DeferredObservable.concatAll,
+              map: DeferredObservable.map,
+            })<Tuple2<T, T>, Updater<T>>(
               ([oldValue, newValue]) => onChange(oldValue, newValue),
-              { innerType: DeferredComputationWithSideEffectsType },
+              {
+                innerType: DeferredComputationWithSideEffectsType,
+              },
             ),
           ),
         ),

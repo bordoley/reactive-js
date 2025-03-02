@@ -13,7 +13,7 @@ export interface ConcatMapOperator<TComputation extends Computation> {
     <TA, TB>(selector: Function1<TA, PureComputationOf<TComputation, TB>>): ComputationOperator<TComputation, TA, TB>;
     <TA, TB>(selector: Function1<TA, ComputationOf<TComputation, TB>>, options?: {
         readonly innerType: typeof ComputationWithSideEffectsType;
-    }): ComputationWithSideEffectsOperator<TComputation, ComputationOf<TComputation, TA>, TB>;
+    }): ComputationWithSideEffectsOperator<TComputation, TA, TB>;
 }
 export interface ConcatMapIterableOperator<TComputation extends Computation> {
     <TA, TB>(selector: Function1<TA, PureIterableLike<TB>>): ComputationOperator<TComputation, TA, TB>;

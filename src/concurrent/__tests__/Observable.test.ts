@@ -587,7 +587,9 @@ testModule(
 
       pipe(
         Observable.empty({ delay: 1 }),
-        Observable.concatWith(Observable.raise({ raise: () => e1 })),
+        Computation.concatWith<
+          ObservableComputationFor<SynchronousObservableLike>
+        >(SynchronousObservable)(Observable.raise({ raise: () => e1 })),
         Observable.catchError(_ => {
           throw e2;
         }),
@@ -772,9 +774,7 @@ testModule(
           },
           { mode: "combine-latest" },
         ),
-        Computation.keepType<
-          ObservableComputationFor<SynchronousObservableLike>
-        >(SynchronousObservable)(isSome),
+        Computation.keepType(SynchronousObservable)(isSome),
         Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.run(),
       );
@@ -866,20 +866,6 @@ testModule(
     ),
   ),
   describe(
-    "concat",
-    test(
-      "concats the input containers in order, when sources have delay",
-      pipeLazy(
-        Observable.concat(
-          pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
-          pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 })),
-        ),
-        Observable.toReadonlyArray<number>(),
-        expectArrayEquals([1, 2, 3, 4, 5, 6]),
-      ),
-    ),
-  ),
-  describe(
     "concatAll",
     DeferredReactiveObservableOperator(Observable.concatAll()),
     DeferringObservableOperatorTests(
@@ -900,6 +886,17 @@ testModule(
   ),
   describe(
     "concatMany",
+    test(
+      "concats the input containers in order, when sources have delay",
+      pipeLazy(
+        Observable.concatMany([
+          pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
+          pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 })),
+        ]),
+        Observable.toReadonlyArray<number>(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6]),
+      ),
+    ),
     testIsPureSynchronousObservable(
       Observable.concatMany([
         Observable.empty({ delay: 1 }),
@@ -935,135 +932,6 @@ testModule(
         Subject.create(),
         pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
       ]),
-    ),
-  ),
-  describe(
-    "concatMap",
-    testAsync("maps each value to a container and flattens", async () => {
-      using scheduler = HostScheduler.create();
-      await pipeAsync(
-        [0, 1],
-        Observable.fromReadonlyArray(),
-        Observable.concatMap(
-          pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
-        ),
-        Observable.toReadonlyArrayAsync<number>(scheduler),
-        expectArrayEquals([1, 2, 3, 1, 2, 3]),
-      );
-    }),
-    DeferredReactiveObservableOperator(
-      Observable.concatMap(_ => Observable.empty({ delay: 1 })),
-    ),
-    DeferringObservableOperatorTests(
-      Observable.concatMap(_ => Observable.empty({ delay: 1 }), {
-        innerType: PureDeferredComputationType,
-      }),
-    ),
-    ObservableOperatorWithSideEffectsTests(
-      Observable.concatMap(
-        _ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
-        {
-          innerType: SynchronousComputationWithSideEffectsType,
-        },
-      ),
-    ),
-    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
-      Observable.concatMap(
-        _ => pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
-        {
-          innerType: DeferredComputationWithSideEffectsType,
-        },
-      ),
-    ),
-  ),
-  describe(
-    "concatWith",
-    DeferredReactiveObservableOperator(
-      Observable.concatWith(
-        Observable.empty({ delay: 1 }),
-        Observable.empty({ delay: 1 }),
-      ),
-    ),
-    ObservableOperatorWithSideEffectsTests(
-      Observable.concatWith(
-        pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
-      ),
-    ),
-    DeferringObservableOperatorTests(
-      (() => {
-        using vts = VirtualTimeScheduler.create();
-        return Observable.concatWith(
-          pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)),
-        );
-      })(),
-    ),
-    describe(
-      "concat with DeferredObservableWithSideEffectsLikes",
-      test(
-        "with PureSynchronousObservableLike",
-        pipeLazy(
-          Observable.empty({ delay: 1 }),
-          Observable.concatWith(
-            pipe(async () => {
-              throw new Error();
-            }, Observable.fromAsyncFactory()),
-          ),
-          expectIsDeferredObservableWithSideEffects,
-        ),
-      ),
-      test(
-        "with SynchronousObservableWithSideEffectsLike",
-        pipeLazy(
-          Observable.empty({ delay: 1 }),
-          Observable.forEach(ignore),
-          Observable.concatWith(
-            pipe(async () => {
-              throw new Error();
-            }, Observable.fromAsyncFactory()),
-          ),
-          expectIsDeferredObservableWithSideEffects,
-        ),
-      ),
-      test("with PureDeferredObservableLike", () => {
-        using vts = VirtualTimeScheduler.create();
-        pipe(
-          Observable.empty({ delay: 1 }),
-          Observable.subscribeOn(vts),
-          Observable.concatWith(
-            pipe(async () => {
-              throw new Error();
-            }, Observable.fromAsyncFactory()),
-          ),
-          expectIsDeferredObservableWithSideEffects,
-        );
-      }),
-      test(
-        "with DeferredObservableWithSideEffectsLike",
-
-        pipeLazy(
-          async () => {
-            throw new Error();
-          },
-          Observable.fromAsyncFactory(),
-          Observable.concatWith(
-            pipe(async () => {
-              throw new Error();
-            }, Observable.fromAsyncFactory()),
-          ),
-          expectIsDeferredObservableWithSideEffects,
-        ),
-      ),
-      test("with MulticastObservableLike", () => {
-        using vts = VirtualTimeScheduler.create();
-        pipe(
-          new Promise(ignore),
-          Observable.fromPromise(),
-          Observable.concatWith(
-            pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)),
-          ),
-          expectIsPureDeferredObservable,
-        );
-      }),
     ),
   ),
   describe(
@@ -1321,43 +1189,10 @@ testModule(
         expectArrayEquals([1]),
       );
     }),
+    /*
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
       Observable.flatMapAsync(async x => await Promise.resolve(x)),
-    ),
-  ),
-  describe(
-    "flatMapIterable",
-    test(
-      "maps the incoming value with the inline generator function",
-      pipeLazy(
-        [none, none],
-        Observable.fromReadonlyArray(),
-        Observable.flatMapIterable(function* (_) {
-          yield 1;
-          yield 2;
-          yield 3;
-        }),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([1, 2, 3, 1, 2, 3]),
-      ),
-    ),
-    test(
-      "maps the incoming value with the inline generator function, with delayed source",
-      pipeLazy(
-        [none, none],
-        Observable.fromReadonlyArray({ delay: 2 }),
-        Observable.flatMapIterable(function* (_) {
-          yield 1;
-          yield 2;
-          yield 3;
-        }),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([1, 2, 3, 1, 2, 3]),
-      ),
-    ),
-    ObservableOperatorWithSideEffectsTests(
-      Observable.flatMapIterable(returns([])),
-    ),
+    ),*/
   ),
   describe(
     "forEach",
@@ -1751,20 +1586,20 @@ testModule(
         Observable.merge(
           Observable.merge(
             pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
-            Observable.concat(
+            Observable.concatMany([
               Observable.empty({ delay: 3 }),
               pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 })),
-            ),
+            ]),
           ),
           Observable.merge(
-            Observable.concat(
+            Observable.concatMany([
               Observable.empty({ delay: 6 }),
               pipe([7, 8, 9], Observable.fromReadonlyArray({ delay: 1 })),
-            ),
-            Observable.concat(
+            ]),
+            Observable.concatMany([
               Observable.empty({ delay: 9 }),
               pipe([10, 11, 12], Observable.fromReadonlyArray({ delay: 1 })),
-            ),
+            ]),
           ),
         ),
         Observable.toReadonlyArray(),

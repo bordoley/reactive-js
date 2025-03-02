@@ -18,6 +18,7 @@ import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import { ReadonlyObjectMapCollection } from "../collections/ReadonlyObjectMap.js";
 import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
 import { ReadonlyObjectMapLike, keySet } from "../collections.js";
+import * as Computation from "../computations/Computation.js";
 import { DeferredComputationWithSideEffectsType } from "../computations.js";
 import {
   CacheLike,
@@ -57,6 +58,7 @@ import {
   QueueLike_dequeue,
   QueueableLike_enqueue,
 } from "../utils.js";
+import * as DeferredObservable from "./DeferredObservable.js";
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
 import * as SingleUseObservable from "./__internal__/SingleUseObservable.js";
@@ -198,7 +200,10 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
             ),
         ),
         isSome(persistentStore)
-          ? Observable.concatMap(
+          ? Computation.concatMap({
+              concatAll: DeferredObservable.concatAll,
+              map: DeferredObservable.map,
+            })(
               next => {
                 const [updaters, values] = next;
                 const keys = pipe(
@@ -276,7 +281,10 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           }),
         ),
         isSome(persistentStore)
-          ? Observable.concatMap(bindMethod(persistentStore, "store"), {
+          ? Computation.concatMap({
+              concatAll: DeferredObservable.concatAll,
+              map: DeferredObservable.map,
+            })(bindMethod(persistentStore, "store"), {
               innerType: DeferredComputationWithSideEffectsType,
             })
           : Observable.ignoreElements(),

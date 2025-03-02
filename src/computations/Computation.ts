@@ -78,11 +78,7 @@ export interface ConcatMapOperator<TComputation extends Computation> {
     options?: {
       readonly innerType: typeof ComputationWithSideEffectsType;
     },
-  ): ComputationWithSideEffectsOperator<
-    TComputation,
-    ComputationOf<TComputation, TA>,
-    TB
-  >;
+  ): ComputationWithSideEffectsOperator<TComputation, TA, TB>;
 }
 
 export interface ConcatMapIterableOperator<TComputation extends Computation> {

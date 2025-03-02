@@ -7,8 +7,9 @@ import {
 import { ObservableLike } from "../../../concurrent.js";
 import { Function1, compose, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
-import Observable_concatMap from "./Observable.concatMap.js";
+import Observable_concatAll from "./Observable.concatAll.js";
 import Observable_fromIterable from "./Observable.fromIterable.js";
+import Observable_map from "./Observable.map.js";
 
 const Observable_flatMapIterable: Observable.Signature["flatMapIterable"] = (<
   TA,
@@ -21,7 +22,8 @@ const Observable_flatMapIterable: Observable.Signature["flatMapIterable"] = (<
   return (observable: ObservableLike<TA>) =>
     pipe(
       observable,
-      Observable_concatMap(mapper, {
+      Observable_map(mapper),
+      Observable_concatAll({
         innerType: {
           [ComputationLike_isPure]: false,
           [ComputationLike_isDeferred]: observable[ComputationLike_isDeferred],
