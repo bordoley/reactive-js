@@ -12,6 +12,7 @@
 
 ## Extended by
 
+- [`MulticastObservableModule`](../../concurrent/MulticastObservable/interfaces/MulticastObservableModule.md)
 - [`EventSourceModule`](../../events/EventSource/interfaces/EventSourceModule.md)
 
 ## Type Parameters

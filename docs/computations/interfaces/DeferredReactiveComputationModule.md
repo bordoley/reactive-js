@@ -9,6 +9,8 @@
 ## Extended by
 
 - [`RunnableModule`](../Runnable/interfaces/RunnableModule.md)
+- [`DeferredObservableModule`](../../concurrent/DeferredObservable/interfaces/DeferredObservableModule.md)
+- [`SynchronousObservableModule`](../../concurrent/SynchronousObservable/interfaces/SynchronousObservableModule.md)
 
 ## Type Parameters
 

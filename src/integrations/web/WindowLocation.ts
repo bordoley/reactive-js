@@ -12,8 +12,8 @@ import {
   ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  ComputationModule,
 } from "../../computations.js";
+import * as MulticastObservable from "../../concurrent/MulticastObservable.js";
 import * as Observable from "../../concurrent/Observable.js";
 import { ObservableComputationFor } from "../../concurrent/Observable.js";
 import * as Streamable from "../../concurrent/Streamable.js";
@@ -242,10 +242,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
         pipe(
           this[WindowLocation_delegate],
           Computation.pick<ObservableComputationFor<MulticastObservableLike>>({
-            // FIXME: A little hacky to need to cast
-            map: Observable.map as unknown as ComputationModule<
-              ObservableComputationFor<MulticastObservableLike>
-            >["map"],
+            map: MulticastObservable.map,
           })<TState, "uri">("uri"),
           invoke(ObservableLike_observe, observer),
         );

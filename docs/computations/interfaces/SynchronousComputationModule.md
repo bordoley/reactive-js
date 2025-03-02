@@ -10,6 +10,7 @@
 
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
 - [`RunnableModule`](../Runnable/interfaces/RunnableModule.md)
+- [`SynchronousObservableModule`](../../concurrent/SynchronousObservable/interfaces/SynchronousObservableModule.md)
 
 ## Type Parameters
 

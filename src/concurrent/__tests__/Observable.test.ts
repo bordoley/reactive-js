@@ -107,6 +107,7 @@ import * as Observable from "../Observable.js";
 import { ObservableComputationFor, ObservableOperator } from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
+import * as SynchronousObservable from "../SynchronousObservable.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
 const expectIsPureSynchronousObservable = compose(
@@ -789,15 +790,7 @@ testModule(
         ),
         Computation.keepType<
           ObservableComputationFor<SynchronousObservableLike>
-        >(
-          // FIXME: A bit hacky to need to cast
-          Observable as Pick<
-            ComputationModule<
-              ObservableComputationFor<SynchronousObservableLike>
-            >,
-            "keep"
-          >,
-        )(isSome),
+        >(SynchronousObservable)(isSome),
         Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.run(),
       );

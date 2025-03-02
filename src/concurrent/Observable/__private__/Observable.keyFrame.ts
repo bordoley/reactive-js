@@ -2,7 +2,10 @@ import { MAX_VALUE } from "../../../__internal__/constants.js";
 import { min } from "../../../__internal__/math.js";
 import * as Computation from "../../../computations/Computation.js";
 import { ComputationModule } from "../../../computations.js";
-import { PureSynchronousObservableLike } from "../../../concurrent.js";
+import {
+  PureSynchronousObservableLike,
+  SynchronousObservableLike,
+} from "../../../concurrent.js";
 import {
   Function1,
   Tuple2,
@@ -38,7 +41,7 @@ const Observable_keyFrame = (
       },
       returns(tuple(MAX_VALUE, 0)),
     ),
-    Computation.pick<ObservableComputationFor<PureSynchronousObservableLike>>({
+    Computation.pick<ObservableComputationFor<SynchronousObservableLike>>({
       // FIXME: A little hacky to need to cast
       map: Observable_map as unknown as ComputationModule<
         ObservableComputationFor<PureSynchronousObservableLike>

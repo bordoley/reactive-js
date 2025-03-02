@@ -76,6 +76,7 @@ import { __await, __bindMethod, __constant, __do, __memo, __observe, __state, __
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
+import * as SynchronousObservable from "../SynchronousObservable.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 const expectIsPureSynchronousObservable = compose((Computation.isPureSynchronous), expectTrue);
 const expectIsSynchronousObservableWithSideEffects = compose((Computation.isSynchronousWithSideEffects), expectTrue);
@@ -344,9 +345,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         const v = __await(oneTwoThreeDelayed);
         const next = __memo(createOneTwoThree, v);
         return __await(next);
-    }, { mode: "combine-latest" }), Computation.keepType(
-    // FIXME: A bit hacky to need to cast
-    Observable)(isSome), Observable.forEach(bindMethod(result, Array_push)), Observable.run());
+    }, { mode: "combine-latest" }), Computation.keepType(SynchronousObservable)(isSome), Observable.forEach(bindMethod(result, Array_push)), Observable.run());
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }), test("when compute function throws", () => {
     const env_14 = { stack: [], error: void 0, hasError: false };

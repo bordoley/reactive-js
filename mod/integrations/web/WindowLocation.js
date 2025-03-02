@@ -5,6 +5,7 @@ import { Array_length, String } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import * as Computation from "../../computations/Computation.js";
 import { ComputationLike_isDeferred, ComputationLike_isInteractive, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../computations.js";
+import * as MulticastObservable from "../../concurrent/MulticastObservable.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import { ObservableLike_observe, StreamableLike_stream, } from "../../concurrent.js";
@@ -90,8 +91,7 @@ export const subscribe = /*@__PURE__*/ (() => {
         },
         [ObservableLike_observe](observer) {
             pipe(this[WindowLocation_delegate], Computation.pick({
-                // FIXME: A little hacky to need to cast
-                map: Observable.map,
+                map: MulticastObservable.map,
             })("uri"), invoke(ObservableLike_observe, observer));
         },
     });
