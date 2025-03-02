@@ -1,4 +1,4 @@
-import { ComputationWithSideEffectsModule, Computation_T, Computation_ofT, Computation_pureOfT, Computation_withSideEffectsOfT, DeferredComputationModule, GenericComputation, InteractiveComputationModule, IterableLike, IterableWithSideEffectsLike, PureIterableLike, SynchronousComputationModule } from "../computations.js";
+import { Computation_T, Computation_ofT, Computation_pureOfT, Computation_withSideEffectsOfT, DeferredComputationModule, GenericComputation, InteractiveComputationModule, IterableLike, IterableWithSideEffectsLike, PureIterableLike, SynchronousComputationModule } from "../computations.js";
 /**
  * @noInheritDoc
  */
@@ -7,7 +7,7 @@ export interface IterableComputation extends GenericComputation<IterableLike, Pu
     readonly [Computation_pureOfT]?: PureIterableLike<this[typeof Computation_T]>;
     readonly [Computation_withSideEffectsOfT]?: IterableWithSideEffectsLike<this[typeof Computation_T]>;
 }
-export interface IterableModule extends DeferredComputationModule<IterableComputation>, ComputationWithSideEffectsModule<IterableComputation>, SynchronousComputationModule<IterableComputation>, InteractiveComputationModule<IterableComputation> {
+export interface IterableModule extends DeferredComputationModule<IterableComputation>, SynchronousComputationModule<IterableComputation>, InteractiveComputationModule<IterableComputation> {
 }
 export type Signature = IterableModule;
 export declare const catchError: Signature["catchError"];

@@ -20,13 +20,11 @@ import {
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as Computation from "../../computations/Computation.js";
 import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/ComputationModuleTests.js";
-import ComputationWithSideEffectsModuleTests from "../../computations/__tests__/fixtures/ComputationWithSideEffectsModuleTests.js";
 import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
 import DeferredReactiveComputationModuleTests from "../../computations/__tests__/fixtures/DeferredReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
 import {
   ComputationModule,
-  ComputationWithSideEffectsModule,
   DeferredComputationModule,
   DeferredComputationWithSideEffectsType,
   DeferredReactiveComputationModule,
@@ -504,20 +502,6 @@ testModule(
       ObservableComputationFor<SynchronousObservableLike>
     > &
       DeferredComputationModule<
-        ObservableComputationFor<SynchronousObservableLike>
-      > &
-      SynchronousComputationModule<
-        ObservableComputationFor<SynchronousObservableLike>
-      > &
-      ComputationWithSideEffectsModule<
-        ObservableComputationFor<SynchronousObservableLike>
-      >,
-  ),
-  ComputationWithSideEffectsModuleTests(
-    Observable as DeferredComputationModule<
-      ObservableComputationFor<SynchronousObservableLike>
-    > &
-      ComputationWithSideEffectsModule<
         ObservableComputationFor<SynchronousObservableLike>
       > &
       SynchronousComputationModule<

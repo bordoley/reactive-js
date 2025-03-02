@@ -191,14 +191,6 @@ export interface ComputationModule<TComputation extends Computation> {
   ): ComputationOperator<TComputation, TA, TB>;
 }
 
-export interface ComputationWithSideEffectsModule<
-  TComputation extends Computation,
-> {
-  forEach<T>(
-    sideEffect: SideEffect1<T>,
-  ): ComputationWithSideEffectsOperator<TComputation, T, T>;
-}
-
 export interface DeferredComputationModule<TComputation extends Computation>
   extends ComputationModule<TComputation> {
   catchError<T>(
@@ -235,6 +227,10 @@ export interface DeferredComputationModule<TComputation extends Computation>
   ): ComputationWithSideEffectsOf<TComputation, T>;
 
   empty<T>(): ComputationOf<TComputation, T>;
+
+  forEach<T>(
+    sideEffect: SideEffect1<T>,
+  ): ComputationWithSideEffectsOperator<TComputation, T, T>;
 
   fromIterable<T>(): <TIterable extends IterableLike<T> = IterableLike<T>>(
     iterable: TIterable,

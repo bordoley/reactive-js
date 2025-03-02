@@ -1,5 +1,4 @@
 import {
-  ComputationWithSideEffectsModule,
   DeferredComputationModule,
   DeferredReactiveComputationModule,
   SynchronousComputationModule,
@@ -13,9 +12,6 @@ export interface SynchronousObservableModule
       ObservableComputationFor<SynchronousObservableLike>
     >,
     DeferredReactiveComputationModule<
-      ObservableComputationFor<SynchronousObservableLike>
-    >,
-    ComputationWithSideEffectsModule<
       ObservableComputationFor<SynchronousObservableLike>
     >,
     SynchronousComputationModule<

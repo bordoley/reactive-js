@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`DeferredComputationModule`](../../../computations/interfaces/DeferredComputationModule.md)\<[`ObservableComputationFor`](../../Observable/type-aliases/ObservableComputationFor.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\>\>.[`DeferredReactiveComputationModule`](../../../computations/interfaces/DeferredReactiveComputationModule.md)\<[`ObservableComputationFor`](../../Observable/type-aliases/ObservableComputationFor.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\>\>.[`ComputationWithSideEffectsModule`](../../../computations/interfaces/ComputationWithSideEffectsModule.md)\<[`ObservableComputationFor`](../../Observable/type-aliases/ObservableComputationFor.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\>\>.[`SynchronousComputationModule`](../../../computations/interfaces/SynchronousComputationModule.md)\<[`ObservableComputationFor`](../../Observable/type-aliases/ObservableComputationFor.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\>\>
+- [`DeferredComputationModule`](../../../computations/interfaces/DeferredComputationModule.md)\<[`ObservableComputationFor`](../../Observable/type-aliases/ObservableComputationFor.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\>\>.[`DeferredReactiveComputationModule`](../../../computations/interfaces/DeferredReactiveComputationModule.md)\<[`ObservableComputationFor`](../../Observable/type-aliases/ObservableComputationFor.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\>\>.[`SynchronousComputationModule`](../../../computations/interfaces/SynchronousComputationModule.md)\<[`ObservableComputationFor`](../../Observable/type-aliases/ObservableComputationFor.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\>\>
 
 ## Methods
 
@@ -304,7 +304,7 @@ readonly [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLik
 
 #### Inherited from
 
-[`ComputationWithSideEffectsModule`](../../../computations/interfaces/ComputationWithSideEffectsModule.md).[`forEach`](../../../computations/interfaces/ComputationWithSideEffectsModule.md#foreach)
+[`DeferredComputationModule`](../../../computations/interfaces/DeferredComputationModule.md).[`forEach`](../../../computations/interfaces/DeferredComputationModule.md#foreach)
 
 ***
 

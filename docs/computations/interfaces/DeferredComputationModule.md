@@ -181,6 +181,26 @@ readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T
 
 ***
 
+### forEach()
+
+> **forEach**\<`T`\>(`sideEffect`): [`ComputationWithSideEffectsOperator`](../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### sideEffect
+
+[`SideEffect1`](../../functions/type-aliases/SideEffect1.md)\<`T`\>
+
+#### Returns
+
+[`ComputationWithSideEffectsOperator`](../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
+
+***
+
 ### fromIterable()
 
 > **fromIterable**\<`T`\>(): \<`TIterable`\>(`iterable`) => `TIterable` *extends* [`PureIterableLike`](PureIterableLike.md)\<`unknown`\> ? [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\> : [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>

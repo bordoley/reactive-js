@@ -57,7 +57,6 @@ import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, e
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as Computation from "../../computations/Computation.js";
 import PureStatelesssComputationModuleTests from "../../computations/__tests__/fixtures/ComputationModuleTests.js";
-import ComputationWithSideEffectsModuleTests from "../../computations/__tests__/fixtures/ComputationWithSideEffectsModuleTests.js";
 import DeferredComputationModuleTests from "../../computations/__tests__/fixtures/DeferredComputationModuleTests.js";
 import DeferredReactiveComputationModuleTests from "../../computations/__tests__/fixtures/DeferredReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
@@ -186,7 +185,7 @@ const AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests = (op) => desc
 }, Observable.fromAsyncFactory(), op, expectIsDeferredObservableWithSideEffects)), test("with MulticastObservableLike", pipeLazy(new Promise(ignore), Observable.fromPromise(), op, expectIsDeferredObservableWithSideEffects)));
 testModule("Observable", describe("effects", test("calling an effect from outside a computation expression throws", () => {
     expectToThrow(() => __constant(0));
-})), DeferredComputationModuleTests(Observable), PureStatelesssComputationModuleTests(Observable), DeferredReactiveComputationModuleTests(Observable), ComputationWithSideEffectsModuleTests(Observable), SynchronousComputationModuleTests(Observable), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", async () => {
+})), DeferredComputationModuleTests(Observable), PureStatelesssComputationModuleTests(Observable), DeferredReactiveComputationModuleTests(Observable), SynchronousComputationModuleTests(Observable), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", async () => {
     const env_7 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_7, HostScheduler.create(), false);

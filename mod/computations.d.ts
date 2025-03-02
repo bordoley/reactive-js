@@ -93,9 +93,6 @@ export interface ComputationModule<TComputation extends Computation> {
     keep<T>(predicate: Predicate<T>): ComputationOperator<TComputation, T, T>;
     map<TA, TB>(selector: Function1<TA, TB>): ComputationOperator<TComputation, TA, TB>;
 }
-export interface ComputationWithSideEffectsModule<TComputation extends Computation> {
-    forEach<T>(sideEffect: SideEffect1<T>): ComputationWithSideEffectsOperator<TComputation, T, T>;
-}
 export interface DeferredComputationModule<TComputation extends Computation> extends ComputationModule<TComputation> {
     catchError<T>(onError: SideEffect1<Error>): ComputationOperator<TComputation, T, T>;
     catchError<T>(onError: Function1<Error, PureComputationOf<TComputation, T>>): ComputationOperator<TComputation, T, T>;
@@ -109,6 +106,7 @@ export interface DeferredComputationModule<TComputation extends Computation> ext
     concatMany<T>(computations: readonly PureComputationOf<TComputation, T>[]): PureComputationOf<TComputation, T>;
     concatMany<T>(computations: readonly ComputationOf<TComputation, T>[]): ComputationWithSideEffectsOf<TComputation, T>;
     empty<T>(): ComputationOf<TComputation, T>;
+    forEach<T>(sideEffect: SideEffect1<T>): ComputationWithSideEffectsOperator<TComputation, T, T>;
     fromIterable<T>(): <TIterable extends IterableLike<T> = IterableLike<T>>(iterable: TIterable) => TIterable extends PureIterableLike ? PureComputationOf<TComputation, T> : ComputationWithSideEffectsOf<TComputation, T>;
     fromReadonlyArray<T>(options?: {
         readonly count?: number;

@@ -11,7 +11,6 @@
 - [ComputationLike](interfaces/ComputationLike.md)
 - [ComputationModule](interfaces/ComputationModule.md)
 - [ComputationWithSideEffectsLike](interfaces/ComputationWithSideEffectsLike.md)
-- [ComputationWithSideEffectsModule](interfaces/ComputationWithSideEffectsModule.md)
 - [ConcurrentReactiveComputationModule](interfaces/ConcurrentReactiveComputationModule.md)
 - [DeferredComputationLike](interfaces/DeferredComputationLike.md)
 - [DeferredComputationModule](interfaces/DeferredComputationModule.md)

@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`DeferredComputationModule`](../../../computations/interfaces/DeferredComputationModule.md)\<[`ObservableComputationFor`](../../Observable/type-aliases/ObservableComputationFor.md)\<[`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\>\>.[`DeferredReactiveComputationModule`](../../../computations/interfaces/DeferredReactiveComputationModule.md)\<[`ObservableComputationFor`](../../Observable/type-aliases/ObservableComputationFor.md)\<[`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\>\>.[`ComputationWithSideEffectsModule`](../../../computations/interfaces/ComputationWithSideEffectsModule.md)\<[`ObservableComputationFor`](../../Observable/type-aliases/ObservableComputationFor.md)\<[`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\>\>
+- [`DeferredComputationModule`](../../../computations/interfaces/DeferredComputationModule.md)\<[`ObservableComputationFor`](../../Observable/type-aliases/ObservableComputationFor.md)\<[`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\>\>.[`DeferredReactiveComputationModule`](../../../computations/interfaces/DeferredReactiveComputationModule.md)\<[`ObservableComputationFor`](../../Observable/type-aliases/ObservableComputationFor.md)\<[`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\>\>
 
 ## Methods
 
@@ -304,7 +304,7 @@ readonly [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\
 
 #### Inherited from
 
-[`ComputationWithSideEffectsModule`](../../../computations/interfaces/ComputationWithSideEffectsModule.md).[`forEach`](../../../computations/interfaces/ComputationWithSideEffectsModule.md#foreach)
+[`DeferredComputationModule`](../../../computations/interfaces/DeferredComputationModule.md).[`forEach`](../../../computations/interfaces/DeferredComputationModule.md#foreach)
 
 ***
 

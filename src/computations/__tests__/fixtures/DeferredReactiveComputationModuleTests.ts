@@ -7,7 +7,6 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   Computation,
-  ComputationWithSideEffectsModule,
   DeferredComputationModule,
   DeferredReactiveComputationModule,
   SynchronousComputationModule,
@@ -26,8 +25,7 @@ const DeferredReactiveComputationModuleTests = <
 >(
   m: DeferredReactiveComputationModule<TComputation> &
     DeferredComputationModule<TComputation> &
-    SynchronousComputationModule<TComputation> &
-    ComputationWithSideEffectsModule<TComputation>,
+    SynchronousComputationModule<TComputation>,
 ) =>
   describe(
     "DeferredReactiveComputationModule",

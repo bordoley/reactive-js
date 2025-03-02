@@ -1,6 +1,5 @@
 import {
   Computation,
-  ComputationWithSideEffectsModule,
   Computation_T,
   Computation_ofT,
   Computation_pureOfT,
@@ -55,7 +54,6 @@ export interface RunnableComputation extends Computation {
 export interface RunnableModule
   extends DeferredComputationModule<RunnableComputation>,
     DeferredReactiveComputationModule<RunnableComputation>,
-    ComputationWithSideEffectsModule<RunnableComputation>,
     SynchronousComputationModule<RunnableComputation> {}
 
 export type Signature = RunnableModule;

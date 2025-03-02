@@ -1,7 +1,7 @@
-import { ComputationWithSideEffectsModule, DeferredComputationModule, DeferredReactiveComputationModule } from "../computations.js";
+import { DeferredComputationModule, DeferredReactiveComputationModule } from "../computations.js";
 import { DeferredObservableLike } from "../concurrent.js";
 import { ObservableComputationFor } from "./Observable.js";
-export interface DeferredObservableModule extends DeferredComputationModule<ObservableComputationFor<DeferredObservableLike>>, DeferredReactiveComputationModule<ObservableComputationFor<DeferredObservableLike>>, ComputationWithSideEffectsModule<ObservableComputationFor<DeferredObservableLike>>, DeferredComputationModule<ObservableComputationFor<DeferredObservableLike>> {
+export interface DeferredObservableModule extends DeferredComputationModule<ObservableComputationFor<DeferredObservableLike>>, DeferredReactiveComputationModule<ObservableComputationFor<DeferredObservableLike>>, DeferredComputationModule<ObservableComputationFor<DeferredObservableLike>> {
 }
 export type Signature = DeferredObservableModule;
 export declare const buffer: Signature["buffer"];

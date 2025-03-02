@@ -2,7 +2,6 @@ import { clampPositiveInteger } from "../__internal__/math.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import {
   ComputationLike_isPure,
-  ComputationWithSideEffectsModule,
   ComputationWithSideEffectsType,
   Computation_T,
   Computation_ofT,
@@ -59,7 +58,6 @@ export interface IterableComputation
 
 export interface IterableModule
   extends DeferredComputationModule<IterableComputation>,
-    ComputationWithSideEffectsModule<IterableComputation>,
     SynchronousComputationModule<IterableComputation>,
     InteractiveComputationModule<IterableComputation> {}
 

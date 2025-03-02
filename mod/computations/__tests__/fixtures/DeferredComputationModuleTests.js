@@ -1,5 +1,6 @@
 /// <reference types="./DeferredComputationModuleTests.d.ts" />
 
+import { Array_push } from "../../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectToThrow, expectToThrowError, expectTrue, test, } from "../../../__internal__/testing.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import { alwaysTrue, increment, lessThan, newInstance, none, pipe, pipeLazy, raise, returns, } from "../../../functions.js";
@@ -21,7 +22,18 @@ const DeferredComputationModuleTests = (m) => describe("DeferredComputationModul
         result = e.cause;
     }), m.toReadonlyArray());
     pipe(result, ReadonlyArray.map(x => x.message), expectArrayEquals(["e2", "e1"]));
-}), test("when error handler returns a computation", pipeLazy([1, 2, 3], m.fromReadonlyArray(), ComputationM.concatWith(m)(m.raise()), m.catchError(pipeLazy([4, 5, 6], m.fromReadonlyArray())), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("fromIterable", test("with array", pipeLazy([1, 2, 3], m.fromIterable(), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("when the iterable throws", pipeLazy(pipeLazy((function* Generator() {
+}), test("when error handler returns a computation", pipeLazy([1, 2, 3], m.fromReadonlyArray(), ComputationM.concatWith(m)(m.raise()), m.catchError(pipeLazy([4, 5, 6], m.fromReadonlyArray())), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("forEach", test("invokes the effect for each notified value", () => {
+    const result = [];
+    pipe([1, 2, 3], m.fromReadonlyArray(), m.forEach((x) => {
+        result[Array_push](x + 10);
+    }), m.toReadonlyArray()),
+        pipe(result, expectArrayEquals([11, 12, 13]));
+}), test("when the effect function throws", () => {
+    const err = new Error();
+    pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.forEach(_ => {
+        throw err;
+    }), m.toReadonlyArray()), expectToThrowError(err));
+})), describe("fromIterable", test("with array", pipeLazy([1, 2, 3], m.fromIterable(), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("when the iterable throws", pipeLazy(pipeLazy((function* Generator() {
     throw newInstance(Error);
 })(), m.fromIterable(), m.last()), expectToThrow))), describe("fromValue", test("with array", pipeLazy(1, m.fromValue(), m.toReadonlyArray(), expectArrayEquals([1])))), describe("generate", test("with count", pipeLazy(m.generate(increment, returns(0), { count: 10 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])))), describe("fromReadonlyArray", test("starting at index greater than 0", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray({ start: 1 }), m.toReadonlyArray(), expectArrayEquals([2, 3, 4]))), test("starting at index greater than 0 with count", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray({ start: 1, count: 2 }), m.toReadonlyArray(), expectArrayEquals([2, 3]))), test("starting at index greater than 0 with count exceeding the length", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray({ start: 1, count: 10 }), m.toReadonlyArray(), expectArrayEquals([2, 3, 4]))), test("negative count", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray({ count: -2 }), m.toReadonlyArray(), expectArrayEquals([4, 3]))), test("starting at index greater than 0 with negative count", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray({ start: 2, count: -2 }), m.toReadonlyArray(), expectArrayEquals([3, 2])))), describe("concatMany", test("concats the input containers in order", pipeLazy(m.concatMany([
     pipe([1, 2, 3], m.fromReadonlyArray()),

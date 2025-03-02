@@ -1,5 +1,4 @@
 import {
-  ComputationWithSideEffectsModule,
   DeferredComputationModule,
   DeferredReactiveComputationModule,
 } from "../computations.js";
@@ -12,9 +11,6 @@ export interface DeferredObservableModule
       ObservableComputationFor<DeferredObservableLike>
     >,
     DeferredReactiveComputationModule<
-      ObservableComputationFor<DeferredObservableLike>
-    >,
-    ComputationWithSideEffectsModule<
       ObservableComputationFor<DeferredObservableLike>
     >,
     DeferredComputationModule<
