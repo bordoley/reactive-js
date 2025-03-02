@@ -16,6 +16,7 @@ import {
   newInstance,
   none,
 } from "../../../functions.js";
+import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
 
 class CatchErrorRunnable<T> implements RunnableLike<T> {
@@ -29,8 +30,7 @@ class CatchErrorRunnable<T> implements RunnableLike<T> {
       | Function1<Error, RunnableLike<T>>,
     isPure: boolean,
   ) {
-    this[ComputationLike_isPure] =
-      (s[ComputationLike_isPure] ?? true) && isPure;
+    this[ComputationLike_isPure] = Computation.isPure(s) && isPure;
   }
 
   [RunnableLike_eval](sink: SinkLike<T>): void {

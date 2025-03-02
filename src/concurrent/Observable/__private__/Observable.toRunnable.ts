@@ -1,3 +1,4 @@
+import * as Computation from "../../../computations/Computation.js";
 import {
   ComputationLike_isInteractive,
   ComputationLike_isPure,
@@ -28,7 +29,7 @@ class SynchronousObservableRunnable<T> implements RunnableLike<T> {
       readonly maxMicroTaskTicks?: number;
     },
   ) {
-    this[ComputationLike_isPure] = obs[ComputationLike_isPure] ?? true;
+    this[ComputationLike_isPure] = Computation.isPure(obs);
   }
 
   [RunnableLike_eval](sink: SinkLike<T>): void {

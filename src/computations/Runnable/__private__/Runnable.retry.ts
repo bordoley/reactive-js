@@ -7,6 +7,7 @@ import {
   SinkLike_complete,
 } from "../../../computations.js";
 import { alwaysTrue, error, newInstance } from "../../../functions.js";
+import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
 import DelegatingNonCompletingSink from "../../Sink/__internal__/DelegatingNonCompletingSink.js";
 
@@ -18,7 +19,7 @@ class RetryRunnable<T> implements RunnableLike<T> {
     private readonly s: RunnableLike<T>,
     private readonly p: (count: number, error: Error) => boolean,
   ) {
-    this[ComputationLike_isPure] = s[ComputationLike_isPure] ?? true;
+    this[ComputationLike_isPure] = Computation.isPure(s);
   }
 
   [RunnableLike_eval](sink: SinkLike<T>): void {

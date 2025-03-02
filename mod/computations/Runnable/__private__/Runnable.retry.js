@@ -2,6 +2,7 @@
 
 import { ComputationLike_isInteractive, ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, } from "../../../computations.js";
 import { alwaysTrue, error, newInstance } from "../../../functions.js";
+import * as Computation from "../../Computation.js";
 import DelegatingNonCompletingSink from "../../Sink/__internal__/DelegatingNonCompletingSink.js";
 class RetryRunnable {
     s;
@@ -11,7 +12,7 @@ class RetryRunnable {
     constructor(s, p) {
         this.s = s;
         this.p = p;
-        this[ComputationLike_isPure] = s[ComputationLike_isPure] ?? true;
+        this[ComputationLike_isPure] = Computation.isPure(s);
     }
     [RunnableLike_eval](sink) {
         const source = this.s;

@@ -73,8 +73,7 @@ class CatchErrorIterable<T> {
       | Function1<Error, IterableLike<T>>,
     isPure: boolean,
   ) {
-    this[ComputationLike_isPure] =
-      (s[ComputationLike_isPure] ?? true) && isPure;
+    this[ComputationLike_isPure] = Computation.isPure(s) && isPure;
   }
 
   *[Symbol.iterator]() {
@@ -121,8 +120,7 @@ class ConcatAllIterable<T> {
     private readonly s: IterableLike<IterableLike<T>>,
     isPure: boolean,
   ) {
-    this[ComputationLike_isPure] =
-      (s[ComputationLike_isPure] ?? true) && isPure;
+    this[ComputationLike_isPure] = Computation.isPure(s) && isPure;
   }
 
   *[Symbol.iterator]() {

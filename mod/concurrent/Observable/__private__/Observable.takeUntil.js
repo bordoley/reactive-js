@@ -1,5 +1,6 @@
 /// <reference types="./Observable.takeUntil.d.ts" />
 
+import * as Computation from "../../../computations/Computation.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -12,8 +13,8 @@ const Observable_takeUntil = ((notifier) => {
     return pipe(operator, Observable_lift({
         [ObservableLift_isStateless]: false,
         [ComputationLike_isDeferred]: true,
-        [ComputationLike_isPure]: notifier[ComputationLike_isPure] ?? true,
-        [ComputationLike_isSynchronous]: notifier[ComputationLike_isSynchronous] ?? true,
+        [ComputationLike_isPure]: Computation.isPure(notifier),
+        [ComputationLike_isSynchronous]: Computation.isSynchronous(notifier),
     }));
 });
 export default Observable_takeUntil;

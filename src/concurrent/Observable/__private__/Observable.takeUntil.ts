@@ -1,3 +1,4 @@
+import * as Computation from "../../../computations/Computation.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
@@ -35,9 +36,8 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = (<T>(
     Observable_lift({
       [ObservableLift_isStateless]: false,
       [ComputationLike_isDeferred]: true,
-      [ComputationLike_isPure]: notifier[ComputationLike_isPure] ?? true,
-      [ComputationLike_isSynchronous]:
-        notifier[ComputationLike_isSynchronous] ?? true,
+      [ComputationLike_isPure]: Computation.isPure(notifier),
+      [ComputationLike_isSynchronous]: Computation.isSynchronous(notifier),
     }),
   );
 }) as Observable.Signature["takeUntil"];

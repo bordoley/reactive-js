@@ -13,8 +13,7 @@ class CatchErrorIterable {
     constructor(s, onError, isPure) {
         this.s = s;
         this.onError = onError;
-        this[ComputationLike_isPure] =
-            (s[ComputationLike_isPure] ?? true) && isPure;
+        this[ComputationLike_isPure] = Computation.isPure(s) && isPure;
     }
     *[Symbol.iterator]() {
         try {
@@ -45,8 +44,7 @@ class ConcatAllIterable {
     [ComputationLike_isPure];
     constructor(s, isPure) {
         this.s = s;
-        this[ComputationLike_isPure] =
-            (s[ComputationLike_isPure] ?? true) && isPure;
+        this[ComputationLike_isPure] = Computation.isPure(s) && isPure;
     }
     *[Symbol.iterator]() {
         for (const iter of this.s) {

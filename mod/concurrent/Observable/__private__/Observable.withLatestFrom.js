@@ -1,6 +1,7 @@
 /// <reference types="./Observable.withLatestFrom.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import * as Computation from "../../../computations/Computation.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { ObserverLike_notify, } from "../../../concurrent.js";
 import { bind, none, partial, pipe, tuple, } from "../../../functions.js";
@@ -51,7 +52,7 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
 const Observable_withLatestFrom = ((other, selector = tuple) => pipe(createWithLatestFromObserver, partial(other, selector), Observable_lift({
     [ObservableLift_isStateless]: false,
     [ComputationLike_isDeferred]: true,
-    [ComputationLike_isPure]: other[ComputationLike_isPure] ?? true,
-    [ComputationLike_isSynchronous]: other[ComputationLike_isSynchronous] ?? true,
+    [ComputationLike_isPure]: Computation.isPure(other),
+    [ComputationLike_isSynchronous]: Computation.isSynchronous(other),
 })));
 export default Observable_withLatestFrom;

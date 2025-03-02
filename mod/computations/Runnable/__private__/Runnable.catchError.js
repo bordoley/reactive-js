@@ -2,6 +2,7 @@
 
 import { ComputationLike_isInteractive, ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, } from "../../../computations.js";
 import { error, isSome, newInstance, none, } from "../../../functions.js";
+import * as Computation from "../../Computation.js";
 class CatchErrorRunnable {
     s;
     onError;
@@ -10,8 +11,7 @@ class CatchErrorRunnable {
     constructor(s, onError, isPure) {
         this.s = s;
         this.onError = onError;
-        this[ComputationLike_isPure] =
-            (s[ComputationLike_isPure] ?? true) && isPure;
+        this[ComputationLike_isPure] = Computation.isPure(s) && isPure;
     }
     [RunnableLike_eval](sink) {
         try {

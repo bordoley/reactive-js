@@ -10,6 +10,7 @@ import {
   SinkLike_next,
 } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
+import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
 
 class FromIterableRunnable<T> implements RunnableLike<T> {
@@ -17,7 +18,7 @@ class FromIterableRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isInteractive]: false = false as const;
 
   constructor(private readonly i: IterableLike<T>) {
-    this[ComputationLike_isPure] = i[ComputationLike_isPure] ?? true;
+    this[ComputationLike_isPure] = Computation.isPure(i);
   }
 
   [RunnableLike_eval](sink: SinkLike<T>): void {
