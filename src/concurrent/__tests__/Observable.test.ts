@@ -1207,10 +1207,6 @@ testModule(
     DeferredReactiveObservableOperator(Observable.encodeUtf8()),
   ),
   describe(
-    "endWith",
-    DeferredReactiveObservableOperator(Observable.endWith(1)),
-  ),
-  describe(
     "enqueue",
     ObservableOperatorWithSideEffectsTests(Observable.enqueue(Queue.create())),
   ),
@@ -2152,10 +2148,6 @@ testModule(
         expectEquals<Optional<number>>(1),
       );
     }),
-  ),
-  describe(
-    "startWith",
-    DeferredReactiveObservableOperator(Observable.startWith(1, 2, 3)),
   ),
   describe(
     "subscribeOn",

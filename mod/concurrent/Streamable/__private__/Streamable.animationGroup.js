@@ -4,12 +4,14 @@ import { include, init, mixInstanceFactory, props, unsafeCast, } from "../../../
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
+import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
 import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
 import { PauseableLike_resume, StreamableLike_stream, } from "../../../concurrent.js";
 import * as Publisher from "../../../events/Publisher.js";
 import { isFunction, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DeferredObservable from "../../DeferredObservable.js";
 import * as Observable from "../../Observable.js";
 import * as PauseableScheduler from "../../PauseableScheduler.js";
 import DelegatingPauseableMixin from "../../__mixins__/DelegatingPauseableMixin.js";
@@ -21,7 +23,13 @@ const AnimationGroupStream_create = /*@__PURE__*/ (() => {
         const operator = Observable.switchMap((event) => pipe(Observable.mergeMany(pipe(animationGroup, ReadonlyObjectMap.entries(), Iterable.map(([key, factory]) => {
             const publisher = publishers[key];
             return pipe(isFunction(factory) ? factory(event) : factory, Observable.notify(publisher), Observable.subscribeOn(pauseableScheduler));
-        }), ReadonlyArray.fromIterable())), Observable.ignoreElements(), Observable.startWith(true), Observable.endWith(false)), {
+        }), ReadonlyArray.fromIterable())), Observable.ignoreElements(), Computation.startWith({
+            concatMany: DeferredObservable.concatMany,
+            fromReadonlyArray: DeferredObservable.fromReadonlyArray,
+        })(true), Computation.endWith({
+            concatMany: DeferredObservable.concatMany,
+            fromReadonlyArray: DeferredObservable.fromReadonlyArray,
+        })(false)), {
             innerType: DeferredComputationWithSideEffectsType,
         });
         init(StreamMixin(), instance, operator, scheduler, options);

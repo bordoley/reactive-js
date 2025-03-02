@@ -2288,35 +2288,21 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 
 ### empty()
 
-#### Call Signature
-
-> **empty**\<`T`\>(): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Returns
-
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
-
-#### Call Signature
-
 > **empty**\<`T`\>(`options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
-##### Type Parameters
+#### Type Parameters
 
 • **T**
 
-##### Parameters
+#### Parameters
 
-###### options?
+##### options?
 
 ###### delay
 
 `number`
 
-##### Returns
+#### Returns
 
 [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
@@ -2329,30 +2315,6 @@ readonly \[[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.
 #### Returns
 
 [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`string`, `Uint8Array`\<`ArrayBufferLike`\>\>
-
-***
-
-### endWith()
-
-> **endWith**\<`T`\>(`value`, ...`values`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### value
-
-`T`
-
-##### values
-
-...readonly `T`[]
-
-#### Returns
-
-[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ***
 
@@ -4381,30 +4343,6 @@ readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 #### Returns
 
 [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
-
-***
-
-### startWith()
-
-> **startWith**\<`T`\>(`value`, ...`values`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### value
-
-`T`
-
-##### values
-
-...readonly `T`[]
-
-#### Returns
-
-[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
 
 ***
 

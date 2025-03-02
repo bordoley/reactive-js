@@ -6,34 +6,20 @@
 
 # Function: empty()
 
-## Call Signature
-
-> **empty**\<`T`\>(): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
-
-### Type Parameters
-
-• **T**
-
-### Returns
-
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
-
-## Call Signature
-
 > **empty**\<`T`\>(`options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
-### Type Parameters
+## Type Parameters
 
 • **T**
 
-### Parameters
+## Parameters
 
-#### options?
+### options?
 
-##### delay
+#### delay
 
 `number`
 
-### Returns
+## Returns
 
 [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>

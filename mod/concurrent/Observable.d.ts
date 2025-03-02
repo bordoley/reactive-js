@@ -142,12 +142,10 @@ export interface ObservableModule {
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): DeferredReactiveObservableOperator<T, T>;
-    empty<T>(): PureSynchronousObservableLike<T>;
     empty<T>(options?: {
         readonly delay: number;
     }): PureSynchronousObservableLike<T>;
     encodeUtf8(): DeferredReactiveObservableOperator<string, Uint8Array>;
-    endWith<T>(value: T, ...values: readonly T[]): DeferredReactiveObservableOperator<T, T>;
     enqueue<T>(queue: QueueableLike<T>): ObservableOperatorWithSideEffects<T, T>;
     exhaust<T>(): DeferredReactiveObservableOperator<PureSynchronousObservableLike<T>, T>;
     exhaust<T>(options: {
@@ -347,7 +345,6 @@ export interface ObservableModule {
         readonly damping?: number;
         readonly precision?: number;
     }): PureSynchronousObservableLike<number>;
-    startWith<T>(value: T, ...values: readonly T[]): DeferredReactiveObservableOperator<T, T>;
     subscribe<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
@@ -480,7 +477,6 @@ export declare const dispatchTo: Signature["dispatchTo"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
-export declare const endWith: Signature["endWith"];
 export declare const enqueue: Signature["enqueue"];
 export declare const exhaust: Signature["exhaust"];
 export declare const exhaustMap: Signature["exhaustMap"];
@@ -524,7 +520,6 @@ export declare const scan: Signature["scan"];
 export declare const scanMany: Signature["scanMany"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const spring: Signature["spring"];
-export declare const startWith: Signature["startWith"];
 export declare const subscribe: Signature["subscribe"];
 export declare const subscribeOn: Signature["subscribeOn"];
 export declare const switchAll: Signature["switchAll"];

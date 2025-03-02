@@ -4,6 +4,7 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
+import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
 import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
 import {
@@ -33,7 +34,9 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
+import * as DeferredObservable from "../../DeferredObservable.js";
 import * as Observable from "../../Observable.js";
+import { ObservableComputationFor } from "../../Observable.js";
 import * as PauseableScheduler from "../../PauseableScheduler.js";
 import type * as Streamable from "../../Streamable.js";
 import * as Subject from "../../Subject.js";
@@ -177,8 +180,18 @@ const SpringStream_create: (
                   Observable.notify(accFeedbackStream),
                   Observable.ignoreElements(),
                   Observable.subscribeOn(pauseableScheduler),
-                  Observable.startWith<boolean>(true),
-                  Observable.endWith<boolean>(false),
+                  Computation.startWith<
+                    ObservableComputationFor<DeferredObservableLike>
+                  >({
+                    concatMany: DeferredObservable.concatMany,
+                    fromReadonlyArray: DeferredObservable.fromReadonlyArray,
+                  })(true),
+                  Computation.endWith<
+                    ObservableComputationFor<DeferredObservableLike>
+                  >({
+                    concatMany: DeferredObservable.concatMany,
+                    fromReadonlyArray: DeferredObservable.fromReadonlyArray,
+                  })(false),
                 )
               : Observable.empty();
           },

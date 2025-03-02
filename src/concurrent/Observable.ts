@@ -82,7 +82,6 @@ import Observable_dispatchTo from "./Observable/__private__/Observable.dispatchT
 import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__private__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__private__/Observable.encodeUtf8.js";
-import Observable_endWith from "./Observable/__private__/Observable.endWith.js";
 import Observable_enqueue from "./Observable/__private__/Observable.enqueue.js";
 import Observable_exhaust from "./Observable/__private__/Observable.exhaust.js";
 import Observable_exhaustMap from "./Observable/__private__/Observable.exhaustMap.js";
@@ -126,7 +125,6 @@ import Observable_scan from "./Observable/__private__/Observable.scan.js";
 import Observable_scanMany from "./Observable/__private__/Observable.scanMany.js";
 import Observable_skipFirst from "./Observable/__private__/Observable.skipFirst.js";
 import Observable_spring from "./Observable/__private__/Observable.spring.js";
-import Observable_startWith from "./Observable/__private__/Observable.startWith.js";
 import Observable_subscribe from "./Observable/__private__/Observable.subscribe.js";
 import Observable_subscribeOn from "./Observable/__private__/Observable.subscribeOn.js";
 import Observable_switchAll from "./Observable/__private__/Observable.switchAll.js";
@@ -700,17 +698,11 @@ export interface ObservableModule {
     readonly equality?: Equality<T>;
   }): DeferredReactiveObservableOperator<T, T>;
 
-  empty<T>(): PureSynchronousObservableLike<T>;
   empty<T>(options?: {
     readonly delay: number;
   }): PureSynchronousObservableLike<T>;
 
   encodeUtf8(): DeferredReactiveObservableOperator<string, Uint8Array>;
-
-  endWith<T>(
-    value: T,
-    ...values: readonly T[]
-  ): DeferredReactiveObservableOperator<T, T>;
 
   enqueue<T>(queue: QueueableLike<T>): ObservableOperatorWithSideEffects<T, T>;
 
@@ -1135,11 +1127,6 @@ export interface ObservableModule {
     readonly damping?: number;
     readonly precision?: number;
   }): PureSynchronousObservableLike<number>;
-
-  startWith<T>(
-    value: T,
-    ...values: readonly T[]
-  ): DeferredReactiveObservableOperator<T, T>;
 
   subscribe<T>(
     scheduler: SchedulerLike,
@@ -1599,7 +1586,6 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const empty: Signature["empty"] = Observable_empty;
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
-export const endWith: Signature["endWith"] = Observable_endWith;
 export const enqueue: Signature["enqueue"] = Observable_enqueue;
 export const exhaust: Signature["exhaust"] = Observable_exhaust;
 export const exhaustMap: Signature["exhaustMap"] = Observable_exhaustMap;
@@ -1649,7 +1635,6 @@ export const scan: Signature["scan"] = Observable_scan;
 export const scanMany: Signature["scanMany"] = Observable_scanMany;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
 export const spring: Signature["spring"] = Observable_spring;
-export const startWith: Signature["startWith"] = Observable_startWith;
 export const subscribe: Signature["subscribe"] = Observable_subscribe;
 export const subscribeOn: Signature["subscribeOn"] = Observable_subscribeOn;
 export const switchAll: Signature["switchAll"] = Observable_switchAll;

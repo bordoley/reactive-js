@@ -13,10 +13,12 @@ import {
   DictionaryLike_keys,
   ReadonlyObjectMapLike,
 } from "../../../collections.js";
+import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
 import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
 import {
   AnimationGroupStreamLike,
+  DeferredObservableLike,
   ObservableLike,
   PauseableLike_resume,
   PureSynchronousObservableLike,
@@ -36,6 +38,7 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
+import * as DeferredObservable from "../../DeferredObservable.js";
 import * as Observable from "../../Observable.js";
 import * as PauseableScheduler from "../../PauseableScheduler.js";
 import type * as Streamable from "../../Streamable.js";
@@ -119,8 +122,18 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
             ),
             Observable.ignoreElements(),
 
-            Observable.startWith<boolean>(true),
-            Observable.endWith<boolean>(false),
+            Computation.startWith<
+              Observable.ObservableComputationFor<DeferredObservableLike>
+            >({
+              concatMany: DeferredObservable.concatMany,
+              fromReadonlyArray: DeferredObservable.fromReadonlyArray,
+            })(true),
+            Computation.endWith<
+              Observable.ObservableComputationFor<DeferredObservableLike>
+            >({
+              concatMany: DeferredObservable.concatMany,
+              fromReadonlyArray: DeferredObservable.fromReadonlyArray,
+            })(false),
           ),
         {
           innerType: DeferredComputationWithSideEffectsType,

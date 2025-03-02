@@ -4,10 +4,12 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
+import * as Computation from "../../../computations/Computation.js";
 import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
 import {
   AnimationStreamLike,
   AnimationStreamLike_animation,
+  DeferredObservableLike,
   PauseableLike_resume,
   PureSynchronousObservableLike,
   SchedulerLike,
@@ -19,7 +21,9 @@ import { EventSourceLike } from "../../../events.js";
 import { Function1, isFunction, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
+import * as DeferredObservable from "../../DeferredObservable.js";
 import * as Observable from "../../Observable.js";
+import { ObservableComputationFor } from "../../Observable.js";
 import * as PauseableScheduler from "../../PauseableScheduler.js";
 import type * as Streamable from "../../Streamable.js";
 import DelegatingPauseableMixin from "../../__mixins__/DelegatingPauseableMixin.js";
@@ -67,8 +71,18 @@ const AnimationStream_create: <TEvent, T>(
             Observable.notify(publisher),
             Observable.ignoreElements(),
             Observable.subscribeOn(pauseableScheduler),
-            Observable.startWith<boolean>(true),
-            Observable.endWith<boolean>(false),
+            Computation.startWith<
+              ObservableComputationFor<DeferredObservableLike>
+            >({
+              concatMany: DeferredObservable.concatMany,
+              fromReadonlyArray: DeferredObservable.fromReadonlyArray,
+            })(true),
+            Computation.endWith<
+              ObservableComputationFor<DeferredObservableLike>
+            >({
+              concatMany: DeferredObservable.concatMany,
+              fromReadonlyArray: DeferredObservable.fromReadonlyArray,
+            })(false),
           ),
         {
           innerType: DeferredComputationWithSideEffectsType,
