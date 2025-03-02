@@ -6,11 +6,10 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { IterableLike } from "../../computations.js";
 import { Optional, isSome, none, pipe, pipeLazy } from "../../functions.js";
 import * as Computation from "../Computation.js";
 import * as Iterable from "../Iterable.js";
-import { IterableComputationFor } from "../Iterable.js";
+import { IterableComputation } from "../Iterable.js";
 
 testModule(
   "Computation",
@@ -19,9 +18,7 @@ testModule(
     test(
       "concats the input containers in order",
       pipeLazy(
-        Computation.concat<IterableLike, IterableComputationFor<IterableLike>>(
-          Iterable,
-        )([1, 2, 3], [4, 5, 6]),
+        Computation.concat<IterableComputation>(Iterable)([1, 2, 3], [4, 5, 6]),
         Iterable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4, 5, 6]),
       ),
@@ -29,10 +26,12 @@ testModule(
     test(
       "only consume partial number of events",
       pipeLazy(
-        Computation.concat<IterableLike, IterableComputationFor<IterableLike>>(
-          Iterable,
-        )([1, 2, 3], [4, 5, 6], [7, 8, 8]),
-        Iterable.takeFirst({ count: 5 }),
+        Computation.concat<IterableComputation>(Iterable)(
+          [1, 2, 3],
+          [4, 5, 6],
+          [7, 8, 8],
+        ),
+        Iterable.takeFirst<number>({ count: 5 }),
         Iterable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4, 5]),
       ),
@@ -85,10 +84,7 @@ testModule(
       "concats two containers together",
       pipeLazy(
         [0, 1],
-        Computation.concatWith<
-          IterableLike,
-          IterableComputationFor<IterableLike>
-        >(Iterable)([2, 3, 4]),
+        Computation.concatWith<IterableComputation>(Iterable)([2, 3, 4]),
         Iterable.toReadonlyArray(),
         expectArrayEquals([0, 1, 2, 3, 4]),
       ),
@@ -100,9 +96,7 @@ testModule(
       "appends the additional values to the end of the container",
       pipeLazy(
         [0, 1],
-        Computation.endWith<IterableLike, IterableComputationFor<IterableLike>>(
-          Iterable,
-        )(2, 3, 4),
+        Computation.endWith<IterableComputation>(Iterable)(2, 3, 4),
         Iterable.toReadonlyArray(),
         expectArrayEquals([0, 1, 2, 3, 4]),
       ),
@@ -175,31 +169,32 @@ testModule(
 
       pipe(
         [obj],
-        Computation.pick(Iterable)(keyA, keyB),
+        Computation.pick(Iterable)<typeof obj, typeof keyA, typeof keyB>(
+          keyA,
+          keyB,
+        ),
+        Iterable.toReadonlyArray<string>(),
+        expectArrayEquals<string>(["value"]),
+      );
+    }),
+    test("with object and string keys", () => {
+      const obj = {
+        keyA: {
+          keyB: "value",
+        },
+      };
+      pipe(
+        [obj],
+        Computation.pick(Iterable)<typeof obj, "keyA", "keyB">("keyA", "keyB"),
         Iterable.toReadonlyArray<string>(),
         expectArrayEquals<string>(["value"]),
       );
     }),
     test(
-      "with object and string keys",
-      pipeLazy(
-        [
-          {
-            keyA: {
-              keyB: "value",
-            },
-          },
-        ],
-        Computation.pick(Iterable)("keyA", "keyB"),
-        Iterable.toReadonlyArray<string>(),
-        expectArrayEquals<string>(["value"]),
-      ),
-    ),
-    test(
       "with array",
       pipeLazy(
         [[1, 2, 3, 4, 5, 6]],
-        Computation.pick(Iterable)(3),
+        Computation.pick(Iterable)<ReadonlyArray<number>, number>(3),
         Iterable.toReadonlyArray<number>(),
         expectArrayEquals<number>([4]),
       ),
@@ -211,10 +206,7 @@ testModule(
       "appends the additional values to the start of the container",
       pipeLazy(
         [0, 1],
-        Computation.startWith<
-          IterableLike,
-          IterableComputationFor<IterableLike>
-        >(Iterable)(2, 3, 4),
+        Computation.startWith<IterableComputation>(Iterable)(2, 3, 4),
         Iterable.toReadonlyArray(),
         expectArrayEquals([2, 3, 4, 0, 1]),
       ),

@@ -6,18 +6,38 @@
 
 # Function: mergeMany()
 
-> **mergeMany**\<`T`\>(`eventSources`): [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & `Pick`\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../../computations/variables/ComputationLike_isInteractive.md)\>
+## Call Signature
 
-## Type Parameters
+> **mergeMany**\<`T`\>(`computations`): [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>
+
+### Type Parameters
 
 • **T**
 
-## Parameters
+### Parameters
 
-### eventSources
+#### computations
 
-readonly [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & `Pick`\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../../computations/variables/ComputationLike_isInteractive.md)\>[]
+readonly [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>[]
 
-## Returns
+### Returns
 
-[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & `Pick`\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>, *typeof* [`ComputationLike_isPure`](../../../computations/variables/ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isDeferred`](../../../computations/variables/ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isSynchronous`](../../../computations/variables/ComputationLike_isSynchronous.md) \| *typeof* [`ComputationLike_isInteractive`](../../../computations/variables/ComputationLike_isInteractive.md)\>
+[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>
+
+## Call Signature
+
+> **mergeMany**\<`T`\>(`computations`): `never`
+
+### Type Parameters
+
+• **T**
+
+### Parameters
+
+#### computations
+
+readonly [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>[]
+
+### Returns
+
+`never`

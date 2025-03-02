@@ -7,18 +7,14 @@ import {
 import {
   Computation,
   DeferredComputationModule,
-  SynchronousComputationLike,
   SynchronousComputationModule,
 } from "../../../computations.js";
 import { Optional, increment, pipeLazy, returns } from "../../../functions.js";
 import * as Runnable from "../../Runnable.js";
 
-const SynchronousComputationModuleTests = <
-  Type extends SynchronousComputationLike,
-  TComputation extends Computation,
->(
-  m: DeferredComputationModule<Type, TComputation> &
-    SynchronousComputationModule<Type, TComputation>,
+const SynchronousComputationModuleTests = <TComputation extends Computation>(
+  m: DeferredComputationModule<TComputation> &
+    SynchronousComputationModule<TComputation>,
 ) =>
   describe(
     "SynchronousComputationModule",
@@ -54,7 +50,7 @@ const SynchronousComputationModuleTests = <
           m.generate(increment, returns(0)),
           m.toRunnable(),
           Runnable.takeFirst({ count: 3 }),
-          Runnable.toReadonlyArray(),
+          Runnable.toReadonlyArray<number>(),
           expectArrayEquals([1, 2, 3]),
         ),
       ),

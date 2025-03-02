@@ -3,6 +3,7 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isInteractive,
   ComputationLike_isSynchronous,
+  ComputationOperator,
 } from "../../../computations.js";
 import {
   EventListenerLike,
@@ -10,6 +11,7 @@ import {
   EventSourceLike_addEventListener,
 } from "../../../events.js";
 import { Function1, bindMethod, none, pipeUnsafe } from "../../../functions.js";
+import type { EventSourceComputation } from "../../EventSource.js";
 
 const LiftedEventSource_source = Symbol("LiftedEventSource_source");
 const LiftedEventSource_operators = Symbol("LiftedEventSource_operators");
@@ -69,8 +71,13 @@ const createLiftedEventSource: <TIn, TOut>(
   );
 })();
 
-const EventSource_lift =
-  <TA, TB>(
+interface EventSourceLift {
+  lift<TA, TB>(
+    operator: Function1<EventListenerLike<TB>, EventListenerLike<TA>>,
+  ): ComputationOperator<EventSourceComputation, TA, TB>;
+}
+
+const EventSource_lift: EventSourceLift["lift"] = (<TA, TB>(
     operator: Function1<EventListenerLike<TB>, EventListenerLike<TA>>,
   ): Function1<EventSourceLike<TA>, EventSourceLike<TB>> =>
   (source: EventSourceLike<TA>) => {
@@ -81,6 +88,6 @@ const EventSource_lift =
     ];
 
     return createLiftedEventSource<TA, TB>(sourceSource, allFunctions);
-  };
+  }) as EventSourceLift["lift"];
 
 export default EventSource_lift;

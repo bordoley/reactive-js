@@ -9,7 +9,7 @@ import type * as EventSource from "../../EventSource.js";
 import EventSource_addEventHandler from "./EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource.create.js";
 
-const EventSource_mergeMany: EventSource.Signature["mergeMany"] = <T>(
+const EventSource_mergeMany: EventSource.Signature["mergeMany"] = (<T>(
   eventSources: readonly EventSourceLike<T>[],
 ): EventSourceLike<T> =>
   EventSource_create(listener => {
@@ -31,6 +31,6 @@ const EventSource_mergeMany: EventSource.Signature["mergeMany"] = <T>(
         }),
       );
     }
-  });
+  })) as EventSource.Signature["mergeMany"];
 
 export default EventSource_mergeMany;

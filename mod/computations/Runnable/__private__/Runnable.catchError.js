@@ -7,10 +7,11 @@ class CatchErrorRunnable {
     onError;
     [ComputationLike_isPure];
     [ComputationLike_isInteractive] = false;
-    constructor(s, onError) {
+    constructor(s, onError, isPure) {
         this.s = s;
         this.onError = onError;
-        this[ComputationLike_isPure] = s[ComputationLike_isPure] ?? true;
+        this[ComputationLike_isPure] =
+            (s[ComputationLike_isPure] ?? true) && isPure;
     }
     [RunnableLike_eval](sink) {
         try {
@@ -32,5 +33,5 @@ class CatchErrorRunnable {
         }
     }
 }
-const Runnable_catchError = (onError) => (deferable) => newInstance((CatchErrorRunnable), deferable, onError);
+const Runnable_catchError = ((onError, options) => (deferable) => newInstance((CatchErrorRunnable), deferable, onError, options?.innerType?.[ComputationLike_isPure] ?? true));
 export default Runnable_catchError;

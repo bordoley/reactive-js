@@ -1,7 +1,7 @@
 /// <reference types="./Runnable.concatAll.d.ts" />
 
-import { RunnableLike_eval, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
-import { newInstance, returns } from "../../../functions.js";
+import { ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
+import { newInstance } from "../../../functions.js";
 import AbstractSink, { AbstractSink_delegate, } from "../../Sink/__internal__/AbstractSink.js";
 import DelegatingNonCompletingSink, { DelegatingNonCompletingSink_inner, } from "../../Sink/__internal__/DelegatingNonCompletingSink.js";
 import Runnable_lift from "./Runnable.lift.js";
@@ -18,8 +18,8 @@ class ConcatAllSink extends AbstractSink {
         this[AbstractSink_delegate][DelegatingNonCompletingSink_inner][SinkLike_complete]();
     }
 }
-const Runnable_concatAll = /*@__PURE__*/ (() => returns(Runnable_lift((sink) => {
+const Runnable_concatAll = ((options) => Runnable_lift((sink) => {
     const innerSink = newInstance(DelegatingNonCompletingSink, sink);
     return newInstance((ConcatAllSink), innerSink);
-}, true)))();
+}, options?.innerType?.[ComputationLike_isPure] ?? true));
 export default Runnable_concatAll;

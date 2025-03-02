@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / DeferredReactiveComputationModule
 
-# Interface: DeferredReactiveComputationModule\<Type, TComputation\>
+# Interface: DeferredReactiveComputationModule\<TComputation\>
 
 ## Extended by
 
@@ -12,15 +12,13 @@
 
 ## Type Parameters
 
-• **Type** *extends* [`DeferredComputationLike`](DeferredComputationLike.md) & [`ReactiveComputationLike`](ReactiveComputationLike.md)
-
-• **TComputation** *extends* [`Computation`](Computation.md)
+• **TComputation** *extends* [`Computation`](../type-aliases/Computation.md)
 
 ## Methods
 
 ### buffer()
 
-> **buffer**\<`T`\>(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, readonly `T`[]\>
+> **buffer**\<`T`\>(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, readonly `T`[]\>
 
 #### Type Parameters
 
@@ -36,13 +34,13 @@
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, readonly `T`[]\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, readonly `T`[]\>
 
 ***
 
 ### decodeWithCharset()
 
-> **decodeWithCharset**(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `ArrayBuffer`, `string`\>
+> **decodeWithCharset**(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -62,13 +60,13 @@
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `ArrayBuffer`, `string`\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `ArrayBuffer`, `string`\>
 
 ***
 
 ### distinctUntilChanged()
 
-> **distinctUntilChanged**\<`T`\>(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
+> **distinctUntilChanged**\<`T`\>(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -84,13 +82,13 @@
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ***
 
 ### pairwise()
 
-> **pairwise**\<`T`\>(): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
+> **pairwise**\<`T`\>(): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
 
 #### Type Parameters
 
@@ -98,13 +96,13 @@
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
 
 ***
 
 ### skipFirst()
 
-> **skipFirst**\<`T`\>(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
+> **skipFirst**\<`T`\>(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -120,13 +118,13 @@
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ***
 
 ### takeLast()
 
-> **takeLast**\<`T`\>(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
+> **takeLast**\<`T`\>(`options`?): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -142,4 +140,4 @@
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>

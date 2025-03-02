@@ -33,8 +33,12 @@ class ConcatManyRunnable<T> implements RunnableLike<T> {
   }
 }
 
-const Runnable_concatMany: Runnable.Signature["concatMany"] = <T>(
+const Runnable_concatMany: Runnable.Signature["concatMany"] = (<T>(
   computations: readonly RunnableLike<T>[],
-) => newInstance(ConcatManyRunnable<T>, computations);
+) =>
+  newInstance(
+    ConcatManyRunnable<T>,
+    computations,
+  )) as Runnable.Signature["concatMany"];
 
 export default Runnable_concatMany;

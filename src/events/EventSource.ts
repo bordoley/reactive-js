@@ -1,7 +1,9 @@
 import {
   Computation,
   Computation_T,
-  Computation_type,
+  Computation_ofT,
+  Computation_pureOfT,
+  Computation_withSideEffectsOfT,
   ConcurrentReactiveComputationModule,
 } from "../computations.js";
 import { EventListenerLike, EventSourceLike } from "../events.js";
@@ -18,17 +20,16 @@ import EventSource_mergeMany from "./EventSource/__private__/EventSource.mergeMa
  * @noInheritDoc
  */
 export interface EventSourceComputation extends Computation {
-  readonly [Computation_type]?: EventSourceLike<this[typeof Computation_T]>;
+  readonly [Computation_ofT]?: EventSourceLike<this[typeof Computation_T]>;
+  readonly [Computation_pureOfT]?: EventSourceLike<this[typeof Computation_T]>;
+  readonly [Computation_withSideEffectsOfT]?: never;
 }
 
 /**
  * @noInheritDoc
  */
 export interface EventSourceModule
-  extends ConcurrentReactiveComputationModule<
-    EventSourceLike,
-    EventSourceComputation
-  > {
+  extends ConcurrentReactiveComputationModule<EventSourceComputation> {
   addEventHandler<T>(
     handler: SideEffect1<T>,
   ): Function1<EventSourceLike<T>, DisposableLike>;

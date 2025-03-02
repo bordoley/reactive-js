@@ -6,38 +6,18 @@
 
 # Function: mergeWith()
 
-> **mergeWith**\<`Type`, `TComputation`\>(`m`): \<`T`\>(`snd`, ...`tail`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
+> **mergeWith**\<`TComputation`\>(`m`): [`MergeWithOperator`](../interfaces/MergeWithOperator.md)\<`TComputation`\>
 
 ## Type Parameters
 
-• **Type** *extends* [`ReactiveComputationLike`](../../interfaces/ReactiveComputationLike.md)
-
-• **TComputation** *extends* [`Computation`](../../interfaces/Computation.md)
+• **TComputation** *extends* [`Computation`](../../type-aliases/Computation.md)
 
 ## Parameters
 
 ### m
 
-`Pick`\<[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<`Type`, `TComputation`\>, `"mergeMany"`\>
+`Pick`\<[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<`TComputation`\>, `"mergeMany"`\>
 
 ## Returns
 
-`Function`
-
-### Type Parameters
-
-• **T**
-
-### Parameters
-
-#### snd
-
-[`ComputationOf`](../../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>
-
-#### tail
-
-...readonly [`ComputationOf`](../../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>[]
-
-### Returns
-
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
+[`MergeWithOperator`](../interfaces/MergeWithOperator.md)\<`TComputation`\>

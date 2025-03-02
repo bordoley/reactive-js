@@ -1,4 +1,4 @@
-import { Computation, ComputationLike_isSynchronous, ComputationOf, Computation_T, Computation_type, DeferredComputationWithSideEffectsType, PureDeferredComputationType, PureSynchronousComputationType, RunnableLike, SynchronousComputationWithSideEffectsType } from "../computations.js";
+import { Computation, ComputationLike_isSynchronous, ComputationOf, ComputationWithSideEffectsLike, ComputationWithSideEffectsOf, Computation_T, Computation_ofT, Computation_pureOfT, Computation_withSideEffectsOfT, DeferredComputationWithSideEffectsType, PureComputationLike, PureComputationOf, PureDeferredComputationType, PureSynchronousComputationType, RunnableLike, SynchronousComputationWithSideEffectsType } from "../computations.js";
 import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureSynchronousObservableLike, SchedulerLike, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../concurrent.js";
 import { EventListenerLike, EventSourceLike, StoreLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9, Updater } from "../functions.js";
@@ -7,55 +7,25 @@ export type ObservableOperator<TIn, out TOut, TObservableInBase extends Observab
 export type ObservableOperatorWithSideEffects<TIn, out TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => ObservableComputationOf<TObservableIn extends DeferredObservableLike ? DeferredObservableWithSideEffectsLike & Pick<TObservableIn, typeof ComputationLike_isSynchronous> : DeferredObservableWithSideEffectsLike, TOut>;
 export type DeferredReactiveObservableOperator<TIn, out TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => ObservableComputationOf<TObservableIn extends DeferredObservableLike ? TObservableIn : TObservableIn extends PureObservableLike ? PureDeferredObservableLike : DeferredObservableWithSideEffectsLike, TOut>;
 export type DeferringObservableOperator<TIn, out TOut> = <TObservableIn extends ObservableLike<TIn>>(obs: TObservableIn) => TObservableIn extends PureObservableLike<TIn> ? PureDeferredObservableLike<TOut> : DeferredObservableWithSideEffectsLike<TOut>;
-export type ObservableComputationFor<Type extends ObservableLike> = Type extends MulticastObservableLike ? MulticastObservableComputation : Type extends PureSynchronousObservableLike ? PureSynchronousObservableComputation : Type extends SynchronousObservableWithSideEffectsLike ? SynchronousObservableWithSideEffectsComputation : Type extends SynchronousObservableLike ? SynchronousObservableComputation : Type extends PureDeferredObservableLike ? PuredDeferredObservableComputation : Type extends DeferredObservableWithSideEffectsLike ? DeferredObservableWithSideEffectsComputation : Type extends DeferredObservableLike ? DeferredObservableComputation : ObservableComputation;
-export type ObservableComputationOf<Type extends ObservableLike, T> = ComputationOf<Type, ObservableComputationFor<Type>, T>;
-/**
- * @noInheritDoc
- */
-interface PureSynchronousObservableComputation extends Computation {
-    readonly [Computation_type]?: PureSynchronousObservableLike<this[typeof Computation_T]>;
-}
-/**
- * @noInheritDoc
- */
-interface SynchronousObservableWithSideEffectsComputation extends Computation {
-    readonly [Computation_type]?: SynchronousObservableWithSideEffectsLike<this[typeof Computation_T]>;
-}
-/**
- * @noInheritDoc
- */
+export type ObservableComputationFor<Type extends ObservableLike> = Type extends MulticastObservableLike ? MulticastObservableComputation : Type extends SynchronousObservableLike ? SynchronousObservableComputation : Type extends DeferredObservableLike ? DeferredObservableComputation : ObservableComputation;
+export type ObservableComputationOf<Type extends ObservableLike, T> = Type extends PureComputationLike ? PureComputationOf<ObservableComputationFor<Type>, T> : Type extends ComputationWithSideEffectsLike ? ComputationWithSideEffectsOf<ObservableComputationFor<Type>, T> : ComputationOf<ObservableComputationFor<Type>, T>;
 interface SynchronousObservableComputation extends Computation {
-    readonly [Computation_type]?: SynchronousObservableLike<this[typeof Computation_T]>;
+    readonly [Computation_ofT]?: SynchronousObservableLike<this[typeof Computation_T]>;
+    readonly [Computation_pureOfT]?: PureSynchronousObservableLike<this[typeof Computation_T]>;
+    readonly [Computation_withSideEffectsOfT]?: SynchronousObservableWithSideEffectsLike<this[typeof Computation_T]>;
 }
-/**
- * @noInheritDoc
- */
-interface PuredDeferredObservableComputation extends Computation {
-    readonly [Computation_type]?: PureDeferredObservableLike<this[typeof Computation_T]>;
-}
-/**
- * @noInheritDoc
- */
-interface DeferredObservableWithSideEffectsComputation extends Computation {
-    readonly [Computation_type]?: DeferredObservableWithSideEffectsLike<this[typeof Computation_T]>;
-}
-/**
- * @noInheritDoc
- */
 interface DeferredObservableComputation extends Computation {
-    readonly [Computation_type]?: DeferredObservableLike<this[typeof Computation_T]>;
+    readonly [Computation_ofT]?: DeferredObservableLike<this[typeof Computation_T]>;
+    readonly [Computation_pureOfT]?: PureDeferredObservableLike<this[typeof Computation_T]>;
+    readonly [Computation_withSideEffectsOfT]?: DeferredObservableWithSideEffectsLike<this[typeof Computation_T]>;
 }
-/**
- * @noInheritDoc
- */
-interface ObservableComputation extends Computation {
-    readonly [Computation_type]?: ObservableLike<this[typeof Computation_T]>;
-}
-/**
- * @noInheritDoc
- */
 interface MulticastObservableComputation extends Computation {
-    readonly [Computation_type]?: MulticastObservableLike<this[typeof Computation_T]>;
+    readonly [Computation_ofT]?: MulticastObservableLike<this[typeof Computation_T]>;
+    readonly [Computation_pureOfT]?: MulticastObservableLike<this[typeof Computation_T]>;
+    readonly [Computation_withSideEffectsOfT]?: never;
+}
+interface ObservableComputation extends Computation {
+    readonly [Computation_ofT]?: ObservableLike<this[typeof Computation_T]>;
 }
 export declare const BatchedComputeMode = "batched";
 export declare const CombineLatestComputeMode = "combine-latest";

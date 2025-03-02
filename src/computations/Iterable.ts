@@ -1,14 +1,15 @@
 import { clampPositiveInteger } from "../__internal__/math.js";
-import { mixInstanceFactory, props } from "../__internal__/mixins.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import {
-  Computation,
   ComputationLike_isPure,
-  ComputationOf,
   ComputationWithSideEffectsModule,
+  ComputationWithSideEffectsType,
   Computation_T,
-  Computation_type,
+  Computation_ofT,
+  Computation_pureOfT,
+  Computation_withSideEffectsOfT,
   DeferredComputationModule,
+  GenericComputation,
   InteractiveComputationModule,
   IterableLike,
   IterableWithSideEffectsLike,
@@ -37,67 +38,46 @@ import {
   returns,
   tuple,
 } from "../functions.js";
+import * as Computation from "./Computation.js";
 import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 
 /**
  * @noInheritDoc
  */
-interface IterableComputation extends Computation {
-  readonly [Computation_type]?: IterableLike<this[typeof Computation_T]>;
-}
-
-interface IterableWithSideEffectsComputation extends Computation {
-  readonly [Computation_type]?: IterableWithSideEffectsLike<
+export interface IterableComputation
+  extends GenericComputation<
+    IterableLike,
+    PureIterableLike,
+    IterableWithSideEffectsLike
+  > {
+  readonly [Computation_ofT]?: IterableLike<this[typeof Computation_T]>;
+  readonly [Computation_pureOfT]?: PureIterableLike<this[typeof Computation_T]>;
+  readonly [Computation_withSideEffectsOfT]?: IterableWithSideEffectsLike<
     this[typeof Computation_T]
   >;
 }
 
-interface PuredIterableComputation extends Computation {
-  readonly [Computation_type]?: PureIterableLike<this[typeof Computation_T]>;
-}
-
-export type IterableComputationFor<Type extends IterableLike> =
-  Type extends PureIterableLike
-    ? PuredIterableComputation
-    : Type extends IterableWithSideEffectsLike
-      ? IterableWithSideEffectsComputation
-      : IterableComputation;
-
-export type IterableComputationOf<Type extends IterableLike, T> = ComputationOf<
-  Type,
-  IterableComputationFor<Type>,
-  T
->;
-
 export interface IterableModule
-  extends DeferredComputationModule<
-      IterableLike,
-      IterableComputationFor<IterableLike>
-    >,
-    ComputationWithSideEffectsModule<
-      IterableLike,
-      IterableComputationFor<IterableLike>,
-      IterableWithSideEffectsLike,
-      IterableComputationFor<IterableWithSideEffectsLike>
-    >,
-    SynchronousComputationModule<
-      IterableLike,
-      IterableComputationFor<IterableLike>
-    >,
-    InteractiveComputationModule<
-      IterableLike,
-      IterableComputationFor<IterableLike>
-    > {}
+  extends DeferredComputationModule<IterableComputation>,
+    ComputationWithSideEffectsModule<IterableComputation>,
+    SynchronousComputationModule<IterableComputation>,
+    InteractiveComputationModule<IterableComputation> {}
 
 export type Signature = IterableModule;
 
 class CatchErrorIterable<T> {
+  public readonly [ComputationLike_isPure]?: boolean;
+
   constructor(
-    private readonly s: Iterable<T>,
+    private readonly s: IterableLike<T>,
     private readonly onError:
       | SideEffect1<Error>
-      | Function1<Error, Iterable<T>>,
-  ) {}
+      | Function1<Error, IterableLike<T>>,
+    isPure: boolean,
+  ) {
+    this[ComputationLike_isPure] =
+      (s[ComputationLike_isPure] ?? true) && isPure;
+  }
 
   *[Symbol.iterator]() {
     try {
@@ -106,9 +86,9 @@ class CatchErrorIterable<T> {
       }
     } catch (e) {
       const err = error(e);
-      let action: Optional<Iterable<T>> = none;
+      let action: Optional<IterableLike<T>> = none;
       try {
-        action = this.onError(err) as Optional<Iterable<T>>;
+        action = this.onError(err) as Optional<IterableLike<T>>;
       } catch (e) {
         throw error([error(e), err]);
       }
@@ -122,13 +102,30 @@ class CatchErrorIterable<T> {
   }
 }
 
-export const catchError: Signature["catchError"] =
-  <T>(onError: SideEffect1<Error> | Function1<Error, Iterable<T>>) =>
-  (iter: Iterable<T>) =>
-    newInstance(CatchErrorIterable, iter, onError);
+export const catchError: Signature["catchError"] = (<T>(
+    onError: SideEffect1<Error> | Function1<Error, IterableLike<T>>,
+    options?: {
+      readonly innerType: typeof ComputationWithSideEffectsType;
+    },
+  ) =>
+  (iter: IterableLike<T>) =>
+    newInstance(
+      CatchErrorIterable,
+      iter,
+      onError,
+      options?.innerType?.[ComputationLike_isPure] ?? true,
+    )) as Signature["catchError"];
 
 class ConcatAllIterable<T> {
-  constructor(private readonly s: Iterable<Iterable<T>>) {}
+  public readonly [ComputationLike_isPure]?: boolean;
+
+  constructor(
+    private readonly s: IterableLike<IterableLike<T>>,
+    isPure: boolean,
+  ) {
+    this[ComputationLike_isPure] =
+      (s[ComputationLike_isPure] ?? true) && isPure;
+  }
 
   *[Symbol.iterator]() {
     for (const iter of this.s) {
@@ -138,56 +135,50 @@ class ConcatAllIterable<T> {
     }
   }
 }
-export const concatAll: Signature["concatAll"] = /*@__PURE__*/ (<T>() =>
-  returns((iterable: Iterable<Iterable<T>>) =>
-    newInstance(ConcatAllIterable, iterable),
-  ))();
+export const concatAll: Signature["concatAll"] = (<T>(options?: {
+    readonly innerType: typeof ComputationWithSideEffectsType;
+  }) =>
+  (iterable: IterableLike<IterableLike<T>>) =>
+    newInstance(
+      ConcatAllIterable,
+      iterable,
+      options?.innerType?.[ComputationLike_isPure] ?? true,
+    )) as Signature["concatAll"];
 
-export const concatMany: Signature["concatMany"] = concatAll();
+export const concatMany: Signature["concatMany"] = (<T>(
+  iterables: ReadonlyArray<IterableLike<T>>,
+) =>
+  newInstance(
+    ConcatAllIterable,
+    iterables,
+    Computation.areAllPure(iterables),
+  )) as Signature["concatMany"];
 
 export const empty: Signature["empty"] = /*@__PURE__*/ returns([]);
 
-export const forEach: Signature["forEach"] = /*@__PURE__*/ (<T>() => {
-  const ForEachIterable_effect = Symbol("ForEachIterable_effect");
-  const ForEachIterable_delegate = Symbol("ForEachIterable_delegate");
+class ForEachIterable<T> implements IterableWithSideEffectsLike<T> {
+  public [ComputationLike_isPure]: false = false as const;
 
-  type TProperties = {
-    [ForEachIterable_delegate]: Iterable<T>;
-    [ForEachIterable_effect]: SideEffect1<T>;
-  };
+  constructor(
+    private readonly d: IterableLike<T>,
+    private readonly ef: SideEffect1<T>,
+  ) {}
 
-  const createForEachIterable = mixInstanceFactory(
-    function KeepIterable(
-      instance: IterableWithSideEffectsLike<T> & TProperties,
-      delegate: Iterable<T>,
-      effect: SideEffect1<T>,
-    ): IterableWithSideEffectsLike<T> {
-      instance[ForEachIterable_delegate] = delegate;
-      instance[ForEachIterable_effect] = effect;
-      return instance;
-    },
-    props<TProperties>({
-      [ForEachIterable_delegate]: none,
-      [ForEachIterable_effect]: none,
-    }),
-    {
-      [ComputationLike_isPure]: false as const,
+  *[Symbol.iterator]() {
+    const delegate = this.d;
+    const effect = this.ef;
 
-      *[Symbol.iterator](this: TProperties) {
-        const delegate = this[ForEachIterable_delegate];
-        const effect = this[ForEachIterable_effect];
+    for (const v of delegate) {
+      effect(v);
+      yield v;
+    }
+  }
+}
 
-        for (const v of delegate) {
-          effect(v);
-          yield v;
-        }
-      },
-    },
-  );
-
-  return (effect: SideEffect1<T>) => (iterable: Iterable<T>) =>
-    createForEachIterable(iterable, effect);
-})();
+export const forEach: Signature["forEach"] =
+  <T>(effect: SideEffect1<T>) =>
+  (iterable: IterableLike<T>) =>
+    newInstance(ForEachIterable, iterable, effect);
 
 export const fromIterable: Signature["fromIterable"] = /*@__PURE__*/ returns(
   identity,
@@ -196,6 +187,8 @@ export const fromIterable: Signature["fromIterable"] = /*@__PURE__*/ returns(
 export const fromValue: Signature["fromValue"] = /*@__PURE__*/ returns(tuple);
 
 class FromReadonlyArrayIterable<T> {
+  public readonly [ComputationLike_isPure]?: true;
+
   constructor(
     private readonly arr: readonly T[],
     private readonly count: number,
@@ -223,6 +216,8 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   };
 
 class GeneratorIterable<T> {
+  public readonly [ComputationLike_isPure]?: true;
+
   constructor(
     readonly generator: Updater<T>,
     readonly initialValue: Factory<T>,
@@ -248,50 +243,35 @@ export const generate: Signature["generate"] = <T>(
   },
 ) => newInstance(GeneratorIterable, generator, initialValue, options?.count);
 
-export const keep: Signature["keep"] = /*@__PURE__*/ (<T>() => {
-  const KeepIterable_predicate = Symbol("KeepIterable_predicate");
-  const KeepIterable_delegate = Symbol("KeepIterable_delegate");
+class KeepIterable<T> implements IterableLike<T> {
+  public readonly [ComputationLike_isPure]?: boolean;
 
-  type TProperties = {
-    [KeepIterable_delegate]: Iterable<T>;
-    [KeepIterable_predicate]: Predicate<T>;
-  };
+  constructor(
+    private readonly d: IterableLike<T>,
+    private readonly p: Predicate<T>,
+  ) {
+    this[ComputationLike_isPure] = d[ComputationLike_isPure];
+  }
 
-  const createKeepIterable = mixInstanceFactory(
-    function KeepIterable(
-      instance: Iterable<T> & TProperties,
-      delegate: Iterable<T>,
-      predicate: Predicate<T>,
-    ): Iterable<T> {
-      instance[KeepIterable_delegate] = delegate;
-      instance[KeepIterable_predicate] = predicate;
-      return instance;
-    },
-    props<TProperties>({
-      [KeepIterable_delegate]: none,
-      [KeepIterable_predicate]: none,
-    }),
-    {
-      *[Symbol.iterator](this: TProperties) {
-        const delegate = this[KeepIterable_delegate];
-        const predicate = this[KeepIterable_predicate];
+  *[Symbol.iterator]() {
+    const delegate = this.d;
+    const predicate = this.p;
 
-        for (const v of delegate) {
-          if (predicate(v)) {
-            yield v;
-          }
-        }
-      },
-    },
-  );
+    for (const v of delegate) {
+      if (predicate(v)) {
+        yield v;
+      }
+    }
+  }
+}
 
-  return (predicate: Predicate<T>) => (iterable: Iterable<T>) =>
-    createKeepIterable(iterable, predicate);
-})();
+export const keep: Signature["keep"] = (<T>(predicate: Predicate<T>) =>
+  (iterable: IterableLike<T>) =>
+    newInstance(KeepIterable, iterable, predicate)) as Signature["keep"];
 
 export const last: Signature["last"] =
   <T>() =>
-  (iter: Iterable<T>) => {
+  (iter: IterableLike<T>) => {
     let result: Optional<T> = none;
     for (const v of iter) {
       result = v;
@@ -299,44 +279,29 @@ export const last: Signature["last"] =
     return result;
   };
 
-export const map: Signature["map"] = /*@__PURE__*/ (<TA, TB>() => {
-  const MapIterable_mapper = Symbol("MapIterable_mapper");
-  const MapIterable_delegate = Symbol("MapIterable_delegate");
+class MapIterable<TA, TB> implements IterableLike<TB> {
+  public readonly [ComputationLike_isPure]?: boolean;
 
-  type TProperties = {
-    [MapIterable_delegate]: Iterable<TA>;
-    [MapIterable_mapper]: Function1<TA, TB>;
-  };
+  constructor(
+    private readonly d: IterableLike<TA>,
+    private readonly m: Function1<TA, TB>,
+  ) {
+    this[ComputationLike_isPure] = d[ComputationLike_isPure];
+  }
 
-  const createMapIterable = mixInstanceFactory(
-    function MapIterable(
-      instance: Iterable<TB> & TProperties,
-      delegate: Iterable<TA>,
-      mapper: Function1<TA, TB>,
-    ): Iterable<TB> {
-      instance[MapIterable_delegate] = delegate;
-      instance[MapIterable_mapper] = mapper;
-      return instance;
-    },
-    props<TProperties>({
-      [MapIterable_delegate]: none,
-      [MapIterable_mapper]: none,
-    }),
-    {
-      *[Symbol.iterator](this: TProperties) {
-        const delegate = this[MapIterable_delegate];
-        const mapper = this[MapIterable_mapper];
+  *[Symbol.iterator]() {
+    const delegate = this.d;
+    const mapper = this.m;
 
-        for (const v of delegate) {
-          yield mapper(v);
-        }
-      },
-    },
-  );
+    for (const v of delegate) {
+      yield mapper(v);
+    }
+  }
+}
 
-  return (mapper: Function1<TA, TB>) => (iterable: Iterable<TA>) =>
-    createMapIterable(iterable, mapper);
-})();
+export const map: Signature["map"] = (<TA, TB>(mapper: Function1<TA, TB>) =>
+  (iterable: IterableLike<TA>) =>
+    newInstance(MapIterable, iterable, mapper)) as Signature["map"];
 
 class RaiseIterable<T> {
   constructor(private r: SideEffect) {}
@@ -354,7 +319,7 @@ export const raise: Signature["raise"] = <T>(options?: {
 
 export const reduce: Signature["reduce"] =
   <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
-  (iterable: Iterable<T>) => {
+  (iterable: IterableLike<T>) => {
     let acc = initialValue();
     for (let v of iterable) {
       acc = reducer(acc, v);
@@ -363,11 +328,15 @@ export const reduce: Signature["reduce"] =
     return acc;
   };
 
-class RepeateIterable<T> {
+class RepeatIterable<T> {
+  public readonly [ComputationLike_isPure]?: boolean;
+
   constructor(
-    private i: Iterable<T>,
+    private i: IterableLike<T>,
     private p: Predicate<number>,
-  ) {}
+  ) {
+    this[ComputationLike_isPure] = i[ComputationLike_isPure];
+  }
 
   *[Symbol.iterator]() {
     const iterable = this.i;
@@ -387,7 +356,7 @@ class RepeateIterable<T> {
   }
 }
 
-export const repeat: Signature["repeat"] = <T>(
+export const repeat: Signature["repeat"] = (<T>(
   predicate?: Predicate<number> | number,
 ) => {
   const repeatPredicate = isFunction(predicate)
@@ -396,15 +365,19 @@ export const repeat: Signature["repeat"] = <T>(
       ? alwaysTrue
       : (count: number) => count < predicate;
 
-  return (src: Iterable<T>) =>
-    newInstance(RepeateIterable, src, repeatPredicate);
-};
+  return (src: IterableLike<T>) =>
+    newInstance(RepeatIterable, src, repeatPredicate);
+}) as Signature["repeat"];
 
 class RetryIterable<T> {
+  public readonly [ComputationLike_isPure]?: boolean;
+
   constructor(
-    private i: Iterable<T>,
+    private i: IterableLike<T>,
     private p: (count: number, error: Error) => boolean,
-  ) {}
+  ) {
+    this[ComputationLike_isPure] = i[ComputationLike_isPure];
+  }
 
   *[Symbol.iterator]() {
     const iterable = this.i;
@@ -427,17 +400,26 @@ class RetryIterable<T> {
   }
 }
 
-export const retry: Signature["retry"] =
-  <T>(shouldRetry?: (count: number, error: Error) => boolean) =>
-  (deferable: Iterable<T>) =>
-    newInstance(RetryIterable, deferable, shouldRetry ?? alwaysTrue);
+export const retry: Signature["retry"] = (<T>(
+    shouldRetry?: (count: number, error: Error) => boolean,
+  ) =>
+  (deferable: IterableLike<T>) =>
+    newInstance(
+      RetryIterable,
+      deferable,
+      shouldRetry ?? alwaysTrue,
+    )) as Signature["retry"];
 
 class ScanIterable<T, TAcc> {
+  public readonly [ComputationLike_isPure]?: boolean;
+
   constructor(
-    private readonly s: Iterable<T>,
+    private readonly s: IterableLike<T>,
     private readonly r: Reducer<T, TAcc>,
     private readonly iv: Factory<TAcc>,
-  ) {}
+  ) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
 
   *[Symbol.iterator]() {
     const reducer = this.r;
@@ -450,16 +432,27 @@ class ScanIterable<T, TAcc> {
   }
 }
 
-export const scan: Signature["scan"] =
-  <T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
-  (iter: Iterable<T>) =>
-    newInstance(ScanIterable, iter, scanner, initialValue);
+export const scan: Signature["scan"] = (<T, TAcc>(
+    scanner: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ) =>
+  (iter: IterableLike<T>) =>
+    newInstance(
+      ScanIterable,
+      iter,
+      scanner,
+      initialValue,
+    )) as Signature["scan"];
 
 class TakeFirstIterable<T> {
+  public readonly [ComputationLike_isPure]?: boolean;
+
   constructor(
-    private s: Iterable<T>,
+    private s: IterableLike<T>,
     private c: number,
-  ) {}
+  ) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
 
   *[Symbol.iterator]() {
     const takeCount = this.c;
@@ -476,21 +469,26 @@ class TakeFirstIterable<T> {
   }
 }
 
-export const takeFirst: Signature["takeFirst"] =
-  <T>(options?: { readonly count?: number }) =>
-  (iterable: Iterable<T>) =>
+export const takeFirst: Signature["takeFirst"] = (<T>(options?: {
+    readonly count?: number;
+  }) =>
+  (iterable: IterableLike<T>) =>
     newInstance(
       TakeFirstIterable,
       iterable,
       clampPositiveInteger(options?.count ?? 1),
-    );
+    )) as Signature["takeFirst"];
 
 class TakeWhileIterable<T> {
+  public readonly [ComputationLike_isPure]?: boolean;
+
   constructor(
-    private s: Iterable<T>,
+    private s: IterableLike<T>,
     private p: Predicate<T>,
     private i: boolean,
-  ) {}
+  ) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
 
   *[Symbol.iterator]() {
     const predicate = this.p;
@@ -510,11 +508,29 @@ class TakeWhileIterable<T> {
   }
 }
 
+export const takeWhile: Signature["takeWhile"] = (<T>(
+    predicate: Predicate<T>,
+    options?: {
+      readonly inclusive?: boolean;
+    },
+  ) =>
+  (iterable: IterableLike<T>) =>
+    newInstance(
+      TakeWhileIterable,
+      iterable,
+      predicate,
+      options?.inclusive ?? false,
+    )) as Signature["takeWhile"];
+
 class ThrowIfEmptyIterable<T> {
+  public readonly [ComputationLike_isPure]?: boolean;
+
   constructor(
-    private readonly i: Iterable<T>,
+    private readonly i: IterableLike<T>,
     private readonly f: Factory<unknown>,
-  ) {}
+  ) {
+    this[ComputationLike_isPure] = i[ComputationLike_isPure];
+  }
 
   *[Symbol.iterator]() {
     let isEmpty = true;
@@ -529,35 +545,29 @@ class ThrowIfEmptyIterable<T> {
   }
 }
 
-export const throwIfEmpty: Signature["throwIfEmpty"] =
-  <T>(factory: Factory<unknown>) =>
-  (iter: Iterable<T>) =>
-    newInstance(ThrowIfEmptyIterable, iter, factory);
-
-export const takeWhile: Signature["takeWhile"] =
-  <T>(
-    predicate: Predicate<T>,
-    options?: {
-      readonly inclusive?: boolean;
-    },
+export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
+    factory: Factory<unknown>,
   ) =>
-  (iterable: Iterable<T>) =>
+  (iter: IterableLike<T>) =>
     newInstance(
-      TakeWhileIterable,
-      iterable,
-      predicate,
-      options?.inclusive ?? false,
-    );
+      ThrowIfEmptyIterable,
+      iter,
+      factory,
+    )) as Signature["throwIfEmpty"];
 
 export const toRunnable: Signature["toRunnable"] = Runnable_fromIterable;
 
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   <T>() =>
-  (iterable: Iterable<T>) =>
+  (iterable: IterableLike<T>) =>
     Array.from(iterable);
 
 class ZipIterable {
-  constructor(private readonly iters: readonly Iterable<any>[]) {}
+  public readonly [ComputationLike_isPure]?: boolean;
+
+  constructor(private readonly iters: readonly IterableLike<any>[]) {
+    this[ComputationLike_isPure] = Computation.areAllPure(iters);
+  }
 
   *[Symbol.iterator]() {
     const iterators = this.iters.map(invoke(Symbol.iterator));
@@ -572,5 +582,6 @@ class ZipIterable {
   }
 }
 
-export const zip: Signature["zip"] = ((...iters: readonly Iterable<any>[]) =>
-  newInstance(ZipIterable, iters)) as Signature["zip"];
+export const zip: Signature["zip"] = ((
+  ...iters: readonly IterableLike<any>[]
+) => newInstance(ZipIterable, iters)) as Signature["zip"];

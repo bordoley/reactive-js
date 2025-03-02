@@ -1,6 +1,7 @@
 import {
   ComputationLike_isInteractive,
   ComputationLike_isPure,
+  ComputationWithSideEffectsType,
   RunnableLike,
   RunnableLike_eval,
   SinkLike,
@@ -26,8 +27,10 @@ class CatchErrorRunnable<T> implements RunnableLike<T> {
     private readonly onError:
       | SideEffect1<Error>
       | Function1<Error, RunnableLike<T>>,
+    isPure: boolean,
   ) {
-    this[ComputationLike_isPure] = s[ComputationLike_isPure] ?? true;
+    this[ComputationLike_isPure] =
+      (s[ComputationLike_isPure] ?? true) && isPure;
   }
 
   [RunnableLike_eval](sink: SinkLike<T>): void {
@@ -51,9 +54,18 @@ class CatchErrorRunnable<T> implements RunnableLike<T> {
   }
 }
 
-const Runnable_catchError: Runnable.Signature["catchError"] =
-  <T>(onError: SideEffect1<Error> | Function1<Error, RunnableLike<T>>) =>
+const Runnable_catchError: Runnable.Signature["catchError"] = (<T>(
+    onError: SideEffect1<Error> | Function1<Error, RunnableLike<T>>,
+    options?: {
+      readonly innerType: typeof ComputationWithSideEffectsType;
+    },
+  ) =>
   (deferable: RunnableLike<T>) =>
-    newInstance(CatchErrorRunnable<T>, deferable, onError);
+    newInstance(
+      CatchErrorRunnable<T>,
+      deferable,
+      onError,
+      options?.innerType?.[ComputationLike_isPure] ?? true,
+    )) as Runnable.Signature["catchError"];
 
 export default Runnable_catchError;

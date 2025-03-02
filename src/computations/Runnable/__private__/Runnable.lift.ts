@@ -1,15 +1,15 @@
 import {
   ComputationLike_isInteractive,
   ComputationLike_isPure,
+  ComputationOf,
   ComputationOperator,
   ComputationWithSideEffectsOperator,
   RunnableLike,
   RunnableLike_eval,
-  RunnableWithSideEffectsLike,
   SinkLike,
 } from "../../../computations.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
-import type { RunnableComputationFor } from "../../Runnable.js";
+import type { RunnableComputation } from "../../Runnable.js";
 
 class LiftedRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
@@ -29,25 +29,20 @@ class LiftedRunnable<T> implements RunnableLike<T> {
 }
 
 interface RunnableLift {
-  lift<TA, TB, TComputationType extends RunnableLike = RunnableLike>(
+  lift<TA, TB>(
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
     isPure: true,
-  ): ComputationOperator<
-    RunnableLike,
-    RunnableComputationFor<RunnableLike>,
-    TA,
-    TB
-  >;
+  ): ComputationOperator<RunnableComputation, TA, TB>;
   lift<TA, TB>(
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
     isPure: false,
-  ): ComputationWithSideEffectsOperator<
-    RunnableLike,
-    RunnableComputationFor<RunnableLike>,
-    RunnableWithSideEffectsLike,
-    RunnableComputationFor<RunnableWithSideEffectsLike>,
-    TA,
-    TB
+  ): ComputationWithSideEffectsOperator<RunnableComputation, TA, TB>;
+  lift<TA, TB>(
+    operator: Function1<SinkLike<TB>, SinkLike<TA>>,
+    isPure: boolean,
+  ): Function1<
+    ComputationOf<RunnableComputation, TA>,
+    ComputationOf<RunnableComputation, TB>
   >;
 }
 

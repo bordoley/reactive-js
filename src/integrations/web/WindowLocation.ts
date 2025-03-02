@@ -12,6 +12,7 @@ import {
   ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
+  ComputationModule,
 } from "../../computations.js";
 import * as Observable from "../../concurrent/Observable.js";
 import { ObservableComputationFor } from "../../concurrent/Observable.js";
@@ -141,10 +142,11 @@ const createSyncToHistoryStream = (
   Streamable.create<TState, TState & { uri: SerializableWindowLocationURI }>(
     compose(
       Observable.throttle(100),
-      Observable.forEach(({ counter, uri }) => {
-        const { title } = uri;
+      Observable.forEach<TState>(({ counter, uri }) => {
+        const serializableURI = createSerializableWindowLocationURI(uri);
+        const { title } = serializableURI;
         document.title = title;
-        f({ title, counter }, "", String(uri));
+        f({ title, counter }, "", String(serializableURI));
       }),
     ),
   )[StreamableLike_stream](scheduler, options);
@@ -239,10 +241,12 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       ): void {
         pipe(
           this[WindowLocation_delegate],
-          Computation.pick<
-            MulticastObservableLike,
-            ObservableComputationFor<MulticastObservableLike>
-          >({map: Observable.map})("uri"),
+          Computation.pick<ObservableComputationFor<MulticastObservableLike>>({
+            // FIXME: A little hacky to need to cast
+            map: Observable.map as unknown as ComputationModule<
+              ObservableComputationFor<MulticastObservableLike>
+            >["map"],
+          })<TState, "uri">("uri"),
           invoke(ObservableLike_observe, observer),
         );
       },

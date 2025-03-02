@@ -478,78 +478,58 @@ testModule(
     }),
   ),
   DeferredComputationModuleTests<
-    SynchronousObservableLike,
     ObservableComputationFor<SynchronousObservableLike>
   >(
     Observable as DeferredComputationModule<
-      SynchronousObservableLike,
       ObservableComputationFor<SynchronousObservableLike>
     > &
       SynchronousComputationModule<
-        SynchronousObservableLike,
         ObservableComputationFor<SynchronousObservableLike>
       >,
   ),
   PureStatelesssComputationModuleTests(
     Observable as ComputationModule<
-      SynchronousObservableLike,
       ObservableComputationFor<SynchronousObservableLike>
     > &
       DeferredComputationModule<
-        SynchronousObservableLike,
         ObservableComputationFor<SynchronousObservableLike>
       > &
       SynchronousComputationModule<
-        SynchronousObservableLike,
         ObservableComputationFor<SynchronousObservableLike>
       >,
   ),
   DeferredReactiveComputationModuleTests(
     Observable as DeferredReactiveComputationModule<
-      SynchronousObservableLike,
       ObservableComputationFor<SynchronousObservableLike>
     > &
       DeferredComputationModule<
-        SynchronousObservableLike,
         ObservableComputationFor<SynchronousObservableLike>
       > &
       SynchronousComputationModule<
-        SynchronousObservableLike,
         ObservableComputationFor<SynchronousObservableLike>
       > &
       ComputationWithSideEffectsModule<
-        SynchronousObservableLike,
-        ObservableComputationFor<SynchronousObservableLike>,
-        SynchronousObservableWithSideEffectsLike,
-        ObservableComputationFor<SynchronousObservableWithSideEffectsLike>
+        ObservableComputationFor<SynchronousObservableLike>
       >,
   ),
   ComputationWithSideEffectsModuleTests(
     Observable as DeferredComputationModule<
-      SynchronousObservableLike,
       ObservableComputationFor<SynchronousObservableLike>
     > &
       ComputationWithSideEffectsModule<
-        SynchronousObservableLike,
-        ObservableComputationFor<SynchronousObservableLike>,
-        SynchronousObservableWithSideEffectsLike,
-        ObservableComputationFor<SynchronousObservableWithSideEffectsLike>
+        ObservableComputationFor<SynchronousObservableLike>
       > &
       SynchronousComputationModule<
-        SynchronousObservableLike,
         ObservableComputationFor<SynchronousObservableLike>
       >,
   ),
   SynchronousComputationModuleTests<
-    SynchronousObservableLike,
     ObservableComputationFor<SynchronousObservableLike>
   >(
     Observable as DeferredComputationModule<
-      SynchronousObservableLike,
       ObservableComputationFor<SynchronousObservableLike>
     > &
       SynchronousComputationModule<
-        SynchronousObservableLike,
         ObservableComputationFor<SynchronousObservableLike>
       >,
   ),
@@ -808,9 +788,16 @@ testModule(
           { mode: "combine-latest" },
         ),
         Computation.keepType<
-          SynchronousObservableLike,
           ObservableComputationFor<SynchronousObservableLike>
-        >(Observable)(isSome),
+        >(
+          // FIXME: A bit hacky to need to cast
+          Observable as Pick<
+            ComputationModule<
+              ObservableComputationFor<SynchronousObservableLike>
+            >,
+            "keep"
+          >,
+        )(isSome),
         Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.run(),
       );

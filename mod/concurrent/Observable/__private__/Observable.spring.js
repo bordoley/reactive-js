@@ -24,7 +24,10 @@ const Observable_spring = (options) => {
         const d = (velocity + acceleration) * dt;
         const newValue = abs(d) < precision && abs(delta) < precision ? 1 : value + d;
         return tuple(now, value, newValue);
-    }, returns(tuple(MAX_VALUE, 0, 0))), Computation.pick({ map: Observable_map })(2), Observable_takeWhile(isNotEqualTo(1), {
+    }, returns(tuple(MAX_VALUE, 0, 0))), Computation.pick({
+        // FIXME: A little hacky to need to cast
+        map: Observable_map,
+    })(2), Observable_takeWhile(isNotEqualTo(1), {
         inclusive: true,
     }));
 };

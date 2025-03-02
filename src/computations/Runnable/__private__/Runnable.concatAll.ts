@@ -1,4 +1,6 @@
 import {
+  ComputationLike_isPure,
+  ComputationWithSideEffectsType,
   RunnableLike,
   RunnableLike_eval,
   SinkLike,
@@ -6,7 +8,7 @@ import {
   SinkLike_isComplete,
   SinkLike_next,
 } from "../../../computations.js";
-import { newInstance, returns } from "../../../functions.js";
+import { newInstance } from "../../../functions.js";
 import type * as Runnable from "../../Runnable.js";
 import AbstractSink, {
   AbstractSink_delegate,
@@ -38,14 +40,12 @@ class ConcatAllSink<T> extends AbstractSink<
   }
 }
 
-const Runnable_concatAll: Runnable.Signature["concatAll"] = /*@__PURE__*/ (<
-  T,
->() =>
-  returns(
-    Runnable_lift((sink: SinkLike<T>) => {
-      const innerSink = newInstance(DelegatingNonCompletingSink, sink);
-      return newInstance(ConcatAllSink<T>, innerSink);
-    }, true),
-  ))();
+const Runnable_concatAll: Runnable.Signature["concatAll"] = (<T>(options?: {
+  readonly innerType: typeof ComputationWithSideEffectsType;
+}) =>
+  Runnable_lift((sink: SinkLike<T>) => {
+    const innerSink = newInstance(DelegatingNonCompletingSink, sink);
+    return newInstance(ConcatAllSink<T>, innerSink);
+  }, options?.innerType?.[ComputationLike_isPure] ?? true)) as Runnable.Signature["concatAll"];
 
 export default Runnable_concatAll;

@@ -8,14 +8,34 @@
 
 ## Extends
 
-- [`Computation`](../../../computations/interfaces/Computation.md)
+- [`Computation`](../../../computations/type-aliases/Computation.md)
 
 ## Properties
 
-### \[Computation\_type\]?
+### \[Computation\_ofT\]?
 
-> `readonly` `optional` **\[Computation\_type\]**: [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>
+> `readonly` `optional` **\[Computation\_ofT\]**: [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>
 
 #### Overrides
 
-[`Computation`](../../../computations/interfaces/Computation.md).[`[Computation_type]`](../../../computations/interfaces/Computation.md#computation_type)
+`Computation.[Computation_ofT]`
+
+***
+
+### \[Computation\_pureOfT\]?
+
+> `readonly` `optional` **\[Computation\_pureOfT\]**: [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>
+
+#### Overrides
+
+`Computation.[Computation_pureOfT]`
+
+***
+
+### \[Computation\_withSideEffectsOfT\]?
+
+> `readonly` `optional` **\[Computation\_withSideEffectsOfT\]**: `undefined`
+
+#### Overrides
+
+`Computation.[Computation_withSideEffectsOfT]`

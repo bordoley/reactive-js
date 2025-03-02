@@ -6,7 +6,6 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   Computation,
-  ComputationLike,
   ComputationModule,
   ComputationOf,
 } from "../../../computations.js";
@@ -18,17 +17,14 @@ import {
   pipeLazy,
 } from "../../../functions.js";
 
-const ComputationModuleTests = <
-  Type extends ComputationLike,
-  TComputation extends Computation,
->(
-  m: ComputationModule<Type, TComputation> & {
+const ComputationModuleTests = <TComputation extends Computation>(
+  m: ComputationModule<TComputation> & {
     fromReadonlyArray: <T>() => Function1<
       ReadonlyArray<T>,
-      ComputationOf<Type, TComputation, T>
+      ComputationOf<TComputation, T>
     >;
     toReadonlyArray: <T>() => Function1<
-      ComputationOf<Type, TComputation, T>,
+      ComputationOf<TComputation, T>,
       ReadonlyArray<T>
     >;
   },
@@ -43,7 +39,7 @@ const ComputationModuleTests = <
           [4, 8, 10, 7],
           m.fromReadonlyArray(),
           m.keep(greaterThan(5)),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([8, 10, 7]),
         ),
       ),
@@ -74,7 +70,7 @@ const ComputationModuleTests = <
           [1, 2, 3],
           m.fromReadonlyArray(),
           m.map(increment),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([2, 3, 4]),
         ),
       ),

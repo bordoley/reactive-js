@@ -22,5 +22,5 @@ class ConcatManyRunnable {
         sink[SinkLike_complete]();
     }
 }
-const Runnable_concatMany = (computations) => newInstance((ConcatManyRunnable), computations);
+const Runnable_concatMany = ((computations) => newInstance((ConcatManyRunnable), computations));
 export default Runnable_concatMany;

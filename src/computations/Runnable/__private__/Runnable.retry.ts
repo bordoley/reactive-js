@@ -42,9 +42,14 @@ class RetryRunnable<T> implements RunnableLike<T> {
   }
 }
 
-const Runnable_retry: Runnable.Signature["retry"] =
-  <T>(shouldRetry?: (count: number, error: Error) => boolean) =>
+const Runnable_retry: Runnable.Signature["retry"] = (<T>(
+    shouldRetry?: (count: number, error: Error) => boolean,
+  ) =>
   (deferable: RunnableLike<T>) =>
-    newInstance(RetryRunnable, deferable, shouldRetry ?? alwaysTrue);
+    newInstance(
+      RetryRunnable,
+      deferable,
+      shouldRetry ?? alwaysTrue,
+    )) as Runnable.Signature["retry"];
 
 export default Runnable_retry;

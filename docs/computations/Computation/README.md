@@ -8,6 +8,12 @@
 
 ## Interfaces
 
+- [ConcatMapIterableOperator](interfaces/ConcatMapIterableOperator.md)
+- [ConcatMapOperator](interfaces/ConcatMapOperator.md)
+- [ConcatOperator](interfaces/ConcatOperator.md)
+- [ConcatWithOperator](interfaces/ConcatWithOperator.md)
+- [MergeOperator](interfaces/MergeOperator.md)
+- [MergeWithOperator](interfaces/MergeWithOperator.md)
 - [PickOperator](interfaces/PickOperator.md)
 - [Signature](interfaces/Signature.md)
 

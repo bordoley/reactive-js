@@ -5,7 +5,7 @@ import { MAX_VALUE, MIN_VALUE } from "../../../../__internal__/constants.js";
 import { clamp } from "../../../../__internal__/math.js";
 import * as Computation from "../../../../computations/Computation.js";
 import * as EventSource from "../../../../events/EventSource.js";
-import { EventListenerLike_notify, } from "../../../../events.js";
+import { EventListenerLike_notify } from "../../../../events.js";
 import { pipe, returns } from "../../../../functions.js";
 import * as Disposable from "../../../../utils/Disposable.js";
 import Element_eventSource from "./Element.eventSource.js";

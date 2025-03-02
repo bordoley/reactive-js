@@ -1,3 +1,3 @@
-import { Computation, DeferredComputationModule, SynchronousComputationLike, SynchronousComputationModule } from "../../../computations.js";
-declare const DeferredComputationModuleTests: <Type extends SynchronousComputationLike, TComputation extends Computation>(m: DeferredComputationModule<Type, TComputation> & SynchronousComputationModule<Type, TComputation>) => import("../../../__internal__/testing.js").Describe;
+import { Computation, DeferredComputationModule, SynchronousComputationModule } from "../../../computations.js";
+declare const DeferredComputationModuleTests: <TComputation extends Computation>(m: DeferredComputationModule<TComputation> & SynchronousComputationModule<TComputation>) => import("../../../__internal__/testing.js").Describe;
 export default DeferredComputationModuleTests;

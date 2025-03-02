@@ -29,11 +29,12 @@ testModule("Computation", describe("concat", test("concats the input containers 
         },
     };
     pipe([obj], Computation.pick(Iterable)(keyA, keyB), Iterable.toReadonlyArray(), expectArrayEquals(["value"]));
-}), test("with object and string keys", pipeLazy([
-    {
+}), test("with object and string keys", () => {
+    const obj = {
         keyA: {
             keyB: "value",
         },
-    },
-], Computation.pick(Iterable)("keyA", "keyB"), Iterable.toReadonlyArray(), expectArrayEquals(["value"]))), test("with array", pipeLazy([[1, 2, 3, 4, 5, 6]], Computation.pick(Iterable)(3), Iterable.toReadonlyArray(), expectArrayEquals([4])))), describe("startWith", test("appends the additional values to the start of the container", pipeLazy([0, 1], Computation.startWith(Iterable)(2, 3, 4), Iterable.toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1])))));
+    };
+    pipe([obj], Computation.pick(Iterable)("keyA", "keyB"), Iterable.toReadonlyArray(), expectArrayEquals(["value"]));
+}), test("with array", pipeLazy([[1, 2, 3, 4, 5, 6]], Computation.pick(Iterable)(3), Iterable.toReadonlyArray(), expectArrayEquals([4])))), describe("startWith", test("appends the additional values to the start of the container", pipeLazy([0, 1], Computation.startWith(Iterable)(2, 3, 4), Iterable.toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1])))));
 ((_) => { })(Computation);

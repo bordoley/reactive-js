@@ -45,7 +45,7 @@ class RepeatRunnable<T> implements RunnableLike<T> {
   }
 }
 
-const Runnable_repeat: Runnable.Signature["repeat"] = <T>(
+const Runnable_repeat: Runnable.Signature["repeat"] = (<T>(
   predicate?: Predicate<number> | number,
 ) => {
   const repeatPredicate = isFunction(predicate)
@@ -56,6 +56,6 @@ const Runnable_repeat: Runnable.Signature["repeat"] = <T>(
 
   return (deferable: RunnableLike<T>) =>
     newInstance(RepeatRunnable, deferable, repeatPredicate);
-};
+}) as Runnable.Signature["repeat"];
 
 export default Runnable_repeat;

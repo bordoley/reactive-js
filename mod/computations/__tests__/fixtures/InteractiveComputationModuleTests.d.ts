@@ -1,7 +1,7 @@
-import { Computation, ComputationOf, DeferredComputationLike, DeferredComputationModule, InteractiveComputationLike, InteractiveComputationModule } from "../../../computations.js";
+import { Computation, ComputationOf, DeferredComputationModule, InteractiveComputationModule } from "../../../computations.js";
 import { Function1 } from "../../../functions.js";
-declare const InteractiveComputationModuleTests: <Type extends DeferredComputationLike & InteractiveComputationLike, TComputation extends Computation>(m: InteractiveComputationModule<Type, TComputation> & DeferredComputationModule<Type, TComputation> & {
-    fromReadonlyArray: <T>() => Function1<ReadonlyArray<T>, ComputationOf<Type, TComputation, T>>;
-    toReadonlyArray: <T>() => Function1<ComputationOf<Type, TComputation, T>, ReadonlyArray<T>>;
+declare const InteractiveComputationModuleTests: <TComputation extends Computation>(m: InteractiveComputationModule<TComputation> & DeferredComputationModule<TComputation> & {
+    fromReadonlyArray: <T>() => Function1<ReadonlyArray<T>, ComputationOf<TComputation, T>>;
+    toReadonlyArray: <T>() => Function1<ComputationOf<TComputation, T>, ReadonlyArray<T>>;
 }) => import("../../../__internal__/testing.js").Describe;
 export default InteractiveComputationModuleTests;

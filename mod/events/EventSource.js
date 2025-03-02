@@ -1,6 +1,6 @@
 /// <reference types="./EventSource.d.ts" />
 
-import { Computation_type, } from "../computations.js";
+import { Computation_ofT, Computation_pureOfT, Computation_withSideEffectsOfT, } from "../computations.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource/__private__/EventSource.create.js";
 import EventSource_fromPromise from "./EventSource/__private__/EventSource.fromPromise.js";

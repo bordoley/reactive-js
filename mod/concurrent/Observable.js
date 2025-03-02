@@ -1,6 +1,6 @@
 /// <reference types="./Observable.d.ts" />
 
-import { Computation_type, } from "../computations.js";
+import { Computation_ofT, Computation_pureOfT, Computation_withSideEffectsOfT, } from "../computations.js";
 import Observable_backpressureStrategy from "./Observable/__private__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";

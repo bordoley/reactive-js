@@ -155,7 +155,6 @@ testModule(
           state =>
             pipe(
               Computation.sequence<
-                PureSynchronousObservableLike,
                 ObservableComputationFor<PureSynchronousObservableLike>
               >(Observable)(state + 10),
               Observable.map(x => (_: number) => x),

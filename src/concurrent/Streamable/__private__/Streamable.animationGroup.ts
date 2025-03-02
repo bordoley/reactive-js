@@ -17,6 +17,7 @@ import * as Iterable from "../../../computations/Iterable.js";
 import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
 import {
   AnimationGroupStreamLike,
+  ObservableLike,
   PauseableLike_resume,
   PureSynchronousObservableLike,
   SchedulerLike,
@@ -28,6 +29,7 @@ import { EventSourceLike, PublisherLike } from "../../../events.js";
 import {
   Function1,
   Optional,
+  Tuple2,
   isFunction,
   none,
   pipe,
@@ -98,15 +100,21 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
               pipe(
                 animationGroup,
                 ReadonlyObjectMap.entries(),
-                Iterable.map(([key, factory]) => {
-                  const publisher = publishers[key] as PublisherLike<T>;
-                  return pipe(
-                    isFunction(factory) ? factory(event) : factory,
-                    Observable.notify(publisher),
-                    Observable.subscribeOn(pauseableScheduler),
-                  );
-                }),
-                ReadonlyArray.fromIterable(),
+                Iterable.map(
+                  ([key, factory]: Tuple2<
+                    string,
+                    | Function1<TEvent, PureSynchronousObservableLike<T>>
+                    | PureSynchronousObservableLike<T>
+                  >) => {
+                    const publisher = publishers[key] as PublisherLike<T>;
+                    return pipe(
+                      isFunction(factory) ? factory(event) : factory,
+                      Observable.notify(publisher),
+                      Observable.subscribeOn(pauseableScheduler),
+                    );
+                  },
+                ),
+                ReadonlyArray.fromIterable<ObservableLike>(),
               ),
             ),
             Observable.ignoreElements(),

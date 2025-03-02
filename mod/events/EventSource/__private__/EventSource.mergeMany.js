@@ -8,7 +8,7 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import EventSource_addEventHandler from "./EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource.create.js";
-const EventSource_mergeMany = (eventSources) => EventSource_create(listener => {
+const EventSource_mergeMany = ((eventSources) => EventSource_create(listener => {
     const count = eventSources[Array_length];
     let completed = 0;
     const eventHandler = bindMethod(listener, EventListenerLike_notify);
@@ -20,5 +20,5 @@ const EventSource_mergeMany = (eventSources) => EventSource_create(listener => {
             }
         }));
     }
-});
+}));
 export default EventSource_mergeMany;

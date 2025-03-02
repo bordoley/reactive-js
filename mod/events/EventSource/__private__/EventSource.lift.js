@@ -23,12 +23,12 @@ const createLiftedEventSource = /*@__PURE__*/ (() => {
         },
     });
 })();
-const EventSource_lift = (operator) => (source) => {
+const EventSource_lift = ((operator) => (source) => {
     const sourceSource = source[LiftedEventSource_source] ?? source;
     const allFunctions = [
         operator,
         ...(source[LiftedEventSource_operators] ?? []),
     ];
     return createLiftedEventSource(sourceSource, allFunctions);
-};
+});
 export default EventSource_lift;

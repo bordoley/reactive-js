@@ -6,19 +6,17 @@
 
 # Function: startWith()
 
-> **startWith**\<`Type`, `TComputation`\>(`m`): \<`T`\>(`value`, ...`values`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
+> **startWith**\<`TComputation`\>(`m`): \<`T`\>(`value`, ...`values`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ## Type Parameters
 
-• **Type** *extends* [`DeferredComputationLike`](../../interfaces/DeferredComputationLike.md)
-
-• **TComputation** *extends* [`Computation`](../../interfaces/Computation.md)
+• **TComputation** *extends* [`Computation`](../../type-aliases/Computation.md)
 
 ## Parameters
 
 ### m
 
-`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`Type`, `TComputation`\>, `"concatMany"` \| `"fromReadonlyArray"`\>
+`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"concatMany"` \| `"fromReadonlyArray"`\>
 
 ## Returns
 
@@ -40,4 +38,4 @@
 
 ### Returns
 
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>

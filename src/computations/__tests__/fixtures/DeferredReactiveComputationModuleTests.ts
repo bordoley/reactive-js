@@ -7,12 +7,9 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   Computation,
-  ComputationWithSideEffectsLike,
   ComputationWithSideEffectsModule,
   DeferredComputationModule,
   DeferredReactiveComputationModule,
-  ReactiveComputationLike,
-  SynchronousComputationLike,
   SynchronousComputationModule,
 } from "../../../computations.js";
 import * as Observable from "../../../concurrent/Observable.js";
@@ -25,20 +22,12 @@ import {
 } from "../../../functions.js";
 
 const DeferredReactiveComputationModuleTests = <
-  Type extends SynchronousComputationLike & ReactiveComputationLike,
   TComputation extends Computation,
-  TypeWithSideEffects extends ComputationWithSideEffectsLike & Type,
-  TComputationWithSideEffects extends Computation & TComputation,
 >(
-  m: DeferredReactiveComputationModule<Type, TComputation> &
-    DeferredComputationModule<Type, TComputation> &
-    SynchronousComputationModule<Type, TComputation> &
-    ComputationWithSideEffectsModule<
-      Type,
-      TComputation,
-      TypeWithSideEffects,
-      TComputationWithSideEffects
-    >,
+  m: DeferredReactiveComputationModule<TComputation> &
+    DeferredComputationModule<TComputation> &
+    SynchronousComputationModule<TComputation> &
+    ComputationWithSideEffectsModule<TComputation>,
 ) =>
   describe(
     "DeferredReactiveComputationModule",
@@ -48,9 +37,9 @@ const DeferredReactiveComputationModuleTests = <
         "with multiple sub buffers",
         pipeLazy(
           [1, 2, 3, 4, 5, 6, 7, 8, 9],
-          m.fromReadonlyArray(),
+          m.fromReadonlyArray<number>(),
           m.buffer({ count: 3 }),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<readonly number[]>(),
           expectArrayEquals<readonly number[]>(
             [
               [1, 2, 3],
@@ -67,7 +56,7 @@ const DeferredReactiveComputationModuleTests = <
           [1, 2, 3, 4, 5, 6, 7, 8],
           m.fromReadonlyArray(),
           m.buffer({ count: 3 }),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<readonly number[]>(),
           expectArrayEquals<readonly number[]>(
             [
               [1, 2, 3],
@@ -84,7 +73,7 @@ const DeferredReactiveComputationModuleTests = <
           [1, 2, 3, 4, 5, 6, 7, 8],
           m.fromReadonlyArray(),
           m.buffer(),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<readonly number[]>(),
           expectArrayEquals<readonly number[]>([[1, 2, 3, 4, 5, 6, 7, 8]], {
             valuesEquality: arrayEquality(),
           }),
@@ -166,7 +155,7 @@ const DeferredReactiveComputationModuleTests = <
           [1, 2, 2, 2, 2, 3, 3, 3, 4],
           m.fromReadonlyArray(),
           m.distinctUntilChanged(),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2, 3, 4]),
         ),
       ),
@@ -175,7 +164,7 @@ const DeferredReactiveComputationModuleTests = <
         pipeLazy(
           m.empty<number>(),
           m.distinctUntilChanged(),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals<number>([]),
         ),
       ),
@@ -203,7 +192,7 @@ const DeferredReactiveComputationModuleTests = <
           m.distinctUntilChanged({
             equality: () => true,
           }),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1]),
         ),
       ),
@@ -216,7 +205,7 @@ const DeferredReactiveComputationModuleTests = <
           [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
           m.fromReadonlyArray(),
           m.pairwise<number>(),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<Tuple2<number, number>>(),
           expectArrayEquals(
             [
               tuple(0, 1),
@@ -254,7 +243,7 @@ const DeferredReactiveComputationModuleTests = <
           [1, 2, 3],
           m.fromReadonlyArray(),
           m.skipFirst(),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([2, 3]),
         ),
       ),
@@ -264,7 +253,7 @@ const DeferredReactiveComputationModuleTests = <
           [1, 2, 3],
           m.fromReadonlyArray(),
           m.skipFirst({ count: 2 }),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([3]),
         ),
       ),
@@ -274,7 +263,7 @@ const DeferredReactiveComputationModuleTests = <
           [1, 2, 3],
           m.fromReadonlyArray(),
           m.skipFirst({ count: 4 }),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([] as number[]),
         ),
       ),

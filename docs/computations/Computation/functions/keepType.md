@@ -6,19 +6,17 @@
 
 # Function: keepType()
 
-> **keepType**\<`Type`, `TComputation`\>(`m`): \<`TA`, `TB`\>(`predicate`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `TA`, `TB`\>
+> **keepType**\<`TComputation`\>(`m`): \<`TA`, `TB`\>(`predicate`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
 
 ## Type Parameters
 
-• **Type** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
-
-• **TComputation** *extends* [`Computation`](../../interfaces/Computation.md)
+• **TComputation** *extends* [`Computation`](../../type-aliases/Computation.md)
 
 ## Parameters
 
 ### m
 
-`Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<`Type`, `TComputation`\>, `"keep"`\>
+`Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputation`\>, `"keep"`\>
 
 ## Returns
 
@@ -38,4 +36,4 @@
 
 ### Returns
 
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `TA`, `TB`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `TA`, `TB`\>

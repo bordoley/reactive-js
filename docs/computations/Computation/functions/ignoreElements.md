@@ -6,19 +6,17 @@
 
 # Function: ignoreElements()
 
-> **ignoreElements**\<`Type`, `TComputation`\>(`m`): \<`T`\>() => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `any`, `T`\>
+> **ignoreElements**\<`TComputation`\>(`m`): \<`T`\>() => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `any`, `T`\>
 
 ## Type Parameters
 
-• **Type** *extends* [`DeferredComputationLike`](../../interfaces/DeferredComputationLike.md)
-
-• **TComputation** *extends* [`Computation`](../../interfaces/Computation.md)
+• **TComputation** *extends* [`Computation`](../../type-aliases/Computation.md)
 
 ## Parameters
 
 ### m
 
-`Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<`Type`, `TComputation`\>, `"keep"`\>
+`Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputation`\>, `"keep"`\>
 
 ## Returns
 
@@ -30,4 +28,4 @@
 
 ### Returns
 
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `any`, `T`\>
+[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `any`, `T`\>

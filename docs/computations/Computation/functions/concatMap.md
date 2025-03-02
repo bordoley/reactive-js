@@ -6,36 +6,18 @@
 
 # Function: concatMap()
 
-> **concatMap**\<`Type`, `TComputation`\>(`m`): \<`TA`, `TB`\>(`selector`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `TA`, `TB`\>
+> **concatMap**\<`TComputation`\>(`m`): [`ConcatMapOperator`](../interfaces/ConcatMapOperator.md)\<`TComputation`\>
 
 ## Type Parameters
 
-• **Type** *extends* [`DeferredComputationLike`](../../interfaces/DeferredComputationLike.md)
-
-• **TComputation** *extends* [`Computation`](../../interfaces/Computation.md)
+• **TComputation** *extends* [`Computation`](../../type-aliases/Computation.md)
 
 ## Parameters
 
 ### m
 
-`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`Type`, `TComputation`\>, `"map"` \| `"concatAll"`\>
+`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"map"` \| `"concatAll"`\>
 
 ## Returns
 
-`Function`
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-### Parameters
-
-#### selector
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`ComputationOf`](../../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TB`\>\>
-
-### Returns
-
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `TA`, `TB`\>
+[`ConcatMapOperator`](../interfaces/ConcatMapOperator.md)\<`TComputation`\>

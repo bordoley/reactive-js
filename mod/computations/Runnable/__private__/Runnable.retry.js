@@ -33,5 +33,5 @@ class RetryRunnable {
         sink[SinkLike_complete]();
     }
 }
-const Runnable_retry = (shouldRetry) => (deferable) => newInstance(RetryRunnable, deferable, shouldRetry ?? alwaysTrue);
+const Runnable_retry = ((shouldRetry) => (deferable) => newInstance(RetryRunnable, deferable, shouldRetry ?? alwaysTrue));
 export default Runnable_retry;

@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / InteractiveComputationModule
 
-# Interface: InteractiveComputationModule\<Type, TComputation\>
+# Interface: InteractiveComputationModule\<TComputation\>
 
 ## Extended by
 
@@ -12,9 +12,7 @@
 
 ## Type Parameters
 
-• **Type** *extends* [`InteractiveComputationLike`](InteractiveComputationLike.md)
-
-• **TComputation** *extends* [`Computation`](Computation.md)
+• **TComputation** *extends* [`Computation`](../type-aliases/Computation.md)
 
 ## Methods
 
@@ -22,7 +20,7 @@
 
 #### Call Signature
 
-> **zip**\<`TA`, `TB`\>(`a`, `b`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **zip**\<`TA`, `TB`\>(`a`, `b`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ##### Type Parameters
 
@@ -34,19 +32,19 @@
 
 ###### a
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TA`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TA`\>
 
 ###### b
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TB`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TB`\>
 
 ##### Returns
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 #### Call Signature
 
-> **zip**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, [`Tuple3`](../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+> **zip**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, [`Tuple3`](../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
 
 ##### Type Parameters
 
@@ -60,23 +58,23 @@
 
 ###### a
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TA`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TA`\>
 
 ###### b
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TB`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TB`\>
 
 ###### c
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TC`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TC`\>
 
 ##### Returns
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, [`Tuple3`](../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, [`Tuple3`](../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
 
 #### Call Signature
 
-> **zip**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, [`Tuple4`](../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+> **zip**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, [`Tuple4`](../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
 
 ##### Type Parameters
 
@@ -92,20 +90,20 @@
 
 ###### a
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TA`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TA`\>
 
 ###### b
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TB`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TB`\>
 
 ###### c
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TC`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TC`\>
 
 ###### d
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `TD`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TD`\>
 
 ##### Returns
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, [`Tuple4`](../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, [`Tuple4`](../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>

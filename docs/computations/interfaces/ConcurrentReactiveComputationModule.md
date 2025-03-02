@@ -4,11 +4,11 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / ConcurrentReactiveComputationModule
 
-# Interface: ConcurrentReactiveComputationModule\<Type, TComputation\>
+# Interface: ConcurrentReactiveComputationModule\<TComputation\>
 
 ## Extends
 
-- [`ComputationModule`](ComputationModule.md)\<`Type`, `TComputation`\>
+- [`ComputationModule`](ComputationModule.md)\<`TComputation`\>
 
 ## Extended by
 
@@ -16,15 +16,13 @@
 
 ## Type Parameters
 
-• **Type** *extends* [`ReactiveComputationLike`](ReactiveComputationLike.md)
-
-• **TComputation** *extends* [`Computation`](Computation.md)
+• **TComputation** *extends* [`Computation`](../type-aliases/Computation.md)
 
 ## Methods
 
 ### fromPromise()
 
-> **fromPromise**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>\>
+> **fromPromise**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>\>
 
 #### Type Parameters
 
@@ -32,13 +30,13 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>\>
 
 ***
 
 ### keep()
 
-> **keep**\<`T`\>(`predicate`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
+> **keep**\<`T`\>(`predicate`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -52,7 +50,7 @@
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `T`, `T`\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 #### Inherited from
 
@@ -62,7 +60,7 @@
 
 ### map()
 
-> **map**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `TA`, `TB`\>
+> **map**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
 
 #### Type Parameters
 
@@ -78,7 +76,7 @@
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`Type`, `TComputation`, `TA`, `TB`\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
 
 #### Inherited from
 
@@ -88,18 +86,38 @@
 
 ### mergeMany()
 
-> **mergeMany**\<`T`\>(`eventSources`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>
+#### Call Signature
 
-#### Type Parameters
+> **mergeMany**\<`T`\>(`computations`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+
+##### Type Parameters
 
 • **T**
 
-#### Parameters
+##### Parameters
 
-##### eventSources
+###### computations
 
-readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>[]
+readonly [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>[]
 
-#### Returns
+##### Returns
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`Type`, `TComputation`, `T`\>
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+
+#### Call Signature
+
+> **mergeMany**\<`T`\>(`computations`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### computations
+
+readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>[]
+
+##### Returns
+
+[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>

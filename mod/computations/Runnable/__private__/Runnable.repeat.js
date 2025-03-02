@@ -28,12 +28,12 @@ class RepeatRunnable {
         sink[SinkLike_complete]();
     }
 }
-const Runnable_repeat = (predicate) => {
+const Runnable_repeat = ((predicate) => {
     const repeatPredicate = isFunction(predicate)
         ? predicate
         : isNone(predicate)
             ? alwaysTrue
             : (count) => count < predicate;
     return (deferable) => newInstance(RepeatRunnable, deferable, repeatPredicate);
-};
+});
 export default Runnable_repeat;

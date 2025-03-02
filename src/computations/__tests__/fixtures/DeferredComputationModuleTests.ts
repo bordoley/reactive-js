@@ -12,7 +12,6 @@ import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import {
   Computation,
   DeferredComputationModule,
-  SynchronousComputationLike,
   SynchronousComputationModule,
 } from "../../../computations.js";
 import {
@@ -29,12 +28,9 @@ import {
 } from "../../../functions.js";
 import * as ComputationM from "../../Computation.js";
 
-const DeferredComputationModuleTests = <
-  Type extends SynchronousComputationLike,
-  TComputation extends Computation,
->(
-  m: DeferredComputationModule<Type, TComputation> &
-    SynchronousComputationModule<Type, TComputation>,
+const DeferredComputationModuleTests = <TComputation extends Computation>(
+  m: DeferredComputationModule<TComputation> &
+    SynchronousComputationModule<TComputation>,
 ) =>
   describe(
     "DeferredComputationModule",
@@ -61,7 +57,7 @@ const DeferredComputationModuleTests = <
 
         pipe(
           m.raise<number>({ raise: () => e1 }),
-          m.catchError(_ => {
+          m.catchError<number>(_ => {
             throw e2;
           }),
           m.catchError<number>(e => {
@@ -82,9 +78,9 @@ const DeferredComputationModuleTests = <
         pipeLazy(
           [1, 2, 3],
           m.fromReadonlyArray(),
-          ComputationM.concatWith(m)(m.raise()),
+          ComputationM.concatWith(m)(m.raise<number>()),
           m.catchError(pipeLazy([4, 5, 6], m.fromReadonlyArray())),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2, 3, 4, 5, 6]),
         ),
       ),
@@ -202,7 +198,7 @@ const DeferredComputationModuleTests = <
             pipe([7, 8, 8], m.fromReadonlyArray()),
           ]),
           m.takeFirst({ count: 5 }),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2, 3, 4, 5]),
         ),
       ),
@@ -301,7 +297,7 @@ const DeferredComputationModuleTests = <
           m.fromReadonlyArray(),
           m.repeat<number>(),
           m.takeFirst<number>({ count: 8 }),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2]),
         ),
       ),
@@ -311,7 +307,7 @@ const DeferredComputationModuleTests = <
           [1, 2, 3],
           m.fromReadonlyArray(),
           m.repeat<number>(3),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
         ),
       ),
@@ -321,7 +317,7 @@ const DeferredComputationModuleTests = <
           [1, 2, 3],
           m.fromReadonlyArray(),
           m.repeat<number>(lessThan(1)),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2, 3]),
         ),
       ),
@@ -349,9 +345,9 @@ const DeferredComputationModuleTests = <
             m.generate(increment, returns(0), { count: 3 }),
             m.raise(),
           ),
-          m.retry(alwaysTrue),
+          m.retry<number>(alwaysTrue),
           m.takeFirst<number>({ count: 6 }),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2, 3, 1, 2, 3]),
         ),
       ),
@@ -362,9 +358,9 @@ const DeferredComputationModuleTests = <
             m.generate(increment, returns(0), { count: 3 }),
             m.raise(),
           ),
-          m.retry(),
+          m.retry<number>(),
           m.takeFirst<number>({ count: 6 }),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2, 3, 1, 2, 3]),
         ),
       ),
@@ -383,9 +379,9 @@ const DeferredComputationModuleTests = <
             m.generate(increment, returns(0), { count: 3 }),
             m.raise(),
           ),
-          m.retry((count, _) => count < 2),
+          m.retry<number>((count, _) => count < 2),
           m.takeFirst<number>({ count: 10 }),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2, 3, 1, 2, 3]),
         ),
       ),
@@ -398,7 +394,7 @@ const DeferredComputationModuleTests = <
           [1, 1, 1],
           m.fromReadonlyArray(),
           m.scan<number, number>((a, b) => a + b, returns(0)),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2, 3]),
         ),
       ),
@@ -428,8 +424,8 @@ const DeferredComputationModuleTests = <
           pipeLazy(
             [1, 1],
             m.fromReadonlyArray(),
-            m.scan((a, b) => a + b, initialValue),
-            m.toReadonlyArray(),
+            m.scan<number, number>((a, b) => a + b, initialValue),
+            m.toReadonlyArray<number>(),
           ),
           expectToThrowError(err),
         );
@@ -443,7 +439,7 @@ const DeferredComputationModuleTests = <
           [0, 1],
           m.fromReadonlyArray(),
           ComputationM.startWith(m)(2, 3, 4),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([2, 3, 4, 0, 1]),
         ),
       ),
@@ -456,7 +452,7 @@ const DeferredComputationModuleTests = <
           [1, 2, 3, 4, 5],
           m.fromReadonlyArray(),
           m.takeFirst(),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1]),
         ),
       ),
@@ -466,7 +462,7 @@ const DeferredComputationModuleTests = <
           [1, 2, 3, 4, 5],
           m.fromReadonlyArray(),
           m.takeFirst({ count: 3 }),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2, 3]),
         ),
       ),
@@ -476,7 +472,7 @@ const DeferredComputationModuleTests = <
           [1, 2],
           m.fromReadonlyArray(),
           m.takeFirst({ count: 3 }),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2]),
         ),
       ),
@@ -486,7 +482,7 @@ const DeferredComputationModuleTests = <
           [1, 2, 3, 4],
           m.fromIterable<number>(),
           m.takeFirst({ count: 2 }),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2]),
         ),
       ),
@@ -495,9 +491,9 @@ const DeferredComputationModuleTests = <
         pipeLazy(
           [],
           m.fromReadonlyArray(),
-          m.takeFirst({ count: 3 }),
+          m.takeFirst<number>({ count: 3 }),
           m.toReadonlyArray(),
-          expectArrayEquals([]),
+          expectArrayEquals<number>([]),
         ),
       ),
       test(
@@ -506,7 +502,7 @@ const DeferredComputationModuleTests = <
           [1, 2, 3],
           m.fromReadonlyArray(),
           m.takeFirst(),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1]),
         ),
       ),
@@ -516,7 +512,7 @@ const DeferredComputationModuleTests = <
           [1, 2, 3],
           m.fromReadonlyArray(),
           m.takeFirst({ count: 0 }),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([] as number[]),
         ),
       ),
@@ -528,7 +524,7 @@ const DeferredComputationModuleTests = <
           [1, 2, 3, 4, 5],
           m.fromReadonlyArray(),
           m.takeWhile(lessThan(4)),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2, 3]),
         );
 
@@ -536,7 +532,7 @@ const DeferredComputationModuleTests = <
           [1, 2, 3],
           m.fromReadonlyArray(),
           m.takeWhile<number>(alwaysTrue),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2, 3]),
         );
 
@@ -544,7 +540,7 @@ const DeferredComputationModuleTests = <
           [],
           m.fromReadonlyArray(),
           m.takeWhile<number>(alwaysTrue),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([] as number[]),
         );
       }),
@@ -554,7 +550,7 @@ const DeferredComputationModuleTests = <
           [1, 2, 3, 4, 5, 6],
           m.fromReadonlyArray(),
           m.takeWhile(lessThan(4), { inclusive: true }),
-          m.toReadonlyArray(),
+          m.toReadonlyArray<number>(),
           expectArrayEquals([1, 2, 3, 4]),
         ),
       ),

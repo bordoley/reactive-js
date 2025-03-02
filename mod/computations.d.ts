@@ -50,96 +50,125 @@ export interface MulticastComputationLike extends ComputationLike {
     readonly [ComputationLike_isPure]?: true;
 }
 export declare const Computation_T: unique symbol;
-export declare const Computation_type: unique symbol;
+export declare const Computation_ofT: unique symbol;
+export declare const Computation_pureOfT: unique symbol;
+export declare const Computation_withSideEffectsOfT: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface Computation {
+export interface GenericComputation<TComputationOfT extends ComputationLike, TPureComputation extends TComputationOfT & PureComputationLike, TComputationWithSideEffects extends TComputationOfT & ComputationWithSideEffectsLike> {
     readonly [Computation_T]?: unknown;
-    readonly [Computation_type]?: unknown;
+    readonly [Computation_ofT]?: TComputationOfT;
+    readonly [Computation_pureOfT]?: TPureComputation;
+    readonly [Computation_withSideEffectsOfT]?: TComputationWithSideEffects;
 }
-export type ComputationOf<Type extends ComputationLike, TComputation extends Computation, T> = TComputation extends {
-    readonly [Computation_type]?: unknown;
+export type Computation = GenericComputation<ComputationLike, PureComputationLike, ComputationWithSideEffectsLike>;
+export type ComputationOf<TComputation extends Computation, T> = TComputation extends {
+    readonly [Computation_ofT]?: unknown;
 } ? NonNullable<(TComputation & {
     readonly [Computation_T]: T;
-})[typeof Computation_type] & Pick<Type, typeof ComputationLike_isPure | typeof ComputationLike_isDeferred | typeof ComputationLike_isSynchronous | typeof ComputationLike_isInteractive>> : {
+})[typeof Computation_ofT]> : {
     readonly _C: TComputation;
     readonly _T: () => T;
 };
-export type ComputationOperator<Type extends ComputationLike, TComputation extends Computation, TA, TB> = Function1<ComputationOf<Type, TComputation, TA>, ComputationOf<Type, TComputation, TB>>;
-export type ComputationWithSideEffectsOperator<Type extends ComputationLike, TComputation extends Computation, TypeWithSideEffects extends ComputationWithSideEffectsLike & Type, TComputationWithSideEffects extends Computation, TA, TB> = Function1<ComputationOf<Type, TComputation, TA>, ComputationOf<TypeWithSideEffects, TComputationWithSideEffects, TB>>;
-export interface ComputationModule<Type extends ComputationLike, TComputation extends Computation> {
-    keep<T>(predicate: Predicate<T>): ComputationOperator<Type, TComputation, T, T>;
-    map<TA, TB>(selector: Function1<TA, TB>): ComputationOperator<Type, TComputation, TA, TB>;
+export type ComputationWithSideEffectsOf<TComputation extends Computation, T> = TComputation extends {
+    readonly [Computation_ofT]?: unknown;
+} ? NonNullable<(TComputation & {
+    readonly [Computation_T]: T;
+})[typeof Computation_withSideEffectsOfT]> & ComputationOf<TComputation, T> : {
+    readonly _C: TComputation;
+    readonly _T: () => T;
+};
+export type PureComputationOf<TComputation extends Computation, T> = TComputation extends {
+    readonly [Computation_ofT]?: unknown;
+} ? NonNullable<(TComputation & {
+    readonly [Computation_T]: T;
+})[typeof Computation_pureOfT]> & ComputationOf<TComputation, T> : {
+    readonly _C: TComputation;
+    readonly _T: () => T;
+};
+export type ComputationOperator<TComputation extends Computation, TA, out TB> = <TComputationOf extends ComputationOf<TComputation, TA>>(computation: TComputationOf) => TComputationOf extends PureComputationOf<TComputation, TA> ? PureComputationOf<TComputation, TB> : ComputationWithSideEffectsOf<TComputation, TB>;
+export type ComputationWithSideEffectsOperator<TComputation extends Computation, TA, out TB> = Function1<ComputationOf<TComputation, TA>, ComputationWithSideEffectsOf<TComputation, TB>>;
+export interface ComputationModule<TComputation extends Computation> {
+    keep<T>(predicate: Predicate<T>): ComputationOperator<TComputation, T, T>;
+    map<TA, TB>(selector: Function1<TA, TB>): ComputationOperator<TComputation, TA, TB>;
 }
-export interface ComputationWithSideEffectsModule<Type extends ComputationLike, TComputation extends Computation, TypeWithSideEffects extends ComputationWithSideEffectsLike & Type, ComputationWithSideEffect extends Computation> {
-    forEach<T>(sideEffect: SideEffect1<T>): ComputationWithSideEffectsOperator<Type, TComputation, TypeWithSideEffects, ComputationWithSideEffect, T, T>;
+export interface ComputationWithSideEffectsModule<TComputation extends Computation> {
+    forEach<T>(sideEffect: SideEffect1<T>): ComputationWithSideEffectsOperator<TComputation, T, T>;
 }
-export interface DeferredComputationModule<Type extends DeferredComputationLike, TComputation extends Computation> extends ComputationModule<Type, TComputation> {
-    catchError<T>(onError: SideEffect1<Error>): ComputationOperator<Type, TComputation, T, T>;
-    catchError<T>(onError: Function1<Error, ComputationOf<Type, TComputation, T>>): ComputationOperator<Type, TComputation, T, T>;
-    concatAll<T>(): ComputationOperator<Type, TComputation, ComputationOf<Type, TComputation, T>, T>;
-    concatMany<T>(computations: readonly ComputationOf<Type, TComputation, T>[]): ComputationOf<Type, TComputation, T>;
-    empty<T>(): ComputationOf<Type, TComputation, T>;
-    fromIterable<T, TIterable extends IterableLike<T> = IterableLike<T>>(): Function1<TIterable, ComputationOf<Type, TComputation, T>>;
+export interface DeferredComputationModule<TComputation extends Computation> extends ComputationModule<TComputation> {
+    catchError<T>(onError: SideEffect1<Error>): ComputationOperator<TComputation, T, T>;
+    catchError<T>(onError: Function1<Error, PureComputationOf<TComputation, T>>): ComputationOperator<TComputation, T, T>;
+    catchError<T>(onError: Function1<Error, ComputationWithSideEffectsOf<TComputation, T>>, options: {
+        readonly innerType: typeof ComputationWithSideEffectsType;
+    }): ComputationWithSideEffectsOperator<TComputation, T, T>;
+    concatAll<T>(options?: {}): ComputationOperator<TComputation, PureComputationOf<TComputation, T>, T>;
+    concatAll<T>(options: {
+        readonly innerType: typeof ComputationWithSideEffectsType;
+    }): ComputationWithSideEffectsOperator<TComputation, ComputationOf<TComputation, T>, T>;
+    concatMany<T>(computations: readonly PureComputationOf<TComputation, T>[]): PureComputationOf<TComputation, T>;
+    concatMany<T>(computations: readonly ComputationOf<TComputation, T>[]): ComputationWithSideEffectsOf<TComputation, T>;
+    empty<T>(): ComputationOf<TComputation, T>;
+    fromIterable<T, TIterable extends IterableLike<T> = IterableLike<T>>(): Function1<TIterable, ComputationOf<TComputation, T>>;
     fromReadonlyArray<T>(options?: {
         readonly count?: number;
         readonly start?: number;
-    }): Function1<readonly T[], ComputationOf<Type, TComputation, T>>;
-    fromValue<T>(): Function1<T, ComputationOf<Type, TComputation, T>>;
+    }): Function1<readonly T[], PureComputationOf<TComputation, T>>;
+    fromValue<T>(): Function1<T, PureComputationOf<TComputation, T>>;
     generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
         readonly count?: number;
-    }): ComputationOf<Type, TComputation, T>;
+    }): PureComputationOf<TComputation, T>;
     raise<T>(options?: {
         readonly raise?: Factory<unknown>;
-    }): ComputationOf<Type, TComputation, T>;
-    repeat<T>(predicate: Predicate<number>): ComputationOperator<Type, TComputation, T, T>;
-    repeat<T>(count: number): ComputationOperator<Type, TComputation, T, T>;
-    repeat<T>(): ComputationOperator<Type, TComputation, T, T>;
-    retry<T>(shouldRetry?: (count: number, error: Error) => boolean): ComputationOperator<Type, TComputation, T, T>;
-    scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ComputationOperator<Type, TComputation, T, TAcc>;
+    }): PureComputationOf<TComputation, T>;
+    repeat<T>(predicate: Predicate<number>): ComputationOperator<TComputation, T, T>;
+    repeat<T>(count: number): ComputationOperator<TComputation, T, T>;
+    repeat<T>(): ComputationOperator<TComputation, T, T>;
+    retry<T>(shouldRetry?: (count: number, error: Error) => boolean): ComputationOperator<TComputation, T, T>;
+    scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ComputationOperator<TComputation, T, TAcc>;
     takeFirst<T>(options?: {
         readonly count?: number;
-    }): ComputationOperator<Type, TComputation, T, T>;
+    }): ComputationOperator<TComputation, T, T>;
     takeWhile<T>(predicate: Predicate<T>, options?: {
         readonly inclusive?: boolean;
-    }): ComputationOperator<Type, TComputation, T, T>;
-    throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): ComputationOperator<Type, TComputation, T, T>;
+    }): ComputationOperator<TComputation, T, T>;
+    throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): ComputationOperator<TComputation, T, T>;
 }
-export interface SynchronousComputationModule<Type extends SynchronousComputationLike, TComputation extends Computation> {
-    last<T>(): Function1<ComputationOf<Type, TComputation, T>, Optional<T>>;
-    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ComputationOf<Type, TComputation, T>, TAcc>;
-    toRunnable<T>(): Function1<ComputationOf<Type, TComputation, T>, RunnableLike<T>>;
-    toReadonlyArray<T>(): Function1<ComputationOf<Type, TComputation, T>, ReadonlyArray<T>>;
+export interface SynchronousComputationModule<TComputation extends Computation> {
+    last<T>(): Function1<ComputationOf<TComputation, T>, Optional<T>>;
+    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ComputationOf<TComputation, T>, TAcc>;
+    toRunnable<T>(): Function1<ComputationOf<TComputation, T>, RunnableLike<T>>;
+    toReadonlyArray<T>(): Function1<ComputationOf<TComputation, T>, ReadonlyArray<T>>;
 }
-export interface InteractiveComputationModule<Type extends InteractiveComputationLike, TComputation extends Computation> {
-    zip<TA, TB>(a: ComputationOf<Type, TComputation, TA>, b: ComputationOf<Type, TComputation, TB>): ComputationOf<Type, TComputation, Tuple2<TA, TB>>;
-    zip<TA, TB, TC>(a: ComputationOf<Type, TComputation, TA>, b: ComputationOf<Type, TComputation, TB>, c: ComputationOf<Type, TComputation, TC>): ComputationOf<Type, TComputation, Tuple3<TA, TB, TC>>;
-    zip<TA, TB, TC, TD>(a: ComputationOf<Type, TComputation, TA>, b: ComputationOf<Type, TComputation, TB>, c: ComputationOf<Type, TComputation, TC>, d: ComputationOf<Type, TComputation, TD>): ComputationOf<Type, TComputation, Tuple4<TA, TB, TC, TD>>;
+export interface InteractiveComputationModule<TComputation extends Computation> {
+    zip<TA, TB>(a: ComputationOf<TComputation, TA>, b: ComputationOf<TComputation, TB>): ComputationOf<TComputation, Tuple2<TA, TB>>;
+    zip<TA, TB, TC>(a: ComputationOf<TComputation, TA>, b: ComputationOf<TComputation, TB>, c: ComputationOf<TComputation, TC>): ComputationOf<TComputation, Tuple3<TA, TB, TC>>;
+    zip<TA, TB, TC, TD>(a: ComputationOf<TComputation, TA>, b: ComputationOf<TComputation, TB>, c: ComputationOf<TComputation, TC>, d: ComputationOf<TComputation, TD>): ComputationOf<TComputation, Tuple4<TA, TB, TC, TD>>;
 }
-export interface DeferredReactiveComputationModule<Type extends DeferredComputationLike & ReactiveComputationLike, TComputation extends Computation> {
+export interface DeferredReactiveComputationModule<TComputation extends Computation> {
     buffer<T>(options?: {
         count?: number;
-    }): ComputationOperator<Type, TComputation, T, readonly T[]>;
+    }): ComputationOperator<TComputation, T, readonly T[]>;
     decodeWithCharset(options?: {
         readonly charset?: string;
         readonly fatal?: boolean;
         readonly ignoreBOM?: boolean;
-    }): ComputationOperator<Type, TComputation, ArrayBuffer, string>;
+    }): ComputationOperator<TComputation, ArrayBuffer, string>;
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
-    }): ComputationOperator<Type, TComputation, T, T>;
-    pairwise<T>(): ComputationOperator<Type, TComputation, T, Tuple2<T, T>>;
+    }): ComputationOperator<TComputation, T, T>;
+    pairwise<T>(): ComputationOperator<TComputation, T, Tuple2<T, T>>;
     skipFirst<T>(options?: {
         readonly count?: number;
-    }): ComputationOperator<Type, TComputation, T, T>;
+    }): ComputationOperator<TComputation, T, T>;
     takeLast<T>(options?: {
         readonly count?: number;
-    }): ComputationOperator<Type, TComputation, T, T>;
+    }): ComputationOperator<TComputation, T, T>;
 }
-export interface ConcurrentReactiveComputationModule<Type extends ReactiveComputationLike, TComputation extends Computation> extends ComputationModule<Type, TComputation> {
-    fromPromise<T>(): Function1<Promise<T>, ComputationOf<Type, TComputation, T>>;
-    mergeMany<T>(eventSources: readonly ComputationOf<Type, TComputation, T>[]): ComputationOf<Type, TComputation, T>;
+export interface ConcurrentReactiveComputationModule<TComputation extends Computation> extends ComputationModule<TComputation> {
+    fromPromise<T>(): Function1<Promise<T>, ComputationOf<TComputation, T>>;
+    mergeMany<T>(computations: readonly PureComputationOf<TComputation, T>[]): PureComputationOf<TComputation, T>;
+    mergeMany<T>(computations: readonly ComputationOf<TComputation, T>[]): ComputationWithSideEffectsOf<TComputation, T>;
 }
 export declare const SinkLike_next: unique symbol;
 export declare const SinkLike_complete: unique symbol;
@@ -178,6 +207,7 @@ export interface PureIterableLike<T = unknown> extends IterableLike<T> {
 export interface IterableWithSideEffectsLike<T = unknown> extends IterableLike<T> {
     readonly [ComputationLike_isPure]: false;
 }
+export declare const ComputationWithSideEffectsType: Pick<ComputationWithSideEffectsLike, typeof ComputationLike_isPure>;
 export declare const PureSynchronousComputationType: Pick<PureSynchronousComputationLike, typeof ComputationLike_isDeferred | typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>;
 export declare const SynchronousComputationWithSideEffectsType: Pick<SynchronousComputationWithSideEffectsLike, typeof ComputationLike_isDeferred | typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>;
 export declare const PureDeferredComputationType: Pick<PureDeferredComputationLike, typeof ComputationLike_isDeferred | typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>;

@@ -8,7 +8,6 @@
 
 ## Interfaces
 
-- [Computation](interfaces/Computation.md)
 - [ComputationLike](interfaces/ComputationLike.md)
 - [ComputationModule](interfaces/ComputationModule.md)
 - [ComputationWithSideEffectsLike](interfaces/ComputationWithSideEffectsLike.md)
@@ -18,6 +17,7 @@
 - [DeferredComputationModule](interfaces/DeferredComputationModule.md)
 - [DeferredComputationWithSideEffectsLike](interfaces/DeferredComputationWithSideEffectsLike.md)
 - [DeferredReactiveComputationModule](interfaces/DeferredReactiveComputationModule.md)
+- [GenericComputation](interfaces/GenericComputation.md)
 - [InteractiveComputationLike](interfaces/InteractiveComputationLike.md)
 - [InteractiveComputationModule](interfaces/InteractiveComputationModule.md)
 - [IterableLike](interfaces/IterableLike.md)
@@ -39,18 +39,24 @@
 
 ## Type Aliases
 
+- [Computation](type-aliases/Computation.md)
 - [ComputationOf](type-aliases/ComputationOf.md)
 - [ComputationOperator](type-aliases/ComputationOperator.md)
+- [ComputationWithSideEffectsOf](type-aliases/ComputationWithSideEffectsOf.md)
 - [ComputationWithSideEffectsOperator](type-aliases/ComputationWithSideEffectsOperator.md)
+- [PureComputationOf](type-aliases/PureComputationOf.md)
 
 ## Variables
 
+- [Computation\_ofT](variables/Computation_ofT.md)
+- [Computation\_pureOfT](variables/Computation_pureOfT.md)
 - [Computation\_T](variables/Computation_T.md)
-- [Computation\_type](variables/Computation_type.md)
+- [Computation\_withSideEffectsOfT](variables/Computation_withSideEffectsOfT.md)
 - [ComputationLike\_isDeferred](variables/ComputationLike_isDeferred.md)
 - [ComputationLike\_isInteractive](variables/ComputationLike_isInteractive.md)
 - [ComputationLike\_isPure](variables/ComputationLike_isPure.md)
 - [ComputationLike\_isSynchronous](variables/ComputationLike_isSynchronous.md)
+- [ComputationWithSideEffectsType](variables/ComputationWithSideEffectsType.md)
 - [DeferredComputationWithSideEffectsType](variables/DeferredComputationWithSideEffectsType.md)
 - [PureDeferredComputationType](variables/PureDeferredComputationType.md)
 - [PureSynchronousComputationType](variables/PureSynchronousComputationType.md)

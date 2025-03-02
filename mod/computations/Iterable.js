@@ -1,17 +1,20 @@
 /// <reference types="./Iterable.d.ts" />
 
 import { clampPositiveInteger } from "../__internal__/math.js";
-import { mixInstanceFactory, props } from "../__internal__/mixins.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
-import { ComputationLike_isPure, Computation_type, } from "../computations.js";
+import { ComputationLike_isPure, Computation_ofT, Computation_pureOfT, Computation_withSideEffectsOfT, } from "../computations.js";
 import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, raise as raiseError, returns, tuple, } from "../functions.js";
+import * as Computation from "./Computation.js";
 import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 class CatchErrorIterable {
     s;
     onError;
-    constructor(s, onError) {
+    [ComputationLike_isPure];
+    constructor(s, onError, isPure) {
         this.s = s;
         this.onError = onError;
+        this[ComputationLike_isPure] =
+            (s[ComputationLike_isPure] ?? true) && isPure;
     }
     *[Symbol.iterator]() {
         try {
@@ -36,11 +39,14 @@ class CatchErrorIterable {
         }
     }
 }
-export const catchError = (onError) => (iter) => newInstance(CatchErrorIterable, iter, onError);
+export const catchError = ((onError, options) => (iter) => newInstance(CatchErrorIterable, iter, onError, options?.innerType?.[ComputationLike_isPure] ?? true));
 class ConcatAllIterable {
     s;
-    constructor(s) {
+    [ComputationLike_isPure];
+    constructor(s, isPure) {
         this.s = s;
+        this[ComputationLike_isPure] =
+            (s[ComputationLike_isPure] ?? true) && isPure;
     }
     *[Symbol.iterator]() {
         for (const iter of this.s) {
@@ -50,38 +56,34 @@ class ConcatAllIterable {
         }
     }
 }
-export const concatAll = /*@__PURE__*/ (() => returns((iterable) => newInstance(ConcatAllIterable, iterable)))();
-export const concatMany = concatAll();
+export const concatAll = ((options) => (iterable) => newInstance(ConcatAllIterable, iterable, options?.innerType?.[ComputationLike_isPure] ?? true));
+export const concatMany = ((iterables) => newInstance(ConcatAllIterable, iterables, Computation.areAllPure(iterables)));
 export const empty = /*@__PURE__*/ returns([]);
-export const forEach = /*@__PURE__*/ (() => {
-    const ForEachIterable_effect = Symbol("ForEachIterable_effect");
-    const ForEachIterable_delegate = Symbol("ForEachIterable_delegate");
-    const createForEachIterable = mixInstanceFactory(function KeepIterable(instance, delegate, effect) {
-        instance[ForEachIterable_delegate] = delegate;
-        instance[ForEachIterable_effect] = effect;
-        return instance;
-    }, props({
-        [ForEachIterable_delegate]: none,
-        [ForEachIterable_effect]: none,
-    }), {
-        [ComputationLike_isPure]: false,
-        *[Symbol.iterator]() {
-            const delegate = this[ForEachIterable_delegate];
-            const effect = this[ForEachIterable_effect];
-            for (const v of delegate) {
-                effect(v);
-                yield v;
-            }
-        },
-    });
-    return (effect) => (iterable) => createForEachIterable(iterable, effect);
-})();
+class ForEachIterable {
+    d;
+    ef;
+    [ComputationLike_isPure] = false;
+    constructor(d, ef) {
+        this.d = d;
+        this.ef = ef;
+    }
+    *[Symbol.iterator]() {
+        const delegate = this.d;
+        const effect = this.ef;
+        for (const v of delegate) {
+            effect(v);
+            yield v;
+        }
+    }
+}
+export const forEach = (effect) => (iterable) => newInstance(ForEachIterable, iterable, effect);
 export const fromIterable = /*@__PURE__*/ returns(identity);
 export const fromValue = /*@__PURE__*/ returns(tuple);
 class FromReadonlyArrayIterable {
     arr;
     count;
     start;
+    [ComputationLike_isPure];
     constructor(arr, count, start) {
         this.arr = arr;
         this.count = count;
@@ -106,6 +108,7 @@ class GeneratorIterable {
     generator;
     initialValue;
     count;
+    [ComputationLike_isPure];
     constructor(generator, initialValue, count) {
         this.generator = generator;
         this.initialValue = initialValue;
@@ -121,29 +124,26 @@ class GeneratorIterable {
     }
 }
 export const generate = (generator, initialValue, options) => newInstance(GeneratorIterable, generator, initialValue, options?.count);
-export const keep = /*@__PURE__*/ (() => {
-    const KeepIterable_predicate = Symbol("KeepIterable_predicate");
-    const KeepIterable_delegate = Symbol("KeepIterable_delegate");
-    const createKeepIterable = mixInstanceFactory(function KeepIterable(instance, delegate, predicate) {
-        instance[KeepIterable_delegate] = delegate;
-        instance[KeepIterable_predicate] = predicate;
-        return instance;
-    }, props({
-        [KeepIterable_delegate]: none,
-        [KeepIterable_predicate]: none,
-    }), {
-        *[Symbol.iterator]() {
-            const delegate = this[KeepIterable_delegate];
-            const predicate = this[KeepIterable_predicate];
-            for (const v of delegate) {
-                if (predicate(v)) {
-                    yield v;
-                }
+class KeepIterable {
+    d;
+    p;
+    [ComputationLike_isPure];
+    constructor(d, p) {
+        this.d = d;
+        this.p = p;
+        this[ComputationLike_isPure] = d[ComputationLike_isPure];
+    }
+    *[Symbol.iterator]() {
+        const delegate = this.d;
+        const predicate = this.p;
+        for (const v of delegate) {
+            if (predicate(v)) {
+                yield v;
             }
-        },
-    });
-    return (predicate) => (iterable) => createKeepIterable(iterable, predicate);
-})();
+        }
+    }
+}
+export const keep = ((predicate) => (iterable) => newInstance(KeepIterable, iterable, predicate));
 export const last = () => (iter) => {
     let result = none;
     for (const v of iter) {
@@ -151,27 +151,24 @@ export const last = () => (iter) => {
     }
     return result;
 };
-export const map = /*@__PURE__*/ (() => {
-    const MapIterable_mapper = Symbol("MapIterable_mapper");
-    const MapIterable_delegate = Symbol("MapIterable_delegate");
-    const createMapIterable = mixInstanceFactory(function MapIterable(instance, delegate, mapper) {
-        instance[MapIterable_delegate] = delegate;
-        instance[MapIterable_mapper] = mapper;
-        return instance;
-    }, props({
-        [MapIterable_delegate]: none,
-        [MapIterable_mapper]: none,
-    }), {
-        *[Symbol.iterator]() {
-            const delegate = this[MapIterable_delegate];
-            const mapper = this[MapIterable_mapper];
-            for (const v of delegate) {
-                yield mapper(v);
-            }
-        },
-    });
-    return (mapper) => (iterable) => createMapIterable(iterable, mapper);
-})();
+class MapIterable {
+    d;
+    m;
+    [ComputationLike_isPure];
+    constructor(d, m) {
+        this.d = d;
+        this.m = m;
+        this[ComputationLike_isPure] = d[ComputationLike_isPure];
+    }
+    *[Symbol.iterator]() {
+        const delegate = this.d;
+        const mapper = this.m;
+        for (const v of delegate) {
+            yield mapper(v);
+        }
+    }
+}
+export const map = ((mapper) => (iterable) => newInstance(MapIterable, iterable, mapper));
 class RaiseIterable {
     r;
     constructor(r) {
@@ -192,12 +189,14 @@ export const reduce = (reducer, initialValue) => (iterable) => {
     }
     return acc;
 };
-class RepeateIterable {
+class RepeatIterable {
     i;
     p;
+    [ComputationLike_isPure];
     constructor(i, p) {
         this.i = i;
         this.p = p;
+        this[ComputationLike_isPure] = i[ComputationLike_isPure];
     }
     *[Symbol.iterator]() {
         const iterable = this.i;
@@ -214,20 +213,22 @@ class RepeateIterable {
         }
     }
 }
-export const repeat = (predicate) => {
+export const repeat = ((predicate) => {
     const repeatPredicate = isFunction(predicate)
         ? predicate
         : isNone(predicate)
             ? alwaysTrue
             : (count) => count < predicate;
-    return (src) => newInstance(RepeateIterable, src, repeatPredicate);
-};
+    return (src) => newInstance(RepeatIterable, src, repeatPredicate);
+});
 class RetryIterable {
     i;
     p;
+    [ComputationLike_isPure];
     constructor(i, p) {
         this.i = i;
         this.p = p;
+        this[ComputationLike_isPure] = i[ComputationLike_isPure];
     }
     *[Symbol.iterator]() {
         const iterable = this.i;
@@ -248,15 +249,17 @@ class RetryIterable {
         }
     }
 }
-export const retry = (shouldRetry) => (deferable) => newInstance(RetryIterable, deferable, shouldRetry ?? alwaysTrue);
+export const retry = ((shouldRetry) => (deferable) => newInstance(RetryIterable, deferable, shouldRetry ?? alwaysTrue));
 class ScanIterable {
     s;
     r;
     iv;
+    [ComputationLike_isPure];
     constructor(s, r, iv) {
         this.s = s;
         this.r = r;
         this.iv = iv;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
     }
     *[Symbol.iterator]() {
         const reducer = this.r;
@@ -267,13 +270,15 @@ class ScanIterable {
         }
     }
 }
-export const scan = (scanner, initialValue) => (iter) => newInstance(ScanIterable, iter, scanner, initialValue);
+export const scan = ((scanner, initialValue) => (iter) => newInstance(ScanIterable, iter, scanner, initialValue));
 class TakeFirstIterable {
     s;
     c;
+    [ComputationLike_isPure];
     constructor(s, c) {
         this.s = s;
         this.c = c;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
     }
     *[Symbol.iterator]() {
         const takeCount = this.c;
@@ -289,15 +294,17 @@ class TakeFirstIterable {
         }
     }
 }
-export const takeFirst = (options) => (iterable) => newInstance(TakeFirstIterable, iterable, clampPositiveInteger(options?.count ?? 1));
+export const takeFirst = ((options) => (iterable) => newInstance(TakeFirstIterable, iterable, clampPositiveInteger(options?.count ?? 1)));
 class TakeWhileIterable {
     s;
     p;
     i;
+    [ComputationLike_isPure];
     constructor(s, p, i) {
         this.s = s;
         this.p = p;
         this.i = i;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
     }
     *[Symbol.iterator]() {
         const predicate = this.p;
@@ -313,12 +320,15 @@ class TakeWhileIterable {
         }
     }
 }
+export const takeWhile = ((predicate, options) => (iterable) => newInstance(TakeWhileIterable, iterable, predicate, options?.inclusive ?? false));
 class ThrowIfEmptyIterable {
     i;
     f;
+    [ComputationLike_isPure];
     constructor(i, f) {
         this.i = i;
         this.f = f;
+        this[ComputationLike_isPure] = i[ComputationLike_isPure];
     }
     *[Symbol.iterator]() {
         let isEmpty = true;
@@ -331,14 +341,15 @@ class ThrowIfEmptyIterable {
         }
     }
 }
-export const throwIfEmpty = (factory) => (iter) => newInstance(ThrowIfEmptyIterable, iter, factory);
-export const takeWhile = (predicate, options) => (iterable) => newInstance(TakeWhileIterable, iterable, predicate, options?.inclusive ?? false);
+export const throwIfEmpty = ((factory) => (iter) => newInstance(ThrowIfEmptyIterable, iter, factory));
 export const toRunnable = Runnable_fromIterable;
 export const toReadonlyArray = () => (iterable) => Array.from(iterable);
 class ZipIterable {
     iters;
+    [ComputationLike_isPure];
     constructor(iters) {
         this.iters = iters;
+        this[ComputationLike_isPure] = Computation.areAllPure(iters);
     }
     *[Symbol.iterator]() {
         const iterators = this.iters.map(invoke(Symbol.iterator));
