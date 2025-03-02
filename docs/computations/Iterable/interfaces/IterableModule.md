@@ -228,17 +228,29 @@ readonly [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>[]
 
 ### fromIterable()
 
-> **fromIterable**\<`T`, `TIterable`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`TIterable`, [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
+> **fromIterable**\<`T`\>(): \<`TIterable`\>(`iterable`) => `TIterable` *extends* [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`unknown`\> ? [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> : [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
 
 #### Type Parameters
 
 • **T**
 
-• **TIterable** *extends* [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> = [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
-
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TIterable`, [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
+`Function`
+
+##### Type Parameters
+
+• **TIterable** *extends* [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> = [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+
+##### Parameters
+
+###### iterable
+
+`TIterable`
+
+##### Returns
+
+`TIterable` *extends* [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`unknown`\> ? [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> : [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
 
 #### Inherited from
 

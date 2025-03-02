@@ -236,14 +236,11 @@ export interface DeferredComputationModule<TComputation extends Computation>
 
   empty<T>(): ComputationOf<TComputation, T>;
 
-  fromIterable<
-    T,
-    TIterable extends IterableLike<T> = IterableLike<T>,
-  >(): Function1<
-    TIterable,
-    // FIXME: they type of iterable should impact whether the computatiosn is pure or not
-    ComputationOf<TComputation, T>
-  >;
+  fromIterable<T>(): <TIterable extends IterableLike<T> = IterableLike<T>>(
+    iterable: TIterable,
+  ) => TIterable extends PureIterableLike
+    ? PureComputationOf<TComputation, T>
+    : ComputationWithSideEffectsOf<TComputation, T>;
 
   fromReadonlyArray<T>(options?: {
     readonly count?: number;

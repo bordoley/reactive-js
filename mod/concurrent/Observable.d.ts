@@ -1,4 +1,4 @@
-import { Computation, ComputationLike_isSynchronous, ComputationOf, ComputationWithSideEffectsLike, ComputationWithSideEffectsOf, Computation_T, Computation_ofT, Computation_pureOfT, Computation_withSideEffectsOfT, DeferredComputationWithSideEffectsType, PureComputationLike, PureComputationOf, PureDeferredComputationType, PureSynchronousComputationType, RunnableLike, SynchronousComputationWithSideEffectsType } from "../computations.js";
+import { Computation, ComputationLike_isSynchronous, ComputationOf, ComputationWithSideEffectsLike, ComputationWithSideEffectsOf, Computation_T, Computation_ofT, Computation_pureOfT, Computation_withSideEffectsOfT, DeferredComputationWithSideEffectsType, IterableLike, PureComputationLike, PureComputationOf, PureDeferredComputationType, PureIterableLike, PureSynchronousComputationType, RunnableLike, SynchronousComputationWithSideEffectsType } from "../computations.js";
 import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureSynchronousObservableLike, SchedulerLike, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../concurrent.js";
 import { EventListenerLike, EventSourceLike, StoreLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9, Updater } from "../functions.js";
@@ -190,7 +190,7 @@ export interface ObservableModule {
     fromIterable<T>(options?: {
         readonly delay: number;
         readonly delayStart?: boolean;
-    }): Function1<Iterable<T>, SynchronousObservableWithSideEffectsLike<T>>;
+    }): <TIterable extends IterableLike<T> = IterableLike<T>>(iterable: TIterable) => TIterable extends PureIterableLike ? PureComputationOf<ObservableComputationFor<SynchronousObservableLike>, T> : ComputationWithSideEffectsOf<ObservableComputationFor<SynchronousObservableLike>, T>;
     fromPromise<T>(): Function1<Promise<T>, MulticastObservableLike<T>>;
     fromReadonlyArray<T>(options?: {
         readonly delay?: number;

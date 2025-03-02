@@ -6,7 +6,7 @@
 
 # Function: fromIterable()
 
-> **fromIterable**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>\>
+> **fromIterable**\<`T`\>(`options`?): \<`TIterable`\>(`iterable`) => `TIterable` *extends* [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<`unknown`\> ? [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\> : [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> & [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -26,4 +26,18 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`Iterable`\<`T`, `any`, `any`\>, [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>\>
+`Function`
+
+### Type Parameters
+
+• **TIterable** *extends* [`IterableLike`](../../../computations/interfaces/IterableLike.md)\<`T`\> = [`IterableLike`](../../../computations/interfaces/IterableLike.md)\<`T`\>
+
+### Parameters
+
+#### iterable
+
+`TIterable`
+
+### Returns
+
+`TIterable` *extends* [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<`unknown`\> ? [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\> : [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> & [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>

@@ -109,7 +109,7 @@ export interface DeferredComputationModule<TComputation extends Computation> ext
     concatMany<T>(computations: readonly PureComputationOf<TComputation, T>[]): PureComputationOf<TComputation, T>;
     concatMany<T>(computations: readonly ComputationOf<TComputation, T>[]): ComputationWithSideEffectsOf<TComputation, T>;
     empty<T>(): ComputationOf<TComputation, T>;
-    fromIterable<T, TIterable extends IterableLike<T> = IterableLike<T>>(): Function1<TIterable, ComputationOf<TComputation, T>>;
+    fromIterable<T>(): <TIterable extends IterableLike<T> = IterableLike<T>>(iterable: TIterable) => TIterable extends PureIterableLike ? PureComputationOf<TComputation, T> : ComputationWithSideEffectsOf<TComputation, T>;
     fromReadonlyArray<T>(options?: {
         readonly count?: number;
         readonly start?: number;

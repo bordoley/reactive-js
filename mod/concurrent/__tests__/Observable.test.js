@@ -791,7 +791,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), testIsPureSynchronousObservable(Observable
     while (true) {
         yield i++;
     }
-})(), Observable.fromAsyncIterable()))), describe("fromEventSource", testIsMulticastObservable(pipe(EventSource.create(ignore), Observable.fromEventSource()))), describe("fromIterable", test("with delay", pipeLazy([9, 9, 9, 9], Observable.fromIterable({ delay: 2 }), Observable.withCurrentTime(t => t), Observable.toReadonlyArray(), expectArrayEquals([0, 2, 4, 6]))), test("with delay and delayed start", pipeLazy([9, 9, 9, 9], Observable.fromIterable({ delay: 2, delayStart: true }), Observable.withCurrentTime(t => t), Observable.toReadonlyArray(), expectArrayEquals([2, 4, 6, 8]))), testIsSynchronousObservableWithSideEffects(pipe((function* Generator() {
+})(), Observable.fromAsyncIterable()))), describe("fromEventSource", testIsMulticastObservable(pipe(EventSource.create(ignore), Observable.fromEventSource()))), describe("fromIterable", test("with delay", pipeLazy([9, 9, 9, 9], Observable.fromIterable({ delay: 2 }), Observable.withCurrentTime(t => t), Observable.toReadonlyArray(), expectArrayEquals([0, 2, 4, 6]))), test("with delay and delayed start", pipeLazy([9, 9, 9, 9], Observable.fromIterable({ delay: 2, delayStart: true }), Observable.withCurrentTime(t => t), Observable.toReadonlyArray(), expectArrayEquals([2, 4, 6, 8]))), testIsPureSynchronousObservable(pipe((function* Generator() {
     throw newInstance(Error);
 })(), Observable.fromIterable()))), describe("fromPromise", testAsync("when the promise resolves", async () => {
     const env_36 = { stack: [], error: void 0, hasError: false };

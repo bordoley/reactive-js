@@ -310,17 +310,29 @@ readonly [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLik
 
 ### fromIterable()
 
-> **fromIterable**\<`T`, `TIterable`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`TIterable`, [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>\>
+> **fromIterable**\<`T`\>(): \<`TIterable`\>(`iterable`) => `TIterable` *extends* [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<`unknown`\> ? [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\> : [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> & [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>
 
 #### Type Parameters
 
 • **T**
 
-• **TIterable** *extends* [`IterableLike`](../../../computations/interfaces/IterableLike.md)\<`T`\> = [`IterableLike`](../../../computations/interfaces/IterableLike.md)\<`T`\>
-
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TIterable`, [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>\>
+`Function`
+
+##### Type Parameters
+
+• **TIterable** *extends* [`IterableLike`](../../../computations/interfaces/IterableLike.md)\<`T`\> = [`IterableLike`](../../../computations/interfaces/IterableLike.md)\<`T`\>
+
+##### Parameters
+
+###### iterable
+
+`TIterable`
+
+##### Returns
+
+`TIterable` *extends* [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<`unknown`\> ? [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\> : [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> & [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>
 
 #### Inherited from
 

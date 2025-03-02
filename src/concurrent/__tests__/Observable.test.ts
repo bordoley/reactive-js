@@ -1562,7 +1562,7 @@ testModule(
         expectArrayEquals([2, 4, 6, 8]),
       ),
     ),
-    testIsSynchronousObservableWithSideEffects(
+    testIsPureSynchronousObservable(
       pipe(
         (function* Generator() {
           throw newInstance(Error);

@@ -9,9 +9,11 @@ import {
   Computation_pureOfT,
   Computation_withSideEffectsOfT,
   DeferredComputationWithSideEffectsType,
+  IterableLike,
   PureComputationLike,
   PureComputationOf,
   PureDeferredComputationType,
+  PureIterableLike,
   PureSynchronousComputationType,
   RunnableLike,
   SynchronousComputationWithSideEffectsType,
@@ -816,7 +818,14 @@ export interface ObservableModule {
   fromIterable<T>(options?: {
     readonly delay: number;
     readonly delayStart?: boolean;
-  }): Function1<Iterable<T>, SynchronousObservableWithSideEffectsLike<T>>;
+  }): <TIterable extends IterableLike<T> = IterableLike<T>>(
+    iterable: TIterable,
+  ) => TIterable extends PureIterableLike
+    ? PureComputationOf<ObservableComputationFor<SynchronousObservableLike>, T>
+    : ComputationWithSideEffectsOf<
+        ObservableComputationFor<SynchronousObservableLike>,
+        T
+      >;
 
   fromPromise<T>(): Function1<Promise<T>, MulticastObservableLike<T>>;
 

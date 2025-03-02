@@ -183,17 +183,29 @@ readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T
 
 ### fromIterable()
 
-> **fromIterable**\<`T`, `TIterable`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`TIterable`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>\>
+> **fromIterable**\<`T`\>(): \<`TIterable`\>(`iterable`) => `TIterable` *extends* [`PureIterableLike`](PureIterableLike.md)\<`unknown`\> ? [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\> : [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
 
 #### Type Parameters
 
 • **T**
 
-• **TIterable** *extends* [`IterableLike`](IterableLike.md)\<`T`\> = [`IterableLike`](IterableLike.md)\<`T`\>
-
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<`TIterable`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>\>
+`Function`
+
+##### Type Parameters
+
+• **TIterable** *extends* [`IterableLike`](IterableLike.md)\<`T`\> = [`IterableLike`](IterableLike.md)\<`T`\>
+
+##### Parameters
+
+###### iterable
+
+`TIterable`
+
+##### Returns
+
+`TIterable` *extends* [`PureIterableLike`](PureIterableLike.md)\<`unknown`\> ? [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\> : [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
 
 ***
 

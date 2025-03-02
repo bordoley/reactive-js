@@ -310,17 +310,29 @@ readonly [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\
 
 ### fromIterable()
 
-> **fromIterable**\<`T`, `TIterable`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`TIterable`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>\>
+> **fromIterable**\<`T`\>(): \<`TIterable`\>(`iterable`) => `TIterable` *extends* [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<`unknown`\> ? [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> & [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\> : [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> & [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>
 
 #### Type Parameters
 
 • **T**
 
-• **TIterable** *extends* [`IterableLike`](../../../computations/interfaces/IterableLike.md)\<`T`\> = [`IterableLike`](../../../computations/interfaces/IterableLike.md)\<`T`\>
-
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TIterable`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>\>
+`Function`
+
+##### Type Parameters
+
+• **TIterable** *extends* [`IterableLike`](../../../computations/interfaces/IterableLike.md)\<`T`\> = [`IterableLike`](../../../computations/interfaces/IterableLike.md)\<`T`\>
+
+##### Parameters
+
+###### iterable
+
+`TIterable`
+
+##### Returns
+
+`TIterable` *extends* [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<`unknown`\> ? [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> & [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\> : [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> & [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>
 
 #### Inherited from
 
