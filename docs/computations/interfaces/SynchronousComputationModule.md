@@ -215,6 +215,16 @@
 
 ***
 
+### encodeUtf8()
+
+> **encodeUtf8**(): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+
+#### Returns
+
+[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+
+***
+
 ### forEach()
 
 > **forEach**\<`T`\>(`sideEffect`): [`ComputationWithSideEffectsOperator`](../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>

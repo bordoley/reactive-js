@@ -256,6 +256,20 @@
 
 ***
 
+### encodeUtf8()
+
+> **encodeUtf8**(): [`DeferringComputationOperator`](../../type-aliases/DeferringComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+
+#### Returns
+
+[`DeferringComputationOperator`](../../type-aliases/DeferringComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+
+#### Inherited from
+
+[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`encodeUtf8`](../../interfaces/InteractiveComputationModule.md#encodeutf8)
+
+***
+
 ### forEach()
 
 > **forEach**\<`T`\>(`sideEffect`): [`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`, `T`\>

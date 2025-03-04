@@ -4,7 +4,7 @@ import { Array_push } from "../../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectToThrow, expectToThrowError, expectTrue, test, } from "../../../__internal__/testing.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import { ComputationLike_isPure, } from "../../../computations.js";
-import { alwaysTrue, increment, lessThan, newInstance, none, pick, pipe, pipeLazy, raise, returns, } from "../../../functions.js";
+import { alwaysTrue, increment, invoke, lessThan, newInstance, none, pick, pipe, pipeLazy, raise, returns, } from "../../../functions.js";
 import * as ComputationM from "../../Computation.js";
 import * as Iterable from "../../Iterable.js";
 import * as Runnable from "../../Runnable.js";
@@ -32,7 +32,10 @@ const SynchronousComputationModuleTests = (m) => describe("SynchronousComputatio
     pipe([1, 2, 3], m.fromReadonlyArray()),
     pipe([4, 5, 6], m.fromReadonlyArray()),
     pipe([7, 8, 9], m.fromReadonlyArray()),
-], m.fromReadonlyArray(), m.concatAll(), m.takeFirst({ count: 5 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])))), describe("concat", test("concats the input containers in order", pipeLazy(m.concat(pipe([1, 2, 3], m.fromReadonlyArray()), pipe([4, 5, 6], m.fromReadonlyArray())), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), test("only consume partial number of events", pipeLazy(m.concat(pipe([1, 2, 3], m.fromReadonlyArray()), pipe([4, 5, 6], m.fromReadonlyArray()), pipe([7, 8, 8], m.fromReadonlyArray())), m.takeFirst({ count: 5 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])))), describe("empty", test("produces no results", pipeLazy(m.empty(), m.toReadonlyArray(), expectArrayEquals([])))), describe("forEach", test("invokes the effect for each notified value", () => {
+], m.fromReadonlyArray(), m.concatAll(), m.takeFirst({ count: 5 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])))), describe("concat", test("concats the input containers in order", pipeLazy(m.concat(pipe([1, 2, 3], m.fromReadonlyArray()), pipe([4, 5, 6], m.fromReadonlyArray())), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), test("only consume partial number of events", pipeLazy(m.concat(pipe([1, 2, 3], m.fromReadonlyArray()), pipe([4, 5, 6], m.fromReadonlyArray()), pipe([7, 8, 8], m.fromReadonlyArray())), m.takeFirst({ count: 5 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])))), describe("empty", test("produces no results", pipeLazy(m.empty(), m.toReadonlyArray(), expectArrayEquals([])))), describe("encodeUtf8", test("encoding ascii", () => {
+    const str = "abcdefghijklmnsopqrstuvwxyz";
+    pipe([str], m.fromReadonlyArray(), m.encodeUtf8(), m.toRunnable(), Runnable.decodeWithCharset(), Runnable.toReadonlyArray(), invoke("join"), expectEquals(str));
+})), describe("forEach", test("invokes the effect for each notified value", () => {
     const result = [];
     pipe([1, 2, 3], m.fromReadonlyArray(), m.forEach((x) => {
         result[Array_push](x + 10);

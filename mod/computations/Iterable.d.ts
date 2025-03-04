@@ -18,6 +18,7 @@ export declare const catchError: Signature["catchError"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concat: Signature["concat"];
 export declare const empty: Signature["empty"];
+export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const forEach: Signature["forEach"];
 export declare const fromIterable: Signature["fromIterable"];
 export declare const fromValue: Signature["fromValue"];

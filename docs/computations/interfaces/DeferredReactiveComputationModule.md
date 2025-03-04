@@ -333,6 +333,10 @@
 
 [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
 
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`encodeUtf8`](SynchronousComputationModule.md#encodeutf8)
+
 ***
 
 ### forEach()

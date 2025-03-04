@@ -168,6 +168,7 @@ export interface SynchronousComputationModule<TComputation extends Computation> 
     concat<T>(...computations: readonly PureDeferredComputationOf<TComputation, T>[]): PureDeferredComputationOf<TComputation, T>;
     concat<T>(...computations: readonly DeferredComputationOf<TComputation, T>[]): DeferredComputationWithSideEffectsOf<TComputation, T>;
     empty<T>(): PureSynchronousComputationOf<TComputation, T>;
+    encodeUtf8(): DeferringComputationOperator<TComputation, string, Uint8Array>;
     forEach<T>(sideEffect: SideEffect1<T>): ComputationWithSideEffectsOperator<TComputation, T, T>;
     fromIterable<T>(): <TIterable extends IterableLike<T> = IterableLike<T>>(iterable: TIterable) => TIterable extends PureIterableLike ? PureSynchronousComputationOf<TComputation, T> : SynchronousComputationWithSideEffectsOf<TComputation, T>;
     fromReadonlyArray<T>(options?: {
@@ -213,7 +214,6 @@ export interface DeferredReactiveComputationModule<TComputation extends Computat
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): DeferringComputationOperator<TComputation, T, T>;
-    encodeUtf8(): DeferringComputationOperator<TComputation, string, Uint8Array>;
     pairwise<T>(): DeferringComputationOperator<TComputation, T, Tuple2<T, T>>;
     skipFirst<T>(options?: {
         readonly count?: number;

@@ -1,7 +1,7 @@
 /// <reference types="./DeferredReactiveComputationModuleTests.d.ts" />
 
 import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, } from "../../../__internal__/testing.js";
-import { arrayEquality, pipe, pipeLazy, tuple, } from "../../../functions.js";
+import { arrayEquality, invoke, pipe, pipeLazy, tuple, } from "../../../functions.js";
 const DeferredReactiveComputationModuleTests = (m) => describe("DeferredReactiveComputationModule", describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],
@@ -12,19 +12,19 @@ const DeferredReactiveComputationModuleTests = (m) => describe("DeferredReactive
     [7, 8],
 ], { valuesEquality: arrayEquality() }))), test("buffers all values when no count is provided", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8], m.fromReadonlyArray(), m.buffer(), m.toReadonlyArray(), expectArrayEquals([[1, 2, 3, 4, 5, 6, 7, 8]], {
     valuesEquality: arrayEquality(),
-})))), describe("decodeWithCharset", test("decoding ascii from runnable", () => {
+})))), describe("decodeWithCharset", test("decoding ascii", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
-    pipe([str], m.fromReadonlyArray(), m.encodeUtf8(), m.decodeWithCharset(), m.toReadonlyArray(), x => x.join(), expectEquals(str));
-}), test("decoding ascii from enumerable", () => {
+    pipe([str], m.fromReadonlyArray(), m.encodeUtf8(), m.decodeWithCharset(), m.toReadonlyArray(), invoke("join"), expectEquals(str));
+}), test("decoding ascii", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
-    pipe([str], m.fromReadonlyArray(), m.encodeUtf8(), m.decodeWithCharset(), m.toReadonlyArray(), x => x.join(), expectEquals(str));
+    pipe([str], m.fromReadonlyArray(), m.encodeUtf8(), m.decodeWithCharset(), m.toReadonlyArray(), invoke("join"), expectEquals(str));
 }), test("decoding multi-byte code points", () => {
     const str = String.fromCodePoint(8364);
-    pipe([str], m.fromReadonlyArray(), m.encodeUtf8(), m.decodeWithCharset(), m.toReadonlyArray(), x => x.join(), expectEquals(str));
+    pipe([str], m.fromReadonlyArray(), m.encodeUtf8(), m.decodeWithCharset(), m.toReadonlyArray(), invoke("join"), expectEquals(str));
 }), test("multi-byte decoding divided between multiple buffers", () => {
-    pipe([new Uint8Array([226, 153]), new Uint8Array([165])], m.fromReadonlyArray(), m.decodeWithCharset(), m.toReadonlyArray(), x => x.join(), expectEquals("♥"));
+    pipe([new Uint8Array([226, 153]), new Uint8Array([165])], m.fromReadonlyArray(), m.decodeWithCharset(), m.toReadonlyArray(), invoke("join"), expectEquals("♥"));
 }), test("multi-byte decoding with missing tail", () => {
-    pipe([new Uint8Array([226])], m.fromReadonlyArray(), m.decodeWithCharset(), m.toReadonlyArray(), x => x.join(), expectEquals("�"));
+    pipe([new Uint8Array([226])], m.fromReadonlyArray(), m.decodeWithCharset(), m.toReadonlyArray(), invoke("join"), expectEquals("�"));
 })), describe("distinctUntilChanged", test("when source has duplicates in order", pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], m.fromReadonlyArray(), m.distinctUntilChanged(), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))), test("when source is empty", pipeLazy(m.empty(), m.distinctUntilChanged(), m.toReadonlyArray(), expectArrayEquals([]))), test("when equality operator throws", () => {
     const err = new Error();
     const equality = (_a, _b) => {

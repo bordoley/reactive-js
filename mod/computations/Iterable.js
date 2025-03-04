@@ -57,6 +57,21 @@ class ConcatAllIterable {
 export const concatAll = ((options) => (iterable) => newInstance(ConcatAllIterable, iterable, options?.innerType?.[ComputationLike_isPure] ?? true));
 export const concat = ((...iterables) => newInstance(ConcatAllIterable, iterables, ComputationM.areAllPure(iterables)));
 export const empty = /*@__PURE__*/ returns([]);
+class EncodeUtf8Iterable {
+    s;
+    [ComputationLike_isPure];
+    constructor(s) {
+        this.s = s;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
+    }
+    *[Symbol.iterator]() {
+        const textEncoder = newInstance(TextEncoder);
+        for (const chunk of this.s) {
+            yield textEncoder.encode(chunk);
+        }
+    }
+}
+export const encodeUtf8 = (() => (iterable) => newInstance(EncodeUtf8Iterable, iterable));
 class ForEachIterable {
     d;
     ef;
