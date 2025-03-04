@@ -19,17 +19,16 @@ const AnimationGroupStream_create = /*@__PURE__*/ (() => {
     const AnimationGroupStream_eventSources = Symbol("AnimationGroupStream_delegate");
     const ObservableModule = {
         concat: Observable.concat,
-        // Note we overall concatAll to get switchMap behavior
-        concatAll: Observable.switchAll,
         forEach: Observable.forEach,
         fromReadonlyArray: Observable.fromReadonlyArray,
         keep: Observable.keep,
         map: Observable.map,
         merge: Observable.merge,
+        switchAll: Observable.switchAll,
     };
     return mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin), function AnimationGroupStream(instance, animationGroup, scheduler, animationScheduler, options) {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
-        const operator = Computation.concatMap(ObservableModule)((event) => pipe(animationGroup, ReadonlyObjectMap.entries(), Iterable.map(([key, factory]) => {
+        const operator = Computation.flatMap(ObservableModule, "switchAll")((event) => pipe(animationGroup, ReadonlyObjectMap.entries(), Iterable.map(([key, factory]) => {
             const publisher = publishers[key];
             return pipe(isFunction(factory) ? factory(event) : factory, Computation.notify(ObservableModule)(publisher), Observable.subscribeOn(pauseableScheduler));
         }), ReadonlyArray.fromIterable(), Computation.mergeMany(ObservableModule), Computation.ignoreElements(ObservableModule)(), Computation.startWith(ObservableModule)(true), Computation.endWith(ObservableModule)(false)), {

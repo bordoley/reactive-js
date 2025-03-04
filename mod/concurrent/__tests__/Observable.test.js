@@ -530,7 +530,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     const env_23 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_23, HostScheduler.create(), false);
-        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forkMerge(Computation.concatMapIterable(Observable)(_ => [1, 2]), Computation.concatMapIterable(Observable)(_ => [3, 4])), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]));
+        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forkMerge(Computation.flatMapIterable(Observable, "concatAll")(_ => [1, 2]), Computation.flatMapIterable(Observable, "concatAll")(_ => [3, 4])), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]));
     }
     catch (e_23) {
         env_23.error = e_23;
@@ -545,7 +545,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
         const scheduler = __addDisposableResource(env_24, HostScheduler.create(), false);
         const sideEffect = mockFn();
         const src = pipe(0, Observable.fromValue(), Observable.forEach(sideEffect));
-        await pipeAsync(src, Observable.forkMerge(Computation.concatMapIterable(Observable)(_ => [1, 2, 3]), Computation.concatMapIterable(Observable)(_ => [4, 5, 6])), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 5, 6]));
+        await pipeAsync(src, Observable.forkMerge(Computation.flatMapIterable(Observable, "concatAll")(_ => [1, 2, 3]), Computation.flatMapIterable(Observable, "concatAll")(_ => [4, 5, 6])), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 5, 6]));
         pipe(sideEffect, expectToHaveBeenCalledTimes(1));
     }
     catch (e_24) {
@@ -749,10 +749,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     const env_36 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_36, HostScheduler.create(), false);
-        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Computation.concatMap({
-            concatAll: Observable.mergeAll,
-            map: Observable.map,
-        })(x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]));
+        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Computation.flatMap(Observable, "mergeAll")(x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]));
     }
     catch (e_36) {
         env_36.error = e_36;
@@ -761,7 +758,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_36);
     }
-}), test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Computation.concatMap(Observable)(x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]))), DeferredReactiveObservableOperator(Observable.mergeAll()), DeferringObservableOperatorTests(Observable.mergeAll({
+}), test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Computation.flatMap(Observable, "concatAll")(x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]))), DeferredReactiveObservableOperator(Observable.mergeAll()), DeferringObservableOperatorTests(Observable.mergeAll({
     innerType: PureDeferredComputationType,
 })), ObservableOperatorWithSideEffectsTests(Observable.mergeAll({
     innerType: SynchronousComputationWithSideEffectsType,
@@ -967,22 +964,10 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_47);
     }
-})())), describe("switchAll", test("with empty source", pipeLazy(Observable.empty({ delay: 1 }), Observable.switchAll(), Observable.toReadonlyArray(), expectArrayEquals([]))), test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Computation.concatMap({
-    concatAll: Observable.switchAll,
-    map: Observable.map,
-})(_ => pipe([1, 2, 3], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("only produce the last observable", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Computation.concatMap({
-    concatAll: Observable.switchAll,
-    map: Observable.map,
-})(x => pipe([x, x, x], Observable.fromReadonlyArray({
+})())), describe("switchAll", test("with empty source", pipeLazy(Observable.empty({ delay: 1 }), Observable.switchAll(), Observable.toReadonlyArray(), expectArrayEquals([]))), test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Computation.flatMap(Observable, "switchAll")(_ => pipe([1, 2, 3], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("only produce the last observable", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Computation.flatMap(Observable, "switchAll")(x => pipe([x, x, x], Observable.fromReadonlyArray({
     delay: 1,
     delayStart: true,
-}))), Observable.toReadonlyArray(), expectArrayEquals([3, 3, 3]))), test("overlapping notification", pipeLazy([none, none, none], Observable.fromReadonlyArray({ delay: 4 }), Computation.concatMap({
-    concatAll: Observable.switchAll,
-    map: Observable.map,
-})(_ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 1, 2, 1, 2, 3]))), test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Computation.concatMap({
-    concatAll: Observable.switchAll,
-    map: Observable.map,
-})(_ => pipe([1, 2, 3], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), DeferredReactiveObservableOperator(Observable.switchAll()), DeferringObservableOperatorTests(Observable.switchAll({
+}))), Observable.toReadonlyArray(), expectArrayEquals([3, 3, 3]))), test("overlapping notification", pipeLazy([none, none, none], Observable.fromReadonlyArray({ delay: 4 }), Computation.flatMap(Observable, "switchAll")(_ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 1, 2, 1, 2, 3]))), test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Computation.flatMap(Observable, "switchAll")(_ => pipe([1, 2, 3], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), DeferredReactiveObservableOperator(Observable.switchAll()), DeferringObservableOperatorTests(Observable.switchAll({
     innerType: PureDeferredComputationType,
 })), ObservableOperatorWithSideEffectsTests(Observable.switchAll({
     innerType: SynchronousComputationWithSideEffectsType,

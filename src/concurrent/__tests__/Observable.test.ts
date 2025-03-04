@@ -1015,8 +1015,8 @@ testModule(
           [1, 2, 3],
           Observable.fromReadonlyArray<number>({ delay: 1 }),
           Observable.forkMerge<number, number>(
-            Computation.concatMapIterable(Observable)(_ => [1, 2]),
-            Computation.concatMapIterable(Observable)(_ => [3, 4]),
+            Computation.flatMapIterable(Observable, "concatAll")(_ => [1, 2]),
+            Computation.flatMapIterable(Observable, "concatAll")(_ => [3, 4]),
           ),
           Observable.toReadonlyArrayAsync(scheduler),
           expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]),
@@ -1036,8 +1036,8 @@ testModule(
       await pipeAsync(
         src,
         Observable.forkMerge(
-          Computation.concatMapIterable(Observable)(_ => [1, 2, 3]),
-          Computation.concatMapIterable(Observable)(_ => [4, 5, 6]),
+          Computation.flatMapIterable(Observable, "concatAll")(_ => [1, 2, 3]),
+          Computation.flatMapIterable(Observable, "concatAll")(_ => [4, 5, 6]),
         ),
         Observable.toReadonlyArrayAsync<number>(scheduler),
         expectArrayEquals([1, 2, 3, 4, 5, 6]),
@@ -1326,10 +1326,10 @@ testModule(
         await pipeAsync(
           [1, 2, 3],
           Observable.fromReadonlyArray(),
-          Computation.concatMap({
-            concatAll: Observable.mergeAll,
-            map: Observable.map,
-          })<number, number>(x =>
+          Computation.flatMap(
+            Observable,
+            "mergeAll",
+          )<number, number>(x =>
             pipe([x, x, x], Observable.fromReadonlyArray<number>()),
           ),
           Observable.toReadonlyArrayAsync(scheduler),
@@ -1342,7 +1342,10 @@ testModule(
       pipeLazy(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
-        Computation.concatMap(Observable)<number, number>(x =>
+        Computation.flatMap(
+          Observable,
+          "concatAll",
+        )<number, number>(x =>
           pipe([x, x, x], Observable.fromReadonlyArray<number>()),
         ),
         Observable.toReadonlyArray(),
@@ -1769,12 +1772,10 @@ testModule(
       pipeLazy(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
-        Computation.concatMap({
-          concatAll: Observable.switchAll,
-          map: Observable.map,
-        })<number, number>(_ =>
-          pipe([1, 2, 3], Observable.fromReadonlyArray()),
-        ),
+        Computation.flatMap(
+          Observable,
+          "switchAll",
+        )<number, number>(_ => pipe([1, 2, 3], Observable.fromReadonlyArray())),
         Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
       ),
@@ -1784,10 +1785,10 @@ testModule(
       pipeLazy(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
-        Computation.concatMap({
-          concatAll: Observable.switchAll,
-          map: Observable.map,
-        })<number, number>(x =>
+        Computation.flatMap(
+          Observable,
+          "switchAll",
+        )<number, number>(x =>
           pipe(
             [x, x, x],
             Observable.fromReadonlyArray<number>({
@@ -1805,10 +1806,10 @@ testModule(
       pipeLazy(
         [none, none, none],
         Observable.fromReadonlyArray({ delay: 4 }),
-        Computation.concatMap({
-          concatAll: Observable.switchAll,
-          map: Observable.map,
-        })<void, number>(_ =>
+        Computation.flatMap(
+          Observable,
+          "switchAll",
+        )<void, number>(_ =>
           pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
         ),
         Observable.toReadonlyArray(),
@@ -1820,12 +1821,10 @@ testModule(
       pipeLazy(
         [1, 2, 3],
         Observable.fromReadonlyArray({ delay: 1 }),
-        Computation.concatMap({
-          concatAll: Observable.switchAll,
-          map: Observable.map,
-        })<number, number>(_ =>
-          pipe([1, 2, 3], Observable.fromReadonlyArray()),
-        ),
+        Computation.flatMap(
+          Observable,
+          "switchAll",
+        )<number, number>(_ => pipe([1, 2, 3], Observable.fromReadonlyArray())),
         Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
       ),

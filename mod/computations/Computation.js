@@ -9,14 +9,14 @@ export const areAllMulticasted = (computations) => computations.every(isMulticas
 export const areAllPure = (computations) => computations.every(isPure);
 export const areAllSynchronous = (computations) => computations.every(isSynchronous);
 export const concatMany = ((m) => (computations) => m.concat(...computations));
-export const concatMap = ((m) => (selector, options) => compose((x) => x, m.map(selector), m.concatAll(options)));
-export const concatMapIterable = ((m) => (selector, options) => {
-    const mapper = compose(selector, m.fromIterable());
-    return concatMap(m)(mapper, options);
-});
 export const concatWith = (m) => ((...tail) => (fst) => m.concat(fst, ...tail));
 export const debug = (m) => () => m.forEach(breakPoint);
 export const endWith = ((m) => (...values) => concatWith(m)(m.fromReadonlyArray()(values)));
+export const flatMap = ((m, flatten) => (selector, options) => compose((x) => x, m.map(selector), m[flatten](options)));
+export const flatMapIterable = ((m, flatten) => (selector, options) => {
+    const mapper = compose(selector, m.fromIterable());
+    return flatMap(m, flatten)(mapper, options);
+});
 export const hasSideEffects = (computation) => !(computation[ComputationLike_isPure] ?? true);
 export const ignoreElements = (m) => () => m.keep(alwaysFalse);
 export const isDeferred = (computation) => computation[ComputationLike_isDeferred] ?? true;

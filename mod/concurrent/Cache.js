@@ -47,7 +47,7 @@ export const create = /*@__PURE__*/ (() => {
             }
         };
         const observableSubscription = pipe(singleUseObservable, Observable.map((updaters) => tuple(updaters, pipe(updaters, ReadonlyObjectMap.map((_, k) => instance[CacheStream_store][Map_get](k))))), isSome(persistentStore)
-            ? Computation.concatMap(ObservableModule)(next => {
+            ? Computation.flatMap(ObservableModule, "concatAll")(next => {
                 const [updaters, values] = next;
                 const keys = pipe(values, ReadonlyObjectMap.keep(isNone), keySet(ReadonlyObjectMap.keys));
                 return keys[Set_size] > 0
@@ -77,7 +77,7 @@ export const create = /*@__PURE__*/ (() => {
             }
             instance[CacheStream_scheduleCleanup](key);
         })), isSome(persistentStore)
-            ? Computation.concatMap(ObservableModule)(bindMethod(persistentStore, "store"), {
+            ? Computation.flatMap(ObservableModule, "concatAll")(bindMethod(persistentStore, "store"), {
                 innerType: DeferredComputationWithSideEffectsType,
             })
             : Computation.ignoreElements(ObservableModule)(), Observable.subscribe(scheduler, options));

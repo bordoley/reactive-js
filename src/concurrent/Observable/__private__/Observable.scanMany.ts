@@ -22,9 +22,9 @@ import Observable_switchAll from "./Observable.switchAll.js";
 import Observable_withLatestFrom from "./Observable.withLatestFrom.js";
 
 const ObservableModule = {
-  concatAll: Observable_switchAll,
   forEach: Observable_forEach,
   map: Observable_map,
+  switchAll: Observable_switchAll,
 };
 
 const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
@@ -57,7 +57,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
         pipe(
           observable,
           Observable_withLatestFrom<T, TAcc>(accFeedbackStream),
-          Computation.concatMap(ObservableModule)(
+          Computation.flatMap(ObservableModule, "switchAll")(
             ([next, acc]) => scanner(acc, next),
             {
               innerType: {

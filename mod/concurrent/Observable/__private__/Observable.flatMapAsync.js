@@ -12,7 +12,7 @@ const ObservableModule = {
 };
 const Observable_flatMapAsync = (f) => {
     const mapper = (a) => pipe((abortSignal) => f(a, abortSignal), Observable_fromAsyncFactory());
-    return Computation.concatMap(ObservableModule)(mapper, {
+    return Computation.flatMap(ObservableModule, "concatAll")(mapper, {
         innerType: DeferredComputationWithSideEffectsType,
     });
 };

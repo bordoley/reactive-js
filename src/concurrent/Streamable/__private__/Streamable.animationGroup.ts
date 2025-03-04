@@ -69,14 +69,12 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
 
   const ObservableModule = {
     concat: Observable.concat,
-
-    // Note we overall concatAll to get switchMap behavior
-    concatAll: Observable.switchAll,
     forEach: Observable.forEach,
     fromReadonlyArray: Observable.fromReadonlyArray,
     keep: Observable.keep,
     map: Observable.map,
     merge: Observable.merge,
+    switchAll: Observable.switchAll,
   };
 
   type TProperties = {
@@ -108,7 +106,7 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
       },
     ): AnimationGroupStreamLike<TEvent, TKey, T> {
       const pauseableScheduler = PauseableScheduler.create(animationScheduler);
-      const operator = Computation.concatMap(ObservableModule)<
+      const operator = Computation.flatMap(ObservableModule, "switchAll")<
         TEvent,
         boolean,
         DeferredComputationWithSideEffectsLike

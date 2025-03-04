@@ -13,9 +13,9 @@ import Observable_map from "./Observable.map.js";
 import Observable_switchAll from "./Observable.switchAll.js";
 import Observable_withLatestFrom from "./Observable.withLatestFrom.js";
 const ObservableModule = {
-    concatAll: Observable_switchAll,
     forEach: Observable_forEach,
     map: Observable_map,
+    switchAll: Observable_switchAll,
 };
 const Observable_scanMany = ((scanner, initialValue, options) => {
     const innerType = options?.innerType ?? {
@@ -29,7 +29,7 @@ const Observable_scanMany = ((scanner, initialValue, options) => {
             observable[ComputationLike_isSynchronous];
         return Observable_createWithConfig(observer => {
             const accFeedbackStream = pipe(Subject.create(), Disposable.addTo(observer));
-            pipe(observable, Observable_withLatestFrom(accFeedbackStream), Computation.concatMap(ObservableModule)(([next, acc]) => scanner(acc, next), {
+            pipe(observable, Observable_withLatestFrom(accFeedbackStream), Computation.flatMap(ObservableModule, "switchAll")(([next, acc]) => scanner(acc, next), {
                 innerType: {
                     [ComputationLike_isDeferred]: true,
                     [ComputationLike_isPure]: false,

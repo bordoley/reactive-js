@@ -11,15 +11,15 @@ testModule("Computation", describe("concatMany", test("concats the input contain
     [1, 2, 3],
     [4, 5, 6],
     [7, 8, 8],
-]), Iterable.takeFirst({ count: 5 }), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])))), describe("concatMap", test("maps each value to a container and flattens", pipeLazy([0, 1], Computation.concatMap(Iterable)(() => [1, 2, 3]), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("concatMapIterable", test("maps the incoming value with the inline generator function", pipeLazy([none, none], Computation.concatMapIterable(Iterable)(function* (_) {
+]), Iterable.takeFirst({ count: 5 }), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])))), describe("concatWith", test("concats two containers together", pipeLazy([0, 1], Computation.concatWith(Iterable)([2, 3, 4]), Iterable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("endWith", test("appends the additional values to the end of the container", pipeLazy([0, 1], Computation.endWith(Iterable)(2, 3, 4), Iterable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("flatMap", test("maps each value to a container and flattens", pipeLazy([0, 1], Computation.flatMap(Iterable, "concatAll")(() => [1, 2, 3]), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("flatMapIterable", test("maps the incoming value with the inline generator function", pipeLazy([none, none], Computation.flatMapIterable(Iterable, "concatAll")(function* (_) {
     yield 1;
     yield 2;
     yield 3;
-}), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("maps the incoming value with the inline generator function, with delayed source", pipeLazy([none, none], Computation.concatMapIterable(Iterable)(function* (_) {
+}), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("maps the incoming value with the inline generator function, with delayed source", pipeLazy([none, none], Computation.flatMapIterable(Iterable, "concatAll")(function* (_) {
     yield 1;
     yield 2;
     yield 3;
-}), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("concatWith", test("concats two containers together", pipeLazy([0, 1], Computation.concatWith(Iterable)([2, 3, 4]), Iterable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("endWith", test("appends the additional values to the end of the container", pipeLazy([0, 1], Computation.endWith(Iterable)(2, 3, 4), Iterable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("ignoreElements", test("ignores all elements", pipeLazy([1, 2, 3], Computation.ignoreElements(Iterable)(), Iterable.toReadonlyArray(), expectArrayEquals([]))), test("invokes all side-effects", () => {
+}), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("ignoreElements", test("ignores all elements", pipeLazy([1, 2, 3], Computation.ignoreElements(Iterable)(), Iterable.toReadonlyArray(), expectArrayEquals([]))), test("invokes all side-effects", () => {
     const f = mockFn();
     pipe([1, 2, 3], Iterable.forEach(f), Computation.ignoreElements(Iterable)(), Iterable.toReadonlyArray(), expectArrayEquals([]));
     pipe(f, expectToHaveBeenCalledTimes(3));

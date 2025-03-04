@@ -47,13 +47,11 @@ const AnimationStream_create: <TEvent, T>(
 
   const ObservableModule = {
     concat: Observable.concat,
-
-    // Note we overall concatAll to get switchMap behavior
-    concatAll: Observable.switchAll,
     forEach: Observable.forEach,
     fromReadonlyArray: Observable.fromReadonlyArray,
     keep: Observable.keep,
     map: Observable.map,
+    switchAll: Observable.switchAll,
   };
 
   return mixInstanceFactory(
@@ -75,7 +73,7 @@ const AnimationStream_create: <TEvent, T>(
       const publisher = (instance[AnimationStreamLike_animation] =
         Publisher.create());
 
-      const operator = Computation.concatMap(ObservableModule)<
+      const operator = Computation.flatMap(ObservableModule, "switchAll")<
         TEvent,
         boolean,
         DeferredComputationWithSideEffectsLike

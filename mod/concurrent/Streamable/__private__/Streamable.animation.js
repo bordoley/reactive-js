@@ -14,18 +14,17 @@ import StreamMixin from "../../__mixins__/StreamMixin.js";
 const AnimationStream_create = /*@__PURE__*/ (() => {
     const ObservableModule = {
         concat: Observable.concat,
-        // Note we overall concatAll to get switchMap behavior
-        concatAll: Observable.switchAll,
         forEach: Observable.forEach,
         fromReadonlyArray: Observable.fromReadonlyArray,
         keep: Observable.keep,
         map: Observable.map,
+        switchAll: Observable.switchAll,
     };
     return mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin), function AnimationStream(instance, animation, scheduler, animationScheduler, options) {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
         const publisher = (instance[AnimationStreamLike_animation] =
             Publisher.create());
-        const operator = Computation.concatMap(ObservableModule)((event) => pipe(isFunction(animation) ? animation(event) : animation, Computation.notify(ObservableModule)(publisher), Computation.ignoreElements(ObservableModule)(), Observable.subscribeOn(pauseableScheduler), Computation.startWith(ObservableModule)(true), Computation.endWith(ObservableModule)(false)), {
+        const operator = Computation.flatMap(ObservableModule, "switchAll")((event) => pipe(isFunction(animation) ? animation(event) : animation, Computation.notify(ObservableModule)(publisher), Computation.ignoreElements(ObservableModule)(), Observable.subscribeOn(pauseableScheduler), Computation.startWith(ObservableModule)(true), Computation.endWith(ObservableModule)(false)), {
             innerType: DeferredComputationWithSideEffectsType,
         });
         init(StreamMixin(), instance, operator, scheduler, options);

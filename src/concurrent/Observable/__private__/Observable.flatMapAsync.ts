@@ -20,7 +20,7 @@ const Observable_flatMapAsync: Observable.Signature["flatMapAsync"] = <TA, TB>(
       Observable_fromAsyncFactory(),
     );
 
-  return Computation.concatMap(ObservableModule)(mapper, {
+  return Computation.flatMap(ObservableModule, "concatAll")(mapper, {
     innerType: DeferredComputationWithSideEffectsType,
   });
 };
