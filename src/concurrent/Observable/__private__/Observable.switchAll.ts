@@ -5,10 +5,12 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
+import * as Computation from "../../../computations/Computation.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
+  DeferringHigherOrderInnerType,
 } from "../../../computations.js";
 import {
   ObservableLike,
@@ -128,19 +130,17 @@ const createSwitchAllObserver: <T>(
 })();
 
 const Observable_switchAll: Observable.Signature["switchAll"] = ((options?: {
-  readonly innerType?: {
-    readonly [ComputationLike_isDeferred]: boolean;
-    readonly [ComputationLike_isPure]: boolean;
-    readonly [ComputationLike_isSynchronous]: boolean;
-  };
+  readonly innerType?: DeferringHigherOrderInnerType;
 }) =>
   Observable_lift({
     [ObservableLift_isStateless]: false,
-    ...(options?.innerType ?? {
-      [ComputationLike_isDeferred]: true,
-      [ComputationLike_isPure]: true,
-      [ComputationLike_isSynchronous]: true,
-    }),
+    [ComputationLike_isDeferred]: Computation.isDeferred(
+      options?.innerType ?? {},
+    ),
+    [ComputationLike_isPure]: Computation.isPure(options?.innerType ?? {}),
+    [ComputationLike_isSynchronous]: Computation.isSynchronous(
+      options?.innerType ?? {},
+    ),
   })(createSwitchAllObserver)) as Observable.Signature["switchAll"];
 
 export default Observable_switchAll;

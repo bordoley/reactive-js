@@ -6,7 +6,7 @@
 
 # Function: backpressureStrategy()
 
-> **backpressureStrategy**\<`T`\>(`capacity`, `backpressureStrategy`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
+> **backpressureStrategy**\<`T`\>(`capacity`, `backpressureStrategy`): [`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>
 
 ## Type Parameters
 
@@ -24,4 +24,4 @@
 
 ## Returns
 
-[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
+[`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>

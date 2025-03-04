@@ -10,7 +10,7 @@
 
 • **TComputation** *extends* [`Computation`](../../type-aliases/Computation.md)
 
-> **ConcatMapOperator**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
+> **ConcatMapOperator**\<`TA`, `TB`\>(`selector`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -22,13 +22,13 @@
 
 ### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureComputationOf`](../../type-aliases/PureComputationOf.md)\<`TComputation`, `TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureSynchronousComputationOf`](../../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `TB`\>\>
 
 ## Returns
 
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
+[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
 
-> **ConcatMapOperator**\<`TA`, `TB`\>(`selector`, `options`?): [`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `TA`, `TB`\>
+> **ConcatMapOperator**\<`TA`, `TB`, `TInnerType`\>(`selector`, `options`?): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, `TInnerType`, `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -36,18 +36,20 @@
 
 • **TB**
 
+• **TInnerType** *extends* [`DeferringHigherOrderInnerType`](../../type-aliases/DeferringHigherOrderInnerType.md)
+
 ## Parameters
 
 ### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`ComputationOf`](../../type-aliases/ComputationOf.md)\<`TComputation`, `TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`ComputationOfInnerType`](../../type-aliases/ComputationOfInnerType.md)\<`TComputation`, `TInnerType`, `TB`\>\>
 
 ### options?
 
 #### innerType
 
-`Pick`\<[`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md), *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md)\>
+`TInnerType`
 
 ## Returns
 
-[`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `TA`, `TB`\>
+[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, `TInnerType`, `TA`, `TB`\>

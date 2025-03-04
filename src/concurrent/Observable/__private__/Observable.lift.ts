@@ -10,6 +10,9 @@ import {
   ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
+  ComputationOperator,
+  ComputationWithSideEffectsOperator,
+  DeferringComputationOperator,
 } from "../../../computations.js";
 import {
   DeferredObservableWithSideEffectsLike,
@@ -18,11 +21,7 @@ import {
   ObserverLike,
 } from "../../../concurrent.js";
 import { Function1, bindMethod, none, pipeUnsafe } from "../../../functions.js";
-import type {
-  DeferredReactiveObservableOperator,
-  ObservableOperator,
-  ObservableOperatorWithSideEffects,
-} from "../../Observable.js";
+import type * as Observable from "../../Observable.js";
 import ObservableMixin from "../../__mixins__/ObservableMixin.js";
 
 const LiftedObservableLike_source = Symbol("LiftedObservableMixin_source");
@@ -108,7 +107,7 @@ interface ObservableLift {
     [ComputationLike_isSynchronous]: true;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => ObservableOperator<TA, TB>;
+  ) => ComputationOperator<Observable.Computation, TA, TB>;
 
   lift(options: {
     [ComputationLike_isDeferred]: true;
@@ -116,7 +115,7 @@ interface ObservableLift {
     [ComputationLike_isSynchronous]: true;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => DeferredReactiveObservableOperator<TA, TB>;
+  ) => DeferringComputationOperator<Observable.Computation, TA, TB>;
 
   lift(options: {
     [ComputationLike_isDeferred]: true;
@@ -124,7 +123,7 @@ interface ObservableLift {
     [ComputationLike_isSynchronous]: true;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => ObservableOperatorWithSideEffects<TA, TB>;
+  ) => ComputationWithSideEffectsOperator<Observable.Computation, TA, TB>;
 
   lift(options: {
     [ComputationLike_isDeferred]: true;

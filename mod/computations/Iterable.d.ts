@@ -1,18 +1,22 @@
-import { Computation_T, Computation_ofT, Computation_pureOfT, Computation_withSideEffectsOfT, DeferredComputationModule, GenericComputation, InteractiveComputationModule, IterableLike, IterableWithSideEffectsLike, PureIterableLike, SynchronousComputationModule } from "../computations.js";
+import { Computation as ComputationSig, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, InteractiveComputationModule, IterableLike, IterableWithSideEffectsLike, PureIterableLike } from "../computations.js";
 /**
  * @noInheritDoc
  */
-export interface IterableComputation extends GenericComputation<IterableLike, PureIterableLike, IterableWithSideEffectsLike> {
-    readonly [Computation_ofT]?: IterableLike<this[typeof Computation_T]>;
-    readonly [Computation_pureOfT]?: PureIterableLike<this[typeof Computation_T]>;
-    readonly [Computation_withSideEffectsOfT]?: IterableWithSideEffectsLike<this[typeof Computation_T]>;
+export interface IterableComputation extends ComputationSig {
+    readonly [Computation_baseOfT]?: IterableLike<this[typeof Computation_T]>;
+    readonly [Computation_pureDeferredOfT]?: PureIterableLike<this[typeof Computation_T]>;
+    readonly [Computation_deferredWithSideEffectsOfT]?: IterableWithSideEffectsLike<this[typeof Computation_T]>;
+    readonly [Computation_pureSynchronousOfT]?: PureIterableLike<this[typeof Computation_T]>;
+    readonly [Computation_synchronousWithSideEffectsOfT]?: IterableWithSideEffectsLike<this[typeof Computation_T]>;
+    readonly [Computation_multicastOfT]?: never;
 }
-export interface IterableModule extends DeferredComputationModule<IterableComputation>, SynchronousComputationModule<IterableComputation>, InteractiveComputationModule<IterableComputation> {
+export type Computation = IterableComputation;
+export interface IterableModule extends InteractiveComputationModule<IterableComputation> {
 }
 export type Signature = IterableModule;
 export declare const catchError: Signature["catchError"];
 export declare const concatAll: Signature["concatAll"];
-export declare const concatMany: Signature["concatMany"];
+export declare const concat: Signature["concat"];
 export declare const empty: Signature["empty"];
 export declare const forEach: Signature["forEach"];
 export declare const fromIterable: Signature["fromIterable"];

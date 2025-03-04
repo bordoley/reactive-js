@@ -6,19 +6,22 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
+import { PureIterableLike } from "../../computations.js";
 import { Optional, isSome, none, pipe, pipeLazy } from "../../functions.js";
 import * as Computation from "../Computation.js";
 import * as Iterable from "../Iterable.js";
-import { IterableComputation } from "../Iterable.js";
 
 testModule(
   "Computation",
   describe(
-    "concat",
+    "concatMany",
     test(
       "concats the input containers in order",
       pipeLazy(
-        Computation.concat<IterableComputation>(Iterable)([1, 2, 3], [4, 5, 6]),
+        Computation.concatMany(Iterable)([
+          [1, 2, 3],
+          [4, 5, 6],
+        ]),
         Iterable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4, 5, 6]),
       ),
@@ -26,11 +29,11 @@ testModule(
     test(
       "only consume partial number of events",
       pipeLazy(
-        Computation.concat<IterableComputation>(Iterable)(
+        Computation.concatMany(Iterable)([
           [1, 2, 3],
           [4, 5, 6],
           [7, 8, 8],
-        ),
+        ]),
         Iterable.takeFirst<number>({ count: 5 }),
         Iterable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4, 5]),
@@ -42,7 +45,7 @@ testModule(
     test(
       "maps each value to a container and flattens",
       pipeLazy(
-        [0, 1],
+        [0, 1] as PureIterableLike<number>,
         Computation.concatMap(Iterable)(() => [1, 2, 3]),
         Iterable.toReadonlyArray<number>(),
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
@@ -84,7 +87,7 @@ testModule(
       "concats two containers together",
       pipeLazy(
         [0, 1],
-        Computation.concatWith<IterableComputation>(Iterable)([2, 3, 4]),
+        Computation.concatWith(Iterable)<number>([2, 3, 4]),
         Iterable.toReadonlyArray(),
         expectArrayEquals([0, 1, 2, 3, 4]),
       ),
@@ -96,7 +99,7 @@ testModule(
       "appends the additional values to the end of the container",
       pipeLazy(
         [0, 1],
-        Computation.endWith<IterableComputation>(Iterable)(2, 3, 4),
+        Computation.endWith(Iterable)(2, 3, 4),
         Iterable.toReadonlyArray(),
         expectArrayEquals([0, 1, 2, 3, 4]),
       ),
@@ -206,7 +209,7 @@ testModule(
       "appends the additional values to the start of the container",
       pipeLazy(
         [0, 1],
-        Computation.startWith<IterableComputation>(Iterable)(2, 3, 4),
+        Computation.startWith(Iterable)(2, 3, 4),
         Iterable.toReadonlyArray(),
         expectArrayEquals([2, 3, 4, 0, 1]),
       ),

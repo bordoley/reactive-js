@@ -8,6 +8,7 @@ import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
+const ObservableModule = { map: Observable_map };
 const Observable_spring = (options) => {
     const stiffness = clamp(0, options?.stiffness ?? 0.15, 1);
     const damping = clamp(0, options?.damping ?? 0.8, 1);
@@ -24,10 +25,7 @@ const Observable_spring = (options) => {
         const d = (velocity + acceleration) * dt;
         const newValue = abs(d) < precision && abs(delta) < precision ? 1 : value + d;
         return tuple(now, value, newValue);
-    }, returns(tuple(MAX_VALUE, 0, 0))), Computation.pick({
-        // FIXME: A little hacky to need to cast
-        map: Observable_map,
-    })(2), Observable_takeWhile(isNotEqualTo(1), {
+    }, returns(tuple(MAX_VALUE, 0, 0))), Computation.pick(ObservableModule)(2), Observable_takeWhile(isNotEqualTo(1), {
         inclusive: true,
     }));
 };

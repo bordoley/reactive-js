@@ -1,3 +1,10 @@
+import * as Computation from "../../../computations/Computation.js";
+import {
+  ComputationLike_isDeferred,
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+  DeferringHigherOrderInnerType,
+} from "../../../computations.js";
 import {
   ObservableLike,
   ObservableLike_observe,
@@ -19,7 +26,9 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
-import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
+import Observable_lift, {
+  ObservableLift_isStateless,
+} from "./Observable.lift.js";
 
 const Observable_catchError: Observable.Signature["catchError"] =
   /*@__PURE__*/ (<T>() => {
@@ -36,6 +45,9 @@ const Observable_catchError: Observable.Signature["catchError"] =
 
     return (
       errorHandler: SideEffect1<Error> | Function1<Error, ObservableLike<T>>,
+      options?: {
+        readonly innerType?: DeferringHigherOrderInnerType;
+      },
     ) => {
       function onErrorHandler(this: ObserverLike<T>, err: Error) {
         let action: Optional<ObservableLike<T>> = none;
@@ -52,10 +64,17 @@ const Observable_catchError: Observable.Signature["catchError"] =
         }
       }
 
-      return Observable_liftPureDeferred(
-        createCatchErrorObserver(onErrorHandler),
-      );
+      return Observable_lift({
+        [ObservableLift_isStateless]: false,
+        [ComputationLike_isDeferred]: Computation.isDeferred(
+          options?.innerType ?? {},
+        ),
+        [ComputationLike_isPure]: Computation.isPure(options?.innerType ?? {}),
+        [ComputationLike_isSynchronous]: Computation.isSynchronous(
+          options?.innerType ?? {},
+        ),
+      })(createCatchErrorObserver(onErrorHandler));
     };
-  })();
+  })() as Observable.Signature["catchError"];
 
 export default Observable_catchError;

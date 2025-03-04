@@ -1,9 +1,12 @@
 import {
-  Computation,
+  Computation as ComputationSig,
   Computation_T,
-  Computation_ofT,
-  Computation_pureOfT,
-  Computation_withSideEffectsOfT,
+  Computation_baseOfT,
+  Computation_deferredWithSideEffectsOfT,
+  Computation_multicastOfT,
+  Computation_pureDeferredOfT,
+  Computation_pureSynchronousOfT,
+  Computation_synchronousWithSideEffectsOfT,
   ConcurrentReactiveComputationModule,
 } from "../computations.js";
 import { EventListenerLike, EventSourceLike } from "../events.js";
@@ -14,16 +17,26 @@ import EventSource_create from "./EventSource/__private__/EventSource.create.js"
 import EventSource_fromPromise from "./EventSource/__private__/EventSource.fromPromise.js";
 import EventSource_keep from "./EventSource/__private__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__private__/EventSource.map.js";
-import EventSource_mergeMany from "./EventSource/__private__/EventSource.mergeMany.js";
+import EventSource_merge from "./EventSource/__private__/EventSource.merge.js";
 
 /**
  * @noInheritDoc
  */
-export interface EventSourceComputation extends Computation {
-  readonly [Computation_ofT]?: EventSourceLike<this[typeof Computation_T]>;
-  readonly [Computation_pureOfT]?: EventSourceLike<this[typeof Computation_T]>;
-  readonly [Computation_withSideEffectsOfT]?: never;
+export interface EventSourceComputation extends ComputationSig {
+  readonly [Computation_baseOfT]?: EventSourceLike<this[typeof Computation_T]>;
+
+  readonly [Computation_pureDeferredOfT]?: never;
+  readonly [Computation_deferredWithSideEffectsOfT]?: never;
+
+  readonly [Computation_pureSynchronousOfT]?: never;
+  readonly [Computation_synchronousWithSideEffectsOfT]?: never;
+
+  readonly [Computation_multicastOfT]?: EventSourceLike<
+    this[typeof Computation_T]
+  >;
 }
+
+export type Computation = EventSourceComputation;
 
 /**
  * @noInheritDoc
@@ -45,4 +58,4 @@ export const create: Signature["create"] = EventSource_create;
 export const fromPromise: Signature["fromPromise"] = EventSource_fromPromise;
 export const keep: Signature["keep"] = EventSource_keep;
 export const map: Signature["map"] = EventSource_map;
-export const mergeMany: Signature["mergeMany"] = EventSource_mergeMany;
+export const merge: Signature["merge"] = EventSource_merge;

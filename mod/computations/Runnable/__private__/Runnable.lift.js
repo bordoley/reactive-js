@@ -19,6 +19,6 @@ class LiftedRunnable {
 const Runnable_lift = ((operator, isPure) => (source) => {
     const src = source.src ?? source;
     const ops = [operator, ...(source.ops ?? [])];
-    return newInstance(LiftedRunnable, src, ops, isPure);
+    return newInstance(LiftedRunnable, src, ops, isPure ?? true);
 });
 export default Runnable_lift;

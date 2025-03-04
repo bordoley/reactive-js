@@ -6,7 +6,7 @@
 
 # Type Alias: ComputationOf\<TComputation, T\>
 
-> **ComputationOf**\<`TComputation`, `T`\>: `TComputation` *extends* `object` ? `NonNullable`\<`TComputation` & `object`\[*typeof* [`Computation_ofT`](../variables/Computation_ofT.md)\]\> : `object`
+> **ComputationOf**\<`TComputation`, `T`\>: [`DeferredComputationOf`](DeferredComputationOf.md)\<`TComputation`, `T`\> \| [`SynchronousComputationOf`](SynchronousComputationOf.md)\<`TComputation`, `T`\> \| [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputation`, `T`\>
 
 ## Type Parameters
 

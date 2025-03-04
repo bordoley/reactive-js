@@ -59,11 +59,7 @@ const Element_measure = options => (element) => {
     const windowResizeEventSource = Element_windowResizeEventSource();
     const windowScrollEventSource = Element_windowScrollEventSource();
     const scrollContainerEventSources = pipe(findScrollContainers(element), ReadonlyArray.map(Element_eventSource("scroll")));
-    pipe(EventSource.mergeMany([
-        windowResizeEventSource,
-        windowScrollEventSource,
-        ...scrollContainerEventSources,
-    ]), EventSource.map(pipeLazy(element, measureElement)), EventSource.addEventHandler(rect => {
+    pipe(EventSource.merge(windowResizeEventSource, windowScrollEventSource, ...scrollContainerEventSources), EventSource.map(pipeLazy(element, measureElement)), EventSource.addEventHandler(rect => {
         store[StoreLike_value] = rect;
     }), Disposable.bindTo(store));
     return store;

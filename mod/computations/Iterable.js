@@ -2,9 +2,9 @@
 
 import { clampPositiveInteger } from "../__internal__/math.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
-import { ComputationLike_isPure, Computation_ofT, Computation_pureOfT, Computation_withSideEffectsOfT, } from "../computations.js";
+import { ComputationLike_isPure, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
 import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, raise as raiseError, returns, tuple, } from "../functions.js";
-import * as Computation from "./Computation.js";
+import * as ComputationM from "./Computation.js";
 import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 class CatchErrorIterable {
     s;
@@ -13,7 +13,7 @@ class CatchErrorIterable {
     constructor(s, onError, isPure) {
         this.s = s;
         this.onError = onError;
-        this[ComputationLike_isPure] = Computation.isPure(s) && isPure;
+        this[ComputationLike_isPure] = ComputationM.isPure(s) && isPure;
     }
     *[Symbol.iterator]() {
         try {
@@ -44,7 +44,7 @@ class ConcatAllIterable {
     [ComputationLike_isPure];
     constructor(s, isPure) {
         this.s = s;
-        this[ComputationLike_isPure] = Computation.isPure(s) && isPure;
+        this[ComputationLike_isPure] = ComputationM.isPure(s) && isPure;
     }
     *[Symbol.iterator]() {
         for (const iter of this.s) {
@@ -55,7 +55,7 @@ class ConcatAllIterable {
     }
 }
 export const concatAll = ((options) => (iterable) => newInstance(ConcatAllIterable, iterable, options?.innerType?.[ComputationLike_isPure] ?? true));
-export const concatMany = ((iterables) => newInstance(ConcatAllIterable, iterables, Computation.areAllPure(iterables)));
+export const concat = ((...iterables) => newInstance(ConcatAllIterable, iterables, ComputationM.areAllPure(iterables)));
 export const empty = /*@__PURE__*/ returns([]);
 class ForEachIterable {
     d;
@@ -347,7 +347,7 @@ class ZipIterable {
     [ComputationLike_isPure];
     constructor(iters) {
         this.iters = iters;
-        this[ComputationLike_isPure] = Computation.areAllPure(iters);
+        this[ComputationLike_isPure] = ComputationM.areAllPure(iters);
     }
     *[Symbol.iterator]() {
         const iterators = this.iters.map(invoke(Symbol.iterator));

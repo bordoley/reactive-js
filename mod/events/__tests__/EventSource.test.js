@@ -106,7 +106,7 @@ testModule("EventSource", ComputationModuleTests({
     }
     catch (e) { }
     pipe(subscription[DisposableLike_error], expectEquals(error));
-})), describe("mergeMany", test("with source that have different delays", () => {
+})), describe("merge", test("with source that have different delays", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);
@@ -116,7 +116,7 @@ testModule("EventSource", ComputationModuleTests({
             [2, 5, 8],
             [3, 6, 9],
         ], ReadonlyArray.map(compose(Observable.fromReadonlyArray({ delay: 3 }), Observable.toEventSource(vts))));
-        pipe(EventSource.mergeMany([ev1, ev2, ev3]), EventSource.addEventHandler(bindMethod(result, Array_push)));
+        pipe(EventSource.merge(ev1, ev2, ev3), EventSource.addEventHandler(bindMethod(result, Array_push)));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }

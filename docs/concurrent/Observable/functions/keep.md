@@ -6,7 +6,7 @@
 
 # Function: keep()
 
-> **keep**\<`T`\>(`predicate`): [`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`\>
+> **keep**\<`T`\>(`predicate`): [`ComputationOperator`](../../../computations/type-aliases/ComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>
 
 ## Type Parameters
 
@@ -20,4 +20,4 @@
 
 ## Returns
 
-[`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`\>
+[`ComputationOperator`](../../../computations/type-aliases/ComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>

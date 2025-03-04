@@ -6,7 +6,7 @@
 
 # Function: throwIfEmpty()
 
-> **throwIfEmpty**\<`T`\>(`factory`): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
+> **throwIfEmpty**\<`T`\>(`factory`, `options`?): [`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>
 
 ## Type Parameters
 
@@ -18,6 +18,10 @@
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
 
+### options?
+
+`undefined`
+
 ## Returns
 
-[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`T`, `T`\>
+[`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>

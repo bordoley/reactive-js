@@ -84,11 +84,11 @@ const Element_measure: Element.Signature["measure"] =
     );
 
     pipe(
-      EventSource.mergeMany([
+      EventSource.merge(
         windowResizeEventSource,
         windowScrollEventSource,
         ...scrollContainerEventSources,
-      ]),
+      ),
       EventSource.map(pipeLazy(element, measureElement)),
       EventSource.addEventHandler<Rect>(rect => {
         store[StoreLike_value] = rect;

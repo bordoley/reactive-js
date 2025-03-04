@@ -1,8 +1,6 @@
 import { MAX_VALUE } from "../../../__internal__/constants.js";
 import { abs, clamp, min } from "../../../__internal__/math.js";
 import * as Computation from "../../../computations/Computation.js";
-import { ComputationModule } from "../../../computations.js";
-import { PureSynchronousObservableLike } from "../../../concurrent.js";
 import {
   Tuple3,
   isNotEqualTo,
@@ -10,11 +8,12 @@ import {
   returns,
   tuple,
 } from "../../../functions.js";
-import type { ObservableComputationFor } from "../../Observable.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
+
+const ObservableModule = { map: Observable_map };
 
 const Observable_spring = (options?: {
   readonly stiffness?: number;
@@ -48,12 +47,9 @@ const Observable_spring = (options?: {
       },
       returns(tuple(MAX_VALUE, 0, 0)),
     ),
-    Computation.pick<ObservableComputationFor<PureSynchronousObservableLike>>({
-      // FIXME: A little hacky to need to cast
-      map: Observable_map as unknown as ComputationModule<
-        ObservableComputationFor<PureSynchronousObservableLike>
-      >["map"],
-    })<Tuple3<number, number, number>, number>(2),
+    Computation.pick(ObservableModule)<Tuple3<number, number, number>, number>(
+      2,
+    ),
     Observable_takeWhile(isNotEqualTo(1), {
       inclusive: true,
     }),

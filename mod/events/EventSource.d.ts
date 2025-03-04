@@ -1,15 +1,19 @@
-import { Computation, Computation_T, Computation_ofT, Computation_pureOfT, Computation_withSideEffectsOfT, ConcurrentReactiveComputationModule } from "../computations.js";
+import { Computation as ComputationSig, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule } from "../computations.js";
 import { EventListenerLike, EventSourceLike } from "../events.js";
 import { Function1, SideEffect1 } from "../functions.js";
 import { DisposableLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
-export interface EventSourceComputation extends Computation {
-    readonly [Computation_ofT]?: EventSourceLike<this[typeof Computation_T]>;
-    readonly [Computation_pureOfT]?: EventSourceLike<this[typeof Computation_T]>;
-    readonly [Computation_withSideEffectsOfT]?: never;
+export interface EventSourceComputation extends ComputationSig {
+    readonly [Computation_baseOfT]?: EventSourceLike<this[typeof Computation_T]>;
+    readonly [Computation_pureDeferredOfT]?: never;
+    readonly [Computation_deferredWithSideEffectsOfT]?: never;
+    readonly [Computation_pureSynchronousOfT]?: never;
+    readonly [Computation_synchronousWithSideEffectsOfT]?: never;
+    readonly [Computation_multicastOfT]?: EventSourceLike<this[typeof Computation_T]>;
 }
+export type Computation = EventSourceComputation;
 /**
  * @noInheritDoc
  */
@@ -23,4 +27,4 @@ export declare const create: Signature["create"];
 export declare const fromPromise: Signature["fromPromise"];
 export declare const keep: Signature["keep"];
 export declare const map: Signature["map"];
-export declare const mergeMany: Signature["mergeMany"];
+export declare const merge: Signature["merge"];

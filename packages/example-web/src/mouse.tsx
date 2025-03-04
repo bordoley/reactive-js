@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useMemo } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
-import { pipe, returns } from "@reactive-js/core/functions";
+import { pipe, pipeLazy, returns } from "@reactive-js/core/functions";
 import {
   __await,
   __bindMethod,
@@ -20,36 +20,33 @@ import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/Ani
 
 type Point = { x: number; y: number };
 
-const animationScheduler = AnimationFrameScheduler.get();
-const spring = pipe(
-  window,
-  WebElement.eventSource<Window, "mousemove">("mousemove"),
-  EventSource.map(ev => ({ x: ev.clientX, y: ev.clientY })),
-  Observable.fromEventSource(),
-  Observable.throttle(300, { mode: "interval" }),
-  Observable.scanMany(
-    (prev: Point, next: Point) => {
-      const diffX = next.x - prev.x;
-      const diffY = next.y - prev.y;
-
-      return pipe(
-        Observable.spring({
-          stiffness: 0.01,
-          damping: 0.1,
-          precision: 0.001,
-        }),
-        Observable.map((v: number) => ({
-          x: prev.x + diffX * v,
-          y: prev.y + diffY * v,
-        })),
-      );
-    },
-    returns({ x: 0, y: 0 }),
-  ),
-  Observable.toEventSource(animationScheduler),
-);
-
 const Root = () => {
+  const spring = useMemo(
+    pipeLazy(
+      window,
+      WebElement.eventSource<Window, "mousemove">("mousemove"),
+      EventSource.map((ev: MouseEvent) => ({ x: ev.clientX, y: ev.clientY })),
+      Observable.fromEventSource(),
+      Observable.throttle(300, { mode: "interval" }),
+      Observable.scanMany(
+        (prev: Point, next: Point) =>
+          pipe(
+            Observable.spring({
+              stiffness: 0.01,
+              damping: 0.1,
+              precision: 0.001,
+            }),
+            Observable.map((v: number) => ({
+              x: prev.x + (next.x - prev.x) * v,
+              y: prev.y + (next.y - prev.y) * v,
+            })),
+          ),
+        returns({ x: 0, y: 0 }),
+      ),
+      Observable.toEventSource(AnimationFrameScheduler.get()),
+    ),
+    [],
+  );
   const ref = useAnimate<HTMLDivElement, Point>(
     spring,
     (p: Point) => ({

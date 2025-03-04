@@ -13,6 +13,7 @@
 
 ## Type Aliases
 
+- [Computation](type-aliases/Computation.md)
 - [Signature](type-aliases/Signature.md)
 
 ## Functions
@@ -22,4 +23,4 @@
 - [fromPromise](functions/fromPromise.md)
 - [keep](functions/keep.md)
 - [map](functions/map.md)
-- [mergeMany](functions/mergeMany.md)
+- [merge](functions/merge.md)

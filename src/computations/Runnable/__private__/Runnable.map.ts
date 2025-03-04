@@ -23,9 +23,8 @@ class MapSink<TA, TB> extends AbstractSink<TA, TB> {
 const Runnable_map: Runnable.Signature["map"] = <TA, TB>(
   selector: Function1<TA, TB>,
 ) =>
-  Runnable_lift(
-    (sink: SinkLike<TB>) => newInstance(MapSink<TA, TB>, sink, selector),
-    true,
+  Runnable_lift((sink: SinkLike<TB>) =>
+    newInstance(MapSink<TA, TB>, sink, selector),
   );
 
 export default Runnable_map;

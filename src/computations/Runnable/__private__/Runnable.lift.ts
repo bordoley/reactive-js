@@ -1,15 +1,16 @@
 import {
+  ComputationBaseOf,
   ComputationLike_isInteractive,
   ComputationLike_isPure,
-  ComputationOf,
   ComputationOperator,
   ComputationWithSideEffectsOperator,
+  DeferringComputationOperator,
   RunnableLike,
   RunnableLike_eval,
   SinkLike,
 } from "../../../computations.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
-import type { RunnableComputation } from "../../Runnable.js";
+import type * as Runnable from "../../Runnable.js";
 
 class LiftedRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
@@ -31,30 +32,33 @@ class LiftedRunnable<T> implements RunnableLike<T> {
 interface RunnableLift {
   lift<TA, TB>(
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
+  ): ComputationOperator<Runnable.Computation, TA, TB>;
+  lift<TA, TB>(
+    operator: Function1<SinkLike<TB>, SinkLike<TA>>,
     isPure: true,
-  ): ComputationOperator<RunnableComputation, TA, TB>;
+  ): DeferringComputationOperator<Runnable.Computation, TA, TB>;
   lift<TA, TB>(
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
     isPure: false,
-  ): ComputationWithSideEffectsOperator<RunnableComputation, TA, TB>;
+  ): ComputationWithSideEffectsOperator<Runnable.Computation, TA, TB>;
   lift<TA, TB>(
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
     isPure: boolean,
   ): Function1<
-    ComputationOf<RunnableComputation, TA>,
-    ComputationOf<RunnableComputation, TB>
+    ComputationBaseOf<Runnable.Computation, TA>,
+    ComputationBaseOf<Runnable.Computation, TB>
   >;
 }
 
 const Runnable_lift: RunnableLift["lift"] = (<TA, TB>(
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
-    isPure: boolean,
+    isPure?: boolean,
   ): Function1<RunnableLike<TA>, RunnableLike<TB>> =>
   (source: RunnableLike<TA>) => {
     const src: RunnableLike<any> = (source as any).src ?? source;
     const ops = [operator, ...((source as any).ops ?? [])];
 
-    return newInstance(LiftedRunnable, src, ops, isPure);
+    return newInstance(LiftedRunnable, src, ops, isPure ?? true);
   }) as RunnableLift["lift"];
 
 export default Runnable_lift;

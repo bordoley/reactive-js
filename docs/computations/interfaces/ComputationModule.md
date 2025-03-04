@@ -8,7 +8,7 @@
 
 ## Extended by
 
-- [`DeferredComputationModule`](DeferredComputationModule.md)
+- [`SynchronousComputationModule`](SynchronousComputationModule.md)
 - [`ConcurrentReactiveComputationModule`](ConcurrentReactiveComputationModule.md)
 
 ## Type Parameters

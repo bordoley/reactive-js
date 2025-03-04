@@ -11,7 +11,7 @@ import {
   EventSourceLike_addEventListener,
 } from "../../../events.js";
 import { Function1, bindMethod, none, pipeUnsafe } from "../../../functions.js";
-import type { EventSourceComputation } from "../../EventSource.js";
+import type * as EventSource from "../../EventSource.js";
 
 const LiftedEventSource_source = Symbol("LiftedEventSource_source");
 const LiftedEventSource_operators = Symbol("LiftedEventSource_operators");
@@ -74,7 +74,7 @@ const createLiftedEventSource: <TIn, TOut>(
 interface EventSourceLift {
   lift<TA, TB>(
     operator: Function1<EventListenerLike<TB>, EventListenerLike<TA>>,
-  ): ComputationOperator<EventSourceComputation, TA, TB>;
+  ): ComputationOperator<EventSource.Computation, TA, TB>;
 }
 
 const EventSource_lift: EventSourceLift["lift"] = (<TA, TB>(

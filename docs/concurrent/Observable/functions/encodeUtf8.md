@@ -6,8 +6,8 @@
 
 # Function: encodeUtf8()
 
-> **encodeUtf8**(): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+> **encodeUtf8**(): [`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
 
 ## Returns
 
-[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+[`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `string`, `Uint8Array`\<`ArrayBufferLike`\>\>

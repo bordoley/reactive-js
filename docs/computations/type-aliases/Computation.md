@@ -6,4 +6,4 @@
 
 # Type Alias: Computation
 
-> **Computation**: [`GenericComputation`](../interfaces/GenericComputation.md)\<[`ComputationLike`](../interfaces/ComputationLike.md), [`PureComputationLike`](../interfaces/PureComputationLike.md), [`ComputationWithSideEffectsLike`](../interfaces/ComputationWithSideEffectsLike.md)\>
+> **Computation**: [`GenericComputation`](../interfaces/GenericComputation.md)\<[`ComputationLike`](../interfaces/ComputationLike.md), [`PureDeferredComputationLike`](../interfaces/PureDeferredComputationLike.md), [`DeferredComputationWithSideEffectsLike`](../interfaces/DeferredComputationWithSideEffectsLike.md), [`PureSynchronousComputationLike`](../interfaces/PureSynchronousComputationLike.md), [`SynchronousComputationWithSideEffectsLike`](../interfaces/SynchronousComputationWithSideEffectsLike.md), [`MulticastComputationLike`](../interfaces/MulticastComputationLike.md)\>

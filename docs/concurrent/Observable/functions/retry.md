@@ -6,7 +6,7 @@
 
 # Function: retry()
 
-> **retry**\<`T`\>(`shouldRetry`?): [`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
+> **retry**\<`T`\>(`shouldRetry`?): [`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>
 
 ## Type Parameters
 
@@ -20,4 +20,4 @@
 
 ## Returns
 
-[`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
+[`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>

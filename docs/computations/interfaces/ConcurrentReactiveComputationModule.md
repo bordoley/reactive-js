@@ -12,7 +12,7 @@
 
 ## Extended by
 
-- [`MulticastObservableModule`](../../concurrent/MulticastObservable/interfaces/MulticastObservableModule.md)
+- [`ObservableModule`](../../concurrent/Observable/interfaces/ObservableModule.md)
 - [`EventSourceModule`](../../events/EventSource/interfaces/EventSourceModule.md)
 
 ## Type Parameters
@@ -23,7 +23,7 @@
 
 ### fromPromise()
 
-> **fromPromise**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>\>
+> **fromPromise**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputation`, `T`\>\>
 
 #### Type Parameters
 
@@ -31,7 +31,7 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputation`, `T`\>\>
 
 ***
 
@@ -85,11 +85,11 @@
 
 ***
 
-### mergeMany()
+### merge()
 
 #### Call Signature
 
-> **mergeMany**\<`T`\>(`computations`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+> **merge**\<`T`\>(...`computations`): [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
 
 ##### Type Parameters
 
@@ -99,15 +99,15 @@
 
 ###### computations
 
-readonly [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>[]
+...readonly [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>[]
 
 ##### Returns
 
-[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
 
 #### Call Signature
 
-> **mergeMany**\<`T`\>(`computations`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+> **merge**\<`T`\>(...`computations`): [`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
 
 ##### Type Parameters
 
@@ -117,8 +117,98 @@ readonly [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputat
 
 ###### computations
 
-readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>[]
+...readonly [`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>[]
 
 ##### Returns
 
-[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+[`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+
+#### Call Signature
+
+> **merge**\<`T`\>(...`computations`): [`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputation`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### computations
+
+...readonly [`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputation`, `T`\>[]
+
+##### Returns
+
+[`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputation`, `T`\>
+
+#### Call Signature
+
+> **merge**\<`T`\>(...`computations`): [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### computations
+
+...readonly [`DeferredComputationOf`](../type-aliases/DeferredComputationOf.md)\<`TComputation`, `T`\>[]
+
+##### Returns
+
+[`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+
+#### Call Signature
+
+> **merge**\<`T`\>(...`computations`): [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputation`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### computations
+
+...readonly [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputation`, `T`\>[]
+
+##### Returns
+
+[`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputation`, `T`\>
+
+#### Call Signature
+
+> **merge**\<`T`\>(...`computations`): [`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputation`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### computations
+
+...readonly [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>[]
+
+##### Returns
+
+[`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputation`, `T`\>
+
+#### Call Signature
+
+> **merge**\<`T`\>(...`computations`): [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### computations
+
+...readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>[]
+
+##### Returns
+
+[`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>

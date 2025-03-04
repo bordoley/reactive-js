@@ -6,7 +6,7 @@
 
 # Function: buffer()
 
-> **buffer**\<`T`\>(`options`?): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`, readonly `T`[]\>
+> **buffer**\<`T`\>(`options`?): [`DeferringComputationOperator`](../../type-aliases/DeferringComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`, readonly `T`[]\>
 
 ## Type Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`, readonly `T`[]\>
+[`DeferringComputationOperator`](../../type-aliases/DeferringComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`, readonly `T`[]\>

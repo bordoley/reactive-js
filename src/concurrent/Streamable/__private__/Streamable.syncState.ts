@@ -1,5 +1,8 @@
 import * as Computation from "../../../computations/Computation.js";
-import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
+import {
+  DeferredComputationWithSideEffectsLike,
+  DeferredComputationWithSideEffectsType,
+} from "../../../computations.js";
 import {
   DeferredObservableLike,
   ObservableLike,
@@ -14,9 +17,14 @@ import {
   pipe,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import * as DeferredObservable from "../../DeferredObservable.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
+
+const ObservableModule = {
+  concatAll: Observable.concatAll,
+  keep: Observable.keep,
+  map: Observable.map,
+};
 
 const Streamable_syncState: Streamable.Signature["syncState"] =
   <T>(
@@ -36,10 +44,7 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
         Observable.forkMerge(
           compose(
             Observable.takeFirst(),
-            Computation.concatMap({
-              concatAll: DeferredObservable.concatAll,
-              map: DeferredObservable.map,
-            })(onInit, {
+            Computation.concatMap(ObservableModule)(onInit, {
               innerType: DeferredComputationWithSideEffectsType,
             }),
           ),
@@ -48,19 +53,18 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
               ? Observable.throttle(throttleDuration)
               : identity<ObservableLike<T>>,
             Observable.pairwise<T>(),
-            Computation.concatMap({
-              concatAll: DeferredObservable.concatAll,
-              map: DeferredObservable.map,
-            })<Tuple2<T, T>, Updater<T>>(
-              ([oldValue, newValue]) => onChange(oldValue, newValue),
-              {
-                innerType: DeferredComputationWithSideEffectsType,
-              },
-            ),
+            Computation.concatMap(ObservableModule)<
+              Tuple2<T, T>,
+              Updater<T>,
+              DeferredComputationWithSideEffectsLike
+            >(([oldValue, newValue]) => onChange(oldValue, newValue), {
+              innerType: DeferredComputationWithSideEffectsType,
+            }),
           ),
+          { innerType: DeferredComputationWithSideEffectsType },
         ),
         Observable.dispatchTo<Updater<T>>(stream),
-        Observable.ignoreElements(),
+        Computation.ignoreElements(ObservableModule)(),
         Observable.subscribe(scheduler),
         Disposable.addTo(stream),
       );

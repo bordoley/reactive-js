@@ -1,7 +1,7 @@
 /// <reference types="./Observable.encodeUtf8.d.ts" />
 
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
-import { ObservableLike_observe } from "../../../concurrent.js";
+import { ObservableLike_observe, } from "../../../concurrent.js";
 import { bindMethod, invoke, newInstance, pipe, returns, } from "../../../functions.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_map from "./Observable.map.js";

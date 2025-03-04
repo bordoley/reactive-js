@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **catchError**\<`T`\>(`onError`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>
+> **catchError**\<`T`\>(`onError`): [`DeferringComputationOperator`](../../type-aliases/DeferringComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>
 
 ### Type Parameters
 
@@ -22,11 +22,11 @@
 
 ### Returns
 
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>
+[`DeferringComputationOperator`](../../type-aliases/DeferringComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>
 
 ## Call Signature
 
-> **catchError**\<`T`\>(`onError`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>
+> **catchError**\<`T`\>(`onError`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `T`, `T`\>
 
 ### Type Parameters
 
@@ -40,28 +40,30 @@
 
 ### Returns
 
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>
+[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `T`, `T`\>
 
 ## Call Signature
 
-> **catchError**\<`T`\>(`onError`, `options`): [`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>
+> **catchError**\<`T`, `TInnerType`\>(`onError`, `options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TInnerType`, `T`, `T`\>
 
 ### Type Parameters
 
 • **T**
 
+• **TInnerType** *extends* [`DeferringHigherOrderInnerType`](../../type-aliases/DeferringHigherOrderInnerType.md)
+
 ### Parameters
 
 #### onError
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`Error`, [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Error`, [`ComputationOfInnerType`](../../type-aliases/ComputationOfInnerType.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TInnerType`, `T`\>\>
 
 #### options
 
 ##### innerType
 
-`Pick`\<[`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md), *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md)\>
+`TInnerType`
 
 ### Returns
 
-[`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>
+[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TInnerType`, `T`, `T`\>

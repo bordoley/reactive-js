@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **repeat**\<`T`\>(`predicate`): [`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
+> **repeat**\<`T`\>(`predicate`): [`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>
 
 ### Type Parameters
 
@@ -22,11 +22,11 @@
 
 ### Returns
 
-[`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
+[`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>
 
 ## Call Signature
 
-> **repeat**\<`T`\>(`count`): [`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
+> **repeat**\<`T`\>(`count`): [`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>
 
 ### Type Parameters
 
@@ -40,11 +40,11 @@
 
 ### Returns
 
-[`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
+[`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>
 
 ## Call Signature
 
-> **repeat**\<`T`\>(): [`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
+> **repeat**\<`T`\>(): [`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>
 
 ### Type Parameters
 
@@ -52,4 +52,4 @@
 
 ### Returns
 
-[`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`unknown`\>\>
+[`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>

@@ -6,7 +6,7 @@
 
 # Function: decodeWithCharset()
 
-> **decodeWithCharset**(`options`?): [`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`ArrayBuffer`, `string`\>
+> **decodeWithCharset**(`options`?): [`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `ArrayBuffer`, `string`\>
 
 ## Parameters
 
@@ -26,4 +26,4 @@
 
 ## Returns
 
-[`DeferredReactiveObservableOperator`](../type-aliases/DeferredReactiveObservableOperator.md)\<`ArrayBuffer`, `string`\>
+[`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `ArrayBuffer`, `string`\>

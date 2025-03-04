@@ -12,30 +12,60 @@
 
 ## Properties
 
-### \[Computation\_ofT\]?
+### \[Computation\_baseOfT\]?
 
-> `readonly` `optional` **\[Computation\_ofT\]**: [`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>
+> `readonly` `optional` **\[Computation\_baseOfT\]**: [`RunnableLike`](../../interfaces/RunnableLike.md)\<`unknown`\>
 
 #### Overrides
 
-`Computation.[Computation_ofT]`
+`ComputationSig.[Computation_baseOfT]`
 
 ***
 
-### \[Computation\_pureOfT\]?
+### \[Computation\_deferredWithSideEffectsOfT\]?
 
-> `readonly` `optional` **\[Computation\_pureOfT\]**: [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>
+> `readonly` `optional` **\[Computation\_deferredWithSideEffectsOfT\]**: [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>
 
 #### Overrides
 
-`Computation.[Computation_pureOfT]`
+`ComputationSig.[Computation_deferredWithSideEffectsOfT]`
 
 ***
 
-### \[Computation\_withSideEffectsOfT\]?
+### \[Computation\_multicastOfT\]?
 
-> `readonly` `optional` **\[Computation\_withSideEffectsOfT\]**: [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>
+> `readonly` `optional` **\[Computation\_multicastOfT\]**: `undefined`
 
 #### Overrides
 
-`Computation.[Computation_withSideEffectsOfT]`
+`ComputationSig.[Computation_multicastOfT]`
+
+***
+
+### \[Computation\_pureDeferredOfT\]?
+
+> `readonly` `optional` **\[Computation\_pureDeferredOfT\]**: [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>
+
+#### Overrides
+
+`ComputationSig.[Computation_pureDeferredOfT]`
+
+***
+
+### \[Computation\_pureSynchronousOfT\]?
+
+> `readonly` `optional` **\[Computation\_pureSynchronousOfT\]**: [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>
+
+#### Overrides
+
+`ComputationSig.[Computation_pureSynchronousOfT]`
+
+***
+
+### \[Computation\_synchronousWithSideEffectsOfT\]?
+
+> `readonly` `optional` **\[Computation\_synchronousWithSideEffectsOfT\]**: [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>
+
+#### Overrides
+
+`ComputationSig.[Computation_synchronousWithSideEffectsOfT]`

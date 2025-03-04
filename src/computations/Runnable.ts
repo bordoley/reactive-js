@@ -1,21 +1,22 @@
 import {
-  Computation,
+  Computation as ComputationSig,
   Computation_T,
-  Computation_ofT,
-  Computation_pureOfT,
-  Computation_withSideEffectsOfT,
-  DeferredComputationModule,
+  Computation_baseOfT,
+  Computation_deferredWithSideEffectsOfT,
+  Computation_multicastOfT,
+  Computation_pureDeferredOfT,
+  Computation_pureSynchronousOfT,
+  Computation_synchronousWithSideEffectsOfT,
   DeferredReactiveComputationModule,
   PureRunnableLike,
   RunnableLike,
   RunnableWithSideEffectsLike,
-  SynchronousComputationModule,
 } from "../computations.js";
 import { identity, returns } from "../functions.js";
 import Runnable_buffer from "./Runnable/__private__/Runnable.buffer.js";
 import Runnable_catchError from "./Runnable/__private__/Runnable.catchError.js";
+import Runnable_concat from "./Runnable/__private__/Runnable.concat.js";
 import Runnable_concatAll from "./Runnable/__private__/Runnable.concatAll.js";
-import Runnable_concatMany from "./Runnable/__private__/Runnable.concatMany.js";
 import Runnable_decodeWithCharset from "./Runnable/__private__/Runnable.decodeWithCharset.js";
 import Runnable_distinctUntilChanged from "./Runnable/__private__/Runnable.distinctUntilChanged.js";
 import Runnable_empty from "./Runnable/__private__/Runnable.empty.js";
@@ -43,25 +44,36 @@ import Runnable_toReadonlyArray from "./Runnable/__private__/Runnable.toReadonly
 /**
  * @noInheritDoc
  */
-export interface RunnableComputation extends Computation {
-  readonly [Computation_ofT]?: RunnableLike<this[typeof Computation_T]>;
-  readonly [Computation_pureOfT]?: PureRunnableLike<this[typeof Computation_T]>;
-  readonly [Computation_withSideEffectsOfT]?: RunnableWithSideEffectsLike<
+export interface RunnableComputation extends ComputationSig {
+  readonly [Computation_baseOfT]?: RunnableLike<this[typeof Computation_T]>;
+  readonly [Computation_pureDeferredOfT]?: PureRunnableLike<
     this[typeof Computation_T]
   >;
+  readonly [Computation_deferredWithSideEffectsOfT]?: RunnableWithSideEffectsLike<
+    this[typeof Computation_T]
+  >;
+
+  readonly [Computation_pureSynchronousOfT]?: PureRunnableLike<
+    this[typeof Computation_T]
+  >;
+  readonly [Computation_synchronousWithSideEffectsOfT]?: RunnableWithSideEffectsLike<
+    this[typeof Computation_T]
+  >;
+
+  readonly [Computation_multicastOfT]?: never;
 }
 
+export type Computation = RunnableComputation;
+
 export interface RunnableModule
-  extends DeferredComputationModule<RunnableComputation>,
-    DeferredReactiveComputationModule<RunnableComputation>,
-    SynchronousComputationModule<RunnableComputation> {}
+  extends DeferredReactiveComputationModule<RunnableComputation> {}
 
 export type Signature = RunnableModule;
 
 export const buffer: Signature["buffer"] = Runnable_buffer;
 export const catchError: Signature["catchError"] = Runnable_catchError;
 export const concatAll: Signature["concatAll"] = Runnable_concatAll;
-export const concatMany: Signature["concatMany"] = Runnable_concatMany;
+export const concat: Signature["concat"] = Runnable_concat;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Runnable_decodeWithCharset;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =

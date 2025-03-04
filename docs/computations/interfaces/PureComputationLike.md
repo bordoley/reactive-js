@@ -13,7 +13,6 @@
 ## Extended by
 
 - [`PureObservableLike`](../../concurrent/interfaces/PureObservableLike.md)
-- [`EventSourceLike`](../../events/interfaces/EventSourceLike.md)
 
 ## Properties
 

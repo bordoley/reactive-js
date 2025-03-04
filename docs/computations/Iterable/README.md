@@ -13,13 +13,14 @@
 
 ## Type Aliases
 
+- [Computation](type-aliases/Computation.md)
 - [Signature](type-aliases/Signature.md)
 
 ## Functions
 
 - [catchError](functions/catchError.md)
+- [concat](functions/concat.md)
 - [concatAll](functions/concatAll.md)
-- [concatMany](functions/concatMany.md)
 - [empty](functions/empty.md)
 - [forEach](functions/forEach.md)
 - [fromIterable](functions/fromIterable.md)

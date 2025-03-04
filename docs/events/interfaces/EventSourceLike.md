@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`PureComputationLike`](../../computations/interfaces/PureComputationLike.md).[`ReactiveComputationLike`](../../computations/interfaces/ReactiveComputationLike.md)
+- [`MulticastComputationLike`](../../computations/interfaces/MulticastComputationLike.md)
 
 ## Extended by
 
@@ -28,7 +28,7 @@
 
 #### Overrides
 
-[`ReactiveComputationLike`](../../computations/interfaces/ReactiveComputationLike.md).[`[ComputationLike_isDeferred]`](../../computations/interfaces/ReactiveComputationLike.md#computationlike_isdeferred)
+[`MulticastComputationLike`](../../computations/interfaces/MulticastComputationLike.md).[`[ComputationLike_isDeferred]`](../../computations/interfaces/MulticastComputationLike.md#computationlike_isdeferred)
 
 ***
 
@@ -38,7 +38,7 @@
 
 #### Overrides
 
-[`ReactiveComputationLike`](../../computations/interfaces/ReactiveComputationLike.md).[`[ComputationLike_isInteractive]`](../../computations/interfaces/ReactiveComputationLike.md#computationlike_isinteractive)
+[`MulticastComputationLike`](../../computations/interfaces/MulticastComputationLike.md).[`[ComputationLike_isInteractive]`](../../computations/interfaces/MulticastComputationLike.md#computationlike_isinteractive)
 
 ***
 
@@ -48,7 +48,7 @@
 
 #### Overrides
 
-[`ReactiveComputationLike`](../../computations/interfaces/ReactiveComputationLike.md).[`[ComputationLike_isPure]`](../../computations/interfaces/ReactiveComputationLike.md#computationlike_ispure)
+[`MulticastComputationLike`](../../computations/interfaces/MulticastComputationLike.md).[`[ComputationLike_isPure]`](../../computations/interfaces/MulticastComputationLike.md#computationlike_ispure)
 
 ***
 
@@ -58,7 +58,7 @@
 
 #### Overrides
 
-[`ReactiveComputationLike`](../../computations/interfaces/ReactiveComputationLike.md).[`[ComputationLike_isSynchronous]`](../../computations/interfaces/ReactiveComputationLike.md#computationlike_issynchronous)
+[`MulticastComputationLike`](../../computations/interfaces/MulticastComputationLike.md).[`[ComputationLike_isSynchronous]`](../../computations/interfaces/MulticastComputationLike.md#computationlike_issynchronous)
 
 ## Methods
 

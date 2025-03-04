@@ -4,7 +4,14 @@ import { describe, expectArrayEquals, expectToHaveBeenCalledTimes, mockFn, test,
 import { isSome, none, pipe, pipeLazy } from "../../functions.js";
 import * as Computation from "../Computation.js";
 import * as Iterable from "../Iterable.js";
-testModule("Computation", describe("concat", test("concats the input containers in order", pipeLazy(Computation.concat(Iterable)([1, 2, 3], [4, 5, 6]), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), test("only consume partial number of events", pipeLazy(Computation.concat(Iterable)([1, 2, 3], [4, 5, 6], [7, 8, 8]), Iterable.takeFirst({ count: 5 }), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])))), describe("concatMap", test("maps each value to a container and flattens", pipeLazy([0, 1], Computation.concatMap(Iterable)(() => [1, 2, 3]), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("concatMapIterable", test("maps the incoming value with the inline generator function", pipeLazy([none, none], Computation.concatMapIterable(Iterable)(function* (_) {
+testModule("Computation", describe("concatMany", test("concats the input containers in order", pipeLazy(Computation.concatMany(Iterable)([
+    [1, 2, 3],
+    [4, 5, 6],
+]), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), test("only consume partial number of events", pipeLazy(Computation.concatMany(Iterable)([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 8],
+]), Iterable.takeFirst({ count: 5 }), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])))), describe("concatMap", test("maps each value to a container and flattens", pipeLazy([0, 1], Computation.concatMap(Iterable)(() => [1, 2, 3]), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("concatMapIterable", test("maps the incoming value with the inline generator function", pipeLazy([none, none], Computation.concatMapIterable(Iterable)(function* (_) {
     yield 1;
     yield 2;
     yield 3;

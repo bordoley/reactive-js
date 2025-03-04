@@ -10,7 +10,7 @@
 
 • **TComputation** *extends* [`Computation`](../../type-aliases/Computation.md)
 
-> **ConcatMapIterableOperator**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
+> **ConcatMapIterableOperator**\<`TA`, `TB`\>(`selector`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -26,9 +26,33 @@
 
 ## Returns
 
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
+[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
 
-> **ConcatMapIterableOperator**\<`TA`, `TB`\>(`selector`, `options`): [`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `TA`, `TB`\>
+> **ConcatMapIterableOperator**\<`TA`, `TB`\>(`selector`, `options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
+
+## Type Parameters
+
+• **TA**
+
+• **TB**
+
+## Parameters
+
+### selector
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TB`\>\>
+
+### options
+
+#### innerType
+
+[`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md)
+
+## Returns
+
+[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
+
+> **ConcatMapIterableOperator**\<`TA`, `TB`\>(`selector`, `options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`SynchronousComputationWithSideEffectsLike`](../../interfaces/SynchronousComputationWithSideEffectsLike.md), `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -46,8 +70,8 @@
 
 #### innerType
 
-`Pick`\<[`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md), *typeof* [`ComputationLike_isPure`](../../variables/ComputationLike_isPure.md)\>
+[`SynchronousComputationWithSideEffectsLike`](../../interfaces/SynchronousComputationWithSideEffectsLike.md)
 
 ## Returns
 
-[`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `TA`, `TB`\>
+[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`SynchronousComputationWithSideEffectsLike`](../../interfaces/SynchronousComputationWithSideEffectsLike.md), `TA`, `TB`\>

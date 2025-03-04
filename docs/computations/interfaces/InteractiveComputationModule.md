@@ -6,6 +6,10 @@
 
 # Interface: InteractiveComputationModule\<TComputation\>
 
+## Extends
+
+- [`SynchronousComputationModule`](SynchronousComputationModule.md)\<`TComputation`\>
+
 ## Extended by
 
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
@@ -14,96 +18,742 @@
 
 • **TComputation** *extends* [`Computation`](../type-aliases/Computation.md)
 
+## Properties
+
+### zip
+
+> **zip**: [`ZippingConstructor`](ZippingConstructor.md)\<`TComputation`\>
+
 ## Methods
 
-### zip()
+### catchError()
 
 #### Call Signature
 
-> **zip**\<`TA`, `TB`\>(`a`, `b`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **catchError**\<`T`\>(`onError`): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### onError
+
+[`SideEffect1`](../../functions/type-aliases/SideEffect1.md)\<`Error`\>
+
+##### Returns
+
+[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+##### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`catchError`](SynchronousComputationModule.md#catcherror)
+
+#### Call Signature
+
+> **catchError**\<`T`\>(`onError`): [`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](PureSynchronousComputationLike.md), `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### onError
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<`Error`, [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>\>
+
+##### Returns
+
+[`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](PureSynchronousComputationLike.md), `T`, `T`\>
+
+##### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`catchError`](SynchronousComputationModule.md#catcherror)
+
+#### Call Signature
+
+> **catchError**\<`T`, `TInnerType`\>(`onError`, `options`): [`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, `TInnerType`, `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+• **TInnerType** *extends* [`DeferringHigherOrderInnerType`](../type-aliases/DeferringHigherOrderInnerType.md)
+
+##### Parameters
+
+###### onError
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<`Error`, [`ComputationOfInnerType`](../type-aliases/ComputationOfInnerType.md)\<`TComputation`, `TInnerType`, `T`\>\>
+
+###### options
+
+###### innerType
+
+`TInnerType`
+
+##### Returns
+
+[`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, `TInnerType`, `T`, `T`\>
+
+##### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`catchError`](SynchronousComputationModule.md#catcherror)
+
+***
+
+### concat()
+
+#### Call Signature
+
+> **concat**\<`T`\>(...`computations`): [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### computations
+
+...readonly [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>[]
+
+##### Returns
+
+[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+
+##### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`concat`](SynchronousComputationModule.md#concat)
+
+#### Call Signature
+
+> **concat**\<`T`\>(...`computations`): [`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### computations
+
+...readonly [`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>[]
+
+##### Returns
+
+[`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+
+##### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`concat`](SynchronousComputationModule.md#concat)
+
+#### Call Signature
+
+> **concat**\<`T`\>(...`computations`): [`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputation`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### computations
+
+...readonly [`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputation`, `T`\>[]
+
+##### Returns
+
+[`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputation`, `T`\>
+
+##### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`concat`](SynchronousComputationModule.md#concat)
+
+#### Call Signature
+
+> **concat**\<`T`\>(...`computations`): [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### computations
+
+...readonly [`DeferredComputationOf`](../type-aliases/DeferredComputationOf.md)\<`TComputation`, `T`\>[]
+
+##### Returns
+
+[`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+
+##### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`concat`](SynchronousComputationModule.md#concat)
+
+***
+
+### concatAll()
+
+#### Call Signature
+
+> **concatAll**\<`T`\>(): [`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](PureSynchronousComputationLike.md), [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Returns
+
+[`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](PureSynchronousComputationLike.md), [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>, `T`\>
+
+##### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`concatAll`](SynchronousComputationModule.md#concatall)
+
+#### Call Signature
+
+> **concatAll**\<`T`, `TInnerType`\>(`options`): [`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, `TInnerType`, [`ComputationOfInnerType`](../type-aliases/ComputationOfInnerType.md)\<`TComputation`, `TInnerType`, `T`\>, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+• **TInnerType** *extends* [`DeferringHigherOrderInnerType`](../type-aliases/DeferringHigherOrderInnerType.md)
+
+##### Parameters
+
+###### options
+
+###### innerType
+
+`TInnerType`
+
+##### Returns
+
+[`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, `TInnerType`, [`ComputationOfInnerType`](../type-aliases/ComputationOfInnerType.md)\<`TComputation`, `TInnerType`, `T`\>, `T`\>
+
+##### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`concatAll`](SynchronousComputationModule.md#concatall)
+
+***
+
+### empty()
+
+> **empty**\<`T`\>(): [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`empty`](SynchronousComputationModule.md#empty)
+
+***
+
+### forEach()
+
+> **forEach**\<`T`\>(`sideEffect`): [`ComputationWithSideEffectsOperator`](../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### sideEffect
+
+[`SideEffect1`](../../functions/type-aliases/SideEffect1.md)\<`T`\>
+
+#### Returns
+
+[`ComputationWithSideEffectsOperator`](../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`forEach`](SynchronousComputationModule.md#foreach)
+
+***
+
+### fromIterable()
+
+> **fromIterable**\<`T`\>(): \<`TIterable`\>(`iterable`) => `TIterable` *extends* [`PureIterableLike`](PureIterableLike.md)\<`unknown`\> ? [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\> : [`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+`Function`
+
+##### Type Parameters
+
+• **TIterable** *extends* [`IterableLike`](IterableLike.md)\<`T`\> = [`IterableLike`](IterableLike.md)\<`T`\>
+
+##### Parameters
+
+###### iterable
+
+`TIterable`
+
+##### Returns
+
+`TIterable` *extends* [`PureIterableLike`](PureIterableLike.md)\<`unknown`\> ? [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\> : [`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`fromIterable`](SynchronousComputationModule.md#fromiterable)
+
+***
+
+### fromReadonlyArray()
+
+> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### count?
+
+`number`
+
+###### start?
+
+`number`
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`fromReadonlyArray`](SynchronousComputationModule.md#fromreadonlyarray)
+
+***
+
+### fromValue()
+
+> **fromValue**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`fromValue`](SynchronousComputationModule.md#fromvalue)
+
+***
+
+### generate()
+
+> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### generator
+
+[`Updater`](../../functions/type-aliases/Updater.md)\<`T`\>
+
+##### initialValue
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`T`\>
+
+##### options?
+
+###### count?
+
+`number`
+
+#### Returns
+
+[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`generate`](SynchronousComputationModule.md#generate)
+
+***
+
+### keep()
+
+> **keep**\<`T`\>(`predicate`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### predicate
+
+[`Predicate`](../../functions/type-aliases/Predicate.md)\<`T`\>
+
+#### Returns
+
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`keep`](SynchronousComputationModule.md#keep)
+
+***
+
+### last()
+
+> **last**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`last`](SynchronousComputationModule.md#last)
+
+***
+
+### map()
+
+> **map**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
+
+#### Type Parameters
 
 • **TA**
 
 • **TB**
 
-##### Parameters
+#### Parameters
 
-###### a
+##### selector
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TA`\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<`TA`, `TB`\>
 
-###### b
+#### Returns
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TB`\>
+[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
 
-##### Returns
+#### Inherited from
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`map`](SynchronousComputationModule.md#map)
+
+***
+
+### raise()
+
+> **raise**\<`T`\>(`options`?): [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### raise?
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+#### Returns
+
+[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`raise`](SynchronousComputationModule.md#raise)
+
+***
+
+### reduce()
+
+> **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, `TAcc`\>
+
+#### Type Parameters
+
+• **T**
+
+• **TAcc**
+
+#### Parameters
+
+##### reducer
+
+[`Reducer`](../../functions/type-aliases/Reducer.md)\<`T`, `TAcc`\>
+
+##### initialValue
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, `TAcc`\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`reduce`](SynchronousComputationModule.md#reduce)
+
+***
+
+### repeat()
 
 #### Call Signature
 
-> **zip**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, [`Tuple3`](../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+> **repeat**\<`T`\>(`predicate`): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ##### Type Parameters
 
-• **TA**
-
-• **TB**
-
-• **TC**
+• **T**
 
 ##### Parameters
 
-###### a
+###### predicate
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TA`\>
-
-###### b
-
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TB`\>
-
-###### c
-
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TC`\>
+[`Predicate`](../../functions/type-aliases/Predicate.md)\<`number`\>
 
 ##### Returns
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, [`Tuple3`](../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+##### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`repeat`](SynchronousComputationModule.md#repeat)
 
 #### Call Signature
 
-> **zip**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, [`Tuple4`](../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+> **repeat**\<`T`\>(`count`): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ##### Type Parameters
 
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
+• **T**
 
 ##### Parameters
 
-###### a
+###### count
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TA`\>
-
-###### b
-
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TB`\>
-
-###### c
-
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TC`\>
-
-###### d
-
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `TD`\>
+`number`
 
 ##### Returns
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, [`Tuple4`](../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+##### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`repeat`](SynchronousComputationModule.md#repeat)
+
+#### Call Signature
+
+> **repeat**\<`T`\>(): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
+
+##### Returns
+
+[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+##### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`repeat`](SynchronousComputationModule.md#repeat)
+
+***
+
+### retry()
+
+> **retry**\<`T`\>(`shouldRetry`?): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### shouldRetry?
+
+(`count`, `error`) => `boolean`
+
+#### Returns
+
+[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`retry`](SynchronousComputationModule.md#retry)
+
+***
+
+### scan()
+
+> **scan**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `TAcc`\>
+
+#### Type Parameters
+
+• **T**
+
+• **TAcc**
+
+#### Parameters
+
+##### scanner
+
+[`Reducer`](../../functions/type-aliases/Reducer.md)\<`T`, `TAcc`\>
+
+##### initialValue
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+#### Returns
+
+[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `TAcc`\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`scan`](SynchronousComputationModule.md#scan)
+
+***
+
+### takeFirst()
+
+> **takeFirst**\<`T`\>(`options`?): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### count?
+
+`number`
+
+#### Returns
+
+[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`takeFirst`](SynchronousComputationModule.md#takefirst)
+
+***
+
+### takeWhile()
+
+> **takeWhile**\<`T`\>(`predicate`, `options`?): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### predicate
+
+[`Predicate`](../../functions/type-aliases/Predicate.md)\<`T`\>
+
+##### options?
+
+###### inclusive?
+
+`boolean`
+
+#### Returns
+
+[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`takeWhile`](SynchronousComputationModule.md#takewhile)
+
+***
+
+### throwIfEmpty()
+
+> **throwIfEmpty**\<`T`\>(`factory`, `options`?): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### factory
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+##### options?
+
+`undefined`
+
+#### Returns
+
+[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`throwIfEmpty`](SynchronousComputationModule.md#throwifempty)
+
+***
+
+### toReadonlyArray()
+
+> **toReadonlyArray**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`toReadonlyArray`](SynchronousComputationModule.md#toreadonlyarray)
+
+***
+
+### toRunnable()
+
+> **toRunnable**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, [`RunnableLike`](RunnableLike.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, [`RunnableLike`](RunnableLike.md)\<`T`\>\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`toRunnable`](SynchronousComputationModule.md#torunnable)

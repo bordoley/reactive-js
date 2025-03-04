@@ -24,9 +24,8 @@ class KeepSink<T> extends AbstractSink<T> {
 const Runnable_keep: Runnable.Signature["keep"] = <T>(
   predicate: Predicate<T>,
 ) =>
-  Runnable_lift(
-    (sink: SinkLike<T>) => newInstance(KeepSink<T>, sink, predicate),
-    true,
+  Runnable_lift((sink: SinkLike<T>) =>
+    newInstance(KeepSink<T>, sink, predicate),
   );
 
 export default Runnable_keep;

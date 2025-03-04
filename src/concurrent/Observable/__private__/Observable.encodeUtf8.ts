@@ -3,7 +3,10 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
-import { ObservableLike, ObservableLike_observe } from "../../../concurrent.js";
+import {
+  ObservableLike_observe,
+  PureSynchronousObservableLike,
+} from "../../../concurrent.js";
 import {
   bindMethod,
   invoke,
@@ -16,7 +19,7 @@ import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_map from "./Observable.map.js";
 
 const Observable_encodeUtf8: Observable.Signature["encodeUtf8"] =
-  /*@__PURE__*/ returns((observable: ObservableLike<string>) =>
+  /*@__PURE__*/ returns((observable: PureSynchronousObservableLike<string>) =>
     Observable_createWithConfig<Uint8Array>(
       observer => {
         const textEncoder = newInstance(TextEncoder);

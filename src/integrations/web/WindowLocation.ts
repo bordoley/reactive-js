@@ -13,13 +13,10 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../computations.js";
-import * as MulticastObservable from "../../concurrent/MulticastObservable.js";
 import * as Observable from "../../concurrent/Observable.js";
-import { ObservableComputationFor } from "../../concurrent/Observable.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import {
   DeferredObservableLike,
-  MulticastObservableLike,
   ObservableLike_observe,
   ObserverLike,
   SchedulerLike,
@@ -41,6 +38,7 @@ import {
   newInstance,
   none,
   pipe,
+  pipeLazy,
   raiseIf,
   returns,
 } from "../../functions.js";
@@ -74,6 +72,12 @@ interface SerializableWindowLocationURI extends WindowLocationURI {
 type Signature = WebWindowLocationModule;
 
 const { history, location } = window;
+
+const ObservableModule = {
+  keep: Observable.keep,
+  map: Observable.map,
+  merge: Observable.merge,
+};
 
 const serializableWindowLocationPrototype = {
   toString(this: WindowLocationURI) {
@@ -241,9 +245,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       ): void {
         pipe(
           this[WindowLocation_delegate],
-          Computation.pick<ObservableComputationFor<MulticastObservableLike>>({
-            map: MulticastObservable.map,
-          })<TState, "uri">("uri"),
+          Computation.pick(ObservableModule)<TState, "uri">("uri"),
           invoke(ObservableLike_observe, observer),
         );
       },
@@ -285,37 +287,38 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       ),
       Streamable.syncState(
         state =>
-          // Initialize the history state on page load
-          pipe(
-            window,
-            Element.eventSource<Window, "popstate">("popstate"),
-            EventSource.map((e: PopStateEvent) => {
-              const { counter, title } = e.state as {
-                counter: number;
-                title: string;
-              };
+          Observable.defer(
+            // Initialize the history state on page load
+            pipeLazy(
+              window,
+              Element.eventSource<Window, "popstate">("popstate"),
+              EventSource.map((e: PopStateEvent) => {
+                const { counter, title } = e.state as {
+                  counter: number;
+                  title: string;
+                };
 
-              const uri = createSerializableWindowLocationURI({
-                ...getCurrentWindowLocationURI(),
-                title,
-              });
+                const uri = createSerializableWindowLocationURI({
+                  ...getCurrentWindowLocationURI(),
+                  title,
+                });
 
-              return { counter, replace: true, uri };
-            }),
-            Observable.fromEventSource(),
-            Observable.mergeWith(
-              pipe(
-                {
-                  counter: 0,
-                  replace: true,
-                  uri: state.uri,
-                },
-                Observable.fromValue(),
+                return { counter, replace: true, uri };
+              }),
+              Observable.fromEventSource(),
+              Computation.mergeWith(ObservableModule)(
+                pipe(
+                  {
+                    counter: 0,
+                    replace: true,
+                    uri: state.uri,
+                  },
+                  Observable.fromValue(),
+                ),
               ),
+              Observable.map<TState, Updater<TState>>(returns),
             ),
-            Observable.map<TState, Updater<TState>>(returns),
           ),
-
         (oldState, state) => {
           const locationChanged = !areURIsEqual(state.uri, oldState.uri);
           const titleChanged = oldState.uri.title !== state.uri.title;
@@ -332,7 +335,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
               : push
                 ? Observable.enqueue(pushState)
                 : identity<DeferredObservableLike>,
-            Observable.ignoreElements(),
+            Computation.ignoreElements(ObservableModule)(),
           );
         },
       ),

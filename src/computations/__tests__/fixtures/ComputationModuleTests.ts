@@ -6,8 +6,8 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   Computation,
+  ComputationBaseOf,
   ComputationModule,
-  ComputationOf,
 } from "../../../computations.js";
 import {
   Function1,
@@ -21,10 +21,10 @@ const ComputationModuleTests = <TComputation extends Computation>(
   m: ComputationModule<TComputation> & {
     fromReadonlyArray: <T>() => Function1<
       ReadonlyArray<T>,
-      ComputationOf<TComputation, T>
+      ComputationBaseOf<TComputation, T>
     >;
     toReadonlyArray: <T>() => Function1<
-      ComputationOf<TComputation, T>,
+      ComputationBaseOf<TComputation, T>,
       ReadonlyArray<T>
     >;
   },

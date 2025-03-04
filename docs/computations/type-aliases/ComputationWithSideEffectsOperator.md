@@ -4,9 +4,9 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / ComputationWithSideEffectsOperator
 
-# Type Alias: ComputationWithSideEffectsOperator\<TComputation, TA, TB\>
+# Type Alias: ComputationWithSideEffectsOperator()\<TComputation, TA, TB\>
 
-> **ComputationWithSideEffectsOperator**\<`TComputation`, `TA`, `TB`\>: [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](ComputationOf.md)\<`TComputation`, `TA`\>, [`ComputationWithSideEffectsOf`](ComputationWithSideEffectsOf.md)\<`TComputation`, `TB`\>\>
+> **ComputationWithSideEffectsOperator**\<`TComputation`, `TA`, `TB`\>: \<`TComputationOf`\>(`computation`) => `TComputationOf` *extends* [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputation`, `TA`\> \| [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `TA`\> ? [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `TB`\> : [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `TB`\>
 
 ## Type Parameters
 
@@ -15,3 +15,17 @@
 • **TA**
 
 • **TB**
+
+## Type Parameters
+
+• **TComputationOf** *extends* [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputation`, `TA`\>
+
+## Parameters
+
+### computation
+
+`TComputationOf`
+
+## Returns
+
+`TComputationOf` *extends* [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputation`, `TA`\> \| [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `TA`\> ? [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `TB`\> : [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `TB`\>

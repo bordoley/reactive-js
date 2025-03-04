@@ -15,5 +15,5 @@ class MapSink extends AbstractSink {
         this[AbstractSink_delegate][SinkLike_next](mapped);
     }
 }
-const Runnable_map = (selector) => Runnable_lift((sink) => newInstance((MapSink), sink, selector), true);
+const Runnable_map = (selector) => Runnable_lift((sink) => newInstance((MapSink), sink, selector));
 export default Runnable_map;

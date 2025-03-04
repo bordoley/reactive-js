@@ -6,7 +6,10 @@ import {
 } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
-import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
+import {
+  DeferredComputationWithSideEffectsLike,
+  DeferredComputationWithSideEffectsType,
+} from "../../../computations.js";
 import {
   AnimationStreamLike,
   AnimationStreamLike_animation,
@@ -34,9 +37,7 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
-import * as DeferredObservable from "../../DeferredObservable.js";
 import * as Observable from "../../Observable.js";
-import { ObservableComputationFor } from "../../Observable.js";
 import * as PauseableScheduler from "../../PauseableScheduler.js";
 import type * as Streamable from "../../Streamable.js";
 import * as Subject from "../../Subject.js";
@@ -66,6 +67,15 @@ const SpringStream_create: (
   >,
   number
 > = /*@__PURE__*/ (() => {
+  const ObservableModule = {
+    concat: Observable.concat,
+    concatAll: Observable.concatAll,
+    forEach: Observable.forEach,
+    fromReadonlyArray: Observable.fromReadonlyArray,
+    keep: Observable.keep,
+    map: Observable.map,
+  };
+
   type TProperties = {
     [AnimationStreamLike_animation]: EventSourceLike<number>;
   };
@@ -124,14 +134,15 @@ const SpringStream_create: (
             number
           >
         >(accFeedbackStream, (updater, acc) => tuple(updater(acc), acc)),
-        Observable.switchMap<
+        Computation.concatMap(ObservableModule)<
           Tuple2<
             | number
             | ReadonlyArray<number>
             | { from: number; to: number | ReadonlyArray<number> },
             number
           >,
-          boolean
+          boolean,
+          DeferredComputationWithSideEffectsLike
         >(
           ([updated, acc]) => {
             const initialValue =
@@ -175,23 +186,13 @@ const SpringStream_create: (
             return sources.length > 0
               ? pipe(
                   sources,
-                  x => Observable.concatMany<number>(x),
-                  Observable.notify(publisher),
-                  Observable.notify(accFeedbackStream),
-                  Observable.ignoreElements(),
+                  Computation.concatMany(ObservableModule),
+                  Computation.notify(ObservableModule)(publisher),
+                  Computation.notify(ObservableModule)(accFeedbackStream),
+                  Computation.ignoreElements(ObservableModule)(),
                   Observable.subscribeOn(pauseableScheduler),
-                  Computation.startWith<
-                    ObservableComputationFor<DeferredObservableLike>
-                  >({
-                    concatMany: DeferredObservable.concatMany,
-                    fromReadonlyArray: DeferredObservable.fromReadonlyArray,
-                  })(true),
-                  Computation.endWith<
-                    ObservableComputationFor<DeferredObservableLike>
-                  >({
-                    concatMany: DeferredObservable.concatMany,
-                    fromReadonlyArray: DeferredObservable.fromReadonlyArray,
-                  })(false),
+                  Computation.startWith(ObservableModule)(true),
+                  Computation.endWith(ObservableModule)(false),
                 )
               : Observable.empty();
           },

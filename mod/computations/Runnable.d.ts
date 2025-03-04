@@ -1,19 +1,23 @@
-import { Computation, Computation_T, Computation_ofT, Computation_pureOfT, Computation_withSideEffectsOfT, DeferredComputationModule, DeferredReactiveComputationModule, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike, SynchronousComputationModule } from "../computations.js";
+import { Computation as ComputationSig, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, DeferredReactiveComputationModule, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike } from "../computations.js";
 /**
  * @noInheritDoc
  */
-export interface RunnableComputation extends Computation {
-    readonly [Computation_ofT]?: RunnableLike<this[typeof Computation_T]>;
-    readonly [Computation_pureOfT]?: PureRunnableLike<this[typeof Computation_T]>;
-    readonly [Computation_withSideEffectsOfT]?: RunnableWithSideEffectsLike<this[typeof Computation_T]>;
+export interface RunnableComputation extends ComputationSig {
+    readonly [Computation_baseOfT]?: RunnableLike<this[typeof Computation_T]>;
+    readonly [Computation_pureDeferredOfT]?: PureRunnableLike<this[typeof Computation_T]>;
+    readonly [Computation_deferredWithSideEffectsOfT]?: RunnableWithSideEffectsLike<this[typeof Computation_T]>;
+    readonly [Computation_pureSynchronousOfT]?: PureRunnableLike<this[typeof Computation_T]>;
+    readonly [Computation_synchronousWithSideEffectsOfT]?: RunnableWithSideEffectsLike<this[typeof Computation_T]>;
+    readonly [Computation_multicastOfT]?: never;
 }
-export interface RunnableModule extends DeferredComputationModule<RunnableComputation>, DeferredReactiveComputationModule<RunnableComputation>, SynchronousComputationModule<RunnableComputation> {
+export type Computation = RunnableComputation;
+export interface RunnableModule extends DeferredReactiveComputationModule<RunnableComputation> {
 }
 export type Signature = RunnableModule;
 export declare const buffer: Signature["buffer"];
 export declare const catchError: Signature["catchError"];
 export declare const concatAll: Signature["concatAll"];
-export declare const concatMany: Signature["concatMany"];
+export declare const concat: Signature["concat"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];

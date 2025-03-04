@@ -13,14 +13,15 @@
 
 ## Type Aliases
 
+- [Computation](type-aliases/Computation.md)
 - [Signature](type-aliases/Signature.md)
 
 ## Functions
 
 - [buffer](functions/buffer.md)
 - [catchError](functions/catchError.md)
+- [concat](functions/concat.md)
 - [concatAll](functions/concatAll.md)
-- [concatMany](functions/concatMany.md)
 - [decodeWithCharset](functions/decodeWithCharset.md)
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [empty](functions/empty.md)

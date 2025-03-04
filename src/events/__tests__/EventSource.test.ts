@@ -126,7 +126,7 @@ testModule(
     }),
   ),
   describe(
-    "mergeMany",
+    "merge",
     test("with source that have different delays", () => {
       using vts = VirtualTimeScheduler.create();
 
@@ -146,7 +146,7 @@ testModule(
       );
 
       pipe(
-        EventSource.mergeMany([ev1, ev2, ev3]),
+        EventSource.merge(ev1, ev2, ev3),
         EventSource.addEventHandler(bindMethod(result, Array_push)),
       );
 

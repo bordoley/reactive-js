@@ -6,4 +6,4 @@
 
 # Variable: PureSynchronousComputationType
 
-> `const` **PureSynchronousComputationType**: `Pick`\<[`PureSynchronousComputationLike`](../interfaces/PureSynchronousComputationLike.md), *typeof* [`ComputationLike_isDeferred`](ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isPure`](ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isSynchronous`](ComputationLike_isSynchronous.md)\>
+> `const` **PureSynchronousComputationType**: [`PureSynchronousComputationLike`](../interfaces/PureSynchronousComputationLike.md)

@@ -13,8 +13,8 @@
 ## Extended by
 
 - [`SynchronousReactiveComputation`](SynchronousReactiveComputation.md)
+- [`MulticastComputationLike`](MulticastComputationLike.md)
 - [`ObservableLike`](../../concurrent/interfaces/ObservableLike.md)
-- [`EventSourceLike`](../../events/interfaces/EventSourceLike.md)
 
 ## Properties
 

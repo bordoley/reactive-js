@@ -108,9 +108,9 @@ readonly `TComputation`[]
 
 ***
 
-### concat()
+### concatMany()
 
-> **concat**\<`TComputation`\>(`m`): [`ConcatOperator`](ConcatOperator.md)\<`TComputation`\>
+> **concatMany**\<`TComputation`\>(`m`): [`ConcatManyOperator`](ConcatManyOperator.md)\<`TComputation`\>
 
 #### Type Parameters
 
@@ -120,11 +120,11 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"concatMany"`\>
+`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"concat"`\>
 
 #### Returns
 
-[`ConcatOperator`](ConcatOperator.md)\<`TComputation`\>
+[`ConcatManyOperator`](ConcatManyOperator.md)\<`TComputation`\>
 
 ***
 
@@ -140,7 +140,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"map"` \| `"concatAll"`\>
+`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"map"` \| `"concatAll"`\>
 
 #### Returns
 
@@ -160,7 +160,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"map"` \| `"fromIterable"` \| `"concatAll"`\>
+`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"map"` \| `"fromIterable"` \| `"concatAll"`\>
 
 #### Returns
 
@@ -180,11 +180,39 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"concatMany"`\>
+`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"concat"`\>
 
 #### Returns
 
 [`ConcatWithOperator`](ConcatWithOperator.md)\<`TComputation`\>
+
+***
+
+### debug()
+
+> **debug**\<`TComputation`\>(`m`): \<`T`\>() => [`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Type Parameters
+
+• **TComputation** *extends* [`Computation`](../../type-aliases/Computation.md)
+
+#### Parameters
+
+##### m
+
+`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"forEach"`\>
+
+#### Returns
+
+`Function`
+
+##### Type Parameters
+
+• **T**
+
+##### Returns
+
+[`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
 
 ***
 
@@ -200,7 +228,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"concatMany"` \| `"fromReadonlyArray"`\>
+`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"concat"` \| `"fromReadonlyArray"`\>
 
 #### Returns
 
@@ -280,7 +308,7 @@ readonly `TComputation`[]
 
 #### Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 #### Parameters
 
@@ -300,7 +328,7 @@ readonly `TComputation`[]
 
 #### Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 #### Parameters
 
@@ -320,7 +348,7 @@ readonly `TComputation`[]
 
 #### Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 #### Parameters
 
@@ -340,7 +368,7 @@ readonly `TComputation`[]
 
 #### Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 #### Parameters
 
@@ -360,7 +388,7 @@ readonly `TComputation`[]
 
 #### Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 #### Parameters
 
@@ -380,7 +408,7 @@ readonly `TComputation`[]
 
 #### Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 #### Parameters
 
@@ -400,7 +428,7 @@ readonly `TComputation`[]
 
 #### Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 #### Parameters
 
@@ -420,7 +448,7 @@ readonly `TComputation`[]
 
 #### Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 #### Parameters
 
@@ -440,7 +468,7 @@ readonly `TComputation`[]
 
 #### Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 #### Parameters
 
@@ -460,7 +488,7 @@ readonly `TComputation`[]
 
 #### Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 #### Parameters
 
@@ -480,7 +508,7 @@ readonly `TComputation`[]
 
 #### Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 #### Parameters
 
@@ -530,6 +558,34 @@ readonly `TComputation`[]
 
 ***
 
+### log()
+
+> **log**\<`TComputation`\>(`m`): \<`T`\>() => [`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Type Parameters
+
+• **TComputation** *extends* [`Computation`](../../type-aliases/Computation.md)
+
+#### Parameters
+
+##### m
+
+`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"forEach"`\>
+
+#### Returns
+
+`Function`
+
+##### Type Parameters
+
+• **T**
+
+##### Returns
+
+[`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
+
+***
+
 ### mapTo()
 
 > **mapTo**\<`TComputation`\>(`m`): \<`T`\>(`value`) => [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `unknown`, `T`\>
@@ -564,9 +620,9 @@ readonly `TComputation`[]
 
 ***
 
-### merge()
+### mergeMany()
 
-> **merge**\<`TComputation`\>(`m`): [`MergeOperator`](MergeOperator.md)\<`TComputation`\>
+> **mergeMany**\<`TComputation`\>(`m`): [`MergeManyOperator`](MergeManyOperator.md)\<`TComputation`\>
 
 #### Type Parameters
 
@@ -576,11 +632,11 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<`TComputation`\>, `"mergeMany"`\>
+`Pick`\<[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<`TComputation`\>, `"merge"`\>
 
 #### Returns
 
-[`MergeOperator`](MergeOperator.md)\<`TComputation`\>
+[`MergeManyOperator`](MergeManyOperator.md)\<`TComputation`\>
 
 ***
 
@@ -596,11 +652,45 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<`TComputation`\>, `"mergeMany"`\>
+`Pick`\<[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<`TComputation`\>, `"merge"`\>
 
 #### Returns
 
 [`MergeWithOperator`](MergeWithOperator.md)\<`TComputation`\>
+
+***
+
+### notify()
+
+> **notify**\<`TComputation`\>(`m`): \<`T`\>(`eventListener`) => [`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
+
+#### Type Parameters
+
+• **TComputation** *extends* [`Computation`](../../type-aliases/Computation.md)
+
+#### Parameters
+
+##### m
+
+`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"forEach"`\>
+
+#### Returns
+
+`Function`
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### eventListener
+
+[`EventListenerLike`](../../../events/interfaces/EventListenerLike.md)\<`T`\>
+
+##### Returns
+
+[`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
 
 ***
 
@@ -626,7 +716,7 @@ readonly `TComputation`[]
 
 ### sequence()
 
-> **sequence**\<`TComputation`\>(`m`): (`start`) => [`ComputationOf`](../../type-aliases/ComputationOf.md)\<`TComputation`, `number`\>
+> **sequence**\<`TComputation`\>(`m`): (`start`) => [`ComputationBaseOf`](../../type-aliases/ComputationBaseOf.md)\<`TComputation`, `number`\>
 
 #### Type Parameters
 
@@ -636,7 +726,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"generate"`\>
+`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"generate"`\>
 
 #### Returns
 
@@ -650,7 +740,7 @@ readonly `TComputation`[]
 
 ##### Returns
 
-[`ComputationOf`](../../type-aliases/ComputationOf.md)\<`TComputation`, `number`\>
+[`ComputationBaseOf`](../../type-aliases/ComputationBaseOf.md)\<`TComputation`, `number`\>
 
 ***
 
@@ -666,7 +756,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"concatMany"` \| `"fromReadonlyArray"`\>
+`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"concat"` \| `"fromReadonlyArray"`\>
 
 #### Returns
 

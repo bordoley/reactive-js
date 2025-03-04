@@ -2,18 +2,19 @@ import { clampPositiveInteger } from "../__internal__/math.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import {
   ComputationLike_isPure,
-  ComputationWithSideEffectsType,
+  Computation as ComputationSig,
   Computation_T,
-  Computation_ofT,
-  Computation_pureOfT,
-  Computation_withSideEffectsOfT,
-  DeferredComputationModule,
-  GenericComputation,
+  Computation_baseOfT,
+  Computation_deferredWithSideEffectsOfT,
+  Computation_multicastOfT,
+  Computation_pureDeferredOfT,
+  Computation_pureSynchronousOfT,
+  Computation_synchronousWithSideEffectsOfT,
+  DeferringHigherOrderInnerType,
   InteractiveComputationModule,
   IterableLike,
   IterableWithSideEffectsLike,
   PureIterableLike,
-  SynchronousComputationModule,
 } from "../computations.js";
 import {
   Factory,
@@ -37,29 +38,35 @@ import {
   returns,
   tuple,
 } from "../functions.js";
-import * as Computation from "./Computation.js";
+import * as ComputationM from "./Computation.js";
 import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 
 /**
  * @noInheritDoc
  */
-export interface IterableComputation
-  extends GenericComputation<
-    IterableLike,
-    PureIterableLike,
-    IterableWithSideEffectsLike
-  > {
-  readonly [Computation_ofT]?: IterableLike<this[typeof Computation_T]>;
-  readonly [Computation_pureOfT]?: PureIterableLike<this[typeof Computation_T]>;
-  readonly [Computation_withSideEffectsOfT]?: IterableWithSideEffectsLike<
+export interface IterableComputation extends ComputationSig {
+  readonly [Computation_baseOfT]?: IterableLike<this[typeof Computation_T]>;
+  readonly [Computation_pureDeferredOfT]?: PureIterableLike<
     this[typeof Computation_T]
   >;
+  readonly [Computation_deferredWithSideEffectsOfT]?: IterableWithSideEffectsLike<
+    this[typeof Computation_T]
+  >;
+
+  readonly [Computation_pureSynchronousOfT]?: PureIterableLike<
+    this[typeof Computation_T]
+  >;
+  readonly [Computation_synchronousWithSideEffectsOfT]?: IterableWithSideEffectsLike<
+    this[typeof Computation_T]
+  >;
+
+  readonly [Computation_multicastOfT]?: never;
 }
 
+export type Computation = IterableComputation;
+
 export interface IterableModule
-  extends DeferredComputationModule<IterableComputation>,
-    SynchronousComputationModule<IterableComputation>,
-    InteractiveComputationModule<IterableComputation> {}
+  extends InteractiveComputationModule<IterableComputation> {}
 
 export type Signature = IterableModule;
 
@@ -73,7 +80,7 @@ class CatchErrorIterable<T> {
       | Function1<Error, IterableLike<T>>,
     isPure: boolean,
   ) {
-    this[ComputationLike_isPure] = Computation.isPure(s) && isPure;
+    this[ComputationLike_isPure] = ComputationM.isPure(s) && isPure;
   }
 
   *[Symbol.iterator]() {
@@ -99,10 +106,13 @@ class CatchErrorIterable<T> {
   }
 }
 
-export const catchError: Signature["catchError"] = (<T>(
+export const catchError: Signature["catchError"] = (<
+    T,
+    TInnerType extends DeferringHigherOrderInnerType,
+  >(
     onError: SideEffect1<Error> | Function1<Error, IterableLike<T>>,
     options?: {
-      readonly innerType: typeof ComputationWithSideEffectsType;
+      readonly innerType: TInnerType;
     },
   ) =>
   (iter: IterableLike<T>) =>
@@ -120,7 +130,7 @@ class ConcatAllIterable<T> {
     private readonly s: IterableLike<IterableLike<T>>,
     isPure: boolean,
   ) {
-    this[ComputationLike_isPure] = Computation.isPure(s) && isPure;
+    this[ComputationLike_isPure] = ComputationM.isPure(s) && isPure;
   }
 
   *[Symbol.iterator]() {
@@ -131,8 +141,11 @@ class ConcatAllIterable<T> {
     }
   }
 }
-export const concatAll: Signature["concatAll"] = (<T>(options?: {
-    readonly innerType: typeof ComputationWithSideEffectsType;
+export const concatAll: Signature["concatAll"] = (<
+    T,
+    TInnerType extends DeferringHigherOrderInnerType,
+  >(options?: {
+    readonly innerType: TInnerType;
   }) =>
   (iterable: IterableLike<IterableLike<T>>) =>
     newInstance(
@@ -141,14 +154,14 @@ export const concatAll: Signature["concatAll"] = (<T>(options?: {
       options?.innerType?.[ComputationLike_isPure] ?? true,
     )) as Signature["concatAll"];
 
-export const concatMany: Signature["concatMany"] = (<T>(
-  iterables: ReadonlyArray<IterableLike<T>>,
+export const concat: Signature["concat"] = (<T>(
+  ...iterables: ReadonlyArray<IterableLike<T>>
 ) =>
   newInstance(
     ConcatAllIterable,
     iterables,
-    Computation.areAllPure(iterables),
-  )) as Signature["concatMany"];
+    ComputationM.areAllPure(iterables),
+  )) as Signature["concat"];
 
 export const empty: Signature["empty"] = /*@__PURE__*/ returns([]);
 
@@ -562,7 +575,7 @@ class ZipIterable {
   public readonly [ComputationLike_isPure]?: boolean;
 
   constructor(private readonly iters: readonly IterableLike<any>[]) {
-    this[ComputationLike_isPure] = Computation.areAllPure(iters);
+    this[ComputationLike_isPure] = ComputationM.areAllPure(iters);
   }
 
   *[Symbol.iterator]() {

@@ -5,11 +5,13 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
-import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
+import {
+  DeferredComputationWithSideEffectsLike,
+  DeferredComputationWithSideEffectsType,
+} from "../../../computations.js";
 import {
   AnimationStreamLike,
   AnimationStreamLike_animation,
-  DeferredObservableLike,
   PauseableLike_resume,
   PureSynchronousObservableLike,
   SchedulerLike,
@@ -21,9 +23,7 @@ import { EventSourceLike } from "../../../events.js";
 import { Function1, isFunction, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
-import * as DeferredObservable from "../../DeferredObservable.js";
 import * as Observable from "../../Observable.js";
-import { ObservableComputationFor } from "../../Observable.js";
 import * as PauseableScheduler from "../../PauseableScheduler.js";
 import type * as Streamable from "../../Streamable.js";
 import DelegatingPauseableMixin from "../../__mixins__/DelegatingPauseableMixin.js";
@@ -45,6 +45,17 @@ const AnimationStream_create: <TEvent, T>(
     [AnimationStreamLike_animation]: EventSourceLike<T>;
   };
 
+  const ObservableModule = {
+    concat: Observable.concat,
+
+    // Note we overall concatAll to get switchMap behavior
+    concatAll: Observable.switchAll,
+    forEach: Observable.forEach,
+    fromReadonlyArray: Observable.fromReadonlyArray,
+    keep: Observable.keep,
+    map: Observable.map,
+  };
+
   return mixInstanceFactory(
     include(StreamMixin(), DelegatingPauseableMixin),
     function AnimationStream(
@@ -64,25 +75,19 @@ const AnimationStream_create: <TEvent, T>(
       const publisher = (instance[AnimationStreamLike_animation] =
         Publisher.create());
 
-      const operator = Observable.switchMap<TEvent, boolean>(
+      const operator = Computation.concatMap(ObservableModule)<
+        TEvent,
+        boolean,
+        DeferredComputationWithSideEffectsLike
+      >(
         (event: TEvent) =>
           pipe(
             isFunction(animation) ? animation(event) : animation,
-            Observable.notify(publisher),
-            Observable.ignoreElements(),
+            Computation.notify(ObservableModule)(publisher),
+            Computation.ignoreElements(ObservableModule)(),
             Observable.subscribeOn(pauseableScheduler),
-            Computation.startWith<
-              ObservableComputationFor<DeferredObservableLike>
-            >({
-              concatMany: DeferredObservable.concatMany,
-              fromReadonlyArray: DeferredObservable.fromReadonlyArray,
-            })(true),
-            Computation.endWith<
-              ObservableComputationFor<DeferredObservableLike>
-            >({
-              concatMany: DeferredObservable.concatMany,
-              fromReadonlyArray: DeferredObservable.fromReadonlyArray,
-            })(false),
+            Computation.startWith(ObservableModule)(true),
+            Computation.endWith(ObservableModule)(false),
           ),
         {
           innerType: DeferredComputationWithSideEffectsType,

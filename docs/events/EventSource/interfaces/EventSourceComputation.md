@@ -12,30 +12,60 @@
 
 ## Properties
 
-### \[Computation\_ofT\]?
+### \[Computation\_baseOfT\]?
 
-> `readonly` `optional` **\[Computation\_ofT\]**: [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>
+> `readonly` `optional` **\[Computation\_baseOfT\]**: [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>
 
 #### Overrides
 
-`Computation.[Computation_ofT]`
+`ComputationSig.[Computation_baseOfT]`
 
 ***
 
-### \[Computation\_pureOfT\]?
+### \[Computation\_deferredWithSideEffectsOfT\]?
 
-> `readonly` `optional` **\[Computation\_pureOfT\]**: [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>
+> `readonly` `optional` **\[Computation\_deferredWithSideEffectsOfT\]**: `undefined`
 
 #### Overrides
 
-`Computation.[Computation_pureOfT]`
+`ComputationSig.[Computation_deferredWithSideEffectsOfT]`
 
 ***
 
-### \[Computation\_withSideEffectsOfT\]?
+### \[Computation\_multicastOfT\]?
 
-> `readonly` `optional` **\[Computation\_withSideEffectsOfT\]**: `undefined`
+> `readonly` `optional` **\[Computation\_multicastOfT\]**: [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`unknown`\>
 
 #### Overrides
 
-`Computation.[Computation_withSideEffectsOfT]`
+`ComputationSig.[Computation_multicastOfT]`
+
+***
+
+### \[Computation\_pureDeferredOfT\]?
+
+> `readonly` `optional` **\[Computation\_pureDeferredOfT\]**: `undefined`
+
+#### Overrides
+
+`ComputationSig.[Computation_pureDeferredOfT]`
+
+***
+
+### \[Computation\_pureSynchronousOfT\]?
+
+> `readonly` `optional` **\[Computation\_pureSynchronousOfT\]**: `undefined`
+
+#### Overrides
+
+`ComputationSig.[Computation_pureSynchronousOfT]`
+
+***
+
+### \[Computation\_synchronousWithSideEffectsOfT\]?
+
+> `readonly` `optional` **\[Computation\_synchronousWithSideEffectsOfT\]**: `undefined`
+
+#### Overrides
+
+`ComputationSig.[Computation_synchronousWithSideEffectsOfT]`

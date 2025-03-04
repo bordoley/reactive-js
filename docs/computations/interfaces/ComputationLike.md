@@ -12,7 +12,6 @@
 - [`PureComputationLike`](PureComputationLike.md)
 - [`DeferredComputationLike`](DeferredComputationLike.md)
 - [`ReactiveComputationLike`](ReactiveComputationLike.md)
-- [`MulticastComputationLike`](MulticastComputationLike.md)
 
 ## Properties
 

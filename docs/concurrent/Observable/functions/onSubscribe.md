@@ -6,56 +6,18 @@
 
 # Function: onSubscribe()
 
-## Call Signature
+> **onSubscribe**\<`T`\>(`f`): [`ComputationWithSideEffectsOperator`](../../../computations/type-aliases/ComputationWithSideEffectsOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>
 
-> **onSubscribe**\<`T`\>(`f`): [`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<`T`, `T`\>
-
-### Type Parameters
+## Type Parameters
 
 • **T**
 
-### Parameters
+## Parameters
 
-#### f
+### f
 
-[`Factory`](../../../functions/type-aliases/Factory.md)\<[`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+[`SideEffect`](../../../functions/type-aliases/SideEffect.md) | [`Factory`](../../../functions/type-aliases/Factory.md)\<[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`Error`\>\> \| [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
-### Returns
+## Returns
 
-[`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<`T`, `T`\>
-
-## Call Signature
-
-> **onSubscribe**\<`T`\>(`f`): [`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<`T`, `T`\>
-
-### Type Parameters
-
-• **T**
-
-### Parameters
-
-#### f
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`Error`\>\>\>
-
-### Returns
-
-[`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<`T`, `T`\>
-
-## Call Signature
-
-> **onSubscribe**\<`T`\>(`f`): [`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<`T`, `T`\>
-
-### Type Parameters
-
-• **T**
-
-### Parameters
-
-#### f
-
-[`SideEffect`](../../../functions/type-aliases/SideEffect.md)
-
-### Returns
-
-[`ObservableOperatorWithSideEffects`](../type-aliases/ObservableOperatorWithSideEffects.md)\<`T`, `T`\>
+[`ComputationWithSideEffectsOperator`](../../../computations/type-aliases/ComputationWithSideEffectsOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>

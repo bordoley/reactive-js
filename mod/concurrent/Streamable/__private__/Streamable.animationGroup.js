@@ -6,30 +6,33 @@ import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
 import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
-import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
+import { DeferredComputationWithSideEffectsType, } from "../../../computations.js";
 import { PauseableLike_resume, StreamableLike_stream, } from "../../../concurrent.js";
 import * as Publisher from "../../../events/Publisher.js";
 import { isFunction, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import * as DeferredObservable from "../../DeferredObservable.js";
 import * as Observable from "../../Observable.js";
 import * as PauseableScheduler from "../../PauseableScheduler.js";
 import DelegatingPauseableMixin from "../../__mixins__/DelegatingPauseableMixin.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 const AnimationGroupStream_create = /*@__PURE__*/ (() => {
     const AnimationGroupStream_eventSources = Symbol("AnimationGroupStream_delegate");
+    const ObservableModule = {
+        concat: Observable.concat,
+        // Note we overall concatAll to get switchMap behavior
+        concatAll: Observable.switchAll,
+        forEach: Observable.forEach,
+        fromReadonlyArray: Observable.fromReadonlyArray,
+        keep: Observable.keep,
+        map: Observable.map,
+        merge: Observable.merge,
+    };
     return mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin), function AnimationGroupStream(instance, animationGroup, scheduler, animationScheduler, options) {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
-        const operator = Observable.switchMap((event) => pipe(Observable.mergeMany(pipe(animationGroup, ReadonlyObjectMap.entries(), Iterable.map(([key, factory]) => {
+        const operator = Computation.concatMap(ObservableModule)((event) => pipe(animationGroup, ReadonlyObjectMap.entries(), Iterable.map(([key, factory]) => {
             const publisher = publishers[key];
-            return pipe(isFunction(factory) ? factory(event) : factory, Observable.notify(publisher), Observable.subscribeOn(pauseableScheduler));
-        }), ReadonlyArray.fromIterable())), Observable.ignoreElements(), Computation.startWith({
-            concatMany: DeferredObservable.concatMany,
-            fromReadonlyArray: DeferredObservable.fromReadonlyArray,
-        })(true), Computation.endWith({
-            concatMany: DeferredObservable.concatMany,
-            fromReadonlyArray: DeferredObservable.fromReadonlyArray,
-        })(false)), {
+            return pipe(isFunction(factory) ? factory(event) : factory, Computation.notify(ObservableModule)(publisher), Observable.subscribeOn(pauseableScheduler));
+        }), ReadonlyArray.fromIterable(), Computation.mergeMany(ObservableModule), Computation.ignoreElements(ObservableModule)(), Computation.startWith(ObservableModule)(true), Computation.endWith(ObservableModule)(false)), {
             innerType: DeferredComputationWithSideEffectsType,
         });
         init(StreamMixin(), instance, operator, scheduler, options);

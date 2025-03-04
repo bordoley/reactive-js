@@ -4,40 +4,60 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / GenericComputation
 
-# Interface: GenericComputation\<TComputationOfT, TPureComputation, TComputationWithSideEffects\>
-
-## Extended by
-
-- [`IterableComputation`](../Iterable/interfaces/IterableComputation.md)
+# Interface: GenericComputation\<TComputationBaseOfT, TPureDeferredComputationOfT, TDeferredDeferredComputationWithSideEffectsOfT, TPureSynchronousOfT, TSynchronousWithSideEffectsOfT, TMulticastComputationOfT\>
 
 ## Type Parameters
 
-• **TComputationOfT** *extends* [`ComputationLike`](ComputationLike.md)
+• **TComputationBaseOfT** *extends* [`ComputationLike`](ComputationLike.md)
 
-• **TPureComputation** *extends* `TComputationOfT` & [`PureComputationLike`](PureComputationLike.md)
+• **TPureDeferredComputationOfT** *extends* `TComputationBaseOfT` & [`PureDeferredComputationLike`](PureDeferredComputationLike.md)
 
-• **TComputationWithSideEffects** *extends* `TComputationOfT` & [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md)
+• **TDeferredDeferredComputationWithSideEffectsOfT** *extends* `TComputationBaseOfT` & [`DeferredComputationWithSideEffectsLike`](DeferredComputationWithSideEffectsLike.md)
+
+• **TPureSynchronousOfT** *extends* `TPureDeferredComputationOfT` & [`PureSynchronousComputationLike`](PureSynchronousComputationLike.md)
+
+• **TSynchronousWithSideEffectsOfT** *extends* `TDeferredDeferredComputationWithSideEffectsOfT` & [`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md)
+
+• **TMulticastComputationOfT** *extends* `TComputationBaseOfT` & [`MulticastComputationLike`](MulticastComputationLike.md)
 
 ## Properties
 
-### \[Computation\_ofT\]?
+### \[Computation\_baseOfT\]?
 
-> `readonly` `optional` **\[Computation\_ofT\]**: `TComputationOfT`
+> `readonly` `optional` **\[Computation\_baseOfT\]**: `TComputationBaseOfT`
 
 ***
 
-### \[Computation\_pureOfT\]?
+### \[Computation\_deferredWithSideEffectsOfT\]?
 
-> `readonly` `optional` **\[Computation\_pureOfT\]**: `TPureComputation`
+> `readonly` `optional` **\[Computation\_deferredWithSideEffectsOfT\]**: `TDeferredDeferredComputationWithSideEffectsOfT`
+
+***
+
+### \[Computation\_multicastOfT\]?
+
+> `readonly` `optional` **\[Computation\_multicastOfT\]**: `TMulticastComputationOfT`
+
+***
+
+### \[Computation\_pureDeferredOfT\]?
+
+> `readonly` `optional` **\[Computation\_pureDeferredOfT\]**: `TPureDeferredComputationOfT`
+
+***
+
+### \[Computation\_pureSynchronousOfT\]?
+
+> `readonly` `optional` **\[Computation\_pureSynchronousOfT\]**: `TPureSynchronousOfT`
+
+***
+
+### \[Computation\_synchronousWithSideEffectsOfT\]?
+
+> `readonly` `optional` **\[Computation\_synchronousWithSideEffectsOfT\]**: `TSynchronousWithSideEffectsOfT`
 
 ***
 
 ### \[Computation\_T\]?
 
 > `readonly` `optional` **\[Computation\_T\]**: `unknown`
-
-***
-
-### \[Computation\_withSideEffectsOfT\]?
-
-> `readonly` `optional` **\[Computation\_withSideEffectsOfT\]**: `TComputationWithSideEffects`

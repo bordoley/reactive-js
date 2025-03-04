@@ -1,11 +1,11 @@
 /// <reference types="./Runnable.d.ts" />
 
-import { Computation_ofT, Computation_pureOfT, Computation_withSideEffectsOfT, } from "../computations.js";
+import { Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
 import { identity, returns } from "../functions.js";
 import Runnable_buffer from "./Runnable/__private__/Runnable.buffer.js";
 import Runnable_catchError from "./Runnable/__private__/Runnable.catchError.js";
+import Runnable_concat from "./Runnable/__private__/Runnable.concat.js";
 import Runnable_concatAll from "./Runnable/__private__/Runnable.concatAll.js";
-import Runnable_concatMany from "./Runnable/__private__/Runnable.concatMany.js";
 import Runnable_decodeWithCharset from "./Runnable/__private__/Runnable.decodeWithCharset.js";
 import Runnable_distinctUntilChanged from "./Runnable/__private__/Runnable.distinctUntilChanged.js";
 import Runnable_empty from "./Runnable/__private__/Runnable.empty.js";
@@ -32,7 +32,7 @@ import Runnable_toReadonlyArray from "./Runnable/__private__/Runnable.toReadonly
 export const buffer = Runnable_buffer;
 export const catchError = Runnable_catchError;
 export const concatAll = Runnable_concatAll;
-export const concatMany = Runnable_concatMany;
+export const concat = Runnable_concat;
 export const decodeWithCharset = Runnable_decodeWithCharset;
 export const distinctUntilChanged = Runnable_distinctUntilChanged;
 export const empty = Runnable_empty;

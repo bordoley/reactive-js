@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **merge**\<`T`\>(`fst`, `snd`, ...`tail`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
+> **merge**\<`T`\>(...`computations`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
 
 ### Type Parameters
 
@@ -16,25 +16,17 @@
 
 ### Parameters
 
-#### fst
+#### computations
 
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
-
-#### snd
-
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
-
-#### tail
-
-...readonly [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>[]
+...readonly [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### Returns
 
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
 
 ## Call Signature
 
-> **merge**\<`T`\>(`fst`, `snd`, ...`tail`): [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\>
+> **merge**\<`T`\>(...`computations`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
 
 ### Type Parameters
 
@@ -42,25 +34,17 @@
 
 ### Parameters
 
-#### fst
+#### computations
 
-[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\>
-
-#### snd
-
-[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\>
-
-#### tail
-
-...readonly [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\>[]
+...readonly [`SynchronousComputationOf`](../../../computations/type-aliases/SynchronousComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>[]
 
 ### Returns
 
-[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\>
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
 
 ## Call Signature
 
-> **merge**\<`T`\>(`fst`, `snd`, ...`tail`): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
+> **merge**\<`T`\>(...`computations`): [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
 
 ### Type Parameters
 
@@ -68,25 +52,17 @@
 
 ### Parameters
 
-#### fst
+#### computations
 
-[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>
-
-#### snd
-
-[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>
-
-#### tail
-
-...readonly [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>[]
+...readonly [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
 
 ### Returns
 
-[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
+[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
 
 ## Call Signature
 
-> **merge**\<`T`\>(`fst`, `snd`, ...`tail`): [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>
+> **merge**\<`T`\>(...`computations`): [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
 
 ### Type Parameters
 
@@ -94,25 +70,17 @@
 
 ### Parameters
 
-#### fst
+#### computations
 
-[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>
-
-#### snd
-
-[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>
-
-#### tail
-
-...readonly [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>[]
+...readonly [`DeferredComputationOf`](../../../computations/type-aliases/DeferredComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>[]
 
 ### Returns
 
-[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>
+[`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
 
 ## Call Signature
 
-> **merge**\<`T`\>(`fst`, `snd`, ...`tail`): [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\>
+> **merge**\<`T`\>(...`computations`): `NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
 
 ### Type Parameters
 
@@ -120,25 +88,17 @@
 
 ### Parameters
 
-#### fst
+#### computations
 
-[`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`T`\>
-
-#### snd
-
-[`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`T`\>
-
-#### tail
-
-...readonly [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`T`\>[]
+...readonly `NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>[]
 
 ### Returns
 
-[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\>
+`NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
 
 ## Call Signature
 
-> **merge**\<`T`\>(`fst`, `snd`, ...`tail`): [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\>
+> **merge**\<`T`\>(...`computations`): [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
 
 ### Type Parameters
 
@@ -146,18 +106,28 @@
 
 ### Parameters
 
-#### fst
+#### computations
 
-[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
-
-#### snd
-
-[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
-
-#### tail
-
-...readonly [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>[]
+...readonly [`PureComputationOf`](../../../computations/type-aliases/PureComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>[]
 
 ### Returns
 
-[`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\>
+[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
+
+## Call Signature
+
+> **merge**\<`T`\>(...`computations`): [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
+
+### Type Parameters
+
+• **T**
+
+### Parameters
+
+#### computations
+
+...readonly [`ComputationOf`](../../../computations/type-aliases/ComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>[]
+
+### Returns
+
+[`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>

@@ -3,6 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger, clampPositiveNonZeroInteger, } from "../../../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import * as Computation from "../../../computations/Computation.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { ObserverLike_notify, } from "../../../concurrent.js";
 import { bind, bindMethod, isSome, none, pipe, } from "../../../functions.js";
@@ -82,10 +83,8 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
 })();
 const Observable_mergeAll = ((options) => Observable_lift({
     [ObservableLift_isStateless]: false,
-    ...(options?.innerType ?? {
-        [ComputationLike_isDeferred]: true,
-        [ComputationLike_isPure]: true,
-        [ComputationLike_isSynchronous]: true,
-    }),
+    [ComputationLike_isDeferred]: Computation.isDeferred(options?.innerType ?? {}),
+    [ComputationLike_isPure]: Computation.isPure(options?.innerType ?? {}),
+    [ComputationLike_isSynchronous]: Computation.isSynchronous(options?.innerType ?? {}),
 })(createMergeAllObserverOperator(options)));
 export default Observable_mergeAll;

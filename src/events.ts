@@ -3,8 +3,7 @@ import {
   ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  PureComputationLike,
-  ReactiveComputationLike,
+  MulticastComputationLike,
 } from "./computations.js";
 import { DisposableLike } from "./utils.js";
 
@@ -30,8 +29,7 @@ export const EventSourceLike_addEventListener = Symbol(
  * @noInheritDoc
  */
 export interface EventSourceLike<out T = unknown>
-  extends PureComputationLike,
-    ReactiveComputationLike {
+  extends MulticastComputationLike {
   readonly [ComputationLike_isDeferred]: false;
   readonly [ComputationLike_isSynchronous]: false;
   readonly [ComputationLike_isInteractive]: false;

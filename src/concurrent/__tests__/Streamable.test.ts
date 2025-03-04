@@ -16,7 +16,6 @@ import {
   AnimationStreamLike_animation,
   DispatcherLike_complete,
   DispatcherLike_isCompleted,
-  PureSynchronousObservableLike,
   StreamableLike_stream,
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
@@ -36,7 +35,6 @@ import {
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Observable from "../Observable.js";
-import { ObservableComputationFor } from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
@@ -154,9 +152,9 @@ testModule(
         Streamable.syncState(
           state =>
             pipe(
-              Computation.sequence<
-                ObservableComputationFor<PureSynchronousObservableLike>
-              >(Observable)(state + 10),
+              Computation.sequence<Observable.Computation>(Observable)(
+                state + 10,
+              ),
               Observable.map(x => (_: number) => x),
               Observable.takeFirst({ count: 2 }),
             ),

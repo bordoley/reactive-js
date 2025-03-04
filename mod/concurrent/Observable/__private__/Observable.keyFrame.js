@@ -8,6 +8,9 @@ import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
+const ObservableModule = {
+    map: Observable_map,
+};
 const Observable_keyFrame = (duration, options) => {
     const { easing = identity } = options ?? {};
     return pipe(Observable_currentTime, Observable_scan(([startTime, _], now) => {
@@ -15,10 +18,7 @@ const Observable_keyFrame = (duration, options) => {
         const elapsed = now - startTime;
         const next = elapsed > duration ? 1 : easing(elapsed / duration);
         return tuple(startTime, next);
-    }, returns(tuple(MAX_VALUE, 0))), Computation.pick({
-        // FIXME: A little hacky to need to cast
-        map: Observable_map,
-    })(1), Observable_takeWhile(isNotEqualTo(1), {
+    }, returns(tuple(MAX_VALUE, 0))), Computation.pick(ObservableModule)(1), Observable_takeWhile(isNotEqualTo(1), {
         inclusive: true,
     }));
 };

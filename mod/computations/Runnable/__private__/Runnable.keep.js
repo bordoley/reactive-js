@@ -16,5 +16,5 @@ class KeepSink extends AbstractSink {
         }
     }
 }
-const Runnable_keep = (predicate) => Runnable_lift((sink) => newInstance((KeepSink), sink, predicate), true);
+const Runnable_keep = (predicate) => Runnable_lift((sink) => newInstance((KeepSink), sink, predicate));
 export default Runnable_keep;

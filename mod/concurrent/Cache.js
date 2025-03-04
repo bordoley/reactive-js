@@ -6,7 +6,7 @@ import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
 import { keySet } from "../collections.js";
 import * as Computation from "../computations/Computation.js";
-import { DeferredComputationWithSideEffectsType } from "../computations.js";
+import { DeferredComputationWithSideEffectsType, } from "../computations.js";
 import { CacheLike_get, ContinuationContextLike_yield, SchedulerLike_schedule, } from "../concurrent.js";
 import { EventListenerLike_notify } from "../events.js";
 import { alwaysNone, bindMethod, identity, isNone, isSome, newInstance, none, pipe, returns, tuple, } from "../functions.js";
@@ -14,7 +14,6 @@ import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Queue from "../utils/Queue.js";
 import { DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../utils.js";
-import * as DeferredObservable from "./DeferredObservable.js";
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
 import * as SingleUseObservable from "./__internal__/SingleUseObservable.js";
@@ -24,6 +23,11 @@ export const create = /*@__PURE__*/ (() => {
     const CacheStream_scheduleCleanup = Symbol("CacheStream_scheduleCleanup");
     const CacheStream_store = Symbol("CacheStream_store");
     const CacheStream_subscriptions = Symbol("CacheStream_subscriptions");
+    const ObservableModule = {
+        concatAll: Observable.concatAll,
+        keep: Observable.keep,
+        map: Observable.map,
+    };
     return mixInstanceFactory(include(DelegatingDispatcherMixin()), function Cache(instance, scheduler, options) {
         const { maxEntries = MAX_SAFE_INTEGER, cleanupScheduler = scheduler, persistentStore, } = options ?? {};
         const singleUseObservable = SingleUseObservable.create();
@@ -43,10 +47,7 @@ export const create = /*@__PURE__*/ (() => {
             }
         };
         const observableSubscription = pipe(singleUseObservable, Observable.map((updaters) => tuple(updaters, pipe(updaters, ReadonlyObjectMap.map((_, k) => instance[CacheStream_store][Map_get](k))))), isSome(persistentStore)
-            ? Computation.concatMap({
-                concatAll: DeferredObservable.concatAll,
-                map: DeferredObservable.map,
-            })(next => {
+            ? Computation.concatMap(ObservableModule)(next => {
                 const [updaters, values] = next;
                 const keys = pipe(values, ReadonlyObjectMap.keep(isNone), keySet(ReadonlyObjectMap.keys));
                 return keys[Set_size] > 0
@@ -76,13 +77,10 @@ export const create = /*@__PURE__*/ (() => {
             }
             instance[CacheStream_scheduleCleanup](key);
         })), isSome(persistentStore)
-            ? Computation.concatMap({
-                concatAll: DeferredObservable.concatAll,
-                map: DeferredObservable.map,
-            })(bindMethod(persistentStore, "store"), {
+            ? Computation.concatMap(ObservableModule)(bindMethod(persistentStore, "store"), {
                 innerType: DeferredComputationWithSideEffectsType,
             })
-            : Observable.ignoreElements(), Observable.subscribe(scheduler, options));
+            : Computation.ignoreElements(ObservableModule)(), Observable.subscribe(scheduler, options));
         let cleanupJob = Disposable.disposed;
         instance[CacheStream_store] = store;
         instance[CacheStream_subscriptions] = subscriptions;

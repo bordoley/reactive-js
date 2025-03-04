@@ -6,7 +6,7 @@
 
 # Function: map()
 
-> **map**\<`TA`, `TB`\>(`selector`): [`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`TA`, `TB`\>
+> **map**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../../../computations/type-aliases/ComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`ObservableOperator`](../type-aliases/ObservableOperator.md)\<`TA`, `TB`\>
+[`ComputationOperator`](../../../computations/type-aliases/ComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`, `TB`\>

@@ -1,7 +1,9 @@
+import * as Computation from "../../../computations/Computation.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
+  DeferringHigherOrderInnerType,
 } from "../../../computations.js";
 import {
   DeferredObservableLike,
@@ -14,19 +16,22 @@ import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import * as Subject from "../../Subject.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
-import Observable_notify from "./Observable.notify.js";
-import Observable_switchMap from "./Observable.switchMap.js";
+import Observable_forEach from "./Observable.forEach.js";
+import Observable_map from "./Observable.map.js";
+import Observable_switchAll from "./Observable.switchAll.js";
 import Observable_withLatestFrom from "./Observable.withLatestFrom.js";
+
+const ObservableModule = {
+  concatAll: Observable_switchAll,
+  forEach: Observable_forEach,
+  map: Observable_map,
+};
 
 const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
   scanner: Function2<TAcc, T, DeferredObservableLike<TAcc>>,
   initialValue: Factory<TAcc>,
   options?: {
-    readonly innerType?: {
-      readonly [ComputationLike_isDeferred]: boolean;
-      readonly [ComputationLike_isPure]: boolean;
-      readonly [ComputationLike_isSynchronous]: boolean;
-    };
+    readonly innerType?: DeferringHigherOrderInnerType;
   },
 ) => {
   const innerType = options?.innerType ?? {
@@ -52,14 +57,17 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
         pipe(
           observable,
           Observable_withLatestFrom<T, TAcc>(accFeedbackStream),
-          Observable_switchMap(([next, acc]) => scanner(acc, next), {
-            innerType: {
-              [ComputationLike_isDeferred]: true,
-              [ComputationLike_isPure]: false,
-              [ComputationLike_isSynchronous]: false,
+          Computation.concatMap(ObservableModule)(
+            ([next, acc]) => scanner(acc, next),
+            {
+              innerType: {
+                [ComputationLike_isDeferred]: true,
+                [ComputationLike_isPure]: false,
+                [ComputationLike_isSynchronous]: false,
+              },
             },
-          }),
-          Observable_notify(accFeedbackStream),
+          ),
+          Computation.notify(ObservableModule)(accFeedbackStream),
           invoke(ObservableLike_observe, observer),
         );
 

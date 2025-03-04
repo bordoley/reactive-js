@@ -19,7 +19,10 @@ import { ReadonlyObjectMapCollection } from "../collections/ReadonlyObjectMap.js
 import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
 import { ReadonlyObjectMapLike, keySet } from "../collections.js";
 import * as Computation from "../computations/Computation.js";
-import { DeferredComputationWithSideEffectsType } from "../computations.js";
+import {
+  DeferredComputationWithSideEffectsLike,
+  DeferredComputationWithSideEffectsType,
+} from "../computations.js";
 import {
   CacheLike,
   CacheLike_get,
@@ -58,7 +61,6 @@ import {
   QueueLike_dequeue,
   QueueableLike_enqueue,
 } from "../utils.js";
-import * as DeferredObservable from "./DeferredObservable.js";
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
 import * as SingleUseObservable from "./__internal__/SingleUseObservable.js";
@@ -113,6 +115,12 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
   const CacheStream_scheduleCleanup = Symbol("CacheStream_scheduleCleanup");
   const CacheStream_store = Symbol("CacheStream_store");
   const CacheStream_subscriptions = Symbol("CacheStream_subscriptions");
+
+  const ObservableModule = {
+    concatAll: Observable.concatAll,
+    keep: Observable.keep,
+    map: Observable.map,
+  };
 
   type TProperties<T> = {
     [CacheStream_scheduleCleanup]: SideEffect1<string>;
@@ -200,10 +208,23 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
             ),
         ),
         isSome(persistentStore)
-          ? Computation.concatMap({
-              concatAll: DeferredObservable.concatAll,
-              map: DeferredObservable.map,
-            })(
+          ? Computation.concatMap(ObservableModule)<
+              Tuple2<
+                ReadonlyObjectMapLike<
+                  string,
+                  Function1<Optional<T>, Optional<T>>
+                >,
+                ReadonlyObjectMapLike<string, T>
+              >,
+              Tuple2<
+                ReadonlyObjectMapLike<
+                  string,
+                  Function1<Optional<T>, Optional<T>>
+                >,
+                ReadonlyObjectMapLike<string, T>
+              >,
+              DeferredComputationWithSideEffectsLike
+            >(
               next => {
                 const [updaters, values] = next;
                 const keys = pipe(
@@ -281,13 +302,13 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           }),
         ),
         isSome(persistentStore)
-          ? Computation.concatMap({
-              concatAll: DeferredObservable.concatAll,
-              map: DeferredObservable.map,
-            })(bindMethod(persistentStore, "store"), {
-              innerType: DeferredComputationWithSideEffectsType,
-            })
-          : Observable.ignoreElements(),
+          ? Computation.concatMap(ObservableModule)(
+              bindMethod(persistentStore, "store"),
+              {
+                innerType: DeferredComputationWithSideEffectsType,
+              },
+            )
+          : Computation.ignoreElements(ObservableModule)(),
         Observable.subscribe(scheduler, options),
       );
 

@@ -1,6 +1,6 @@
 import {
   ComputationLike_isPure,
-  ComputationWithSideEffectsType,
+  DeferringHigherOrderInnerType,
   RunnableLike,
   RunnableLike_eval,
   SinkLike,
@@ -40,8 +40,11 @@ class ConcatAllSink<T> extends AbstractSink<
   }
 }
 
-const Runnable_concatAll: Runnable.Signature["concatAll"] = (<T>(options?: {
-  readonly innerType: typeof ComputationWithSideEffectsType;
+const Runnable_concatAll: Runnable.Signature["concatAll"] = (<
+  T,
+  TInnerType extends DeferringHigherOrderInnerType,
+>(options?: {
+  readonly innerType: TInnerType;
 }) =>
   Runnable_lift((sink: SinkLike<T>) => {
     const innerSink = newInstance(DelegatingNonCompletingSink, sink);

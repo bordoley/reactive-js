@@ -20,17 +20,17 @@
 
 ### snd
 
-[`PureComputationOf`](../../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+[`PureSynchronousComputationOf`](../../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
 
 ### tail
 
-...readonly [`PureComputationOf`](../../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>[]
+...readonly [`PureSynchronousComputationOf`](../../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>[]
 
 ## Returns
 
 [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
-> **ConcatWithOperator**\<`T`\>(`snd`, ...`tail`): [`ComputationWithSideEffectsOf`](../../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+> **ConcatWithOperator**\<`T`\>(`snd`, ...`tail`): [`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
 
 ## Type Parameters
 
@@ -40,12 +40,52 @@
 
 ### snd
 
-[`ComputationOf`](../../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>
+[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>
 
 ### tail
 
-...readonly [`ComputationOf`](../../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>[]
+...readonly [`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>[]
 
 ## Returns
 
-[`ComputationWithSideEffectsOf`](../../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+[`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
+
+> **ConcatWithOperator**\<`T`\>(`snd`, ...`tail`): [`DeferredComputationOperator`](../../type-aliases/DeferredComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+## Type Parameters
+
+• **T**
+
+## Parameters
+
+### snd
+
+[`PureDeferredComputationOf`](../../type-aliases/PureDeferredComputationOf.md)\<`TComputation`, `T`\>
+
+### tail
+
+...readonly [`PureDeferredComputationOf`](../../type-aliases/PureDeferredComputationOf.md)\<`TComputation`, `T`\>[]
+
+## Returns
+
+[`DeferredComputationOperator`](../../type-aliases/DeferredComputationOperator.md)\<`TComputation`, `T`, `T`\>
+
+> **ConcatWithOperator**\<`T`\>(`snd`, ...`tail`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<`TComputation`, `T`\>, [`DeferredComputationWithSideEffectsOf`](../../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>\>
+
+## Type Parameters
+
+• **T**
+
+## Parameters
+
+### snd
+
+[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<`TComputation`, `T`\>
+
+### tail
+
+...readonly [`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<`TComputation`, `T`\>[]
+
+## Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<`TComputation`, `T`\>, [`DeferredComputationWithSideEffectsOf`](../../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>\>

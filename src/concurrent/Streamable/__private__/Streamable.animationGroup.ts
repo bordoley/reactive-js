@@ -15,11 +15,12 @@ import {
 } from "../../../collections.js";
 import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
-import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
+import {
+  DeferredComputationWithSideEffectsLike,
+  DeferredComputationWithSideEffectsType,
+} from "../../../computations.js";
 import {
   AnimationGroupStreamLike,
-  DeferredObservableLike,
-  ObservableLike,
   PauseableLike_resume,
   PureSynchronousObservableLike,
   SchedulerLike,
@@ -38,7 +39,6 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy } from "../../../utils.js";
-import * as DeferredObservable from "../../DeferredObservable.js";
 import * as Observable from "../../Observable.js";
 import * as PauseableScheduler from "../../PauseableScheduler.js";
 import type * as Streamable from "../../Streamable.js";
@@ -66,6 +66,18 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
   const AnimationGroupStream_eventSources = Symbol(
     "AnimationGroupStream_delegate",
   );
+
+  const ObservableModule = {
+    concat: Observable.concat,
+
+    // Note we overall concatAll to get switchMap behavior
+    concatAll: Observable.switchAll,
+    forEach: Observable.forEach,
+    fromReadonlyArray: Observable.fromReadonlyArray,
+    keep: Observable.keep,
+    map: Observable.map,
+    merge: Observable.merge,
+  };
 
   type TProperties = {
     [AnimationGroupStream_eventSources]: ReadonlyObjectMapLike<
@@ -96,44 +108,34 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
       },
     ): AnimationGroupStreamLike<TEvent, TKey, T> {
       const pauseableScheduler = PauseableScheduler.create(animationScheduler);
-      const operator = Observable.switchMap<TEvent, boolean>(
+      const operator = Computation.concatMap(ObservableModule)<
+        TEvent,
+        boolean,
+        DeferredComputationWithSideEffectsLike
+      >(
         (event: TEvent) =>
           pipe(
-            Observable.mergeMany(
-              pipe(
-                animationGroup,
-                ReadonlyObjectMap.entries(),
-                Iterable.map(
-                  ([key, factory]: Tuple2<
-                    string,
-                    | Function1<TEvent, PureSynchronousObservableLike<T>>
-                    | PureSynchronousObservableLike<T>
-                  >) => {
-                    const publisher = publishers[key] as PublisherLike<T>;
-                    return pipe(
-                      isFunction(factory) ? factory(event) : factory,
-                      Observable.notify(publisher),
-                      Observable.subscribeOn(pauseableScheduler),
-                    );
-                  },
-                ),
-                ReadonlyArray.fromIterable<ObservableLike>(),
-              ),
+            animationGroup,
+            ReadonlyObjectMap.entries(),
+            Iterable.map(
+              ([key, factory]: Tuple2<
+                string,
+                | Function1<TEvent, PureSynchronousObservableLike<T>>
+                | PureSynchronousObservableLike<T>
+              >) => {
+                const publisher = publishers[key] as PublisherLike<T>;
+                return pipe(
+                  isFunction(factory) ? factory(event) : factory,
+                  Computation.notify(ObservableModule)(publisher),
+                  Observable.subscribeOn(pauseableScheduler),
+                );
+              },
             ),
-            Observable.ignoreElements(),
-
-            Computation.startWith<
-              Observable.ObservableComputationFor<DeferredObservableLike>
-            >({
-              concatMany: DeferredObservable.concatMany,
-              fromReadonlyArray: DeferredObservable.fromReadonlyArray,
-            })(true),
-            Computation.endWith<
-              Observable.ObservableComputationFor<DeferredObservableLike>
-            >({
-              concatMany: DeferredObservable.concatMany,
-              fromReadonlyArray: DeferredObservable.fromReadonlyArray,
-            })(false),
+            ReadonlyArray.fromIterable(),
+            Computation.mergeMany(ObservableModule),
+            Computation.ignoreElements(ObservableModule)(),
+            Computation.startWith(ObservableModule)(true),
+            Computation.endWith(ObservableModule)(false),
           ),
         {
           innerType: DeferredComputationWithSideEffectsType,

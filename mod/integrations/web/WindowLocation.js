@@ -5,20 +5,24 @@ import { Array_length, String } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
 import * as Computation from "../../computations/Computation.js";
 import { ComputationLike_isDeferred, ComputationLike_isInteractive, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../computations.js";
-import * as MulticastObservable from "../../concurrent/MulticastObservable.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import { ObservableLike_observe, StreamableLike_stream, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
 import { StoreLike_value } from "../../events.js";
-import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, raiseIf, returns, } from "../../functions.js";
+import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, pipeLazy, raiseIf, returns, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { DisposableContainerLike_add, DropOldestBackpressureStrategy, QueueableLike_enqueue, } from "../../utils.js";
 import { WindowLocationLike_canGoBack, WindowLocationLike_goBack, WindowLocationLike_push, WindowLocationLike_replace, } from "../web.js";
 import * as Element from "./Element.js";
 const { history, location } = window;
+const ObservableModule = {
+    keep: Observable.keep,
+    map: Observable.map,
+    merge: Observable.merge,
+};
 const serializableWindowLocationPrototype = {
     toString() {
         const { path, query, fragment } = this;
@@ -90,9 +94,7 @@ export const subscribe = /*@__PURE__*/ (() => {
             history.back();
         },
         [ObservableLike_observe](observer) {
-            pipe(this[WindowLocation_delegate], Computation.pick({
-                map: MulticastObservable.map,
-            })("uri"), invoke(ObservableLike_observe, observer));
+            pipe(this[WindowLocation_delegate], Computation.pick(ObservableModule)("uri"), invoke(ObservableLike_observe, observer));
         },
     });
     let currentWindowLocationObservable = none;
@@ -106,20 +108,20 @@ export const subscribe = /*@__PURE__*/ (() => {
             // Initialize the counter to -1 so that the initized start value
             // get pushed through the updater.
             counter: -1,
-        }), { equality: areWindowLocationStatesEqual }), Streamable.syncState(state => 
+        }), { equality: areWindowLocationStatesEqual }), Streamable.syncState(state => Observable.defer(
         // Initialize the history state on page load
-        pipe(window, Element.eventSource("popstate"), EventSource.map((e) => {
+        pipeLazy(window, Element.eventSource("popstate"), EventSource.map((e) => {
             const { counter, title } = e.state;
             const uri = createSerializableWindowLocationURI({
                 ...getCurrentWindowLocationURI(),
                 title,
             });
             return { counter, replace: true, uri };
-        }), Observable.fromEventSource(), Observable.mergeWith(pipe({
+        }), Observable.fromEventSource(), Computation.mergeWith(ObservableModule)(pipe({
             counter: 0,
             replace: true,
             uri: state.uri,
-        }, Observable.fromValue())), Observable.map(returns)), (oldState, state) => {
+        }, Observable.fromValue())), Observable.map(returns))), (oldState, state) => {
             const locationChanged = !areURIsEqual(state.uri, oldState.uri);
             const titleChanged = oldState.uri.title !== state.uri.title;
             let { replace } = state;
@@ -129,7 +131,7 @@ export const subscribe = /*@__PURE__*/ (() => {
                 ? Observable.enqueue(replaceState)
                 : push
                     ? Observable.enqueue(pushState)
-                    : identity, Observable.ignoreElements());
+                    : identity, Computation.ignoreElements(ObservableModule)());
         }), invoke(StreamableLike_stream, scheduler, {
             replay: 1,
             capacity: 1,

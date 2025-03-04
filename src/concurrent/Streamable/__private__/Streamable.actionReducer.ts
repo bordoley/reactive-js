@@ -1,3 +1,4 @@
+import * as Computation from "../../../computations/Computation.js";
 import {
   ObservableLike,
   ObservableLike_observe,
@@ -15,6 +16,8 @@ import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 import Streamable_create from "./Streamable.create.js";
 
+const ObservableModule = { merge: Observable.merge };
+
 const Observable_actionReducer =
   <TAction, T>(
     reducer: Reducer<TAction, T>,
@@ -27,7 +30,9 @@ const Observable_actionReducer =
       return pipe(
         obs,
         Observable.scan<TAction, T>(reducer, returns(acc)),
-        Observable.mergeWith<T>(pipe(acc, Observable.fromValue())),
+        Computation.mergeWith(ObservableModule)(
+          pipe(acc, Observable.fromValue()),
+        ),
         Observable.distinctUntilChanged<T>(options),
         invoke(ObservableLike_observe, observer),
       );

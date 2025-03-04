@@ -6,4 +6,4 @@
 
 # Variable: PureDeferredComputationType
 
-> `const` **PureDeferredComputationType**: `Pick`\<[`PureDeferredComputationLike`](../interfaces/PureDeferredComputationLike.md), *typeof* [`ComputationLike_isDeferred`](ComputationLike_isDeferred.md) \| *typeof* [`ComputationLike_isPure`](ComputationLike_isPure.md) \| *typeof* [`ComputationLike_isSynchronous`](ComputationLike_isSynchronous.md)\>
+> `const` **PureDeferredComputationType**: [`PureDeferredComputationLike`](../interfaces/PureDeferredComputationLike.md)

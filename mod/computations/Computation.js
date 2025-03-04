@@ -1,23 +1,22 @@
 /// <reference types="./Computation.d.ts" />
 
 import { ComputationLike_isDeferred, ComputationLike_isInteractive, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../computations.js";
-import { alwaysFalse, compose, increment, pickUnsafe, pipe, returns, } from "../functions.js";
+import { EventListenerLike_notify } from "../events.js";
+import { alwaysFalse, bindMethod, debug as breakPoint, compose, log as consoleLog, increment, pickUnsafe, pipe, returns, } from "../functions.js";
 export const areAllDeferred = (computations) => computations.every(isDeferred);
 export const areAllInteractive = (computations) => computations.every(isInteractive);
 export const areAllMulticasted = (computations) => computations.every(isMulticasted);
 export const areAllPure = (computations) => computations.every(isPure);
 export const areAllSynchronous = (computations) => computations.every(isSynchronous);
-export const concat = (m) => (...computations) => m.concatMany(computations);
-export const concatMap = (m) => ((selector, options) => (computation) => pipe(computation, m.map(selector), m.concatAll(options)));
-export const concatMapIterable = (m) => (selector, options) => {
+export const concatMany = ((m) => (computations) => m.concat(...computations));
+export const concatMap = ((m) => (selector, options) => compose((x) => x, m.map(selector), m.concatAll(options)));
+export const concatMapIterable = ((m) => (selector, options) => {
     const mapper = compose(selector, m.fromIterable());
     return concatMap(m)(mapper, options);
-};
-export const concatWith = (m) => ((...tail) => (fst) => m.concatMany([
-    fst,
-    ...tail,
-]));
-export const endWith = (m) => (...values) => (computation) => m.concatMany([computation, m.fromReadonlyArray()(values)]);
+});
+export const concatWith = (m) => ((...tail) => (fst) => m.concat(fst, ...tail));
+export const debug = (m) => () => m.forEach(breakPoint);
+export const endWith = ((m) => (...values) => concatWith(m)(m.fromReadonlyArray()(values)));
 export const hasSideEffects = (computation) => !(computation[ComputationLike_isPure] ?? true);
 export const ignoreElements = (m) => () => m.keep(alwaysFalse);
 export const isDeferred = (computation) => computation[ComputationLike_isDeferred] ?? true;
@@ -43,12 +42,11 @@ export const isSynchronousWithSideEffects = (computation) => (computation[Comput
     (computation[ComputationLike_isDeferred] ?? true) &&
     !(computation[ComputationLike_isPure] ?? true);
 export const keepType = ((m) => (predicate) => m.keep(predicate));
+export const log = (m) => () => m.forEach(consoleLog);
 export const mapTo = (m) => (v) => m.map(returns(v));
-export const merge = (m) => (...computations) => m.mergeMany(computations);
-export const mergeWith = (m) => ((...tail) => (fst) => m.mergeMany([
-    fst,
-    ...tail,
-]));
-export const pick = ((m) => (...keys) => m.map(pickUnsafe(...keys)));
+export const mergeMany = ((m) => (computations) => m.merge(...computations));
+export const mergeWith = (m) => ((...tail) => (fst) => m.merge(fst, ...tail));
+export const notify = (m) => (eventListener) => m.forEach(bindMethod(eventListener, EventListenerLike_notify));
+export const pick = (m) => (...keys) => m.map(pickUnsafe(...keys));
 export const sequence = (m) => (start) => m.generate(increment, returns(start - 1));
-export const startWith = (m) => (...values) => (computation) => m.concatMany([m.fromReadonlyArray()(values), computation]);
+export const startWith = ((m) => (...values) => (computation) => pipe(m.fromReadonlyArray()(values), concatWith(m)(computation)));

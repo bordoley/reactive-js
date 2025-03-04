@@ -8,34 +8,64 @@
 
 ## Extends
 
-- [`GenericComputation`](../../interfaces/GenericComputation.md)\<[`IterableLike`](../../interfaces/IterableLike.md), [`PureIterableLike`](../../interfaces/PureIterableLike.md), [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\>
+- [`Computation`](../../type-aliases/Computation.md)
 
 ## Properties
 
-### \[Computation\_ofT\]?
+### \[Computation\_baseOfT\]?
 
-> `readonly` `optional` **\[Computation\_ofT\]**: [`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>
+> `readonly` `optional` **\[Computation\_baseOfT\]**: [`IterableLike`](../../interfaces/IterableLike.md)\<`unknown`\>
 
 #### Overrides
 
-[`GenericComputation`](../../interfaces/GenericComputation.md).[`[Computation_ofT]`](../../interfaces/GenericComputation.md#computation_oft)
+`ComputationSig.[Computation_baseOfT]`
 
 ***
 
-### \[Computation\_pureOfT\]?
+### \[Computation\_deferredWithSideEffectsOfT\]?
 
-> `readonly` `optional` **\[Computation\_pureOfT\]**: [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`unknown`\>
+> `readonly` `optional` **\[Computation\_deferredWithSideEffectsOfT\]**: [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`unknown`\>
 
 #### Overrides
 
-[`GenericComputation`](../../interfaces/GenericComputation.md).[`[Computation_pureOfT]`](../../interfaces/GenericComputation.md#computation_pureoft)
+`ComputationSig.[Computation_deferredWithSideEffectsOfT]`
 
 ***
 
-### \[Computation\_withSideEffectsOfT\]?
+### \[Computation\_multicastOfT\]?
 
-> `readonly` `optional` **\[Computation\_withSideEffectsOfT\]**: [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`unknown`\>
+> `readonly` `optional` **\[Computation\_multicastOfT\]**: `undefined`
 
 #### Overrides
 
-[`GenericComputation`](../../interfaces/GenericComputation.md).[`[Computation_withSideEffectsOfT]`](../../interfaces/GenericComputation.md#computation_withsideeffectsoft)
+`ComputationSig.[Computation_multicastOfT]`
+
+***
+
+### \[Computation\_pureDeferredOfT\]?
+
+> `readonly` `optional` **\[Computation\_pureDeferredOfT\]**: [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`unknown`\>
+
+#### Overrides
+
+`ComputationSig.[Computation_pureDeferredOfT]`
+
+***
+
+### \[Computation\_pureSynchronousOfT\]?
+
+> `readonly` `optional` **\[Computation\_pureSynchronousOfT\]**: [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`unknown`\>
+
+#### Overrides
+
+`ComputationSig.[Computation_pureSynchronousOfT]`
+
+***
+
+### \[Computation\_synchronousWithSideEffectsOfT\]?
+
+> `readonly` `optional` **\[Computation\_synchronousWithSideEffectsOfT\]**: [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`unknown`\>
+
+#### Overrides
+
+`ComputationSig.[Computation_synchronousWithSideEffectsOfT]`
