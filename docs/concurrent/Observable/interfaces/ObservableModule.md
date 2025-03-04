@@ -192,16 +192,6 @@
 
 ***
 
-### encodeUtf8()
-
-> **encodeUtf8**(): [`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
-
-#### Returns
-
-[`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
-
-***
-
 ### enqueue()
 
 > **enqueue**\<`T`\>(`queue`): [`ComputationWithSideEffectsOperator`](../../../computations/type-aliases/ComputationWithSideEffectsOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>

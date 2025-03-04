@@ -10,10 +10,10 @@ import {
   DeferredReactiveComputationModule,
   SynchronousComputationModule,
 } from "../../../computations.js";
-import * as Observable from "../../../concurrent/Observable.js";
 import {
   Tuple2,
   arrayEquality,
+  invoke,
   pipe,
   pipeLazy,
   tuple,
@@ -33,8 +33,8 @@ const DeferredReactiveComputationModuleTests = <
         "with multiple sub buffers",
         pipeLazy(
           [1, 2, 3, 4, 5, 6, 7, 8, 9],
-          m.fromReadonlyArray<number>(),
-          m.buffer<number>({ count: 3 }),
+          m.fromReadonlyArray(),
+          m.buffer({ count: 3 }),
           m.toReadonlyArray<readonly number[]>(),
           expectArrayEquals<readonly number[]>(
             [
@@ -68,7 +68,7 @@ const DeferredReactiveComputationModuleTests = <
         pipeLazy(
           [1, 2, 3, 4, 5, 6, 7, 8],
           m.fromReadonlyArray(),
-          m.buffer<number>(),
+          m.buffer(),
           m.toReadonlyArray<readonly number[]>(),
           expectArrayEquals<readonly number[]>([[1, 2, 3, 4, 5, 6, 7, 8]], {
             valuesEquality: arrayEquality(),
@@ -78,33 +78,29 @@ const DeferredReactiveComputationModuleTests = <
     ),
     describe(
       "decodeWithCharset",
-      test("decoding ascii from runnable", () => {
+      test("decoding ascii", () => {
         const str = "abcdefghijklmnsopqrstuvwxyz";
 
         pipe(
           [str],
-          Observable.fromReadonlyArray({ delay: 1 }),
-          Observable.encodeUtf8(),
-          Observable.toReadonlyArray<Uint8Array>(),
           m.fromReadonlyArray(),
+          m.encodeUtf8(),
           m.decodeWithCharset(),
           m.toReadonlyArray(),
-          x => x.join(),
+          invoke("join"),
           expectEquals(str),
         );
       }),
-      test("decoding ascii from enumerable", () => {
+      test("decoding ascii", () => {
         const str = "abcdefghijklmnsopqrstuvwxyz";
 
         pipe(
           [str],
-          Observable.fromReadonlyArray(),
-          Observable.encodeUtf8(),
-          Observable.toReadonlyArray<Uint8Array>(),
           m.fromReadonlyArray(),
+          m.encodeUtf8(),
           m.decodeWithCharset(),
           m.toReadonlyArray(),
-          x => x.join(),
+          invoke("join"),
           expectEquals(str),
         );
       }),
@@ -112,13 +108,11 @@ const DeferredReactiveComputationModuleTests = <
         const str = String.fromCodePoint(8364);
         pipe(
           [str],
-          Observable.fromReadonlyArray(),
-          Observable.encodeUtf8(),
-          Observable.toReadonlyArray<Uint8Array>(),
           m.fromReadonlyArray(),
+          m.encodeUtf8(),
           m.decodeWithCharset(),
           m.toReadonlyArray(),
-          x => x.join(),
+          invoke("join"),
           expectEquals(str),
         );
       }),
@@ -128,7 +122,7 @@ const DeferredReactiveComputationModuleTests = <
           m.fromReadonlyArray(),
           m.decodeWithCharset(),
           m.toReadonlyArray(),
-          x => x.join(),
+          invoke("join"),
           expectEquals("♥"),
         );
       }),
@@ -138,7 +132,7 @@ const DeferredReactiveComputationModuleTests = <
           m.fromReadonlyArray(),
           m.decodeWithCharset(),
           m.toReadonlyArray(),
-          x => x.join(),
+          invoke("join"),
           expectEquals("�"),
         );
       }),
@@ -264,7 +258,6 @@ const DeferredReactiveComputationModuleTests = <
         ),
       ),
     ),
-
     describe(
       "takeLast",
       test(

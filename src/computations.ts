@@ -568,6 +568,8 @@ export interface SynchronousComputationModule<TComputation extends Computation>
 
   empty<T>(): PureSynchronousComputationOf<TComputation, T>;
 
+  encodeUtf8(): DeferringComputationOperator<TComputation, string, Uint8Array>;
+
   forEach<T>(
     sideEffect: SideEffect1<T>,
   ): ComputationWithSideEffectsOperator<TComputation, T, T>;

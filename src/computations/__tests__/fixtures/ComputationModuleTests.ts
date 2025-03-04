@@ -65,7 +65,6 @@ const ComputationModuleTests = <TComputation extends Computation>(
       "map",
       test(
         "maps every value",
-
         pipeLazy(
           [1, 2, 3],
           m.fromReadonlyArray(),

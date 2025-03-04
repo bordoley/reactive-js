@@ -19,6 +19,7 @@ import {
   Optional,
   alwaysTrue,
   increment,
+  invoke,
   lessThan,
   newInstance,
   none,
@@ -158,6 +159,23 @@ const SynchronousComputationModuleTests = <TComputation extends Computation>(
           expectArrayEquals<number>([]),
         ),
       ),
+    ),
+    describe(
+      "encodeUtf8",
+      test("encoding ascii", () => {
+        const str = "abcdefghijklmnsopqrstuvwxyz";
+
+        pipe(
+          [str],
+          m.fromReadonlyArray(),
+          m.encodeUtf8(),
+          m.toRunnable(),
+          Runnable.decodeWithCharset(),
+          Runnable.toReadonlyArray(),
+          invoke("join"),
+          expectEquals(str),
+        );
+      }),
     ),
     describe(
       "forEach",

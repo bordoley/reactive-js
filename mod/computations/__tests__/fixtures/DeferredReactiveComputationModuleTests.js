@@ -1,7 +1,6 @@
 /// <reference types="./DeferredReactiveComputationModuleTests.d.ts" />
 
 import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, } from "../../../__internal__/testing.js";
-import * as Observable from "../../../concurrent/Observable.js";
 import { arrayEquality, pipe, pipeLazy, tuple, } from "../../../functions.js";
 const DeferredReactiveComputationModuleTests = (m) => describe("DeferredReactiveComputationModule", describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
@@ -15,13 +14,13 @@ const DeferredReactiveComputationModuleTests = (m) => describe("DeferredReactive
     valuesEquality: arrayEquality(),
 })))), describe("decodeWithCharset", test("decoding ascii from runnable", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
-    pipe([str], Observable.fromReadonlyArray({ delay: 1 }), Observable.encodeUtf8(), Observable.toReadonlyArray(), m.fromReadonlyArray(), m.decodeWithCharset(), m.toReadonlyArray(), x => x.join(), expectEquals(str));
+    pipe([str], m.fromReadonlyArray(), m.encodeUtf8(), m.decodeWithCharset(), m.toReadonlyArray(), x => x.join(), expectEquals(str));
 }), test("decoding ascii from enumerable", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
-    pipe([str], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Observable.toReadonlyArray(), m.fromReadonlyArray(), m.decodeWithCharset(), m.toReadonlyArray(), x => x.join(), expectEquals(str));
+    pipe([str], m.fromReadonlyArray(), m.encodeUtf8(), m.decodeWithCharset(), m.toReadonlyArray(), x => x.join(), expectEquals(str));
 }), test("decoding multi-byte code points", () => {
     const str = String.fromCodePoint(8364);
-    pipe([str], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Observable.toReadonlyArray(), m.fromReadonlyArray(), m.decodeWithCharset(), m.toReadonlyArray(), x => x.join(), expectEquals(str));
+    pipe([str], m.fromReadonlyArray(), m.encodeUtf8(), m.decodeWithCharset(), m.toReadonlyArray(), x => x.join(), expectEquals(str));
 }), test("multi-byte decoding divided between multiple buffers", () => {
     pipe([new Uint8Array([226, 153]), new Uint8Array([165])], m.fromReadonlyArray(), m.decodeWithCharset(), m.toReadonlyArray(), x => x.join(), expectEquals("♥"));
 }), test("multi-byte decoding with missing tail", () => {

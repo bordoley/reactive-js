@@ -216,12 +216,6 @@ export interface ObservableModule
     readonly delay: number;
   }): PureSynchronousObservableLike<T>;
 
-  encodeUtf8(): DeferringComputationOperator<
-    ObservableComputation,
-    string,
-    Uint8Array
-  >;
-
   enqueue<T>(
     queue: QueueableLike<T>,
   ): ComputationWithSideEffectsOperator<ObservableComputation, T, T>;

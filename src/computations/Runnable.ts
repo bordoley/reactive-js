@@ -20,6 +20,7 @@ import Runnable_concatAll from "./Runnable/__private__/Runnable.concatAll.js";
 import Runnable_decodeWithCharset from "./Runnable/__private__/Runnable.decodeWithCharset.js";
 import Runnable_distinctUntilChanged from "./Runnable/__private__/Runnable.distinctUntilChanged.js";
 import Runnable_empty from "./Runnable/__private__/Runnable.empty.js";
+import Runnable_encodeUtf8 from "./Runnable/__private__/Runnable.encodeUtf8.js";
 import Runnable_forEach from "./Runnable/__private__/Runnable.forEach.js";
 import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 import Runnable_fromReadonlyArray from "./Runnable/__private__/Runnable.fromReadonlyArray.js";
@@ -79,6 +80,7 @@ export const decodeWithCharset: Signature["decodeWithCharset"] =
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Runnable_distinctUntilChanged;
 export const empty: Signature["empty"] = Runnable_empty;
+export const encodeUtf8: Signature["encodeUtf8"] = Runnable_encodeUtf8;
 export const forEach: Signature["forEach"] = Runnable_forEach;
 export const fromIterable: Signature["fromIterable"] = Runnable_fromIterable;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =

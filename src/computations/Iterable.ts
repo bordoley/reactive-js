@@ -165,6 +165,26 @@ export const concat: Signature["concat"] = (<T>(
 
 export const empty: Signature["empty"] = /*@__PURE__*/ returns([]);
 
+class EncodeUtf8Iterable implements IterableLike<Uint8Array<ArrayBufferLike>> {
+  public [ComputationLike_isPure]?: boolean;
+
+  constructor(private readonly s: IterableLike<string>) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
+
+  *[Symbol.iterator]() {
+    const textEncoder = newInstance(TextEncoder);
+
+    for (const chunk of this.s) {
+      yield textEncoder.encode(chunk);
+    }
+  }
+}
+
+export const encodeUtf8: Signature["encodeUtf8"] = (() =>
+  (iterable: IterableLike<string>) =>
+    newInstance(EncodeUtf8Iterable, iterable)) as Signature["encodeUtf8"];
+
 class ForEachIterable<T> implements IterableWithSideEffectsLike<T> {
   public [ComputationLike_isPure]: false = false as const;
 

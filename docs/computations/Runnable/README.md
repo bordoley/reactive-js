@@ -25,6 +25,7 @@
 - [decodeWithCharset](functions/decodeWithCharset.md)
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [empty](functions/empty.md)
+- [encodeUtf8](functions/encodeUtf8.md)
 - [forEach](functions/forEach.md)
 - [fromIterable](functions/fromIterable.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)

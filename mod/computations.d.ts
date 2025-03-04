@@ -213,6 +213,7 @@ export interface DeferredReactiveComputationModule<TComputation extends Computat
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): DeferringComputationOperator<TComputation, T, T>;
+    encodeUtf8(): DeferringComputationOperator<TComputation, string, Uint8Array>;
     pairwise<T>(): DeferringComputationOperator<TComputation, T, Tuple2<T, T>>;
     skipFirst<T>(options?: {
         readonly count?: number;

@@ -38,7 +38,6 @@ export interface ObservableModule extends DeferredReactiveComputationModule<Obse
     empty<T>(options?: {
         readonly delay: number;
     }): PureSynchronousObservableLike<T>;
-    encodeUtf8(): DeferringComputationOperator<ObservableComputation, string, Uint8Array>;
     enqueue<T>(queue: QueueableLike<T>): ComputationWithSideEffectsOperator<ObservableComputation, T, T>;
     exhaust<T>(): HigherOrderComputationOperator<ObservableComputation, PureSynchronousObservableLike, PureSynchronousObservableLike<T>, T>;
     exhaust<T, TInnerType extends DeferringHigherOrderInnerType>(options: {
