@@ -1,12 +1,12 @@
 import {
   ComputationBaseOf,
   ComputationLike_isPure,
-  ComputationOperator,
-  ComputationWithSideEffectsOperator,
-  DeferringComputationOperator,
+  ComputationOperatorWithSideEffects,
   RunnableLike,
   RunnableLike_eval,
   SinkLike,
+  StatefulSynchronousComputationOperator,
+  StatelessComputationOperator,
 } from "../../../computations.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import type * as Runnable from "../../Runnable.js";
@@ -30,15 +30,15 @@ class LiftedRunnable<T> implements RunnableLike<T> {
 interface RunnableLift {
   lift<TA, TB>(
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
-  ): ComputationOperator<Runnable.Computation, TA, TB>;
+  ): StatelessComputationOperator<Runnable.Computation, TA, TB>;
   lift<TA, TB>(
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
     isPure: true,
-  ): DeferringComputationOperator<Runnable.Computation, TA, TB>;
+  ): StatefulSynchronousComputationOperator<Runnable.Computation, TA, TB>;
   lift<TA, TB>(
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
     isPure: false,
-  ): ComputationWithSideEffectsOperator<Runnable.Computation, TA, TB>;
+  ): ComputationOperatorWithSideEffects<Runnable.Computation, TA, TB>;
   lift<TA, TB>(
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
     isPure: boolean,

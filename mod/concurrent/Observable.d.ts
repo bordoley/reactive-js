@@ -1,4 +1,4 @@
-import { ComputationBaseOf, ComputationType, ComputationWithSideEffectsOperator, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationOperator, DeferredComputationWithSideEffectsLike, DeferredReactiveComputationModule, DeferringComputationOperator, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, IterableLike, PureDeferredComputationLike, PureIterableLike, PureSynchronousComputationOf, RunnableLike, SynchronousComputationWithSideEffectsOf, ZippingConstructor } from "../computations.js";
+import { ComputationBaseOf, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationWithSideEffectsLike, DeferredReactiveComputationModule, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, IterableLike, PureDeferredComputationLike, PureIterableLike, PureSynchronousComputationOf, RunnableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, SynchronousComputationWithSideEffectsOf, ZippingConstructor } from "../computations.js";
 import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureSynchronousObservableLike, SchedulerLike, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../concurrent.js";
 import { EventSourceLike, StoreLike } from "../events.js";
 import { Factory, Function1, Function2, Optional, SideEffect, SideEffect1, Tuple2, Updater } from "../functions.js";
@@ -23,7 +23,7 @@ export type ThrottleMode = typeof ThrottleFirstMode | typeof ThrottleLastMode | 
  * @noInheritDoc
  */
 export interface ObservableModule extends DeferredReactiveComputationModule<ObservableComputation>, ConcurrentReactiveComputationModule<ObservableComputation> {
-    backpressureStrategy<T>(capacity: number, backpressureStrategy: BackpressureStrategy): DeferringComputationOperator<ObservableComputation, T, T>;
+    backpressureStrategy<T>(capacity: number, backpressureStrategy: BackpressureStrategy): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
     combineLatest: ZippingConstructor<ObservableComputation>;
     computeDeferred<T>(computation: Factory<T>, options?: {
         readonly mode?: ComputeMode;
@@ -34,11 +34,11 @@ export interface ObservableModule extends DeferredReactiveComputationModule<Obse
     create<T>(f: SideEffect1<ObserverLike<T>>): DeferredObservableWithSideEffectsLike<T>;
     currentTime: PureSynchronousObservableLike<number>;
     defer<T>(f: Factory<MulticastObservableLike<T>>): PureDeferredObservableLike<T>;
-    dispatchTo<T>(dispatcher: DispatcherLike<T>): ComputationWithSideEffectsOperator<ObservableComputation, T, T>;
+    dispatchTo<T>(dispatcher: DispatcherLike<T>): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
     empty<T>(options?: {
         readonly delay: number;
     }): PureSynchronousObservableLike<T>;
-    enqueue<T>(queue: QueueableLike<T>): ComputationWithSideEffectsOperator<ObservableComputation, T, T>;
+    enqueue<T>(queue: QueueableLike<T>): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
     exhaust<T>(): HigherOrderComputationOperator<ObservableComputation, PureSynchronousObservableLike, PureSynchronousObservableLike<T>, T>;
     exhaust<T, TInnerType extends HigherOrderInnerComputationLike>(options: {
         readonly innerType: TInnerType;
@@ -106,7 +106,7 @@ export interface ObservableModule extends DeferredReactiveComputationModule<Obse
         readonly backpressureStrategy?: BackpressureStrategy;
     }): Function1<DeferredObservableLike<T>, MulticastObservableLike<T> & DisposableLike>;
     never<T>(): MulticastObservableLike<T>;
-    onSubscribe<T>(f: Factory<DisposableLike | SideEffect1<Optional<Error>>> | SideEffect): ComputationWithSideEffectsOperator<ObservableComputation, T, T>;
+    onSubscribe<T>(f: Factory<DisposableLike | SideEffect1<Optional<Error>>> | SideEffect): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
     raise<T>(options?: {
         readonly raise?: Factory<unknown>;
         readonly delay?: number;
@@ -137,13 +137,13 @@ export interface ObservableModule extends DeferredReactiveComputationModule<Obse
     switchAll<T, TInnerType extends HigherOrderInnerComputationLike>(options: {
         readonly innerType: TInnerType;
     }): HigherOrderComputationOperator<ObservableComputation, TInnerType, HigherOrderInnerComputationOf<ObservableComputation, TInnerType, T>, T>;
-    takeUntil<T>(notifier: PureSynchronousObservableLike): DeferringComputationOperator<ObservableComputation, T, T>;
-    takeUntil<T>(notifier: SynchronousObservableWithSideEffectsLike): ComputationWithSideEffectsOperator<ObservableComputation, T, T>;
+    takeUntil<T>(notifier: PureSynchronousObservableLike): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
+    takeUntil<T>(notifier: SynchronousObservableWithSideEffectsLike): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
     takeUntil<T>(notifier: DeferredObservableWithSideEffectsLike): Function1<ObservableLike<T>, DeferredObservableWithSideEffectsLike<T>>;
-    takeUntil<T>(notifier: MulticastObservableLike): DeferredComputationOperator<ObservableComputation, T, T>;
+    takeUntil<T>(notifier: MulticastObservableLike): StatefulAsynchronousComputationOperator<ObservableComputation, T, T>;
     throttle<T>(duration: number, options?: {
         readonly mode?: ThrottleMode;
-    }): DeferringComputationOperator<ObservableComputation, T, T>;
+    }): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
     toRunnable<T>(options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
@@ -162,17 +162,17 @@ export interface ObservableModule extends DeferredReactiveComputationModule<Obse
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
-    withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): DeferringComputationOperator<ObservableComputation, TA, TB>;
-    withLatestFrom<TA, TB>(other: PureSynchronousObservableLike<TB>): DeferringComputationOperator<ObservableComputation, TA, Tuple2<TA, TB>>;
-    withLatestFrom<TA, TB, T>(other: PureSynchronousObservableLike<TB>, selector: Function2<TA, TB, T>): DeferringComputationOperator<ObservableComputation, TA, T>;
-    withLatestFrom<TA, TB>(other: SynchronousObservableWithSideEffectsLike<TB>): ComputationWithSideEffectsOperator<ObservableComputation, TA, Tuple2<TA, TB>>;
-    withLatestFrom<TA, TB, T>(other: SynchronousObservableWithSideEffectsLike<TB>, selector: Function2<TA, TB, T>): ComputationWithSideEffectsOperator<ObservableComputation, TA, T>;
-    withLatestFrom<TA, TB>(other: PureDeferredObservableLike<TB>): DeferredComputationOperator<ObservableComputation, TA, Tuple2<TA, TB>>;
-    withLatestFrom<TA, TB, T>(other: PureDeferredObservableLike<TB>, selector: Function2<TA, TB, T>): DeferredComputationOperator<ObservableComputation, TA, T>;
+    withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): StatefulSynchronousComputationOperator<ObservableComputation, TA, TB>;
+    withLatestFrom<TA, TB>(other: PureSynchronousObservableLike<TB>): StatefulSynchronousComputationOperator<ObservableComputation, TA, Tuple2<TA, TB>>;
+    withLatestFrom<TA, TB, T>(other: PureSynchronousObservableLike<TB>, selector: Function2<TA, TB, T>): StatefulSynchronousComputationOperator<ObservableComputation, TA, T>;
+    withLatestFrom<TA, TB>(other: SynchronousObservableWithSideEffectsLike<TB>): ComputationOperatorWithSideEffects<ObservableComputation, TA, Tuple2<TA, TB>>;
+    withLatestFrom<TA, TB, T>(other: SynchronousObservableWithSideEffectsLike<TB>, selector: Function2<TA, TB, T>): ComputationOperatorWithSideEffects<ObservableComputation, TA, T>;
+    withLatestFrom<TA, TB>(other: PureDeferredObservableLike<TB>): StatefulAsynchronousComputationOperator<ObservableComputation, TA, Tuple2<TA, TB>>;
+    withLatestFrom<TA, TB, T>(other: PureDeferredObservableLike<TB>, selector: Function2<TA, TB, T>): StatefulAsynchronousComputationOperator<ObservableComputation, TA, T>;
     withLatestFrom<TA, TB>(other: DeferredObservableWithSideEffectsLike<TB>): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<Tuple2<TA, TB>>>;
     withLatestFrom<TA, TB, T>(other: DeferredObservableWithSideEffectsLike<TB>, selector: Function2<TA, TB, T>): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<T>>;
-    withLatestFrom<TA, TB>(other: MulticastObservableLike<TB>): DeferredComputationOperator<ObservableComputation, TA, Tuple2<TA, TB>>;
-    withLatestFrom<TA, TB, T>(other: MulticastObservableLike<TB>, selector: Function2<TA, TB, T>): DeferredComputationOperator<ObservableComputation, TA, T>;
+    withLatestFrom<TA, TB>(other: MulticastObservableLike<TB>): StatefulAsynchronousComputationOperator<ObservableComputation, TA, Tuple2<TA, TB>>;
+    withLatestFrom<TA, TB, T>(other: MulticastObservableLike<TB>, selector: Function2<TA, TB, T>): StatefulAsynchronousComputationOperator<ObservableComputation, TA, T>;
     zipLatest: ZippingConstructor<ObservableComputation>;
 }
 export type Signature = ObservableModule;

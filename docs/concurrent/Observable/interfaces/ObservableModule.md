@@ -32,7 +32,7 @@
 
 ### backpressureStrategy()
 
-> **backpressureStrategy**\<`T`\>(`capacity`, `backpressureStrategy`): [`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+> **backpressureStrategy**\<`T`\>(`capacity`, `backpressureStrategy`): [`StatefulSynchronousComputationOperator`](../../../computations/type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -50,7 +50,7 @@
 
 #### Returns
 
-[`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+[`StatefulSynchronousComputationOperator`](../../../computations/type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 ***
 
@@ -148,7 +148,7 @@
 
 ### dispatchTo()
 
-> **dispatchTo**\<`T`\>(`dispatcher`): [`ComputationWithSideEffectsOperator`](../../../computations/type-aliases/ComputationWithSideEffectsOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+> **dispatchTo**\<`T`\>(`dispatcher`): [`ComputationOperatorWithSideEffects`](../../../computations/type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -162,7 +162,7 @@
 
 #### Returns
 
-[`ComputationWithSideEffectsOperator`](../../../computations/type-aliases/ComputationWithSideEffectsOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+[`ComputationOperatorWithSideEffects`](../../../computations/type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 ***
 
@@ -194,7 +194,7 @@
 
 ### enqueue()
 
-> **enqueue**\<`T`\>(`queue`): [`ComputationWithSideEffectsOperator`](../../../computations/type-aliases/ComputationWithSideEffectsOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+> **enqueue**\<`T`\>(`queue`): [`ComputationOperatorWithSideEffects`](../../../computations/type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -208,7 +208,7 @@
 
 #### Returns
 
-[`ComputationWithSideEffectsOperator`](../../../computations/type-aliases/ComputationWithSideEffectsOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+[`ComputationOperatorWithSideEffects`](../../../computations/type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 ***
 
@@ -760,7 +760,7 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 ### onSubscribe()
 
-> **onSubscribe**\<`T`\>(`f`): [`ComputationWithSideEffectsOperator`](../../../computations/type-aliases/ComputationWithSideEffectsOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+> **onSubscribe**\<`T`\>(`f`): [`ComputationOperatorWithSideEffects`](../../../computations/type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -774,7 +774,7 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 #### Returns
 
-[`ComputationWithSideEffectsOperator`](../../../computations/type-aliases/ComputationWithSideEffectsOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+[`ComputationOperatorWithSideEffects`](../../../computations/type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 ***
 
@@ -1040,7 +1040,7 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 #### Call Signature
 
-> **takeUntil**\<`T`\>(`notifier`): [`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+> **takeUntil**\<`T`\>(`notifier`): [`StatefulSynchronousComputationOperator`](../../../computations/type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 ##### Type Parameters
 
@@ -1054,11 +1054,11 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 ##### Returns
 
-[`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+[`StatefulSynchronousComputationOperator`](../../../computations/type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 #### Call Signature
 
-> **takeUntil**\<`T`\>(`notifier`): [`ComputationWithSideEffectsOperator`](../../../computations/type-aliases/ComputationWithSideEffectsOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+> **takeUntil**\<`T`\>(`notifier`): [`ComputationOperatorWithSideEffects`](../../../computations/type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 ##### Type Parameters
 
@@ -1072,7 +1072,7 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 ##### Returns
 
-[`ComputationWithSideEffectsOperator`](../../../computations/type-aliases/ComputationWithSideEffectsOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+[`ComputationOperatorWithSideEffects`](../../../computations/type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 #### Call Signature
 
@@ -1094,7 +1094,7 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 #### Call Signature
 
-> **takeUntil**\<`T`\>(`notifier`): [`DeferredComputationOperator`](../../../computations/type-aliases/DeferredComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+> **takeUntil**\<`T`\>(`notifier`): [`StatefulAsynchronousComputationOperator`](../../../computations/type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 ##### Type Parameters
 
@@ -1108,13 +1108,13 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 ##### Returns
 
-[`DeferredComputationOperator`](../../../computations/type-aliases/DeferredComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+[`StatefulAsynchronousComputationOperator`](../../../computations/type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 ***
 
 ### throttle()
 
-> **throttle**\<`T`\>(`duration`, `options`?): [`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+> **throttle**\<`T`\>(`duration`, `options`?): [`StatefulSynchronousComputationOperator`](../../../computations/type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -1134,7 +1134,7 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 #### Returns
 
-[`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+[`StatefulSynchronousComputationOperator`](../../../computations/type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 ***
 
@@ -1268,7 +1268,7 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 ### withCurrentTime()
 
-> **withCurrentTime**\<`TA`, `TB`\>(`selector`): [`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `TB`\>
+> **withCurrentTime**\<`TA`, `TB`\>(`selector`): [`StatefulSynchronousComputationOperator`](../../../computations/type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `TB`\>
 
 #### Type Parameters
 
@@ -1284,7 +1284,7 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 #### Returns
 
-[`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `TB`\>
+[`StatefulSynchronousComputationOperator`](../../../computations/type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `TB`\>
 
 ***
 
@@ -1292,7 +1292,7 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`StatefulSynchronousComputationOperator`](../../../computations/type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ##### Type Parameters
 
@@ -1308,11 +1308,11 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 ##### Returns
 
-[`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`StatefulSynchronousComputationOperator`](../../../computations/type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>
+> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`StatefulSynchronousComputationOperator`](../../../computations/type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>
 
 ##### Type Parameters
 
@@ -1334,11 +1334,11 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 ##### Returns
 
-[`DeferringComputationOperator`](../../../computations/type-aliases/DeferringComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>
+[`StatefulSynchronousComputationOperator`](../../../computations/type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`ComputationWithSideEffectsOperator`](../../../computations/type-aliases/ComputationWithSideEffectsOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`ComputationOperatorWithSideEffects`](../../../computations/type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ##### Type Parameters
 
@@ -1354,11 +1354,11 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 ##### Returns
 
-[`ComputationWithSideEffectsOperator`](../../../computations/type-aliases/ComputationWithSideEffectsOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`ComputationOperatorWithSideEffects`](../../../computations/type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`ComputationWithSideEffectsOperator`](../../../computations/type-aliases/ComputationWithSideEffectsOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>
+> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`ComputationOperatorWithSideEffects`](../../../computations/type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>
 
 ##### Type Parameters
 
@@ -1380,11 +1380,11 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 ##### Returns
 
-[`ComputationWithSideEffectsOperator`](../../../computations/type-aliases/ComputationWithSideEffectsOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>
+[`ComputationOperatorWithSideEffects`](../../../computations/type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`DeferredComputationOperator`](../../../computations/type-aliases/DeferredComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`StatefulAsynchronousComputationOperator`](../../../computations/type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ##### Type Parameters
 
@@ -1400,11 +1400,11 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 ##### Returns
 
-[`DeferredComputationOperator`](../../../computations/type-aliases/DeferredComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`StatefulAsynchronousComputationOperator`](../../../computations/type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`DeferredComputationOperator`](../../../computations/type-aliases/DeferredComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>
+> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`StatefulAsynchronousComputationOperator`](../../../computations/type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>
 
 ##### Type Parameters
 
@@ -1426,7 +1426,7 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 ##### Returns
 
-[`DeferredComputationOperator`](../../../computations/type-aliases/DeferredComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>
+[`StatefulAsynchronousComputationOperator`](../../../computations/type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>
 
 #### Call Signature
 
@@ -1476,7 +1476,7 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`DeferredComputationOperator`](../../../computations/type-aliases/DeferredComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`StatefulAsynchronousComputationOperator`](../../../computations/type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ##### Type Parameters
 
@@ -1492,11 +1492,11 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 ##### Returns
 
-[`DeferredComputationOperator`](../../../computations/type-aliases/DeferredComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`StatefulAsynchronousComputationOperator`](../../../computations/type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`DeferredComputationOperator`](../../../computations/type-aliases/DeferredComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>
+> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`StatefulAsynchronousComputationOperator`](../../../computations/type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>
 
 ##### Type Parameters
 
@@ -1518,4 +1518,4 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 ##### Returns
 
-[`DeferredComputationOperator`](../../../computations/type-aliases/DeferredComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>
+[`StatefulAsynchronousComputationOperator`](../../../computations/type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `T`\>

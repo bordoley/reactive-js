@@ -1,4 +1,4 @@
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ComputationOperator, ComputationWithSideEffectsOperator, DeferringComputationOperator } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ComputationOperatorWithSideEffects, StatefulSynchronousComputationOperator, StatelessComputationOperator } from "../../../computations.js";
 import { DeferredObservableWithSideEffectsLike, ObservableLike, ObserverLike } from "../../../concurrent.js";
 import { Function1 } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
@@ -9,17 +9,17 @@ interface ObservableLift {
         [ComputationLike_isDeferred]: boolean;
         [ComputationLike_isPure]: true;
         [ComputationLike_isSynchronous]: true;
-    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => ComputationOperator<Observable.Computation, TA, TB>;
+    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => StatelessComputationOperator<Observable.Computation, TA, TB>;
     lift(options: {
         [ComputationLike_isDeferred]: true;
         [ComputationLike_isPure]: true;
         [ComputationLike_isSynchronous]: true;
-    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => DeferringComputationOperator<Observable.Computation, TA, TB>;
+    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => StatefulSynchronousComputationOperator<Observable.Computation, TA, TB>;
     lift(options: {
         [ComputationLike_isDeferred]: true;
         [ComputationLike_isPure]: false;
         [ComputationLike_isSynchronous]: true;
-    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => ComputationWithSideEffectsOperator<Observable.Computation, TA, TB>;
+    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => ComputationOperatorWithSideEffects<Observable.Computation, TA, TB>;
     lift(options: {
         [ComputationLike_isDeferred]: true;
         [ComputationLike_isPure]: false;

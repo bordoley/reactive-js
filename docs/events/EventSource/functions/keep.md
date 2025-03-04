@@ -6,7 +6,7 @@
 
 # Function: keep()
 
-> **keep**\<`T`\>(`predicate`): [`ComputationOperator`](../../../computations/type-aliases/ComputationOperator.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `T`, `T`\>
+> **keep**\<`T`\>(`predicate`): [`StatelessComputationOperator`](../../../computations/type-aliases/StatelessComputationOperator.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `T`, `T`\>
 
 ## Type Parameters
 
@@ -20,4 +20,4 @@
 
 ## Returns
 
-[`ComputationOperator`](../../../computations/type-aliases/ComputationOperator.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `T`, `T`\>
+[`StatelessComputationOperator`](../../../computations/type-aliases/StatelessComputationOperator.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `T`, `T`\>

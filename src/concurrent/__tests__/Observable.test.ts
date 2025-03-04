@@ -27,10 +27,10 @@ import SynchronousComputationModuleTests from "../../computations/__tests__/fixt
 import {
   ComputationBaseOf,
   ComputationModule,
-  ComputationOperator,
   DeferredComputationWithSideEffects,
   PureDeferredComputation,
   PureDeferredComputationLike,
+  StatelessComputationOperator,
   SynchronousComputationWithSideEffects,
 } from "../../computations.js";
 import {
@@ -102,7 +102,7 @@ import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
 const ObservableOperatorTests = (
-  op: ComputationOperator<Observable.Computation, unknown, unknown>,
+  op: StatelessComputationOperator<Observable.Computation, unknown, unknown>,
 ) =>
   describe(
     "ObservableOperator",

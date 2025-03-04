@@ -108,10 +108,10 @@ export type DeferredComputationOf<TComputation extends ComputationType, T> = Pur
 export type SynchronousComputationOf<TComputation extends ComputationType, T> = PureSynchronousComputationOf<TComputation, T> | SynchronousComputationWithSideEffectsOf<TComputation, T>;
 export type PureComputationOf<TComputation extends ComputationType, T> = PureSynchronousComputationOf<TComputation, T> | PureDeferredComputationOf<TComputation, T> | MulticastComputationOf<TComputation, T>;
 export type ComputationOf<TComputation extends ComputationType, T> = DeferredComputationOf<TComputation, T> | SynchronousComputationOf<TComputation, T> | MulticastComputationOf<TComputation, T>;
-export type ComputationOperator<TComputation extends ComputationType, TA, out TB> = <TComputationOf extends ComputationBaseOf<TComputation, TA>>(computation: TComputationOf) => TComputationOf extends PureSynchronousComputationOf<TComputation, TA> ? PureSynchronousComputationOf<TComputation, TB> : TComputationOf extends SynchronousComputationWithSideEffectsOf<TComputation, TA> ? SynchronousComputationWithSideEffectsOf<TComputation, TB> : TComputationOf extends PureDeferredComputationOf<TComputation, TA> ? PureDeferredComputationOf<TComputation, TB> : TComputationOf extends DeferredComputationWithSideEffectsOf<TComputation, TA> ? DeferredComputationWithSideEffectsOf<TComputation, TB> : TComputationOf extends MulticastComputationOf<TComputation, TA> ? MulticastComputationOf<TComputation, TB> : never;
-export type ComputationWithSideEffectsOperator<TComputation extends ComputationType, TA, out TB> = <TComputationOf extends ComputationBaseOf<TComputation, TA>>(computation: TComputationOf) => TComputationOf extends PureSynchronousComputationOf<TComputation, TA> | SynchronousComputationWithSideEffectsOf<TComputation, TA> ? SynchronousComputationWithSideEffectsOf<TComputation, TB> : DeferredComputationWithSideEffectsOf<TComputation, TB>;
-export type DeferredComputationOperator<TComputation extends ComputationType, TA, out TB> = <TComputationOf extends ComputationBaseOf<TComputation, TA>>(computation: TComputationOf) => TComputationOf extends PureDeferredComputationOf<TComputation, TA> ? PureDeferredComputationOf<TComputation, TB> : TComputationOf extends MulticastComputationOf<TComputation, TA> ? PureDeferredComputationOf<TComputation, TB> : DeferredComputationWithSideEffectsOf<TComputation, TB>;
-export type DeferringComputationOperator<TComputation extends ComputationType, TA, out TB> = <TComputationOf extends ComputationBaseOf<TComputation, TA>>(computation: TComputationOf) => TComputationOf extends PureSynchronousComputationOf<TComputation, TA> ? PureSynchronousComputationOf<TComputation, TB> : TComputationOf extends SynchronousComputationWithSideEffectsOf<TComputation, TA> ? SynchronousComputationWithSideEffectsOf<TComputation, TB> : TComputationOf extends SynchronousComputationOf<TComputation, TA> ? SynchronousComputationOf<TComputation, TB> : TComputationOf extends DeferredComputationWithSideEffectsOf<TComputation, TA> ? DeferredComputationWithSideEffectsOf<TComputation, TB> : PureDeferredComputationOf<TComputation, TB>;
+export type StatelessComputationOperator<TComputation extends ComputationType, TA, out TB> = <TComputationOf extends ComputationBaseOf<TComputation, TA>>(computation: TComputationOf) => TComputationOf extends PureSynchronousComputationOf<TComputation, TA> ? PureSynchronousComputationOf<TComputation, TB> : TComputationOf extends SynchronousComputationWithSideEffectsOf<TComputation, TA> ? SynchronousComputationWithSideEffectsOf<TComputation, TB> : TComputationOf extends PureDeferredComputationOf<TComputation, TA> ? PureDeferredComputationOf<TComputation, TB> : TComputationOf extends DeferredComputationWithSideEffectsOf<TComputation, TA> ? DeferredComputationWithSideEffectsOf<TComputation, TB> : TComputationOf extends MulticastComputationOf<TComputation, TA> ? MulticastComputationOf<TComputation, TB> : never;
+export type ComputationOperatorWithSideEffects<TComputation extends ComputationType, TA, out TB> = <TComputationOf extends ComputationBaseOf<TComputation, TA>>(computation: TComputationOf) => TComputationOf extends SynchronousComputationOf<TComputation, TA> ? SynchronousComputationWithSideEffectsOf<TComputation, TB> : DeferredComputationWithSideEffectsOf<TComputation, TB>;
+export type StatefulAsynchronousComputationOperator<TComputation extends ComputationType, TA, out TB> = <TComputationOf extends ComputationBaseOf<TComputation, TA>>(computation: TComputationOf) => TComputationOf extends PureComputationOf<TComputation, TA> ? PureDeferredComputationOf<TComputation, TB> : DeferredComputationWithSideEffectsOf<TComputation, TB>;
+export type StatefulSynchronousComputationOperator<TComputation extends ComputationType, TA, out TB> = <TComputationOf extends ComputationBaseOf<TComputation, TA>>(computation: TComputationOf) => TComputationOf extends PureSynchronousComputationOf<TComputation, TA> ? PureSynchronousComputationOf<TComputation, TB> : TComputationOf extends SynchronousComputationWithSideEffectsOf<TComputation, TA> ? SynchronousComputationWithSideEffectsOf<TComputation, TB> : TComputationOf extends SynchronousComputationOf<TComputation, TA> ? SynchronousComputationOf<TComputation, TB> : TComputationOf extends DeferredComputationWithSideEffectsOf<TComputation, TA> ? DeferredComputationWithSideEffectsOf<TComputation, TB> : PureDeferredComputationOf<TComputation, TB>;
 type HigherOrderPureSynchronousComputationOut<TComputation extends ComputationType, TInnerType extends ComputationLike, TB> = TInnerType extends PureSynchronousComputationLike ? PureSynchronousComputationOf<TComputation, TB> : TInnerType extends SynchronousComputationWithSideEffectsLike ? SynchronousComputationWithSideEffectsOf<TComputation, TB> : TInnerType extends PureDeferredComputationLike ? PureDeferredComputationOf<TComputation, TB> : TInnerType extends DeferredComputationWithSideEffectsLike ? DeferredComputationWithSideEffectsOf<TComputation, TB> : never;
 type HigherOrderSynchronousComputationWithSideEffectsOut<TComputation extends ComputationType, TInnerType extends ComputationLike, TB> = TInnerType extends SynchronousComputationLike ? SynchronousComputationWithSideEffectsOf<TComputation, TB> : TInnerType extends DeferredComputationLike ? DeferredComputationWithSideEffectsOf<TComputation, TB> : never;
 type HigherOrderPureDeferredComputationOut<TComputation extends ComputationType, TInnerType extends ComputationLike, TB> = TInnerType extends PureDeferredComputationLike ? PureDeferredComputationOf<TComputation, TB> : TInnerType extends DeferredComputationWithSideEffectsLike ? DeferredComputationWithSideEffectsOf<TComputation, TB> : never;
@@ -137,11 +137,11 @@ export interface ZippingConstructor<TComputation extends ComputationType> {
     <TA, TB, TC, TD>(a: PureComputationOf<TComputation, TA>, b: PureComputationOf<TComputation, TB>, c: PureComputationOf<TComputation, TC>, d: PureComputationOf<TComputation, TD>): PureDeferredComputationOf<TComputation, Tuple4<TA, TB, TC, TD>>;
 }
 export interface ComputationModule<TComputation extends ComputationType> {
-    keep<T>(predicate: Predicate<T>): ComputationOperator<TComputation, T, T>;
-    map<TA, TB>(selector: Function1<TA, TB>): ComputationOperator<TComputation, TA, TB>;
+    keep<T>(predicate: Predicate<T>): StatelessComputationOperator<TComputation, T, T>;
+    map<TA, TB>(selector: Function1<TA, TB>): StatelessComputationOperator<TComputation, TA, TB>;
 }
 export interface SynchronousComputationModule<TComputation extends ComputationType> extends ComputationModule<TComputation> {
-    catchError<T>(onError: SideEffect1<Error>): DeferringComputationOperator<TComputation, T, T>;
+    catchError<T>(onError: SideEffect1<Error>): StatefulSynchronousComputationOperator<TComputation, T, T>;
     catchError<T>(onError: Function1<Error, PureSynchronousComputationOf<TComputation, T>>): HigherOrderComputationOperator<TComputation, PureSynchronousComputationLike, T, T>;
     catchError<T, TInnerType extends HigherOrderInnerComputationLike>(onError: Function1<Error, HigherOrderInnerComputationOf<TComputation, TInnerType, T>>, options: {
         readonly innerType: TInnerType;
@@ -155,8 +155,8 @@ export interface SynchronousComputationModule<TComputation extends ComputationTy
     concat<T>(...computations: readonly PureDeferredComputationOf<TComputation, T>[]): PureDeferredComputationOf<TComputation, T>;
     concat<T>(...computations: readonly DeferredComputationOf<TComputation, T>[]): DeferredComputationWithSideEffectsOf<TComputation, T>;
     empty<T>(): PureSynchronousComputationOf<TComputation, T>;
-    encodeUtf8(): DeferringComputationOperator<TComputation, string, Uint8Array>;
-    forEach<T>(sideEffect: SideEffect1<T>): ComputationWithSideEffectsOperator<TComputation, T, T>;
+    encodeUtf8(): StatefulSynchronousComputationOperator<TComputation, string, Uint8Array>;
+    forEach<T>(sideEffect: SideEffect1<T>): ComputationOperatorWithSideEffects<TComputation, T, T>;
     fromIterable<T>(): <TIterable extends IterableLike<T> = IterableLike<T>>(iterable: TIterable) => TIterable extends PureIterableLike ? PureSynchronousComputationOf<TComputation, T> : SynchronousComputationWithSideEffectsOf<TComputation, T>;
     fromReadonlyArray<T>(options?: {
         readonly count?: number;
@@ -171,18 +171,18 @@ export interface SynchronousComputationModule<TComputation extends ComputationTy
         readonly raise?: Factory<unknown>;
     }): PureSynchronousComputationOf<TComputation, T>;
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<SynchronousComputationOf<TComputation, T>, TAcc>;
-    repeat<T>(predicate: Predicate<number>): DeferringComputationOperator<TComputation, T, T>;
-    repeat<T>(count: number): DeferringComputationOperator<TComputation, T, T>;
-    repeat<T>(): DeferringComputationOperator<TComputation, T, T>;
-    retry<T>(shouldRetry?: (count: number, error: Error) => boolean): DeferringComputationOperator<TComputation, T, T>;
-    scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): DeferringComputationOperator<TComputation, T, TAcc>;
+    repeat<T>(predicate: Predicate<number>): StatefulSynchronousComputationOperator<TComputation, T, T>;
+    repeat<T>(count: number): StatefulSynchronousComputationOperator<TComputation, T, T>;
+    repeat<T>(): StatefulSynchronousComputationOperator<TComputation, T, T>;
+    retry<T>(shouldRetry?: (count: number, error: Error) => boolean): StatefulSynchronousComputationOperator<TComputation, T, T>;
+    scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): StatefulSynchronousComputationOperator<TComputation, T, TAcc>;
     takeFirst<T>(options?: {
         readonly count?: number;
-    }): DeferringComputationOperator<TComputation, T, T>;
+    }): StatefulSynchronousComputationOperator<TComputation, T, T>;
     takeWhile<T>(predicate: Predicate<T>, options?: {
         readonly inclusive?: boolean;
-    }): DeferringComputationOperator<TComputation, T, T>;
-    throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): DeferringComputationOperator<TComputation, T, T>;
+    }): StatefulSynchronousComputationOperator<TComputation, T, T>;
+    throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): StatefulSynchronousComputationOperator<TComputation, T, T>;
     toRunnable<T>(): Function1<SynchronousComputationOf<TComputation, T>, RunnableLike<T>>;
     toReadonlyArray<T>(): Function1<SynchronousComputationOf<TComputation, T>, ReadonlyArray<T>>;
 }
@@ -192,22 +192,22 @@ export interface InteractiveComputationModule<TComputation extends ComputationTy
 export interface DeferredReactiveComputationModule<TComputation extends ComputationType> extends SynchronousComputationModule<TComputation> {
     buffer<T>(options?: {
         count?: number;
-    }): DeferringComputationOperator<TComputation, T, readonly T[]>;
+    }): StatefulSynchronousComputationOperator<TComputation, T, readonly T[]>;
     decodeWithCharset(options?: {
         readonly charset?: string;
         readonly fatal?: boolean;
         readonly ignoreBOM?: boolean;
-    }): DeferringComputationOperator<TComputation, ArrayBuffer, string>;
+    }): StatefulSynchronousComputationOperator<TComputation, ArrayBuffer, string>;
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
-    }): DeferringComputationOperator<TComputation, T, T>;
-    pairwise<T>(): DeferringComputationOperator<TComputation, T, Tuple2<T, T>>;
+    }): StatefulSynchronousComputationOperator<TComputation, T, T>;
+    pairwise<T>(): StatefulSynchronousComputationOperator<TComputation, T, Tuple2<T, T>>;
     skipFirst<T>(options?: {
         readonly count?: number;
-    }): DeferringComputationOperator<TComputation, T, T>;
+    }): StatefulSynchronousComputationOperator<TComputation, T, T>;
     takeLast<T>(options?: {
         readonly count?: number;
-    }): DeferringComputationOperator<TComputation, T, T>;
+    }): StatefulSynchronousComputationOperator<TComputation, T, T>;
 }
 export interface ConcurrentReactiveComputationModule<TComputation extends ComputationType> extends ComputationModule<TComputation> {
     fromPromise<T>(): Function1<Promise<T>, MulticastComputationOf<TComputation, T>>;

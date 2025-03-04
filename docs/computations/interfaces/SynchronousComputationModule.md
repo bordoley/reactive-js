@@ -25,7 +25,7 @@
 
 #### Call Signature
 
-> **catchError**\<`T`\>(`onError`): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **catchError**\<`T`\>(`onError`): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -39,7 +39,7 @@
 
 ##### Returns
 
-[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 #### Call Signature
 
@@ -217,17 +217,17 @@
 
 ### encodeUtf8()
 
-> **encodeUtf8**(): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+> **encodeUtf8**(): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
 
 #### Returns
 
-[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
 
 ***
 
 ### forEach()
 
-> **forEach**\<`T`\>(`sideEffect`): [`ComputationWithSideEffectsOperator`](../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
+> **forEach**\<`T`\>(`sideEffect`): [`ComputationOperatorWithSideEffects`](../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputation`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -241,7 +241,7 @@
 
 #### Returns
 
-[`ComputationWithSideEffectsOperator`](../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
+[`ComputationOperatorWithSideEffects`](../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputation`, `T`, `T`\>
 
 ***
 
@@ -345,7 +345,7 @@
 
 ### keep()
 
-> **keep**\<`T`\>(`predicate`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **keep**\<`T`\>(`predicate`): [`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -359,7 +359,7 @@
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 #### Inherited from
 
@@ -383,7 +383,7 @@
 
 ### map()
 
-> **map**\<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
+> **map**\<`TA`, `TB`\>(`selector`): [`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
 
 #### Type Parameters
 
@@ -399,7 +399,7 @@
 
 #### Returns
 
-[`ComputationOperator`](../type-aliases/ComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
+[`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
 
 #### Inherited from
 
@@ -459,7 +459,7 @@
 
 #### Call Signature
 
-> **repeat**\<`T`\>(`predicate`): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **repeat**\<`T`\>(`predicate`): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -473,11 +473,11 @@
 
 ##### Returns
 
-[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 #### Call Signature
 
-> **repeat**\<`T`\>(`count`): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **repeat**\<`T`\>(`count`): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -491,11 +491,11 @@
 
 ##### Returns
 
-[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 #### Call Signature
 
-> **repeat**\<`T`\>(): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **repeat**\<`T`\>(): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -503,13 +503,13 @@
 
 ##### Returns
 
-[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ***
 
 ### retry()
 
-> **retry**\<`T`\>(`shouldRetry`?): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **retry**\<`T`\>(`shouldRetry`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -523,13 +523,13 @@
 
 #### Returns
 
-[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ***
 
 ### scan()
 
-> **scan**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `TAcc`\>
+> **scan**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `TAcc`\>
 
 #### Type Parameters
 
@@ -549,13 +549,13 @@
 
 #### Returns
 
-[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `TAcc`\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `TAcc`\>
 
 ***
 
 ### takeFirst()
 
-> **takeFirst**\<`T`\>(`options`?): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **takeFirst**\<`T`\>(`options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -571,13 +571,13 @@
 
 #### Returns
 
-[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ***
 
 ### takeWhile()
 
-> **takeWhile**\<`T`\>(`predicate`, `options`?): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **takeWhile**\<`T`\>(`predicate`, `options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -597,13 +597,13 @@
 
 #### Returns
 
-[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ***
 
 ### throwIfEmpty()
 
-> **throwIfEmpty**\<`T`\>(`factory`, `options`?): [`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **throwIfEmpty**\<`T`\>(`factory`, `options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -621,7 +621,7 @@
 
 #### Returns
 
-[`DeferringComputationOperator`](../type-aliases/DeferringComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ***
 

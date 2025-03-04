@@ -2,7 +2,7 @@ import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
-  ComputationOperator,
+  StatelessComputationOperator,
 } from "../../../computations.js";
 import {
   EventListenerLike,
@@ -71,7 +71,7 @@ const createLiftedEventSource: <TIn, TOut>(
 interface EventSourceLift {
   lift<TA, TB>(
     operator: Function1<EventListenerLike<TB>, EventListenerLike<TA>>,
-  ): ComputationOperator<EventSource.Computation, TA, TB>;
+  ): StatelessComputationOperator<EventSource.Computation, TA, TB>;
 }
 
 const EventSource_lift: EventSourceLift["lift"] = (<TA, TB>(

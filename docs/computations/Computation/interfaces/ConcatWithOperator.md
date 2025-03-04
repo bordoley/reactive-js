@@ -10,7 +10,7 @@
 
 • **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
-> **ConcatWithOperator**\<`T`\>(`snd`, ...`tail`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **ConcatWithOperator**\<`T`\>(`snd`, ...`tail`): [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ## Type Parameters
 
@@ -28,9 +28,9 @@
 
 ## Returns
 
-[`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
-> **ConcatWithOperator**\<`T`\>(`snd`, ...`tail`): [`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
+> **ConcatWithOperator**\<`T`\>(`snd`, ...`tail`): [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputation`, `T`, `T`\>
 
 ## Type Parameters
 
@@ -48,9 +48,9 @@
 
 ## Returns
 
-[`ComputationWithSideEffectsOperator`](../../type-aliases/ComputationWithSideEffectsOperator.md)\<`TComputation`, `T`, `T`\>
+[`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputation`, `T`, `T`\>
 
-> **ConcatWithOperator**\<`T`\>(`snd`, ...`tail`): [`DeferredComputationOperator`](../../type-aliases/DeferredComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **ConcatWithOperator**\<`T`\>(`snd`, ...`tail`): [`StatefulAsynchronousComputationOperator`](../../type-aliases/StatefulAsynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ## Type Parameters
 
@@ -68,7 +68,7 @@
 
 ## Returns
 
-[`DeferredComputationOperator`](../../type-aliases/DeferredComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatefulAsynchronousComputationOperator`](../../type-aliases/StatefulAsynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 > **ConcatWithOperator**\<`T`\>(`snd`, ...`tail`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<`TComputation`, `T`\>, [`DeferredComputationWithSideEffectsOf`](../../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>\>
 

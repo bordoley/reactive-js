@@ -9,9 +9,9 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  ComputationOperator,
-  ComputationWithSideEffectsOperator,
-  DeferringComputationOperator,
+  ComputationOperatorWithSideEffects,
+  StatefulSynchronousComputationOperator,
+  StatelessComputationOperator,
 } from "../../../computations.js";
 import {
   DeferredObservableWithSideEffectsLike,
@@ -101,7 +101,7 @@ interface ObservableLift {
     [ComputationLike_isSynchronous]: true;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => ComputationOperator<Observable.Computation, TA, TB>;
+  ) => StatelessComputationOperator<Observable.Computation, TA, TB>;
 
   lift(options: {
     [ComputationLike_isDeferred]: true;
@@ -109,7 +109,7 @@ interface ObservableLift {
     [ComputationLike_isSynchronous]: true;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => DeferringComputationOperator<Observable.Computation, TA, TB>;
+  ) => StatefulSynchronousComputationOperator<Observable.Computation, TA, TB>;
 
   lift(options: {
     [ComputationLike_isDeferred]: true;
@@ -117,7 +117,7 @@ interface ObservableLift {
     [ComputationLike_isSynchronous]: true;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => ComputationWithSideEffectsOperator<Observable.Computation, TA, TB>;
+  ) => ComputationOperatorWithSideEffects<Observable.Computation, TA, TB>;
 
   lift(options: {
     [ComputationLike_isDeferred]: true;
