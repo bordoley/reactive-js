@@ -7,13 +7,13 @@ export interface ConcatManyOperator<TComputation extends Computation> {
     <T>(computations: readonly PureDeferredComputationOf<TComputation, T>[]): PureDeferredComputationOf<TComputation, T>;
     <T>(computations: readonly DeferredComputationOf<TComputation, T>[]): DeferredComputationWithSideEffectsOf<TComputation, T>;
 }
-export interface ConcatMapOperator<TComputation extends Computation> {
+export interface FlatMapOperator<TComputation extends Computation> {
     <TA, TB>(selector: Function1<TA, PureSynchronousComputationOf<TComputation, TB>>): HigherOrderComputationOperator<TComputation, PureSynchronousComputationLike, TA, TB>;
     <TA, TB, TInnerType extends DeferringHigherOrderInnerType>(selector: Function1<TA, ComputationOfInnerType<TComputation, TInnerType, TB>>, options?: {
         readonly innerType: TInnerType;
     }): HigherOrderComputationOperator<TComputation, TInnerType, TA, TB>;
 }
-export interface ConcatMapIterableOperator<TComputation extends Computation> {
+export interface FlatMapIterableOperator<TComputation extends Computation> {
     <TA, TB>(selector: Function1<TA, PureIterableLike<TB>>): HigherOrderComputationOperator<TComputation, PureSynchronousComputationLike, TA, TB>;
     <TA, TB>(selector: Function1<TA, PureIterableLike<TB>>, options: {
         readonly innerType: PureSynchronousComputationLike;
@@ -54,16 +54,18 @@ export interface Signature {
     areAllMulticasted<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & MulticastComputationLike)[];
     areAllPure<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & PureComputationLike)[];
     areAllSynchronous<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & SynchronousComputationLike)[];
+    concatMap<TComputation extends Computation>(m: Pick<SynchronousComputationModule<TComputation>, "concatAll" | "map">): FlatMapOperator<TComputation>;
+    concatMapIterable<TComputation extends Computation>(m: Pick<SynchronousComputationModule<TComputation>, "concatAll" | "map" | "fromIterable">): FlatMapIterableOperator<TComputation>;
     concatMany<TComputation extends Computation>(m: Pick<SynchronousComputationModule<TComputation>, "concat">): ConcatManyOperator<TComputation>;
     concatWith<TComputation extends Computation>(m: Pick<SynchronousComputationModule<TComputation>, "concat">): ConcatWithOperator<TComputation>;
     debug<TComputation extends Computation>(m: Pick<SynchronousComputationModule<TComputation>, "forEach">): <T>() => ComputationWithSideEffectsOperator<TComputation, T, T>;
     endWith<TComputation extends Computation>(m: Pick<SynchronousComputationModule<TComputation>, "concat" | "fromReadonlyArray">): <T>(value: T, ...values: readonly T[]) => ComputationOperator<TComputation, T, T>;
     flatMap<TComputation extends Computation, TFlattenKey extends string | number | symbol>(m: Pick<SynchronousComputationModule<TComputation>, "map"> & {
         readonly [key in TFlattenKey]: SynchronousComputationModule<TComputation>["concatAll"];
-    }, key: TFlattenKey): ConcatMapOperator<TComputation>;
+    }, key: TFlattenKey): FlatMapOperator<TComputation>;
     flatMapIterable<TComputation extends Computation, TFlattenKey extends string | number | symbol>(m: Pick<SynchronousComputationModule<TComputation>, "map" | "fromIterable"> & {
         readonly [key in TFlattenKey]: SynchronousComputationModule<TComputation>["concatAll"];
-    }, key: TFlattenKey): ConcatMapIterableOperator<TComputation>;
+    }, key: TFlattenKey): FlatMapIterableOperator<TComputation>;
     hasSideEffects<TComputation extends ComputationLike>(computation: TComputation): computation is TComputation & ComputationWithSideEffectsLike;
     ignoreElements<TComputation extends Computation>(m: Pick<ComputationModule<TComputation>, "keep">): <T>() => ComputationOperator<TComputation, any, T>;
     isDeferred<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & DeferredComputationLike;
@@ -92,6 +94,8 @@ export declare const areAllInteractive: Signature["areAllInteractive"];
 export declare const areAllMulticasted: Signature["areAllMulticasted"];
 export declare const areAllPure: Signature["areAllPure"];
 export declare const areAllSynchronous: Signature["areAllSynchronous"];
+export declare const concatMap: Signature["concatMap"];
+export declare const concatMapIterable: Signature["concatMapIterable"];
 export declare const concatMany: Signature["concatMany"];
 export declare const concatWith: Signature["concatWith"];
 export declare const debug: Signature["debug"];

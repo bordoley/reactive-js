@@ -44,7 +44,7 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
         Observable.forkMerge(
           compose(
             Observable.takeFirst(),
-            Computation.flatMap(ObservableModule, "concatAll")(onInit, {
+            Computation.concatMap(ObservableModule)(onInit, {
               innerType: DeferredComputationWithSideEffectsType,
             }),
           ),
@@ -53,7 +53,7 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
               ? Observable.throttle(throttleDuration)
               : identity<ObservableLike<T>>,
             Observable.pairwise<T>(),
-            Computation.flatMap(ObservableModule, "concatAll")<
+            Computation.concatMap(ObservableModule)<
               Tuple2<T, T>,
               Updater<T>,
               DeferredComputationWithSideEffectsLike

@@ -8,6 +8,8 @@ export const areAllInteractive = (computations) => computations.every(isInteract
 export const areAllMulticasted = (computations) => computations.every(isMulticasted);
 export const areAllPure = (computations) => computations.every(isPure);
 export const areAllSynchronous = (computations) => computations.every(isSynchronous);
+export const concatMap = (m) => flatMap(m, "concatAll");
+export const concatMapIterable = (m) => flatMapIterable(m, "concatAll");
 export const concatMany = ((m) => (computations) => m.concat(...computations));
 export const concatWith = (m) => ((...tail) => (fst) => m.concat(fst, ...tail));
 export const debug = (m) => () => m.forEach(breakPoint);

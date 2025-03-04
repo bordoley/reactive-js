@@ -208,7 +208,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
             ),
         ),
         isSome(persistentStore)
-          ? Computation.flatMap(ObservableModule, "concatAll")<
+          ? Computation.concatMap(ObservableModule)<
               Tuple2<
                 ReadonlyObjectMapLike<
                   string,
@@ -302,7 +302,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           }),
         ),
         isSome(persistentStore)
-          ? Computation.flatMap(ObservableModule, "concatAll")(
+          ? Computation.concatMap(ObservableModule)(
               bindMethod(persistentStore, "store"),
               {
                 innerType: DeferredComputationWithSideEffectsType,

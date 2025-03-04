@@ -70,7 +70,7 @@ testModule(
       "maps each value to a container and flattens",
       pipeLazy(
         [0, 1] as PureIterableLike<number>,
-        Computation.flatMap(Iterable, "concatAll")(() => [1, 2, 3]),
+        Computation.concatMap(Iterable)(() => [1, 2, 3]),
         Iterable.toReadonlyArray<number>(),
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
@@ -82,10 +82,7 @@ testModule(
       "maps the incoming value with the inline generator function",
       pipeLazy(
         [none, none],
-        Computation.flatMapIterable(
-          Iterable,
-          "concatAll",
-        )(function* (_) {
+        Computation.concatMapIterable(Iterable)(function* (_) {
           yield 1;
           yield 2;
           yield 3;
@@ -98,10 +95,7 @@ testModule(
       "maps the incoming value with the inline generator function, with delayed source",
       pipeLazy(
         [none, none],
-        Computation.flatMapIterable(
-          Iterable,
-          "concatAll",
-        )(function* (_) {
+        Computation.concatMapIterable(Iterable)(function* (_) {
           yield 1;
           yield 2;
           yield 3;

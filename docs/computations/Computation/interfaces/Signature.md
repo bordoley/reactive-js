@@ -128,6 +128,46 @@ readonly `TComputation`[]
 
 ***
 
+### concatMap()
+
+> **concatMap**\<`TComputation`\>(`m`): [`FlatMapOperator`](FlatMapOperator.md)\<`TComputation`\>
+
+#### Type Parameters
+
+• **TComputation** *extends* [`Computation`](../../type-aliases/Computation.md)
+
+#### Parameters
+
+##### m
+
+`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"map"` \| `"concatAll"`\>
+
+#### Returns
+
+[`FlatMapOperator`](FlatMapOperator.md)\<`TComputation`\>
+
+***
+
+### concatMapIterable()
+
+> **concatMapIterable**\<`TComputation`\>(`m`): [`FlatMapIterableOperator`](FlatMapIterableOperator.md)\<`TComputation`\>
+
+#### Type Parameters
+
+• **TComputation** *extends* [`Computation`](../../type-aliases/Computation.md)
+
+#### Parameters
+
+##### m
+
+`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"map"` \| `"fromIterable"` \| `"concatAll"`\>
+
+#### Returns
+
+[`FlatMapIterableOperator`](FlatMapIterableOperator.md)\<`TComputation`\>
+
+***
+
 ### concatWith()
 
 > **concatWith**\<`TComputation`\>(`m`): [`ConcatWithOperator`](ConcatWithOperator.md)\<`TComputation`\>
@@ -216,7 +256,7 @@ readonly `TComputation`[]
 
 ### flatMap()
 
-> **flatMap**\<`TComputation`, `TFlattenKey`\>(`m`, `key`): [`ConcatMapOperator`](ConcatMapOperator.md)\<`TComputation`\>
+> **flatMap**\<`TComputation`, `TFlattenKey`\>(`m`, `key`): [`FlatMapOperator`](FlatMapOperator.md)\<`TComputation`\>
 
 #### Type Parameters
 
@@ -236,13 +276,13 @@ readonly `TComputation`[]
 
 #### Returns
 
-[`ConcatMapOperator`](ConcatMapOperator.md)\<`TComputation`\>
+[`FlatMapOperator`](FlatMapOperator.md)\<`TComputation`\>
 
 ***
 
 ### flatMapIterable()
 
-> **flatMapIterable**\<`TComputation`, `TFlattenKey`\>(`m`, `key`): [`ConcatMapIterableOperator`](ConcatMapIterableOperator.md)\<`TComputation`\>
+> **flatMapIterable**\<`TComputation`, `TFlattenKey`\>(`m`, `key`): [`FlatMapIterableOperator`](FlatMapIterableOperator.md)\<`TComputation`\>
 
 #### Type Parameters
 
@@ -262,7 +302,7 @@ readonly `TComputation`[]
 
 #### Returns
 
-[`ConcatMapIterableOperator`](ConcatMapIterableOperator.md)\<`TComputation`\>
+[`FlatMapIterableOperator`](FlatMapIterableOperator.md)\<`TComputation`\>
 
 ***
 

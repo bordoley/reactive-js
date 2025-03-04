@@ -9,9 +9,9 @@
 ## Interfaces
 
 - [ConcatManyOperator](interfaces/ConcatManyOperator.md)
-- [ConcatMapIterableOperator](interfaces/ConcatMapIterableOperator.md)
-- [ConcatMapOperator](interfaces/ConcatMapOperator.md)
 - [ConcatWithOperator](interfaces/ConcatWithOperator.md)
+- [FlatMapIterableOperator](interfaces/FlatMapIterableOperator.md)
+- [FlatMapOperator](interfaces/FlatMapOperator.md)
 - [MergeManyOperator](interfaces/MergeManyOperator.md)
 - [MergeWithOperator](interfaces/MergeWithOperator.md)
 - [PickOperator](interfaces/PickOperator.md)
@@ -25,6 +25,8 @@
 - [areAllPure](functions/areAllPure.md)
 - [areAllSynchronous](functions/areAllSynchronous.md)
 - [concatMany](functions/concatMany.md)
+- [concatMap](functions/concatMap.md)
+- [concatMapIterable](functions/concatMapIterable.md)
 - [concatWith](functions/concatWith.md)
 - [debug](functions/debug.md)
 - [endWith](functions/endWith.md)

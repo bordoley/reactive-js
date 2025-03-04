@@ -134,7 +134,7 @@ const SpringStream_create: (
             number
           >
         >(accFeedbackStream, (updater, acc) => tuple(updater(acc), acc)),
-        Computation.flatMap(ObservableModule, "concatAll")<
+        Computation.concatMap(ObservableModule)<
           Tuple2<
             | number
             | ReadonlyArray<number>

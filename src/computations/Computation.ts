@@ -68,7 +68,7 @@ export interface ConcatManyOperator<TComputation extends Computation> {
   ): DeferredComputationWithSideEffectsOf<TComputation, T>;
 }
 
-export interface ConcatMapOperator<TComputation extends Computation> {
+export interface FlatMapOperator<TComputation extends Computation> {
   <TA, TB>(
     selector: Function1<TA, PureSynchronousComputationOf<TComputation, TB>>,
   ): HigherOrderComputationOperator<
@@ -89,7 +89,7 @@ export interface ConcatMapOperator<TComputation extends Computation> {
   ): HigherOrderComputationOperator<TComputation, TInnerType, TA, TB>;
 }
 
-export interface ConcatMapIterableOperator<TComputation extends Computation> {
+export interface FlatMapIterableOperator<TComputation extends Computation> {
   <TA, TB>(
     selector: Function1<TA, PureIterableLike<TB>>,
   ): HigherOrderComputationOperator<
@@ -240,6 +240,17 @@ export interface Signature {
     computations: readonly TComputation[],
   ): computations is readonly (TComputation & SynchronousComputationLike)[];
 
+  concatMap<TComputation extends Computation>(
+    m: Pick<SynchronousComputationModule<TComputation>, "concatAll" | "map">,
+  ): FlatMapOperator<TComputation>;
+
+  concatMapIterable<TComputation extends Computation>(
+    m: Pick<
+      SynchronousComputationModule<TComputation>,
+      "concatAll" | "map" | "fromIterable"
+    >,
+  ): FlatMapIterableOperator<TComputation>;
+
   concatMany<TComputation extends Computation>(
     m: Pick<SynchronousComputationModule<TComputation>, "concat">,
   ): ConcatManyOperator<TComputation>;
@@ -270,7 +281,7 @@ export interface Signature {
       readonly [key in TFlattenKey]: SynchronousComputationModule<TComputation>["concatAll"];
     },
     key: TFlattenKey,
-  ): ConcatMapOperator<TComputation>;
+  ): FlatMapOperator<TComputation>;
 
   flatMapIterable<
     TComputation extends Computation,
@@ -283,7 +294,7 @@ export interface Signature {
       readonly [key in TFlattenKey]: SynchronousComputationModule<TComputation>["concatAll"];
     },
     key: TFlattenKey,
-  ): ConcatMapIterableOperator<TComputation>;
+  ): FlatMapIterableOperator<TComputation>;
 
   hasSideEffects<TComputation extends ComputationLike>(
     computation: TComputation,
@@ -422,6 +433,21 @@ export const areAllSynchronous: Signature["areAllSynchronous"] = <
   computations: readonly TComputation[],
 ): computations is readonly (TComputation & SynchronousComputationLike)[] =>
   computations.every(isSynchronous);
+
+export const concatMap: Signature["concatMap"] = <
+  TComputation extends Computation,
+>(
+  m: Pick<SynchronousComputationModule<TComputation>, "concatAll" | "map">,
+) => flatMap(m, "concatAll");
+
+export const concatMapIterable: Signature["concatMapIterable"] = <
+  TComputation extends Computation,
+>(
+  m: Pick<
+    SynchronousComputationModule<TComputation>,
+    "concatAll" | "map" | "fromIterable"
+  >,
+) => flatMapIterable(m, "concatAll");
 
 export const concatMany: Signature["concatMany"] = (<
     TComputation extends Computation,

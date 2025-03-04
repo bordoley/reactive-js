@@ -1015,8 +1015,8 @@ testModule(
           [1, 2, 3],
           Observable.fromReadonlyArray<number>({ delay: 1 }),
           Observable.forkMerge<number, number>(
-            Computation.flatMapIterable(Observable, "concatAll")(_ => [1, 2]),
-            Computation.flatMapIterable(Observable, "concatAll")(_ => [3, 4]),
+            Computation.concatMapIterable(Observable)(_ => [1, 2]),
+            Computation.concatMapIterable(Observable)(_ => [3, 4]),
           ),
           Observable.toReadonlyArrayAsync(scheduler),
           expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]),
@@ -1036,8 +1036,8 @@ testModule(
       await pipeAsync(
         src,
         Observable.forkMerge(
-          Computation.flatMapIterable(Observable, "concatAll")(_ => [1, 2, 3]),
-          Computation.flatMapIterable(Observable, "concatAll")(_ => [4, 5, 6]),
+          Computation.concatMapIterable(Observable)(_ => [1, 2, 3]),
+          Computation.concatMapIterable(Observable)(_ => [4, 5, 6]),
         ),
         Observable.toReadonlyArrayAsync<number>(scheduler),
         expectArrayEquals([1, 2, 3, 4, 5, 6]),
@@ -1342,10 +1342,7 @@ testModule(
       pipeLazy(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
-        Computation.flatMap(
-          Observable,
-          "concatAll",
-        )<number, number>(x =>
+        Computation.concatMap(Observable)<number, number>(x =>
           pipe([x, x, x], Observable.fromReadonlyArray<number>()),
         ),
         Observable.toReadonlyArray(),

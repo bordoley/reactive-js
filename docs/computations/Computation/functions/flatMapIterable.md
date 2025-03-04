@@ -6,7 +6,7 @@
 
 # Function: flatMapIterable()
 
-> **flatMapIterable**\<`TComputation`, `TFlattenKey`\>(`m`, `key`): [`ConcatMapIterableOperator`](../interfaces/ConcatMapIterableOperator.md)\<`TComputation`\>
+> **flatMapIterable**\<`TComputation`, `TFlattenKey`\>(`m`, `key`): [`FlatMapIterableOperator`](../interfaces/FlatMapIterableOperator.md)\<`TComputation`\>
 
 ## Type Parameters
 
@@ -26,4 +26,4 @@
 
 ## Returns
 
-[`ConcatMapIterableOperator`](../interfaces/ConcatMapIterableOperator.md)\<`TComputation`\>
+[`FlatMapIterableOperator`](../interfaces/FlatMapIterableOperator.md)\<`TComputation`\>

@@ -6,7 +6,7 @@
 
 # Function: flatMap()
 
-> **flatMap**\<`TComputation`, `TFlattenKey`\>(`m`, `key`): [`ConcatMapOperator`](../interfaces/ConcatMapOperator.md)\<`TComputation`\>
+> **flatMap**\<`TComputation`, `TFlattenKey`\>(`m`, `key`): [`FlatMapOperator`](../interfaces/FlatMapOperator.md)\<`TComputation`\>
 
 ## Type Parameters
 
@@ -26,4 +26,4 @@
 
 ## Returns
 
-[`ConcatMapOperator`](../interfaces/ConcatMapOperator.md)\<`TComputation`\>
+[`FlatMapOperator`](../interfaces/FlatMapOperator.md)\<`TComputation`\>
