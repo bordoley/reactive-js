@@ -15,7 +15,6 @@ import {
 } from "../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
-  ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../computations.js";
@@ -83,7 +82,6 @@ export const create: <T>(options?: {
         | typeof ComputationLike_isPure
         | typeof ComputationLike_isSynchronous
         | typeof EventListenerLike_notify
-        | typeof ComputationLike_isInteractive
       > &
         Mutable<TProperties>,
       options?: {
@@ -128,7 +126,6 @@ export const create: <T>(options?: {
       [ComputationLike_isDeferred]: false as const,
       [ComputationLike_isPure]: true as const,
       [ComputationLike_isSynchronous]: false as const,
-      [ComputationLike_isInteractive]: false as const,
 
       [EventListenerLike_notify](
         this: TProperties & SubjectLike<T> & QueueLike<T>,

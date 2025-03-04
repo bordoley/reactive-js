@@ -1,6 +1,5 @@
 import {
   ComputationLike_isDeferred,
-  ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationOf,
   RunnableLike,
@@ -14,7 +13,6 @@ import Runnable_map from "./Runnable.map.js";
 
 class EncodeUtf8Runnable implements RunnableLike<Uint8Array<ArrayBufferLike>> {
   readonly [ComputationLike_isPure]?: boolean;
-  readonly [ComputationLike_isInteractive]: false = false as const;
 
   constructor(private readonly s: ComputationOf<Runnable.Computation, string>) {
     this[ComputationLike_isPure] = s[ComputationLike_isDeferred];

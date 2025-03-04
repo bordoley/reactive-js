@@ -3,7 +3,6 @@
 export const ComputationLike_isPure = Symbol("ComputationLike_isPure");
 export const ComputationLike_isDeferred = Symbol("ComputationLike_isDeferred");
 export const ComputationLike_isSynchronous = Symbol("ComputationLike_isSynchronous");
-export const ComputationLike_isInteractive = Symbol("ComputationLike_isInteractive");
 export const Computation_T = Symbol("Computation_T");
 export const Computation_baseOfT = Symbol("Computation_baseOfT");
 export const Computation_pureDeferredOfT = Symbol("Computation_pureDeferredOfT");

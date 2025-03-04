@@ -28,16 +28,6 @@ Represents a deferred computation that is synchronously evaluated.
 
 ***
 
-### \[ComputationLike\_isInteractive\]
-
-> `readonly` **\[ComputationLike\_isInteractive\]**: `false`
-
-#### Inherited from
-
-[`RunnableLike`](RunnableLike.md).[`[ComputationLike_isInteractive]`](RunnableLike.md#computationlike_isinteractive)
-
-***
-
 ### \[ComputationLike\_isPure\]
 
 > `readonly` **\[ComputationLike\_isPure\]**: `false`

@@ -3,7 +3,7 @@
 import { Array_length } from "../../../__internal__/constants.js";
 import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
-import { ComputationLike_isDeferred, ComputationLike_isInteractive, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { ObservableLike_observe, } from "../../../concurrent.js";
 import { bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -33,7 +33,6 @@ const Observable_merge = (() => {
         [ComputationLike_isSynchronous]: false,
         [MergeObservable_observables]: none,
     }), {
-        [ComputationLike_isInteractive]: false,
         [ObservableLike_observe](observer) {
             const observables = this[MergeObservable_observables];
             const count = observables[Array_length];

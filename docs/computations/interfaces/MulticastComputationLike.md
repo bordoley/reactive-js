@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ReactiveComputationLike`](ReactiveComputationLike.md)
+- [`ComputationLike`](ComputationLike.md)
 
 ## Extended by
 
@@ -22,17 +22,7 @@
 
 #### Overrides
 
-[`ReactiveComputationLike`](ReactiveComputationLike.md).[`[ComputationLike_isDeferred]`](ReactiveComputationLike.md#computationlike_isdeferred)
-
-***
-
-### \[ComputationLike\_isInteractive\]
-
-> `readonly` **\[ComputationLike\_isInteractive\]**: `false`
-
-#### Inherited from
-
-[`ReactiveComputationLike`](ReactiveComputationLike.md).[`[ComputationLike_isInteractive]`](ReactiveComputationLike.md#computationlike_isinteractive)
+[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isDeferred]`](ComputationLike.md#computationlike_isdeferred)
 
 ***
 
@@ -42,7 +32,7 @@
 
 #### Overrides
 
-[`ReactiveComputationLike`](ReactiveComputationLike.md).[`[ComputationLike_isPure]`](ReactiveComputationLike.md#computationlike_ispure)
+[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isPure]`](ComputationLike.md#computationlike_ispure)
 
 ***
 
@@ -52,4 +42,4 @@
 
 #### Overrides
 
-[`ReactiveComputationLike`](ReactiveComputationLike.md).[`[ComputationLike_isSynchronous]`](ReactiveComputationLike.md#computationlike_issynchronous)
+[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isSynchronous]`](ComputationLike.md#computationlike_issynchronous)

@@ -1,5 +1,5 @@
 import { DictionaryLike, ReadonlyObjectMapLike } from "./collections.js";
-import { ComputationLike_isDeferred, ComputationLike_isInteractive, ComputationLike_isPure, ComputationLike_isSynchronous, DeferredComputationLike, PureComputationLike, ReactiveComputationLike, SynchronousReactiveComputation } from "./computations.js";
+import { ComputationLike, ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, DeferredComputationLike, PureComputationLike, SynchronousComputationLike } from "./computations.js";
 import { EventListenerLike, EventSourceLike, StoreLike } from "./events.js";
 import { Optional, SideEffect1, Updater } from "./functions.js";
 import { BackpressureStrategy, DisposableContainerLike, DisposableLike, QueueableLike } from "./utils.js";
@@ -132,7 +132,7 @@ export declare const ObservableLike_observe: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface ObservableLike<out T = unknown> extends ReactiveComputationLike {
+export interface ObservableLike<out T = unknown> extends ComputationLike {
     /**
      * Subscribes the given `ObserverLike` to the `ObservableLike` source.
      *
@@ -145,19 +145,17 @@ export interface ObservableLike<out T = unknown> extends ReactiveComputationLike
  */
 export interface DeferredObservableLike<out T = unknown> extends ObservableLike<T>, DeferredComputationLike {
     readonly [ComputationLike_isDeferred]?: true;
-    readonly [ComputationLike_isInteractive]: false;
 }
 /**
  * @noInheritDoc
  */
-export interface SynchronousObservableLike<out T = unknown> extends DeferredObservableLike<T>, SynchronousReactiveComputation {
+export interface SynchronousObservableLike<out T = unknown> extends DeferredObservableLike<T>, SynchronousComputationLike {
     readonly [ComputationLike_isSynchronous]?: true;
 }
 /**
  * @noInheritDoc
  */
 export interface PureObservableLike<out T = unknown> extends ObservableLike<T>, PureComputationLike {
-    readonly [ComputationLike_isInteractive]: false;
     readonly [ComputationLike_isPure]?: true;
 }
 /**

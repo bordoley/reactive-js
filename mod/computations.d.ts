@@ -2,12 +2,10 @@ import { Equality, Factory, Function1, Optional, Predicate, Reducer, SideEffect1
 export declare const ComputationLike_isPure: unique symbol;
 export declare const ComputationLike_isDeferred: unique symbol;
 export declare const ComputationLike_isSynchronous: unique symbol;
-export declare const ComputationLike_isInteractive: unique symbol;
 export interface ComputationLike {
     readonly [ComputationLike_isPure]?: boolean;
     readonly [ComputationLike_isSynchronous]?: boolean;
     readonly [ComputationLike_isDeferred]?: boolean;
-    readonly [ComputationLike_isInteractive]?: boolean;
 }
 export interface ComputationWithSideEffectsLike extends ComputationLike {
     readonly [ComputationLike_isPure]: false;
@@ -33,18 +31,7 @@ export interface PureSynchronousComputationLike extends SynchronousComputationLi
 export interface SynchronousComputationWithSideEffectsLike extends SynchronousComputationLike {
     readonly [ComputationLike_isPure]: false;
 }
-export interface InteractiveComputationLike extends SynchronousComputationLike {
-    readonly [ComputationLike_isInteractive]?: true;
-}
-export interface ReactiveComputationLike extends ComputationLike {
-    readonly [ComputationLike_isInteractive]: false;
-}
-export interface SynchronousReactiveComputation extends SynchronousComputationLike, ReactiveComputationLike {
-    readonly [ComputationLike_isDeferred]?: true;
-    readonly [ComputationLike_isInteractive]: false;
-    readonly [ComputationLike_isSynchronous]?: true;
-}
-export interface MulticastComputationLike extends ReactiveComputationLike {
+export interface MulticastComputationLike extends ComputationLike {
     readonly [ComputationLike_isSynchronous]: false;
     readonly [ComputationLike_isDeferred]: false;
     readonly [ComputationLike_isPure]?: true;
@@ -252,7 +239,7 @@ export declare const RunnableLike_eval: unique symbol;
 /**
  * Represents a deferred computation that is synchronously evaluated.
  */
-export interface RunnableLike<T = unknown> extends SynchronousReactiveComputation {
+export interface RunnableLike<T = unknown> extends SynchronousComputationLike {
     [RunnableLike_eval](sink: SinkLike<T>): void;
 }
 export interface PureRunnableLike<T = unknown> extends RunnableLike<T> {
@@ -261,7 +248,7 @@ export interface PureRunnableLike<T = unknown> extends RunnableLike<T> {
 export interface RunnableWithSideEffectsLike<T = unknown> extends RunnableLike<T> {
     readonly [ComputationLike_isPure]: false;
 }
-export interface IterableLike<T = unknown> extends Iterable<T>, InteractiveComputationLike {
+export interface IterableLike<T = unknown> extends Iterable<T>, SynchronousComputationLike {
 }
 export interface PureIterableLike<T = unknown> extends IterableLike<T> {
     readonly [ComputationLike_isPure]?: true;

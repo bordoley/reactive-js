@@ -1,7 +1,7 @@
 /// <reference types="./WritableStore.d.ts" />
 
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isInteractive, ComputationLike_isSynchronous, } from "../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../computations.js";
 import { EventListenerLike_notify, EventSourceLike_addEventListener, StoreLike_value, } from "../events.js";
 import { none, strictEquality } from "../functions.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
@@ -24,7 +24,6 @@ export const create = /*@__PURE__*/ (() => {
     }), {
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
-        [ComputationLike_isInteractive]: false,
         get [StoreLike_value]() {
             unsafeCast(this);
             return this[WritableStore_value];

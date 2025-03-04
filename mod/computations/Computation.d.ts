@@ -1,4 +1,4 @@
-import { Computation, ComputationBaseOf, ComputationLike, ComputationModule, ComputationOfInnerType, ComputationOperator, ComputationWithSideEffectsLike, ComputationWithSideEffectsOperator, ConcurrentReactiveComputationModule, DeferredComputationLike, DeferredComputationOf, DeferredComputationOperator, DeferredComputationWithSideEffectsLike, DeferredComputationWithSideEffectsOf, DeferringHigherOrderInnerType, HigherOrderComputationOperator, InteractiveComputationLike, IterableLike, MulticastComputationLike, MulticastComputationOf, PureComputationLike, PureDeferredComputationLike, PureDeferredComputationOf, PureIterableLike, PureSynchronousComputationLike, PureSynchronousComputationOf, ReactiveComputationLike, SynchronousComputationLike, SynchronousComputationModule, SynchronousComputationOf, SynchronousComputationWithSideEffectsLike, SynchronousComputationWithSideEffectsOf, SynchronousReactiveComputation } from "../computations.js";
+import { Computation, ComputationBaseOf, ComputationLike, ComputationModule, ComputationOfInnerType, ComputationOperator, ComputationWithSideEffectsLike, ComputationWithSideEffectsOperator, ConcurrentReactiveComputationModule, DeferredComputationLike, DeferredComputationOf, DeferredComputationOperator, DeferredComputationWithSideEffectsLike, DeferredComputationWithSideEffectsOf, DeferringHigherOrderInnerType, HigherOrderComputationOperator, IterableLike, MulticastComputationLike, MulticastComputationOf, PureComputationLike, PureDeferredComputationLike, PureDeferredComputationOf, PureIterableLike, PureSynchronousComputationLike, PureSynchronousComputationOf, SynchronousComputationLike, SynchronousComputationModule, SynchronousComputationOf, SynchronousComputationWithSideEffectsLike, SynchronousComputationWithSideEffectsOf } from "../computations.js";
 import { EventListenerLike } from "../events.js";
 import { Function1, TypePredicate } from "../functions.js";
 export interface ConcatManyOperator<TComputation extends Computation> {
@@ -50,7 +50,6 @@ export interface PickOperator<TComputation extends Computation> {
 }
 export interface Signature {
     areAllDeferred<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & DeferredComputationLike)[];
-    areAllInteractive<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & InteractiveComputationLike)[];
     areAllMulticasted<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & MulticastComputationLike)[];
     areAllPure<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & PureComputationLike)[];
     areAllSynchronous<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & SynchronousComputationLike)[];
@@ -70,14 +69,11 @@ export interface Signature {
     ignoreElements<TComputation extends Computation>(m: Pick<ComputationModule<TComputation>, "keep">): <T>() => ComputationOperator<TComputation, any, T>;
     isDeferred<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & DeferredComputationLike;
     isDeferredWithSideEffects<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & DeferredComputationWithSideEffectsLike;
-    isInteractive<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & InteractiveComputationLike;
     isMulticasted<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & MulticastComputationLike;
     isPure<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & PureComputationLike;
     isPureDeferred<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & PureDeferredComputationLike;
     isPureSynchronous<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & PureSynchronousComputationLike;
-    isReactive<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & ReactiveComputationLike;
     isSynchronous<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & SynchronousComputationLike;
-    isSynchronousReactive<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & SynchronousReactiveComputation;
     isSynchronousWithSideEffects<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & SynchronousComputationWithSideEffectsLike;
     keepType<TComputation extends Computation>(m: Pick<ComputationModule<TComputation>, "keep">): <TA, TB>(predicate: TypePredicate<TA, TB>) => ComputationOperator<TComputation, TA, TB>;
     log<TComputation extends Computation>(m: Pick<SynchronousComputationModule<TComputation>, "forEach">): <T>() => ComputationWithSideEffectsOperator<TComputation, T, T>;
@@ -90,7 +86,6 @@ export interface Signature {
     startWith<TComputation extends Computation>(m: Pick<SynchronousComputationModule<TComputation>, "concat" | "fromReadonlyArray">): <T>(value: T, ...values: readonly T[]) => ComputationOperator<TComputation, T, T>;
 }
 export declare const areAllDeferred: Signature["areAllDeferred"];
-export declare const areAllInteractive: Signature["areAllInteractive"];
 export declare const areAllMulticasted: Signature["areAllMulticasted"];
 export declare const areAllPure: Signature["areAllPure"];
 export declare const areAllSynchronous: Signature["areAllSynchronous"];
@@ -106,14 +101,11 @@ export declare const hasSideEffects: Signature["hasSideEffects"];
 export declare const ignoreElements: Signature["ignoreElements"];
 export declare const isDeferred: Signature["isDeferred"];
 export declare const isDeferredWithSideEffects: Signature["isDeferredWithSideEffects"];
-export declare const isInteractive: Signature["isInteractive"];
 export declare const isMulticasted: Signature["isMulticasted"];
 export declare const isPure: Signature["isPure"];
 export declare const isPureDeferred: Signature["isPureDeferred"];
 export declare const isPureSynchronous: Signature["isPureSynchronous"];
-export declare const isReactive: Signature["isReactive"];
 export declare const isSynchronous: Signature["isSynchronous"];
-export declare const isSynchronousReactive: Signature["isSynchronousReactive"];
 export declare const isSynchronousWithSideEffects: Signature["isSynchronousWithSideEffects"];
 export declare const keepType: Signature["keepType"];
 export declare const log: Signature["log"];

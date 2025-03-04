@@ -11,19 +11,14 @@
 - [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md)
 - [`PureComputationLike`](PureComputationLike.md)
 - [`DeferredComputationLike`](DeferredComputationLike.md)
-- [`ReactiveComputationLike`](ReactiveComputationLike.md)
+- [`MulticastComputationLike`](MulticastComputationLike.md)
+- [`ObservableLike`](../../concurrent/interfaces/ObservableLike.md)
 
 ## Properties
 
 ### \[ComputationLike\_isDeferred\]?
 
 > `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `boolean`
-
-***
-
-### \[ComputationLike\_isInteractive\]?
-
-> `readonly` `optional` **\[ComputationLike\_isInteractive\]**: `boolean`
 
 ***
 

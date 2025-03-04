@@ -1,6 +1,5 @@
 import * as Computation from "../../../computations/Computation.js";
 import {
-  ComputationLike_isInteractive,
   ComputationLike_isPure,
   RunnableLike,
   RunnableLike_eval,
@@ -19,7 +18,6 @@ import Observable_takeWhile from "./Observable.takeWhile.js";
 
 class SynchronousObservableRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
-  readonly [ComputationLike_isInteractive]: false = false as const;
 
   constructor(
     private readonly obs: SynchronousObservableLike<T>,

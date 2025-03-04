@@ -3,7 +3,6 @@ import {
   ComputationBaseOf,
   ComputationLike,
   ComputationLike_isDeferred,
-  ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ComputationModule,
@@ -20,7 +19,6 @@ import {
   DeferredComputationWithSideEffectsOf,
   DeferringHigherOrderInnerType,
   HigherOrderComputationOperator,
-  InteractiveComputationLike,
   IterableLike,
   MulticastComputationLike,
   MulticastComputationOf,
@@ -30,13 +28,11 @@ import {
   PureIterableLike,
   PureSynchronousComputationLike,
   PureSynchronousComputationOf,
-  ReactiveComputationLike,
   SynchronousComputationLike,
   SynchronousComputationModule,
   SynchronousComputationOf,
   SynchronousComputationWithSideEffectsLike,
   SynchronousComputationWithSideEffectsOf,
-  SynchronousReactiveComputation,
 } from "../computations.js";
 import { EventListenerLike, EventListenerLike_notify } from "../events.js";
 import {
@@ -224,10 +220,6 @@ export interface Signature {
     computations: readonly TComputation[],
   ): computations is readonly (TComputation & DeferredComputationLike)[];
 
-  areAllInteractive<TComputation extends ComputationLike>(
-    computations: readonly TComputation[],
-  ): computations is readonly (TComputation & InteractiveComputationLike)[];
-
   areAllMulticasted<TComputation extends ComputationLike>(
     computations: readonly TComputation[],
   ): computations is readonly (TComputation & MulticastComputationLike)[];
@@ -314,10 +306,6 @@ export interface Signature {
     computation: TComputation,
   ): computation is TComputation & DeferredComputationWithSideEffectsLike;
 
-  isInteractive<TComputation extends ComputationLike = ComputationLike>(
-    computation: TComputation,
-  ): computation is TComputation & InteractiveComputationLike;
-
   isMulticasted<TComputation extends ComputationLike = ComputationLike>(
     computation: TComputation,
   ): computation is TComputation & MulticastComputationLike;
@@ -334,17 +322,9 @@ export interface Signature {
     computation: TComputation,
   ): computation is TComputation & PureSynchronousComputationLike;
 
-  isReactive<TComputation extends ComputationLike = ComputationLike>(
-    computation: TComputation,
-  ): computation is TComputation & ReactiveComputationLike;
-
   isSynchronous<TComputation extends ComputationLike = ComputationLike>(
     computation: TComputation,
   ): computation is TComputation & SynchronousComputationLike;
-
-  isSynchronousReactive<TComputation extends ComputationLike = ComputationLike>(
-    computation: TComputation,
-  ): computation is TComputation & SynchronousReactiveComputation;
 
   isSynchronousWithSideEffects<
     TComputation extends ComputationLike = ComputationLike,
@@ -405,13 +385,6 @@ export const areAllDeferred: Signature["areAllDeferred"] = <
   computations: readonly TComputation[],
 ): computations is readonly (TComputation & DeferredComputationLike)[] =>
   computations.every(isDeferred);
-
-export const areAllInteractive: Signature["areAllInteractive"] = <
-  TComputation extends ComputationLike,
->(
-  computations: readonly TComputation[],
-): computations is readonly (TComputation & InteractiveComputationLike)[] =>
-  computations.every(isInteractive);
 
 export const areAllMulticasted: Signature["areAllMulticasted"] = <
   TComputation extends ComputationLike,
@@ -560,13 +533,6 @@ export const isDeferredWithSideEffects: Signature["isDeferredWithSideEffects"] =
     (computation[ComputationLike_isDeferred] ?? true) &&
     !(computation[ComputationLike_isPure] ?? true);
 
-export const isInteractive: Signature["isInteractive"] = <
-  TComputation extends ComputationLike,
->(
-  computation: TComputation,
-): computation is TComputation & InteractiveComputationLike =>
-  computation[ComputationLike_isInteractive] ?? true;
-
 export const isMulticasted: Signature["isMulticasted"] = <
   TComputation extends ComputationLike,
 >(
@@ -600,13 +566,6 @@ export const isPureSynchronous: Signature["isPureSynchronous"] = <
   (computation[ComputationLike_isDeferred] ?? true) &&
   (computation[ComputationLike_isSynchronous] ?? true);
 
-export const isReactive: Signature["isReactive"] = <
-  TComputation extends ComputationLike,
->(
-  computation: TComputation,
-): computation is TComputation & ReactiveComputationLike =>
-  !(computation[ComputationLike_isInteractive] ?? true);
-
 export const isSynchronous: Signature["isSynchronous"] = <
   TComputation extends ComputationLike,
 >(
@@ -614,15 +573,6 @@ export const isSynchronous: Signature["isSynchronous"] = <
 ): computation is TComputation & SynchronousComputationLike =>
   (computation[ComputationLike_isSynchronous] ?? true) &&
   (computation[ComputationLike_isDeferred] ?? true);
-
-export const isSynchronousReactive: Signature["isSynchronousReactive"] = <
-  TComputation extends ComputationLike,
->(
-  computation: TComputation,
-): computation is TComputation & SynchronousReactiveComputation =>
-  (computation[ComputationLike_isDeferred] ?? true) &&
-  !(computation[ComputationLike_isInteractive] ?? true) &&
-  (computation[ComputationLike_isSynchronous] ?? true);
 
 export const isSynchronousWithSideEffects: Signature["isSynchronousWithSideEffects"] =
   <TComputation extends ComputationLike>(

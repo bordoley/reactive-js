@@ -1,14 +1,13 @@
 /// <reference types="./Runnable.fromReadonlyArray.d.ts" />
 
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
-import { ComputationLike_isInteractive, ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
+import { ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
 class FromReadonlyArrayRunnable {
     arr;
     count;
     start;
     [ComputationLike_isPure] = true;
-    [ComputationLike_isInteractive] = false;
     constructor(arr, count, start) {
         this.arr = arr;
         this.count = count;

@@ -1,5 +1,4 @@
 import {
-  ComputationLike_isInteractive,
   ComputationLike_isPure,
   PureRunnableLike,
   RunnableLike_eval,
@@ -12,7 +11,6 @@ import type * as Runnable from "../../Runnable.js";
 
 class FromValueRunnable<T> implements PureRunnableLike<T> {
   readonly [ComputationLike_isPure]: true = true as const;
-  readonly [ComputationLike_isInteractive]: false = false as const;
 
   constructor(private readonly v: T) {}
 

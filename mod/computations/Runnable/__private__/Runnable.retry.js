@@ -1,6 +1,6 @@
 /// <reference types="./Runnable.retry.d.ts" />
 
-import { ComputationLike_isInteractive, ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, } from "../../../computations.js";
+import { ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, } from "../../../computations.js";
 import { alwaysTrue, error, newInstance } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
 import DelegatingNonCompletingSink from "../../Sink/__internal__/DelegatingNonCompletingSink.js";
@@ -8,7 +8,6 @@ class RetryRunnable {
     s;
     p;
     [ComputationLike_isPure];
-    [ComputationLike_isInteractive] = false;
     constructor(s, p) {
         this.s = s;
         this.p = p;

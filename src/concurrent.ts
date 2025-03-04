@@ -1,13 +1,12 @@
 import { DictionaryLike, ReadonlyObjectMapLike } from "./collections.js";
 import {
+  ComputationLike,
   ComputationLike_isDeferred,
-  ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   DeferredComputationLike,
   PureComputationLike,
-  ReactiveComputationLike,
-  SynchronousReactiveComputation,
+  SynchronousComputationLike,
 } from "./computations.js";
 import { EventListenerLike, EventSourceLike, StoreLike } from "./events.js";
 import { Optional, SideEffect1, Updater } from "./functions.js";
@@ -194,8 +193,7 @@ export const ObservableLike_observe = Symbol("ObservableLike_observe");
 /**
  * @noInheritDoc
  */
-export interface ObservableLike<out T = unknown>
-  extends ReactiveComputationLike {
+export interface ObservableLike<out T = unknown> extends ComputationLike {
   /**
    * Subscribes the given `ObserverLike` to the `ObservableLike` source.
    *
@@ -211,7 +209,6 @@ export interface DeferredObservableLike<out T = unknown>
   extends ObservableLike<T>,
     DeferredComputationLike {
   readonly [ComputationLike_isDeferred]?: true;
-  readonly [ComputationLike_isInteractive]: false;
 }
 
 /**
@@ -219,7 +216,7 @@ export interface DeferredObservableLike<out T = unknown>
  */
 export interface SynchronousObservableLike<out T = unknown>
   extends DeferredObservableLike<T>,
-    SynchronousReactiveComputation {
+    SynchronousComputationLike {
   readonly [ComputationLike_isSynchronous]?: true;
 }
 
@@ -229,7 +226,6 @@ export interface SynchronousObservableLike<out T = unknown>
 export interface PureObservableLike<out T = unknown>
   extends ObservableLike<T>,
     PureComputationLike {
-  readonly [ComputationLike_isInteractive]: false;
   readonly [ComputationLike_isPure]?: true;
 }
 

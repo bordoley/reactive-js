@@ -1,11 +1,10 @@
 /// <reference types="./Runnable.raise.d.ts" />
 
-import { ComputationLike_isInteractive, ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { error, newInstance, raise } from "../../../functions.js";
 class RaiseRunnable {
     r;
     [ComputationLike_isPure] = true;
-    [ComputationLike_isInteractive] = false;
     constructor(r) {
         this.r = r;
     }

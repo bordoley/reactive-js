@@ -14,8 +14,9 @@
 
 - [`PureSynchronousComputationLike`](PureSynchronousComputationLike.md)
 - [`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md)
-- [`InteractiveComputationLike`](InteractiveComputationLike.md)
-- [`SynchronousReactiveComputation`](SynchronousReactiveComputation.md)
+- [`RunnableLike`](RunnableLike.md)
+- [`IterableLike`](IterableLike.md)
+- [`SynchronousObservableLike`](../../concurrent/interfaces/SynchronousObservableLike.md)
 
 ## Properties
 
@@ -26,16 +27,6 @@
 #### Inherited from
 
 [`DeferredComputationLike`](DeferredComputationLike.md).[`[ComputationLike_isDeferred]`](DeferredComputationLike.md#computationlike_isdeferred)
-
-***
-
-### \[ComputationLike\_isInteractive\]?
-
-> `readonly` `optional` **\[ComputationLike\_isInteractive\]**: `boolean`
-
-#### Inherited from
-
-[`DeferredComputationLike`](DeferredComputationLike.md).[`[ComputationLike_isInteractive]`](DeferredComputationLike.md#computationlike_isinteractive)
 
 ***
 

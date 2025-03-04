@@ -7,7 +7,6 @@ import {
 import * as Computation from "../../../computations/Computation.js";
 import {
   ComputationLike_isDeferred,
-  ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ComputationOperator,
@@ -59,10 +58,7 @@ const createLiftedObservable: <TA, TB>(
     include(ObservableMixin),
     function LiftedObservable(
       instance: TProperties &
-        Pick<
-          ObservableLike<TB>,
-          typeof ObservableLike_observe | typeof ComputationLike_isInteractive
-        >,
+        Pick<ObservableLike<TB>, typeof ObservableLike_observe>,
       source: ObservableLike<TA>,
       ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
       config: Pick<
@@ -84,8 +80,6 @@ const createLiftedObservable: <TA, TB>(
       [LiftedObservableLike_operators]: none,
     }),
     {
-      [ComputationLike_isInteractive]: false as const,
-
       [ObservableLike_observe](this: TProperties, observer: ObserverLike<TB>) {
         pipeUnsafe(
           observer,

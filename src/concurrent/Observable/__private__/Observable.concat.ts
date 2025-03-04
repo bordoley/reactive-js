@@ -3,7 +3,6 @@ import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import {
   ComputationLike_isDeferred,
-  ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
@@ -97,7 +96,6 @@ const Observable_concat: Observable.Signature["concat"] = /*@__PURE__*/ (<
     }),
     {
       [ComputationLike_isDeferred]: true as const,
-      [ComputationLike_isInteractive]: false as const,
 
       [ObservableLike_observe](
         this: TProperties<T>,

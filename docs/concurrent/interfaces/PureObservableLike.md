@@ -21,16 +21,6 @@
 
 ## Properties
 
-### \[ComputationLike\_isInteractive\]
-
-> `readonly` **\[ComputationLike\_isInteractive\]**: `false`
-
-#### Overrides
-
-[`PureComputationLike`](../../computations/interfaces/PureComputationLike.md).[`[ComputationLike_isInteractive]`](../../computations/interfaces/PureComputationLike.md#computationlike_isinteractive)
-
-***
-
 ### \[ComputationLike\_isPure\]?
 
 > `readonly` `optional` **\[ComputationLike\_isPure\]**: `true`

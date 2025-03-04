@@ -32,16 +32,6 @@
 
 ***
 
-### \[ComputationLike\_isInteractive\]
-
-> `readonly` **\[ComputationLike\_isInteractive\]**: `false`
-
-#### Overrides
-
-[`MulticastComputationLike`](../../computations/interfaces/MulticastComputationLike.md).[`[ComputationLike_isInteractive]`](../../computations/interfaces/MulticastComputationLike.md#computationlike_isinteractive)
-
-***
-
 ### \[ComputationLike\_isPure\]?
 
 > `readonly` `optional` **\[ComputationLike\_isPure\]**: `true`

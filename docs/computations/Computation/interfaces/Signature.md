@@ -28,26 +28,6 @@ readonly `TComputation`[]
 
 ***
 
-### areAllInteractive()
-
-> **areAllInteractive**\<`TComputation`\>(`computations`): `computations is readonly (TComputation & InteractiveComputationLike)[]`
-
-#### Type Parameters
-
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
-
-#### Parameters
-
-##### computations
-
-readonly `TComputation`[]
-
-#### Returns
-
-`computations is readonly (TComputation & InteractiveComputationLike)[]`
-
-***
-
 ### areAllMulticasted()
 
 > **areAllMulticasted**\<`TComputation`\>(`computations`): `computations is readonly (TComputation & MulticastComputationLike)[]`
@@ -394,26 +374,6 @@ readonly `TComputation`[]
 
 ***
 
-### isInteractive()
-
-> **isInteractive**\<`TComputation`\>(`computation`): `computation is TComputation & InteractiveComputationLike`
-
-#### Type Parameters
-
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
-
-#### Parameters
-
-##### computation
-
-`TComputation`
-
-#### Returns
-
-`computation is TComputation & InteractiveComputationLike`
-
-***
-
 ### isMulticasted()
 
 > **isMulticasted**\<`TComputation`\>(`computation`): `computation is TComputation & MulticastComputationLike`
@@ -494,26 +454,6 @@ readonly `TComputation`[]
 
 ***
 
-### isReactive()
-
-> **isReactive**\<`TComputation`\>(`computation`): `computation is TComputation & ReactiveComputationLike`
-
-#### Type Parameters
-
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
-
-#### Parameters
-
-##### computation
-
-`TComputation`
-
-#### Returns
-
-`computation is TComputation & ReactiveComputationLike`
-
-***
-
 ### isSynchronous()
 
 > **isSynchronous**\<`TComputation`\>(`computation`): `computation is TComputation & SynchronousComputationLike`
@@ -531,26 +471,6 @@ readonly `TComputation`[]
 #### Returns
 
 `computation is TComputation & SynchronousComputationLike`
-
-***
-
-### isSynchronousReactive()
-
-> **isSynchronousReactive**\<`TComputation`\>(`computation`): `computation is TComputation & SynchronousReactiveComputation`
-
-#### Type Parameters
-
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
-
-#### Parameters
-
-##### computation
-
-`TComputation`
-
-#### Returns
-
-`computation is TComputation & SynchronousReactiveComputation`
 
 ***
 

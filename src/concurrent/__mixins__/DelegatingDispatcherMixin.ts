@@ -8,7 +8,6 @@ import {
 } from "../../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
-  ComputationLike_isInteractive,
   ComputationLike_isSynchronous,
 } from "../../computations.js";
 import {
@@ -57,7 +56,6 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
           | typeof QueueableLike_enqueue
           | typeof ComputationLike_isSynchronous
           | typeof ComputationLike_isDeferred
-          | typeof ComputationLike_isInteractive
         > &
           TProperties,
         delegate: DispatcherLike<TReq>,
@@ -73,7 +71,6 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
       {
         [ComputationLike_isDeferred]: false as const,
         [ComputationLike_isSynchronous]: false as const,
-        [ComputationLike_isInteractive]: false as const,
 
         get [DispatcherLike_isCompleted]() {
           unsafeCast<TProperties>(this);

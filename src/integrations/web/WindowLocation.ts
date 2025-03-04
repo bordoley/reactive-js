@@ -9,7 +9,6 @@ import {
 import * as Computation from "../../computations/Computation.js";
 import {
   ComputationLike_isDeferred,
-  ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../computations.js";
@@ -199,7 +198,6 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       [ComputationLike_isDeferred]: false as const,
       [ComputationLike_isSynchronous]: false as const,
       [ComputationLike_isPure]: true as const,
-      [ComputationLike_isInteractive]: false as const,
 
       [WindowLocationLike_push](
         this: TProperties,

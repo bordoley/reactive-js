@@ -1,10 +1,9 @@
 /// <reference types="./Computation.d.ts" />
 
-import { ComputationLike_isDeferred, ComputationLike_isInteractive, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../computations.js";
 import { EventListenerLike_notify } from "../events.js";
 import { alwaysFalse, bindMethod, debug as breakPoint, compose, log as consoleLog, increment, pickUnsafe, pipe, returns, } from "../functions.js";
 export const areAllDeferred = (computations) => computations.every(isDeferred);
-export const areAllInteractive = (computations) => computations.every(isInteractive);
 export const areAllMulticasted = (computations) => computations.every(isMulticasted);
 export const areAllPure = (computations) => computations.every(isPure);
 export const areAllSynchronous = (computations) => computations.every(isSynchronous);
@@ -24,7 +23,6 @@ export const ignoreElements = (m) => () => m.keep(alwaysFalse);
 export const isDeferred = (computation) => computation[ComputationLike_isDeferred] ?? true;
 export const isDeferredWithSideEffects = (computation) => (computation[ComputationLike_isDeferred] ?? true) &&
     !(computation[ComputationLike_isPure] ?? true);
-export const isInteractive = (computation) => computation[ComputationLike_isInteractive] ?? true;
 export const isMulticasted = (computation) => !(computation[ComputationLike_isDeferred] ?? true) &&
     (computation[ComputationLike_isPure] ?? true) &&
     !(computation[ComputationLike_isSynchronous] ?? true);
@@ -34,12 +32,8 @@ export const isPureDeferred = (computation) => (computation[ComputationLike_isPu
 export const isPureSynchronous = (computation) => (computation[ComputationLike_isPure] ?? true) &&
     (computation[ComputationLike_isDeferred] ?? true) &&
     (computation[ComputationLike_isSynchronous] ?? true);
-export const isReactive = (computation) => !(computation[ComputationLike_isInteractive] ?? true);
 export const isSynchronous = (computation) => (computation[ComputationLike_isSynchronous] ?? true) &&
     (computation[ComputationLike_isDeferred] ?? true);
-export const isSynchronousReactive = (computation) => (computation[ComputationLike_isDeferred] ?? true) &&
-    !(computation[ComputationLike_isInteractive] ?? true) &&
-    (computation[ComputationLike_isSynchronous] ?? true);
 export const isSynchronousWithSideEffects = (computation) => (computation[ComputationLike_isSynchronous] ?? true) &&
     (computation[ComputationLike_isDeferred] ?? true) &&
     !(computation[ComputationLike_isPure] ?? true);

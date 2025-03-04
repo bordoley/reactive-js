@@ -1,6 +1,5 @@
 import {
   ComputationLike_isDeferred,
-  ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   MulticastComputationLike,
@@ -32,7 +31,6 @@ export interface EventSourceLike<out T = unknown>
   extends MulticastComputationLike {
   readonly [ComputationLike_isDeferred]: false;
   readonly [ComputationLike_isSynchronous]: false;
-  readonly [ComputationLike_isInteractive]: false;
   readonly [ComputationLike_isPure]?: true;
 
   [EventSourceLike_addEventListener](listener: EventListenerLike<T>): void;

@@ -7,7 +7,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
-  ComputationLike_isInteractive,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
@@ -97,10 +96,7 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
     return mixInstanceFactory(
       include(ObservableMixin),
       function CreateObservable(
-        instance: Pick<
-          ObservableLike,
-          typeof ObservableLike_observe | typeof ComputationLike_isInteractive
-        > &
+        instance: Pick<ObservableLike, typeof ObservableLike_observe> &
           Mutable<TProperties>,
         effect: SideEffect1<ObserverLike>,
         config: {
@@ -118,8 +114,6 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
         [CreateObservable_effect]: none,
       }),
       {
-        [ComputationLike_isInteractive]: false as const,
-
         [ObservableLike_observe](this: TProperties, observer: ObserverLike) {
           try {
             this[CreateObservable_effect](observer);
