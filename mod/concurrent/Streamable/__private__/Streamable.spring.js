@@ -3,7 +3,7 @@
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
-import { DeferredComputationWithSideEffectsType, } from "../../../computations.js";
+import { DeferredComputationWithSideEffects, } from "../../../computations.js";
 import { AnimationStreamLike_animation, PauseableLike_resume, StreamableLike_stream, } from "../../../concurrent.js";
 import * as Publisher from "../../../events/Publisher.js";
 import { EventListenerLike_notify } from "../../../events.js";
@@ -49,7 +49,7 @@ const SpringStream_create = /*@__PURE__*/ (() => {
                 ? pipe(sources, Computation.concatMany(ObservableModule), Computation.notify(ObservableModule)(publisher), Computation.notify(ObservableModule)(accFeedbackStream), Computation.ignoreElements(ObservableModule)(), Observable.subscribeOn(pauseableScheduler), Computation.startWith(ObservableModule)(true), Computation.endWith(ObservableModule)(false))
                 : Observable.empty();
         }, {
-            innerType: DeferredComputationWithSideEffectsType,
+            innerType: DeferredComputationWithSideEffects,
         }));
         init(StreamMixin(), instance, operator, scheduler, options);
         init(DelegatingPauseableMixin, instance, pauseableScheduler);

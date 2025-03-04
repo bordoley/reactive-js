@@ -1,6 +1,6 @@
 import {
   ComputationLike_isPure,
-  DeferringHigherOrderInnerType,
+  HigherOrderInnerComputationLike,
   RunnableLike,
   RunnableLike_eval,
   SinkLike,
@@ -42,7 +42,7 @@ class ConcatAllSink<T> extends AbstractSink<
 
 const Runnable_concatAll: Runnable.Signature["concatAll"] = (<
   T,
-  TInnerType extends DeferringHigherOrderInnerType,
+  TInnerType extends HigherOrderInnerComputationLike,
 >(options?: {
   readonly innerType: TInnerType;
 }) =>

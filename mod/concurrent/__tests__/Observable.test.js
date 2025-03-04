@@ -61,7 +61,7 @@ import ComputationModuleTests from "../../computations/__tests__/fixtures/Comput
 import * as ComputationTest from "../../computations/__tests__/fixtures/ComputationTest.js";
 import DeferredReactiveComputationModuleTests from "../../computations/__tests__/fixtures/DeferredReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
-import { DeferredComputationWithSideEffectsType, PureDeferredComputationType, SynchronousComputationWithSideEffectsType, } from "../../computations.js";
+import { DeferredComputationWithSideEffects, PureDeferredComputation, SynchronousComputationWithSideEffects, } from "../../computations.js";
 import { DispatcherLikeEvent_completed, DispatcherLike_complete, SchedulerLike_now, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
@@ -361,11 +361,11 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         return v;
     }
 }), Observable.distinctUntilChanged(), Observable.toReadonlyArray(), expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]))), ComputationTest.isSynchronousWithSideEffects(Observable.computeSynchronousObservable(() => { }))), describe("concatAll", DeferredReactiveObservableOperator(Observable.concatAll()), DeferringObservableOperatorTests(Observable.concatAll({
-    innerType: PureDeferredComputationType,
+    innerType: PureDeferredComputation,
 })), ObservableOperatorWithSideEffectsTests(Observable.concatAll({
-    innerType: SynchronousComputationWithSideEffectsType,
+    innerType: SynchronousComputationWithSideEffects,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.concatAll({
-    innerType: DeferredComputationWithSideEffectsType,
+    innerType: DeferredComputationWithSideEffects,
 }))), describe("concat", test("concats the input containers in order, when sources have delay", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), ComputationTest.isPureSynchronous(Observable.concat(Observable.empty({ delay: 1 }), Observable.empty({ delay: 1 }))), ComputationTest.isPureDeferred((() => {
     const env_14 = { stack: [], error: void 0, hasError: false };
     try {
@@ -482,11 +482,11 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     pipe([4, 5, 6], Observable.fromReadonlyArray()),
     pipe([7, 8, 9], Observable.fromReadonlyArray()),
 ], Observable.fromReadonlyArray(), Observable.exhaust(), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), DeferredReactiveObservableOperator(Observable.exhaust()), DeferringObservableOperatorTests(Observable.exhaust({
-    innerType: PureDeferredComputationType,
+    innerType: PureDeferredComputation,
 })), ObservableOperatorWithSideEffectsTests(Observable.exhaust({
-    innerType: SynchronousComputationWithSideEffectsType,
+    innerType: SynchronousComputationWithSideEffects,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.exhaust({
-    innerType: DeferredComputationWithSideEffectsType,
+    innerType: DeferredComputationWithSideEffects,
 }))), describe("firstAsync", testAsync("empty source", async () => {
     const env_20 = { stack: [], error: void 0, hasError: false };
     try {
@@ -759,11 +759,11 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
         __disposeResources(env_36);
     }
 }), test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Computation.concatMap(Observable)(x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]))), DeferredReactiveObservableOperator(Observable.mergeAll()), DeferringObservableOperatorTests(Observable.mergeAll({
-    innerType: PureDeferredComputationType,
+    innerType: PureDeferredComputation,
 })), ObservableOperatorWithSideEffectsTests(Observable.mergeAll({
-    innerType: SynchronousComputationWithSideEffectsType,
+    innerType: SynchronousComputationWithSideEffects,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.mergeAll({
-    innerType: DeferredComputationWithSideEffectsType,
+    innerType: DeferredComputationWithSideEffects,
 }))), describe("merge", test("validate output runtime type", () => {
     const pureSynchronousObservable = pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }));
     const runnableWithSideEffects = pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }), Observable.forEach(ignore));
@@ -907,11 +907,11 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     delay: 10,
     delayStart: true,
 }), Observable.takeFirst({ count: 10 }), Observable.scanMany((_acc, next) => pipe(next, Observable.fromValue({ delay: 2 })), returns(0)), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]))), DeferringObservableOperatorTests(Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none))), DeferringObservableOperatorTests(Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
-    innerType: PureDeferredComputationType,
+    innerType: PureDeferredComputation,
 })), ObservableOperatorWithSideEffectsTests(Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
-    innerType: SynchronousComputationWithSideEffectsType,
+    innerType: SynchronousComputationWithSideEffects,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
-    innerType: DeferredComputationWithSideEffectsType,
+    innerType: DeferredComputationWithSideEffects,
 }))), describe("skipFirst", DeferredReactiveObservableOperator(Observable.skipFirst())), describe("spring", testAsync("test with spring", async () => {
     const env_44 = { stack: [], error: void 0, hasError: false };
     try {
@@ -968,11 +968,11 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     delay: 1,
     delayStart: true,
 }))), Observable.toReadonlyArray(), expectArrayEquals([3, 3, 3]))), test("overlapping notification", pipeLazy([none, none, none], Observable.fromReadonlyArray({ delay: 4 }), Computation.flatMap(Observable, "switchAll")(_ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 1, 2, 1, 2, 3]))), test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Computation.flatMap(Observable, "switchAll")(_ => pipe([1, 2, 3], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), DeferredReactiveObservableOperator(Observable.switchAll()), DeferringObservableOperatorTests(Observable.switchAll({
-    innerType: PureDeferredComputationType,
+    innerType: PureDeferredComputation,
 })), ObservableOperatorWithSideEffectsTests(Observable.switchAll({
-    innerType: SynchronousComputationWithSideEffectsType,
+    innerType: SynchronousComputationWithSideEffects,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.switchAll({
-    innerType: DeferredComputationWithSideEffectsType,
+    innerType: DeferredComputationWithSideEffects,
 }))), describe("takeFirst", DeferredReactiveObservableOperator(Observable.takeFirst())), describe("takeLast", DeferredReactiveObservableOperator(Observable.takeLast())), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 1 }), Observable.takeUntil(pipe([1], Observable.fromReadonlyArray({ delay: 3, delayStart: true }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), DeferredReactiveObservableOperator(Observable.takeUntil(Observable.empty({ delay: 1 }))), ObservableOperatorWithSideEffectsTests(Observable.takeUntil(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)))), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.takeUntil(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), Observable.forEach(ignore)))), DeferringObservableOperatorTests(Observable.takeUntil(Subject.create()))), describe("takeWhile", DeferredReactiveObservableOperator(Observable.takeWhile(alwaysTrue))), describe("throttle", test("first", pipeLazy(Observable.generate(increment, returns(-1), {
     delay: 1,
     delayStart: true,

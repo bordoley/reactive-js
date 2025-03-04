@@ -3,7 +3,7 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  DeferringHigherOrderInnerType,
+  HigherOrderInnerComputationLike,
 } from "../../../computations.js";
 import {
   DeferredObservableLike,
@@ -31,7 +31,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
   scanner: Function2<TAcc, T, DeferredObservableLike<TAcc>>,
   initialValue: Factory<TAcc>,
   options?: {
-    readonly innerType?: DeferringHigherOrderInnerType;
+    readonly innerType?: HigherOrderInnerComputationLike;
   },
 ) => {
   const innerType = options?.innerType ?? {

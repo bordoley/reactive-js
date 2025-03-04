@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`Computation`](../../type-aliases/Computation.md)
+- [`ComputationType`](../../type-aliases/ComputationType.md)
 
 ## Properties
 
@@ -18,7 +18,7 @@
 
 #### Overrides
 
-`ComputationSig.[Computation_baseOfT]`
+`ComputationType.[Computation_baseOfT]`
 
 ***
 
@@ -28,7 +28,7 @@
 
 #### Overrides
 
-`ComputationSig.[Computation_deferredWithSideEffectsOfT]`
+`ComputationType.[Computation_deferredWithSideEffectsOfT]`
 
 ***
 
@@ -38,7 +38,7 @@
 
 #### Overrides
 
-`ComputationSig.[Computation_multicastOfT]`
+`ComputationType.[Computation_multicastOfT]`
 
 ***
 
@@ -48,7 +48,7 @@
 
 #### Overrides
 
-`ComputationSig.[Computation_pureDeferredOfT]`
+`ComputationType.[Computation_pureDeferredOfT]`
 
 ***
 
@@ -58,7 +58,7 @@
 
 #### Overrides
 
-`ComputationSig.[Computation_pureSynchronousOfT]`
+`ComputationType.[Computation_pureSynchronousOfT]`
 
 ***
 
@@ -68,4 +68,4 @@
 
 #### Overrides
 
-`ComputationSig.[Computation_synchronousWithSideEffectsOfT]`
+`ComputationType.[Computation_synchronousWithSideEffectsOfT]`

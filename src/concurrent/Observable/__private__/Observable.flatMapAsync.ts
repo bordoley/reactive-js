@@ -1,5 +1,5 @@
 import * as Computation from "../../../computations/Computation.js";
-import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
+import { DeferredComputationWithSideEffects } from "../../../computations.js";
 import { Function2, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
 import Observable_concatAll from "./Observable.concatAll.js";
@@ -21,7 +21,7 @@ const Observable_flatMapAsync: Observable.Signature["flatMapAsync"] = <TA, TB>(
     );
 
   return Computation.concatMap(ObservableModule)(mapper, {
-    innerType: DeferredComputationWithSideEffectsType,
+    innerType: DeferredComputationWithSideEffects,
   });
 };
 

@@ -1,7 +1,6 @@
 import {
   ComputationBaseOf,
-  ComputationOfInnerType,
-  Computation as ComputationSig,
+  ComputationType,
   ComputationWithSideEffectsOperator,
   Computation_T,
   Computation_baseOfT,
@@ -15,8 +14,9 @@ import {
   DeferredComputationWithSideEffectsLike,
   DeferredReactiveComputationModule,
   DeferringComputationOperator,
-  DeferringHigherOrderInnerType,
   HigherOrderComputationOperator,
+  HigherOrderInnerComputationLike,
+  HigherOrderInnerComputationOf,
   IterableLike,
   PureDeferredComputationLike,
   PureIterableLike,
@@ -131,7 +131,7 @@ import Observable_withCurrentTime from "./Observable/__private__/Observable.with
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 import Observable_zipLatest from "./Observable/__private__/Observable.zipLatest.js";
 
-export interface ObservableComputation extends ComputationSig {
+export interface ObservableComputation extends ComputationType {
   readonly [Computation_baseOfT]?: ObservableLike<this[typeof Computation_T]>;
 
   readonly [Computation_pureDeferredOfT]?: PureDeferredObservableLike<
@@ -226,12 +226,12 @@ export interface ObservableModule
     PureSynchronousObservableLike<T>,
     T
   >;
-  exhaust<T, TInnerType extends DeferringHigherOrderInnerType>(options: {
+  exhaust<T, TInnerType extends HigherOrderInnerComputationLike>(options: {
     readonly innerType: TInnerType;
   }): HigherOrderComputationOperator<
     ObservableComputation,
     TInnerType,
-    ComputationOfInnerType<ObservableComputation, TInnerType, T>,
+    HigherOrderInnerComputationOf<ObservableComputation, TInnerType, T>,
     T
   >;
 
@@ -259,17 +259,21 @@ export interface ObservableModule
   >(
     fst: Function1<
       MulticastObservableLike<TIn>,
-      ComputationOfInnerType<ObservableComputation, TInnerType, TOut>
+      HigherOrderInnerComputationOf<ObservableComputation, TInnerType, TOut>
     >,
     snd: Function1<
       MulticastObservableLike<TIn>,
-      ComputationOfInnerType<ObservableComputation, TInnerType, TOut>
+      HigherOrderInnerComputationOf<ObservableComputation, TInnerType, TOut>
     >,
     ...tail:
       | readonly [
           ...Function1<
             MulticastObservableLike<TIn>,
-            ComputationOfInnerType<ObservableComputation, TInnerType, TOut>
+            HigherOrderInnerComputationOf<
+              ObservableComputation,
+              TInnerType,
+              TOut
+            >
           >[],
           {
             innerType?: TInnerType;
@@ -277,7 +281,7 @@ export interface ObservableModule
         ]
       | readonly Function1<
           MulticastObservableLike<TIn>,
-          ComputationOfInnerType<ObservableComputation, TInnerType, TOut>
+          HigherOrderInnerComputationOf<ObservableComputation, TInnerType, TOut>
         >[]
   ): <TComputationIn extends ComputationBaseOf<ObservableComputation, TIn>>(
     observable: TComputationIn,
@@ -365,7 +369,7 @@ export interface ObservableModule
     PureSynchronousObservableLike<T>,
     T
   >;
-  mergeAll<T, TInnerType extends DeferringHigherOrderInnerType>(options: {
+  mergeAll<T, TInnerType extends HigherOrderInnerComputationLike>(options: {
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
     readonly concurrency?: number;
@@ -373,7 +377,7 @@ export interface ObservableModule
   }): HigherOrderComputationOperator<
     ObservableComputation,
     TInnerType,
-    ComputationOfInnerType<ObservableComputation, TInnerType, T>,
+    HigherOrderInnerComputationOf<ObservableComputation, TInnerType, T>,
     T
   >;
 
@@ -416,11 +420,11 @@ export interface ObservableModule
     T,
     TAcc
   >;
-  scanMany<T, TAcc, TInnerType extends DeferringHigherOrderInnerType>(
+  scanMany<T, TAcc, TInnerType extends HigherOrderInnerComputationLike>(
     scanner: Function2<
       TAcc,
       T,
-      ComputationOfInnerType<ObservableComputation, TInnerType, T>
+      HigherOrderInnerComputationOf<ObservableComputation, TInnerType, T>
     >,
     initialValue: Factory<TAcc>,
     options: {
@@ -466,12 +470,12 @@ export interface ObservableModule
     PureSynchronousObservableLike<T>,
     T
   >;
-  switchAll<T, TInnerType extends DeferringHigherOrderInnerType>(options: {
+  switchAll<T, TInnerType extends HigherOrderInnerComputationLike>(options: {
     readonly innerType: TInnerType;
   }): HigherOrderComputationOperator<
     ObservableComputation,
     TInnerType,
-    ComputationOfInnerType<ObservableComputation, TInnerType, T>,
+    HigherOrderInnerComputationOf<ObservableComputation, TInnerType, T>,
     T
   >;
 

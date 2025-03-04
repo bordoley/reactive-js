@@ -10,7 +10,7 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  DeferringHigherOrderInnerType,
+  HigherOrderInnerComputationLike,
 } from "../../../computations.js";
 import {
   ObservableLike,
@@ -130,7 +130,7 @@ const createSwitchAllObserver: <T>(
 })();
 
 const Observable_switchAll: Observable.Signature["switchAll"] = ((options?: {
-  readonly innerType?: DeferringHigherOrderInnerType;
+  readonly innerType?: HigherOrderInnerComputationLike;
 }) =>
   Observable_lift({
     [ObservableLift_isStateless]: false,

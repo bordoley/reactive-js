@@ -8,7 +8,7 @@
 
 ## Type Parameters
 
-• **TComputation** *extends* [`Computation`](../../type-aliases/Computation.md)
+• **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
 > **ConcatManyOperator**\<`T`\>(`computations`): [`PureSynchronousComputationOf`](../../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
 

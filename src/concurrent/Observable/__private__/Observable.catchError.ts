@@ -3,7 +3,7 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  DeferringHigherOrderInnerType,
+  HigherOrderInnerComputationLike,
 } from "../../../computations.js";
 import {
   ObservableLike,
@@ -46,7 +46,7 @@ const Observable_catchError: Observable.Signature["catchError"] =
     return (
       errorHandler: SideEffect1<Error> | Function1<Error, ObservableLike<T>>,
       options?: {
-        readonly innerType?: DeferringHigherOrderInnerType;
+        readonly innerType?: HigherOrderInnerComputationLike;
       },
     ) => {
       function onErrorHandler(this: ObserverLike<T>, err: Error) {

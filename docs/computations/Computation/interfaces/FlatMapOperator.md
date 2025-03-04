@@ -8,7 +8,7 @@
 
 ## Type Parameters
 
-• **TComputation** *extends* [`Computation`](../../type-aliases/Computation.md)
+• **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
 > **FlatMapOperator**\<`TA`, `TB`\>(`selector`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
 
@@ -36,13 +36,13 @@
 
 • **TB**
 
-• **TInnerType** *extends* [`DeferringHigherOrderInnerType`](../../type-aliases/DeferringHigherOrderInnerType.md)
+• **TInnerType** *extends* [`HigherOrderInnerComputationLike`](../../type-aliases/HigherOrderInnerComputationLike.md)
 
 ## Parameters
 
 ### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`ComputationOfInnerType`](../../type-aliases/ComputationOfInnerType.md)\<`TComputation`, `TInnerType`, `TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<`TComputation`, `TInnerType`, `TB`\>\>
 
 ### options?
 

@@ -6,7 +6,7 @@ import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
 import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
-import { DeferredComputationWithSideEffectsType, } from "../../../computations.js";
+import { DeferredComputationWithSideEffects, } from "../../../computations.js";
 import { PauseableLike_resume, StreamableLike_stream, } from "../../../concurrent.js";
 import * as Publisher from "../../../events/Publisher.js";
 import { isFunction, none, pipe, } from "../../../functions.js";
@@ -32,7 +32,7 @@ const AnimationGroupStream_create = /*@__PURE__*/ (() => {
             const publisher = publishers[key];
             return pipe(isFunction(factory) ? factory(event) : factory, Computation.notify(ObservableModule)(publisher), Observable.subscribeOn(pauseableScheduler));
         }), ReadonlyArray.fromIterable(), Computation.mergeMany(ObservableModule), Computation.ignoreElements(ObservableModule)(), Computation.startWith(ObservableModule)(true), Computation.endWith(ObservableModule)(false)), {
-            innerType: DeferredComputationWithSideEffectsType,
+            innerType: DeferredComputationWithSideEffects,
         });
         init(StreamMixin(), instance, operator, scheduler, options);
         init(DelegatingPauseableMixin, instance, pauseableScheduler);

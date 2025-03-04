@@ -6,7 +6,7 @@ import {
   test,
 } from "../../../__internal__/testing.js";
 import {
-  Computation,
+  ComputationType,
   DeferredReactiveComputationModule,
   SynchronousComputationModule,
 } from "../../../computations.js";
@@ -20,7 +20,7 @@ import {
 } from "../../../functions.js";
 
 const DeferredReactiveComputationModuleTests = <
-  TComputation extends Computation,
+  TComputation extends ComputationType,
 >(
   m: DeferredReactiveComputationModule<TComputation> &
     SynchronousComputationModule<TComputation>,

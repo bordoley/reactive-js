@@ -1,7 +1,7 @@
 /// <reference types="./Observable.flatMapAsync.d.ts" />
 
 import * as Computation from "../../../computations/Computation.js";
-import { DeferredComputationWithSideEffectsType } from "../../../computations.js";
+import { DeferredComputationWithSideEffects } from "../../../computations.js";
 import { pipe } from "../../../functions.js";
 import Observable_concatAll from "./Observable.concatAll.js";
 import Observable_fromAsyncFactory from "./Observable.fromAsyncFactory.js";
@@ -13,7 +13,7 @@ const ObservableModule = {
 const Observable_flatMapAsync = (f) => {
     const mapper = (a) => pipe((abortSignal) => f(a, abortSignal), Observable_fromAsyncFactory());
     return Computation.concatMap(ObservableModule)(mapper, {
-        innerType: DeferredComputationWithSideEffectsType,
+        innerType: DeferredComputationWithSideEffects,
     });
 };
 export default Observable_flatMapAsync;

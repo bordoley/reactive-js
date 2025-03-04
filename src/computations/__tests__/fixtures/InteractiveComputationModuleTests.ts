@@ -4,13 +4,15 @@ import {
   test,
 } from "../../../__internal__/testing.js";
 import {
-  Computation,
+  ComputationType,
   InteractiveComputationModule,
 } from "../../../computations.js";
 import { pipeLazy } from "../../../functions.js";
 import * as ComputationM from "../../Computation.js";
 
-const InteractiveComputationModuleTests = <TComputation extends Computation>(
+const InteractiveComputationModuleTests = <
+  TComputation extends ComputationType,
+>(
   m: InteractiveComputationModule<TComputation>,
 ) =>
   describe(

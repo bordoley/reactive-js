@@ -1,7 +1,7 @@
 import * as Computation from "../../../computations/Computation.js";
 import {
+  DeferredComputationWithSideEffects,
   DeferredComputationWithSideEffectsLike,
-  DeferredComputationWithSideEffectsType,
 } from "../../../computations.js";
 import {
   DeferredObservableLike,
@@ -45,7 +45,7 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
           compose(
             Observable.takeFirst(),
             Computation.concatMap(ObservableModule)(onInit, {
-              innerType: DeferredComputationWithSideEffectsType,
+              innerType: DeferredComputationWithSideEffects,
             }),
           ),
           compose(
@@ -58,10 +58,10 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
               Updater<T>,
               DeferredComputationWithSideEffectsLike
             >(([oldValue, newValue]) => onChange(oldValue, newValue), {
-              innerType: DeferredComputationWithSideEffectsType,
+              innerType: DeferredComputationWithSideEffects,
             }),
           ),
-          { innerType: DeferredComputationWithSideEffectsType },
+          { innerType: DeferredComputationWithSideEffects },
         ),
         Observable.dispatchTo<Updater<T>>(stream),
         Computation.ignoreElements(ObservableModule)(),

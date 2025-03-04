@@ -28,10 +28,10 @@ import {
   ComputationBaseOf,
   ComputationModule,
   ComputationOperator,
-  DeferredComputationWithSideEffectsType,
+  DeferredComputationWithSideEffects,
+  PureDeferredComputation,
   PureDeferredComputationLike,
-  PureDeferredComputationType,
-  SynchronousComputationWithSideEffectsType,
+  SynchronousComputationWithSideEffects,
 } from "../../computations.js";
 import {
   DeferredObservableWithSideEffectsLike,
@@ -732,17 +732,17 @@ testModule(
     DeferredReactiveObservableOperator(Observable.concatAll()),
     DeferringObservableOperatorTests(
       Observable.concatAll<any, PureDeferredComputationLike>({
-        innerType: PureDeferredComputationType,
+        innerType: PureDeferredComputation,
       }),
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.concatAll({
-        innerType: SynchronousComputationWithSideEffectsType,
+        innerType: SynchronousComputationWithSideEffects,
       }),
     ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
       Observable.concatAll({
-        innerType: DeferredComputationWithSideEffectsType,
+        innerType: DeferredComputationWithSideEffects,
       }),
     ),
   ),
@@ -949,17 +949,17 @@ testModule(
     DeferredReactiveObservableOperator(Observable.exhaust()),
     DeferringObservableOperatorTests(
       Observable.exhaust({
-        innerType: PureDeferredComputationType,
+        innerType: PureDeferredComputation,
       }),
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.exhaust({
-        innerType: SynchronousComputationWithSideEffectsType,
+        innerType: SynchronousComputationWithSideEffects,
       }),
     ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
       Observable.exhaust({
-        innerType: DeferredComputationWithSideEffectsType,
+        innerType: DeferredComputationWithSideEffects,
       }),
     ),
   ),
@@ -1352,17 +1352,17 @@ testModule(
     DeferredReactiveObservableOperator(Observable.mergeAll()),
     DeferringObservableOperatorTests(
       Observable.mergeAll({
-        innerType: PureDeferredComputationType,
+        innerType: PureDeferredComputation,
       }),
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.mergeAll({
-        innerType: SynchronousComputationWithSideEffectsType,
+        innerType: SynchronousComputationWithSideEffects,
       }),
     ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
       Observable.mergeAll({
-        innerType: DeferredComputationWithSideEffectsType,
+        innerType: DeferredComputationWithSideEffects,
       }),
     ),
   ),
@@ -1694,18 +1694,18 @@ testModule(
         () => Observable.empty({ delay: 1 }),
         returns(none),
         {
-          innerType: PureDeferredComputationType,
+          innerType: PureDeferredComputation,
         },
       ),
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
-        innerType: SynchronousComputationWithSideEffectsType,
+        innerType: SynchronousComputationWithSideEffects,
       }),
     ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
       Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
-        innerType: DeferredComputationWithSideEffectsType,
+        innerType: DeferredComputationWithSideEffects,
       }),
     ),
   ),
@@ -1829,17 +1829,17 @@ testModule(
     DeferredReactiveObservableOperator(Observable.switchAll()),
     DeferringObservableOperatorTests(
       Observable.switchAll({
-        innerType: PureDeferredComputationType,
+        innerType: PureDeferredComputation,
       }),
     ),
     ObservableOperatorWithSideEffectsTests(
       Observable.switchAll({
-        innerType: SynchronousComputationWithSideEffectsType,
+        innerType: SynchronousComputationWithSideEffects,
       }),
     ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
       Observable.switchAll({
-        innerType: DeferredComputationWithSideEffectsType,
+        innerType: DeferredComputationWithSideEffects,
       }),
     ),
   ),

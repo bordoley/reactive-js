@@ -6,8 +6,8 @@ import {
 } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import {
+  DeferredComputationWithSideEffects,
   DeferredComputationWithSideEffectsLike,
-  DeferredComputationWithSideEffectsType,
 } from "../../../computations.js";
 import {
   AnimationStreamLike,
@@ -88,7 +88,7 @@ const AnimationStream_create: <TEvent, T>(
             Computation.endWith(ObservableModule)(false),
           ),
         {
-          innerType: DeferredComputationWithSideEffectsType,
+          innerType: DeferredComputationWithSideEffects,
         },
       );
 

@@ -15,7 +15,7 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  DeferringHigherOrderInnerType,
+  HigherOrderInnerComputationLike,
 } from "../../../computations.js";
 import {
   DeferredObservableWithSideEffectsLike,
@@ -216,7 +216,7 @@ const createMergeAllObserverOperator: <T>(options?: {
 })();
 
 const Observable_mergeAll: Observable.Signature["mergeAll"] = ((options?: {
-  readonly innerType?: DeferringHigherOrderInnerType;
+  readonly innerType?: HigherOrderInnerComputationLike;
   readonly backpressureStrategy?: BackpressureStrategy;
   readonly capacity?: number;
   readonly concurrency?: number;

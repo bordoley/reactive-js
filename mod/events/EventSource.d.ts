@@ -1,11 +1,11 @@
-import { Computation as ComputationSig, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule } from "../computations.js";
+import { ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule } from "../computations.js";
 import { EventListenerLike, EventSourceLike } from "../events.js";
 import { Function1, SideEffect1 } from "../functions.js";
 import { DisposableLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
-export interface EventSourceComputation extends ComputationSig {
+export interface EventSourceComputation extends ComputationType {
     readonly [Computation_baseOfT]?: EventSourceLike<this[typeof Computation_T]>;
     readonly [Computation_pureDeferredOfT]?: never;
     readonly [Computation_deferredWithSideEffectsOfT]?: never;

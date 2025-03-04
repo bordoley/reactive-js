@@ -13,7 +13,7 @@
 
 ## Type Parameters
 
-• **TComputation** *extends* [`Computation`](../type-aliases/Computation.md)
+• **TComputation** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
 
 ## Methods
 

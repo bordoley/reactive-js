@@ -16,8 +16,8 @@ import {
 import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
 import {
+  DeferredComputationWithSideEffects,
   DeferredComputationWithSideEffectsLike,
-  DeferredComputationWithSideEffectsType,
 } from "../../../computations.js";
 import {
   AnimationGroupStreamLike,
@@ -136,7 +136,7 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
             Computation.endWith(ObservableModule)(false),
           ),
         {
-          innerType: DeferredComputationWithSideEffectsType,
+          innerType: DeferredComputationWithSideEffects,
         },
       );
 

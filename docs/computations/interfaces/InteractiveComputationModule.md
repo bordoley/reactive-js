@@ -16,7 +16,7 @@
 
 ## Type Parameters
 
-• **TComputation** *extends* [`Computation`](../type-aliases/Computation.md)
+• **TComputation** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
 
 ## Properties
 
@@ -80,13 +80,13 @@
 
 • **T**
 
-• **TInnerType** *extends* [`DeferringHigherOrderInnerType`](../type-aliases/DeferringHigherOrderInnerType.md)
+• **TInnerType** *extends* [`HigherOrderInnerComputationLike`](../type-aliases/HigherOrderInnerComputationLike.md)
 
 ##### Parameters
 
 ###### onError
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<`Error`, [`ComputationOfInnerType`](../type-aliases/ComputationOfInnerType.md)\<`TComputation`, `TInnerType`, `T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<`Error`, [`HigherOrderInnerComputationOf`](../type-aliases/HigherOrderInnerComputationOf.md)\<`TComputation`, `TInnerType`, `T`\>\>
 
 ###### options
 
@@ -216,13 +216,13 @@
 
 #### Call Signature
 
-> **concatAll**\<`T`, `TInnerType`\>(`options`): [`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, `TInnerType`, [`ComputationOfInnerType`](../type-aliases/ComputationOfInnerType.md)\<`TComputation`, `TInnerType`, `T`\>, `T`\>
+> **concatAll**\<`T`, `TInnerType`\>(`options`): [`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, `TInnerType`, [`HigherOrderInnerComputationOf`](../type-aliases/HigherOrderInnerComputationOf.md)\<`TComputation`, `TInnerType`, `T`\>, `T`\>
 
 ##### Type Parameters
 
 • **T**
 
-• **TInnerType** *extends* [`DeferringHigherOrderInnerType`](../type-aliases/DeferringHigherOrderInnerType.md)
+• **TInnerType** *extends* [`HigherOrderInnerComputationLike`](../type-aliases/HigherOrderInnerComputationLike.md)
 
 ##### Parameters
 
@@ -234,7 +234,7 @@
 
 ##### Returns
 
-[`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, `TInnerType`, [`ComputationOfInnerType`](../type-aliases/ComputationOfInnerType.md)\<`TComputation`, `TInnerType`, `T`\>, `T`\>
+[`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, `TInnerType`, [`HigherOrderInnerComputationOf`](../type-aliases/HigherOrderInnerComputationOf.md)\<`TComputation`, `TInnerType`, `T`\>, `T`\>
 
 ##### Inherited from
 

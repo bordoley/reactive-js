@@ -1,5 +1,5 @@
 import {
-  Computation as ComputationSig,
+  ComputationType,
   Computation_T,
   Computation_baseOfT,
   Computation_deferredWithSideEffectsOfT,
@@ -22,7 +22,7 @@ import EventSource_merge from "./EventSource/__private__/EventSource.merge.js";
 /**
  * @noInheritDoc
  */
-export interface EventSourceComputation extends ComputationSig {
+export interface EventSourceComputation extends ComputationType {
   readonly [Computation_baseOfT]?: EventSourceLike<this[typeof Computation_T]>;
 
   readonly [Computation_pureDeferredOfT]?: never;

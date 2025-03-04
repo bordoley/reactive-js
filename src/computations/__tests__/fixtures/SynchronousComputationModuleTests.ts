@@ -11,8 +11,8 @@ import {
 } from "../../../__internal__/testing.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import {
-  Computation,
   ComputationLike_isPure,
+  ComputationType,
   SynchronousComputationModule,
 } from "../../../computations.js";
 import {
@@ -33,7 +33,9 @@ import * as ComputationM from "../../Computation.js";
 import * as Iterable from "../../Iterable.js";
 import * as Runnable from "../../Runnable.js";
 
-const SynchronousComputationModuleTests = <TComputation extends Computation>(
+const SynchronousComputationModuleTests = <
+  TComputation extends ComputationType,
+>(
   m: SynchronousComputationModule<TComputation>,
 ) =>
   describe(

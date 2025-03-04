@@ -5,9 +5,9 @@ import {
   test,
 } from "../../../__internal__/testing.js";
 import {
-  Computation,
   ComputationBaseOf,
   ComputationModule,
+  ComputationType,
 } from "../../../computations.js";
 import {
   Function1,
@@ -17,7 +17,7 @@ import {
   pipeLazy,
 } from "../../../functions.js";
 
-const ComputationModuleTests = <TComputation extends Computation>(
+const ComputationModuleTests = <TComputation extends ComputationType>(
   m: ComputationModule<TComputation> & {
     fromReadonlyArray: <T>() => Function1<
       ReadonlyArray<T>,

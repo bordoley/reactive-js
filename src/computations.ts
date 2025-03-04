@@ -85,7 +85,7 @@ export const Computation_multicastOfT = Symbol("Computation_multicastOfT");
 /**
  * @noInheritDoc
  */
-export interface GenericComputation<
+export interface GenericComputationType<
   TComputationBaseOfT extends ComputationLike,
   TPureDeferredComputationOfT extends TComputationBaseOfT &
     PureDeferredComputationLike,
@@ -112,7 +112,7 @@ export interface GenericComputation<
   readonly [Computation_multicastOfT]?: TMulticastComputationOfT;
 }
 
-export type Computation = GenericComputation<
+export type ComputationType = GenericComputationType<
   ComputationLike,
   PureDeferredComputationLike,
   DeferredComputationWithSideEffectsLike,
@@ -122,7 +122,7 @@ export type Computation = GenericComputation<
 >;
 
 export type ComputationBaseOf<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
   T,
 > = TComputation extends {
   readonly [Computation_baseOfT]?: unknown;
@@ -138,7 +138,7 @@ export type ComputationBaseOf<
     };
 
 export type DeferredComputationWithSideEffectsOf<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
   T,
 > = TComputation extends {
   readonly [Computation_baseOfT]?: unknown;
@@ -155,7 +155,7 @@ export type DeferredComputationWithSideEffectsOf<
     };
 
 export type PureDeferredComputationOf<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
   T,
 > = TComputation extends {
   readonly [Computation_baseOfT]?: unknown;
@@ -172,7 +172,7 @@ export type PureDeferredComputationOf<
     };
 
 export type SynchronousComputationWithSideEffectsOf<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
   T,
 > = TComputation extends {
   readonly [Computation_baseOfT]?: unknown;
@@ -189,7 +189,7 @@ export type SynchronousComputationWithSideEffectsOf<
     };
 
 export type PureSynchronousComputationOf<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
   T,
 > = TComputation extends {
   readonly [Computation_baseOfT]?: unknown;
@@ -205,7 +205,7 @@ export type PureSynchronousComputationOf<
       readonly _T: () => T;
     };
 export type MulticastComputationOf<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
   T,
 > = TComputation extends {
   readonly [Computation_baseOfT]?: unknown;
@@ -221,26 +221,26 @@ export type MulticastComputationOf<
       readonly _T: () => T;
     };
 
-export type DeferredComputationOf<TComputation extends Computation, T> =
+export type DeferredComputationOf<TComputation extends ComputationType, T> =
   | PureDeferredComputationOf<TComputation, T>
   | DeferredComputationWithSideEffectsOf<TComputation, T>;
 
-export type SynchronousComputationOf<TComputation extends Computation, T> =
+export type SynchronousComputationOf<TComputation extends ComputationType, T> =
   | PureSynchronousComputationOf<TComputation, T>
   | SynchronousComputationWithSideEffectsOf<TComputation, T>;
 
-export type PureComputationOf<TComputation extends Computation, T> =
+export type PureComputationOf<TComputation extends ComputationType, T> =
   | PureSynchronousComputationOf<TComputation, T>
   | PureDeferredComputationOf<TComputation, T>
   | MulticastComputationOf<TComputation, T>;
 
-export type ComputationOf<TComputation extends Computation, T> =
+export type ComputationOf<TComputation extends ComputationType, T> =
   | DeferredComputationOf<TComputation, T>
   | SynchronousComputationOf<TComputation, T>
   | MulticastComputationOf<TComputation, T>;
 
 export type ComputationOperator<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
   TA,
   out TB,
 > = <TComputationOf extends ComputationBaseOf<TComputation, TA>>(
@@ -264,7 +264,7 @@ export type ComputationOperator<
           : never;
 
 export type ComputationWithSideEffectsOperator<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
   TA,
   out TB,
 > = <TComputationOf extends ComputationBaseOf<TComputation, TA>>(
@@ -276,7 +276,7 @@ export type ComputationWithSideEffectsOperator<
   : DeferredComputationWithSideEffectsOf<TComputation, TB>;
 
 export type DeferredComputationOperator<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
   TA,
   out TB,
 > = <TComputationOf extends ComputationBaseOf<TComputation, TA>>(
@@ -288,7 +288,7 @@ export type DeferredComputationOperator<
     : DeferredComputationWithSideEffectsOf<TComputation, TB>;
 
 export type DeferringComputationOperator<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
   TA,
   out TB,
 > = <TComputationOf extends ComputationBaseOf<TComputation, TA>>(
@@ -310,7 +310,7 @@ export type DeferringComputationOperator<
         : PureDeferredComputationOf<TComputation, TB>;
 
 type HigherOrderPureSynchronousComputationOut<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
   TInnerType extends ComputationLike,
   TB,
 > = TInnerType extends PureSynchronousComputationLike
@@ -324,7 +324,7 @@ type HigherOrderPureSynchronousComputationOut<
         : never;
 
 type HigherOrderSynchronousComputationWithSideEffectsOut<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
   TInnerType extends ComputationLike,
   TB,
 > = TInnerType extends SynchronousComputationLike
@@ -334,7 +334,7 @@ type HigherOrderSynchronousComputationWithSideEffectsOut<
     : never;
 
 type HigherOrderPureDeferredComputationOut<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
   TInnerType extends ComputationLike,
   TB,
 > = TInnerType extends PureDeferredComputationLike
@@ -344,36 +344,36 @@ type HigherOrderPureDeferredComputationOut<
     : never;
 
 type HigherOrderDeferredComputationWithSideEffectsOut<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
   TInnerType extends ComputationLike,
   TB,
 > = TInnerType extends DeferredComputationLike
   ? DeferredComputationWithSideEffectsOf<TComputation, TB>
   : never;
 
-export type DeferringHigherOrderInnerType =
+export type HigherOrderInnerComputationLike =
   | PureSynchronousComputationLike
   | SynchronousComputationWithSideEffectsLike
   | PureDeferredComputationLike
   | DeferredComputationWithSideEffectsLike;
 
-export type ComputationOfInnerType<
-  TComputation extends Computation,
-  TType extends DeferringHigherOrderInnerType,
+export type HigherOrderInnerComputationOf<
+  TComputation extends ComputationType,
+  THigherOrderInnerComputation extends HigherOrderInnerComputationLike,
   T,
-> = TType extends PureSynchronousComputationLike
+> = THigherOrderInnerComputation extends PureSynchronousComputationLike
   ? PureSynchronousComputationOf<TComputation, T>
-  : TType extends SynchronousComputationWithSideEffectsLike
+  : THigherOrderInnerComputation extends SynchronousComputationWithSideEffectsLike
     ? SynchronousComputationOf<TComputation, T>
-    : TType extends PureDeferredComputationLike
+    : THigherOrderInnerComputation extends PureDeferredComputationLike
       ? PureDeferredComputationOf<TComputation, T>
-      : TType extends DeferredComputationWithSideEffectsLike
+      : THigherOrderInnerComputation extends DeferredComputationWithSideEffectsLike
         ? DeferredComputationOf<TComputation, T>
         : never;
 
 export type HigherOrderComputationOperator<
-  TComputation extends Computation,
-  TInnerType extends DeferringHigherOrderInnerType,
+  TComputation extends ComputationType,
+  TInnerType extends HigherOrderInnerComputationLike,
   TA,
   out TB,
 > = <TComputationIn extends ComputationBaseOf<TComputation, TA>>(
@@ -402,7 +402,7 @@ export type HigherOrderComputationOperator<
           >
         : never;
 
-export interface ZippingConstructor<TComputation extends Computation> {
+export interface ZippingConstructor<TComputation extends ComputationType> {
   <TA, TB>(
     a: PureSynchronousComputationOf<TComputation, TA>,
     b: PureSynchronousComputationOf<TComputation, TB>,
@@ -487,7 +487,7 @@ export interface ZippingConstructor<TComputation extends Computation> {
   ): PureDeferredComputationOf<TComputation, Tuple4<TA, TB, TC, TD>>;
 }
 
-export interface ComputationModule<TComputation extends Computation> {
+export interface ComputationModule<TComputation extends ComputationType> {
   keep<T>(predicate: Predicate<T>): ComputationOperator<TComputation, T, T>;
 
   map<TA, TB>(
@@ -495,8 +495,9 @@ export interface ComputationModule<TComputation extends Computation> {
   ): ComputationOperator<TComputation, TA, TB>;
 }
 
-export interface SynchronousComputationModule<TComputation extends Computation>
-  extends ComputationModule<TComputation> {
+export interface SynchronousComputationModule<
+  TComputation extends ComputationType,
+> extends ComputationModule<TComputation> {
   catchError<T>(
     onError: SideEffect1<Error>,
   ): DeferringComputationOperator<TComputation, T, T>;
@@ -508,10 +509,10 @@ export interface SynchronousComputationModule<TComputation extends Computation>
     T,
     T
   >;
-  catchError<T, TInnerType extends DeferringHigherOrderInnerType>(
+  catchError<T, TInnerType extends HigherOrderInnerComputationLike>(
     onError: Function1<
       Error,
-      ComputationOfInnerType<TComputation, TInnerType, T>
+      HigherOrderInnerComputationOf<TComputation, TInnerType, T>
     >,
     options: {
       readonly innerType: TInnerType;
@@ -521,15 +522,19 @@ export interface SynchronousComputationModule<TComputation extends Computation>
   concatAll<T>(): HigherOrderComputationOperator<
     TComputation,
     PureSynchronousComputationLike,
-    ComputationOfInnerType<TComputation, PureSynchronousComputationLike, T>,
+    HigherOrderInnerComputationOf<
+      TComputation,
+      PureSynchronousComputationLike,
+      T
+    >,
     T
   >;
-  concatAll<T, TInnerType extends DeferringHigherOrderInnerType>(options: {
+  concatAll<T, TInnerType extends HigherOrderInnerComputationLike>(options: {
     readonly innerType: TInnerType;
   }): HigherOrderComputationOperator<
     TComputation,
     TInnerType,
-    ComputationOfInnerType<TComputation, TInnerType, T>,
+    HigherOrderInnerComputationOf<TComputation, TInnerType, T>,
     T
   >;
 
@@ -626,13 +631,14 @@ export interface SynchronousComputationModule<TComputation extends Computation>
   >;
 }
 
-export interface InteractiveComputationModule<TComputation extends Computation>
-  extends SynchronousComputationModule<TComputation> {
+export interface InteractiveComputationModule<
+  TComputation extends ComputationType,
+> extends SynchronousComputationModule<TComputation> {
   zip: ZippingConstructor<TComputation>;
 }
 
 export interface DeferredReactiveComputationModule<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
 > extends SynchronousComputationModule<TComputation> {
   buffer<T>(options?: {
     count?: number;
@@ -660,7 +666,7 @@ export interface DeferredReactiveComputationModule<
 }
 
 export interface ConcurrentReactiveComputationModule<
-  TComputation extends Computation,
+  TComputation extends ComputationType,
 > extends ComputationModule<TComputation> {
   fromPromise<T>(): Function1<
     Promise<T>,
@@ -741,26 +747,26 @@ export interface IterableWithSideEffectsLike<T = unknown>
   readonly [ComputationLike_isPure]: false;
 }
 
-export const PureSynchronousComputationType: PureSynchronousComputationLike = {
+export const PureSynchronousComputation: PureSynchronousComputationLike = {
   [ComputationLike_isDeferred]: true,
   [ComputationLike_isPure]: true,
   [ComputationLike_isSynchronous]: true,
 };
 
-export const SynchronousComputationWithSideEffectsType: SynchronousComputationWithSideEffectsLike =
+export const SynchronousComputationWithSideEffects: SynchronousComputationWithSideEffectsLike =
   {
     [ComputationLike_isDeferred]: true,
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: true,
   };
 
-export const PureDeferredComputationType: PureDeferredComputationLike = {
+export const PureDeferredComputation: PureDeferredComputationLike = {
   [ComputationLike_isDeferred]: true,
   [ComputationLike_isPure]: true,
   [ComputationLike_isSynchronous]: false,
 };
 
-export const DeferredComputationWithSideEffectsType: DeferredComputationWithSideEffectsLike =
+export const DeferredComputationWithSideEffects: DeferredComputationWithSideEffectsLike =
   {
     [ComputationLike_isDeferred]: true,
     [ComputationLike_isPure]: false,

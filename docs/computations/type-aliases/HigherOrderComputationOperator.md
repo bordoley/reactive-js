@@ -10,9 +10,9 @@
 
 ## Type Parameters
 
-• **TComputation** *extends* [`Computation`](Computation.md)
+• **TComputation** *extends* [`ComputationType`](ComputationType.md)
 
-• **TInnerType** *extends* [`DeferringHigherOrderInnerType`](DeferringHigherOrderInnerType.md)
+• **TInnerType** *extends* [`HigherOrderInnerComputationLike`](HigherOrderInnerComputationLike.md)
 
 • **TA**
 

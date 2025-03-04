@@ -1,10 +1,10 @@
-import { DeferringHigherOrderInnerType } from "../../../computations.js";
+import { HigherOrderInnerComputationLike } from "../../../computations.js";
 import { DropLatestBackpressureStrategy } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_mergeAll from "./Observable.mergeAll.js";
 
 const Observable_exhaust: Observable.Signature["exhaust"] = ((options?: {
-  readonly innerType?: DeferringHigherOrderInnerType;
+  readonly innerType?: HigherOrderInnerComputationLike;
 }) =>
   Observable_mergeAll({
     ...(options ?? {}),

@@ -14,22 +14,22 @@ export const SinkLike_next = Symbol("SinkLike_next");
 export const SinkLike_complete = Symbol("SinkLike_complete");
 export const SinkLike_isComplete = Symbol("SinkLike_isComplete");
 export const RunnableLike_eval = Symbol("RunnableLike_eval");
-export const PureSynchronousComputationType = {
+export const PureSynchronousComputation = {
     [ComputationLike_isDeferred]: true,
     [ComputationLike_isPure]: true,
     [ComputationLike_isSynchronous]: true,
 };
-export const SynchronousComputationWithSideEffectsType = {
+export const SynchronousComputationWithSideEffects = {
     [ComputationLike_isDeferred]: true,
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: true,
 };
-export const PureDeferredComputationType = {
+export const PureDeferredComputation = {
     [ComputationLike_isDeferred]: true,
     [ComputationLike_isPure]: true,
     [ComputationLike_isSynchronous]: false,
 };
-export const DeferredComputationWithSideEffectsType = {
+export const DeferredComputationWithSideEffects = {
     [ComputationLike_isDeferred]: true,
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: false,

@@ -7,8 +7,8 @@ import {
 import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
 import {
+  DeferredComputationWithSideEffects,
   DeferredComputationWithSideEffectsLike,
-  DeferredComputationWithSideEffectsType,
 } from "../../../computations.js";
 import {
   AnimationStreamLike,
@@ -198,7 +198,7 @@ const SpringStream_create: (
           },
 
           {
-            innerType: DeferredComputationWithSideEffectsType,
+            innerType: DeferredComputationWithSideEffects,
           },
         ),
       );

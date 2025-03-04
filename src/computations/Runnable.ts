@@ -1,5 +1,5 @@
 import {
-  Computation as ComputationSig,
+  ComputationType,
   Computation_T,
   Computation_baseOfT,
   Computation_deferredWithSideEffectsOfT,
@@ -45,7 +45,7 @@ import Runnable_toReadonlyArray from "./Runnable/__private__/Runnable.toReadonly
 /**
  * @noInheritDoc
  */
-export interface RunnableComputation extends ComputationSig {
+export interface RunnableComputation extends ComputationType {
   readonly [Computation_baseOfT]?: RunnableLike<this[typeof Computation_T]>;
   readonly [Computation_pureDeferredOfT]?: PureRunnableLike<
     this[typeof Computation_T]

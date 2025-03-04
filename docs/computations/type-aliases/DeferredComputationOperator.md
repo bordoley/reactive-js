@@ -10,7 +10,7 @@
 
 ## Type Parameters
 
-• **TComputation** *extends* [`Computation`](Computation.md)
+• **TComputation** *extends* [`ComputationType`](ComputationType.md)
 
 • **TA**
 

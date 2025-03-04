@@ -2,7 +2,7 @@ import { clampPositiveInteger } from "../__internal__/math.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import {
   ComputationLike_isPure,
-  Computation as ComputationSig,
+  ComputationType,
   Computation_T,
   Computation_baseOfT,
   Computation_deferredWithSideEffectsOfT,
@@ -10,7 +10,7 @@ import {
   Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
-  DeferringHigherOrderInnerType,
+  HigherOrderInnerComputationLike,
   InteractiveComputationModule,
   IterableLike,
   IterableWithSideEffectsLike,
@@ -44,7 +44,7 @@ import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.
 /**
  * @noInheritDoc
  */
-export interface IterableComputation extends ComputationSig {
+export interface IterableComputation extends ComputationType {
   readonly [Computation_baseOfT]?: IterableLike<this[typeof Computation_T]>;
   readonly [Computation_pureDeferredOfT]?: PureIterableLike<
     this[typeof Computation_T]
@@ -108,7 +108,7 @@ class CatchErrorIterable<T> {
 
 export const catchError: Signature["catchError"] = (<
     T,
-    TInnerType extends DeferringHigherOrderInnerType,
+    TInnerType extends HigherOrderInnerComputationLike,
   >(
     onError: SideEffect1<Error> | Function1<Error, IterableLike<T>>,
     options?: {
@@ -143,7 +143,7 @@ class ConcatAllIterable<T> {
 }
 export const concatAll: Signature["concatAll"] = (<
     T,
-    TInnerType extends DeferringHigherOrderInnerType,
+    TInnerType extends HigherOrderInnerComputationLike,
   >(options?: {
     readonly innerType: TInnerType;
   }) =>

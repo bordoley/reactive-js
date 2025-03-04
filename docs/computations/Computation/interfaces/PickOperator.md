@@ -8,7 +8,7 @@
 
 ## Type Parameters
 
-• **TComputation** *extends* [`Computation`](../../type-aliases/Computation.md)
+• **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
 > **PickOperator**\<`T`, `TKeyOfT`\>(`key`): [`ComputationOperator`](../../type-aliases/ComputationOperator.md)\<`TComputation`, `T`, `T`\[`TKeyOfT`\]\>
 

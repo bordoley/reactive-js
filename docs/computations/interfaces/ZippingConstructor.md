@@ -8,7 +8,7 @@
 
 ## Type Parameters
 
-• **TComputation** *extends* [`Computation`](../type-aliases/Computation.md)
+• **TComputation** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
 
 > **ZippingConstructor**\<`TA`, `TB`\>(`a`, `b`): [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 

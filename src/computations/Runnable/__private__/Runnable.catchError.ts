@@ -1,6 +1,6 @@
 import {
   ComputationLike_isPure,
-  DeferringHigherOrderInnerType,
+  HigherOrderInnerComputationLike,
   RunnableLike,
   RunnableLike_eval,
   SinkLike,
@@ -54,7 +54,7 @@ class CatchErrorRunnable<T> implements RunnableLike<T> {
 
 const Runnable_catchError: Runnable.Signature["catchError"] = (<
     T,
-    TInnerType extends DeferringHigherOrderInnerType,
+    TInnerType extends HigherOrderInnerComputationLike,
   >(
     onError: SideEffect1<Error> | Function1<Error, RunnableLike<T>>,
     options?: {

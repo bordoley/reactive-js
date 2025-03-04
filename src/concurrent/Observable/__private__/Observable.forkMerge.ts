@@ -1,8 +1,8 @@
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as Computation from "../../../computations/Computation.js";
 import {
-  ComputationOfInnerType,
   DeferredComputationWithSideEffectsLike,
+  HigherOrderInnerComputationOf,
   PureDeferredComputationLike,
 } from "../../../computations.js";
 import {
@@ -40,7 +40,11 @@ const Observable_forkMerge: Observable.Signature["forkMerge"] = (<
       | readonly [
           ...Function1<
             MulticastObservableLike<TIn>,
-            ComputationOfInnerType<Observable.Computation, TInnerType, TOut>
+            HigherOrderInnerComputationOf<
+              Observable.Computation,
+              TInnerType,
+              TOut
+            >
           >[],
           {
             innerType?: TInnerType;
@@ -48,7 +52,11 @@ const Observable_forkMerge: Observable.Signature["forkMerge"] = (<
         ]
       | readonly Function1<
           MulticastObservableLike<TIn>,
-          ComputationOfInnerType<Observable.Computation, TInnerType, TOut>
+          HigherOrderInnerComputationOf<
+            Observable.Computation,
+            TInnerType,
+            TOut
+          >
         >[]
   ) =>
   (obs: ObservableLike<TIn>) => {
@@ -61,7 +69,7 @@ const Observable_forkMerge: Observable.Signature["forkMerge"] = (<
     ) as ReadonlyArray<
       Function1<
         MulticastObservableLike<TIn>,
-        ComputationOfInnerType<Observable.Computation, TInnerType, TOut>
+        HigherOrderInnerComputationOf<Observable.Computation, TInnerType, TOut>
       >
     >;
     const innerType = maybeConfig?.innerType ?? {};
