@@ -20,7 +20,7 @@ const RunnableTypes = {
 testModule(
   "Runnable",
   ComputationModuleTests(Runnable, RunnableTypes),
-  DeferredReactiveComputationModuleTests(Runnable),
+  DeferredReactiveComputationModuleTests(Runnable, RunnableTypes),
   SynchronousComputationModuleTests(Runnable, RunnableTypes),
 );
 

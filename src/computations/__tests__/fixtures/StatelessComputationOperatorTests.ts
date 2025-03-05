@@ -76,6 +76,7 @@ const StatelessComputationOperatorTests = <
               computationType[Computation_pureDeferredOfT],
               operator,
               ComputationExpect.isPureDeferred,
+              ComputationExpect.isNotSynchronous,
             ),
           ),
 
@@ -86,6 +87,7 @@ const StatelessComputationOperatorTests = <
               computationType[Computation_deferredWithSideEffectsOfT],
               operator,
               ComputationExpect.isDeferredWithSideEffects,
+              ComputationExpect.isNotSynchronous,
             ),
           ),
 

@@ -40,10 +40,12 @@ import {
   raise,
   returns,
 } from "../../../functions.js";
-import * as ComputationM from "../../Computation.js";
+import * as Computation from "../../Computation.js";
 import * as Iterable from "../../Iterable.js";
 import * as Runnable from "../../Runnable.js";
 import ComputationOperatorWithSideEffectsTests from "./ComputationOperatorWithSideEffectsTests.js";
+import * as ComputationTest from "./ComputationTest.js";
+import StatefulSynchronousComputationOperatorTests from "./StatefulSynchronousComputationOperatorTests.js";
 
 const SynchronousComputationModuleTests = <
   TComputation extends ComputationType,
@@ -118,7 +120,7 @@ const SynchronousComputationModuleTests = <
         pipeLazy(
           [1, 2, 3],
           m.fromReadonlyArray<number>(),
-          ComputationM.concatWith(m)(m.raise<number>()),
+          Computation.concatWith(m)(m.raise<number>()),
           m.catchError<number>(
             pipeLazy([4, 5, 6], m.fromReadonlyArray<number>()),
           ),
@@ -198,6 +200,10 @@ const SynchronousComputationModuleTests = <
     ),
     describe(
       "encodeUtf8",
+      StatefulSynchronousComputationOperatorTests(
+        computationType,
+        m.encodeUtf8(),
+      ),
       test("encoding ascii", () => {
         const str = "abcdefghijklmnsopqrstuvwxyz";
 
@@ -362,6 +368,8 @@ const SynchronousComputationModuleTests = <
     ),
     describe(
       "raise",
+      ComputationTest.isPureSynchronous(m.raise()),
+
       test("when raise function returns an value", () => {
         const e1 = "e1";
 
@@ -417,6 +425,14 @@ const SynchronousComputationModuleTests = <
     ),
     describe(
       "repeat",
+      StatefulSynchronousComputationOperatorTests(
+        {
+          ...computationType,
+          // Repeat does not support multicasted input
+          [Computation_multicastOfT]: none,
+        },
+        m.repeat(),
+      ),
       test(
         "when repeating forever.",
         pipeLazy(
@@ -465,6 +481,14 @@ const SynchronousComputationModuleTests = <
     ),
     describe(
       "retry",
+      StatefulSynchronousComputationOperatorTests(
+        {
+          ...computationType,
+          // Repeat does not support multicasted input
+          [Computation_multicastOfT]: none,
+        },
+        m.retry(),
+      ),
       test(
         "retrys the container on an exception",
         pipeLazy(
@@ -506,6 +530,10 @@ const SynchronousComputationModuleTests = <
     ),
     describe(
       "scan",
+      StatefulSynchronousComputationOperatorTests(
+        computationType,
+        m.scan(increment, returns(0)),
+      ),
       test(
         "sums all the values in the array emitting intermediate values.",
         pipeLazy(
@@ -556,7 +584,7 @@ const SynchronousComputationModuleTests = <
         pipeLazy(
           [0, 1],
           m.fromReadonlyArray<number>(),
-          ComputationM.startWith(m)(2, 3, 4),
+          Computation.startWith(m)(2, 3, 4),
           m.toReadonlyArray<number>(),
           expectArrayEquals([2, 3, 4, 0, 1]),
         ),
@@ -564,6 +592,10 @@ const SynchronousComputationModuleTests = <
     ),
     describe(
       "takeFirst",
+      StatefulSynchronousComputationOperatorTests(
+        computationType,
+        m.takeFirst(),
+      ),
       test(
         "with default count",
         pipeLazy(
@@ -637,6 +669,10 @@ const SynchronousComputationModuleTests = <
     ),
     describe(
       "takeWhile",
+      StatefulSynchronousComputationOperatorTests(
+        computationType,
+        m.takeWhile(alwaysTrue),
+      ),
       test("exclusive", () => {
         pipe(
           [1, 2, 3, 4, 5],
@@ -691,6 +727,10 @@ const SynchronousComputationModuleTests = <
     ),
     describe(
       "throwIfEmpty",
+      StatefulSynchronousComputationOperatorTests(
+        computationType,
+        m.throwIfEmpty(() => new Error()),
+      ),
       test("when source is empty", () => {
         const error = new Error();
         pipe(

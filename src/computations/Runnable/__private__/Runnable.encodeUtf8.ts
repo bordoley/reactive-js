@@ -1,5 +1,4 @@
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationOf,
   RunnableLike,
@@ -15,7 +14,7 @@ class EncodeUtf8Runnable implements RunnableLike<Uint8Array<ArrayBufferLike>> {
   readonly [ComputationLike_isPure]?: boolean;
 
   constructor(private readonly s: ComputationOf<Runnable.Computation, string>) {
-    this[ComputationLike_isPure] = s[ComputationLike_isDeferred];
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
   }
 
   [RunnableLike_eval](sink: SinkLike<Uint8Array<ArrayBufferLike>>): void {

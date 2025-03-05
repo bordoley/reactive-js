@@ -7,8 +7,18 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   ComputationType,
+  Computation_deferredWithSideEffectsOfT,
+  Computation_multicastOfT,
+  Computation_pureDeferredOfT,
+  Computation_pureSynchronousOfT,
+  Computation_synchronousWithSideEffectsOfT,
+  DeferredComputationWithSideEffectsOf,
   DeferredReactiveComputationModule,
+  MulticastComputationOf,
+  PureDeferredComputationOf,
+  PureSynchronousComputationOf,
   SynchronousComputationModule,
+  SynchronousComputationWithSideEffectsOf,
 } from "../../../computations.js";
 import {
   Tuple2,
@@ -18,17 +28,41 @@ import {
   pipeLazy,
   tuple,
 } from "../../../functions.js";
+import StatefulSynchronousComputationOperatorTests from "./StatefulSynchronousComputationOperatorTests.js";
 
 const DeferredReactiveComputationModuleTests = <
   TComputation extends ComputationType,
 >(
   m: DeferredReactiveComputationModule<TComputation> &
     SynchronousComputationModule<TComputation>,
+  computationType: {
+    readonly [Computation_pureSynchronousOfT]?: PureSynchronousComputationOf<
+      TComputation,
+      unknown
+    >;
+    readonly [Computation_synchronousWithSideEffectsOfT]?: SynchronousComputationWithSideEffectsOf<
+      TComputation,
+      unknown
+    >;
+    readonly [Computation_pureDeferredOfT]?: PureDeferredComputationOf<
+      TComputation,
+      unknown
+    >;
+    readonly [Computation_deferredWithSideEffectsOfT]?: DeferredComputationWithSideEffectsOf<
+      TComputation,
+      unknown
+    >;
+    readonly [Computation_multicastOfT]?: MulticastComputationOf<
+      TComputation,
+      unknown
+    >;
+  },
 ) =>
   describe(
     "DeferredReactiveComputationModule",
     describe(
       "buffer",
+      StatefulSynchronousComputationOperatorTests(computationType, m.buffer()),
       test(
         "with multiple sub buffers",
         pipeLazy(
@@ -78,6 +112,10 @@ const DeferredReactiveComputationModuleTests = <
     ),
     describe(
       "decodeWithCharset",
+      StatefulSynchronousComputationOperatorTests(
+        computationType,
+        m.decodeWithCharset(),
+      ),
       test("decoding ascii", () => {
         const str = "abcdefghijklmnsopqrstuvwxyz";
 
@@ -139,6 +177,10 @@ const DeferredReactiveComputationModuleTests = <
     ),
     describe(
       "distinctUntilChanged",
+      StatefulSynchronousComputationOperatorTests(
+        computationType,
+        m.distinctUntilChanged(),
+      ),
       test(
         "when source has duplicates in order",
         pipeLazy(
@@ -189,6 +231,10 @@ const DeferredReactiveComputationModuleTests = <
     ),
     describe(
       "pairwise",
+      StatefulSynchronousComputationOperatorTests(
+        computationType,
+        m.pairwise(),
+      ),
       test(
         "when there are more than one input value",
         pipeLazy(
@@ -227,6 +273,10 @@ const DeferredReactiveComputationModuleTests = <
     ),
     describe(
       "skipFirst",
+      StatefulSynchronousComputationOperatorTests(
+        computationType,
+        m.skipFirst(),
+      ),
       test(
         "with default count",
         pipeLazy(
@@ -260,6 +310,10 @@ const DeferredReactiveComputationModuleTests = <
     ),
     describe(
       "takeLast",
+      StatefulSynchronousComputationOperatorTests(
+        computationType,
+        m.takeLast(),
+      ),
       test(
         "with default count",
         pipeLazy(

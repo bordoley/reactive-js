@@ -57,7 +57,6 @@ import {
   Function1,
   Optional,
   Tuple2,
-  alwaysTrue,
   arrayEquality,
   bindMethod,
   error,
@@ -348,7 +347,7 @@ testModule(
     },
     ObservableTypes,
   ),
-  DeferredReactiveComputationModuleTests(Observable),
+  DeferredReactiveComputationModuleTests(Observable, ObservableTypes),
   SynchronousComputationModuleTests<Observable.Computation>(
     Observable,
     ObservableTypes,
@@ -411,7 +410,6 @@ testModule(
       Observable.backpressureStrategy(10, DropLatestBackpressureStrategy),
     ),
   ),
-  describe("buffer", DeferredReactiveObservableOperator(Observable.buffer())),
   describe(
     "catchError",
     test("when the error handler throws an error from a delayed source", () => {
@@ -779,10 +777,6 @@ testModule(
     ComputationTest.isPureSynchronous(Observable.currentTime),
   ),
   describe(
-    "decodeWithCharset",
-    DeferredReactiveObservableOperator(Observable.decodeWithCharset()),
-  ),
-  describe(
     "defer",
     testAsync("defering a promise converted to an Observable", async () => {
       using scheduler = HostScheduler.create();
@@ -878,10 +872,6 @@ testModule(
     }),
   ),
   describe(
-    "distinctUntilChanged",
-    DeferredReactiveObservableOperator(Observable.distinctUntilChanged()),
-  ),
-  describe(
     "empty",
     test("with delay", () => {
       let disposedTime = -1;
@@ -899,10 +889,6 @@ testModule(
       pipe(disposedTime, expectEquals(5));
     }),
     ComputationTest.isPureSynchronous(Observable.empty({ delay: 1 })),
-  ),
-  describe(
-    "encodeUtf8",
-    DeferredReactiveObservableOperator(Observable.encodeUtf8()),
   ),
   describe(
     "enqueue",
@@ -1275,72 +1261,6 @@ testModule(
       );
     }),
   ),
-  describe("merge"),
-  describe(
-    "mergeAll",
-    test(
-      "with queueing",
-      pipeLazy(
-        [
-          pipe([1, 3, 5], Observable.fromReadonlyArray({ delay: 3 })),
-          pipe([2, 4, 6], Observable.fromReadonlyArray({ delay: 3 })),
-          pipe([9, 10], Observable.fromReadonlyArray({ delay: 3 })),
-        ],
-        Observable.fromReadonlyArray(),
-        Observable.mergeAll<number>({
-          concurrency: 2,
-        }),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]),
-      ),
-    ),
-    testAsync(
-      "without delay, merge all observables as they are produced",
-      async () => {
-        using scheduler = HostScheduler.create();
-        await pipeAsync(
-          [1, 2, 3],
-          Observable.fromReadonlyArray(),
-          Computation.flatMap(
-            Observable,
-            "mergeAll",
-          )<number, number>(x =>
-            pipe([x, x, x], Observable.fromReadonlyArray<number>()),
-          ),
-          Observable.toReadonlyArrayAsync(scheduler),
-          expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
-        );
-      },
-    ),
-    test(
-      "without delay, merge all observables as they are produced",
-      pipeLazy(
-        [1, 2, 3],
-        Observable.fromReadonlyArray(),
-        Computation.concatMap(Observable)<number, number>(x =>
-          pipe([x, x, x], Observable.fromReadonlyArray<number>()),
-        ),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
-      ),
-    ),
-    DeferredReactiveObservableOperator(Observable.mergeAll()),
-    DeferringObservableOperatorTests(
-      Observable.mergeAll({
-        innerType: PureDeferredComputation,
-      }),
-    ),
-    ObservableOperatorWithSideEffectsTests(
-      Observable.mergeAll({
-        innerType: SynchronousComputationWithSideEffects,
-      }),
-    ),
-    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
-      Observable.mergeAll({
-        innerType: DeferredComputationWithSideEffects,
-      }),
-    ),
-  ),
   describe(
     "merge",
     test("validate output runtime type", () => {
@@ -1485,6 +1405,71 @@ testModule(
     ),
   ),
   describe(
+    "mergeAll",
+    test(
+      "with queueing",
+      pipeLazy(
+        [
+          pipe([1, 3, 5], Observable.fromReadonlyArray({ delay: 3 })),
+          pipe([2, 4, 6], Observable.fromReadonlyArray({ delay: 3 })),
+          pipe([9, 10], Observable.fromReadonlyArray({ delay: 3 })),
+        ],
+        Observable.fromReadonlyArray(),
+        Observable.mergeAll<number>({
+          concurrency: 2,
+        }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]),
+      ),
+    ),
+    testAsync(
+      "without delay, merge all observables as they are produced",
+      async () => {
+        using scheduler = HostScheduler.create();
+        await pipeAsync(
+          [1, 2, 3],
+          Observable.fromReadonlyArray(),
+          Computation.flatMap(
+            Observable,
+            "mergeAll",
+          )<number, number>(x =>
+            pipe([x, x, x], Observable.fromReadonlyArray<number>()),
+          ),
+          Observable.toReadonlyArrayAsync(scheduler),
+          expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
+        );
+      },
+    ),
+    test(
+      "without delay, merge all observables as they are produced",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Computation.concatMap(Observable)<number, number>(x =>
+          pipe([x, x, x], Observable.fromReadonlyArray<number>()),
+        ),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
+      ),
+    ),
+    DeferredReactiveObservableOperator(Observable.mergeAll()),
+    DeferringObservableOperatorTests(
+      Observable.mergeAll({
+        innerType: PureDeferredComputation,
+      }),
+    ),
+    ObservableOperatorWithSideEffectsTests(
+      Observable.mergeAll({
+        innerType: SynchronousComputationWithSideEffects,
+      }),
+    ),
+    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
+      Observable.mergeAll({
+        innerType: DeferredComputationWithSideEffects,
+      }),
+    ),
+  ),
+  describe(
     "multicast",
     ComputationTest.isMulticasted(
       (() => {
@@ -1596,11 +1581,6 @@ testModule(
     }),
   ),
   describe(
-    "pairwise",
-    DeferredReactiveObservableOperator(Observable.pairwise()),
-  ),
-  describe("raise", ComputationTest.isPureSynchronous(Observable.raise())),
-  describe(
     "repeat",
     test(
       "when repeating a finite amount of times, with delayed source.",
@@ -1636,14 +1616,6 @@ testModule(
         expectToThrowError(err),
       );
     }),
-    DeferringObservableOperatorTests(Observable.repeat()),
-  ),
-  describe("retry", DeferringObservableOperatorTests(Observable.retry(raise))),
-  describe(
-    "scan",
-    DeferredReactiveObservableOperator(
-      Observable.scan((acc, _) => acc, returns(none)),
-    ),
   ),
   describe(
     "scanMany",
@@ -1686,10 +1658,6 @@ testModule(
         innerType: DeferredComputationWithSideEffects,
       }),
     ),
-  ),
-  describe(
-    "skipFirst",
-    DeferredReactiveObservableOperator(Observable.skipFirst()),
   ),
   describe(
     "spring",
@@ -1801,14 +1769,6 @@ testModule(
     ),
   ),
   describe(
-    "takeFirst",
-    DeferredReactiveObservableOperator(Observable.takeFirst()),
-  ),
-  describe(
-    "takeLast",
-    DeferredReactiveObservableOperator(Observable.takeLast()),
-  ),
-  describe(
     "takeUntil",
     test(
       "takes until the notifier notifies its first notification",
@@ -1844,10 +1804,6 @@ testModule(
       ),
     ),
     DeferringObservableOperatorTests(Observable.takeUntil(Subject.create())),
-  ),
-  describe(
-    "takeWhile",
-    DeferredReactiveObservableOperator(Observable.takeWhile(alwaysTrue)),
   ),
   describe(
     "throttle",
@@ -1930,9 +1886,6 @@ testModule(
         Observable.toReadonlyArray<number>(),
         expectArrayEquals([1]),
       ),
-    ),
-    DeferredReactiveObservableOperator(
-      Observable.throwIfEmpty(() => newInstance(Error)),
     ),
   ),
   describe(

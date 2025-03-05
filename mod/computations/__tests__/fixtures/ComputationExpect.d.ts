@@ -1,6 +1,9 @@
 import { ComputationLike } from "../../../computations.js";
-export declare const isPureSynchronous: (x: ComputationLike) => boolean;
-export declare const isSynchronousWithSideEffects: (x: ComputationLike) => boolean;
-export declare const isPureDeferred: (x: ComputationLike) => ComputationLike;
-export declare const isDeferredWithSideEffects: (x: ComputationLike) => ComputationLike;
-export declare const isMulticasted: (x: ComputationLike) => ComputationLike;
+export declare const isPureSynchronous: <TComputation extends ComputationLike>(x: TComputation) => TComputation;
+export declare const isNotPureSynchronous: <TComputation extends ComputationLike>(x: TComputation) => TComputation;
+export declare const isSynchronousWithSideEffects: <TComputation extends ComputationLike>(x: TComputation) => TComputation;
+export declare const isNotSynchronousWithSideEffects: <TComputation extends ComputationLike>(x: TComputation) => TComputation;
+export declare const isNotSynchronous: <TComputation extends ComputationLike>(x: TComputation) => TComputation;
+export declare const isPureDeferred: <TComputation extends ComputationLike>(x: TComputation) => TComputation;
+export declare const isDeferredWithSideEffects: <TComputation extends ComputationLike>(x: TComputation) => TComputation;
+export declare const isMulticasted: <TComputation extends ComputationLike>(x: TComputation) => TComputation;
