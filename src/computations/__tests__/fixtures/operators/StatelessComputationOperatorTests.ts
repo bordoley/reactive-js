@@ -1,6 +1,5 @@
-import { Test, describe, test } from "../../../__internal__/testing.js";
+import { Test, describe, test } from "../../../../__internal__/testing.js";
 import {
-  ComputationOperatorWithSideEffects,
   ComputationType,
   Computation_deferredWithSideEffectsOfT,
   Computation_multicastOfT,
@@ -11,14 +10,15 @@ import {
   MulticastComputationOf,
   PureDeferredComputationOf,
   PureSynchronousComputationOf,
+  StatelessComputationOperator,
   SynchronousComputationWithSideEffectsOf,
-} from "../../../computations.js";
-import { Optional, isSome, pipe, pipeSomeLazy } from "../../../functions.js";
-import * as Computation from "../../Computation.js";
-import * as Iterable from "../../Iterable.js";
-import * as ComputationExpect from "./ComputationExpect.js";
+} from "../../../../computations.js";
+import { Optional, isSome, pipe, pipeSomeLazy } from "../../../../functions.js";
+import * as Computation from "../../../Computation.js";
+import * as Iterable from "../../../Iterable.js";
+import * as ComputationExpect from "../helpers/ComputationExpect.js";
 
-const ComputationOperatorWithSideEffectsTests = <
+const StatelessComputationOperatorTests = <
   TComputation extends ComputationType,
 >(
   computationType: {
@@ -43,19 +43,20 @@ const ComputationOperatorWithSideEffectsTests = <
       unknown
     >;
   },
-  operator: ComputationOperatorWithSideEffects<TComputation, unknown, unknown>,
-) => {
-  return describe(
-    "ComputationOperatorWithSideEffects",
+  operator: StatelessComputationOperator<TComputation, unknown, unknown>,
+) =>
+  describe(
+    "StatelessComputationOperator",
     ...pipe(
       [
         computationType[Computation_pureSynchronousOfT] &&
           test(
-            "with PureSynchronous input, returns SynchronousWithSideEffects output",
+            "with PureSynchronous input, returns PureSynchronous output",
             pipeSomeLazy(
               computationType[Computation_pureSynchronousOfT],
+              ComputationExpect.isPureSynchronous,
               operator,
-              ComputationExpect.isSynchronousWithSideEffects,
+              ComputationExpect.isPureSynchronous,
             ),
           ),
 
@@ -64,6 +65,7 @@ const ComputationOperatorWithSideEffectsTests = <
             "with SynchronousWithSideEffects input, returns SynchronousWithSideEffects output",
             pipeSomeLazy(
               computationType[Computation_synchronousWithSideEffectsOfT],
+              ComputationExpect.isSynchronousWithSideEffects,
               operator,
               ComputationExpect.isSynchronousWithSideEffects,
             ),
@@ -71,11 +73,14 @@ const ComputationOperatorWithSideEffectsTests = <
 
         computationType[Computation_pureDeferredOfT] &&
           test(
-            "with PureDeferred input, returns DeferredWithSideEffects output",
+            "with PureDeferred input, returns PureDeferred output",
             pipeSomeLazy(
               computationType[Computation_pureDeferredOfT],
+              ComputationExpect.isPureDeferred,
+              ComputationExpect.isNotSynchronous,
               operator,
-              ComputationExpect.isDeferredWithSideEffects,
+              ComputationExpect.isPureDeferred,
+              ComputationExpect.isNotSynchronous,
             ),
           ),
 
@@ -84,18 +89,22 @@ const ComputationOperatorWithSideEffectsTests = <
             "with DeferredWithSideEffects input, returns DeferredWithSideEffects output",
             pipeSomeLazy(
               computationType[Computation_deferredWithSideEffectsOfT],
+              ComputationExpect.isDeferredWithSideEffects,
+              ComputationExpect.isNotSynchronous,
               operator,
               ComputationExpect.isDeferredWithSideEffects,
+              ComputationExpect.isNotSynchronous,
             ),
           ),
 
         computationType[Computation_multicastOfT] &&
           test(
-            "with Multicasted input, returns DeferredWithSideEffects output",
+            "with Multicasted input, returns Multicasted output",
             pipeSomeLazy(
               computationType[Computation_multicastOfT],
+              ComputationExpect.isMulticasted,
               operator,
-              ComputationExpect.isDeferredWithSideEffects,
+              ComputationExpect.isMulticasted,
             ),
           ),
       ],
@@ -103,6 +112,5 @@ const ComputationOperatorWithSideEffectsTests = <
       Iterable.toReadonlyArray(),
     ),
   );
-};
 
-export default ComputationOperatorWithSideEffectsTests;
+export default StatelessComputationOperatorTests;

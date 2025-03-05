@@ -19,15 +19,15 @@ import {
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as Computation from "../../computations/Computation.js";
-import * as ComputationExpect from "../../computations/__tests__/fixtures/ComputationExpect.js";
 import ComputationModuleTests from "../../computations/__tests__/fixtures/ComputationModuleTests.js";
-import ComputationOperatorWithSideEffectsTests from "../../computations/__tests__/fixtures/ComputationOperatorWithSideEffectsTests.js";
-import * as ComputationTest from "../../computations/__tests__/fixtures/ComputationTest.js";
 import DeferredReactiveComputationModuleTests from "../../computations/__tests__/fixtures/DeferredReactiveComputationModuleTests.js";
-import HigherOrderComputationOperatorTests from "../../computations/__tests__/fixtures/HigherOrderComputationOperatorTests.js";
-import StatefulSynchronousComputationOperatorTests from "../../computations/__tests__/fixtures/StatefulSynchronousComputationOperatorTests.js";
-import StatelessAsynchronousComputationOperatorTests from "../../computations/__tests__/fixtures/StatelessAsynchronousComputationOperatorTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
+import * as ComputationExpect from "../../computations/__tests__/fixtures/helpers/ComputationExpect.js";
+import * as ComputationTest from "../../computations/__tests__/fixtures/helpers/ComputationTest.js";
+import ComputationOperatorWithSideEffectsTests from "../../computations/__tests__/fixtures/operators/ComputationOperatorWithSideEffectsTests.js";
+import HigherOrderComputationOperatorTests from "../../computations/__tests__/fixtures/operators/HigherOrderComputationOperatorTests.js";
+import StatefulSynchronousComputationOperatorTests from "../../computations/__tests__/fixtures/operators/StatefulSynchronousComputationOperatorTests.js";
+import StatelessAsynchronousComputationOperatorTests from "../../computations/__tests__/fixtures/operators/StatelessAsynchronousComputationOperatorTests.js";
 import {
   ComputationModule,
   ComputationOf,

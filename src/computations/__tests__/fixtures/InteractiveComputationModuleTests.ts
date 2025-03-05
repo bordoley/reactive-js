@@ -8,7 +8,7 @@ import {
   InteractiveComputationModule,
 } from "../../../computations.js";
 import { pipeLazy } from "../../../functions.js";
-import * as ComputationM from "../../Computation.js";
+import * as Computation from "../../Computation.js";
 
 const InteractiveComputationModuleTests = <
   TComputation extends ComputationType,
@@ -27,7 +27,7 @@ const InteractiveComputationModuleTests = <
             m.fromReadonlyArray<number>()([0, 1, 2]),
             m.fromReadonlyArray<number>()([0, 1, 2, 3]),
           ),
-          ComputationM.concatMap(m)(m.fromReadonlyArray<number>()),
+          Computation.concatMap(m)(m.fromReadonlyArray<number>()),
           m.toReadonlyArray<number>(),
           expectArrayEquals([0, 0, 0, 1, 1, 1, 2, 2, 2]),
         ),
@@ -40,7 +40,7 @@ const InteractiveComputationModuleTests = <
             m.fromReadonlyArray<number>()([]),
             m.fromReadonlyArray<number>()([0, 1, 2, 3]),
           ),
-          ComputationM.concatMap(m)(m.fromReadonlyArray<number>()),
+          Computation.concatMap(m)(m.fromReadonlyArray<number>()),
           m.toReadonlyArray<number>(),
           expectArrayEquals<number>([]),
         ),

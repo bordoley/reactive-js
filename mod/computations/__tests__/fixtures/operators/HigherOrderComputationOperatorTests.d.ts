@@ -1,0 +1,9 @@
+import { ComputationType, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, DeferredComputationWithSideEffectsLike, DeferredComputationWithSideEffectsOf, HigherOrderComputationOperator, MulticastComputationOf, PureDeferredComputationLike, PureDeferredComputationOf, PureSynchronousComputationLike, PureSynchronousComputationOf, SynchronousComputationWithSideEffectsLike, SynchronousComputationWithSideEffectsOf } from "../../../../computations.js";
+declare const HigherOrderComputationOperatorTests: <TComputation extends ComputationType>(computationType: {
+    readonly [Computation_pureSynchronousOfT]?: PureSynchronousComputationOf<TComputation, unknown>;
+    readonly [Computation_synchronousWithSideEffectsOfT]?: SynchronousComputationWithSideEffectsOf<TComputation, unknown>;
+    readonly [Computation_pureDeferredOfT]?: PureDeferredComputationOf<TComputation, unknown>;
+    readonly [Computation_deferredWithSideEffectsOfT]?: DeferredComputationWithSideEffectsOf<TComputation, unknown>;
+    readonly [Computation_multicastOfT]?: MulticastComputationOf<TComputation, unknown>;
+}, operatorPureSynchronousInner?: HigherOrderComputationOperator<TComputation, PureSynchronousComputationLike, any, unknown>, operatorSynchronousWithSideEffectsInner?: HigherOrderComputationOperator<TComputation, SynchronousComputationWithSideEffectsLike, any, unknown>, operatorPureDeferredInner?: HigherOrderComputationOperator<TComputation, PureDeferredComputationLike, any, unknown>, operatorDeferredWithSideEffectsInner?: HigherOrderComputationOperator<TComputation, DeferredComputationWithSideEffectsLike, any, unknown>) => import("../../../../__internal__/testing.js").Describe;
+export default HigherOrderComputationOperatorTests;

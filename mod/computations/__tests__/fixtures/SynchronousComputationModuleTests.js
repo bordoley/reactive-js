@@ -8,11 +8,11 @@ import { alwaysTrue, ignore, increment, invoke, lessThan, newInstance, none, pic
 import * as Computation from "../../Computation.js";
 import * as Iterable from "../../Iterable.js";
 import * as Runnable from "../../Runnable.js";
-import ComputationOperatorWithSideEffectsTests from "./ComputationOperatorWithSideEffectsTests.js";
-import * as ComputationTest from "./ComputationTest.js";
-import HigherOrderComputationOperatorTests from "./HigherOrderComputationOperatorTests.js";
-import StatefulSynchronousComputationOperatorTests from "./StatefulSynchronousComputationOperatorTests.js";
-import StatelessComputationOperatorTests from "./StatelessComputationOperatorTests.js";
+import * as ComputationTest from "./helpers/ComputationTest.js";
+import ComputationOperatorWithSideEffectsTests from "./operators/ComputationOperatorWithSideEffectsTests.js";
+import HigherOrderComputationOperatorTests from "./operators/HigherOrderComputationOperatorTests.js";
+import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSynchronousComputationOperatorTests.js";
+import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
 const SynchronousComputationModuleTests = (m, computationType) => {
     const { [Computation_pureSynchronousOfT]: pureSynchronousComputation, [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffects, [Computation_pureDeferredOfT]: pureDeferredOfT, [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT, } = computationType;
     return describe("SynchronousComputationModule", describe("catchError", HigherOrderComputationOperatorTests(computationType, pureSynchronousComputation &&

@@ -3,7 +3,7 @@
 import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, } from "../../../__internal__/testing.js";
 import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../../computations.js";
 import { arrayEquality, invoke, pipe, pipeLazy, tuple, } from "../../../functions.js";
-import StatefulSynchronousComputationOperatorTests from "./StatefulSynchronousComputationOperatorTests.js";
+import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSynchronousComputationOperatorTests.js";
 const DeferredReactiveComputationModuleTests = (m, computationType) => describe("DeferredReactiveComputationModule", describe("buffer", StatefulSynchronousComputationOperatorTests(computationType, m.buffer()), test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],

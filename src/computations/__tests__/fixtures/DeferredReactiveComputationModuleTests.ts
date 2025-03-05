@@ -28,7 +28,7 @@ import {
   pipeLazy,
   tuple,
 } from "../../../functions.js";
-import StatefulSynchronousComputationOperatorTests from "./StatefulSynchronousComputationOperatorTests.js";
+import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSynchronousComputationOperatorTests.js";
 
 const DeferredReactiveComputationModuleTests = <
   TComputation extends ComputationType,

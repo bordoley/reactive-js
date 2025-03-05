@@ -1,4 +1,4 @@
-import { Test, describe, test } from "../../../__internal__/testing.js";
+import { Test, describe, test } from "../../../../__internal__/testing.js";
 import {
   ComputationType,
   Computation_deferredWithSideEffectsOfT,
@@ -10,15 +10,15 @@ import {
   MulticastComputationOf,
   PureDeferredComputationOf,
   PureSynchronousComputationOf,
-  StatelessComputationOperator,
+  StatefulSynchronousComputationOperator,
   SynchronousComputationWithSideEffectsOf,
-} from "../../../computations.js";
-import { Optional, isSome, pipe, pipeSomeLazy } from "../../../functions.js";
-import * as Computation from "../../Computation.js";
-import * as Iterable from "../../Iterable.js";
-import * as ComputationExpect from "./ComputationExpect.js";
+} from "../../../../computations.js";
+import { Optional, isSome, pipe, pipeSomeLazy } from "../../../../functions.js";
+import * as Computation from "../../../Computation.js";
+import * as Iterable from "../../../Iterable.js";
+import * as ComputationExpect from "../helpers/ComputationExpect.js";
 
-const StatelessComputationOperatorTests = <
+const StatefulSynchronousComputationOperatorTests = <
   TComputation extends ComputationType,
 >(
   computationType: {
@@ -43,10 +43,10 @@ const StatelessComputationOperatorTests = <
       unknown
     >;
   },
-  operator: StatelessComputationOperator<TComputation, unknown, unknown>,
+  operator: StatefulSynchronousComputationOperator<TComputation, any, unknown>,
 ) =>
   describe(
-    "StatelessComputationOperator",
+    "StatefulSynchronousComputationOperator",
     ...pipe(
       [
         computationType[Computation_pureSynchronousOfT] &&
@@ -99,12 +99,13 @@ const StatelessComputationOperatorTests = <
 
         computationType[Computation_multicastOfT] &&
           test(
-            "with Multicasted input, returns Multicasted output",
+            "with Multicasted input, returns PureDeferred output",
             pipeSomeLazy(
               computationType[Computation_multicastOfT],
               ComputationExpect.isMulticasted,
               operator,
-              ComputationExpect.isMulticasted,
+              ComputationExpect.isPureDeferred,
+              ComputationExpect.isNotSynchronous,
             ),
           ),
       ],
@@ -113,4 +114,4 @@ const StatelessComputationOperatorTests = <
     ),
   );
 
-export default StatelessComputationOperatorTests;
+export default StatefulSynchronousComputationOperatorTests;

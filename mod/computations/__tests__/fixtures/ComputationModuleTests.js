@@ -3,7 +3,7 @@
 import { describe, expectArrayEquals, expectToThrowError, test, } from "../../../__internal__/testing.js";
 import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../../computations.js";
 import { alwaysTrue, greaterThan, identity, increment, pipe, pipeLazy, } from "../../../functions.js";
-import StatelessComputationOperatorTests from "./StatelessComputationOperatorTests.js";
+import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
 const ComputationModuleTests = (m, computationType) => describe("ComputationModule", describe("keep", StatelessComputationOperatorTests(computationType, m.keep(alwaysTrue)), test("keeps only values greater than 5", pipeLazy([4, 8, 10, 7], m.fromReadonlyArray(), m.keep(greaterThan(5)), m.toReadonlyArray(), expectArrayEquals([8, 10, 7]))), test("when predicate throws", () => {
     const err = new Error();
     const predicate = (_a) => {

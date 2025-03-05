@@ -1,12 +1,12 @@
-import { test } from "../../../__internal__/testing.js";
+import { test } from "../../../../__internal__/testing.js";
 import {
   DeferredComputationWithSideEffectsLike,
   MulticastComputationLike,
   PureDeferredComputationLike,
   PureSynchronousComputationLike,
   SynchronousComputationWithSideEffectsLike,
-} from "../../../computations.js";
-import { pipeLazy } from "../../../functions.js";
+} from "../../../../computations.js";
+import { pipeLazy } from "../../../../functions.js";
 import * as ComputationExpect from "./ComputationExpect.js";
 
 export const isPureSynchronous = (obs: PureSynchronousComputationLike) =>

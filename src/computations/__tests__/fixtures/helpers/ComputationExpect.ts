@@ -1,7 +1,7 @@
-import { expectFalse, expectTrue } from "../../../__internal__/testing.js";
-import { ComputationLike } from "../../../computations.js";
-import { pipe } from "../../../functions.js";
-import * as Computation from "../../Computation.js";
+import { expectFalse, expectTrue } from "../../../../__internal__/testing.js";
+import { ComputationLike } from "../../../../computations.js";
+import { pipe } from "../../../../functions.js";
+import * as Computation from "../../../Computation.js";
 
 export const isPureSynchronous = <TComputation extends ComputationLike>(
   x: TComputation,

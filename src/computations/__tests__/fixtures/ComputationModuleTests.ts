@@ -28,7 +28,7 @@ import {
   pipe,
   pipeLazy,
 } from "../../../functions.js";
-import StatelessComputationOperatorTests from "./StatelessComputationOperatorTests.js";
+import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
 
 const ComputationModuleTests = <TComputation extends ComputationType>(
   m: ComputationModule<TComputation> & {

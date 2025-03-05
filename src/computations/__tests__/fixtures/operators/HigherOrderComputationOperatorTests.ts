@@ -3,7 +3,7 @@ import {
   TestGroup,
   describe,
   test,
-} from "../../../__internal__/testing.js";
+} from "../../../../__internal__/testing.js";
 import {
   ComputationType,
   Computation_deferredWithSideEffectsOfT,
@@ -21,11 +21,11 @@ import {
   PureSynchronousComputationOf,
   SynchronousComputationWithSideEffectsLike,
   SynchronousComputationWithSideEffectsOf,
-} from "../../../computations.js";
-import { Optional, isSome, pipe, pipeSomeLazy } from "../../../functions.js";
-import * as Computation from "../../Computation.js";
-import * as Iterable from "../../Iterable.js";
-import * as ComputationExpect from "./ComputationExpect.js";
+} from "../../../../computations.js";
+import { Optional, isSome, pipe, pipeSomeLazy } from "../../../../functions.js";
+import * as Computation from "../../../Computation.js";
+import * as Iterable from "../../../Iterable.js";
+import * as ComputationExpect from "../helpers/ComputationExpect.js";
 
 const HigherOrderComputationOperatorTests = <
   TComputation extends ComputationType,
