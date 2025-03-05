@@ -13,11 +13,22 @@ import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import {
   ComputationLike_isPure,
   ComputationType,
+  Computation_deferredWithSideEffectsOfT,
+  Computation_multicastOfT,
+  Computation_pureDeferredOfT,
+  Computation_pureSynchronousOfT,
+  Computation_synchronousWithSideEffectsOfT,
+  DeferredComputationWithSideEffectsOf,
+  MulticastComputationOf,
+  PureDeferredComputationOf,
+  PureSynchronousComputationOf,
   SynchronousComputationModule,
+  SynchronousComputationWithSideEffectsOf,
 } from "../../../computations.js";
 import {
   Optional,
   alwaysTrue,
+  ignore,
   increment,
   invoke,
   lessThan,
@@ -32,11 +43,34 @@ import {
 import * as ComputationM from "../../Computation.js";
 import * as Iterable from "../../Iterable.js";
 import * as Runnable from "../../Runnable.js";
+import ComputationOperatorWithSideEffectsTests from "./ComputationOperatorWithSideEffectsTests.js";
 
 const SynchronousComputationModuleTests = <
   TComputation extends ComputationType,
 >(
   m: SynchronousComputationModule<TComputation>,
+  computationType: {
+    readonly [Computation_pureSynchronousOfT]?: PureSynchronousComputationOf<
+      TComputation,
+      unknown
+    >;
+    readonly [Computation_synchronousWithSideEffectsOfT]?: SynchronousComputationWithSideEffectsOf<
+      TComputation,
+      unknown
+    >;
+    readonly [Computation_pureDeferredOfT]?: PureDeferredComputationOf<
+      TComputation,
+      unknown
+    >;
+    readonly [Computation_deferredWithSideEffectsOfT]?: DeferredComputationWithSideEffectsOf<
+      TComputation,
+      unknown
+    >;
+    readonly [Computation_multicastOfT]?: MulticastComputationOf<
+      TComputation,
+      unknown
+    >;
+  },
 ) =>
   describe(
     "SynchronousComputationModule",
@@ -181,6 +215,10 @@ const SynchronousComputationModuleTests = <
     ),
     describe(
       "forEach",
+      ...ComputationOperatorWithSideEffectsTests(
+        computationType,
+        m.forEach(ignore),
+      ).tests,
       test("invokes the effect for each notified value", () => {
         const result: number[] = [];
 

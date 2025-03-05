@@ -21,7 +21,7 @@ testModule(
   "Runnable",
   ComputationModuleTests(Runnable, RunnableTypes),
   DeferredReactiveComputationModuleTests(Runnable),
-  SynchronousComputationModuleTests(Runnable),
+  SynchronousComputationModuleTests(Runnable, RunnableTypes),
 );
 
 ((_: Runnable.Signature) => {})(Runnable);

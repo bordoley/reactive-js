@@ -21,6 +21,7 @@ import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as Computation from "../../computations/Computation.js";
 import * as ComputationExpect from "../../computations/__tests__/fixtures/ComputationExpect.js";
 import ComputationModuleTests from "../../computations/__tests__/fixtures/ComputationModuleTests.js";
+import ComputationOperatorWithSideEffectsTests from "../../computations/__tests__/fixtures/ComputationOperatorWithSideEffectsTests.js";
 import * as ComputationTest from "../../computations/__tests__/fixtures/ComputationTest.js";
 import DeferredReactiveComputationModuleTests from "../../computations/__tests__/fixtures/DeferredReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
@@ -39,7 +40,6 @@ import {
 } from "../../computations.js";
 import {
   DeferredObservableWithSideEffectsLike,
-  DispatcherLike,
   DispatcherLikeEvent_completed,
   DispatcherLike_complete,
   ObservableLike,
@@ -348,7 +348,10 @@ testModule(
     ObservableTypes,
   ),
   DeferredReactiveComputationModuleTests(Observable),
-  SynchronousComputationModuleTests<Observable.Computation>(Observable),
+  SynchronousComputationModuleTests<Observable.Computation>(
+    Observable,
+    ObservableTypes,
+  ),
   describe(
     "backpressureStrategy",
     testAsync("with a throw backpressure strategy", async () => {
@@ -794,6 +797,14 @@ testModule(
   ),
   describe(
     "dispatchTo",
+    ...ComputationOperatorWithSideEffectsTests(
+      ObservableTypes,
+      Observable.dispatchTo(
+        Streamable.identity()[StreamableLike_stream](
+          VirtualTimeScheduler.create(),
+        ),
+      ),
+    ).tests,
     test("when backpressure exception is thrown", () => {
       using vts = VirtualTimeScheduler.create();
       const stream = Streamable.identity()[StreamableLike_stream](vts, {
@@ -864,9 +875,6 @@ testModule(
 
       expectTrue(completed);
     }),
-    ObservableOperatorWithSideEffectsTests(
-      Observable.dispatchTo({} as unknown as DispatcherLike),
-    ),
   ),
   describe(
     "distinctUntilChanged",
@@ -897,7 +905,10 @@ testModule(
   ),
   describe(
     "enqueue",
-    ObservableOperatorWithSideEffectsTests(Observable.enqueue(Queue.create())),
+    ...ComputationOperatorWithSideEffectsTests(
+      ObservableTypes,
+      Observable.enqueue(Queue.create()),
+    ).tests,
   ),
   describe(
     "exhaust",
@@ -969,10 +980,6 @@ testModule(
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
       Observable.flatMapAsync(async x => await Promise.resolve(x)),
     ),*/
-  ),
-  describe(
-    "forEach",
-    ObservableOperatorWithSideEffectsTests(Observable.forEach(ignore)),
   ),
   describe(
     "forkMerge",
@@ -1510,6 +1517,10 @@ testModule(
   describe("never", ComputationTest.isMulticasted(Observable.never())),
   describe(
     "onSubscribe",
+    ...ComputationOperatorWithSideEffectsTests(
+      ObservableTypes,
+      Observable.onSubscribe(ignore),
+    ).tests,
     test("when subscribe function returns a teardown function", () => {
       using vts = VirtualTimeScheduler.create();
 
@@ -1582,7 +1593,6 @@ testModule(
 
       expectTrue(called);
     }),
-    ObservableOperatorWithSideEffectsTests(Observable.onSubscribe(ignore)),
   ),
   describe(
     "pairwise",
@@ -1838,11 +1848,12 @@ testModule(
     DeferredReactiveObservableOperator(
       Observable.takeUntil(Observable.empty({ delay: 1 })),
     ),
-    ObservableOperatorWithSideEffectsTests(
+    ...ComputationOperatorWithSideEffectsTests(
+      ObservableTypes,
       Observable.takeUntil(
         pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
       ),
-    ),
+    ).tests,
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
       Observable.takeUntil(
         pipe(
@@ -2037,7 +2048,8 @@ testModule(
     DeferredReactiveObservableOperator(
       Observable.withLatestFrom(Observable.empty({ delay: 1 }), returns),
     ),
-    ObservableOperatorWithSideEffectsTests(
+    ComputationOperatorWithSideEffectsTests(
+      ObservableTypes,
       Observable.withLatestFrom(
         pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
         returns,

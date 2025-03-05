@@ -58,6 +58,7 @@ import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as Computation from "../../computations/Computation.js";
 import * as ComputationExpect from "../../computations/__tests__/fixtures/ComputationExpect.js";
 import ComputationModuleTests from "../../computations/__tests__/fixtures/ComputationModuleTests.js";
+import ComputationOperatorWithSideEffectsTests from "../../computations/__tests__/fixtures/ComputationOperatorWithSideEffectsTests.js";
 import * as ComputationTest from "../../computations/__tests__/fixtures/ComputationTest.js";
 import DeferredReactiveComputationModuleTests from "../../computations/__tests__/fixtures/DeferredReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
@@ -150,7 +151,7 @@ const ObservableTypes = {
 };
 testModule("Observable", describe("effects", test("calling an effect from outside a computation expression throws", () => {
     expectToThrow(() => __constant(0));
-})), ComputationModuleTests(Observable, ObservableTypes), DeferredReactiveComputationModuleTests(Observable), SynchronousComputationModuleTests(Observable), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", async () => {
+})), ComputationModuleTests(Observable, ObservableTypes), DeferredReactiveComputationModuleTests(Observable), SynchronousComputationModuleTests(Observable, ObservableTypes), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", async () => {
     const env_5 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_5, HostScheduler.create(), false);
@@ -385,7 +386,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_14);
     }
-}), ComputationTest.isPureDeferred(Observable.defer(Subject.create))), describe("dispatchTo", test("when backpressure exception is thrown", () => {
+}), ComputationTest.isPureDeferred(Observable.defer(Subject.create))), describe("dispatchTo", ...ComputationOperatorWithSideEffectsTests(ObservableTypes, Observable.dispatchTo(Streamable.identity()[StreamableLike_stream](VirtualTimeScheduler.create()))).tests, test("when backpressure exception is thrown", () => {
     const env_15 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_15, VirtualTimeScheduler.create(), false);
@@ -450,7 +451,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_17);
     }
-}), ObservableOperatorWithSideEffectsTests(Observable.dispatchTo({}))), describe("distinctUntilChanged", DeferredReactiveObservableOperator(Observable.distinctUntilChanged())), describe("empty", test("with delay", () => {
+})), describe("distinctUntilChanged", DeferredReactiveObservableOperator(Observable.distinctUntilChanged())), describe("empty", test("with delay", () => {
     const env_18 = { stack: [], error: void 0, hasError: false };
     try {
         let disposedTime = -1;
@@ -468,7 +469,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_18);
     }
-}), ComputationTest.isPureSynchronous(Observable.empty({ delay: 1 }))), describe("encodeUtf8", DeferredReactiveObservableOperator(Observable.encodeUtf8())), describe("enqueue", ObservableOperatorWithSideEffectsTests(Observable.enqueue(Queue.create()))), describe("exhaust", test("when the initial observable never disposes", pipeLazy([
+}), ComputationTest.isPureSynchronous(Observable.empty({ delay: 1 }))), describe("encodeUtf8", DeferredReactiveObservableOperator(Observable.encodeUtf8())), describe("enqueue", ...ComputationOperatorWithSideEffectsTests(ObservableTypes, Observable.enqueue(Queue.create())).tests), describe("exhaust", test("when the initial observable never disposes", pipeLazy([
     pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
     pipe([4, 5, 6], Observable.fromReadonlyArray()),
     pipe([7, 8, 9], Observable.fromReadonlyArray()),
@@ -517,7 +518,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_21);
     }
-})), describe("forEach", ObservableOperatorWithSideEffectsTests(Observable.forEach(ignore))), describe("forkMerge", testAsync("with pure src and inner runnables with side-effects", async () => {
+})), describe("forkMerge", testAsync("with pure src and inner runnables with side-effects", async () => {
     const env_22 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_22, HostScheduler.create(), false);
@@ -816,7 +817,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_38);
     }
-})), describe("never", ComputationTest.isMulticasted(Observable.never())), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
+})), describe("never", ComputationTest.isMulticasted(Observable.never())), describe("onSubscribe", ...ComputationOperatorWithSideEffectsTests(ObservableTypes, Observable.onSubscribe(ignore)).tests, test("when subscribe function returns a teardown function", () => {
     const env_39 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_39, VirtualTimeScheduler.create(), false);
@@ -889,7 +890,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_42);
     }
-}), ObservableOperatorWithSideEffectsTests(Observable.onSubscribe(ignore))), describe("pairwise", DeferredReactiveObservableOperator(Observable.pairwise())), describe("raise", ComputationTest.isPureSynchronous(Observable.raise())), describe("repeat", test("when repeating a finite amount of times, with delayed source.", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.repeat(3), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("when repeating with a predicate with delayed source", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }), Observable.repeat(lessThan(1)), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("when the repeat function throws with delayed source", () => {
+})), describe("pairwise", DeferredReactiveObservableOperator(Observable.pairwise())), describe("raise", ComputationTest.isPureSynchronous(Observable.raise())), describe("repeat", test("when repeating a finite amount of times, with delayed source.", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.repeat(3), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("when repeating with a predicate with delayed source", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }), Observable.repeat(lessThan(1)), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("when the repeat function throws with delayed source", () => {
     const err = new Error();
     pipe(pipeLazy([1, 1], Observable.fromReadonlyArray({ delay: 3 }), Observable.repeat(_ => {
         throw err;
@@ -964,7 +965,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     innerType: SynchronousComputationWithSideEffects,
 })), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.switchAll({
     innerType: DeferredComputationWithSideEffects,
-}))), describe("takeFirst", DeferredReactiveObservableOperator(Observable.takeFirst())), describe("takeLast", DeferredReactiveObservableOperator(Observable.takeLast())), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 1 }), Observable.takeUntil(pipe([1], Observable.fromReadonlyArray({ delay: 3, delayStart: true }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), DeferredReactiveObservableOperator(Observable.takeUntil(Observable.empty({ delay: 1 }))), ObservableOperatorWithSideEffectsTests(Observable.takeUntil(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)))), AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.takeUntil(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), Observable.forEach(ignore)))), DeferringObservableOperatorTests(Observable.takeUntil(Subject.create()))), describe("takeWhile", DeferredReactiveObservableOperator(Observable.takeWhile(alwaysTrue))), describe("throttle", test("first", pipeLazy(Observable.generate(increment, returns(-1), {
+}))), describe("takeFirst", DeferredReactiveObservableOperator(Observable.takeFirst())), describe("takeLast", DeferredReactiveObservableOperator(Observable.takeLast())), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 1 }), Observable.takeUntil(pipe([1], Observable.fromReadonlyArray({ delay: 3, delayStart: true }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), DeferredReactiveObservableOperator(Observable.takeUntil(Observable.empty({ delay: 1 }))), ...ComputationOperatorWithSideEffectsTests(ObservableTypes, Observable.takeUntil(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)))).tests, AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(Observable.takeUntil(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), Observable.forEach(ignore)))), DeferringObservableOperatorTests(Observable.takeUntil(Subject.create()))), describe("takeWhile", DeferredReactiveObservableOperator(Observable.takeWhile(alwaysTrue))), describe("throttle", test("first", pipeLazy(Observable.generate(increment, returns(-1), {
     delay: 1,
     delayStart: true,
 }), Observable.takeFirst({ count: 100 }), Observable.throttle(50, { mode: "first" }), Observable.toReadonlyArray(), expectArrayEquals([0, 49, 99]))), test("last", pipeLazy(Observable.generate(increment, returns(-1), {
@@ -1026,7 +1027,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
 })), describe("withCurrentTime", DeferredReactiveObservableOperator(Observable.withCurrentTime(returns))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.withLatestFrom(pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })), (tuple)), Observable.toReadonlyArray(), expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], { valuesEquality: arrayEquality() }))), test("when latest produces no values", pipeLazy([0], Observable.fromReadonlyArray({ delay: 1 }), Observable.withLatestFrom(Observable.empty({ delay: 0 }), returns(1)), Observable.toReadonlyArray(), expectArrayEquals([]))), test("when latest throws", () => {
     const error = newInstance(Error);
     pipe(pipeLazy([0], Observable.fromReadonlyArray({ delay: 1 }), Observable.withLatestFrom(Observable.raise({ raise: returns(error) }), returns(1)), Observable.run()), expectToThrowError(error));
-}), DeferredReactiveObservableOperator(Observable.withLatestFrom(Observable.empty({ delay: 1 }), returns)), ObservableOperatorWithSideEffectsTests(Observable.withLatestFrom(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)), returns)), DeferringObservableOperatorTests(Observable.withLatestFrom(Subject.create(), returns))), describe("zipLatest", test("zip two delayed observable", pipeLazy(Observable.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Observable.fromReadonlyArray({ delay: 1, delayStart: true })), pipe([1, 2, 3, 4], Observable.fromReadonlyArray({ delay: 2, delayStart: true }))), Observable.map(([a, b]) => a + b), Observable.toReadonlyArray(), expectArrayEquals([2, 5, 8, 11]))), ComputationTest.isPureSynchronous(Observable.zipLatest(Observable.empty({ delay: 1 }), Observable.empty({ delay: 1 }))), ComputationTest.isPureDeferred((() => {
+}), DeferredReactiveObservableOperator(Observable.withLatestFrom(Observable.empty({ delay: 1 }), returns)), ComputationOperatorWithSideEffectsTests(ObservableTypes, Observable.withLatestFrom(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)), returns)), DeferringObservableOperatorTests(Observable.withLatestFrom(Subject.create(), returns))), describe("zipLatest", test("zip two delayed observable", pipeLazy(Observable.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Observable.fromReadonlyArray({ delay: 1, delayStart: true })), pipe([1, 2, 3, 4], Observable.fromReadonlyArray({ delay: 2, delayStart: true }))), Observable.map(([a, b]) => a + b), Observable.toReadonlyArray(), expectArrayEquals([2, 5, 8, 11]))), ComputationTest.isPureSynchronous(Observable.zipLatest(Observable.empty({ delay: 1 }), Observable.empty({ delay: 1 }))), ComputationTest.isPureDeferred((() => {
     const env_50 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_50, VirtualTimeScheduler.create(), false);

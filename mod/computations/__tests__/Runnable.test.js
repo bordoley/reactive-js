@@ -11,5 +11,5 @@ const RunnableTypes = {
     [Computation_pureSynchronousOfT]: Runnable.empty(),
     [Computation_synchronousWithSideEffectsOfT]: pipe(Runnable.empty(), Runnable.forEach(ignore)),
 };
-testModule("Runnable", ComputationModuleTests(Runnable, RunnableTypes), DeferredReactiveComputationModuleTests(Runnable), SynchronousComputationModuleTests(Runnable));
+testModule("Runnable", ComputationModuleTests(Runnable, RunnableTypes), DeferredReactiveComputationModuleTests(Runnable), SynchronousComputationModuleTests(Runnable, RunnableTypes));
 ((_) => { })(Runnable);

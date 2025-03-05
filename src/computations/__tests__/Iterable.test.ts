@@ -20,6 +20,6 @@ const IterableTypes = {
 testModule(
   "Iterable",
   ComputationModuleTests(Iterable, IterableTypes),
-  SynchronousComputationModuleTests(Iterable),
+  SynchronousComputationModuleTests(Iterable, IterableTypes),
   InteractiveComputationModuleTests(Iterable),
 );
