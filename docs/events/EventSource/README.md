@@ -25,5 +25,6 @@
 - [keep](functions/keep.md)
 - [map](functions/map.md)
 - [merge](functions/merge.md)
+- [never](functions/never.md)
 - [withLatestFrom](functions/withLatestFrom.md)
 - [zipLatest](functions/zipLatest.md)

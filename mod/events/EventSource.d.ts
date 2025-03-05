@@ -29,5 +29,6 @@ export declare const fromPromise: Signature["fromPromise"];
 export declare const keep: Signature["keep"];
 export declare const map: Signature["map"];
 export declare const merge: Signature["merge"];
+export declare const never: Signature["never"];
 export declare const withLatestFrom: Signature["withLatestFrom"];
 export declare const zipLatest: Signature["zipLatest"];

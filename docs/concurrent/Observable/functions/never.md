@@ -6,7 +6,7 @@
 
 # Function: never()
 
-> **never**\<`T`\>(): [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>
+> **never**\<`T`\>(): `NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
 
 ## Type Parameters
 
@@ -14,4 +14,4 @@
 
 ## Returns
 
-[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>
+`NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>

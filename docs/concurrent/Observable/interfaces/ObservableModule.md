@@ -678,20 +678,6 @@
 
 ***
 
-### never()
-
-> **never**\<`T`\>(): [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>
-
-***
-
 ### onSubscribe()
 
 > **onSubscribe**\<`T`\>(`f`): [`ComputationOperatorWithSideEffects`](../../../computations/type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>

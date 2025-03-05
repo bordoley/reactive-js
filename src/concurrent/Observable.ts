@@ -403,8 +403,6 @@ export interface ObservableModule
     MulticastObservableLike<T> & DisposableLike
   >;
 
-  never<T>(): MulticastObservableLike<T>;
-
   onSubscribe<T>(
     f: Factory<DisposableLike | SideEffect1<Optional<Error>>> | SideEffect,
   ): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;

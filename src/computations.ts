@@ -823,6 +823,8 @@ export interface ConcurrentReactiveComputationModule<
     ...computations: readonly ComputationOf<TComputation, T>[]
   ): DeferredComputationWithSideEffectsOf<TComputation, T>;
 
+  never<T>(): MulticastComputationOf<TComputation, T>;
+
   withLatestFrom<TA, TB>(
     other: PureSynchronousComputationOf<TComputation, TB>,
   ): StatefulSynchronousComputationOperator<TComputation, TA, Tuple2<TA, TB>>;

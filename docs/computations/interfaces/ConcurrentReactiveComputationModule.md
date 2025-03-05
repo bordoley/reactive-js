@@ -227,6 +227,20 @@
 
 ***
 
+### never()
+
+> **never**\<`T`\>(): [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputation`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputation`, `T`\>
+
+***
+
 ### withLatestFrom()
 
 #### Call Signature

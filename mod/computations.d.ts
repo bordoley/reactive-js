@@ -241,6 +241,7 @@ export interface ConcurrentReactiveComputationModule<TComputation extends Comput
     merge<T>(...computations: readonly MulticastComputationOf<TComputation, T>[]): MulticastComputationOf<TComputation, T>;
     merge<T>(...computations: readonly PureComputationOf<TComputation, T>[]): PureDeferredComputationOf<TComputation, T>;
     merge<T>(...computations: readonly ComputationOf<TComputation, T>[]): DeferredComputationWithSideEffectsOf<TComputation, T>;
+    never<T>(): MulticastComputationOf<TComputation, T>;
     withLatestFrom<TA, TB>(other: PureSynchronousComputationOf<TComputation, TB>): StatefulSynchronousComputationOperator<TComputation, TA, Tuple2<TA, TB>>;
     withLatestFrom<TA, TB, T>(other: PureSynchronousComputationOf<TComputation, TB>, selector: Function2<TA, TB, T>): StatefulSynchronousComputationOperator<TComputation, TA, T>;
     withLatestFrom<TA, TB>(other: SynchronousComputationWithSideEffectsOf<TComputation, TB>): ComputationOperatorWithSideEffects<TComputation, TA, Tuple2<TA, TB>>;

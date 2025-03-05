@@ -19,6 +19,7 @@ import EventSource_fromPromise from "./EventSource/__private__/EventSource.fromP
 import EventSource_keep from "./EventSource/__private__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__private__/EventSource.map.js";
 import EventSource_merge from "./EventSource/__private__/EventSource.merge.js";
+import EventSource_never from "./EventSource/__private__/EventSource.never.js";
 import EventSource_withLatestFrom from "./EventSource/__private__/EventSource.withLatestFrom.js";
 import EventSource_zipLatest from "./EventSource/__private__/EventSource.zipLatest.js";
 
@@ -64,6 +65,7 @@ export const fromPromise: Signature["fromPromise"] = EventSource_fromPromise;
 export const keep: Signature["keep"] = EventSource_keep;
 export const map: Signature["map"] = EventSource_map;
 export const merge: Signature["merge"] = EventSource_merge;
+export const never: Signature["never"] = EventSource_never;
 export const withLatestFrom: Signature["withLatestFrom"] =
   EventSource_withLatestFrom;
 export const zipLatest: Signature["zipLatest"] = EventSource_zipLatest;

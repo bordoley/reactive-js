@@ -108,7 +108,6 @@ export interface ObservableModule extends DeferredReactiveComputationModule<Obse
         readonly capacity?: number;
         readonly backpressureStrategy?: BackpressureStrategy;
     }): Function1<DeferredObservableLike<T>, MulticastObservableLike<T> & DisposableLike>;
-    never<T>(): MulticastObservableLike<T>;
     onSubscribe<T>(f: Factory<DisposableLike | SideEffect1<Optional<Error>>> | SideEffect): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
     raise<T>(options?: {
         readonly raise?: Factory<unknown>;
