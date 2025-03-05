@@ -44,8 +44,8 @@ const StatefulSynchronousComputationOperatorTests = <
     >;
   },
   operator: StatefulSynchronousComputationOperator<TComputation, any, unknown>,
-) => {
-  return describe(
+) =>
+  describe(
     "StatefulSynchronousComputationOperator",
     ...pipe(
       [
@@ -113,6 +113,5 @@ const StatefulSynchronousComputationOperatorTests = <
       Iterable.toReadonlyArray(),
     ),
   );
-};
 
 export default StatefulSynchronousComputationOperatorTests;

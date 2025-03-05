@@ -18,11 +18,15 @@ import {
   Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
+  DeferredComputationWithSideEffects,
   DeferredComputationWithSideEffectsOf,
   MulticastComputationOf,
+  PureDeferredComputation,
   PureDeferredComputationOf,
+  PureSynchronousComputation,
   PureSynchronousComputationOf,
   SynchronousComputationModule,
+  SynchronousComputationWithSideEffects,
   SynchronousComputationWithSideEffectsOf,
 } from "../../../computations.js";
 import {
@@ -45,6 +49,7 @@ import * as Iterable from "../../Iterable.js";
 import * as Runnable from "../../Runnable.js";
 import ComputationOperatorWithSideEffectsTests from "./ComputationOperatorWithSideEffectsTests.js";
 import * as ComputationTest from "./ComputationTest.js";
+import HigherOrderComputationOperatorTests from "./HigherOrderComputationOperatorTests.js";
 import StatefulSynchronousComputationOperatorTests from "./StatefulSynchronousComputationOperatorTests.js";
 import StatelessComputationOperatorTests from "./StatelessComputationOperatorTests.js";
 
@@ -74,11 +79,41 @@ const SynchronousComputationModuleTests = <
       unknown
     >;
   },
-) =>
-  describe(
+) => {
+  const {
+    [Computation_pureSynchronousOfT]: pureSynchronousComputation,
+    [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffects,
+    [Computation_pureDeferredOfT]: pureDeferredOfT,
+    [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT,
+  } = computationType;
+
+  return describe(
     "SynchronousComputationModule",
     describe(
       "catchError",
+      HigherOrderComputationOperatorTests(
+        computationType,
+        pureSynchronousComputation &&
+          m.catchError(_ => pureSynchronousComputation, {
+            innerType: PureSynchronousComputation,
+          }),
+        synchronousWithSideEffects &&
+          m.catchError(_ => synchronousWithSideEffects, {
+            innerType: SynchronousComputationWithSideEffects,
+          }),
+        pureDeferredOfT &&
+          m.catchError(_ => pureDeferredOfT, {
+            innerType: PureDeferredComputation,
+          }),
+        deferredWithSideEffectsOfT &&
+          m.catchError(_ => deferredWithSideEffectsOfT, {
+            innerType: DeferredComputationWithSideEffects,
+          }),
+      ),
+      StatefulSynchronousComputationOperatorTests(
+        computationType,
+        m.catchError(_ => console.log()),
+      ),
       test("when the source throws", () => {
         const e1 = "e1";
         let result: Optional<string> = none;
@@ -132,6 +167,21 @@ const SynchronousComputationModuleTests = <
     ),
     describe(
       "concatAll",
+      HigherOrderComputationOperatorTests(
+        computationType,
+        m.concatAll({
+          innerType: PureSynchronousComputation,
+        }),
+        m.concatAll({
+          innerType: SynchronousComputationWithSideEffects,
+        }),
+        m.concatAll({
+          innerType: PureDeferredComputation,
+        }),
+        m.concatAll({
+          innerType: DeferredComputationWithSideEffects,
+        }),
+      ),
       test(
         "concating inner sources",
         pipeLazy(
@@ -783,5 +833,6 @@ const SynchronousComputationModuleTests = <
       ),
     ),
   );
+};
 
 export default SynchronousComputationModuleTests;

@@ -44,8 +44,8 @@ const StatelessComputationOperatorTests = <
     >;
   },
   operator: StatelessComputationOperator<TComputation, unknown, unknown>,
-) => {
-  return describe(
+) =>
+  describe(
     "StatelessComputationOperator",
     ...pipe(
       [
@@ -112,6 +112,5 @@ const StatelessComputationOperatorTests = <
       Iterable.toReadonlyArray(),
     ),
   );
-};
 
 export default StatelessComputationOperatorTests;

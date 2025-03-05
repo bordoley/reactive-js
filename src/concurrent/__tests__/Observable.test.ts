@@ -24,6 +24,8 @@ import ComputationModuleTests from "../../computations/__tests__/fixtures/Comput
 import ComputationOperatorWithSideEffectsTests from "../../computations/__tests__/fixtures/ComputationOperatorWithSideEffectsTests.js";
 import * as ComputationTest from "../../computations/__tests__/fixtures/ComputationTest.js";
 import DeferredReactiveComputationModuleTests from "../../computations/__tests__/fixtures/DeferredReactiveComputationModuleTests.js";
+import HigherOrderComputationOperatorTests from "../../computations/__tests__/fixtures/HigherOrderComputationOperatorTests.js";
+import StatefulSynchronousComputationOperatorTests from "../../computations/__tests__/fixtures/StatefulSynchronousComputationOperatorTests.js";
 import StatelessAsynchronousComputationOperatorTests from "../../computations/__tests__/fixtures/StatelessAsynchronousComputationOperatorTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
 import {
@@ -36,7 +38,7 @@ import {
   Computation_synchronousWithSideEffectsOfT,
   DeferredComputationWithSideEffects,
   PureDeferredComputation,
-  PureDeferredComputationLike,
+  PureSynchronousComputation,
   SynchronousComputationWithSideEffects,
 } from "../../computations.js";
 import {
@@ -202,59 +204,6 @@ const DeferringObservableOperatorTests = (
     ),
   );
 
-const ObservableOperatorWithSideEffectsTests = (
-  op: Function1<ObservableLike<any>, DeferredObservableWithSideEffectsLike>,
-) =>
-  describe(
-    "ObservableOperatorWithSideEffects",
-    test(
-      "with PureSynchronousObservableLike",
-      pipeLazy(
-        Observable.empty({ delay: 1 }),
-        op,
-        ComputationExpect.isSynchronousWithSideEffects,
-      ),
-    ),
-    test(
-      "with SynchronousObservableWithSideEffectsLike",
-      pipeLazy(
-        Observable.empty({ delay: 1 }),
-        Observable.forEach(ignore),
-        op,
-        ComputationExpect.isSynchronousWithSideEffects,
-      ),
-    ),
-    test("with PureDeferredObservableLike", () => {
-      using vts = VirtualTimeScheduler.create();
-      pipe(
-        Observable.empty({ delay: 1 }),
-        Observable.subscribeOn(vts),
-        op,
-        ComputationExpect.isDeferredWithSideEffects,
-      );
-    }),
-    test(
-      "with DeferredObservableWithSideEffectsLike",
-      pipeLazy(
-        async () => {
-          throw new Error();
-        },
-        Observable.fromAsyncFactory(),
-        op,
-        ComputationExpect.isDeferredWithSideEffects,
-      ),
-    ),
-    test(
-      "with MulticastObservableLike",
-      pipeLazy(
-        new Promise(ignore),
-        Observable.fromPromise(),
-        op,
-        ComputationExpect.isDeferredWithSideEffects,
-      ),
-    ),
-  );
-
 const AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests = (
   op: Function1<ObservableLike<any>, DeferredObservableWithSideEffectsLike>,
 ) =>
@@ -406,7 +355,8 @@ testModule(
         expectArrayEquals([1, 2, 3]),
       ),
     ),
-    DeferredReactiveObservableOperator(
+    StatefulSynchronousComputationOperatorTests(
+      ObservableTypes,
       Observable.backpressureStrategy(10, DropLatestBackpressureStrategy),
     ),
   ),
@@ -438,7 +388,6 @@ testModule(
         expectArrayEquals(["e2", "e1"]),
       );
     }),
-    DeferredReactiveObservableOperator(Observable.catchError(ignore)),
   ),
   describe(
     "combineLatest",
@@ -699,25 +648,6 @@ testModule(
     ),
   ),
   describe(
-    "concatAll",
-    DeferredReactiveObservableOperator(Observable.concatAll()),
-    DeferringObservableOperatorTests(
-      Observable.concatAll<any, PureDeferredComputationLike>({
-        innerType: PureDeferredComputation,
-      }),
-    ),
-    ObservableOperatorWithSideEffectsTests(
-      Observable.concatAll({
-        innerType: SynchronousComputationWithSideEffects,
-      }),
-    ),
-    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
-      Observable.concatAll({
-        innerType: DeferredComputationWithSideEffects,
-      }),
-    ),
-  ),
-  describe(
     "concat",
     test(
       "concats the input containers in order, when sources have delay",
@@ -913,18 +843,17 @@ testModule(
         expectArrayEquals([1, 2, 3]),
       ),
     ),
-    DeferredReactiveObservableOperator(Observable.exhaust()),
-    DeferringObservableOperatorTests(
+    HigherOrderComputationOperatorTests(
+      ObservableTypes,
       Observable.exhaust({
-        innerType: PureDeferredComputation,
+        innerType: PureSynchronousComputation,
       }),
-    ),
-    ObservableOperatorWithSideEffectsTests(
       Observable.exhaust({
         innerType: SynchronousComputationWithSideEffects,
       }),
-    ),
-    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
+      Observable.exhaust({
+        innerType: PureDeferredComputation,
+      }),
       Observable.exhaust({
         innerType: DeferredComputationWithSideEffects,
       }),
@@ -1452,18 +1381,17 @@ testModule(
         expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
       ),
     ),
-    DeferredReactiveObservableOperator(Observable.mergeAll()),
-    DeferringObservableOperatorTests(
+    HigherOrderComputationOperatorTests(
+      ObservableTypes,
       Observable.mergeAll({
-        innerType: PureDeferredComputation,
+        innerType: PureSynchronousComputation,
       }),
-    ),
-    ObservableOperatorWithSideEffectsTests(
       Observable.mergeAll({
         innerType: SynchronousComputationWithSideEffects,
       }),
-    ),
-    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
+      Observable.mergeAll({
+        innerType: PureDeferredComputation,
+      }),
       Observable.mergeAll({
         innerType: DeferredComputationWithSideEffects,
       }),
@@ -1636,27 +1564,36 @@ testModule(
         expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
       ),
     ),
-    DeferringObservableOperatorTests(
-      Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none)),
-    ),
-    DeferringObservableOperatorTests(
-      Observable.scanMany<void, void, PureDeferredComputationLike>(
-        () => Observable.empty({ delay: 1 }),
-        returns(none),
+    HigherOrderComputationOperatorTests(
+      ObservableTypes,
+      Observable.scanMany((_acc, _next) => Observable.empty(), returns(0), {
+        innerType: PureSynchronousComputation,
+      }),
+      Observable.scanMany(
+        (_acc, _next) => pipe(Observable.empty(), Observable.forEach(ignore)),
+        returns(0),
+        { innerType: SynchronousComputationWithSideEffects },
+      ),
+      Observable.scanMany(
+        (_acc, _next) =>
+          pipe(Observable.empty(), Observable.subscribeOn(HostScheduler.get())),
+        returns(0),
         {
           innerType: PureDeferredComputation,
         },
       ),
-    ),
-    ObservableOperatorWithSideEffectsTests(
-      Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
-        innerType: SynchronousComputationWithSideEffects,
-      }),
-    ),
-    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
-      Observable.scanMany(() => Observable.empty({ delay: 1 }), returns(none), {
-        innerType: DeferredComputationWithSideEffects,
-      }),
+      Observable.scanMany(
+        (_acc, _next) =>
+          pipe(
+            Observable.empty(),
+            Observable.forEach(ignore),
+            Observable.subscribeOn(HostScheduler.get()),
+          ),
+        returns(0),
+        {
+          innerType: DeferredComputationWithSideEffects,
+        },
+      ),
     ),
   ),
   describe(
@@ -1751,18 +1688,17 @@ testModule(
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
       ),
     ),
-    DeferredReactiveObservableOperator(Observable.switchAll()),
-    DeferringObservableOperatorTests(
+    HigherOrderComputationOperatorTests(
+      ObservableTypes,
       Observable.switchAll({
-        innerType: PureDeferredComputation,
+        innerType: PureSynchronousComputation,
       }),
-    ),
-    ObservableOperatorWithSideEffectsTests(
       Observable.switchAll({
         innerType: SynchronousComputationWithSideEffects,
       }),
-    ),
-    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
+      Observable.switchAll({
+        innerType: PureDeferredComputation,
+      }),
       Observable.switchAll({
         innerType: DeferredComputationWithSideEffects,
       }),

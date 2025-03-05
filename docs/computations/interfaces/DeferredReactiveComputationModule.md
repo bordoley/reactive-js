@@ -69,28 +69,6 @@
 
 #### Call Signature
 
-> **catchError**\<`T`\>(`onError`): [`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](PureSynchronousComputationLike.md), `T`, `T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### onError
-
-[`Function1`](../../functions/type-aliases/Function1.md)\<`Error`, [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>\>
-
-##### Returns
-
-[`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](PureSynchronousComputationLike.md), `T`, `T`\>
-
-##### Inherited from
-
-[`SynchronousComputationModule`](SynchronousComputationModule.md).[`catchError`](SynchronousComputationModule.md#catcherror)
-
-#### Call Signature
-
 > **catchError**\<`T`, `TInnerType`\>(`onError`, `options`): [`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, `TInnerType`, `T`, `T`\>
 
 ##### Type Parameters

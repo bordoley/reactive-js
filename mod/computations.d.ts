@@ -164,7 +164,6 @@ export interface ComputationModule<TComputation extends ComputationType> {
 }
 export interface SynchronousComputationModule<TComputation extends ComputationType> extends ComputationModule<TComputation> {
     catchError<T>(onError: SideEffect1<Error>): StatefulSynchronousComputationOperator<TComputation, T, T>;
-    catchError<T>(onError: Function1<Error, PureSynchronousComputationOf<TComputation, T>>): HigherOrderComputationOperator<TComputation, PureSynchronousComputationLike, T, T>;
     catchError<T, TInnerType extends HigherOrderInnerComputationLike>(onError: Function1<Error, HigherOrderInnerComputationOf<TComputation, TInnerType, T>>, options: {
         readonly innerType: TInnerType;
     }): HigherOrderComputationOperator<TComputation, TInnerType, T, T>;

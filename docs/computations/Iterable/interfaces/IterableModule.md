@@ -48,28 +48,6 @@
 
 #### Call Signature
 
-> **catchError**\<`T`\>(`onError`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `T`, `T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### onError
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`Error`, [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
-
-##### Returns
-
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `T`, `T`\>
-
-##### Inherited from
-
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`catchError`](../../interfaces/InteractiveComputationModule.md#catcherror)
-
-#### Call Signature
-
 > **catchError**\<`T`, `TInnerType`\>(`onError`, `options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`IterableComputation`](IterableComputation.md), `TInnerType`, `T`, `T`\>
 
 ##### Type Parameters

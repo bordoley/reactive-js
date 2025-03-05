@@ -26,24 +26,6 @@
 
 ## Call Signature
 
-> **catchError**\<`T`\>(`onError`): [`HigherOrderComputationOperator`](../../../computations/type-aliases/HigherOrderComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), [`PureSynchronousComputationLike`](../../../computations/interfaces/PureSynchronousComputationLike.md), `T`, `T`\>
-
-### Type Parameters
-
-• **T**
-
-### Parameters
-
-#### onError
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`Error`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
-
-### Returns
-
-[`HigherOrderComputationOperator`](../../../computations/type-aliases/HigherOrderComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), [`PureSynchronousComputationLike`](../../../computations/interfaces/PureSynchronousComputationLike.md), `T`, `T`\>
-
-## Call Signature
-
 > **catchError**\<`T`, `TInnerType`\>(`onError`, `options`): [`HigherOrderComputationOperator`](../../../computations/type-aliases/HigherOrderComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TInnerType`, `T`, `T`\>
 
 ### Type Parameters

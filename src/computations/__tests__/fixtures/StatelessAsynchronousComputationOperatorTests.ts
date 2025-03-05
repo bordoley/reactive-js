@@ -48,8 +48,8 @@ const StatelessAsynchronousComputationOperatorTests = <
     unknown,
     unknown
   >,
-) => {
-  return describe(
+) =>
+  describe(
     "StatelessAsynchronousComputationOperatorTests",
     ...pipe(
       [
@@ -118,6 +118,5 @@ const StatelessAsynchronousComputationOperatorTests = <
       Iterable.toReadonlyArray(),
     ),
   );
-};
 
 export default StatelessAsynchronousComputationOperatorTests;
