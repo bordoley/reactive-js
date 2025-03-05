@@ -215,10 +215,10 @@ const SynchronousComputationModuleTests = <
     ),
     describe(
       "forEach",
-      ...ComputationOperatorWithSideEffectsTests(
+      ComputationOperatorWithSideEffectsTests(
         computationType,
         m.forEach(ignore),
-      ).tests,
+      ),
       test("invokes the effect for each notified value", () => {
         const result: number[] = [];
 

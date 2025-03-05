@@ -68,8 +68,7 @@ const ComputationModuleTests = <TComputation extends ComputationType>(
     "ComputationModule",
     describe(
       "keep",
-      ...StatelessComputationOperatorTests(computationType, m.keep(alwaysTrue))
-        .tests,
+      StatelessComputationOperatorTests(computationType, m.keep(alwaysTrue)),
       test(
         "keeps only values greater than 5",
         pipeLazy(
@@ -100,8 +99,7 @@ const ComputationModuleTests = <TComputation extends ComputationType>(
     ),
     describe(
       "map",
-      ...StatelessComputationOperatorTests(computationType, m.map(identity))
-        .tests,
+      StatelessComputationOperatorTests(computationType, m.map(identity)),
       test(
         "maps every value",
         pipeLazy(

@@ -49,6 +49,7 @@ export const expectToThrow = (f) => {
     if (!didThrow) {
         raise("expected function to throw");
     }
+    return f;
 };
 export const expectToThrowAsync = async (f) => {
     let didThrow = false;
@@ -61,6 +62,7 @@ export const expectToThrowAsync = async (f) => {
     if (!didThrow) {
         raise("expected function to throw");
     }
+    return f;
 };
 export const expectToThrowError = (error) => (f) => {
     let didThrow = false;
@@ -78,11 +80,13 @@ export const expectToThrowError = (error) => (f) => {
     else if (errorThrown !== error) {
         raise(`expected ${JSON.stringify(error)}\nreceieved: ${JSON.stringify(errorThrown)}`);
     }
+    return f;
 };
 export const expectEquals = (b, valueEquality = strictEquality) => (a) => {
     if (!valueEquality(a, b)) {
         raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
     }
+    return a;
 };
 export const expectArrayEquals = (b, { valuesEquality, } = {
     valuesEquality: strictEquality,
@@ -91,6 +95,7 @@ export const expectArrayEquals = (b, { valuesEquality, } = {
     if (!equals(a, b)) {
         raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
     }
+    return a;
 };
 export const expectArrayNotEquals = (b, { valuesEquality, } = {
     valuesEquality: strictEquality,
@@ -99,26 +104,31 @@ export const expectArrayNotEquals = (b, { valuesEquality, } = {
     if (equals(a, b)) {
         raise(`expected ${JSON.stringify(b)}\n to not equal ${JSON.stringify(a)}`);
     }
+    return a;
 };
 export const expectTrue = (v) => {
     if (!v) {
         raise("expected true");
     }
+    return v;
 };
 export const expectFalse = (v) => {
     if (v) {
         raise("expected false");
     }
+    return v;
 };
 export const expectIsNone = (v) => {
     if (isSome(v)) {
         raise(`expected none but recieved ${v}`);
     }
+    return v;
 };
 export const expectIsSome = (v) => {
     if (isNone(v)) {
         raise(`expected Some(?) but recieved None`);
     }
+    return v;
 };
 export const mockFn = (retval) => {
     const calls = [];
@@ -134,6 +144,7 @@ export const expectToHaveBeenCalledTimes = (times) => (fn) => {
     if (length !== times) {
         raise(`expected fn to be called ${times} times, but was only called ${length} times.`);
     }
+    return fn;
 };
 export const expectPromiseToThrow = async (promise) => {
     let didThrow = false;
@@ -146,6 +157,7 @@ export const expectPromiseToThrow = async (promise) => {
     if (!didThrow) {
         raise("expected function to throw");
     }
+    //return promise;
 };
 const createTests = (testGroup, parents, debug = false) => {
     const path = [...parents, testGroup.name];

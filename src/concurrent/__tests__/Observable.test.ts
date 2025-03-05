@@ -24,6 +24,7 @@ import ComputationModuleTests from "../../computations/__tests__/fixtures/Comput
 import ComputationOperatorWithSideEffectsTests from "../../computations/__tests__/fixtures/ComputationOperatorWithSideEffectsTests.js";
 import * as ComputationTest from "../../computations/__tests__/fixtures/ComputationTest.js";
 import DeferredReactiveComputationModuleTests from "../../computations/__tests__/fixtures/DeferredReactiveComputationModuleTests.js";
+import StatelessAsynchronousComputationOperatorTests from "../../computations/__tests__/fixtures/StatelessAsynchronousComputationOperatorTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
 import {
   ComputationModule,
@@ -797,14 +798,14 @@ testModule(
   ),
   describe(
     "dispatchTo",
-    ...ComputationOperatorWithSideEffectsTests(
+    ComputationOperatorWithSideEffectsTests(
       ObservableTypes,
       Observable.dispatchTo(
         Streamable.identity()[StreamableLike_stream](
           VirtualTimeScheduler.create(),
         ),
       ),
-    ).tests,
+    ),
     test("when backpressure exception is thrown", () => {
       using vts = VirtualTimeScheduler.create();
       const stream = Streamable.identity()[StreamableLike_stream](vts, {
@@ -905,10 +906,10 @@ testModule(
   ),
   describe(
     "enqueue",
-    ...ComputationOperatorWithSideEffectsTests(
+    ComputationOperatorWithSideEffectsTests(
       ObservableTypes,
       Observable.enqueue(Queue.create()),
-    ).tests,
+    ),
   ),
   describe(
     "exhaust",
@@ -1517,10 +1518,10 @@ testModule(
   describe("never", ComputationTest.isMulticasted(Observable.never())),
   describe(
     "onSubscribe",
-    ...ComputationOperatorWithSideEffectsTests(
+    ComputationOperatorWithSideEffectsTests(
       ObservableTypes,
       Observable.onSubscribe(ignore),
-    ).tests,
+    ),
     test("when subscribe function returns a teardown function", () => {
       using vts = VirtualTimeScheduler.create();
 
@@ -1704,30 +1705,9 @@ testModule(
   ),
   describe(
     "subscribeOn",
-    ComputationTest.isPureDeferred(
-      (() => {
-        using vts = VirtualTimeScheduler.create();
-        return pipe(
-          Observable.empty({ delay: 1 }),
-          Observable.subscribeOn(vts),
-        );
-      })(),
-    ),
-    ComputationTest.isDeferredWithSideEffects(
-      (() => {
-        using vts = VirtualTimeScheduler.create();
-        return pipe(
-          Observable.empty({ delay: 1 }),
-          Observable.forEach(ignore),
-          Observable.subscribeOn(vts),
-        );
-      })(),
-    ),
-    ComputationTest.isMulticasted(
-      (() => {
-        using vts = VirtualTimeScheduler.create();
-        return pipe(Subject.create(), Observable.subscribeOn(vts));
-      })(),
+    StatelessAsynchronousComputationOperatorTests(
+      ObservableTypes,
+      Observable.subscribeOn(VirtualTimeScheduler.create()),
     ),
   ),
   describe(
@@ -1848,12 +1828,12 @@ testModule(
     DeferredReactiveObservableOperator(
       Observable.takeUntil(Observable.empty({ delay: 1 })),
     ),
-    ...ComputationOperatorWithSideEffectsTests(
+    ComputationOperatorWithSideEffectsTests(
       ObservableTypes,
       Observable.takeUntil(
         pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
       ),
-    ).tests,
+    ),
     AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
       Observable.takeUntil(
         pipe(

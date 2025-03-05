@@ -13,11 +13,17 @@ export const isSynchronousWithSideEffects = (x: ComputationLike) =>
     expectTrue,
   );
 
-export const isPureDeferred = (x: ComputationLike) =>
+export const isPureDeferred = (x: ComputationLike) => {
   pipe(x, Computation.isPureDeferred<ComputationLike>, expectTrue);
+  return x;
+};
 
-export const isDeferredWithSideEffects = (x: ComputationLike) =>
+export const isDeferredWithSideEffects = (x: ComputationLike) => {
   pipe(x, Computation.isDeferredWithSideEffects<ComputationLike>, expectTrue);
+  return x;
+};
 
-export const isMulticasted = (x: ComputationLike) =>
+export const isMulticasted = (x: ComputationLike) => {
   pipe(x, Computation.isMulticasted<ComputationLike>, expectTrue);
+  return x;
+};

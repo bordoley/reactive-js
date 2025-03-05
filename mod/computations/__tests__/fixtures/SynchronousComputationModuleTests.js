@@ -36,7 +36,7 @@ const SynchronousComputationModuleTests = (m, computationType) => describe("Sync
 ], m.fromReadonlyArray(), m.concatAll(), m.takeFirst({ count: 5 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])))), describe("concat", test("concats the input containers in order", pipeLazy(m.concat(pipe([1, 2, 3], m.fromReadonlyArray()), pipe([4, 5, 6], m.fromReadonlyArray())), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), test("only consume partial number of events", pipeLazy(m.concat(pipe([1, 2, 3], m.fromReadonlyArray()), pipe([4, 5, 6], m.fromReadonlyArray()), pipe([7, 8, 8], m.fromReadonlyArray())), m.takeFirst({ count: 5 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])))), describe("empty", test("produces no results", pipeLazy(m.empty(), m.toReadonlyArray(), expectArrayEquals([])))), describe("encodeUtf8", test("encoding ascii", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
     pipe([str], m.fromReadonlyArray(), m.encodeUtf8(), m.toRunnable(), Runnable.decodeWithCharset(), Runnable.toReadonlyArray(), invoke("join"), expectEquals(str));
-})), describe("forEach", ...ComputationOperatorWithSideEffectsTests(computationType, m.forEach(ignore)).tests, test("invokes the effect for each notified value", () => {
+})), describe("forEach", ComputationOperatorWithSideEffectsTests(computationType, m.forEach(ignore)), test("invokes the effect for each notified value", () => {
     const result = [];
     pipe([1, 2, 3], m.fromReadonlyArray(), m.forEach((x) => {
         result[Array_push](x + 10);

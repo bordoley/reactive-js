@@ -13,11 +13,11 @@ const ComputationOperatorWithSideEffectsTests = (computationType, operator) => {
         computationType[Computation_synchronousWithSideEffectsOfT] &&
             test("with SynchronousWithSideEffects input, returns SynchronousWithSideEffects output", pipeSomeLazy(computationType[Computation_synchronousWithSideEffectsOfT], operator, ComputationExpect.isSynchronousWithSideEffects)),
         computationType[Computation_pureDeferredOfT] &&
-            test("with PureDeferred input, returns PureDeferred output", pipeSomeLazy(computationType[Computation_pureDeferredOfT], operator, ComputationExpect.isDeferredWithSideEffects)),
+            test("with PureDeferred input, returns DeferredWithSideEffects output", pipeSomeLazy(computationType[Computation_pureDeferredOfT], operator, ComputationExpect.isDeferredWithSideEffects)),
         computationType[Computation_deferredWithSideEffectsOfT] &&
             test("with DeferredWithSideEffects input, returns DeferredWithSideEffects output", pipeSomeLazy(computationType[Computation_deferredWithSideEffectsOfT], operator, ComputationExpect.isDeferredWithSideEffects)),
         computationType[Computation_multicastOfT] &&
-            test("with Multicasted input, returns Multicasted output", pipeSomeLazy(computationType[Computation_multicastOfT], operator, ComputationExpect.isDeferredWithSideEffects)),
+            test("with Multicasted input, returns DeferredWithSideEffects output", pipeSomeLazy(computationType[Computation_multicastOfT], operator, ComputationExpect.isDeferredWithSideEffects)),
     ], Computation.keepType(Iterable)(isSome), Iterable.toReadonlyArray()));
 };
 export default ComputationOperatorWithSideEffectsTests;

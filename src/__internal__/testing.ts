@@ -93,7 +93,7 @@ export const testPredicateExpectingFalse = <T>(
 
 export const testAsync = (
   name: string,
-  f: Factory<Promise<void>>,
+  f: Factory<Promise<any>>,
 ): TestAsync => ({
   type: TestAsyncType,
   name,
@@ -114,6 +114,8 @@ export const expectToThrow = (f: SideEffect) => {
   if (!didThrow) {
     raise("expected function to throw");
   }
+
+  return f;
 };
 
 export const expectToThrowAsync = async (f: Factory<Promise<unknown>>) => {
@@ -127,6 +129,7 @@ export const expectToThrowAsync = async (f: Factory<Promise<unknown>>) => {
   if (!didThrow) {
     raise("expected function to throw");
   }
+  return f;
 };
 
 export const expectToThrowError = (error: unknown) => (f: SideEffect) => {
@@ -148,6 +151,8 @@ export const expectToThrowError = (error: unknown) => (f: SideEffect) => {
       )}`,
     );
   }
+
+  return f;
 };
 
 export const expectEquals =
@@ -156,6 +161,8 @@ export const expectEquals =
     if (!valueEquality(a, b)) {
       raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
     }
+
+    return a;
   };
 
 export const expectArrayEquals =
@@ -174,6 +181,8 @@ export const expectArrayEquals =
     if (!equals(a, b)) {
       raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
     }
+
+    return a;
   };
 
 export const expectArrayNotEquals =
@@ -194,30 +203,36 @@ export const expectArrayNotEquals =
         `expected ${JSON.stringify(b)}\n to not equal ${JSON.stringify(a)}`,
       );
     }
+
+    return a;
   };
 
 export const expectTrue = (v: boolean) => {
   if (!v) {
     raise("expected true");
   }
+  return v;
 };
 
 export const expectFalse = (v: boolean) => {
   if (v) {
     raise("expected false");
   }
+  return v;
 };
 
 export const expectIsNone = (v: Optional) => {
   if (isSome(v)) {
     raise(`expected none but recieved ${v}`);
   }
+  return v;
 };
 
 export const expectIsSome = (v: Optional) => {
   if (isNone(v)) {
     raise(`expected Some(?) but recieved None`);
   }
+  return v;
 };
 
 type MockFunction = {
@@ -244,6 +259,7 @@ export const expectToHaveBeenCalledTimes =
         `expected fn to be called ${times} times, but was only called ${length} times.`,
       );
     }
+    return fn;
   };
 
 export const expectPromiseToThrow = async (promise: PromiseLike<unknown>) => {
@@ -257,6 +273,7 @@ export const expectPromiseToThrow = async (promise: PromiseLike<unknown>) => {
   if (!didThrow) {
     raise("expected function to throw");
   }
+  //return promise;
 };
 
 const createTests = (
