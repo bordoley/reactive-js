@@ -32,16 +32,6 @@
 
 ***
 
-### \[Computation\_multicastOfT\]?
-
-> `readonly` `optional` **\[Computation\_multicastOfT\]**: `undefined`
-
-#### Overrides
-
-`ComputationType.[Computation_multicastOfT]`
-
-***
-
 ### \[Computation\_pureDeferredOfT\]?
 
 > `readonly` `optional` **\[Computation\_pureDeferredOfT\]**: [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`unknown`\>

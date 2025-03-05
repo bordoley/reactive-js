@@ -380,11 +380,31 @@
 
 #### a
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TA`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TA`\>
+##### [ComputationLike_isDeferred]?
+
+`true`
+
+##### [ComputationLike_isPure]?
+
+`true`
+
+##### [ComputationLike_isSynchronous]?
+
+`true`
 
 #### b
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TB`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TB`\>
+##### [ComputationLike_isDeferred]?
+
+`true`
+
+##### [ComputationLike_isPure]?
+
+`true`
+
+##### [ComputationLike_isSynchronous]?
+
+`true`
 
 ### Returns
 
@@ -406,15 +426,45 @@
 
 #### a
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TA`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TA`\>
+##### [ComputationLike_isDeferred]?
+
+`true`
+
+##### [ComputationLike_isPure]?
+
+`true`
+
+##### [ComputationLike_isSynchronous]?
+
+`true`
 
 #### b
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TB`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TB`\>
+##### [ComputationLike_isDeferred]?
+
+`true`
+
+##### [ComputationLike_isPure]?
+
+`true`
+
+##### [ComputationLike_isSynchronous]?
+
+`true`
 
 #### c
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TC`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TC`\>
+##### [ComputationLike_isDeferred]?
+
+`true`
+
+##### [ComputationLike_isPure]?
+
+`true`
+
+##### [ComputationLike_isSynchronous]?
+
+`true`
 
 ### Returns
 
@@ -438,19 +488,59 @@
 
 #### a
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TA`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TA`\>
+##### [ComputationLike_isDeferred]?
+
+`true`
+
+##### [ComputationLike_isPure]?
+
+`true`
+
+##### [ComputationLike_isSynchronous]?
+
+`true`
 
 #### b
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TB`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TB`\>
+##### [ComputationLike_isDeferred]?
+
+`true`
+
+##### [ComputationLike_isPure]?
+
+`true`
+
+##### [ComputationLike_isSynchronous]?
+
+`true`
 
 #### c
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TC`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TC`\>
+##### [ComputationLike_isDeferred]?
+
+`true`
+
+##### [ComputationLike_isPure]?
+
+`true`
+
+##### [ComputationLike_isSynchronous]?
+
+`true`
 
 #### d
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TD`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TD`\>
+##### [ComputationLike_isDeferred]?
+
+`true`
+
+##### [ComputationLike_isPure]?
+
+`true`
+
+##### [ComputationLike_isSynchronous]?
+
+`true`
 
 ### Returns
 

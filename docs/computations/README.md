@@ -31,7 +31,6 @@
 - [SynchronousComputationLike](interfaces/SynchronousComputationLike.md)
 - [SynchronousComputationModule](interfaces/SynchronousComputationModule.md)
 - [SynchronousComputationWithSideEffectsLike](interfaces/SynchronousComputationWithSideEffectsLike.md)
-- [ZippingConstructor](interfaces/ZippingConstructor.md)
 
 ## Type Aliases
 

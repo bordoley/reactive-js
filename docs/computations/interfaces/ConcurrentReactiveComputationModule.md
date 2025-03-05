@@ -19,6 +19,18 @@
 
 • **TComputation** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
 
+## Properties
+
+### combineLatest
+
+> **combineLatest**: `CombineConstructor`\<`TComputation`\>
+
+***
+
+### zipLatest
+
+> **zipLatest**: `CombineConstructor`\<`TComputation`\>
+
 ## Methods
 
 ### fromPromise()

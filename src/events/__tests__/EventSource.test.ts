@@ -25,9 +25,13 @@ import {
 } from "../../events.js";
 import {
   Optional,
+  Tuple2,
+  arrayEquality,
+  bind,
   bindMethod,
   compose,
   ignore,
+  incrementBy,
   isSome,
   newInstance,
   none,
@@ -35,6 +39,8 @@ import {
   pipe,
   pipeLazy,
   raise,
+  returns,
+  tuple,
 } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
@@ -71,6 +77,35 @@ testModule(
         return result;
       };
     },
+  }),
+  test("combineLatest", () => {
+    using vts = VirtualTimeScheduler.create();
+    const result: Tuple2<number, number>[] = [];
+
+    pipe(
+      EventSource.combineLatest<number, number>(
+        pipe(
+          Observable.generate(incrementBy(2), returns(1), { delay: 2 }),
+          Observable.takeFirst<number>({ count: 3 }),
+          Observable.toEventSource(vts),
+        ),
+        pipe(
+          Observable.generate(incrementBy(2), returns(0), { delay: 3 }),
+          Observable.takeFirst<number>({ count: 2 }),
+          Observable.toEventSource(vts),
+        ),
+      ),
+      EventSource.addEventHandler(bind(result.push, result)),
+    );
+
+    vts[VirtualTimeSchedulerLike_run]();
+
+    pipe(
+      result,
+      expectArrayEquals([tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)], {
+        valuesEquality: arrayEquality(),
+      }),
+    );
   }),
   describe(
     "create",
@@ -151,6 +186,34 @@ testModule(
       vts[VirtualTimeSchedulerLike_run]();
 
       pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]));
+    }),
+  ),
+  describe(
+    "zipLatest",
+    test("zip two delayed observable", () => {
+      using vts = VirtualTimeScheduler.create();
+      const result: number[] = [];
+
+      pipe(
+        EventSource.zipLatest(
+          pipe(
+            [1, 2, 3, 4, 5, 6, 7, 8],
+            Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
+            Observable.toEventSource(vts),
+          ),
+          pipe(
+            [1, 2, 3, 4],
+            Observable.fromReadonlyArray({ delay: 2, delayStart: true }),
+            Observable.toEventSource(vts),
+          ),
+        ),
+        EventSource.map<Tuple2<number, number>, number>(([a, b]) => a + b),
+        EventSource.addEventHandler(bind(result.push, result)),
+      );
+
+      vts[VirtualTimeSchedulerLike_run]();
+
+      pipe(result, expectArrayEquals([2, 5, 8, 11]));
     }),
   ),
 );

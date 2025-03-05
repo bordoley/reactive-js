@@ -12,12 +12,6 @@
 
 ## Properties
 
-### combineLatest
-
-> **combineLatest**: [`ZippingConstructor`](../../../computations/interfaces/ZippingConstructor.md)\<[`ObservableComputation`](ObservableComputation.md)\>
-
-***
-
 ### currentTime
 
 > **currentTime**: [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
@@ -27,12 +21,6 @@
 ### forkMerge
 
 > **forkMerge**: `ForkMerge`
-
-***
-
-### zipLatest
-
-> **zipLatest**: [`ZippingConstructor`](../../../computations/interfaces/ZippingConstructor.md)\<[`ObservableComputation`](ObservableComputation.md)\>
 
 ## Methods
 

@@ -19,8 +19,10 @@
 ## Functions
 
 - [addEventHandler](functions/addEventHandler.md)
+- [combineLatest](functions/combineLatest.md)
 - [create](functions/create.md)
 - [fromPromise](functions/fromPromise.md)
 - [keep](functions/keep.md)
 - [map](functions/map.md)
 - [merge](functions/merge.md)
+- [zipLatest](functions/zipLatest.md)

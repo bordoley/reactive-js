@@ -22,7 +22,7 @@
 
 ### zip
 
-> **zip**: [`ZippingConstructor`](ZippingConstructor.md)\<`TComputation`\>
+> **zip**: `ZipConstructor`\<`TComputation`\>
 
 ## Methods
 

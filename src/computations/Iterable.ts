@@ -6,7 +6,6 @@ import {
   Computation_T,
   Computation_baseOfT,
   Computation_deferredWithSideEffectsOfT,
-  Computation_multicastOfT,
   Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
@@ -59,8 +58,6 @@ export interface IterableComputation extends ComputationType {
   readonly [Computation_synchronousWithSideEffectsOfT]?: IterableWithSideEffectsLike<
     this[typeof Computation_T]
   >;
-
-  readonly [Computation_multicastOfT]?: never;
 }
 
 export type Computation = IterableComputation;

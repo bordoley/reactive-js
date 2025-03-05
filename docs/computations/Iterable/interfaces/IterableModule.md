@@ -14,7 +14,7 @@
 
 ### zip
 
-> **zip**: [`ZippingConstructor`](../../interfaces/ZippingConstructor.md)\<[`IterableComputation`](IterableComputation.md)\>
+> **zip**: `ZipConstructor`\<[`IterableComputation`](IterableComputation.md)\>
 
 #### Inherited from
 

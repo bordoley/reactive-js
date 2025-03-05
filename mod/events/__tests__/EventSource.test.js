@@ -61,7 +61,7 @@ import * as Observable from "../../concurrent/Observable.js";
 import * as VirtualTimeScheduler from "../../concurrent/VirtualTimeScheduler.js";
 import { VirtualTimeSchedulerLike_run } from "../../concurrent.js";
 import { EventListenerLike_notify, EventSourceLike_addEventListener, } from "../../events.js";
-import { bindMethod, compose, ignore, isSome, newInstance, none, pick, pipe, pipeLazy, raise, } from "../../functions.js";
+import { arrayEquality, bind, bindMethod, compose, ignore, incrementBy, isSome, newInstance, none, pick, pipe, pipeLazy, raise, returns, tuple, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 testModule("EventSource", ComputationModuleTests({
@@ -88,6 +88,24 @@ testModule("EventSource", ComputationModuleTests({
             return result;
         };
     },
+}), test("combineLatest", () => {
+    const env_1 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);
+        const result = [];
+        pipe(EventSource.combineLatest(pipe(Observable.generate(incrementBy(2), returns(1), { delay: 2 }), Observable.takeFirst({ count: 3 }), Observable.toEventSource(vts)), pipe(Observable.generate(incrementBy(2), returns(0), { delay: 3 }), Observable.takeFirst({ count: 2 }), Observable.toEventSource(vts))), EventSource.addEventHandler(bind(result.push, result)));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(result, expectArrayEquals([tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)], {
+            valuesEquality: arrayEquality(),
+        }));
+    }
+    catch (e_1) {
+        env_1.error = e_1;
+        env_1.hasError = true;
+    }
+    finally {
+        __disposeResources(env_1);
+    }
 }), describe("create", test("when the setup function throws", pipeLazy(EventSource.create(_ => raise()), EventSource.addEventHandler(ignore), pick(DisposableLike_error), expectIsSome))), describe("fromPromise", testAsync("when the promise resolves", async () => {
     const promise = Promise.resolve(1);
     let result = none;
@@ -106,9 +124,9 @@ testModule("EventSource", ComputationModuleTests({
     catch (e) { }
     pipe(subscription[DisposableLike_error], expectEquals(error));
 })), describe("merge", test("with source that have different delays", () => {
-    const env_1 = { stack: [], error: void 0, hasError: false };
+    const env_2 = { stack: [], error: void 0, hasError: false };
     try {
-        const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);
+        const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create(), false);
         const result = [];
         const [ev1, ev2, ev3] = pipe([
             [1, 4, 7],
@@ -119,12 +137,28 @@ testModule("EventSource", ComputationModuleTests({
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
-    catch (e_1) {
-        env_1.error = e_1;
-        env_1.hasError = true;
+    catch (e_2) {
+        env_2.error = e_2;
+        env_2.hasError = true;
     }
     finally {
-        __disposeResources(env_1);
+        __disposeResources(env_2);
+    }
+})), describe("zipLatest", test("zip two delayed observable", () => {
+    const env_3 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_3, VirtualTimeScheduler.create(), false);
+        const result = [];
+        pipe(EventSource.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Observable.fromReadonlyArray({ delay: 1, delayStart: true }), Observable.toEventSource(vts)), pipe([1, 2, 3, 4], Observable.fromReadonlyArray({ delay: 2, delayStart: true }), Observable.toEventSource(vts))), EventSource.map(([a, b]) => a + b), EventSource.addEventHandler(bind(result.push, result)));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(result, expectArrayEquals([2, 5, 8, 11]));
+    }
+    catch (e_3) {
+        env_3.error = e_3;
+        env_3.hasError = true;
+    }
+    finally {
+        __disposeResources(env_3);
     }
 })));
 ((_) => { })(EventSource);

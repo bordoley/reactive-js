@@ -23,8 +23,10 @@ export interface EventSourceModule extends ConcurrentReactiveComputationModule<E
 }
 export type Signature = EventSourceModule;
 export declare const addEventHandler: Signature["addEventHandler"];
+export declare const combineLatest: Signature["combineLatest"];
 export declare const create: Signature["create"];
 export declare const fromPromise: Signature["fromPromise"];
 export declare const keep: Signature["keep"];
 export declare const map: Signature["map"];
 export declare const merge: Signature["merge"];
+export declare const zipLatest: Signature["zipLatest"];

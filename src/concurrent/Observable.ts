@@ -20,7 +20,6 @@ import {
   StatefulAsynchronousComputationOperator,
   StatefulSynchronousComputationOperator,
   StatelessAsynchronousComputationOperator,
-  ZippingConstructor,
 } from "../computations.js";
 import {
   DeferredObservableLike,
@@ -237,8 +236,6 @@ export interface ObservableModule
     capacity: number,
     backpressureStrategy: BackpressureStrategy,
   ): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
-
-  combineLatest: ZippingConstructor<ObservableComputation>;
 
   computeDeferred<T>(
     computation: Factory<T>,
@@ -586,8 +583,6 @@ export interface ObservableModule
     other: MulticastObservableLike<TB>,
     selector: Function2<TA, TB, T>,
   ): StatefulAsynchronousComputationOperator<ObservableComputation, TA, T>;
-
-  zipLatest: ZippingConstructor<ObservableComputation>;
 }
 
 export type Signature = ObservableModule;
