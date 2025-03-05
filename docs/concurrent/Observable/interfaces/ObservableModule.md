@@ -24,6 +24,12 @@
 
 ***
 
+### forkMerge
+
+> **forkMerge**: `ForkMerge`
+
+***
+
 ### zipLatest
 
 > **zipLatest**: [`ZippingConstructor`](../../../computations/interfaces/ZippingConstructor.md)\<[`ObservableComputation`](ObservableComputation.md)\>
@@ -302,52 +308,6 @@
 
 ***
 
-### forkMerge()
-
-> **forkMerge**\<`TIn`, `TOut`, `TInnerType`\>(`fst`, `snd`, ...`tail`): \<`TComputationIn`\>(`observable`) => `TComputationIn` *extends* [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`TIn`\> ? `TInnerType` *extends* [`PureDeferredComputationLike`](../../../computations/interfaces/PureDeferredComputationLike.md) ? [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`TOut`\> : [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`TOut`\> : [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`TOut`\>
-
-#### Type Parameters
-
-• **TIn**
-
-• **TOut**
-
-• **TInnerType** *extends* [`PureDeferredComputationLike`](../../../computations/interfaces/PureDeferredComputationLike.md) \| [`DeferredComputationWithSideEffectsLike`](../../../computations/interfaces/DeferredComputationWithSideEffectsLike.md) = [`PureDeferredComputationLike`](../../../computations/interfaces/PureDeferredComputationLike.md)
-
-#### Parameters
-
-##### fst
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TIn`\>, [`HigherOrderInnerComputationOf`](../../../computations/type-aliases/HigherOrderInnerComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `TInnerType`, `TOut`\>\>
-
-##### snd
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TIn`\>, [`HigherOrderInnerComputationOf`](../../../computations/type-aliases/HigherOrderInnerComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `TInnerType`, `TOut`\>\>
-
-##### tail
-
-readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TIn`\>, [`HigherOrderInnerComputationOf`](../../../computations/type-aliases/HigherOrderInnerComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `TInnerType`, `TOut`\>\>, \{ `innerType`: `TInnerType`; \}\] | readonly [`Function1`](../../../functions/type-aliases/Function1.md)\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TIn`\>, [`HigherOrderInnerComputationOf`](../../../computations/type-aliases/HigherOrderInnerComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `TInnerType`, `TOut`\>\>[]
-
-#### Returns
-
-`Function`
-
-##### Type Parameters
-
-• **TComputationIn** *extends* [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TIn`\>
-
-##### Parameters
-
-###### observable
-
-`TComputationIn`
-
-##### Returns
-
-`TComputationIn` *extends* [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`TIn`\> ? `TInnerType` *extends* [`PureDeferredComputationLike`](../../../computations/interfaces/PureDeferredComputationLike.md) ? [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`TOut`\> : [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`TOut`\> : [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`TOut`\>
-
-***
-
 ### fromAsyncFactory()
 
 > **fromAsyncFactory**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`AbortSignal`, `Promise`\<`T`\>\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
@@ -392,7 +352,7 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 ### fromIterable()
 
-> **fromIterable**\<`T`\>(`options`?): \<`TIterable`\>(`iterable`) => `TIterable` *extends* [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<`unknown`\> ? [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\> : [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
+> **fromIterable**\<`T`\>(`options`?): [`FromIterableOperator`](../../../computations/type-aliases/FromIterableOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>
 
 #### Type Parameters
 
@@ -412,21 +372,7 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 #### Returns
 
-`Function`
-
-##### Type Parameters
-
-• **TIterable** *extends* [`IterableLike`](../../../computations/interfaces/IterableLike.md)\<`T`\> = [`IterableLike`](../../../computations/interfaces/IterableLike.md)\<`T`\>
-
-##### Parameters
-
-###### iterable
-
-`TIterable`
-
-##### Returns
-
-`TIterable` *extends* [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<`unknown`\> ? [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\> : [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
+[`FromIterableOperator`](../../../computations/type-aliases/FromIterableOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>
 
 #### Overrides
 
@@ -956,7 +902,7 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 ### subscribeOn()
 
-> **subscribeOn**\<`T`\>(`scheduler`, `options`?): \<`TObservableIn`\>(`observable`) => `TObservableIn` *extends* [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> ? [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> : `TObservableIn` *extends* [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> ? [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> : `TObservableIn` *extends* [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> ? [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `TObservableIn` *extends* [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> ? [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `never`
+> **subscribeOn**\<`T`\>(`scheduler`, `options`?): [`StatelessAsynchronousComputationOperator`](../../../computations/type-aliases/StatelessAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -980,21 +926,7 @@ readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`Multic
 
 #### Returns
 
-`Function`
-
-##### Type Parameters
-
-• **TObservableIn** *extends* [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
-
-##### Parameters
-
-###### observable
-
-`TObservableIn`
-
-##### Returns
-
-`TObservableIn` *extends* [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> ? [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`T`\> : `TObservableIn` *extends* [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> ? [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> : `TObservableIn` *extends* [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> ? [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `TObservableIn` *extends* [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> ? [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `never`
+[`StatelessAsynchronousComputationOperator`](../../../computations/type-aliases/StatelessAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 ***
 

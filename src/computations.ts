@@ -273,6 +273,18 @@ export type ComputationOperatorWithSideEffects<
   ? SynchronousComputationWithSideEffectsOf<TComputation, TB>
   : DeferredComputationWithSideEffectsOf<TComputation, TB>;
 
+export type StatelessAsynchronousComputationOperator<
+  TComputation extends ComputationType,
+  TA,
+  out TB,
+> = <TComputationOf extends ComputationBaseOf<TComputation, TA>>(
+  computation: TComputationOf,
+) => TComputationOf extends PureDeferredComputationOf<TComputation, TA>
+  ? PureDeferredComputationOf<TComputation, TB>
+  : TComputationOf extends MulticastComputationOf<TComputation, TA>
+    ? MulticastComputationOf<TComputation, TB>
+    : DeferredComputationWithSideEffectsOf<TComputation, TB>;
+
 export type StatefulAsynchronousComputationOperator<
   TComputation extends ComputationType,
   TA,
@@ -397,6 +409,14 @@ export type HigherOrderComputationOperator<
             TB
           >
         : never;
+
+export type FromIterableOperator<TComputation extends ComputationType, T> = <
+  TIterable extends IterableLike<T>,
+>(
+  iterable: TIterable,
+) => TIterable extends PureIterableLike
+  ? PureSynchronousComputationOf<TComputation, T>
+  : SynchronousComputationWithSideEffectsOf<TComputation, T>;
 
 export interface ZippingConstructor<TComputation extends ComputationType> {
   <TA, TB>(
@@ -561,11 +581,7 @@ export interface SynchronousComputationModule<
     sideEffect: SideEffect1<T>,
   ): ComputationOperatorWithSideEffects<TComputation, T, T>;
 
-  fromIterable<T>(): <TIterable extends IterableLike<T> = IterableLike<T>>(
-    iterable: TIterable,
-  ) => TIterable extends PureIterableLike
-    ? PureSynchronousComputationOf<TComputation, T>
-    : SynchronousComputationWithSideEffectsOf<TComputation, T>;
+  fromIterable<T>(): FromIterableOperator<TComputation, T>;
 
   fromReadonlyArray<T>(options?: {
     readonly count?: number;

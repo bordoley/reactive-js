@@ -247,7 +247,7 @@
 
 ### fromIterable()
 
-> **fromIterable**\<`T`\>(): \<`TIterable`\>(`iterable`) => `TIterable` *extends* [`PureIterableLike`](PureIterableLike.md)\<`unknown`\> ? [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\> : [`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+> **fromIterable**\<`T`\>(): [`FromIterableOperator`](../type-aliases/FromIterableOperator.md)\<`TComputation`, `T`\>
 
 #### Type Parameters
 
@@ -255,21 +255,7 @@
 
 #### Returns
 
-`Function`
-
-##### Type Parameters
-
-• **TIterable** *extends* [`IterableLike`](IterableLike.md)\<`T`\> = [`IterableLike`](IterableLike.md)\<`T`\>
-
-##### Parameters
-
-###### iterable
-
-`TIterable`
-
-##### Returns
-
-`TIterable` *extends* [`PureIterableLike`](PureIterableLike.md)\<`unknown`\> ? [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\> : [`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+[`FromIterableOperator`](../type-aliases/FromIterableOperator.md)\<`TComputation`, `T`\>
 
 ***
 

@@ -1,5 +1,5 @@
-import { ComputationBaseOf, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationWithSideEffectsLike, DeferredReactiveComputationModule, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, IterableLike, PureDeferredComputationLike, PureIterableLike, PureSynchronousComputationOf, RunnableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, SynchronousComputationWithSideEffectsOf, ZippingConstructor } from "../computations.js";
-import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObserverLike, PureDeferredObservableLike, PureObservableLike, PureSynchronousObservableLike, SchedulerLike, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../concurrent.js";
+import { ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationWithSideEffectsLike, DeferredReactiveComputationModule, FromIterableOperator, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, PureDeferredComputationLike, RunnableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StatelessAsynchronousComputationOperator, ZippingConstructor } from "../computations.js";
+import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObserverLike, PureDeferredObservableLike, PureSynchronousObservableLike, SchedulerLike, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../concurrent.js";
 import { EventSourceLike, StoreLike } from "../events.js";
 import { Factory, Function1, Function2, Optional, SideEffect, SideEffect1, Tuple2, Updater } from "../functions.js";
 import { BackpressureStrategy, DisposableLike, QueueableLike } from "../utils.js";
@@ -19,6 +19,15 @@ export declare const ThrottleFirstMode = "first";
 export declare const ThrottleLastMode = "last";
 export declare const ThrottleIntervalMode = "interval";
 export type ThrottleMode = typeof ThrottleFirstMode | typeof ThrottleLastMode | typeof ThrottleIntervalMode;
+interface ForkMerge {
+    <TIn, TOut>(fst: Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, PureDeferredComputationLike, TOut>>, snd: Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, PureDeferredComputationLike, TOut>>, ...tail: Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, PureDeferredComputationLike, TOut>>[]): HigherOrderComputationOperator<ObservableComputation, PureDeferredComputationLike, TIn, TOut>;
+    <TIn, TOut, TInnerType extends DeferredComputationWithSideEffectsLike>(fst: Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, TInnerType, TOut>>, snd: Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, TInnerType, TOut>>, ...tail: readonly [
+        ...Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, TInnerType, TOut>>[],
+        {
+            innerType?: TInnerType;
+        }
+    ]): HigherOrderComputationOperator<ObservableComputation, TInnerType, TIn, TOut>;
+}
 /**
  * @noInheritDoc
  */
@@ -48,19 +57,14 @@ export interface ObservableModule extends DeferredReactiveComputationModule<Obse
         readonly backpressureStrategy?: BackpressureStrategy;
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     flatMapAsync<TA, TB>(f: Function2<TA, AbortSignal, Promise<TB>>): Function1<DeferredObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
-    forkMerge<TIn, TOut, TInnerType extends PureDeferredComputationLike | DeferredComputationWithSideEffectsLike = PureDeferredComputationLike>(fst: Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, TInnerType, TOut>>, snd: Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, TInnerType, TOut>>, ...tail: readonly [
-        ...Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, TInnerType, TOut>>[],
-        {
-            innerType?: TInnerType;
-        }
-    ] | readonly Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, TInnerType, TOut>>[]): <TComputationIn extends ComputationBaseOf<ObservableComputation, TIn>>(observable: TComputationIn) => TComputationIn extends PureObservableLike<TIn> ? TInnerType extends PureDeferredComputationLike ? PureDeferredObservableLike<TOut> : DeferredObservableWithSideEffectsLike<TOut> : DeferredObservableWithSideEffectsLike<TOut>;
+    forkMerge: ForkMerge;
     fromAsyncFactory<T>(): Function1<Function1<AbortSignal, Promise<T>>, DeferredObservableWithSideEffectsLike<T>>;
     fromAsyncIterable<T>(): Function1<AsyncIterable<T>, DeferredObservableWithSideEffectsLike<T>>;
     fromEventSource<T>(): Function1<EventSourceLike<T>, MulticastObservableLike<T>>;
     fromIterable<T>(options?: {
         readonly delay: number;
         readonly delayStart?: boolean;
-    }): <TIterable extends IterableLike<T> = IterableLike<T>>(iterable: TIterable) => TIterable extends PureIterableLike ? PureSynchronousComputationOf<ObservableComputation, T> : SynchronousComputationWithSideEffectsOf<ObservableComputation, T>;
+    }): FromIterableOperator<ObservableComputation, T>;
     fromReadonlyArray<T>(options?: {
         readonly delay?: number;
         readonly delayStart?: boolean;
@@ -132,7 +136,7 @@ export interface ObservableModule extends DeferredReactiveComputationModule<Obse
     subscribeOn<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
-    }): <TObservableIn extends ObservableLike<T>>(observable: TObservableIn) => TObservableIn extends PureDeferredObservableLike<T> ? PureDeferredObservableLike<T> : TObservableIn extends MulticastObservableLike<T> ? MulticastObservableLike<T> : TObservableIn extends SynchronousObservableWithSideEffectsLike<T> ? DeferredObservableWithSideEffectsLike<T> : TObservableIn extends DeferredObservableWithSideEffectsLike<T> ? DeferredObservableWithSideEffectsLike<T> : never;
+    }): StatelessAsynchronousComputationOperator<ObservableComputation, T, T>;
     switchAll<T>(): HigherOrderComputationOperator<ObservableComputation, PureSynchronousObservableLike, PureSynchronousObservableLike<T>, T>;
     switchAll<T, TInnerType extends HigherOrderInnerComputationLike>(options: {
         readonly innerType: TInnerType;
@@ -243,3 +247,4 @@ export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
 export declare const withCurrentTime: Signature["withCurrentTime"];
 export declare const withLatestFrom: Signature["withLatestFrom"];
 export declare const zipLatest: Signature["zipLatest"];
+export {};
