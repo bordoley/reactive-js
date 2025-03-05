@@ -1,4 +1,3 @@
-import { Set } from "./__internal__/constants.js";
 import {
   type Factory,
   type Function1,
@@ -8,7 +7,6 @@ import {
   type SideEffect1,
   type SideEffect2,
   type Tuple2,
-  newInstance,
 } from "./functions.js";
 
 /**
@@ -175,10 +173,3 @@ export interface DictionaryCollectionModule<C extends Collection>
     m2: CollectionOf<C, T, TKey>,
   ): Function1<CollectionOf<C, T, TKey>, CollectionOf<C, T, TKey>>;
 }
-
-export const keySet =
-  <C extends Collection>(keys: CollectionModule<C>["keys"]) =>
-  <TKey extends KeyOf<C> = KeyOf<C>>(
-    collection: CollectionOf<C, unknown, TKey>,
-  ): ReadonlySet<TKey> =>
-    newInstance(Set<TKey>, keys<TKey>()(collection));

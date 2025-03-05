@@ -54,8 +54,9 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 });
 import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectTrue, test, testModule, } from "../../__internal__/testing.js";
+import * as Collection from "../../collections/Collection.js";
 import * as Dictionary from "../../collections/Dictionary.js";
-import { DictionaryLike_get, keySet } from "../../collections.js";
+import { DictionaryLike_get } from "../../collections.js";
 import * as Computation from "../../computations/Computation.js";
 import { AnimationStreamLike_animation, DispatcherLike_complete, DispatcherLike_isCompleted, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
@@ -91,7 +92,7 @@ testModule("Streamable", describe("animation", test("integration", () => {
         const stream = Streamable.animationGroup({
             a: Observable.keyFrame(500),
         })[StreamableLike_stream](vts);
-        pipe(stream, keySet(Dictionary.keys), invoke("has", "a"), expectTrue);
+        pipe(stream, Collection.keySet(Dictionary.keys), invoke("has", "a"), expectTrue);
         let result = 0;
         pipeSome(stream[DictionaryLike_get]("a"), EventSource.addEventHandler(ev => {
             result = ev;

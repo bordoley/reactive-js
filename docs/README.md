@@ -7,6 +7,7 @@
 ## Modules
 
 - [collections](collections/README.md)
+- [collections/Collection](collections/Collection/README.md)
 - [collections/Dictionary](collections/Dictionary/README.md)
 - [collections/ReadonlyArray](collections/ReadonlyArray/README.md)
 - [collections/ReadonlyMap](collections/ReadonlyMap/README.md)

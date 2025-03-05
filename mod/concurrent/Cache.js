@@ -2,9 +2,9 @@
 
 import { MAX_SAFE_INTEGER, Map_delete, Map_get, Map_set, Map_size, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
+import * as Collection from "../collections/Collection.js";
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
-import { keySet } from "../collections.js";
 import * as Computation from "../computations/Computation.js";
 import { DeferredComputationWithSideEffects, } from "../computations.js";
 import { CacheLike_get, ContinuationContextLike_yield, SchedulerLike_schedule, } from "../concurrent.js";
@@ -49,7 +49,7 @@ export const create = /*@__PURE__*/ (() => {
         const observableSubscription = pipe(singleUseObservable, Observable.map((updaters) => tuple(updaters, pipe(updaters, ReadonlyObjectMap.map((_, k) => instance[CacheStream_store][Map_get](k))))), isSome(persistentStore)
             ? Computation.concatMap(ObservableModule)(next => {
                 const [updaters, values] = next;
-                const keys = pipe(values, ReadonlyObjectMap.keep(isNone), keySet(ReadonlyObjectMap.keys));
+                const keys = pipe(values, ReadonlyObjectMap.keep(isNone), Collection.keySet(ReadonlyObjectMap.keys));
                 return keys[Set_size] > 0
                     ? pipe(persistentStore.load(keys), Observable.map((persistedValues) => tuple(updaters, pipe(values, ReadonlyObjectMap.union(persistedValues)))))
                     : pipe(next, Observable.fromValue());

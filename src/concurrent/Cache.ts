@@ -14,10 +14,11 @@ import {
   mixInstanceFactory,
   props,
 } from "../__internal__/mixins.js";
+import * as Collection from "../collections/Collection.js";
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import { ReadonlyObjectMapCollection } from "../collections/ReadonlyObjectMap.js";
 import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
-import { ReadonlyObjectMapLike, keySet } from "../collections.js";
+import { ReadonlyObjectMapLike } from "../collections.js";
 import * as Computation from "../computations/Computation.js";
 import {
   DeferredComputationWithSideEffects,
@@ -230,7 +231,9 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
                 const keys = pipe(
                   values,
                   ReadonlyObjectMap.keep<unknown, string>(isNone),
-                  keySet<ReadonlyObjectMapCollection>(ReadonlyObjectMap.keys),
+                  Collection.keySet<ReadonlyObjectMapCollection>(
+                    ReadonlyObjectMap.keys,
+                  ),
                 );
 
                 return keys[Set_size] > 0

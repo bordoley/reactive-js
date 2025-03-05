@@ -95,4 +95,3 @@ export interface DictionaryCollectionModule<C extends Collection> extends Collec
     fromEntries<T, TKey extends KeyOf<C>>(): Function1<Iterable<Tuple2<TKey, T>>, CollectionOf<C, T, TKey>>;
     union<TKey extends string | symbol, T>(m2: CollectionOf<C, T, TKey>): Function1<CollectionOf<C, T, TKey>, CollectionOf<C, T, TKey>>;
 }
-export declare const keySet: <C extends Collection>(keys: CollectionModule<C>["keys"]) => <TKey extends KeyOf<C> = KeyOf<C>>(collection: CollectionOf<C, unknown, TKey>) => ReadonlySet<TKey>;

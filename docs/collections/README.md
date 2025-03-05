@@ -27,7 +27,3 @@
 - [Collection\_type](variables/Collection_type.md)
 - [DictionaryLike\_get](variables/DictionaryLike_get.md)
 - [DictionaryLike\_keys](variables/DictionaryLike_keys.md)
-
-## Functions
-
-- [keySet](functions/keySet.md)

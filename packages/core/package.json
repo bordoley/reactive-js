@@ -48,6 +48,7 @@
   },
   "exports": {
     "./collections": "./collections.js",
+    "./collections/Collection": "./collections/Collection.js",
     "./collections/Dictionary": "./collections/Dictionary.js",
     "./collections/Enumerable": "./collections/Enumerable.js",
     "./collections/ReadonlyArray": "./collections/ReadonlyArray.js",

@@ -8,9 +8,10 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
+import * as Collection from "../../collections/Collection.js";
 import * as Dictionary from "../../collections/Dictionary.js";
 import { DictionaryCollection } from "../../collections/Dictionary.js";
-import { DictionaryLike_get, keySet } from "../../collections.js";
+import { DictionaryLike_get } from "../../collections.js";
 import * as Computation from "../../computations/Computation.js";
 import {
   AnimationStreamLike_animation,
@@ -74,7 +75,7 @@ testModule(
 
       pipe(
         stream,
-        keySet<DictionaryCollection>(Dictionary.keys),
+        Collection.keySet<DictionaryCollection>(Dictionary.keys),
         invoke("has", "a"),
         expectTrue,
       );
