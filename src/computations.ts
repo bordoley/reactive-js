@@ -2,6 +2,7 @@ import {
   Equality,
   Factory,
   Function1,
+  Function2,
   Optional,
   Predicate,
   Reducer,
@@ -821,6 +822,48 @@ export interface ConcurrentReactiveComputationModule<
   merge<T>(
     ...computations: readonly ComputationOf<TComputation, T>[]
   ): DeferredComputationWithSideEffectsOf<TComputation, T>;
+
+  withLatestFrom<TA, TB>(
+    other: PureSynchronousComputationOf<TComputation, TB>,
+  ): StatefulSynchronousComputationOperator<TComputation, TA, Tuple2<TA, TB>>;
+  withLatestFrom<TA, TB, T>(
+    other: PureSynchronousComputationOf<TComputation, TB>,
+    selector: Function2<TA, TB, T>,
+  ): StatefulSynchronousComputationOperator<TComputation, TA, T>;
+  withLatestFrom<TA, TB>(
+    other: SynchronousComputationWithSideEffectsOf<TComputation, TB>,
+  ): ComputationOperatorWithSideEffects<TComputation, TA, Tuple2<TA, TB>>;
+  withLatestFrom<TA, TB, T>(
+    other: SynchronousComputationWithSideEffectsOf<TComputation, TB>,
+    selector: Function2<TA, TB, T>,
+  ): ComputationOperatorWithSideEffects<TComputation, TA, T>;
+  withLatestFrom<TA, TB>(
+    other: PureDeferredComputationOf<TComputation, TB>,
+  ): StatefulAsynchronousComputationOperator<TComputation, TA, Tuple2<TA, TB>>;
+  withLatestFrom<TA, TB, T>(
+    other: PureDeferredComputationOf<TComputation, TB>,
+    selector: Function2<TA, TB, T>,
+  ): StatefulAsynchronousComputationOperator<TComputation, TA, T>;
+  withLatestFrom<TA, TB>(
+    other: DeferredComputationWithSideEffectsOf<TComputation, TB>,
+  ): Function1<
+    ComputationOf<TComputation, TA>,
+    DeferredComputationWithSideEffectsOf<TComputation, Tuple2<TA, TB>>
+  >;
+  withLatestFrom<TA, TB, T>(
+    other: DeferredComputationWithSideEffectsOf<TComputation, TB>,
+    selector: Function2<TA, TB, T>,
+  ): Function1<
+    ComputationOf<TComputation, TA>,
+    DeferredComputationWithSideEffectsOf<TComputation, Tuple2<TA, TB>>
+  >;
+  withLatestFrom<TA, TB>(
+    other: MulticastComputationOf<TComputation, TB>,
+  ): StatelessAsynchronousComputationOperator<TComputation, TA, Tuple2<TA, TB>>;
+  withLatestFrom<TA, TB, T>(
+    other: MulticastComputationOf<TComputation, TB>,
+    selector: Function2<TA, TB, T>,
+  ): StatelessAsynchronousComputationOperator<TComputation, TA, T>;
 
   zipLatest: CombineConstructor<TComputation>;
 }

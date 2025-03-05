@@ -2076,16 +2076,6 @@ testModule(
         returns,
       ),
     ),
-    AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests(
-      Observable.withLatestFrom(
-        pipe(
-          () => Promise.resolve(1),
-          Observable.fromAsyncFactory(),
-          Observable.forEach(ignore),
-        ),
-        returns,
-      ),
-    ),
     DeferringObservableOperatorTests(
       Observable.withLatestFrom(Subject.create(), returns),
     ),

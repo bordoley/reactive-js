@@ -4,6 +4,7 @@ import {
   expectArrayEquals,
   expectEquals,
   expectIsSome,
+  expectToThrowError,
   test,
   testAsync,
   testModule,
@@ -42,6 +43,7 @@ import {
   returns,
   tuple,
 } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 
@@ -186,6 +188,83 @@ testModule(
       vts[VirtualTimeSchedulerLike_run]();
 
       pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]));
+    }),
+  ),
+  describe(
+    "withLatestFrom",
+    test("when source and latest are interlaced", () => {
+      using vts = VirtualTimeScheduler.create();
+
+      const result: Tuple2<number, number>[] = [];
+
+      pipe(
+        [0, 1, 2, 3],
+        Observable.fromReadonlyArray({ delay: 1 }),
+        Observable.toEventSource<number>(vts),
+        EventSource.withLatestFrom<number, number>(
+          pipe(
+            [0, 1, 2, 3],
+            Observable.fromReadonlyArray<number>({ delay: 2 }),
+            Observable.toEventSource<number>(vts),
+          ),
+        ),
+        EventSource.addEventHandler(bind(result.push, result)),
+      );
+
+      vts[VirtualTimeSchedulerLike_run]();
+
+      expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], {
+        valuesEquality: arrayEquality(),
+      })(result);
+    }),
+    test("when latest produces no values", () => {
+      using vts = VirtualTimeScheduler.create();
+
+      const result: number[] = [];
+
+      pipe(
+        [0],
+        Observable.fromReadonlyArray({ delay: 1 }),
+        Observable.toEventSource<number>(vts),
+        EventSource.withLatestFrom(
+          pipe(
+            Observable.empty<number>({ delay: 0 }),
+            Observable.toEventSource<number>(vts),
+          ),
+          returns(1),
+        ),
+        EventSource.addEventHandler(bind(result.push, result)),
+      );
+
+      vts[VirtualTimeSchedulerLike_run]();
+
+      expectArrayEquals([] as number[])(result);
+    }),
+    test("when latest throws", () => {
+      using vts = VirtualTimeScheduler.create();
+
+      const error = newInstance(Error);
+
+      const result = pipe(
+        [0],
+        Observable.fromReadonlyArray({ delay: 1 }),
+        Observable.toEventSource<number>(vts),
+        EventSource.withLatestFrom(
+          pipe(
+            Observable.raise<number>({ raise: returns(error) }),
+            Observable.toEventSource<number>(vts),
+          ),
+          returns(1),
+        ),
+        EventSource.addEventHandler(ignore),
+      );
+
+      vts[VirtualTimeSchedulerLike_run]();
+
+      pipe(
+        pipeLazy(result, Disposable.raiseIfDisposedWithError),
+        expectToThrowError(error),
+      );
     }),
   ),
   describe(

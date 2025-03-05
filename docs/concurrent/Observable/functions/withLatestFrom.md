@@ -20,7 +20,7 @@
 
 #### other
 
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TB`\>
 
 ### Returns
 
@@ -42,7 +42,7 @@
 
 #### other
 
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`TB`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TB`\>
 
 #### selector
 
@@ -66,7 +66,7 @@
 
 #### other
 
-[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`TB`\>
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`TB`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TB`\>
 
 ### Returns
 
@@ -88,7 +88,7 @@
 
 #### other
 
-[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`TB`\>
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`TB`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TB`\>
 
 #### selector
 
@@ -112,7 +112,7 @@
 
 #### other
 
-[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`TB`\>
+[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`TB`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TB`\>
 
 ### Returns
 
@@ -134,7 +134,7 @@
 
 #### other
 
-[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`TB`\>
+[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`TB`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TB`\>
 
 #### selector
 
@@ -146,7 +146,7 @@
 
 ## Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`TA`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>\>
+> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../../computations/type-aliases/ComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>\>
 
 ### Type Parameters
 
@@ -158,15 +158,15 @@
 
 #### other
 
-[`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`TB`\>
+[`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`TB`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TB`\>
 
 ### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`TA`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../../computations/type-aliases/ComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>\>
 
 ## Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`TA`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
+> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../../computations/type-aliases/ComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>\>
 
 ### Type Parameters
 
@@ -180,7 +180,7 @@
 
 #### other
 
-[`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`TB`\>
+[`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`TB`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TB`\>
 
 #### selector
 
@@ -188,11 +188,11 @@
 
 ### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`TA`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../../computations/type-aliases/ComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>\>
 
 ## Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`StatefulAsynchronousComputationOperator`](../../../computations/type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`StatelessAsynchronousComputationOperator`](../../../computations/type-aliases/StatelessAsynchronousComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ### Type Parameters
 
@@ -204,15 +204,15 @@
 
 #### other
 
-[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TB`\>
+`NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TB`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TB`\>\>
 
 ### Returns
 
-[`StatefulAsynchronousComputationOperator`](../../../computations/type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`StatelessAsynchronousComputationOperator`](../../../computations/type-aliases/StatelessAsynchronousComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ## Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`StatefulAsynchronousComputationOperator`](../../../computations/type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`, `T`\>
+> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`StatelessAsynchronousComputationOperator`](../../../computations/type-aliases/StatelessAsynchronousComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`, `T`\>
 
 ### Type Parameters
 
@@ -226,7 +226,7 @@
 
 #### other
 
-[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TB`\>
+`NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TB`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TB`\>\>
 
 #### selector
 
@@ -234,4 +234,4 @@
 
 ### Returns
 
-[`StatefulAsynchronousComputationOperator`](../../../computations/type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`, `T`\>
+[`StatelessAsynchronousComputationOperator`](../../../computations/type-aliases/StatelessAsynchronousComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`, `T`\>

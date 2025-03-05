@@ -53,7 +53,7 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 });
 import { Array_length, Array_push } from "../../__internal__/constants.js";
-import { describe, expectArrayEquals, expectEquals, expectIsSome, test, testAsync, testModule, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectIsSome, expectToThrowError, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import ComputationModuleTests from "../../computations/__tests__/fixtures/ComputationModuleTests.js";
 import { ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../../computations.js";
@@ -62,6 +62,7 @@ import * as VirtualTimeScheduler from "../../concurrent/VirtualTimeScheduler.js"
 import { VirtualTimeSchedulerLike_run } from "../../concurrent.js";
 import { EventListenerLike_notify, EventSourceLike_addEventListener, } from "../../events.js";
 import { arrayEquality, bind, bindMethod, compose, ignore, incrementBy, isSome, newInstance, none, pick, pipe, pipeLazy, raise, returns, tuple, } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 testModule("EventSource", ComputationModuleTests({
@@ -144,14 +145,16 @@ testModule("EventSource", ComputationModuleTests({
     finally {
         __disposeResources(env_2);
     }
-})), describe("zipLatest", test("zip two delayed observable", () => {
+})), describe("withLatestFrom", test("when source and latest are interlaced", () => {
     const env_3 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_3, VirtualTimeScheduler.create(), false);
         const result = [];
-        pipe(EventSource.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Observable.fromReadonlyArray({ delay: 1, delayStart: true }), Observable.toEventSource(vts)), pipe([1, 2, 3, 4], Observable.fromReadonlyArray({ delay: 2, delayStart: true }), Observable.toEventSource(vts))), EventSource.map(([a, b]) => a + b), EventSource.addEventHandler(bind(result.push, result)));
+        pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.toEventSource(vts), EventSource.withLatestFrom(pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }), Observable.toEventSource(vts))), EventSource.addEventHandler(bind(result.push, result)));
         vts[VirtualTimeSchedulerLike_run]();
-        pipe(result, expectArrayEquals([2, 5, 8, 11]));
+        expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], {
+            valuesEquality: arrayEquality(),
+        })(result);
     }
     catch (e_3) {
         env_3.error = e_3;
@@ -159,6 +162,54 @@ testModule("EventSource", ComputationModuleTests({
     }
     finally {
         __disposeResources(env_3);
+    }
+}), test("when latest produces no values", () => {
+    const env_4 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_4, VirtualTimeScheduler.create(), false);
+        const result = [];
+        pipe([0], Observable.fromReadonlyArray({ delay: 1 }), Observable.toEventSource(vts), EventSource.withLatestFrom(pipe(Observable.empty({ delay: 0 }), Observable.toEventSource(vts)), returns(1)), EventSource.addEventHandler(bind(result.push, result)));
+        vts[VirtualTimeSchedulerLike_run]();
+        expectArrayEquals([])(result);
+    }
+    catch (e_4) {
+        env_4.error = e_4;
+        env_4.hasError = true;
+    }
+    finally {
+        __disposeResources(env_4);
+    }
+}), test("when latest throws", () => {
+    const env_5 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
+        const error = newInstance(Error);
+        const result = pipe([0], Observable.fromReadonlyArray({ delay: 1 }), Observable.toEventSource(vts), EventSource.withLatestFrom(pipe(Observable.raise({ raise: returns(error) }), Observable.toEventSource(vts)), returns(1)), EventSource.addEventHandler(ignore));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(pipeLazy(result, Disposable.raiseIfDisposedWithError), expectToThrowError(error));
+    }
+    catch (e_5) {
+        env_5.error = e_5;
+        env_5.hasError = true;
+    }
+    finally {
+        __disposeResources(env_5);
+    }
+})), describe("zipLatest", test("zip two delayed observable", () => {
+    const env_6 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_6, VirtualTimeScheduler.create(), false);
+        const result = [];
+        pipe(EventSource.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Observable.fromReadonlyArray({ delay: 1, delayStart: true }), Observable.toEventSource(vts)), pipe([1, 2, 3, 4], Observable.fromReadonlyArray({ delay: 2, delayStart: true }), Observable.toEventSource(vts))), EventSource.map(([a, b]) => a + b), EventSource.addEventHandler(bind(result.push, result)));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(result, expectArrayEquals([2, 5, 8, 11]));
+    }
+    catch (e_6) {
+        env_6.error = e_6;
+        env_6.hasError = true;
+    }
+    finally {
+        __disposeResources(env_6);
     }
 })));
 ((_) => { })(EventSource);

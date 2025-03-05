@@ -42,7 +42,6 @@ import {
   Optional,
   SideEffect,
   SideEffect1,
-  Tuple2,
   Updater,
 } from "../functions.js";
 import {
@@ -528,61 +527,6 @@ export interface ObservableModule
   withCurrentTime<TA, TB>(
     selector: Function2<number, TA, TB>,
   ): StatefulSynchronousComputationOperator<ObservableComputation, TA, TB>;
-
-  withLatestFrom<TA, TB>(
-    other: PureSynchronousObservableLike<TB>,
-  ): StatefulSynchronousComputationOperator<
-    ObservableComputation,
-    TA,
-    Tuple2<TA, TB>
-  >;
-  withLatestFrom<TA, TB, T>(
-    other: PureSynchronousObservableLike<TB>,
-    selector: Function2<TA, TB, T>,
-  ): StatefulSynchronousComputationOperator<ObservableComputation, TA, T>;
-  withLatestFrom<TA, TB>(
-    other: SynchronousObservableWithSideEffectsLike<TB>,
-  ): ComputationOperatorWithSideEffects<
-    ObservableComputation,
-    TA,
-    Tuple2<TA, TB>
-  >;
-  withLatestFrom<TA, TB, T>(
-    other: SynchronousObservableWithSideEffectsLike<TB>,
-    selector: Function2<TA, TB, T>,
-  ): ComputationOperatorWithSideEffects<ObservableComputation, TA, T>;
-  withLatestFrom<TA, TB>(
-    other: PureDeferredObservableLike<TB>,
-  ): StatefulAsynchronousComputationOperator<
-    ObservableComputation,
-    TA,
-    Tuple2<TA, TB>
-  >;
-  withLatestFrom<TA, TB, T>(
-    other: PureDeferredObservableLike<TB>,
-    selector: Function2<TA, TB, T>,
-  ): StatefulAsynchronousComputationOperator<ObservableComputation, TA, T>;
-  withLatestFrom<TA, TB>(
-    other: DeferredObservableWithSideEffectsLike<TB>,
-  ): Function1<
-    ObservableLike<TA>,
-    DeferredObservableWithSideEffectsLike<Tuple2<TA, TB>>
-  >;
-  withLatestFrom<TA, TB, T>(
-    other: DeferredObservableWithSideEffectsLike<TB>,
-    selector: Function2<TA, TB, T>,
-  ): Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<T>>;
-  withLatestFrom<TA, TB>(
-    other: MulticastObservableLike<TB>,
-  ): StatefulAsynchronousComputationOperator<
-    ObservableComputation,
-    TA,
-    Tuple2<TA, TB>
-  >;
-  withLatestFrom<TA, TB, T>(
-    other: MulticastObservableLike<TB>,
-    selector: Function2<TA, TB, T>,
-  ): StatefulAsynchronousComputationOperator<ObservableComputation, TA, T>;
 }
 
 export type Signature = ObservableModule;
