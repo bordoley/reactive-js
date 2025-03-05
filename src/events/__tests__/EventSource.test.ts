@@ -14,6 +14,7 @@ import ComputationModuleTests from "../../computations/__tests__/fixtures/Comput
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
+  Computation_multicastOfT,
 } from "../../computations.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as VirtualTimeScheduler from "../../concurrent/VirtualTimeScheduler.js";
@@ -47,39 +48,46 @@ import * as Disposable from "../../utils/Disposable.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 
+const EventSourceTypes = {
+  [Computation_multicastOfT]: EventSource.never(),
+};
+
 testModule(
   "EventSource",
-  ComputationModuleTests({
-    ...EventSource,
-    fromReadonlyArray<T>() {
-      return (arr: readonly T[]) => ({
-        [ComputationLike_isDeferred]: false as const,
-        [ComputationLike_isSynchronous]: false as const,
+  ComputationModuleTests(
+    {
+      ...EventSource,
+      fromReadonlyArray<T>() {
+        return (arr: readonly T[]) => ({
+          [ComputationLike_isDeferred]: false as const,
+          [ComputationLike_isSynchronous]: false as const,
 
-        [EventSourceLike_addEventListener](listener: EventListenerLike<T>) {
-          for (let i = 0; i < arr[Array_length]; i++) {
-            listener[EventListenerLike_notify](arr[i]);
+          [EventSourceLike_addEventListener](listener: EventListenerLike<T>) {
+            for (let i = 0; i < arr[Array_length]; i++) {
+              listener[EventListenerLike_notify](arr[i]);
+            }
+            listener[DisposableLike_dispose]();
+          },
+        });
+      },
+      toReadonlyArray<T>() {
+        return (eventSource: EventSourceLike<T>) => {
+          const result: T[] = [];
+          const subscription = pipe(
+            eventSource,
+            EventSource.addEventHandler(bindMethod(result, Array_push)),
+          );
+
+          if (isSome(subscription[DisposableLike_error])) {
+            throw subscription[DisposableLike_error];
           }
-          listener[DisposableLike_dispose]();
-        },
-      });
-    },
-    toReadonlyArray<T>() {
-      return (eventSource: EventSourceLike<T>) => {
-        const result: T[] = [];
-        const subscription = pipe(
-          eventSource,
-          EventSource.addEventHandler(bindMethod(result, Array_push)),
-        );
 
-        if (isSome(subscription[DisposableLike_error])) {
-          throw subscription[DisposableLike_error];
-        }
-
-        return result;
-      };
+          return result;
+        };
+      },
     },
-  }),
+    EventSourceTypes,
+  ),
   test("combineLatest", () => {
     using vts = VirtualTimeScheduler.create();
     const result: Tuple2<number, number>[] = [];

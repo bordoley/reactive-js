@@ -5,27 +5,62 @@ import {
   test,
 } from "../../../__internal__/testing.js";
 import {
-  ComputationBaseOf,
   ComputationModule,
+  ComputationOf,
   ComputationType,
+  Computation_deferredWithSideEffectsOfT,
+  Computation_multicastOfT,
+  Computation_pureDeferredOfT,
+  Computation_pureSynchronousOfT,
+  Computation_synchronousWithSideEffectsOfT,
+  DeferredComputationWithSideEffectsOf,
+  MulticastComputationOf,
+  PureDeferredComputationOf,
+  PureSynchronousComputationOf,
+  SynchronousComputationWithSideEffectsOf,
 } from "../../../computations.js";
 import {
   Function1,
+  alwaysTrue,
   greaterThan,
+  identity,
   increment,
   pipe,
   pipeLazy,
 } from "../../../functions.js";
+import StatelessComputationOperatorTests from "./StatelessComputationOperatorTests.js";
 
 const ComputationModuleTests = <TComputation extends ComputationType>(
   m: ComputationModule<TComputation> & {
     fromReadonlyArray: <T>() => Function1<
       ReadonlyArray<T>,
-      ComputationBaseOf<TComputation, T>
+      ComputationOf<TComputation, T>
     >;
     toReadonlyArray: <T>() => Function1<
-      ComputationBaseOf<TComputation, T>,
+      ComputationOf<TComputation, T>,
       ReadonlyArray<T>
+    >;
+  },
+  computationType: {
+    readonly [Computation_pureSynchronousOfT]?: PureSynchronousComputationOf<
+      TComputation,
+      unknown
+    >;
+    readonly [Computation_synchronousWithSideEffectsOfT]?: SynchronousComputationWithSideEffectsOf<
+      TComputation,
+      unknown
+    >;
+    readonly [Computation_pureDeferredOfT]?: PureDeferredComputationOf<
+      TComputation,
+      unknown
+    >;
+    readonly [Computation_deferredWithSideEffectsOfT]?: DeferredComputationWithSideEffectsOf<
+      TComputation,
+      unknown
+    >;
+    readonly [Computation_multicastOfT]?: MulticastComputationOf<
+      TComputation,
+      unknown
     >;
   },
 ) =>
@@ -33,6 +68,8 @@ const ComputationModuleTests = <TComputation extends ComputationType>(
     "ComputationModule",
     describe(
       "keep",
+      ...StatelessComputationOperatorTests(computationType, m.keep(alwaysTrue))
+        .tests,
       test(
         "keeps only values greater than 5",
         pipeLazy(
@@ -63,6 +100,8 @@ const ComputationModuleTests = <TComputation extends ComputationType>(
     ),
     describe(
       "map",
+      ...StatelessComputationOperatorTests(computationType, m.map(identity))
+        .tests,
       test(
         "maps every value",
         pipeLazy(

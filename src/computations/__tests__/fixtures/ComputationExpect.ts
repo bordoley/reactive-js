@@ -1,29 +1,23 @@
 import { expectTrue } from "../../../__internal__/testing.js";
 import { ComputationLike } from "../../../computations.js";
-import { compose } from "../../../functions.js";
+import { pipe } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
 
-export const isPureSynchronous = compose(
-  Computation.isPureSynchronous<ComputationLike>,
-  expectTrue,
-);
+export const isPureSynchronous = (x: ComputationLike) =>
+  pipe(x, Computation.isPureSynchronous<ComputationLike>, expectTrue);
 
-export const isSynchronousWithSideEffects = compose(
-  Computation.isSynchronousWithSideEffects<ComputationLike>,
-  expectTrue,
-);
+export const isSynchronousWithSideEffects = (x: ComputationLike) =>
+  pipe(
+    x,
+    Computation.isSynchronousWithSideEffects<ComputationLike>,
+    expectTrue,
+  );
 
-export const isPureDeferred = compose(
-  Computation.isPureDeferred<ComputationLike>,
-  expectTrue,
-);
+export const isPureDeferred = (x: ComputationLike) =>
+  pipe(x, Computation.isPureDeferred<ComputationLike>, expectTrue);
 
-export const isDeferredWithSideEffects = compose(
-  Computation.isDeferredWithSideEffects<ComputationLike>,
-  expectTrue,
-);
+export const isDeferredWithSideEffects = (x: ComputationLike) =>
+  pipe(x, Computation.isDeferredWithSideEffects<ComputationLike>, expectTrue);
 
-export const isMulticasted = compose(
-  Computation.isMulticasted<ComputationLike>,
-  expectTrue,
-);
+export const isMulticasted = (x: ComputationLike) =>
+  pipe(x, Computation.isMulticasted<ComputationLike>, expectTrue);

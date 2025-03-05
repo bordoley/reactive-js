@@ -56,7 +56,7 @@ import { Array_length, Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectIsSome, expectToThrowError, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import ComputationModuleTests from "../../computations/__tests__/fixtures/ComputationModuleTests.js";
-import { ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, Computation_multicastOfT, } from "../../computations.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as VirtualTimeScheduler from "../../concurrent/VirtualTimeScheduler.js";
 import { VirtualTimeSchedulerLike_run } from "../../concurrent.js";
@@ -65,6 +65,9 @@ import { arrayEquality, bind, bindMethod, compose, ignore, incrementBy, isSome, 
 import * as Disposable from "../../utils/Disposable.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
+const EventSourceTypes = {
+    [Computation_multicastOfT]: EventSource.never(),
+};
 testModule("EventSource", ComputationModuleTests({
     ...EventSource,
     fromReadonlyArray() {
@@ -89,7 +92,7 @@ testModule("EventSource", ComputationModuleTests({
             return result;
         };
     },
-}), test("combineLatest", () => {
+}, EventSourceTypes), test("combineLatest", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);

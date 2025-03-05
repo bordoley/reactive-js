@@ -9,6 +9,7 @@ import {
   StatelessComputationOperator,
 } from "../../../computations.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
+import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
 
 class LiftedRunnable<T> implements RunnableLike<T> {
@@ -19,7 +20,7 @@ class LiftedRunnable<T> implements RunnableLike<T> {
     public readonly ops: readonly Function1<SinkLike<any>, SinkLike<any>>[],
     isPure: boolean,
   ) {
-    this[ComputationLike_isPure] = isPure;
+    this[ComputationLike_isPure] = isPure && Computation.isPure(src);
   }
 
   [RunnableLike_eval](sink: SinkLike<T>): void {
@@ -56,7 +57,12 @@ const Runnable_lift: RunnableLift["lift"] = (<TA, TB>(
     const src: RunnableLike<any> = (source as any).src ?? source;
     const ops = [operator, ...((source as any).ops ?? [])];
 
-    return newInstance(LiftedRunnable, src, ops, isPure ?? true);
+    return newInstance(
+      LiftedRunnable,
+      src,
+      ops,
+      (isPure ?? true) && Computation.isPure(source),
+    );
   }) as RunnableLift["lift"];
 
 export default Runnable_lift;

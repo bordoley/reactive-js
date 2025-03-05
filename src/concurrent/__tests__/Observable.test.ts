@@ -25,12 +25,16 @@ import * as ComputationTest from "../../computations/__tests__/fixtures/Computat
 import DeferredReactiveComputationModuleTests from "../../computations/__tests__/fixtures/DeferredReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
 import {
-  ComputationBaseOf,
   ComputationModule,
+  ComputationOf,
+  Computation_deferredWithSideEffectsOfT,
+  Computation_multicastOfT,
+  Computation_pureDeferredOfT,
+  Computation_pureSynchronousOfT,
+  Computation_synchronousWithSideEffectsOfT,
   DeferredComputationWithSideEffects,
   PureDeferredComputation,
   PureDeferredComputationLike,
-  StatelessComputationOperator,
   SynchronousComputationWithSideEffects,
 } from "../../computations.js";
 import {
@@ -100,60 +104,6 @@ import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
-
-const ObservableOperatorTests = (
-  op: StatelessComputationOperator<Observable.Computation, unknown, unknown>,
-) =>
-  describe(
-    "ObservableOperator",
-    test(
-      "with PureSynchronousObservableLike",
-      pipeLazy(
-        Observable.empty({ delay: 1 }),
-        op,
-        ComputationExpect.isPureSynchronous,
-      ),
-    ),
-    test(
-      "with SynchronousObservableWithSideEffectsLike",
-      pipeLazy(
-        Observable.empty({ delay: 1 }),
-        Observable.forEach(ignore),
-        op,
-        ComputationExpect.isSynchronousWithSideEffects,
-      ),
-    ),
-    test("with PureDeferredObservableLike", () => {
-      using vts = VirtualTimeScheduler.create();
-
-      pipe(
-        Observable.empty({ delay: 1 }),
-        Observable.subscribeOn(vts),
-        op,
-        ComputationExpect.isPureDeferred,
-      );
-    }),
-    test(
-      "with DeferredObservableWithSideEffectsLike",
-      pipeLazy(
-        async () => {
-          throw new Error();
-        },
-        Observable.fromAsyncFactory(),
-        op,
-        ComputationExpect.isDeferredWithSideEffects,
-      ),
-    ),
-    test(
-      "with MulticastObservableLike",
-      pipeLazy(
-        new Promise(ignore),
-        Observable.fromPromise(),
-        op,
-        ComputationExpect.isMulticasted,
-      ),
-    ),
-  );
 
 const DeferredReactiveObservableOperator = (
   op: Function1<ObservableLike<any>, ObservableLike<unknown>>,
@@ -358,6 +308,24 @@ const AlwaysReturnsDeferredObservableWithSideEffectsOperatorTests = (
     ),
   );
 
+const ObservableTypes = {
+  [Computation_pureSynchronousOfT]: Observable.empty({ delay: 1 }),
+  [Computation_synchronousWithSideEffectsOfT]: pipe(
+    Observable.empty(),
+    Observable.forEach(ignore),
+  ),
+  [Computation_pureDeferredOfT]: pipe(
+    Observable.empty(),
+    Observable.subscribeOn(HostScheduler.create()),
+  ),
+  [Computation_deferredWithSideEffectsOfT]: pipe(
+    Observable.empty(),
+    Observable.subscribeOn(HostScheduler.create()),
+    Observable.forEach(ignore),
+  ),
+  [Computation_multicastOfT]: Observable.never(),
+};
+
 testModule(
   "Observable",
   describe(
@@ -370,13 +338,14 @@ testModule(
     Observable as ComputationModule<Observable.Computation> & {
       fromReadonlyArray: <T>() => Function1<
         ReadonlyArray<T>,
-        ComputationBaseOf<Observable.Computation, T>
+        ComputationOf<Observable.Computation, T>
       >;
       toReadonlyArray: <T>() => Function1<
-        ComputationBaseOf<Observable.Computation, T>,
+        ComputationOf<Observable.Computation, T>,
         ReadonlyArray<T>
       >;
     },
+    ObservableTypes,
   ),
   DeferredReactiveComputationModuleTests(Observable),
   SynchronousComputationModuleTests<Observable.Computation>(Observable),
@@ -1263,7 +1232,6 @@ testModule(
       pipe("a", Observable.fromValue({ delay: 1 })),
     ),
   ),
-  describe("keep", ObservableOperatorTests(Observable.keep(alwaysTrue))),
   describe(
     "keyFrame",
     test(
@@ -1299,7 +1267,6 @@ testModule(
       );
     }),
   ),
-  describe("map", ObservableOperatorTests(Observable.map(returns(none)))),
   describe("merge"),
   describe(
     "mergeAll",
