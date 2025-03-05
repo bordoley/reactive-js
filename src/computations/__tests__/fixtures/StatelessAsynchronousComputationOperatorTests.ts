@@ -58,6 +58,7 @@ const StatelessAsynchronousComputationOperatorTests = <
             "with PureSynchronous input, returns PureDeferred output",
             pipeSomeLazy(
               computationType[Computation_pureSynchronousOfT],
+              ComputationExpect.isPureSynchronous,
               operator,
               ComputationExpect.isPureDeferred,
               ComputationExpect.isNotSynchronous,
@@ -69,6 +70,7 @@ const StatelessAsynchronousComputationOperatorTests = <
             "with SynchronousWithSideEffects input, returns DeferredWithSideEffects output",
             pipeSomeLazy(
               computationType[Computation_synchronousWithSideEffectsOfT],
+              ComputationExpect.isSynchronousWithSideEffects,
               operator,
               ComputationExpect.isDeferredWithSideEffects,
               ComputationExpect.isNotSynchronous,
@@ -80,6 +82,8 @@ const StatelessAsynchronousComputationOperatorTests = <
             "with PureDeferred input, returns PureDeferred output",
             pipeSomeLazy(
               computationType[Computation_pureDeferredOfT],
+              ComputationExpect.isPureDeferred,
+              ComputationExpect.isNotSynchronous,
               operator,
               ComputationExpect.isPureDeferred,
               ComputationExpect.isNotSynchronous,
@@ -91,6 +95,8 @@ const StatelessAsynchronousComputationOperatorTests = <
             "with DeferredWithSideEffects input, returns DeferredWithSideEffects output",
             pipeSomeLazy(
               computationType[Computation_deferredWithSideEffectsOfT],
+              ComputationExpect.isDeferredWithSideEffects,
+              ComputationExpect.isNotSynchronous,
               operator,
               ComputationExpect.isDeferredWithSideEffects,
               ComputationExpect.isNotSynchronous,
@@ -102,6 +108,7 @@ const StatelessAsynchronousComputationOperatorTests = <
             "with Multicasted input, returns Multicasted output",
             pipeSomeLazy(
               computationType[Computation_multicastOfT],
+              ComputationExpect.isMulticasted,
               operator,
               ComputationExpect.isMulticasted,
             ),

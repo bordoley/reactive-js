@@ -46,6 +46,7 @@ import * as Runnable from "../../Runnable.js";
 import ComputationOperatorWithSideEffectsTests from "./ComputationOperatorWithSideEffectsTests.js";
 import * as ComputationTest from "./ComputationTest.js";
 import StatefulSynchronousComputationOperatorTests from "./StatefulSynchronousComputationOperatorTests.js";
+import StatelessComputationOperatorTests from "./StatelessComputationOperatorTests.js";
 
 const SynchronousComputationModuleTests = <
   TComputation extends ComputationType,
@@ -425,7 +426,7 @@ const SynchronousComputationModuleTests = <
     ),
     describe(
       "repeat",
-      StatefulSynchronousComputationOperatorTests(
+      StatelessComputationOperatorTests(
         {
           ...computationType,
           // Repeat does not support multicasted input
@@ -481,7 +482,7 @@ const SynchronousComputationModuleTests = <
     ),
     describe(
       "retry",
-      StatefulSynchronousComputationOperatorTests(
+      StatelessComputationOperatorTests(
         {
           ...computationType,
           // Repeat does not support multicasted input

@@ -54,6 +54,7 @@ const StatefulSynchronousComputationOperatorTests = <
             "with PureSynchronous input, returns PureSynchronous output",
             pipeSomeLazy(
               computationType[Computation_pureSynchronousOfT],
+              ComputationExpect.isPureSynchronous,
               operator,
               ComputationExpect.isPureSynchronous,
             ),
@@ -64,9 +65,7 @@ const StatefulSynchronousComputationOperatorTests = <
             "with SynchronousWithSideEffects input, returns SynchronousWithSideEffects output",
             pipeSomeLazy(
               computationType[Computation_synchronousWithSideEffectsOfT],
-              ComputationExpect.isSynchronousWithSideEffects<
-                SynchronousComputationWithSideEffectsOf<TComputation, unknown>
-              >,
+              ComputationExpect.isSynchronousWithSideEffects,
               operator,
               ComputationExpect.isSynchronousWithSideEffects,
             ),
@@ -77,6 +76,8 @@ const StatefulSynchronousComputationOperatorTests = <
             "with PureDeferred input, returns PureDeferred output",
             pipeSomeLazy(
               computationType[Computation_pureDeferredOfT],
+              ComputationExpect.isPureDeferred,
+              ComputationExpect.isNotSynchronous,
               operator,
               ComputationExpect.isPureDeferred,
               ComputationExpect.isNotSynchronous,
@@ -88,6 +89,8 @@ const StatefulSynchronousComputationOperatorTests = <
             "with DeferredWithSideEffects input, returns DeferredWithSideEffects output",
             pipeSomeLazy(
               computationType[Computation_deferredWithSideEffectsOfT],
+              ComputationExpect.isDeferredWithSideEffects,
+              ComputationExpect.isNotSynchronous,
               operator,
               ComputationExpect.isDeferredWithSideEffects,
               ComputationExpect.isNotSynchronous,
@@ -99,6 +102,7 @@ const StatefulSynchronousComputationOperatorTests = <
             "with Multicasted input, returns PureDeferred output",
             pipeSomeLazy(
               computationType[Computation_multicastOfT],
+              ComputationExpect.isMulticasted,
               operator,
               ComputationExpect.isPureDeferred,
               ComputationExpect.isNotSynchronous,

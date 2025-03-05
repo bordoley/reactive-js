@@ -244,7 +244,11 @@ export type StatelessComputationOperator<
   TComputation extends ComputationType,
   TA,
   out TB,
-> = <TComputationOf extends ComputationBaseOf<TComputation, TA>>(
+  TInComputationBaseOf extends ComputationBaseOf<
+    TComputation,
+    TA
+  > = ComputationBaseOf<TComputation, TA>,
+> = <TComputationOf extends TInComputationBaseOf>(
   computation: TComputationOf,
 ) => TComputationOf extends PureSynchronousComputationOf<TComputation, TA>
   ? PureSynchronousComputationOf<TComputation, TB>
@@ -300,11 +304,7 @@ export type StatefulSynchronousComputationOperator<
   TComputation extends ComputationType,
   TA,
   out TB,
-  TInComputationBaseOf extends ComputationBaseOf<
-    TComputation,
-    TA
-  > = ComputationBaseOf<TComputation, TA>,
-> = <TComputationOf extends TInComputationBaseOf>(
+> = <TComputationOf extends ComputationBaseOf<TComputation, TA>>(
   computation: TComputationOf,
 ) => TComputationOf extends PureSynchronousComputationOf<TComputation, TA>
   ? PureSynchronousComputationOf<TComputation, TB>
@@ -718,7 +718,7 @@ export interface SynchronousComputationModule<
 
   repeat<T>(
     predicate: Predicate<number>,
-  ): StatefulSynchronousComputationOperator<
+  ): StatelessComputationOperator<
     TComputation,
     T,
     T,
@@ -726,13 +726,13 @@ export interface SynchronousComputationModule<
   >;
   repeat<T>(
     count: number,
-  ): StatefulSynchronousComputationOperator<
+  ): StatelessComputationOperator<
     TComputation,
     T,
     T,
     DeferredComputationOf<TComputation, T>
   >;
-  repeat<T>(): StatefulSynchronousComputationOperator<
+  repeat<T>(): StatelessComputationOperator<
     TComputation,
     T,
     T,
@@ -741,7 +741,7 @@ export interface SynchronousComputationModule<
 
   retry<T>(
     shouldRetry?: (count: number, error: Error) => boolean,
-  ): StatefulSynchronousComputationOperator<
+  ): StatelessComputationOperator<
     TComputation,
     T,
     T,

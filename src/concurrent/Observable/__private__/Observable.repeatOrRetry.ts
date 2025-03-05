@@ -1,4 +1,4 @@
-import { StatefulSynchronousComputationOperator } from "../../../computations.js";
+import { StatelessComputationOperator } from "../../../computations.js";
 import {
   DeferredObservableLike,
   ObservableLike,
@@ -24,7 +24,7 @@ import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js"
 
 type ObservableRepeatOrRetry = <T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
-) => StatefulSynchronousComputationOperator<Observable.Computation, T, T>;
+) => StatelessComputationOperator<Observable.Computation, T, T>;
 
 const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
   T,

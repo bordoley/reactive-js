@@ -11,6 +11,7 @@ import * as Runnable from "../../Runnable.js";
 import ComputationOperatorWithSideEffectsTests from "./ComputationOperatorWithSideEffectsTests.js";
 import * as ComputationTest from "./ComputationTest.js";
 import StatefulSynchronousComputationOperatorTests from "./StatefulSynchronousComputationOperatorTests.js";
+import StatelessComputationOperatorTests from "./StatelessComputationOperatorTests.js";
 const SynchronousComputationModuleTests = (m, computationType) => describe("SynchronousComputationModule", describe("catchError", test("when the source throws", () => {
     const e1 = "e1";
     let result = none;
@@ -85,7 +86,7 @@ const SynchronousComputationModuleTests = (m, computationType) => describe("Sync
         expectTrue(e instanceof Error);
         pipe(e, expectEquals(e1));
     }
-})), describe("reduce", test("summing all values from delayed source", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.reduce((acc, next) => acc + next, returns(0)), expectEquals(6)))), describe("repeat", StatefulSynchronousComputationOperatorTests({
+})), describe("reduce", test("summing all values from delayed source", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.reduce((acc, next) => acc + next, returns(0)), expectEquals(6)))), describe("repeat", StatelessComputationOperatorTests({
     ...computationType,
     // Repeat does not support multicasted input
     [Computation_multicastOfT]: none,
@@ -94,7 +95,7 @@ const SynchronousComputationModuleTests = (m, computationType) => describe("Sync
     pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.repeat(_ => {
         throw err;
     }), m.toReadonlyArray()), expectToThrowError(err));
-})), describe("retry", StatefulSynchronousComputationOperatorTests({
+})), describe("retry", StatelessComputationOperatorTests({
     ...computationType,
     // Repeat does not support multicasted input
     [Computation_multicastOfT]: none,
