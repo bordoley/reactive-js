@@ -1,3 +1,4 @@
+import { Array_push } from "../../../__internal__/constants.js";
 import {
   Test,
   describe,
@@ -5,9 +6,11 @@ import {
   expectEquals,
   expectToThrow,
   expectToThrowAsync,
+  expectToThrowError,
   test,
   testAsync,
 } from "../../../__internal__/testing.js";
+import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import {
   ComputationOf,
   ComputationType,
@@ -48,12 +51,10 @@ import {
   returns,
   tuple,
 } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import * as Computation from "../../Computation.js";
 import * as Iterable from "../../Iterable.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
-import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import { Array_push } from "../../../__internal__/constants.js";
-import * as Disposable from "../../../utils/Disposable.js";
 
 const ConcurrentReactiveComputationModuleTests = <
   TComputation extends ComputationType,
@@ -385,6 +386,121 @@ const ConcurrentReactiveComputationModuleTests = <
           result,
           expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
         );
+      }),
+    ),
+    describe(
+      "withLatestFrom",
+      test("when source and latest are interlaced", () => {
+        using vts = VirtualTimeScheduler.create();
+
+        const result: Tuple2<number, number>[] = [];
+
+        pipe(
+          [0, 1, 2, 3],
+          Observable.fromReadonlyArray({ delay: 1 }),
+          m.fromObservable<number>(vts),
+          m.withLatestFrom<number, number>(
+            pipe(
+              [0, 1, 2, 3],
+              Observable.fromReadonlyArray<number>({ delay: 2 }),
+              m.fromObservable<number>(vts),
+            ),
+          ),
+          m.toObservable(),
+          Observable.forEach(bind(result.push, result)),
+          Observable.subscribe(vts),
+        );
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        expectArrayEquals(
+          [tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)],
+          {
+            valuesEquality: arrayEquality(),
+          },
+        )(result);
+      }),
+      test("when latest produces no values", () => {
+        using vts = VirtualTimeScheduler.create();
+
+        const result: number[] = [];
+
+        pipe(
+          [0],
+          Observable.fromReadonlyArray({ delay: 1 }),
+          m.fromObservable<number>(vts),
+          m.withLatestFrom(
+            pipe(
+              Observable.empty<number>({ delay: 0 }),
+              m.fromObservable<number>(vts),
+            ),
+            returns(1),
+          ),
+          m.toObservable(),
+          Observable.forEach(bind(result.push, result)),
+          Observable.subscribe(vts),
+        );
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        expectArrayEquals([] as number[])(result);
+      }),
+      test("when latest throws", () => {
+        using vts = VirtualTimeScheduler.create();
+
+        const error = newInstance(Error);
+
+        const result = pipe(
+          [0],
+          Observable.fromReadonlyArray({ delay: 1 }),
+          m.fromObservable<number>(vts),
+          m.withLatestFrom(
+            pipe(
+              Observable.raise<number>({ raise: returns(error) }),
+              m.fromObservable<number>(vts),
+            ),
+            returns(1),
+          ),
+          m.toObservable(),
+          Observable.subscribe(vts),
+        );
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        pipe(
+          pipeLazy(result, Disposable.raiseIfDisposedWithError),
+          expectToThrowError(error),
+        );
+      }),
+    ),
+    describe(
+      "zipLatest",
+      test("zip two delayed sources", () => {
+        using vts = VirtualTimeScheduler.create();
+        const result: number[] = [];
+
+        pipe(
+          m.zipLatest(
+            pipe(
+              [1, 2, 3, 4, 5, 6, 7, 8],
+              Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
+              m.fromObservable(vts),
+            ),
+            pipe(
+              [1, 2, 3, 4],
+              Observable.fromReadonlyArray({ delay: 2, delayStart: true }),
+              m.fromObservable(vts),
+            ),
+          ),
+          m.map<Tuple2<number, number>, number>(([a, b]) => a + b),
+          m.toObservable(),
+          Observable.forEach(bindMethod(result, Array_push)),
+          Observable.subscribe(vts),
+        );
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        pipe(result, expectArrayEquals([2, 5, 8, 11]));
       }),
     ),
   );

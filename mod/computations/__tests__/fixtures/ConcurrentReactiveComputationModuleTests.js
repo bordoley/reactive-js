@@ -52,13 +52,16 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
     var e = new Error(message);
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 });
-import { describe, expectArrayEquals, expectEquals, expectToThrowAsync, test, testAsync, } from "../../../__internal__/testing.js";
+import { Array_push } from "../../../__internal__/constants.js";
+import { describe, expectArrayEquals, expectEquals, expectToThrow, expectToThrowAsync, expectToThrowError, test, testAsync, } from "../../../__internal__/testing.js";
+import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../../computations.js";
 import * as HostScheduler from "../../../concurrent/HostScheduler.js";
 import * as Observable from "../../../concurrent/Observable.js";
 import * as VirtualTimeScheduler from "../../../concurrent/VirtualTimeScheduler.js";
 import { VirtualTimeSchedulerLike_run, } from "../../../concurrent.js";
-import { arrayEquality, bind, incrementBy, isSome, newInstance, none, pipe, returns, tuple, } from "../../../functions.js";
+import { arrayEquality, bind, bindMethod, compose, incrementBy, isSome, newInstance, none, pipe, pipeLazy, returns, tuple, } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import * as Computation from "../../Computation.js";
 import * as Iterable from "../../Iterable.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
@@ -137,6 +140,140 @@ const ConcurrentReactiveComputationModuleTests = (m, computationType) => {
         finally {
             __disposeResources(env_3);
         }
-    }), ComputationTest.isMulticasted(pipe(Promise.resolve(true), m.fromPromise()))));
+    }), ComputationTest.isMulticasted(pipe(Promise.resolve(true), m.fromPromise()))), describe("merge", test("with sources that have the same delays", () => {
+        const env_4 = { stack: [], error: void 0, hasError: false };
+        try {
+            const vts = __addDisposableResource(env_4, VirtualTimeScheduler.create(), false);
+            const result = [];
+            const [ev1, ev2, ev3] = pipe([
+                [1, 4, 7],
+                [2, 5, 8],
+                [3, 6, 9],
+            ], ReadonlyArray.map(compose(Observable.fromReadonlyArray({ delay: 3 }), m.fromObservable(vts))));
+            pipe(m.merge(ev1, ev2, ev3), m.toObservable(), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
+            vts[VirtualTimeSchedulerLike_run]();
+            pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]));
+        }
+        catch (e_4) {
+            env_4.error = e_4;
+            env_4.hasError = true;
+        }
+        finally {
+            __disposeResources(env_4);
+        }
+    }), test("with sources that have the different delays", () => {
+        const env_5 = { stack: [], error: void 0, hasError: false };
+        try {
+            const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
+            const result = [];
+            pipe(m.merge(pipe([0, 2, 3, 5, 6], Observable.fromReadonlyArray({ delay: 1, delayStart: true }), m.fromObservable(vts)), pipe([1, 4, 7], Observable.fromReadonlyArray({ delay: 2, delayStart: true }), m.fromObservable(vts))), m.toObservable(), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
+            vts[VirtualTimeSchedulerLike_run]();
+            pipe(result, expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]));
+        }
+        catch (e_5) {
+            env_5.error = e_5;
+            env_5.hasError = true;
+        }
+        finally {
+            __disposeResources(env_5);
+        }
+    }), test("when one source throws", () => {
+        const env_6 = { stack: [], error: void 0, hasError: false };
+        try {
+            const vts = __addDisposableResource(env_6, VirtualTimeScheduler.create(), false);
+            const subscription = pipe(m.merge(pipe([1, 4, 7], Observable.fromReadonlyArray({ delay: 2 }), m.fromObservable(vts)), pipe(Observable.raise({ delay: 5 }), m.fromObservable(vts))), m.toObservable(), Observable.subscribe(vts));
+            vts[VirtualTimeSchedulerLike_run]();
+            pipe(pipeLazy(subscription, Disposable.raiseIfDisposedWithError), expectToThrow);
+        }
+        catch (e_6) {
+            env_6.error = e_6;
+            env_6.hasError = true;
+        }
+        finally {
+            __disposeResources(env_6);
+        }
+    }), test("merging merged sources", () => {
+        const env_7 = { stack: [], error: void 0, hasError: false };
+        try {
+            const vts = __addDisposableResource(env_7, VirtualTimeScheduler.create(), false);
+            const result = [];
+            pipe(m.merge(m.merge(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), m.fromObservable(vts)), pipe(Observable.empty({ delay: 3 }), Computation.concatWith(Observable)(pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 }))), m.fromObservable(vts)), m.merge(pipe(Observable.empty({ delay: 6 }), Computation.concatWith(Observable)(pipe([7, 8, 9], Observable.fromReadonlyArray({ delay: 1 }))), m.fromObservable(vts)), pipe(Observable.empty({ delay: 9 }), Computation.concatWith(Observable)(pipe([10, 11, 12], Observable.fromReadonlyArray({ delay: 1 }))), m.fromObservable(vts))))), m.toObservable(), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
+            vts[VirtualTimeSchedulerLike_run]();
+            pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]));
+        }
+        catch (e_7) {
+            env_7.error = e_7;
+            env_7.hasError = true;
+        }
+        finally {
+            __disposeResources(env_7);
+        }
+    })), describe("withLatestFrom", test("when source and latest are interlaced", () => {
+        const env_8 = { stack: [], error: void 0, hasError: false };
+        try {
+            const vts = __addDisposableResource(env_8, VirtualTimeScheduler.create(), false);
+            const result = [];
+            pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), m.fromObservable(vts), m.withLatestFrom(pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }), m.fromObservable(vts))), m.toObservable(), Observable.forEach(bind(result.push, result)), Observable.subscribe(vts));
+            vts[VirtualTimeSchedulerLike_run]();
+            expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], {
+                valuesEquality: arrayEquality(),
+            })(result);
+        }
+        catch (e_8) {
+            env_8.error = e_8;
+            env_8.hasError = true;
+        }
+        finally {
+            __disposeResources(env_8);
+        }
+    }), test("when latest produces no values", () => {
+        const env_9 = { stack: [], error: void 0, hasError: false };
+        try {
+            const vts = __addDisposableResource(env_9, VirtualTimeScheduler.create(), false);
+            const result = [];
+            pipe([0], Observable.fromReadonlyArray({ delay: 1 }), m.fromObservable(vts), m.withLatestFrom(pipe(Observable.empty({ delay: 0 }), m.fromObservable(vts)), returns(1)), m.toObservable(), Observable.forEach(bind(result.push, result)), Observable.subscribe(vts));
+            vts[VirtualTimeSchedulerLike_run]();
+            expectArrayEquals([])(result);
+        }
+        catch (e_9) {
+            env_9.error = e_9;
+            env_9.hasError = true;
+        }
+        finally {
+            __disposeResources(env_9);
+        }
+    }), test("when latest throws", () => {
+        const env_10 = { stack: [], error: void 0, hasError: false };
+        try {
+            const vts = __addDisposableResource(env_10, VirtualTimeScheduler.create(), false);
+            const error = newInstance(Error);
+            const result = pipe([0], Observable.fromReadonlyArray({ delay: 1 }), m.fromObservable(vts), m.withLatestFrom(pipe(Observable.raise({ raise: returns(error) }), m.fromObservable(vts)), returns(1)), m.toObservable(), Observable.subscribe(vts));
+            vts[VirtualTimeSchedulerLike_run]();
+            pipe(pipeLazy(result, Disposable.raiseIfDisposedWithError), expectToThrowError(error));
+        }
+        catch (e_10) {
+            env_10.error = e_10;
+            env_10.hasError = true;
+        }
+        finally {
+            __disposeResources(env_10);
+        }
+    })), describe("zipLatest", test("zip two delayed sources", () => {
+        const env_11 = { stack: [], error: void 0, hasError: false };
+        try {
+            const vts = __addDisposableResource(env_11, VirtualTimeScheduler.create(), false);
+            const result = [];
+            pipe(m.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Observable.fromReadonlyArray({ delay: 1, delayStart: true }), m.fromObservable(vts)), pipe([1, 2, 3, 4], Observable.fromReadonlyArray({ delay: 2, delayStart: true }), m.fromObservable(vts))), m.map(([a, b]) => a + b), m.toObservable(), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
+            vts[VirtualTimeSchedulerLike_run]();
+            pipe(result, expectArrayEquals([2, 5, 8, 11]));
+        }
+        catch (e_11) {
+            env_11.error = e_11;
+            env_11.hasError = true;
+        }
+        finally {
+            __disposeResources(env_11);
+        }
+    })));
 };
 export default ConcurrentReactiveComputationModuleTests;

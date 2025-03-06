@@ -60,7 +60,6 @@ import {
   Function1,
   Optional,
   Tuple2,
-  arrayEquality,
   bindMethod,
   error,
   ignore,
@@ -76,7 +75,6 @@ import {
   raise,
   returns,
   scale,
-  tuple,
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
@@ -1742,51 +1740,6 @@ testModule(
   ),
   describe(
     "withLatestFrom",
-    test(
-      "when source and latest are interlaced",
-      pipeLazy(
-        [0, 1, 2, 3],
-        Observable.fromReadonlyArray({ delay: 1 }),
-        Observable.withLatestFrom(
-          pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
-          tuple<number, number>,
-        ),
-        Observable.toReadonlyArray(),
-        expectArrayEquals(
-          [tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)],
-          { valuesEquality: arrayEquality() },
-        ),
-      ),
-    ),
-    test(
-      "when latest produces no values",
-      pipeLazy(
-        [0],
-        Observable.fromReadonlyArray({ delay: 1 }),
-        Observable.withLatestFrom(
-          Observable.empty<number>({ delay: 0 }),
-          returns(1),
-        ),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([] as number[]),
-      ),
-    ),
-    test("when latest throws", () => {
-      const error = newInstance(Error);
-
-      pipe(
-        pipeLazy(
-          [0],
-          Observable.fromReadonlyArray({ delay: 1 }),
-          Observable.withLatestFrom(
-            Observable.raise<number>({ raise: returns(error) }),
-            returns(1),
-          ),
-          Observable.run(),
-        ),
-        expectToThrowError(error),
-      );
-    }),
     DeferredReactiveObservableOperator(
       Observable.withLatestFrom(Observable.empty({ delay: 1 }), returns),
     ),
@@ -1803,24 +1756,6 @@ testModule(
   ),
   describe(
     "zipLatest",
-    test(
-      "zip two delayed observable",
-      pipeLazy(
-        Observable.zipLatest(
-          pipe(
-            [1, 2, 3, 4, 5, 6, 7, 8],
-            Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
-          ),
-          pipe(
-            [1, 2, 3, 4],
-            Observable.fromReadonlyArray({ delay: 2, delayStart: true }),
-          ),
-        ),
-        Observable.map<Tuple2<number, number>, number>(([a, b]) => a + b),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([2, 5, 8, 11]),
-      ),
-    ),
     ComputationTest.isPureSynchronous(
       Observable.zipLatest(
         Observable.empty({ delay: 1 }),

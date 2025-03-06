@@ -71,7 +71,7 @@ import { DispatcherLikeEvent_completed, DispatcherLike_complete, SchedulerLike_n
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
 import { EventListenerLike_notify, StoreLike_value } from "../../events.js";
-import { arrayEquality, bindMethod, error, ignore, increment, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, scale, tuple, } from "../../functions.js";
+import { bindMethod, error, ignore, increment, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, scale, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Queue from "../../utils/Queue.js";
@@ -695,7 +695,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     ComputationExpect.isPureSynchronous(merged7);
     const merged8 = Observable.merge(Subject.create(), Subject.create());
     ComputationExpect.isMulticasted(merged8);
-}), test("two arrays", pipeLazy(Observable.merge(pipe([0, 2, 3, 5, 6], Observable.fromReadonlyArray({ delay: 1, delayStart: true })), pipe([1, 4, 7], Observable.fromReadonlyArray({ delay: 2, delayStart: true }))), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", pipeLazy(pipeLazy(Observable.merge(pipe([1, 4, 7], Observable.fromReadonlyArray({ delay: 2 })), Observable.raise({ delay: 5 })), Observable.run()), expectToThrow)), test("merging merged observable", pipeLazy(Observable.merge(Observable.merge(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), Observable.concat(Observable.empty({ delay: 3 }), pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 })))), Observable.merge(Observable.concat(Observable.empty({ delay: 6 }), pipe([7, 8, 9], Observable.fromReadonlyArray({ delay: 1 }))), Observable.concat(Observable.empty({ delay: 9 }), pipe([10, 11, 12], Observable.fromReadonlyArray({ delay: 1 }))))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]))), ComputationTest.isPureSynchronous(Observable.merge(Observable.empty({ delay: 1 }), Observable.empty({ delay: 1 }))), ComputationTest.isPureDeferred((() => {
+}), ComputationTest.isPureSynchronous(Observable.merge(Observable.empty({ delay: 1 }), Observable.empty({ delay: 1 }))), ComputationTest.isPureDeferred((() => {
     const env_31 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_31, VirtualTimeScheduler.create(), false);
@@ -936,10 +936,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_42);
     }
-})), describe("withCurrentTime", DeferredReactiveObservableOperator(Observable.withCurrentTime(returns))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.withLatestFrom(pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })), (tuple)), Observable.toReadonlyArray(), expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], { valuesEquality: arrayEquality() }))), test("when latest produces no values", pipeLazy([0], Observable.fromReadonlyArray({ delay: 1 }), Observable.withLatestFrom(Observable.empty({ delay: 0 }), returns(1)), Observable.toReadonlyArray(), expectArrayEquals([]))), test("when latest throws", () => {
-    const error = newInstance(Error);
-    pipe(pipeLazy([0], Observable.fromReadonlyArray({ delay: 1 }), Observable.withLatestFrom(Observable.raise({ raise: returns(error) }), returns(1)), Observable.run()), expectToThrowError(error));
-}), DeferredReactiveObservableOperator(Observable.withLatestFrom(Observable.empty({ delay: 1 }), returns)), ComputationOperatorWithSideEffectsTests(ObservableTypes, Observable.withLatestFrom(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)), returns)), DeferringObservableOperatorTests(Observable.withLatestFrom(Subject.create(), returns))), describe("zipLatest", test("zip two delayed observable", pipeLazy(Observable.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Observable.fromReadonlyArray({ delay: 1, delayStart: true })), pipe([1, 2, 3, 4], Observable.fromReadonlyArray({ delay: 2, delayStart: true }))), Observable.map(([a, b]) => a + b), Observable.toReadonlyArray(), expectArrayEquals([2, 5, 8, 11]))), ComputationTest.isPureSynchronous(Observable.zipLatest(Observable.empty({ delay: 1 }), Observable.empty({ delay: 1 }))), ComputationTest.isPureDeferred((() => {
+})), describe("withCurrentTime", DeferredReactiveObservableOperator(Observable.withCurrentTime(returns))), describe("withLatestFrom", DeferredReactiveObservableOperator(Observable.withLatestFrom(Observable.empty({ delay: 1 }), returns)), ComputationOperatorWithSideEffectsTests(ObservableTypes, Observable.withLatestFrom(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)), returns)), DeferringObservableOperatorTests(Observable.withLatestFrom(Subject.create(), returns))), describe("zipLatest", ComputationTest.isPureSynchronous(Observable.zipLatest(Observable.empty({ delay: 1 }), Observable.empty({ delay: 1 }))), ComputationTest.isPureDeferred((() => {
     const env_43 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_43, VirtualTimeScheduler.create(), false);
