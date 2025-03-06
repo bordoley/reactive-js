@@ -25,8 +25,10 @@ import DeferredReactiveComputationModuleTests from "../../computations/__tests__
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
 import * as ComputationExpect from "../../computations/__tests__/fixtures/helpers/ComputationExpect.js";
 import * as ComputationTest from "../../computations/__tests__/fixtures/helpers/ComputationTest.js";
+import AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests from "../../computations/__tests__/fixtures/operators/AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests.js";
 import ComputationOperatorWithSideEffectsTests from "../../computations/__tests__/fixtures/operators/ComputationOperatorWithSideEffectsTests.js";
 import HigherOrderComputationOperatorTests from "../../computations/__tests__/fixtures/operators/HigherOrderComputationOperatorTests.js";
+import StatefulAsynchronousComputationOperatorTests from "../../computations/__tests__/fixtures/operators/StatefulAsynchronousComputationOperatorTests.js";
 import StatefulSynchronousComputationOperatorTests from "../../computations/__tests__/fixtures/operators/StatefulSynchronousComputationOperatorTests.js";
 import StatelessAsynchronousComputationOperatorTests from "../../computations/__tests__/fixtures/operators/StatelessAsynchronousComputationOperatorTests.js";
 import {
@@ -103,104 +105,6 @@ import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
-import AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests from "../../computations/__tests__/fixtures/operators/AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests.js";
-
-const DeferredReactiveObservableOperator = (
-  op: Function1<ObservableLike<any>, ObservableLike<unknown>>,
-) =>
-  describe(
-    "DeferredReactiveObservableOperator",
-    test(
-      "with PureSynchronousObservableLike",
-      pipeLazy(
-        Observable.empty({ delay: 1 }),
-        op,
-        ComputationExpect.isPureSynchronous,
-      ),
-    ),
-    test(
-      "with SynchronousObservableWithSideEffectsLike",
-      pipeLazy(
-        Observable.empty({ delay: 1 }),
-        Observable.forEach(ignore),
-        op,
-        ComputationExpect.isSynchronousWithSideEffects,
-      ),
-    ),
-    test("with PureDeferredObservableLike", () => {
-      using vts = VirtualTimeScheduler.create();
-      pipe(
-        Observable.empty({ delay: 1 }),
-        Observable.subscribeOn(vts),
-        op,
-        ComputationExpect.isPureDeferred,
-      );
-    }),
-    test(
-      "with DeferredObservableWithSideEffectsLike",
-      pipeLazy(
-        async () => {
-          throw new Error();
-        },
-        Observable.fromAsyncFactory(),
-        op,
-        ComputationExpect.isDeferredWithSideEffects,
-      ),
-    ),
-    test(
-      "with MulticastObservableLike",
-      pipeLazy(
-        new Promise(ignore),
-        Observable.fromPromise(),
-        op,
-        ComputationExpect.isPureDeferred,
-      ),
-    ),
-  );
-
-const DeferringObservableOperatorTests = (
-  op: Function1<ObservableLike<any>, ObservableLike<any>>,
-) =>
-  describe(
-    "DeferringObservableOperatorTests",
-    test(
-      "with PureSynchronousObservableLike",
-      pipeLazy(
-        Observable.empty({ delay: 1 }),
-        op,
-        ComputationExpect.isPureDeferred,
-      ),
-    ),
-    test(
-      "with SynchronousObservableWithSideEffectsLike",
-      pipeLazy(
-        Observable.empty({ delay: 1 }),
-        Observable.forEach(ignore),
-        op,
-        ComputationExpect.isDeferredWithSideEffects,
-      ),
-    ),
-    test("with PureDeferredObservableLike", () => {
-      using vts = VirtualTimeScheduler.create();
-      pipe(
-        Observable.empty({ delay: 1 }),
-        Observable.subscribeOn(vts),
-        op,
-        ComputationExpect.isPureDeferred,
-      );
-    }),
-    test(
-      "with DeferredObservableWithSideEffectsLike",
-      pipeLazy(
-        async () => {
-          throw new Error();
-        },
-        Observable.fromAsyncFactory(),
-        op,
-        ComputationExpect.isDeferredWithSideEffects,
-      ),
-    ),
-  );
 
 const ObservableTypes = {
   [Computation_pureSynchronousOfT]: Observable.empty({ delay: 1 }),
@@ -795,10 +699,10 @@ testModule(
     HigherOrderComputationOperatorTests(
       ObservableTypes,
       none,
-      none, 
-      none, 
+      none,
+      none,
       Observable.flatMapAsync(async x => await Promise.resolve(x)),
-    )
+    ),
   ),
   describe(
     "forkMerge",
@@ -1542,7 +1446,8 @@ testModule(
         expectArrayEquals([1, 2, 3]),
       ),
     ),
-    DeferredReactiveObservableOperator(
+    StatefulSynchronousComputationOperatorTests(
+      ObservableTypes,
       Observable.takeUntil(Observable.empty({ delay: 1 })),
     ),
     ComputationOperatorWithSideEffectsTests(
@@ -1561,7 +1466,10 @@ testModule(
         ),
       ),
     ),
-    DeferringObservableOperatorTests(Observable.takeUntil(Subject.create())),
+    StatefulAsynchronousComputationOperatorTests(
+      ObservableTypes,
+      Observable.takeUntil(Subject.create()),
+    ),
   ),
   describe(
     "throttle",
@@ -1604,7 +1512,10 @@ testModule(
         expectArrayEquals([0, 74, 149, 199]),
       ),
     ),
-    DeferredReactiveObservableOperator(Observable.throttle(1)),
+    StatefulSynchronousComputationOperatorTests(
+      ObservableTypes,
+      Observable.throttle(1),
+    ),
   ),
   describe(
     "throwIfEmpty",
