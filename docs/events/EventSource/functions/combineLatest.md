@@ -278,96 +278,6 @@
 
 ## Call Signature
 
-> **combineLatest**\<`TA`, `TB`\>(`a`, `b`): `never`
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-### Parameters
-
-#### a
-
-`never`
-
-#### b
-
-`never`
-
-### Returns
-
-`never`
-
-## Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): `never`
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-### Parameters
-
-#### a
-
-`never`
-
-#### b
-
-`never`
-
-#### c
-
-`never`
-
-### Returns
-
-`never`
-
-## Call Signature
-
-> **combineLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): `never`
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-### Parameters
-
-#### a
-
-`never`
-
-#### b
-
-`never`
-
-#### c
-
-`never`
-
-#### d
-
-`never`
-
-### Returns
-
-`never`
-
-## Call Signature
-
 > **combineLatest**\<`TA`, `TB`\>(`a`, `b`): [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ### Type Parameters
@@ -455,6 +365,96 @@
 ### Returns
 
 [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+## Call Signature
+
+> **combineLatest**\<`TA`, `TB`\>(`a`, `b`): `never`
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+### Parameters
+
+#### a
+
+[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`TA`\>
+
+#### b
+
+[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`TB`\>
+
+### Returns
+
+`never`
+
+## Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): `never`
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+### Parameters
+
+#### a
+
+[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`TA`\>
+
+#### b
+
+[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`TB`\>
+
+#### c
+
+[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`TC`\>
+
+### Returns
+
+`never`
+
+## Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): `never`
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+### Parameters
+
+#### a
+
+[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`TA`\>
+
+#### b
+
+[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`TB`\>
+
+#### c
+
+[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`TC`\>
+
+#### d
+
+[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`TD`\>
+
+### Returns
+
+`never`
 
 ## Call Signature
 

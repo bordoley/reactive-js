@@ -20,6 +20,7 @@ import {
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as Computation from "../../computations/Computation.js";
 import ComputationModuleTests from "../../computations/__tests__/fixtures/ComputationModuleTests.js";
+import ConcurrentReactiveComputationModuleTests from "../../computations/__tests__/fixtures/ConcurrentReactiveComputationModuleTests.js";
 import DeferredReactiveComputationModuleTests from "../../computations/__tests__/fixtures/DeferredReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "../../computations/__tests__/fixtures/SynchronousComputationModuleTests.js";
 import * as ComputationExpect from "../../computations/__tests__/fixtures/helpers/ComputationExpect.js";
@@ -105,7 +106,6 @@ import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
-import ConcurrentReactiveComputationModuleTests from "../../computations/__tests__/fixtures/ConcurrentReactiveComputationModuleTests.js";
 
 const DeferredReactiveObservableOperator = (
   op: Function1<ObservableLike<any>, ObservableLike<unknown>>,
@@ -1038,32 +1038,6 @@ testModule(
         })(),
         Observable.fromIterable(),
       ),
-    ),
-  ),
-  describe(
-    "fromPromise",
-    testAsync("when the promise resolves", async () => {
-      using scheduler = HostScheduler.create();
-      await pipeAsync(
-        Promise.resolve(1),
-        Observable.fromPromise(),
-        Observable.lastAsync(scheduler),
-        expectEquals<Optional<number>>(1),
-      );
-    }),
-    testAsync("when the promise reject", async () => {
-      using scheduler = HostScheduler.create();
-      await pipeAsync(
-        pipeAsync(
-          Promise.reject(newInstance(Error)),
-          Observable.fromPromise(),
-          Observable.lastAsync(scheduler),
-        ),
-        expectPromiseToThrow,
-      );
-    }),
-    ComputationTest.isMulticasted(
-      pipe(Promise.resolve(true), Observable.fromPromise()),
     ),
   ),
   describe(

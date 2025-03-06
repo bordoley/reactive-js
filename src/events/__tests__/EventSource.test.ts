@@ -2,15 +2,14 @@ import { Array_length, Array_push } from "../../__internal__/constants.js";
 import {
   describe,
   expectArrayEquals,
-  expectEquals,
   expectIsSome,
   expectToThrowError,
   test,
-  testAsync,
   testModule,
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import ComputationModuleTests from "../../computations/__tests__/fixtures/ComputationModuleTests.js";
+import ConcurrentReactiveComputationModuleTests from "../../computations/__tests__/fixtures/ConcurrentReactiveComputationModuleTests.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
@@ -26,7 +25,6 @@ import {
   EventSourceLike_addEventListener,
 } from "../../events.js";
 import {
-  Optional,
   Tuple2,
   arrayEquality,
   bind,
@@ -35,7 +33,6 @@ import {
   ignore,
   isSome,
   newInstance,
-  none,
   pick,
   pipe,
   pipeLazy,
@@ -46,7 +43,6 @@ import {
 import * as Disposable from "../../utils/Disposable.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
-import ConcurrentReactiveComputationModuleTests from "../../computations/__tests__/fixtures/ConcurrentReactiveComputationModuleTests.js";
 
 const EventSourceTypes = {
   [Computation_multicastOfT]: EventSource.never(),
@@ -107,45 +103,6 @@ testModule(
         expectIsSome,
       ),
     ),
-  ),
-  describe(
-    "fromPromise",
-    testAsync("when the promise resolves", async () => {
-      const promise = Promise.resolve(1);
-
-      let result: Optional<number> = none;
-
-      pipe(
-        promise,
-        EventSource.fromPromise(),
-        EventSource.addEventHandler(e => {
-          result = e;
-        }),
-      );
-
-      await promise;
-
-      pipe(result, expectEquals<Optional<number>>(1));
-    }),
-    testAsync("when the promise reject", async () => {
-      const error = newInstance(Error);
-      const promise = Promise.reject(error);
-
-      const subscription = pipe(
-        promise,
-        EventSource.fromPromise(),
-        EventSource.addEventHandler(ignore),
-      );
-
-      try {
-        await promise;
-      } catch (e) {}
-
-      pipe(
-        subscription[DisposableLike_error],
-        expectEquals<Optional<Error>>(error),
-      );
-    }),
   ),
   describe(
     "merge",

@@ -131,15 +131,15 @@ interface CombineConstructor<TComputation extends ComputationType> {
     <TA, TB>(a: PureDeferredComputationOf<TComputation, TA>, b: PureDeferredComputationOf<TComputation, TB>): PureDeferredComputationOf<TComputation, Tuple2<TA, TB>>;
     <TA, TB, TC>(a: PureDeferredComputationOf<TComputation, TA>, b: PureDeferredComputationOf<TComputation, TB>, c: PureDeferredComputationOf<TComputation, TC>): PureDeferredComputationOf<TComputation, Tuple3<TA, TB, TC>>;
     <TA, TB, TC, TD>(a: PureDeferredComputationOf<TComputation, TA>, b: PureDeferredComputationOf<TComputation, TB>, c: PureDeferredComputationOf<TComputation, TC>, d: PureDeferredComputationOf<TComputation, TD>): PureDeferredComputationOf<TComputation, Tuple4<TA, TB, TC, TD>>;
-    <TA, TB>(a: DeferredComputationOf<TComputation, TA>, b: DeferredComputationOf<TComputation, TB>): DeferredComputationWithSideEffectsOf<TComputation, Tuple2<TA, TB>>;
-    <TA, TB, TC>(a: DeferredComputationOf<TComputation, TA>, b: DeferredComputationOf<TComputation, TB>, c: DeferredComputationOf<TComputation, TC>): DeferredComputationWithSideEffectsOf<TComputation, Tuple3<TA, TB, TC>>;
-    <TA, TB, TC, TD>(a: DeferredComputationOf<TComputation, TA>, b: DeferredComputationOf<TComputation, TB>, c: DeferredComputationOf<TComputation, TC>, d: DeferredComputationOf<TComputation, TD>): DeferredComputationWithSideEffectsOf<TComputation, Tuple4<TA, TB, TC, TD>>;
     <TA, TB>(a: MulticastComputationOf<TComputation, TA>, b: MulticastComputationOf<TComputation, TB>): MulticastComputationOf<TComputation, Tuple2<TA, TB>>;
     <TA, TB, TC>(a: MulticastComputationOf<TComputation, TA>, b: MulticastComputationOf<TComputation, TB>, c: MulticastComputationOf<TComputation, TC>): MulticastComputationOf<TComputation, Tuple3<TA, TB, TC>>;
     <TA, TB, TC, TD>(a: MulticastComputationOf<TComputation, TA>, b: MulticastComputationOf<TComputation, TB>, c: MulticastComputationOf<TComputation, TC>, d: MulticastComputationOf<TComputation, TD>): MulticastComputationOf<TComputation, Tuple4<TA, TB, TC, TD>>;
     <TA, TB>(a: PureComputationOf<TComputation, TA>, b: PureComputationOf<TComputation, TB>): PureDeferredComputationOf<TComputation, Tuple2<TA, TB>>;
     <TA, TB, TC>(a: PureComputationOf<TComputation, TA>, b: PureComputationOf<TComputation, TB>, c: PureComputationOf<TComputation, TC>): PureDeferredComputationOf<TComputation, Tuple3<TA, TB, TC>>;
     <TA, TB, TC, TD>(a: PureComputationOf<TComputation, TA>, b: PureComputationOf<TComputation, TB>, c: PureComputationOf<TComputation, TC>, d: PureComputationOf<TComputation, TD>): PureDeferredComputationOf<TComputation, Tuple4<TA, TB, TC, TD>>;
+    <TA, TB>(a: ComputationOf<TComputation, TA>, b: ComputationOf<TComputation, TB>): DeferredComputationWithSideEffectsOf<TComputation, Tuple2<TA, TB>>;
+    <TA, TB, TC>(a: ComputationOf<TComputation, TA>, b: ComputationOf<TComputation, TB>, c: ComputationOf<TComputation, TC>): DeferredComputationWithSideEffectsOf<TComputation, Tuple3<TA, TB, TC>>;
+    <TA, TB, TC, TD>(a: ComputationOf<TComputation, TA>, b: ComputationOf<TComputation, TB>, c: ComputationOf<TComputation, TC>, d: ComputationOf<TComputation, TD>): DeferredComputationWithSideEffectsOf<TComputation, Tuple4<TA, TB, TC, TD>>;
 }
 interface ZipConstructor<TComputation extends ComputationType> {
     <TA, TB>(a: PureSynchronousComputationOf<TComputation, TA>, b: PureSynchronousComputationOf<TComputation, TB>): PureSynchronousComputationOf<TComputation, Tuple2<TA, TB>>;

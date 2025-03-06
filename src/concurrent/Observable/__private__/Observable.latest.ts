@@ -144,7 +144,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
 
     const isPure = Computation.areAllPure(observables);
     const isSynchronous = Computation.areAllSynchronous(observables);
-    const isMulticasted = Computation.areAllMulticasted(observables)
+    const isMulticasted = Computation.areAllMulticasted(observables);
 
     return Observable_createWithConfig(onSubscribe, {
       [ComputationLike_isDeferred]: !isMulticasted,

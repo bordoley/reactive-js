@@ -1,8 +1,11 @@
 import {
+  Test,
   describe,
   expectArrayEquals,
-  Test,
+  expectEquals,
+  expectToThrowAsync,
   test,
+  testAsync,
 } from "../../../__internal__/testing.js";
 import {
   ComputationOf,
@@ -19,28 +22,31 @@ import {
   PureSynchronousComputationOf,
   SynchronousComputationWithSideEffectsOf,
 } from "../../../computations.js";
-import {
-  arrayEquality,
-  bind,
-  Function1,
-  incrementBy,
-  isSome,
-  Optional,
-  pipe,
-  returns,
-  tuple,
-  Tuple2,
-} from "../../../functions.js";
+import * as HostScheduler from "../../../concurrent/HostScheduler.js";
+import * as Observable from "../../../concurrent/Observable.js";
+import * as VirtualTimeScheduler from "../../../concurrent/VirtualTimeScheduler.js";
 import {
   ObservableLike,
   SchedulerLike,
   VirtualTimeSchedulerLike_run,
 } from "../../../concurrent.js";
-import * as VirtualTimeScheduler from "../../../concurrent/VirtualTimeScheduler.js";
-import * as Observable from "../../../concurrent/Observable.js";
-import * as ComputationTest from "./helpers/ComputationTest.js";
+import {
+  Function1,
+  Optional,
+  Tuple2,
+  arrayEquality,
+  bind,
+  incrementBy,
+  isSome,
+  newInstance,
+  none,
+  pipe,
+  returns,
+  tuple,
+} from "../../../functions.js";
 import * as Computation from "../../Computation.js";
 import * as Iterable from "../../Iterable.js";
+import * as ComputationTest from "./helpers/ComputationTest.js";
 
 const ConcurrentReactiveComputationModuleTests = <
   TComputation extends ComputationType,
@@ -174,7 +180,7 @@ const ConcurrentReactiveComputationModuleTests = <
             ),
 
           pureDeferredOfT &&
-          deferredWithSideEffectsOfT &&
+            deferredWithSideEffectsOfT &&
             multicastOfT &&
             ComputationTest.isDeferredWithSideEffects(
               m.combineLatest(
@@ -182,16 +188,58 @@ const ConcurrentReactiveComputationModuleTests = <
                 deferredWithSideEffectsOfT,
                 multicastOfT,
               ),
-              " when combining multicast, pureDeferred and deferredithSideEffect inputs"
+              " when combining multicast, pureDeferred and deferredithSideEffect inputs",
             ),
 
           multicastOfT &&
             ComputationTest.isMulticasted(
               m.combineLatest(multicastOfT, multicastOfT, multicastOfT),
+              " when coming multicast inputs",
             ),
         ],
         Computation.keepType(Iterable)<Optional<Test>, Test>(isSome),
         Iterable.toReadonlyArray(),
+      ),
+    ),
+    describe(
+      "fromPromise",
+      testAsync("when the promise resolves", async () => {
+        using scheduler = HostScheduler.create();
+        const promise = Promise.resolve(1);
+
+        let result: Optional<number> = none;
+
+        await pipe(
+          promise,
+          m.fromPromise(),
+          m.toObservable(),
+          Observable.forEach<number>(e => {
+            result = e;
+          }),
+          Observable.lastAsync(scheduler),
+        );
+
+        pipe(result, expectEquals<Optional<number>>(1));
+      }),
+
+      testAsync("when the promise reject", async () => {
+        using scheduler = HostScheduler.create();
+
+        const error = newInstance(Error);
+        const promise = Promise.reject(error);
+
+        await expectToThrowAsync(() =>
+          pipe(
+            promise,
+            m.fromPromise(),
+            m.toObservable(),
+            Observable.lastAsync(scheduler),
+          ),
+        );
+      }),
+
+      ComputationTest.isMulticasted(
+        pipe(Promise.resolve(true), m.fromPromise()),
       ),
     ),
   );
