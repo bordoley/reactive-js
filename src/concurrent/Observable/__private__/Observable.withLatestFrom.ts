@@ -147,8 +147,8 @@ const Observable_withLatestFrom: Observable.Signature["withLatestFrom"] = (<
     createWithLatestFromObserver,
     partial(other, selector),
     Observable_lift({
-      [ObservableLift_isStateless]: false,
-      [ComputationLike_isDeferred]: true,
+      [ObservableLift_isStateless]: Computation.isMulticasted(other),
+      [ComputationLike_isDeferred]: !Computation.isMulticasted(other),
       [ComputationLike_isPure]: Computation.isPure(other),
       [ComputationLike_isSynchronous]: Computation.isSynchronous(other),
     }),

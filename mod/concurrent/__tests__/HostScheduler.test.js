@@ -64,7 +64,7 @@ testModule("HostScheduler", testAsync("delayed continuation", async () => {
         const start = scheduler[SchedulerLike_now];
         await pipe(Observable.empty({ delay: 20 }), Observable.firstAsync(scheduler));
         const end = scheduler[SchedulerLike_now];
-        expectTrue(end - start >= 20);
+        pipe(end - start >= 20, expectTrue("expected more than 20 ms to elapse"));
     }
     catch (e_1) {
         env_1.error = e_1;

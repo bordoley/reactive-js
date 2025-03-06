@@ -25,7 +25,7 @@ export type TestAsync = {
     readonly f: Function1<string, Factory<Promise<void>>>;
 };
 export type TestGroup = Describe | Test | TestAsync | TestDebug;
-export declare const describe: (name: string, ...tests: TestGroup[]) => Describe;
+export declare const describe: (name: string, ...tests: Optional<TestGroup>[]) => Describe;
 export declare const test: (name: string, f: SideEffect) => Test;
 export declare const testDebug: (name: string, f: SideEffect) => TestDebug;
 export declare const testPredicateExpectingTrue: <T>(input: T, predicate: Predicate<T>) => any;
@@ -41,8 +41,8 @@ export declare const expectArrayEquals: <T>(b: readonly T[], { valuesEquality, }
 export declare const expectArrayNotEquals: <T>(b: readonly T[], { valuesEquality, }?: {
     valuesEquality: Equality<T>;
 }) => (a: readonly T[]) => readonly T[];
-export declare const expectTrue: (v: boolean) => boolean;
-export declare const expectFalse: (v: boolean) => boolean;
+export declare const expectTrue: (message?: string) => (v: boolean) => boolean;
+export declare const expectFalse: (message?: string) => (v: boolean) => boolean;
 export declare const expectIsNone: (v: Optional) => unknown;
 export declare const expectIsSome: (v: Optional) => unknown;
 type MockFunction = {

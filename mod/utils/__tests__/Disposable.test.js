@@ -8,13 +8,13 @@ testModule("Disposable", describe("add", test("disposes child disposable when di
     const child = Disposable.create();
     const disposable = pipe(Disposable.create(), Disposable.add(child));
     disposable[DisposableLike_dispose]();
-    pipe(child[DisposableLike_isDisposed], expectTrue);
+    pipe(child[DisposableLike_isDisposed], expectTrue());
 }), test("adding to disposed disposable disposes the child", () => {
     const child = Disposable.create();
     const disposable = Disposable.create();
     disposable[DisposableLike_dispose]();
     pipe(disposable, Disposable.add(child));
-    pipe(child[DisposableLike_isDisposed], expectTrue);
+    pipe(child[DisposableLike_isDisposed], expectTrue());
 }), test("disposes parent when child is disposed with error", () => {
     const parent = Disposable.create();
     const child = Disposable.create();
@@ -33,7 +33,7 @@ testModule("Disposable", describe("add", test("disposes child disposable when di
     const child = Disposable.create();
     pipe(parent, Disposable.bindTo(child));
     child[DisposableLike_dispose]();
-    expectTrue(child[DisposableLike_isDisposed]);
+    pipe(child[DisposableLike_isDisposed], expectTrue("expected child to be disposed"));
 }), test("disposing the child disposable with an error disposes the parent with an error", () => {
     const parent = Disposable.create();
     const child = Disposable.create();

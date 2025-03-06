@@ -79,7 +79,7 @@ testModule("FlowableStream", describe("create", testAsync("reading from readable
         flowed[PauseableLike_pause]();
         flowed[PauseableLike_resume]();
         await pipeAsync(flowed, Observable.decodeWithCharset(), Observable.scan((acc, next) => acc + next, returns("")), Observable.lastAsync(scheduler), expectEquals("abcdefg"));
-        expectTrue(readable.destroyed);
+        pipe(readable.destroyed, expectTrue("expected readable to be destroyed"));
     }
     catch (e_1) {
         env_1.error = e_1;
@@ -100,7 +100,7 @@ testModule("FlowableStream", describe("create", testAsync("reading from readable
         flowed[PauseableLike_resume]();
         const acc = await pipe(flowed, Observable.decodeWithCharset(), Observable.scan((acc, next) => acc + next, returns("")), Observable.lastAsync(scheduler));
         pipe(acc, expectEquals("abcdefg"));
-        expectTrue(flowed[DisposableLike_isDisposed]);
+        pipe(flowed[DisposableLike_isDisposed], expectTrue("expected flowed to be disposed"));
     }
     catch (e_2) {
         env_2.error = e_2;
@@ -143,7 +143,7 @@ testModule("FlowableStream", describe("create", testAsync("reading from readable
             },
         });
         await pipe(["abc", "defg", "xyz"], Observable.fromReadonlyArray(), Observable.keep(x => x !== "xyz"), Observable.encodeUtf8(), Flowable.fromSynchronousObservable(), FlowableStream.writeTo(writable), Observable.lastAsync(scheduler));
-        expectFalse(writable.destroyed);
+        pipe(writable.destroyed, expectFalse("expected writable not to be destroyed"));
         pipe(data, expectEquals("abcdefg"));
         writable.destroy();
     }

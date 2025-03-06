@@ -44,13 +44,13 @@ testModule(
       const publisher = Publisher.create({ autoDispose: true });
       const subscription = pipe(publisher, EventSource.addEventHandler(ignore));
 
-      expectFalse(subscription[DisposableLike_isDisposed]);
-      expectFalse(publisher[DisposableLike_isDisposed]);
+      pipe(subscription[DisposableLike_isDisposed], expectFalse());
+      pipe(publisher[DisposableLike_isDisposed], expectFalse());
 
       subscription[DisposableLike_dispose]();
 
-      expectTrue(subscription[DisposableLike_isDisposed]);
-      expectTrue(publisher[DisposableLike_isDisposed]);
+      pipe(subscription[DisposableLike_isDisposed], expectTrue());
+      pipe(publisher[DisposableLike_isDisposed], expectTrue());
     }),
     test("when a listener throws an exception", () => {
       const e = newInstance(Error);
@@ -95,6 +95,6 @@ testModule(
 
     listener[DisposableLike_dispose]();
 
-    expectTrue(publisher[DisposableLike_isDisposed]);
+    pipe(publisher[DisposableLike_isDisposed], expectTrue());
   }),
 );

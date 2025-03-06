@@ -77,7 +77,7 @@ testModule(
         stream,
         Collection.keySet<DictionaryCollection>(Dictionary.keys),
         invoke("has", "a"),
-        expectTrue,
+        expectTrue("expect collection tot contain the key 'a'"),
       );
 
       let result = 0;
@@ -136,11 +136,17 @@ testModule(
         backpressureStrategy: DropLatestBackpressureStrategy,
       });
 
-      expectFalse(stateStream[DispatcherLike_isCompleted]);
+      pipe(
+        stateStream[DispatcherLike_isCompleted],
+        expectFalse("expected stream not to be completed"),
+      );
 
       stateStream[DispatcherLike_complete]();
 
-      expectTrue(stateStream[DispatcherLike_isCompleted]);
+      pipe(
+        stateStream[DispatcherLike_isCompleted],
+        expectTrue("expected stream to be completed"),
+      );
     }),
   ),
   describe(

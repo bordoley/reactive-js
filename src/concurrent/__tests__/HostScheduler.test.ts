@@ -19,6 +19,6 @@ testModule(
       Observable.firstAsync(scheduler),
     );
     const end = scheduler[SchedulerLike_now];
-    expectTrue(end - start >= 20);
+    pipe(end - start >= 20, expectTrue("expected more than 20 ms to elapse"));
   }),
 );

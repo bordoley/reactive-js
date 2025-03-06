@@ -14,12 +14,12 @@ import HigherOrderComputationOperatorTests from "./operators/HigherOrderComputat
 import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSynchronousComputationOperatorTests.js";
 import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
 const SynchronousComputationModuleTests = (m, computationType) => {
-    const { [Computation_pureSynchronousOfT]: pureSynchronousComputation, [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffects, [Computation_pureDeferredOfT]: pureDeferredOfT, [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT, } = computationType;
-    return describe("SynchronousComputationModule", describe("catchError", HigherOrderComputationOperatorTests(computationType, pureSynchronousComputation &&
-        m.catchError(_ => pureSynchronousComputation, {
+    const { [Computation_pureSynchronousOfT]: pureSynchronousOfT, [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffectsOfT, [Computation_pureDeferredOfT]: pureDeferredOfT, [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT, } = computationType;
+    return describe("SynchronousComputationModule", describe("catchError", HigherOrderComputationOperatorTests(computationType, pureSynchronousOfT &&
+        m.catchError(_ => pureSynchronousOfT, {
             innerType: PureSynchronousComputation,
-        }), synchronousWithSideEffects &&
-        m.catchError(_ => synchronousWithSideEffects, {
+        }), synchronousWithSideEffectsOfT &&
+        m.catchError(_ => synchronousWithSideEffectsOfT, {
             innerType: SynchronousComputationWithSideEffects,
         }), pureDeferredOfT &&
         m.catchError(_ => pureDeferredOfT, {
@@ -73,16 +73,16 @@ const SynchronousComputationModuleTests = (m, computationType) => {
         pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.forEach(_ => {
             throw err;
         }), m.toReadonlyArray()), expectToThrowError(err));
-    })), describe("fromIterable", test("with array", pipeLazy([1, 2, 3], m.fromIterable(), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("from Iterable that has side effects", pipeLazy([], Iterable.forEach(() => { }), m.fromIterable(), pick(ComputationLike_isPure), expectFalse)), test("when the iterable throws", pipeLazy(pipeLazy((function* Generator() {
+    })), describe("fromIterable", test("with array", pipeLazy([1, 2, 3], m.fromIterable(), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("from Iterable that has side effects", pipeLazy([], Iterable.forEach(() => { }), m.fromIterable(), pick(ComputationLike_isPure), expectFalse("expected iterable to have side effects"))), test("when the iterable throws", pipeLazy(pipeLazy((function* Generator() {
         throw newInstance(Error);
     })(), m.fromIterable(), m.last()), expectToThrow))), describe("fromValue", test("with array", pipeLazy(1, m.fromValue(), m.toReadonlyArray(), expectArrayEquals([1])))), describe("generate", test("with count", pipeLazy(m.generate(increment, returns(0), { count: 10 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])))), describe("fromReadonlyArray", test("starting at index greater than 0", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray({ start: 1 }), m.toReadonlyArray(), expectArrayEquals([2, 3, 4]))), test("starting at index greater than 0 with count", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray({ start: 1, count: 2 }), m.toReadonlyArray(), expectArrayEquals([2, 3]))), test("starting at index greater than 0 with count exceeding the length", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray({ start: 1, count: 10 }), m.toReadonlyArray(), expectArrayEquals([2, 3, 4]))), test("negative count", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray({ count: -2 }), m.toReadonlyArray(), expectArrayEquals([4, 3]))), test("starting at index greater than 0 with negative count", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray({ start: 2, count: -2 }), m.toReadonlyArray(), expectArrayEquals([3, 2])))), describe("last", test("returns the last value in the computation", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.last(), expectEquals(3)))), describe("raise", ComputationTest.isPureSynchronous(m.raise()), test("when raise function returns an value", () => {
         const e1 = "e1";
         try {
             pipe(m.raise({ raise: () => e1 }), m.toReadonlyArray());
-            expectFalse(true);
+            expectFalse()(true);
         }
         catch (e) {
-            expectTrue(e instanceof Error);
+            pipe(e instanceof Error, expectTrue("expected e to be instance of an Error"));
             pipe(e.message, expectEquals(e1));
         }
     }), test("when raise function throws an exception", () => {
@@ -93,20 +93,20 @@ const SynchronousComputationModuleTests = (m, computationType) => {
                     throw e1;
                 },
             }), m.toReadonlyArray());
-            expectFalse(true);
+            expectFalse()(true);
         }
         catch (e) {
-            expectTrue(e instanceof Error);
+            pipe(e instanceof Error, expectTrue("expected e to be instance of an Error"));
             pipe(e, expectEquals(e1));
         }
     }), test("when raise function returns an exception", () => {
         const e1 = new Error();
         try {
             pipe(m.raise({ raise: () => e1 }), m.toReadonlyArray());
-            expectFalse(true);
+            expectFalse()(true);
         }
         catch (e) {
-            expectTrue(e instanceof Error);
+            pipe(e instanceof Error, expectTrue("expected e to be instance of an Error"));
             pipe(e, expectEquals(e1));
         }
     })), describe("reduce", test("summing all values from delayed source", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.reduce((acc, next) => acc + next, returns(0)), expectEquals(6)))), describe("repeat", StatelessComputationOperatorTests({

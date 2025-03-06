@@ -220,7 +220,7 @@ testModule(
       const instance = newInstance(TestClass);
 
       pipe(instance, invoke("testMethod"));
-      pipe(called, expectTrue);
+      pipe(called, expectTrue());
     }),
   ),
   describe(

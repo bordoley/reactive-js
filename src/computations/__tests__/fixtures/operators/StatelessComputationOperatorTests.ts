@@ -1,4 +1,4 @@
-import { Test, describe, test } from "../../../../__internal__/testing.js";
+import { describe, test } from "../../../../__internal__/testing.js";
 import {
   ComputationType,
   Computation_deferredWithSideEffectsOfT,
@@ -13,9 +13,7 @@ import {
   StatelessComputationOperator,
   SynchronousComputationWithSideEffectsOf,
 } from "../../../../computations.js";
-import { Optional, isSome, pipe, pipeSomeLazy } from "../../../../functions.js";
-import * as Computation from "../../../Computation.js";
-import * as Iterable from "../../../Iterable.js";
+import { pipeSomeLazy } from "../../../../functions.js";
 import * as ComputationExpect from "../helpers/ComputationExpect.js";
 
 const StatelessComputationOperatorTests = <
@@ -47,70 +45,65 @@ const StatelessComputationOperatorTests = <
 ) =>
   describe(
     "StatelessComputationOperator",
-    ...pipe(
-      [
-        computationType[Computation_pureSynchronousOfT] &&
-          test(
-            "with PureSynchronous input, returns PureSynchronous output",
-            pipeSomeLazy(
-              computationType[Computation_pureSynchronousOfT],
-              ComputationExpect.isPureSynchronous,
-              operator,
-              ComputationExpect.isPureSynchronous,
-            ),
-          ),
 
-        computationType[Computation_synchronousWithSideEffectsOfT] &&
-          test(
-            "with SynchronousWithSideEffects input, returns SynchronousWithSideEffects output",
-            pipeSomeLazy(
-              computationType[Computation_synchronousWithSideEffectsOfT],
-              ComputationExpect.isSynchronousWithSideEffects,
-              operator,
-              ComputationExpect.isSynchronousWithSideEffects,
-            ),
-          ),
+    computationType[Computation_pureSynchronousOfT] &&
+      test(
+        "with PureSynchronous input, returns PureSynchronous output",
+        pipeSomeLazy(
+          computationType[Computation_pureSynchronousOfT],
+          ComputationExpect.isPureSynchronous,
+          operator,
+          ComputationExpect.isPureSynchronous,
+        ),
+      ),
 
-        computationType[Computation_pureDeferredOfT] &&
-          test(
-            "with PureDeferred input, returns PureDeferred output",
-            pipeSomeLazy(
-              computationType[Computation_pureDeferredOfT],
-              ComputationExpect.isPureDeferred,
-              ComputationExpect.isNotSynchronous,
-              operator,
-              ComputationExpect.isPureDeferred,
-              ComputationExpect.isNotSynchronous,
-            ),
-          ),
+    computationType[Computation_synchronousWithSideEffectsOfT] &&
+      test(
+        "with SynchronousWithSideEffects input, returns SynchronousWithSideEffects output",
+        pipeSomeLazy(
+          computationType[Computation_synchronousWithSideEffectsOfT],
+          ComputationExpect.isSynchronousWithSideEffects,
+          operator,
+          ComputationExpect.isSynchronousWithSideEffects,
+        ),
+      ),
 
-        computationType[Computation_deferredWithSideEffectsOfT] &&
-          test(
-            "with DeferredWithSideEffects input, returns DeferredWithSideEffects output",
-            pipeSomeLazy(
-              computationType[Computation_deferredWithSideEffectsOfT],
-              ComputationExpect.isDeferredWithSideEffects,
-              ComputationExpect.isNotSynchronous,
-              operator,
-              ComputationExpect.isDeferredWithSideEffects,
-              ComputationExpect.isNotSynchronous,
-            ),
-          ),
+    computationType[Computation_pureDeferredOfT] &&
+      test(
+        "with PureDeferred input, returns PureDeferred output",
+        pipeSomeLazy(
+          computationType[Computation_pureDeferredOfT],
+          ComputationExpect.isPureDeferred,
+          ComputationExpect.isNotSynchronous,
+          operator,
+          ComputationExpect.isPureDeferred,
+          ComputationExpect.isNotSynchronous,
+        ),
+      ),
 
-        computationType[Computation_multicastOfT] &&
-          test(
-            "with Multicasted input, returns Multicasted output",
-            pipeSomeLazy(
-              computationType[Computation_multicastOfT],
-              ComputationExpect.isMulticasted,
-              operator,
-              ComputationExpect.isMulticasted,
-            ),
-          ),
-      ],
-      Computation.keepType(Iterable)<Optional<Test>, Test>(isSome),
-      Iterable.toReadonlyArray(),
-    ),
+    computationType[Computation_deferredWithSideEffectsOfT] &&
+      test(
+        "with DeferredWithSideEffects input, returns DeferredWithSideEffects output",
+        pipeSomeLazy(
+          computationType[Computation_deferredWithSideEffectsOfT],
+          ComputationExpect.isDeferredWithSideEffects,
+          ComputationExpect.isNotSynchronous,
+          operator,
+          ComputationExpect.isDeferredWithSideEffects,
+          ComputationExpect.isNotSynchronous,
+        ),
+      ),
+
+    computationType[Computation_multicastOfT] &&
+      test(
+        "with Multicasted input, returns Multicasted output",
+        pipeSomeLazy(
+          computationType[Computation_multicastOfT],
+          ComputationExpect.isMulticasted,
+          operator,
+          ComputationExpect.isMulticasted,
+        ),
+      ),
   );
 
 export default StatelessComputationOperatorTests;

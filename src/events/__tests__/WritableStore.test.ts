@@ -34,6 +34,9 @@ testModule(
 
     store[DisposableLike_dispose]();
 
-    expectTrue(store[DisposableLike_isDisposed]);
+    pipe(
+      store[DisposableLike_isDisposed],
+      expectTrue("expected store to be disposed"),
+    );
   }),
 );

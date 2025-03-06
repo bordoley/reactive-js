@@ -92,7 +92,7 @@ testModule("Streamable", describe("animation", test("integration", () => {
         const stream = Streamable.animationGroup({
             a: Observable.keyFrame(500),
         })[StreamableLike_stream](vts);
-        pipe(stream, Collection.keySet(Dictionary.keys), invoke("has", "a"), expectTrue);
+        pipe(stream, Collection.keySet(Dictionary.keys), invoke("has", "a"), expectTrue("expect collection tot contain the key 'a'"));
         let result = 0;
         pipeSome(stream[DictionaryLike_get]("a"), EventSource.addEventHandler(ev => {
             result = ev;
@@ -143,9 +143,9 @@ testModule("Streamable", describe("animation", test("integration", () => {
             capacity: 20,
             backpressureStrategy: DropLatestBackpressureStrategy,
         });
-        expectFalse(stateStream[DispatcherLike_isCompleted]);
+        pipe(stateStream[DispatcherLike_isCompleted], expectFalse("expected stream not to be completed"));
         stateStream[DispatcherLike_complete]();
-        expectTrue(stateStream[DispatcherLike_isCompleted]);
+        pipe(stateStream[DispatcherLike_isCompleted], expectTrue("expected stream to be completed"));
     }
     catch (e_4) {
         env_4.error = e_4;

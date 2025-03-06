@@ -81,8 +81,8 @@ const SynchronousComputationModuleTests = <
   },
 ) => {
   const {
-    [Computation_pureSynchronousOfT]: pureSynchronousComputation,
-    [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffects,
+    [Computation_pureSynchronousOfT]: pureSynchronousOfT,
+    [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffectsOfT,
     [Computation_pureDeferredOfT]: pureDeferredOfT,
     [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT,
   } = computationType;
@@ -93,12 +93,12 @@ const SynchronousComputationModuleTests = <
       "catchError",
       HigherOrderComputationOperatorTests(
         computationType,
-        pureSynchronousComputation &&
-          m.catchError(_ => pureSynchronousComputation, {
+        pureSynchronousOfT &&
+          m.catchError(_ => pureSynchronousOfT, {
             innerType: PureSynchronousComputation,
           }),
-        synchronousWithSideEffects &&
-          m.catchError(_ => synchronousWithSideEffects, {
+        synchronousWithSideEffectsOfT &&
+          m.catchError(_ => synchronousWithSideEffectsOfT, {
             innerType: SynchronousComputationWithSideEffects,
           }),
         pureDeferredOfT &&
@@ -322,7 +322,7 @@ const SynchronousComputationModuleTests = <
           Iterable.forEach(() => {}),
           m.fromIterable(),
           pick(ComputationLike_isPure),
-          expectFalse,
+          expectFalse("expected iterable to have side effects"),
         ),
       ),
       test(
@@ -425,9 +425,12 @@ const SynchronousComputationModuleTests = <
 
         try {
           pipe(m.raise({ raise: () => e1 }), m.toReadonlyArray());
-          expectFalse(true);
+          expectFalse()(true);
         } catch (e) {
-          expectTrue(e instanceof Error);
+          pipe(
+            e instanceof Error,
+            expectTrue("expected e to be instance of an Error"),
+          );
           pipe((e as Error).message, expectEquals(e1));
         }
       }),
@@ -443,9 +446,12 @@ const SynchronousComputationModuleTests = <
             }),
             m.toReadonlyArray(),
           );
-          expectFalse(true);
+          expectFalse()(true);
         } catch (e) {
-          expectTrue(e instanceof Error);
+          pipe(
+            e instanceof Error,
+            expectTrue("expected e to be instance of an Error"),
+          );
           pipe(e, expectEquals<unknown>(e1));
         }
       }),
@@ -454,9 +460,12 @@ const SynchronousComputationModuleTests = <
 
         try {
           pipe(m.raise({ raise: () => e1 }), m.toReadonlyArray());
-          expectFalse(true);
+          expectFalse()(true);
         } catch (e) {
-          expectTrue(e instanceof Error);
+          pipe(
+            e instanceof Error,
+            expectTrue("expected e to be instance of an Error"),
+          );
           pipe(e, expectEquals<unknown>(e1));
         }
       }),

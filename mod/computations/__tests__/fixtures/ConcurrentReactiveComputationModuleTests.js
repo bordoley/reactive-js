@@ -60,13 +60,18 @@ import * as HostScheduler from "../../../concurrent/HostScheduler.js";
 import * as Observable from "../../../concurrent/Observable.js";
 import * as VirtualTimeScheduler from "../../../concurrent/VirtualTimeScheduler.js";
 import { VirtualTimeSchedulerLike_run, } from "../../../concurrent.js";
-import { arrayEquality, bind, bindMethod, compose, incrementBy, isSome, newInstance, none, pipe, pipeLazy, returns, tuple, } from "../../../functions.js";
+import { arrayEquality, bind, bindMethod, compose, incrementBy, newInstance, none, pipe, pipeLazy, returns, tuple, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Computation from "../../Computation.js";
-import * as Iterable from "../../Iterable.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
+import AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests from "./operators/AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests.js";
+import CombineConstructorTests from "./operators/CombineConstructorTests.js";
+import ComputationOperatorWithSideEffectsTests from "./operators/ComputationOperatorWithSideEffectsTests.js";
+import StatefulAsynchronousComputationOperatorTests from "./operators/StatefulAsynchronousComputationOperatorTests.js";
+import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSynchronousComputationOperatorTests.js";
+import StatelessAsynchronousComputationOperatorTests from "./operators/StatelessAsynchronousComputationOperatorTests.js";
 const ConcurrentReactiveComputationModuleTests = (m, computationType) => {
-    const { [Computation_pureSynchronousOfT]: pureSynchronousComputationOfT, [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffectsOfT, [Computation_pureDeferredOfT]: pureDeferredOfT, [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT, [Computation_multicastOfT]: multicastOfT, } = computationType;
+    const { [Computation_pureSynchronousOfT]: pureSynchronousOfT, [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffectsOfT, [Computation_pureDeferredOfT]: pureDeferredOfT, [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT, [Computation_multicastOfT]: multicastOfT, } = computationType;
     return describe("ConcurrentReactiveComputationModule", describe("combineLatest", test("combineLatest from two interspersing sources", () => {
         const env_1 = { stack: [], error: void 0, hasError: false };
         try {
@@ -85,29 +90,7 @@ const ConcurrentReactiveComputationModuleTests = (m, computationType) => {
         finally {
             __disposeResources(env_1);
         }
-    }), ...pipe([
-        pureSynchronousComputationOfT &&
-            ComputationTest.isPureSynchronous(m.combineLatest(pureSynchronousComputationOfT, pureSynchronousComputationOfT), " when all inputs are pureSynchronous"),
-        pureSynchronousComputationOfT &&
-            synchronousWithSideEffectsOfT &&
-            ComputationTest.isSynchronousWithSideEffects(m.combineLatest(pureSynchronousComputationOfT, synchronousWithSideEffectsOfT), " when combining pureSynchronous and synchronousWithSideEffects inputs"),
-        synchronousWithSideEffectsOfT &&
-            ComputationTest.isSynchronousWithSideEffects(m.combineLatest(synchronousWithSideEffectsOfT, synchronousWithSideEffectsOfT), " when all inputs are synchronousWithSideEffects"),
-        pureDeferredOfT &&
-            ComputationTest.isPureDeferred(m.combineLatest(pureDeferredOfT, pureDeferredOfT), " when all inputs are PureDeferred"),
-        pureSynchronousComputationOfT &&
-            pureDeferredOfT &&
-            ComputationTest.isPureDeferred(m.combineLatest(pureSynchronousComputationOfT, pureDeferredOfT), " when combining pureSynchronous and pureDeferred inputs"),
-        multicastOfT &&
-            pureDeferredOfT &&
-            ComputationTest.isPureDeferred(m.combineLatest(multicastOfT, pureDeferredOfT), " when combining pureDeferred and multicast inputs"),
-        pureDeferredOfT &&
-            deferredWithSideEffectsOfT &&
-            multicastOfT &&
-            ComputationTest.isDeferredWithSideEffects(m.combineLatest(pureDeferredOfT, deferredWithSideEffectsOfT, multicastOfT), " when combining multicast, pureDeferred and deferredithSideEffect inputs"),
-        multicastOfT &&
-            ComputationTest.isMulticasted(m.combineLatest(multicastOfT, multicastOfT, multicastOfT), " when coming multicast inputs"),
-    ], Computation.keepType(Iterable)(isSome), Iterable.toReadonlyArray())), describe("fromPromise", testAsync("when the promise resolves", async () => {
+    }), CombineConstructorTests(computationType, m.combineLatest)), describe("fromPromise", testAsync("when the promise resolves", async () => {
         const env_2 = { stack: [], error: void 0, hasError: false };
         try {
             const scheduler = __addDisposableResource(env_2, HostScheduler.create(), false);
@@ -258,14 +241,14 @@ const ConcurrentReactiveComputationModuleTests = (m, computationType) => {
         finally {
             __disposeResources(env_10);
         }
-    })), describe("zipLatest", test("zip two delayed sources", () => {
+    }), test("with selector", () => {
         const env_11 = { stack: [], error: void 0, hasError: false };
         try {
             const vts = __addDisposableResource(env_11, VirtualTimeScheduler.create(), false);
             const result = [];
-            pipe(m.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Observable.fromReadonlyArray({ delay: 1, delayStart: true }), m.fromObservable(vts)), pipe([1, 2, 3, 4], Observable.fromReadonlyArray({ delay: 2, delayStart: true }), m.fromObservable(vts))), m.map(([a, b]) => a + b), m.toObservable(), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
+            pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), m.fromObservable(vts), m.withLatestFrom(pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }), m.fromObservable(vts)), (x, y) => x + y), m.toObservable(), Observable.forEach(bind(result.push, result)), Observable.subscribe(vts));
             vts[VirtualTimeSchedulerLike_run]();
-            pipe(result, expectArrayEquals([2, 5, 8, 11]));
+            expectArrayEquals([0, 1, 3, 4])(result);
         }
         catch (e_11) {
             env_11.error = e_11;
@@ -274,6 +257,27 @@ const ConcurrentReactiveComputationModuleTests = (m, computationType) => {
         finally {
             __disposeResources(env_11);
         }
-    })));
+    }), pureSynchronousOfT &&
+        StatefulSynchronousComputationOperatorTests(computationType, m.withLatestFrom(pureSynchronousOfT)), synchronousWithSideEffectsOfT &&
+        ComputationOperatorWithSideEffectsTests(computationType, m.withLatestFrom(synchronousWithSideEffectsOfT)), pureDeferredOfT &&
+        StatefulAsynchronousComputationOperatorTests(computationType, m.withLatestFrom(pureDeferredOfT)), deferredWithSideEffectsOfT &&
+        AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests(computationType, m.withLatestFrom(deferredWithSideEffectsOfT)), multicastOfT &&
+        StatelessAsynchronousComputationOperatorTests(computationType, m.withLatestFrom(multicastOfT))), describe("zipLatest", test("zip two delayed sources", () => {
+        const env_12 = { stack: [], error: void 0, hasError: false };
+        try {
+            const vts = __addDisposableResource(env_12, VirtualTimeScheduler.create(), false);
+            const result = [];
+            pipe(m.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Observable.fromReadonlyArray({ delay: 1, delayStart: true }), m.fromObservable(vts)), pipe([1, 2, 3, 4], Observable.fromReadonlyArray({ delay: 2, delayStart: true }), m.fromObservable(vts))), m.map(([a, b]) => a + b), m.toObservable(), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
+            vts[VirtualTimeSchedulerLike_run]();
+            pipe(result, expectArrayEquals([2, 5, 8, 11]));
+        }
+        catch (e_12) {
+            env_12.error = e_12;
+            env_12.hasError = true;
+        }
+        finally {
+            __disposeResources(env_12);
+        }
+    }), CombineConstructorTests(computationType, m.combineLatest)));
 };
 export default ConcurrentReactiveComputationModuleTests;

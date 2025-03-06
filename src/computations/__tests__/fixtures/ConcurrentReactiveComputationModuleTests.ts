@@ -1,6 +1,5 @@
 import { Array_push } from "../../../__internal__/constants.js";
 import {
-  Test,
   describe,
   expectArrayEquals,
   expectEquals,
@@ -53,7 +52,12 @@ import {
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Computation from "../../Computation.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
+import AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests from "./operators/AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests.js";
 import CombineConstructorTests from "./operators/CombineConstructorTests.js";
+import ComputationOperatorWithSideEffectsTests from "./operators/ComputationOperatorWithSideEffectsTests.js";
+import StatefulAsynchronousComputationOperatorTests from "./operators/StatefulAsynchronousComputationOperatorTests.js";
+import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSynchronousComputationOperatorTests.js";
+import StatelessAsynchronousComputationOperatorTests from "./operators/StatelessAsynchronousComputationOperatorTests.js";
 
 const ConcurrentReactiveComputationModuleTests = <
   TComputation extends ComputationType,
@@ -89,8 +93,16 @@ const ConcurrentReactiveComputationModuleTests = <
       unknown
     >;
   },
-) =>
-  describe(
+) => {
+  const {
+    [Computation_pureSynchronousOfT]: pureSynchronousOfT,
+    [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffectsOfT,
+    [Computation_pureDeferredOfT]: pureDeferredOfT,
+    [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT,
+    [Computation_multicastOfT]: multicastOfT,
+  } = computationType;
+
+  return describe(
     "ConcurrentReactiveComputationModule",
     describe(
       "combineLatest",
@@ -393,6 +405,57 @@ const ConcurrentReactiveComputationModuleTests = <
           expectToThrowError(error),
         );
       }),
+      test("with selector", () => {
+        using vts = VirtualTimeScheduler.create();
+
+        const result: number[] = [];
+
+        pipe(
+          [0, 1, 2, 3],
+          Observable.fromReadonlyArray({ delay: 1 }),
+          m.fromObservable<number>(vts),
+          m.withLatestFrom<number, number, number>(
+            pipe(
+              [0, 1, 2, 3],
+              Observable.fromReadonlyArray<number>({ delay: 2 }),
+              m.fromObservable<number>(vts),
+            ),
+            (x, y) => x + y,
+          ),
+          m.toObservable(),
+          Observable.forEach(bind(result.push, result)),
+          Observable.subscribe(vts),
+        );
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        expectArrayEquals([0, 1, 3, 4])(result);
+      }),
+      pureSynchronousOfT &&
+        StatefulSynchronousComputationOperatorTests(
+          computationType,
+          m.withLatestFrom(pureSynchronousOfT),
+        ),
+      synchronousWithSideEffectsOfT &&
+        ComputationOperatorWithSideEffectsTests(
+          computationType,
+          m.withLatestFrom(synchronousWithSideEffectsOfT),
+        ),
+      pureDeferredOfT &&
+        StatefulAsynchronousComputationOperatorTests(
+          computationType,
+          m.withLatestFrom(pureDeferredOfT),
+        ),
+      deferredWithSideEffectsOfT &&
+        AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests(
+          computationType,
+          m.withLatestFrom(deferredWithSideEffectsOfT),
+        ),
+      multicastOfT &&
+        StatelessAsynchronousComputationOperatorTests(
+          computationType,
+          m.withLatestFrom(multicastOfT),
+        ),
     ),
     describe(
       "zipLatest",
@@ -426,5 +489,6 @@ const ConcurrentReactiveComputationModuleTests = <
       CombineConstructorTests(computationType, m.combineLatest),
     ),
   );
+};
 
 export default ConcurrentReactiveComputationModuleTests;

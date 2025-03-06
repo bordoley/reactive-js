@@ -622,7 +622,6 @@ export interface ComputationModule<TComputation extends ComputationType> {
 export interface SynchronousComputationModule<
   TComputation extends ComputationType,
 > extends ComputationModule<TComputation> {
-  // FIXME: Should return ComputationWithSideEffectsLike
   catchError<T>(
     onError: SideEffect1<Error>,
   ): StatefulSynchronousComputationOperator<TComputation, T, T>;

@@ -65,7 +65,7 @@ testModule(
         expectEquals<Optional<string>>("abcdefg"),
       );
 
-      expectTrue(readable.destroyed);
+      pipe(readable.destroyed, expectTrue("expected readable to be destroyed"));
     }),
     testAsync("reading from readable factory", async () => {
       function* generate() {
@@ -90,7 +90,10 @@ testModule(
         Observable.lastAsync<string>(scheduler),
       );
       pipe(acc, expectEquals<Optional<string>>("abcdefg"));
-      expectTrue(flowed[DisposableLike_isDisposed]);
+      pipe(
+        flowed[DisposableLike_isDisposed],
+        expectTrue("expected flowed to be disposed"),
+      );
     }),
     testAsync("reading from readable that throws", async () => {
       const err = newInstance(Error);
@@ -141,7 +144,10 @@ testModule(
           Observable.lastAsync(scheduler),
         );
 
-        expectFalse(writable.destroyed);
+        pipe(
+          writable.destroyed,
+          expectFalse("expected writable not to be destroyed"),
+        );
         pipe(data, expectEquals("abcdefg"));
         writable.destroy();
       },

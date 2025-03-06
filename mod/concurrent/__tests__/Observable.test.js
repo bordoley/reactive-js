@@ -389,7 +389,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             }
         }));
         pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Observable.toReadonlyArray());
-        expectTrue(completed);
+        pipe(completed, expectTrue("expected stream to be completed"));
     }
     catch (e_14) {
         env_14.error = e_14;
@@ -413,7 +413,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             }
         }));
         pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray({ delay: 1 }), Observable.dispatchTo(stream), Observable.toReadonlyArray());
-        expectTrue(completed);
+        pipe(completed, expectTrue("expected stream to be completed"));
     }
     catch (e_15) {
         env_15.error = e_15;
@@ -807,10 +807,10 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
         const disp = Disposable.create();
         const f = mockFn(disp);
         pipe([1], Observable.fromReadonlyArray(), Observable.onSubscribe(f), Observable.subscribe(vts));
-        expectFalse(disp[DisposableLike_isDisposed]);
+        pipe(disp[DisposableLike_isDisposed], expectFalse());
         pipe(f, expectToHaveBeenCalledTimes(1));
         vts[VirtualTimeSchedulerLike_run]();
-        expectTrue(disp[DisposableLike_isDisposed]);
+        pipe(disp[DisposableLike_isDisposed], expectTrue());
         expectIsNone(disp[DisposableLike_error]);
         pipe(f, expectToHaveBeenCalledTimes(1));
     }
@@ -830,7 +830,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             called = true;
         }), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
-        expectTrue(called);
+        pipe(called, expectTrue());
     }
     catch (e_38) {
         env_38.error = e_38;
@@ -936,20 +936,5 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_42);
     }
-})), describe("withCurrentTime", DeferredReactiveObservableOperator(Observable.withCurrentTime(returns))), describe("withLatestFrom", DeferredReactiveObservableOperator(Observable.withLatestFrom(Observable.empty({ delay: 1 }), returns)), ComputationOperatorWithSideEffectsTests(ObservableTypes, Observable.withLatestFrom(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)), returns)), DeferringObservableOperatorTests(Observable.withLatestFrom(Subject.create(), returns))), describe("zipLatest", ComputationTest.isPureSynchronous(Observable.zipLatest(Observable.empty({ delay: 1 }), Observable.empty({ delay: 1 }))), ComputationTest.isPureDeferred((() => {
-    const env_43 = { stack: [], error: void 0, hasError: false };
-    try {
-        const vts = __addDisposableResource(env_43, VirtualTimeScheduler.create(), false);
-        return Observable.zipLatest(pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)), Observable.empty({ delay: 1 }));
-    }
-    catch (e_43) {
-        env_43.error = e_43;
-        env_43.hasError = true;
-    }
-    finally {
-        __disposeResources(env_43);
-    }
-})()), ComputationTest.isSynchronousWithSideEffects(Observable.zipLatest(Observable.empty({ delay: 1 }), pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)))), ComputationTest.isPureDeferred(Observable.zipLatest(Observable.empty({ delay: 1 }), Subject.create())), ComputationTest.isDeferredWithSideEffects(Observable.zipLatest(pipe(async () => {
-    throw new Error();
-}, Observable.fromAsyncFactory()), Observable.empty({ delay: 1 }), pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore))))));
+})), describe("withCurrentTime", StatefulSynchronousComputationOperatorTests(ObservableTypes, Observable.withCurrentTime(returns))));
 ((_) => { })(Observable);

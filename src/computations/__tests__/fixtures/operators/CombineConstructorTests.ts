@@ -1,4 +1,4 @@
-import { Test, describe } from "../../../../__internal__/testing.js";
+import { describe } from "../../../../__internal__/testing.js";
 import {
   ComputationType,
   Computation_deferredWithSideEffectsOfT,
@@ -13,9 +13,6 @@ import {
   PureSynchronousComputationOf,
   SynchronousComputationWithSideEffectsOf,
 } from "../../../../computations.js";
-import { Optional, isSome, pipe } from "../../../../functions.js";
-import * as Computation from "../../../Computation.js";
-import * as Iterable from "../../../Iterable.js";
 import * as ComputationTest from "../helpers/ComputationTest.js";
 
 const CombineConstructorTests = <TComputation extends ComputationType>(
@@ -52,73 +49,59 @@ const CombineConstructorTests = <TComputation extends ComputationType>(
   } = computationType;
   return describe(
     "CombineConstructorTests",
-    ...pipe(
-      [
-        pureSynchronousComputationOfT &&
-          ComputationTest.isPureSynchronous(
-            operator(
-              pureSynchronousComputationOfT,
-              pureSynchronousComputationOfT,
-            ),
-            " when all inputs are pureSynchronous",
-          ),
 
-        pureSynchronousComputationOfT &&
-          synchronousWithSideEffectsOfT &&
-          ComputationTest.isSynchronousWithSideEffects(
-            operator(
-              pureSynchronousComputationOfT,
-              synchronousWithSideEffectsOfT,
-            ),
-            " when combining pureSynchronous and synchronousWithSideEffects inputs",
-          ),
+    pureSynchronousComputationOfT &&
+      ComputationTest.isPureSynchronous(
+        operator(pureSynchronousComputationOfT, pureSynchronousComputationOfT),
+        " when all inputs are pureSynchronous",
+      ),
 
-        synchronousWithSideEffectsOfT &&
-          ComputationTest.isSynchronousWithSideEffects(
-            operator(
-              synchronousWithSideEffectsOfT,
-              synchronousWithSideEffectsOfT,
-            ),
-            " when all inputs are synchronousWithSideEffects",
-          ),
+    pureSynchronousComputationOfT &&
+      synchronousWithSideEffectsOfT &&
+      ComputationTest.isSynchronousWithSideEffects(
+        operator(pureSynchronousComputationOfT, synchronousWithSideEffectsOfT),
+        " when combining pureSynchronous and synchronousWithSideEffects inputs",
+      ),
 
-        pureDeferredOfT &&
-          ComputationTest.isPureDeferred(
-            operator(pureDeferredOfT, pureDeferredOfT),
-            " when all inputs are PureDeferred",
-          ),
+    synchronousWithSideEffectsOfT &&
+      ComputationTest.isSynchronousWithSideEffects(
+        operator(synchronousWithSideEffectsOfT, synchronousWithSideEffectsOfT),
+        " when all inputs are synchronousWithSideEffects",
+      ),
 
-        pureSynchronousComputationOfT &&
-          pureDeferredOfT &&
-          ComputationTest.isPureDeferred(
-            operator(pureSynchronousComputationOfT, pureDeferredOfT),
-            " when combining pureSynchronous and pureDeferred inputs",
-          ),
+    pureDeferredOfT &&
+      ComputationTest.isPureDeferred(
+        operator(pureDeferredOfT, pureDeferredOfT),
+        " when all inputs are PureDeferred",
+      ),
 
-        multicastOfT &&
-          pureDeferredOfT &&
-          ComputationTest.isPureDeferred(
-            operator(multicastOfT, pureDeferredOfT),
-            " when combining pureDeferred and multicast inputs",
-          ),
+    pureSynchronousComputationOfT &&
+      pureDeferredOfT &&
+      ComputationTest.isPureDeferred(
+        operator(pureSynchronousComputationOfT, pureDeferredOfT),
+        " when combining pureSynchronous and pureDeferred inputs",
+      ),
 
-        pureDeferredOfT &&
-          deferredWithSideEffectsOfT &&
-          multicastOfT &&
-          ComputationTest.isDeferredWithSideEffects(
-            operator(pureDeferredOfT, deferredWithSideEffectsOfT, multicastOfT),
-            " when combining multicast, pureDeferred and deferredithSideEffect inputs",
-          ),
+    multicastOfT &&
+      pureDeferredOfT &&
+      ComputationTest.isPureDeferred(
+        operator(multicastOfT, pureDeferredOfT),
+        " when combining pureDeferred and multicast inputs",
+      ),
 
-        multicastOfT &&
-          ComputationTest.isMulticasted(
-            operator(multicastOfT, multicastOfT, multicastOfT),
-            " when coming multicast inputs",
-          ),
-      ],
-      Computation.keepType(Iterable)<Optional<Test>, Test>(isSome),
-      Iterable.toReadonlyArray(),
-    ),
+    pureDeferredOfT &&
+      deferredWithSideEffectsOfT &&
+      multicastOfT &&
+      ComputationTest.isDeferredWithSideEffects(
+        operator(pureDeferredOfT, deferredWithSideEffectsOfT, multicastOfT),
+        " when combining multicast, pureDeferred and deferredithSideEffect inputs",
+      ),
+
+    multicastOfT &&
+      ComputationTest.isMulticasted(
+        operator(multicastOfT, multicastOfT, multicastOfT),
+        " when coming multicast inputs",
+      ),
   );
 };
 

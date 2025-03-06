@@ -81,7 +81,7 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
         const result = [];
         pipe(dest, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
-        expectTrue(dispatchToSubscription[DisposableLike_isDisposed]);
+        pipe(dispatchToSubscription[DisposableLike_isDisposed], expectTrue());
         pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
     }
     catch (e_1) {
@@ -176,11 +176,11 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
         generateObservable[PauseableLike_resume]();
         vts[SchedulerLike_schedule](() => {
             generateObservable[PauseableLike_pause]();
-            expectTrue(generateObservable[PauseableLike_isPaused][StoreLike_value]);
+            pipe(generateObservable[PauseableLike_isPaused][StoreLike_value], expectTrue("expect observable to be paused"));
         }, { delay: 2 });
         vts[SchedulerLike_schedule](() => {
             generateObservable[PauseableLike_resume]();
-            expectFalse(generateObservable[PauseableLike_isPaused][StoreLike_value]);
+            pipe(generateObservable[PauseableLike_isPaused][StoreLike_value], expectFalse("expect observable to not be paused"));
         }, { delay: 4 });
         vts[SchedulerLike_schedule](() => generateObservable[DisposableLike_dispose](), { delay: 6 });
         const f = mockFn();
@@ -190,7 +190,7 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
         vts[VirtualTimeSchedulerLike_run]();
         // pipe(f, expectToHaveBeenCalledTimes(2));
         pipe(f.calls.flat(), expectArrayEquals([0, 1]));
-        pipe(subscription[DisposableLike_isDisposed], expectTrue);
+        pipe(subscription[DisposableLike_isDisposed], expectTrue());
     }
     catch (e_5) {
         env_5.error = e_5;
@@ -214,7 +214,7 @@ testModule("Flowable", describe("dispatchTo", test("dispatching a pauseable obse
         vts[VirtualTimeSchedulerLike_run]();
         pipe(f, expectToHaveBeenCalledTimes(3));
         pipe(f.calls.flat(), expectArrayEquals([0, 1, 2]));
-        pipe(subscription[DisposableLike_isDisposed], expectTrue);
+        pipe(subscription[DisposableLike_isDisposed], expectTrue());
     }
     catch (e_6) {
         env_6.error = e_6;

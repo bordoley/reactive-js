@@ -157,12 +157,8 @@ const Observable_lift: ObservableLift["lift"] = ((
 
     const isStateless = config[ObservableLift_isStateless] ?? false;
 
-    const sourceIsMulticasted = Computation.isMulticasted(source);
+    const isDeferred = !isStateless || Computation.isDeferred(source);
 
-    const isDeferred =
-      (sourceIsMulticasted && !isStateless) ||
-      (config[ComputationLike_isDeferred] &&
-        source[ComputationLike_isDeferred]);
     const isSynchronousObservable =
       config[ComputationLike_isSynchronous] &&
       source[ComputationLike_isSynchronous];

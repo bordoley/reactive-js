@@ -86,7 +86,7 @@ testModule(
 
       vts[VirtualTimeSchedulerLike_run]();
 
-      expectTrue(dispatchToSubscription[DisposableLike_isDisposed]);
+      pipe(dispatchToSubscription[DisposableLike_isDisposed], expectTrue());
 
       pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
     }),
@@ -193,8 +193,9 @@ testModule(
       vts[SchedulerLike_schedule](
         () => {
           generateObservable[PauseableLike_pause]();
-          expectTrue(
+          pipe(
             generateObservable[PauseableLike_isPaused][StoreLike_value],
+            expectTrue("expect observable to be paused"),
           );
         },
         { delay: 2 },
@@ -203,8 +204,10 @@ testModule(
       vts[SchedulerLike_schedule](
         () => {
           generateObservable[PauseableLike_resume]();
-          expectFalse(
+
+          pipe(
             generateObservable[PauseableLike_isPaused][StoreLike_value],
+            expectFalse("expect observable to not be paused"),
           );
         },
         { delay: 4 },
@@ -229,7 +232,7 @@ testModule(
       // pipe(f, expectToHaveBeenCalledTimes(2));
       pipe(f.calls.flat(), expectArrayEquals([0, 1]));
 
-      pipe(subscription[DisposableLike_isDisposed], expectTrue);
+      pipe(subscription[DisposableLike_isDisposed], expectTrue());
     }),
     test("flow a generating source", () => {
       using vts = VirtualTimeScheduler.create();
@@ -262,7 +265,7 @@ testModule(
       pipe(f, expectToHaveBeenCalledTimes(3));
       pipe(f.calls.flat(), expectArrayEquals([0, 1, 2]));
 
-      pipe(subscription[DisposableLike_isDisposed], expectTrue);
+      pipe(subscription[DisposableLike_isDisposed], expectTrue());
     }),
     test("when the source throws", () => {
       using vts = VirtualTimeScheduler.create();

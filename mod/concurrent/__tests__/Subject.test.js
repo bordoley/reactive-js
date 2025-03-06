@@ -87,22 +87,22 @@ testModule("Subject", describe("create", test("with replay", () => {
     try {
         const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create(), false);
         const subject = Subject.create({ autoDispose: true });
-        expectFalse(subject[DisposableLike_isDisposed]);
+        pipe(subject[DisposableLike_isDisposed], expectFalse());
         const sub1 = pipe(subject, Observable.subscribe(vts));
-        expectFalse(subject[DisposableLike_isDisposed]);
+        pipe(subject[DisposableLike_isDisposed], expectFalse());
         const sub2 = pipe(subject, Observable.subscribe(vts));
-        expectFalse(subject[DisposableLike_isDisposed]);
+        pipe(subject[DisposableLike_isDisposed], expectFalse());
         const sub3 = pipe(Observable.create(observer => {
             subject[ObservableLike_observe](observer);
             subject[ObservableLike_observe](observer);
         }), Observable.subscribe(vts));
-        expectFalse(subject[DisposableLike_isDisposed]);
+        pipe(subject[DisposableLike_isDisposed], expectFalse());
         sub3[DisposableLike_dispose]();
-        expectFalse(subject[DisposableLike_isDisposed]);
+        pipe(subject[DisposableLike_isDisposed], expectFalse());
         sub1[DisposableLike_dispose]();
-        expectFalse(subject[DisposableLike_isDisposed]);
+        pipe(subject[DisposableLike_isDisposed], expectFalse());
         sub2[DisposableLike_dispose]();
-        expectTrue(subject[DisposableLike_isDisposed]);
+        pipe(subject[DisposableLike_isDisposed], expectTrue());
     }
     catch (e_2) {
         env_2.error = e_2;
@@ -129,7 +129,7 @@ testModule("Subject", describe("create", test("with replay", () => {
             generateSubscription[DisposableLike_dispose]();
         }, { delay: 10 });
         vts[VirtualTimeSchedulerLike_run]();
-        expectTrue(subjectSubscription[DisposableLike_isDisposed]);
+        pipe(subjectSubscription[DisposableLike_isDisposed], expectTrue());
         pipe(result, expectArrayEquals([0, 1]));
     }
     catch (e_3) {
@@ -193,9 +193,9 @@ testModule("Subject", describe("create", test("with replay", () => {
         const subscription = pipe(subject, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         vts[SchedulerLike_schedule](() => {
             pipe(result, expectArrayEquals([3, 4]));
-            expectFalse(subject[DisposableLike_isDisposed]);
+            pipe(subject[DisposableLike_isDisposed], expectFalse());
             subscription[DisposableLike_dispose]();
-            expectTrue(subject[DisposableLike_isDisposed]);
+            pipe(subject[DisposableLike_isDisposed], expectTrue());
         });
         vts[VirtualTimeSchedulerLike_run]();
     }

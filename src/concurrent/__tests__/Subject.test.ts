@@ -62,11 +62,11 @@ testModule(
       using vts = VirtualTimeScheduler.create();
 
       const subject = Subject.create({ autoDispose: true });
-      expectFalse(subject[DisposableLike_isDisposed]);
+      pipe(subject[DisposableLike_isDisposed], expectFalse());
       const sub1 = pipe(subject, Observable.subscribe(vts));
-      expectFalse(subject[DisposableLike_isDisposed]);
+      pipe(subject[DisposableLike_isDisposed], expectFalse());
       const sub2 = pipe(subject, Observable.subscribe(vts));
-      expectFalse(subject[DisposableLike_isDisposed]);
+      pipe(subject[DisposableLike_isDisposed], expectFalse());
       const sub3 = pipe(
         Observable.create(observer => {
           subject[ObservableLike_observe](observer);
@@ -74,13 +74,13 @@ testModule(
         }),
         Observable.subscribe(vts),
       );
-      expectFalse(subject[DisposableLike_isDisposed]);
+      pipe(subject[DisposableLike_isDisposed], expectFalse());
       sub3[DisposableLike_dispose]();
-      expectFalse(subject[DisposableLike_isDisposed]);
+      pipe(subject[DisposableLike_isDisposed], expectFalse());
       sub1[DisposableLike_dispose]();
-      expectFalse(subject[DisposableLike_isDisposed]);
+      pipe(subject[DisposableLike_isDisposed], expectFalse());
       sub2[DisposableLike_dispose]();
-      expectTrue(subject[DisposableLike_isDisposed]);
+      pipe(subject[DisposableLike_isDisposed], expectTrue());
     }),
     test("notifying a disposed subject", () => {
       using vts = VirtualTimeScheduler.create();
@@ -119,7 +119,7 @@ testModule(
 
       vts[VirtualTimeSchedulerLike_run]();
 
-      expectTrue(subjectSubscription[DisposableLike_isDisposed]);
+      pipe(subjectSubscription[DisposableLike_isDisposed], expectTrue());
 
       pipe(result, expectArrayEquals([0, 1]));
     }),
@@ -178,9 +178,9 @@ testModule(
 
       vts[SchedulerLike_schedule](() => {
         pipe(result, expectArrayEquals([3, 4]));
-        expectFalse(subject[DisposableLike_isDisposed]);
+        pipe(subject[DisposableLike_isDisposed], expectFalse());
         subscription[DisposableLike_dispose]();
-        expectTrue(subject[DisposableLike_isDisposed]);
+        pipe(subject[DisposableLike_isDisposed], expectTrue());
       });
 
       vts[VirtualTimeSchedulerLike_run]();

@@ -49,10 +49,13 @@ export type TestAsync = {
 
 export type TestGroup = Describe | Test | TestAsync | TestDebug;
 
-export const describe = (name: string, ...tests: TestGroup[]): Describe => ({
+export const describe = (
+  name: string,
+  ...tests: Optional<TestGroup>[]
+): Describe => ({
   type: DescribeType,
   name,
-  tests,
+  tests: tests.filter(isSome),
 });
 
 export const test = (name: string, f: SideEffect): Test => ({
@@ -79,7 +82,7 @@ export const testPredicateExpectingTrue = <T>(
 ): any =>
   test(
     `returns true when input is ${input}`,
-    pipeLazy(input, predicate, expectTrue),
+    pipeLazy(input, predicate, expectTrue("expected predicate to return true")),
   );
 
 export const testPredicateExpectingFalse = <T>(
@@ -88,7 +91,11 @@ export const testPredicateExpectingFalse = <T>(
 ): any =>
   test(
     `returns false when input is ${input}`,
-    pipeLazy(input, predicate, expectFalse),
+    pipeLazy(
+      input,
+      predicate,
+      expectFalse("expected predicate to return false"),
+    ),
   );
 
 export const testAsync = (
@@ -207,16 +214,16 @@ export const expectArrayNotEquals =
     return a;
   };
 
-export const expectTrue = (v: boolean) => {
+export const expectTrue = (message?: string) => (v: boolean) => {
   if (!v) {
-    raise("expected true");
+    raise(message ?? "expected true");
   }
   return v;
 };
 
-export const expectFalse = (v: boolean) => {
+export const expectFalse = (message?: string) => (v: boolean) => {
   if (v) {
-    raise("expected false");
+    raise(message ?? "expected false");
   }
   return v;
 };

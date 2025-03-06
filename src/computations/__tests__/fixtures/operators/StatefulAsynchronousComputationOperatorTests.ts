@@ -10,13 +10,13 @@ import {
   MulticastComputationOf,
   PureDeferredComputationOf,
   PureSynchronousComputationOf,
-  StatefulSynchronousComputationOperator,
+  StatefulAsynchronousComputationOperator,
   SynchronousComputationWithSideEffectsOf,
 } from "../../../../computations.js";
 import { pipeSomeLazy } from "../../../../functions.js";
 import * as ComputationExpect from "../helpers/ComputationExpect.js";
 
-const StatefulSynchronousComputationOperatorTests = <
+const StatefulAsynchronousComputationOperatorTests = <
   TComputation extends ComputationType,
 >(
   computationType: {
@@ -41,30 +41,36 @@ const StatefulSynchronousComputationOperatorTests = <
       unknown
     >;
   },
-  operator: StatefulSynchronousComputationOperator<TComputation, any, unknown>,
+  operator: StatefulAsynchronousComputationOperator<
+    TComputation,
+    unknown,
+    unknown
+  >,
 ) =>
   describe(
-    "StatefulSynchronousComputationOperator",
+    "StatefulAsynchronousComputationOperatorTests",
 
     computationType[Computation_pureSynchronousOfT] &&
       test(
-        "with PureSynchronous input, returns PureSynchronous output",
+        "with PureSynchronous input, returns PureDeferred output",
         pipeSomeLazy(
           computationType[Computation_pureSynchronousOfT],
           ComputationExpect.isPureSynchronous,
           operator,
-          ComputationExpect.isPureSynchronous,
+          ComputationExpect.isPureDeferred,
+          ComputationExpect.isNotSynchronous,
         ),
       ),
 
     computationType[Computation_synchronousWithSideEffectsOfT] &&
       test(
-        "with SynchronousWithSideEffects input, returns SynchronousWithSideEffects output",
+        "with SynchronousWithSideEffects input, returns DeferredWithSideEffects output",
         pipeSomeLazy(
           computationType[Computation_synchronousWithSideEffectsOfT],
           ComputationExpect.isSynchronousWithSideEffects,
           operator,
-          ComputationExpect.isSynchronousWithSideEffects,
+          ComputationExpect.isDeferredWithSideEffects,
+          ComputationExpect.isNotSynchronous,
         ),
       ),
 
@@ -102,9 +108,8 @@ const StatefulSynchronousComputationOperatorTests = <
           ComputationExpect.isMulticasted,
           operator,
           ComputationExpect.isPureDeferred,
-          ComputationExpect.isNotSynchronous,
         ),
       ),
   );
 
-export default StatefulSynchronousComputationOperatorTests;
+export default StatefulAsynchronousComputationOperatorTests;

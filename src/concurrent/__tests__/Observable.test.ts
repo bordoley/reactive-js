@@ -724,7 +724,7 @@ testModule(
         Observable.toReadonlyArray(),
       );
 
-      expectTrue(completed);
+      pipe(completed, expectTrue("expected stream to be completed"));
     }),
     test("when completed successfully from delayed source", () => {
       using vts = VirtualTimeScheduler.create();
@@ -751,7 +751,7 @@ testModule(
         Observable.toReadonlyArray(),
       );
 
-      expectTrue(completed);
+      pipe(completed, expectTrue("expected stream to be completed"));
     }),
   ),
   describe(
@@ -1351,12 +1351,12 @@ testModule(
         Observable.subscribe(vts),
       );
 
-      expectFalse(disp[DisposableLike_isDisposed]);
+      pipe(disp[DisposableLike_isDisposed], expectFalse());
       pipe(f, expectToHaveBeenCalledTimes(1));
 
       vts[VirtualTimeSchedulerLike_run]();
 
-      expectTrue(disp[DisposableLike_isDisposed]);
+      pipe(disp[DisposableLike_isDisposed], expectTrue());
       expectIsNone(disp[DisposableLike_error]);
       pipe(f, expectToHaveBeenCalledTimes(1));
     }),
@@ -1376,7 +1376,7 @@ testModule(
 
       vts[VirtualTimeSchedulerLike_run]();
 
-      expectTrue(called);
+      pipe(called, expectTrue());
     }),
   ),
   describe(
@@ -1736,22 +1736,9 @@ testModule(
   ),
   describe(
     "withCurrentTime",
-    DeferredReactiveObservableOperator(Observable.withCurrentTime(returns)),
-  ),
-  describe(
-    "withLatestFrom",
-    DeferredReactiveObservableOperator(
-      Observable.withLatestFrom(Observable.empty({ delay: 1 }), returns),
-    ),
-    ComputationOperatorWithSideEffectsTests(
+    StatefulSynchronousComputationOperatorTests(
       ObservableTypes,
-      Observable.withLatestFrom(
-        pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
-        returns,
-      ),
-    ),
-    DeferringObservableOperatorTests(
-      Observable.withLatestFrom(Subject.create(), returns),
+      Observable.withCurrentTime(returns),
     ),
   ),
 );

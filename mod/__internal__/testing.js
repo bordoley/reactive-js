@@ -10,7 +10,7 @@ export const TestDebugType = 4;
 export const describe = (name, ...tests) => ({
     type: DescribeType,
     name,
-    tests,
+    tests: tests.filter(isSome),
 });
 export const test = (name, f) => ({
     type: TestType,
@@ -28,8 +28,8 @@ export const testDebug = (name, f) => ({
         f();
     },
 });
-export const testPredicateExpectingTrue = (input, predicate) => test(`returns true when input is ${input}`, pipeLazy(input, predicate, expectTrue));
-export const testPredicateExpectingFalse = (input, predicate) => test(`returns false when input is ${input}`, pipeLazy(input, predicate, expectFalse));
+export const testPredicateExpectingTrue = (input, predicate) => test(`returns true when input is ${input}`, pipeLazy(input, predicate, expectTrue("expected predicate to return true")));
+export const testPredicateExpectingFalse = (input, predicate) => test(`returns false when input is ${input}`, pipeLazy(input, predicate, expectFalse("expected predicate to return false")));
 export const testAsync = (name, f) => ({
     type: TestAsyncType,
     name,
@@ -106,15 +106,15 @@ export const expectArrayNotEquals = (b, { valuesEquality, } = {
     }
     return a;
 };
-export const expectTrue = (v) => {
+export const expectTrue = (message) => (v) => {
     if (!v) {
-        raise("expected true");
+        raise(message ?? "expected true");
     }
     return v;
 };
-export const expectFalse = (v) => {
+export const expectFalse = (message) => (v) => {
     if (v) {
-        raise("expected false");
+        raise(message ?? "expected false");
     }
     return v;
 };

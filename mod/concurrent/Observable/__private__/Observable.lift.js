@@ -31,10 +31,7 @@ const Observable_lift = ((config) => (operator) => (source) => {
         ...(source[LiftedObservableLike_operators] ?? []),
     ];
     const isStateless = config[ObservableLift_isStateless] ?? false;
-    const sourceIsMulticasted = Computation.isMulticasted(source);
-    const isDeferred = (sourceIsMulticasted && !isStateless) ||
-        (config[ComputationLike_isDeferred] &&
-            source[ComputationLike_isDeferred]);
+    const isDeferred = !isStateless || Computation.isDeferred(source);
     const isSynchronousObservable = config[ComputationLike_isSynchronous] &&
         source[ComputationLike_isSynchronous];
     const isPure = !isDeferred ||

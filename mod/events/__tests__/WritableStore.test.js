@@ -17,5 +17,5 @@ testModule("WritableStore", test("create", () => {
     store[StoreLike_value] = 10;
     pipe(current, expectEquals(10));
     store[DisposableLike_dispose]();
-    expectTrue(store[DisposableLike_isDisposed]);
+    pipe(store[DisposableLike_isDisposed], expectTrue("expected store to be disposed"));
 }));
