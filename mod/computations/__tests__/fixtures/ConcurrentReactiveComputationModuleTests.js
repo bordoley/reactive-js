@@ -191,7 +191,17 @@ const ConcurrentReactiveComputationModuleTests = (m, computationType) => {
         finally {
             __disposeResources(env_7);
         }
-    })), describe("withLatestFrom", test("when source and latest are interlaced", () => {
+    }), pureSynchronousOfT &&
+        ComputationTest.isPureSynchronous(m.merge(pureSynchronousOfT, pureSynchronousOfT)), pureSynchronousOfT &&
+        synchronousWithSideEffectsOfT &&
+        ComputationTest.isSynchronousWithSideEffects(m.merge(synchronousWithSideEffectsOfT, pureSynchronousOfT)), pureDeferredOfT &&
+        ComputationTest.isPureDeferred(m.merge(pureDeferredOfT, pureDeferredOfT)), multicastOfT &&
+        ComputationTest.isMulticasted(m.merge(multicastOfT, multicastOfT)), multicastOfT &&
+        pureDeferredOfT &&
+        ComputationTest.isPureDeferred(m.merge(multicastOfT, pureDeferredOfT)), multicastOfT &&
+        pureDeferredOfT &&
+        deferredWithSideEffectsOfT &&
+        ComputationTest.isDeferredWithSideEffects(m.merge(multicastOfT, pureDeferredOfT, deferredWithSideEffectsOfT))), describe("never", ComputationTest.isMulticasted(m.never())), describe("withLatestFrom", test("when source and latest are interlaced", () => {
         const env_8 = { stack: [], error: void 0, hasError: false };
         try {
             const vts = __addDisposableResource(env_8, VirtualTimeScheduler.create(), false);

@@ -18,6 +18,7 @@ import {
   Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
+  DeferredComputationOf,
   DeferredComputationWithSideEffects,
   DeferredComputationWithSideEffectsOf,
   MulticastComputationOf,
@@ -237,6 +238,23 @@ const SynchronousComputationModuleTests = <
           expectArrayEquals([1, 2, 3, 4, 5]),
         ),
       ),
+      ComputationTest.isPureSynchronous(m.concat(m.empty(), m.empty())),
+      pureDeferredOfT &&
+        ComputationTest.isPureDeferred(m.concat(pureDeferredOfT, m.empty())),
+      synchronousWithSideEffectsOfT &&
+        ComputationTest.isSynchronousWithSideEffects(
+          m.concat(synchronousWithSideEffectsOfT, m.empty()),
+        ),
+      deferredWithSideEffectsOfT &&
+        ComputationTest.isDeferredWithSideEffects(
+          m.concat<any>(
+            deferredWithSideEffectsOfT as DeferredComputationOf<
+              TComputation,
+              any
+            >,
+            m.empty() as DeferredComputationOf<TComputation, any>,
+          ),
+        ),
     ),
     describe(
       "empty",
@@ -248,6 +266,7 @@ const SynchronousComputationModuleTests = <
           expectArrayEquals<number>([]),
         ),
       ),
+      ComputationTest.isPureSynchronous(m.empty()),
     ),
     describe(
       "encodeUtf8",
@@ -338,25 +357,12 @@ const SynchronousComputationModuleTests = <
           expectToThrow,
         ),
       ),
-    ),
-    describe(
-      "fromValue",
-      test(
-        "with array",
-        pipeLazy(1, m.fromValue(), m.toReadonlyArray(), expectArrayEquals([1])),
+      ComputationTest.isPureSynchronous(m.fromIterable()([])),
+      ComputationTest.isSynchronousWithSideEffects(
+        pipe([], Iterable.forEach(ignore), m.fromIterable()),
       ),
     ),
-    describe(
-      "generate",
-      test(
-        "with count",
-        pipeLazy(
-          m.generate(increment, returns(0), { count: 10 }),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
-        ),
-      ),
-    ),
+
     describe(
       "fromReadonlyArray",
       test(
@@ -402,6 +408,26 @@ const SynchronousComputationModuleTests = <
           m.fromReadonlyArray({ start: 2, count: -2 }),
           m.toReadonlyArray(),
           expectArrayEquals([3, 2]),
+        ),
+      ),
+      ComputationTest.isPureSynchronous(pipe([], m.fromReadonlyArray())),
+    ),
+    describe(
+      "fromValue",
+      test(
+        "with array",
+        pipeLazy(1, m.fromValue(), m.toReadonlyArray(), expectArrayEquals([1])),
+      ),
+      ComputationTest.isPureSynchronous(pipe("a", m.fromValue())),
+    ),
+    describe(
+      "generate",
+      test(
+        "with count",
+        pipeLazy(
+          m.generate(increment, returns(0), { count: 10 }),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
         ),
       ),
     ),

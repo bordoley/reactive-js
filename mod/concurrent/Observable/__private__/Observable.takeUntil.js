@@ -11,8 +11,8 @@ import Observable_takeFirst from "./Observable.takeFirst.js";
 const Observable_takeUntil = ((notifier) => {
     const operator = (delegate) => pipe(Observer_createWithDelegate(delegate), Disposable.bindTo(delegate), Disposable.bindTo(pipe(notifier, Observable_takeFirst(), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(delegate))));
     return pipe(operator, Observable_lift({
-        [ObservableLift_isStateless]: false,
-        [ComputationLike_isDeferred]: true,
+        [ObservableLift_isStateless]: Computation.isMulticasted(notifier),
+        [ComputationLike_isDeferred]: !Computation.isMulticasted(notifier),
         [ComputationLike_isPure]: Computation.isPure(notifier),
         [ComputationLike_isSynchronous]: Computation.isSynchronous(notifier),
     }));

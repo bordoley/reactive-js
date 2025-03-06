@@ -464,33 +464,6 @@ testModule(
         expectArrayEquals([1, 2, 3, 4, 5, 6]),
       ),
     ),
-    ComputationTest.isPureSynchronous(
-      Observable.concat(
-        Observable.empty({ delay: 1 }),
-        Observable.empty({ delay: 1 }),
-      ),
-    ),
-    ComputationTest.isPureDeferred(
-      (() => {
-        using vts = VirtualTimeScheduler.create();
-        return Observable.concat(
-          pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)),
-          Observable.empty({ delay: 1 }),
-        );
-      })(),
-    ),
-    ComputationTest.isSynchronousWithSideEffects(
-      Observable.concat(
-        pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
-        Observable.empty({ delay: 1 }),
-      ),
-    ),
-    ComputationTest.isDeferredWithSideEffects(
-      Observable.concat(
-        Observable.create(ignore),
-        Observable.empty({ delay: 1 }),
-      ),
-    ),
   ),
   describe(
     "create",
@@ -622,7 +595,6 @@ testModule(
 
       pipe(disposedTime, expectEquals(5));
     }),
-    ComputationTest.isPureSynchronous(Observable.empty({ delay: 1 })),
   ),
   describe(
     "enqueue",
@@ -883,20 +855,6 @@ testModule(
         expectArrayEquals([2, 4, 6, 8]),
       ),
     ),
-    ComputationTest.isPureSynchronous(
-      pipe(
-        (function* Generator() {
-          throw newInstance(Error);
-        })(),
-        Observable.fromIterable(),
-      ),
-    ),
-  ),
-  describe(
-    "fromReadonlyArray",
-    ComputationTest.isPureSynchronous(
-      pipe([], Observable.fromReadonlyArray({ delay: 1 })),
-    ),
   ),
   describe(
     "fromStore",
@@ -928,12 +886,6 @@ testModule(
     }),
     ComputationTest.isMulticasted(
       pipe(WritableStore.create<number>(-1), Observable.fromStore()),
-    ),
-  ),
-  describe(
-    "fromValue",
-    ComputationTest.isPureSynchronous(
-      pipe("a", Observable.fromValue({ delay: 1 })),
     ),
   ),
   describe(
@@ -970,93 +922,6 @@ testModule(
         expectEquals<Optional<number>>(3),
       );
     }),
-  ),
-  describe(
-    "merge",
-    test("validate output runtime type", () => {
-      const pureSynchronousObservable = pipe(
-        [1, 2, 3],
-        Observable.fromReadonlyArray({ delay: 2 }),
-      );
-      const runnableWithSideEffects = pipe(
-        [1, 2, 3],
-        Observable.fromReadonlyArray({ delay: 2 }),
-        Observable.forEach(ignore),
-      );
-      const deferred = pipe(
-        () => Promise.resolve(1),
-        Observable.fromAsyncFactory(),
-      );
-      const multicast = Subject.create();
-
-      const merged1 = Observable.merge(
-        pureSynchronousObservable,
-        runnableWithSideEffects,
-        deferred,
-        multicast,
-      );
-      ComputationExpect.isDeferredWithSideEffects(merged1);
-
-      const merged2 = Observable.merge(pureSynchronousObservable, multicast);
-      ComputationExpect.isPureDeferred(merged2);
-
-      const merged3 = Observable.merge(
-        pureSynchronousObservable,
-        runnableWithSideEffects,
-        deferred,
-        Observable.never(),
-      );
-      ComputationExpect.isDeferredWithSideEffects(merged3);
-
-      const merged4 = Observable.merge(
-        pureSynchronousObservable,
-        runnableWithSideEffects,
-      );
-      ComputationExpect.isSynchronousWithSideEffects(merged4);
-
-      const merged7 = Observable.merge(
-        pureSynchronousObservable,
-        pureSynchronousObservable,
-      );
-      ComputationExpect.isPureSynchronous(merged7);
-
-      const merged8 = Observable.merge(Subject.create(), Subject.create());
-      ComputationExpect.isMulticasted(merged8);
-    }),
-    ComputationTest.isPureSynchronous(
-      Observable.merge(
-        Observable.empty({ delay: 1 }),
-        Observable.empty({ delay: 1 }),
-      ),
-    ),
-    ComputationTest.isPureDeferred(
-      (() => {
-        using vts = VirtualTimeScheduler.create();
-        return Observable.merge(
-          pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)),
-          Observable.empty({ delay: 1 }),
-        );
-      })(),
-    ),
-    ComputationTest.isSynchronousWithSideEffects(
-      Observable.merge(
-        pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
-        Observable.empty({ delay: 1 }),
-      ),
-    ),
-    ComputationTest.isMulticasted(
-      Observable.merge(Subject.create(), Subject.create()),
-    ),
-    ComputationTest.isPureDeferred(
-      Observable.merge(Subject.create(), Observable.empty({ delay: 1 })),
-    ),
-    ComputationTest.isDeferredWithSideEffects(
-      Observable.merge(
-        Observable.create(ignore),
-        Subject.create(),
-        Observable.empty({ delay: 1 }),
-      ),
-    ),
   ),
   describe(
     "mergeAll",
@@ -1153,7 +1018,6 @@ testModule(
       pipe(result, expectArrayEquals([2, 4, 6]));
     }),
   ),
-  describe("never", ComputationTest.isMulticasted(Observable.never())),
   describe(
     "onSubscribe",
     ComputationOperatorWithSideEffectsTests(
@@ -1332,6 +1196,7 @@ testModule(
         expectEquals<Optional<number>>(1),
       );
     }),
+    ComputationTest.isPureSynchronous(Observable.spring()),
   ),
   describe(
     "subscribeOn",
@@ -1456,6 +1321,15 @@ testModule(
         pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
       ),
     ),
+    StatefulAsynchronousComputationOperatorTests(
+      ObservableTypes,
+      Observable.takeUntil(
+        pipe(
+          Observable.empty(),
+          Observable.subscribeOn(HostScheduler.create()),
+        ),
+      ),
+    ),
     AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests(
       ObservableTypes,
       Observable.takeUntil(
@@ -1466,7 +1340,7 @@ testModule(
         ),
       ),
     ),
-    StatefulAsynchronousComputationOperatorTests(
+    StatelessAsynchronousComputationOperatorTests(
       ObservableTypes,
       Observable.takeUntil(Subject.create()),
     ),
@@ -1575,7 +1449,7 @@ testModule(
     }),
   ),
   describe(
-    "toReadonlyArrayAsync",
+    "toReadonlyArrayAsy nc",
     testAsync("with pure delayed source", async () => {
       using scheduler = HostScheduler.create();
 

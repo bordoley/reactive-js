@@ -141,8 +141,9 @@ export interface ObservableModule extends DeferredReactiveComputationModule<Obse
     }): HigherOrderComputationOperator<ObservableComputation, TInnerType, HigherOrderInnerComputationOf<ObservableComputation, TInnerType, T>, T>;
     takeUntil<T>(notifier: PureSynchronousObservableLike): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
     takeUntil<T>(notifier: SynchronousObservableWithSideEffectsLike): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
+    takeUntil<T>(notifier: PureDeferredObservableLike): StatefulAsynchronousComputationOperator<ObservableComputation, T, T>;
     takeUntil<T>(notifier: DeferredObservableWithSideEffectsLike): Function1<ComputationOf<ObservableComputation, T>, DeferredObservableWithSideEffectsLike<T>>;
-    takeUntil<T>(notifier: MulticastObservableLike): StatefulAsynchronousComputationOperator<ObservableComputation, T, T>;
+    takeUntil<T>(notifier: MulticastObservableLike): StatelessAsynchronousComputationOperator<ObservableComputation, T, T>;
     throttle<T>(duration: number, options?: {
         readonly mode?: ThrottleMode;
     }): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;

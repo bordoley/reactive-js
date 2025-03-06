@@ -320,7 +320,32 @@ const ConcurrentReactiveComputationModuleTests = <
           expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
         );
       }),
+      pureSynchronousOfT &&
+        ComputationTest.isPureSynchronous(
+          m.merge(pureSynchronousOfT, pureSynchronousOfT),
+        ),
+      pureSynchronousOfT &&
+        synchronousWithSideEffectsOfT &&
+        ComputationTest.isSynchronousWithSideEffects(
+          m.merge(synchronousWithSideEffectsOfT, pureSynchronousOfT),
+        ),
+      pureDeferredOfT &&
+        ComputationTest.isPureDeferred(
+          m.merge(pureDeferredOfT, pureDeferredOfT),
+        ),
+      multicastOfT &&
+        ComputationTest.isMulticasted(m.merge(multicastOfT, multicastOfT)),
+      multicastOfT &&
+        pureDeferredOfT &&
+        ComputationTest.isPureDeferred(m.merge(multicastOfT, pureDeferredOfT)),
+      multicastOfT &&
+        pureDeferredOfT &&
+        deferredWithSideEffectsOfT &&
+        ComputationTest.isDeferredWithSideEffects(
+          m.merge(multicastOfT, pureDeferredOfT, deferredWithSideEffectsOfT),
+        ),
     ),
+    describe("never", ComputationTest.isMulticasted(m.never())),
     describe(
       "withLatestFrom",
       test("when source and latest are interlaced", () => {

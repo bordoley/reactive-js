@@ -34,8 +34,8 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = (<T>(
   return pipe(
     operator,
     Observable_lift({
-      [ObservableLift_isStateless]: false,
-      [ComputationLike_isDeferred]: true,
+      [ObservableLift_isStateless]: Computation.isMulticasted(notifier),
+      [ComputationLike_isDeferred]: !Computation.isMulticasted(notifier),
       [ComputationLike_isPure]: Computation.isPure(notifier),
       [ComputationLike_isSynchronous]: Computation.isSynchronous(notifier),
     }),

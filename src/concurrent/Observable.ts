@@ -486,6 +486,9 @@ export interface ObservableModule
     notifier: SynchronousObservableWithSideEffectsLike,
   ): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
   takeUntil<T>(
+    notifier: PureDeferredObservableLike,
+  ): StatefulAsynchronousComputationOperator<ObservableComputation, T, T>;
+  takeUntil<T>(
     notifier: DeferredObservableWithSideEffectsLike,
   ): Function1<
     ComputationOf<ObservableComputation, T>,
@@ -493,7 +496,7 @@ export interface ObservableModule
   >;
   takeUntil<T>(
     notifier: MulticastObservableLike,
-  ): StatefulAsynchronousComputationOperator<ObservableComputation, T, T>;
+  ): StatelessAsynchronousComputationOperator<ObservableComputation, T, T>;
 
   throttle<T>(
     duration: number,
