@@ -1171,62 +1171,6 @@ testModule(
       const merged8 = Observable.merge(Subject.create(), Subject.create());
       ComputationExpect.isMulticasted(merged8);
     }),
-    test(
-      "two arrays",
-      pipeLazy(
-        Observable.merge(
-          pipe(
-            [0, 2, 3, 5, 6],
-            Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
-          ),
-          pipe(
-            [1, 4, 7],
-            Observable.fromReadonlyArray({ delay: 2, delayStart: true }),
-          ),
-        ),
-        Observable.toReadonlyArray<number>(),
-        expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]),
-      ),
-    ),
-    test(
-      "when one source throws",
-      pipeLazy(
-        pipeLazy(
-          Observable.merge(
-            pipe([1, 4, 7], Observable.fromReadonlyArray({ delay: 2 })),
-            Observable.raise({ delay: 5 }),
-          ),
-          Observable.run(),
-        ),
-        expectToThrow,
-      ),
-    ),
-    test(
-      "merging merged observable",
-      pipeLazy(
-        Observable.merge(
-          Observable.merge(
-            pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
-            Observable.concat(
-              Observable.empty({ delay: 3 }),
-              pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 })),
-            ),
-          ),
-          Observable.merge(
-            Observable.concat(
-              Observable.empty({ delay: 6 }),
-              pipe([7, 8, 9], Observable.fromReadonlyArray({ delay: 1 })),
-            ),
-            Observable.concat(
-              Observable.empty({ delay: 9 }),
-              pipe([10, 11, 12], Observable.fromReadonlyArray({ delay: 1 })),
-            ),
-          ),
-        ),
-        Observable.toReadonlyArray<number>(),
-        expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
-      ),
-    ),
     ComputationTest.isPureSynchronous(
       Observable.merge(
         Observable.empty({ delay: 1 }),

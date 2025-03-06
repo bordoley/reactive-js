@@ -105,36 +105,6 @@ testModule(
     ),
   ),
   describe(
-    "merge",
-    test("with source that have different delays", () => {
-      using vts = VirtualTimeScheduler.create();
-
-      const result: number[] = [];
-      const [ev1, ev2, ev3] = pipe(
-        [
-          [1, 4, 7],
-          [2, 5, 8],
-          [3, 6, 9],
-        ],
-        ReadonlyArray.map<number[], EventSourceLike<number>, number>(
-          compose(
-            Observable.fromReadonlyArray({ delay: 3 }),
-            Observable.toEventSource(vts),
-          ),
-        ),
-      );
-
-      pipe(
-        EventSource.merge(ev1, ev2, ev3),
-        EventSource.addEventHandler(bindMethod(result, Array_push)),
-      );
-
-      vts[VirtualTimeSchedulerLike_run]();
-
-      pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]));
-    }),
-  ),
-  describe(
     "withLatestFrom",
     test("when source and latest are interlaced", () => {
       using vts = VirtualTimeScheduler.create();

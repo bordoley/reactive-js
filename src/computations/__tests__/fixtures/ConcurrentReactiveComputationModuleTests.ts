@@ -3,6 +3,7 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
+  expectToThrow,
   expectToThrowAsync,
   test,
   testAsync,
@@ -36,17 +37,23 @@ import {
   Tuple2,
   arrayEquality,
   bind,
+  bindMethod,
+  compose,
   incrementBy,
   isSome,
   newInstance,
   none,
   pipe,
+  pipeLazy,
   returns,
   tuple,
 } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
 import * as Iterable from "../../Iterable.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
+import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
+import { Array_push } from "../../../__internal__/constants.js";
+import * as Disposable from "../../../utils/Disposable.js";
 
 const ConcurrentReactiveComputationModuleTests = <
   TComputation extends ComputationType,
@@ -241,6 +248,144 @@ const ConcurrentReactiveComputationModuleTests = <
       ComputationTest.isMulticasted(
         pipe(Promise.resolve(true), m.fromPromise()),
       ),
+    ),
+    describe(
+      "merge",
+      test("with sources that have the same delays", () => {
+        using vts = VirtualTimeScheduler.create();
+
+        const result: number[] = [];
+        const [ev1, ev2, ev3] = pipe(
+          [
+            [1, 4, 7],
+            [2, 5, 8],
+            [3, 6, 9],
+          ],
+          ReadonlyArray.map<
+            number[],
+            ComputationOf<TComputation, number>,
+            number
+          >(
+            compose(
+              Observable.fromReadonlyArray({ delay: 3 }),
+              m.fromObservable(vts),
+            ),
+          ),
+        );
+
+        pipe(
+          m.merge(ev1, ev2, ev3),
+          m.toObservable(),
+          Observable.forEach(bindMethod(result, Array_push)),
+          Observable.subscribe(vts),
+        );
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]));
+      }),
+      test("with sources that have the different delays", () => {
+        using vts = VirtualTimeScheduler.create();
+
+        const result: number[] = [];
+
+        pipe(
+          m.merge(
+            pipe(
+              [0, 2, 3, 5, 6],
+              Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
+              m.fromObservable(vts),
+            ),
+            pipe(
+              [1, 4, 7],
+              Observable.fromReadonlyArray({ delay: 2, delayStart: true }),
+              m.fromObservable(vts),
+            ),
+          ),
+          m.toObservable(),
+          Observable.forEach(bindMethod(result, Array_push)),
+          Observable.subscribe(vts),
+        );
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        pipe(result, expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]));
+      }),
+      test("when one source throws", () => {
+        using vts = VirtualTimeScheduler.create();
+
+        const subscription = pipe(
+          m.merge(
+            pipe(
+              [1, 4, 7],
+              Observable.fromReadonlyArray({ delay: 2 }),
+              m.fromObservable(vts),
+            ),
+            pipe(Observable.raise({ delay: 5 }), m.fromObservable(vts)),
+          ),
+          m.toObservable(),
+          Observable.subscribe(vts),
+        );
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        pipe(
+          pipeLazy(subscription, Disposable.raiseIfDisposedWithError),
+          expectToThrow,
+        );
+      }),
+      test("merging merged sources", () => {
+        using vts = VirtualTimeScheduler.create();
+        const result: number[] = [];
+
+        pipe(
+          m.merge(
+            m.merge(
+              pipe(
+                [1, 2, 3],
+                Observable.fromReadonlyArray({ delay: 1 }),
+                m.fromObservable(vts),
+              ),
+              pipe(
+                Observable.empty({ delay: 3 }),
+                Computation.concatWith(Observable)(
+                  pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 })),
+                ),
+                m.fromObservable(vts),
+              ),
+              m.merge(
+                pipe(
+                  Observable.empty({ delay: 6 }),
+                  Computation.concatWith(Observable)(
+                    pipe([7, 8, 9], Observable.fromReadonlyArray({ delay: 1 })),
+                  ),
+                  m.fromObservable(vts),
+                ),
+                pipe(
+                  Observable.empty({ delay: 9 }),
+                  Computation.concatWith(Observable)(
+                    pipe(
+                      [10, 11, 12],
+                      Observable.fromReadonlyArray({ delay: 1 }),
+                    ),
+                  ),
+                  m.fromObservable(vts),
+                ),
+              ),
+            ),
+          ),
+          m.toObservable(),
+          Observable.forEach(bindMethod(result, Array_push)),
+          Observable.subscribe(vts),
+        );
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        pipe(
+          result,
+          expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
+        );
+      }),
     ),
   );
 };
