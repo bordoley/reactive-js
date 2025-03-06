@@ -43,7 +43,6 @@ import {
   bindMethod,
   compose,
   incrementBy,
-  isSome,
   newInstance,
   none,
   pipe,
@@ -53,8 +52,8 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Computation from "../../Computation.js";
-import * as Iterable from "../../Iterable.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
+import CombineConstructorTests from "./operators/CombineConstructorTests.js";
 
 const ConcurrentReactiveComputationModuleTests = <
   TComputation extends ComputationType,
@@ -90,16 +89,8 @@ const ConcurrentReactiveComputationModuleTests = <
       unknown
     >;
   },
-) => {
-  const {
-    [Computation_pureSynchronousOfT]: pureSynchronousComputationOfT,
-    [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffectsOfT,
-    [Computation_pureDeferredOfT]: pureDeferredOfT,
-    [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT,
-    [Computation_multicastOfT]: multicastOfT,
-  } = computationType;
-
-  return describe(
+) =>
+  describe(
     "ConcurrentReactiveComputationModule",
     describe(
       "combineLatest",
@@ -137,77 +128,7 @@ const ConcurrentReactiveComputationModuleTests = <
           ),
         );
       }),
-      ...pipe(
-        [
-          pureSynchronousComputationOfT &&
-            ComputationTest.isPureSynchronous(
-              m.combineLatest(
-                pureSynchronousComputationOfT,
-                pureSynchronousComputationOfT,
-              ),
-              " when all inputs are pureSynchronous",
-            ),
-
-          pureSynchronousComputationOfT &&
-            synchronousWithSideEffectsOfT &&
-            ComputationTest.isSynchronousWithSideEffects(
-              m.combineLatest(
-                pureSynchronousComputationOfT,
-                synchronousWithSideEffectsOfT,
-              ),
-              " when combining pureSynchronous and synchronousWithSideEffects inputs",
-            ),
-
-          synchronousWithSideEffectsOfT &&
-            ComputationTest.isSynchronousWithSideEffects(
-              m.combineLatest(
-                synchronousWithSideEffectsOfT,
-                synchronousWithSideEffectsOfT,
-              ),
-              " when all inputs are synchronousWithSideEffects",
-            ),
-
-          pureDeferredOfT &&
-            ComputationTest.isPureDeferred(
-              m.combineLatest(pureDeferredOfT, pureDeferredOfT),
-              " when all inputs are PureDeferred",
-            ),
-
-          pureSynchronousComputationOfT &&
-            pureDeferredOfT &&
-            ComputationTest.isPureDeferred(
-              m.combineLatest(pureSynchronousComputationOfT, pureDeferredOfT),
-              " when combining pureSynchronous and pureDeferred inputs",
-            ),
-
-          multicastOfT &&
-            pureDeferredOfT &&
-            ComputationTest.isPureDeferred(
-              m.combineLatest(multicastOfT, pureDeferredOfT),
-              " when combining pureDeferred and multicast inputs",
-            ),
-
-          pureDeferredOfT &&
-            deferredWithSideEffectsOfT &&
-            multicastOfT &&
-            ComputationTest.isDeferredWithSideEffects(
-              m.combineLatest(
-                pureDeferredOfT,
-                deferredWithSideEffectsOfT,
-                multicastOfT,
-              ),
-              " when combining multicast, pureDeferred and deferredithSideEffect inputs",
-            ),
-
-          multicastOfT &&
-            ComputationTest.isMulticasted(
-              m.combineLatest(multicastOfT, multicastOfT, multicastOfT),
-              " when coming multicast inputs",
-            ),
-        ],
-        Computation.keepType(Iterable)<Optional<Test>, Test>(isSome),
-        Iterable.toReadonlyArray(),
-      ),
+      CombineConstructorTests(computationType, m.combineLatest),
     ),
     describe(
       "fromPromise",
@@ -502,8 +423,8 @@ const ConcurrentReactiveComputationModuleTests = <
 
         pipe(result, expectArrayEquals([2, 5, 8, 11]));
       }),
+      CombineConstructorTests(computationType, m.combineLatest),
     ),
   );
-};
 
 export default ConcurrentReactiveComputationModuleTests;

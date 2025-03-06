@@ -1754,42 +1754,6 @@ testModule(
       Observable.withLatestFrom(Subject.create(), returns),
     ),
   ),
-  describe(
-    "zipLatest",
-    ComputationTest.isPureSynchronous(
-      Observable.zipLatest(
-        Observable.empty({ delay: 1 }),
-        Observable.empty({ delay: 1 }),
-      ),
-    ),
-    ComputationTest.isPureDeferred(
-      (() => {
-        using vts = VirtualTimeScheduler.create();
-        return Observable.zipLatest(
-          pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)),
-          Observable.empty({ delay: 1 }),
-        );
-      })(),
-    ),
-    ComputationTest.isSynchronousWithSideEffects(
-      Observable.zipLatest(
-        Observable.empty({ delay: 1 }),
-        pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
-      ),
-    ),
-    ComputationTest.isPureDeferred(
-      Observable.zipLatest(Observable.empty({ delay: 1 }), Subject.create()),
-    ),
-    ComputationTest.isDeferredWithSideEffects(
-      Observable.zipLatest(
-        pipe(async () => {
-          throw new Error();
-        }, Observable.fromAsyncFactory()),
-        Observable.empty({ delay: 1 }),
-        pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
-      ),
-    ),
-  ),
 );
 
 ((_: Observable.Signature) => {})(Observable);
