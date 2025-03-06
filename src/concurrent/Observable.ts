@@ -1,4 +1,5 @@
 import {
+  ComputationOf,
   ComputationOperatorWithSideEffects,
   ComputationType,
   Computation_T,
@@ -297,10 +298,7 @@ export interface ObservableModule
 
   flatMapAsync<TA, TB>(
     f: Function2<TA, AbortSignal, Promise<TB>>,
-  ): Function1<
-    DeferredObservableLike<TA>,
-    DeferredObservableWithSideEffectsLike<TB>
-  >;
+  ): HigherOrderComputationOperator<ObservableComputation, DeferredComputationWithSideEffectsLike, TA, TB>
 
   forkMerge: ForkMerge;
 
@@ -484,7 +482,7 @@ export interface ObservableModule
   ): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
   takeUntil<T>(
     notifier: DeferredObservableWithSideEffectsLike,
-  ): Function1<ObservableLike<T>, DeferredObservableWithSideEffectsLike<T>>;
+  ): Function1<ComputationOf<ObservableComputation, T>, DeferredObservableWithSideEffectsLike<T>>;
   takeUntil<T>(
     notifier: MulticastObservableLike,
   ): StatefulAsynchronousComputationOperator<ObservableComputation, T, T>;
