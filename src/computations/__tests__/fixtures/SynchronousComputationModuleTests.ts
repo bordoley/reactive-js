@@ -420,7 +420,6 @@ const SynchronousComputationModuleTests = <
     describe(
       "raise",
       ComputationTest.isPureSynchronous(m.raise()),
-
       test("when raise function returns an value", () => {
         const e1 = "e1";
 

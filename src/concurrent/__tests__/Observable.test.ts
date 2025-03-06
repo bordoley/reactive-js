@@ -64,7 +64,6 @@ import {
   error,
   ignore,
   increment,
-  incrementBy,
   isSome,
   lessThan,
   newInstance,
@@ -106,6 +105,7 @@ import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
+import ConcurrentReactiveComputationModuleTests from "../../computations/__tests__/fixtures/ConcurrentReactiveComputationModuleTests.js";
 
 const DeferredReactiveObservableOperator = (
   op: Function1<ObservableLike<any>, ObservableLike<unknown>>,
@@ -301,6 +301,20 @@ testModule(
     Observable,
     ObservableTypes,
   ),
+  ConcurrentReactiveComputationModuleTests(
+    {
+      ...Observable,
+      fromObservable:
+        <T>() =>
+        (v: ObservableLike<T>) =>
+          v as ComputationOf<Observable.Computation, T>,
+      toObservable:
+        <T>() =>
+        (v: ComputationOf<Observable.Computation, T>) =>
+          v,
+    },
+    ObservableTypes,
+  ),
   describe(
     "backpressureStrategy",
     testAsync("with a throw backpressure strategy", async () => {
@@ -388,65 +402,6 @@ testModule(
         expectArrayEquals(["e2", "e1"]),
       );
     }),
-  ),
-  describe(
-    "combineLatest",
-    test(
-      "combineLatest",
-      pipeLazy(
-        Observable.combineLatest<number, number>(
-          pipe(
-            Observable.generate(incrementBy(2), returns(1), { delay: 2 }),
-            Observable.takeFirst({ count: 3 }),
-          ),
-          pipe(
-            Observable.generate(incrementBy(2), returns(0), { delay: 3 }),
-            Observable.takeFirst({ count: 2 }),
-          ),
-        ),
-        Observable.toReadonlyArray(),
-        expectArrayEquals(
-          [tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)],
-          { valuesEquality: arrayEquality() },
-        ),
-      ),
-    ),
-    ComputationTest.isPureSynchronous(
-      Observable.combineLatest(
-        Observable.empty({ delay: 1 }),
-        Observable.empty({ delay: 1 }),
-      ),
-    ),
-    ComputationTest.isPureDeferred(
-      (() => {
-        using vts = VirtualTimeScheduler.create();
-        return Observable.combineLatest(
-          pipe(Observable.empty({ delay: 1 }), Observable.subscribeOn(vts)),
-          Observable.empty({ delay: 1 }),
-        );
-      })(),
-    ),
-    ComputationTest.isSynchronousWithSideEffects(
-      Observable.combineLatest(
-        Observable.empty({ delay: 1 }),
-        pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
-      ),
-    ),
-    ComputationTest.isPureDeferred(
-      Observable.combineLatest(
-        Observable.empty({ delay: 1 }),
-        Subject.create(),
-      ),
-    ),
-    ComputationTest.isDeferredWithSideEffects(
-      Observable.combineLatest(
-        pipe(async () => {
-          throw new Error();
-        }, Observable.fromAsyncFactory()),
-        Observable.empty({ delay: 1 }),
-        pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)),
-      ),
-    ),
   ),
   describe(
     "computeDeferred",

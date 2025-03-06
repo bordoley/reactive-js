@@ -33,7 +33,6 @@ import {
   bindMethod,
   compose,
   ignore,
-  incrementBy,
   isSome,
   newInstance,
   none,
@@ -47,6 +46,7 @@ import {
 import * as Disposable from "../../utils/Disposable.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
+import ConcurrentReactiveComputationModuleTests from "../../computations/__tests__/fixtures/ConcurrentReactiveComputationModuleTests.js";
 
 const EventSourceTypes = {
   [Computation_multicastOfT]: EventSource.never(),
@@ -88,35 +88,14 @@ testModule(
     },
     EventSourceTypes,
   ),
-  test("combineLatest", () => {
-    using vts = VirtualTimeScheduler.create();
-    const result: Tuple2<number, number>[] = [];
-
-    pipe(
-      EventSource.combineLatest<number, number>(
-        pipe(
-          Observable.generate(incrementBy(2), returns(1), { delay: 2 }),
-          Observable.takeFirst<number>({ count: 3 }),
-          Observable.toEventSource(vts),
-        ),
-        pipe(
-          Observable.generate(incrementBy(2), returns(0), { delay: 3 }),
-          Observable.takeFirst<number>({ count: 2 }),
-          Observable.toEventSource(vts),
-        ),
-      ),
-      EventSource.addEventHandler(bind(result.push, result)),
-    );
-
-    vts[VirtualTimeSchedulerLike_run]();
-
-    pipe(
-      result,
-      expectArrayEquals([tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)], {
-        valuesEquality: arrayEquality(),
-      }),
-    );
-  }),
+  ConcurrentReactiveComputationModuleTests(
+    {
+      ...EventSource,
+      fromObservable: Observable.toEventSource,
+      toObservable: Observable.fromEventSource,
+    },
+    EventSourceTypes,
+  ),
   describe(
     "create",
     test(

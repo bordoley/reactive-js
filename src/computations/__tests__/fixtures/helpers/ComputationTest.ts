@@ -9,36 +9,47 @@ import {
 import { pipeLazy } from "../../../../functions.js";
 import * as ComputationExpect from "./ComputationExpect.js";
 
-export const isPureSynchronous = (obs: PureSynchronousComputationLike) =>
+export const isPureSynchronous = (
+  obs: PureSynchronousComputationLike,
+  description?: string,
+) =>
   test(
-    "is PureSynchronousComputationLike",
+    "is PureSynchronousComputationLike" + (description ?? ""),
     pipeLazy(obs, ComputationExpect.isPureSynchronous),
   );
 
 export const isSynchronousWithSideEffects = (
   obs: SynchronousComputationWithSideEffectsLike,
+  description?: string,
 ) =>
   test(
-    "is SynchronousComputationWithSideEffectsLike",
+    "is SynchronousComputationWithSideEffectsLike" + (description ?? ""),
     pipeLazy(obs, ComputationExpect.isSynchronousWithSideEffects),
   );
 
 export const isDeferredWithSideEffects = (
   obs: DeferredComputationWithSideEffectsLike,
+  description?: string,
 ) =>
   test(
-    "is DeferredComputationWithSideEffectsLike",
+    "is DeferredComputationWithSideEffectsLike" + (description ?? ""),
     pipeLazy(obs, ComputationExpect.isDeferredWithSideEffects),
   );
 
-export const isPureDeferred = (obs: PureDeferredComputationLike) =>
+export const isPureDeferred = (
+  obs: PureDeferredComputationLike,
+  description?: string,
+) =>
   test(
-    "is PureDeferredComputationLike",
+    "is PureDeferredComputationLike" + (description ?? ""),
     pipeLazy(obs, ComputationExpect.isPureDeferred),
   );
 
-export const isMulticasted = (obs: MulticastComputationLike) =>
+export const isMulticasted = (
+  obs: MulticastComputationLike,
+  description?: string,
+) =>
   test(
-    "is MulticastComputationLike",
+    "is MulticastComputationLike" + (description ?? ""),
     pipeLazy(obs, ComputationExpect.isMulticasted),
   );
