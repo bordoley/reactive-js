@@ -6,23 +6,6 @@ import {
   mixInstanceFactory,
   props,
 } from "../../__internal__/mixins.js";
-import * as HostScheduler from "../../concurrent/HostScheduler.js";
-import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
-import {
-  SchedulerContinuationLike,
-  SchedulerContinuationLike_dueTime,
-  SchedulerContinuationLike_run,
-  SchedulerMixinHostLike,
-  SchedulerMixinHostLike_schedule,
-  SchedulerMixinHostLike_shouldYield,
-} from "../../concurrent/__mixins__/SchedulerMixin.js";
-import {
-  SchedulerLike,
-  SchedulerLike_maxYieldInterval,
-  SchedulerLike_now,
-  SchedulerLike_schedule,
-  SchedulerLike_shouldYield,
-} from "../../concurrent.js";
 import {
   Optional,
   invoke,
@@ -34,13 +17,28 @@ import {
   raiseIfNone,
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Queue from "../../utils/Queue.js";
+import CurrentTimeSchedulerMixin from "../../utils/__mixins__/CurrentTimeSchedulerMixin.js";
+import {
+  SchedulerContinuationLike,
+  SchedulerContinuationLike_dueTime,
+  SchedulerContinuationLike_run,
+  SchedulerMixinHostLike,
+  SchedulerMixinHostLike_schedule,
+  SchedulerMixinHostLike_shouldYield,
+} from "../../utils/__mixins__/SchedulerMixin.js";
 import {
   DisposableLike,
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
   QueueableLike_enqueue,
+  SchedulerLike,
+  SchedulerLike_maxYieldInterval,
+  SchedulerLike_now,
+  SchedulerLike_schedule,
+  SchedulerLike_shouldYield,
 } from "../../utils.js";
 
 interface Signature {

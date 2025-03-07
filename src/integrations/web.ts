@@ -1,6 +1,5 @@
 import { ReadonlyObjectMapLike } from "../collections.js";
-import { MulticastObservableLike } from "../concurrent.js";
-import { StoreLike } from "../events.js";
+import { MulticastObservableLike, StoreLike } from "../computations.js";
 import { SideEffect1, Updater } from "../functions.js";
 
 /**

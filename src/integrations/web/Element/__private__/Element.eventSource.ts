@@ -1,8 +1,8 @@
-import * as EventSource from "../../../../events/EventSource.js";
+import * as EventSource from "../../../../computations/EventSource.js";
 import {
   EventListenerLike,
   EventListenerLike_notify,
-} from "../../../../events.js";
+} from "../../../../computations.js";
 import { error, pipe } from "../../../../functions.js";
 import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../../utils.js";

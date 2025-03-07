@@ -1,5 +1,5 @@
-import * as Observable from "../concurrent/Observable.js";
-import { ObservableLike, SchedulerLike } from "../concurrent.js";
+import * as Observable from "../computations/Observable.js";
+import { ObservableLike } from "../computations.js";
 import {
   Factory,
   Function1,
@@ -9,7 +9,11 @@ import {
   none,
   pipe,
 } from "../functions.js";
-import { BackpressureStrategy, DisposableLike_dispose } from "../utils.js";
+import {
+  BackpressureStrategy,
+  DisposableLike_dispose,
+  SchedulerLike,
+} from "../utils.js";
 
 interface SvelteModule {
   subscribe<T>(

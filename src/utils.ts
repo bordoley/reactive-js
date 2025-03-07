@@ -145,3 +145,92 @@ export class BackPressureError extends Error {
     this[QueueableLike_backpressureStrategy] = backpressureStrategy;
   }
 }
+
+export const SchedulerLike_inContinuation = Symbol(
+  "SchedulerLike_inContinuation",
+);
+export const SchedulerLike_maxYieldInterval = Symbol(
+  "SchedulerLike_maxYieldInterval",
+);
+export const SchedulerLike_now = Symbol("SchedulerLike_now");
+export const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
+export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
+export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
+
+export const ContinuationContextLike_yield = Symbol(
+  "ContinuationContextLike_yield",
+);
+
+export interface ContinuationContextLike {
+  [ContinuationContextLike_yield](delay?: number): void;
+}
+
+/**
+ * Schedulers are the core unit of concurrency, orchestration and
+ * cooperative multi-tasking.
+ *
+ * @noInheritDoc
+ */
+export interface SchedulerLike extends DisposableContainerLike {
+  /**
+   * Boolean flag indicating the scheduler is currently
+   * running a continuation.
+   */
+  readonly [SchedulerLike_inContinuation]: boolean;
+
+  /**
+   * The max number of milliseconds the scheduler will run
+   * before yielding control back to the underlying system scheduler.
+   */
+  readonly [SchedulerLike_maxYieldInterval]: number;
+
+  /**
+   * The current time in milliseconds.
+   */
+  readonly [SchedulerLike_now]: number;
+
+  /**
+   * Boolean flag indicating whether a running continuation
+   * should yield control back to the scheduler.
+   */
+  readonly [SchedulerLike_shouldYield]: boolean;
+
+  /**
+   * Request the scheduler to yield the current continuation.
+   */
+  [SchedulerLike_requestYield](): void;
+
+  /**
+   * Schedule a continuation on the Scheduler.
+   * @param continuation - The continuation to run on the scheduler.
+   * @param options
+   */
+  [SchedulerLike_schedule](
+    continuation: SideEffect1<ContinuationContextLike>,
+    options?: {
+      /**
+       * The amount of time in ms to delay execution of the continuation.
+       */
+      readonly delay?: number;
+    },
+  ): DisposableLike;
+}
+
+export const VirtualTimeSchedulerLike_run = Symbol(
+  "VirtualTimeSchedulerLike_run",
+);
+
+/**
+ * A non-concurrent scheduler that simulates time but executes synchronously.
+ *
+ * @noInheritDoc
+ */
+export interface VirtualTimeSchedulerLike
+  extends SchedulerLike,
+    DisposableLike {
+  /**
+   * Runs the scheduler synchronously until it has no more
+   * enqueued continuations, at which time the scheduler will auto dispose.
+   */
+  [VirtualTimeSchedulerLike_run](): void;
+}

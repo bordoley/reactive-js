@@ -9,14 +9,13 @@ import {
   testAsync,
   testModule,
 } from "../../../__internal__/testing.js";
-import * as Flowable from "../../../concurrent/Flowable.js";
-import * as HostScheduler from "../../../concurrent/HostScheduler.js";
-import * as Observable from "../../../concurrent/Observable.js";
+import * as Flowable from "../../../computations/Flowable.js";
+import * as Observable from "../../../computations/Observable.js";
 import {
   FlowableLike_flow,
   PauseableLike_pause,
   PauseableLike_resume,
-} from "../../../concurrent.js";
+} from "../../../computations.js";
 import {
   Optional,
   invoke,
@@ -26,6 +25,7 @@ import {
   returns,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as HostScheduler from "../../../utils/HostScheduler.js";
 import { DisposableLike_isDisposed } from "../../../utils.js";
 import * as FlowableStream from "../FlowableStream.js";
 

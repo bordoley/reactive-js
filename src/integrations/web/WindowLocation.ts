@@ -7,24 +7,22 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import * as Computation from "../../computations/Computation.js";
+import * as EventSource from "../../computations/EventSource.js";
+import * as Observable from "../../computations/Observable.js";
+import * as Streamable from "../../computations/Streamable.js";
+import * as WritableStore from "../../computations/WritableStore.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-} from "../../computations.js";
-import * as Observable from "../../concurrent/Observable.js";
-import * as Streamable from "../../concurrent/Streamable.js";
-import {
   DeferredObservableLike,
   ObservableLike_observe,
   ObserverLike,
-  SchedulerLike,
+  StoreLike_value,
   StreamLike,
   StreamableLike_stream,
-} from "../../concurrent.js";
-import * as EventSource from "../../events/EventSource.js";
-import * as WritableStore from "../../events/WritableStore.js";
-import { StoreLike_value, WritableStoreLike } from "../../events.js";
+  WritableStoreLike,
+} from "../../computations.js";
 import {
   Optional,
   Updater,
@@ -49,6 +47,7 @@ import {
   DisposableLike,
   DropOldestBackpressureStrategy,
   QueueableLike_enqueue,
+  SchedulerLike,
 } from "../../utils.js";
 import {
   WindowLocationLike,

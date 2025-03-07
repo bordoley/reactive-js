@@ -1,6 +1,7 @@
 import { Readable, Transform, Writable } from "stream";
-import * as Flowable from "../../concurrent/Flowable.js";
-import * as Observable from "../../concurrent/Observable.js";
+import * as EventSource from "../../computations/EventSource.js";
+import * as Flowable from "../../computations/Flowable.js";
+import * as Observable from "../../computations/Observable.js";
 import {
   DeferredObservableWithSideEffectsLike,
   DispatcherLike_complete,
@@ -9,8 +10,7 @@ import {
   ObservableLike_observe,
   PauseableLike_pause,
   PauseableLike_resume,
-} from "../../concurrent.js";
-import * as EventSource from "../../events/EventSource.js";
+} from "../../computations.js";
 import {
   Factory,
   Function1,
