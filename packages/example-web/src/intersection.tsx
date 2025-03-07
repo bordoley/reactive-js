@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactDOMClient from "react-dom/client";
-import * as WebElement from "@reactive-js/core/integrations/web/Element";
+import * as WebElement from "@reactive-js/core/web/Element";
 import {
   Optional,
   incrementBy,
@@ -9,7 +9,7 @@ import {
   pipeLazy,
   pipeSomeLazy,
 } from "@reactive-js/core/functions";
-import { useDisposable } from "@reactive-js/core/integrations/react";
+import { useDisposable } from "@reactive-js/core/react";
 import * as Computation from "@reactive-js/core/computations/Computation";
 import * as EventSource from "@reactive-js/core/computations/EventSource";
 

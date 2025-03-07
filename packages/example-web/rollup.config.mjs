@@ -1,7 +1,6 @@
 import typescript from "@rollup/plugin-typescript";
 import replace from "@rollup/plugin-replace";
 import resolve from "@rollup/plugin-node-resolve";
-import svelte from "rollup-plugin-svelte";
 import terser from "@rollup/plugin-terser";
 
 const typescriptConfig = {
@@ -92,34 +91,6 @@ export default [
     plugins: [
       typescript(typescriptConfig),
       resolve(),
-      replace({
-        preventAssignment: true,
-        "process.env.NODE_ENV": JSON.stringify("production"),
-      }),
-      terser({
-        compress: {
-          ecma: 2015,
-          passes: 2,
-          unsafe: true,
-          unsafe_arrows: true,
-          unsafe_symbols: true,
-        },
-      }),
-    ],
-  },
-  {
-    input: "src/svelte-example.js",
-    output: {
-      dir: "./build",
-      format: "iife",
-      name: "ExampleSvelte",
-    },
-    plugins: [
-      svelte(),
-      resolve({
-        browser: true,
-        dedupe: ["svelte"],
-      }),
       replace({
         preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify("production"),

@@ -4,9 +4,9 @@ import {
   useAnimate,
   useScroll,
   useSpring,
-} from "@reactive-js/core/integrations/react/web";
-import { useDisposable } from "@reactive-js/core/integrations/react";
-import { ScrollValue } from "@reactive-js/core/integrations/web";
+} from "@reactive-js/core/react/web";
+import { useDisposable } from "@reactive-js/core/react";
+import { ScrollValue } from "@reactive-js/core/web";
 import { Optional } from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/computations/EventSource";
 import {

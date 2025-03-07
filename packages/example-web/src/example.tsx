@@ -13,17 +13,17 @@ import {
   useDispatcher,
   usePauseable,
   useObserve,
-} from "@reactive-js/core/integrations/react";
+} from "@reactive-js/core/react";
 import {
   useAnimate,
   useAnimationGroup,
   useWindowLocation,
   WindowLocationProvider,
-} from "@reactive-js/core/integrations/react/web";
+} from "@reactive-js/core/react/web";
 import {
   WindowLocationLike,
   WindowLocationURI,
-} from "@reactive-js/core/integrations/web";
+} from "@reactive-js/core/web";
 import {
   increment,
   isNone,
@@ -52,11 +52,11 @@ import {
 import {
   __animate,
   __animation,
-} from "@reactive-js/core/integrations/web/effects";
+} from "@reactive-js/core/web/effects";
 import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
-import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
-import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
+import * as WindowLocation from "@reactive-js/core/web/WindowLocation";
+import * as ReactScheduler from "@reactive-js/core/react/Scheduler";
 import { ObservableLike } from "@reactive-js/core/computations";
 import {
   EventSourceLike,
@@ -69,8 +69,8 @@ import {
   QueueableLike_enqueue,
 } from "@reactive-js/core/utils";
 import * as Flowable from "@reactive-js/core/computations/Flowable";
-import { useFlow } from "@reactive-js/core/integrations/react";
-import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
+import { useFlow } from "@reactive-js/core/react";
+import * as AnimationFrameScheduler from "@reactive-js/core/web/AnimationFrameScheduler";
 import * as Cache from "@reactive-js/core/computations/Cache";
 
 const AnimatedBox = ({
