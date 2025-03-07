@@ -14,7 +14,6 @@ import {
   EventSourceLike,
 } from "@reactive-js/core/computations";
 import * as Publisher from "@reactive-js/core/computations/Publisher";
-import { AnimationStreamLike_animation } from "@reactive-js/core/computations";
 import {
   QueueableLike_enqueue,
   PauseableLike_pause,
@@ -84,14 +83,12 @@ const ScrollApp = () => {
     [publishedAnimation],
   );
 
-  const springAnimation = spring?.[AnimationStreamLike_animation];
-
   const circleAnimtation = useMemo(
     () =>
-      springAnimation &&
+      spring &&
       publishedAnimation &&
-      EventSource.merge<number>(springAnimation, publishedAnimation),
-    [springAnimation, publishedAnimation],
+      EventSource.merge<number>(spring, publishedAnimation),
+    [spring, publishedAnimation],
   );
 
   return (

@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **animationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`void`, `TKey`, `T`\>\>
+> **animationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationGroupStreamLike`](../interfaces/AnimationGroupStreamLike.md)\<`void`, `TKey`, `T`\>\>
 
 ### Type Parameters
 
@@ -30,11 +30,11 @@
 
 ### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`void`, `TKey`, `T`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationGroupStreamLike`](../interfaces/AnimationGroupStreamLike.md)\<`void`, `TKey`, `T`\>\>
 
 ## Call Signature
 
-> **animationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
+> **animationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](../interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
 
 ### Type Parameters
 
@@ -58,4 +58,4 @@
 
 ### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](../interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>

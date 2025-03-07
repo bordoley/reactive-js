@@ -1,11 +1,15 @@
 import { ReadonlyObjectMapLike } from "../collections.js";
-import { CacheLike, DeferredObservableLike, ObservableLike } from "../computations.js";
+import { DeferredObservableLike, DispatcherLike, ObservableLike } from "../computations.js";
 import { Optional, Updater } from "../functions.js";
 import { BackpressureStrategy, SchedulerLike } from "../utils.js";
+export declare const CacheLike_get: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface CacheModule {
+export interface CacheLike<T> extends DispatcherLike<ReadonlyObjectMapLike<string, Updater<Optional<T>>>> {
+    [CacheLike_get](index: string): ObservableLike<T>;
+}
+interface CacheModule {
     create<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
@@ -33,3 +37,4 @@ export declare const set: <T>(cache: CacheLike<T>, key: string, v: Optional<T>) 
 export declare const setMany: <T>(cache: CacheLike<T>, keyValues: ReadonlyObjectMapLike<string, Optional<T>>) => boolean;
 export declare const update: <T>(cache: CacheLike<T>, key: string, updater: Updater<Optional<T>>) => boolean;
 export declare const updateMany: <T>(cache: CacheLike<T>, keyValues: ReadonlyObjectMapLike<string, Updater<Optional<T>>>) => boolean;
+export {};

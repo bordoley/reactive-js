@@ -8,6 +8,8 @@
 
 ## Interfaces
 
+- [AnimationGroupStreamLike](interfaces/AnimationGroupStreamLike.md)
+- [AnimationStreamLike](interfaces/AnimationStreamLike.md)
 - [StreamableModule](interfaces/StreamableModule.md)
 
 ## Type Aliases

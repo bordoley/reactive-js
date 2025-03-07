@@ -57,11 +57,7 @@ import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
-import {
-  ObservableLike,
-  CacheLike,
-  AnimationStreamLike_animation,
-} from "@reactive-js/core/computations";
+import { ObservableLike } from "@reactive-js/core/computations";
 import {
   EventSourceLike,
   StoreLike_value,
@@ -157,7 +153,7 @@ const AnimationGroup = () => {
 };
 
 const inMemoryCacheContext =
-  /*@__PURE__*/ createContext<Optional<CacheLike<string>>>(none);
+  /*@__PURE__*/ createContext<Optional<Cache.CacheLike<string>>>(none);
 
 const CacheComponent = () => {
   const cache = useContext(inMemoryCacheContext);
@@ -311,9 +307,7 @@ const RxComponent = createComponent(
         PauseableLike_resume,
       );
 
-      const animatedDivRef = __animate(
-        animationStream[AnimationStreamLike_animation],
-      );
+      const animatedDivRef = __animate(animationStream);
 
       return (
         <div>

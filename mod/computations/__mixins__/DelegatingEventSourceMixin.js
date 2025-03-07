@@ -1,0 +1,21 @@
+/// <reference types="./DelegatingEventSourceMixin.d.ts" />
+
+import { mix, props } from "../../__internal__/mixins.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, EventSourceLike_addEventListener, } from "../../computations.js";
+import { none, returns } from "../../functions.js";
+const DelegatingEventSourceMixin = /*@__PURE__*/ (() => {
+    const DelegatingEventSourceMixin_delegate = Symbol("DelegatingEventSourceMixin_delegate");
+    return returns(mix(function DelegatingEventSourceMixin(instance, delegate) {
+        instance[DelegatingEventSourceMixin_delegate] = delegate;
+        return instance;
+    }, props({
+        [DelegatingEventSourceMixin_delegate]: none,
+    }), {
+        [ComputationLike_isDeferred]: false,
+        [ComputationLike_isSynchronous]: false,
+        [EventSourceLike_addEventListener](listener) {
+            this[DelegatingEventSourceMixin_delegate][EventSourceLike_addEventListener](listener);
+        },
+    }));
+})();
+export default DelegatingEventSourceMixin;

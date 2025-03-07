@@ -21,11 +21,10 @@ import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
 import { ReadonlyObjectMapLike } from "../collections.js";
 import * as Computation from "../computations/Computation.js";
 import {
-  CacheLike,
-  CacheLike_get,
   DeferredComputationWithSideEffects,
   DeferredComputationWithSideEffectsLike,
   DeferredObservableLike,
+  DispatcherLike,
   EventListenerLike_notify,
   ObservableLike,
   SubjectLike,
@@ -66,10 +65,17 @@ import * as SingleUseObservable from "./__internal__/SingleUseObservable.js";
 import { SingleUseObservableLike_observer } from "./__internal__/SingleUseObservable.js";
 import DelegatingDispatcherMixin from "./__mixins__/DelegatingDispatcherMixin.js";
 
+export const CacheLike_get = Symbol("CacheLike_get");
+
 /**
  * @noInheritDoc
  */
-export interface CacheModule {
+export interface CacheLike<T>
+  extends DispatcherLike<ReadonlyObjectMapLike<string, Updater<Optional<T>>>> {
+  [CacheLike_get](index: string): ObservableLike<T>;
+}
+
+interface CacheModule {
   create<T>(
     scheduler: SchedulerLike,
     options?: {

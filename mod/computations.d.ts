@@ -1,4 +1,3 @@
-import type { DictionaryLike, ReadonlyObjectMapLike } from "./collections.js";
 import type { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4, Updater } from "./functions.js";
 import type { BackpressureStrategy, DisposableLike, PauseableLike, QueueableLike, SchedulerLike } from "./utils.js";
 export declare const ComputationLike_isPure: unique symbol;
@@ -494,23 +493,4 @@ export interface StreamableLike<TReq = unknown, out T = unknown, TStream extends
     }): TStream;
 }
 export type StreamOf<TStreamable extends StreamableLike> = ReturnType<TStreamable[typeof StreamableLike_stream]>;
-/**
- * @noInheritDoc
- */
-export interface AnimationGroupStreamLike<TEvent, TKey extends string, out T> extends StreamLike<TEvent, boolean>, DictionaryLike<TKey, EventSourceLike<T>>, PauseableLike {
-}
-export declare const AnimationStreamLike_animation: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface AnimationStreamLike<TEvent, out T> extends StreamLike<TEvent, boolean>, PauseableLike {
-    [AnimationStreamLike_animation]: EventSourceLike<T>;
-}
-export declare const CacheLike_get: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface CacheLike<T> extends DispatcherLike<ReadonlyObjectMapLike<string, Updater<Optional<T>>>> {
-    [CacheLike_get](index: string): ObservableLike<T>;
-}
 export {};

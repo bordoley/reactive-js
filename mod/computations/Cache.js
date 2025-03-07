@@ -6,7 +6,7 @@ import * as Collection from "../collections/Collection.js";
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
 import * as Computation from "../computations/Computation.js";
-import { CacheLike_get, DeferredComputationWithSideEffects, EventListenerLike_notify, } from "../computations.js";
+import { DeferredComputationWithSideEffects, EventListenerLike_notify, } from "../computations.js";
 import { alwaysNone, bindMethod, identity, isNone, isSome, newInstance, none, pipe, returns, tuple, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
@@ -17,6 +17,7 @@ import * as Subject from "./Subject.js";
 import * as SingleUseObservable from "./__internal__/SingleUseObservable.js";
 import { SingleUseObservableLike_observer } from "./__internal__/SingleUseObservable.js";
 import DelegatingDispatcherMixin from "./__mixins__/DelegatingDispatcherMixin.js";
+export const CacheLike_get = Symbol("CacheLike_get");
 export const create = /*@__PURE__*/ (() => {
     const CacheStream_scheduleCleanup = Symbol("CacheStream_scheduleCleanup");
     const CacheStream_store = Symbol("CacheStream_store");

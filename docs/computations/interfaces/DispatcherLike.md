@@ -15,9 +15,9 @@ be dispatched from any execution constext.
 
 ## Extended by
 
+- [`CacheLike`](../Cache/interfaces/CacheLike.md)
 - [`ObserverLike`](ObserverLike.md)
 - [`StreamLike`](StreamLike.md)
-- [`CacheLike`](CacheLike.md)
 
 ## Type Parameters
 

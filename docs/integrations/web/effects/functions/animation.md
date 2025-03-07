@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **\_\_animation**\<`T`\>(`animation`, `options`?): [`AnimationStreamLike`](../../../../computations/interfaces/AnimationStreamLike.md)\<`unknown`, `T`\>
+> **\_\_animation**\<`T`\>(`animation`, `options`?): [`AnimationStreamLike`](../../../../computations/Streamable/interfaces/AnimationStreamLike.md)\<`unknown`, `T`\>
 
 ### Type Parameters
 
@@ -28,11 +28,11 @@
 
 ### Returns
 
-[`AnimationStreamLike`](../../../../computations/interfaces/AnimationStreamLike.md)\<`unknown`, `T`\>
+[`AnimationStreamLike`](../../../../computations/Streamable/interfaces/AnimationStreamLike.md)\<`unknown`, `T`\>
 
 ## Call Signature
 
-> **\_\_animation**\<`TEvent`, `T`\>(`animation`, `options`?): [`AnimationStreamLike`](../../../../computations/interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>
+> **\_\_animation**\<`TEvent`, `T`\>(`animation`, `options`?): [`AnimationStreamLike`](../../../../computations/Streamable/interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>
 
 ### Type Parameters
 
@@ -54,4 +54,4 @@
 
 ### Returns
 
-[`AnimationStreamLike`](../../../../computations/interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>
+[`AnimationStreamLike`](../../../../computations/Streamable/interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>

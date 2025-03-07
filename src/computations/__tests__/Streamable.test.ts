@@ -15,7 +15,6 @@ import { DictionaryLike_get } from "../../collections.js";
 import * as Observable from "../../computations/Observable.js";
 import * as Streamable from "../../computations/Streamable.js";
 import {
-  AnimationStreamLike_animation,
   DispatcherLike_complete,
   DispatcherLike_state,
   DispatcherState_completed,
@@ -54,7 +53,7 @@ testModule(
       let result = 0;
 
       pipeSome(
-        stream[AnimationStreamLike_animation],
+        stream,
         EventSource.addEventHandler(ev => {
           result = ev;
         }),

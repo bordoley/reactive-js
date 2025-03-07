@@ -2,21 +2,17 @@ import {
   include,
   init,
   mixInstanceFactory,
-  props,
 } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import * as Publisher from "../../../computations/Publisher.js";
 import {
-  AnimationStreamLike,
-  AnimationStreamLike_animation,
   DeferredComputationWithSideEffects,
   DeferredComputationWithSideEffectsLike,
-  EventSourceLike,
   PureSynchronousObservableLike,
   StreamableLike,
   StreamableLike_stream,
 } from "../../../computations.js";
-import { Function1, isFunction, none, pipe } from "../../../functions.js";
+import { Function1, isFunction, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
@@ -27,6 +23,7 @@ import {
 } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
+import DelegatingEventSourceMixin from "../../__mixins__/DelegatingEventSourceMixin.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 
 const AnimationStream_create: <TEvent, T>(
@@ -40,11 +37,10 @@ const AnimationStream_create: <TEvent, T>(
     readonly replay?: number;
     readonly capacity?: number;
   },
-) => AnimationStreamLike<TEvent, T> = /*@__PURE__*/ (<TEvent, T>() => {
-  type TProperties = {
-    [AnimationStreamLike_animation]: EventSourceLike<T>;
-  };
-
+) => Streamable.AnimationStreamLike<TEvent, T> = /*@__PURE__*/ (<
+  TEvent,
+  T,
+>() => {
   const ObservableModule = {
     concat: Observable.concat,
     forEach: Observable.forEach,
@@ -55,9 +51,13 @@ const AnimationStream_create: <TEvent, T>(
   };
 
   return mixInstanceFactory(
-    include(StreamMixin(), DelegatingPauseableMixin),
+    include(
+      StreamMixin(),
+      DelegatingPauseableMixin,
+      DelegatingEventSourceMixin(),
+    ),
     function AnimationStream(
-      instance: TProperties,
+      instance: unknown,
       animation:
         | Function1<TEvent, PureSynchronousObservableLike<T>>
         | PureSynchronousObservableLike<T>,
@@ -68,10 +68,9 @@ const AnimationStream_create: <TEvent, T>(
         readonly replay?: number;
         readonly capacity?: number;
       },
-    ): AnimationStreamLike<TEvent, T> {
+    ): Streamable.AnimationStreamLike<TEvent, T> {
       const pauseableScheduler = PauseableScheduler.create(animationScheduler);
-      const publisher = (instance[AnimationStreamLike_animation] =
-        Publisher.create());
+      const publisher = Publisher.create();
 
       const operator = Computation.flatMap(ObservableModule, "switchAll")<
         TEvent,
@@ -102,6 +101,8 @@ const AnimationStream_create: <TEvent, T>(
 
       init(DelegatingPauseableMixin, instance, pauseableScheduler);
 
+      init(DelegatingEventSourceMixin(), instance, publisher);
+
       pipe(
         instance,
         Disposable.add(publisher),
@@ -112,9 +113,6 @@ const AnimationStream_create: <TEvent, T>(
 
       return instance;
     },
-    props<TProperties>({
-      [AnimationStreamLike_animation]: none,
-    }),
   );
 })();
 
@@ -128,7 +126,11 @@ const Streamable_animation: Streamable.Signature["animation"] = (<
   creationOptions?: {
     readonly animationScheduler?: SchedulerLike;
   },
-): StreamableLike<TEvent, boolean, AnimationStreamLike<TEvent, T>> => ({
+): StreamableLike<
+  TEvent,
+  boolean,
+  Streamable.AnimationStreamLike<TEvent, T>
+> => ({
   [StreamableLike_stream]: (scheduler, options) =>
     AnimationStream_create(
       animationGroup,

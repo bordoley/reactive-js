@@ -12,8 +12,6 @@ import {
 } from "../../computations/Observable/effects.js";
 import * as Streamable from "../../computations/Streamable.js";
 import {
-  AnimationGroupStreamLike,
-  AnimationStreamLike,
   EventSourceLike,
   PureSynchronousObservableLike,
 } from "../../computations.js";
@@ -55,7 +53,7 @@ interface WebEffectsModule {
     options?: {
       animationScheduler: SchedulerLike;
     },
-  ): AnimationStreamLike<unknown, T>;
+  ): Streamable.AnimationStreamLike<unknown, T>;
 
   __animation<TEvent, T>(
     animation:
@@ -64,7 +62,7 @@ interface WebEffectsModule {
     options?: {
       animationScheduler: SchedulerLike;
     },
-  ): AnimationStreamLike<TEvent, T>;
+  ): Streamable.AnimationStreamLike<TEvent, T>;
 
   __animationGroup<T, TKey extends string = string>(
     animationGroup: ReadonlyObjectMapLike<
@@ -74,7 +72,7 @@ interface WebEffectsModule {
     options?: {
       animationScheduler: SchedulerLike;
     },
-  ): AnimationGroupStreamLike<unknown, TKey, T>;
+  ): Streamable.AnimationGroupStreamLike<unknown, TKey, T>;
   __animationGroup<T, TKey extends string, TEvent>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
@@ -84,7 +82,7 @@ interface WebEffectsModule {
     options?: {
       animationScheduler: SchedulerLike;
     },
-  ): AnimationGroupStreamLike<TEvent, TKey, T>;
+  ): Streamable.AnimationGroupStreamLike<TEvent, TKey, T>;
 }
 
 type Signature = WebEffectsModule;

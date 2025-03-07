@@ -17,7 +17,6 @@ import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
 import * as Publisher from "../../../computations/Publisher.js";
 import {
-  AnimationGroupStreamLike,
   DeferredComputationWithSideEffects,
   DeferredComputationWithSideEffectsLike,
   EventSourceLike,
@@ -59,7 +58,7 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
     readonly replay?: number;
     readonly capacity?: number;
   },
-) => AnimationGroupStreamLike<TEvent, TKey, T> = /*@__PURE__*/ (<
+) => Streamable.AnimationGroupStreamLike<TEvent, TKey, T> = /*@__PURE__*/ (<
   TEvent,
   TKey extends string,
   T,
@@ -105,7 +104,7 @@ const AnimationGroupStream_create: <TEvent, T, TKey extends string>(
         readonly replay?: number;
         readonly capacity?: number;
       },
-    ): AnimationGroupStreamLike<TEvent, TKey, T> {
+    ): Streamable.AnimationGroupStreamLike<TEvent, TKey, T> {
       const pauseableScheduler = PauseableScheduler.create(animationScheduler);
       const operator = Computation.flatMap(ObservableModule, "switchAll")<
         TEvent,
@@ -202,7 +201,7 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] = (<
 ): StreamableLike<
   TEvent,
   boolean,
-  AnimationGroupStreamLike<TEvent, TKey, T>
+  Streamable.AnimationGroupStreamLike<TEvent, TKey, T>
 > => ({
   [StreamableLike_stream]: (scheduler, options) =>
     AnimationGroupStream_create(

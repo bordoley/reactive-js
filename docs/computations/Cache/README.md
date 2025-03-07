@@ -8,11 +8,15 @@
 
 ## Interfaces
 
-- [CacheModule](interfaces/CacheModule.md)
+- [CacheLike](interfaces/CacheLike.md)
 
 ## Type Aliases
 
 - [Signature](type-aliases/Signature.md)
+
+## Variables
+
+- [CacheLike\_get](variables/CacheLike_get.md)
 
 ## Functions
 

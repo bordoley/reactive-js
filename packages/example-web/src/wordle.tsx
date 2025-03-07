@@ -12,7 +12,6 @@ import { Optional, pipe } from "@reactive-js/core/functions";
 import { EventSourceLike } from "@reactive-js/core/computations";
 import * as Observable from "@reactive-js/core/computations/Observable";
 import { scale } from "@reactive-js/core/functions";
-import { AnimationStreamLike_animation } from "@reactive-js/core/computations";
 
 const items = ["W", "O", "R", "D", "L", "E"];
 
@@ -113,7 +112,7 @@ const AnimatedBox = ({
 export const Wordle = () => {
   const [state, updateState] = useState(false);
 
-  const animationStream = useAnimation((direction: boolean) =>
+  const animation = useAnimation((direction: boolean) =>
     pipe(
       Observable.spring({
         stiffness: 0.0005,
@@ -125,9 +124,8 @@ export const Wordle = () => {
     ),
   );
 
-  const animation = animationStream?.[AnimationStreamLike_animation];
-  const { enqueue } = useDispatcher(animationStream);
-  const isAnimationRunning = useObserve(animationStream) ?? false;
+  const { enqueue } = useDispatcher(animation);
+  const isAnimationRunning = useObserve(animation) ?? false;
 
   useEffect(() => {
     enqueue(state);

@@ -2,20 +2,16 @@ import {
   include,
   init,
   mixInstanceFactory,
-  props,
 } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
 import * as Publisher from "../../../computations/Publisher.js";
 import {
-  AnimationStreamLike,
-  AnimationStreamLike_animation,
   DeferredComputationWithSideEffects,
   DeferredComputationWithSideEffectsLike,
   DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
   EventListenerLike_notify,
-  EventSourceLike,
   PureSynchronousObservableLike,
   StreamableLike,
   StreamableLike_stream,
@@ -26,7 +22,6 @@ import {
   compose,
   isNumber,
   isReadonlyArray,
-  none,
   pipe,
   returns,
   scale,
@@ -43,6 +38,7 @@ import {
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 import * as Subject from "../../Subject.js";
+import DelegatingEventSourceMixin from "../../__mixins__/DelegatingEventSourceMixin.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 
 const SpringStream_create: (
@@ -59,7 +55,7 @@ const SpringStream_create: (
     readonly replay?: number;
     readonly capacity?: number;
   },
-) => AnimationStreamLike<
+) => Streamable.AnimationStreamLike<
   Function1<
     number,
     | number
@@ -78,14 +74,14 @@ const SpringStream_create: (
     switchAll: Observable.switchAll,
   };
 
-  type TProperties = {
-    [AnimationStreamLike_animation]: EventSourceLike<number>;
-  };
-
   return mixInstanceFactory(
-    include(StreamMixin(), DelegatingPauseableMixin),
+    include(
+      StreamMixin(),
+      DelegatingPauseableMixin,
+      DelegatingEventSourceMixin(),
+    ),
     function AnimationStream(
-      instance: TProperties,
+      instance: unknown,
       initialValue: number,
       scheduler: SchedulerLike,
       animationScheduler: SchedulerLike,
@@ -99,14 +95,13 @@ const SpringStream_create: (
         readonly replay?: number;
         readonly capacity?: number;
       },
-    ): AnimationStreamLike<
+    ): Streamable.AnimationStreamLike<
       Function1<number, number | ReadonlyArray<number>>,
       number
     > {
       const pauseableScheduler = PauseableScheduler.create(animationScheduler);
 
-      const publisher = (instance[AnimationStreamLike_animation] =
-        Publisher.create<number>());
+      const publisher = Publisher.create<number>();
 
       const accFeedbackStream = Subject.create<number>({ replay: 1 });
 
@@ -218,6 +213,8 @@ const SpringStream_create: (
 
       init(DelegatingPauseableMixin, instance, pauseableScheduler);
 
+      init(DelegatingEventSourceMixin(), instance, publisher);
+
       pipe(
         instance,
         Disposable.add(publisher),
@@ -231,9 +228,6 @@ const SpringStream_create: (
 
       return instance;
     },
-    props<TProperties>({
-      [AnimationStreamLike_animation]: none,
-    }),
   );
 })();
 
@@ -253,7 +247,10 @@ const Streamable_spring: Streamable.Signature["spring"] = (
     | ReadonlyArray<number>
   >,
   boolean,
-  AnimationStreamLike<Function1<number, number | ReadonlyArray<number>>, number>
+  Streamable.AnimationStreamLike<
+    Function1<number, number | ReadonlyArray<number>>,
+    number
+  >
 > => ({
   [StreamableLike_stream]: (scheduler, options) =>
     SpringStream_create(

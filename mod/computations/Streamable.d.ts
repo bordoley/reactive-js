@@ -1,7 +1,17 @@
-import { ReadonlyObjectMapLike } from "../collections.js";
-import { AnimationGroupStreamLike, AnimationStreamLike, DeferredObservableLike, PureDeferredObservableLike, PureSynchronousObservableLike, StreamLike, StreamableLike } from "../computations.js";
+import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
+import { DeferredObservableLike, EventSourceLike, PureDeferredObservableLike, PureSynchronousObservableLike, StreamLike, StreamableLike } from "../computations.js";
 import { Equality, Factory, Function1, Function2, Reducer, Updater } from "../functions.js";
-import { SchedulerLike } from "../utils.js";
+import { PauseableLike, SchedulerLike } from "../utils.js";
+/**
+ * @noInheritDoc
+ */
+export interface AnimationGroupStreamLike<TEvent, TKey extends string, out T> extends StreamLike<TEvent, boolean>, DictionaryLike<TKey, EventSourceLike<T>>, PauseableLike {
+}
+/**
+ * @noInheritDoc
+ */
+export interface AnimationStreamLike<TEvent, out T> extends StreamLike<TEvent, boolean>, EventSourceLike<T>, PauseableLike {
+}
 /**
  * @noInheritDoc
  */
