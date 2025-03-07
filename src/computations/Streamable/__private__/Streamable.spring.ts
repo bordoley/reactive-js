@@ -75,6 +75,7 @@ const SpringStream_create: (
     fromReadonlyArray: Observable.fromReadonlyArray,
     keep: Observable.keep,
     map: Observable.map,
+    switchAll: Observable.switchAll,
   };
 
   type TProperties = {
@@ -135,7 +136,7 @@ const SpringStream_create: (
             number
           >
         >(accFeedbackStream, (updater, acc) => tuple(updater(acc), acc)),
-        Computation.concatMap(ObservableModule)<
+        Computation.flatMap(ObservableModule, "switchAll")<
           Tuple2<
             | number
             | ReadonlyArray<number>

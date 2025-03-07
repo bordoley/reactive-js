@@ -21,13 +21,14 @@ const SpringStream_create = /*@__PURE__*/ (() => {
         fromReadonlyArray: Observable.fromReadonlyArray,
         keep: Observable.keep,
         map: Observable.map,
+        switchAll: Observable.switchAll,
     };
     return mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin), function AnimationStream(instance, initialValue, scheduler, animationScheduler, springOptions, options) {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
         const publisher = (instance[AnimationStreamLike_animation] =
             Publisher.create());
         const accFeedbackStream = Subject.create({ replay: 1 });
-        const operator = compose(Observable.withLatestFrom(accFeedbackStream, (updater, acc) => tuple(updater(acc), acc)), Computation.concatMap(ObservableModule)(([updated, acc]) => {
+        const operator = compose(Observable.withLatestFrom(accFeedbackStream, (updater, acc) => tuple(updater(acc), acc)), Computation.flatMap(ObservableModule, "switchAll")(([updated, acc]) => {
             const initialValue = isNumber(updated) || isReadonlyArray(updated)
                 ? acc
                 : updated.from;
