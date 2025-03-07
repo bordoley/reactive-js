@@ -11,7 +11,7 @@ be dispatched from any execution constext.
 
 ## Extends
 
-- [`QueueableLike`](../../utils/interfaces/QueueableLike.md)\<`T`\>.[`EventSourceLike`](../../events/interfaces/EventSourceLike.md)\<*typeof* [`DispatcherLikeEvent_ready`](../variables/DispatcherLikeEvent_ready.md) \| *typeof* [`DispatcherLikeEvent_capacityExceeded`](../variables/DispatcherLikeEvent_capacityExceeded.md) \| *typeof* [`DispatcherLikeEvent_completed`](../variables/DispatcherLikeEvent_completed.md)\>.[`DisposableLike`](../../utils/interfaces/DisposableLike.md)
+- [`QueueableLike`](../../utils/interfaces/QueueableLike.md)\<`T`\>.[`DisposableLike`](../../utils/interfaces/DisposableLike.md)
 
 ## Extended by
 
@@ -25,9 +25,9 @@ be dispatched from any execution constext.
 
 ## Properties
 
-### \[DispatcherLike\_isCompleted\]
+### \[DispatcherLike\_state\]
 
-> `readonly` **\[DispatcherLike\_isCompleted\]**: `boolean`
+> `readonly` **\[DispatcherLike\_state\]**: [`StoreLike`](../../events/interfaces/StoreLike.md)\<[`DispatcherState`](../type-aliases/DispatcherState.md)\>
 
 ## Methods
 

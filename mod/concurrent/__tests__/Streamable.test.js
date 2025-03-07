@@ -58,8 +58,9 @@ import * as Collection from "../../collections/Collection.js";
 import * as Dictionary from "../../collections/Dictionary.js";
 import { DictionaryLike_get } from "../../collections.js";
 import * as Computation from "../../computations/Computation.js";
-import { AnimationStreamLike_animation, DispatcherLike_complete, DispatcherLike_isCompleted, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
+import { AnimationStreamLike_animation, DispatcherLike_complete, DispatcherLike_state, DispatcherState_completed, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
+import { StoreLike_value } from "../../events.js";
 import { bindMethod, invoke, none, pipe, pipeSome, returns, } from "../../functions.js";
 import { DropLatestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import * as Observable from "../Observable.js";
@@ -143,9 +144,11 @@ testModule("Streamable", describe("animation", test("integration", () => {
             capacity: 20,
             backpressureStrategy: DropLatestBackpressureStrategy,
         });
-        pipe(stateStream[DispatcherLike_isCompleted], expectFalse("expected stream not to be completed"));
+        pipe(stateStream[DispatcherLike_state][StoreLike_value] ===
+            DispatcherState_completed, expectFalse("expected stream not to be completed"));
         stateStream[DispatcherLike_complete]();
-        pipe(stateStream[DispatcherLike_isCompleted], expectTrue("expected stream to be completed"));
+        pipe(stateStream[DispatcherLike_state][StoreLike_value] ===
+            DispatcherState_completed, expectTrue("expected stream to be completed"));
     }
     catch (e_4) {
         env_4.error = e_4;

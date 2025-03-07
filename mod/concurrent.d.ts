@@ -3,19 +3,20 @@ import { ComputationLike, ComputationLike_isDeferred, ComputationLike_isPure, Co
 import { EventListenerLike, EventSourceLike, StoreLike } from "./events.js";
 import { Optional, SideEffect1, Updater } from "./functions.js";
 import { BackpressureStrategy, DisposableContainerLike, DisposableLike, QueueableLike } from "./utils.js";
-export declare const DispatcherLikeEvent_ready: unique symbol;
-export declare const DispatcherLikeEvent_capacityExceeded: unique symbol;
-export declare const DispatcherLikeEvent_completed: unique symbol;
+export declare const DispatcherState_ready: unique symbol;
+export declare const DispatcherState_capacityExceeded: unique symbol;
+export declare const DispatcherState_completed: unique symbol;
+export type DispatcherState = typeof DispatcherState_ready | typeof DispatcherState_capacityExceeded | typeof DispatcherState_completed;
 export declare const DispatcherLike_complete: unique symbol;
-export declare const DispatcherLike_isCompleted: unique symbol;
+export declare const DispatcherLike_state: unique symbol;
 /**
  * A `QueueableLike` type that consumes enqueued events to
  * be dispatched from any execution constext.
  *
  * @noInheritDoc
  */
-export interface DispatcherLike<T = unknown> extends QueueableLike<T>, EventSourceLike<typeof DispatcherLikeEvent_ready | typeof DispatcherLikeEvent_capacityExceeded | typeof DispatcherLikeEvent_completed>, DisposableLike {
-    readonly [DispatcherLike_isCompleted]: boolean;
+export interface DispatcherLike<T = unknown> extends QueueableLike<T>, DisposableLike {
+    readonly [DispatcherLike_state]: StoreLike<DispatcherState>;
     /**
      * Communicates to the dispatcher that no more events will be enqueued.
      */

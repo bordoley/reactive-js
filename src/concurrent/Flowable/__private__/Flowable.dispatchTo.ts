@@ -1,8 +1,9 @@
 import {
   DispatcherLike,
-  DispatcherLikeEvent_capacityExceeded,
-  DispatcherLikeEvent_completed,
-  DispatcherLikeEvent_ready,
+  DispatcherLike_state,
+  DispatcherState_capacityExceeded,
+  DispatcherState_completed,
+  DispatcherState_ready,
   FlowableLike,
   FlowableLike_flow,
   ObservableLike_observe,
@@ -32,14 +33,14 @@ const Flowable_dispatchTo: Flowable.Signature["dispatchTo"] =
       );
 
       pipe(
-        dispatcher,
+        dispatcher[DispatcherLike_state],
         EventSource.addEventHandler(ev => {
           if (
-            ev === DispatcherLikeEvent_capacityExceeded ||
-            ev === DispatcherLikeEvent_completed
+            ev === DispatcherState_capacityExceeded ||
+            ev === DispatcherState_completed
           ) {
             flowed[PauseableLike_pause]();
-          } else if (ev === DispatcherLikeEvent_ready) {
+          } else if (ev === DispatcherState_ready) {
             flowed[PauseableLike_resume]();
           }
         }),

@@ -16,11 +16,13 @@ import * as Computation from "../../computations/Computation.js";
 import {
   AnimationStreamLike_animation,
   DispatcherLike_complete,
-  DispatcherLike_isCompleted,
+  DispatcherLike_state,
+  DispatcherState_completed,
   StreamableLike_stream,
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
+import { StoreLike_value } from "../../events.js";
 import {
   bindMethod,
   invoke,
@@ -137,14 +139,16 @@ testModule(
       });
 
       pipe(
-        stateStream[DispatcherLike_isCompleted],
+        stateStream[DispatcherLike_state][StoreLike_value] ===
+          DispatcherState_completed,
         expectFalse("expected stream not to be completed"),
       );
 
       stateStream[DispatcherLike_complete]();
 
       pipe(
-        stateStream[DispatcherLike_isCompleted],
+        stateStream[DispatcherLike_state][StoreLike_value] ===
+          DispatcherState_completed,
         expectTrue("expected stream to be completed"),
       );
     }),

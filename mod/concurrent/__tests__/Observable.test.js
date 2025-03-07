@@ -69,11 +69,11 @@ import StatefulAsynchronousComputationOperatorTests from "../../computations/__t
 import StatefulSynchronousComputationOperatorTests from "../../computations/__tests__/fixtures/operators/StatefulSynchronousComputationOperatorTests.js";
 import StatelessAsynchronousComputationOperatorTests from "../../computations/__tests__/fixtures/operators/StatelessAsynchronousComputationOperatorTests.js";
 import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, DeferredComputationWithSideEffects, PureDeferredComputation, PureSynchronousComputation, SynchronousComputationWithSideEffects, } from "../../computations.js";
-import { DispatcherLikeEvent_completed, DispatcherLike_complete, SchedulerLike_now, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
+import { DispatcherLike_complete, DispatcherLike_state, DispatcherState_completed, SchedulerLike_now, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStore from "../../events/WritableStore.js";
 import { EventListenerLike_notify, StoreLike_value } from "../../events.js";
-import { bindMethod, error, ignore, increment, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, scale, } from "../../functions.js";
+import { bind, bindMethod, error, ignore, increment, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, scale, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Queue from "../../utils/Queue.js";
@@ -323,14 +323,9 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             backpressureStrategy: OverflowBackpressureStrategy,
             capacity: 1,
         });
-        let completed = false;
-        pipe(stream, EventSource.addEventHandler(ev => {
-            if (ev === DispatcherLikeEvent_completed) {
-                completed = true;
-            }
-        }));
         pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Observable.toReadonlyArray());
-        pipe(completed, expectTrue("expected stream to be completed"));
+        pipe(stream[DispatcherLike_state][StoreLike_value] ===
+            DispatcherState_completed, expectTrue("expected stream to be completed"));
     }
     catch (e_10) {
         env_10.error = e_10;
@@ -347,14 +342,9 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             backpressureStrategy: OverflowBackpressureStrategy,
             capacity: 1,
         });
-        let completed = false;
-        pipe(stream, EventSource.addEventHandler(ev => {
-            if (ev === DispatcherLikeEvent_completed) {
-                completed = true;
-            }
-        }));
         pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray({ delay: 1 }), Observable.dispatchTo(stream), Observable.toReadonlyArray());
-        pipe(completed, expectTrue("expected stream to be completed"));
+        pipe(stream[DispatcherLike_state][StoreLike_value] ===
+            DispatcherState_completed, expectTrue("expected stream to be completed"));
     }
     catch (e_11) {
         env_11.error = e_11;
@@ -432,11 +422,14 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_15);
     }
-}), HigherOrderComputationOperatorTests(ObservableTypes, none, none, none, Observable.flatMapAsync(async (x) => await Promise.resolve(x)))), describe("forkMerge", testAsync("with pure src and inner runnables with side-effects", async () => {
+}), HigherOrderComputationOperatorTests(ObservableTypes, none, none, none, Observable.flatMapAsync(async (x) => await Promise.resolve(x)))), describe("forkMerge", test("with pure src and inner runnables with side-effects", () => {
     const env_16 = { stack: [], error: void 0, hasError: false };
     try {
-        const scheduler = __addDisposableResource(env_16, HostScheduler.create(), false);
-        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forkMerge(Computation.concatMapIterable(Observable)(_ => [1, 2]), Computation.concatMapIterable(Observable)(_ => [3, 4])), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]));
+        const vts = __addDisposableResource(env_16, VirtualTimeScheduler.create(), false);
+        const result = [];
+        pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forkMerge(Computation.concatMapIterable(Observable)(_ => [1, 2]), Computation.concatMapIterable(Observable)(_ => [3, 4])), Observable.forEach(bind(result.push, result)), Observable.subscribe(vts));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(result, expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]));
     }
     catch (e_16) {
         env_16.error = e_16;
@@ -448,10 +441,13 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
 }), testAsync("src with side-effects is only subscribed to once", async () => {
     const env_17 = { stack: [], error: void 0, hasError: false };
     try {
-        const scheduler = __addDisposableResource(env_17, HostScheduler.create(), false);
+        const vts = __addDisposableResource(env_17, VirtualTimeScheduler.create(), false);
+        const result = [];
         const sideEffect = mockFn();
         const src = pipe(0, Observable.fromValue(), Observable.forEach(sideEffect));
-        await pipeAsync(src, Observable.forkMerge(Computation.concatMapIterable(Observable)(_ => [1, 2, 3]), Computation.concatMapIterable(Observable)(_ => [4, 5, 6])), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3, 4, 5, 6]));
+        await pipeAsync(src, Observable.forkMerge(Computation.concatMapIterable(Observable)(_ => [1, 2, 3]), Computation.concatMapIterable(Observable)(_ => [4, 5, 6])), Observable.forEach(bind(result.push, result)), Observable.subscribe(vts));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
         pipe(sideEffect, expectToHaveBeenCalledTimes(1));
     }
     catch (e_17) {

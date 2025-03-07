@@ -45,8 +45,9 @@ import {
   SynchronousComputationWithSideEffects,
 } from "../../computations.js";
 import {
-  DispatcherLikeEvent_completed,
   DispatcherLike_complete,
+  DispatcherLike_state,
+  DispatcherState_completed,
   ObservableLike,
   PureSynchronousObservableLike,
   SchedulerLike_now,
@@ -61,6 +62,7 @@ import {
   Function1,
   Optional,
   Tuple2,
+  bind,
   bindMethod,
   error,
   ignore,
@@ -530,17 +532,6 @@ testModule(
         capacity: 1,
       });
 
-      let completed = false;
-
-      pipe(
-        stream,
-        EventSource.addEventHandler(ev => {
-          if (ev === DispatcherLikeEvent_completed) {
-            completed = true;
-          }
-        }),
-      );
-
       pipe(
         [1, 2, 2, 2, 2, 3, 3, 3, 4],
         Observable.fromReadonlyArray(),
@@ -548,7 +539,11 @@ testModule(
         Observable.toReadonlyArray(),
       );
 
-      pipe(completed, expectTrue("expected stream to be completed"));
+      pipe(
+        stream[DispatcherLike_state][StoreLike_value] ===
+          DispatcherState_completed,
+        expectTrue("expected stream to be completed"),
+      );
     }),
     test("when completed successfully from delayed source", () => {
       using vts = VirtualTimeScheduler.create();
@@ -557,17 +552,6 @@ testModule(
         capacity: 1,
       });
 
-      let completed = false;
-
-      pipe(
-        stream,
-        EventSource.addEventHandler(ev => {
-          if (ev === DispatcherLikeEvent_completed) {
-            completed = true;
-          }
-        }),
-      );
-
       pipe(
         [1, 2, 2, 2, 2, 3, 3, 3, 4],
         Observable.fromReadonlyArray({ delay: 1 }),
@@ -575,7 +559,11 @@ testModule(
         Observable.toReadonlyArray(),
       );
 
-      pipe(completed, expectTrue("expected stream to be completed"));
+      pipe(
+        stream[DispatcherLike_state][StoreLike_value] ===
+          DispatcherState_completed,
+        expectTrue("expected stream to be completed"),
+      );
     }),
   ),
   describe(
@@ -678,25 +666,30 @@ testModule(
   ),
   describe(
     "forkMerge",
-    testAsync(
-      "with pure src and inner runnables with side-effects",
-      async () => {
-        using scheduler = HostScheduler.create();
-        await pipeAsync(
-          [1, 2, 3],
-          Observable.fromReadonlyArray<number>({ delay: 1 }),
-          Observable.forkMerge<number, number>(
-            Computation.concatMapIterable(Observable)(_ => [1, 2]),
-            Computation.concatMapIterable(Observable)(_ => [3, 4]),
-          ),
-          Observable.toReadonlyArrayAsync(scheduler),
-          expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]),
-        );
-      },
-    ),
+    test("with pure src and inner runnables with side-effects", () => {
+      using vts = VirtualTimeScheduler.create();
+      const result: number[] = [];
+
+      pipe(
+        [1, 2, 3],
+        Observable.fromReadonlyArray<number>({ delay: 1 }),
+        Observable.forkMerge<number, number>(
+          Computation.concatMapIterable(Observable)(_ => [1, 2]),
+          Computation.concatMapIterable(Observable)(_ => [3, 4]),
+        ),
+        Observable.forEach(bind(result.push, result)),
+        Observable.subscribe(vts),
+      );
+
+      vts[VirtualTimeSchedulerLike_run]();
+
+      pipe(result, expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]));
+    }),
 
     testAsync("src with side-effects is only subscribed to once", async () => {
-      using scheduler = HostScheduler.create();
+      using vts = VirtualTimeScheduler.create();
+      const result: number[] = [];
+
       const sideEffect = mockFn();
       const src = pipe(
         0,
@@ -710,10 +703,13 @@ testModule(
           Computation.concatMapIterable(Observable)(_ => [1, 2, 3]),
           Computation.concatMapIterable(Observable)(_ => [4, 5, 6]),
         ),
-        Observable.toReadonlyArrayAsync<number>(scheduler),
-        expectArrayEquals([1, 2, 3, 4, 5, 6]),
+        Observable.forEach(bind(result.push, result)),
+        Observable.subscribe(vts),
       );
 
+      vts[VirtualTimeSchedulerLike_run]();
+
+      pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
       pipe(sideEffect, expectToHaveBeenCalledTimes(1));
     }),
   ),

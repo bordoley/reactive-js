@@ -12,7 +12,6 @@
 
 ## Extended by
 
-- [`DispatcherLike`](../../concurrent/interfaces/DispatcherLike.md)
 - [`PublisherLike`](PublisherLike.md)
 - [`StoreLike`](StoreLike.md)
 

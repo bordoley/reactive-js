@@ -1,6 +1,6 @@
 /// <reference types="./Flowable.dispatchTo.d.ts" />
 
-import { DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, FlowableLike_flow, ObservableLike_observe, PauseableLike_pause, PauseableLike_resume, } from "../../../concurrent.js";
+import { DispatcherLike_state, DispatcherState_capacityExceeded, DispatcherState_completed, DispatcherState_ready, FlowableLike_flow, ObservableLike_observe, PauseableLike_pause, PauseableLike_resume, } from "../../../concurrent.js";
 import * as EventSource from "../../../events/EventSource.js";
 import { invoke, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -11,12 +11,12 @@ const Flowable_dispatchTo = (dispatcher) => (flowable) => Observable.create(obse
         backpressureStrategy: observer[QueueableLike_backpressureStrategy],
         capacity: observer[QueueableLike_capacity],
     }), Disposable.addTo(observer));
-    pipe(dispatcher, EventSource.addEventHandler(ev => {
-        if (ev === DispatcherLikeEvent_capacityExceeded ||
-            ev === DispatcherLikeEvent_completed) {
+    pipe(dispatcher[DispatcherLike_state], EventSource.addEventHandler(ev => {
+        if (ev === DispatcherState_capacityExceeded ||
+            ev === DispatcherState_completed) {
             flowed[PauseableLike_pause]();
         }
-        else if (ev === DispatcherLikeEvent_ready) {
+        else if (ev === DispatcherState_ready) {
             flowed[PauseableLike_resume]();
         }
     }), Disposable.addTo(observer));

@@ -7,21 +7,10 @@ import {
   unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
-  ComputationLike_isDeferred,
-  ComputationLike_isSynchronous,
-} from "../../computations.js";
-import {
   DispatcherLike,
-  DispatcherLikeEvent_capacityExceeded,
-  DispatcherLikeEvent_completed,
-  DispatcherLikeEvent_ready,
   DispatcherLike_complete,
-  DispatcherLike_isCompleted,
+  DispatcherLike_state,
 } from "../../concurrent.js";
-import {
-  EventListenerLike,
-  EventSourceLike_addEventListener,
-} from "../../events.js";
 import { none, returns } from "../../functions.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
@@ -49,13 +38,10 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
         instance: Pick<
           DispatcherLike,
           | typeof DispatcherLike_complete
-          | typeof DispatcherLike_isCompleted
-          | typeof EventSourceLike_addEventListener
+          | typeof DispatcherLike_state
           | typeof QueueableLike_backpressureStrategy
           | typeof QueueableLike_capacity
           | typeof QueueableLike_enqueue
-          | typeof ComputationLike_isSynchronous
-          | typeof ComputationLike_isDeferred
         > &
           TProperties,
         delegate: DispatcherLike<TReq>,
@@ -69,14 +55,9 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
         [DelegatingDispatcherMixin_delegate]: none,
       }),
       {
-        [ComputationLike_isDeferred]: false as const,
-        [ComputationLike_isSynchronous]: false as const,
-
-        get [DispatcherLike_isCompleted]() {
+        get [DispatcherLike_state]() {
           unsafeCast<TProperties>(this);
-          return this[DelegatingDispatcherMixin_delegate][
-            DispatcherLike_isCompleted
-          ];
+          return this[DelegatingDispatcherMixin_delegate][DispatcherLike_state];
         },
 
         get [QueueableLike_backpressureStrategy]() {
@@ -101,19 +82,6 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
 
         [DispatcherLike_complete](this: TProperties) {
           this[DelegatingDispatcherMixin_delegate][DispatcherLike_complete]();
-        },
-
-        [EventSourceLike_addEventListener](
-          this: TProperties,
-          listener: EventListenerLike<
-            | typeof DispatcherLikeEvent_ready
-            | typeof DispatcherLikeEvent_capacityExceeded
-            | typeof DispatcherLikeEvent_completed
-          >,
-        ): void {
-          this[DelegatingDispatcherMixin_delegate][
-            EventSourceLike_addEventListener
-          ](listener);
         },
       },
     ),

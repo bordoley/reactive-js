@@ -17,16 +17,19 @@ import {
   QueueableLike,
 } from "./utils.js";
 
-export const DispatcherLikeEvent_ready = Symbol("DispatcherLikeEvent_ready");
-export const DispatcherLikeEvent_capacityExceeded = Symbol(
-  "DispatcherLikeEvent_capacityExceeded",
+export const DispatcherState_ready = Symbol("DispatcherState_ready");
+export const DispatcherState_capacityExceeded = Symbol(
+  "DispatcherState_capacityExceeded",
 );
-export const DispatcherLikeEvent_completed = Symbol(
-  "DispatcherLikeEvent_completed",
-);
+export const DispatcherState_completed = Symbol("DispatcherState_completed");
+
+export type DispatcherState =
+  | typeof DispatcherState_ready
+  | typeof DispatcherState_capacityExceeded
+  | typeof DispatcherState_completed;
 
 export const DispatcherLike_complete = Symbol("DispatcherLike_complete");
-export const DispatcherLike_isCompleted = Symbol("DispatcherLike_isCompleted");
+export const DispatcherLike_state = Symbol("DispatcherLike_state");
 
 /**
  * A `QueueableLike` type that consumes enqueued events to
@@ -36,13 +39,8 @@ export const DispatcherLike_isCompleted = Symbol("DispatcherLike_isCompleted");
  */
 export interface DispatcherLike<T = unknown>
   extends QueueableLike<T>,
-    EventSourceLike<
-      | typeof DispatcherLikeEvent_ready
-      | typeof DispatcherLikeEvent_capacityExceeded
-      | typeof DispatcherLikeEvent_completed
-    >,
     DisposableLike {
-  readonly [DispatcherLike_isCompleted]: boolean;
+  readonly [DispatcherLike_state]: StoreLike<DispatcherState>;
 
   /**
    * Communicates to the dispatcher that no more events will be enqueued.

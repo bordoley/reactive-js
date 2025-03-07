@@ -35,6 +35,7 @@
 
 ## Type Aliases
 
+- [DispatcherState](type-aliases/DispatcherState.md)
 - [StreamOf](type-aliases/StreamOf.md)
 
 ## Variables
@@ -43,10 +44,10 @@
 - [CacheLike\_get](variables/CacheLike_get.md)
 - [ContinuationContextLike\_yield](variables/ContinuationContextLike_yield.md)
 - [DispatcherLike\_complete](variables/DispatcherLike_complete.md)
-- [DispatcherLike\_isCompleted](variables/DispatcherLike_isCompleted.md)
-- [DispatcherLikeEvent\_capacityExceeded](variables/DispatcherLikeEvent_capacityExceeded.md)
-- [DispatcherLikeEvent\_completed](variables/DispatcherLikeEvent_completed.md)
-- [DispatcherLikeEvent\_ready](variables/DispatcherLikeEvent_ready.md)
+- [DispatcherLike\_state](variables/DispatcherLike_state.md)
+- [DispatcherState\_capacityExceeded](variables/DispatcherState_capacityExceeded.md)
+- [DispatcherState\_completed](variables/DispatcherState_completed.md)
+- [DispatcherState\_ready](variables/DispatcherState_ready.md)
 - [FlowableLike\_flow](variables/FlowableLike_flow.md)
 - [ObservableLike\_observe](variables/ObservableLike_observe.md)
 - [ObserverLike\_notify](variables/ObserverLike_notify.md)

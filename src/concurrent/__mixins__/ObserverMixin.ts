@@ -8,17 +8,14 @@ import {
   unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
-  ComputationLike_isDeferred,
-  ComputationLike_isSynchronous,
-} from "../../computations.js";
-import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
-  DispatcherLikeEvent_capacityExceeded,
-  DispatcherLikeEvent_completed,
-  DispatcherLikeEvent_ready,
   DispatcherLike_complete,
-  DispatcherLike_isCompleted,
+  DispatcherLike_state,
+  DispatcherState,
+  DispatcherState_capacityExceeded,
+  DispatcherState_completed,
+  DispatcherState_ready,
   ObserverLike,
   ObserverLike_notify,
   SchedulerLike,
@@ -29,25 +26,10 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../concurrent.js";
-import * as Publisher from "../../events/Publisher.js";
-import {
-  EventListenerLike,
-  EventListenerLike_notify,
-  EventSourceLike,
-  EventSourceLike_addEventListener,
-  PublisherLike,
-} from "../../events.js";
-import {
-  Optional,
-  SideEffect1,
-  bind,
-  call,
-  none,
-  pipe,
-  returns,
-} from "../../functions.js";
+import * as WritableStore from "../../events/WritableStore.js";
+import { StoreLike_value, WritableStoreLike } from "../../events.js";
+import { SideEffect1, call, none, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
-import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import QueueMixin from "../../utils/__mixins__/QueueMixin.js";
 import SerialDisposableMixin from "../../utils/__mixins__/SerialDisposableMixin.js";
 import {
@@ -77,18 +59,10 @@ const ObserverMixin: <T>() => Mixin2<
   DisposableLike
 > = /*@__PURE__*/ (<T>() => {
   const ObserverMixin_scheduler = Symbol("ObserverMixin_scheduler");
-  const ObserverMixin_publisher = Symbol("ObserverMixin_publisher");
 
   type TProperties = {
-    [DispatcherLike_isCompleted]: boolean;
     [ObserverMixin_scheduler]: SchedulerLike;
-    [ObserverMixin_publisher]: Optional<
-      PublisherLike<
-        | typeof DispatcherLikeEvent_ready
-        | typeof DispatcherLikeEvent_capacityExceeded
-        | typeof DispatcherLikeEvent_completed
-      >
-    >;
+    [DispatcherLike_state]: WritableStoreLike<DispatcherState>;
   };
 
   const scheduleDrainQueue = (
@@ -108,12 +82,14 @@ const ObserverMixin: <T>() => Mixin2<
           }
         }
 
-        if (observer[DispatcherLike_isCompleted]) {
+        if (
+          observer[DispatcherLike_state][StoreLike_value] ===
+          DispatcherState_completed
+        ) {
           observer[DisposableLike_dispose]();
         } else {
-          observer[ObserverMixin_publisher]?.[EventListenerLike_notify](
-            DispatcherLikeEvent_ready,
-          );
+          observer[DispatcherLike_state][StoreLike_value] =
+            DispatcherState_ready;
         }
       };
 
@@ -123,10 +99,6 @@ const ObserverMixin: <T>() => Mixin2<
   };
 
   const queueProtoype = getPrototype(QueueMixin<T>());
-
-  function onPublisherDisposed(this: TProperties) {
-    this[ObserverMixin_publisher] = none;
-  }
 
   return returns(
     mix<
@@ -138,9 +110,6 @@ const ObserverMixin: <T>() => Mixin2<
           | typeof ObserverLike_notify
           | typeof DispatcherLike_complete
           | typeof QueueableLike_enqueue
-          | typeof EventSourceLike_addEventListener
-          | typeof ComputationLike_isSynchronous
-          | typeof ComputationLike_isDeferred
         >,
       DisposableLike,
       SchedulerLike,
@@ -159,9 +128,6 @@ const ObserverMixin: <T>() => Mixin2<
             | typeof ObserverLike_notify
             | typeof DispatcherLike_complete
             | typeof QueueableLike_enqueue
-            | typeof EventSourceLike_addEventListener
-            | typeof ComputationLike_isSynchronous
-            | typeof ComputationLike_isDeferred
           > &
           TProperties,
         scheduler: SchedulerLike,
@@ -182,17 +148,18 @@ const ObserverMixin: <T>() => Mixin2<
           (scheduler as unknown as TProperties)[ObserverMixin_scheduler] ??
           scheduler;
 
+        instance[DispatcherLike_state] = pipe(
+          WritableStore.create<DispatcherState>(DispatcherState_ready),
+          Disposable.addTo(instance),
+        );
+
         return instance;
       },
       props<TProperties>({
-        [DispatcherLike_isCompleted]: false,
+        [DispatcherLike_state]: none,
         [ObserverMixin_scheduler]: none,
-        [ObserverMixin_publisher]: none,
       }),
       {
-        [ComputationLike_isDeferred]: false as const,
-        [ComputationLike_isSynchronous]: false as const,
-
         get [SchedulerLike_inContinuation]() {
           unsafeCast<TProperties>(this);
           return this[ObserverMixin_scheduler][SchedulerLike_inContinuation];
@@ -240,26 +207,24 @@ const ObserverMixin: <T>() => Mixin2<
             SerialDisposableLike,
           next: T,
         ): boolean {
+          let result = true;
           if (
-            !this[DispatcherLike_isCompleted] &&
+            !(
+              this[DispatcherLike_state][StoreLike_value] ===
+              DispatcherState_completed
+            ) &&
             !this[DisposableLike_isDisposed]
           ) {
-            const result = call(
-              queueProtoype[QueueableLike_enqueue],
-              this,
-              next,
-            );
+            result = call(queueProtoype[QueueableLike_enqueue], this, next);
 
             if (!result) {
-              this[ObserverMixin_publisher]?.[EventListenerLike_notify](
-                DispatcherLikeEvent_capacityExceeded,
-              );
+              this[DispatcherLike_state][StoreLike_value] =
+                DispatcherState_capacityExceeded;
             }
 
             scheduleDrainQueue(this);
-            return result;
           }
-          return true;
+          return result;
         },
 
         [DispatcherLike_complete](
@@ -268,14 +233,11 @@ const ObserverMixin: <T>() => Mixin2<
             QueueLike<T> &
             SerialDisposableLike,
         ) {
-          const isCompleted = this[DispatcherLike_isCompleted];
-          this[DispatcherLike_isCompleted] = true;
-
-          if (!isCompleted) {
-            this[ObserverMixin_publisher]?.[EventListenerLike_notify](
-              DispatcherLikeEvent_completed,
-            );
-          }
+          const isCompleted =
+            this[DispatcherLike_state][StoreLike_value] ===
+            DispatcherState_completed;
+          this[DispatcherLike_state][StoreLike_value] =
+            DispatcherState_completed;
 
           if (
             this[SerialDisposableLike_current][DisposableLike_isDisposed] &&
@@ -289,35 +251,6 @@ const ObserverMixin: <T>() => Mixin2<
           this: ObserverLike,
           _: T,
         ) {}),
-
-        [EventSourceLike_addEventListener](
-          this: EventSourceLike<
-            | typeof DispatcherLikeEvent_ready
-            | typeof DispatcherLikeEvent_capacityExceeded
-            | typeof DispatcherLikeEvent_completed
-          > &
-            TProperties &
-            DisposableLike,
-          listener: EventListenerLike<
-            | typeof DispatcherLikeEvent_ready
-            | typeof DispatcherLikeEvent_capacityExceeded
-            | typeof DispatcherLikeEvent_completed
-          >,
-        ): void {
-          const publisher =
-            this[ObserverMixin_publisher] ??
-            (() => {
-              const publisher = pipe(
-                Publisher.create({ autoDispose: true }),
-                Disposable.addTo(this),
-                DisposableContainer.onDisposed(bind(onPublisherDisposed, this)),
-              );
-              this[ObserverMixin_publisher] = publisher;
-              return publisher;
-            })();
-
-          publisher[EventSourceLike_addEventListener](listener);
-        },
       },
     ),
   );
