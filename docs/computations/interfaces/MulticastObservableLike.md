@@ -15,7 +15,7 @@
 - [`SubjectLike`](SubjectLike.md)
 - [`PauseableObservableLike`](PauseableObservableLike.md)
 - [`StreamLike`](StreamLike.md)
-- [`WindowLocationLike`](../../integrations/web/interfaces/WindowLocationLike.md)
+- [`WindowLocationLike`](../../web/interfaces/WindowLocationLike.md)
 
 ## Type Parameters
 

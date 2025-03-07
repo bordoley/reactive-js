@@ -71,18 +71,11 @@
 
     "./functions": "./functions.js",
 
-    "./integrations/node/FlowableStream": "./integrations/node/FlowableStream.js",
-    "./integrations/react": "./integrations/react.js",
-    "./integrations/react/Scheduler": "./integrations/react/Scheduler.js",
-    "./integrations/react/web": "./integrations/react/web.js",
-    "./integrations/svelte": "./integrations/svelte.js",
-    "./integrations/web": "./integrations/web.js",
-    "./integrations/web/effects": "./integrations/web/effects.js",
-    "./integrations/web/AnimationFrameScheduler": "./integrations/web/AnimationFrameScheduler.js",
-    "./integrations/web/Element": "./integrations/web/Element.js",
-    "./integrations/web/PostTaskScheduler": "./integrations/web/PostTaskScheduler.js",
-    "./integrations/web/ServerSideEventSource": "./integrations/web/ServerSideEventSource.js",
-    "./integrations/web/WindowLocation": "./integrations/web/WindowLocation.js",
+    "./node/FlowableStream": "./node/FlowableStream.js",
+
+    "./react": "./react.js",
+    "./react/Scheduler": "./react/Scheduler.js",
+    "./react/web": "./react/web.js",
 
     "./utils": "./utils.js",
     "./utils/Disposable": "./utils/Disposable.js",
@@ -91,7 +84,15 @@
     "./utils/PauseableScheduler": "./utils/PauseableScheduler.js",
     "./utils/Queue": "./utils/Queue.js",
     "./utils/SerialDisposable": "./utils/SerialDisposable.js",
-    "./utils/VirtualTimeScheduler": "./utils/VirtualTimeScheduler.js"
+    "./utils/VirtualTimeScheduler": "./utils/VirtualTimeScheduler.js",
+
+    "./web": "./web.js",
+    "./web/effects": "./web/effects.js",
+    "./web/AnimationFrameScheduler": "./web/AnimationFrameScheduler.js",
+    "./web/Element": "./web/Element.js",
+    "./web/PostTaskScheduler": "./web/PostTaskScheduler.js",
+    "./web/ServerSideEventSource": "./web/ServerSideEventSource.js",
+    "./web/WindowLocation": "./web/WindowLocation.js"
   },
   "gitHead": "c83b94619ce24d1a2605528963f162f51b49ea83"
 }

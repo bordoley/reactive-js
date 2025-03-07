@@ -16,9 +16,7 @@
     "@rollup/plugin-typescript": "11.0.0",
     "@types/react": "18.2.24",
     "@types/react-dom": "18.0.11",
-    "rollup": "3.9.1",
-    "rollup-plugin-svelte": "7.1.4",
-    "svelte": "3.57.0"
+    "rollup": "3.9.1"
   },
   "scripts": {
     "serve": "yarn build && npx http-server",
