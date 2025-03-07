@@ -8,14 +8,17 @@ import {
   useState,
 } from "react";
 import { nullObject } from "../__internal__/constants.js";
-import * as Cache from "../concurrent/Cache.js";
-import * as Observable from "../concurrent/Observable.js";
-import * as Subject from "../concurrent/Subject.js";
+import * as Cache from "../computations/Cache.js";
+import * as EventSource from "../computations/EventSource.js";
+import * as Observable from "../computations/Observable.js";
+import * as Subject from "../computations/Subject.js";
 import {
   CacheLike,
   DeferredObservableLike,
   DispatcherLike,
   DispatcherLike_complete,
+  EventListenerLike_notify,
+  EventSourceLike,
   FlowableLike,
   FlowableLike_flow,
   MulticastObservableLike,
@@ -25,17 +28,12 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,
+  StoreLike,
+  StoreLike_value,
   StreamOf,
   StreamableLike,
   StreamableLike_stream,
-} from "../concurrent.js";
-import * as EventSource from "../events/EventSource.js";
-import {
-  EventListenerLike_notify,
-  EventSourceLike,
-  StoreLike,
-  StoreLike_value,
-} from "../events.js";
+} from "../computations.js";
 import {
   Factory,
   Function1,

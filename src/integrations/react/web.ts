@@ -10,15 +10,15 @@ import {
 import { nullObject } from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { ReadonlyObjectMapLike } from "../../collections.js";
-import * as Streamable from "../../concurrent/Streamable.js";
+import * as EventSource from "../../computations/EventSource.js";
+import * as Streamable from "../../computations/Streamable.js";
 import {
   AnimationGroupStreamLike,
   AnimationStreamLike,
+  EventSourceLike,
   PureSynchronousObservableLike,
-  SchedulerLike,
-} from "../../concurrent.js";
-import * as EventSource from "../../events/EventSource.js";
-import { EventSourceLike, StoreLike_value } from "../../events.js";
+  StoreLike_value,
+} from "../../computations.js";
 import {
   Function1,
   Optional,
@@ -32,6 +32,7 @@ import {
   pipe,
   pipeSomeLazy,
 } from "../../functions.js";
+import { SchedulerLike } from "../../utils.js";
 import {
   useDisposable,
   useListen,

@@ -5,8 +5,11 @@ import {
   Map_set,
   Map_size,
 } from "../../../../__internal__/constants.js";
-import * as Publisher from "../../../../events/Publisher.js";
-import { EventListenerLike_notify, PublisherLike } from "../../../../events.js";
+import * as Publisher from "../../../../computations/Publisher.js";
+import {
+  EventListenerLike_notify,
+  PublisherLike,
+} from "../../../../computations.js";
 import {
   Optional,
   isNone,

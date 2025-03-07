@@ -1,4 +1,4 @@
-import * as EventSource from "../../../../events/EventSource.js";
+import * as EventSource from "../../../../computations/EventSource.js";
 import { SideEffect1, compose } from "../../../../functions.js";
 import { ScrollValue } from "../../../web.js";
 import type * as Element from "../../Element.js";

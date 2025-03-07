@@ -1,6 +1,7 @@
 import { nullObject } from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { ReadonlyObjectMapLike } from "../../collections.js";
+import * as EventSource from "../../computations/EventSource.js";
 import {
   __constant,
   __memo,
@@ -8,16 +9,14 @@ import {
   __state,
   __stream,
   __using,
-} from "../../concurrent/Observable/effects.js";
-import * as Streamable from "../../concurrent/Streamable.js";
+} from "../../computations/Observable/effects.js";
+import * as Streamable from "../../computations/Streamable.js";
 import {
   AnimationGroupStreamLike,
   AnimationStreamLike,
+  EventSourceLike,
   PureSynchronousObservableLike,
-  SchedulerLike,
-} from "../../concurrent.js";
-import * as EventSource from "../../events/EventSource.js";
-import { EventSourceLike } from "../../events.js";
+} from "../../computations.js";
 import {
   Function1,
   Optional,
@@ -34,6 +33,7 @@ import {
   DisposableLike,
   QueueableLike,
   QueueableLike_enqueue,
+  SchedulerLike,
 } from "../../utils.js";
 import { CSSStyleMapLike } from "../web.js";
 import * as AnimationFrameScheduler from "./AnimationFrameScheduler.js";

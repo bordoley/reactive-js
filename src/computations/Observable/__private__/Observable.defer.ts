@@ -1,0 +1,26 @@
+import {
+  ComputationLike_isDeferred,
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+  MulticastObservableLike,
+  ObservableLike_observe,
+} from "../../../computations.js";
+import { Factory, invoke, pipe } from "../../../functions.js";
+import type * as Observable from "../../Observable.js";
+import Observable_createWithConfig from "./Observable.createWithConfig.js";
+
+const Observable_defer: Observable.Signature["defer"] = <T>(
+  factory: Factory<MulticastObservableLike<T>>,
+) =>
+  Observable_createWithConfig<T>(
+    observer => {
+      pipe(factory(), invoke(ObservableLike_observe, observer));
+    },
+    {
+      [ComputationLike_isDeferred]: true,
+      [ComputationLike_isPure]: true,
+      [ComputationLike_isSynchronous]: false,
+    },
+  );
+
+export default Observable_defer;

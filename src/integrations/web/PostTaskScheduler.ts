@@ -10,7 +10,9 @@ import {
   mixInstanceFactory,
   props,
 } from "../../__internal__/mixins.js";
-import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
+import { bindMethod, ignore, newInstance, pipe } from "../../functions.js";
+import * as DisposableContainer from "../../utils/DisposableContainer.js";
+import CurrentTimeSchedulerMixin from "../../utils/__mixins__/CurrentTimeSchedulerMixin.js";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationLike_dueTime,
@@ -18,15 +20,13 @@ import {
   SchedulerMixinHostLike,
   SchedulerMixinHostLike_schedule,
   SchedulerMixinHostLike_shouldYield,
-} from "../../concurrent/__mixins__/SchedulerMixin.js";
+} from "../../utils/__mixins__/SchedulerMixin.js";
 import {
+  DisposableLike,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
-} from "../../concurrent.js";
-import { bindMethod, ignore, newInstance, pipe } from "../../functions.js";
-import * as DisposableContainer from "../../utils/DisposableContainer.js";
-import { DisposableLike } from "../../utils.js";
+} from "../../utils.js";
 
 declare var globalThis: {
   scheduler: {

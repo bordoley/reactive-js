@@ -14,6 +14,8 @@ import {
   DeferredComputationOf,
   DeferredComputationWithSideEffectsLike,
   DeferredComputationWithSideEffectsOf,
+  EventListenerLike,
+  EventListenerLike_notify,
   HigherOrderComputationOperator,
   HigherOrderInnerComputationLike,
   HigherOrderInnerComputationOf,
@@ -34,7 +36,6 @@ import {
   SynchronousComputationWithSideEffectsLike,
   SynchronousComputationWithSideEffectsOf,
 } from "../computations.js";
-import { EventListenerLike, EventListenerLike_notify } from "../events.js";
 import {
   Function1,
   TypePredicate,

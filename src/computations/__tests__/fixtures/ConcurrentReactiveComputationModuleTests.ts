@@ -10,6 +10,7 @@ import {
   testAsync,
 } from "../../../__internal__/testing.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
+import * as Observable from "../../../computations/Observable.js";
 import {
   ComputationOf,
   ComputationType,
@@ -21,18 +22,11 @@ import {
   ConcurrentReactiveComputationModule,
   DeferredComputationWithSideEffectsOf,
   MulticastComputationOf,
+  ObservableLike,
   PureDeferredComputationOf,
   PureSynchronousComputationOf,
   SynchronousComputationWithSideEffectsOf,
 } from "../../../computations.js";
-import * as HostScheduler from "../../../concurrent/HostScheduler.js";
-import * as Observable from "../../../concurrent/Observable.js";
-import * as VirtualTimeScheduler from "../../../concurrent/VirtualTimeScheduler.js";
-import {
-  ObservableLike,
-  SchedulerLike,
-  VirtualTimeSchedulerLike_run,
-} from "../../../concurrent.js";
 import {
   Function1,
   Optional,
@@ -50,6 +44,9 @@ import {
   tuple,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as HostScheduler from "../../../utils/HostScheduler.js";
+import * as VirtualTimeScheduler from "../../../utils/VirtualTimeScheduler.js";
+import { SchedulerLike, VirtualTimeSchedulerLike_run } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
 import AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests from "./operators/AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests.js";
