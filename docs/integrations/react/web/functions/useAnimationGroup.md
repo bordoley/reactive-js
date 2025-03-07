@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **useAnimationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>\>
+> **useAnimationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../computations/Streamable/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>\>
 
 ### Type Parameters
 
@@ -34,11 +34,11 @@
 
 ### Returns
 
-[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>\>
+[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../computations/Streamable/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>\>
 
 ## Call Signature
 
-> **useAnimationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
+> **useAnimationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../computations/Streamable/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
 
 ### Type Parameters
 
@@ -66,4 +66,4 @@
 
 ### Returns
 
-[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
+[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../computations/Streamable/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>

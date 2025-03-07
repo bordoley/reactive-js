@@ -22,7 +22,7 @@
 
 #### cacheContext
 
-`Context`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<[`CacheLike`](../../../computations/interfaces/CacheLike.md)\<`T`\>\>\>
+`Context`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<[`CacheLike`](../../../computations/Cache/interfaces/CacheLike.md)\<`T`\>\>\>
 
 #### capacity?
 

@@ -59,7 +59,7 @@ import * as Dictionary from "../../collections/Dictionary.js";
 import { DictionaryLike_get } from "../../collections.js";
 import * as Observable from "../../computations/Observable.js";
 import * as Streamable from "../../computations/Streamable.js";
-import { AnimationStreamLike_animation, DispatcherLike_complete, DispatcherLike_state, DispatcherState_completed, StoreLike_value, StreamableLike_stream, } from "../../computations.js";
+import { DispatcherLike_complete, DispatcherLike_state, DispatcherState_completed, StoreLike_value, StreamableLike_stream, } from "../../computations.js";
 import { bindMethod, invoke, none, pipe, pipeSome, returns, } from "../../functions.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import { DropLatestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, VirtualTimeSchedulerLike_run, } from "../../utils.js";
@@ -71,7 +71,7 @@ testModule("Streamable", describe("animation", test("integration", () => {
         const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }), false);
         const stream = Streamable.animation(Observable.keyFrame(500))[StreamableLike_stream](vts);
         let result = 0;
-        pipeSome(stream[AnimationStreamLike_animation], EventSource.addEventHandler(ev => {
+        pipeSome(stream, EventSource.addEventHandler(ev => {
             result = ev;
         }));
         stream[QueueableLike_enqueue](none);

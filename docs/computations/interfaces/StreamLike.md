@@ -14,8 +14,8 @@ Represents a duplex stream
 
 ## Extended by
 
-- [`AnimationGroupStreamLike`](AnimationGroupStreamLike.md)
-- [`AnimationStreamLike`](AnimationStreamLike.md)
+- [`AnimationGroupStreamLike`](../Streamable/interfaces/AnimationGroupStreamLike.md)
+- [`AnimationStreamLike`](../Streamable/interfaces/AnimationStreamLike.md)
 
 ## Type Parameters
 

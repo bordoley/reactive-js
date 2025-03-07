@@ -13,8 +13,6 @@ import { ReadonlyObjectMapLike } from "../../collections.js";
 import * as EventSource from "../../computations/EventSource.js";
 import * as Streamable from "../../computations/Streamable.js";
 import {
-  AnimationGroupStreamLike,
-  AnimationStreamLike,
   EventSourceLike,
   PureSynchronousObservableLike,
   StoreLike_value,
@@ -77,7 +75,7 @@ interface ReactWebModule {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly animationScheduler?: SchedulerLike;
     },
-  ): Optional<AnimationStreamLike<unknown, T>>;
+  ): Optional<Streamable.AnimationStreamLike<unknown, T>>;
   useAnimation<TEvent, T>(
     animation:
       | Function1<TEvent, PureSynchronousObservableLike<T>>
@@ -86,7 +84,7 @@ interface ReactWebModule {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly animationScheduler?: SchedulerLike;
     },
-  ): Optional<AnimationStreamLike<TEvent, T>>;
+  ): Optional<Streamable.AnimationStreamLike<TEvent, T>>;
 
   useAnimationGroup<T, TKey extends string = string>(
     animationGroup: ReadonlyObjectMapLike<
@@ -97,7 +95,7 @@ interface ReactWebModule {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly animationScheduler?: SchedulerLike;
     },
-  ): Optional<AnimationGroupStreamLike<unknown, TKey, T>>;
+  ): Optional<Streamable.AnimationGroupStreamLike<unknown, TKey, T>>;
   useAnimationGroup<T, TKey extends string, TEvent>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
@@ -108,7 +106,7 @@ interface ReactWebModule {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly animationScheduler?: SchedulerLike;
     },
-  ): Optional<AnimationGroupStreamLike<TEvent, TKey, T>>;
+  ): Optional<Streamable.AnimationGroupStreamLike<TEvent, TKey, T>>;
 
   /**
    */
@@ -127,7 +125,7 @@ interface ReactWebModule {
       readonly precision?: number;
     },
   ): Optional<
-    AnimationStreamLike<
+    Streamable.AnimationStreamLike<
       Function1<
         number,
         | number

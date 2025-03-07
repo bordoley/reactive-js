@@ -16,7 +16,7 @@
 
 ### cache
 
-[`CacheLike`](../../interfaces/CacheLike.md)\<`T`\>
+[`CacheLike`](../interfaces/CacheLike.md)\<`T`\>
 
 ### key
 

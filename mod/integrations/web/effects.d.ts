@@ -1,5 +1,6 @@
 import { ReadonlyObjectMapLike } from "../../collections.js";
-import { AnimationGroupStreamLike, AnimationStreamLike, EventSourceLike, PureSynchronousObservableLike } from "../../computations.js";
+import * as Streamable from "../../computations/Streamable.js";
+import { EventSourceLike, PureSynchronousObservableLike } from "../../computations.js";
 import { Function1, Optional, SideEffect1 } from "../../functions.js";
 import { SchedulerLike } from "../../utils.js";
 import { CSSStyleMapLike } from "../web.js";
@@ -9,16 +10,16 @@ interface WebEffectsModule {
     __animationFrameScheduler(): SchedulerLike;
     __animation<T>(animation: PureSynchronousObservableLike<T>, options?: {
         animationScheduler: SchedulerLike;
-    }): AnimationStreamLike<unknown, T>;
+    }): Streamable.AnimationStreamLike<unknown, T>;
     __animation<TEvent, T>(animation: Function1<TEvent, PureSynchronousObservableLike<T>> | PureSynchronousObservableLike<T>, options?: {
         animationScheduler: SchedulerLike;
-    }): AnimationStreamLike<TEvent, T>;
+    }): Streamable.AnimationStreamLike<TEvent, T>;
     __animationGroup<T, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, PureSynchronousObservableLike<T>>, options?: {
         animationScheduler: SchedulerLike;
-    }): AnimationGroupStreamLike<unknown, TKey, T>;
+    }): Streamable.AnimationGroupStreamLike<unknown, TKey, T>;
     __animationGroup<T, TKey extends string, TEvent>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureSynchronousObservableLike<T>> | PureSynchronousObservableLike<T>>, options?: {
         animationScheduler: SchedulerLike;
-    }): AnimationGroupStreamLike<TEvent, TKey, T>;
+    }): Streamable.AnimationGroupStreamLike<TEvent, TKey, T>;
 }
 type Signature = WebEffectsModule;
 export declare const __animate: Signature["__animate"];

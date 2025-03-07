@@ -1,4 +1,3 @@
-import type { DictionaryLike, ReadonlyObjectMapLike } from "./collections.js";
 import type {
   Equality,
   Factory,
@@ -1247,34 +1246,3 @@ export interface StreamableLike<
 export type StreamOf<TStreamable extends StreamableLike> = ReturnType<
   TStreamable[typeof StreamableLike_stream]
 >;
-
-/**
- * @noInheritDoc
- */
-export interface AnimationGroupStreamLike<TEvent, TKey extends string, out T>
-  extends StreamLike<TEvent, boolean>,
-    DictionaryLike<TKey, EventSourceLike<T>>,
-    PauseableLike {}
-
-export const AnimationStreamLike_animation = Symbol(
-  "AnimationStreamLike_animation",
-);
-
-/**
- * @noInheritDoc
- */
-export interface AnimationStreamLike<TEvent, out T>
-  extends StreamLike<TEvent, boolean>, 
-    PauseableLike {
-  [AnimationStreamLike_animation]: EventSourceLike<T>;
-}
-
-export const CacheLike_get = Symbol("CacheLike_get");
-
-/**
- * @noInheritDoc
- */
-export interface CacheLike<T>
-  extends DispatcherLike<ReadonlyObjectMapLike<string, Updater<Optional<T>>>> {
-  [CacheLike_get](index: string): ObservableLike<T>;
-}

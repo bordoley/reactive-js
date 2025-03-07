@@ -6,4 +6,4 @@
 
 # Type Alias: Signature
 
-> **Signature**: [`CacheModule`](../interfaces/CacheModule.md)
+> **Signature**: `CacheModule`

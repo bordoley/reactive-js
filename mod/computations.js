@@ -46,5 +46,3 @@ export const ObserverLike_notify = Symbol("ObserverLike_notify");
 export const ObservableLike_observe = Symbol("ObservableLike_observe");
 export const FlowableLike_flow = Symbol("FlowableLike_flow");
 export const StreamableLike_stream = Symbol("StreamableLike_stream");
-export const AnimationStreamLike_animation = Symbol("AnimationStreamLike_animation");
-export const CacheLike_get = Symbol("CacheLike_get");

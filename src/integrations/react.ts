@@ -13,7 +13,6 @@ import * as EventSource from "../computations/EventSource.js";
 import * as Observable from "../computations/Observable.js";
 import * as Subject from "../computations/Subject.js";
 import {
-  CacheLike,
   DeferredObservableLike,
   DispatcherLike,
   DispatcherLike_complete,
@@ -59,7 +58,7 @@ import * as ReactScheduler from "./react/Scheduler.js";
 
 interface ReactModule {
   CacheProvider<T>(props: {
-    readonly cacheContext: React.Context<Optional<CacheLike<T>>>;
+    readonly cacheContext: React.Context<Optional<Cache.CacheLike<T>>>;
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
@@ -500,7 +499,7 @@ export const useFlow: Signature["useFlow"] = <T>(
 };
 
 export const CacheProvider: Signature["CacheProvider"] = <T>(props: {
-  readonly cacheContext: React.Context<Optional<CacheLike<T>>>;
+  readonly cacheContext: React.Context<Optional<Cache.CacheLike<T>>>;
   readonly priority?: 1 | 2 | 3 | 4 | 5;
   readonly backpressureStrategy?: BackpressureStrategy;
   readonly capacity?: number;

@@ -6,7 +6,7 @@
 
 # Function: useSpring()
 
-> **useSpring**(`initialValue`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../computations/interfaces/AnimationStreamLike.md)\<[`Function1`](../../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `number`\>\>
+> **useSpring**(`initialValue`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../computations/Streamable/interfaces/AnimationStreamLike.md)\<[`Function1`](../../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `number`\>\>
 
 ## Parameters
 
@@ -38,4 +38,4 @@
 
 ## Returns
 
-[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../computations/interfaces/AnimationStreamLike.md)\<[`Function1`](../../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `number`\>\>
+[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../computations/Streamable/interfaces/AnimationStreamLike.md)\<[`Function1`](../../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `number`\>\>

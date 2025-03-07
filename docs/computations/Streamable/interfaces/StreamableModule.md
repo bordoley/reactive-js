@@ -44,7 +44,7 @@
 
 #### Call Signature
 
-> **animation**\<`T`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`void`, `T`\>\>
+> **animation**\<`T`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationStreamLike`](AnimationStreamLike.md)\<`void`, `T`\>\>
 
 ##### Type Parameters
 
@@ -64,11 +64,11 @@
 
 ##### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`void`, `T`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationStreamLike`](AnimationStreamLike.md)\<`void`, `T`\>\>
 
 #### Call Signature
 
-> **animation**\<`T`, `TEvent`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>\>
+> **animation**\<`T`, `TEvent`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](AnimationStreamLike.md)\<`TEvent`, `T`\>\>
 
 ##### Type Parameters
 
@@ -90,7 +90,7 @@
 
 ##### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](AnimationStreamLike.md)\<`TEvent`, `T`\>\>
 
 ***
 
@@ -98,7 +98,7 @@
 
 #### Call Signature
 
-> **animationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`void`, `TKey`, `T`\>\>
+> **animationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationGroupStreamLike`](AnimationGroupStreamLike.md)\<`void`, `TKey`, `T`\>\>
 
 ##### Type Parameters
 
@@ -120,11 +120,11 @@
 
 ##### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`void`, `TKey`, `T`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationGroupStreamLike`](AnimationGroupStreamLike.md)\<`void`, `TKey`, `T`\>\>
 
 #### Call Signature
 
-> **animationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
+> **animationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
 
 ##### Type Parameters
 
@@ -148,7 +148,7 @@
 
 ##### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](../../interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
 
 ***
 
@@ -190,7 +190,7 @@
 
 ### spring()
 
-> **spring**(`initialValue`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `number`\>\>
+> **spring**(`initialValue`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `boolean`, [`AnimationStreamLike`](AnimationStreamLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `number`\>\>
 
 #### Parameters
 
@@ -218,7 +218,7 @@
 
 #### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `number`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `boolean`, [`AnimationStreamLike`](AnimationStreamLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `number`\>\>
 
 ***
 

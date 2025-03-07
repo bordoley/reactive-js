@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **animation**\<`T`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`void`, `T`\>\>
+> **animation**\<`T`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationStreamLike`](../interfaces/AnimationStreamLike.md)\<`void`, `T`\>\>
 
 ### Type Parameters
 
@@ -28,11 +28,11 @@
 
 ### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`void`, `T`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationStreamLike`](../interfaces/AnimationStreamLike.md)\<`void`, `T`\>\>
 
 ## Call Signature
 
-> **animation**\<`T`, `TEvent`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>\>
+> **animation**\<`T`, `TEvent`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](../interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>\>
 
 ### Type Parameters
 
@@ -54,4 +54,4 @@
 
 ### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](../../interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](../interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>\>

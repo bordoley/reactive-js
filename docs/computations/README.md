@@ -8,9 +8,6 @@
 
 ## Interfaces
 
-- [AnimationGroupStreamLike](interfaces/AnimationGroupStreamLike.md)
-- [AnimationStreamLike](interfaces/AnimationStreamLike.md)
-- [CacheLike](interfaces/CacheLike.md)
 - [ComputationLike](interfaces/ComputationLike.md)
 - [ComputationModule](interfaces/ComputationModule.md)
 - [ComputationWithSideEffectsLike](interfaces/ComputationWithSideEffectsLike.md)
@@ -83,8 +80,6 @@
 
 ## Variables
 
-- [AnimationStreamLike\_animation](variables/AnimationStreamLike_animation.md)
-- [CacheLike\_get](variables/CacheLike_get.md)
 - [Computation\_baseOfT](variables/Computation_baseOfT.md)
 - [Computation\_deferredWithSideEffectsOfT](variables/Computation_deferredWithSideEffectsOfT.md)
 - [Computation\_multicastOfT](variables/Computation_multicastOfT.md)

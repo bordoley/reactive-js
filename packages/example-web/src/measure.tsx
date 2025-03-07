@@ -7,7 +7,6 @@ import {
   useMeasure,
   useSpring,
 } from "@reactive-js/core/integrations/react/web";
-import { AnimationStreamLike_animation } from "@reactive-js/core/computations";
 import { QueueableLike_enqueue } from "@reactive-js/core/utils";
 
 const Measure = () => {
@@ -25,70 +24,71 @@ const Measure = () => {
   const width =
     useObserve(
       pipeSomeLazy(
-        spring?.[AnimationStreamLike_animation],
+        spring,
         Observable.fromEventSource(),
         Observable.throttle<number>(50, { mode: "last" }),
       ),
       [spring],
     ) ?? 0;
 
-  const fillRef: React.Ref<HTMLDivElement> = useAnimate(
-    spring?.[AnimationStreamLike_animation],
-    value => ({ width: `${value}px` }),
-  );
+  const fillRef: React.Ref<HTMLDivElement> = useAnimate(spring, value => ({
+    width: `${value}px`,
+  }));
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        height: "100%",
-      }}
-    >
+    <>
       <div
-        ref={boxRef}
         style={{
-          position: "relative",
-          width: "1000px",
-          height: "50px",
-          cursor: "pointer",
-          borderRadius: "5px",
-          border: "2px solid #272727",
-          overflow: "hidden",
-        }}
-        onClick={() => {
-          updateState(f => !f);
+          display: "flex",
+          alignItems: "center",
+          height: "100%",
         }}
       >
         <div
-          ref={fillRef}
+          ref={boxRef}
           style={{
-            position: "absolute",
-            top: "0",
-            left: "0",
-            width: "0",
-            height: "100%",
-            background: "hotpink",
+            position: "relative",
+            width: "1000px",
+            height: "50px",
+            cursor: "pointer",
+            borderRadius: "5px",
+            border: "2px solid #272727",
+            overflow: "hidden",
           }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: "0",
-            left: "0",
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#272727",
+          onClick={() => {
+            updateState(f => !f);
           }}
         >
-          {Math.floor(width)}
+          <div
+            ref={fillRef}
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "0",
+              height: "100%",
+              background: "hotpink",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#272727",
+            }}
+          >
+            {Math.floor(width)}
+          </div>
         </div>
       </div>
-      {springIsAnimating ? "Animation is running" : ""}
-    </div>
+      <div> {springIsAnimating ? "Animation is running" : ""}</div>
+    </>
   );
 };
 

@@ -1,17 +1,18 @@
 /// <reference types="./Streamable.spring.d.ts" />
 
-import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
 import * as Publisher from "../../../computations/Publisher.js";
-import { AnimationStreamLike_animation, DeferredComputationWithSideEffects, EventListenerLike_notify, StreamableLike_stream, } from "../../../computations.js";
-import { compose, isNumber, isReadonlyArray, none, pipe, returns, scale, tuple, } from "../../../functions.js";
+import { DeferredComputationWithSideEffects, EventListenerLike_notify, StreamableLike_stream, } from "../../../computations.js";
+import { compose, isNumber, isReadonlyArray, pipe, returns, scale, tuple, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
 import { PauseableLike_resume, } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import * as Subject from "../../Subject.js";
+import DelegatingEventSourceMixin from "../../__mixins__/DelegatingEventSourceMixin.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 const SpringStream_create = /*@__PURE__*/ (() => {
     const ObservableModule = {
@@ -23,10 +24,9 @@ const SpringStream_create = /*@__PURE__*/ (() => {
         map: Observable.map,
         switchAll: Observable.switchAll,
     };
-    return mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin), function AnimationStream(instance, initialValue, scheduler, animationScheduler, springOptions, options) {
+    return mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin, DelegatingEventSourceMixin()), function AnimationStream(instance, initialValue, scheduler, animationScheduler, springOptions, options) {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
-        const publisher = (instance[AnimationStreamLike_animation] =
-            Publisher.create());
+        const publisher = Publisher.create();
         const accFeedbackStream = Subject.create({ replay: 1 });
         const operator = compose(Observable.withLatestFrom(accFeedbackStream, (updater, acc) => tuple(updater(acc), acc)), Computation.flatMap(ObservableModule, "switchAll")(([updated, acc]) => {
             const initialValue = isNumber(updated) || isReadonlyArray(updated)
@@ -53,13 +53,12 @@ const SpringStream_create = /*@__PURE__*/ (() => {
         }));
         init(StreamMixin(), instance, operator, scheduler, options);
         init(DelegatingPauseableMixin, instance, pauseableScheduler);
+        init(DelegatingEventSourceMixin(), instance, publisher);
         pipe(instance, Disposable.add(publisher), Disposable.add(accFeedbackStream), Disposable.add(pauseableScheduler));
         instance[PauseableLike_resume]();
         accFeedbackStream[EventListenerLike_notify](initialValue);
         return instance;
-    }, props({
-        [AnimationStreamLike_animation]: none,
-    }));
+    });
 })();
 const Streamable_spring = (initialValue, creationOptions) => ({
     [StreamableLike_stream]: (scheduler, options) => SpringStream_create(initialValue, scheduler, creationOptions?.animationScheduler ?? scheduler, creationOptions, options),

@@ -1,8 +1,7 @@
-import { ReadonlyObjectMapLike } from "../collections.js";
+import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
 import {
-  AnimationGroupStreamLike,
-  AnimationStreamLike,
   DeferredObservableLike,
+  EventSourceLike,
   PureDeferredObservableLike,
   PureSynchronousObservableLike,
   StreamLike,
@@ -16,7 +15,7 @@ import {
   Reducer,
   Updater,
 } from "../functions.js";
-import { SchedulerLike } from "../utils.js";
+import { PauseableLike, SchedulerLike } from "../utils.js";
 import Streamable_actionReducer from "./Streamable/__private__/Streamable.actionReducer.js";
 import Streamable_animation from "./Streamable/__private__/Streamable.animation.js";
 import Streamable_animationGroup from "./Streamable/__private__/Streamable.animationGroup.js";
@@ -25,6 +24,22 @@ import Streamable_identity from "./Streamable/__private__/Streamable.identity.js
 import Streamable_spring from "./Streamable/__private__/Streamable.spring.js";
 import Streamable_stateStore from "./Streamable/__private__/Streamable.stateStore.js";
 import Streamable_syncState from "./Streamable/__private__/Streamable.syncState.js";
+
+/**
+ * @noInheritDoc
+ */
+export interface AnimationGroupStreamLike<TEvent, TKey extends string, out T>
+  extends StreamLike<TEvent, boolean>,
+    DictionaryLike<TKey, EventSourceLike<T>>,
+    PauseableLike {}
+
+/**
+ * @noInheritDoc
+ */
+export interface AnimationStreamLike<TEvent, out T>
+  extends StreamLike<TEvent, boolean>,
+    EventSourceLike<T>,
+    PauseableLike {}
 
 /**
  * @noInheritDoc

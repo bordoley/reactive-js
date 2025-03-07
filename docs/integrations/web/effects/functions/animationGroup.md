@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **\_\_animationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>
+> **\_\_animationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`AnimationGroupStreamLike`](../../../../computations/Streamable/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>
 
 ### Type Parameters
 
@@ -30,11 +30,11 @@
 
 ### Returns
 
-[`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>
+[`AnimationGroupStreamLike`](../../../../computations/Streamable/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>
 
 ## Call Signature
 
-> **\_\_animationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>
+> **\_\_animationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`AnimationGroupStreamLike`](../../../../computations/Streamable/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>
 
 ### Type Parameters
 
@@ -58,4 +58,4 @@
 
 ### Returns
 
-[`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>
+[`AnimationGroupStreamLike`](../../../../computations/Streamable/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>
