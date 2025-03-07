@@ -14,7 +14,7 @@
 
 #### animation
 
-[`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<[`CSSStyleMapLike`](../../interfaces/CSSStyleMapLike.md)\>
+[`EventSourceLike`](../../../../computations/interfaces/EventSourceLike.md)\<[`CSSStyleMapLike`](../../interfaces/CSSStyleMapLike.md)\>
 
 ### Returns
 
@@ -32,7 +32,7 @@
 
 #### animation
 
-[`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<`T`\>
+[`EventSourceLike`](../../../../computations/interfaces/EventSourceLike.md)\<`T`\>
 
 #### selector
 

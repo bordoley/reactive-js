@@ -12,8 +12,8 @@
 
 ## Extended by
 
-- [`ObservableModule`](../../concurrent/Observable/interfaces/ObservableModule.md)
-- [`EventSourceModule`](../../events/EventSource/interfaces/EventSourceModule.md)
+- [`EventSourceModule`](../EventSource/interfaces/EventSourceModule.md)
+- [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
 
 ## Type Parameters
 

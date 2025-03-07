@@ -2,8 +2,8 @@ import {
   ContinuationContextLike_yield,
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
-} from "@reactive-js/core/concurrent";
-import * as VirtualTimeScheduler from "@reactive-js/core/concurrent/VirtualTimeScheduler";
+} from "@reactive-js/core/utils";
+import * as VirtualTimeScheduler from "@reactive-js/core/utils/VirtualTimeScheduler";
 
 class FromArrayTask<T> {
   private active = true;

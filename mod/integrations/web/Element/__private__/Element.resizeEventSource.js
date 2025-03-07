@@ -1,8 +1,8 @@
 /// <reference types="./Element.resizeEventSource.d.ts" />
 
 import { Map, Map_delete, Map_get, Map_set, Map_size, } from "../../../../__internal__/constants.js";
-import * as Publisher from "../../../../events/Publisher.js";
-import { EventListenerLike_notify } from "../../../../events.js";
+import * as Publisher from "../../../../computations/Publisher.js";
+import { EventListenerLike_notify, } from "../../../../computations.js";
 import { isNone, newInstance, none, pipe, } from "../../../../functions.js";
 import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 const Element_resizeEventSource = 

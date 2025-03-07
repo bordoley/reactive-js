@@ -6,7 +6,7 @@
 
 # Function: create()
 
-> **create**(`factory`): [`FlowableLike`](../../../../concurrent/interfaces/FlowableLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\>
+> **create**(`factory`): [`FlowableLike`](../../../../computations/interfaces/FlowableLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\>
 
 ## Parameters
 
@@ -16,4 +16,4 @@
 
 ## Returns
 
-[`FlowableLike`](../../../../concurrent/interfaces/FlowableLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\>
+[`FlowableLike`](../../../../computations/interfaces/FlowableLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\>

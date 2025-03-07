@@ -1,7 +1,6 @@
 /// <reference types="./Computation.d.ts" />
 
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../computations.js";
-import { EventListenerLike_notify } from "../events.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, EventListenerLike_notify, } from "../computations.js";
 import { alwaysFalse, bindMethod, debug as breakPoint, compose, log as consoleLog, increment, pickUnsafe, pipe, returns, } from "../functions.js";
 export const areAllDeferred = (computations) => computations.every(isDeferred);
 export const areAllMulticasted = (computations) => computations.every(isMulticasted);

@@ -12,7 +12,7 @@
 
 ## Extended by
 
-- [`EventSourceLike`](../../events/interfaces/EventSourceLike.md)
+- [`EventSourceLike`](EventSourceLike.md)
 
 ## Properties
 

@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **useAnimationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>\>
+> **useAnimationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>\>
 
 ### Type Parameters
 
@@ -20,13 +20,13 @@
 
 #### animationGroup
 
-[`ReadonlyObjectMapLike`](../../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureSynchronousObservableLike`](../../../../concurrent/interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
+[`ReadonlyObjectMapLike`](../../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureSynchronousObservableLike`](../../../../computations/interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
 
 #### options?
 
 ##### animationScheduler?
 
-[`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+[`SchedulerLike`](../../../../utils/interfaces/SchedulerLike.md)
 
 ##### priority?
 
@@ -34,11 +34,11 @@
 
 ### Returns
 
-[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>\>
+[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>\>
 
 ## Call Signature
 
-> **useAnimationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
+> **useAnimationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
 
 ### Type Parameters
 
@@ -52,13 +52,13 @@
 
 #### animationGroup
 
-[`ReadonlyObjectMapLike`](../../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureSynchronousObservableLike`](../../../../concurrent/interfaces/PureSynchronousObservableLike.md)\<`T`\> \| [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureSynchronousObservableLike`](../../../../concurrent/interfaces/PureSynchronousObservableLike.md)\<`T`\>\>\>
+[`ReadonlyObjectMapLike`](../../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureSynchronousObservableLike`](../../../../computations/interfaces/PureSynchronousObservableLike.md)\<`T`\> \| [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureSynchronousObservableLike`](../../../../computations/interfaces/PureSynchronousObservableLike.md)\<`T`\>\>\>
 
 #### options?
 
 ##### animationScheduler?
 
-[`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+[`SchedulerLike`](../../../../utils/interfaces/SchedulerLike.md)
 
 ##### priority?
 
@@ -66,4 +66,4 @@
 
 ### Returns
 
-[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
+[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>

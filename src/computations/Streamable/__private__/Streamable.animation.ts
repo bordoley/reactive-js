@@ -12,18 +12,21 @@ import {
   DeferredComputationWithSideEffects,
   DeferredComputationWithSideEffectsLike,
   EventSourceLike,
-  PauseableLike_resume,
   PureSynchronousObservableLike,
   StreamableLike,
   StreamableLike_stream,
 } from "../../../computations.js";
 import { Function1, isFunction, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { BackpressureStrategy, SchedulerLike } from "../../../utils.js";
+import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
+import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
+import {
+  BackpressureStrategy,
+  PauseableLike_resume,
+  SchedulerLike,
+} from "../../../utils.js";
 import * as Observable from "../../Observable.js";
-import * as PauseableScheduler from "../../PauseableScheduler.js";
 import type * as Streamable from "../../Streamable.js";
-import DelegatingPauseableMixin from "../../__mixins__/DelegatingPauseableMixin.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 
 const AnimationStream_create: <TEvent, T>(

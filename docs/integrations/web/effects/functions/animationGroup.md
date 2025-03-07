@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **\_\_animationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>
+> **\_\_animationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>
 
 ### Type Parameters
 
@@ -20,21 +20,21 @@
 
 #### animationGroup
 
-[`ReadonlyObjectMapLike`](../../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureSynchronousObservableLike`](../../../../concurrent/interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
+[`ReadonlyObjectMapLike`](../../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureSynchronousObservableLike`](../../../../computations/interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
 
 #### options?
 
 ##### animationScheduler
 
-[`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+[`SchedulerLike`](../../../../utils/interfaces/SchedulerLike.md)
 
 ### Returns
 
-[`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>
+[`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`unknown`, `TKey`, `T`\>
 
 ## Call Signature
 
-> **\_\_animationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>
+> **\_\_animationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>
 
 ### Type Parameters
 
@@ -48,14 +48,14 @@
 
 #### animationGroup
 
-[`ReadonlyObjectMapLike`](../../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureSynchronousObservableLike`](../../../../concurrent/interfaces/PureSynchronousObservableLike.md)\<`T`\> \| [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureSynchronousObservableLike`](../../../../concurrent/interfaces/PureSynchronousObservableLike.md)\<`T`\>\>\>
+[`ReadonlyObjectMapLike`](../../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureSynchronousObservableLike`](../../../../computations/interfaces/PureSynchronousObservableLike.md)\<`T`\> \| [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureSynchronousObservableLike`](../../../../computations/interfaces/PureSynchronousObservableLike.md)\<`T`\>\>\>
 
 #### options?
 
 ##### animationScheduler
 
-[`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+[`SchedulerLike`](../../../../utils/interfaces/SchedulerLike.md)
 
 ### Returns
 
-[`AnimationGroupStreamLike`](../../../../concurrent/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>
+[`AnimationGroupStreamLike`](../../../../computations/interfaces/AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>

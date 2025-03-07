@@ -1,6 +1,6 @@
-import * as Observable from "@reactive-js/core/concurrent/Observable";
+import * as Observable from "@reactive-js/core/computations/Observable";
 import { incrementBy, pipe, returns } from "@reactive-js/core/functions";
-import * as HostScheduler from "@reactive-js/core/concurrent/HostScheduler";
+import * as HostScheduler from "@reactive-js/core/utils/HostScheduler";
 
 using scheduler = HostScheduler.create();
 

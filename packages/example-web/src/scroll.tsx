@@ -8,18 +8,18 @@ import {
 import { useDisposable } from "@reactive-js/core/integrations/react";
 import { ScrollValue } from "@reactive-js/core/integrations/web";
 import { Optional } from "@reactive-js/core/functions";
-import * as EventSource from "@reactive-js/core/events/EventSource";
+import * as EventSource from "@reactive-js/core/computations/EventSource";
 import {
   EventListenerLike_notify,
   EventSourceLike,
-} from "@reactive-js/core/events";
-import * as Publisher from "@reactive-js/core/events/Publisher";
+} from "@reactive-js/core/computations";
+import * as Publisher from "@reactive-js/core/computations/Publisher";
+import { AnimationStreamLike_animation } from "@reactive-js/core/computations";
 import {
-  AnimationStreamLike_animation,
+  QueueableLike_enqueue,
   PauseableLike_pause,
   PauseableLike_resume,
-} from "@reactive-js/core/concurrent";
-import { QueueableLike_enqueue } from "@reactive-js/core/utils";
+} from "@reactive-js/core/utils";
 
 const AnimatedCircle = ({
   animation,

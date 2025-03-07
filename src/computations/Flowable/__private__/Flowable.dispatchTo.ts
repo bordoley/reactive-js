@@ -8,12 +8,12 @@ import {
   FlowableLike,
   FlowableLike_flow,
   ObservableLike_observe,
-  PauseableLike_pause,
-  PauseableLike_resume,
 } from "../../../computations.js";
 import { invoke, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import {
+  PauseableLike_pause,
+  PauseableLike_resume,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../utils.js";

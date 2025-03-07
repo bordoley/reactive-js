@@ -16,7 +16,7 @@
 - [`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md)
 - [`RunnableLike`](RunnableLike.md)
 - [`IterableLike`](IterableLike.md)
-- [`SynchronousObservableLike`](../../concurrent/interfaces/SynchronousObservableLike.md)
+- [`SynchronousObservableLike`](SynchronousObservableLike.md)
 
 ## Properties
 

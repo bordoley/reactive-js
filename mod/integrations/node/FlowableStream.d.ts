@@ -1,5 +1,5 @@
 import { Readable, Writable } from "stream";
-import { DeferredObservableWithSideEffectsLike, FlowableLike } from "../../concurrent.js";
+import { DeferredObservableWithSideEffectsLike, FlowableLike } from "../../computations.js";
 import { Factory, Function1 } from "../../functions.js";
 interface FlowableStreamModule {
     create(factory: Factory<Readable>): FlowableLike<Uint8Array>;

@@ -6,21 +6,24 @@ import {
 import {
   FlowableLike,
   FlowableLike_flow,
-  PauseableLike_isPaused,
-  PauseableLike_pause,
-  PauseableLike_resume,
   PauseableObservableLike,
   SynchronousObservableLike,
 } from "../../../computations.js";
 import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import { BackpressureStrategy, SchedulerLike } from "../../../utils.js";
+import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
+import {
+  BackpressureStrategy,
+  PauseableLike_isPaused,
+  PauseableLike_pause,
+  PauseableLike_resume,
+  SchedulerLike,
+} from "../../../utils.js";
 import type * as Flowable from "../../Flowable.js";
 import * as Observable from "../../Observable.js";
-import * as PauseableScheduler from "../../PauseableScheduler.js";
 import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
-import DelegatingPauseableMixin from "../../__mixins__/DelegatingPauseableMixin.js";
 
 const PauseableSynchronousObservable_create: <T>(
   obs: SynchronousObservableLike<T>,

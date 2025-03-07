@@ -2,9 +2,9 @@
 
 import { nullObject } from "../../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
-import { __constant, __memo, __observe, __state, __stream, __using, } from "../../concurrent/Observable/effects.js";
-import * as Streamable from "../../concurrent/Streamable.js";
-import * as EventSource from "../../events/EventSource.js";
+import * as EventSource from "../../computations/EventSource.js";
+import { __constant, __memo, __observe, __state, __stream, __using, } from "../../computations/Observable/effects.js";
+import * as Streamable from "../../computations/Streamable.js";
 import { compose, identity, none, pipe, returns, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import { QueueableLike_enqueue, } from "../../utils.js";

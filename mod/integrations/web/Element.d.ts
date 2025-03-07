@@ -1,4 +1,4 @@
-import { EventSourceLike, StoreLike } from "../../events.js";
+import { EventSourceLike, StoreLike } from "../../computations.js";
 import { Function1, SideEffect1 } from "../../functions.js";
 import { DisposableLike } from "../../utils.js";
 import { DOMEventTarget, EventKeysOf, EventMapOf, Rect, ScrollValue } from "../web.js";

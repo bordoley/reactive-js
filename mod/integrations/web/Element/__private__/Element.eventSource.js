@@ -1,7 +1,7 @@
 /// <reference types="./Element.eventSource.d.ts" />
 
-import * as EventSource from "../../../../events/EventSource.js";
-import { EventListenerLike_notify, } from "../../../../events.js";
+import * as EventSource from "../../../../computations/EventSource.js";
+import { EventListenerLike_notify, } from "../../../../computations.js";
 import { error, pipe } from "../../../../functions.js";
 import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../../utils.js";

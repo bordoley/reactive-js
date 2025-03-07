@@ -8,8 +8,8 @@
 
 ## Extended by
 
-- [`SchedulerLike`](../../concurrent/interfaces/SchedulerLike.md)
 - [`DisposableLike`](DisposableLike.md)
+- [`SchedulerLike`](SchedulerLike.md)
 
 ## Methods
 

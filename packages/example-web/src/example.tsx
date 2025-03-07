@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import ReactDOMClient from "react-dom/client";
-import * as Observable from "@reactive-js/core/concurrent/Observable";
+import * as Observable from "@reactive-js/core/computations/Observable";
 import {
   CacheProvider,
   createComponent,
@@ -48,7 +48,7 @@ import {
   __observe,
   __stream,
   __using,
-} from "@reactive-js/core/concurrent/Observable/effects";
+} from "@reactive-js/core/computations/Observable/effects";
 import {
   __animate,
   __animation,
@@ -59,18 +59,23 @@ import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocati
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import {
   ObservableLike,
+  CacheLike,
+  AnimationStreamLike_animation,
+} from "@reactive-js/core/computations";
+import {
+  EventSourceLike,
+  StoreLike_value,
+} from "@reactive-js/core/computations";
+import {
   PauseableLike_resume,
   PauseableLike_isPaused,
   PauseableLike_pause,
-  CacheLike,
-  AnimationStreamLike_animation,
-} from "@reactive-js/core/concurrent";
-import { EventSourceLike, StoreLike_value } from "@reactive-js/core/events";
-import { QueueableLike_enqueue } from "@reactive-js/core/utils";
-import * as Flowable from "@reactive-js/core/concurrent/Flowable";
+  QueueableLike_enqueue,
+} from "@reactive-js/core/utils";
+import * as Flowable from "@reactive-js/core/computations/Flowable";
 import { useFlow } from "@reactive-js/core/integrations/react";
 import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
-import * as Cache from "@reactive-js/core/concurrent/Cache";
+import * as Cache from "@reactive-js/core/computations/Cache";
 
 const AnimatedBox = ({
   animation,

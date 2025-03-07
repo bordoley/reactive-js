@@ -55,13 +55,13 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 import { Array_push } from "../../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectToThrow, expectToThrowAsync, expectToThrowError, test, testAsync, } from "../../../__internal__/testing.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
+import * as Observable from "../../../computations/Observable.js";
 import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../../computations.js";
-import * as HostScheduler from "../../../concurrent/HostScheduler.js";
-import * as Observable from "../../../concurrent/Observable.js";
-import * as VirtualTimeScheduler from "../../../concurrent/VirtualTimeScheduler.js";
-import { VirtualTimeSchedulerLike_run, } from "../../../concurrent.js";
 import { arrayEquality, bind, bindMethod, compose, incrementBy, newInstance, none, pipe, pipeLazy, returns, tuple, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as HostScheduler from "../../../utils/HostScheduler.js";
+import * as VirtualTimeScheduler from "../../../utils/VirtualTimeScheduler.js";
+import { VirtualTimeSchedulerLike_run } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
 import AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests from "./operators/AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests.js";

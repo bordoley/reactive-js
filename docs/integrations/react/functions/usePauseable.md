@@ -12,7 +12,7 @@
 
 ### pauseable
 
-[`Optional`](../../../functions/type-aliases/Optional.md)\<[`PauseableLike`](../../../concurrent/interfaces/PauseableLike.md)\>
+[`Optional`](../../../functions/type-aliases/Optional.md)\<[`PauseableLike`](../../../utils/interfaces/PauseableLike.md)\>
 
 ## Returns
 

@@ -18,7 +18,7 @@
 
 #### observable
 
-[`Optional`](../../../functions/type-aliases/Optional.md)\<[`ObservableLike`](../../../concurrent/interfaces/ObservableLike.md)\<`T`\>\>
+[`Optional`](../../../functions/type-aliases/Optional.md)\<[`ObservableLike`](../../../computations/interfaces/ObservableLike.md)\<`T`\>\>
 
 #### options?
 
@@ -50,7 +50,7 @@
 
 #### factory
 
-[`Factory`](../../../functions/type-aliases/Factory.md)\<[`Optional`](../../../functions/type-aliases/Optional.md)\<[`ObservableLike`](../../../concurrent/interfaces/ObservableLike.md)\<`T`\>\>\>
+[`Factory`](../../../functions/type-aliases/Factory.md)\<[`Optional`](../../../functions/type-aliases/Optional.md)\<[`ObservableLike`](../../../computations/interfaces/ObservableLike.md)\<`T`\>\>\>
 
 #### deps
 

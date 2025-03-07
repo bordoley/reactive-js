@@ -37,7 +37,7 @@ export const map = (n: number) =>
     pipeLazy<number, readonly number[]>(n, createArray),
     benchmarkTest("Observable", async (src: readonly number[]) => {
       const Observable = await import(
-        "@reactive-js/core/concurrent/Observable"
+        "@reactive-js/core/computations/Observable"
       );
 
       return pipeLazy(
@@ -102,7 +102,7 @@ export const filterMapFusion = (n: number) =>
     pipeLazy<number, readonly number[]>(n, createArray),
     benchmarkTest("Observable", async (src: readonly number[]) => {
       const Observable = await import(
-        "@reactive-js/core/concurrent/Observable"
+        "@reactive-js/core/computations/Observable"
       );
 
       return pipeLazy(
@@ -186,7 +186,7 @@ export const filterMapReduce = (n: number) =>
     pipeLazy<number, readonly number[]>(n, createArray),
     benchmarkTest("Observable", async (src: readonly number[]) => {
       const Observable = await import(
-        "@reactive-js/core/concurrent/Observable"
+        "@reactive-js/core/computations/Observable"
       );
       return pipeLazy(
         src,
@@ -253,7 +253,7 @@ export const scanReduce = (n: number) =>
     pipeLazy<number, readonly number[]>(n, createArray),
     benchmarkTest("Observable", async (src: readonly number[]) => {
       const Observable = await import(
-        "@reactive-js/core/concurrent/Observable"
+        "@reactive-js/core/computations/Observable"
       );
       return pipeLazy(
         src,

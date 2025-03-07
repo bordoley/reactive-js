@@ -18,7 +18,7 @@
 
 #### store
 
-[`Optional`](../../../functions/type-aliases/Optional.md)\<[`StoreLike`](../../../events/interfaces/StoreLike.md)\<`T`\>\>
+[`Optional`](../../../functions/type-aliases/Optional.md)\<[`StoreLike`](../../../computations/interfaces/StoreLike.md)\<`T`\>\>
 
 ### Returns
 
@@ -36,7 +36,7 @@
 
 #### factory
 
-[`Factory`](../../../functions/type-aliases/Factory.md)\<[`Optional`](../../../functions/type-aliases/Optional.md)\<[`StoreLike`](../../../events/interfaces/StoreLike.md)\<`unknown`\>\>\>
+[`Factory`](../../../functions/type-aliases/Factory.md)\<[`Optional`](../../../functions/type-aliases/Optional.md)\<[`StoreLike`](../../../computations/interfaces/StoreLike.md)\<`unknown`\>\>\>
 
 #### deps
 

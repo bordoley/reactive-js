@@ -18,7 +18,7 @@
 
 #### animation
 
-[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<[`CSSStyleMapLike`](../../../web/interfaces/CSSStyleMapLike.md)\>\>
+[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`EventSourceLike`](../../../../computations/interfaces/EventSourceLike.md)\<[`CSSStyleMapLike`](../../../web/interfaces/CSSStyleMapLike.md)\>\>
 
 ### Returns
 
@@ -38,7 +38,7 @@
 
 #### animation
 
-[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<`T`\>\>
+[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`EventSourceLike`](../../../../computations/interfaces/EventSourceLike.md)\<`T`\>\>
 
 #### selector
 

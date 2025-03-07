@@ -6,7 +6,7 @@
 
 # Function: get()
 
-> **get**(`priority`?): [`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+> **get**(`priority`?): [`SchedulerLike`](../../../../utils/interfaces/SchedulerLike.md)
 
 ## Parameters
 
@@ -16,4 +16,4 @@
 
 ## Returns
 
-[`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+[`SchedulerLike`](../../../../utils/interfaces/SchedulerLike.md)

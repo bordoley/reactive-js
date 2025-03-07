@@ -15,7 +15,7 @@
 - [`PureDeferredComputationLike`](PureDeferredComputationLike.md)
 - [`DeferredComputationWithSideEffectsLike`](DeferredComputationWithSideEffectsLike.md)
 - [`SynchronousComputationLike`](SynchronousComputationLike.md)
-- [`DeferredObservableLike`](../../concurrent/interfaces/DeferredObservableLike.md)
+- [`DeferredObservableLike`](DeferredObservableLike.md)
 
 ## Properties
 

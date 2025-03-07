@@ -22,7 +22,7 @@
 
 #### cacheContext
 
-`Context`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<[`CacheLike`](../../../concurrent/interfaces/CacheLike.md)\<`T`\>\>\>
+`Context`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<[`CacheLike`](../../../computations/interfaces/CacheLike.md)\<`T`\>\>\>
 
 #### capacity?
 
@@ -42,7 +42,7 @@
 
 #### persistentStore?
 
-\{ `load`: [`DeferredObservableLike`](../../../concurrent/interfaces/DeferredObservableLike.md)\<`Readonly`\<`Record`\<`string`, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>\>; `store`: [`DeferredObservableLike`](../../../concurrent/interfaces/DeferredObservableLike.md)\<`void`\>; \}
+\{ `load`: [`DeferredObservableLike`](../../../computations/interfaces/DeferredObservableLike.md)\<`Readonly`\<`Record`\<`string`, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>\>; `store`: [`DeferredObservableLike`](../../../computations/interfaces/DeferredObservableLike.md)\<`void`\>; \}
 
 #### persistentStore.load
 

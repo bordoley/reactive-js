@@ -3,14 +3,13 @@
 import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import { globalObject } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
-import * as HostScheduler from "../../concurrent/HostScheduler.js";
-import CurrentTimeSchedulerMixin from "../../concurrent/__mixins__/CurrentTimeSchedulerMixin.js";
-import { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../../concurrent/__mixins__/SchedulerMixin.js";
-import { SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import { invoke, isNone, isSome, none, pipe, pipeLazy, raiseIfNone, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Queue from "../../utils/Queue.js";
-import { QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
+import CurrentTimeSchedulerMixin from "../../utils/__mixins__/CurrentTimeSchedulerMixin.js";
+import { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../../utils/__mixins__/SchedulerMixin.js";
+import { QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
 export const get = /*@__PURE__*/ (() => {
     const raf = globalObject.requestAnimationFrame;
     raiseIfNone(raf, "requestAnimationFrame is not defined in the current environment");
