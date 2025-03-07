@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **\_\_animation**\<`T`\>(`animation`, `options`?): [`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<`unknown`, `T`\>
+> **\_\_animation**\<`T`\>(`animation`, `options`?): [`AnimationStreamLike`](../../../../computations/interfaces/AnimationStreamLike.md)\<`unknown`, `T`\>
 
 ### Type Parameters
 
@@ -18,21 +18,21 @@
 
 #### animation
 
-[`PureSynchronousObservableLike`](../../../../concurrent/interfaces/PureSynchronousObservableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../../../computations/interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 #### options?
 
 ##### animationScheduler
 
-[`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+[`SchedulerLike`](../../../../utils/interfaces/SchedulerLike.md)
 
 ### Returns
 
-[`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<`unknown`, `T`\>
+[`AnimationStreamLike`](../../../../computations/interfaces/AnimationStreamLike.md)\<`unknown`, `T`\>
 
 ## Call Signature
 
-> **\_\_animation**\<`TEvent`, `T`\>(`animation`, `options`?): [`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>
+> **\_\_animation**\<`TEvent`, `T`\>(`animation`, `options`?): [`AnimationStreamLike`](../../../../computations/interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>
 
 ### Type Parameters
 
@@ -44,14 +44,14 @@
 
 #### animation
 
-[`PureSynchronousObservableLike`](../../../../concurrent/interfaces/PureSynchronousObservableLike.md)\<`T`\> | [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureSynchronousObservableLike`](../../../../concurrent/interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
+[`PureSynchronousObservableLike`](../../../../computations/interfaces/PureSynchronousObservableLike.md)\<`T`\> | [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureSynchronousObservableLike`](../../../../computations/interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
 
 #### options?
 
 ##### animationScheduler
 
-[`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+[`SchedulerLike`](../../../../utils/interfaces/SchedulerLike.md)
 
 ### Returns
 
-[`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>
+[`AnimationStreamLike`](../../../../computations/interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>

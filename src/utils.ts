@@ -1,4 +1,5 @@
 import { Error, Symbol as GlobalSymbol } from "./__internal__/constants.js";
+import type { StoreLike } from "./computations.js";
 import { Method1, Optional, SideEffect1, isNone } from "./functions.js";
 
 export const DisposableContainerLike_add = Symbol(
@@ -234,3 +235,35 @@ export interface VirtualTimeSchedulerLike
    */
   [VirtualTimeSchedulerLike_run](): void;
 }
+
+export const PauseableLike_isPaused = Symbol("PauseableLike_isPaused");
+export const PauseableLike_pause = Symbol("PauseableLike_pause");
+export const PauseableLike_resume = Symbol("PauseableLike_resume");
+
+/**
+ * @noInheritDoc
+ */
+export interface PauseableLike extends DisposableLike {
+  /**
+   * Boolean flag indicating if the PauseableLike is currently paused or not.
+   */
+  readonly [PauseableLike_isPaused]: StoreLike<boolean>;
+
+  /**
+   * Imperatively pause the source.
+   */
+  [PauseableLike_pause](): void;
+
+  /**
+   * Imperatively resume the source.
+   */
+  [PauseableLike_resume](): void;
+}
+
+/**
+ * A `SchedulerLike` that supports imperative pausing and resuming
+ * of it's run loop.
+ *
+ * @noInheritDoc
+ */
+export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {}

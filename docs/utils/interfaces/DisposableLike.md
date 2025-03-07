@@ -12,12 +12,12 @@
 
 ## Extended by
 
-- [`DispatcherLike`](../../concurrent/interfaces/DispatcherLike.md)
-- [`PauseableLike`](../../concurrent/interfaces/PauseableLike.md)
-- [`VirtualTimeSchedulerLike`](../../concurrent/interfaces/VirtualTimeSchedulerLike.md)
-- [`EventListenerLike`](../../events/interfaces/EventListenerLike.md)
-- [`WritableStoreLike`](../../events/interfaces/WritableStoreLike.md)
+- [`EventListenerLike`](../../computations/interfaces/EventListenerLike.md)
+- [`WritableStoreLike`](../../computations/interfaces/WritableStoreLike.md)
+- [`DispatcherLike`](../../computations/interfaces/DispatcherLike.md)
 - [`SerialDisposableLike`](SerialDisposableLike.md)
+- [`VirtualTimeSchedulerLike`](VirtualTimeSchedulerLike.md)
+- [`PauseableLike`](PauseableLike.md)
 
 ## Properties
 

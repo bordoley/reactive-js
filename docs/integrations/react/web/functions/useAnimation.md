@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **useAnimation**\<`T`\>(`animation`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<`unknown`, `T`\>\>
+> **useAnimation**\<`T`\>(`animation`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../computations/interfaces/AnimationStreamLike.md)\<`unknown`, `T`\>\>
 
 ### Type Parameters
 
@@ -18,13 +18,13 @@
 
 #### animation
 
-[`PureSynchronousObservableLike`](../../../../concurrent/interfaces/PureSynchronousObservableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../../../computations/interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
 #### options?
 
 ##### animationScheduler?
 
-[`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+[`SchedulerLike`](../../../../utils/interfaces/SchedulerLike.md)
 
 ##### priority?
 
@@ -32,11 +32,11 @@
 
 ### Returns
 
-[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<`unknown`, `T`\>\>
+[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../computations/interfaces/AnimationStreamLike.md)\<`unknown`, `T`\>\>
 
 ## Call Signature
 
-> **useAnimation**\<`TEvent`, `T`\>(`animation`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>\>
+> **useAnimation**\<`TEvent`, `T`\>(`animation`, `options`?): [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../computations/interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>\>
 
 ### Type Parameters
 
@@ -48,13 +48,13 @@
 
 #### animation
 
-[`PureSynchronousObservableLike`](../../../../concurrent/interfaces/PureSynchronousObservableLike.md)\<`T`\> | [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureSynchronousObservableLike`](../../../../concurrent/interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
+[`PureSynchronousObservableLike`](../../../../computations/interfaces/PureSynchronousObservableLike.md)\<`T`\> | [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureSynchronousObservableLike`](../../../../computations/interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
 
 #### options?
 
 ##### animationScheduler?
 
-[`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+[`SchedulerLike`](../../../../utils/interfaces/SchedulerLike.md)
 
 ##### priority?
 
@@ -62,4 +62,4 @@
 
 ### Returns
 
-[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../concurrent/interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>\>
+[`Optional`](../../../../functions/type-aliases/Optional.md)\<[`AnimationStreamLike`](../../../../computations/interfaces/AnimationStreamLike.md)\<`TEvent`, `T`\>\>

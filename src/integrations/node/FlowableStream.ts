@@ -8,8 +8,6 @@ import {
   FlowableLike,
   FlowableLike_flow,
   ObservableLike_observe,
-  PauseableLike_pause,
-  PauseableLike_resume,
 } from "../../computations.js";
 import {
   Factory,
@@ -24,6 +22,8 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
+  PauseableLike_pause,
+  PauseableLike_resume,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,

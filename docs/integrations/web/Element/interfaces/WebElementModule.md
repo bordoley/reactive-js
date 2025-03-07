@@ -90,7 +90,7 @@
 
 ### eventSource()
 
-> **eventSource**\<`TEventTarget`, `TEventName`\>(`eventName`, `options`?): [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEventTarget`, [`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<[`EventMapOf`](../../type-aliases/EventMapOf.md)\<`TEventTarget`\>\[`TEventName`\]\>\>
+> **eventSource**\<`TEventTarget`, `TEventName`\>(`eventName`, `options`?): [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEventTarget`, [`EventSourceLike`](../../../../computations/interfaces/EventSourceLike.md)\<[`EventMapOf`](../../type-aliases/EventMapOf.md)\<`TEventTarget`\>\[`TEventName`\]\>\>
 
 #### Type Parameters
 
@@ -116,13 +116,13 @@
 
 #### Returns
 
-[`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEventTarget`, [`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<[`EventMapOf`](../../type-aliases/EventMapOf.md)\<`TEventTarget`\>\[`TEventName`\]\>\>
+[`Function1`](../../../../functions/type-aliases/Function1.md)\<`TEventTarget`, [`EventSourceLike`](../../../../computations/interfaces/EventSourceLike.md)\<[`EventMapOf`](../../type-aliases/EventMapOf.md)\<`TEventTarget`\>\[`TEventName`\]\>\>
 
 ***
 
 ### intersectionEventSource()
 
-> **intersectionEventSource**(`parent`?): [`Function1`](../../../../functions/type-aliases/Function1.md)\<`Element`, [`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<`IntersectionObserverEntry`\>\>
+> **intersectionEventSource**(`parent`?): [`Function1`](../../../../functions/type-aliases/Function1.md)\<`Element`, [`EventSourceLike`](../../../../computations/interfaces/EventSourceLike.md)\<`IntersectionObserverEntry`\>\>
 
 #### Parameters
 
@@ -132,13 +132,13 @@
 
 #### Returns
 
-[`Function1`](../../../../functions/type-aliases/Function1.md)\<`Element`, [`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<`IntersectionObserverEntry`\>\>
+[`Function1`](../../../../functions/type-aliases/Function1.md)\<`Element`, [`EventSourceLike`](../../../../computations/interfaces/EventSourceLike.md)\<`IntersectionObserverEntry`\>\>
 
 ***
 
 ### measure()
 
-> **measure**\<`TElement`\>(`options`?): [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`StoreLike`](../../../../events/interfaces/StoreLike.md)\<[`Rect`](../../interfaces/Rect.md)\> & [`DisposableLike`](../../../../utils/interfaces/DisposableLike.md)\>
+> **measure**\<`TElement`\>(`options`?): [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`StoreLike`](../../../../computations/interfaces/StoreLike.md)\<[`Rect`](../../interfaces/Rect.md)\> & [`DisposableLike`](../../../../utils/interfaces/DisposableLike.md)\>
 
 #### Type Parameters
 
@@ -154,13 +154,13 @@
 
 #### Returns
 
-[`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`StoreLike`](../../../../events/interfaces/StoreLike.md)\<[`Rect`](../../interfaces/Rect.md)\> & [`DisposableLike`](../../../../utils/interfaces/DisposableLike.md)\>
+[`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`StoreLike`](../../../../computations/interfaces/StoreLike.md)\<[`Rect`](../../interfaces/Rect.md)\> & [`DisposableLike`](../../../../utils/interfaces/DisposableLike.md)\>
 
 ***
 
 ### resizeEventSource()
 
-> **resizeEventSource**\<`TElement`\>(`options`?): [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<`ResizeObserverEntry`\>\>
+> **resizeEventSource**\<`TElement`\>(`options`?): [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../../computations/interfaces/EventSourceLike.md)\<`ResizeObserverEntry`\>\>
 
 #### Type Parameters
 
@@ -174,13 +174,13 @@
 
 #### Returns
 
-[`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<`ResizeObserverEntry`\>\>
+[`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../../computations/interfaces/EventSourceLike.md)\<`ResizeObserverEntry`\>\>
 
 ***
 
 ### scrollEventSource()
 
-> **scrollEventSource**\<`TElement`\>(): [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<[`ScrollValue`](../../interfaces/ScrollValue.md)\>\>
+> **scrollEventSource**\<`TElement`\>(): [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../../computations/interfaces/EventSourceLike.md)\<[`ScrollValue`](../../interfaces/ScrollValue.md)\>\>
 
 #### Type Parameters
 
@@ -188,4 +188,4 @@
 
 #### Returns
 
-[`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<[`ScrollValue`](../../interfaces/ScrollValue.md)\>\>
+[`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../../computations/interfaces/EventSourceLike.md)\<[`ScrollValue`](../../interfaces/ScrollValue.md)\>\>

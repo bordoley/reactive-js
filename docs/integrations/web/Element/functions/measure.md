@@ -6,7 +6,7 @@
 
 # Function: measure()
 
-> **measure**\<`TElement`\>(`options`?): [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`StoreLike`](../../../../events/interfaces/StoreLike.md)\<[`Rect`](../../interfaces/Rect.md)\> & [`DisposableLike`](../../../../utils/interfaces/DisposableLike.md)\>
+> **measure**\<`TElement`\>(`options`?): [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`StoreLike`](../../../../computations/interfaces/StoreLike.md)\<[`Rect`](../../interfaces/Rect.md)\> & [`DisposableLike`](../../../../utils/interfaces/DisposableLike.md)\>
 
 ## Type Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`StoreLike`](../../../../events/interfaces/StoreLike.md)\<[`Rect`](../../interfaces/Rect.md)\> & [`DisposableLike`](../../../../utils/interfaces/DisposableLike.md)\>
+[`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`StoreLike`](../../../../computations/interfaces/StoreLike.md)\<[`Rect`](../../interfaces/Rect.md)\> & [`DisposableLike`](../../../../utils/interfaces/DisposableLike.md)\>

@@ -8,13 +8,13 @@
 
 ## Extends
 
-- [`MulticastObservableLike`](../../../concurrent/interfaces/MulticastObservableLike.md)\<[`WindowLocationURI`](WindowLocationURI.md)\>
+- [`MulticastObservableLike`](../../../computations/interfaces/MulticastObservableLike.md)\<[`WindowLocationURI`](WindowLocationURI.md)\>
 
 ## Properties
 
 ### \[WindowLocationLike\_canGoBack\]
 
-> `readonly` **\[WindowLocationLike\_canGoBack\]**: [`StoreLike`](../../../events/interfaces/StoreLike.md)\<`boolean`\>
+> `readonly` **\[WindowLocationLike\_canGoBack\]**: [`StoreLike`](../../../computations/interfaces/StoreLike.md)\<`boolean`\>
 
 ## Methods
 

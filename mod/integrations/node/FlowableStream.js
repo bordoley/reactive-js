@@ -1,13 +1,13 @@
 /// <reference types="./FlowableStream.d.ts" />
 
-import * as Flowable from "../../concurrent/Flowable.js";
-import * as Observable from "../../concurrent/Observable.js";
-import { DispatcherLike_complete, FlowableLike_flow, ObservableLike_observe, PauseableLike_pause, PauseableLike_resume, } from "../../concurrent.js";
-import * as EventSource from "../../events/EventSource.js";
+import * as EventSource from "../../computations/EventSource.js";
+import * as Flowable from "../../computations/Flowable.js";
+import * as Observable from "../../computations/Observable.js";
+import { DispatcherLike_complete, FlowableLike_flow, ObservableLike_observe, } from "../../computations.js";
 import { bindMethod, ignore, invoke, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
-import { DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
+import { DisposableLike_dispose, PauseableLike_pause, PauseableLike_resume, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 const disposeStream = (stream) => () => {
     stream.removeAllListeners();
     // Calling destory can result in onError being called

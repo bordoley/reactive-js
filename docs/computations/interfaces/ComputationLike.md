@@ -12,7 +12,7 @@
 - [`PureComputationLike`](PureComputationLike.md)
 - [`DeferredComputationLike`](DeferredComputationLike.md)
 - [`MulticastComputationLike`](MulticastComputationLike.md)
-- [`ObservableLike`](../../concurrent/interfaces/ObservableLike.md)
+- [`ObservableLike`](ObservableLike.md)
 
 ## Properties
 

@@ -17,9 +17,6 @@ import * as Observable from "../../computations/Observable.js";
 import * as Streamable from "../../computations/Streamable.js";
 import {
   FlowableLike_flow,
-  PauseableLike_isPaused,
-  PauseableLike_pause,
-  PauseableLike_resume,
   StoreLike_value,
   StreamableLike_stream,
 } from "../../computations.js";
@@ -45,6 +42,9 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  PauseableLike_isPaused,
+  PauseableLike_pause,
+  PauseableLike_resume,
   SchedulerLike_schedule,
   ThrowBackpressureStrategy,
   VirtualTimeSchedulerLike_run,

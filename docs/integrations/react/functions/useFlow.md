@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **useFlow**\<`T`\>(`flowable`, `options`?): [`Optional`](../../../functions/type-aliases/Optional.md)\<[`PauseableObservableLike`](../../../concurrent/interfaces/PauseableObservableLike.md)\<`T`\>\>
+> **useFlow**\<`T`\>(`flowable`, `options`?): [`Optional`](../../../functions/type-aliases/Optional.md)\<[`PauseableObservableLike`](../../../computations/interfaces/PauseableObservableLike.md)\<`T`\>\>
 
 ### Type Parameters
 
@@ -18,7 +18,7 @@
 
 #### flowable
 
-[`FlowableLike`](../../../concurrent/interfaces/FlowableLike.md)\<`T`\>
+[`FlowableLike`](../../../computations/interfaces/FlowableLike.md)\<`T`\>
 
 #### options?
 
@@ -40,11 +40,11 @@
 
 ### Returns
 
-[`Optional`](../../../functions/type-aliases/Optional.md)\<[`PauseableObservableLike`](../../../concurrent/interfaces/PauseableObservableLike.md)\<`T`\>\>
+[`Optional`](../../../functions/type-aliases/Optional.md)\<[`PauseableObservableLike`](../../../computations/interfaces/PauseableObservableLike.md)\<`T`\>\>
 
 ## Call Signature
 
-> **useFlow**\<`T`\>(`factory`, `dep`, `options`?): [`Optional`](../../../functions/type-aliases/Optional.md)\<[`PauseableObservableLike`](../../../concurrent/interfaces/PauseableObservableLike.md)\<`T`\>\>
+> **useFlow**\<`T`\>(`factory`, `dep`, `options`?): [`Optional`](../../../functions/type-aliases/Optional.md)\<[`PauseableObservableLike`](../../../computations/interfaces/PauseableObservableLike.md)\<`T`\>\>
 
 ### Type Parameters
 
@@ -54,7 +54,7 @@
 
 #### factory
 
-[`Factory`](../../../functions/type-aliases/Factory.md)\<[`FlowableLike`](../../../concurrent/interfaces/FlowableLike.md)\<`T`\>\>
+[`Factory`](../../../functions/type-aliases/Factory.md)\<[`FlowableLike`](../../../computations/interfaces/FlowableLike.md)\<`T`\>\>
 
 #### dep
 
@@ -80,4 +80,4 @@ readonly `unknown`[]
 
 ### Returns
 
-[`Optional`](../../../functions/type-aliases/Optional.md)\<[`PauseableObservableLike`](../../../concurrent/interfaces/PauseableObservableLike.md)\<`T`\>\>
+[`Optional`](../../../functions/type-aliases/Optional.md)\<[`PauseableObservableLike`](../../../computations/interfaces/PauseableObservableLike.md)\<`T`\>\>

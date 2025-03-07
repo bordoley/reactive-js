@@ -16,7 +16,6 @@ import {
   DeferredObservableWithSideEffectsLike,
   EventListenerLike_notify,
   EventSourceLike,
-  PauseableLike_resume,
   PureSynchronousObservableLike,
   StreamableLike,
   StreamableLike_stream,
@@ -34,12 +33,16 @@ import {
   tuple,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { BackpressureStrategy, SchedulerLike } from "../../../utils.js";
+import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
+import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
+import {
+  BackpressureStrategy,
+  PauseableLike_resume,
+  SchedulerLike,
+} from "../../../utils.js";
 import * as Observable from "../../Observable.js";
-import * as PauseableScheduler from "../../PauseableScheduler.js";
 import type * as Streamable from "../../Streamable.js";
 import * as Subject from "../../Subject.js";
-import DelegatingPauseableMixin from "../../__mixins__/DelegatingPauseableMixin.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 
 const SpringStream_create: (

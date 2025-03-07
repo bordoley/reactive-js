@@ -1,5 +1,4 @@
-import { SchedulerLike } from "../../concurrent.js";
-import { DisposableLike } from "../../utils.js";
+import { DisposableLike, SchedulerLike } from "../../utils.js";
 import { WindowLocationLike } from "../web.js";
 interface WebWindowLocationModule {
     subscribe(scheduler: SchedulerLike): WindowLocationLike & DisposableLike;

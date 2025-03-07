@@ -9,10 +9,10 @@ import {
   useObserve,
 } from "@reactive-js/core/integrations/react";
 import { Optional, pipe } from "@reactive-js/core/functions";
-import { EventSourceLike } from "@reactive-js/core/events";
-import * as Observable from "@reactive-js/core/concurrent/Observable";
+import { EventSourceLike } from "@reactive-js/core/computations";
+import * as Observable from "@reactive-js/core/computations/Observable";
 import { scale } from "@reactive-js/core/functions";
-import { AnimationStreamLike_animation } from "@reactive-js/core/concurrent";
+import { AnimationStreamLike_animation } from "@reactive-js/core/computations";
 
 const items = ["W", "O", "R", "D", "L", "E"];
 

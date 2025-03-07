@@ -1,5 +1,5 @@
-import { DictionaryLike, ReadonlyObjectMapLike } from "./collections.js";
-import {
+import type { DictionaryLike, ReadonlyObjectMapLike } from "./collections.js";
+import type {
   Equality,
   Factory,
   Function1,
@@ -13,9 +13,10 @@ import {
   Tuple4,
   Updater,
 } from "./functions.js";
-import {
+import type {
   BackpressureStrategy,
   DisposableLike,
+  PauseableLike,
   QueueableLike,
   SchedulerLike,
 } from "./utils.js";
@@ -1055,38 +1056,6 @@ export interface DispatcherLike<T = unknown>
    */
   [DispatcherLike_complete](): void;
 }
-
-export const PauseableLike_isPaused = Symbol("PauseableLike_isPaused");
-export const PauseableLike_pause = Symbol("PauseableLike_pause");
-export const PauseableLike_resume = Symbol("PauseableLike_resume");
-
-/**
- * @noInheritDoc
- */
-export interface PauseableLike extends DisposableLike {
-  /**
-   * Boolean flag indicating if the PauseableLike is currently paused or not.
-   */
-  readonly [PauseableLike_isPaused]: StoreLike<boolean>;
-
-  /**
-   * Imperatively pause the source.
-   */
-  [PauseableLike_pause](): void;
-
-  /**
-   * Imperatively resume the source.
-   */
-  [PauseableLike_resume](): void;
-}
-
-/**
- * A `SchedulerLike` that supports imperative pausing and resuming
- * of it's run loop.
- *
- * @noInheritDoc
- */
-export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {}
 
 export const ObserverLike_notify = Symbol("ObserverLike_notify");
 /**

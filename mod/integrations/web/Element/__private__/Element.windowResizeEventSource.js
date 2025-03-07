@@ -1,7 +1,7 @@
 /// <reference types="./Element.windowResizeEventSource.d.ts" />
 
-import * as EventSource from "../../../../events/EventSource.js";
-import { EventSourceLike_addEventListener, } from "../../../../events.js";
+import * as EventSource from "../../../../computations/EventSource.js";
+import { EventSourceLike_addEventListener, } from "../../../../computations.js";
 import { invoke, none, pipe } from "../../../../functions.js";
 import * as DisposableContainer from "../../../../utils/DisposableContainer.js";
 import Element_eventSource from "./Element.eventSource.js";

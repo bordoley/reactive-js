@@ -1,6 +1,6 @@
-import { ComputationOf, ComputationType, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationWithSideEffectsOf, MulticastComputationOf, PureDeferredComputationOf, PureSynchronousComputationOf, SynchronousComputationWithSideEffectsOf } from "../../../computations.js";
-import { ObservableLike, SchedulerLike } from "../../../concurrent.js";
+import { ComputationOf, ComputationType, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationWithSideEffectsOf, MulticastComputationOf, ObservableLike, PureDeferredComputationOf, PureSynchronousComputationOf, SynchronousComputationWithSideEffectsOf } from "../../../computations.js";
 import { Function1 } from "../../../functions.js";
+import { SchedulerLike } from "../../../utils.js";
 declare const ConcurrentReactiveComputationModuleTests: <TComputation extends ComputationType>(m: ConcurrentReactiveComputationModule<TComputation> & {
     fromObservable: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, ComputationOf<TComputation, T>>;
     toObservable: <T>() => Function1<ComputationOf<TComputation, T>, ObservableLike<T>>;

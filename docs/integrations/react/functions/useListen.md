@@ -18,7 +18,7 @@
 
 #### eventSource
 
-[`Optional`](../../../functions/type-aliases/Optional.md)\<[`EventSourceLike`](../../../events/interfaces/EventSourceLike.md)\<`T`\>\>
+[`Optional`](../../../functions/type-aliases/Optional.md)\<[`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<`T`\>\>
 
 ### Returns
 
@@ -36,7 +36,7 @@
 
 #### factory
 
-[`Factory`](../../../functions/type-aliases/Factory.md)\<[`Optional`](../../../functions/type-aliases/Optional.md)\<[`EventSourceLike`](../../../events/interfaces/EventSourceLike.md)\<`T`\>\>\>
+[`Factory`](../../../functions/type-aliases/Factory.md)\<[`Optional`](../../../functions/type-aliases/Optional.md)\<[`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<`T`\>\>\>
 
 #### deps
 

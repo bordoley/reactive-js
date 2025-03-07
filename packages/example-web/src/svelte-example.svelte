@@ -1,6 +1,6 @@
 <script>
 import * as PostTaskScheduler from "@reactive-js/core/integrations/web/PostTaskScheduler";
-import * as Observable from "@reactive-js/core/concurrent/Observable";
+import * as Observable from "@reactive-js/core/computations/Observable";
 import { subscribe } from "@reactive-js/core/integrations/svelte";
 import {
   bindMethod,
@@ -10,12 +10,12 @@ import {
   returns,
 } from "@reactive-js/core/functions";
 import {
-  FlowableLike_flow,
   PauseableLike_isPaused,
   PauseableLike_pause, 
   PauseableLike_resume
-} from "@reactive-js/core/concurrent";
-import * as Flowable from "@reactive-js/core/concurrent/Flowable";
+} from "@reactive-js/core/utils";
+import { FlowableLike_flow }from "@reactive-js/core/computations";
+import * as Flowable from "@reactive-js/core/computations/Flowable";
 
   const scheduler = PostTaskScheduler.get();
 

@@ -12,7 +12,7 @@
 
 ## Extended by
 
-- [`PureObservableLike`](../../concurrent/interfaces/PureObservableLike.md)
+- [`PureObservableLike`](PureObservableLike.md)
 
 ## Properties
 

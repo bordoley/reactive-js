@@ -11,11 +11,7 @@ import {
 } from "../../../__internal__/testing.js";
 import * as Flowable from "../../../computations/Flowable.js";
 import * as Observable from "../../../computations/Observable.js";
-import {
-  FlowableLike_flow,
-  PauseableLike_pause,
-  PauseableLike_resume,
-} from "../../../computations.js";
+import { FlowableLike_flow } from "../../../computations.js";
 import {
   Optional,
   invoke,
@@ -26,7 +22,11 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as HostScheduler from "../../../utils/HostScheduler.js";
-import { DisposableLike_isDisposed } from "../../../utils.js";
+import {
+  DisposableLike_isDisposed,
+  PauseableLike_pause,
+  PauseableLike_resume,
+} from "../../../utils.js";
 import * as FlowableStream from "../FlowableStream.js";
 
 testModule(

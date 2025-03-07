@@ -12,8 +12,8 @@
 
 ## Extended by
 
+- [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
 - [`RunnableModule`](../Runnable/interfaces/RunnableModule.md)
-- [`ObservableModule`](../../concurrent/Observable/interfaces/ObservableModule.md)
 
 ## Type Parameters
 

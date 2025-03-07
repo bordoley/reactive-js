@@ -6,7 +6,7 @@
 
 # Function: resizeEventSource()
 
-> **resizeEventSource**\<`TElement`\>(`options`?): [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<`ResizeObserverEntry`\>\>
+> **resizeEventSource**\<`TElement`\>(`options`?): [`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../../computations/interfaces/EventSourceLike.md)\<`ResizeObserverEntry`\>\>
 
 ## Type Parameters
 
@@ -20,4 +20,4 @@
 
 ## Returns
 
-[`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../../events/interfaces/EventSourceLike.md)\<`ResizeObserverEntry`\>\>
+[`Function1`](../../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../../computations/interfaces/EventSourceLike.md)\<`ResizeObserverEntry`\>\>

@@ -23,10 +23,6 @@ import {
   FlowableLike_flow,
   MulticastObservableLike,
   ObservableLike,
-  PauseableLike,
-  PauseableLike_isPaused,
-  PauseableLike_pause,
-  PauseableLike_resume,
   PauseableObservableLike,
   StoreLike,
   StoreLike_value,
@@ -53,6 +49,10 @@ import {
   BackpressureStrategy,
   DisposableLike,
   DisposableLike_dispose,
+  PauseableLike,
+  PauseableLike_isPaused,
+  PauseableLike_pause,
+  PauseableLike_resume,
   QueueableLike_enqueue,
 } from "../utils.js";
 import * as ReactScheduler from "./react/Scheduler.js";

@@ -6,7 +6,7 @@
 
 # Function: subscribe()
 
-> **subscribe**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../../concurrent/interfaces/ObservableLike.md)\<`T`\>, \{ `subscribe`: [`Factory`](../../../functions/type-aliases/Factory.md)\<`void`\>; \}\>
+> **subscribe**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../../computations/interfaces/ObservableLike.md)\<`T`\>, \{ `subscribe`: [`Factory`](../../../functions/type-aliases/Factory.md)\<`void`\>; \}\>
 
 ## Type Parameters
 
@@ -16,7 +16,7 @@
 
 ### scheduler
 
-[`SchedulerLike`](../../../concurrent/interfaces/SchedulerLike.md)
+[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
 
 ### options?
 
@@ -30,4 +30,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../../concurrent/interfaces/ObservableLike.md)\<`T`\>, \{ `subscribe`: [`Factory`](../../../functions/type-aliases/Factory.md)\<`void`\>; \}\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../../computations/interfaces/ObservableLike.md)\<`T`\>, \{ `subscribe`: [`Factory`](../../../functions/type-aliases/Factory.md)\<`void`\>; \}\>

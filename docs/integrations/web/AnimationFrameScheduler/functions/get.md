@@ -6,8 +6,8 @@
 
 # Function: get()
 
-> **get**(): [`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+> **get**(): [`SchedulerLike`](../../../../utils/interfaces/SchedulerLike.md)
 
 ## Returns
 
-[`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+[`SchedulerLike`](../../../../utils/interfaces/SchedulerLike.md)

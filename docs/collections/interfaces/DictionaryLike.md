@@ -8,7 +8,7 @@
 
 ## Extended by
 
-- [`AnimationGroupStreamLike`](../../concurrent/interfaces/AnimationGroupStreamLike.md)
+- [`AnimationGroupStreamLike`](../../computations/interfaces/AnimationGroupStreamLike.md)
 
 ## Type Parameters
 

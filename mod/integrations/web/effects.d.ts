@@ -1,7 +1,7 @@
 import { ReadonlyObjectMapLike } from "../../collections.js";
-import { AnimationGroupStreamLike, AnimationStreamLike, PureSynchronousObservableLike, SchedulerLike } from "../../concurrent.js";
-import { EventSourceLike } from "../../events.js";
+import { AnimationGroupStreamLike, AnimationStreamLike, EventSourceLike, PureSynchronousObservableLike } from "../../computations.js";
 import { Function1, Optional, SideEffect1 } from "../../functions.js";
+import { SchedulerLike } from "../../utils.js";
 import { CSSStyleMapLike } from "../web.js";
 interface WebEffectsModule {
     __animate(animation: EventSourceLike<CSSStyleMapLike>): SideEffect1<Optional<HTMLElement | null>>;

@@ -8,11 +8,11 @@
 
 ## Call Signature
 
-> **useStream**\<`TStreamable`\>(`streamable`, `options`?): [`Optional`](../../../functions/type-aliases/Optional.md)\<[`StreamOf`](../../../concurrent/type-aliases/StreamOf.md)\<`TStreamable`\>\>
+> **useStream**\<`TStreamable`\>(`streamable`, `options`?): [`Optional`](../../../functions/type-aliases/Optional.md)\<[`StreamOf`](../../../computations/type-aliases/StreamOf.md)\<`TStreamable`\>\>
 
 ### Type Parameters
 
-• **TStreamable** *extends* [`StreamableLike`](../../../concurrent/interfaces/StreamableLike.md)\<`unknown`, `unknown`, [`StreamLike`](../../../concurrent/interfaces/StreamLike.md)\<`unknown`, `unknown`\>\>
+• **TStreamable** *extends* [`StreamableLike`](../../../computations/interfaces/StreamableLike.md)\<`unknown`, `unknown`, [`StreamLike`](../../../computations/interfaces/StreamLike.md)\<`unknown`, `unknown`\>\>
 
 ### Parameters
 
@@ -40,15 +40,15 @@
 
 ### Returns
 
-[`Optional`](../../../functions/type-aliases/Optional.md)\<[`StreamOf`](../../../concurrent/type-aliases/StreamOf.md)\<`TStreamable`\>\>
+[`Optional`](../../../functions/type-aliases/Optional.md)\<[`StreamOf`](../../../computations/type-aliases/StreamOf.md)\<`TStreamable`\>\>
 
 ## Call Signature
 
-> **useStream**\<`TStreamable`\>(`factory`, `dep`, `options`?): [`Optional`](../../../functions/type-aliases/Optional.md)\<[`StreamOf`](../../../concurrent/type-aliases/StreamOf.md)\<`TStreamable`\>\>
+> **useStream**\<`TStreamable`\>(`factory`, `dep`, `options`?): [`Optional`](../../../functions/type-aliases/Optional.md)\<[`StreamOf`](../../../computations/type-aliases/StreamOf.md)\<`TStreamable`\>\>
 
 ### Type Parameters
 
-• **TStreamable** *extends* [`StreamableLike`](../../../concurrent/interfaces/StreamableLike.md)\<`unknown`, `unknown`, [`StreamLike`](../../../concurrent/interfaces/StreamLike.md)\<`unknown`, `unknown`\>\>
+• **TStreamable** *extends* [`StreamableLike`](../../../computations/interfaces/StreamableLike.md)\<`unknown`, `unknown`, [`StreamLike`](../../../computations/interfaces/StreamLike.md)\<`unknown`, `unknown`\>\>
 
 ### Parameters
 
@@ -80,4 +80,4 @@ readonly `unknown`[]
 
 ### Returns
 
-[`Optional`](../../../functions/type-aliases/Optional.md)\<[`StreamOf`](../../../concurrent/type-aliases/StreamOf.md)\<`TStreamable`\>\>
+[`Optional`](../../../functions/type-aliases/Optional.md)\<[`StreamOf`](../../../computations/type-aliases/StreamOf.md)\<`TStreamable`\>\>

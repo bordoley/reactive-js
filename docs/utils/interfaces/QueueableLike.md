@@ -10,7 +10,7 @@ An interface for types that support buffering items with backpressure.
 
 ## Extended by
 
-- [`DispatcherLike`](../../concurrent/interfaces/DispatcherLike.md)
+- [`DispatcherLike`](../../computations/interfaces/DispatcherLike.md)
 - [`QueueLike`](QueueLike.md)
 
 ## Type Parameters

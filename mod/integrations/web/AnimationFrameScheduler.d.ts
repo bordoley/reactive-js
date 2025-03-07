@@ -1,4 +1,4 @@
-import { SchedulerLike } from "../../concurrent.js";
+import { SchedulerLike } from "../../utils.js";
 interface Signature {
     get(): SchedulerLike;
 }

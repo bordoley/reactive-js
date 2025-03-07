@@ -11,7 +11,7 @@ import {
 } from "@reactive-js/core/functions";
 import { useDisposable } from "@reactive-js/core/integrations/react";
 import * as Computation from "@reactive-js/core/computations/Computation";
-import * as EventSource from "@reactive-js/core/events/EventSource";
+import * as EventSource from "@reactive-js/core/computations/EventSource";
 
 const EventSourcModule = { map: EventSource.map };
 

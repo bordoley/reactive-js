@@ -1,13 +1,13 @@
 import { pipeSomeLazy } from "@reactive-js/core/functions";
 import React, { useEffect, useState } from "react";
-import * as Observable from "@reactive-js/core/concurrent/Observable";
+import * as Observable from "@reactive-js/core/computations/Observable";
 import { useObserve } from "@reactive-js/core/integrations/react";
 import {
   useAnimate,
   useMeasure,
   useSpring,
 } from "@reactive-js/core/integrations/react/web";
-import { AnimationStreamLike_animation } from "@reactive-js/core/concurrent";
+import { AnimationStreamLike_animation } from "@reactive-js/core/computations";
 import { QueueableLike_enqueue } from "@reactive-js/core/utils";
 
 const Measure = () => {

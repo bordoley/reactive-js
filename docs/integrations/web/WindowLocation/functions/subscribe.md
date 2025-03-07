@@ -12,7 +12,7 @@
 
 ### scheduler
 
-[`SchedulerLike`](../../../../concurrent/interfaces/SchedulerLike.md)
+[`SchedulerLike`](../../../../utils/interfaces/SchedulerLike.md)
 
 ## Returns
 

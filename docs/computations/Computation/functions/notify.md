@@ -30,7 +30,7 @@
 
 #### eventListener
 
-[`EventListenerLike`](../../../events/interfaces/EventListenerLike.md)\<`T`\>
+[`EventListenerLike`](../../interfaces/EventListenerLike.md)\<`T`\>
 
 ### Returns
 

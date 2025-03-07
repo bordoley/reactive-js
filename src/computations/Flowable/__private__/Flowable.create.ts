@@ -10,9 +10,6 @@ import {
   EventSourceLike,
   FlowableLike,
   FlowableLike_flow,
-  PauseableLike_isPaused,
-  PauseableLike_pause,
-  PauseableLike_resume,
   PauseableObservableLike,
   StoreLike_value,
   WritableStoreLike,
@@ -20,7 +17,13 @@ import {
 import { Function1, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import { BackpressureStrategy, SchedulerLike } from "../../../utils.js";
+import {
+  BackpressureStrategy,
+  PauseableLike_isPaused,
+  PauseableLike_pause,
+  PauseableLike_resume,
+  SchedulerLike,
+} from "../../../utils.js";
 import type * as Flowable from "../../Flowable.js";
 import * as Observable from "../../Observable.js";
 import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";

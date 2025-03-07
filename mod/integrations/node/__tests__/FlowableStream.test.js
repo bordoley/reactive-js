@@ -55,13 +55,13 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 import { Readable, Writable, pipeline } from "node:stream";
 import zlib from "node:zlib";
 import { describe, expectEquals, expectFalse, expectPromiseToThrow, expectTrue, testAsync, testModule, } from "../../../__internal__/testing.js";
-import * as Flowable from "../../../concurrent/Flowable.js";
-import * as HostScheduler from "../../../concurrent/HostScheduler.js";
-import * as Observable from "../../../concurrent/Observable.js";
-import { FlowableLike_flow, PauseableLike_pause, PauseableLike_resume, } from "../../../concurrent.js";
+import * as Flowable from "../../../computations/Flowable.js";
+import * as Observable from "../../../computations/Observable.js";
+import { FlowableLike_flow } from "../../../computations.js";
 import { invoke, newInstance, pipe, pipeAsync, returns, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { DisposableLike_isDisposed } from "../../../utils.js";
+import * as HostScheduler from "../../../utils/HostScheduler.js";
+import { DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume, } from "../../../utils.js";
 import * as FlowableStream from "../FlowableStream.js";
 testModule("FlowableStream", describe("create", testAsync("reading from readable", async () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
