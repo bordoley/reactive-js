@@ -22,4 +22,6 @@
 - [keep](functions/keep.md)
 - [map](functions/map.md)
 - [of](functions/of.md)
+- [toObservable](functions/toObservable.md)
+- [toPauseableObservable](functions/toPauseableObservable.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

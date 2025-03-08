@@ -16,7 +16,6 @@
 
 ## Functions
 
-- [create](functions/create.md)
 - [dispatchTo](functions/dispatchTo.md)
 - [fromAsyncIterable](functions/fromAsyncIterable.md)
 - [fromSynchronousObservable](functions/fromSynchronousObservable.md)

@@ -7,7 +7,6 @@ import Observable_firstAsync from "./Observable.firstAsync.js";
 const Observable_toReadonlyArrayAsync = (schedulerOrOptions, maybeOptions) => {
     const { scheduler, options } = isNone(schedulerOrOptions) || isSome(schedulerOrOptions.capacity)
         ? {
-            // FIXME: Might want to create a scheduler and use it instead
             scheduler: HostScheduler.get(),
             options: schedulerOrOptions,
         }
