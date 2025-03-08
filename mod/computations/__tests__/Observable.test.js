@@ -66,7 +66,7 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Queue from "../../utils/Queue.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
-import { DispatcherLike_complete, DispatcherLike_state, DispatcherState_completed, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, QueueableLike_enqueue, SchedulerLike_now, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { DispatcherLike_complete, DispatcherLike_state, DispatcherState_completed, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_schedule, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 import * as WritableStore from "../WritableStore.js";
@@ -820,11 +820,32 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_35);
     }
-})), describe("toReadonlyArrayAsync", testAsync("with pure delayed source", async () => {
+})), describe("toPauseableObservable", test("a source with delay", () => {
     const env_36 = { stack: [], error: void 0, hasError: false };
     try {
-        const scheduler = __addDisposableResource(env_36, HostScheduler.create(), false);
-        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 3 }), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3]));
+        const vts = __addDisposableResource(env_36, VirtualTimeScheduler.create(), false);
+        const generateObservable = pipe(Observable.generate(increment, returns(-1), {
+            delay: 1,
+            delayStart: true,
+        }), Observable.toPauseableObservable(vts));
+        generateObservable[PauseableLike_resume]();
+        vts[SchedulerLike_schedule](() => {
+            generateObservable[PauseableLike_pause]();
+            pipe(generateObservable[PauseableLike_isPaused][StoreLike_value], expectTrue("expect observable to be paused"));
+        }, { delay: 2 });
+        vts[SchedulerLike_schedule](() => {
+            generateObservable[PauseableLike_resume]();
+            pipe(generateObservable[PauseableLike_isPaused][StoreLike_value], expectFalse("expect observable to not be paused"));
+        }, { delay: 4 });
+        vts[SchedulerLike_schedule](() => generateObservable[DisposableLike_dispose](), { delay: 6 });
+        const f = mockFn();
+        const subscription = pipe(generateObservable, Observable.forEach((x) => {
+            f(x);
+        }), Observable.subscribe(vts));
+        vts[VirtualTimeSchedulerLike_run]();
+        // pipe(f, expectToHaveBeenCalledTimes(2));
+        pipe(f.calls.flat(), expectArrayEquals([0, 1]));
+        pipe(subscription[DisposableLike_isDisposed], expectTrue());
     }
     catch (e_36) {
         env_36.error = e_36;
@@ -833,11 +854,22 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_36);
     }
-}), testAsync("with empty non-runnable source", async () => {
+}), test("flow a generating source", () => {
     const env_37 = { stack: [], error: void 0, hasError: false };
     try {
-        const scheduler = __addDisposableResource(env_37, HostScheduler.create(), false);
-        await pipeAsync(EventSource.create(l => l[DisposableLike_dispose]()), Observable.fromEventSource(), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([]));
+        const vts = __addDisposableResource(env_37, VirtualTimeScheduler.create(), false);
+        const flowed = pipe([0, 1, 2], Observable.fromReadonlyArray(), Observable.toPauseableObservable(vts), Disposable.addTo(vts));
+        vts[SchedulerLike_schedule](() => flowed[PauseableLike_resume](), {
+            delay: 2,
+        });
+        const f = mockFn();
+        const subscription = pipe(flowed, Observable.withCurrentTime(tuple), Observable.forEach(([_, v]) => {
+            f(v);
+        }), Observable.subscribe(vts), Disposable.addTo(vts));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(f, expectToHaveBeenCalledTimes(3));
+        pipe(f.calls.flat(), expectArrayEquals([0, 1, 2]));
+        pipe(subscription[DisposableLike_isDisposed], expectTrue());
     }
     catch (e_37) {
         env_37.error = e_37;
@@ -845,6 +877,49 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     }
     finally {
         __disposeResources(env_37);
+    }
+}), test("when the source throws", () => {
+    const env_38 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_38, VirtualTimeScheduler.create(), false);
+        const error = newInstance(Error);
+        const flowed = pipe(Observable.raise({ raise: () => error }), Observable.toPauseableObservable(vts), Disposable.addTo(vts));
+        flowed[PauseableLike_resume]();
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(flowed[DisposableLike_error], expectEquals(error));
+    }
+    catch (e_38) {
+        env_38.error = e_38;
+        env_38.hasError = true;
+    }
+    finally {
+        __disposeResources(env_38);
+    }
+})), describe("toReadonlyArrayAsync", testAsync("with pure delayed source", async () => {
+    const env_39 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_39, HostScheduler.create(), false);
+        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 3 }), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3]));
+    }
+    catch (e_39) {
+        env_39.error = e_39;
+        env_39.hasError = true;
+    }
+    finally {
+        __disposeResources(env_39);
+    }
+}), testAsync("with empty non-runnable source", async () => {
+    const env_40 = { stack: [], error: void 0, hasError: false };
+    try {
+        const scheduler = __addDisposableResource(env_40, HostScheduler.create(), false);
+        await pipeAsync(EventSource.create(l => l[DisposableLike_dispose]()), Observable.fromEventSource(), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([]));
+    }
+    catch (e_40) {
+        env_40.error = e_40;
+        env_40.hasError = true;
+    }
+    finally {
+        __disposeResources(env_40);
     }
 })), describe("withCurrentTime", StatefulSynchronousComputationOperatorTests(ObservableTypes, Observable.withCurrentTime(returns))), describe("zipLatest", test("zip two delayed sources", pipeLazy(Observable.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Observable.fromReadonlyArray({ delay: 1, delayStart: true })), pipe([1, 2, 3, 4], Observable.fromReadonlyArray({ delay: 2, delayStart: true }))), Observable.map(([a, b]) => a + b), Observable.toReadonlyArray(), expectArrayEquals([2, 5, 8, 11]))), CombineConstructorTests(Observable.zipLatest)));
 ((_) => { })(Observable);

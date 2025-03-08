@@ -22,7 +22,6 @@ const Observable_toReadonlyArrayAsync: Observable.Signature["toReadonlyArrayAsyn
     const { scheduler, options } =
       isNone(schedulerOrOptions) || isSome((schedulerOrOptions as any).capacity)
         ? {
-            // FIXME: Might want to create a scheduler and use it instead
             scheduler: HostScheduler.get(),
             options: schedulerOrOptions as {
               readonly capacity?: number;

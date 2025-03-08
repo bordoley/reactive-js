@@ -91,8 +91,12 @@ import {
   DropOldestBackpressureStrategy,
   EventListenerLike_notify,
   OverflowBackpressureStrategy,
+  PauseableLike_isPaused,
+  PauseableLike_pause,
+  PauseableLike_resume,
   QueueableLike_enqueue,
   SchedulerLike_now,
+  SchedulerLike_schedule,
   ThrowBackpressureStrategy,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
@@ -1536,6 +1540,113 @@ testModule(
       vts[VirtualTimeSchedulerLike_run]();
 
       pipe(result, expectArrayEquals([0, 1, 2]));
+    }),
+  ),
+  describe(
+    "toPauseableObservable",
+    test("a source with delay", () => {
+      using vts = VirtualTimeScheduler.create();
+
+      const generateObservable = pipe(
+        Observable.generate(increment, returns(-1), {
+          delay: 1,
+          delayStart: true,
+        }),
+        Observable.toPauseableObservable(vts),
+      );
+
+      generateObservable[PauseableLike_resume]();
+
+      vts[SchedulerLike_schedule](
+        () => {
+          generateObservable[PauseableLike_pause]();
+          pipe(
+            generateObservable[PauseableLike_isPaused][StoreLike_value],
+            expectTrue("expect observable to be paused"),
+          );
+        },
+        { delay: 2 },
+      );
+
+      vts[SchedulerLike_schedule](
+        () => {
+          generateObservable[PauseableLike_resume]();
+
+          pipe(
+            generateObservable[PauseableLike_isPaused][StoreLike_value],
+            expectFalse("expect observable to not be paused"),
+          );
+        },
+        { delay: 4 },
+      );
+
+      vts[SchedulerLike_schedule](
+        () => generateObservable[DisposableLike_dispose](),
+        { delay: 6 },
+      );
+
+      const f = mockFn();
+      const subscription = pipe(
+        generateObservable,
+        Observable.forEach((x: number) => {
+          f(x);
+        }),
+        Observable.subscribe(vts),
+      );
+
+      vts[VirtualTimeSchedulerLike_run]();
+
+      // pipe(f, expectToHaveBeenCalledTimes(2));
+      pipe(f.calls.flat(), expectArrayEquals([0, 1]));
+
+      pipe(subscription[DisposableLike_isDisposed], expectTrue());
+    }),
+    test("flow a generating source", () => {
+      using vts = VirtualTimeScheduler.create();
+
+      const flowed = pipe(
+        [0, 1, 2],
+        Observable.fromReadonlyArray(),
+        Observable.toPauseableObservable(vts),
+        Disposable.addTo(vts),
+      );
+
+      vts[SchedulerLike_schedule](() => flowed[PauseableLike_resume](), {
+        delay: 2,
+      });
+
+      const f = mockFn();
+      const subscription = pipe(
+        flowed,
+        Observable.withCurrentTime<unknown, Tuple2<number, any>>(tuple),
+        Observable.forEach(([_, v]: Tuple2<number, any>) => {
+          f(v);
+        }),
+        Observable.subscribe(vts),
+        Disposable.addTo(vts),
+      );
+
+      vts[VirtualTimeSchedulerLike_run]();
+
+      pipe(f, expectToHaveBeenCalledTimes(3));
+      pipe(f.calls.flat(), expectArrayEquals([0, 1, 2]));
+
+      pipe(subscription[DisposableLike_isDisposed], expectTrue());
+    }),
+    test("when the source throws", () => {
+      using vts = VirtualTimeScheduler.create();
+      const error = newInstance(Error);
+
+      const flowed = pipe(
+        Observable.raise({ raise: () => error }),
+        Observable.toPauseableObservable(vts),
+        Disposable.addTo(vts),
+      );
+      flowed[PauseableLike_resume]();
+
+      vts[VirtualTimeSchedulerLike_run]();
+
+      pipe(flowed[DisposableLike_error], expectEquals<Optional<Error>>(error));
     }),
   ),
   describe(

@@ -6,31 +6,29 @@ import {
 } from "../__internal__/mixins.js";
 import {
   EventSourceLike,
-  PauseableEventSourceLike,
+  MulticastObservableLike,
+  PauseableObservableLike,
   StoreLike_value,
   WritableStoreLike,
 } from "../computations.js";
 import { Function1, none, pipe } from "../functions.js";
+import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
-  DisposableLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
 } from "../utils.js";
 import * as WritableStore from "./WritableStore.js";
-import DelegatingEventSourceMixin from "./__mixins__/DelegatingEventSourceMixin.js";
+import DelegatingMulticastObservableMixin from "./__mixins__/DelegatingMulticastObservableMixin.js";
 
-interface PauseableEventSourceModule {
+interface PauseableObservableModule {
   create<T>(
-    op: Function1<
-      EventSourceLike<boolean> & DisposableLike,
-      EventSourceLike<T>
-    >,
-  ): PauseableEventSourceLike<T>;
+    op: Function1<EventSourceLike<boolean>, MulticastObservableLike<T>>,
+  ): PauseableObservableLike<T>;
 }
 
-export type Signature = PauseableEventSourceModule;
+type Signature = PauseableObservableModule;
 
 export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
   type TProperties = {
@@ -38,25 +36,27 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
   };
 
   return mixInstanceFactory(
-    include(DelegatingDisposableMixin, DelegatingEventSourceMixin()),
-    function PauseableEventSource(
+    include(DelegatingDisposableMixin, DelegatingMulticastObservableMixin()),
+    function PauseableObservable(
       instance: Pick<
-        PauseableEventSourceLike<T>,
+        PauseableObservableLike<T>,
         typeof PauseableLike_pause | typeof PauseableLike_resume
       > &
         TProperties,
-      op: Function1<
-        EventSourceLike<boolean> & DisposableLike,
-        EventSourceLike<T>
-      >,
-    ): PauseableEventSourceLike<T> {
+      op: Function1<EventSourceLike<boolean>, MulticastObservableLike<T>>,
+    ): PauseableObservableLike<T> {
       const writableStore = (instance[PauseableLike_isPaused] =
         WritableStore.create(true));
 
-      const delegate = pipe(writableStore, op);
+      const observableDelegate = pipe(writableStore, op);
+      pipe(writableStore, Disposable.addToContainer(observableDelegate));
 
       init(DelegatingDisposableMixin, instance, writableStore);
-      init(DelegatingEventSourceMixin<T>(), instance, delegate);
+      init(
+        DelegatingMulticastObservableMixin<T>(),
+        instance,
+        observableDelegate,
+      );
 
       return instance;
     },

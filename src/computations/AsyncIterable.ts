@@ -1,4 +1,9 @@
-import { Array_push } from "../__internal__/constants.js";
+import {
+  Array_push,
+  Iterator_done,
+  Iterator_next,
+  Iterator_value,
+} from "../__internal__/constants.js";
 import {
   AsyncIterableLike,
   ComputationLike_isPure,
@@ -8,15 +13,39 @@ import {
   Computation_T,
   Computation_baseOfT,
   Computation_deferredWithSideEffectsOfT,
+  DeferredObservableWithSideEffectsLike,
+  EventSourceLike,
+  PauseableObservableLike,
 } from "../computations.js";
 import {
   AsyncFunction1,
   Function1,
   Predicate,
+  bindMethod,
+  error,
   newInstance,
+  pipe,
   returns,
 } from "../functions.js";
-
+import * as Disposable from "../utils/Disposable.js";
+import * as DisposableContainer from "../utils/DisposableContainer.js";
+import {
+  BackpressureStrategy,
+  DispatcherLike_complete,
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
+  ObserverLike,
+  QueueableLike_enqueue,
+  SchedulerLike,
+  SchedulerLike_maxYieldInterval,
+  SchedulerLike_now,
+  SchedulerLike_schedule,
+} from "../utils.js";
+import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
+import Observable_create from "./Observable/__private__/Observable.create.js";
+import Observable_fromAsyncIterable from "./Observable/__private__/Observable.fromAsyncIterable.js";
+import Observable_multicast from "./Observable/__private__/Observable.multicast.js";
+import * as PauseableObservable from "./PauseableObservable.js";
 /**
  * @noInheritDoc
  */
@@ -36,6 +65,21 @@ export interface AsyncIterableModule
   fromReadonlyArray<T>(): Function1<ReadonlyArray<T>, AsyncIterableLike<T>>;
 
   of<T>(): Function1<AsyncIterable<T>, AsyncIterableLike<T>>;
+
+  toObservable<T>(): Function1<
+    AsyncIterable<T>,
+    DeferredObservableWithSideEffectsLike<T>
+  >;
+
+  toPauseableObservable<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly autoDispose?: boolean;
+      readonly replay?: number;
+      readonly capacity?: number;
+      readonly backpressureStrategy?: BackpressureStrategy;
+    },
+  ): Function1<AsyncIterableLike<T>, PauseableObservableLike<T>>;
 
   toReadonlyArrayAsync<T>(): AsyncFunction1<AsyncIterable<T>, ReadonlyArray<T>>;
 }
@@ -123,6 +167,90 @@ class AsyncIterableOf<T> implements AsyncIterableLike<T> {
 export const of: Signature["of"] = /*@__PURE__*/ returns(iter =>
   newInstance(AsyncIterableOf, iter),
 );
+
+export const toObservable: Signature["toObservable"] =
+  Observable_fromAsyncIterable;
+
+export const toPauseableObservable: Signature["toPauseableObservable"] =
+  <T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly autoDispose?: boolean;
+      readonly replay?: number;
+      readonly capacity?: number;
+      readonly backpressureStrategy?: BackpressureStrategy;
+    },
+  ) =>
+  (iterable: AsyncIterableLike<T>) =>
+    PauseableObservable.create<T>((modeObs: EventSourceLike<boolean>) =>
+      pipe(
+        Observable_create((observer: ObserverLike<T>) => {
+          const iterator = iterable[Symbol.asyncIterator]();
+          const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
+
+          let isPaused = true;
+
+          const continuation = async () => {
+            const startTime = observer[SchedulerLike_now];
+
+            try {
+              while (
+                !observer[DisposableLike_isDisposed] &&
+                !isPaused &&
+                observer[SchedulerLike_now] - startTime < maxYieldInterval
+              ) {
+                const next = await iterator[Iterator_next]();
+
+                if (next[Iterator_done]) {
+                  observer[DispatcherLike_complete]();
+                  break;
+                } else if (
+                  !observer[QueueableLike_enqueue](next[Iterator_value])
+                ) {
+                  // An async iterable can produce resolved promises which are immediately
+                  // scheduled on the microtask queue. This prevents the observer's scheduler
+                  // from running and draining dispatched events.
+                  //
+                  // Check the observer's buffer size so we can avoid queueing forever
+                  // in this situation.
+                  break;
+                }
+              }
+            } catch (e) {
+              observer[DisposableLike_dispose](error(e));
+            }
+
+            if (!isPaused) {
+              pipe(
+                observer[SchedulerLike_schedule](continuation),
+                Disposable.addTo(observer),
+              );
+            }
+          };
+
+          pipe(
+            modeObs,
+            EventSource_addEventHandler((mode: boolean) => {
+              const wasPaused = isPaused;
+              isPaused = mode;
+
+              if (!isPaused && wasPaused) {
+                pipe(
+                  observer[SchedulerLike_schedule](continuation),
+                  Disposable.addTo(observer),
+                );
+              }
+            }),
+            Disposable.addTo(observer),
+            DisposableContainer.onComplete(
+              bindMethod(observer, DispatcherLike_complete),
+            ),
+          );
+        }),
+        Observable_multicast(scheduler, options),
+        Disposable.addToContainer(modeObs),
+      ),
+    );
 
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   /*@__PURE__*/

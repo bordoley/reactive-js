@@ -6,4 +6,4 @@
 
 # Type Alias: Signature
 
-> **Signature**: `PauseableEventSource`
+> **Signature**: `PauseableEventSourceModule`

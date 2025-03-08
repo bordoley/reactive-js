@@ -8,26 +8,6 @@
 
 ## Methods
 
-### create()
-
-> **create**\<`T`\>(`op`): [`FlowableLike`](../../interfaces/FlowableLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### op
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`boolean`\>, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>\>
-
-#### Returns
-
-[`FlowableLike`](../../interfaces/FlowableLike.md)\<`T`\>
-
-***
-
 ### dispatchTo()
 
 > **dispatchTo**\<`T`\>(`dispatcher`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`FlowableLike`](../../interfaces/FlowableLike.md)\<`T`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
@@ -50,7 +30,7 @@
 
 ### fromAsyncIterable()
 
-> **fromAsyncIterable**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`AsyncIterable`\<`T`, `any`, `any`\>, [`FlowableLike`](../../interfaces/FlowableLike.md)\<`T`\>\>
+> **fromAsyncIterable**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>, [`FlowableLike`](../../interfaces/FlowableLike.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -58,7 +38,7 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`AsyncIterable`\<`T`, `any`, `any`\>, [`FlowableLike`](../../interfaces/FlowableLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>, [`FlowableLike`](../../interfaces/FlowableLike.md)\<`T`\>\>
 
 ***
 
