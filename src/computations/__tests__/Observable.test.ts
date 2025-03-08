@@ -51,6 +51,7 @@ import {
   SynchronousObservableLike,
 } from "../../computations.js";
 import {
+  AsyncFunction1,
   Function1,
   Optional,
   Tuple2,
@@ -198,7 +199,7 @@ testModule(
         ReadonlyArray<T>,
         ComputationOf<Observable.Computation, T>
       >;
-      toReadonlyArray: <T>() => Function1<
+      toReadonlyArrayAsync: <T>() => AsyncFunction1<
         ComputationOf<Observable.Computation, T>,
         ReadonlyArray<T>
       >;

@@ -22,16 +22,6 @@
 
 ***
 
-### \[Computation\_deferredWithSideEffectsOfT\]?
-
-> `readonly` `optional` **\[Computation\_deferredWithSideEffectsOfT\]**: [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`unknown`\>
-
-#### Overrides
-
-`ComputationType.[Computation_deferredWithSideEffectsOfT]`
-
-***
-
 ### \[Computation\_multicastOfT\]?
 
 > `readonly` `optional` **\[Computation\_multicastOfT\]**: `undefined`
@@ -39,16 +29,6 @@
 #### Overrides
 
 `ComputationType.[Computation_multicastOfT]`
-
-***
-
-### \[Computation\_pureDeferredOfT\]?
-
-> `readonly` `optional` **\[Computation\_pureDeferredOfT\]**: [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>
-
-#### Overrides
-
-`ComputationType.[Computation_pureDeferredOfT]`
 
 ***
 

@@ -8,6 +8,7 @@
 
 ## Extended by
 
+- [`AsyncIterableModule`](../AsyncIterable/interfaces/AsyncIterableModule.md)
 - [`SynchronousComputationModule`](SynchronousComputationModule.md)
 - [`ConcurrentReactiveComputationModule`](ConcurrentReactiveComputationModule.md)
 

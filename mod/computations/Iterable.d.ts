@@ -1,11 +1,9 @@
-import { ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, InteractiveComputationModule, IterableLike, IterableWithSideEffectsLike, PureIterableLike } from "../computations.js";
+import { ComputationType, Computation_T, Computation_baseOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, InteractiveComputationModule, IterableLike, IterableWithSideEffectsLike, PureIterableLike } from "../computations.js";
 /**
  * @noInheritDoc
  */
 export interface IterableComputation extends ComputationType {
     readonly [Computation_baseOfT]?: IterableLike<this[typeof Computation_T]>;
-    readonly [Computation_pureDeferredOfT]?: PureIterableLike<this[typeof Computation_T]>;
-    readonly [Computation_deferredWithSideEffectsOfT]?: IterableWithSideEffectsLike<this[typeof Computation_T]>;
     readonly [Computation_pureSynchronousOfT]?: PureIterableLike<this[typeof Computation_T]>;
     readonly [Computation_synchronousWithSideEffectsOfT]?: IterableWithSideEffectsLike<this[typeof Computation_T]>;
 }

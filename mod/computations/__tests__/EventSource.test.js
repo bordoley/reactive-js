@@ -27,8 +27,8 @@ testModule("EventSource", ComputationModuleTests({
             },
         });
     },
-    toReadonlyArray() {
-        return (eventSource) => {
+    toReadonlyArrayAsync() {
+        return async (eventSource) => {
             const result = [];
             const subscription = pipe(eventSource, EventSource.addEventHandler(bindMethod(result, Array_push)));
             if (isSome(subscription[DisposableLike_error])) {

@@ -82,6 +82,24 @@ export const expectToThrowError = (error) => (f) => {
     }
     return f;
 };
+export const expectToThrowErrorAsync = (error) => async (f) => {
+    let didThrow = false;
+    let errorThrown = none;
+    try {
+        await f();
+    }
+    catch (e) {
+        didThrow = true;
+        errorThrown = e;
+    }
+    if (!didThrow) {
+        raise("expected function to throw");
+    }
+    else if (errorThrown !== error) {
+        raise(`expected ${JSON.stringify(error)}\nreceieved: ${JSON.stringify(errorThrown)}`);
+    }
+    return f;
+};
 export const expectEquals = (b, valueEquality = strictEquality) => (a) => {
     if (!valueEquality(a, b)) {
         raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);

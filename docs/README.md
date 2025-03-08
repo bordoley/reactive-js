@@ -13,6 +13,7 @@
 - [collections/ReadonlyMap](collections/ReadonlyMap/README.md)
 - [collections/ReadonlyObjectMap](collections/ReadonlyObjectMap/README.md)
 - [computations](computations/README.md)
+- [computations/AsyncIterable](computations/AsyncIterable/README.md)
 - [computations/Cache](computations/Cache/README.md)
 - [computations/Computation](computations/Computation/README.md)
 - [computations/EventSource](computations/EventSource/README.md)

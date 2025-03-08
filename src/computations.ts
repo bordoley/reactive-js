@@ -1081,3 +1081,9 @@ export interface StreamableLike<
 export type StreamOf<TStreamable extends StreamableLike> = ReturnType<
   TStreamable[typeof StreamableLike_stream]
 >;
+
+export interface AsyncIterableLike<T>
+  extends AsyncIterable<T>,
+    DeferredComputationWithSideEffectsLike {
+  readonly [ComputationLike_isSynchronous]: false;
+}

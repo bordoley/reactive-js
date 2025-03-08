@@ -43,6 +43,8 @@ import {
   SynchronousObservableWithSideEffectsLike,
 } from "../computations.js";
 import {
+  AsyncFunction1,
+  AsyncFunction2,
   Factory,
   Function1,
   Function2,
@@ -434,10 +436,10 @@ export interface ObservableModule
       readonly capacity?: number;
       readonly backpressureStrategy?: BackpressureStrategy;
     },
-  ): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+  ): AsyncFunction1<ObservableLike<T>, Optional<T>>;
 
   flatMapAsync<TA, TB>(
-    f: Function2<TA, AbortSignal, Promise<TB>>,
+    f: AsyncFunction2<TA, AbortSignal, TB>,
   ): HigherOrderComputationOperator<
     ObservableComputation,
     DeferredComputationWithSideEffectsLike,
@@ -448,7 +450,7 @@ export interface ObservableModule
   forkMerge: ForkMerge;
 
   fromAsyncFactory<T>(): Function1<
-    Function1<AbortSignal, Promise<T>>,
+    AsyncFunction1<AbortSignal, T>,
     DeferredObservableWithSideEffectsLike<T>
   >;
 
@@ -511,7 +513,7 @@ export interface ObservableModule
       readonly capacity?: number;
       readonly backpressureStrategy?: BackpressureStrategy;
     },
-  ): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+  ): AsyncFunction1<ObservableLike<T>, Optional<T>>;
 
   mergeAll<T>(options?: {
     readonly backpressureStrategy?: BackpressureStrategy;
@@ -677,13 +679,25 @@ export interface ObservableModule
     readonly maxMicroTaskTicks?: number;
   }): Function1<SynchronousObservableLike<T>, ReadonlyArray<T>>;
 
+  toReadonlyArrayAsync<T>(options?: {
+    readonly backpressureStrategy?: BackpressureStrategy;
+    readonly capacity?: number;
+  }): AsyncFunction1<ObservableLike<T>, ReadonlyArray<T>>;
   toReadonlyArrayAsync<T>(
     scheduler: SchedulerLike,
     options?: {
       readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     },
-  ): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
+  ): AsyncFunction1<ObservableLike<T>, ReadonlyArray<T>>;
+
+  toReadonlyArrayAsync<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: BackpressureStrategy;
+      readonly capacity?: number;
+    },
+  ): AsyncFunction1<ObservableLike<T>, ReadonlyArray<T>>;
 
   toRunnable<T>(options?: {
     readonly backpressureStrategy?: BackpressureStrategy;

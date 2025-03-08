@@ -61,8 +61,8 @@ testModule(
           },
         });
       },
-      toReadonlyArray<T>() {
-        return (eventSource: EventSourceLike<T>) => {
+      toReadonlyArrayAsync<T>() {
+        return async (eventSource: EventSourceLike<T>) => {
           const result: T[] = [];
           const subscription = pipe(
             eventSource,

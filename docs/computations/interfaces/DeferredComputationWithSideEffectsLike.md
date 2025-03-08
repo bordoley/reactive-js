@@ -10,6 +10,10 @@
 
 - [`DeferredComputationLike`](DeferredComputationLike.md)
 
+## Extended by
+
+- [`AsyncIterableLike`](AsyncIterableLike.md)
+
 ## Properties
 
 ### \[ComputationLike\_isDeferred\]?

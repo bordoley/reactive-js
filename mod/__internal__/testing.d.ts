@@ -1,4 +1,4 @@
-import { Equality, Factory, Function1, Optional, Predicate, SideEffect } from "../functions.js";
+import { AsyncFactory, Equality, Factory, Function1, Optional, Predicate, SideEffect } from "../functions.js";
 export declare const __DENO__: boolean;
 export declare const DescribeType = 1;
 export declare const TestType = 2;
@@ -22,7 +22,7 @@ export type TestDebug = {
 export type TestAsync = {
     readonly type: typeof TestAsyncType;
     readonly name: string;
-    readonly f: Function1<string, Factory<Promise<void>>>;
+    readonly f: Function1<string, AsyncFactory<void>>;
 };
 export type TestGroup = Describe | Test | TestAsync | TestDebug;
 export declare const describe: (name: string, ...tests: Optional<TestGroup>[]) => Describe;
@@ -30,10 +30,11 @@ export declare const test: (name: string, f: SideEffect) => Test;
 export declare const testDebug: (name: string, f: SideEffect) => TestDebug;
 export declare const testPredicateExpectingTrue: <T>(input: T, predicate: Predicate<T>) => any;
 export declare const testPredicateExpectingFalse: <T>(input: T, predicate: Predicate<T>) => any;
-export declare const testAsync: (name: string, f: Factory<Promise<any>>) => TestAsync;
+export declare const testAsync: (name: string, f: AsyncFactory<any>) => TestAsync;
 export declare const expectToThrow: (f: SideEffect) => SideEffect;
 export declare const expectToThrowAsync: (f: Factory<Promise<unknown>>) => Promise<Factory<Promise<unknown>>>;
 export declare const expectToThrowError: (error: unknown) => (f: SideEffect) => SideEffect;
+export declare const expectToThrowErrorAsync: (error: unknown) => (f: Factory<Promise<unknown>>) => Promise<Factory<Promise<unknown>>>;
 export declare const expectEquals: <T>(b: T, valueEquality?: <T_1>(a: T_1, b: T_1) => boolean) => (a: T) => T;
 export declare const expectArrayEquals: <T>(b: readonly T[], { valuesEquality, }?: {
     valuesEquality: Equality<T>;
