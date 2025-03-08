@@ -6,9 +6,6 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Flowable from "../../computations/Flowable.js";
-import * as Observable from "../../computations/Observable.js";
-import * as Streamable from "../../computations/Streamable.js";
 import { StreamableLike_stream } from "../../computations.js";
 import { bindMethod, increment, pipe, returns } from "../../functions.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
@@ -17,22 +14,16 @@ import {
   ThrowBackpressureStrategy,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
+import * as Observable from "../Observable.js";
+import * as PauseableObservable from "../PauseableObservable.js";
+import * as Streamable from "../Streamable.js";
 
 testModule(
-  "Flowable",
+  "PauseableObservable",
   describe(
     "dispatchTo",
     test("dispatching a pauseable observable into a stream with backpressure", () => {
       using vts = VirtualTimeScheduler.create();
-
-      const src = pipe(
-        Observable.generate(increment, returns(-1), {
-          delay: 1,
-          delayStart: true,
-        }),
-        Observable.takeFirst<number>({ count: 5 }),
-        Flowable.fromSynchronousObservable(),
-      );
 
       const dest = Streamable.identity<number>()[StreamableLike_stream](vts, {
         backpressureStrategy: ThrowBackpressureStrategy,
@@ -40,8 +31,13 @@ testModule(
       });
 
       const dispatchToSubscription = pipe(
-        src,
-        Flowable.dispatchTo(dest),
+        Observable.generate(increment, returns(-1), {
+          delay: 1,
+          delayStart: true,
+        }),
+        Observable.takeFirst<number>({ count: 5 }),
+        Observable.toPauseableObservable(vts),
+        PauseableObservable.dispatchTo(dest),
         Observable.subscribe(vts),
       );
 
@@ -61,4 +57,4 @@ testModule(
   ),
 );
 
-((_: Flowable.Signature) => {})(Flowable);
+((_: PauseableObservable.Signature) => {})(PauseableObservable);

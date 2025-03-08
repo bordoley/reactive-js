@@ -12,7 +12,6 @@
 - [createComponent](functions/createComponent.md)
 - [useDispatcher](functions/useDispatcher.md)
 - [useDisposable](functions/useDisposable.md)
-- [useFlow](functions/useFlow.md)
 - [useListen](functions/useListen.md)
 - [useObserve](functions/useObserve.md)
 - [usePauseable](functions/usePauseable.md)

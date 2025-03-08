@@ -370,17 +370,6 @@ export interface SubjectLike<out T = unknown> extends MulticastObservableLike<T>
  */
 export interface PauseableObservableLike<out T = unknown> extends MulticastObservableLike<T>, PauseableLike {
 }
-export declare const FlowableLike_flow: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface FlowableLike<out T> {
-    [FlowableLike_flow](scheduler: SchedulerLike, options?: {
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-        readonly replay?: number;
-    }): PauseableObservableLike<T>;
-}
 /**
  * Represents a duplex stream
  *

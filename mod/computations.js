@@ -39,5 +39,4 @@ export const MulticastComputation = {
 export const EventSourceLike_addEventListener = Symbol("EventSourceLike_addEventListener");
 export const StoreLike_value = Symbol("StoreLike_value");
 export const ObservableLike_observe = Symbol("ObservableLike_observe");
-export const FlowableLike_flow = Symbol("FlowableLike_flow");
 export const StreamableLike_stream = Symbol("StreamableLike_stream");

@@ -6,6 +6,11 @@
 
 # computations/PauseableObservable
 
+## Type Aliases
+
+- [Signature](type-aliases/Signature.md)
+
 ## Functions
 
 - [create](functions/create.md)
+- [dispatchTo](functions/dispatchTo.md)
