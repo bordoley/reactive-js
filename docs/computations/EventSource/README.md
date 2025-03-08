@@ -25,4 +25,5 @@
 - [map](functions/map.md)
 - [merge](functions/merge.md)
 - [never](functions/never.md)
+- [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
 - [withLatestFrom](functions/withLatestFrom.md)

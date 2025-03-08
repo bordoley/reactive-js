@@ -10,6 +10,24 @@
 
 - [`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`RunnableComputation`](RunnableComputation.md)\>
 
+## Properties
+
+### toReadonlyArrayAsync()
+
+> **toReadonlyArrayAsync**: \<`T`\>() => [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>, readonly `T`[]\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>, readonly `T`[]\>
+
+#### Inherited from
+
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`toReadonlyArrayAsync`](../../interfaces/DeferredReactiveComputationModule.md#toreadonlyarrayasync)
+
 ## Methods
 
 ### buffer()

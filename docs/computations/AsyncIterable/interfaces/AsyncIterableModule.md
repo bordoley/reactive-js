@@ -10,6 +10,24 @@
 
 - [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>
 
+## Properties
+
+### toReadonlyArrayAsync()
+
+> **toReadonlyArrayAsync**: \<`T`\>() => [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>, readonly `T`[]\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>, readonly `T`[]\>
+
+#### Inherited from
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`toReadonlyArrayAsync`](../../interfaces/ComputationModule.md#toreadonlyarrayasync)
+
 ## Methods
 
 ### fromReadonlyArray()
@@ -139,17 +157,3 @@
 #### Returns
 
 [`Function1`](../../../functions/type-aliases/Function1.md)\<[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>, [`PauseableObservableLike`](../../interfaces/PauseableObservableLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
-
-***
-
-### toReadonlyArrayAsync()
-
-> **toReadonlyArrayAsync**\<`T`\>(): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<`AsyncIterable`\<`T`, `any`, `any`\>, readonly `T`[]\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<`AsyncIterable`\<`T`, `any`, `any`\>, readonly `T`[]\>

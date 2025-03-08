@@ -5,7 +5,7 @@ import { clampPositiveInteger } from "../__internal__/math.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import { ComputationLike_isPure, Computation_baseOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
-import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, raise as raiseError, returns, tuple, } from "../functions.js";
+import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raise as raiseError, returns, tuple, } from "../functions.js";
 import * as ComputationM from "./Computation.js";
 import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 class CatchErrorIterable {
@@ -363,8 +363,10 @@ class ThrowIfEmptyIterable {
     }
 }
 export const throwIfEmpty = ((factory) => (iter) => newInstance(ThrowIfEmptyIterable, iter, factory));
-export const toRunnable = Runnable_fromIterable;
 export const toReadonlyArray = ReadonlyArray.fromIterable;
+export const toReadonlyArrayAsync = 
+/*@__PURE__*/ returns(async (iter) => pipe(iter, toReadonlyArray()));
+export const toRunnable = Runnable_fromIterable;
 class ZipIterable {
     iters;
     [ComputationLike_isPure];

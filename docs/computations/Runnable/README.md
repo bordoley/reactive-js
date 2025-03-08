@@ -47,4 +47,5 @@
 - [takeWhile](functions/takeWhile.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [toReadonlyArray](functions/toReadonlyArray.md)
+- [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
 - [toRunnable](functions/toRunnable.md)

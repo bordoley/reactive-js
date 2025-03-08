@@ -16,6 +16,20 @@
 
 • **TComputation** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
 
+## Properties
+
+### toReadonlyArrayAsync()
+
+> **toReadonlyArrayAsync**: \<`T`\>() => [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>
+
 ## Methods
 
 ### keep()

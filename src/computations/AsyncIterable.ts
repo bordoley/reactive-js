@@ -18,7 +18,6 @@ import {
   PauseableObservableLike,
 } from "../computations.js";
 import {
-  AsyncFunction1,
   Function1,
   Predicate,
   bindMethod,
@@ -84,8 +83,6 @@ export interface AsyncIterableModule
     AsyncIterableLike<T>,
     PauseableObservableLike<T> & DisposableLike
   >;
-
-  toReadonlyArrayAsync<T>(): AsyncFunction1<AsyncIterable<T>, ReadonlyArray<T>>;
 }
 
 export type Signature = AsyncIterableModule;
@@ -258,7 +255,7 @@ export const toPauseableObservable: Signature["toPauseableObservable"] =
 
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   /*@__PURE__*/
-  returns(async iter => {
+  returns(async (iter: AsyncIterableLike) => {
     const result: any[] = [];
     for await (const v of iter) {
       result[Array_push](v);

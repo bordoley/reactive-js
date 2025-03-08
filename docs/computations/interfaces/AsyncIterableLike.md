@@ -12,7 +12,7 @@
 
 ## Type Parameters
 
-• **T**
+• **T** = `unknown`
 
 ## Properties
 
