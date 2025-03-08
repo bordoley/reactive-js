@@ -89,6 +89,7 @@
 - [throttle](functions/throttle.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [toEventSource](functions/toEventSource.md)
+- [toPauseableObservable](functions/toPauseableObservable.md)
 - [toReadonlyArray](functions/toReadonlyArray.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
 - [toRunnable](functions/toRunnable.md)

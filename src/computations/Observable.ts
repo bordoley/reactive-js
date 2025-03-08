@@ -25,6 +25,7 @@ import {
   MulticastObservableLike,
   ObservableLike,
   ObserverLike,
+  PauseableObservableLike,
   PureComputationOf,
   PureDeferredComputationLike,
   PureDeferredComputationOf,
@@ -129,6 +130,7 @@ import Observable_throttle, {
 } from "./Observable/__private__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
+import Observable_toPauseableObservable from "./Observable/__private__/Observable.toPauseableObservable.js";
 import Observable_toReadonlyArray from "./Observable/__private__/Observable.toReadonlyArray.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
 import Observable_toRunnable from "./Observable/__private__/Observable.toRunnable.js";
@@ -634,12 +636,6 @@ export interface ObservableModule
     options?: { readonly mode?: ThrottleMode },
   ): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
 
-  toRunnable<T>(options?: {
-    readonly backpressureStrategy?: BackpressureStrategy;
-    readonly capacity?: number;
-    readonly maxMicroTaskTicks?: number;
-  }): Function1<SynchronousObservableLike<T>, RunnableLike<T>>;
-
   toEventSource<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -647,6 +643,15 @@ export interface ObservableModule
       readonly capacity?: number;
     },
   ): Function1<ObservableLike<T>, EventSourceLike<T> & DisposableLike>;
+
+  toPauseableObservable<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: BackpressureStrategy;
+      readonly capacity?: number;
+      readonly replay?: number;
+    },
+  ): Function1<SynchronousObservableLike<T>, PauseableObservableLike<T>>;
 
   toReadonlyArray<T>(options?: {
     readonly backpressureStrategy?: BackpressureStrategy;
@@ -661,6 +666,12 @@ export interface ObservableModule
       readonly capacity?: number;
     },
   ): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
+
+  toRunnable<T>(options?: {
+    readonly backpressureStrategy?: BackpressureStrategy;
+    readonly capacity?: number;
+    readonly maxMicroTaskTicks?: number;
+  }): Function1<SynchronousObservableLike<T>, RunnableLike<T>>;
 
   withCurrentTime<TA, TB>(
     selector: Function2<number, TA, TB>,
@@ -741,13 +752,15 @@ export const takeUntil: Signature["takeUntil"] = Observable_takeUntil;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throttle: Signature["throttle"] = Observable_throttle;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
-export const toRunnable: Signature["toRunnable"] = Observable_toRunnable;
 export const toEventSource: Signature["toEventSource"] =
   Observable_toEventSource;
+export const toPauseableObservable: Signature["toPauseableObservable"] =
+  Observable_toPauseableObservable;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Observable_toReadonlyArray;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   Observable_toReadonlyArrayAsync;
+export const toRunnable: Signature["toRunnable"] = Observable_toRunnable;
 export const withCurrentTime: Signature["withCurrentTime"] =
   Observable_withCurrentTime;
 export const withLatestFrom: Signature["withLatestFrom"] =
