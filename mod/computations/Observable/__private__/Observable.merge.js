@@ -67,7 +67,7 @@ const Observable_merge = /*@__PURE__*/ (() => {
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
     });
-    return (...observables) => observables.every(Computation.isMulticasted)
+    return (...observables) => Computation.areAllMulticasted(observables)
         ? createMulticastMergeObservable(observables)
         : createDeferredMergeObservable(observables);
 })();

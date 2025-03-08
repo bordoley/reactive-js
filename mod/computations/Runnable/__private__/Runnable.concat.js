@@ -1,15 +1,16 @@
 /// <reference types="./Runnable.concat.d.ts" />
 
 import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
-import { newInstance, pick } from "../../../functions.js";
+import { newInstance } from "../../../functions.js";
 import DelegatingNonCompletingSink from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
 import { SinkLike_complete, SinkLike_isComplete, } from "../../../utils.js";
+import * as Computation from "../../Computation.js";
 class ConcatRunnable {
     s;
     [ComputationLike_isPure];
     constructor(s) {
         this.s = s;
-        this[ComputationLike_isPure] = s.every(pick(ComputationLike_isPure));
+        this[ComputationLike_isPure] = Computation.areAllPure(s);
     }
     [RunnableLike_eval](sink) {
         const delegatingSink = newInstance(DelegatingNonCompletingSink, sink);

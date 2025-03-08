@@ -155,7 +155,7 @@ const Observable_merge: Observable.Signature["merge"] = /*@__PURE__*/ (<
   );
 
   return (...observables: readonly ObservableLike<T>[]) =>
-    observables.every(Computation.isMulticasted)
+    Computation.areAllMulticasted(observables)
       ? createMulticastMergeObservable(
           observables as readonly MulticastObservableLike<T>[],
         )
