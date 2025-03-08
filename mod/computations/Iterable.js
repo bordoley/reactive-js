@@ -3,6 +3,7 @@
 import { Array_length, Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
 import { clampPositiveInteger } from "../__internal__/math.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
+import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import { ComputationLike_isPure, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
 import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, raise as raiseError, returns, tuple, } from "../functions.js";
 import * as ComputationM from "./Computation.js";
@@ -363,7 +364,7 @@ class ThrowIfEmptyIterable {
 }
 export const throwIfEmpty = ((factory) => (iter) => newInstance(ThrowIfEmptyIterable, iter, factory));
 export const toRunnable = Runnable_fromIterable;
-export const toReadonlyArray = () => (iterable) => Array.from(iterable);
+export const toReadonlyArray = ReadonlyArray.fromIterable;
 class ZipIterable {
     iters;
     [ComputationLike_isPure];

@@ -7,6 +7,7 @@ import {
 } from "../__internal__/constants.js";
 import { clampPositiveInteger } from "../__internal__/math.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
+import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import {
   ComputationLike_isPure,
   ComputationType,
@@ -601,9 +602,7 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
 export const toRunnable: Signature["toRunnable"] = Runnable_fromIterable;
 
 export const toReadonlyArray: Signature["toReadonlyArray"] =
-  <T>() =>
-  (iterable: IterableLike<T>) =>
-    Array.from(iterable);
+  ReadonlyArray.fromIterable;
 
 class ZipIterable {
   public readonly [ComputationLike_isPure]?: boolean;
