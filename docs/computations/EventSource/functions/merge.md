@@ -108,7 +108,7 @@
 
 #### computations
 
-...readonly [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>[]
+...readonly [`PureComputationOf`](../../type-aliases/PureComputationOf.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `T`\>[]
 
 ### Returns
 
@@ -126,7 +126,7 @@
 
 #### computations
 
-...readonly [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>[]
+...readonly [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `T`\>[]
 
 ### Returns
 

@@ -1,4 +1,4 @@
-import { ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, EventSourceLike } from "../computations.js";
+import { ComputationType, Computation_T, Computation_baseOfT, Computation_multicastOfT, ConcurrentReactiveComputationModule, EventSourceLike } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
 import { DisposableLike, EventListenerLike } from "../utils.js";
 /**
@@ -6,10 +6,6 @@ import { DisposableLike, EventListenerLike } from "../utils.js";
  */
 export interface EventSourceComputation extends ComputationType {
     readonly [Computation_baseOfT]?: EventSourceLike<this[typeof Computation_T]>;
-    readonly [Computation_pureDeferredOfT]?: never;
-    readonly [Computation_deferredWithSideEffectsOfT]?: never;
-    readonly [Computation_pureSynchronousOfT]?: never;
-    readonly [Computation_synchronousWithSideEffectsOfT]?: never;
     readonly [Computation_multicastOfT]?: EventSourceLike<this[typeof Computation_T]>;
 }
 export type Computation = EventSourceComputation;

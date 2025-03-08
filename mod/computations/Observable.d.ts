@@ -1,5 +1,5 @@
 import { ComputationOf, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationWithSideEffectsLike, DeferredComputationWithSideEffectsOf, DeferredObservableLike, DeferredObservableWithSideEffectsLike, DeferredReactiveComputationModule, EventSourceLike, FromIterableOperator, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastComputationLike, MulticastObservableLike, ObservableLike, PauseableEventSourceLike, PauseableObservableLike, PureComputationOf, PureDeferredComputationLike, PureDeferredComputationOf, PureDeferredObservableLike, PureSynchronousComputationOf, PureSynchronousObservableLike, RunnableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StatelessAsynchronousComputationOperator, StatelessComputationOperator, StoreLike, SynchronousComputationOf, SynchronousComputationWithSideEffectsOf, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../computations.js";
-import { Factory, Function1, Function2, Optional, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Updater } from "../functions.js";
+import { AsyncFunction1, AsyncFunction2, Factory, Function1, Function2, Optional, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Updater } from "../functions.js";
 import { BackpressureStrategy, DispatcherLike, DisposableLike, ObserverLike, QueueableLike, SchedulerLike } from "../utils.js";
 export interface ObservableComputation extends ComputationType {
     readonly [Computation_baseOfT]?: ObservableLike<this[typeof Computation_T]>;
@@ -81,10 +81,10 @@ export interface ObservableModule extends DeferredReactiveComputationModule<Obse
     firstAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
         readonly backpressureStrategy?: BackpressureStrategy;
-    }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
-    flatMapAsync<TA, TB>(f: Function2<TA, AbortSignal, Promise<TB>>): HigherOrderComputationOperator<ObservableComputation, DeferredComputationWithSideEffectsLike, TA, TB>;
+    }): AsyncFunction1<ObservableLike<T>, Optional<T>>;
+    flatMapAsync<TA, TB>(f: AsyncFunction2<TA, AbortSignal, TB>): HigherOrderComputationOperator<ObservableComputation, DeferredComputationWithSideEffectsLike, TA, TB>;
     forkMerge: ForkMerge;
-    fromAsyncFactory<T>(): Function1<Function1<AbortSignal, Promise<T>>, DeferredObservableWithSideEffectsLike<T>>;
+    fromAsyncFactory<T>(): Function1<AsyncFunction1<AbortSignal, T>, DeferredObservableWithSideEffectsLike<T>>;
     fromAsyncIterable<T>(): Function1<AsyncIterable<T>, DeferredObservableWithSideEffectsLike<T>>;
     fromEventSource<T>(): Function1<EventSourceLike<T>, MulticastObservableLike<T>>;
     fromIterable<T>(options?: {
@@ -118,7 +118,7 @@ export interface ObservableModule extends DeferredReactiveComputationModule<Obse
     lastAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
         readonly backpressureStrategy?: BackpressureStrategy;
-    }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+    }): AsyncFunction1<ObservableLike<T>, Optional<T>>;
     mergeAll<T>(options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
@@ -193,10 +193,18 @@ export interface ObservableModule extends DeferredReactiveComputationModule<Obse
         readonly capacity?: number;
         readonly maxMicroTaskTicks?: number;
     }): Function1<SynchronousObservableLike<T>, ReadonlyArray<T>>;
+    toReadonlyArrayAsync<T>(options?: {
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+    }): AsyncFunction1<ObservableLike<T>, ReadonlyArray<T>>;
     toReadonlyArrayAsync<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
-    }): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
+    }): AsyncFunction1<ObservableLike<T>, ReadonlyArray<T>>;
+    toReadonlyArrayAsync<T>(scheduler: SchedulerLike, options?: {
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+    }): AsyncFunction1<ObservableLike<T>, ReadonlyArray<T>>;
     toRunnable<T>(options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;

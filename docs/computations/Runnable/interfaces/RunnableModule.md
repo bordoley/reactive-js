@@ -142,7 +142,7 @@
 
 #### Call Signature
 
-> **concat**\<`T`\>(...`computations`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+> **concat**\<`T`\>(...`computations`): [`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
 
 ##### Type Parameters
 
@@ -152,11 +152,11 @@
 
 ###### computations
 
-...readonly [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>[]
+...readonly [`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>[]
 
 ##### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+[`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
 
 ##### Inherited from
 
@@ -164,7 +164,7 @@
 
 #### Call Signature
 
-> **concat**\<`T`\>(...`computations`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+> **concat**\<`T`\>(...`computations`): [`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md) & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
 
 ##### Type Parameters
 
@@ -178,7 +178,7 @@
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+[`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md) & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
 
 ##### Inherited from
 

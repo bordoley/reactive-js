@@ -2,6 +2,7 @@ import { testModule } from "../../__internal__/testing.js";
 import {
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
+  RunnableLike,
 } from "../../computations.js";
 import { ignore, pipe } from "../../functions.js";
 import * as Runnable from "../Runnable.js";
@@ -19,7 +20,16 @@ const RunnableTypes = {
 
 testModule(
   "Runnable",
-  ComputationModuleTests(Runnable, RunnableTypes),
+  ComputationModuleTests(
+    {
+      ...Runnable,
+      toReadonlyArrayAsync<T>() {
+        return async (runnable: RunnableLike<T>) =>
+          pipe(runnable, Runnable.toReadonlyArray());
+      },
+    },
+    RunnableTypes,
+  ),
   DeferredReactiveComputationModuleTests(Runnable, RunnableTypes),
   SynchronousComputationModuleTests(Runnable, RunnableTypes),
 );

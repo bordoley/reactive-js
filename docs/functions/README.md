@@ -8,6 +8,16 @@
 
 ## Type Aliases
 
+- [AsyncFactory](type-aliases/AsyncFactory.md)
+- [AsyncFunction1](type-aliases/AsyncFunction1.md)
+- [AsyncFunction2](type-aliases/AsyncFunction2.md)
+- [AsyncFunction3](type-aliases/AsyncFunction3.md)
+- [AsyncFunction4](type-aliases/AsyncFunction4.md)
+- [AsyncFunction5](type-aliases/AsyncFunction5.md)
+- [AsyncFunction6](type-aliases/AsyncFunction6.md)
+- [AsyncFunction7](type-aliases/AsyncFunction7.md)
+- [AsyncFunction8](type-aliases/AsyncFunction8.md)
+- [AsyncFunction9](type-aliases/AsyncFunction9.md)
 - [Comparator](type-aliases/Comparator.md)
 - [Constructor](type-aliases/Constructor.md)
 - [Constructor1](type-aliases/Constructor1.md)

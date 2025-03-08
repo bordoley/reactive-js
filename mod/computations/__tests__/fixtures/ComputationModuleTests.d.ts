@@ -2,7 +2,7 @@ import { ComputationModule, ComputationOf, ComputationType, Computation_deferred
 import { Function1 } from "../../../functions.js";
 declare const ComputationModuleTests: <TComputation extends ComputationType>(m: ComputationModule<TComputation> & {
     fromReadonlyArray: <T>() => Function1<ReadonlyArray<T>, ComputationOf<TComputation, T>>;
-    toReadonlyArray: <T>() => Function1<ComputationOf<TComputation, T>, ReadonlyArray<T>>;
+    toReadonlyArrayAsync: <T>() => Function1<ComputationOf<TComputation, T>, Promise<ReadonlyArray<T>>>;
 }, computationType: {
     readonly [Computation_pureSynchronousOfT]?: PureSynchronousComputationOf<TComputation, unknown>;
     readonly [Computation_synchronousWithSideEffectsOfT]?: SynchronousComputationWithSideEffectsOf<TComputation, unknown>;

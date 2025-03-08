@@ -13,8 +13,6 @@ import {
   ComputationType,
   Computation_T,
   Computation_baseOfT,
-  Computation_deferredWithSideEffectsOfT,
-  Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
   HigherOrderInnerComputationLike,
@@ -54,12 +52,6 @@ import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.
  */
 export interface IterableComputation extends ComputationType {
   readonly [Computation_baseOfT]?: IterableLike<this[typeof Computation_T]>;
-  readonly [Computation_pureDeferredOfT]?: PureIterableLike<
-    this[typeof Computation_T]
-  >;
-  readonly [Computation_deferredWithSideEffectsOfT]?: IterableWithSideEffectsLike<
-    this[typeof Computation_T]
-  >;
 
   readonly [Computation_pureSynchronousOfT]?: PureIterableLike<
     this[typeof Computation_T]

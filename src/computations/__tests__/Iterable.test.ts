@@ -2,6 +2,7 @@ import { testModule } from "../../__internal__/testing.js";
 import {
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
+  IterableLike,
 } from "../../computations.js";
 import { ignore, pipe } from "../../functions.js";
 import * as Iterable from "../Iterable.js";
@@ -19,7 +20,16 @@ const IterableTypes = {
 
 testModule(
   "Iterable",
-  ComputationModuleTests(Iterable, IterableTypes),
+  ComputationModuleTests(
+    {
+      ...Iterable,
+      toReadonlyArrayAsync<T>() {
+        return async (runnable: IterableLike<T>) =>
+          pipe(runnable, Iterable.toReadonlyArray());
+      },
+    },
+    IterableTypes,
+  ),
   SynchronousComputationModuleTests(Iterable, IterableTypes),
   InteractiveComputationModuleTests(Iterable),
 );

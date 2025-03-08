@@ -18,7 +18,7 @@
 
 ### f
 
-[`Function2`](../../../functions/type-aliases/Function2.md)\<`TA`, `AbortSignal`, `Promise`\<`TB`\>\>
+[`AsyncFunction2`](../../../functions/type-aliases/AsyncFunction2.md)\<`TA`, `AbortSignal`, `TB`\>
 
 ## Returns
 

@@ -146,7 +146,7 @@
 
 ## Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`TA`\>, `never`\>
+> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `TA`\>, `never`\>
 
 ### Type Parameters
 
@@ -162,11 +162,11 @@
 
 ### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`TA`\>, `never`\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `TA`\>, `never`\>
 
 ## Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`TA`\>, `never`\>
+> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `TA`\>, `never`\>
 
 ### Type Parameters
 
@@ -188,7 +188,7 @@
 
 ### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`TA`\>, `never`\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `TA`\>, `never`\>
 
 ## Call Signature
 

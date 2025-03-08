@@ -1,11 +1,9 @@
-import { ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, DeferredReactiveComputationModule, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike } from "../computations.js";
+import { ComputationType, Computation_T, Computation_baseOfT, Computation_multicastOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, DeferredReactiveComputationModule, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike } from "../computations.js";
 /**
  * @noInheritDoc
  */
 export interface RunnableComputation extends ComputationType {
     readonly [Computation_baseOfT]?: RunnableLike<this[typeof Computation_T]>;
-    readonly [Computation_pureDeferredOfT]?: PureRunnableLike<this[typeof Computation_T]>;
-    readonly [Computation_deferredWithSideEffectsOfT]?: RunnableWithSideEffectsLike<this[typeof Computation_T]>;
     readonly [Computation_pureSynchronousOfT]?: PureRunnableLike<this[typeof Computation_T]>;
     readonly [Computation_synchronousWithSideEffectsOfT]?: RunnableWithSideEffectsLike<this[typeof Computation_T]>;
     readonly [Computation_multicastOfT]?: never;

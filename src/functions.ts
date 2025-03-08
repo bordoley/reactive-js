@@ -183,6 +183,67 @@ export type Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, out T = void> = (
   i: TI,
 ) => T;
 
+export type AsyncFactory<out T> = () => Promise<T>;
+
+export type AsyncFunction1<TA, out T = void> = (a: TA) => Promise<T>;
+export type AsyncFunction2<TA, TB, out T = void> = (a: TA, b: TB) => Promise<T>;
+export type AsyncFunction3<TA, TB, TC, out T = void> = (
+  a: TA,
+  b: TB,
+  c: TC,
+) => Promise<T>;
+export type AsyncFunction4<TA, TB, TC, TD, out T = void> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+) => Promise<T>;
+export type AsyncFunction5<TA, TB, TC, TD, TE, out T = void> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+) => Promise<T>;
+export type AsyncFunction6<TA, TB, TC, TD, TE, TF, out T = void> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+) => Promise<T>;
+export type AsyncFunction7<TA, TB, TC, TD, TE, TF, TG, out T = void> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+  g: TG,
+) => Promise<T>;
+export type AsyncFunction8<TA, TB, TC, TD, TE, TF, TG, TH, out T = void> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+  g: TG,
+  h: TH,
+) => Promise<T>;
+export type AsyncFunction9<TA, TB, TC, TD, TE, TF, TG, TH, TI, out T = void> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+  g: TG,
+  h: TH,
+  i: TI,
+) => Promise<T>;
+
 /**
  * Compare two values for equality.
  *

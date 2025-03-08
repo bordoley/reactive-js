@@ -6,28 +6,82 @@
 
 # Function: toReadonlyArrayAsync()
 
-> **toReadonlyArrayAsync**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, `Promise`\<readonly `T`[]\>\>
+## Call Signature
 
-## Type Parameters
+> **toReadonlyArrayAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, readonly `T`[]\>
+
+### Type Parameters
 
 • **T**
 
-## Parameters
+### Parameters
 
-### scheduler
+#### options?
 
-[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-### options?
-
-#### backpressureStrategy?
+##### backpressureStrategy?
 
 [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
 
-#### capacity?
+##### capacity?
 
 `number`
 
-## Returns
+### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, `Promise`\<readonly `T`[]\>\>
+[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, readonly `T`[]\>
+
+## Call Signature
+
+> **toReadonlyArrayAsync**\<`T`\>(`scheduler`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, readonly `T`[]\>
+
+### Type Parameters
+
+• **T**
+
+### Parameters
+
+#### scheduler
+
+[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
+
+#### options?
+
+##### backpressureStrategy?
+
+[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
+
+##### capacity?
+
+`number`
+
+### Returns
+
+[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, readonly `T`[]\>
+
+## Call Signature
+
+> **toReadonlyArrayAsync**\<`T`\>(`scheduler`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, readonly `T`[]\>
+
+### Type Parameters
+
+• **T**
+
+### Parameters
+
+#### scheduler
+
+[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
+
+#### options?
+
+##### backpressureStrategy?
+
+[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
+
+##### capacity?
+
+`number`
+
+### Returns
+
+[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, readonly `T`[]\>

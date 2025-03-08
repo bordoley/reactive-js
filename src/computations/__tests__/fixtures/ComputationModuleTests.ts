@@ -1,8 +1,8 @@
 import {
   describe,
   expectArrayEquals,
-  expectToThrowError,
-  test,
+  expectToThrowErrorAsync,
+  testAsync,
 } from "../../../__internal__/testing.js";
 import {
   ComputationModule,
@@ -25,8 +25,9 @@ import {
   greaterThan,
   identity,
   increment,
-  pipe,
+  pipeAsync,
   pipeLazy,
+  pipeLazyAsync,
 } from "../../../functions.js";
 import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
 
@@ -36,9 +37,9 @@ const ComputationModuleTests = <TComputation extends ComputationType>(
       ReadonlyArray<T>,
       ComputationOf<TComputation, T>
     >;
-    toReadonlyArray: <T>() => Function1<
+    toReadonlyArrayAsync: <T>() => Function1<
       ComputationOf<TComputation, T>,
-      ReadonlyArray<T>
+      Promise<ReadonlyArray<T>>
     >;
   },
   computationType: {
@@ -69,62 +70,61 @@ const ComputationModuleTests = <TComputation extends ComputationType>(
     describe(
       "keep",
       StatelessComputationOperatorTests(computationType, m.keep(alwaysTrue)),
-      test(
+      testAsync(
         "keeps only values greater than 5",
-        pipeLazy(
+        pipeLazyAsync(
           [4, 8, 10, 7],
           m.fromReadonlyArray(),
           m.keep(greaterThan(5)),
-          m.toReadonlyArray<number>(),
+          m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([8, 10, 7]),
         ),
       ),
-      test("when predicate throws", () => {
+      testAsync("when predicate throws", async () => {
         const err = new Error();
         const predicate = <T>(_a: T): boolean => {
           throw err;
         };
 
-        pipe(
+        await pipeAsync(
           pipeLazy(
             [1, 1],
             m.fromReadonlyArray(),
             m.keep(predicate),
-            m.toReadonlyArray(),
+            m.toReadonlyArrayAsync(),
           ),
-
-          expectToThrowError(err),
+          expectToThrowErrorAsync(err),
         );
       }),
     ),
     describe(
       "map",
       StatelessComputationOperatorTests(computationType, m.map(identity)),
-      test(
+      testAsync(
         "maps every value",
-        pipeLazy(
+        pipeLazyAsync(
           [1, 2, 3],
           m.fromReadonlyArray(),
           m.map(increment),
-          m.toReadonlyArray<number>(),
+          m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([2, 3, 4]),
         ),
       ),
-      test("when selector throws", () => {
+      testAsync("when selector throws", async () => {
         const err = new Error();
         const selector = <T>(_a: T): boolean => {
           throw err;
         };
 
-        pipe(
+        await pipeAsync(
           pipeLazy(
             [1, 1],
             m.fromReadonlyArray(),
             m.map(selector),
-            m.toReadonlyArray(),
+            m.toReadonlyArrayAsync(),
           ),
 
-          expectToThrowError(err),
+          expectToThrowErrorAsync(err),
         );
       }),
     ),

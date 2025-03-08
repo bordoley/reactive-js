@@ -419,4 +419,7 @@ export interface StreamableLike<TReq = unknown, out T = unknown, TStream extends
     }): TStream;
 }
 export type StreamOf<TStreamable extends StreamableLike> = ReturnType<TStreamable[typeof StreamableLike_stream]>;
+export interface AsyncIterableLike<T> extends AsyncIterable<T>, DeferredComputationWithSideEffectsLike {
+    readonly [ComputationLike_isSynchronous]: false;
+}
 export {};

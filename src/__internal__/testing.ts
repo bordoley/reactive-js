@@ -1,4 +1,5 @@
 import {
+  AsyncFactory,
   Equality,
   Factory,
   Function1,
@@ -44,7 +45,7 @@ export type TestDebug = {
 export type TestAsync = {
   readonly type: typeof TestAsyncType;
   readonly name: string;
-  readonly f: Function1<string, Factory<Promise<void>>>;
+  readonly f: Function1<string, AsyncFactory<void>>;
 };
 
 export type TestGroup = Describe | Test | TestAsync | TestDebug;
@@ -98,10 +99,7 @@ export const testPredicateExpectingFalse = <T>(
     ),
   );
 
-export const testAsync = (
-  name: string,
-  f: Factory<Promise<any>>,
-): TestAsync => ({
+export const testAsync = (name: string, f: AsyncFactory<any>): TestAsync => ({
   type: TestAsyncType,
   name,
   f: (ctx: string) => async () => {
@@ -161,6 +159,30 @@ export const expectToThrowError = (error: unknown) => (f: SideEffect) => {
 
   return f;
 };
+
+export const expectToThrowErrorAsync =
+  (error: unknown) => async (f: Factory<Promise<unknown>>) => {
+    let didThrow = false;
+    let errorThrown: Optional = none;
+    try {
+      await f();
+    } catch (e) {
+      didThrow = true;
+      errorThrown = e;
+    }
+
+    if (!didThrow) {
+      raise("expected function to throw");
+    } else if (errorThrown !== error) {
+      raise(
+        `expected ${JSON.stringify(error)}\nreceieved: ${JSON.stringify(
+          errorThrown,
+        )}`,
+      );
+    }
+
+    return f;
+  };
 
 export const expectEquals =
   <T>(b: T, valueEquality = strictEquality) =>

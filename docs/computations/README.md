@@ -8,6 +8,7 @@
 
 ## Interfaces
 
+- [AsyncIterableLike](interfaces/AsyncIterableLike.md)
 - [ComputationLike](interfaces/ComputationLike.md)
 - [ComputationModule](interfaces/ComputationModule.md)
 - [ComputationWithSideEffectsLike](interfaces/ComputationWithSideEffectsLike.md)

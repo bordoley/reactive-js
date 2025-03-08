@@ -9,6 +9,7 @@ import "./mod/collections/__tests__/ReadonlyArray.test.js";
 import "./mod/collections/__tests__/ReadonlyMap.test.js";
 import "./mod/collections/__tests__/ReadonlyObjectMap.test.js";
 
+import "./mod/computations/__tests__/AsyncIterable.test.js";
 import "./mod/computations/__tests__/Cache.test.js";
 import "./mod/computations/__tests__/Computation.test.js";
 import "./mod/computations/__tests__/EventSource.test.js";
