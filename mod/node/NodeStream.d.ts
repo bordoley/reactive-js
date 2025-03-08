@@ -3,7 +3,7 @@ import { PauseableEventSourceLike } from "../computations.js";
 import { Function1 } from "../functions.js";
 import { DisposableLike } from "../utils.js";
 interface FlowableStreamModule {
-    create(factory: Readable): PauseableEventSourceLike<Uint8Array>;
+    create(factory: Readable): PauseableEventSourceLike<Uint8Array> & DisposableLike;
     writeTo(writable: Writable): Function1<PauseableEventSourceLike<Uint8Array>, DisposableLike>;
 }
 type Signature = FlowableStreamModule;

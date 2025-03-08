@@ -6,7 +6,7 @@
 
 # Function: create()
 
-> **create**(`hostScheduler`): [`PauseableSchedulerLike`](../../interfaces/PauseableSchedulerLike.md)
+> **create**(`hostScheduler`): [`PauseableSchedulerLike`](../../interfaces/PauseableSchedulerLike.md) & [`DisposableLike`](../../interfaces/DisposableLike.md)
 
 ## Parameters
 
@@ -16,4 +16,4 @@
 
 ## Returns
 
-[`PauseableSchedulerLike`](../../interfaces/PauseableSchedulerLike.md)
+[`PauseableSchedulerLike`](../../interfaces/PauseableSchedulerLike.md) & [`DisposableLike`](../../interfaces/DisposableLike.md)

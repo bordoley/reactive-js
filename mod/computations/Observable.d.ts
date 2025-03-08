@@ -183,11 +183,11 @@ export interface ObservableModule extends DeferredReactiveComputationModule<Obse
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly replay?: number;
-    }): Function1<SynchronousObservableLike<T>, PauseableObservableLike<T>>;
+    }): Function1<SynchronousObservableLike<T>, PauseableObservableLike<T> & DisposableLike>;
     toPauseableEventSource<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
-    }): Function1<SynchronousObservableLike<T>, PauseableEventSourceLike<T>>;
+    }): Function1<SynchronousObservableLike<T>, PauseableEventSourceLike<T> & DisposableLike>;
     toReadonlyArray<T>(options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;

@@ -6,7 +6,7 @@
 
 # Function: create()
 
-> **create**\<`T`\>(`op`): [`PauseableObservableLike`](../../interfaces/PauseableObservableLike.md)\<`T`\>
+> **create**\<`T`\>(`op`): [`PauseableObservableLike`](../../interfaces/PauseableObservableLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
 
 ## Type Parameters
 
@@ -20,4 +20,4 @@
 
 ## Returns
 
-[`PauseableObservableLike`](../../interfaces/PauseableObservableLike.md)\<`T`\>
+[`PauseableObservableLike`](../../interfaces/PauseableObservableLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)

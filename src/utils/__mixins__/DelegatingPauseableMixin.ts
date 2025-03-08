@@ -1,7 +1,7 @@
 import { Mixin1, mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { none } from "../../functions.js";
 import {
-  DisposableLike,
+  DisposableContainerLike,
   PauseableLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
@@ -11,7 +11,7 @@ import {
 const DelegatingPauseableMixin: Mixin1<
   PauseableLike,
   PauseableLike,
-  DisposableLike
+  DisposableContainerLike
 > = /*@__PURE__*/ (() => {
   const DelegatingPauseableMixin_delegate = Symbol(
     "DelegatingPauseableMixin_delegate",
@@ -29,7 +29,7 @@ const DelegatingPauseableMixin: Mixin1<
       | typeof PauseableLike_pause
       | typeof PauseableLike_resume
     >,
-    DisposableLike &
+    DisposableContainerLike &
       TProperties &
       Pick<
         PauseableLike,

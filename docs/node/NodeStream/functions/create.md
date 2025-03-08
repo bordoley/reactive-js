@@ -6,7 +6,7 @@
 
 # Function: create()
 
-> **create**(`factory`): [`PauseableEventSourceLike`](../../../computations/interfaces/PauseableEventSourceLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\>
+> **create**(`factory`): [`PauseableEventSourceLike`](../../../computations/interfaces/PauseableEventSourceLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
 
 ## Parameters
 
@@ -16,4 +16,4 @@
 
 ## Returns
 
-[`PauseableEventSourceLike`](../../../computations/interfaces/PauseableEventSourceLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\>
+[`PauseableEventSourceLike`](../../../computations/interfaces/PauseableEventSourceLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)

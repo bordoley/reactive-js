@@ -14,7 +14,9 @@ import {
 } from "../utils.js";
 
 interface FlowableStreamModule {
-  create(factory: Readable): PauseableEventSourceLike<Uint8Array>;
+  create(
+    factory: Readable,
+  ): PauseableEventSourceLike<Uint8Array> & DisposableLike;
 
   writeTo(
     writable: Writable,

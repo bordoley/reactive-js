@@ -11,6 +11,7 @@
 - [`MulticastLike`](../../computations/interfaces/MulticastLike.md)
 - [`DisposableLike`](DisposableLike.md)
 - [`SchedulerLike`](SchedulerLike.md)
+- [`PauseableLike`](PauseableLike.md)
 
 ## Methods
 

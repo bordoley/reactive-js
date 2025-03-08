@@ -1,6 +1,6 @@
 import { AsyncIterableLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, DeferredObservableWithSideEffectsLike, PauseableObservableLike } from "../computations.js";
 import { AsyncFunction1, Function1 } from "../functions.js";
-import { BackpressureStrategy, SchedulerLike } from "../utils.js";
+import { BackpressureStrategy, DisposableLike, SchedulerLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
@@ -18,7 +18,7 @@ export interface AsyncIterableModule extends ComputationModule<AsyncIterableComp
         readonly replay?: number;
         readonly capacity?: number;
         readonly backpressureStrategy?: BackpressureStrategy;
-    }): Function1<AsyncIterableLike<T>, PauseableObservableLike<T>>;
+    }): Function1<AsyncIterableLike<T>, PauseableObservableLike<T> & DisposableLike>;
     toReadonlyArrayAsync<T>(): AsyncFunction1<AsyncIterable<T>, ReadonlyArray<T>>;
 }
 export type Signature = AsyncIterableModule;

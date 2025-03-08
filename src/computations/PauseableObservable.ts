@@ -23,6 +23,7 @@ import {
   DispatcherState_capacityExceeded,
   DispatcherState_completed,
   DispatcherState_ready,
+  DisposableLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -35,7 +36,7 @@ import DelegatingMulticastObservableMixin from "./__mixins__/DelegatingMulticast
 interface PauseableObservableModule {
   create<T>(
     op: Function1<EventSourceLike<boolean>, MulticastObservableLike<T>>,
-  ): PauseableObservableLike<T>;
+  ): PauseableObservableLike<T> & DisposableLike;
 
   dispatchTo<T>(
     dispatcher: DispatcherLike<T>,
@@ -61,7 +62,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
       > &
         TProperties,
       op: Function1<EventSourceLike<boolean>, MulticastObservableLike<T>>,
-    ): PauseableObservableLike<T> {
+    ): PauseableObservableLike<T> & DisposableLike {
       const writableStore = (instance[PauseableLike_isPaused] =
         WritableStore.create(true));
 

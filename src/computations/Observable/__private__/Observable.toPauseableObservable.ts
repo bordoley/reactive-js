@@ -14,6 +14,7 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
 import {
   BackpressureStrategy,
+  DisposableLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -45,7 +46,7 @@ const Observable_toPauseableObservable: Observable.Signature["toPauseableObserva
           backpressureStrategy?: BackpressureStrategy;
           replay?: number;
         }>,
-      ): PauseableObservableLike<T> {
+      ): PauseableObservableLike<T> & DisposableLike {
         const pauseableScheduler = PauseableScheduler.create(scheduler);
         init(DelegatingDisposableMixin, instance, pauseableScheduler);
         init(DelegatingPauseableMixin, instance, pauseableScheduler);
