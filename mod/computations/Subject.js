@@ -10,7 +10,6 @@ import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import QueueMixin from "../utils/__mixins__/QueueMixin.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, QueueableLike_enqueue, SchedulerLike_inContinuation, } from "../utils.js";
 export const create = /*@__PURE__*/ (() => {
-    const Subject_autoDispose = Symbol("Subject_autoDispose");
     const Subject_observers = Symbol("Subject_observers");
     const Subject_onObserverDisposed = Symbol("Subject_onObserverDisposed");
     function onSubjectDisposed(e) {
@@ -31,19 +30,17 @@ export const create = /*@__PURE__*/ (() => {
             capacity: replay,
         });
         instance[Subject_observers] = newInstance(Set);
-        instance[Subject_autoDispose] = options?.autoDispose ?? false;
+        const autoDispose = options?.autoDispose ?? false;
         instance[Subject_onObserverDisposed] = function onObserverDisposed() {
             const observers = instance[Subject_observers];
             observers[Set_delete](this);
-            if (instance[Subject_autoDispose] &&
-                instance[Subject_observers][Set_size] === 0) {
+            if (autoDispose && instance[Subject_observers][Set_size] === 0) {
                 instance[DisposableLike_dispose]();
             }
         };
         pipe(instance, DisposableContainer.onDisposed(onSubjectDisposed));
         return instance;
     }, props({
-        [Subject_autoDispose]: false,
         [Subject_observers]: none,
         [Subject_onObserverDisposed]: none,
     }), {
