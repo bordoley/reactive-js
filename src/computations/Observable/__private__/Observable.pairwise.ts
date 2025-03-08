@@ -29,7 +29,7 @@ const createPairwiseObserver: <T>(
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
     include(
-      DelegatingDisposableMixin(),
+      DelegatingDisposableMixin,
       ObserverMixin<T>(),
       LiftedObserverMixin(),
     ),
@@ -37,7 +37,7 @@ const createPairwiseObserver: <T>(
       instance: unknown,
       delegate: ObserverLike<Tuple2<T, T>>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
       init(LiftedObserverMixin(), instance, delegate);
 

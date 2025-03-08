@@ -27,17 +27,13 @@ const createForEachObserver: <T>(
   }
 
   return mixInstanceFactory(
-    include(
-      ObserverMixin(),
-      DelegatingDisposableMixin(),
-      LiftedObserverMixin(),
-    ),
+    include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
     function ForEachObserver(
       instance: TProperties,
       delegate: ObserverLike<T>,
       effect: SideEffect1<T>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
       init(LiftedObserverMixin(), instance, delegate);
       instance[ForEachObserver_effect] = effect;

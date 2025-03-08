@@ -71,7 +71,7 @@
 
     "./functions": "./functions.js",
 
-    "./node/FlowableStream": "./node/FlowableStream.js",
+    "./node/NodeStream": "./node/NodeStream.js",
 
     "./react": "./react.js",
     "./react/Scheduler": "./react/Scheduler.js",

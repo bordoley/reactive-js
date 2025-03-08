@@ -7,3 +7,5 @@ export declare const isNotSynchronous: <TComputation extends ComputationLike>(x:
 export declare const isPureDeferred: <TComputation extends ComputationLike>(x: TComputation) => TComputation;
 export declare const isDeferredWithSideEffects: <TComputation extends ComputationLike>(x: TComputation) => TComputation;
 export declare const isMulticasted: <TComputation extends ComputationLike>(x: TComputation) => TComputation;
+export declare const isMulticastedAndNotDisposable: <TComputation extends ComputationLike>(x: TComputation) => TComputation;
+export declare const isMulticastedAndDisposable: <TComputation extends ComputationLike>(x: TComputation) => TComputation;

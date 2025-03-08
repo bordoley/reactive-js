@@ -10,7 +10,6 @@ import {
   ComputationLike_isSynchronous,
   EventListenerLike,
   EventListenerLike_notify,
-  EventSourceLike,
   EventSourceLike_addEventListener,
   PublisherLike,
   StoreLike_value,
@@ -18,6 +17,7 @@ import {
 } from "../computations.js";
 import { Equality, none, strictEquality } from "../functions.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
+import { DisposableLike } from "../utils.js";
 import * as Publisher from "./Publisher.js";
 
 export const create: <T>(
@@ -37,12 +37,9 @@ export const create: <T>(
     [WritableStore_publisher]: PublisherLike<T>;
   };
   return mixInstanceFactory(
-    include(DelegatingDisposableMixin()),
+    include(DelegatingDisposableMixin),
     function WritableStore(
-      instance: {
-        [StoreLike_value]: T;
-      } & TProperties &
-        EventSourceLike<T>,
+      instance: TProperties & Omit<WritableStoreLike<T>, keyof DisposableLike>,
       initialValue: T,
       options?: {
         readonly equality?: Equality<T>;
@@ -50,7 +47,7 @@ export const create: <T>(
       },
     ): WritableStoreLike<T> {
       const publisher = Publisher.create(options);
-      init(DelegatingDisposableMixin(), instance, publisher);
+      init(DelegatingDisposableMixin, instance, publisher);
 
       instance[WritableStore_value] = initialValue;
       instance[WritableStore_equality] = options?.equality ?? strictEquality;

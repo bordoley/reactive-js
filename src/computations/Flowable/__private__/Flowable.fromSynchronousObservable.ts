@@ -35,7 +35,7 @@ const PauseableSynchronousObservable_create: <T>(
 ) => PauseableObservableLike<T> = /*@__PURE__*/ (<T>() => {
   return mixInstanceFactory(
     include(
-      DelegatingDisposableMixin(),
+      DelegatingDisposableMixin,
       DelegatingMulticastObservableMixin(),
       DelegatingPauseableMixin,
     ),
@@ -55,7 +55,7 @@ const PauseableSynchronousObservable_create: <T>(
       },
     ): PauseableObservableLike<T> {
       const pauseableScheduler = PauseableScheduler.create(scheduler);
-      init(DelegatingDisposableMixin(), instance, pauseableScheduler);
+      init(DelegatingDisposableMixin, instance, pauseableScheduler);
       init(DelegatingPauseableMixin, instance, pauseableScheduler);
 
       const multicastObs = pipe(

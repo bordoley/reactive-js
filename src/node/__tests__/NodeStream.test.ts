@@ -9,25 +9,24 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Flowable from "../../computations/Flowable.js";
 import * as Observable from "../../computations/Observable.js";
-import { FlowableLike_flow } from "../../computations.js";
+import * as PauseableEventSource from "../../computations/PauseableEventSource.js";
 import {
   Optional,
-  invoke,
   newInstance,
   pipe,
   pipeAsync,
   returns,
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import {
   DisposableLike_isDisposed,
   PauseableLike_pause,
   PauseableLike_resume,
 } from "../../utils.js";
-import * as FlowableStream from "../FlowableStream.js";
+import * as NodeStream from "../NodeStream.js";
 
 testModule(
   "FlowableStream",
@@ -47,9 +46,7 @@ testModule(
 
       const flowed = pipe(
         readable,
-        returns,
-        FlowableStream.create,
-        invoke(FlowableLike_flow, scheduler),
+        NodeStream.create,
         Disposable.addTo(scheduler),
       );
 
@@ -59,6 +56,7 @@ testModule(
 
       await pipeAsync(
         flowed,
+        Observable.fromEventSource(),
         Observable.decodeWithCharset(),
         Observable.scan((acc: string, next: string) => acc + next, returns("")),
         Observable.lastAsync<string>(scheduler),
@@ -76,8 +74,8 @@ testModule(
       using scheduler = HostScheduler.create();
 
       const flowed = pipe(
-        FlowableStream.create(() => Readable.from(generate())),
-        invoke(FlowableLike_flow, scheduler),
+        Readable.from(generate()),
+        NodeStream.create,
         Disposable.addTo(scheduler),
       );
 
@@ -85,6 +83,7 @@ testModule(
 
       const acc = await pipe(
         flowed,
+        Observable.fromEventSource(),
         Observable.decodeWithCharset(),
         Observable.scan((acc: string, next: string) => acc + next, returns("")),
         Observable.lastAsync<string>(scheduler),
@@ -106,14 +105,20 @@ testModule(
       using scheduler = HostScheduler.create();
 
       const flowed = pipe(
-        FlowableStream.create(() => Readable.from(generate())),
-        invoke(FlowableLike_flow, scheduler),
+        generate(),
+        Readable.from,
+        NodeStream.create,
         Disposable.addTo(scheduler),
       );
 
       flowed[PauseableLike_resume]();
 
-      await pipe(flowed, Observable.lastAsync(scheduler), expectPromiseToThrow);
+      await pipe(
+        flowed,
+        Observable.fromEventSource(),
+        Observable.lastAsync(scheduler),
+        expectPromiseToThrow,
+      );
     }),
   ),
   describe(
@@ -136,12 +141,12 @@ testModule(
 
         await pipe(
           ["abc", "defg", "xyz"],
-          Observable.fromReadonlyArray(),
-          Observable.keep(x => x !== "xyz"),
+          Observable.fromReadonlyArray<string>(),
+          Observable.keep<string>(x => x !== "xyz"),
           Observable.encodeUtf8(),
-          Flowable.fromSynchronousObservable(),
-          FlowableStream.writeTo(writable),
-          Observable.lastAsync(scheduler),
+          PauseableEventSource.fromSynchronousObservable(scheduler),
+          NodeStream.writeTo(writable),
+          DisposableContainer.toPromise,
         );
 
         pipe(
@@ -168,9 +173,9 @@ testModule(
         ["abc", "defg"],
         Observable.fromReadonlyArray(),
         Observable.encodeUtf8(),
-        Flowable.fromSynchronousObservable(),
-        FlowableStream.writeTo(writable),
-        Observable.lastAsync(scheduler),
+        PauseableEventSource.fromSynchronousObservable(scheduler),
+        NodeStream.writeTo(writable),
+        DisposableContainer.toPromise,
         expectPromiseToThrow,
       );
 
@@ -200,9 +205,9 @@ testModule(
         ["abc", "defg"],
         Observable.fromReadonlyArray(),
         Observable.encodeUtf8(),
-        Flowable.fromSynchronousObservable(),
-        FlowableStream.writeTo(compressionPipeline),
-        Observable.lastAsync(scheduler),
+        PauseableEventSource.fromSynchronousObservable(scheduler),
+        NodeStream.writeTo(compressionPipeline),
+        DisposableContainer.toPromise,
       );
 
       pipe(writable.destroyed, expectEquals(true));

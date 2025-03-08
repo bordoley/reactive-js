@@ -27,8 +27,8 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
         this[WithLatestFromObserver_hasLatest] = true;
         this[WithLatestFromObserver_otherLatest] = next;
     }
-    return mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin(), LiftedObserverMixin()), function WithLatestFromObserver(instance, delegate, other, selector) {
-        init(DelegatingDisposableMixin(), instance, delegate);
+    return mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()), function WithLatestFromObserver(instance, delegate, other, selector) {
+        init(DelegatingDisposableMixin, instance, delegate);
         init(ObserverMixin(), instance, delegate, delegate);
         init(LiftedObserverMixin(), instance, delegate);
         instance[WithLatestFromObserver_selector] = selector;

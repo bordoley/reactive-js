@@ -1,10 +1,6 @@
 import React, { useMemo } from "react";
 import ReactDOMClient from "react-dom/client";
-import {
-  useAnimate,
-  useScroll,
-  useSpring,
-} from "@reactive-js/core/react/web";
+import { useAnimate, useScroll, useSpring } from "@reactive-js/core/react/web";
 import { useDisposable } from "@reactive-js/core/react";
 import { ScrollValue } from "@reactive-js/core/web";
 import { Optional } from "@reactive-js/core/functions";

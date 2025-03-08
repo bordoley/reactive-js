@@ -122,7 +122,6 @@ export const create: <T>(options?: {
     }),
     {
       [ComputationLike_isDeferred]: false as const,
-      [ComputationLike_isPure]: true as const,
       [ComputationLike_isSynchronous]: false as const,
 
       [EventListenerLike_notify](
@@ -154,11 +153,12 @@ export const create: <T>(options?: {
       ) {
         const observers = this[Subject_observers];
 
-        if (isSome(this[DisposableLike_error])) {
-          observer[DisposableLike_dispose](this[DisposableLike_error]);
+        if (observers[Set_has](observer)) {
+          return;
         }
 
-        if (observers[Set_has](observer)) {
+        if (isSome(this[DisposableLike_error])) {
+          observer[DisposableLike_dispose](this[DisposableLike_error]);
           return;
         }
 

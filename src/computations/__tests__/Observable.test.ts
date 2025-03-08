@@ -44,6 +44,7 @@ import {
   DispatcherLike_state,
   DispatcherState_completed,
   EventListenerLike_notify,
+  MulticastComputation,
   ObservableLike,
   PureDeferredComputation,
   PureSynchronousComputation,
@@ -57,11 +58,13 @@ import {
   Function1,
   Optional,
   Tuple2,
+  arrayEquality,
   bind,
   bindMethod,
   error,
   ignore,
   increment,
+  incrementBy,
   isSome,
   lessThan,
   newInstance,
@@ -73,6 +76,7 @@ import {
   raise,
   returns,
   scale,
+  tuple,
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
@@ -98,7 +102,6 @@ import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReactiveComputationModuleTests.js";
 import DeferredReactiveComputationModuleTests from "./fixtures/DeferredReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
-import * as ComputationExpect from "./fixtures/helpers/ComputationExpect.js";
 import * as ComputationTest from "./fixtures/helpers/ComputationTest.js";
 import AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests from "./fixtures/operators/AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests.js";
 import ComputationOperatorWithSideEffectsTests from "./fixtures/operators/ComputationOperatorWithSideEffectsTests.js";
@@ -106,6 +109,7 @@ import HigherOrderComputationOperatorTests from "./fixtures/operators/HigherOrde
 import StatefulAsynchronousComputationOperatorTests from "./fixtures/operators/StatefulAsynchronousComputationOperatorTests.js";
 import StatefulSynchronousComputationOperatorTests from "./fixtures/operators/StatefulSynchronousComputationOperatorTests.js";
 import StatelessAsynchronousComputationOperatorTests from "./fixtures/operators/StatelessAsynchronousComputationOperatorTests.js";
+import StatelessComputationOperatorTests from "./fixtures/operators/StatelessComputationOperatorTests.js";
 
 const ObservableTypes = {
   [Computation_pureSynchronousOfT]: Observable.empty({ delay: 1 }),
@@ -123,6 +127,61 @@ const ObservableTypes = {
     Observable.forEach(ignore),
   ),
   [Computation_multicastOfT]: Observable.never(),
+};
+
+const CombineConstructorTests = (
+  operator: Observable.Signature["combineLatest"],
+) => {
+  const {
+    [Computation_pureSynchronousOfT]: pureSynchronousComputationOfT,
+    [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffectsOfT,
+    [Computation_pureDeferredOfT]: pureDeferredOfT,
+    [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT,
+    [Computation_multicastOfT]: multicastOfT,
+  } = ObservableTypes;
+  return describe(
+    "CombineConstructorTests",
+
+    ComputationTest.isPureSynchronous(
+      operator(pureSynchronousComputationOfT, pureSynchronousComputationOfT),
+      " when all inputs are pureSynchronous",
+    ),
+
+    ComputationTest.isSynchronousWithSideEffects(
+      operator(pureSynchronousComputationOfT, synchronousWithSideEffectsOfT),
+      " when combining pureSynchronous and synchronousWithSideEffects inputs",
+    ),
+
+    ComputationTest.isSynchronousWithSideEffects(
+      operator(synchronousWithSideEffectsOfT, synchronousWithSideEffectsOfT),
+      " when all inputs are synchronousWithSideEffects",
+    ),
+
+    ComputationTest.isPureDeferred(
+      operator(pureDeferredOfT, pureDeferredOfT),
+      " when all inputs are PureDeferred",
+    ),
+
+    ComputationTest.isPureDeferred(
+      operator(pureSynchronousComputationOfT, pureDeferredOfT),
+      " when combining pureSynchronous and pureDeferred inputs",
+    ),
+
+    ComputationTest.isPureDeferred(
+      operator(multicastOfT, pureDeferredOfT),
+      " when combining pureDeferred and multicast inputs",
+    ),
+
+    ComputationTest.isDeferredWithSideEffects(
+      operator(pureDeferredOfT, deferredWithSideEffectsOfT, multicastOfT),
+      " when combining multicast, pureDeferred and deferredWithSideEffect inputs",
+    ),
+
+    ComputationTest.isPureDeferred(
+      operator(multicastOfT, multicastOfT, multicastOfT),
+      " when combining multicast inputs",
+    ),
+  );
 };
 
 testModule(
@@ -252,6 +311,32 @@ testModule(
         expectArrayEquals(["e2", "e1"]),
       );
     }),
+  ),
+  describe(
+    "combineLatest",
+    test(
+      "combineLatest from two interspersing sources",
+      pipeLazy(
+        Observable.combineLatest<number, number>(
+          pipe(
+            Observable.generate(incrementBy(2), returns(1), { delay: 2 }),
+            Observable.takeFirst<number>({ count: 3 }),
+          ),
+          pipe(
+            Observable.generate(incrementBy(2), returns(0), { delay: 3 }),
+            Observable.takeFirst<number>({ count: 2 }),
+          ),
+        ),
+        Observable.toReadonlyArray(),
+        expectArrayEquals(
+          [tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)],
+          {
+            valuesEquality: arrayEquality(),
+          },
+        ),
+      ),
+    ),
+    CombineConstructorTests(Observable.combineLatest),
   ),
   describe(
     "computeDeferred",
@@ -490,7 +575,7 @@ testModule(
       using scheduler = HostScheduler.create();
       await pipeAsync(
         Observable.defer(() =>
-          pipe(Promise.resolve(1), Observable.fromPromise()),
+          pipe(1, Observable.fromValue(), Observable.multicast(scheduler)),
         ),
         Observable.toReadonlyArrayAsync(scheduler),
         expectArrayEquals([1]),
@@ -711,6 +796,16 @@ testModule(
       pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
       pipe(sideEffect, expectToHaveBeenCalledTimes(1));
     }),
+    StatelessComputationOperatorTests(
+      ObservableTypes,
+      Observable.forkMerge(
+        _ => ObservableTypes[Computation_multicastOfT],
+        _ => ObservableTypes[Computation_multicastOfT],
+        {
+          innerType: MulticastComputation,
+        },
+      ),
+    ),
   ),
   describe(
     "fromAsyncFactory",
@@ -824,7 +919,7 @@ testModule(
   ),
   describe(
     "fromEventSource",
-    ComputationTest.isMulticasted(
+    ComputationTest.isMulticastedAndNotDisposable(
       pipe(EventSource.create(ignore), Observable.fromEventSource()),
     ),
   ),
@@ -879,7 +974,7 @@ testModule(
 
       pipe(result, expectArrayEquals([-1, 0, 1, 2]));
     }),
-    ComputationTest.isMulticasted(
+    ComputationTest.isMulticastedAndNotDisposable(
       pipe(WritableStore.create<number>(-1), Observable.fromStore()),
     ),
   ),
@@ -984,7 +1079,7 @@ testModule(
   ),
   describe(
     "multicast",
-    ComputationTest.isMulticasted(
+    ComputationTest.isMulticastedAndDisposable(
       (() => {
         using vts = VirtualTimeScheduler.create();
         return pipe(Observable.empty({ delay: 1 }), Observable.multicast(vts));
@@ -998,8 +1093,6 @@ testModule(
         Observable.forEach(ignore),
         Observable.multicast(vts, { replay: 1, autoDispose: true }),
       );
-
-      ComputationExpect.isMulticasted(shared);
 
       let result: number[] = [];
       pipe(
@@ -1195,7 +1288,7 @@ testModule(
   ),
   describe(
     "subscribeOn",
-    StatelessAsynchronousComputationOperatorTests(
+    StatefulAsynchronousComputationOperatorTests(
       ObservableTypes,
       Observable.subscribeOn(VirtualTimeScheduler.create()),
     ),
@@ -1435,6 +1528,7 @@ testModule(
         [0, 1, 2],
         Observable.fromReadonlyArray(),
         Observable.toEventSource(vts),
+        Disposable.addTo(vts),
         EventSource.addEventHandler(bindMethod(result, Array_push)),
       );
 
@@ -1444,7 +1538,7 @@ testModule(
     }),
   ),
   describe(
-    "toReadonlyArrayAsy nc",
+    "toReadonlyArrayAsync",
     testAsync("with pure delayed source", async () => {
       using scheduler = HostScheduler.create();
 
@@ -1471,6 +1565,29 @@ testModule(
       ObservableTypes,
       Observable.withCurrentTime(returns),
     ),
+  ),
+  describe(
+    "zipLatest",
+    test(
+      "zip two delayed sources",
+
+      pipeLazy(
+        Observable.zipLatest(
+          pipe(
+            [1, 2, 3, 4, 5, 6, 7, 8],
+            Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
+          ),
+          pipe(
+            [1, 2, 3, 4],
+            Observable.fromReadonlyArray({ delay: 2, delayStart: true }),
+          ),
+        ),
+        Observable.map<Tuple2<number, number>, number>(([a, b]) => a + b),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([2, 5, 8, 11]),
+      ),
+    ),
+    CombineConstructorTests(Observable.zipLatest),
   ),
 );
 

@@ -32,18 +32,14 @@ const Observer_createEnqueueObserver: <T>(
   };
 
   return mixInstanceFactory(
-    include(
-      ObserverMixin(),
-      DelegatingDisposableMixin(),
-      LiftedObserverMixin(),
-    ),
+    include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
     function EnqueueObserver(
       instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
       queue: QueueableLike<T>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
       init(LiftedObserverMixin(), instance, delegate);
       instance[EnqueueObserver_queue] = queue;

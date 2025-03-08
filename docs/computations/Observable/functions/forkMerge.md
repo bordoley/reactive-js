@@ -63,3 +63,31 @@
 ### Returns
 
 [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TInnerType`, `TIn`, `TOut`\>
+
+## Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`fst`, `snd`, ...`tail`): [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TIn`, `TOut`\>
+
+### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+### Parameters
+
+#### fst
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TIn`\>, [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TOut`\>\>
+
+#### snd
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TIn`\>, [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TOut`\>\>
+
+#### tail
+
+...readonly \[[`Function1`](../../../functions/type-aliases/Function1.md)\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TIn`\>, [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TOut`\>\>, \{ `innerType`: [`MulticastComputationLike`](../../interfaces/MulticastComputationLike.md); \}\]
+
+### Returns
+
+[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TIn`, `TOut`\>

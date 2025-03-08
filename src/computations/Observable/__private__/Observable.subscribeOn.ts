@@ -1,5 +1,4 @@
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ObservableLike,
@@ -40,7 +39,6 @@ const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
           Disposable.addTo(observer),
         ),
       {
-        [ComputationLike_isDeferred]: observable[ComputationLike_isDeferred],
         [ComputationLike_isPure]: observable[ComputationLike_isPure],
         [ComputationLike_isSynchronous]: false,
       },

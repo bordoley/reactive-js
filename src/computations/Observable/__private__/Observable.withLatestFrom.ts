@@ -78,11 +78,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
   }
 
   return mixInstanceFactory(
-    include(
-      ObserverMixin(),
-      DelegatingDisposableMixin(),
-      LiftedObserverMixin(),
-    ),
+    include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
     function WithLatestFromObserver(
       instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
         TProperties,
@@ -90,7 +86,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
       other: ObservableLike<TB>,
       selector: Function2<TA, TB, T>,
     ): ObserverLike<TA> {
-      init(DelegatingDisposableMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
       init(LiftedObserverMixin(), instance, delegate);
 

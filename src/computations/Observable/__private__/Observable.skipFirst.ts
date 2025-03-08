@@ -29,17 +29,13 @@ const createSkipFirstObserver: <T>(
   count?: number,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(
-      DelegatingDisposableMixin(),
-      ObserverMixin(),
-      LiftedObserverMixin(),
-    ),
+    include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function SkipFirstObserver(
       instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProperties,
       delegate: ObserverLike<T>,
       skipCount?: number,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
       init(LiftedObserverMixin(), instance, delegate);
 

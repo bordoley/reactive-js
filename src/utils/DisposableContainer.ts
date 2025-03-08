@@ -11,6 +11,7 @@ import DisposableContainer_onComplete from "./DisposableContainer/__private__/Di
 import DisposableContainer_onDisposed from "./DisposableContainer/__private__/DisposableContainer.onDisposed.js";
 import DisposableContainer_onError from "./DisposableContainer/__private__/DisposableContainer.onError.js";
 import DisposableContainer_toAbortSignal from "./DisposableContainer/__private__/DisposableContainer.toAbortSignal.js";
+import DisposableContainer_toPromise from "./DisposableContainer/__private__/DisposableContainer.toPromise.js";
 
 export interface DisposableContainerModule {
   onComplete<TDisposable extends DisposableContainerLike>(
@@ -36,6 +37,8 @@ export interface DisposableContainerModule {
   ): Updater<TDisposable>;
 
   toAbortSignal(disposable: DisposableContainerLike): AbortSignal;
+
+  toPromise(disposable: DisposableContainerLike): Promise<void>;
 }
 
 export type Signature = DisposableContainerModule;
@@ -47,3 +50,4 @@ export const onDisposed: Signature["onDisposed"] =
 export const onError: Signature["onError"] = DisposableContainer_onError;
 export const toAbortSignal: Signature["toAbortSignal"] =
   DisposableContainer_toAbortSignal;
+export const toPromise: Signature["toPromise"] = DisposableContainer_toPromise;

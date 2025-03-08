@@ -8,8 +8,8 @@ import { partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-const createBackpressureObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin(), LiftedObserverMixin()), function EnqueueObserver(instance, delegate, config) {
-    init(DelegatingDisposableMixin(), instance, delegate);
+const createBackpressureObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()), function EnqueueObserver(instance, delegate, config) {
+    init(DelegatingDisposableMixin, instance, delegate);
     init(ObserverMixin(), instance, delegate, config);
     init(LiftedObserverMixin(), instance, delegate);
     return instance;

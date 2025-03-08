@@ -27,18 +27,14 @@ const createKeepObserver: <T>(
   predicate: Predicate<T>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(
-      DelegatingDisposableMixin(),
-      ObserverMixin(),
-      LiftedObserverMixin(),
-    ),
+    include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function KeepObserver(
       instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
         TProperties<T>,
       delegate: ObserverLike<T>,
       predicate: Predicate<T>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
       init(LiftedObserverMixin(), instance, delegate);
 

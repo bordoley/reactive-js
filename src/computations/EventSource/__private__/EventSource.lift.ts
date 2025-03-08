@@ -1,4 +1,9 @@
-import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
+import {
+  include,
+  init,
+  mixInstanceFactory,
+  props,
+} from "../../../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
@@ -8,6 +13,7 @@ import {
   StatelessComputationOperator,
 } from "../../../computations.js";
 import { Function1, bindMethod, none, pipeUnsafe } from "../../../functions.js";
+import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import type * as EventSource from "../../EventSource.js";
 
 const LiftedEventSource_source = Symbol("LiftedEventSource_source");
@@ -25,6 +31,7 @@ const createLiftedEventSource: <TIn, TOut>(
     >[];
   };
   return mixInstanceFactory(
+    include(DelegatingDisposableContainerMixin),
     function LiftedEventSource(
       instance: TProperties &
         Pick<
@@ -38,6 +45,8 @@ const createLiftedEventSource: <TIn, TOut>(
     ) {
       instance[LiftedEventSource_source] = source;
       instance[LiftedEventSource_operators] = ops;
+
+      init(DelegatingDisposableContainerMixin, instance, source);
 
       return instance;
     },

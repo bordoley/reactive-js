@@ -39,11 +39,7 @@ const createScanObserver: <T, TAcc>(
   initialValue: Factory<TAcc>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T, TAcc>() => {
   return mixInstanceFactory(
-    include(
-      DelegatingDisposableMixin(),
-      ObserverMixin(),
-      LiftedObserverMixin(),
-    ),
+    include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function ScanObserver(
       instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
         TProperties<T, TAcc>,
@@ -51,7 +47,7 @@ const createScanObserver: <T, TAcc>(
       reducer: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
       init(LiftedObserverMixin(), instance, delegate);
 

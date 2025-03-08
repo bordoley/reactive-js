@@ -36,7 +36,6 @@ const Observable_scanMany = ((scanner, initialValue, options) => {
             }), Computation.notify(ObservableModule)(accFeedbackStream), invoke(ObservableLike_observe, observer));
             accFeedbackStream[EventListenerLike_notify](initialValue());
         }, {
-            [ComputationLike_isDeferred]: true,
             [ComputationLike_isPure]: isPure,
             [ComputationLike_isSynchronous]: isSynchronousObservable,
         });

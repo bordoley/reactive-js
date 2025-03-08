@@ -5,7 +5,7 @@ import { include, init, mixInstanceFactory, props, } from "../../../__internal__
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as Computation from "../../../computations/Computation.js";
 import DelegatingObserverMixin from "../../../computations/__mixins__/DelegatingObserverMixin.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike_observe, ObserverLike_notify, } from "../../../computations.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike_observe, ObserverLike_notify, } from "../../../computations.js";
 import { none, pick, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
@@ -74,9 +74,8 @@ const Observable_latest = /*@__PURE__*/ (() => {
         };
         const isPure = Computation.areAllPure(observables);
         const isSynchronous = Computation.areAllSynchronous(observables);
-        const isMulticasted = Computation.areAllMulticasted(observables);
+        //const isMulticasted = Computation.areAllMulticasted(observables);
         return Observable_createWithConfig(onSubscribe, {
-            [ComputationLike_isDeferred]: !isMulticasted,
             [ComputationLike_isPure]: isPure,
             [ComputationLike_isSynchronous]: isSynchronous,
         });

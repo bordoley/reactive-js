@@ -10,7 +10,7 @@
 
 • **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
-> **MergeWithOperator**\<`T`\>(`snd`, ...`tail`): [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **MergeWithOperator**\<`T`\>(`snd`, ...`tail`): [`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 ## Type Parameters
 
@@ -28,7 +28,7 @@
 
 ## Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
 > **MergeWithOperator**\<`T`\>(`snd`, ...`tail`): [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputation`, `T`, `T`\>
 
@@ -70,7 +70,7 @@
 
 [`StatefulAsynchronousComputationOperator`](../../type-aliases/StatefulAsynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
 
-> **MergeWithOperator**\<`T`\>(`snd`, ...`tail`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationBaseOf`](../../type-aliases/ComputationBaseOf.md)\<`TComputation`, `T`\>, [`DeferredComputationWithSideEffectsOf`](../../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>\>
+> **MergeWithOperator**\<`T`\>(`snd`, ...`tail`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, [`DeferredComputationWithSideEffectsOf`](../../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>\>
 
 ## Type Parameters
 
@@ -88,7 +88,7 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationBaseOf`](../../type-aliases/ComputationBaseOf.md)\<`TComputation`, `T`\>, [`DeferredComputationWithSideEffectsOf`](../../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, [`DeferredComputationWithSideEffectsOf`](../../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>\>
 
 > **MergeWithOperator**\<`T`\>(`snd`, ...`tail`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`MulticastComputationOf`](../../type-aliases/MulticastComputationOf.md)\<`TComputation`, `T`\>, [`MulticastComputationOf`](../../type-aliases/MulticastComputationOf.md)\<`TComputation`, `T`\>\>
 

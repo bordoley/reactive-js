@@ -1,7 +1,8 @@
 /// <reference types="./ComputationExpect.d.ts" />
 
-import { expectFalse, expectTrue } from "../../../../__internal__/testing.js";
+import { expectFalse, expectIsNone, expectIsSome, expectTrue, } from "../../../../__internal__/testing.js";
 import { pipe } from "../../../../functions.js";
+import { DisposableLike_dispose } from "../../../../utils.js";
 import * as Computation from "../../../Computation.js";
 const computationToTypeString = (x) => Computation.isPureSynchronous(x)
     ? "PureSynchronous"
@@ -44,5 +45,15 @@ export const isDeferredWithSideEffects = (x) => {
 };
 export const isMulticasted = (x) => {
     pipe(x, (Computation.isMulticasted), expectTrue(`expected Multicast computation received ${computationToTypeString(x)}`));
+    return x;
+};
+export const isMulticastedAndNotDisposable = (x) => {
+    isMulticasted(x);
+    expectIsNone(x[DisposableLike_dispose]);
+    return x;
+};
+export const isMulticastedAndDisposable = (x) => {
+    isMulticasted(x);
+    expectIsSome(x[DisposableLike_dispose]);
     return x;
 };

@@ -11,7 +11,6 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   DeferredObservableWithSideEffectsLike,
-  MulticastObservableLike,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
@@ -27,9 +26,7 @@ interface ObservableCreateWithConfig {
     f: SideEffect1<ObserverLike<T>>,
     config: Pick<
       PureSynchronousObservableLike,
-      | typeof ComputationLike_isDeferred
-      | typeof ComputationLike_isPure
-      | typeof ComputationLike_isSynchronous
+      typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
     >,
   ): PureSynchronousObservableLike<T>;
 
@@ -37,9 +34,7 @@ interface ObservableCreateWithConfig {
     f: SideEffect1<ObserverLike<T>>,
     config: Pick<
       SynchronousObservableWithSideEffectsLike,
-      | typeof ComputationLike_isDeferred
-      | typeof ComputationLike_isPure
-      | typeof ComputationLike_isSynchronous
+      typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
     >,
   ): SynchronousObservableWithSideEffectsLike<T>;
 
@@ -47,9 +42,7 @@ interface ObservableCreateWithConfig {
     f: SideEffect1<ObserverLike<T>>,
     config: Pick<
       PureDeferredObservableLike,
-      | typeof ComputationLike_isDeferred
-      | typeof ComputationLike_isPure
-      | typeof ComputationLike_isSynchronous
+      typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
     >,
   ): PureDeferredObservableLike<T>;
 
@@ -57,29 +50,15 @@ interface ObservableCreateWithConfig {
     f: SideEffect1<ObserverLike<T>>,
     config: Pick<
       DeferredObservableWithSideEffectsLike,
-      | typeof ComputationLike_isDeferred
-      | typeof ComputationLike_isPure
-      | typeof ComputationLike_isSynchronous
+      typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
     >,
   ): DeferredObservableWithSideEffectsLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
     config: Pick<
-      MulticastObservableLike,
-      | typeof ComputationLike_isDeferred
-      | typeof ComputationLike_isPure
-      | typeof ComputationLike_isSynchronous
-    >,
-  ): MulticastObservableLike<T>;
-
-  createWithConfig<T>(
-    f: SideEffect1<ObserverLike<T>>,
-    config: Pick<
       ObservableLike,
-      | typeof ComputationLike_isDeferred
-      | typeof ComputationLike_isPure
-      | typeof ComputationLike_isSynchronous
+      typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
     >,
   ): ObservableLike<T>;
 }
@@ -98,7 +77,6 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
           Mutable<TProperties>,
         effect: SideEffect1<ObserverLike>,
         config: {
-          readonly [ComputationLike_isDeferred]: boolean;
           readonly [ComputationLike_isPure]: boolean;
           readonly [ComputationLike_isSynchronous]: boolean;
         },
@@ -112,6 +90,8 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
         [CreateObservable_effect]: none,
       }),
       {
+        [ComputationLike_isDeferred]: true as const,
+
         [ObservableLike_observe](this: TProperties, observer: ObserverLike) {
           try {
             this[CreateObservable_effect](observer);

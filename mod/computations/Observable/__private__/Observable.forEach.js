@@ -10,8 +10,8 @@ import Observer_assertObserverState from "../../Observer/__private__/Observer.as
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 const createForEachObserver = /*@__PURE__*/ (() => {
     const ForEachObserver_effect = Symbol("ForEachObserver_effect");
-    return mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin(), LiftedObserverMixin()), function ForEachObserver(instance, delegate, effect) {
-        init(DelegatingDisposableMixin(), instance, delegate);
+    return mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()), function ForEachObserver(instance, delegate, effect) {
+        init(DelegatingDisposableMixin, instance, delegate);
         init(ObserverMixin(), instance, delegate, delegate);
         init(LiftedObserverMixin(), instance, delegate);
         instance[ForEachObserver_effect] = effect;

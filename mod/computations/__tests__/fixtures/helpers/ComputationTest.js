@@ -8,3 +8,5 @@ export const isSynchronousWithSideEffects = (obs, description) => test("is Synch
 export const isDeferredWithSideEffects = (obs, description) => test("is DeferredComputationWithSideEffectsLike" + (description ?? ""), pipeLazy(obs, ComputationExpect.isDeferredWithSideEffects));
 export const isPureDeferred = (obs, description) => test("is PureDeferredComputationLike" + (description ?? ""), pipeLazy(obs, ComputationExpect.isPureDeferred));
 export const isMulticasted = (obs, description) => test("is MulticastComputationLike" + (description ?? ""), pipeLazy(obs, ComputationExpect.isMulticasted));
+export const isMulticastedAndDisposable = (obs, description) => test("is MulticastComputationLike & DisposableLike" + (description ?? ""), pipeLazy(obs, ComputationExpect.isMulticastedAndDisposable));
+export const isMulticastedAndNotDisposable = (obs, description) => test("is MulticastComputationLike & !DisposableLike" + (description ?? ""), pipeLazy(obs, ComputationExpect.isMulticastedAndNotDisposable));

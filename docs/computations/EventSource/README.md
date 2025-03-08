@@ -19,7 +19,6 @@
 ## Functions
 
 - [addEventHandler](functions/addEventHandler.md)
-- [combineLatest](functions/combineLatest.md)
 - [create](functions/create.md)
 - [fromPromise](functions/fromPromise.md)
 - [keep](functions/keep.md)
@@ -27,4 +26,3 @@
 - [merge](functions/merge.md)
 - [never](functions/never.md)
 - [withLatestFrom](functions/withLatestFrom.md)
-- [zipLatest](functions/zipLatest.md)

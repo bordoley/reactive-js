@@ -16,7 +16,9 @@ import { DisposableLike_dispose } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
 
-const Observable_merge: Observable.Signature["merge"] = (<T>() => {
+const Observable_merge: Observable.Signature["merge"] = /*@__PURE__*/ (<
+  T,
+>() => {
   const MergeObservable_observables = Symbol("MergeObservable_observables");
 
   type TProperties<T> = {

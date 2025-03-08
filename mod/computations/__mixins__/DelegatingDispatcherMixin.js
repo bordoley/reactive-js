@@ -7,8 +7,8 @@ import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposab
 import { QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 const DelegatingDispatcherMixin = /*@__PURE__*/ (() => {
     const DelegatingDispatcherMixin_delegate = Symbol("DelegatingDispatcherMixin_delegate");
-    return returns(mix(include(DelegatingDisposableMixin()), function DelegatingDispatcherMixin(instance, delegate) {
-        init(DelegatingDisposableMixin(), instance, delegate);
+    return returns(mix(include(DelegatingDisposableMixin), function DelegatingDispatcherMixin(instance, delegate) {
+        init(DelegatingDisposableMixin, instance, delegate);
         instance[DelegatingDispatcherMixin_delegate] = delegate;
         return instance;
     }, props({

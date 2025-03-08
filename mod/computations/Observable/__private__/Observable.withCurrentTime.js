@@ -11,8 +11,8 @@ import Observer_assertObserverState from "../../Observer/__private__/Observer.as
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createWithCurrentTimeObserver = /*@__PURE__*/ (() => {
     const WithCurrentTimeObserver_selector = Symbol("WithCurrentTimeObserver_selector");
-    return mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin(), LiftedObserverMixin()), function WithCurrentTimeObserver(instance, delegate, selector) {
-        init(DelegatingDisposableMixin(), instance, delegate);
+    return mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()), function WithCurrentTimeObserver(instance, delegate, selector) {
+        init(DelegatingDisposableMixin, instance, delegate);
         init(ObserverMixin(), instance, delegate, delegate);
         init(LiftedObserverMixin(), instance, delegate);
         instance[WithCurrentTimeObserver_selector] = selector;

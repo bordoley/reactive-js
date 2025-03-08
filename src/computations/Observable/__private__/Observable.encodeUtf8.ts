@@ -1,5 +1,4 @@
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ObservableLike_observe,
@@ -29,7 +28,6 @@ const Observable_encodeUtf8: Observable.Signature["encodeUtf8"] =
         );
       },
       {
-        [ComputationLike_isDeferred]: true,
         [ComputationLike_isPure]: observable[ComputationLike_isPure],
         [ComputationLike_isSynchronous]:
           observable[ComputationLike_isSynchronous],

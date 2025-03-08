@@ -36,12 +36,10 @@ import { DisposableLike_dispose, DisposableLike_isDisposed } from "../utils.js";
 export const create: <T>(options?: {
   readonly autoDispose?: boolean;
 }) => PublisherLike<T> = /*@__PURE__*/ (<T>() => {
-  const Publisher_autoDispose = Symbol("Publisher_autoDispose");
   const Publisher_listeners = Symbol("Publisher_listeners");
   const Publisher_onListenerDisposed = Symbol("Publisher_onListenerDisposed");
 
   type TProperties = {
-    readonly [Publisher_autoDispose]: boolean;
     readonly [Publisher_listeners]: Set<EventListenerLike<T>>;
     readonly [Publisher_onListenerDisposed]: Method<EventListenerLike<T>>;
   };
@@ -70,7 +68,7 @@ export const create: <T>(options?: {
       instance[Publisher_listeners] =
         newInstance<Set<EventListenerLike<T>>>(Set);
 
-      instance[Publisher_autoDispose] = options?.autoDispose ?? false;
+      const autoDispose = options?.autoDispose ?? false;
 
       pipe(instance, DisposableContainer.onDisposed(onEventPublisherDisposed));
 
@@ -80,7 +78,7 @@ export const create: <T>(options?: {
         const listeners = instance[Publisher_listeners];
         listeners[Set_delete](this);
 
-        if (instance[Publisher_autoDispose] && listeners[Set_size] === 0) {
+        if (autoDispose && listeners[Set_size] === 0) {
           instance[DisposableLike_dispose]();
         }
       };
@@ -88,7 +86,6 @@ export const create: <T>(options?: {
       return instance;
     },
     props<TProperties>({
-      [Publisher_autoDispose]: false,
       [Publisher_listeners]: none,
       [Publisher_onListenerDisposed]: none,
     }),

@@ -13,7 +13,6 @@ import * as Streamable from "../computations/Streamable.js";
 import * as WritableStore from "../computations/WritableStore.js";
 import {
   ComputationLike_isDeferred,
-  ComputationLike_isPure,
   ComputationLike_isSynchronous,
   DeferredObservableLike,
   ObservableLike_observe,
@@ -35,7 +34,6 @@ import {
   newInstance,
   none,
   pipe,
-  pipeLazy,
   raiseIf,
   returns,
 } from "../functions.js";
@@ -163,13 +161,13 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
   };
 
   const createWindowLocationObservable = mixInstanceFactory(
-    include(DelegatingDisposableMixin()),
+    include(DelegatingDisposableMixin),
     function WindowLocationStream(
       instance: WindowLocationLike & TProperties,
       delegate: StreamLike<Updater<TState>, TState>,
       scheduler: SchedulerLike,
     ): WindowLocationLike & DisposableLike {
-      init(DelegatingDisposableMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, instance, delegate);
 
       instance[WindowLocation_delegate] = delegate;
 
@@ -196,7 +194,6 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
     {
       [ComputationLike_isDeferred]: false as const,
       [ComputationLike_isSynchronous]: false as const,
-      [ComputationLike_isPure]: true as const,
 
       [WindowLocationLike_push](
         this: TProperties,
@@ -284,38 +281,37 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       ),
       Streamable.syncState(
         state =>
-          Observable.defer(
-            // Initialize the history state on page load
-            pipeLazy(
-              window,
-              Element.eventSource<Window, "popstate">("popstate"),
-              EventSource.map((e: PopStateEvent) => {
-                const { counter, title } = e.state as {
-                  counter: number;
-                  title: string;
-                };
+          // Initialize the history state on page load
+          pipe(
+            window,
+            Element.eventSource<Window, "popstate">("popstate"),
+            EventSource.map((e: PopStateEvent) => {
+              const { counter, title } = e.state as {
+                counter: number;
+                title: string;
+              };
 
-                const uri = createSerializableWindowLocationURI({
-                  ...getCurrentWindowLocationURI(),
-                  title,
-                });
+              const uri = createSerializableWindowLocationURI({
+                ...getCurrentWindowLocationURI(),
+                title,
+              });
 
-                return { counter, replace: true, uri };
-              }),
-              Observable.fromEventSource(),
-              Computation.mergeWith(ObservableModule)(
-                pipe(
-                  {
-                    counter: 0,
-                    replace: true,
-                    uri: state.uri,
-                  },
-                  Observable.fromValue(),
-                ),
+              return { counter, replace: true, uri };
+            }),
+            Observable.fromEventSource(),
+            Computation.mergeWith(ObservableModule)(
+              pipe(
+                {
+                  counter: 0,
+                  replace: true,
+                  uri: state.uri,
+                },
+                Observable.fromValue(),
               ),
-              Observable.map<TState, Updater<TState>>(returns),
             ),
+            Observable.map<TState, Updater<TState>>(returns),
           ),
+
         (oldState, state) => {
           const locationChanged = !areURIsEqual(state.uri, oldState.uri);
           const titleChanged = oldState.uri.title !== state.uri.title;

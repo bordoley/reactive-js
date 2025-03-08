@@ -8,8 +8,8 @@ import * as EventSource from "../computations/EventSource.js";
 import * as Observable from "../computations/Observable.js";
 import * as Streamable from "../computations/Streamable.js";
 import * as WritableStore from "../computations/WritableStore.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike_observe, StoreLike_value, StreamableLike_stream, } from "../computations.js";
-import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, pipeLazy, raiseIf, returns, } from "../functions.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ObservableLike_observe, StoreLike_value, StreamableLike_stream, } from "../computations.js";
+import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, raiseIf, returns, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import { DisposableContainerLike_add, DropOldestBackpressureStrategy, QueueableLike_enqueue, } from "../utils.js";
@@ -56,8 +56,8 @@ const createSyncToHistoryStream = (f, scheduler, options) => Streamable.create(c
 })))[StreamableLike_stream](scheduler, options);
 export const subscribe = /*@__PURE__*/ (() => {
     const WindowLocation_delegate = Symbol("WindowLocation_delegate");
-    const createWindowLocationObservable = mixInstanceFactory(include(DelegatingDisposableMixin()), function WindowLocationStream(instance, delegate, scheduler) {
-        init(DelegatingDisposableMixin(), instance, delegate);
+    const createWindowLocationObservable = mixInstanceFactory(include(DelegatingDisposableMixin), function WindowLocationStream(instance, delegate, scheduler) {
+        init(DelegatingDisposableMixin, instance, delegate);
         instance[WindowLocation_delegate] = delegate;
         instance[WindowLocationLike_canGoBack] = pipe(WritableStore.create(false), Disposable.addTo(instance));
         pipe(delegate, Observable.forEach(({ counter }) => {
@@ -70,7 +70,6 @@ export const subscribe = /*@__PURE__*/ (() => {
     }), {
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
-        [ComputationLike_isPure]: true,
         [WindowLocationLike_push](stateOrUpdater) {
             this[WindowLocation_delegate][QueueableLike_enqueue]((prevState) => {
                 const uri = createSerializableWindowLocationURI(isFunction(stateOrUpdater)
@@ -105,9 +104,9 @@ export const subscribe = /*@__PURE__*/ (() => {
             // Initialize the counter to -1 so that the initized start value
             // get pushed through the updater.
             counter: -1,
-        }), { equality: areWindowLocationStatesEqual }), Streamable.syncState(state => Observable.defer(
+        }), { equality: areWindowLocationStatesEqual }), Streamable.syncState(state => 
         // Initialize the history state on page load
-        pipeLazy(window, Element.eventSource("popstate"), EventSource.map((e) => {
+        pipe(window, Element.eventSource("popstate"), EventSource.map((e) => {
             const { counter, title } = e.state;
             const uri = createSerializableWindowLocationURI({
                 ...getCurrentWindowLocationURI(),
@@ -118,7 +117,7 @@ export const subscribe = /*@__PURE__*/ (() => {
             counter: 0,
             replace: true,
             uri: state.uri,
-        }, Observable.fromValue())), Observable.map(returns))), (oldState, state) => {
+        }, Observable.fromValue())), Observable.map(returns)), (oldState, state) => {
             const locationChanged = !areURIsEqual(state.uri, oldState.uri);
             const titleChanged = oldState.uri.title !== state.uri.title;
             let { replace } = state;

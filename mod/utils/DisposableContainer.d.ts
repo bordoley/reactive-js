@@ -8,9 +8,11 @@ export interface DisposableContainerModule {
     onError<TDisposable extends DisposableContainerLike>(teardown: SideEffect1<Error>): Updater<TDisposable>;
     onError<TDisposable extends DisposableContainerLike>(teardown: Method1<TDisposable, Error>): Updater<TDisposable>;
     toAbortSignal(disposable: DisposableContainerLike): AbortSignal;
+    toPromise(disposable: DisposableContainerLike): Promise<void>;
 }
 export type Signature = DisposableContainerModule;
 export declare const onComplete: Signature["onComplete"];
 export declare const onDisposed: Signature["onDisposed"];
 export declare const onError: Signature["onError"];
 export declare const toAbortSignal: Signature["toAbortSignal"];
+export declare const toPromise: Signature["toPromise"];

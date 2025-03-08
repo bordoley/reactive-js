@@ -10,8 +10,8 @@ import Observer_assertObserverState from "../../Observer/__private__/Observer.as
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const PairwiseObserver_hasPrev = Symbol("PairwiseObserver_hasPrev");
 const PairwiseObserver_prev = Symbol("PairwiseObserver_prev");
-const createPairwiseObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin(), ObserverMixin(), LiftedObserverMixin()), function PairwiseObserver(instance, delegate) {
-    init(DelegatingDisposableMixin(), instance, delegate);
+const createPairwiseObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()), function PairwiseObserver(instance, delegate) {
+    init(DelegatingDisposableMixin, instance, delegate);
     init(ObserverMixin(), instance, delegate, delegate);
     init(LiftedObserverMixin(), instance, delegate);
     return instance;

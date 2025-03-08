@@ -31,7 +31,7 @@ const createBackpressureObserver: <T>(
   mixInstanceFactory(
     include(
       ObserverMixin<T>(),
-      DelegatingDisposableMixin(),
+      DelegatingDisposableMixin,
       LiftedObserverMixin(),
     ),
     function EnqueueObserver(
@@ -43,7 +43,7 @@ const createBackpressureObserver: <T>(
         | typeof QueueableLike_backpressureStrategy
       >,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, instance, delegate);
       init(ObserverMixin<T>(), instance, delegate, config);
       init(LiftedObserverMixin(), instance, delegate);
 

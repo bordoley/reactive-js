@@ -11,8 +11,8 @@ import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const DistinctUntilChangedObserver_equality = Symbol("DistinctUntilChangedObserver_equality");
 const DistinctUntilChangedObserver_prev = Symbol("DistinctUntilChangedObserver_prev");
 const DistinctUntilChangedObserver_hasValue = Symbol("DistinctUntilChangedObserver_hasValue");
-const createDistinctUntilChangedObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin(), LiftedObserverMixin()), function DistinctUntilChangedObserver(instance, delegate, equality) {
-    init(DelegatingDisposableMixin(), instance, delegate);
+const createDistinctUntilChangedObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()), function DistinctUntilChangedObserver(instance, delegate, equality) {
+    init(DelegatingDisposableMixin, instance, delegate);
     init(ObserverMixin(), instance, delegate, delegate);
     init(LiftedObserverMixin(), instance, delegate);
     instance[DistinctUntilChangedObserver_equality] = equality;

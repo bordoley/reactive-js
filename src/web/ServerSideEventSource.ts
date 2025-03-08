@@ -4,6 +4,7 @@ import { EventListenerLike_notify, EventSourceLike } from "../computations.js";
 import { bindMethod, newInstance, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
+import { DisposableLike } from "../utils.js";
 
 const errorEvent = "error";
 
@@ -14,7 +15,7 @@ export const create = (
   options: EventSourceInit & {
     readonly events?: readonly string[];
   } = {},
-): EventSourceLike<MessageEvent> => {
+): EventSourceLike<MessageEvent> & DisposableLike => {
   const events = pipe(
     options.events ?? ["message"],
     ReadonlyArray.keep(x => !reservedEvents.includes(x)),

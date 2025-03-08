@@ -8,13 +8,14 @@
 
 ## Extends
 
-- [`MulticastComputationLike`](MulticastComputationLike.md)
+- [`MulticastComputationLike`](MulticastComputationLike.md).[`DisposableContainerLike`](../../utils/interfaces/DisposableContainerLike.md)
 
 ## Extended by
 
 - [`AnimationStreamLike`](../Streamable/interfaces/AnimationStreamLike.md)
 - [`PublisherLike`](PublisherLike.md)
 - [`StoreLike`](StoreLike.md)
+- [`PauseableEventSourceLike`](PauseableEventSourceLike.md)
 
 ## Type Parameters
 

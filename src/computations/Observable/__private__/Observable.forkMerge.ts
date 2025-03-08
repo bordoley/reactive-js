@@ -1,6 +1,8 @@
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as Computation from "../../../computations/Computation.js";
 import {
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
   DeferredComputationWithSideEffectsLike,
   DeferredObservableLike,
   HigherOrderInnerComputationOf,
@@ -20,8 +22,7 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
-import Observable_create from "./Observable.create.js";
-import Observable_createPureDeferredObservable from "./Observable.createPureDeferredObservable.js";
+import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_merge from "./Observable.merge.js";
 import Observable_multicast from "./Observable.multicast.js";
 
@@ -71,11 +72,9 @@ const Observable_forkMerge: Observable.Signature["forkMerge"] = (<
       >
     >;
     const innerType = maybeConfig?.innerType ?? {};
-    const isPure = Computation.isPure(innerType);
-
-    const create = isPure
-      ? Observable_createPureDeferredObservable
-      : Observable_create;
+    const isPure = Computation.isPure(innerType) && Computation.isPure(obs);
+    const isSynchronous =
+      Computation.isMulticasted(innerType) && Computation.isSynchronous(obs);
 
     return Computation.isMulticasted(obs)
       ? pipe(
@@ -83,20 +82,26 @@ const Observable_forkMerge: Observable.Signature["forkMerge"] = (<
           ReadonlyArray.map(op => op(obs)),
           Computation.mergeMany(ObservableModule),
         )
-      : create<TOut>(observer => {
-          const src = pipe(
-            obs as DeferredObservableLike<TIn>,
-            Observable_multicast(observer, { autoDispose: true }),
-            Disposable.addTo(observer),
-          );
+      : Observable_createWithConfig<TOut>(
+          observer => {
+            const src = pipe(
+              obs as DeferredObservableLike<TIn>,
+              Observable_multicast(observer, { autoDispose: true }),
+              Disposable.addTo(observer),
+            );
 
-          pipe(
-            ops,
-            ReadonlyArray.map(op => op(src)),
-            Computation.mergeMany(ObservableModule),
-            invoke(ObservableLike_observe, observer),
-          );
-        });
-  }) as Observable.Signature["forkMerge"];
+            pipe(
+              ops,
+              ReadonlyArray.map(op => op(src)),
+              Computation.mergeMany(ObservableModule),
+              invoke(ObservableLike_observe, observer),
+            );
+          },
+          {
+            [ComputationLike_isPure]: isPure,
+            [ComputationLike_isSynchronous]: isSynchronous,
+          },
+        );
+  }) as unknown as Observable.Signature["forkMerge"];
 
 export default Observable_forkMerge;

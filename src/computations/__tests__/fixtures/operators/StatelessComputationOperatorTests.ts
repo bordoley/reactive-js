@@ -101,7 +101,7 @@ const StatelessComputationOperatorTests = <
           computationType[Computation_multicastOfT],
           ComputationExpect.isMulticasted,
           operator,
-          ComputationExpect.isMulticasted,
+          ComputationExpect.isMulticastedAndNotDisposable,
         ),
       ),
   );

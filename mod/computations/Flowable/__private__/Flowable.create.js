@@ -10,11 +10,11 @@ import { PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } fr
 import * as Observable from "../../Observable.js";
 import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulticastObservableMixin.js";
 const PauseableObservable_create = /*@__PURE__*/ (() => {
-    return mixInstanceFactory(include(DelegatingDisposableMixin(), DelegatingMulticastObservableMixin()), function PauseableObservable(instance, op, scheduler, multicastOptions) {
+    return mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingMulticastObservableMixin()), function PauseableObservable(instance, op, scheduler, multicastOptions) {
         const writableStore = (instance[PauseableLike_isPaused] =
             WritableStore.create(true));
         const observableDelegate = pipe(writableStore, op, Observable.multicast(scheduler, multicastOptions), Disposable.bindTo(writableStore));
-        init(DelegatingDisposableMixin(), instance, writableStore);
+        init(DelegatingDisposableMixin, instance, writableStore);
         init(DelegatingMulticastObservableMixin(), instance, observableDelegate);
         return instance;
     }, props({

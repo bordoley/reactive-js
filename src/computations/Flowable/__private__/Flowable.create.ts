@@ -41,7 +41,7 @@ const PauseableObservable_create: <T>(
   };
 
   return mixInstanceFactory(
-    include(DelegatingDisposableMixin(), DelegatingMulticastObservableMixin()),
+    include(DelegatingDisposableMixin, DelegatingMulticastObservableMixin()),
     function PauseableObservable(
       instance: Pick<
         PauseableObservableLike<T>,
@@ -66,7 +66,7 @@ const PauseableObservable_create: <T>(
         Disposable.bindTo(writableStore),
       );
 
-      init(DelegatingDisposableMixin(), instance, writableStore);
+      init(DelegatingDisposableMixin, instance, writableStore);
       init(
         DelegatingMulticastObservableMixin<T>(),
         instance,

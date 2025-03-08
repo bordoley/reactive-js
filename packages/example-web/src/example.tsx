@@ -20,10 +20,7 @@ import {
   useWindowLocation,
   WindowLocationProvider,
 } from "@reactive-js/core/react/web";
-import {
-  WindowLocationLike,
-  WindowLocationURI,
-} from "@reactive-js/core/web";
+import { WindowLocationLike, WindowLocationURI } from "@reactive-js/core/web";
 import {
   increment,
   isNone,
@@ -49,10 +46,7 @@ import {
   __stream,
   __using,
 } from "@reactive-js/core/computations/Observable/effects";
-import {
-  __animate,
-  __animation,
-} from "@reactive-js/core/web/effects";
+import { __animate, __animation } from "@reactive-js/core/web/effects";
 import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/web/WindowLocation";

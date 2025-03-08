@@ -1,15 +1,36 @@
 /// <reference types="./EventSource.fromPromise.d.ts" />
 
-import { EventListenerLike_notify } from "../../../computations.js";
+import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, EventListenerLike_notify, EventSourceLike_addEventListener, } from "../../../computations.js";
+import { bindMethod, none, returns } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
-import EventSource_create from "./EventSource.create.js";
-const EventSource_fromPromise = () => (promise) => EventSource_create(listener => {
-    promise.then(next => {
-        if (!listener[DisposableLike_isDisposed]) {
-            listener[EventListenerLike_notify](next);
-            listener[DisposableLike_dispose]();
-        }
-    }, Disposable.toErrorHandler(listener));
-});
+const EventSource_fromPromise = 
+/*@__PURE__*/ (() => {
+    const FromPromiseEventSource_promise = Symbol("FromPromiseEventSource_promise");
+    return returns(mixInstanceFactory(include(DelegatingDisposableContainerMixin), function FromPromiseEventSource(instance, promise) {
+        instance[FromPromiseEventSource_promise] = promise;
+        const disposable = Disposable.create();
+        init(DelegatingDisposableContainerMixin, instance, disposable);
+        promise
+            .catch(Disposable.toErrorHandler(disposable))
+            .finally(bindMethod(disposable, DisposableLike_dispose));
+        return instance;
+    }, props({
+        [FromPromiseEventSource_promise]: none,
+    }), {
+        [ComputationLike_isDeferred]: false,
+        [ComputationLike_isSynchronous]: false,
+        [EventSourceLike_addEventListener](listener) {
+            const promise = this[FromPromiseEventSource_promise];
+            promise.then(next => {
+                if (!listener[DisposableLike_isDisposed]) {
+                    listener[EventListenerLike_notify](next);
+                    listener[DisposableLike_dispose]();
+                }
+            }, Disposable.toErrorHandler(listener));
+        },
+    }));
+})();
 export default EventSource_fromPromise;

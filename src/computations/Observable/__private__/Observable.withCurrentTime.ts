@@ -32,18 +32,14 @@ const createWithCurrentTimeObserver: <TA, TB>(
   };
 
   return mixInstanceFactory(
-    include(
-      ObserverMixin(),
-      DelegatingDisposableMixin(),
-      LiftedObserverMixin(),
-    ),
+    include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
     function WithCurrentTimeObserver(
       instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<TB>,
       selector: Function2<number, TA, TB>,
     ): ObserverLike<TA> {
-      init(DelegatingDisposableMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
       init(LiftedObserverMixin(), instance, delegate);
 

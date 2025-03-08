@@ -11,8 +11,8 @@ import Observer_assertObserverState from "../../Observer/__private__/Observer.as
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const TakeWhileObserver_inclusive = Symbol("TakeWhileObserver_inclusive");
 const TakeWhileObserver_predicate = Symbol("TakeWhileObserver_predicate");
-const createTakeWhileObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin(), ObserverMixin(), LiftedObserverMixin()), function TakeWhileObserver(instance, delegate, predicate, inclusive) {
-    init(DelegatingDisposableMixin(), instance, delegate);
+const createTakeWhileObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()), function TakeWhileObserver(instance, delegate, predicate, inclusive) {
+    init(DelegatingDisposableMixin, instance, delegate);
     init(ObserverMixin(), instance, delegate, delegate);
     init(LiftedObserverMixin(), instance, delegate);
     instance[TakeWhileObserver_predicate] = predicate;

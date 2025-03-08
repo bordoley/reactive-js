@@ -7,6 +7,7 @@ import {
   SynchronousComputationWithSideEffectsLike,
 } from "../../../../computations.js";
 import { pipeLazy } from "../../../../functions.js";
+import { DisposableLike } from "../../../../utils.js";
 import * as ComputationExpect from "./ComputationExpect.js";
 
 export const isPureSynchronous = (
@@ -52,4 +53,22 @@ export const isMulticasted = (
   test(
     "is MulticastComputationLike" + (description ?? ""),
     pipeLazy(obs, ComputationExpect.isMulticasted),
+  );
+
+export const isMulticastedAndDisposable = (
+  obs: MulticastComputationLike & DisposableLike,
+  description?: string,
+) =>
+  test(
+    "is MulticastComputationLike & DisposableLike" + (description ?? ""),
+    pipeLazy(obs, ComputationExpect.isMulticastedAndDisposable),
+  );
+
+export const isMulticastedAndNotDisposable = (
+  obs: MulticastComputationLike,
+  description?: string,
+) =>
+  test(
+    "is MulticastComputationLike & !DisposableLike" + (description ?? ""),
+    pipeLazy(obs, ComputationExpect.isMulticastedAndNotDisposable),
   );

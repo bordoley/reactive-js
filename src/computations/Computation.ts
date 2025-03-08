@@ -29,6 +29,7 @@ import {
   PureSynchronousComputationLike,
   PureSynchronousComputationOf,
   StatefulAsynchronousComputationOperator,
+  StatefulSynchronousComputationOperator,
   StatelessComputationOperator,
   SynchronousComputationLike,
   SynchronousComputationModule,
@@ -163,7 +164,7 @@ export interface MergeWithOperator<TComputation extends ComputationType> {
   <T>(
     snd: PureSynchronousComputationOf<TComputation, T>,
     ...tail: readonly PureSynchronousComputationOf<TComputation, T>[]
-  ): StatelessComputationOperator<TComputation, T, T>;
+  ): StatefulSynchronousComputationOperator<TComputation, T, T>;
   <T>(
     snd: SynchronousComputationOf<TComputation, T>,
     ...tail: readonly SynchronousComputationOf<TComputation, T>[]
@@ -176,7 +177,7 @@ export interface MergeWithOperator<TComputation extends ComputationType> {
     snd: DeferredComputationOf<TComputation, T>,
     ...tail: readonly DeferredComputationOf<TComputation, T>[]
   ): Function1<
-    ComputationBaseOf<TComputation, T>,
+    ComputationOf<TComputation, T>,
     DeferredComputationWithSideEffectsOf<TComputation, T>
   >;
   <T>(

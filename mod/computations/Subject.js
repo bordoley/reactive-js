@@ -3,7 +3,7 @@
 import { Set, Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
 import { clampPositiveInteger } from "../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, DispatcherLike_complete, EventListenerLike_notify, ObservableLike_observe, ObserverLike_notify, } from "../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, DispatcherLike_complete, EventListenerLike_notify, ObservableLike_observe, ObserverLike_notify, } from "../computations.js";
 import { error, isSome, newInstance, none, pipe, } from "../functions.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
@@ -48,7 +48,6 @@ export const create = /*@__PURE__*/ (() => {
         [Subject_onObserverDisposed]: none,
     }), {
         [ComputationLike_isDeferred]: false,
-        [ComputationLike_isPure]: true,
         [ComputationLike_isSynchronous]: false,
         [EventListenerLike_notify](next) {
             if (this[DisposableLike_isDisposed]) {
@@ -71,10 +70,11 @@ export const create = /*@__PURE__*/ (() => {
         },
         [ObservableLike_observe](observer) {
             const observers = this[Subject_observers];
+            if (observers[Set_has](observer)) {
+                return;
+            }
             if (isSome(this[DisposableLike_error])) {
                 observer[DisposableLike_dispose](this[DisposableLike_error]);
-            }
-            if (observers[Set_has](observer)) {
                 return;
             }
             observers[Set_add](observer);

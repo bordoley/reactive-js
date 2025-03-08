@@ -1,5 +1,4 @@
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ObserverLike,
@@ -11,7 +10,6 @@ const Observable_createSynchronousObservableWithSideEffects = <T>(
   f: SideEffect1<ObserverLike<T>>,
 ) =>
   Observable_createWithConfig(f, {
-    [ComputationLike_isDeferred]: true,
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: true,
   });

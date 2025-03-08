@@ -43,17 +43,13 @@ const createDistinctUntilChangedObserver: <T>(
   equality: Equality<T>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(
-      ObserverMixin(),
-      DelegatingDisposableMixin(),
-      LiftedObserverMixin(),
-    ),
+    include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
     function DistinctUntilChangedObserver(
       instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProps<T>,
       delegate: ObserverLike<T>,
       equality: Equality<T>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
       init(LiftedObserverMixin(), instance, delegate);
 

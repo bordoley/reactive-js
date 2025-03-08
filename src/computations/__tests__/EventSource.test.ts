@@ -16,6 +16,8 @@ import {
   EventSourceLike_addEventListener,
 } from "../../computations.js";
 import {
+  Optional,
+  SideEffect1,
   bindMethod,
   ignore,
   isSome,
@@ -24,7 +26,11 @@ import {
   pipeLazy,
   raise,
 } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_error } from "../../utils.js";
+import {
+  DisposableContainerLike_add,
+  DisposableLike_dispose,
+  DisposableLike_error,
+} from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReactiveComputationModuleTests.js";
@@ -42,6 +48,10 @@ testModule(
         return (arr: readonly T[]) => ({
           [ComputationLike_isDeferred]: false as const,
           [ComputationLike_isSynchronous]: false as const,
+
+          [DisposableContainerLike_add](
+            _: Disposable | SideEffect1<Optional<Error>>,
+          ) {},
 
           [EventSourceLike_addEventListener](listener: EventListenerLike<T>) {
             for (let i = 0; i < arr[Array_length]; i++) {

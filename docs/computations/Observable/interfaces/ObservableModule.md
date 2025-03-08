@@ -12,6 +12,12 @@
 
 ## Properties
 
+### combineLatest
+
+> **combineLatest**: `CombineConstructor`
+
+***
+
 ### currentTime
 
 > **currentTime**: [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
@@ -21,6 +27,12 @@
 ### forkMerge
 
 > **forkMerge**: `ForkMerge`
+
+***
+
+### zipLatest
+
+> **zipLatest**: `CombineConstructor`
 
 ## Methods
 
@@ -132,7 +144,7 @@
 
 ##### f
 
-[`Factory`](../../../functions/type-aliases/Factory.md)\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>\>
+[`Factory`](../../../functions/type-aliases/Factory.md)\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 #### Returns
 
@@ -365,6 +377,24 @@
 #### Overrides
 
 [`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`fromIterable`](../../interfaces/DeferredReactiveComputationModule.md#fromiterable)
+
+***
+
+### fromPromise()
+
+> **fromPromise**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>\>
+
+#### Overrides
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`fromPromise`](../../interfaces/ConcurrentReactiveComputationModule.md#frompromise)
 
 ***
 
@@ -876,7 +906,7 @@
 
 ### subscribeOn()
 
-> **subscribeOn**\<`T`\>(`scheduler`, `options`?): [`StatelessAsynchronousComputationOperator`](../../type-aliases/StatelessAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+> **subscribeOn**\<`T`\>(`scheduler`, `options`?): [`StatefulAsynchronousComputationOperator`](../../type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -900,7 +930,7 @@
 
 #### Returns
 
-[`StatelessAsynchronousComputationOperator`](../../type-aliases/StatelessAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+[`StatefulAsynchronousComputationOperator`](../../type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 ***
 
@@ -1064,7 +1094,7 @@
 
 ### toEventSource()
 
-> **toEventSource**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>\>
+> **toEventSource**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 #### Type Parameters
 
@@ -1088,7 +1118,7 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 ***
 

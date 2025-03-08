@@ -9,8 +9,8 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 const MapObserver_selector = Symbol("MapObserver_selector");
-const createMapObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin(), ObserverMixin(), LiftedObserverMixin()), function MapObserver(instance, delegate, selector) {
-    init(DelegatingDisposableMixin(), instance, delegate);
+const createMapObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()), function MapObserver(instance, delegate, selector) {
+    init(DelegatingDisposableMixin, instance, delegate);
     init(ObserverMixin(), instance, delegate, delegate);
     init(LiftedObserverMixin(), instance, delegate);
     instance[MapObserver_selector] = selector;

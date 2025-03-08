@@ -1,9 +1,24 @@
 /// <reference types="./Computation.test.d.ts" />
 
 import { describe, expectArrayEquals, expectToHaveBeenCalledTimes, mockFn, test, testModule, } from "../../__internal__/testing.js";
-import { isSome, none, pipe, pipeLazy } from "../../functions.js";
+import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../computations.js";
+import { ignore, isSome, none, pipe, pipeLazy, } from "../../functions.js";
+import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Computation from "../Computation.js";
 import * as Iterable from "../Iterable.js";
+import * as Observable from "../Observable.js";
+import * as ComputationTest from "./fixtures/helpers/ComputationTest.js";
+import AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests from "./fixtures/operators/AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests.js";
+import ComputationOperatorWithSideEffectsTests from "./fixtures/operators/ComputationOperatorWithSideEffectsTests.js";
+import StatefulAsynchronousComputationOperatorTests from "./fixtures/operators/StatefulAsynchronousComputationOperatorTests.js";
+import StatefulSynchronousComputationOperatorTests from "./fixtures/operators/StatefulSynchronousComputationOperatorTests.js";
+const ObservableTypes = {
+    [Computation_pureSynchronousOfT]: Observable.empty({ delay: 1 }),
+    [Computation_synchronousWithSideEffectsOfT]: pipe(Observable.empty(), Observable.forEach(ignore)),
+    [Computation_pureDeferredOfT]: pipe(Observable.empty(), Observable.subscribeOn(HostScheduler.create())),
+    [Computation_deferredWithSideEffectsOfT]: pipe(Observable.empty(), Observable.subscribeOn(HostScheduler.create()), Observable.forEach(ignore)),
+    [Computation_multicastOfT]: Observable.never(),
+};
 testModule("Computation", describe("concatMany", test("concats the input containers in order", pipeLazy(Computation.concatMany(Iterable)([
     [1, 2, 3],
     [4, 5, 6],
@@ -27,7 +42,7 @@ testModule("Computation", describe("concatMany", test("concats the input contain
     ["a", "b"],
     ["c", "d"],
     ["e", "f"],
-], Computation.mapTo(Iterable)(2), Iterable.toReadonlyArray(), expectArrayEquals([2, 2, 2])))), describe("pick", test("with object and symbol keys", () => {
+], Computation.mapTo(Iterable)(2), Iterable.toReadonlyArray(), expectArrayEquals([2, 2, 2])))), describe("mergeWith", StatefulSynchronousComputationOperatorTests(ObservableTypes, Computation.mergeWith(Observable)(Observable.empty(), Observable.empty())), ComputationOperatorWithSideEffectsTests(ObservableTypes, Computation.mergeWith(Observable)(pipe(Observable.empty(), Observable.forEach(ignore)), Observable.empty())), StatefulAsynchronousComputationOperatorTests(ObservableTypes, Computation.mergeWith(Observable)(ObservableTypes[Computation_pureDeferredOfT], Observable.empty())), AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests(ObservableTypes, Computation.mergeWith(Observable)(ObservableTypes[Computation_deferredWithSideEffectsOfT], Observable.empty())), ComputationTest.isMulticasted(pipe(ObservableTypes[Computation_multicastOfT], Computation.mergeWith(Observable)(ObservableTypes[Computation_multicastOfT])))), describe("pick", test("with object and symbol keys", () => {
     const keyA = Symbol();
     const keyB = Symbol();
     const obj = {

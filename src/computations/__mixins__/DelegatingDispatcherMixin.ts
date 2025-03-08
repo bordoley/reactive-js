@@ -33,7 +33,7 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
 
   return returns(
     mix(
-      include(DelegatingDisposableMixin()),
+      include(DelegatingDisposableMixin),
       function DelegatingDispatcherMixin(
         instance: Pick<
           DispatcherLike,
@@ -46,7 +46,7 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
           TProperties,
         delegate: DispatcherLike<TReq>,
       ): DispatcherLike<TReq> {
-        init(DelegatingDisposableMixin(), instance, delegate);
+        init(DelegatingDisposableMixin, instance, delegate);
         instance[DelegatingDispatcherMixin_delegate] = delegate;
 
         return instance;

@@ -12,8 +12,8 @@ import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const ScanObserver_acc = Symbol("ScanObserver_acc");
 const ScanObserver_reducer = Symbol("ScanObserver_reducer");
 const createScanObserver = /*@__PURE__*/ (() => {
-    return mixInstanceFactory(include(DelegatingDisposableMixin(), ObserverMixin(), LiftedObserverMixin()), function ScanObserver(instance, delegate, reducer, initialValue) {
-        init(DelegatingDisposableMixin(), instance, delegate);
+    return mixInstanceFactory(include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()), function ScanObserver(instance, delegate, reducer, initialValue) {
+        init(DelegatingDisposableMixin, instance, delegate);
         init(ObserverMixin(), instance, delegate, delegate);
         init(LiftedObserverMixin(), instance, delegate);
         instance[ScanObserver_reducer] = reducer;

@@ -14,6 +14,7 @@ import type {
 } from "./functions.js";
 import type {
   BackpressureStrategy,
+  DisposableContainerLike,
   DisposableLike,
   PauseableLike,
   QueueableLike,
@@ -430,107 +431,6 @@ export type FromIterableOperator<TComputation extends ComputationType, T> = <
   ? PureSynchronousComputationOf<TComputation, T>
   : SynchronousComputationWithSideEffectsOf<TComputation, T>;
 
-interface CombineConstructor<TComputation extends ComputationType> {
-  <TA, TB>(
-    a: PureSynchronousComputationOf<TComputation, TA>,
-    b: PureSynchronousComputationOf<TComputation, TB>,
-  ): PureSynchronousComputationOf<TComputation, Tuple2<TA, TB>>;
-  <TA, TB, TC>(
-    a: PureSynchronousComputationOf<TComputation, TA>,
-    b: PureSynchronousComputationOf<TComputation, TB>,
-    c: PureSynchronousComputationOf<TComputation, TC>,
-  ): PureSynchronousComputationOf<TComputation, Tuple3<TA, TB, TC>>;
-  <TA, TB, TC, TD>(
-    a: PureSynchronousComputationOf<TComputation, TA>,
-    b: PureSynchronousComputationOf<TComputation, TB>,
-    c: PureSynchronousComputationOf<TComputation, TC>,
-    d: PureSynchronousComputationOf<TComputation, TD>,
-  ): PureSynchronousComputationOf<TComputation, Tuple4<TA, TB, TC, TD>>;
-
-  <TA, TB>(
-    a: SynchronousComputationOf<TComputation, TA>,
-    b: SynchronousComputationOf<TComputation, TB>,
-  ): SynchronousComputationWithSideEffectsOf<TComputation, Tuple2<TA, TB>>;
-  <TA, TB, TC>(
-    a: SynchronousComputationOf<TComputation, TA>,
-    b: SynchronousComputationOf<TComputation, TB>,
-    c: SynchronousComputationOf<TComputation, TC>,
-  ): SynchronousComputationWithSideEffectsOf<TComputation, Tuple3<TA, TB, TC>>;
-  <TA, TB, TC, TD>(
-    a: SynchronousComputationOf<TComputation, TA>,
-    b: SynchronousComputationOf<TComputation, TB>,
-    c: SynchronousComputationOf<TComputation, TC>,
-    d: SynchronousComputationOf<TComputation, TD>,
-  ): SynchronousComputationWithSideEffectsOf<
-    TComputation,
-    Tuple4<TA, TB, TC, TD>
-  >;
-
-  <TA, TB>(
-    a: PureDeferredComputationOf<TComputation, TA>,
-    b: PureDeferredComputationOf<TComputation, TB>,
-  ): PureDeferredComputationOf<TComputation, Tuple2<TA, TB>>;
-  <TA, TB, TC>(
-    a: PureDeferredComputationOf<TComputation, TA>,
-    b: PureDeferredComputationOf<TComputation, TB>,
-    c: PureDeferredComputationOf<TComputation, TC>,
-  ): PureDeferredComputationOf<TComputation, Tuple3<TA, TB, TC>>;
-  <TA, TB, TC, TD>(
-    a: PureDeferredComputationOf<TComputation, TA>,
-    b: PureDeferredComputationOf<TComputation, TB>,
-    c: PureDeferredComputationOf<TComputation, TC>,
-    d: PureDeferredComputationOf<TComputation, TD>,
-  ): PureDeferredComputationOf<TComputation, Tuple4<TA, TB, TC, TD>>;
-
-  <TA, TB>(
-    a: MulticastComputationOf<TComputation, TA>,
-    b: MulticastComputationOf<TComputation, TB>,
-  ): MulticastComputationOf<TComputation, Tuple2<TA, TB>>;
-  <TA, TB, TC>(
-    a: MulticastComputationOf<TComputation, TA>,
-    b: MulticastComputationOf<TComputation, TB>,
-    c: MulticastComputationOf<TComputation, TC>,
-  ): MulticastComputationOf<TComputation, Tuple3<TA, TB, TC>>;
-  <TA, TB, TC, TD>(
-    a: MulticastComputationOf<TComputation, TA>,
-    b: MulticastComputationOf<TComputation, TB>,
-    c: MulticastComputationOf<TComputation, TC>,
-    d: MulticastComputationOf<TComputation, TD>,
-  ): MulticastComputationOf<TComputation, Tuple4<TA, TB, TC, TD>>;
-
-  <TA, TB>(
-    a: PureComputationOf<TComputation, TA>,
-    b: PureComputationOf<TComputation, TB>,
-  ): PureDeferredComputationOf<TComputation, Tuple2<TA, TB>>;
-  <TA, TB, TC>(
-    a: PureComputationOf<TComputation, TA>,
-    b: PureComputationOf<TComputation, TB>,
-    c: PureComputationOf<TComputation, TC>,
-  ): PureDeferredComputationOf<TComputation, Tuple3<TA, TB, TC>>;
-  <TA, TB, TC, TD>(
-    a: PureComputationOf<TComputation, TA>,
-    b: PureComputationOf<TComputation, TB>,
-    c: PureComputationOf<TComputation, TC>,
-    d: PureComputationOf<TComputation, TD>,
-  ): PureDeferredComputationOf<TComputation, Tuple4<TA, TB, TC, TD>>;
-
-  <TA, TB>(
-    a: ComputationOf<TComputation, TA>,
-    b: ComputationOf<TComputation, TB>,
-  ): DeferredComputationWithSideEffectsOf<TComputation, Tuple2<TA, TB>>;
-  <TA, TB, TC>(
-    a: ComputationOf<TComputation, TA>,
-    b: ComputationOf<TComputation, TB>,
-    c: ComputationOf<TComputation, TC>,
-  ): DeferredComputationWithSideEffectsOf<TComputation, Tuple3<TA, TB, TC>>;
-  <TA, TB, TC, TD>(
-    a: ComputationOf<TComputation, TA>,
-    b: ComputationOf<TComputation, TB>,
-    c: ComputationOf<TComputation, TC>,
-    d: ComputationOf<TComputation, TD>,
-  ): DeferredComputationWithSideEffectsOf<TComputation, Tuple4<TA, TB, TC, TD>>;
-}
-
 interface ZipConstructor<TComputation extends ComputationType> {
   <TA, TB>(
     a: PureSynchronousComputationOf<TComputation, TA>,
@@ -817,8 +717,6 @@ export interface DeferredReactiveComputationModule<
 export interface ConcurrentReactiveComputationModule<
   TComputation extends ComputationType,
 > extends ComputationModule<TComputation> {
-  combineLatest: CombineConstructor<TComputation>;
-
   fromPromise<T>(): Function1<
     Promise<T>,
     MulticastComputationOf<TComputation, T>
@@ -889,8 +787,6 @@ export interface ConcurrentReactiveComputationModule<
     other: MulticastComputationOf<TComputation, TB>,
     selector: Function2<TA, TB, T>,
   ): StatelessAsynchronousComputationOperator<TComputation, TA, T>;
-
-  zipLatest: CombineConstructor<TComputation>;
 }
 
 export const SinkLike_next = Symbol("SinkLike_next");
@@ -970,6 +866,12 @@ export const DeferredComputationWithSideEffects: DeferredComputationWithSideEffe
     [ComputationLike_isSynchronous]: false,
   };
 
+export const MulticastComputation: MulticastComputationLike = {
+  [ComputationLike_isDeferred]: false,
+  [ComputationLike_isPure]: true,
+  [ComputationLike_isSynchronous]: false,
+};
+
 export const EventListenerLike_notify = Symbol("EventListenerLike_notify");
 
 /**
@@ -992,7 +894,8 @@ export const EventSourceLike_addEventListener = Symbol(
  * @noInheritDoc
  */
 export interface EventSourceLike<out T = unknown>
-  extends MulticastComputationLike {
+  extends MulticastComputationLike,
+    DisposableContainerLike {
   readonly [ComputationLike_isDeferred]: false;
   readonly [ComputationLike_isSynchronous]: false;
   readonly [ComputationLike_isPure]?: true;
@@ -1024,6 +927,13 @@ export interface WritableStoreLike<T = unknown>
     DisposableLike {
   [StoreLike_value]: T;
 }
+
+/**
+ * @noInheritDoc
+ */
+export interface PauseableEventSourceLike<out T = unknown>
+  extends EventSourceLike<T>,
+    PauseableLike {}
 
 export const DispatcherState_ready = Symbol("DispatcherState_ready");
 export const DispatcherState_capacityExceeded = Symbol(

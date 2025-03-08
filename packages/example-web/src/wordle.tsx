@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  useAnimate,
-  useAnimation,
-} from "@reactive-js/core/react/web";
+import { useAnimate, useAnimation } from "@reactive-js/core/react/web";
 import { Property } from "csstype";
-import {
-  useDispatcher,
-  useObserve,
-} from "@reactive-js/core/react";
+import { useDispatcher, useObserve } from "@reactive-js/core/react";
 import { Optional, pipe } from "@reactive-js/core/functions";
 import { EventSourceLike } from "@reactive-js/core/computations";
 import * as Observable from "@reactive-js/core/computations/Observable";

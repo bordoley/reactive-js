@@ -1,4 +1,9 @@
-import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
+import {
+  include,
+  init,
+  mixInstanceFactory,
+  props,
+} from "../../../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
@@ -7,15 +12,9 @@ import {
   EventSourceLike_addEventListener,
   PublisherLike,
 } from "../../../computations.js";
-import {
-  Optional,
-  SideEffect1,
-  error,
-  none,
-  pipe,
-} from "../../../functions.js";
-import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DisposableLike_dispose } from "../../../utils.js";
+import { SideEffect1, error, none } from "../../../functions.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { DisposableLike, DisposableLike_dispose } from "../../../utils.js";
 import type * as EventSource from "../../EventSource.js";
 import * as Publisher from "../../Publisher.js";
 
@@ -23,18 +22,13 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
   T,
 >() => {
   const CreateEventSource_delegate = Symbol("CreateEventSource_delegate");
-  const CreateEventSource_setup = Symbol("CreateEventSource_setup");
 
   type TProperties = {
-    [CreateEventSource_delegate]: Optional<PublisherLike<T>>;
-    [CreateEventSource_setup]: SideEffect1<EventListenerLike<T>>;
+    [CreateEventSource_delegate]: PublisherLike<T>;
   };
 
-  function onCreateEventSourcePublisherDisposed(this: TProperties) {
-    this[CreateEventSource_delegate] = none;
-  }
-
   return mixInstanceFactory(
+    include(DelegatingDisposableMixin),
     function CreateEventSource(
       instance: Pick<
         EventSourceLike<T>,
@@ -44,13 +38,22 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
       > &
         TProperties,
       setup: SideEffect1<EventListenerLike<T>>,
-    ): EventSourceLike<T> {
-      instance[CreateEventSource_setup] = setup;
+    ): EventSourceLike<T> & DisposableLike {
+      const delegate = (instance[CreateEventSource_delegate] =
+        Publisher.create<T>());
+
+      init(DelegatingDisposableMixin, instance, delegate);
+
+      try {
+        setup(delegate);
+      } catch (e) {
+        delegate[DisposableLike_dispose](error(e));
+      }
+
       return instance;
     },
     props<TProperties>({
       [CreateEventSource_delegate]: none,
-      [CreateEventSource_setup]: none,
     }),
     {
       [ComputationLike_isDeferred]: false as const,
@@ -60,29 +63,9 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
         this: TProperties,
         listener: EventListenerLike,
       ) {
-        const delegate =
-          this[CreateEventSource_delegate] ??
-          (() => {
-            const delegate = pipe(
-              Publisher.create<T>({
-                autoDispose: true,
-              }),
-              DisposableContainer.onDisposed(
-                onCreateEventSourcePublisherDisposed,
-              ),
-            );
-
-            this[CreateEventSource_delegate] = delegate;
-            try {
-              this[CreateEventSource_setup](delegate);
-            } catch (e) {
-              delegate[DisposableLike_dispose](error(e));
-            }
-
-            return delegate;
-          })();
-
-        delegate[EventSourceLike_addEventListener](listener);
+        this[CreateEventSource_delegate][EventSourceLike_addEventListener](
+          listener,
+        );
       },
     },
   );

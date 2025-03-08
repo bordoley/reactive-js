@@ -20,3 +20,4 @@
 - [onDisposed](functions/onDisposed.md)
 - [onError](functions/onError.md)
 - [toAbortSignal](functions/toAbortSignal.md)
+- [toPromise](functions/toPromise.md)

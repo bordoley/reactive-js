@@ -69,7 +69,7 @@ const createWithLatestFromEventListener: <TA, TB, T>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingDisposableMixin()),
+    include(DelegatingDisposableMixin),
     function WithLatestFromEventListener(
       instance: Pick<EventListenerLike<TA>, typeof EventListenerLike_notify> &
         TProperties,
@@ -77,7 +77,7 @@ const createWithLatestFromEventListener: <TA, TB, T>(
       other: EventSourceLike<TB>,
       selector: Function2<TA, TB, T>,
     ): EventListenerLike<TA> {
-      init(DelegatingDisposableMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, instance, delegate);
 
       instance[WithLatestFromEventListener_selector] = selector;
       instance[WithLatestFromEventListener_delegate] = delegate;

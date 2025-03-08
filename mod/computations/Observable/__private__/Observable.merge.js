@@ -9,7 +9,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
-const Observable_merge = (() => {
+const Observable_merge = /*@__PURE__*/ (() => {
     const MergeObservable_observables = Symbol("MergeObservable_observables");
     const isMergeObservable = (observable) => isSome(observable[MergeObservable_observables]);
     const flattenObservables = (observables) => observables.some(isMergeObservable)

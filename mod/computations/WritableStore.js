@@ -9,9 +9,9 @@ export const create = /*@__PURE__*/ (() => {
     const WritableStore_equality = Symbol("WritableStore_equality");
     const WritableStore_value = Symbol("WritableStore_value");
     const WritableStore_publisher = Symbol("WritableStore_publisher");
-    return mixInstanceFactory(include(DelegatingDisposableMixin()), function WritableStore(instance, initialValue, options) {
+    return mixInstanceFactory(include(DelegatingDisposableMixin), function WritableStore(instance, initialValue, options) {
         const publisher = Publisher.create(options);
-        init(DelegatingDisposableMixin(), instance, publisher);
+        init(DelegatingDisposableMixin, instance, publisher);
         instance[WritableStore_value] = initialValue;
         instance[WritableStore_equality] = options?.equality ?? strictEquality;
         instance[WritableStore_publisher] = publisher;

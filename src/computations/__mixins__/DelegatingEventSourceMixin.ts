@@ -7,9 +7,10 @@ import {
   EventSourceLike_addEventListener,
 } from "../../computations.js";
 import { none, returns } from "../../functions.js";
+import { DisposableContainerLike } from "../../utils.js";
 
 const DelegatingEventSourceMixin: <T>() => Mixin1<
-  EventSourceLike<T>,
+  Omit<EventSourceLike<T>, keyof DisposableContainerLike>,
   EventSourceLike<T>
 > = /*@__PURE__*/ (<T>() => {
   const DelegatingEventSourceMixin_delegate = Symbol(
@@ -23,9 +24,10 @@ const DelegatingEventSourceMixin: <T>() => Mixin1<
   return returns(
     mix(
       function DelegatingEventSourceMixin(
-        instance: EventSourceLike<T> & TProperties,
+        instance: Omit<EventSourceLike<T>, keyof DisposableContainerLike> &
+          TProperties,
         delegate: EventSourceLike<T>,
-      ): EventSourceLike<T> {
+      ): Omit<EventSourceLike<T>, keyof DisposableContainerLike> {
         instance[DelegatingEventSourceMixin_delegate] = delegate;
 
         return instance;

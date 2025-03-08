@@ -9,8 +9,8 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 const KeepObserver_predicate = Symbol("KeepObserver_predicate");
-const createKeepObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin(), ObserverMixin(), LiftedObserverMixin()), function KeepObserver(instance, delegate, predicate) {
-    init(DelegatingDisposableMixin(), instance, delegate);
+const createKeepObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()), function KeepObserver(instance, delegate, predicate) {
+    init(DelegatingDisposableMixin, instance, delegate);
     init(ObserverMixin(), instance, delegate, delegate);
     init(LiftedObserverMixin(), instance, delegate);
     instance[KeepObserver_predicate] = predicate;

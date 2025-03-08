@@ -72,7 +72,6 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
         accFeedbackStream[EventListenerLike_notify](initialValue());
       },
       {
-        [ComputationLike_isDeferred]: true,
         [ComputationLike_isPure]: isPure,
         [ComputationLike_isSynchronous]: isSynchronousObservable,
       },

@@ -1,6 +1,12 @@
-import { expectFalse, expectTrue } from "../../../../__internal__/testing.js";
+import {
+  expectFalse,
+  expectIsNone,
+  expectIsSome,
+  expectTrue,
+} from "../../../../__internal__/testing.js";
 import { ComputationLike } from "../../../../computations.js";
 import { pipe } from "../../../../functions.js";
+import { DisposableLike_dispose } from "../../../../utils.js";
 import * as Computation from "../../../Computation.js";
 
 const computationToTypeString = (x: ComputationLike) =>
@@ -121,5 +127,27 @@ export const isMulticasted = <TComputation extends ComputationLike>(
       `expected Multicast computation received ${computationToTypeString(x)}`,
     ),
   );
+  return x;
+};
+
+export const isMulticastedAndNotDisposable = <
+  TComputation extends ComputationLike,
+>(
+  x: TComputation,
+) => {
+  isMulticasted(x);
+
+  expectIsNone((x as any)[DisposableLike_dispose]);
+  return x;
+};
+
+export const isMulticastedAndDisposable = <
+  TComputation extends ComputationLike,
+>(
+  x: TComputation,
+) => {
+  isMulticasted(x);
+
+  expectIsSome((x as any)[DisposableLike_dispose]);
   return x;
 };

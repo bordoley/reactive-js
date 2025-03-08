@@ -11,8 +11,8 @@ import { DisposableLike_dispose } from "../../../utils.js";
 import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const TakeFirstObserver_count = Symbol("TakeFirstObserver_count");
-const createTakeFirstObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin(), ObserverMixin(), LiftedObserverMixin()), function TakeFirstObserver(instance, delegate, takeCount) {
-    init(DelegatingDisposableMixin(), instance, delegate);
+const createTakeFirstObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()), function TakeFirstObserver(instance, delegate, takeCount) {
+    init(DelegatingDisposableMixin, instance, delegate);
     init(ObserverMixin(), instance, delegate, delegate);
     init(LiftedObserverMixin(), instance, delegate);
     instance[TakeFirstObserver_count] = clampPositiveInteger(takeCount ?? 1);

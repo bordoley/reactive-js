@@ -15,6 +15,7 @@ const Observable_createWithConfig =
     }, props({
         [CreateObservable_effect]: none,
     }), {
+        [ComputationLike_isDeferred]: true,
         [ObservableLike_observe](observer) {
             try {
                 this[CreateObservable_effect](observer);

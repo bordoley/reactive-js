@@ -34,6 +34,11 @@ export const DeferredComputationWithSideEffects = {
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: false,
 };
+export const MulticastComputation = {
+    [ComputationLike_isDeferred]: false,
+    [ComputationLike_isPure]: true,
+    [ComputationLike_isSynchronous]: false,
+};
 export const EventListenerLike_notify = Symbol("EventListenerLike_notify");
 export const EventSourceLike_addEventListener = Symbol("EventSourceLike_addEventListener");
 export const StoreLike_value = Symbol("StoreLike_value");

@@ -28,14 +28,14 @@ const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (() => {
     predicate: Function1<TA, TB>,
   ) => EventListenerLike<TA> = (<TA, TB>() =>
     mixInstanceFactory(
-      include(DelegatingDisposableMixin()),
+      include(DelegatingDisposableMixin),
       function MapEventListener(
         instance: Pick<EventListenerLike<TA>, typeof EventListenerLike_notify> &
           TProperties<TA, TB>,
         delegate: EventListenerLike<TB>,
         selector: Function1<TA, TB>,
       ): EventListenerLike<TA> {
-        init(DelegatingDisposableMixin(), instance, delegate);
+        init(DelegatingDisposableMixin, instance, delegate);
         instance[MapEventListener_selector] = selector;
         instance[MapEventListener_delegate] = delegate;
 

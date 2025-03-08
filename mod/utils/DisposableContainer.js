@@ -4,7 +4,9 @@ import DisposableContainer_onComplete from "./DisposableContainer/__private__/Di
 import DisposableContainer_onDisposed from "./DisposableContainer/__private__/DisposableContainer.onDisposed.js";
 import DisposableContainer_onError from "./DisposableContainer/__private__/DisposableContainer.onError.js";
 import DisposableContainer_toAbortSignal from "./DisposableContainer/__private__/DisposableContainer.toAbortSignal.js";
+import DisposableContainer_toPromise from "./DisposableContainer/__private__/DisposableContainer.toPromise.js";
 export const onComplete = DisposableContainer_onComplete;
 export const onDisposed = DisposableContainer_onDisposed;
 export const onError = DisposableContainer_onError;
 export const toAbortSignal = DisposableContainer_toAbortSignal;
+export const toPromise = DisposableContainer_toPromise;

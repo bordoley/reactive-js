@@ -1,29 +1,71 @@
-import * as EventSource from "../../../computations/EventSource.js";
+import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
 import {
+  ComputationLike_isDeferred,
+  ComputationLike_isSynchronous,
   DispatcherLike_complete,
   EventSourceLike,
+  MulticastObservableLike,
+  ObservableLike_observe,
+  ObserverLike,
 } from "../../../computations.js";
-import { bindMethod, pipe } from "../../../functions.js";
+import { bindMethod, none, pipe, returns } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { QueueableLike_enqueue } from "../../../utils.js";
+import {
+  DisposableLike_dispose,
+  QueueableLike_enqueue,
+} from "../../../utils.js";
+import * as EventSource from "../../EventSource.js";
 import type * as Observable from "../../Observable.js";
-import Observable_createMulticast from "./Observable.createMulticast.js";
 
 const Observable_fromEventSource: Observable.Signature["fromEventSource"] =
-  <T>() =>
-  (eventSource: EventSourceLike<T>) =>
-    Observable_createMulticast<T>(observer => {
-      pipe(
-        eventSource,
-        EventSource.addEventHandler(
-          bindMethod(observer, QueueableLike_enqueue),
-        ),
-        DisposableContainer.onComplete(
-          bindMethod(observer, DispatcherLike_complete),
-        ),
-        Disposable.addTo(observer),
-      );
-    });
+  /*@__PURE__*/ (<T>() => {
+    const FromEventSourceObservable_eventSource = Symbol(
+      "FromEventSourceObservable_eventSource",
+    );
+
+    type TProperties = {
+      [FromEventSourceObservable_eventSource]: EventSourceLike<T>;
+    };
+
+    return returns(
+      mixInstanceFactory(
+        function FromEventSourceObservable(
+          instance: MulticastObservableLike<T> & TProperties,
+          eventSource: EventSourceLike<T>,
+        ): MulticastObservableLike<T> {
+          instance[FromEventSourceObservable_eventSource] = eventSource;
+
+          return instance;
+        },
+        props<TProperties>({
+          [FromEventSourceObservable_eventSource]: none,
+        }),
+        {
+          [ComputationLike_isDeferred]: false as const,
+          [ComputationLike_isSynchronous]: false as const,
+
+          [ObservableLike_observe](
+            this: TProperties,
+            observer: ObserverLike<T>,
+          ) {
+            pipe(
+              this[FromEventSourceObservable_eventSource],
+              DisposableContainer.onComplete(
+                bindMethod(observer, DispatcherLike_complete),
+              ),
+              DisposableContainer.onError(
+                bindMethod(observer, DisposableLike_dispose),
+              ),
+              EventSource.addEventHandler(
+                bindMethod(observer, QueueableLike_enqueue),
+              ),
+              Disposable.addTo(observer),
+            );
+          },
+        },
+      ),
+    );
+  })();
 
 export default Observable_fromEventSource;

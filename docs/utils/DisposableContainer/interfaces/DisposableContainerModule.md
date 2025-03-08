@@ -141,3 +141,19 @@
 #### Returns
 
 `AbortSignal`
+
+***
+
+### toPromise()
+
+> **toPromise**(`disposable`): `Promise`\<`void`\>
+
+#### Parameters
+
+##### disposable
+
+[`DisposableContainerLike`](../../interfaces/DisposableContainerLike.md)
+
+#### Returns
+
+`Promise`\<`void`\>

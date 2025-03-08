@@ -32,11 +32,7 @@ const createTakeWhileObserver: <T>(
   inclusive?: boolean,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(
-      DelegatingDisposableMixin(),
-      ObserverMixin(),
-      LiftedObserverMixin(),
-    ),
+    include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function TakeWhileObserver(
       instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
         TProperties<T>,
@@ -44,7 +40,7 @@ const createTakeWhileObserver: <T>(
       predicate: Predicate<T>,
       inclusive?: boolean,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
       init(LiftedObserverMixin(), instance, delegate);
 

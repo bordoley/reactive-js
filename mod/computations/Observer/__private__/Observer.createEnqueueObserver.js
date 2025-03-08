@@ -10,8 +10,8 @@ import { QueueableLike_enqueue, SchedulerLike_requestYield, } from "../../../uti
 import Observer_assertObserverState from "./Observer.assertObserverState.js";
 const Observer_createEnqueueObserver = /*@__PURE__*/ (() => {
     const EnqueueObserver_queue = Symbol("EnqueueObserver_queue");
-    return mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin(), LiftedObserverMixin()), function EnqueueObserver(instance, delegate, queue) {
-        init(DelegatingDisposableMixin(), instance, delegate);
+    return mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()), function EnqueueObserver(instance, delegate, queue) {
+        init(DelegatingDisposableMixin, instance, delegate);
         init(ObserverMixin(), instance, delegate, delegate);
         init(LiftedObserverMixin(), instance, delegate);
         instance[EnqueueObserver_queue] = queue;

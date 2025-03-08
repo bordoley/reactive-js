@@ -27,18 +27,14 @@ const createMapObserver: <TA, TB>(
   selector: Function1<TA, TB>,
 ) => ObserverLike<TA> = /*@__PURE__*/ (<TA, TB>() =>
   mixInstanceFactory(
-    include(
-      DelegatingDisposableMixin(),
-      ObserverMixin(),
-      LiftedObserverMixin(),
-    ),
+    include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function MapObserver(
       instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
         TProperties<TA, TB>,
       delegate: ObserverLike<TB>,
       selector: Function1<TA, TB>,
     ): ObserverLike<TA> {
-      init(DelegatingDisposableMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, instance, delegate);
       init(ObserverMixin(), instance, delegate, delegate);
       init(LiftedObserverMixin(), instance, delegate);
 

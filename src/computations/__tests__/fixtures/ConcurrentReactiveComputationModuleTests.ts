@@ -35,7 +35,6 @@ import {
   bind,
   bindMethod,
   compose,
-  incrementBy,
   newInstance,
   none,
   pipe,
@@ -50,7 +49,6 @@ import { SchedulerLike, VirtualTimeSchedulerLike_run } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
 import AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests from "./operators/AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests.js";
-import CombineConstructorTests from "./operators/CombineConstructorTests.js";
 import ComputationOperatorWithSideEffectsTests from "./operators/ComputationOperatorWithSideEffectsTests.js";
 import StatefulAsynchronousComputationOperatorTests from "./operators/StatefulAsynchronousComputationOperatorTests.js";
 import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSynchronousComputationOperatorTests.js";
@@ -102,44 +100,6 @@ const ConcurrentReactiveComputationModuleTests = <
   return describe(
     "ConcurrentReactiveComputationModule",
     describe(
-      "combineLatest",
-      test("combineLatest from two interspersing sources", () => {
-        using vts = VirtualTimeScheduler.create();
-        const result: Tuple2<number, number>[] = [];
-
-        pipe(
-          m.combineLatest<number, number>(
-            pipe(
-              Observable.generate(incrementBy(2), returns(1), { delay: 2 }),
-              Observable.takeFirst<number>({ count: 3 }),
-              m.fromObservable(vts),
-            ),
-            pipe(
-              Observable.generate(incrementBy(2), returns(0), { delay: 3 }),
-              Observable.takeFirst<number>({ count: 2 }),
-              m.fromObservable(vts),
-            ),
-          ),
-          m.toObservable(),
-          Observable.forEach(bind(result.push, result)),
-          Observable.subscribe(vts),
-        );
-
-        vts[VirtualTimeSchedulerLike_run]();
-
-        pipe(
-          result,
-          expectArrayEquals(
-            [tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)],
-            {
-              valuesEquality: arrayEquality(),
-            },
-          ),
-        );
-      }),
-      CombineConstructorTests(computationType, m.combineLatest),
-    ),
-    describe(
       "fromPromise",
       testAsync("when the promise resolves", async () => {
         using scheduler = HostScheduler.create();
@@ -150,7 +110,7 @@ const ConcurrentReactiveComputationModuleTests = <
         await pipe(
           promise,
           m.fromPromise(),
-          m.toObservable(),
+          m.toObservable<number>(),
           Observable.forEach<number>(e => {
             result = e;
           }),
@@ -176,7 +136,7 @@ const ConcurrentReactiveComputationModuleTests = <
         );
       }),
 
-      ComputationTest.isMulticasted(
+      ComputationTest.isMulticastedAndNotDisposable(
         pipe(Promise.resolve(true), m.fromPromise()),
       ),
     ),
@@ -331,7 +291,9 @@ const ConcurrentReactiveComputationModuleTests = <
           m.merge(pureDeferredOfT, pureDeferredOfT),
         ),
       multicastOfT &&
-        ComputationTest.isMulticasted(m.merge(multicastOfT, multicastOfT)),
+        ComputationTest.isMulticastedAndNotDisposable(
+          m.merge(multicastOfT, multicastOfT),
+        ),
       multicastOfT &&
         pureDeferredOfT &&
         ComputationTest.isPureDeferred(m.merge(multicastOfT, pureDeferredOfT)),
@@ -478,37 +440,6 @@ const ConcurrentReactiveComputationModuleTests = <
           computationType,
           m.withLatestFrom(multicastOfT),
         ),
-    ),
-    describe(
-      "zipLatest",
-      test("zip two delayed sources", () => {
-        using vts = VirtualTimeScheduler.create();
-        const result: number[] = [];
-
-        pipe(
-          m.zipLatest(
-            pipe(
-              [1, 2, 3, 4, 5, 6, 7, 8],
-              Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
-              m.fromObservable(vts),
-            ),
-            pipe(
-              [1, 2, 3, 4],
-              Observable.fromReadonlyArray({ delay: 2, delayStart: true }),
-              m.fromObservable(vts),
-            ),
-          ),
-          m.map<Tuple2<number, number>, number>(([a, b]) => a + b),
-          m.toObservable(),
-          Observable.forEach(bindMethod(result, Array_push)),
-          Observable.subscribe(vts),
-        );
-
-        vts[VirtualTimeSchedulerLike_run]();
-
-        pipe(result, expectArrayEquals([2, 5, 8, 11]));
-      }),
-      CombineConstructorTests(computationType, m.combineLatest),
     ),
   );
 };
