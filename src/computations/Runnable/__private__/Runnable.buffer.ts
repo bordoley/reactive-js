@@ -36,7 +36,7 @@ class BufferSink<T> implements SinkLike<T> {
     if (!this[SinkLike_isComplete]) {
       const { buffer } = this;
       this.buffer = [];
-      if (buffer.length > 0) {
+      if (buffer[Array_length] > 0) {
         this.sink[SinkLike_next](buffer);
       }
       this[SinkLike_isComplete] = true;

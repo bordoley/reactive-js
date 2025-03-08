@@ -4,6 +4,7 @@ import {
   expectArrayEquals,
   expectEquals,
   expectFalse,
+  expectIsNone,
   expectToThrow,
   expectToThrowError,
   expectTrue,
@@ -288,6 +289,22 @@ const SynchronousComputationModuleTests = <
           expectEquals(str),
         );
       }),
+    ),
+    describe(
+      "first",
+      test(
+        "returns the first value in the computation",
+        pipeLazy(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.first(),
+          expectEquals<Optional<number>>(1),
+        ),
+      ),
+      test(
+        "returns the none when computation is empty",
+        pipeLazy([], m.fromReadonlyArray(), m.first(), expectIsNone),
+      ),
     ),
     describe(
       "forEach",

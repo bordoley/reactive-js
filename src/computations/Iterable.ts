@@ -1,3 +1,10 @@
+import {
+  Array_length,
+  Array_map,
+  Iterator_done,
+  Iterator_next,
+  Iterator_value,
+} from "../__internal__/constants.js";
 import { clampPositiveInteger } from "../__internal__/math.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import {
@@ -33,6 +40,7 @@ import {
   isSome,
   newInstance,
   none,
+  pick,
   raise as raiseError,
   returns,
   tuple,
@@ -182,6 +190,15 @@ export const encodeUtf8: Signature["encodeUtf8"] = (() =>
   (iterable: IterableLike<string>) =>
     newInstance(EncodeUtf8Iterable, iterable)) as Signature["encodeUtf8"];
 
+export const first: Signature["first"] = /*@__PURE__*/ returns(
+  (iter: IterableLike) => {
+    for (const v of iter) {
+      return v;
+    }
+    return none;
+  },
+) as Signature["first"];
+
 class ForEachIterable<T> implements IterableWithSideEffectsLike<T> {
   public [ComputationLike_isPure]: false = false as const;
 
@@ -236,7 +253,7 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   (arr: readonly T[]) => {
     let [start, count] = parseArrayBounds(arr, options);
 
-    return start === 0 && count >= arr.length
+    return start === 0 && count >= arr[Array_length]
       ? arr
       : newInstance(FromReadonlyArrayIterable, arr, count, start);
   };
@@ -596,14 +613,14 @@ class ZipIterable {
   }
 
   *[Symbol.iterator]() {
-    const iterators = this.iters.map(invoke(Symbol.iterator));
+    const iterators = this.iters[Array_map](invoke(Symbol.iterator));
 
     while (true) {
-      const next = iterators.map(x => x.next());
-      if (next.some(x => x.done ?? false)) {
+      const next = iterators[Array_map](invoke(Iterator_next));
+      if (next.some(x => x[Iterator_done] ?? false)) {
         break;
       }
-      yield next.map(x => x.value);
+      yield next[Array_map](pick(Iterator_value));
     }
   }
 }

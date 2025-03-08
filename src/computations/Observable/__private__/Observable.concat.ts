@@ -112,12 +112,14 @@ const Observable_concat: Observable.Signature["concat"] = /*@__PURE__*/ (<
     },
   );
 
-  return (...observables: readonly ObservableLike<T>[]) =>
-    observables.length === 0
+  return (...observables: readonly ObservableLike<T>[]) => {
+    const length = observables[Array_length];
+    return length === 0
       ? Observable_empty()
-      : observables.length === 1
+      : length === 1
         ? observables[0]
         : createConcatObservable(observables);
+  };
 })() as Observable.Signature["concat"];
 
 export default Observable_concat;

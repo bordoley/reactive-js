@@ -1,5 +1,6 @@
 /// <reference types="./Streamable.spring.d.ts" />
 
+import { Array_length, Array_push } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
@@ -41,11 +42,11 @@ const SpringStream_create = /*@__PURE__*/ (() => {
                         : updated.to;
             const sources = pipe(destinations, Iterable.scan(([, prev], v) => tuple(prev, v), returns(tuple(initialValue, initialValue))), Iterable.reduce((animations, [prev, next]) => {
                 if (prev !== next) {
-                    animations.push(pipe(Observable.spring(springOptions), Observable.map(scale(prev, next))));
+                    animations[Array_push](pipe(Observable.spring(springOptions), Observable.map(scale(prev, next))));
                 }
                 return animations;
             }, () => []));
-            return sources.length > 0
+            return sources[Array_length] > 0
                 ? pipe(sources, Computation.concatMany(ObservableModule), Computation.notify(ObservableModule)(publisher), Computation.notify(ObservableModule)(accFeedbackStream), Computation.ignoreElements(ObservableModule)(), Observable.subscribeOn(pauseableScheduler), Computation.startWith(ObservableModule)(true), Computation.endWith(ObservableModule)(false))
                 : Observable.empty();
         }, {

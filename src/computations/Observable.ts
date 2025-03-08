@@ -84,6 +84,7 @@ import Observable_empty from "./Observable/__private__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__private__/Observable.encodeUtf8.js";
 import Observable_enqueue from "./Observable/__private__/Observable.enqueue.js";
 import Observable_exhaust from "./Observable/__private__/Observable.exhaust.js";
+import Observable_first from "./Observable/__private__/Observable.first.js";
 import Observable_firstAsync from "./Observable/__private__/Observable.firstAsync.js";
 import Observable_flatMapAsync from "./Observable/__private__/Observable.flatMapAsync.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
@@ -421,6 +422,12 @@ export interface ObservableModule
     T
   >;
 
+  first<T>(options?: {
+    readonly backpressureStrategy?: BackpressureStrategy;
+    readonly capacity?: number;
+    readonly maxMicroTaskTicks?: number;
+  }): Function1<SynchronousObservableLike<T>, Optional<T>>;
+
   firstAsync<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -717,6 +724,7 @@ export const empty: Signature["empty"] = Observable_empty;
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const enqueue: Signature["enqueue"] = Observable_enqueue;
 export const exhaust: Signature["exhaust"] = Observable_exhaust;
+export const first: Signature["first"] = Observable_first;
 export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
 export const flatMapAsync: Signature["flatMapAsync"] = Observable_flatMapAsync;
 export const forEach: Signature["forEach"] = Observable_forEach;

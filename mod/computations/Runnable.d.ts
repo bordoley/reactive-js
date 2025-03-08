@@ -22,6 +22,7 @@ export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
+export declare const first: Signature["first"];
 export declare const forEach: Signature["forEach"];
 export declare const fromIterable: Signature["fromIterable"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];

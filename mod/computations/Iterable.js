@@ -1,9 +1,10 @@
 /// <reference types="./Iterable.d.ts" />
 
+import { Array_length, Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
 import { clampPositiveInteger } from "../__internal__/math.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import { ComputationLike_isPure, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
-import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, raise as raiseError, returns, tuple, } from "../functions.js";
+import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, raise as raiseError, returns, tuple, } from "../functions.js";
 import * as ComputationM from "./Computation.js";
 import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 class CatchErrorIterable {
@@ -72,6 +73,12 @@ class EncodeUtf8Iterable {
     }
 }
 export const encodeUtf8 = (() => (iterable) => newInstance(EncodeUtf8Iterable, iterable));
+export const first = /*@__PURE__*/ returns((iter) => {
+    for (const v of iter) {
+        return v;
+    }
+    return none;
+});
 class ForEachIterable {
     d;
     ef;
@@ -113,7 +120,7 @@ class FromReadonlyArrayIterable {
 }
 export const fromReadonlyArray = (options) => (arr) => {
     let [start, count] = parseArrayBounds(arr, options);
-    return start === 0 && count >= arr.length
+    return start === 0 && count >= arr[Array_length]
         ? arr
         : newInstance(FromReadonlyArrayIterable, arr, count, start);
 };
@@ -365,13 +372,13 @@ class ZipIterable {
         this[ComputationLike_isPure] = ComputationM.areAllPure(iters);
     }
     *[Symbol.iterator]() {
-        const iterators = this.iters.map(invoke(Symbol.iterator));
+        const iterators = this.iters[Array_map](invoke(Symbol.iterator));
         while (true) {
-            const next = iterators.map(x => x.next());
-            if (next.some(x => x.done ?? false)) {
+            const next = iterators[Array_map](invoke(Iterator_next));
+            if (next.some(x => x[Iterator_done] ?? false)) {
                 break;
             }
-            yield next.map(x => x.value);
+            yield next[Array_map](pick(Iterator_value));
         }
     }
 }

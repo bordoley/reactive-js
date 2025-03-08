@@ -1,3 +1,4 @@
+import { Array_length, Array_push } from "../../../__internal__/constants.js";
 import {
   include,
   init,
@@ -167,7 +168,7 @@ const SpringStream_create: (
                   [prev, next],
                 ) => {
                   if (prev !== next) {
-                    animations.push(
+                    animations[Array_push](
                       pipe(
                         Observable.spring(springOptions),
                         Observable.map(scale(prev, next)),
@@ -180,7 +181,7 @@ const SpringStream_create: (
               ),
             );
 
-            return sources.length > 0
+            return sources[Array_length] > 0
               ? pipe(
                   sources,
                   Computation.concatMany(ObservableModule),

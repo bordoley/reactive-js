@@ -1,7 +1,7 @@
 /// <reference types="./SynchronousComputationModuleTests.d.ts" />
 
 import { Array_push } from "../../../__internal__/constants.js";
-import { describe, expectArrayEquals, expectEquals, expectFalse, expectToThrow, expectToThrowError, expectTrue, test, } from "../../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectToThrow, expectToThrowError, expectTrue, test, } from "../../../__internal__/testing.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import { ComputationLike_isPure, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, DeferredComputationWithSideEffects, PureDeferredComputation, PureSynchronousComputation, SynchronousComputationWithSideEffects, } from "../../../computations.js";
 import { alwaysTrue, ignore, increment, invoke, lessThan, newInstance, none, pick, pipe, pipeLazy, raise, returns, } from "../../../functions.js";
@@ -65,7 +65,7 @@ const SynchronousComputationModuleTests = (m, computationType) => {
         ComputationTest.isDeferredWithSideEffects(m.concat(deferredWithSideEffectsOfT, m.empty()))), describe("empty", test("produces no results", pipeLazy(m.empty(), m.toReadonlyArray(), expectArrayEquals([]))), ComputationTest.isPureSynchronous(m.empty())), describe("encodeUtf8", StatefulSynchronousComputationOperatorTests(computationType, m.encodeUtf8()), test("encoding ascii", () => {
         const str = "abcdefghijklmnsopqrstuvwxyz";
         pipe([str], m.fromReadonlyArray(), m.encodeUtf8(), m.toRunnable(), Runnable.decodeWithCharset(), Runnable.toReadonlyArray(), invoke("join"), expectEquals(str));
-    })), describe("forEach", ComputationOperatorWithSideEffectsTests(computationType, m.forEach(ignore)), test("invokes the effect for each notified value", () => {
+    })), describe("first", test("returns the first value in the computation", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.first(), expectEquals(1))), test("returns the none when computation is empty", pipeLazy([], m.fromReadonlyArray(), m.first(), expectIsNone))), describe("forEach", ComputationOperatorWithSideEffectsTests(computationType, m.forEach(ignore)), test("invokes the effect for each notified value", () => {
         const result = [];
         pipe([1, 2, 3], m.fromReadonlyArray(), m.forEach((x) => {
             result[Array_push](x + 10);

@@ -160,6 +160,7 @@ export interface SynchronousComputationModule<TComputation extends ComputationTy
     concat<T>(...computations: readonly DeferredComputationOf<TComputation, T>[]): DeferredComputationWithSideEffectsOf<TComputation, T>;
     empty<T>(): PureSynchronousComputationOf<TComputation, T>;
     encodeUtf8(): StatefulSynchronousComputationOperator<TComputation, string, Uint8Array>;
+    first<T>(): Function1<SynchronousComputationOf<TComputation, T>, Optional<T>>;
     forEach<T>(sideEffect: SideEffect1<T>): ComputationOperatorWithSideEffects<TComputation, T, T>;
     fromIterable<T>(): FromIterableOperator<TComputation, T>;
     fromReadonlyArray<T>(options?: {

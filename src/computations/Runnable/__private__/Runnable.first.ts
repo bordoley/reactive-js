@@ -1,6 +1,5 @@
-import { Array_push } from "../../../__internal__/constants.js";
 import { RunnableLike, RunnableLike_eval } from "../../../computations.js";
-import { newInstance } from "../../../functions.js";
+import { Optional, newInstance, none } from "../../../functions.js";
 import {
   SinkLike,
   SinkLike_complete,
@@ -9,24 +8,25 @@ import {
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
-class ToReadonlyArraySink<T> implements SinkLike<T> {
+class FirstSink<T> implements SinkLike<T> {
   public [SinkLike_isComplete] = false;
-  public acc: T[] = [];
+  public v: Optional<T> = none;
 
   [SinkLike_next](next: T): void {
-    this.acc[Array_push](next);
+    this.v = next;
+    this[SinkLike_complete]();
   }
   [SinkLike_complete]() {
     this[SinkLike_isComplete] = true;
   }
 }
 
-const Runnable_toReadonlyArray: Runnable.Signature["toReadonlyArray"] =
+const Runnable_first: Runnable.Signature["first"] =
   <T>() =>
   (deferable: RunnableLike<T>) => {
-    const sink = newInstance(ToReadonlyArraySink<T>);
+    const sink = newInstance(FirstSink<T>);
     deferable[RunnableLike_eval](sink);
-    return sink.acc;
+    return sink.v;
   };
 
-export default Runnable_toReadonlyArray;
+export default Runnable_first;

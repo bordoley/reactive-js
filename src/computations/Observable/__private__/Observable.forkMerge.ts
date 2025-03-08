@@ -1,3 +1,4 @@
+import { Array_length } from "../../../__internal__/constants.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as Computation from "../../../computations/Computation.js";
 import {
@@ -59,7 +60,7 @@ const Observable_forkMerge: Observable.Signature["forkMerge"] = (<
         >[]
   ) =>
   (obs: ObservableLike<TIn>) => {
-    const argsLength = args.length;
+    const argsLength = args[Array_length];
     const lastArg = args[argsLength - 1];
     const maybeConfig: Optional<{ innerType?: TInnerType }> =
       isSome(lastArg) && !isFunction(lastArg) ? lastArg : none;

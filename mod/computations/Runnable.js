@@ -10,6 +10,7 @@ import Runnable_decodeWithCharset from "./Runnable/__private__/Runnable.decodeWi
 import Runnable_distinctUntilChanged from "./Runnable/__private__/Runnable.distinctUntilChanged.js";
 import Runnable_empty from "./Runnable/__private__/Runnable.empty.js";
 import Runnable_encodeUtf8 from "./Runnable/__private__/Runnable.encodeUtf8.js";
+import Runnable_first from "./Runnable/__private__/Runnable.first.js";
 import Runnable_forEach from "./Runnable/__private__/Runnable.forEach.js";
 import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 import Runnable_fromReadonlyArray from "./Runnable/__private__/Runnable.fromReadonlyArray.js";
@@ -38,6 +39,7 @@ export const decodeWithCharset = Runnable_decodeWithCharset;
 export const distinctUntilChanged = Runnable_distinctUntilChanged;
 export const empty = Runnable_empty;
 export const encodeUtf8 = Runnable_encodeUtf8;
+export const first = Runnable_first;
 export const forEach = Runnable_forEach;
 export const fromIterable = Runnable_fromIterable;
 export const fromReadonlyArray = Runnable_fromReadonlyArray;

@@ -58,10 +58,13 @@ const Observable_concat = /*@__PURE__*/ (() => {
             }), bindMethod(observables[0], ObservableLike_observe));
         },
     });
-    return (...observables) => observables.length === 0
-        ? Observable_empty()
-        : observables.length === 1
-            ? observables[0]
-            : createConcatObservable(observables);
+    return (...observables) => {
+        const length = observables[Array_length];
+        return length === 0
+            ? Observable_empty()
+            : length === 1
+                ? observables[0]
+                : createConcatObservable(observables);
+    };
 })();
 export default Observable_concat;

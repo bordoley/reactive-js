@@ -5,6 +5,7 @@ import {
   Set_has,
 } from "../../__internal__/constants.js";
 import { Mixin, mix, props } from "../../__internal__/mixins.js";
+import * as Iterable from "../../computations/Iterable.js";
 import {
   Method1,
   Optional,
@@ -151,9 +152,9 @@ const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
             }
 
             if (disposablesIsSet && disposables.size === 1) {
-              instance[DisposableMixin_disposables] = disposables
-                .values()
-                .next().value;
+              instance[DisposableMixin_disposables] = Iterable.first<
+                Disposable | SideEffect1<Optional<Error>>
+              >()(disposables.values());
             }
           };
 

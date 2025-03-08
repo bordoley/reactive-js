@@ -588,6 +588,8 @@ export interface SynchronousComputationModule<
     Uint8Array
   >;
 
+  first<T>(): Function1<SynchronousComputationOf<TComputation, T>, Optional<T>>;
+
   forEach<T>(
     sideEffect: SideEffect1<T>,
   ): ComputationOperatorWithSideEffects<TComputation, T, T>;

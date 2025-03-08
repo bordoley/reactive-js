@@ -73,6 +73,11 @@ export interface ObservableModule extends DeferredReactiveComputationModule<Obse
     exhaust<T, TInnerType extends HigherOrderInnerComputationLike>(options: {
         readonly innerType: TInnerType;
     }): HigherOrderComputationOperator<ObservableComputation, TInnerType, HigherOrderInnerComputationOf<ObservableComputation, TInnerType, T>, T>;
+    first<T>(options?: {
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+        readonly maxMicroTaskTicks?: number;
+    }): Function1<SynchronousObservableLike<T>, Optional<T>>;
     firstAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
         readonly backpressureStrategy?: BackpressureStrategy;
@@ -219,6 +224,7 @@ export declare const empty: Signature["empty"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const enqueue: Signature["enqueue"];
 export declare const exhaust: Signature["exhaust"];
+export declare const first: Signature["first"];
 export declare const firstAsync: Signature["firstAsync"];
 export declare const flatMapAsync: Signature["flatMapAsync"];
 export declare const forEach: Signature["forEach"];
