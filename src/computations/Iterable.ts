@@ -40,10 +40,12 @@ import {
   newInstance,
   none,
   pick,
+  pipe,
   raise as raiseError,
   returns,
   tuple,
 } from "../functions.js";
+
 import * as ComputationM from "./Computation.js";
 import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 
@@ -591,10 +593,15 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
       factory,
     )) as Signature["throwIfEmpty"];
 
-export const toRunnable: Signature["toRunnable"] = Runnable_fromIterable;
-
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   ReadonlyArray.fromIterable;
+
+export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
+  /*@__PURE__*/ returns(async (iter: IterableLike) =>
+    pipe(iter, toReadonlyArray<unknown>()),
+  ) as Signature["toReadonlyArrayAsync"];
+
+export const toRunnable: Signature["toRunnable"] = Runnable_fromIterable;
 
 class ZipIterable {
   public readonly [ComputationLike_isPure]?: boolean;

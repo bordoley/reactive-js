@@ -20,6 +20,24 @@
 
 ## Properties
 
+### toReadonlyArrayAsync()
+
+> **toReadonlyArrayAsync**: \<`T`\>() => [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](SynchronousComputationModule.md).[`toReadonlyArrayAsync`](SynchronousComputationModule.md#toreadonlyarrayasync)
+
+***
+
 ### zip
 
 > **zip**: `ZipConstructor`\<`TComputation`\>

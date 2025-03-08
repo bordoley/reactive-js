@@ -1,4 +1,4 @@
-import type { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4, Updater } from "./functions.js";
+import type { AsyncFunction1, Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4, Updater } from "./functions.js";
 import type { BackpressureStrategy, DispatcherLike, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, PauseableLike, SchedulerLike, SinkLike } from "./utils.js";
 export declare const ComputationLike_isPure: unique symbol;
 export declare const ComputationLike_isDeferred: unique symbol;
@@ -144,6 +144,7 @@ interface ZipConstructor<TComputation extends ComputationType> {
 export interface ComputationModule<TComputation extends ComputationType> {
     keep<T>(predicate: Predicate<T>): StatelessComputationOperator<TComputation, T, T>;
     map<TA, TB>(selector: Function1<TA, TB>): StatelessComputationOperator<TComputation, TA, TB>;
+    toReadonlyArrayAsync: <T>() => AsyncFunction1<ComputationOf<TComputation, T>, ReadonlyArray<T>>;
 }
 export interface SynchronousComputationModule<TComputation extends ComputationType> extends ComputationModule<TComputation> {
     catchError<T>(onError: SideEffect1<Error>): StatefulSynchronousComputationOperator<TComputation, T, T>;
@@ -408,7 +409,7 @@ export interface StreamableLike<TReq = unknown, out T = unknown, TStream extends
     }): TStream;
 }
 export type StreamOf<TStreamable extends StreamableLike> = ReturnType<TStreamable[typeof StreamableLike_stream]>;
-export interface AsyncIterableLike<T> extends AsyncIterable<T>, DeferredComputationWithSideEffectsLike {
+export interface AsyncIterableLike<T = unknown> extends AsyncIterable<T>, DeferredComputationWithSideEffectsLike {
     readonly [ComputationLike_isSynchronous]: false;
 }
 export {};

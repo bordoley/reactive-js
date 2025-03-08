@@ -11,9 +11,4 @@ const IterableTypes = {
     [Computation_pureSynchronousOfT]: Iterable.empty(),
     [Computation_synchronousWithSideEffectsOfT]: pipe(Iterable.empty(), Iterable.forEach(ignore)),
 };
-testModule("Iterable", ComputationModuleTests({
-    ...Iterable,
-    toReadonlyArrayAsync() {
-        return async (runnable) => pipe(runnable, Iterable.toReadonlyArray());
-    },
-}, IterableTypes), SynchronousComputationModuleTests(Iterable, IterableTypes), InteractiveComputationModuleTests(Iterable));
+testModule("Iterable", ComputationModuleTests(Iterable, IterableTypes), SynchronousComputationModuleTests(Iterable, IterableTypes), InteractiveComputationModuleTests(Iterable));

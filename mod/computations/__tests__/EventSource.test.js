@@ -1,10 +1,10 @@
 /// <reference types="./EventSource.test.d.ts" />
 
-import { Array_length, Array_push } from "../../__internal__/constants.js";
+import { Array_length } from "../../__internal__/constants.js";
 import { describe, expectIsSome, test, testModule, } from "../../__internal__/testing.js";
 import * as Observable from "../../computations/Observable.js";
 import { ComputationLike_isDeferred, ComputationLike_isSynchronous, Computation_multicastOfT, EventSourceLike_addEventListener, } from "../../computations.js";
-import { bindMethod, ignore, isSome, pick, pipe, pipeLazy, raise, } from "../../functions.js";
+import { ignore, pick, pipeLazy, raise, } from "../../functions.js";
 import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_error, EventListenerLike_notify, } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
@@ -26,16 +26,6 @@ testModule("EventSource", ComputationModuleTests({
                 listener[DisposableLike_dispose]();
             },
         });
-    },
-    toReadonlyArrayAsync() {
-        return async (eventSource) => {
-            const result = [];
-            const subscription = pipe(eventSource, EventSource.addEventHandler(bindMethod(result, Array_push)));
-            if (isSome(subscription[DisposableLike_error])) {
-                throw subscription[DisposableLike_error];
-            }
-            return result;
-        };
     },
 }, EventSourceTypes), ConcurrentReactiveComputationModuleTests({
     ...EventSource,

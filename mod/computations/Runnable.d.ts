@@ -42,3 +42,4 @@ export declare const takeWhile: Signature["takeWhile"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const toRunnable: Signature["toRunnable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
+export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];

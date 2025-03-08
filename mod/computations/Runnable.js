@@ -31,6 +31,7 @@ import Runnable_takeLast from "./Runnable/__private__/Runnable.takeLast.js";
 import Runnable_takeWhile from "./Runnable/__private__/Runnable.takeWhile.js";
 import Runnable_throwIfEmpty from "./Runnable/__private__/Runnable.throwIfEmpty.js";
 import Runnable_toReadonlyArray from "./Runnable/__private__/Runnable.toReadonlyArray.js";
+import Runnable_toReadonlyArrayAsync from "./Runnable/__private__/Runnable.toReadonlyArrayAsync.js";
 export const buffer = Runnable_buffer;
 export const catchError = Runnable_catchError;
 export const concatAll = Runnable_concatAll;
@@ -62,3 +63,4 @@ export const throwIfEmpty = Runnable_throwIfEmpty;
 export const toRunnable = 
 /*@__PURE__*/ returns(identity);
 export const toReadonlyArray = Runnable_toReadonlyArray;
+export const toReadonlyArrayAsync = Runnable_toReadonlyArrayAsync;

@@ -1,4 +1,5 @@
 import type {
+  AsyncFunction1,
   Equality,
   Factory,
   Function1,
@@ -523,6 +524,11 @@ interface ZipConstructor<TComputation extends ComputationType> {
 }
 
 export interface ComputationModule<TComputation extends ComputationType> {
+  fromReadonlyArray<T>(options?: {
+    readonly count?: number;
+    readonly start?: number;
+  }): Function1<readonly T[], ComputationOf<TComputation, T>>;
+
   keep<T>(
     predicate: Predicate<T>,
   ): StatelessComputationOperator<TComputation, T, T>;
@@ -530,6 +536,11 @@ export interface ComputationModule<TComputation extends ComputationType> {
   map<TA, TB>(
     selector: Function1<TA, TB>,
   ): StatelessComputationOperator<TComputation, TA, TB>;
+
+  toReadonlyArrayAsync: <T>() => AsyncFunction1<
+    ComputationOf<TComputation, T>,
+    ReadonlyArray<T>
+  >;
 }
 
 export interface SynchronousComputationModule<
@@ -1066,7 +1077,7 @@ export type StreamOf<TStreamable extends StreamableLike> = ReturnType<
   TStreamable[typeof StreamableLike_stream]
 >;
 
-export interface AsyncIterableLike<T>
+export interface AsyncIterableLike<T = unknown>
   extends AsyncIterable<T>,
     DeferredComputationWithSideEffectsLike {
   readonly [ComputationLike_isSynchronous]: false;
