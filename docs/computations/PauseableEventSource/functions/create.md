@@ -6,7 +6,7 @@
 
 # Function: create()
 
-> **create**\<`T`\>(`op`): [`PauseableEventSourceLike`](../../interfaces/PauseableEventSourceLike.md)\<`T`\>
+> **create**\<`T`\>(`op`): [`PauseableEventSourceLike`](../../interfaces/PauseableEventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
 
 ## Type Parameters
 
@@ -20,4 +20,4 @@
 
 ## Returns
 
-[`PauseableEventSourceLike`](../../interfaces/PauseableEventSourceLike.md)\<`T`\>
+[`PauseableEventSourceLike`](../../interfaces/PauseableEventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)

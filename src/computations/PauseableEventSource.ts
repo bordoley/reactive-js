@@ -37,7 +37,7 @@ interface PauseableEventSourceModule {
       EventSourceLike<boolean> & DisposableLike,
       EventSourceLike<T>
     >,
-  ): PauseableEventSourceLike<T>;
+  ): PauseableEventSourceLike<T> & DisposableLike;
 
   dispatchTo<T>(
     dispatcher: DispatcherLike<T>,
@@ -66,7 +66,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
         EventSourceLike<boolean> & DisposableLike,
         EventSourceLike<T>
       >,
-    ): PauseableEventSourceLike<T> {
+    ): PauseableEventSourceLike<T> & DisposableLike {
       const writableStore = (instance[PauseableLike_isPaused] =
         WritableStore.create(true));
 

@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`DisposableLike`](DisposableLike.md)
+- [`DisposableContainerLike`](DisposableContainerLike.md)
 
 ## Extended by
 

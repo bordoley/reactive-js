@@ -32,6 +32,7 @@ import * as DisposableContainer from "../utils/DisposableContainer.js";
 import {
   BackpressureStrategy,
   DispatcherLike_complete,
+  DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
@@ -79,7 +80,10 @@ export interface AsyncIterableModule
       readonly capacity?: number;
       readonly backpressureStrategy?: BackpressureStrategy;
     },
-  ): Function1<AsyncIterableLike<T>, PauseableObservableLike<T>>;
+  ): Function1<
+    AsyncIterableLike<T>,
+    PauseableObservableLike<T> & DisposableLike
+  >;
 
   toReadonlyArrayAsync<T>(): AsyncFunction1<AsyncIterable<T>, ReadonlyArray<T>>;
 }

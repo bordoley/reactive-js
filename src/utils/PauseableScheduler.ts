@@ -48,7 +48,7 @@ import SchedulerMixin, {
 import SerialDisposableMixin from "./__mixins__/SerialDisposableMixin.js";
 
 interface Signature {
-  create(hostScheduler: SchedulerLike): PauseableSchedulerLike;
+  create(hostScheduler: SchedulerLike): PauseableSchedulerLike & DisposableLike;
 }
 
 export const create: Signature["create"] = /*@PURE__*/ (() => {
@@ -178,7 +178,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         SchedulerMixinHostLike &
         Mutable<TProperties>,
       host: SchedulerLike,
-    ): PauseableSchedulerLike {
+    ): PauseableSchedulerLike & DisposableLike {
       init(SchedulerMixin, instance);
       init(SerialDisposableMixin(), instance, Disposable.disposed);
       init(QueueMixin<SchedulerContinuationLike>(), instance, {

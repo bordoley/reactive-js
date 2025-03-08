@@ -15,7 +15,6 @@
 - [`WritableStoreLike`](../../computations/interfaces/WritableStoreLike.md)
 - [`SerialDisposableLike`](SerialDisposableLike.md)
 - [`VirtualTimeSchedulerLike`](VirtualTimeSchedulerLike.md)
-- [`PauseableLike`](PauseableLike.md)
 - [`EventListenerLike`](EventListenerLike.md)
 - [`DispatcherLike`](DispatcherLike.md)
 

@@ -172,7 +172,7 @@ export declare const PauseableLike_resume: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface PauseableLike extends DisposableLike {
+export interface PauseableLike extends DisposableContainerLike {
     /**
      * Boolean flag indicating if the PauseableLike is currently paused or not.
      */
