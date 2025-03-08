@@ -51,9 +51,10 @@
     "collectCoverageFrom": [
       "./src/**/*.ts",
       "!**/__tests__/**",
-      "!./src/integrations/*.ts",
-      "!./src/integrations/react/**/*.ts",
-      "!./src/integrations/web/**/*.ts"
+      "!./src/react.ts",
+      "!./src/web.ts",
+      "!./src/react/**/*.ts",
+      "!./src/web/**/*.ts"
     ],
     "extensionsToTreatAsEsm": [
       ".ts"
