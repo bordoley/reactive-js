@@ -47,12 +47,15 @@ export interface WebElementModule {
     options?: { passive?: boolean; capture?: boolean },
   ): Function1<
     TEventTarget,
-    EventSourceLike<EventMapOf<TEventTarget>[TEventName]>
+    EventSourceLike<EventMapOf<TEventTarget>[TEventName]> & DisposableLike
   >;
 
   intersectionEventSource(
     parent?: Document | Element,
-  ): Function1<Element, EventSourceLike<IntersectionObserverEntry>>;
+  ): Function1<
+    Element,
+    EventSourceLike<IntersectionObserverEntry> & DisposableLike
+  >;
 
   measure<TElement extends HTMLElement | SVGElement>(options?: {
     autoDispose?: boolean;
@@ -64,7 +67,7 @@ export interface WebElementModule {
 
   scrollEventSource<TElement extends HTMLElement>(): Function1<
     TElement,
-    EventSourceLike<ScrollValue>
+    EventSourceLike<ScrollValue> & DisposableLike
   >;
 }
 
