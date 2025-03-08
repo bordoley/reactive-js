@@ -28,7 +28,7 @@ import {
 import * as NodeStream from "../NodeStream.js";
 
 testModule(
-  "FlowableStream",
+  "NodeStream",
   describe(
     "create",
     testAsync("reading from readable", async () => {
