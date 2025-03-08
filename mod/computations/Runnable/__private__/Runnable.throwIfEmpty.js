@@ -1,7 +1,7 @@
 /// <reference types="./Runnable.throwIfEmpty.d.ts" />
 
-import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
 import { error, newInstance, raise } from "../../../functions.js";
+import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class ThrowIfEmptySink {
     sink;

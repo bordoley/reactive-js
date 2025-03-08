@@ -24,6 +24,7 @@
 - [QueueLike](interfaces/QueueLike.md)
 - [SchedulerLike](interfaces/SchedulerLike.md)
 - [SerialDisposableLike](interfaces/SerialDisposableLike.md)
+- [SinkLike](interfaces/SinkLike.md)
 - [VirtualTimeSchedulerLike](interfaces/VirtualTimeSchedulerLike.md)
 
 ## Type Aliases
@@ -64,5 +65,8 @@
 - [SchedulerLike\_schedule](variables/SchedulerLike_schedule.md)
 - [SchedulerLike\_shouldYield](variables/SchedulerLike_shouldYield.md)
 - [SerialDisposableLike\_current](variables/SerialDisposableLike_current.md)
+- [SinkLike\_complete](variables/SinkLike_complete.md)
+- [SinkLike\_isComplete](variables/SinkLike_isComplete.md)
+- [SinkLike\_next](variables/SinkLike_next.md)
 - [ThrowBackpressureStrategy](variables/ThrowBackpressureStrategy.md)
 - [VirtualTimeSchedulerLike\_run](variables/VirtualTimeSchedulerLike_run.md)

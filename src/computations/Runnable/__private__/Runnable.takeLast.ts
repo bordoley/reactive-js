@@ -1,10 +1,4 @@
 import { clampPositiveInteger } from "../../../__internal__/math.js";
-import {
-  SinkLike,
-  SinkLike_complete,
-  SinkLike_isComplete,
-  SinkLike_next,
-} from "../../../computations.js";
 import { Optional, isSome, newInstance, none } from "../../../functions.js";
 import * as Queue from "../../../utils/Queue.js";
 import {
@@ -12,6 +6,10 @@ import {
   QueueLike,
   QueueLike_dequeue,
   QueueableLike_enqueue,
+  SinkLike,
+  SinkLike_complete,
+  SinkLike_isComplete,
+  SinkLike_next,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";

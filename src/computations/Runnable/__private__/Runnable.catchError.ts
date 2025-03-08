@@ -3,8 +3,6 @@ import {
   HigherOrderInnerComputationLike,
   RunnableLike,
   RunnableLike_eval,
-  SinkLike,
-  SinkLike_complete,
 } from "../../../computations.js";
 import {
   Function1,
@@ -15,6 +13,7 @@ import {
   newInstance,
   none,
 } from "../../../functions.js";
+import { SinkLike, SinkLike_complete } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
 

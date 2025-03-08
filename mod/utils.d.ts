@@ -194,6 +194,22 @@ export interface PauseableLike extends DisposableLike {
  */
 export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {
 }
+export declare const SinkLike_next: unique symbol;
+export declare const SinkLike_complete: unique symbol;
+export declare const SinkLike_isComplete: unique symbol;
+/**
+ * @noInheritDoc
+ */
+export interface SinkLike<T = unknown> {
+    readonly [SinkLike_isComplete]: boolean;
+    /**
+     * Notifies the EventListener of the next notification produced by the source.
+     *
+     * @param next - The next notification value.
+     */
+    [SinkLike_next](next: T): void;
+    [SinkLike_complete](): void;
+}
 export declare const EventListenerLike_notify: unique symbol;
 /**
  * @noInheritDoc

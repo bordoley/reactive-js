@@ -1,5 +1,6 @@
-import { ComputationBaseOf, ComputationOperatorWithSideEffects, SinkLike, StatefulSynchronousComputationOperator, StatelessComputationOperator } from "../../../computations.js";
+import { ComputationBaseOf, ComputationOperatorWithSideEffects, StatefulSynchronousComputationOperator, StatelessComputationOperator } from "../../../computations.js";
 import { Function1 } from "../../../functions.js";
+import { SinkLike } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 interface RunnableLift {
     lift<TA, TB>(operator: Function1<SinkLike<TB>, SinkLike<TA>>): StatelessComputationOperator<Runnable.Computation, TA, TB>;

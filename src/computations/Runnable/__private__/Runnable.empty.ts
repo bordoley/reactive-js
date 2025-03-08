@@ -2,10 +2,9 @@ import {
   ComputationLike_isPure,
   PureRunnableLike,
   RunnableLike_eval,
-  SinkLike,
-  SinkLike_complete,
 } from "../../../computations.js";
 import { newInstance, returns } from "../../../functions.js";
+import { SinkLike, SinkLike_complete } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
 class EmptyRunnable<T> implements PureRunnableLike<T> {

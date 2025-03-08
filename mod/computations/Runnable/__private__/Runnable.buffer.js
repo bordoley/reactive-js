@@ -2,8 +2,8 @@
 
 import { Array_length, Array_push, MAX_SAFE_INTEGER, } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
-import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
+import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class BufferSink {
     sink;

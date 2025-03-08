@@ -1,9 +1,10 @@
 /// <reference types="./Runnable.retry.d.ts" />
 
-import { ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, } from "../../../computations.js";
+import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { alwaysTrue, error, newInstance } from "../../../functions.js";
+import DelegatingNonCompletingSink from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
+import { SinkLike_complete } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
-import DelegatingNonCompletingSink from "../../Sink/__internal__/DelegatingNonCompletingSink.js";
 class RetryRunnable {
     s;
     p;

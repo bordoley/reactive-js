@@ -2,13 +2,12 @@ import {
   ComputationLike_isPure,
   RunnableLike,
   RunnableLike_eval,
-  SinkLike,
-  SinkLike_complete,
 } from "../../../computations.js";
 import { alwaysTrue, error, newInstance } from "../../../functions.js";
+import DelegatingNonCompletingSink from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
+import { SinkLike, SinkLike_complete } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
-import DelegatingNonCompletingSink from "../../Sink/__internal__/DelegatingNonCompletingSink.js";
 
 class RetryRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;

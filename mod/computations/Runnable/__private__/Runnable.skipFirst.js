@@ -1,9 +1,9 @@
 /// <reference types="./Runnable.skipFirst.d.ts" />
 
 import { clampPositiveInteger, max } from "../../../__internal__/math.js";
-import { SinkLike_next } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
-import AbstractSink, { AbstractSink_delegate, } from "../../Sink/__internal__/AbstractSink.js";
+import AbstractSink, { AbstractSink_delegate, } from "../../../utils/Sink/__internal__/AbstractSink.js";
+import { SinkLike_next } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class SkipFirstSink extends AbstractSink {
     cnt;

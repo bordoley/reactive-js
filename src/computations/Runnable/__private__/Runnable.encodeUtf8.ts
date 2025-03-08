@@ -3,10 +3,9 @@ import {
   ComputationOf,
   RunnableLike,
   RunnableLike_eval,
-  SinkLike,
-  SinkLike_complete,
 } from "../../../computations.js";
 import { bindMethod, invoke, newInstance, pipe } from "../../../functions.js";
+import { SinkLike, SinkLike_complete } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_map from "./Runnable.map.js";
 

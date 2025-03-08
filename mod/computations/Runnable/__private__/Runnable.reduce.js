@@ -1,7 +1,8 @@
 /// <reference types="./Runnable.reduce.d.ts" />
 
-import { RunnableLike_eval, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
+import { RunnableLike_eval } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
+import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
 class ReducerSink {
     r;
     acc;

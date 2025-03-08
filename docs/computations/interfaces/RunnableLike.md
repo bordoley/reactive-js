@@ -61,7 +61,7 @@ Represents a deferred computation that is synchronously evaluated.
 
 ##### sink
 
-[`SinkLike`](SinkLike.md)\<`T`\>
+[`SinkLike`](../../utils/interfaces/SinkLike.md)\<`T`\>
 
 #### Returns
 

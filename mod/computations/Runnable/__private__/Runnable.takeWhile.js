@@ -1,8 +1,8 @@
 /// <reference types="./Runnable.takeWhile.d.ts" />
 
-import { SinkLike_complete, SinkLike_next, } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
-import AbstractSink, { AbstractSink_delegate, } from "../../Sink/__internal__/AbstractSink.js";
+import AbstractSink, { AbstractSink_delegate, } from "../../../utils/Sink/__internal__/AbstractSink.js";
+import { SinkLike_complete, SinkLike_next } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class TakeWhileSink extends AbstractSink {
     p;

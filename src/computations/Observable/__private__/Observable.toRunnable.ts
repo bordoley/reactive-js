@@ -3,14 +3,16 @@ import {
   ComputationLike_isPure,
   RunnableLike,
   RunnableLike_eval,
+  SynchronousObservableLike,
+} from "../../../computations.js";
+import { bindMethod, newInstance, pipe } from "../../../functions.js";
+import {
+  BackpressureStrategy,
   SinkLike,
   SinkLike_complete,
   SinkLike_isComplete,
   SinkLike_next,
-  SynchronousObservableLike,
-} from "../../../computations.js";
-import { bindMethod, newInstance, pipe } from "../../../functions.js";
-import { BackpressureStrategy } from "../../../utils.js";
+} from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_run from "./Observable.run.js";

@@ -2,13 +2,15 @@ import {
   ComputationLike_isPure,
   RunnableLike,
   RunnableLike_eval,
+} from "../../../computations.js";
+import { newInstance, pick } from "../../../functions.js";
+import DelegatingNonCompletingSink from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
+import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isComplete,
-} from "../../../computations.js";
-import { newInstance, pick } from "../../../functions.js";
+} from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
-import DelegatingNonCompletingSink from "../../Sink/__internal__/DelegatingNonCompletingSink.js";
 
 class ConcatRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;

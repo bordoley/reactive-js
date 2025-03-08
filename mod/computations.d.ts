@@ -1,5 +1,5 @@
 import type { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4, Updater } from "./functions.js";
-import type { BackpressureStrategy, DispatcherLike, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, PauseableLike, SchedulerLike } from "./utils.js";
+import type { BackpressureStrategy, DispatcherLike, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, PauseableLike, SchedulerLike, SinkLike } from "./utils.js";
 export declare const ComputationLike_isPure: unique symbol;
 export declare const ComputationLike_isDeferred: unique symbol;
 export declare const ComputationLike_isSynchronous: unique symbol;
@@ -233,22 +233,6 @@ export interface ConcurrentReactiveComputationModule<TComputation extends Comput
     withLatestFrom<TA, TB, T>(other: DeferredComputationWithSideEffectsOf<TComputation, TB>, selector: Function2<TA, TB, T>): Function1<ComputationOf<TComputation, TA>, DeferredComputationWithSideEffectsOf<TComputation, Tuple2<TA, TB>>>;
     withLatestFrom<TA, TB>(other: MulticastComputationOf<TComputation, TB>): StatelessAsynchronousComputationOperator<TComputation, TA, Tuple2<TA, TB>>;
     withLatestFrom<TA, TB, T>(other: MulticastComputationOf<TComputation, TB>, selector: Function2<TA, TB, T>): StatelessAsynchronousComputationOperator<TComputation, TA, T>;
-}
-export declare const SinkLike_next: unique symbol;
-export declare const SinkLike_complete: unique symbol;
-export declare const SinkLike_isComplete: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface SinkLike<T = unknown> {
-    readonly [SinkLike_isComplete]: boolean;
-    /**
-     * Notifies the EventListener of the next notification produced by the source.
-     *
-     * @param next - The next notification value.
-     */
-    [SinkLike_next](next: T): void;
-    [SinkLike_complete](): void;
 }
 export declare const RunnableLike_eval: unique symbol;
 /**

@@ -2,9 +2,9 @@ import {
   ComputationLike_isPure,
   PureRunnableLike,
   RunnableLike_eval,
-  SinkLike,
 } from "../../../computations.js";
 import { Factory, error, newInstance, raise } from "../../../functions.js";
+import { SinkLike } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
 class RaiseRunnable<T> implements PureRunnableLike<T> {

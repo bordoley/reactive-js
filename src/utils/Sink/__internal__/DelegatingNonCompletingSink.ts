@@ -3,7 +3,7 @@ import {
   SinkLike_complete,
   SinkLike_isComplete,
   SinkLike_next,
-} from "../../../computations.js";
+} from "../../../utils.js";
 
 export const DelegatingNonCompletingSink_inner = Symbol(
   "DelegatingNonCompletingSink_inner",

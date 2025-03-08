@@ -3,12 +3,14 @@ import {
   IterableLike,
   RunnableLike,
   RunnableLike_eval,
+} from "../../../computations.js";
+import { newInstance } from "../../../functions.js";
+import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isComplete,
   SinkLike_next,
-} from "../../../computations.js";
-import { newInstance } from "../../../functions.js";
+} from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
 

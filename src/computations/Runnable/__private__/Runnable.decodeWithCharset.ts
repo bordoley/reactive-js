@@ -1,11 +1,11 @@
 import { Array_length } from "../../../__internal__/constants.js";
+import { newInstance, none } from "../../../functions.js";
 import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isComplete,
   SinkLike_next,
-} from "../../../computations.js";
-import { newInstance, none } from "../../../functions.js";
+} from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
 

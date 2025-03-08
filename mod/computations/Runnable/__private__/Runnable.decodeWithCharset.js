@@ -1,8 +1,8 @@
 /// <reference types="./Runnable.decodeWithCharset.d.ts" />
 
 import { Array_length } from "../../../__internal__/constants.js";
-import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
 import { newInstance, none } from "../../../functions.js";
+import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class DecodeWithCharsetSink {
     sink;

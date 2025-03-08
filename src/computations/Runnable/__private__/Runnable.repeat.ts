@@ -2,9 +2,6 @@ import {
   ComputationLike_isPure,
   RunnableLike,
   RunnableLike_eval,
-  SinkLike,
-  SinkLike_complete,
-  SinkLike_isComplete,
 } from "../../../computations.js";
 import {
   Predicate,
@@ -13,9 +10,14 @@ import {
   isNone,
   newInstance,
 } from "../../../functions.js";
+import DelegatingNonCompletingSink from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
+import {
+  SinkLike,
+  SinkLike_complete,
+  SinkLike_isComplete,
+} from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
-import DelegatingNonCompletingSink from "../../Sink/__internal__/DelegatingNonCompletingSink.js";
 
 class RepeatRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;

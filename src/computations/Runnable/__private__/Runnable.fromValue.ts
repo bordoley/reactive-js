@@ -2,11 +2,9 @@ import {
   ComputationLike_isPure,
   PureRunnableLike,
   RunnableLike_eval,
-  SinkLike,
-  SinkLike_complete,
-  SinkLike_next,
 } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
+import { SinkLike, SinkLike_complete, SinkLike_next } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
 class FromValueRunnable<T> implements PureRunnableLike<T> {

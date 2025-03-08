@@ -1,10 +1,9 @@
 /// <reference types="./Runnable.takeLast.d.ts" />
 
 import { clampPositiveInteger } from "../../../__internal__/math.js";
-import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
 import { isSome, newInstance, none } from "../../../functions.js";
 import * as Queue from "../../../utils/Queue.js";
-import { DropOldestBackpressureStrategy, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
+import { DropOldestBackpressureStrategy, QueueLike_dequeue, QueueableLike_enqueue, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class TakeLastSink {
     sink;

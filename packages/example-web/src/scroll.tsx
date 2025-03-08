@@ -5,9 +5,7 @@ import { useDisposable } from "@reactive-js/core/react";
 import { ScrollValue } from "@reactive-js/core/web";
 import { Optional } from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/computations/EventSource";
-import {
-  EventSourceLike,
-} from "@reactive-js/core/computations";
+import { EventSourceLike } from "@reactive-js/core/computations";
 import * as Publisher from "@reactive-js/core/computations/Publisher";
 import {
   EventListenerLike_notify,

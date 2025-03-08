@@ -1,8 +1,9 @@
 /// <reference types="./Observable.toRunnable.d.ts" />
 
 import * as Computation from "../../../computations/Computation.js";
-import { ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
+import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { bindMethod, newInstance, pipe } from "../../../functions.js";
+import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_run from "./Observable.run.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";

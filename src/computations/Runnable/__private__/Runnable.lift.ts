@@ -4,11 +4,11 @@ import {
   ComputationOperatorWithSideEffects,
   RunnableLike,
   RunnableLike_eval,
-  SinkLike,
   StatefulSynchronousComputationOperator,
   StatelessComputationOperator,
 } from "../../../computations.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
+import { SinkLike } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
 

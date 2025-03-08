@@ -10,9 +10,6 @@ export const Computation_deferredWithSideEffectsOfT = Symbol("Computation_deferr
 export const Computation_pureSynchronousOfT = Symbol("Computation_pureSynchronousOfT");
 export const Computation_synchronousWithSideEffectsOfT = Symbol("Computation_synchronousWithSideEffectsOfT");
 export const Computation_multicastOfT = Symbol("Computation_multicastOfT");
-export const SinkLike_next = Symbol("SinkLike_next");
-export const SinkLike_complete = Symbol("SinkLike_complete");
-export const SinkLike_isComplete = Symbol("SinkLike_isComplete");
 export const RunnableLike_eval = Symbol("RunnableLike_eval");
 export const PureSynchronousComputation = {
     [ComputationLike_isDeferred]: true,

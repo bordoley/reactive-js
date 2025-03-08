@@ -3,12 +3,14 @@ import {
   ComputationLike_isPure,
   PureRunnableLike,
   RunnableLike_eval,
+} from "../../../computations.js";
+import { newInstance } from "../../../functions.js";
+import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isComplete,
   SinkLike_next,
-} from "../../../computations.js";
-import { newInstance } from "../../../functions.js";
+} from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
 class FromReadonlyArrayRunnable<T> implements PureRunnableLike<T> {

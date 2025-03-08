@@ -1,9 +1,10 @@
 /// <reference types="./Runnable.concatAll.d.ts" />
 
-import { ComputationLike_isPure, RunnableLike_eval, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../computations.js";
+import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
-import AbstractSink, { AbstractSink_delegate, } from "../../Sink/__internal__/AbstractSink.js";
-import DelegatingNonCompletingSink, { DelegatingNonCompletingSink_inner, } from "../../Sink/__internal__/DelegatingNonCompletingSink.js";
+import AbstractSink, { AbstractSink_delegate, } from "../../../utils/Sink/__internal__/AbstractSink.js";
+import DelegatingNonCompletingSink, { DelegatingNonCompletingSink_inner, } from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
+import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class ConcatAllSink extends AbstractSink {
     [SinkLike_next](next) {

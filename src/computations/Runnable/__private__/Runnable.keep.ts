@@ -1,10 +1,10 @@
-import { SinkLike, SinkLike_next } from "../../../computations.js";
 import { Predicate, newInstance } from "../../../functions.js";
-
-import type * as Runnable from "../../Runnable.js";
 import AbstractSink, {
   AbstractSink_delegate,
-} from "../../Sink/__internal__/AbstractSink.js";
+} from "../../../utils/Sink/__internal__/AbstractSink.js";
+import { SinkLike, SinkLike_next } from "../../../utils.js";
+
+import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
 
 class KeepSink<T> extends AbstractSink<T> {

@@ -1,12 +1,11 @@
+import { RunnableLike, RunnableLike_eval } from "../../../computations.js";
+import { newInstance } from "../../../functions.js";
 import {
-  RunnableLike,
-  RunnableLike_eval,
   SinkLike,
   SinkLike_complete,
   SinkLike_isComplete,
   SinkLike_next,
-} from "../../../computations.js";
-import { newInstance } from "../../../functions.js";
+} from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
 class ToReadonlyArraySink<T> implements SinkLike<T> {
