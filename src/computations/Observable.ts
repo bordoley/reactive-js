@@ -25,6 +25,7 @@ import {
   MulticastObservableLike,
   ObservableLike,
   ObserverLike,
+  PauseableEventSourceLike,
   PauseableObservableLike,
   PureComputationOf,
   PureDeferredComputationLike,
@@ -130,6 +131,7 @@ import Observable_throttle, {
 } from "./Observable/__private__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
+import Observable_toPauseableEventSource from "./Observable/__private__/Observable.toPauseableEventSource.js";
 import Observable_toPauseableObservable from "./Observable/__private__/Observable.toPauseableObservable.js";
 import Observable_toReadonlyArray from "./Observable/__private__/Observable.toReadonlyArray.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
@@ -653,6 +655,14 @@ export interface ObservableModule
     },
   ): Function1<SynchronousObservableLike<T>, PauseableObservableLike<T>>;
 
+  toPauseableEventSource<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: BackpressureStrategy;
+      readonly capacity?: number;
+    },
+  ): Function1<SynchronousObservableLike<T>, PauseableEventSourceLike<T>>;
+
   toReadonlyArray<T>(options?: {
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
@@ -754,6 +764,8 @@ export const throttle: Signature["throttle"] = Observable_throttle;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
 export const toEventSource: Signature["toEventSource"] =
   Observable_toEventSource;
+export const toPauseableEventSource: Signature["toPauseableEventSource"] =
+  Observable_toPauseableEventSource;
 export const toPauseableObservable: Signature["toPauseableObservable"] =
   Observable_toPauseableObservable;
 export const toReadonlyArray: Signature["toReadonlyArray"] =

@@ -10,7 +10,6 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as Observable from "../../computations/Observable.js";
-import * as PauseableEventSource from "../../computations/PauseableEventSource.js";
 import {
   Optional,
   newInstance,
@@ -144,7 +143,7 @@ testModule(
           Observable.fromReadonlyArray<string>(),
           Observable.keep<string>(x => x !== "xyz"),
           Observable.encodeUtf8(),
-          PauseableEventSource.fromSynchronousObservable(scheduler),
+          Observable.toPauseableEventSource(scheduler),
           NodeStream.writeTo(writable),
           DisposableContainer.toPromise,
         );
@@ -173,7 +172,7 @@ testModule(
         ["abc", "defg"],
         Observable.fromReadonlyArray(),
         Observable.encodeUtf8(),
-        PauseableEventSource.fromSynchronousObservable(scheduler),
+        Observable.toPauseableEventSource(scheduler),
         NodeStream.writeTo(writable),
         DisposableContainer.toPromise,
         expectPromiseToThrow,
@@ -205,7 +204,7 @@ testModule(
         ["abc", "defg"],
         Observable.fromReadonlyArray(),
         Observable.encodeUtf8(),
-        PauseableEventSource.fromSynchronousObservable(scheduler),
+        Observable.toPauseableEventSource(scheduler),
         NodeStream.writeTo(compressionPipeline),
         DisposableContainer.toPromise,
       );

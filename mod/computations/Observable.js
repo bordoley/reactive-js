@@ -63,6 +63,7 @@ import Observable_takeWhile from "./Observable/__private__/Observable.takeWhile.
 import Observable_throttle, { ThrottleFirstMode as ObservableThrottle_ThrottleFirstMode, ThrottleIntervalMode as ObservableThrottle_ThrottleIntervalMode, ThrottleLastMode as ObservableThrottle_ThrottleLastMode, } from "./Observable/__private__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
+import Observable_toPauseableEventSource from "./Observable/__private__/Observable.toPauseableEventSource.js";
 import Observable_toPauseableObservable from "./Observable/__private__/Observable.toPauseableObservable.js";
 import Observable_toReadonlyArray from "./Observable/__private__/Observable.toReadonlyArray.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
@@ -136,6 +137,7 @@ export const takeWhile = Observable_takeWhile;
 export const throttle = Observable_throttle;
 export const throwIfEmpty = Observable_throwIfEmpty;
 export const toEventSource = Observable_toEventSource;
+export const toPauseableEventSource = Observable_toPauseableEventSource;
 export const toPauseableObservable = Observable_toPauseableObservable;
 export const toReadonlyArray = Observable_toReadonlyArray;
 export const toReadonlyArrayAsync = Observable_toReadonlyArrayAsync;

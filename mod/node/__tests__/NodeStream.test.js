@@ -56,7 +56,6 @@ import { Readable, Writable, pipeline } from "node:stream";
 import zlib from "node:zlib";
 import { describe, expectEquals, expectFalse, expectPromiseToThrow, expectTrue, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as Observable from "../../computations/Observable.js";
-import * as PauseableEventSource from "../../computations/PauseableEventSource.js";
 import { newInstance, pipe, pipeAsync, returns, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
@@ -142,7 +141,7 @@ testModule("FlowableStream", describe("create", testAsync("reading from readable
                 callback();
             },
         });
-        await pipe(["abc", "defg", "xyz"], Observable.fromReadonlyArray(), Observable.keep(x => x !== "xyz"), Observable.encodeUtf8(), PauseableEventSource.fromSynchronousObservable(scheduler), NodeStream.writeTo(writable), DisposableContainer.toPromise);
+        await pipe(["abc", "defg", "xyz"], Observable.fromReadonlyArray(), Observable.keep(x => x !== "xyz"), Observable.encodeUtf8(), Observable.toPauseableEventSource(scheduler), NodeStream.writeTo(writable), DisposableContainer.toPromise);
         pipe(writable.destroyed, expectFalse("expected writable not to be destroyed"));
         pipe(data, expectEquals("abcdefg"));
         writable.destroy();
@@ -166,7 +165,7 @@ testModule("FlowableStream", describe("create", testAsync("reading from readable
                 callback(err);
             },
         });
-        await pipe(["abc", "defg"], Observable.fromReadonlyArray(), Observable.encodeUtf8(), PauseableEventSource.fromSynchronousObservable(scheduler), NodeStream.writeTo(writable), DisposableContainer.toPromise, expectPromiseToThrow);
+        await pipe(["abc", "defg"], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Observable.toPauseableEventSource(scheduler), NodeStream.writeTo(writable), DisposableContainer.toPromise, expectPromiseToThrow);
         pipe(writable.destroyed, expectEquals(true));
     }
     catch (e_5) {
@@ -190,7 +189,7 @@ testModule("FlowableStream", describe("create", testAsync("reading from readable
             },
         });
         const compressionPipeline = pipeline(zlib.createGzip(), zlib.createGunzip(), writable, Disposable.toErrorHandler(scheduler));
-        await pipe(["abc", "defg"], Observable.fromReadonlyArray(), Observable.encodeUtf8(), PauseableEventSource.fromSynchronousObservable(scheduler), NodeStream.writeTo(compressionPipeline), DisposableContainer.toPromise);
+        await pipe(["abc", "defg"], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Observable.toPauseableEventSource(scheduler), NodeStream.writeTo(compressionPipeline), DisposableContainer.toPromise);
         pipe(writable.destroyed, expectEquals(true));
         pipe(data, expectEquals("abcdefg"));
     }

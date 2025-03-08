@@ -13,4 +13,3 @@
 ## Functions
 
 - [create](functions/create.md)
-- [fromSynchronousObservable](functions/fromSynchronousObservable.md)
