@@ -18,7 +18,7 @@
 
 • **TSynchronousWithSideEffectsOfT** *extends* `TDeferredDeferredComputationWithSideEffectsOfT` & [`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md)
 
-• **TMulticastComputationOfT** *extends* `TComputationBaseOfT` & [`MulticastComputationLike`](MulticastComputationLike.md)
+• **TMulticastComputationOfT** *extends* `TComputationBaseOfT` & [`MulticastLike`](MulticastLike.md)
 
 ## Properties
 

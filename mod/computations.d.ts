@@ -37,6 +37,8 @@ export interface MulticastComputationLike extends ComputationLike {
     readonly [ComputationLike_isDeferred]: false;
     readonly [ComputationLike_isPure]?: true;
 }
+export interface MulticastLike extends MulticastComputationLike, DisposableContainerLike {
+}
 export declare const Computation_T: unique symbol;
 export declare const Computation_baseOfT: unique symbol;
 export declare const Computation_pureDeferredOfT: unique symbol;
@@ -47,7 +49,7 @@ export declare const Computation_multicastOfT: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface GenericComputationType<TComputationBaseOfT extends ComputationLike, TPureDeferredComputationOfT extends TComputationBaseOfT & PureDeferredComputationLike, TDeferredDeferredComputationWithSideEffectsOfT extends TComputationBaseOfT & DeferredComputationWithSideEffectsLike, TPureSynchronousOfT extends TPureDeferredComputationOfT & PureSynchronousComputationLike, TSynchronousWithSideEffectsOfT extends TDeferredDeferredComputationWithSideEffectsOfT & SynchronousComputationWithSideEffectsLike, TMulticastComputationOfT extends TComputationBaseOfT & MulticastComputationLike> {
+export interface GenericComputationType<TComputationBaseOfT extends ComputationLike, TPureDeferredComputationOfT extends TComputationBaseOfT & PureDeferredComputationLike, TDeferredDeferredComputationWithSideEffectsOfT extends TComputationBaseOfT & DeferredComputationWithSideEffectsLike, TPureSynchronousOfT extends TPureDeferredComputationOfT & PureSynchronousComputationLike, TSynchronousWithSideEffectsOfT extends TDeferredDeferredComputationWithSideEffectsOfT & SynchronousComputationWithSideEffectsLike, TMulticastComputationOfT extends TComputationBaseOfT & MulticastLike> {
     readonly [Computation_T]?: unknown;
     readonly [Computation_baseOfT]?: TComputationBaseOfT;
     readonly [Computation_pureDeferredOfT]?: TPureDeferredComputationOfT;
@@ -56,7 +58,7 @@ export interface GenericComputationType<TComputationBaseOfT extends ComputationL
     readonly [Computation_synchronousWithSideEffectsOfT]?: TSynchronousWithSideEffectsOfT;
     readonly [Computation_multicastOfT]?: TMulticastComputationOfT;
 }
-export type ComputationType = GenericComputationType<ComputationLike, PureDeferredComputationLike, DeferredComputationWithSideEffectsLike, PureSynchronousComputationLike, SynchronousComputationWithSideEffectsLike, MulticastComputationLike>;
+export type ComputationType = GenericComputationType<ComputationLike, PureDeferredComputationLike, DeferredComputationWithSideEffectsLike, PureSynchronousComputationLike, SynchronousComputationWithSideEffectsLike, MulticastLike>;
 export type ComputationBaseOf<TComputation extends ComputationType, T> = TComputation extends {
     readonly [Computation_baseOfT]?: unknown;
 } ? NonNullable<(TComputation & {
@@ -274,8 +276,6 @@ export declare const SynchronousComputationWithSideEffects: SynchronousComputati
 export declare const PureDeferredComputation: PureDeferredComputationLike;
 export declare const DeferredComputationWithSideEffects: DeferredComputationWithSideEffectsLike;
 export declare const MulticastComputation: MulticastComputationLike;
-export interface MulticastLike extends MulticastComputationLike, DisposableContainerLike {
-}
 export declare const EventListenerLike_notify: unique symbol;
 /**
  * @noInheritDoc

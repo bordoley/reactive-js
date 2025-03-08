@@ -75,6 +75,10 @@ export interface MulticastComputationLike extends ComputationLike {
   readonly [ComputationLike_isPure]?: true;
 }
 
+export interface MulticastLike
+  extends MulticastComputationLike,
+    DisposableContainerLike {}
+
 export const Computation_T = Symbol("Computation_T");
 export const Computation_baseOfT = Symbol("Computation_baseOfT");
 export const Computation_pureDeferredOfT = Symbol(
@@ -105,8 +109,7 @@ export interface GenericComputationType<
   TSynchronousWithSideEffectsOfT extends
     TDeferredDeferredComputationWithSideEffectsOfT &
       SynchronousComputationWithSideEffectsLike,
-  TMulticastComputationOfT extends TComputationBaseOfT &
-    MulticastComputationLike,
+  TMulticastComputationOfT extends TComputationBaseOfT & MulticastLike,
 > {
   readonly [Computation_T]?: unknown;
 
@@ -127,7 +130,7 @@ export type ComputationType = GenericComputationType<
   DeferredComputationWithSideEffectsLike,
   PureSynchronousComputationLike,
   SynchronousComputationWithSideEffectsLike,
-  MulticastComputationLike
+  MulticastLike
 >;
 
 export type ComputationBaseOf<
@@ -871,10 +874,6 @@ export const MulticastComputation: MulticastComputationLike = {
   [ComputationLike_isPure]: true,
   [ComputationLike_isSynchronous]: false,
 };
-
-export interface MulticastLike
-  extends MulticastComputationLike,
-    DisposableContainerLike {}
 
 export const EventListenerLike_notify = Symbol("EventListenerLike_notify");
 

@@ -638,6 +638,7 @@ export interface ObservableModule
     options?: { readonly mode?: ThrottleMode },
   ): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
 
+  // FIXME: Shouldn't return DisposableLike if input is
   toEventSource<T>(
     scheduler: SchedulerLike,
     options?: {
