@@ -193,9 +193,7 @@ const Counter = () => {
           query: `v=${value}`,
         })),
       ),
-      Observable.toPauseableObservable(
-        ReactScheduler.get(),
-      ),
+      Observable.toPauseableObservable(ReactScheduler.get()),
     ),
     [history.replace, counterInitialValue],
   );

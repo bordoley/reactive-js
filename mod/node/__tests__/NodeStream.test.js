@@ -62,7 +62,7 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import { DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume, } from "../../utils.js";
 import * as NodeStream from "../NodeStream.js";
-testModule("FlowableStream", describe("create", testAsync("reading from readable", async () => {
+testModule("NodeStream", describe("create", testAsync("reading from readable", async () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         function* generate() {

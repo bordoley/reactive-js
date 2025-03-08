@@ -13,3 +13,4 @@
 ## Functions
 
 - [create](functions/create.md)
+- [dispatchTo](functions/dispatchTo.md)
