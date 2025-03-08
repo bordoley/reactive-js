@@ -2,7 +2,7 @@
 
 import { expectFalse, expectIsNone, expectIsSome, expectTrue, } from "../../../../__internal__/testing.js";
 import { pipe } from "../../../../functions.js";
-import { DisposableLike_dispose } from "../../../../utils.js";
+import { DisposableContainerLike_add, DisposableLike_dispose, } from "../../../../utils.js";
 import * as Computation from "../../../Computation.js";
 const computationToTypeString = (x) => Computation.isPureSynchronous(x)
     ? "PureSynchronous"
@@ -45,6 +45,7 @@ export const isDeferredWithSideEffects = (x) => {
 };
 export const isMulticasted = (x) => {
     pipe(x, (Computation.isMulticasted), expectTrue(`expected Multicast computation received ${computationToTypeString(x)}`));
+    expectIsSome(x[DisposableContainerLike_add]);
     return x;
 };
 export const isMulticastedAndNotDisposable = (x) => {

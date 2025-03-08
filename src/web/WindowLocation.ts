@@ -41,6 +41,7 @@ import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   BackpressureStrategy,
+  DisposableContainerLike,
   DisposableContainerLike_add,
   DisposableLike,
   DropOldestBackpressureStrategy,
@@ -163,7 +164,8 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
   const createWindowLocationObservable = mixInstanceFactory(
     include(DelegatingDisposableMixin),
     function WindowLocationStream(
-      instance: WindowLocationLike & TProperties,
+      instance: Omit<WindowLocationLike, keyof DisposableContainerLike> &
+        TProperties,
       delegate: StreamLike<Updater<TState>, TState>,
       scheduler: SchedulerLike,
     ): WindowLocationLike & DisposableLike {

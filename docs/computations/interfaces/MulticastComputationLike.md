@@ -12,7 +12,7 @@
 
 ## Extended by
 
-- [`EventSourceLike`](EventSourceLike.md)
+- [`MulticastLike`](MulticastLike.md)
 
 ## Properties
 

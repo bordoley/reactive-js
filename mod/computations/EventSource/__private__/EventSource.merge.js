@@ -25,10 +25,10 @@ const EventSource_merge = /*@__PURE__*/ (() => {
         const count = eventSources[Array_length];
         let completed = 0;
         for (const eventSource of eventSources) {
-            pipe(eventSource, DisposableContainer.onComplete(() => {
+            pipe(eventSource, DisposableContainer.onDisposed(e => {
                 completed++;
-                if (completed >= count) {
-                    disposable[DisposableLike_dispose]();
+                if (completed >= count || isSome(e)) {
+                    disposable[DisposableLike_dispose](e);
                 }
             }));
         }

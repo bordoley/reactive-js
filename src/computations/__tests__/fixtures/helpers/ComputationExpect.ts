@@ -6,7 +6,10 @@ import {
 } from "../../../../__internal__/testing.js";
 import { ComputationLike } from "../../../../computations.js";
 import { pipe } from "../../../../functions.js";
-import { DisposableLike_dispose } from "../../../../utils.js";
+import {
+  DisposableContainerLike_add,
+  DisposableLike_dispose,
+} from "../../../../utils.js";
 import * as Computation from "../../../Computation.js";
 
 const computationToTypeString = (x: ComputationLike) =>
@@ -127,6 +130,7 @@ export const isMulticasted = <TComputation extends ComputationLike>(
       `expected Multicast computation received ${computationToTypeString(x)}`,
     ),
   );
+  expectIsSome((x as any)[DisposableContainerLike_add]);
   return x;
 };
 

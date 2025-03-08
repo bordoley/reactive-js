@@ -1,4 +1,9 @@
-import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
+import {
+  include,
+  init,
+  mixInstanceFactory,
+  props,
+} from "../../../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
@@ -11,7 +16,9 @@ import {
 import { bindMethod, none, pipe, returns } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import {
+  DisposableContainerLike,
   DisposableLike_dispose,
   QueueableLike_enqueue,
 } from "../../../utils.js";
@@ -30,11 +37,18 @@ const Observable_fromEventSource: Observable.Signature["fromEventSource"] =
 
     return returns(
       mixInstanceFactory(
+        include(DelegatingDisposableContainerMixin),
         function FromEventSourceObservable(
-          instance: MulticastObservableLike<T> & TProperties,
+          instance: Omit<
+            MulticastObservableLike<T>,
+            keyof DisposableContainerLike
+          > &
+            TProperties,
           eventSource: EventSourceLike<T>,
         ): MulticastObservableLike<T> {
           instance[FromEventSourceObservable_eventSource] = eventSource;
+
+          init(DelegatingDisposableContainerMixin, instance, eventSource);
 
           return instance;
         },

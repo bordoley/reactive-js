@@ -1,4 +1,9 @@
-import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
+import {
+  include,
+  init,
+  mixInstanceFactory,
+  props,
+} from "../../../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
@@ -7,9 +12,12 @@ import {
   ObservableLike_observe,
   ObserverLike,
 } from "../../../computations.js";
-import { none, returns } from "../../../functions.js";
+import { bindMethod, none, returns } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import {
+  DisposableContainerLike,
+  DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike_enqueue,
 } from "../../../utils.js";
@@ -27,11 +35,23 @@ const Observable_fromPromise: Observable.Signature["fromPromise"] =
 
     return returns(
       mixInstanceFactory(
+        include(DelegatingDisposableContainerMixin),
         function FromPromiseObservable(
-          instance: MulticastObservableLike<T> & TProperties,
+          instance: Omit<
+            MulticastObservableLike<T>,
+            keyof DisposableContainerLike
+          > &
+            TProperties,
           promise: Promise<T>,
         ): MulticastObservableLike<T> {
           instance[FromPromiseObservable_promise] = promise;
+
+          const disposable = Disposable.create();
+          init(DelegatingDisposableContainerMixin, instance, disposable);
+
+          promise
+            .catch(Disposable.toErrorHandler(disposable))
+            .finally(bindMethod(disposable, DisposableLike_dispose));
 
           return instance;
         },

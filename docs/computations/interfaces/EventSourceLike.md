@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`MulticastComputationLike`](MulticastComputationLike.md).[`DisposableContainerLike`](../../utils/interfaces/DisposableContainerLike.md)
+- [`MulticastLike`](MulticastLike.md)
 
 ## Extended by
 
@@ -29,7 +29,7 @@
 
 #### Overrides
 
-[`MulticastComputationLike`](MulticastComputationLike.md).[`[ComputationLike_isDeferred]`](MulticastComputationLike.md#computationlike_isdeferred)
+[`MulticastLike`](MulticastLike.md).[`[ComputationLike_isDeferred]`](MulticastLike.md#computationlike_isdeferred)
 
 ***
 
@@ -39,7 +39,7 @@
 
 #### Overrides
 
-[`MulticastComputationLike`](MulticastComputationLike.md).[`[ComputationLike_isPure]`](MulticastComputationLike.md#computationlike_ispure)
+[`MulticastLike`](MulticastLike.md).[`[ComputationLike_isPure]`](MulticastLike.md#computationlike_ispure)
 
 ***
 
@@ -49,7 +49,7 @@
 
 #### Overrides
 
-[`MulticastComputationLike`](MulticastComputationLike.md).[`[ComputationLike_isSynchronous]`](MulticastComputationLike.md#computationlike_issynchronous)
+[`MulticastLike`](MulticastLike.md).[`[ComputationLike_isSynchronous]`](MulticastLike.md#computationlike_issynchronous)
 
 ## Methods
 

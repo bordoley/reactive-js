@@ -8,7 +8,7 @@
 
 ## Extended by
 
-- [`EventSourceLike`](../../computations/interfaces/EventSourceLike.md)
+- [`MulticastLike`](../../computations/interfaces/MulticastLike.md)
 - [`DisposableLike`](DisposableLike.md)
 - [`SchedulerLike`](SchedulerLike.md)
 

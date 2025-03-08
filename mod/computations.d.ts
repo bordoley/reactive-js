@@ -274,6 +274,8 @@ export declare const SynchronousComputationWithSideEffects: SynchronousComputati
 export declare const PureDeferredComputation: PureDeferredComputationLike;
 export declare const DeferredComputationWithSideEffects: DeferredComputationWithSideEffectsLike;
 export declare const MulticastComputation: MulticastComputationLike;
+export interface MulticastLike extends MulticastComputationLike, DisposableContainerLike {
+}
 export declare const EventListenerLike_notify: unique symbol;
 /**
  * @noInheritDoc
@@ -290,7 +292,7 @@ export declare const EventSourceLike_addEventListener: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface EventSourceLike<out T = unknown> extends MulticastComputationLike, DisposableContainerLike {
+export interface EventSourceLike<out T = unknown> extends MulticastLike {
     readonly [ComputationLike_isDeferred]: false;
     readonly [ComputationLike_isSynchronous]: false;
     readonly [ComputationLike_isPure]?: true;
@@ -414,7 +416,7 @@ export interface SynchronousObservableWithSideEffectsLike<out T = unknown> exten
 /**
  * @noInheritDoc
  */
-export interface MulticastObservableLike<out T = unknown> extends PureObservableLike<T> {
+export interface MulticastObservableLike<out T = unknown> extends PureObservableLike<T>, MulticastLike {
     readonly [ComputationLike_isDeferred]: false;
     readonly [ComputationLike_isSynchronous]: false;
 }

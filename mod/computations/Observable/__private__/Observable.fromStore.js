@@ -1,16 +1,18 @@
 /// <reference types="./Observable.fromStore.d.ts" />
 
-import { mixInstanceFactory, props } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isSynchronous, DispatcherLike_complete, ObservableLike_observe, StoreLike_value, } from "../../../computations.js";
 import { bindMethod, none, pipe, returns } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";
 const Observable_fromStore = /*@__PURE__*/ (() => {
     const FromStoreObservable_eventSource = Symbol("FromStoreObservable_eventSource");
-    return returns(mixInstanceFactory(function FromEventSourceObservable(instance, store) {
+    return returns(mixInstanceFactory(include(DelegatingDisposableContainerMixin), function FromEventSourceObservable(instance, store) {
         instance[FromStoreObservable_eventSource] = store;
+        init(DelegatingDisposableContainerMixin, instance, store);
         return instance;
     }, props({
         [FromStoreObservable_eventSource]: none,

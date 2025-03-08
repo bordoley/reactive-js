@@ -27,7 +27,6 @@ import {
 import * as Observable from "./Observable.js";
 import * as WritableStore from "./WritableStore.js";
 import DelegatingEventSourceMixin from "./__mixins__/DelegatingEventSourceMixin.js";
-import DelegatingMulticastObservableMixin from "./__mixins__/DelegatingMulticastObservableMixin.js";
 
 interface PauseableEventSource {
   create<T>(
@@ -54,11 +53,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
   };
 
   return mixInstanceFactory(
-    include(
-      DelegatingDisposableMixin,
-      DelegatingMulticastObservableMixin(),
-      DelegatingEventSourceMixin(),
-    ),
+    include(DelegatingDisposableMixin, DelegatingEventSourceMixin()),
     function PauseableEventSource(
       instance: Pick<
         PauseableEventSourceLike<T>,

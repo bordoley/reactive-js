@@ -11,9 +11,8 @@ import { PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } fr
 import * as Observable from "./Observable.js";
 import * as WritableStore from "./WritableStore.js";
 import DelegatingEventSourceMixin from "./__mixins__/DelegatingEventSourceMixin.js";
-import DelegatingMulticastObservableMixin from "./__mixins__/DelegatingMulticastObservableMixin.js";
 export const create = /*@__PURE__*/ (() => {
-    return mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingMulticastObservableMixin(), DelegatingEventSourceMixin()), function PauseableEventSource(instance, op) {
+    return mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingEventSourceMixin()), function PauseableEventSource(instance, op) {
         const writableStore = (instance[PauseableLike_isPaused] =
             WritableStore.create(true));
         const delegate = pipe(writableStore, op);

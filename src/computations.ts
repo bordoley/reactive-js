@@ -872,6 +872,10 @@ export const MulticastComputation: MulticastComputationLike = {
   [ComputationLike_isSynchronous]: false,
 };
 
+export interface MulticastLike
+  extends MulticastComputationLike,
+    DisposableContainerLike {}
+
 export const EventListenerLike_notify = Symbol("EventListenerLike_notify");
 
 /**
@@ -893,9 +897,7 @@ export const EventSourceLike_addEventListener = Symbol(
 /**
  * @noInheritDoc
  */
-export interface EventSourceLike<out T = unknown>
-  extends MulticastComputationLike,
-    DisposableContainerLike {
+export interface EventSourceLike<out T = unknown> extends MulticastLike {
   readonly [ComputationLike_isDeferred]: false;
   readonly [ComputationLike_isSynchronous]: false;
   readonly [ComputationLike_isPure]?: true;
@@ -1068,7 +1070,8 @@ export interface SynchronousObservableWithSideEffectsLike<out T = unknown>
  * @noInheritDoc
  */
 export interface MulticastObservableLike<out T = unknown>
-  extends PureObservableLike<T> {
+  extends PureObservableLike<T>,
+    MulticastLike {
   readonly [ComputationLike_isDeferred]: false;
   readonly [ComputationLike_isSynchronous]: false;
 }

@@ -67,10 +67,10 @@ const EventSource_merge: EventSource.Signature["merge"] = /*@__PURE__*/ (<
       for (const eventSource of eventSources) {
         pipe(
           eventSource,
-          DisposableContainer.onComplete(() => {
+          DisposableContainer.onDisposed(e => {
             completed++;
-            if (completed >= count) {
-              disposable[DisposableLike_dispose]();
+            if (completed >= count || isSome(e)) {
+              disposable[DisposableLike_dispose](e);
             }
           }),
         );

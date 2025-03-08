@@ -1,24 +1,33 @@
 import {
+  Mixin2,
   include,
   init,
+  mix,
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
-import ObservableMixin from "../../../computations/__mixins__/ObservableMixin.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ComputationOperatorWithSideEffects,
   DeferredObservableWithSideEffectsLike,
+  MulticastObservableLike,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
   StatefulSynchronousComputationOperator,
   StatelessComputationOperator,
 } from "../../../computations.js";
-import { Function1, bindMethod, none, pipeUnsafe } from "../../../functions.js";
+import {
+  Function1,
+  Optional,
+  bindMethod,
+  none,
+  pipeUnsafe,
+} from "../../../functions.js";
+import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import type * as Observable from "../../Observable.js";
 
 const LiftedObservableLike_source = Symbol("LiftedObservableMixin_source");
@@ -52,22 +61,17 @@ const createLiftedObservable: <TA, TB>(
     >[];
   };
 
-  return mixInstanceFactory(
-    include(ObservableMixin),
+  const LiftedObservableMixin: Mixin2<
+    LiftedObservableLike<TA, TB>,
+    ObservableLike<TA>,
+    readonly Function1<ObserverLike<any>, ObserverLike<any>>[]
+  > = mix(
     function LiftedObservable(
       instance: TProperties &
         Pick<ObservableLike<TB>, typeof ObservableLike_observe>,
       source: ObservableLike<TA>,
       ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
-      config: Pick<
-        ObservableLike,
-        | typeof ComputationLike_isDeferred
-        | typeof ComputationLike_isPure
-        | typeof ComputationLike_isSynchronous
-      >,
     ): LiftedObservableLike<TA, TB> {
-      init(ObservableMixin, instance, config);
-
       instance[LiftedObservableLike_source] = source;
       instance[LiftedObservableLike_operators] = ops;
 
@@ -87,6 +91,73 @@ const createLiftedObservable: <TA, TB>(
       },
     },
   );
+
+  type TPropertiesDeferred = {
+    [ComputationLike_isPure]: Optional<boolean>;
+    [ComputationLike_isSynchronous]: Optional<boolean>;
+  };
+
+  const createDeferredLiftedObservable = mixInstanceFactory(
+    include(LiftedObservableMixin),
+    function DeferredLiftedObservable(
+      instance: TPropertiesDeferred &
+        Omit<ObservableLike<TB>, typeof ObservableLike_observe>,
+      source: ObservableLike<TA>,
+      ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
+      config: {
+        [ComputationLike_isPure]?: boolean;
+        [ComputationLike_isSynchronous]?: boolean;
+      },
+    ): LiftedObservableLike<TA, TB> {
+      init(LiftedObservableMixin, instance, source, ops);
+
+      instance[ComputationLike_isPure] = config[ComputationLike_isPure];
+      instance[ComputationLike_isSynchronous] =
+        config[ComputationLike_isSynchronous];
+
+      return instance;
+    },
+    props<TPropertiesDeferred>({
+      [ComputationLike_isPure]: true,
+      [ComputationLike_isSynchronous]: true,
+    }),
+  );
+
+  const createMulticastLiftedObservable = mixInstanceFactory(
+    include(LiftedObservableMixin, DelegatingDisposableContainerMixin),
+    function DeferredLiftedObservable(
+      instance: Omit<ObservableLike<TB>, typeof ObservableLike_observe>,
+      source: MulticastObservableLike<TA>,
+      ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
+    ): LiftedObservableLike<TA, TB> {
+      init(LiftedObservableMixin, instance, source, ops);
+      init(DelegatingDisposableContainerMixin, instance, source);
+
+      return instance;
+    },
+    props(),
+    {
+      [ComputationLike_isDeferred]: false as const,
+      [ComputationLike_isSynchronous]: false as const,
+    },
+  );
+
+  return (
+    obs: ObservableLike<TA>,
+    ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
+    config: Pick<
+      ObservableLike,
+      | typeof ComputationLike_isDeferred
+      | typeof ComputationLike_isPure
+      | typeof ComputationLike_isSynchronous
+    >,
+  ) =>
+    Computation.isDeferred(config)
+      ? createDeferredLiftedObservable(obs, ops, config)
+      : createMulticastLiftedObservable(
+          obs as MulticastObservableLike<TA>,
+          ops,
+        );
 })();
 
 export const ObservableLift_isStateless = Symbol("ObservableLift_isStateless");

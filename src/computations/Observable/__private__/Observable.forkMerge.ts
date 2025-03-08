@@ -79,7 +79,7 @@ const Observable_forkMerge: Observable.Signature["forkMerge"] = (<
     return Computation.isMulticasted(obs)
       ? pipe(
           ops,
-          ReadonlyArray.map(op => op(obs)),
+          ReadonlyArray.map(op => op(obs as MulticastObservableLike<TIn>)),
           Computation.mergeMany(ObservableModule),
         )
       : Observable_createWithConfig<TOut>(

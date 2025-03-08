@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`PureObservableLike`](PureObservableLike.md)\<`T`\>
+- [`PureObservableLike`](PureObservableLike.md)\<`T`\>.[`MulticastLike`](MulticastLike.md)
 
 ## Extended by
 
@@ -29,7 +29,7 @@
 
 #### Overrides
 
-`PureObservableLike.[ComputationLike_isDeferred]`
+[`MulticastLike`](MulticastLike.md).[`[ComputationLike_isDeferred]`](MulticastLike.md#computationlike_isdeferred)
 
 ***
 
@@ -39,4 +39,4 @@
 
 #### Overrides
 
-`PureObservableLike.[ComputationLike_isSynchronous]`
+[`MulticastLike`](MulticastLike.md).[`[ComputationLike_isSynchronous]`](MulticastLike.md#computationlike_issynchronous)

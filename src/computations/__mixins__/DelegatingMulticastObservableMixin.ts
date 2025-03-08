@@ -7,9 +7,10 @@ import {
   ObserverLike,
 } from "../../computations.js";
 import { none, returns } from "../../functions.js";
+import { DisposableContainerLike } from "../../utils.js";
 
 const DelegatingMulticastObservableMixin: <T>() => Mixin1<
-  MulticastObservableLike<T>,
+  Omit<MulticastObservableLike<T>, keyof DisposableContainerLike>,
   MulticastObservableLike<T>
 > = /*@__PURE__*/ (<
   T,
@@ -25,9 +26,13 @@ const DelegatingMulticastObservableMixin: <T>() => Mixin1<
   return returns(
     mix(
       function DelegatingMulticastObservableMixin(
-        instance: MulticastObservableLike<T> & TProperties,
+        instance: Omit<
+          MulticastObservableLike<T>,
+          keyof DisposableContainerLike
+        > &
+          TProperties,
         delegate: TReplayObservable,
-      ): MulticastObservableLike<T> {
+      ): Omit<MulticastObservableLike<T>, keyof DisposableContainerLike> {
         instance[DelegatingMulticastObservableMixin_delegate] = delegate;
 
         return instance;
