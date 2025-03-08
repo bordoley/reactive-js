@@ -1,11 +1,10 @@
 /// <reference types="./Observable.repeatOrRetry.d.ts" />
 
-import { ObserverLike_notify, } from "../../../computations.js";
 import { bindMethod, error, isSome, none, partial, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DisposableLike_dispose } from "../../../utils.js";
-import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
+import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
+import { DisposableLike_dispose, ObserverLike_notify, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";

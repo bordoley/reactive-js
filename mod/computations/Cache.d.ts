@@ -1,7 +1,7 @@
 import { ReadonlyObjectMapLike } from "../collections.js";
-import { DeferredObservableLike, DispatcherLike, ObservableLike } from "../computations.js";
+import { DeferredObservableLike, ObservableLike } from "../computations.js";
 import { Optional, Updater } from "../functions.js";
-import { BackpressureStrategy, SchedulerLike } from "../utils.js";
+import { BackpressureStrategy, DispatcherLike, SchedulerLike } from "../utils.js";
 export declare const CacheLike_get: unique symbol;
 /**
  * @noInheritDoc

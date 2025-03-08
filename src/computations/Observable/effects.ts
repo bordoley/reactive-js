@@ -1,8 +1,6 @@
 import {
   ComputationLike_isSynchronous,
   ObservableLike,
-  ObserverLike,
-  ObserverLike_notify,
   StreamLike,
   StreamOf,
   StreamableLike,
@@ -36,6 +34,8 @@ import {
   BackpressureStrategy,
   DisposableLike,
   DisposableLike_dispose,
+  ObserverLike,
+  ObserverLike_notify,
   SchedulerLike,
   SchedulerLike_schedule,
 } from "../../utils.js";

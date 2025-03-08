@@ -8,11 +8,10 @@ import {
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
   ConcurrentReactiveComputationModule,
-  EventListenerLike,
   EventSourceLike,
 } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
-import { DisposableLike } from "../utils.js";
+import { DisposableLike, EventListenerLike } from "../utils.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource/__private__/EventSource.create.js";
 import EventSource_fromPromise from "./EventSource/__private__/EventSource.fromPromise.js";

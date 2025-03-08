@@ -8,12 +8,12 @@ import {
 import * as EventSource from "../../../computations/EventSource.js";
 import * as Publisher from "../../../computations/Publisher.js";
 import {
-  EventListenerLike_notify,
   EventSourceLike_addEventListener,
   PublisherLike,
 } from "../../../computations.js";
 import { isNone, newInstance, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import { EventListenerLike_notify } from "../../../utils.js";
 import type * as Element from "../../Element.js";
 
 const Element_intersectionEventSource: Element.Signature["intersectionEventSource"] =

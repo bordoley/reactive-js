@@ -2,10 +2,9 @@
 
 import { Iterator_done, Iterator_next, Iterator_value, Symbol, } from "../../../__internal__/constants.js";
 import * as Computation from "../../../computations/Computation.js";
-import { ObserverLike_notify, } from "../../../computations.js";
 import { error, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, SchedulerLike_schedule, } from "../../../utils.js";
+import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, ObserverLike_notify, SchedulerLike_schedule, } from "../../../utils.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
 import Observable_createSynchronousObservableWithSideEffects from "./Observable.createSynchronousObservableWithSideEffects.js";
 const Observable_fromIterable = ((options) => (iterable) => {

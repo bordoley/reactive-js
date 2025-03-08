@@ -11,11 +11,6 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
-import DelegatingObserverMixin from "../../../computations/__mixins__/DelegatingObserverMixin.js";
-import LiftedObserverMixin, {
-  LiftedObserverLike,
-  LiftedObserverLike_delegate,
-} from "../../../computations/__mixins__/LiftedObserverMixin.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
@@ -23,8 +18,6 @@ import {
   DeferredObservableWithSideEffectsLike,
   HigherOrderInnerComputationLike,
   ObservableLike,
-  ObserverLike,
-  ObserverLike_notify,
 } from "../../../computations.js";
 import {
   Function1,
@@ -37,12 +30,20 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import * as Queue from "../../../utils/Queue.js";
+import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_delegate,
+} from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   BackpressureStrategy,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  ObserverLike,
+  ObserverLike_notify,
   OverflowBackpressureStrategy,
   QueueLike,
   QueueLike_count,
@@ -50,7 +51,6 @@ import {
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, {
   ObservableLift_isStateless,

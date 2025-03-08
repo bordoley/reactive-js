@@ -6,11 +6,11 @@ import {
 } from "../../computations.js";
 import { Function1, Optional, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import DelegatingDispatcherMixin from "../../utils/__mixins__/DelegatingDispatcherMixin.js";
 import { BackpressureStrategy, SchedulerLike } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as SingleUseObservable from "../__internal__/SingleUseObservable.js";
 import { SingleUseObservableLike_observer } from "../__internal__/SingleUseObservable.js";
-import DelegatingDispatcherMixin from "../__mixins__/DelegatingDispatcherMixin.js";
 import DelegatingMulticastObservableMixin from "../__mixins__/DelegatingMulticastObservableMixin.js";
 
 const StreamMixin: <TReq, T>() => Mixin3<

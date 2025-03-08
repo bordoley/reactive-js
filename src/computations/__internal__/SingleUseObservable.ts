@@ -7,10 +7,10 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
   ObservableLike_observe,
-  ObserverLike,
   PureDeferredObservableLike,
 } from "../../computations.js";
 import { Optional, isSome, none, raiseIf } from "../../functions.js";
+import { ObserverLike } from "../../utils.js";
 
 export const SingleUseObservableLike_observer = Symbol(
   "SingleUseObservableLike_observer",

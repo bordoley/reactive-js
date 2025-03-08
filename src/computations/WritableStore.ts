@@ -8,8 +8,6 @@ import {
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
-  EventListenerLike,
-  EventListenerLike_notify,
   EventSourceLike_addEventListener,
   PublisherLike,
   StoreLike_value,
@@ -17,7 +15,11 @@ import {
 } from "../computations.js";
 import { Equality, none, strictEquality } from "../functions.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
-import { DisposableLike } from "../utils.js";
+import {
+  DisposableLike,
+  EventListenerLike,
+  EventListenerLike_notify,
+} from "../utils.js";
 import * as Publisher from "./Publisher.js";
 
 export const create: <T>(

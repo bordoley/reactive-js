@@ -2,9 +2,9 @@
 
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import * as Publisher from "../../computations/Publisher.js";
-import { EventListenerLike_notify, EventSourceLike_addEventListener, } from "../../computations.js";
+import { EventSourceLike_addEventListener } from "../../computations.js";
 import { ignore, newInstance, none, pipe, raiseError, } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_notify, } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 testModule("Publisher", describe("create", test("when disposed with an error", () => {
     const e = newInstance(Error);

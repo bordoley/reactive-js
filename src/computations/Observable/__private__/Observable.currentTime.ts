@@ -1,10 +1,11 @@
-import { ObserverLike, ObserverLike_notify } from "../../../computations.js";
 import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DisposableLike_isDisposed,
+  ObserverLike,
+  ObserverLike_notify,
   SchedulerLike_now,
   SchedulerLike_schedule,
 } from "../../../utils.js";

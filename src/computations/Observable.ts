@@ -15,7 +15,6 @@ import {
   DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
   DeferredReactiveComputationModule,
-  DispatcherLike,
   EventSourceLike,
   FromIterableOperator,
   HigherOrderComputationOperator,
@@ -24,7 +23,6 @@ import {
   MulticastComputationLike,
   MulticastObservableLike,
   ObservableLike,
-  ObserverLike,
   PauseableEventSourceLike,
   PauseableObservableLike,
   PureComputationOf,
@@ -58,7 +56,9 @@ import {
 } from "../functions.js";
 import {
   BackpressureStrategy,
+  DispatcherLike,
   DisposableLike,
+  ObserverLike,
   QueueableLike,
   SchedulerLike,
 } from "../utils.js";

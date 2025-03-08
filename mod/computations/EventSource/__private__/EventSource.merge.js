@@ -2,12 +2,12 @@
 
 import { Array_length } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isSynchronous, EventListenerLike_notify, EventSourceLike_addEventListener, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, EventSourceLike_addEventListener, } from "../../../computations.js";
 import { bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
-import { DisposableLike_dispose, } from "../../../utils.js";
+import { DisposableLike_dispose, EventListenerLike_notify, } from "../../../utils.js";
 import EventSource_addEventHandler from "./EventSource.addEventHandler.js";
 const EventSource_merge = /*@__PURE__*/ (() => {
     const MergeEventSource_eventSources = Symbol("MergeEventSource_eventSources");

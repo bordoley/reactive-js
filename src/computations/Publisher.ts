@@ -15,8 +15,6 @@ import {
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
-  EventListenerLike,
-  EventListenerLike_notify,
   EventSourceLike_addEventListener,
   PublisherLike,
 } from "../computations.js";
@@ -31,7 +29,12 @@ import {
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed } from "../utils.js";
+import {
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
+  EventListenerLike,
+  EventListenerLike_notify,
+} from "../utils.js";
 
 export const create: <T>(options?: {
   readonly autoDispose?: boolean;

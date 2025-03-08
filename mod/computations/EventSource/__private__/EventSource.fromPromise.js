@@ -1,11 +1,11 @@
 /// <reference types="./EventSource.fromPromise.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isSynchronous, EventListenerLike_notify, EventSourceLike_addEventListener, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, EventSourceLike_addEventListener, } from "../../../computations.js";
 import { bindMethod, none, returns } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, } from "../../../utils.js";
 const EventSource_fromPromise = 
 /*@__PURE__*/ (() => {
     const FromPromiseEventSource_promise = Symbol("FromPromiseEventSource_promise");

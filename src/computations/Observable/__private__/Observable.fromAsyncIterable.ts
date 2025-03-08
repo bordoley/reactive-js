@@ -3,15 +3,13 @@ import {
   Iterator_next,
   Iterator_value,
 } from "../../../__internal__/constants.js";
-import {
-  DispatcherLike_complete,
-  ObserverLike,
-} from "../../../computations.js";
 import { error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import {
+  DispatcherLike_complete,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  ObserverLike,
   QueueableLike_enqueue,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,

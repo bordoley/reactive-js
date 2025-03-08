@@ -7,8 +7,8 @@ import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isS
 import { bind, bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
 import { DisposableLike_dispose } from "../../../utils.js";
-import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
 import Observable_empty from "./Observable.empty.js";
 const Observable_concat = /*@__PURE__*/ (() => {
     const ConcatObserverCtx_delegate = Symbol("ConcatObserverCtx_delegate");

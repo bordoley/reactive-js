@@ -14,8 +14,6 @@ import {
   DeferredComputationOf,
   DeferredComputationWithSideEffectsLike,
   DeferredComputationWithSideEffectsOf,
-  EventListenerLike,
-  EventListenerLike_notify,
   HigherOrderComputationOperator,
   HigherOrderInnerComputationLike,
   HigherOrderInnerComputationOf,
@@ -50,6 +48,7 @@ import {
   pipe,
   returns,
 } from "../functions.js";
+import { EventListenerLike, EventListenerLike_notify } from "../utils.js";
 
 export interface ConcatManyOperator<TComputation extends ComputationType> {
   <T>(

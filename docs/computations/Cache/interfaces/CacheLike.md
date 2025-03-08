@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`DispatcherLike`](../../interfaces/DispatcherLike.md)\<[`ReadonlyObjectMapLike`](../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`string`, [`Updater`](../../../functions/type-aliases/Updater.md)\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>\>
+- [`DispatcherLike`](../../../utils/interfaces/DispatcherLike.md)\<[`ReadonlyObjectMapLike`](../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`string`, [`Updater`](../../../functions/type-aliases/Updater.md)\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>\>
 
 ## Type Parameters
 

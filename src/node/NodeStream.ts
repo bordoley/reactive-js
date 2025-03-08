@@ -1,16 +1,14 @@
 import { Readable, Transform, Writable } from "stream";
 import * as EventSource from "../computations/EventSource.js";
 import * as PauseableEventSource from "../computations/PauseableEventSource.js";
-import {
-  EventListenerLike_notify,
-  PauseableEventSourceLike,
-} from "../computations.js";
+import { PauseableEventSourceLike } from "../computations.js";
 import { Function1, bindMethod, ignore, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
+  EventListenerLike_notify,
   PauseableLike_pause,
   PauseableLike_resume,
 } from "../utils.js";

@@ -8,8 +8,6 @@ import {
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
-  EventListenerLike,
-  EventListenerLike_notify,
   EventSourceLike,
   EventSourceLike_addEventListener,
 } from "../../../computations.js";
@@ -20,6 +18,8 @@ import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/Delega
 import {
   DisposableContainerLike,
   DisposableLike_dispose,
+  EventListenerLike,
+  EventListenerLike_notify,
 } from "../../../utils.js";
 import type * as EventSource from "../../EventSource.js";
 import EventSource_addEventHandler from "./EventSource.addEventHandler.js";

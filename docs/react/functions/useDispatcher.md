@@ -16,7 +16,7 @@
 
 ### dispatcher
 
-[`Optional`](../../functions/type-aliases/Optional.md)\<[`DispatcherLike`](../../computations/interfaces/DispatcherLike.md)\<`TReq`\>\>
+[`Optional`](../../functions/type-aliases/Optional.md)\<[`DispatcherLike`](../../utils/interfaces/DispatcherLike.md)\<`TReq`\>\>
 
 ## Returns
 

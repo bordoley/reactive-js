@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
 import * as Cache from "./computations/Cache.js";
-import { DeferredObservableLike, DispatcherLike, EventSourceLike, FlowableLike, MulticastObservableLike, ObservableLike, PauseableObservableLike, StoreLike, StreamOf, StreamableLike } from "./computations.js";
+import { DeferredObservableLike, EventSourceLike, FlowableLike, MulticastObservableLike, ObservableLike, PauseableObservableLike, StoreLike, StreamOf, StreamableLike } from "./computations.js";
 import { Factory, Function1, Optional, SideEffect } from "./functions.js";
-import { BackpressureStrategy, DisposableLike, PauseableLike } from "./utils.js";
+import { BackpressureStrategy, DispatcherLike, DisposableLike, PauseableLike } from "./utils.js";
 interface ReactModule {
     CacheProvider<T>(props: {
         readonly cacheContext: React.Context<Optional<Cache.CacheLike<T>>>;

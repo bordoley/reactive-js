@@ -9,10 +9,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as Publisher from "../../computations/Publisher.js";
-import {
-  EventListenerLike_notify,
-  EventSourceLike_addEventListener,
-} from "../../computations.js";
+import { EventSourceLike_addEventListener } from "../../computations.js";
 import {
   Optional,
   ignore,
@@ -25,6 +22,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  EventListenerLike_notify,
 } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 

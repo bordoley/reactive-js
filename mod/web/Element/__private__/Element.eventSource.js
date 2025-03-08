@@ -1,10 +1,9 @@
 /// <reference types="./Element.eventSource.d.ts" />
 
 import * as EventSource from "../../../computations/EventSource.js";
-import { EventListenerLike_notify, } from "../../../computations.js";
 import { error, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DisposableLike_dispose } from "../../../utils.js";
+import { DisposableLike_dispose, EventListenerLike_notify, } from "../../../utils.js";
 const Element_eventSource = (eventName, options) => (target) => EventSource.create((listener) => {
     const eventHandler = (ev) => {
         try {

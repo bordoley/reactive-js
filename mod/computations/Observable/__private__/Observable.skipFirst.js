@@ -2,12 +2,12 @@
 
 import { clampPositiveInteger, max } from "../../../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../computations/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin from "../../../computations/__mixins__/ObserverMixin.js";
-import { ObserverLike_notify } from "../../../computations.js";
 import { partial, pipe } from "../../../functions.js";
+import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
+import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
+import { ObserverLike_notify } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const SkipFirstObserver_count = Symbol("SkipFirstObserver_count");
 const createSkipFirstObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()), function SkipFirstObserver(instance, delegate, skipCount) {

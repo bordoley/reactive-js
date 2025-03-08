@@ -12,20 +12,22 @@ import {
 } from "../../../__internal__/mixins.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as Computation from "../../../computations/Computation.js";
-import DelegatingObserverMixin from "../../../computations/__mixins__/DelegatingObserverMixin.js";
 import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ObservableLike,
   ObservableLike_observe,
-  ObserverLike,
-  ObserverLike_notify,
 } from "../../../computations.js";
 import { none, pick, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
+import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import { DisposableLike_dispose } from "../../../utils.js";
-import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
+import {
+  DisposableLike_dispose,
+  ObserverLike,
+  ObserverLike_notify,
+} from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 
 type LatestMode = 1 | 2;

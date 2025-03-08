@@ -31,7 +31,7 @@ Subscribes the given `ObserverLike` to the `ObservableLike` source.
 
 ##### observer
 
-[`ObserverLike`](ObserverLike.md)\<`T`\>
+[`ObserverLike`](../../utils/interfaces/ObserverLike.md)\<`T`\>
 
 The observer.
 

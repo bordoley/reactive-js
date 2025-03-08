@@ -1,8 +1,6 @@
 import {
   DeferredObservableLike,
   ObservableLike,
-  ObserverLike,
-  ObserverLike_notify,
   StatelessComputationOperator,
 } from "../../../computations.js";
 import {
@@ -15,9 +13,13 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DisposableLike_dispose } from "../../../utils.js";
+import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
+import {
+  DisposableLike_dispose,
+  ObserverLike,
+  ObserverLike_notify,
+} from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";

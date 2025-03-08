@@ -1,5 +1,6 @@
-import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, DispatcherLike, EventSourceLike, FlowableLike, SynchronousObservableLike } from "../computations.js";
+import { DeferredObservableLike, DeferredObservableWithSideEffectsLike, EventSourceLike, FlowableLike, SynchronousObservableLike } from "../computations.js";
 import { Function1 } from "../functions.js";
+import { DispatcherLike } from "../utils.js";
 /**
  * @noInheritDoc
  */

@@ -658,7 +658,7 @@ readonly `TComputation`[]
 
 ###### eventListener
 
-[`EventListenerLike`](../../interfaces/EventListenerLike.md)\<`T`\>
+[`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>
 
 ##### Returns
 

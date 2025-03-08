@@ -7,19 +7,19 @@ import {
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
-  DispatcherLike_complete,
   EventSourceLike,
   MulticastObservableLike,
   ObservableLike_observe,
-  ObserverLike,
 } from "../../../computations.js";
 import { bindMethod, none, pipe, returns } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import {
+  DispatcherLike_complete,
   DisposableContainerLike,
   DisposableLike_dispose,
+  ObserverLike,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";

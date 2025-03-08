@@ -6,10 +6,7 @@ import {
   Map_size,
 } from "../../../__internal__/constants.js";
 import * as Publisher from "../../../computations/Publisher.js";
-import {
-  EventListenerLike_notify,
-  PublisherLike,
-} from "../../../computations.js";
+import { PublisherLike } from "../../../computations.js";
 import {
   Optional,
   isNone,
@@ -18,6 +15,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import { EventListenerLike_notify } from "../../../utils.js";
 import type * as Element from "../../Element.js";
 
 const Element_resizeEventSource: Element.Signature["resizeEventSource"] =

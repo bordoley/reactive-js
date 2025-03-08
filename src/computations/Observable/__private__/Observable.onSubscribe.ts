@@ -3,7 +3,6 @@ import {
   ComputationLike_isSynchronous,
   ObservableLike,
   ObservableLike_observe,
-  ObserverLike,
 } from "../../../computations.js";
 import {
   Factory,
@@ -17,7 +16,7 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DisposableLike } from "../../../utils.js";
+import { DisposableLike, ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 

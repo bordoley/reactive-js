@@ -1,9 +1,9 @@
 /// <reference types="./EventSource.map.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { EventListenerLike_notify, } from "../../../computations.js";
 import { none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { EventListenerLike_notify } from "../../../utils.js";
 import EventSource_lift from "./EventSource.lift.js";
 const EventSource_map = /*@__PURE__*/ (() => {
     const MapEventListener_selector = Symbol("MapEventListener_selector");

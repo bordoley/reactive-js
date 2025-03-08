@@ -3,15 +3,15 @@ import {
   init,
   mixInstanceFactory,
 } from "../../../__internal__/mixins.js";
-import ObserverMixin from "../../../computations/__mixins__/ObserverMixin.js";
 import {
   ObservableLike,
   ObservableLike_observe,
-  ObserverLike,
 } from "../../../computations.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
+import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
 import {
   DisposableContainerLike_add,
+  ObserverLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,

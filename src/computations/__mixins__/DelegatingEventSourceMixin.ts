@@ -2,12 +2,11 @@ import { Mixin1, mix, props } from "../../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
-  EventListenerLike,
   EventSourceLike,
   EventSourceLike_addEventListener,
 } from "../../computations.js";
 import { none, returns } from "../../functions.js";
-import { DisposableContainerLike } from "../../utils.js";
+import { DisposableContainerLike, EventListenerLike } from "../../utils.js";
 
 const DelegatingEventSourceMixin: <T>() => Mixin1<
   Omit<EventSourceLike<T>, keyof DisposableContainerLike>,

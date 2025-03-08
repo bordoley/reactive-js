@@ -24,8 +24,6 @@ import {
   DeferredComputationWithSideEffects,
   DeferredComputationWithSideEffectsLike,
   DeferredObservableLike,
-  DispatcherLike,
-  EventListenerLike_notify,
   ObservableLike,
   SubjectLike,
 } from "../computations.js";
@@ -49,11 +47,14 @@ import {
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Queue from "../utils/Queue.js";
+import DelegatingDispatcherMixin from "../utils/__mixins__/DelegatingDispatcherMixin.js";
 import {
   BackpressureStrategy,
   ContinuationContextLike,
   ContinuationContextLike_yield,
+  DispatcherLike,
   DisposableLike_isDisposed,
+  EventListenerLike_notify,
   QueueLike_dequeue,
   QueueableLike_enqueue,
   SchedulerLike,
@@ -63,7 +64,6 @@ import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
 import * as SingleUseObservable from "./__internal__/SingleUseObservable.js";
 import { SingleUseObservableLike_observer } from "./__internal__/SingleUseObservable.js";
-import DelegatingDispatcherMixin from "./__mixins__/DelegatingDispatcherMixin.js";
 
 export const CacheLike_get = Symbol("CacheLike_get");
 

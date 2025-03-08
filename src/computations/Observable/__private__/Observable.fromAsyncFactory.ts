@@ -1,11 +1,9 @@
-import {
-  DispatcherLike_complete,
-  ObserverLike,
-} from "../../../computations.js";
 import { error } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import {
+  DispatcherLike_complete,
   DisposableLike_dispose,
+  ObserverLike,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";

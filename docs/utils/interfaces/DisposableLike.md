@@ -12,12 +12,12 @@
 
 ## Extended by
 
-- [`EventListenerLike`](../../computations/interfaces/EventListenerLike.md)
 - [`WritableStoreLike`](../../computations/interfaces/WritableStoreLike.md)
-- [`DispatcherLike`](../../computations/interfaces/DispatcherLike.md)
 - [`SerialDisposableLike`](SerialDisposableLike.md)
 - [`VirtualTimeSchedulerLike`](VirtualTimeSchedulerLike.md)
 - [`PauseableLike`](PauseableLike.md)
+- [`EventListenerLike`](EventListenerLike.md)
+- [`DispatcherLike`](DispatcherLike.md)
 
 ## Properties
 

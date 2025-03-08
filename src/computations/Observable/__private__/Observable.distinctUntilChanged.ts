@@ -4,12 +4,6 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
-import LiftedObserverMixin, {
-  LiftedObserverLike,
-  LiftedObserverLike_delegate,
-} from "../../../computations/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin from "../../../computations/__mixins__/ObserverMixin.js";
-import { ObserverLike, ObserverLike_notify } from "../../../computations.js";
 import {
   Equality,
   none,
@@ -17,9 +11,15 @@ import {
   pipe,
   strictEquality,
 } from "../../../functions.js";
+import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_delegate,
+} from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
+import { ObserverLike, ObserverLike_notify } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const DistinctUntilChangedObserver_equality = Symbol(

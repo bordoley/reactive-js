@@ -1,6 +1,6 @@
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, DeferredObservableWithSideEffectsLike, ObservableLike, ObserverLike, SynchronousObservableWithSideEffectsLike } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, DeferredObservableWithSideEffectsLike, ObservableLike, SynchronousObservableWithSideEffectsLike } from "../../../computations.js";
 import { Factory, Optional } from "../../../functions.js";
-import { DisposableLike } from "../../../utils.js";
+import { DisposableLike, ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 export declare const BatchedComputeMode = "batched";
 export declare const CombineLatestComputeMode = "combine-latest";

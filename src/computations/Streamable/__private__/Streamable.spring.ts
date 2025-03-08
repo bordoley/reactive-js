@@ -11,7 +11,6 @@ import {
   DeferredComputationWithSideEffectsLike,
   DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
-  EventListenerLike_notify,
   PureSynchronousObservableLike,
   StreamableLike,
   StreamableLike_stream,
@@ -32,6 +31,7 @@ import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
 import {
   BackpressureStrategy,
+  EventListenerLike_notify,
   PauseableLike_resume,
   SchedulerLike,
 } from "../../../utils.js";

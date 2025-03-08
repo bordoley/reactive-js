@@ -7,14 +7,17 @@ import {
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
-  EventListenerLike,
   EventSourceLike,
   EventSourceLike_addEventListener,
   PublisherLike,
 } from "../../../computations.js";
 import { SideEffect1, error, none } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import { DisposableLike, DisposableLike_dispose } from "../../../utils.js";
+import {
+  DisposableLike,
+  DisposableLike_dispose,
+  EventListenerLike,
+} from "../../../utils.js";
 import type * as EventSource from "../../EventSource.js";
 import * as Publisher from "../../Publisher.js";
 

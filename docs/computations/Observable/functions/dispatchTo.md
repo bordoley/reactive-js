@@ -16,7 +16,7 @@
 
 ### dispatcher
 
-[`DispatcherLike`](../../interfaces/DispatcherLike.md)\<`T`\>
+[`DispatcherLike`](../../../utils/interfaces/DispatcherLike.md)\<`T`\>
 
 ## Returns
 

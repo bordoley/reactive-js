@@ -1,12 +1,12 @@
 /// <reference types="./Observable.forEach.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../computations/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin from "../../../computations/__mixins__/ObserverMixin.js";
-import { ObserverLike_notify } from "../../../computations.js";
 import { none, partial, pipe } from "../../../functions.js";
+import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
+import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
+import { ObserverLike_notify } from "../../../utils.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 const createForEachObserver = /*@__PURE__*/ (() => {
     const ForEachObserver_effect = Symbol("ForEachObserver_effect");

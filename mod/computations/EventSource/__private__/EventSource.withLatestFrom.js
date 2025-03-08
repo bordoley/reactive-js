@@ -1,12 +1,11 @@
 /// <reference types="./EventSource.withLatestFrom.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { EventListenerLike_notify, } from "../../../computations.js";
 import { bind, none, partial, pipe, tuple, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, } from "../../../utils.js";
 import EventSource_addEventHandler from "./EventSource.addEventHandler.js";
 import EventSource_lift from "./EventSource.lift.js";
 const createWithLatestFromEventListener = /*@__PURE__*/ (() => {

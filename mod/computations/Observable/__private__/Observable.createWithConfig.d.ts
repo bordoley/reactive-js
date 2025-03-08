@@ -1,5 +1,6 @@
-import { ComputationLike_isPure, ComputationLike_isSynchronous, DeferredObservableWithSideEffectsLike, ObservableLike, ObserverLike, PureDeferredObservableLike, PureSynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../../../computations.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, DeferredObservableWithSideEffectsLike, ObservableLike, PureDeferredObservableLike, PureSynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../../../computations.js";
 import { SideEffect1 } from "../../../functions.js";
+import { ObserverLike } from "../../../utils.js";
 interface ObservableCreateWithConfig {
     createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: Pick<PureSynchronousObservableLike, typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>): PureSynchronousObservableLike<T>;
     createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: Pick<SynchronousObservableWithSideEffectsLike, typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>): SynchronousObservableWithSideEffectsLike<T>;

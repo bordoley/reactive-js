@@ -4,13 +4,13 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   DeferredObservableLike,
-  EventListenerLike_notify,
   HigherOrderInnerComputationLike,
   ObservableLike,
   ObservableLike_observe,
 } from "../../../computations.js";
 import { Factory, Function2, invoke, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { EventListenerLike_notify } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import * as Subject from "../../Subject.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";

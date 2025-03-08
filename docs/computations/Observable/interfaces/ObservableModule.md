@@ -124,7 +124,7 @@
 
 ##### f
 
-[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`ObserverLike`](../../interfaces/ObserverLike.md)\<`T`\>\>
+[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`ObserverLike`](../../../utils/interfaces/ObserverLike.md)\<`T`\>\>
 
 #### Returns
 
@@ -164,7 +164,7 @@
 
 ##### dispatcher
 
-[`DispatcherLike`](../../interfaces/DispatcherLike.md)\<`T`\>
+[`DispatcherLike`](../../../utils/interfaces/DispatcherLike.md)\<`T`\>
 
 #### Returns
 

@@ -1,10 +1,10 @@
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import * as EventSource from "../computations/EventSource.js";
-import { EventListenerLike_notify, EventSourceLike } from "../computations.js";
+import { EventSourceLike } from "../computations.js";
 import { bindMethod, newInstance, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
-import { DisposableLike } from "../utils.js";
+import { DisposableLike, EventListenerLike_notify } from "../utils.js";
 
 const errorEvent = "error";
 

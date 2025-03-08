@@ -15,9 +15,9 @@ cooperative multi-tasking.
 
 ## Extended by
 
-- [`ObserverLike`](../../computations/interfaces/ObserverLike.md)
 - [`VirtualTimeSchedulerLike`](VirtualTimeSchedulerLike.md)
 - [`PauseableSchedulerLike`](PauseableSchedulerLike.md)
+- [`ObserverLike`](ObserverLike.md)
 
 ## Properties
 

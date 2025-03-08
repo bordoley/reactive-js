@@ -1,5 +1,6 @@
-import { EventListenerLike, StatelessComputationOperator } from "../../../computations.js";
+import { StatelessComputationOperator } from "../../../computations.js";
 import { Function1 } from "../../../functions.js";
+import { EventListenerLike } from "../../../utils.js";
 import type * as EventSource from "../../EventSource.js";
 interface EventSourceLift {
     lift<TA, TB>(operator: Function1<EventListenerLike<TB>, EventListenerLike<TA>>): StatelessComputationOperator<EventSource.Computation, TA, TB>;

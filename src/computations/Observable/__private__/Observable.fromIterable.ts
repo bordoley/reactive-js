@@ -5,11 +5,7 @@ import {
   Symbol,
 } from "../../../__internal__/constants.js";
 import * as Computation from "../../../computations/Computation.js";
-import {
-  IterableLike,
-  ObserverLike,
-  ObserverLike_notify,
-} from "../../../computations.js";
+import { IterableLike } from "../../../computations.js";
 import { Optional, error, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import {
@@ -17,6 +13,8 @@ import {
   ContinuationContextLike_yield,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  ObserverLike,
+  ObserverLike_notify,
   SchedulerLike_schedule,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";

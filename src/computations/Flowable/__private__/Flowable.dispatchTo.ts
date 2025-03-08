@@ -1,10 +1,5 @@
 import * as EventSource from "../../../computations/EventSource.js";
 import {
-  DispatcherLike,
-  DispatcherLike_state,
-  DispatcherState_capacityExceeded,
-  DispatcherState_completed,
-  DispatcherState_ready,
   FlowableLike,
   FlowableLike_flow,
   ObservableLike_observe,
@@ -12,6 +7,11 @@ import {
 import { invoke, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import {
+  DispatcherLike,
+  DispatcherLike_state,
+  DispatcherState_capacityExceeded,
+  DispatcherState_completed,
+  DispatcherState_ready,
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike_backpressureStrategy,

@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`MulticastObservableLike`](MulticastObservableLike.md)\<`T`\>.[`EventListenerLike`](EventListenerLike.md)\<`T`\>
+- [`MulticastObservableLike`](MulticastObservableLike.md)\<`T`\>.[`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)\<`T`\>
 
 ## Type Parameters
 

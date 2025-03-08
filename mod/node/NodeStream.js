@@ -2,11 +2,10 @@
 
 import * as EventSource from "../computations/EventSource.js";
 import * as PauseableEventSource from "../computations/PauseableEventSource.js";
-import { EventListenerLike_notify, } from "../computations.js";
 import { bindMethod, ignore, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
-import { DisposableLike_dispose, PauseableLike_pause, PauseableLike_resume, } from "../utils.js";
+import { DisposableLike_dispose, EventListenerLike_notify, PauseableLike_pause, PauseableLike_resume, } from "../utils.js";
 const disposeStream = (stream) => () => {
     stream.removeAllListeners();
     // Calling destory can result in onError being called

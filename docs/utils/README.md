@@ -13,8 +13,11 @@
 ## Interfaces
 
 - [ContinuationContextLike](interfaces/ContinuationContextLike.md)
+- [DispatcherLike](interfaces/DispatcherLike.md)
 - [DisposableContainerLike](interfaces/DisposableContainerLike.md)
 - [DisposableLike](interfaces/DisposableLike.md)
+- [EventListenerLike](interfaces/EventListenerLike.md)
+- [ObserverLike](interfaces/ObserverLike.md)
 - [PauseableLike](interfaces/PauseableLike.md)
 - [PauseableSchedulerLike](interfaces/PauseableSchedulerLike.md)
 - [QueueableLike](interfaces/QueueableLike.md)
@@ -26,16 +29,24 @@
 ## Type Aliases
 
 - [BackpressureStrategy](type-aliases/BackpressureStrategy.md)
+- [DispatcherState](type-aliases/DispatcherState.md)
 
 ## Variables
 
 - [ContinuationContextLike\_yield](variables/ContinuationContextLike_yield.md)
+- [DispatcherLike\_complete](variables/DispatcherLike_complete.md)
+- [DispatcherLike\_state](variables/DispatcherLike_state.md)
+- [DispatcherState\_capacityExceeded](variables/DispatcherState_capacityExceeded.md)
+- [DispatcherState\_completed](variables/DispatcherState_completed.md)
+- [DispatcherState\_ready](variables/DispatcherState_ready.md)
 - [DisposableContainerLike\_add](variables/DisposableContainerLike_add.md)
 - [DisposableLike\_dispose](variables/DisposableLike_dispose.md)
 - [DisposableLike\_error](variables/DisposableLike_error.md)
 - [DisposableLike\_isDisposed](variables/DisposableLike_isDisposed.md)
 - [DropLatestBackpressureStrategy](variables/DropLatestBackpressureStrategy.md)
 - [DropOldestBackpressureStrategy](variables/DropOldestBackpressureStrategy.md)
+- [EventListenerLike\_notify](variables/EventListenerLike_notify.md)
+- [ObserverLike\_notify](variables/ObserverLike_notify.md)
 - [OverflowBackpressureStrategy](variables/OverflowBackpressureStrategy.md)
 - [PauseableLike\_isPaused](variables/PauseableLike_isPaused.md)
 - [PauseableLike\_pause](variables/PauseableLike_pause.md)

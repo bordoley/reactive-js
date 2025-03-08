@@ -4,17 +4,15 @@ import {
   Iterator_value,
 } from "../../../__internal__/constants.js";
 import * as EventSource from "../../../computations/EventSource.js";
-import {
-  DispatcherLike_complete,
-  EventSourceLike,
-  ObserverLike,
-} from "../../../computations.js";
+import { EventSourceLike } from "../../../computations.js";
 import { bindMethod, error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import {
+  DispatcherLike_complete,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  ObserverLike,
   QueueableLike_enqueue,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,

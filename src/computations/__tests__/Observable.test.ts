@@ -40,10 +40,6 @@ import {
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
   DeferredComputationWithSideEffects,
-  DispatcherLike_complete,
-  DispatcherLike_state,
-  DispatcherState_completed,
-  EventListenerLike_notify,
   MulticastComputation,
   ObservableLike,
   PureDeferredComputation,
@@ -84,11 +80,15 @@ import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Queue from "../../utils/Queue.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
+  DispatcherLike_complete,
+  DispatcherLike_state,
+  DispatcherState_completed,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
   DropLatestBackpressureStrategy,
   DropOldestBackpressureStrategy,
+  EventListenerLike_notify,
   OverflowBackpressureStrategy,
   QueueableLike_enqueue,
   SchedulerLike_now,

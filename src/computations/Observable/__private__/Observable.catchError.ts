@@ -6,7 +6,6 @@ import {
   HigherOrderInnerComputationLike,
   ObservableLike,
   ObservableLike_observe,
-  ObserverLike,
 } from "../../../computations.js";
 import {
   Function1,
@@ -21,9 +20,9 @@ import {
   pipe,
 } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DisposableLike_dispose } from "../../../utils.js";
+import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
+import { DisposableLike_dispose, ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
 import Observable_lift, {
   ObservableLift_isStateless,
 } from "./Observable.lift.js";

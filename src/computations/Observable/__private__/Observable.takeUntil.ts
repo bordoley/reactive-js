@@ -4,12 +4,12 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ObservableLike,
-  ObserverLike,
 } from "../../../computations.js";
 import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
+import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
 import Observable_lift, {
   ObservableLift_isStateless,
 } from "./Observable.lift.js";

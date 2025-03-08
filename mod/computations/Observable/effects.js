@@ -1,9 +1,9 @@
 /// <reference types="./effects.d.ts" />
 
-import { ComputationLike_isSynchronous, ObserverLike_notify, StreamableLike_stream, } from "../../computations.js";
+import { ComputationLike_isSynchronous, StreamableLike_stream, } from "../../computations.js";
 import { bindMethod, isSome, none, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
-import { DisposableLike_dispose, SchedulerLike_schedule, } from "../../utils.js";
+import { DisposableLike_dispose, ObserverLike_notify, SchedulerLike_schedule, } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import { ComputeContext_awaitOrObserve, ComputeContext_constant, ComputeContext_memoOrUse, ComputeContext_observableConfig, ComputeContext_observer, assertCurrentContext, } from "./__private__/Observable.computeWithConfig.js";

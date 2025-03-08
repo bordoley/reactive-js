@@ -4,10 +4,9 @@ import {
   ComputationLike_isSynchronous,
   MulticastObservableLike,
   ObservableLike_observe,
-  ObserverLike,
 } from "../../computations.js";
 import { none, returns } from "../../functions.js";
-import { DisposableContainerLike } from "../../utils.js";
+import { DisposableContainerLike, ObserverLike } from "../../utils.js";
 
 const DelegatingMulticastObservableMixin: <T>() => Mixin1<
   Omit<MulticastObservableLike<T>, keyof DisposableContainerLike>,

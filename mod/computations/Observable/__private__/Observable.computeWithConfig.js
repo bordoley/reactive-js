@@ -1,11 +1,11 @@
 /// <reference types="./Observable.computeWithConfig.d.ts" />
 
 import { Array_length, Array_push, __DEV__, } from "../../../__internal__/constants.js";
-import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ObserverLike_notify, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseIf, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, SchedulerLike_schedule, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, ObserverLike_notify, SchedulerLike_schedule, } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";

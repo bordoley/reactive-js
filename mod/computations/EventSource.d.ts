@@ -1,6 +1,6 @@
-import { ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, EventListenerLike, EventSourceLike } from "../computations.js";
+import { ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, EventSourceLike } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
-import { DisposableLike } from "../utils.js";
+import { DisposableLike, EventListenerLike } from "../utils.js";
 /**
  * @noInheritDoc
  */

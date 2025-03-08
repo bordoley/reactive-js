@@ -14,9 +14,6 @@ import * as Observable from "./computations/Observable.js";
 import * as Subject from "./computations/Subject.js";
 import {
   DeferredObservableLike,
-  DispatcherLike,
-  DispatcherLike_complete,
-  EventListenerLike_notify,
   EventSourceLike,
   FlowableLike,
   FlowableLike_flow,
@@ -47,8 +44,11 @@ import * as ReactScheduler from "./react/Scheduler.js";
 import * as DisposableContainer from "./utils/DisposableContainer.js";
 import {
   BackpressureStrategy,
+  DispatcherLike,
+  DispatcherLike_complete,
   DisposableLike,
   DisposableLike_dispose,
+  EventListenerLike_notify,
   PauseableLike,
   PauseableLike_isPaused,
   PauseableLike_pause,

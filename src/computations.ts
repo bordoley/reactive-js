@@ -14,10 +14,12 @@ import type {
 } from "./functions.js";
 import type {
   BackpressureStrategy,
+  DispatcherLike,
   DisposableContainerLike,
   DisposableLike,
+  EventListenerLike,
+  ObserverLike,
   PauseableLike,
-  QueueableLike,
   SchedulerLike,
 } from "./utils.js";
 
@@ -875,20 +877,6 @@ export const MulticastComputation: MulticastComputationLike = {
   [ComputationLike_isSynchronous]: false,
 };
 
-export const EventListenerLike_notify = Symbol("EventListenerLike_notify");
-
-/**
- * @noInheritDoc
- */
-export interface EventListenerLike<T = unknown> extends DisposableLike {
-  /**
-   * Notifies the EventListener of the next notification produced by the source.
-   *
-   * @param next - The next notification value.
-   */
-  [EventListenerLike_notify](event: T): void;
-}
-
 export const EventSourceLike_addEventListener = Symbol(
   "EventSourceLike_addEventListener",
 );
@@ -935,54 +923,6 @@ export interface WritableStoreLike<T = unknown>
 export interface PauseableEventSourceLike<out T = unknown>
   extends EventSourceLike<T>,
     PauseableLike {}
-
-export const DispatcherState_ready = Symbol("DispatcherState_ready");
-export const DispatcherState_capacityExceeded = Symbol(
-  "DispatcherState_capacityExceeded",
-);
-export const DispatcherState_completed = Symbol("DispatcherState_completed");
-
-export type DispatcherState =
-  | typeof DispatcherState_ready
-  | typeof DispatcherState_capacityExceeded
-  | typeof DispatcherState_completed;
-
-export const DispatcherLike_complete = Symbol("DispatcherLike_complete");
-export const DispatcherLike_state = Symbol("DispatcherLike_state");
-
-/**
- * A `QueueableLike` type that consumes enqueued events to
- * be dispatched from any execution constext.
- *
- * @noInheritDoc
- */
-export interface DispatcherLike<T = unknown>
-  extends QueueableLike<T>,
-    DisposableLike {
-  readonly [DispatcherLike_state]: StoreLike<DispatcherState>;
-
-  /**
-   * Communicates to the dispatcher that no more events will be enqueued.
-   */
-  [DispatcherLike_complete](): void;
-}
-
-export const ObserverLike_notify = Symbol("ObserverLike_notify");
-/**
- * A consumer of push-based notifications.
- *
- * @noInheritDoc
- */
-export interface ObserverLike<T = unknown>
-  extends DispatcherLike<T>,
-    SchedulerLike {
-  /**
-   * Notifies the observer of the next notification produced by the source.
-   *
-   * @param next - The next notification value.
-   */
-  [ObserverLike_notify](event: T): void;
-}
 
 export const ObservableLike_observe = Symbol("ObservableLike_observe");
 

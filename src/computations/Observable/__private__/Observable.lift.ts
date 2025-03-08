@@ -16,7 +16,6 @@ import {
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_observe,
-  ObserverLike,
   StatefulSynchronousComputationOperator,
   StatelessComputationOperator,
 } from "../../../computations.js";
@@ -28,6 +27,7 @@ import {
   pipeUnsafe,
 } from "../../../functions.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
+import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 
 const LiftedObservableLike_source = Symbol("LiftedObservableMixin_source");

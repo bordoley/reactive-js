@@ -7,13 +7,13 @@ import {
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
-  EventListenerLike,
   EventSourceLike,
   EventSourceLike_addEventListener,
   StatelessComputationOperator,
 } from "../../../computations.js";
 import { Function1, bindMethod, none, pipeUnsafe } from "../../../functions.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
+import { EventListenerLike } from "../../../utils.js";
 import type * as EventSource from "../../EventSource.js";
 
 const LiftedEventSource_source = Symbol("LiftedEventSource_source");

@@ -61,7 +61,7 @@
 
 ##### listener
 
-[`EventListenerLike`](EventListenerLike.md)\<`T`\>
+[`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)\<`T`\>
 
 #### Returns
 

@@ -1,5 +1,6 @@
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ComputationOperatorWithSideEffects, DeferredObservableWithSideEffectsLike, ObservableLike, ObserverLike, StatefulSynchronousComputationOperator, StatelessComputationOperator } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ComputationOperatorWithSideEffects, DeferredObservableWithSideEffectsLike, ObservableLike, StatefulSynchronousComputationOperator, StatelessComputationOperator } from "../../../computations.js";
 import { Function1 } from "../../../functions.js";
+import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 export declare const ObservableLift_isStateless: unique symbol;
 interface ObservableLift {

@@ -194,3 +194,48 @@ export interface PauseableLike extends DisposableLike {
  */
 export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {
 }
+export declare const EventListenerLike_notify: unique symbol;
+/**
+ * @noInheritDoc
+ */
+export interface EventListenerLike<T = unknown> extends DisposableLike {
+    /**
+     * Notifies the EventListener of the next notification produced by the source.
+     *
+     * @param next - The next notification value.
+     */
+    [EventListenerLike_notify](event: T): void;
+}
+export declare const DispatcherState_ready: unique symbol;
+export declare const DispatcherState_capacityExceeded: unique symbol;
+export declare const DispatcherState_completed: unique symbol;
+export type DispatcherState = typeof DispatcherState_ready | typeof DispatcherState_capacityExceeded | typeof DispatcherState_completed;
+export declare const DispatcherLike_complete: unique symbol;
+export declare const DispatcherLike_state: unique symbol;
+/**
+ * A `QueueableLike` type that consumes enqueued events to
+ * be dispatched from any execution constext.
+ *
+ * @noInheritDoc
+ */
+export interface DispatcherLike<T = unknown> extends QueueableLike<T>, DisposableLike {
+    readonly [DispatcherLike_state]: StoreLike<DispatcherState>;
+    /**
+     * Communicates to the dispatcher that no more events will be enqueued.
+     */
+    [DispatcherLike_complete](): void;
+}
+export declare const ObserverLike_notify: unique symbol;
+/**
+ * A consumer of push-based notifications.
+ *
+ * @noInheritDoc
+ */
+export interface ObserverLike<T = unknown> extends DispatcherLike<T>, SchedulerLike {
+    /**
+     * Notifies the observer of the next notification produced by the source.
+     *
+     * @param next - The next notification value.
+     */
+    [ObserverLike_notify](event: T): void;
+}

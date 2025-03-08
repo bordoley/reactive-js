@@ -1,12 +1,12 @@
 import {
   DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
-  DispatcherLike,
   EventSourceLike,
   FlowableLike,
   SynchronousObservableLike,
 } from "../computations.js";
 import { Function1 } from "../functions.js";
+import { DispatcherLike } from "../utils.js";
 import Flowable_create from "./Flowable/__private__/Flowable.create.js";
 import Flowable_dispatchTo from "./Flowable/__private__/Flowable.dispatchTo.js";
 import Flowable_fromAsyncIterable from "./Flowable/__private__/Flowable.fromAsyncIterable.js";

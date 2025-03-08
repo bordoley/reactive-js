@@ -1,11 +1,11 @@
 import * as EventSource from "../../../computations/EventSource.js";
-import {
-  EventListenerLike,
-  EventListenerLike_notify,
-} from "../../../computations.js";
 import { error, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DisposableLike_dispose } from "../../../utils.js";
+import {
+  DisposableLike_dispose,
+  EventListenerLike,
+  EventListenerLike_notify,
+} from "../../../utils.js";
 import { DOMEventTarget, EventKeysOf, EventMapOf } from "../../../web.js";
 import type * as Element from "../../Element.js";
 

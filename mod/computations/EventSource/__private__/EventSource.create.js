@@ -4,7 +4,7 @@ import { include, init, mixInstanceFactory, props, } from "../../../__internal__
 import { ComputationLike_isDeferred, ComputationLike_isSynchronous, EventSourceLike_addEventListener, } from "../../../computations.js";
 import { error, none } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import { DisposableLike_dispose } from "../../../utils.js";
+import { DisposableLike_dispose, } from "../../../utils.js";
 import * as Publisher from "../../Publisher.js";
 const EventSource_create = /*@__PURE__*/ (() => {
     const CreateEventSource_delegate = Symbol("CreateEventSource_delegate");

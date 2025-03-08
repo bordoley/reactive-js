@@ -16,18 +16,18 @@ import {
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_observe,
-  ObserverLike,
 } from "../../../computations.js";
 import { bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import {
   DisposableContainerLike,
   DisposableLike_dispose,
+  ObserverLike,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
 
 const Observable_merge: Observable.Signature["merge"] = /*@__PURE__*/ (<
   T,

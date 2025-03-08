@@ -6,13 +6,12 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  EventListenerLike,
-  EventListenerLike_notify,
   EventSourceLike,
   EventSourceLike_addEventListener,
 } from "../../../computations.js";
 import { SideEffect1, none } from "../../../functions.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
+import { EventListenerLike, EventListenerLike_notify } from "../../../utils.js";
 import type * as EventSource from "../../EventSource.js";
 
 const EventListener_createInternal: <T>(

@@ -56,10 +56,10 @@ import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsSome, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import * as Observable from "../../computations/Observable.js";
 import * as Subject from "../../computations/Subject.js";
-import { EventListenerLike_notify, ObservableLike_observe, } from "../../computations.js";
+import { ObservableLike_observe } from "../../computations.js";
 import { bindMethod, increment, pipe, returns, } from "../../functions.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, SchedulerLike_schedule, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_notify, SchedulerLike_schedule, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 testModule("Subject", describe("create", test("with replay", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {

@@ -1,9 +1,10 @@
 /// <reference types="./WritableStore.d.ts" />
 
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isSynchronous, EventListenerLike_notify, EventSourceLike_addEventListener, StoreLike_value, } from "../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, EventSourceLike_addEventListener, StoreLike_value, } from "../computations.js";
 import { none, strictEquality } from "../functions.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
+import { EventListenerLike_notify, } from "../utils.js";
 import * as Publisher from "./Publisher.js";
 export const create = /*@__PURE__*/ (() => {
     const WritableStore_equality = Symbol("WritableStore_equality");

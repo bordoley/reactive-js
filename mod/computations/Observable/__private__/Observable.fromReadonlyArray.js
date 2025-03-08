@@ -1,10 +1,9 @@
 /// <reference types="./Observable.fromReadonlyArray.d.ts" />
 
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
-import { ObserverLike_notify } from "../../../computations.js";
 import { none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, SchedulerLike_schedule, } from "../../../utils.js";
+import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, ObserverLike_notify, SchedulerLike_schedule, } from "../../../utils.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
 const Observable_fromReadonlyArray = (options) => (arr) => Observable_createPureSynchronousObservable((observer) => {
     const { delay = 0, delayStart = false } = options ?? {};

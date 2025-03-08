@@ -7,8 +7,6 @@ import {
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
-  EventListenerLike,
-  EventListenerLike_notify,
   EventSourceLike,
   EventSourceLike_addEventListener,
 } from "../../../computations.js";
@@ -19,6 +17,8 @@ import {
   DisposableContainerLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EventListenerLike,
+  EventListenerLike_notify,
 } from "../../../utils.js";
 import type * as EventSource from "../../EventSource.js";
 

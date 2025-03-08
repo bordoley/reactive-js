@@ -17,11 +17,7 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  DispatcherLike_complete,
-  EventListenerLike_notify,
   ObservableLike_observe,
-  ObserverLike,
-  ObserverLike_notify,
   SubjectLike,
 } from "../computations.js";
 import {
@@ -37,10 +33,14 @@ import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import QueueMixin from "../utils/__mixins__/QueueMixin.js";
 import {
+  DispatcherLike_complete,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
   DropOldestBackpressureStrategy,
+  EventListenerLike_notify,
+  ObserverLike,
+  ObserverLike_notify,
   QueueLike,
   QueueableLike_enqueue,
   SchedulerLike_inContinuation,

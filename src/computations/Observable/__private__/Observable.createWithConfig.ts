@@ -13,13 +13,12 @@ import {
   DeferredObservableWithSideEffectsLike,
   ObservableLike,
   ObservableLike_observe,
-  ObserverLike,
   PureDeferredObservableLike,
   PureSynchronousObservableLike,
   SynchronousObservableWithSideEffectsLike,
 } from "../../../computations.js";
 import { SideEffect1, error, none } from "../../../functions.js";
-import { DisposableLike_dispose } from "../../../utils.js";
+import { DisposableLike_dispose, ObserverLike } from "../../../utils.js";
 
 interface ObservableCreateWithConfig {
   createWithConfig<T>(

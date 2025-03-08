@@ -16,7 +16,6 @@ import {
   ComputationLike_isSynchronous,
   DeferredObservableLike,
   ObservableLike_observe,
-  ObserverLike,
   StoreLike_value,
   StreamLike,
   StreamableLike_stream,
@@ -45,6 +44,7 @@ import {
   DisposableContainerLike_add,
   DisposableLike,
   DropOldestBackpressureStrategy,
+  ObserverLike,
   QueueableLike_enqueue,
   SchedulerLike,
 } from "../utils.js";

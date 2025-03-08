@@ -4,12 +4,12 @@ import { include, init, mixInstanceFactory, } from "../../../__internal__/mixins
 import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
 import * as Publisher from "../../../computations/Publisher.js";
-import { DeferredComputationWithSideEffects, EventListenerLike_notify, StreamableLike_stream, } from "../../../computations.js";
+import { DeferredComputationWithSideEffects, StreamableLike_stream, } from "../../../computations.js";
 import { compose, isNumber, isReadonlyArray, pipe, returns, scale, tuple, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
-import { PauseableLike_resume, } from "../../../utils.js";
+import { EventListenerLike_notify, PauseableLike_resume, } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import * as Subject from "../../Subject.js";
 import DelegatingEventSourceMixin from "../../__mixins__/DelegatingEventSourceMixin.js";

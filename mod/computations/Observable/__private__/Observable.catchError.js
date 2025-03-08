@@ -4,8 +4,8 @@ import * as Computation from "../../../computations/Computation.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike_observe, } from "../../../computations.js";
 import { bind, bindMethod, error, isSome, none, pipe, } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
 import { DisposableLike_dispose } from "../../../utils.js";
-import Observer_createWithDelegate from "../../Observer/__private__/Observer.createWithDelegate.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 const Observable_catchError = 
 /*@__PURE__*/ (() => {

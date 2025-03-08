@@ -1,13 +1,12 @@
 /// <reference types="./Observable.takeWhile.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../computations/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin from "../../../computations/__mixins__/ObserverMixin.js";
-import { ObserverLike_notify } from "../../../computations.js";
 import { none, partial, pipe } from "../../../functions.js";
+import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import { DisposableLike_dispose } from "../../../utils.js";
-import Observer_assertObserverState from "../../Observer/__private__/Observer.assertObserverState.js";
+import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
+import { DisposableLike_dispose, ObserverLike_notify, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const TakeWhileObserver_inclusive = Symbol("TakeWhileObserver_inclusive");
 const TakeWhileObserver_predicate = Symbol("TakeWhileObserver_predicate");

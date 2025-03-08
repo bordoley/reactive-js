@@ -1,9 +1,10 @@
 /// <reference types="./Observable.scanMany.d.ts" />
 
 import * as Computation from "../../../computations/Computation.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, EventListenerLike_notify, ObservableLike_observe, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike_observe, } from "../../../computations.js";
 import { invoke, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import { EventListenerLike_notify } from "../../../utils.js";
 import * as Subject from "../../Subject.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_forEach from "./Observable.forEach.js";

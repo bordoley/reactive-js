@@ -1,9 +1,9 @@
 import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  ObserverLike,
 } from "../../../computations.js";
 import { SideEffect1 } from "../../../functions.js";
+import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 

@@ -59,10 +59,10 @@ import * as Dictionary from "../../collections/Dictionary.js";
 import { DictionaryLike_get } from "../../collections.js";
 import * as Observable from "../../computations/Observable.js";
 import * as Streamable from "../../computations/Streamable.js";
-import { DispatcherLike_complete, DispatcherLike_state, DispatcherState_completed, StoreLike_value, StreamableLike_stream, } from "../../computations.js";
+import { StoreLike_value, StreamableLike_stream } from "../../computations.js";
 import { bindMethod, invoke, none, pipe, pipeSome, returns, } from "../../functions.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
-import { DropLatestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { DispatcherLike_complete, DispatcherLike_state, DispatcherState_completed, DropLatestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 testModule("Streamable", describe("animation", test("integration", () => {

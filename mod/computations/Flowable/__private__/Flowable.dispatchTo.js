@@ -1,10 +1,10 @@
 /// <reference types="./Flowable.dispatchTo.d.ts" />
 
 import * as EventSource from "../../../computations/EventSource.js";
-import { DispatcherLike_state, DispatcherState_capacityExceeded, DispatcherState_completed, DispatcherState_ready, FlowableLike_flow, ObservableLike_observe, } from "../../../computations.js";
+import { FlowableLike_flow, ObservableLike_observe, } from "../../../computations.js";
 import { invoke, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { PauseableLike_pause, PauseableLike_resume, QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../utils.js";
+import { DispatcherLike_state, DispatcherState_capacityExceeded, DispatcherState_completed, DispatcherState_ready, PauseableLike_pause, PauseableLike_resume, QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 const Flowable_dispatchTo = (dispatcher) => (flowable) => Observable.create(observer => {
     const flowed = pipe(flowable[FlowableLike_flow](observer, {

@@ -6,11 +6,11 @@ import * as Cache from "./computations/Cache.js";
 import * as EventSource from "./computations/EventSource.js";
 import * as Observable from "./computations/Observable.js";
 import * as Subject from "./computations/Subject.js";
-import { DispatcherLike_complete, EventListenerLike_notify, FlowableLike_flow, StoreLike_value, StreamableLike_stream, } from "./computations.js";
+import { FlowableLike_flow, StoreLike_value, StreamableLike_stream, } from "./computations.js";
 import { bindMethod, isFunction, isNone, isSome, none, pipe, pipeSomeLazy, raiseError, } from "./functions.js";
 import * as ReactScheduler from "./react/Scheduler.js";
 import * as DisposableContainer from "./utils/DisposableContainer.js";
-import { DisposableLike_dispose, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, } from "./utils.js";
+import { DispatcherLike_complete, DisposableLike_dispose, EventListenerLike_notify, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, } from "./utils.js";
 export const createComponent = (fn, options = {}) => {
     const ObservableComponent = (props) => {
         const propsSubject = useDisposable(() => Subject.create({ replay: 1 }), []);

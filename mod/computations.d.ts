@@ -1,5 +1,5 @@
 import type { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4, Updater } from "./functions.js";
-import type { BackpressureStrategy, DisposableContainerLike, DisposableLike, PauseableLike, QueueableLike, SchedulerLike } from "./utils.js";
+import type { BackpressureStrategy, DispatcherLike, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, PauseableLike, SchedulerLike } from "./utils.js";
 export declare const ComputationLike_isPure: unique symbol;
 export declare const ComputationLike_isDeferred: unique symbol;
 export declare const ComputationLike_isSynchronous: unique symbol;
@@ -276,18 +276,6 @@ export declare const SynchronousComputationWithSideEffects: SynchronousComputati
 export declare const PureDeferredComputation: PureDeferredComputationLike;
 export declare const DeferredComputationWithSideEffects: DeferredComputationWithSideEffectsLike;
 export declare const MulticastComputation: MulticastComputationLike;
-export declare const EventListenerLike_notify: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface EventListenerLike<T = unknown> extends DisposableLike {
-    /**
-     * Notifies the EventListener of the next notification produced by the source.
-     *
-     * @param next - The next notification value.
-     */
-    [EventListenerLike_notify](event: T): void;
-}
 export declare const EventSourceLike_addEventListener: unique symbol;
 /**
  * @noInheritDoc
@@ -320,39 +308,6 @@ export interface WritableStoreLike<T = unknown> extends StoreLike<T>, Disposable
  * @noInheritDoc
  */
 export interface PauseableEventSourceLike<out T = unknown> extends EventSourceLike<T>, PauseableLike {
-}
-export declare const DispatcherState_ready: unique symbol;
-export declare const DispatcherState_capacityExceeded: unique symbol;
-export declare const DispatcherState_completed: unique symbol;
-export type DispatcherState = typeof DispatcherState_ready | typeof DispatcherState_capacityExceeded | typeof DispatcherState_completed;
-export declare const DispatcherLike_complete: unique symbol;
-export declare const DispatcherLike_state: unique symbol;
-/**
- * A `QueueableLike` type that consumes enqueued events to
- * be dispatched from any execution constext.
- *
- * @noInheritDoc
- */
-export interface DispatcherLike<T = unknown> extends QueueableLike<T>, DisposableLike {
-    readonly [DispatcherLike_state]: StoreLike<DispatcherState>;
-    /**
-     * Communicates to the dispatcher that no more events will be enqueued.
-     */
-    [DispatcherLike_complete](): void;
-}
-export declare const ObserverLike_notify: unique symbol;
-/**
- * A consumer of push-based notifications.
- *
- * @noInheritDoc
- */
-export interface ObserverLike<T = unknown> extends DispatcherLike<T>, SchedulerLike {
-    /**
-     * Notifies the observer of the next notification produced by the source.
-     *
-     * @param next - The next notification value.
-     */
-    [ObserverLike_notify](event: T): void;
 }
 export declare const ObservableLike_observe: unique symbol;
 /**

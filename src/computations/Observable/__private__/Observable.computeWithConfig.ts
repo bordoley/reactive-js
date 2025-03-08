@@ -9,8 +9,6 @@ import {
   ComputationLike_isSynchronous,
   DeferredObservableWithSideEffectsLike,
   ObservableLike,
-  ObserverLike,
-  ObserverLike_notify,
   SynchronousObservableWithSideEffectsLike,
 } from "../../../computations.js";
 import {
@@ -33,6 +31,8 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  ObserverLike,
+  ObserverLike_notify,
   SchedulerLike_schedule,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";

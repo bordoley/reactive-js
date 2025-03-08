@@ -2,7 +2,6 @@ import * as Computation from "../../../computations/Computation.js";
 import {
   ObservableLike,
   ObservableLike_observe,
-  ObserverLike,
 } from "../../../computations.js";
 import {
   Equality,
@@ -12,6 +11,7 @@ import {
   pipe,
   returns,
 } from "../../../functions.js";
+import { ObserverLike } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 import Streamable_create from "./Streamable.create.js";

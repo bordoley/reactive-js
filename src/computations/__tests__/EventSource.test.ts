@@ -10,8 +10,6 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
   Computation_multicastOfT,
-  EventListenerLike,
-  EventListenerLike_notify,
   EventSourceLike,
   EventSourceLike_addEventListener,
 } from "../../computations.js";
@@ -30,6 +28,8 @@ import {
   DisposableContainerLike_add,
   DisposableLike_dispose,
   DisposableLike_error,
+  EventListenerLike,
+  EventListenerLike_notify,
 } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";

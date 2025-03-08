@@ -4,12 +4,9 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
-import {
-  EventListenerLike,
-  EventListenerLike_notify,
-} from "../../../computations.js";
 import { Function1, none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { EventListenerLike, EventListenerLike_notify } from "../../../utils.js";
 
 import type * as EventSource from "../../EventSource.js";
 import EventSource_lift from "./EventSource.lift.js";
