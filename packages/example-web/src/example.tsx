@@ -13,6 +13,7 @@ import {
   useDispatcher,
   usePauseable,
   useObserve,
+  useDisposable,
 } from "@reactive-js/core/react";
 import {
   useAnimate,
@@ -62,8 +63,6 @@ import {
   PauseableLike_pause,
   QueueableLike_enqueue,
 } from "@reactive-js/core/utils";
-import * as Flowable from "@reactive-js/core/computations/Flowable";
-import { useFlow } from "@reactive-js/core/react";
 import * as AnimationFrameScheduler from "@reactive-js/core/web/AnimationFrameScheduler";
 import * as Cache from "@reactive-js/core/computations/Cache";
 
@@ -185,7 +184,7 @@ const Counter = () => {
     }
   }, [history.uri, counterInitialValue, setCounterInitialValue]);
 
-  const counter = useFlow(
+  const counter = useDisposable(
     pipeLazy(
       Observable.generate(increment, returns(counterInitialValue ?? -1)),
       Observable.forEach<number>(value =>
@@ -194,7 +193,9 @@ const Counter = () => {
           query: `v=${value}`,
         })),
       ),
-      Flowable.fromSynchronousObservable(),
+      Observable.toPauseableObservable(
+        ReactScheduler.get(),
+      ),
     ),
     [history.replace, counterInitialValue],
   );

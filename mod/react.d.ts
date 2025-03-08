@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import * as Cache from "./computations/Cache.js";
-import { DeferredObservableLike, EventSourceLike, FlowableLike, MulticastObservableLike, ObservableLike, PauseableObservableLike, StoreLike, StreamOf, StreamableLike } from "./computations.js";
+import { DeferredObservableLike, EventSourceLike, MulticastObservableLike, ObservableLike, StoreLike, StreamOf, StreamableLike } from "./computations.js";
 import { Factory, Function1, Optional, SideEffect } from "./functions.js";
 import { BackpressureStrategy, DispatcherLike, DisposableLike, PauseableLike } from "./utils.js";
 interface ReactModule {
@@ -29,20 +29,6 @@ interface ReactModule {
     /**
      */
     useDisposable<TDisposable extends DisposableLike>(factory: () => Optional<TDisposable>, deps: readonly unknown[]): Optional<TDisposable>;
-    /**
-     */
-    useFlow<T>(flowable: FlowableLike<T>, options?: {
-        readonly priority?: 1 | 2 | 3 | 4 | 5;
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-        readonly replay?: number;
-    }): Optional<PauseableObservableLike<T>>;
-    useFlow<T>(factory: Factory<FlowableLike<T>>, dep: readonly unknown[], options?: {
-        readonly priority?: 1 | 2 | 3 | 4 | 5;
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-        readonly replay?: number;
-    }): Optional<PauseableObservableLike<T>>;
     /**
      */
     useListen<T>(eventSource: Optional<EventSourceLike<T>>): Optional<T>;
@@ -92,6 +78,5 @@ export declare const useObserve: Signature["useObserve"];
 export declare const usePauseable: Signature["usePauseable"];
 export declare const useStore: Signature["useStore"];
 export declare const useStream: Signature["useStream"];
-export declare const useFlow: Signature["useFlow"];
 export declare const CacheProvider: Signature["CacheProvider"];
 export {};

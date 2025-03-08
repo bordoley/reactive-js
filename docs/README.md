@@ -17,7 +17,6 @@
 - [computations/Cache](computations/Cache/README.md)
 - [computations/Computation](computations/Computation/README.md)
 - [computations/EventSource](computations/EventSource/README.md)
-- [computations/Flowable](computations/Flowable/README.md)
 - [computations/Iterable](computations/Iterable/README.md)
 - [computations/Observable](computations/Observable/README.md)
 - [computations/Observable/effects](computations/Observable/effects/README.md)

@@ -4,21 +4,31 @@ import {
   mixInstanceFactory,
   props,
 } from "../__internal__/mixins.js";
+import * as EventSource from "../computations/EventSource.js";
 import {
+  DeferredObservableWithSideEffectsLike,
   EventSourceLike,
   MulticastObservableLike,
+  ObservableLike_observe,
   PauseableObservableLike,
   StoreLike_value,
   WritableStoreLike,
 } from "../computations.js";
-import { Function1, none, pipe } from "../functions.js";
+import { Function1, invoke, none, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
+  DispatcherLike,
+  DispatcherLike_state,
+  DispatcherState_capacityExceeded,
+  DispatcherState_completed,
+  DispatcherState_ready,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
 } from "../utils.js";
+import Observable_create from "./Observable/__private__/Observable.create.js";
+import Observable_dispatchTo from "./Observable/__private__/Observable.dispatchTo.js";
 import * as WritableStore from "./WritableStore.js";
 import DelegatingMulticastObservableMixin from "./__mixins__/DelegatingMulticastObservableMixin.js";
 
@@ -26,9 +36,16 @@ interface PauseableObservableModule {
   create<T>(
     op: Function1<EventSourceLike<boolean>, MulticastObservableLike<T>>,
   ): PauseableObservableLike<T>;
+
+  dispatchTo<T>(
+    dispatcher: DispatcherLike<T>,
+  ): Function1<
+    PauseableObservableLike<T>,
+    DeferredObservableWithSideEffectsLike<T>
+  >;
 }
 
-type Signature = PauseableObservableModule;
+export type Signature = PauseableObservableModule;
 
 export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
   type TProperties = {
@@ -74,3 +91,31 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
     },
   );
 })();
+
+export const dispatchTo: Signature["dispatchTo"] =
+  <T>(dispatcher: DispatcherLike<T>) =>
+  (src: PauseableObservableLike<T>) =>
+    Observable_create<T>(observer => {
+      pipe(
+        dispatcher[DispatcherLike_state],
+        EventSource.addEventHandler(ev => {
+          if (
+            ev === DispatcherState_capacityExceeded ||
+            ev === DispatcherState_completed
+          ) {
+            src[PauseableLike_pause]();
+          } else if (ev === DispatcherState_ready) {
+            src[PauseableLike_resume]();
+          }
+        }),
+        Disposable.addTo(observer),
+      );
+
+      pipe(
+        src,
+        Observable_dispatchTo(dispatcher),
+        invoke(ObservableLike_observe, observer),
+      );
+
+      src[PauseableLike_resume]();
+    });

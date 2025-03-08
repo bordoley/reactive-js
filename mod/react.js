@@ -6,7 +6,7 @@ import * as Cache from "./computations/Cache.js";
 import * as EventSource from "./computations/EventSource.js";
 import * as Observable from "./computations/Observable.js";
 import * as Subject from "./computations/Subject.js";
-import { FlowableLike_flow, StoreLike_value, StreamableLike_stream, } from "./computations.js";
+import { StoreLike_value, StreamableLike_stream, } from "./computations.js";
 import { bindMethod, isFunction, isNone, isSome, none, pipe, pipeSomeLazy, raiseError, } from "./functions.js";
 import * as ReactScheduler from "./react/Scheduler.js";
 import * as DisposableContainer from "./utils/DisposableContainer.js";
@@ -117,20 +117,6 @@ export const useStream = (streamableOrFactory, optionsOrDeps, optionsOrNone) => 
         capacity,
     }), [streamable, priority, replay, backpressureStrategy, capacity]);
     return stream;
-};
-export const useFlow = (flowableOrFactory, optionsOrDeps, optionsOrNone) => {
-    const flowable = isFunction(flowableOrFactory)
-        ? useMemo(flowableOrFactory, optionsOrDeps)
-        : flowableOrFactory;
-    const { backpressureStrategy, capacity, priority, replay = 1, } = (isFunction(flowableOrFactory)
-        ? optionsOrNone
-        : optionsOrDeps) ?? {};
-    const pauseable = useDisposable(() => flowable[FlowableLike_flow](ReactScheduler.get(priority), {
-        replay,
-        backpressureStrategy,
-        capacity,
-    }), [flowable, priority, replay, backpressureStrategy, capacity]);
-    return pauseable;
 };
 export const CacheProvider = (props) => {
     const { cacheContext, priority, backpressureStrategy, capacity, cleanupPriority, maxEntries, persistentStore, children, } = props ?? {};
