@@ -1,4 +1,5 @@
 import {
+  AsyncIterableLike,
   ComputationModule,
   ComputationType,
   Computation_T,
@@ -13,6 +14,7 @@ import { DisposableLike, EventListenerLike } from "../utils.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource/__private__/EventSource.create.js";
 import EventSource_empty from "./EventSource/__private__/EventSource.empty.js";
+import EventSource_fromAsyncIterable from "./EventSource/__private__/EventSource.fromAsyncIterable.js";
 import EventSource_fromIterable from "./EventSource/__private__/EventSource.fromIterable.js";
 import EventSource_fromPromise from "./EventSource/__private__/EventSource.fromPromise.js";
 import EventSource_fromReadonlyArray from "./EventSource/__private__/EventSource.fromReadonlyArray.js";
@@ -55,6 +57,11 @@ export interface EventSourceModule
 
   empty<T>(): EventSourceLike<T> & DisposableLike;
 
+  fromAsyncIterable<T>(): Function1<
+    AsyncIterableLike<T>,
+    EventSourceLike<T> & DisposableLike
+  >;
+
   fromIterable<T>(): Function1<
     IterableLike<T>,
     EventSourceLike<T> & DisposableLike
@@ -86,6 +93,8 @@ export const addEventHandler: Signature["addEventHandler"] =
   EventSource_addEventHandler;
 export const create: Signature["create"] = EventSource_create;
 export const empty: Signature["empty"] = EventSource_empty;
+export const fromAsyncIterable: Signature["fromAsyncIterable"] =
+  EventSource_fromAsyncIterable;
 export const fromIterable: Signature["fromIterable"] = EventSource_fromIterable;
 export const fromPromise: Signature["fromPromise"] = EventSource_fromPromise;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
