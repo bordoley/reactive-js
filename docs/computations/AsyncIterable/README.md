@@ -18,7 +18,10 @@
 
 ## Functions
 
+- [fromIterable](functions/fromIterable.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
+- [fromValue](functions/fromValue.md)
+- [generate](functions/generate.md)
 - [keep](functions/keep.md)
 - [map](functions/map.md)
 - [of](functions/of.md)

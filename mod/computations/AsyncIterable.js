@@ -1,8 +1,9 @@
 /// <reference types="./AsyncIterable.d.ts" />
 
 import { Array_push, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
-import { ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, } from "../computations.js";
-import { bindMethod, error, newInstance, pipe, returns, } from "../functions.js";
+import parseArrayBounds from "../__internal__/parseArrayBounds.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, } from "../computations.js";
+import { bindMethod, error, newInstance, none, pipe, returns, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import { DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, } from "../utils.js";
@@ -11,9 +12,8 @@ import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_fromAsyncIterable from "./Observable/__private__/Observable.fromAsyncIterable.js";
 import Observable_multicast from "./Observable/__private__/Observable.multicast.js";
 import * as PauseableObservable from "./PauseableObservable.js";
-class FromReadonlyArrayAsyncIterable {
+class FromIterableAsyncIterable {
     s;
-    [ComputationLike_isPure] = false;
     [ComputationLike_isSynchronous] = false;
     constructor(s) {
         this.s = s;
@@ -24,13 +24,59 @@ class FromReadonlyArrayAsyncIterable {
         }
     }
 }
-export const fromReadonlyArray = 
+export const fromIterable = 
 /*@__PURE__*/
-returns(arr => newInstance(FromReadonlyArrayAsyncIterable, arr));
+returns(arr => newInstance(FromIterableAsyncIterable, arr));
+class FromReadonlyArrayAsyncIterable {
+    arr;
+    count;
+    start;
+    [ComputationLike_isSynchronous] = false;
+    constructor(arr, count, start) {
+        this.arr = arr;
+        this.count = count;
+        this.start = start;
+    }
+    async *[Symbol.asyncIterator]() {
+        let { arr, start, count } = this;
+        while (count !== 0) {
+            const next = arr[start];
+            yield next;
+            count > 0 ? (start++, count--) : (start--, count++);
+        }
+    }
+}
+export const fromReadonlyArray = (options) => (arr) => {
+    let [start, count] = parseArrayBounds(arr, options);
+    return newInstance(FromReadonlyArrayAsyncIterable, arr, count, start);
+};
+export const fromValue = 
+/*@__PURE__*/
+returns(v => fromReadonlyArray()([v]));
+class GeneratorAsyncIterable {
+    generator;
+    initialValue;
+    count;
+    [ComputationLike_isSynchronous] = false;
+    constructor(generator, initialValue, count) {
+        this.generator = generator;
+        this.initialValue = initialValue;
+        this.count = count;
+    }
+    async *[Symbol.asyncIterator]() {
+        const { count, generator } = this;
+        let acc = this.initialValue();
+        for (let cnt = 0; count === none || cnt < count; cnt++) {
+            acc = generator(acc);
+            yield acc;
+        }
+    }
+}
+export const generate = (generator, initialValue, options) => newInstance(GeneratorAsyncIterable, generator, initialValue, options?.count);
 class KeepAsyncIterable {
     d;
     p;
-    [ComputationLike_isPure] = false;
+    [ComputationLike_isPure];
     [ComputationLike_isSynchronous] = false;
     constructor(d, p) {
         this.d = d;
@@ -51,11 +97,12 @@ export const keep = ((predicate) => (iterable) => newInstance(KeepAsyncIterable,
 class MapAsyncIterable {
     d;
     m;
-    [ComputationLike_isPure] = false;
+    [ComputationLike_isPure];
     [ComputationLike_isSynchronous] = false;
     constructor(d, m) {
         this.d = d;
         this.m = m;
+        this[ComputationLike_isPure] = d[ComputationLike_isPure];
     }
     async *[Symbol.asyncIterator]() {
         const delegate = this.d;

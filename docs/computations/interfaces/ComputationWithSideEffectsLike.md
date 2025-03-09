@@ -10,6 +10,10 @@
 
 - [`ComputationLike`](ComputationLike.md)
 
+## Extended by
+
+- [`AsyncIterableWithSideEffectsLike`](AsyncIterableWithSideEffectsLike.md)
+
 ## Properties
 
 ### \[ComputationLike\_isDeferred\]?

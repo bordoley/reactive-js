@@ -54,7 +54,7 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 });
 import { describe, expectArrayEquals, expectToThrowAsync, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as Observable from "../../computations/Observable.js";
-import { Computation_deferredWithSideEffectsOfT } from "../../computations.js";
+import { Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, } from "../../computations.js";
 import { error, none, pipe, pipeLazy } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
@@ -62,7 +62,8 @@ import { PauseableLike_pause, PauseableLike_resume, SchedulerLike_schedule, } fr
 import * as AsyncIterable from "../AsyncIterable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 const AsyncIterableTypes = {
-    [Computation_deferredWithSideEffectsOfT]: pipe([], AsyncIterable.fromReadonlyArray()),
+    [Computation_deferredWithSideEffectsOfT]: pipe((async function* () { })(), AsyncIterable.of()),
+    [Computation_pureDeferredOfT]: pipe([], AsyncIterable.fromReadonlyArray()),
 };
 testModule("AsyncIterable", ComputationModuleTests(AsyncIterable, AsyncIterableTypes), describe("toPauseableObservable", testAsync("infinite immediately resolving iterable", async () => {
     const env_1 = { stack: [], error: void 0, hasError: false };

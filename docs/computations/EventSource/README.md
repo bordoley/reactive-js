@@ -20,7 +20,11 @@
 
 - [addEventHandler](functions/addEventHandler.md)
 - [create](functions/create.md)
+- [fromIterable](functions/fromIterable.md)
 - [fromPromise](functions/fromPromise.md)
+- [fromReadonlyArray](functions/fromReadonlyArray.md)
+- [fromValue](functions/fromValue.md)
+- [generate](functions/generate.md)
 - [keep](functions/keep.md)
 - [map](functions/map.md)
 - [merge](functions/merge.md)

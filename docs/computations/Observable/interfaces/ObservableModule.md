@@ -410,7 +410,7 @@
 
 #### Overrides
 
-[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`fromIterable`](../../interfaces/DeferredReactiveComputationModule.md#fromiterable)
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`fromIterable`](../../interfaces/ConcurrentReactiveComputationModule.md#fromiterable)
 
 ***
 
@@ -466,7 +466,7 @@
 
 #### Overrides
 
-[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`fromReadonlyArray`](../../interfaces/DeferredReactiveComputationModule.md#fromreadonlyarray)
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`fromReadonlyArray`](../../interfaces/ConcurrentReactiveComputationModule.md#fromreadonlyarray)
 
 ***
 
@@ -506,7 +506,7 @@
 
 #### Overrides
 
-[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`fromValue`](../../interfaces/DeferredReactiveComputationModule.md#fromvalue)
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`fromValue`](../../interfaces/ConcurrentReactiveComputationModule.md#fromvalue)
 
 ***
 
@@ -548,7 +548,7 @@
 
 #### Overrides
 
-[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`generate`](../../interfaces/DeferredReactiveComputationModule.md#generate)
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`generate`](../../interfaces/ConcurrentReactiveComputationModule.md#generate)
 
 ***
 

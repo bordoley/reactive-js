@@ -9,6 +9,7 @@
 ## Interfaces
 
 - [AsyncIterableLike](interfaces/AsyncIterableLike.md)
+- [AsyncIterableWithSideEffectsLike](interfaces/AsyncIterableWithSideEffectsLike.md)
 - [ComputationLike](interfaces/ComputationLike.md)
 - [ComputationModule](interfaces/ComputationModule.md)
 - [ComputationWithSideEffectsLike](interfaces/ComputationWithSideEffectsLike.md)
@@ -30,6 +31,7 @@
 - [PauseableEventSourceLike](interfaces/PauseableEventSourceLike.md)
 - [PauseableObservableLike](interfaces/PauseableObservableLike.md)
 - [PublisherLike](interfaces/PublisherLike.md)
+- [PureAsyncIterableLike](interfaces/PureAsyncIterableLike.md)
 - [PureComputationLike](interfaces/PureComputationLike.md)
 - [PureDeferredComputationLike](interfaces/PureDeferredComputationLike.md)
 - [PureDeferredObservableLike](interfaces/PureDeferredObservableLike.md)
