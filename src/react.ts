@@ -208,7 +208,7 @@ export const useDispatcher: Signature["useDispatcher"] = <TReq>(
     [stableDispatcherRef],
   );
 
-  return { enqueue, complete };
+  return useMemo(() => ({ enqueue, complete }), [enqueue, complete]);
 };
 
 export const useDisposable: Signature["useDisposable"] = <
@@ -341,11 +341,14 @@ export const usePauseable: Signature["usePauseable"] = (
     pauseable?.[PauseableLike_isPaused][StoreLike_value] ??
     true;
 
-  return {
-    isPaused,
-    pause,
-    resume,
-  };
+  return useMemo(
+    () => ({
+      isPaused,
+      pause,
+      resume,
+    }),
+    [isPaused, pause, resume],
+  );
 };
 
 export const useStore: Signature["useStore"] = <T>(

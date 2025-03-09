@@ -44,8 +44,6 @@ import {
   __currentScheduler,
   __memo,
   __observe,
-  __stream,
-  __using,
 } from "@reactive-js/core/computations/Observable/effects";
 import { __animate, __animation } from "@reactive-js/core/web/effects";
 import { Wordle } from "./wordle.js";
@@ -97,7 +95,7 @@ const AnimatedBox = ({
 };
 
 const AnimationGroup = () => {
-  const animationStream = useAnimationGroup<number>({
+  const animation = useAnimationGroup<number>({
     a: pipe(
       Observable.concat(
         Observable.keyFrame(500),
@@ -116,14 +114,14 @@ const AnimationGroup = () => {
     ),
   });
 
-  const animationDispatcher = useDispatcher(animationStream);
-  const isAnimationRunning = useObserve(animationStream) ?? false;
+  const animationController = useDispatcher(animation);
+  const isAnimationRunning = useObserve(animation) ?? false;
 
   return (
     <div>
       <div>
         {pipeSome(
-          animationStream,
+          animation,
           Dictionary.entries(),
           ReadonlyArray.fromIterable(),
           ReadonlyArray.map(
@@ -135,7 +133,7 @@ const AnimationGroup = () => {
       </div>
       <div>
         <button
-          onClick={() => animationDispatcher.enqueue(none)}
+          onClick={animationController.enqueue}
           disabled={isAnimationRunning}
         >
           Run Animation
@@ -258,7 +256,7 @@ const RxComponent = createComponent(
       const { windowLocation } = __await(props);
       const uri = __await(windowLocation);
 
-      const animationStream = __animation(
+      const animation = __animation(
         Observable.concat(
           pipe(
             Observable.keyFrame(1000),
@@ -283,21 +281,21 @@ const RxComponent = createComponent(
         { animationScheduler },
       );
 
-      const isAnimationRunning = __observe(animationStream) ?? false;
+      const isAnimationRunning = __observe(animation) ?? false;
       const isAnimationPausedObservable: ObservableLike<boolean> = __constant(
-        pipe(animationStream[PauseableLike_isPaused], Observable.fromStore()),
-        animationStream,
+        pipe(animation[PauseableLike_isPaused], Observable.fromStore()),
+        animation,
       );
 
       const isAnimationPaused =
         __observe(isAnimationPausedObservable) ??
-        animationStream[PauseableLike_isPaused][StoreLike_value];
-      const runAnimation = bindMethod(animationStream, QueueableLike_enqueue);
+        animation[PauseableLike_isPaused][StoreLike_value];
+      const runAnimation = bindMethod(animation, QueueableLike_enqueue);
 
-      const pauseAnimation = bindMethod(animationStream, PauseableLike_pause);
-      const resumeAnimation = bindMethod(animationStream, PauseableLike_resume);
+      const pauseAnimation = bindMethod(animation, PauseableLike_pause);
+      const resumeAnimation = bindMethod(animation, PauseableLike_resume);
 
-      const animatedDivRef = __animate(animationStream);
+      const animatedDivRef = __animate(animation);
 
       return (
         <div>

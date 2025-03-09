@@ -118,12 +118,12 @@ export const Wordle = () => {
     ),
   );
 
-  const { enqueue } = useDispatcher(animation);
+  const animationController = useDispatcher(animation);
   const isAnimationRunning = useObserve(animation) ?? false;
 
   useEffect(() => {
-    enqueue(state);
-  }, [enqueue, state]);
+    animationController.enqueue(state);
+  }, [animationController, state]);
 
   return (
     <div

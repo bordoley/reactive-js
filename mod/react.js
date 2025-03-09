@@ -29,7 +29,7 @@ export const useDispatcher = (dispatcher) => {
     }, [dispatcher]);
     const enqueue = useCallback((req) => stableDispatcherRef?.current?.[QueueableLike_enqueue](req) ?? true, [stableDispatcherRef]);
     const complete = useCallback(() => stableDispatcherRef?.current?.[DispatcherLike_complete](), [stableDispatcherRef]);
-    return { enqueue, complete };
+    return useMemo(() => ({ enqueue, complete }), [enqueue, complete]);
 };
 export const useDisposable = (factory, deps) => {
     const [disposable, setDisposable] = useState(none);
@@ -86,11 +86,11 @@ export const usePauseable = (pauseable) => {
     const isPaused = useListen(pauseable?.[PauseableLike_isPaused]) ??
         pauseable?.[PauseableLike_isPaused][StoreLike_value] ??
         true;
-    return {
+    return useMemo(() => ({
         isPaused,
         pause,
         resume,
-    };
+    }), [isPaused, pause, resume]);
 };
 export const useStore = (storeOrFactory, depsOrNone) => {
     const [state, updateState] = useState(none);
