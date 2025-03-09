@@ -18,6 +18,7 @@ import {
 } from "../../../computations.js";
 import {
   Function1,
+  Optional,
   Tuple2,
   compose,
   isNumber,
@@ -43,30 +44,7 @@ import * as Subject from "../../Subject.js";
 import DelegatingEventSourceMixin from "../../__mixins__/DelegatingEventSourceMixin.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 
-const SpringStream_create: (
-  initialValue: number,
-  scheduler: SchedulerLike,
-  animationScheduler: SchedulerLike,
-  springOptions?: {
-    readonly stiffness?: number;
-    readonly damping?: number;
-    readonly precision?: number;
-  },
-  options?: {
-    readonly backpressureStrategy?: BackpressureStrategy;
-    readonly replay?: number;
-    readonly capacity?: number;
-  },
-) => Streamable.AnimationStreamLike<
-  Function1<
-    number,
-    | number
-    | { from: number; to: number | ReadonlyArray<number> }
-    | ReadonlyArray<number>
-  >,
-  number
-> &
-  DisposableLike = /*@__PURE__*/ (() => {
+const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
   const ObservableModule = {
     concat: Observable.concat,
     concatAll: Observable.concatAll,
@@ -77,7 +55,7 @@ const SpringStream_create: (
     switchAll: Observable.switchAll,
   };
 
-  return mixInstanceFactory(
+  const SpringStream_create = mixInstanceFactory(
     include(
       StreamMixin(),
       DelegatingPauseableMixin,
@@ -88,16 +66,16 @@ const SpringStream_create: (
       initialValue: number,
       scheduler: SchedulerLike,
       animationScheduler: SchedulerLike,
-      springOptions?: {
+      springOptions: Optional<{
         readonly stiffness?: number;
         readonly damping?: number;
         readonly precision?: number;
-      },
-      options?: {
+      }>,
+      options: Optional<{
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly replay?: number;
         readonly capacity?: number;
-      },
+      }>,
     ): Streamable.AnimationStreamLike<
       Function1<number, number | ReadonlyArray<number>>,
       number
@@ -233,37 +211,36 @@ const SpringStream_create: (
       return instance;
     },
   );
+
+  return (
+    initialValue: number,
+    creationOptions?: {
+      readonly animationScheduler?: SchedulerLike;
+      readonly stiffness?: number;
+      readonly damping?: number;
+      readonly precision?: number;
+    },
+  ): StreamableLike<
+    Function1<
+      number,
+      | number
+      | { from: number; to: number | ReadonlyArray<number> }
+      | ReadonlyArray<number>
+    >,
+    boolean,
+    Streamable.AnimationStreamLike<
+      Function1<number, number | ReadonlyArray<number>>,
+      number
+    >
+  > => ({
+    [StreamableLike_stream]: (scheduler, options) =>
+      SpringStream_create(
+        initialValue,
+        scheduler,
+        creationOptions?.animationScheduler ?? scheduler,
+        creationOptions,
+        options,
+      ),
+  });
 })();
-
-const Streamable_spring: Streamable.Signature["spring"] = (
-  initialValue: number,
-  creationOptions?: {
-    readonly animationScheduler?: SchedulerLike;
-    readonly stiffness?: number;
-    readonly damping?: number;
-    readonly precision?: number;
-  },
-): StreamableLike<
-  Function1<
-    number,
-    | number
-    | { from: number; to: number | ReadonlyArray<number> }
-    | ReadonlyArray<number>
-  >,
-  boolean,
-  Streamable.AnimationStreamLike<
-    Function1<number, number | ReadonlyArray<number>>,
-    number
-  >
-> => ({
-  [StreamableLike_stream]: (scheduler, options) =>
-    SpringStream_create(
-      initialValue,
-      scheduler,
-      creationOptions?.animationScheduler ?? scheduler,
-      creationOptions,
-      options,
-    ),
-});
-
 export default Streamable_spring;

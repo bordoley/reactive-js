@@ -3,8 +3,10 @@
 import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import { StreamableLike_stream, } from "../../../computations.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
-const Stream_create = /*@__PURE__*/ (() => createInstanceFactory(StreamMixin()))();
-const Streamable_create = (op) => ({
-    [StreamableLike_stream]: (scheduler, options) => Stream_create(op, scheduler, options),
-});
+const Streamable_create = /*@__PURE__*/ (() => {
+    const Stream_create = createInstanceFactory(StreamMixin());
+    return (op) => ({
+        [StreamableLike_stream]: (scheduler, options) => Stream_create(op, scheduler, options),
+    });
+})();
 export default Streamable_create;

@@ -16,7 +16,7 @@ import * as Observable from "../../Observable.js";
 import * as Subject from "../../Subject.js";
 import DelegatingEventSourceMixin from "../../__mixins__/DelegatingEventSourceMixin.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
-const SpringStream_create = /*@__PURE__*/ (() => {
+const Streamable_spring = /*@__PURE__*/ (() => {
     const ObservableModule = {
         concat: Observable.concat,
         concatAll: Observable.concatAll,
@@ -26,7 +26,7 @@ const SpringStream_create = /*@__PURE__*/ (() => {
         map: Observable.map,
         switchAll: Observable.switchAll,
     };
-    return mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin, DelegatingEventSourceMixin()), function AnimationStream(instance, initialValue, scheduler, animationScheduler, springOptions, options) {
+    const SpringStream_create = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin, DelegatingEventSourceMixin()), function AnimationStream(instance, initialValue, scheduler, animationScheduler, springOptions, options) {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
         const publisher = Publisher.create();
         const accFeedbackStream = Subject.create({ replay: 1 });
@@ -61,8 +61,8 @@ const SpringStream_create = /*@__PURE__*/ (() => {
         accFeedbackStream[EventListenerLike_notify](initialValue);
         return instance;
     });
+    return (initialValue, creationOptions) => ({
+        [StreamableLike_stream]: (scheduler, options) => SpringStream_create(initialValue, scheduler, creationOptions?.animationScheduler ?? scheduler, creationOptions, options),
+    });
 })();
-const Streamable_spring = (initialValue, creationOptions) => ({
-    [StreamableLike_stream]: (scheduler, options) => SpringStream_create(initialValue, scheduler, creationOptions?.animationScheduler ?? scheduler, creationOptions, options),
-});
 export default Streamable_spring;

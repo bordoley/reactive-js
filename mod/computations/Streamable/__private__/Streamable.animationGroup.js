@@ -15,7 +15,7 @@ import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPausea
 import { PauseableLike_resume, } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
-const AnimationGroupStream_create = 
+const Streamable_animationGroup = 
 /*@__PURE__*/ (() => {
     const AnimationGroupStream_eventSources = Symbol("AnimationGroupStream_delegate");
     const ObservableModule = {
@@ -27,7 +27,7 @@ const AnimationGroupStream_create =
         merge: Observable.merge,
         switchAll: Observable.switchAll,
     };
-    return mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin), function AnimationGroupStream(instance, animationGroup, scheduler, animationScheduler, options) {
+    const AnimationGroupStream_create = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin), function AnimationGroupStream(instance, animationGroup, scheduler, animationScheduler, options) {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
         const operator = Computation.flatMap(ObservableModule, "switchAll")((event) => pipe(animationGroup, ReadonlyObjectMap.entries(), Iterable.map(([key, factory]) => {
             const publisher = publishers[key];
@@ -52,8 +52,8 @@ const AnimationGroupStream_create =
             return this[AnimationGroupStream_eventSources][index];
         },
     });
+    return (animationGroup, creationOptions) => ({
+        [StreamableLike_stream]: (scheduler, options) => AnimationGroupStream_create(animationGroup, scheduler, creationOptions?.animationScheduler ?? scheduler, options),
+    });
 })();
-const Streamable_animationGroup = ((animationGroup, creationOptions) => ({
-    [StreamableLike_stream]: (scheduler, options) => AnimationGroupStream_create(animationGroup, scheduler, creationOptions?.animationScheduler ?? scheduler, options),
-}));
 export default Streamable_animationGroup;

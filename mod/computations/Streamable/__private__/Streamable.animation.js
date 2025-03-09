@@ -12,8 +12,7 @@ import { PauseableLike_resume, } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import DelegatingEventSourceMixin from "../../__mixins__/DelegatingEventSourceMixin.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
-const AnimationStream_create = 
-/*@__PURE__*/ (() => {
+const Streamable_animation = /*@__PURE__*/ (() => {
     const ObservableModule = {
         concat: Observable.concat,
         forEach: Observable.forEach,
@@ -22,7 +21,7 @@ const AnimationStream_create =
         map: Observable.map,
         switchAll: Observable.switchAll,
     };
-    return mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin, DelegatingEventSourceMixin()), function AnimationStream(instance, animation, scheduler, animationScheduler, options) {
+    const AnimationStream_create = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin, DelegatingEventSourceMixin()), function AnimationStream(instance, animation, scheduler, animationScheduler, options) {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
         const publisher = Publisher.create();
         const operator = Computation.flatMap(ObservableModule, "switchAll")((event) => pipe(isFunction(animation) ? animation(event) : animation, Computation.notify(ObservableModule)(publisher), Computation.ignoreElements(ObservableModule)(), Observable.subscribeOn(pauseableScheduler), Computation.startWith(ObservableModule)(true), Computation.endWith(ObservableModule)(false)), {
@@ -35,8 +34,8 @@ const AnimationStream_create =
         instance[PauseableLike_resume]();
         return instance;
     });
+    return (animationGroup, creationOptions) => ({
+        [StreamableLike_stream]: (scheduler, options) => AnimationStream_create(animationGroup, scheduler, creationOptions?.animationScheduler ?? scheduler, options),
+    });
 })();
-const Streamable_animation = ((animationGroup, creationOptions) => ({
-    [StreamableLike_stream]: (scheduler, options) => AnimationStream_create(animationGroup, scheduler, creationOptions?.animationScheduler ?? scheduler, options),
-}));
 export default Streamable_animation;
