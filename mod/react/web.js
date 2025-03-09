@@ -50,12 +50,12 @@ export const useScroll = (callback, deps) => {
     useDisposable(pipeSomeLazy(element ?? none, WebElement.addScrollHandler(memoizedCallback)), [element, memoizedCallback]);
     return setElement;
 };
-export const useSpring = (initialValue, options) => {
+export const useSpring = (options) => {
     const animationScheduler = AnimationFrameScheduler.get();
-    return useStream(() => Streamable.spring(initialValue, {
+    return useStream(() => Streamable.spring({
         ...options,
         animationScheduler,
-    }), [initialValue, animationScheduler], options);
+    }), [animationScheduler], options);
 };
 export const useWindowLocation = () => {
     const windowLocation = useContext(WindowLocationContext);

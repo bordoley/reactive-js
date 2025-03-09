@@ -6,7 +6,7 @@ import { useAnimate, useMeasure, useSpring } from "@reactive-js/core/react/web";
 import { QueueableLike_enqueue } from "@reactive-js/core/utils";
 
 const Measure = () => {
-  const spring = useSpring(0);
+  const spring = useSpring();
   const [boxRef, rect] = useMeasure();
   const boxWidth = rect?.width ?? 0;
 

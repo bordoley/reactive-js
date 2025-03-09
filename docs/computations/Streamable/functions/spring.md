@@ -6,13 +6,9 @@
 
 # Function: spring()
 
-> **spring**(`initialValue`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `boolean`, [`SpringStreamLike`](../interfaces/SpringStreamLike.md)\>
+> **spring**(`options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `boolean`, [`SpringStreamLike`](../interfaces/SpringStreamLike.md)\>
 
 ## Parameters
-
-### initialValue
-
-`number`
 
 ### options?
 

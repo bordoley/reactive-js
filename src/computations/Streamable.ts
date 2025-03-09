@@ -100,15 +100,12 @@ export interface StreamableModule {
 
   identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
 
-  spring(
-    initialValue: number,
-    options?: {
-      readonly animationScheduler?: SchedulerLike;
-      readonly stiffness?: number;
-      readonly damping?: number;
-      readonly precision?: number;
-    },
-  ): StreamableLike<SpringEvent, boolean, SpringStreamLike>;
+  spring(options?: {
+    readonly animationScheduler?: SchedulerLike;
+    readonly stiffness?: number;
+    readonly damping?: number;
+    readonly precision?: number;
+  }): StreamableLike<SpringEvent, boolean, SpringStreamLike>;
 
   /**
    * Returns a new `StateStoreLike` instance that stores state which can

@@ -6,13 +6,9 @@
 
 # Function: useSpring()
 
-> **useSpring**(`initialValue`, `options`?): [`Optional`](../../../functions/type-aliases/Optional.md)\<[`SpringStreamLike`](../../../computations/Streamable/interfaces/SpringStreamLike.md)\>
+> **useSpring**(`options`?): [`Optional`](../../../functions/type-aliases/Optional.md)\<[`SpringStreamLike`](../../../computations/Streamable/interfaces/SpringStreamLike.md)\>
 
 ## Parameters
-
-### initialValue
-
-`number`
 
 ### options?
 

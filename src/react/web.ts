@@ -120,15 +120,12 @@ interface ReactWebModule {
     deps: readonly unknown[],
   ): React.Ref<TElement>;
 
-  useSpring(
-    initialValue: number,
-    options?: {
-      readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly stiffness?: number;
-      readonly damping?: number;
-      readonly precision?: number;
-    },
-  ): Optional<SpringStreamLike>;
+  useSpring(options?: {
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly stiffness?: number;
+    readonly damping?: number;
+    readonly precision?: number;
+  }): Optional<SpringStreamLike>;
 
   /**
    */
@@ -267,24 +264,21 @@ export const useScroll: Signature["useScroll"] = <TElement extends HTMLElement>(
   return setElement as React.Ref<TElement>;
 };
 
-export const useSpring: Signature["useSpring"] = (
-  initialValue: number,
-  options?: {
-    readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly stiffness?: number;
-    readonly damping?: number;
-    readonly precision?: number;
-  },
-) => {
+export const useSpring: Signature["useSpring"] = (options?: {
+  readonly priority?: 1 | 2 | 3 | 4 | 5;
+  readonly stiffness?: number;
+  readonly damping?: number;
+  readonly precision?: number;
+}) => {
   const animationScheduler = AnimationFrameScheduler.get();
 
   return useStream(
     () =>
-      Streamable.spring(initialValue, {
+      Streamable.spring({
         ...options,
         animationScheduler,
       }),
-    [initialValue, animationScheduler],
+    [animationScheduler],
     options,
   );
 };

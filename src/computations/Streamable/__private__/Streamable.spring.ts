@@ -59,7 +59,6 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
     ),
     function SpringStream(
       instance: unknown,
-      initialValue: number,
       scheduler: SchedulerLike,
       animationScheduler: SchedulerLike,
       springOptions: Optional<{
@@ -166,28 +165,24 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
 
       instance[PauseableLike_resume]();
 
-      accFeedbackStream[EventListenerLike_notify](initialValue);
+      accFeedbackStream[EventListenerLike_notify](0);
 
       return instance;
     },
   );
 
-  return (
-    initialValue: number,
-    creationOptions?: {
-      readonly animationScheduler?: SchedulerLike;
-      readonly stiffness?: number;
-      readonly damping?: number;
-      readonly precision?: number;
-    },
-  ): StreamableLike<
+  return (creationOptions?: {
+    readonly animationScheduler?: SchedulerLike;
+    readonly stiffness?: number;
+    readonly damping?: number;
+    readonly precision?: number;
+  }): StreamableLike<
     Streamable.SpringEvent,
     boolean,
     Streamable.SpringStreamLike
   > => ({
     [StreamableLike_stream]: (scheduler, options) =>
       SpringStream_create(
-        initialValue,
         scheduler,
         creationOptions?.animationScheduler ?? scheduler,
         creationOptions,

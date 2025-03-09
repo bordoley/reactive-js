@@ -101,7 +101,7 @@ const AnimatedBox = ({
 export const Wordle = () => {
   const [state, updateState] = useState(false);
 
-  const spring = useSpring(0, {
+  const spring = useSpring({
     stiffness: 0.0005,
     damping: 0.0026,
     precision: 0.1,

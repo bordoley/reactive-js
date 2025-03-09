@@ -25,7 +25,7 @@ const Streamable_spring = /*@__PURE__*/ (() => {
         keep: Observable.keep,
         map: Observable.map,
     };
-    const SpringStream_create = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin, DelegatingEventSourceMixin()), function SpringStream(instance, initialValue, scheduler, animationScheduler, springOptions, options) {
+    const SpringStream_create = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin, DelegatingEventSourceMixin()), function SpringStream(instance, scheduler, animationScheduler, springOptions, options) {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
         const publisher = Publisher.create();
         const accFeedbackStream = Subject.create({ replay: 1 });
@@ -61,11 +61,11 @@ const Streamable_spring = /*@__PURE__*/ (() => {
         init(DelegatingEventSourceMixin(), instance, publisher);
         pipe(instance, Disposable.add(publisher), Disposable.add(accFeedbackStream), Disposable.add(pauseableScheduler));
         instance[PauseableLike_resume]();
-        accFeedbackStream[EventListenerLike_notify](initialValue);
+        accFeedbackStream[EventListenerLike_notify](0);
         return instance;
     });
-    return (initialValue, creationOptions) => ({
-        [StreamableLike_stream]: (scheduler, options) => SpringStream_create(initialValue, scheduler, creationOptions?.animationScheduler ?? scheduler, creationOptions, options),
+    return (creationOptions) => ({
+        [StreamableLike_stream]: (scheduler, options) => SpringStream_create(scheduler, creationOptions?.animationScheduler ?? scheduler, creationOptions, options),
     });
 })();
 export default Streamable_spring;

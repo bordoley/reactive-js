@@ -45,7 +45,7 @@ const AnimatedCircle = ({
 };
 
 const ScrollApp = () => {
-  const spring = useSpring(0, { precision: 0.1, priority: 1 });
+  const spring = useSpring({ precision: 0.1, priority: 1 });
 
   const publishedAnimation = useDisposable(Publisher.create, []);
 

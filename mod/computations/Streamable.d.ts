@@ -43,7 +43,7 @@ export interface StreamableModule {
     }): StreamableLike<TEvent, boolean, AnimationGroupStreamLike<TEvent, TKey, T>>;
     create<TReq, T>(op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
     identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
-    spring(initialValue: number, options?: {
+    spring(options?: {
         readonly animationScheduler?: SchedulerLike;
         readonly stiffness?: number;
         readonly damping?: number;

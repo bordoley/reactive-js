@@ -32,7 +32,7 @@ interface ReactWebModule {
     /**
      */
     useScroll<TElement extends HTMLElement>(callback: SideEffect1<ScrollValue>, deps: readonly unknown[]): React.Ref<TElement>;
-    useSpring(initialValue: number, options?: {
+    useSpring(options?: {
         readonly priority?: 1 | 2 | 3 | 4 | 5;
         readonly stiffness?: number;
         readonly damping?: number;
