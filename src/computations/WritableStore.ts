@@ -86,6 +86,12 @@ export const create: <T>(
           listener,
         );
       },
+      [EventListenerLike_notify](
+        this: TProperties & WritableStoreLike<T>,
+        v: T,
+      ) {
+        this[StoreLike_value] = v;
+      },
     },
   );
 })();

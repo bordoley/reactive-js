@@ -8,6 +8,7 @@ import {
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
+  EventSourceLike_addEventListener,
   ObservableLike_observe,
   PureDeferredObservableLike,
   StoreLike_value,
@@ -40,7 +41,6 @@ import {
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../utils.js";
-import * as EventSource from "../EventSource.js";
 import * as WritableStore from "../WritableStore.js";
 
 export interface SingleUseObservableLike<out T>
@@ -106,29 +106,21 @@ export const create: <T>(config?: {
         this[SingleUseObservableLike_delegate] = observer;
         pipe(this, Disposable.bindTo(observer));
 
-        pipe(
-          observer[DispatcherLike_state],
-          EventSource.addEventHandler(v => {
-            const isCompleted =
-              this[DispatcherLike_state][StoreLike_value] ===
-              DispatcherState_completed;
-            if (!isCompleted) {
-              this[DispatcherLike_state][StoreLike_value] = v;
-            }
-          }),
-          Disposable.addTo(this),
-        );
+        const isCompleted =
+          this[DispatcherLike_state][StoreLike_value] ===
+          DispatcherState_completed;
 
         let v: Optional<T> = none;
         while (((v = this[QueueLike_dequeue]()), isSome(v))) {
           observer[QueueableLike_enqueue](v);
         }
 
-        const isCompleted =
-          this[DispatcherLike_state][StoreLike_value] ===
-          DispatcherState_completed;
         if (isCompleted) {
           observer[DispatcherLike_complete]();
+        } else {
+          observer[DispatcherLike_state][EventSourceLike_addEventListener](
+            this[DispatcherLike_state],
+          );
         }
       },
 
@@ -138,10 +130,11 @@ export const create: <T>(config?: {
           this[DispatcherLike_state][StoreLike_value] ===
           DispatcherState_completed;
 
-        this[DispatcherLike_state][StoreLike_value] = DispatcherState_completed;
-
         if (isSome(delegate) && !isAlreadyCompleted) {
           delegate[DispatcherLike_complete]();
+        } else if (!isAlreadyCompleted) {
+          this[DispatcherLike_state][StoreLike_value] =
+            DispatcherState_completed;
         }
       },
 

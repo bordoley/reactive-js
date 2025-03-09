@@ -38,5 +38,8 @@ export const create = /*@__PURE__*/ (() => {
         [EventSourceLike_addEventListener](listener) {
             this[WritableStore_publisher][EventSourceLike_addEventListener](listener);
         },
+        [EventListenerLike_notify](v) {
+            this[StoreLike_value] = v;
+        },
     });
 })();
