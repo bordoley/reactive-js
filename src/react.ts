@@ -98,7 +98,7 @@ interface ReactModule {
    */
   useListen<T>(eventSource: Optional<EventSourceLike<T>>): Optional<T>;
   useListen<T>(
-    factory: Factory<Optional<EventSourceLike<T>>>,
+    factory: Factory<Optional<EventSourceLike<T> & DisposableLike>>,
     deps: readonly unknown[],
   ): Optional<T>;
 
@@ -132,7 +132,7 @@ interface ReactModule {
 
   useStore<T>(store: Optional<StoreLike<T>>): Optional<T>;
   useStore<T>(
-    factory: Factory<Optional<StoreLike>>,
+    factory: Factory<Optional<StoreLike> & DisposableLike>,
     deps: readonly unknown[],
   ): Optional<T>;
 
@@ -239,14 +239,14 @@ export const useDisposable: Signature["useDisposable"] = <
 export const useListen: Signature["useListen"] = <T>(
   eventSourceOrFactory:
     | Optional<EventSourceLike<T>>
-    | Factory<Optional<EventSourceLike<T>>>,
+    | Factory<Optional<EventSourceLike<T> & DisposableLike>>,
   depsOrNone?: readonly unknown[],
 ) => {
   const [state, updateState] = useState<Optional<T>>(none);
   const [error, updateError] = useState<Optional<Error>>(none);
 
   const eventSource = isFunction(eventSourceOrFactory)
-    ? useMemo(eventSourceOrFactory, depsOrNone as readonly unknown[])
+    ? useDisposable(eventSourceOrFactory, depsOrNone as readonly unknown[])
     : eventSourceOrFactory;
 
   useDisposable(

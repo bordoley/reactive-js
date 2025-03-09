@@ -15,7 +15,8 @@ import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPausea
 import { PauseableLike_resume, } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
-const AnimationGroupStream_create = /*@__PURE__*/ (() => {
+const AnimationGroupStream_create = 
+/*@__PURE__*/ (() => {
     const AnimationGroupStream_eventSources = Symbol("AnimationGroupStream_delegate");
     const ObservableModule = {
         concat: Observable.concat,

@@ -32,7 +32,7 @@ interface ReactModule {
     /**
      */
     useListen<T>(eventSource: Optional<EventSourceLike<T>>): Optional<T>;
-    useListen<T>(factory: Factory<Optional<EventSourceLike<T>>>, deps: readonly unknown[]): Optional<T>;
+    useListen<T>(factory: Factory<Optional<EventSourceLike<T> & DisposableLike>>, deps: readonly unknown[]): Optional<T>;
     /**
      */
     useObserve<T>(observable: Optional<ObservableLike<T>>, options?: {
@@ -53,7 +53,7 @@ interface ReactModule {
         resume: SideEffect;
     };
     useStore<T>(store: Optional<StoreLike<T>>): Optional<T>;
-    useStore<T>(factory: Factory<Optional<StoreLike>>, deps: readonly unknown[]): Optional<T>;
+    useStore<T>(factory: Factory<Optional<StoreLike> & DisposableLike>, deps: readonly unknown[]): Optional<T>;
     /**
      */
     useStream<TStreamable extends StreamableLike>(streamable: TStreamable, options?: {

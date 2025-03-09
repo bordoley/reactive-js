@@ -32,6 +32,7 @@ import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
 import {
   BackpressureStrategy,
+  DisposableLike,
   EventListenerLike_notify,
   PauseableLike_resume,
   SchedulerLike,
@@ -64,7 +65,8 @@ const SpringStream_create: (
     | ReadonlyArray<number>
   >,
   number
-> = /*@__PURE__*/ (() => {
+> &
+  DisposableLike = /*@__PURE__*/ (() => {
   const ObservableModule = {
     concat: Observable.concat,
     concatAll: Observable.concatAll,
@@ -99,7 +101,8 @@ const SpringStream_create: (
     ): Streamable.AnimationStreamLike<
       Function1<number, number | ReadonlyArray<number>>,
       number
-    > {
+    > &
+      DisposableLike {
       const pauseableScheduler = PauseableScheduler.create(animationScheduler);
 
       const publisher = Publisher.create<number>();

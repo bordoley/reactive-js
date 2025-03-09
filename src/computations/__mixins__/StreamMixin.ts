@@ -7,14 +7,20 @@ import {
 import { Function1, Optional, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DelegatingDispatcherMixin from "../../utils/__mixins__/DelegatingDispatcherMixin.js";
-import { BackpressureStrategy, SchedulerLike } from "../../utils.js";
+import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  BackpressureStrategy,
+  DisposableLike,
+  ObserverLike,
+  SchedulerLike,
+} from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as SingleUseObservable from "../__internal__/SingleUseObservable.js";
 import { SingleUseObservableLike_observer } from "../__internal__/SingleUseObservable.js";
 import DelegatingMulticastObservableMixin from "../__mixins__/DelegatingMulticastObservableMixin.js";
 
 const StreamMixin: <TReq, T>() => Mixin3<
-  StreamLike<TReq, T>,
+  StreamLike<TReq, T> & DisposableLike,
   Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>,
   SchedulerLike,
   Optional<{
@@ -26,6 +32,7 @@ const StreamMixin: <TReq, T>() => Mixin3<
   returns(
     mix(
       include(
+        DelegatingDisposableMixin,
         DelegatingDispatcherMixin(),
         DelegatingMulticastObservableMixin<T>(),
       ),
@@ -41,7 +48,7 @@ const StreamMixin: <TReq, T>() => Mixin3<
           capacity?: number;
           backpressureStrategy?: BackpressureStrategy;
         },
-      ): StreamLike<TReq, T> {
+      ): StreamLike<TReq, T> & DisposableLike {
         const singleUseObservable = SingleUseObservable.create<TReq>();
 
         const delegate = pipe(
@@ -50,14 +57,14 @@ const StreamMixin: <TReq, T>() => Mixin3<
           Observable.multicast<T>(scheduler, options),
         );
 
-        init(
-          DelegatingDispatcherMixin<TReq>(),
-          instance,
-          singleUseObservable[SingleUseObservableLike_observer],
+        const dispatcher = pipe(
+          singleUseObservable[SingleUseObservableLike_observer] as ObserverLike,
+          Disposable.add(delegate),
         );
-        init(DelegatingMulticastObservableMixin<T>(), instance, delegate);
 
-        pipe(delegate, Disposable.addTo(instance));
+        init(DelegatingDisposableMixin, instance, dispatcher);
+        init(DelegatingDispatcherMixin<TReq>(), instance, dispatcher);
+        init(DelegatingMulticastObservableMixin<T>(), instance, delegate);
 
         return instance;
       },

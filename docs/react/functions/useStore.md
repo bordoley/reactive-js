@@ -36,7 +36,7 @@
 
 #### factory
 
-[`Factory`](../../functions/type-aliases/Factory.md)\<[`Optional`](../../functions/type-aliases/Optional.md)\<[`StoreLike`](../../computations/interfaces/StoreLike.md)\<`unknown`\>\>\>
+[`Factory`](../../functions/type-aliases/Factory.md)\<[`StoreLike`](../../computations/interfaces/StoreLike.md)\<`unknown`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)\>
 
 #### deps
 

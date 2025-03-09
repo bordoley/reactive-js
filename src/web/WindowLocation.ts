@@ -166,7 +166,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
     function WindowLocationStream(
       instance: Omit<WindowLocationLike, keyof DisposableContainerLike> &
         TProperties,
-      delegate: StreamLike<Updater<TState>, TState>,
+      delegate: StreamLike<Updater<TState>, TState> & DisposableLike,
       scheduler: SchedulerLike,
     ): WindowLocationLike & DisposableLike {
       init(DelegatingDisposableMixin, instance, delegate);

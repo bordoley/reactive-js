@@ -324,7 +324,7 @@ export const DispatcherLike_state = Symbol("DispatcherLike_state");
  */
 export interface DispatcherLike<T = unknown>
   extends QueueableLike<T>,
-    DisposableLike {
+    DisposableContainerLike {
   readonly [DispatcherLike_state]: StoreLike<DispatcherState>;
 
   /**
@@ -341,7 +341,8 @@ export const ObserverLike_notify = Symbol("ObserverLike_notify");
  */
 export interface ObserverLike<T = unknown>
   extends DispatcherLike<T>,
-    SchedulerLike {
+    SchedulerLike,
+    DisposableLike {
   /**
    * Notifies the observer of the next notification produced by the source.
    *

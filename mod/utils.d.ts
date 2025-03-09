@@ -234,7 +234,7 @@ export declare const DispatcherLike_state: unique symbol;
  *
  * @noInheritDoc
  */
-export interface DispatcherLike<T = unknown> extends QueueableLike<T>, DisposableLike {
+export interface DispatcherLike<T = unknown> extends QueueableLike<T>, DisposableContainerLike {
     readonly [DispatcherLike_state]: StoreLike<DispatcherState>;
     /**
      * Communicates to the dispatcher that no more events will be enqueued.
@@ -247,7 +247,7 @@ export declare const ObserverLike_notify: unique symbol;
  *
  * @noInheritDoc
  */
-export interface ObserverLike<T = unknown> extends DispatcherLike<T>, SchedulerLike {
+export interface ObserverLike<T = unknown> extends DispatcherLike<T>, SchedulerLike, DisposableLike {
     /**
      * Notifies the observer of the next notification produced by the source.
      *

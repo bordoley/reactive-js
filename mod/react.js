@@ -49,7 +49,7 @@ export const useListen = (eventSourceOrFactory, depsOrNone) => {
     const [state, updateState] = useState(none);
     const [error, updateError] = useState(none);
     const eventSource = isFunction(eventSourceOrFactory)
-        ? useMemo(eventSourceOrFactory, depsOrNone)
+        ? useDisposable(eventSourceOrFactory, depsOrNone)
         : eventSourceOrFactory;
     useDisposable(pipeSomeLazy(eventSource, EventSource.addEventHandler(v => updateState(_ => v)), DisposableContainer.onError(updateError)), [eventSource, updateState, updateError]);
     return isSome(error) ? raiseError(error) : state;

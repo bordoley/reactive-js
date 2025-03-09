@@ -12,6 +12,7 @@ import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Queue from "../utils/Queue.js";
 import DelegatingDispatcherMixin from "../utils/__mixins__/DelegatingDispatcherMixin.js";
+import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import { ContinuationContextLike_yield, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_dequeue, QueueableLike_enqueue, SchedulerLike_schedule, } from "../utils.js";
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
@@ -27,7 +28,7 @@ export const create = /*@__PURE__*/ (() => {
         keep: Observable.keep,
         map: Observable.map,
     };
-    return mixInstanceFactory(include(DelegatingDispatcherMixin()), function Cache(instance, scheduler, options) {
+    return mixInstanceFactory(include(DelegatingDispatcherMixin(), DelegatingDisposableMixin), function Cache(instance, scheduler, options) {
         const { maxEntries = MAX_SAFE_INTEGER, cleanupScheduler = scheduler, persistentStore, } = options ?? {};
         const singleUseObservable = SingleUseObservable.create();
         const store = newInstance(Map);
@@ -94,7 +95,9 @@ export const create = /*@__PURE__*/ (() => {
             cleanupJob =
                 cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
         };
-        init(DelegatingDispatcherMixin(), instance, singleUseObservable[SingleUseObservableLike_observer]);
+        const dispatcher = singleUseObservable[SingleUseObservableLike_observer];
+        init(DelegatingDisposableMixin, instance, dispatcher);
+        init(DelegatingDispatcherMixin(), instance, dispatcher);
         pipe(observableSubscription, Disposable.addTo(instance));
         return instance;
     }, props({

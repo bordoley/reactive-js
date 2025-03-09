@@ -1,13 +1,11 @@
 /// <reference types="./DelegatingDispatcherMixin.d.ts" />
 
-import { include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
+import { mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { none, returns } from "../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_state, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
-import DelegatingDisposableMixin from "./DelegatingDisposableMixin.js";
 const DelegatingDispatcherMixin = /*@__PURE__*/ (() => {
     const DelegatingDispatcherMixin_delegate = Symbol("DelegatingDispatcherMixin_delegate");
-    return returns(mix(include(DelegatingDisposableMixin), function DelegatingDispatcherMixin(instance, delegate) {
-        init(DelegatingDisposableMixin, instance, delegate);
+    return returns(mix(function DelegatingDispatcherMixin(instance, delegate) {
         instance[DelegatingDispatcherMixin_delegate] = delegate;
         return instance;
     }, props({

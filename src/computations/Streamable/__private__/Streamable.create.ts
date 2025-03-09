@@ -6,7 +6,11 @@ import {
   StreamableLike_stream,
 } from "../../../computations.js";
 import { Function1 } from "../../../functions.js";
-import { BackpressureStrategy, SchedulerLike } from "../../../utils.js";
+import {
+  BackpressureStrategy,
+  DisposableLike,
+  SchedulerLike,
+} from "../../../utils.js";
 import type * as Streamable from "../../Streamable.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 
@@ -18,7 +22,7 @@ const Stream_create: <TReq, T>(
     readonly replay?: number;
     readonly capacity?: number;
   },
-) => StreamLike<TReq, T> = /*@__PURE__*/ (<TReq, T>() =>
+) => StreamLike<TReq, T> & DisposableLike = /*@__PURE__*/ (<TReq, T>() =>
   createInstanceFactory(StreamMixin<TReq, T>()))();
 
 const Streamable_create: Streamable.Signature["create"] = <TReq, T>(

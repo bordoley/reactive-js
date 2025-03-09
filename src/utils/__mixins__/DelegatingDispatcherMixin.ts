@@ -1,24 +1,17 @@
-import {
-  Mixin1,
-  include,
-  init,
-  mix,
-  props,
-  unsafeCast,
-} from "../../__internal__/mixins.js";
+import { Mixin1, mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { none, returns } from "../../functions.js";
 import {
   DispatcherLike,
   DispatcherLike_complete,
   DispatcherLike_state,
+  DisposableContainerLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../utils.js";
-import DelegatingDisposableMixin from "./DelegatingDisposableMixin.js";
 
 const DelegatingDispatcherMixin: <TReq>() => Mixin1<
-  DispatcherLike<TReq>,
+  Omit<DispatcherLike<TReq>, keyof DisposableContainerLike>,
   DispatcherLike<TReq>
 > = /*@__PURE__*/ (<TReq>() => {
   const DelegatingDispatcherMixin_delegate = Symbol(
@@ -31,7 +24,6 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
 
   return returns(
     mix(
-      include(DelegatingDisposableMixin),
       function DelegatingDispatcherMixin(
         instance: Pick<
           DispatcherLike,
@@ -43,8 +35,7 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
         > &
           TProperties,
         delegate: DispatcherLike<TReq>,
-      ): DispatcherLike<TReq> {
-        init(DelegatingDisposableMixin, instance, delegate);
+      ): Omit<DispatcherLike<TReq>, keyof DisposableContainerLike> {
         instance[DelegatingDispatcherMixin_delegate] = delegate;
 
         return instance;

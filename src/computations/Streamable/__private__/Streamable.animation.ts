@@ -18,6 +18,7 @@ import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
 import {
   BackpressureStrategy,
+  DisposableLike,
   PauseableLike_resume,
   SchedulerLike,
 } from "../../../utils.js";
@@ -37,84 +38,83 @@ const AnimationStream_create: <TEvent, T>(
     readonly replay?: number;
     readonly capacity?: number;
   },
-) => Streamable.AnimationStreamLike<TEvent, T> = /*@__PURE__*/ (<
-  TEvent,
-  T,
->() => {
-  const ObservableModule = {
-    concat: Observable.concat,
-    forEach: Observable.forEach,
-    fromReadonlyArray: Observable.fromReadonlyArray,
-    keep: Observable.keep,
-    map: Observable.map,
-    switchAll: Observable.switchAll,
-  };
+) => Streamable.AnimationStreamLike<TEvent, T> & DisposableLike =
+  /*@__PURE__*/ (<TEvent, T>() => {
+    const ObservableModule = {
+      concat: Observable.concat,
+      forEach: Observable.forEach,
+      fromReadonlyArray: Observable.fromReadonlyArray,
+      keep: Observable.keep,
+      map: Observable.map,
+      switchAll: Observable.switchAll,
+    };
 
-  return mixInstanceFactory(
-    include(
-      StreamMixin(),
-      DelegatingPauseableMixin,
-      DelegatingEventSourceMixin(),
-    ),
-    function AnimationStream(
-      instance: unknown,
-      animation:
-        | Function1<TEvent, PureSynchronousObservableLike<T>>
-        | PureSynchronousObservableLike<T>,
-      scheduler: SchedulerLike,
-      animationScheduler: SchedulerLike,
-      options?: {
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly replay?: number;
-        readonly capacity?: number;
-      },
-    ): Streamable.AnimationStreamLike<TEvent, T> {
-      const pauseableScheduler = PauseableScheduler.create(animationScheduler);
-      const publisher = Publisher.create();
-
-      const operator = Computation.flatMap(ObservableModule, "switchAll")<
-        TEvent,
-        boolean,
-        DeferredComputationWithSideEffectsLike
-      >(
-        (event: TEvent) =>
-          pipe(
-            isFunction(animation) ? animation(event) : animation,
-            Computation.notify(ObservableModule)(publisher),
-            Computation.ignoreElements(ObservableModule)(),
-            Observable.subscribeOn(pauseableScheduler),
-            Computation.startWith(ObservableModule)(true),
-            Computation.endWith(ObservableModule)(false),
-          ),
-        {
-          innerType: DeferredComputationWithSideEffects,
+    return mixInstanceFactory(
+      include(
+        StreamMixin(),
+        DelegatingPauseableMixin,
+        DelegatingEventSourceMixin(),
+      ),
+      function AnimationStream(
+        instance: unknown,
+        animation:
+          | Function1<TEvent, PureSynchronousObservableLike<T>>
+          | PureSynchronousObservableLike<T>,
+        scheduler: SchedulerLike,
+        animationScheduler: SchedulerLike,
+        options?: {
+          readonly backpressureStrategy?: BackpressureStrategy;
+          readonly replay?: number;
+          readonly capacity?: number;
         },
-      );
+      ): Streamable.AnimationStreamLike<TEvent, T> & DisposableLike {
+        const pauseableScheduler =
+          PauseableScheduler.create(animationScheduler);
+        const publisher = Publisher.create();
 
-      init(
-        StreamMixin<TEvent, boolean>(),
-        instance,
-        operator,
-        scheduler,
-        options,
-      );
+        const operator = Computation.flatMap(ObservableModule, "switchAll")<
+          TEvent,
+          boolean,
+          DeferredComputationWithSideEffectsLike
+        >(
+          (event: TEvent) =>
+            pipe(
+              isFunction(animation) ? animation(event) : animation,
+              Computation.notify(ObservableModule)(publisher),
+              Computation.ignoreElements(ObservableModule)(),
+              Observable.subscribeOn(pauseableScheduler),
+              Computation.startWith(ObservableModule)(true),
+              Computation.endWith(ObservableModule)(false),
+            ),
+          {
+            innerType: DeferredComputationWithSideEffects,
+          },
+        );
 
-      init(DelegatingPauseableMixin, instance, pauseableScheduler);
+        init(
+          StreamMixin<TEvent, boolean>(),
+          instance,
+          operator,
+          scheduler,
+          options,
+        );
 
-      init(DelegatingEventSourceMixin(), instance, publisher);
+        init(DelegatingPauseableMixin, instance, pauseableScheduler);
 
-      pipe(
-        instance,
-        Disposable.add(publisher),
-        Disposable.add(pauseableScheduler),
-      );
+        init(DelegatingEventSourceMixin(), instance, publisher);
 
-      instance[PauseableLike_resume]();
+        pipe(
+          instance,
+          Disposable.add(publisher),
+          Disposable.add(pauseableScheduler),
+        );
 
-      return instance;
-    },
-  );
-})();
+        instance[PauseableLike_resume]();
+
+        return instance;
+      },
+    );
+  })();
 
 const Streamable_animation: Streamable.Signature["animation"] = (<
   T,

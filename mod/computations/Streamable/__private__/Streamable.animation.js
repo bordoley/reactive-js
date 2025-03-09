@@ -12,7 +12,8 @@ import { PauseableLike_resume, } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import DelegatingEventSourceMixin from "../../__mixins__/DelegatingEventSourceMixin.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
-const AnimationStream_create = /*@__PURE__*/ (() => {
+const AnimationStream_create = 
+/*@__PURE__*/ (() => {
     const ObservableModule = {
         concat: Observable.concat,
         forEach: Observable.forEach,

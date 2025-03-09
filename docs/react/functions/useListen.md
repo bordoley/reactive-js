@@ -36,7 +36,7 @@
 
 #### factory
 
-[`Factory`](../../functions/type-aliases/Factory.md)\<[`Optional`](../../functions/type-aliases/Optional.md)\<[`EventSourceLike`](../../computations/interfaces/EventSourceLike.md)\<`T`\>\>\>
+[`Factory`](../../functions/type-aliases/Factory.md)\<[`Optional`](../../functions/type-aliases/Optional.md)\<[`EventSourceLike`](../../computations/interfaces/EventSourceLike.md)\<`T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)\>\>
 
 #### deps
 

@@ -11,7 +11,7 @@ be dispatched from any execution constext.
 
 ## Extends
 
-- [`QueueableLike`](QueueableLike.md)\<`T`\>.[`DisposableLike`](DisposableLike.md)
+- [`QueueableLike`](QueueableLike.md)\<`T`\>.[`DisposableContainerLike`](DisposableContainerLike.md)
 
 ## Extended by
 

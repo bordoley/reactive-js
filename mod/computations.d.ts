@@ -438,7 +438,7 @@ export interface StreamableLike<TReq = unknown, out T = unknown, TStream extends
          */
         readonly capacity?: number;
         readonly backpressureStrategy?: BackpressureStrategy;
-    }): TStream;
+    }): TStream & DisposableLike;
 }
 export type StreamOf<TStreamable extends StreamableLike> = ReturnType<TStreamable[typeof StreamableLike_stream]>;
 export interface AsyncIterableLike<T = unknown> extends AsyncIterable<T>, DeferredComputationLike {

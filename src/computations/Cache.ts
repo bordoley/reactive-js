@@ -48,11 +48,13 @@ import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Queue from "../utils/Queue.js";
 import DelegatingDispatcherMixin from "../utils/__mixins__/DelegatingDispatcherMixin.js";
+import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   BackpressureStrategy,
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DispatcherLike,
+  DisposableLike,
   DisposableLike_isDisposed,
   EventListenerLike_notify,
   QueueLike_dequeue,
@@ -94,7 +96,7 @@ interface CacheModule {
         ): DeferredObservableLike<void>;
       };
     },
-  ): CacheLike<T>;
+  ): CacheLike<T> & DisposableLike;
   get<T>(cache: CacheLike<T>, key: string): ObservableLike<T>;
   remove<T>(cache: CacheLike<T>, key: string): boolean;
   removeMany<T>(cache: CacheLike<T>, keys: ReadonlyArray<string>): boolean;
@@ -141,6 +143,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           ReadonlyObjectMapLike<string, Updater<Optional<T>>>
         >
       >(),
+      DelegatingDisposableMixin,
     ),
     function Cache(
       instance: TProperties<T> & Pick<CacheLike<T>, typeof CacheLike_get>,
@@ -161,7 +164,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           ): DeferredObservableLike<void>;
         };
       }>,
-    ): CacheLike<T> {
+    ): CacheLike<T> & DisposableLike {
       const {
         maxEntries = MAX_SAFE_INTEGER,
         cleanupScheduler = scheduler,
@@ -338,12 +341,14 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
       };
 
+      const dispatcher = singleUseObservable[SingleUseObservableLike_observer];
+      init(DelegatingDisposableMixin, instance, dispatcher);
       init(
         DelegatingDispatcherMixin<
           ReadonlyObjectMapLike<string, Function1<Optional<T>, T>>
         >(),
         instance,
-        singleUseObservable[SingleUseObservableLike_observer],
+        dispatcher,
       );
 
       pipe(observableSubscription, Disposable.addTo(instance));

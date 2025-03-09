@@ -1142,7 +1142,7 @@ export interface StreamableLike<
 
       readonly backpressureStrategy?: BackpressureStrategy;
     },
-  ): TStream;
+  ): TStream & DisposableLike;
 }
 
 export type StreamOf<TStreamable extends StreamableLike> = ReturnType<

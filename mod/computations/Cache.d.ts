@@ -1,7 +1,7 @@
 import { ReadonlyObjectMapLike } from "../collections.js";
 import { DeferredObservableLike, ObservableLike } from "../computations.js";
 import { Optional, Updater } from "../functions.js";
-import { BackpressureStrategy, DispatcherLike, SchedulerLike } from "../utils.js";
+import { BackpressureStrategy, DispatcherLike, DisposableLike, SchedulerLike } from "../utils.js";
 export declare const CacheLike_get: unique symbol;
 /**
  * @noInheritDoc
@@ -19,7 +19,7 @@ interface CacheModule {
             load(keys: ReadonlySet<string>): DeferredObservableLike<Readonly<ReadonlyObjectMapLike<string, Optional<T>>>>;
             store(updates: Readonly<ReadonlyObjectMapLike<string, T>>): DeferredObservableLike<void>;
         };
-    }): CacheLike<T>;
+    }): CacheLike<T> & DisposableLike;
     get<T>(cache: CacheLike<T>, key: string): ObservableLike<T>;
     remove<T>(cache: CacheLike<T>, key: string): boolean;
     removeMany<T>(cache: CacheLike<T>, keys: ReadonlyArray<string>): boolean;

@@ -6,7 +6,7 @@
 
 # Function: create()
 
-> **create**\<`T`\>(`scheduler`, `options`?): [`CacheLike`](../interfaces/CacheLike.md)\<`T`\>
+> **create**\<`T`\>(`scheduler`, `options`?): [`CacheLike`](../interfaces/CacheLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
 
 ## Type Parameters
 
@@ -46,4 +46,4 @@
 
 ## Returns
 
-[`CacheLike`](../interfaces/CacheLike.md)\<`T`\>
+[`CacheLike`](../interfaces/CacheLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
