@@ -12,6 +12,7 @@ import {
   Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
+  DeferredComputationModule,
   DeferredComputationWithSideEffectsOf,
   DeferredReactiveComputationModule,
   MulticastComputationOf,
@@ -33,7 +34,8 @@ import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSyn
 const DeferredReactiveComputationModuleTests = <
   TComputation extends ComputationType,
 >(
-  m: DeferredReactiveComputationModule<TComputation> &
+  m: DeferredComputationModule<TComputation> &
+    DeferredReactiveComputationModule<TComputation> &
     SynchronousComputationModule<TComputation>,
   computationType: {
     readonly [Computation_pureSynchronousOfT]?: PureSynchronousComputationOf<

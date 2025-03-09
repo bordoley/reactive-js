@@ -220,6 +220,7 @@ export type PureSynchronousComputationOf<
       readonly _C: TComputation;
       readonly _T: () => T;
     };
+
 export type MulticastComputationOf<
   TComputation extends ComputationType,
   T,
@@ -430,9 +431,19 @@ export type HigherOrderComputationOperator<
           >
         : never;
 
-export type FromIterableOperator<TComputation extends ComputationType, T> = <
-  TIterable extends IterableLike<T>,
->(
+export type FromIterableDeferredOperator<
+  TComputation extends ComputationType,
+  T,
+> = <TIterable extends IterableLike<T>>(
+  iterable: TIterable,
+) => TIterable extends PureIterableLike
+  ? PureDeferredComputationOf<TComputation, T>
+  : DeferredComputationWithSideEffectsOf<TComputation, T>;
+
+export type FromIterableSynchronousOperator<
+  TComputation extends ComputationType,
+  T,
+> = <TIterable extends IterableLike<T>>(
   iterable: TIterable,
 ) => TIterable extends PureIterableLike
   ? PureSynchronousComputationOf<TComputation, T>
@@ -524,6 +535,8 @@ interface ZipConstructor<TComputation extends ComputationType> {
 }
 
 export interface ComputationModule<TComputation extends ComputationType> {
+  empty<T>(): PureComputationOf<TComputation, T>;
+
   fromIterable<T>(): Function1<
     PureIterableLike<T>,
     PureComputationOf<TComputation, T>
@@ -552,15 +565,19 @@ export interface ComputationModule<TComputation extends ComputationType> {
     selector: Function1<TA, TB>,
   ): StatelessComputationOperator<TComputation, TA, TB>;
 
+  raise<T>(options?: {
+    readonly raise?: Factory<unknown>;
+  }): PureComputationOf<TComputation, T>;
+
   toReadonlyArrayAsync: <T>() => AsyncFunction1<
     ComputationOf<TComputation, T>,
     ReadonlyArray<T>
   >;
 }
 
-export interface SynchronousComputationModule<
+export interface DeferredComputationModule<
   TComputation extends ComputationType,
-> extends ComputationModule<TComputation> {
+> {
   catchError<T>(
     onError: SideEffect1<Error>,
   ): StatefulSynchronousComputationOperator<TComputation, T, T>;
@@ -573,6 +590,19 @@ export interface SynchronousComputationModule<
       readonly innerType: TInnerType;
     },
   ): HigherOrderComputationOperator<TComputation, TInnerType, T, T>;
+
+  concat<T>(
+    ...computations: readonly PureSynchronousComputationOf<TComputation, T>[]
+  ): PureSynchronousComputationOf<TComputation, T>;
+  concat<T>(
+    ...computations: readonly SynchronousComputationOf<TComputation, T>[]
+  ): SynchronousComputationWithSideEffectsOf<TComputation, T>;
+  concat<T>(
+    ...computations: readonly PureDeferredComputationOf<TComputation, T>[]
+  ): PureDeferredComputationOf<TComputation, T>;
+  concat<T>(
+    ...computations: readonly DeferredComputationOf<TComputation, T>[]
+  ): DeferredComputationWithSideEffectsOf<TComputation, T>;
 
   concatAll<T>(): HigherOrderComputationOperator<
     TComputation,
@@ -593,20 +623,7 @@ export interface SynchronousComputationModule<
     T
   >;
 
-  concat<T>(
-    ...computations: readonly PureSynchronousComputationOf<TComputation, T>[]
-  ): PureSynchronousComputationOf<TComputation, T>;
-  concat<T>(
-    ...computations: readonly SynchronousComputationOf<TComputation, T>[]
-  ): SynchronousComputationWithSideEffectsOf<TComputation, T>;
-  concat<T>(
-    ...computations: readonly PureDeferredComputationOf<TComputation, T>[]
-  ): PureDeferredComputationOf<TComputation, T>;
-  concat<T>(
-    ...computations: readonly DeferredComputationOf<TComputation, T>[]
-  ): DeferredComputationWithSideEffectsOf<TComputation, T>;
-
-  empty<T>(): PureSynchronousComputationOf<TComputation, T>;
+  empty<T>(): PureDeferredComputationOf<TComputation, T>;
 
   encodeUtf8(): StatefulSynchronousComputationOperator<
     TComputation,
@@ -614,20 +631,22 @@ export interface SynchronousComputationModule<
     Uint8Array
   >;
 
-  first<T>(): Function1<SynchronousComputationOf<TComputation, T>, Optional<T>>;
-
   forEach<T>(
     sideEffect: SideEffect1<T>,
   ): ComputationOperatorWithSideEffects<TComputation, T, T>;
 
-  fromIterable<T>(): FromIterableOperator<TComputation, T>;
+  fromIterable<T>(): FromIterableDeferredOperator<TComputation, T>;
 
   fromReadonlyArray<T>(options?: {
     readonly count?: number;
     readonly start?: number;
-  }): Function1<readonly T[], PureSynchronousComputationOf<TComputation, T>>;
+  }): Function1<
+    readonly T[],
+    | PureSynchronousComputationOf<TComputation, T>
+    | PureDeferredComputationOf<TComputation, T>
+  >;
 
-  fromValue<T>(): Function1<T, PureSynchronousComputationOf<TComputation, T>>;
+  fromValue<T>(): Function1<T, PureDeferredComputationOf<TComputation, T>>;
 
   generate<T>(
     generator: Updater<T>,
@@ -635,18 +654,11 @@ export interface SynchronousComputationModule<
     options?: {
       readonly count?: number;
     },
-  ): PureSynchronousComputationOf<TComputation, T>;
-
-  last<T>(): Function1<SynchronousComputationOf<TComputation, T>, Optional<T>>;
+  ): PureDeferredComputationOf<TComputation, T>;
 
   raise<T>(options?: {
     readonly raise?: Factory<unknown>;
-  }): PureSynchronousComputationOf<TComputation, T>;
-
-  reduce<T, TAcc>(
-    reducer: Reducer<T, TAcc>,
-    initialValue: Factory<TAcc>,
-  ): Function1<SynchronousComputationOf<TComputation, T>, TAcc>;
+  }): PureDeferredComputationOf<TComputation, T>;
 
   repeat<T>(
     predicate: Predicate<number>,
@@ -698,6 +710,42 @@ export interface SynchronousComputationModule<
     factory: Factory<unknown>,
     options?: undefined,
   ): StatefulSynchronousComputationOperator<TComputation, T, T>;
+}
+
+export interface SynchronousComputationModule<
+  TComputation extends ComputationType,
+> {
+  empty<T>(): PureSynchronousComputationOf<TComputation, T>;
+
+  first<T>(): Function1<SynchronousComputationOf<TComputation, T>, Optional<T>>;
+
+  fromIterable<T>(): FromIterableSynchronousOperator<TComputation, T>;
+
+  fromReadonlyArray<T>(options?: {
+    readonly count?: number;
+    readonly start?: number;
+  }): Function1<readonly T[], PureSynchronousComputationOf<TComputation, T>>;
+
+  fromValue<T>(): Function1<T, PureSynchronousComputationOf<TComputation, T>>;
+
+  generate<T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+    options?: {
+      readonly count?: number;
+    },
+  ): PureSynchronousComputationOf<TComputation, T>;
+
+  last<T>(): Function1<SynchronousComputationOf<TComputation, T>, Optional<T>>;
+
+  raise<T>(options?: {
+    readonly raise?: Factory<unknown>;
+  }): PureSynchronousComputationOf<TComputation, T>;
+
+  reduce<T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): Function1<SynchronousComputationOf<TComputation, T>, TAcc>;
 
   toRunnable<T>(): Function1<
     SynchronousComputationOf<TComputation, T>,
@@ -712,13 +760,13 @@ export interface SynchronousComputationModule<
 
 export interface InteractiveComputationModule<
   TComputation extends ComputationType,
-> extends SynchronousComputationModule<TComputation> {
+> {
   zip: ZipConstructor<TComputation>;
 }
 
 export interface DeferredReactiveComputationModule<
   TComputation extends ComputationType,
-> extends SynchronousComputationModule<TComputation> {
+> {
   buffer<T>(options?: {
     count?: number;
   }): StatefulSynchronousComputationOperator<TComputation, T, readonly T[]>;
@@ -750,7 +798,7 @@ export interface DeferredReactiveComputationModule<
 
 export interface ConcurrentReactiveComputationModule<
   TComputation extends ComputationType,
-> extends ComputationModule<TComputation> {
+> {
   fromPromise<T>(): Function1<
     Promise<T>,
     MulticastComputationOf<TComputation, T>

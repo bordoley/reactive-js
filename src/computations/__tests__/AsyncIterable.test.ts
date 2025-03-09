@@ -20,6 +20,8 @@ import {
 } from "../../utils.js";
 import * as AsyncIterable from "../AsyncIterable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
+import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
+import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
 
 const AsyncIterableTypes = {
   [Computation_deferredWithSideEffectsOfT]: pipe(
@@ -33,6 +35,8 @@ const AsyncIterableTypes = {
 testModule(
   "AsyncIterable",
   ComputationModuleTests(AsyncIterable, AsyncIterableTypes),
+  DeferredComputationModuleTests(AsyncIterable, AsyncIterableTypes),
+  InteractiveComputationModuleTests(AsyncIterable),
   describe(
     "toPauseableObservable",
     testAsync("infinite immediately resolving iterable", async () => {

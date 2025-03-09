@@ -10,16 +10,19 @@ import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import {
   ComputationLike_isPure,
+  ComputationModule,
   ComputationType,
   Computation_T,
   Computation_baseOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
+  DeferredComputationModule,
   HigherOrderInnerComputationLike,
   InteractiveComputationModule,
   IterableLike,
   IterableWithSideEffectsLike,
   PureIterableLike,
+  SynchronousComputationModule,
 } from "../computations.js";
 import {
   Factory,
@@ -45,7 +48,6 @@ import {
   returns,
   tuple,
 } from "../functions.js";
-
 import * as ComputationM from "./Computation.js";
 import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 
@@ -66,7 +68,17 @@ export interface IterableComputation extends ComputationType {
 export type Computation = IterableComputation;
 
 export interface IterableModule
-  extends InteractiveComputationModule<IterableComputation> {}
+  extends ComputationModule<IterableComputation>,
+    DeferredComputationModule<IterableComputation>,
+    SynchronousComputationModule<IterableComputation>,
+    InteractiveComputationModule<IterableComputation> {
+  empty: SynchronousComputationModule<IterableComputation>["empty"];
+  fromIterable: SynchronousComputationModule<IterableComputation>["fromIterable"];
+  fromReadonlyArray: SynchronousComputationModule<IterableComputation>["fromReadonlyArray"];
+  fromValue: SynchronousComputationModule<IterableComputation>["fromValue"];
+  generate: SynchronousComputationModule<IterableComputation>["generate"];
+  raise: SynchronousComputationModule<IterableComputation>["raise"];
+}
 
 export type Signature = IterableModule;
 
