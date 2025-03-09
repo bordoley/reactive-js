@@ -29,9 +29,7 @@ class CatchErrorAsyncIterable {
     }
     async *[Symbol.asyncIterator]() {
         try {
-            for await (const v of this.s) {
-                yield v;
-            }
+            yield* this.s;
         }
         catch (e) {
             const err = error(e);
@@ -42,11 +40,7 @@ class CatchErrorAsyncIterable {
             catch (e) {
                 throw error([error(e), err]);
             }
-            if (isSome(action)) {
-                for await (const v of action) {
-                    yield v;
-                }
-            }
+            isSome(action) && (yield* action);
         }
     }
 }
@@ -61,9 +55,7 @@ class ConcatAllAsyncIterable {
     }
     async *[Symbol.asyncIterator]() {
         for await (const iter of this.s) {
-            for await (const v of iter) {
-                yield v;
-            }
+            yield* iter;
         }
     }
 }
@@ -78,9 +70,7 @@ class ConcatAsyncIterable {
     }
     async *[Symbol.asyncIterator]() {
         for (const iter of this.s) {
-            for await (const v of iter) {
-                yield v;
-            }
+            yield* iter;
         }
     }
 }
@@ -92,9 +82,7 @@ class FromIterableAsyncIterable {
         this.s = s;
     }
     async *[Symbol.asyncIterator]() {
-        for (const v of this.s) {
-            yield v;
-        }
+        yield* this.s;
     }
 }
 export const fromIterable = 
@@ -305,9 +293,7 @@ class RepeatAsyncIterable {
         const predicate = this.p;
         let cnt = 0;
         while (true) {
-            for await (const v of iterable) {
-                yield v;
-            }
+            yield* iterable;
             cnt++;
             if (!predicate(cnt)) {
                 break;
@@ -339,9 +325,7 @@ class RetryAsyncIterable {
         let cnt = 0;
         while (true) {
             try {
-                for await (const v of iterable) {
-                    yield v;
-                }
+                yield* iterable;
             }
             catch (e) {
                 cnt++;

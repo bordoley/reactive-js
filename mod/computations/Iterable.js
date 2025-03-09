@@ -19,9 +19,7 @@ class CatchErrorIterable {
     }
     *[Symbol.iterator]() {
         try {
-            for (const v of this.s) {
-                yield v;
-            }
+            yield* this.s;
         }
         catch (e) {
             const err = error(e);
@@ -32,11 +30,7 @@ class CatchErrorIterable {
             catch (e) {
                 throw error([error(e), err]);
             }
-            if (isSome(action)) {
-                for (const v of action) {
-                    yield v;
-                }
-            }
+            isSome(action) && (yield* action);
         }
     }
 }
@@ -50,9 +44,7 @@ class ConcatAllIterable {
     }
     *[Symbol.iterator]() {
         for (const iter of this.s) {
-            for (const v of iter) {
-                yield v;
-            }
+            yield* iter;
         }
     }
 }
@@ -236,9 +228,7 @@ class RepeatIterable {
         const predicate = this.p;
         let cnt = 0;
         while (true) {
-            for (const v of iterable) {
-                yield v;
-            }
+            yield* iterable;
             cnt++;
             if (!predicate(cnt)) {
                 break;
@@ -269,9 +259,7 @@ class RetryIterable {
         let cnt = 0;
         while (true) {
             try {
-                for (const v of iterable) {
-                    yield v;
-                }
+                yield* iterable;
             }
             catch (e) {
                 cnt++;

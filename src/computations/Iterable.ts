@@ -97,9 +97,7 @@ class CatchErrorIterable<T> {
 
   *[Symbol.iterator]() {
     try {
-      for (const v of this.s) {
-        yield v;
-      }
+      yield* this.s;
     } catch (e) {
       const err = error(e);
       let action: Optional<IterableLike<T>> = none;
@@ -109,11 +107,7 @@ class CatchErrorIterable<T> {
         throw error([error(e), err]);
       }
 
-      if (isSome(action)) {
-        for (const v of action) {
-          yield v;
-        }
-      }
+      isSome(action) && (yield* action);
     }
   }
 }
@@ -147,9 +141,7 @@ class ConcatAllIterable<T> {
 
   *[Symbol.iterator]() {
     for (const iter of this.s) {
-      for (const v of iter) {
-        yield v;
-      }
+      yield* iter;
     }
   }
 }
@@ -415,9 +407,8 @@ class RepeatIterable<T> {
     let cnt = 0;
 
     while (true) {
-      for (const v of iterable) {
-        yield v;
-      }
+      yield* iterable;
+
       cnt++;
       if (!predicate(cnt)) {
         break;
@@ -457,9 +448,7 @@ class RetryIterable<T> {
 
     while (true) {
       try {
-        for (const v of iterable) {
-          yield v;
-        }
+        yield* iterable;
       } catch (e) {
         cnt++;
         if (!predicate(cnt, error(e))) {
