@@ -52,6 +52,7 @@ import {
   Function1,
   Function2,
   Optional,
+  Reducer,
   SideEffect,
   SideEffect1,
   Tuple2,
@@ -116,6 +117,7 @@ import Observable_onSubscribe from "./Observable/__private__/Observable.onSubscr
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
 import Observable_raise from "./Observable/__private__/Observable.raise.js";
 import Observable_reduce from "./Observable/__private__/Observable.reduce.js";
+import Observable_reduceAsync from "./Observable/__private__/Observable.reduceAsync.js";
 import Observable_repeat from "./Observable/__private__/Observable.repeat.js";
 import Observable_retry from "./Observable/__private__/Observable.retry.js";
 import Observable_run from "./Observable/__private__/Observable.run.js";
@@ -436,6 +438,11 @@ export interface ObservableModule
     readonly maxMicroTaskTicks?: number;
   }): Function1<SynchronousObservableLike<T>, Optional<T>>;
 
+  firstAsync<T>(options?: {
+    readonly capacity?: number;
+    readonly backpressureStrategy?: BackpressureStrategy;
+  }): AsyncFunction1<ObservableLike<T>, Optional<T>>;
+
   firstAsync<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -513,6 +520,10 @@ export interface ObservableModule
     readonly maxMicroTaskTicks?: number;
   }): Function1<SynchronousObservableLike<T>, Optional<T>>;
 
+  lastAsync<T>(options?: {
+    readonly capacity?: number;
+    readonly backpressureStrategy?: BackpressureStrategy;
+  }): AsyncFunction1<ObservableLike<T>, Optional<T>>;
   lastAsync<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -564,6 +575,28 @@ export interface ObservableModule
     readonly raise?: Factory<unknown>;
     readonly delay?: number;
   }): PureSynchronousObservableLike<T>;
+
+  reduceAsync<T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+    options?: {
+      readonly autoDispose?: boolean;
+      readonly replay?: number;
+      readonly capacity?: number;
+      readonly backpressureStrategy?: BackpressureStrategy;
+    },
+  ): AsyncFunction1<ObservableLike<T>, TAcc>;
+  reduceAsync<T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+    scheduler: SchedulerLike,
+    options?: {
+      readonly autoDispose?: boolean;
+      readonly replay?: number;
+      readonly capacity?: number;
+      readonly backpressureStrategy?: BackpressureStrategy;
+    },
+  ): AsyncFunction1<ObservableLike<T>, TAcc>;
 
   run<T>(options?: {
     readonly backpressureStrategy?: BackpressureStrategy;
@@ -690,7 +723,6 @@ export interface ObservableModule
     readonly capacity?: number;
     readonly maxMicroTaskTicks?: number;
   }): Function1<SynchronousObservableLike<T>, ReadonlyArray<T>>;
-
   toReadonlyArrayAsync<T>(options?: {
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
@@ -781,6 +813,7 @@ export const onSubscribe: Signature["onSubscribe"] = Observable_onSubscribe;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const raise: Signature["raise"] = Observable_raise;
 export const reduce: Signature["reduce"] = Observable_reduce;
+export const reduceAsync: Signature["reduceAsync"] = Observable_reduceAsync;
 export const repeat: Signature["repeat"] = Observable_repeat;
 export const retry: Signature["retry"] = Observable_retry;
 export const run: Signature["run"] = Observable_run;

@@ -80,6 +80,10 @@ export const first = /*@__PURE__*/ returns((iter) => {
     }
     return none;
 });
+export const firstAsync = /*@__PURE__*/ returns(async (iter) => {
+    await Promise.resolve();
+    return first()(iter);
+});
 class ForEachIterable {
     d;
     ef;
@@ -172,6 +176,10 @@ export const last = () => (iter) => {
     }
     return result;
 };
+export const lastAsync = (() => async (iter) => {
+    await Promise.resolve();
+    return last()(iter);
+});
 class MapIterable {
     d;
     m;
@@ -209,6 +217,10 @@ export const reduce = (reducer, initialValue) => (iterable) => {
         acc = reducer(acc, v);
     }
     return acc;
+};
+export const reduceAsync = (reducer, initialValue) => async (iterable) => {
+    await Promise.resolve();
+    return reduce(reducer, initialValue)(iterable);
 };
 class RepeatIterable {
     i;

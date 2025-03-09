@@ -144,6 +144,7 @@ interface ZipConstructor<TComputation extends ComputationType> {
 }
 export interface ComputationModule<TComputation extends ComputationType> {
     empty<T>(): PureComputationOf<TComputation, T>;
+    firstAsync<T>(): AsyncFunction1<ComputationOf<TComputation, T>, T>;
     fromIterable<T>(): Function1<PureIterableLike<T>, PureComputationOf<TComputation, T>>;
     fromReadonlyArray<T>(options?: {
         readonly count?: number;
@@ -154,11 +155,13 @@ export interface ComputationModule<TComputation extends ComputationType> {
         readonly count?: number;
     }): PureComputationOf<TComputation, T>;
     keep<T>(predicate: Predicate<T>): StatelessComputationOperator<TComputation, T, T>;
+    lastAsync<T>(): AsyncFunction1<ComputationOf<TComputation, T>, T>;
     map<TA, TB>(selector: Function1<TA, TB>): StatelessComputationOperator<TComputation, TA, TB>;
     raise<T>(options?: {
         readonly raise?: Factory<unknown>;
     }): PureComputationOf<TComputation, T>;
-    toReadonlyArrayAsync: <T>() => AsyncFunction1<ComputationOf<TComputation, T>, ReadonlyArray<T>>;
+    reduceAsync<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): AsyncFunction1<ComputationOf<TComputation, T>, TAcc>;
+    toReadonlyArrayAsync<T>(): AsyncFunction1<ComputationOf<TComputation, T>, ReadonlyArray<T>>;
 }
 export interface DeferredComputationModule<TComputation extends ComputationType> {
     catchError<T>(onError: SideEffect1<Error>): StatefulSynchronousComputationOperator<TComputation, T, T>;

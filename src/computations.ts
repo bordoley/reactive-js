@@ -537,6 +537,8 @@ interface ZipConstructor<TComputation extends ComputationType> {
 export interface ComputationModule<TComputation extends ComputationType> {
   empty<T>(): PureComputationOf<TComputation, T>;
 
+  firstAsync<T>(): AsyncFunction1<ComputationOf<TComputation, T>, T>;
+
   fromIterable<T>(): Function1<
     PureIterableLike<T>,
     PureComputationOf<TComputation, T>
@@ -561,6 +563,8 @@ export interface ComputationModule<TComputation extends ComputationType> {
     predicate: Predicate<T>,
   ): StatelessComputationOperator<TComputation, T, T>;
 
+  lastAsync<T>(): AsyncFunction1<ComputationOf<TComputation, T>, T>;
+
   map<TA, TB>(
     selector: Function1<TA, TB>,
   ): StatelessComputationOperator<TComputation, TA, TB>;
@@ -569,7 +573,12 @@ export interface ComputationModule<TComputation extends ComputationType> {
     readonly raise?: Factory<unknown>;
   }): PureComputationOf<TComputation, T>;
 
-  toReadonlyArrayAsync: <T>() => AsyncFunction1<
+  reduceAsync<T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): AsyncFunction1<ComputationOf<TComputation, T>, TAcc>;
+
+  toReadonlyArrayAsync<T>(): AsyncFunction1<
     ComputationOf<TComputation, T>,
     ReadonlyArray<T>
   >;
