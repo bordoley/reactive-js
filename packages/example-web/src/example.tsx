@@ -23,6 +23,7 @@ import {
 } from "@reactive-js/core/react/web";
 import { WindowLocationLike, WindowLocationURI } from "@reactive-js/core/web";
 import {
+  bindMethod,
   increment,
   isNone,
   isSome,
@@ -39,7 +40,6 @@ import * as Dictionary from "@reactive-js/core/collections/Dictionary";
 import * as ReadonlyArray from "@reactive-js/core/collections/ReadonlyArray";
 import {
   __await,
-  __bindMethod,
   __constant,
   __currentScheduler,
   __memo,
@@ -292,13 +292,10 @@ const RxComponent = createComponent(
       const isAnimationPaused =
         __observe(isAnimationPausedObservable) ??
         animationStream[PauseableLike_isPaused][StoreLike_value];
-      const runAnimation = __bindMethod(animationStream, QueueableLike_enqueue);
+      const runAnimation = bindMethod(animationStream, QueueableLike_enqueue);
 
-      const pauseAnimation = __bindMethod(animationStream, PauseableLike_pause);
-      const resumeAnimation = __bindMethod(
-        animationStream,
-        PauseableLike_resume,
-      );
+      const pauseAnimation = bindMethod(animationStream, PauseableLike_pause);
+      const resumeAnimation = bindMethod(animationStream, PauseableLike_resume);
 
       const animatedDivRef = __animate(animationStream);
 

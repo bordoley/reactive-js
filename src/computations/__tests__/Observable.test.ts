@@ -20,7 +20,6 @@ import {
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import {
   __await,
-  __bindMethod,
   __constant,
   __do,
   __memo,
@@ -334,7 +333,7 @@ testModule(
       await pipeAsync(
         Observable.computeDeferred(() => {
           const stream = __stream(Streamable.identity<number>());
-          const push = __bindMethod(stream, QueueableLike_enqueue);
+          const push = bindMethod(stream, QueueableLike_enqueue);
 
           const result = __observe(stream) ?? 0;
           __do(push, result + 1);
@@ -354,7 +353,7 @@ testModule(
         Observable.computeDeferred(() => {
           const initialState = __constant((): number => 0);
           const state = __state(initialState);
-          const push = __bindMethod(state, QueueableLike_enqueue);
+          const push = bindMethod(state, QueueableLike_enqueue);
           const result = __observe(state) ?? -1;
 
           if (result > -1) {

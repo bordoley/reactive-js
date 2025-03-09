@@ -3,16 +3,6 @@ import ReactDOMClient from "react-dom/client";
 import * as Observable from "@reactive-js/core/computations/Observable";
 import { useAnimate } from "@reactive-js/core/react/web";
 import { pipe, pipeLazy, returns } from "@reactive-js/core/functions";
-import {
-  __await,
-  __bindMethod,
-  __constant,
-  __currentScheduler,
-  __memo,
-  __observe,
-  __stream,
-  __using,
-} from "@reactive-js/core/computations/Observable/effects";
 import { __animate } from "@reactive-js/core/web/effects";
 import * as EventSource from "@reactive-js/core/computations/EventSource";
 import * as WebElement from "@reactive-js/core/web/Element";

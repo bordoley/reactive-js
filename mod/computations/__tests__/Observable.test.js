@@ -55,7 +55,7 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
-import { __await, __bindMethod, __constant, __do, __memo, __observe, __state, __stream, } from "../../computations/Observable/effects.js";
+import { __await, __constant, __do, __memo, __observe, __state, __stream, } from "../../computations/Observable/effects.js";
 import * as Observable from "../../computations/Observable.js";
 import * as Streamable from "../../computations/Streamable.js";
 import * as Subject from "../../computations/Subject.js";
@@ -171,7 +171,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         const scheduler = __addDisposableResource(env_4, HostScheduler.create(), false);
         await pipeAsync(Observable.computeDeferred(() => {
             const stream = __stream(Streamable.identity());
-            const push = __bindMethod(stream, QueueableLike_enqueue);
+            const push = bindMethod(stream, QueueableLike_enqueue);
             const result = __observe(stream) ?? 0;
             __do(push, result + 1);
             return result;
@@ -191,7 +191,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         await pipeAsync(Observable.computeDeferred(() => {
             const initialState = __constant(() => 0);
             const state = __state(initialState);
-            const push = __bindMethod(state, QueueableLike_enqueue);
+            const push = bindMethod(state, QueueableLike_enqueue);
             const result = __observe(state) ?? -1;
             if (result > -1) {
                 __do(push, () => result + 1);

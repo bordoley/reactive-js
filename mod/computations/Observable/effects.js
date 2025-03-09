@@ -1,7 +1,7 @@
 /// <reference types="./effects.d.ts" />
 
 import { ComputationLike_isSynchronous, StreamableLike_stream, } from "../../computations.js";
-import { bindMethod, isSome, none, pipe, } from "../../functions.js";
+import { isSome, none, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import { DisposableLike_dispose, ObserverLike_notify, SchedulerLike_schedule, } from "../../utils.js";
 import * as Observable from "../Observable.js";
@@ -72,4 +72,3 @@ export const __state = /*@__PURE__*/ (() => {
         return __stream(streamable, options);
     };
 })();
-export const __bindMethod = (thiz, key) => __memo(bindMethod, thiz, key);

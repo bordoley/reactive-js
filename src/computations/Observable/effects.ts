@@ -24,7 +24,6 @@ import {
   SideEffect5,
   SideEffect6,
   Updater,
-  bindMethod,
   isSome,
   none,
   pipe,
@@ -289,17 +288,3 @@ export const __state = /*@__PURE__*/ (() => {
     return __stream(streamable, options) as StreamLike<Updater<T>, T>;
   };
 })();
-
-export const __bindMethod = <
-  T extends { [K in TKey]: (...args: any[]) => any },
-  TKey extends number | string | symbol,
-  TFunction extends T[TKey],
->(
-  thiz: T,
-  key: TKey,
-): TFunction =>
-  __memo<T, TKey, TFunction>(
-    bindMethod as (...args: any[]) => TFunction,
-    thiz,
-    key,
-  );

@@ -9,7 +9,6 @@
 ## Functions
 
 - [\_\_await](functions/await.md)
-- [\_\_bindMethod](functions/bindMethod.md)
 - [\_\_constant](functions/constant.md)
 - [\_\_currentScheduler](functions/currentScheduler.md)
 - [\_\_do](functions/do.md)
