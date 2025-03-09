@@ -1,4 +1,5 @@
 import {
+  ComputationModule,
   ComputationOf,
   ComputationOperatorWithSideEffects,
   ComputationType,
@@ -10,13 +11,14 @@ import {
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
   ConcurrentReactiveComputationModule,
+  DeferredComputationModule,
   DeferredComputationWithSideEffectsLike,
   DeferredComputationWithSideEffectsOf,
   DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
   DeferredReactiveComputationModule,
   EventSourceLike,
-  FromIterableOperator,
+  FromIterableSynchronousOperator,
   HigherOrderComputationOperator,
   HigherOrderInnerComputationLike,
   HigherOrderInnerComputationOf,
@@ -37,6 +39,7 @@ import {
   StatelessAsynchronousComputationOperator,
   StatelessComputationOperator,
   StoreLike,
+  SynchronousComputationModule,
   SynchronousComputationOf,
   SynchronousComputationWithSideEffectsOf,
   SynchronousObservableLike,
@@ -364,7 +367,10 @@ interface CombineConstructor {
  * @noInheritDoc
  */
 export interface ObservableModule
-  extends DeferredReactiveComputationModule<ObservableComputation>,
+  extends ComputationModule<ObservableComputation>,
+    DeferredComputationModule<ObservableComputation>,
+    SynchronousComputationModule<ObservableComputation>,
+    DeferredReactiveComputationModule<ObservableComputation>,
     ConcurrentReactiveComputationModule<ObservableComputation> {
   backpressureStrategy<T>(
     capacity: number,
@@ -467,7 +473,7 @@ export interface ObservableModule
   fromIterable<T>(options?: {
     readonly delay: number;
     readonly delayStart?: boolean;
-  }): FromIterableOperator<ObservableComputation, T>;
+  }): FromIterableSynchronousOperator<ObservableComputation, T>;
 
   fromPromise<T>(): Function1<Promise<T>, MulticastObservableLike<T>>;
 

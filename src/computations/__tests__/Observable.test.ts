@@ -32,7 +32,6 @@ import * as Observable from "../../computations/Observable.js";
 import * as Streamable from "../../computations/Streamable.js";
 import * as Subject from "../../computations/Subject.js";
 import {
-  ComputationModule,
   ComputationOf,
   Computation_deferredWithSideEffectsOfT,
   Computation_multicastOfT,
@@ -51,7 +50,6 @@ import {
   SynchronousObservableLike,
 } from "../../computations.js";
 import {
-  Function1,
   Optional,
   Tuple2,
   arrayEquality,
@@ -104,6 +102,7 @@ import * as EventSource from "../EventSource.js";
 import * as WritableStore from "../WritableStore.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReactiveComputationModuleTests.js";
+import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
 import DeferredReactiveComputationModuleTests from "./fixtures/DeferredReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 import * as ComputationTest from "./fixtures/helpers/ComputationTest.js";
@@ -196,19 +195,11 @@ testModule(
       expectToThrow(() => __constant(0));
     }),
   ),
-  ComputationModuleTests(
-    Observable as ComputationModule<Observable.Computation> & {
-      fromReadonlyArray: <T>() => Function1<
-        ReadonlyArray<T>,
-        ComputationOf<Observable.Computation, T>
-      >;
-    },
-    ObservableTypes,
-  ),
+  ComputationModuleTests(Observable, ObservableTypes),
+  DeferredComputationModuleTests(Observable, ObservableTypes),
   DeferredReactiveComputationModuleTests(Observable, ObservableTypes),
   SynchronousComputationModuleTests<Observable.Computation>(
-    Observable,
-    ObservableTypes,
+    Observable
   ),
   ConcurrentReactiveComputationModuleTests(
     {

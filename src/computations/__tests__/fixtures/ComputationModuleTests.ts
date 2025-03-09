@@ -1,13 +1,15 @@
 import {
   describe,
   expectArrayEquals,
+  expectEquals,
+  expectFalse,
   expectToThrowAsync,
   expectToThrowErrorAsync,
+  expectTrue,
   testAsync,
 } from "../../../__internal__/testing.js";
 import {
   ComputationModule,
-  ComputationOf,
   ComputationType,
   Computation_deferredWithSideEffectsOfT,
   Computation_multicastOfT,
@@ -21,13 +23,13 @@ import {
   SynchronousComputationWithSideEffectsOf,
 } from "../../../computations.js";
 import {
-  Function1,
   alwaysTrue,
   greaterThan,
   identity,
   increment,
   newInstance,
   none,
+  pipe,
   pipeAsync,
   pipeLazy,
   pipeLazyAsync,
@@ -36,16 +38,7 @@ import {
 import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
 
 const ComputationModuleTests = <TComputation extends ComputationType>(
-  m: ComputationModule<TComputation> & {
-    fromReadonlyArray: <T>() => Function1<
-      ReadonlyArray<T>,
-      ComputationOf<TComputation, T>
-    >;
-    toReadonlyArrayAsync: <T>() => Function1<
-      ComputationOf<TComputation, T>,
-      Promise<ReadonlyArray<T>>
-    >;
-  },
+  m: ComputationModule<TComputation>,
   computationType: {
     readonly [Computation_pureSynchronousOfT]?: PureSynchronousComputationOf<
       TComputation,
@@ -71,6 +64,17 @@ const ComputationModuleTests = <TComputation extends ComputationType>(
 ) =>
   describe(
     "ComputationModule",
+    describe(
+      "empty",
+      testAsync(
+        "produces no results",
+        pipeLazyAsync(
+          m.empty<number>(),
+          m.toReadonlyArrayAsync(),
+          expectArrayEquals<number>([]),
+        ),
+      ),
+    ),
     describe(
       "fromIterable",
       testAsync(
@@ -230,6 +234,64 @@ const ComputationModuleTests = <TComputation extends ComputationType>(
 
           expectToThrowErrorAsync(err),
         );
+      }),
+    ),
+    describe(
+      "raise",
+      testAsync("when raise function returns an value", async () => {
+        const e1 = "e1";
+
+        try {
+          await pipeAsync(
+            m.raise({ raise: () => e1 }),
+            m.toReadonlyArrayAsync(),
+          );
+          expectFalse()(true);
+        } catch (e) {
+          pipe(
+            e instanceof Error,
+            expectTrue("expected e to be instance of an Error"),
+          );
+          pipe((e as Error).message, expectEquals(e1));
+        }
+      }),
+      testAsync("when raise function throws an exception", async () => {
+        const e1 = new Error();
+
+        try {
+          await pipeAsync(
+            m.raise({
+              raise: () => {
+                throw e1;
+              },
+            }),
+            m.toReadonlyArrayAsync(),
+          );
+          expectFalse()(true);
+        } catch (e) {
+          pipe(
+            e instanceof Error,
+            expectTrue("expected e to be instance of an Error"),
+          );
+          pipe(e, expectEquals<unknown>(e1));
+        }
+      }),
+      testAsync("when raise function returns an exception", async () => {
+        const e1 = new Error();
+
+        try {
+          await pipeAsync(
+            m.raise({ raise: () => e1 }),
+            m.toReadonlyArrayAsync(),
+          );
+          expectFalse()(true);
+        } catch (e) {
+          pipe(
+            e instanceof Error,
+            expectTrue("expected e to be instance of an Error"),
+          );
+          pipe(e, expectEquals<unknown>(e1));
+        }
       }),
     ),
   );

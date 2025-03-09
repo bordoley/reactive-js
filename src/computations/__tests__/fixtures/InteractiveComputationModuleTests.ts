@@ -1,47 +1,51 @@
 import {
   describe,
   expectArrayEquals,
-  test,
+  testAsync,
 } from "../../../__internal__/testing.js";
 import {
+  ComputationModule,
   ComputationType,
+  DeferredComputationModule,
   InteractiveComputationModule,
 } from "../../../computations.js";
-import { pipeLazy } from "../../../functions.js";
+import { pipeLazyAsync } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
 
 const InteractiveComputationModuleTests = <
   TComputation extends ComputationType,
 >(
-  m: InteractiveComputationModule<TComputation>,
+  m: InteractiveComputationModule<TComputation> &
+    DeferredComputationModule<TComputation> &
+    ComputationModule<TComputation>,
 ) =>
   describe(
     "InteractiveComputationModule",
     describe(
       "zip",
-      test(
+      testAsync(
         "different length iterables",
-        pipeLazy(
+        pipeLazyAsync(
           m.zip(
             m.fromReadonlyArray<number>()([0, 1, 2, 3, 4]),
             m.fromReadonlyArray<number>()([0, 1, 2]),
             m.fromReadonlyArray<number>()([0, 1, 2, 3]),
           ),
           Computation.concatMap(m)(m.fromReadonlyArray<number>()),
-          m.toReadonlyArray<number>(),
+          m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([0, 0, 0, 1, 1, 1, 2, 2, 2]),
         ),
       ),
-      test(
+      testAsync(
         "with empty iterable",
-        pipeLazy(
+        pipeLazyAsync(
           m.zip(
             m.fromReadonlyArray<number>()([0, 1, 2, 3, 4]),
             m.fromReadonlyArray<number>()([]),
             m.fromReadonlyArray<number>()([0, 1, 2, 3]),
           ),
           Computation.concatMap(m)(m.fromReadonlyArray<number>()),
-          m.toReadonlyArray<number>(),
+          m.toReadonlyArrayAsync<number>(),
           expectArrayEquals<number>([]),
         ),
       ),
