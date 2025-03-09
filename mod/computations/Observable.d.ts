@@ -1,5 +1,5 @@
 import { ComputationModule, ComputationOf, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredComputationWithSideEffectsLike, DeferredComputationWithSideEffectsOf, DeferredObservableLike, DeferredObservableWithSideEffectsLike, DeferredReactiveComputationModule, EventSourceLike, FromIterableSynchronousOperator, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastComputationLike, MulticastObservableLike, ObservableLike, PauseableEventSourceLike, PauseableObservableLike, PureComputationOf, PureDeferredComputationLike, PureDeferredComputationOf, PureDeferredObservableLike, PureSynchronousComputationOf, PureSynchronousObservableLike, RunnableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StatelessAsynchronousComputationOperator, StatelessComputationOperator, StoreLike, SynchronousComputationModule, SynchronousComputationOf, SynchronousComputationWithSideEffectsOf, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../computations.js";
-import { AsyncFunction1, AsyncFunction2, Factory, Function1, Function2, Optional, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Updater } from "../functions.js";
+import { AsyncFunction1, AsyncFunction2, Factory, Function1, Function2, Optional, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Updater } from "../functions.js";
 import { BackpressureStrategy, DispatcherLike, DisposableLike, ObserverLike, QueueableLike, SchedulerLike } from "../utils.js";
 export interface ObservableComputation extends ComputationType {
     readonly [Computation_baseOfT]?: ObservableLike<this[typeof Computation_T]>;
@@ -78,6 +78,10 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly capacity?: number;
         readonly maxMicroTaskTicks?: number;
     }): Function1<SynchronousObservableLike<T>, Optional<T>>;
+    firstAsync<T>(options?: {
+        readonly capacity?: number;
+        readonly backpressureStrategy?: BackpressureStrategy;
+    }): AsyncFunction1<ObservableLike<T>, Optional<T>>;
     firstAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
         readonly backpressureStrategy?: BackpressureStrategy;
@@ -115,6 +119,10 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly capacity?: number;
         readonly maxMicroTaskTicks?: number;
     }): Function1<SynchronousObservableLike<T>, Optional<T>>;
+    lastAsync<T>(options?: {
+        readonly capacity?: number;
+        readonly backpressureStrategy?: BackpressureStrategy;
+    }): AsyncFunction1<ObservableLike<T>, Optional<T>>;
     lastAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
         readonly backpressureStrategy?: BackpressureStrategy;
@@ -141,6 +149,18 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly raise?: Factory<unknown>;
         readonly delay?: number;
     }): PureSynchronousObservableLike<T>;
+    reduceAsync<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: {
+        readonly autoDispose?: boolean;
+        readonly replay?: number;
+        readonly capacity?: number;
+        readonly backpressureStrategy?: BackpressureStrategy;
+    }): AsyncFunction1<ObservableLike<T>, TAcc>;
+    reduceAsync<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, scheduler: SchedulerLike, options?: {
+        readonly autoDispose?: boolean;
+        readonly replay?: number;
+        readonly capacity?: number;
+        readonly backpressureStrategy?: BackpressureStrategy;
+    }): AsyncFunction1<ObservableLike<T>, TAcc>;
     run<T>(options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
@@ -259,6 +279,7 @@ export declare const onSubscribe: Signature["onSubscribe"];
 export declare const pairwise: Signature["pairwise"];
 export declare const raise: Signature["raise"];
 export declare const reduce: Signature["reduce"];
+export declare const reduceAsync: Signature["reduceAsync"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
 export declare const run: Signature["run"];

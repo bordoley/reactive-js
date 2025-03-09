@@ -292,19 +292,17 @@
 
 ### firstAsync()
 
-> **firstAsync**\<`T`\>(`scheduler`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+#### Call Signature
 
-#### Type Parameters
+> **firstAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+##### Type Parameters
 
 • **T**
 
-#### Parameters
+##### Parameters
 
-##### scheduler
-
-[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-##### options?
+###### options?
 
 ###### backpressureStrategy?
 
@@ -314,9 +312,45 @@
 
 `number`
 
-#### Returns
+##### Returns
 
 [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+##### Overrides
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`firstAsync`](../../interfaces/ComputationModule.md#firstasync)
+
+#### Call Signature
+
+> **firstAsync**\<`T`\>(`scheduler`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### scheduler
+
+[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
+
+###### options?
+
+###### backpressureStrategy?
+
+[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
+
+###### capacity?
+
+`number`
+
+##### Returns
+
+[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+##### Overrides
+
+`ComputationModule.firstAsync`
 
 ***
 
@@ -610,19 +644,17 @@
 
 ### lastAsync()
 
-> **lastAsync**\<`T`\>(`scheduler`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+#### Call Signature
 
-#### Type Parameters
+> **lastAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+##### Type Parameters
 
 • **T**
 
-#### Parameters
+##### Parameters
 
-##### scheduler
-
-[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-##### options?
+###### options?
 
 ###### backpressureStrategy?
 
@@ -632,9 +664,45 @@
 
 `number`
 
-#### Returns
+##### Returns
 
 [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+##### Overrides
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`lastAsync`](../../interfaces/ComputationModule.md#lastasync)
+
+#### Call Signature
+
+> **lastAsync**\<`T`\>(`scheduler`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### scheduler
+
+[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
+
+###### options?
+
+###### backpressureStrategy?
+
+[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
+
+###### capacity?
+
+`number`
+
+##### Returns
+
+[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+##### Overrides
+
+`ComputationModule.lastAsync`
 
 ***
 
@@ -789,6 +857,106 @@
 #### Overrides
 
 [`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`raise`](../../interfaces/SynchronousComputationModule.md#raise)
+
+***
+
+### reduceAsync()
+
+#### Call Signature
+
+> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, `TAcc`\>
+
+##### Type Parameters
+
+• **T**
+
+• **TAcc**
+
+##### Parameters
+
+###### reducer
+
+[`Reducer`](../../../functions/type-aliases/Reducer.md)\<`T`, `TAcc`\>
+
+###### initialValue
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+###### options?
+
+###### autoDispose?
+
+`boolean`
+
+###### backpressureStrategy?
+
+[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
+
+###### capacity?
+
+`number`
+
+###### replay?
+
+`number`
+
+##### Returns
+
+[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, `TAcc`\>
+
+##### Overrides
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`reduceAsync`](../../interfaces/ComputationModule.md#reduceasync)
+
+#### Call Signature
+
+> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `scheduler`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, `TAcc`\>
+
+##### Type Parameters
+
+• **T**
+
+• **TAcc**
+
+##### Parameters
+
+###### reducer
+
+[`Reducer`](../../../functions/type-aliases/Reducer.md)\<`T`, `TAcc`\>
+
+###### initialValue
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+###### scheduler
+
+[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
+
+###### options?
+
+###### autoDispose?
+
+`boolean`
+
+###### backpressureStrategy?
+
+[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
+
+###### capacity?
+
+`number`
+
+###### replay?
+
+`number`
+
+##### Returns
+
+[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, `TAcc`\>
+
+##### Overrides
+
+`ComputationModule.reduceAsync`
 
 ***
 
@@ -1282,7 +1450,7 @@
 
 ##### Overrides
 
-`ComputationModule.toReadonlyArrayAsync`
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`toReadonlyArrayAsync`](../../interfaces/ComputationModule.md#toreadonlyarrayasync)
 
 #### Call Signature
 

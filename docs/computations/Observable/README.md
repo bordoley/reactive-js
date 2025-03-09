@@ -73,6 +73,7 @@
 - [pairwise](functions/pairwise.md)
 - [raise](functions/raise.md)
 - [reduce](functions/reduce.md)
+- [reduceAsync](functions/reduceAsync.md)
 - [repeat](functions/repeat.md)
 - [retry](functions/retry.md)
 - [run](functions/run.md)

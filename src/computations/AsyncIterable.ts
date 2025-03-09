@@ -320,6 +320,15 @@ export const encodeUtf8: Signature["encodeUtf8"] = (() =>
   (iterable: AsyncIterableLike<string>) =>
     newInstance(EncodeUtf8AsyncIterable, iterable)) as Signature["encodeUtf8"];
 
+export const firstAsync: Signature["firstAsync"] = /*@__PURE__*/ returns(
+  async (iter: AsyncIterableLike) => {
+    for await (const v of iter) {
+      return v;
+    }
+    return none;
+  },
+) as Signature["firstAsync"];
+
 class ForEachAsyncIterable<T> implements AsyncIterableWithSideEffectsLike<T> {
   public [ComputationLike_isPure]: false = false as const;
   public [ComputationLike_isSynchronous]: false = false as const;
@@ -404,6 +413,16 @@ export const keep: Signature["keep"] = (<T>(predicate: Predicate<T>) =>
   (iterable: AsyncIterableLike<T>) =>
     newInstance(KeepAsyncIterable, iterable, predicate)) as Signature["keep"];
 
+export const lastAsync: Signature["lastAsync"] = /*@__PURE__*/ returns(
+  async (iter: AsyncIterableLike) => {
+    let result: Optional<unknown> = none;
+    for await (const v of iter) {
+      result = v;
+    }
+    return result;
+  },
+) as Signature["lastAsync"];
+
 class MapAsyncIterable<TA, TB> implements AsyncIterableLike<TB> {
   public readonly [ComputationLike_isPure]?: boolean;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
@@ -484,6 +503,17 @@ export const raise: Signature["raise"] = <T>(options?: {
   const { raise: factory = raise } = options ?? {};
   return newInstance(RaiseAsyncIterable<T>, factory);
 };
+
+export const reduceAsync: Signature["reduceAsync"] =
+  <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
+  async (iterable: AsyncIterableLike<T>) => {
+    let acc = initialValue();
+    for await (let v of iterable) {
+      acc = reducer(acc, v);
+    }
+
+    return acc;
+  };
 
 class RepeatAsyncIterable<T> implements AsyncIterableLike<T> {
   public readonly [ComputationLike_isPure]?: boolean;

@@ -18,20 +18,6 @@
 
 • **TComputation** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
 
-## Properties
-
-### toReadonlyArrayAsync()
-
-> **toReadonlyArrayAsync**: \<`T`\>() => [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>
-
 ## Methods
 
 ### empty()
@@ -45,6 +31,20 @@
 #### Returns
 
 [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+
+***
+
+### firstAsync()
+
+> **firstAsync**\<`T`\>(): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, `T`\>
 
 ***
 
@@ -152,6 +152,20 @@
 
 ***
 
+### lastAsync()
+
+> **lastAsync**\<`T`\>(): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, `T`\>
+
+***
+
 ### map()
 
 > **map**\<`TA`, `TB`\>(`selector`): [`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
@@ -193,3 +207,43 @@
 #### Returns
 
 [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+
+***
+
+### reduceAsync()
+
+> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, `TAcc`\>
+
+#### Type Parameters
+
+• **T**
+
+• **TAcc**
+
+#### Parameters
+
+##### reducer
+
+[`Reducer`](../../functions/type-aliases/Reducer.md)\<`T`, `TAcc`\>
+
+##### initialValue
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+#### Returns
+
+[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, `TAcc`\>
+
+***
+
+### toReadonlyArrayAsync()
+
+> **toReadonlyArrayAsync**\<`T`\>(): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>

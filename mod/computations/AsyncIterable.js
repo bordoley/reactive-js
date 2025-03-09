@@ -140,6 +140,12 @@ class EncodeUtf8AsyncIterable {
     }
 }
 export const encodeUtf8 = (() => (iterable) => newInstance(EncodeUtf8AsyncIterable, iterable));
+export const firstAsync = /*@__PURE__*/ returns(async (iter) => {
+    for await (const v of iter) {
+        return v;
+    }
+    return none;
+});
 class ForEachAsyncIterable {
     d;
     ef;
@@ -203,6 +209,13 @@ class KeepAsyncIterable {
     }
 }
 export const keep = ((predicate) => (iterable) => newInstance(KeepAsyncIterable, iterable, predicate));
+export const lastAsync = /*@__PURE__*/ returns(async (iter) => {
+    let result = none;
+    for await (const v of iter) {
+        result = v;
+    }
+    return result;
+});
 class MapAsyncIterable {
     d;
     m;
@@ -269,6 +282,13 @@ class RaiseAsyncIterable {
 export const raise = (options) => {
     const { raise: factory = raise } = options ?? {};
     return newInstance((RaiseAsyncIterable), factory);
+};
+export const reduceAsync = (reducer, initialValue) => async (iterable) => {
+    let acc = initialValue();
+    for await (let v of iterable) {
+        acc = reducer(acc, v);
+    }
+    return acc;
 };
 class RepeatAsyncIterable {
     i;

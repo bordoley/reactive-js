@@ -206,6 +206,13 @@ export const first: Signature["first"] = /*@__PURE__*/ returns(
   },
 ) as Signature["first"];
 
+export const firstAsync: Signature["firstAsync"] = /*@__PURE__*/ returns(
+  async (iter: IterableLike) => {
+    await Promise.resolve();
+    return first()(iter);
+  },
+) as Signature["firstAsync"];
+
 class ForEachIterable<T> implements IterableWithSideEffectsLike<T> {
   public [ComputationLike_isPure]: false = false as const;
 
@@ -329,6 +336,12 @@ export const last: Signature["last"] =
     return result;
   };
 
+export const lastAsync: Signature["lastAsync"] = (<T>() =>
+  async (iter: IterableLike<T>) => {
+    await Promise.resolve();
+    return last<T>()(iter);
+  }) as Signature["lastAsync"];
+
 class MapIterable<TA, TB> implements IterableLike<TB> {
   public readonly [ComputationLike_isPure]?: boolean;
 
@@ -376,6 +389,13 @@ export const reduce: Signature["reduce"] =
     }
 
     return acc;
+  };
+
+export const reduceAsync: Signature["reduceAsync"] =
+  <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
+  async (iterable: IterableLike<T>) => {
+    await Promise.resolve();
+    return reduce(reducer, initialValue)(iterable);
   };
 
 class RepeatIterable<T> {
