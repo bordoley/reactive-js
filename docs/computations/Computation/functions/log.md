@@ -16,7 +16,7 @@
 
 ### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"forEach"`\>
+`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"forEach"`\>
 
 ## Returns
 

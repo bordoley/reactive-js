@@ -1,10 +1,10 @@
 /// <reference types="./ComputationModuleTests.d.ts" />
 
-import { describe, expectArrayEquals, expectToThrowAsync, expectToThrowErrorAsync, testAsync, } from "../../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectFalse, expectToThrowAsync, expectToThrowErrorAsync, expectTrue, testAsync, } from "../../../__internal__/testing.js";
 import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../../computations.js";
-import { alwaysTrue, greaterThan, identity, increment, newInstance, none, pipeAsync, pipeLazy, pipeLazyAsync, returns, } from "../../../functions.js";
+import { alwaysTrue, greaterThan, identity, increment, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, returns, } from "../../../functions.js";
 import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
-const ComputationModuleTests = (m, computationType) => describe("ComputationModule", describe("fromIterable", testAsync("with array", pipeLazyAsync([1, 2, 3], m.fromIterable(), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]))), testAsync("when the iterable throws", pipeLazyAsync(pipeLazy((function* Generator() {
+const ComputationModuleTests = (m, computationType) => describe("ComputationModule", describe("empty", testAsync("produces no results", pipeLazyAsync(m.empty(), m.toReadonlyArrayAsync(), expectArrayEquals([])))), describe("fromIterable", testAsync("with array", pipeLazyAsync([1, 2, 3], m.fromIterable(), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]))), testAsync("when the iterable throws", pipeLazyAsync(pipeLazy((function* Generator() {
     throw newInstance(Error);
 })(), m.fromIterable(), m.toReadonlyArrayAsync()), expectToThrowAsync))), describe("fromReadonlyArray", testAsync("starting at index greater than 0", pipeLazyAsync([1, 2, 3, 4], m.fromReadonlyArray({ start: 1 }), m.toReadonlyArrayAsync(), expectArrayEquals([2, 3, 4]))), testAsync("starting at index greater than 0 with count", pipeLazyAsync([1, 2, 3, 4], m.fromReadonlyArray({ start: 1, count: 2 }), m.toReadonlyArrayAsync(), expectArrayEquals([2, 3]))), testAsync("starting at index greater than 0 with count exceeding the length", pipeLazyAsync([1, 2, 3, 4], m.fromReadonlyArray({ start: 1, count: 10 }), m.toReadonlyArrayAsync(), expectArrayEquals([2, 3, 4]))), testAsync("negative count", pipeLazyAsync([1, 2, 3, 4], m.fromReadonlyArray({ count: -2 }), m.toReadonlyArrayAsync(), expectArrayEquals([4, 3]))), testAsync("starting at index greater than 0 with negative count", pipeLazyAsync([1, 2, 3, 4], m.fromReadonlyArray({ start: 2, count: -2 }), m.toReadonlyArrayAsync(), expectArrayEquals([3, 2])))), describe("fromValue", testAsync("with array", pipeLazyAsync(1, m.fromValue(), m.toReadonlyArrayAsync(), expectArrayEquals([1])))), describe("generate", testAsync("with count", pipeLazyAsync(none, 
 // Need to delay instantiating the generate function until
@@ -22,5 +22,39 @@ const ComputationModuleTests = (m, computationType) => describe("ComputationModu
         throw err;
     };
     await pipeAsync(pipeLazy([1, 1], m.fromReadonlyArray(), m.map(selector), m.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
+})), describe("raise", testAsync("when raise function returns an value", async () => {
+    const e1 = "e1";
+    try {
+        await pipeAsync(m.raise({ raise: () => e1 }), m.toReadonlyArrayAsync());
+        expectFalse()(true);
+    }
+    catch (e) {
+        pipe(e instanceof Error, expectTrue("expected e to be instance of an Error"));
+        pipe(e.message, expectEquals(e1));
+    }
+}), testAsync("when raise function throws an exception", async () => {
+    const e1 = new Error();
+    try {
+        await pipeAsync(m.raise({
+            raise: () => {
+                throw e1;
+            },
+        }), m.toReadonlyArrayAsync());
+        expectFalse()(true);
+    }
+    catch (e) {
+        pipe(e instanceof Error, expectTrue("expected e to be instance of an Error"));
+        pipe(e, expectEquals(e1));
+    }
+}), testAsync("when raise function returns an exception", async () => {
+    const e1 = new Error();
+    try {
+        await pipeAsync(m.raise({ raise: () => e1 }), m.toReadonlyArrayAsync());
+        expectFalse()(true);
+    }
+    catch (e) {
+        pipe(e instanceof Error, expectTrue("expected e to be instance of an Error"));
+        pipe(e, expectEquals(e1));
+    }
 })));
 export default ComputationModuleTests;

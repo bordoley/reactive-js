@@ -20,6 +20,7 @@
 
 - [addEventHandler](functions/addEventHandler.md)
 - [create](functions/create.md)
+- [empty](functions/empty.md)
 - [fromIterable](functions/fromIterable.md)
 - [fromPromise](functions/fromPromise.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
@@ -29,5 +30,6 @@
 - [map](functions/map.md)
 - [merge](functions/merge.md)
 - [never](functions/never.md)
+- [raise](functions/raise.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
 - [withLatestFrom](functions/withLatestFrom.md)

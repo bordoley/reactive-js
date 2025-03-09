@@ -198,9 +198,7 @@ testModule(
   ComputationModuleTests(Observable, ObservableTypes),
   DeferredComputationModuleTests(Observable, ObservableTypes),
   DeferredReactiveComputationModuleTests(Observable, ObservableTypes),
-  SynchronousComputationModuleTests<Observable.Computation>(
-    Observable
-  ),
+  SynchronousComputationModuleTests<Observable.Computation>(Observable),
   ConcurrentReactiveComputationModuleTests(
     {
       ...Observable,

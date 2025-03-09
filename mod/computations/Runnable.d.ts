@@ -1,4 +1,4 @@
-import { ComputationType, Computation_T, Computation_baseOfT, Computation_multicastOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, DeferredReactiveComputationModule, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike } from "../computations.js";
+import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_multicastOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, DeferredComputationModule, DeferredReactiveComputationModule, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike, SynchronousComputationModule } from "../computations.js";
 /**
  * @noInheritDoc
  */
@@ -9,7 +9,13 @@ export interface RunnableComputation extends ComputationType {
     readonly [Computation_multicastOfT]?: never;
 }
 export type Computation = RunnableComputation;
-export interface RunnableModule extends DeferredReactiveComputationModule<RunnableComputation> {
+export interface RunnableModule extends ComputationModule<RunnableComputation>, DeferredComputationModule<RunnableComputation>, DeferredReactiveComputationModule<RunnableComputation>, SynchronousComputationModule<RunnableComputation> {
+    empty: SynchronousComputationModule<RunnableComputation>["empty"];
+    fromIterable: SynchronousComputationModule<RunnableComputation>["fromIterable"];
+    fromReadonlyArray: SynchronousComputationModule<RunnableComputation>["fromReadonlyArray"];
+    fromValue: SynchronousComputationModule<RunnableComputation>["fromValue"];
+    generate: SynchronousComputationModule<RunnableComputation>["generate"];
+    raise: SynchronousComputationModule<RunnableComputation>["raise"];
 }
 export type Signature = RunnableModule;
 export declare const buffer: Signature["buffer"];

@@ -18,6 +18,12 @@
 
 ## Functions
 
+- [catchError](functions/catchError.md)
+- [concat](functions/concat.md)
+- [concatAll](functions/concatAll.md)
+- [empty](functions/empty.md)
+- [encodeUtf8](functions/encodeUtf8.md)
+- [forEach](functions/forEach.md)
 - [fromIterable](functions/fromIterable.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
 - [fromValue](functions/fromValue.md)
@@ -25,6 +31,14 @@
 - [keep](functions/keep.md)
 - [map](functions/map.md)
 - [of](functions/of.md)
+- [raise](functions/raise.md)
+- [repeat](functions/repeat.md)
+- [retry](functions/retry.md)
+- [scan](functions/scan.md)
+- [takeFirst](functions/takeFirst.md)
+- [takeWhile](functions/takeWhile.md)
+- [throwIfEmpty](functions/throwIfEmpty.md)
 - [toObservable](functions/toObservable.md)
 - [toPauseableObservable](functions/toPauseableObservable.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
+- [zip](functions/zip.md)

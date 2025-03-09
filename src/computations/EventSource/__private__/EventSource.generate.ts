@@ -1,4 +1,4 @@
-import { Factory, Updater, error, none } from "../../../functions.js";
+import { Factory, Updater, none } from "../../../functions.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -26,12 +26,9 @@ const EventSource_generate: EventSource.Signature["generate"] = <T>(
 
     while (!listener[DisposableLike_isDisposed]) {
       acc = generator(acc);
-      try {
-        listener[EventListenerLike_notify](acc);
-      } catch (e) {
-        listener[DisposableLike_dispose](error(e));
-        break;
-      }
+
+      // Will never throw.
+      listener[EventListenerLike_notify](acc);
 
       if (count !== none && (cnt++, cnt >= count)) {
         break;

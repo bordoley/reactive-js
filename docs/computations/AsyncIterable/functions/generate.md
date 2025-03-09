@@ -6,7 +6,7 @@
 
 # Function: generate()
 
-> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\>
+> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): `object`
 
 ## Type Parameters
 
@@ -30,4 +30,16 @@
 
 ## Returns
 
-[`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\>
+`object`
+
+### \[ComputationLike\_isDeferred\]?
+
+> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
+
+### \[ComputationLike\_isPure\]?
+
+> `readonly` `optional` **\[ComputationLike\_isPure\]**: `true`
+
+### \[ComputationLike\_isSynchronous\]
+
+> `readonly` **\[ComputationLike\_isSynchronous\]**: `false`

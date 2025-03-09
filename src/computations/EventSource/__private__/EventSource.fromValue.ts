@@ -1,4 +1,4 @@
-import { error, returns } from "../../../functions.js";
+import { returns } from "../../../functions.js";
 import {
   DisposableLike_dispose,
   EventListenerLike,
@@ -11,11 +11,9 @@ const EventSource_fromValue: EventSource.Signature["fromValue"] =
   /*@__PURE__*/ returns((v: unknown) =>
     EventSource_create(async (listener: EventListenerLike) => {
       await Promise.resolve();
-      try {
-        listener[EventListenerLike_notify](v);
-      } catch (e) {
-        listener[DisposableLike_dispose](error(e));
-      }
+
+      // Will never throw.
+      listener[EventListenerLike_notify](v);
 
       listener[DisposableLike_dispose]();
     }),

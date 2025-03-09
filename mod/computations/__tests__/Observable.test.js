@@ -72,6 +72,7 @@ import * as EventSource from "../EventSource.js";
 import * as WritableStore from "../WritableStore.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReactiveComputationModuleTests.js";
+import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
 import DeferredReactiveComputationModuleTests from "./fixtures/DeferredReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 import * as ComputationTest from "./fixtures/helpers/ComputationTest.js";
@@ -95,7 +96,7 @@ const CombineConstructorTests = (operator) => {
 };
 testModule("Observable", describe("effects", test("calling an effect from outside a computation expression throws", () => {
     expectToThrow(() => __constant(0));
-})), ComputationModuleTests(Observable, ObservableTypes), DeferredReactiveComputationModuleTests(Observable, ObservableTypes), SynchronousComputationModuleTests(Observable, ObservableTypes), ConcurrentReactiveComputationModuleTests({
+})), ComputationModuleTests(Observable, ObservableTypes), DeferredComputationModuleTests(Observable, ObservableTypes), DeferredReactiveComputationModuleTests(Observable, ObservableTypes), SynchronousComputationModuleTests(Observable), ConcurrentReactiveComputationModuleTests({
     ...Observable,
     fromObservable: () => (v) => v,
     toObservable: () => (v) => v,
