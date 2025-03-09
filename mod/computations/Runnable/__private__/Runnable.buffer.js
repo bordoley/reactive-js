@@ -1,8 +1,8 @@
 /// <reference types="./Runnable.buffer.d.ts" />
 
 import { Array_length, Array_push, MAX_SAFE_INTEGER, } from "../../../__internal__/constants.js";
-import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { newInstance } from "../../../functions.js";
+import { clampPositiveNonZeroInteger } from "../../../math.js";
 import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class BufferSink {

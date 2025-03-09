@@ -5,7 +5,6 @@ import {
   Iterator_next,
   Iterator_value,
 } from "../__internal__/constants.js";
-import { clampPositiveInteger } from "../__internal__/math.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import {
   AsyncIterableLike,
@@ -51,6 +50,7 @@ import {
   raiseError,
   returns,
 } from "../functions.js";
+import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import {

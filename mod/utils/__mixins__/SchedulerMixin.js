@@ -1,9 +1,9 @@
 /// <reference types="./SchedulerMixin.d.ts" />
 
 import { __DEV__ } from "../../__internal__/constants.js";
-import { abs, clampPositiveInteger, floor } from "../../__internal__/math.js";
 import { include, init, mix, mixInstanceFactory, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { error, isNone, isSome, newInstance, none, pipe, raiseIf, } from "../../functions.js";
+import { abs, clampPositiveInteger, floor } from "../../math.js";
 import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";

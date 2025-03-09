@@ -55,7 +55,8 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import { StreamableLike_stream } from "../../computations.js";
-import { bindMethod, increment, pipe, returns } from "../../functions.js";
+import { bindMethod, pipe, returns } from "../../functions.js";
+import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import { DisposableLike_isDisposed, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as Observable from "../Observable.js";

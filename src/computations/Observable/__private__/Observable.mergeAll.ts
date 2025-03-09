@@ -1,9 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
-  clampPositiveInteger,
-  clampPositiveNonZeroInteger,
-} from "../../../__internal__/math.js";
-import {
   Mutable,
   include,
   init,
@@ -28,6 +24,10 @@ import {
   none,
   pipe,
 } from "../../../functions.js";
+import {
+  clampPositiveInteger,
+  clampPositiveNonZeroInteger,
+} from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";

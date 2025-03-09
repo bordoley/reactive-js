@@ -4,6 +4,7 @@ import { Property } from "csstype";
 import { useDispatcher, useObserve } from "@reactive-js/core/react";
 import { Optional } from "@reactive-js/core/functions";
 import { EventSourceLike } from "@reactive-js/core/computations";
+import { clamp } from "@reactive-js/core/math";
 
 const items = ["W", "O", "R", "D", "L", "E"];
 
@@ -32,14 +33,7 @@ const Box = (props: any) => (
   />
 );
 
-const clamp = (min: number, v: number, max: number): number =>
-  v > max ? max : v < min ? min : v;
-
-const clampPositive180deg = (v: number) => clamp(0, v, 180);
-
-const calcXRotation = (value: number, i: number) => {
-  return clampPositive180deg(value / (i + 1));
-};
+const calcXRotation = (v: number, i: number) => clamp(0, v / (i + 1), 180);
 
 const AnimatedBox = ({
   label,

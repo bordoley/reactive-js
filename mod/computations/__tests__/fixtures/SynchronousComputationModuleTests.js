@@ -1,7 +1,8 @@
 /// <reference types="./SynchronousComputationModuleTests.d.ts" />
 
 import { describe, expectArrayEquals, expectEquals, expectIsNone, test, } from "../../../__internal__/testing.js";
-import { ignore, increment, pipe, pipeLazy, returns, } from "../../../functions.js";
+import { ignore, pipe, pipeLazy, returns, } from "../../../functions.js";
+import { increment } from "../../../math.js";
 import * as Iterable from "../../Iterable.js";
 import * as Runnable from "../../Runnable.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";

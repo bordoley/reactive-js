@@ -1,5 +1,5 @@
+import { abs, clamp, min } from "../math.js";
 import { Array_length, MAX_SAFE_INTEGER } from "./constants.js";
-import { abs, clamp, min } from "./math.js";
 
 const parseArrayBounds = (
   array: readonly unknown[],

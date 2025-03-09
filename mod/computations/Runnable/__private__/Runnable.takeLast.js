@@ -1,7 +1,7 @@
 /// <reference types="./Runnable.takeLast.d.ts" />
 
-import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { isSome, newInstance, none } from "../../../functions.js";
+import { clampPositiveInteger } from "../../../math.js";
 import * as Queue from "../../../utils/Queue.js";
 import { DropOldestBackpressureStrategy, QueueLike_dequeue, QueueableLike_enqueue, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";

@@ -1,8 +1,8 @@
 /// <reference types="./Observable.skipFirst.d.ts" />
 
-import { clampPositiveInteger, max } from "../../../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { partial, pipe } from "../../../functions.js";
+import { clampPositiveInteger, max } from "../../../math.js";
 import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";

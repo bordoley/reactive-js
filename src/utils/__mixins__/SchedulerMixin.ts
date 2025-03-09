@@ -1,5 +1,4 @@
 import { __DEV__ } from "../../__internal__/constants.js";
-import { abs, clampPositiveInteger, floor } from "../../__internal__/math.js";
 import {
   Mixin,
   Mutable,
@@ -21,6 +20,7 @@ import {
   pipe,
   raiseIf,
 } from "../../functions.js";
+import { abs, clampPositiveInteger, floor } from "../../math.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,

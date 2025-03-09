@@ -1,5 +1,4 @@
 import { MAX_VALUE, globalObject } from "../__internal__/constants.js";
-import { clampPositiveInteger } from "../__internal__/math.js";
 import {
   Mutable,
   include,
@@ -17,6 +16,7 @@ import {
   pipe,
   pipeLazy,
 } from "../functions.js";
+import { clampPositiveInteger } from "../math.js";
 import CurrentTimeSchedulerMixin from "../utils/__mixins__/CurrentTimeSchedulerMixin.js";
 import {
   DisposableLike,

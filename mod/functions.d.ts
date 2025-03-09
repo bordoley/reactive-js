@@ -158,16 +158,12 @@ interface FunctionsModule {
     compose<T, A, B, C, D, E, F, G, H, I, J, K>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>, op11: Function1<J, K>): Function1<T, K>;
     compose<T, A, B, C, D, E, F, G, H, I, J, K, L>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>, op11: Function1<J, K>, op12: Function1<K, L>): Function1<T, L>;
     debug<T>(v: T): T;
-    decrement(x: number): number;
-    decrementBy(decr: number): Updater<number>;
     error(message?: unknown): Error;
     errorWithDebugMessage(message: string): Error;
     greaterThan(v: number): Predicate<number>;
     identity<T>(v: T): T;
     identityLazy<T>(): Updater<T>;
     ignore(..._args: unknown[]): void;
-    increment(x: number): number;
-    incrementBy(incr: number): Updater<number>;
     invoke<T extends Record<TKey, (...args: any[]) => any>, TKey extends number | string | symbol>(method: TKey, ...args: Parameters<T[TKey]>): Function1<T, ReturnType<T[TKey]>>;
     isEqualTo<T>(b: T, options?: {
         readonly equality?: Equality<T>;
@@ -282,7 +278,6 @@ interface FunctionsModule {
     raiseIf(condition: boolean, message: string): void;
     raiseIfNone<T>(v: Optional<T>, message: string): asserts v is T;
     returns<T>(v: T): (..._args: unknown[]) => T;
-    scale(start: number, end: number): Function1<number, number>;
     strictEquality<T>(a: T, b: T): boolean;
     tuple<TA>(a: TA): Tuple1<TA>;
     tuple<TA, TB>(a: TA, b: TB): Tuple2<TA, TB>;
@@ -328,14 +323,6 @@ export declare const compose: Signature["compose"];
  */
 export declare const debug: Signature["debug"];
 /**
- * An updater function that returns the result of decrementing `x`.
- */
-export declare const decrement: Signature["decrement"];
-/**
- * Returns a function that decrements a number `x` by the value `decr`.
- */
-export declare const decrementBy: Signature["decrementBy"];
-/**
  * The identity function.
  *
  * @returns `v`
@@ -346,14 +333,6 @@ export declare const identityLazy: Signature["identityLazy"];
  * A function that always returns `undefined`.
  */
 export declare const ignore: Signature["ignore"];
-/**
- * An updater function that returns the result of incrementing `x`.
- */
-export declare const increment: Signature["increment"];
-/**
- * Returns a function that increments a number `x` by the value `incr`.
- */
-export declare const incrementBy: Signature["incrementBy"];
 /**
  * Enables invoking a method on an object as a unary function within
  * a pipeline operation.
@@ -473,7 +452,6 @@ export declare const raiseIfNone: Signature["raiseIfNone"];
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */
 export declare const returns: Signature["returns"];
-export declare const scale: Signature["scale"];
 /**
  * The javascript strict equality function.
  */

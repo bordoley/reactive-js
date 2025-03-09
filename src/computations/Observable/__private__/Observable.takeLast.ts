@@ -1,4 +1,3 @@
-import { clampPositiveInteger } from "../../../__internal__/math.js";
 import {
   include,
   init,
@@ -13,6 +12,7 @@ import {
   partial,
   pipe,
 } from "../../../functions.js";
+import { clampPositiveInteger } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";

@@ -2,6 +2,7 @@
  * @jest-environment node
  */
 
+import "./mod/__tests__/math.test.js";
 import "./mod/__tests__/functions.test.js";
 
 import "./mod/collections/__tests__/Dictionary.test.js";

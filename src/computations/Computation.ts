@@ -42,11 +42,11 @@ import {
   debug as breakPoint,
   compose,
   log as consoleLog,
-  increment,
   pickUnsafe,
   pipe,
   returns,
 } from "../functions.js";
+import { increment } from "../math.js";
 import { EventListenerLike, EventListenerLike_notify } from "../utils.js";
 
 export interface ConcatManyOperator<TComputation extends ComputationType> {

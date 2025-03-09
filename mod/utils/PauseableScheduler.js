@@ -1,11 +1,11 @@
 /// <reference types="./PauseableScheduler.d.ts" />
 
 import { MAX_VALUE } from "../__internal__/constants.js";
-import { clampPositiveInteger } from "../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
 import * as WritableStore from "../computations/WritableStore.js";
 import { StoreLike_value } from "../computations.js";
 import { bind, isNone, isSome, none } from "../functions.js";
+import { clampPositiveInteger } from "../math.js";
 import { ContinuationContextLike_yield, DisposableContainerLike_add, DisposableLike_isDisposed, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";

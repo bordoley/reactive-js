@@ -12,13 +12,8 @@ import {
 import * as Observable from "../../computations/Observable.js";
 import * as Subject from "../../computations/Subject.js";
 import { ObservableLike_observe } from "../../computations.js";
-import {
-  Optional,
-  bindMethod,
-  increment,
-  pipe,
-  returns,
-} from "../../functions.js";
+import { Optional, bindMethod, pipe, returns } from "../../functions.js";
+import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
   DisposableLike_dispose,

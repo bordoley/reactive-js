@@ -3,7 +3,6 @@ import {
   Array_push,
   MAX_SAFE_INTEGER,
 } from "../../../__internal__/constants.js";
-import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import {
   include,
   init,
@@ -11,6 +10,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { Optional, none, partial, pipe } from "../../../functions.js";
+import { clampPositiveNonZeroInteger } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";

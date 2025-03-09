@@ -1,5 +1,4 @@
 import { Array_length, Array_push } from "../../__internal__/constants.js";
-import { floor, random } from "../../__internal__/math.js";
 import {
   describe,
   expectArrayEquals,
@@ -9,6 +8,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import { Optional, newInstance, none, pipe } from "../../functions.js";
+import { floor, random } from "../../math.js";
 import {
   DropLatestBackpressureStrategy,
   DropOldestBackpressureStrategy,

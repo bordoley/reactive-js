@@ -1,5 +1,4 @@
 import { MAX_VALUE } from "../__internal__/constants.js";
-import { clampPositiveInteger } from "../__internal__/math.js";
 import {
   Mutable,
   include,
@@ -11,6 +10,7 @@ import {
 import * as WritableStore from "../computations/WritableStore.js";
 import { StoreLike_value, WritableStoreLike } from "../computations.js";
 import { Optional, bind, isNone, isSome, none } from "../functions.js";
+import { clampPositiveInteger } from "../math.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,

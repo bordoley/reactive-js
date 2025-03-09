@@ -7,7 +7,8 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import { StreamableLike_stream } from "../../computations.js";
-import { bindMethod, increment, pipe, returns } from "../../functions.js";
+import { bindMethod, pipe, returns } from "../../functions.js";
+import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
   DisposableLike_isDisposed,

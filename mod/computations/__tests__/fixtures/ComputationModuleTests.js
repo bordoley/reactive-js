@@ -2,7 +2,8 @@
 
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectToThrowAsync, expectToThrowErrorAsync, expectTrue, testAsync, } from "../../../__internal__/testing.js";
 import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../../computations.js";
-import { alwaysTrue, greaterThan, identity, increment, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, returns, } from "../../../functions.js";
+import { alwaysTrue, greaterThan, identity, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, returns, } from "../../../functions.js";
+import { increment } from "../../../math.js";
 import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
 const ComputationModuleTests = (m, computationType) => describe("ComputationModule", describe("empty", testAsync("produces no results", pipeLazyAsync(m.empty(), m.toReadonlyArrayAsync(), expectArrayEquals([])))), describe("firstAsync", testAsync("returns the first value", pipeLazyAsync([1, 2, 3, 4, 5], m.fromIterable(), m.firstAsync(), expectEquals(1))), testAsync("empty source", pipeLazyAsync([], m.fromIterable(), m.firstAsync(), expectIsNone)), testAsync("an iterable that throws", pipeLazyAsync(pipeLazy((function* Generator() {
     throw newInstance(Error);

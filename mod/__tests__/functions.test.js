@@ -1,7 +1,7 @@
 /// <reference types="./functions.test.d.ts" />
 
 import { describe, expectArrayEquals, expectArrayNotEquals, expectEquals, expectIsNone, expectIsSome, expectToThrow, expectTrue, test, testAsync, testModule, testPredicateExpectingFalse, testPredicateExpectingTrue, } from "../__internal__/testing.js";
-import { alwaysFalse, alwaysTrue, arrayEquality, bind, bindMethod, call, decrement, decrementBy, greaterThan, identity, increment, incrementBy, invoke, isEqualTo, isEven, isFalse, isFunction, isNone, isNotEqualTo, isNumber, isObject, isOdd, isSome, isString, isTrue, lessThan, negate, newInstance, none, pick, pipe, pipeLazy, pipeLazyAsync, pipeSome, pipeSomeLazy, raiseIf, raiseIfNone, returns, tuple, } from "../functions.js";
+import { alwaysFalse, alwaysTrue, arrayEquality, bind, bindMethod, call, greaterThan, identity, invoke, isEqualTo, isEven, isFalse, isFunction, isNone, isNotEqualTo, isNumber, isObject, isOdd, isSome, isString, isTrue, lessThan, negate, newInstance, none, pick, pipe, pipeLazy, pipeLazyAsync, pipeSome, pipeSomeLazy, raiseIf, raiseIfNone, returns, tuple, } from "../functions.js";
 testModule("functions", describe("alwaysFalse", testPredicateExpectingFalse(false, alwaysFalse), testPredicateExpectingFalse(true, alwaysFalse)), describe("alwaysTrue", testPredicateExpectingTrue(false, alwaysTrue), testPredicateExpectingTrue(true, alwaysTrue)), describe("arrayEquality", describe("strict equality", test("when arrays are empty", pipeLazy([], expectArrayEquals([]))), test("when arrays have identical values", pipeLazy([1, 2, 3], expectArrayEquals([1, 2, 3]))), test("when arrays are the same reference", () => {
     const arr = [1, 2, 3];
     pipe(arr, expectArrayEquals(arr));
@@ -47,10 +47,10 @@ testModule("functions", describe("alwaysFalse", testPredicateExpectingFalse(fals
         pipe(a, expectEquals(1));
     };
     call(f, thiz, 1);
-})), describe("decrement", test("decrements an integer by 1", pipeLazy(decrement(100), expectEquals(99)))), describe("decrementBy", test("decrements an integer by the specified value", pipeLazy(100, decrementBy(10), expectEquals(90)))), describe("greaterThan", testPredicateExpectingTrue(10, greaterThan(5)), testPredicateExpectingFalse(10, greaterThan(100))), describe("identity", test("returns the provided function", () => {
+})), describe("greaterThan", testPredicateExpectingTrue(10, greaterThan(5)), testPredicateExpectingFalse(10, greaterThan(100))), describe("identity", test("returns the provided function", () => {
     const thiz = {};
     pipe(identity(thiz), expectEquals(thiz));
-})), describe("increment", test("increments an integer by 1", pipeLazy(increment(100), expectEquals(101)))), describe("incrementBy", test("increments an integer by the specified value", pipeLazy(100, incrementBy(10), expectEquals(110)))), describe("invoke", test("invokes a method by name on an object", () => {
+})), describe("invoke", test("invokes a method by name on an object", () => {
     let called = false;
     class TestClass {
         testMethod() {

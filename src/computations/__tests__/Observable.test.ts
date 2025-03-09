@@ -56,8 +56,6 @@ import {
   bindMethod,
   error,
   ignore,
-  increment,
-  incrementBy,
   isSome,
   lessThan,
   newInstance,
@@ -68,9 +66,9 @@ import {
   pipeLazyAsync,
   raise,
   returns,
-  scale,
   tuple,
 } from "../../functions.js";
+import { increment, incrementBy, scale } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";

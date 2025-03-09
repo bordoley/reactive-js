@@ -1,5 +1,5 @@
-import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { Optional, isSome, newInstance, none } from "../../../functions.js";
+import { clampPositiveInteger } from "../../../math.js";
 import * as Queue from "../../../utils/Queue.js";
 import {
   DropOldestBackpressureStrategy,

@@ -1,8 +1,8 @@
 /// <reference types="./Observable.takeLast.d.ts" />
 
-import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { bind, isSome, none, partial, pipe, } from "../../../functions.js";
+import { clampPositiveInteger } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";

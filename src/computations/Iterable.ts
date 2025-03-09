@@ -5,7 +5,6 @@ import {
   Iterator_next,
   Iterator_value,
 } from "../__internal__/constants.js";
-import { clampPositiveInteger } from "../__internal__/math.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import {
@@ -48,6 +47,7 @@ import {
   returns,
   tuple,
 } from "../functions.js";
+import { clampPositiveInteger } from "../math.js";
 import * as ComputationM from "./Computation.js";
 import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 

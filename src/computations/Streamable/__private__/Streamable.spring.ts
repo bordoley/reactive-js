@@ -24,9 +24,9 @@ import {
   isReadonlyArray,
   pipe,
   returns,
-  scale,
   tuple,
 } from "../../../functions.js";
+import { scale } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";

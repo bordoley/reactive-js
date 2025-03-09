@@ -34,7 +34,6 @@ import {
   Optional,
   alwaysTrue,
   ignore,
-  increment,
   lessThan,
   none,
   pick,
@@ -45,6 +44,7 @@ import {
   raise,
   returns,
 } from "../../../functions.js";
+import { increment } from "../../../math.js";
 import * as Computation from "../../Computation.js";
 import * as Iterable from "../../Iterable.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";

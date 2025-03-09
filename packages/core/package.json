@@ -72,6 +72,8 @@
     "./computations/WritableStore": "./computations/WritableStore.js",
 
     "./functions": "./functions.js",
+    
+    "./math": "./math.js",
 
     "./node/NodeStream": "./node/NodeStream.js",
 

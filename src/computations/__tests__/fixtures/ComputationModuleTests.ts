@@ -27,7 +27,6 @@ import {
   alwaysTrue,
   greaterThan,
   identity,
-  increment,
   newInstance,
   none,
   pipe,
@@ -36,6 +35,7 @@ import {
   pipeLazyAsync,
   returns,
 } from "../../../functions.js";
+import { increment } from "../../../math.js";
 import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
 
 const ComputationModuleTests = <TComputation extends ComputationType>(

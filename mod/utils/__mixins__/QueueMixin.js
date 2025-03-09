@@ -1,9 +1,9 @@
 /// <reference types="./QueueMixin.d.ts" />
 
 import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/constants.js";
-import { clampPositiveInteger, floor } from "../../__internal__/math.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { isSome, newInstance, none, raiseError, returns, } from "../../functions.js";
+import { clampPositiveInteger, floor } from "../../math.js";
 import { BackPressureError, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, ThrowBackpressureStrategy, } from "../../utils.js";
 const QueueMixin = /*@__PURE__*/ (() => {
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");

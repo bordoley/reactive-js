@@ -3,7 +3,6 @@ import {
   Array_length,
   MAX_SAFE_INTEGER,
 } from "../../__internal__/constants.js";
-import { clampPositiveInteger, floor } from "../../__internal__/math.js";
 import {
   Mixin1,
   Mutable,
@@ -20,6 +19,7 @@ import {
   raiseError,
   returns,
 } from "../../functions.js";
+import { clampPositiveInteger, floor } from "../../math.js";
 import {
   BackPressureError,
   BackpressureStrategy,

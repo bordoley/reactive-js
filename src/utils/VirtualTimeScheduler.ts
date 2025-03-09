@@ -2,7 +2,6 @@ import {
   MAX_SAFE_INTEGER,
   MIN_SAFE_INTEGER,
 } from "../__internal__/constants.js";
-import { clampPositiveNonZeroInteger, max } from "../__internal__/math.js";
 import {
   Mutable,
   include,
@@ -12,6 +11,7 @@ import {
   unsafeCast,
 } from "../__internal__/mixins.js";
 import { Optional, isSome, none } from "../functions.js";
+import { clampPositiveNonZeroInteger, max } from "../math.js";
 import {
   DisposableLike,
   DisposableLike_dispose,

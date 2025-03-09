@@ -24,7 +24,6 @@ import {
 import { WindowLocationLike, WindowLocationURI } from "@reactive-js/core/web";
 import {
   bindMethod,
-  increment,
   isNone,
   isSome,
   none,
@@ -33,7 +32,6 @@ import {
   pipeLazy,
   pipeSome,
   returns,
-  scale,
   Tuple2,
 } from "@reactive-js/core/functions";
 import * as Dictionary from "@reactive-js/core/collections/Dictionary";
@@ -63,6 +61,7 @@ import {
 } from "@reactive-js/core/utils";
 import * as AnimationFrameScheduler from "@reactive-js/core/web/AnimationFrameScheduler";
 import * as Cache from "@reactive-js/core/computations/Cache";
+import { increment, scale } from "@reactive-js/core/math";
 
 const AnimatedBox = ({
   animation,

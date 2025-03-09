@@ -1,5 +1,5 @@
-import { clampPositiveInteger, max } from "../../../__internal__/math.js";
 import { newInstance } from "../../../functions.js";
+import { clampPositiveInteger, max } from "../../../math.js";
 import AbstractSink, {
   AbstractSink_delegate,
 } from "../../../utils/Sink/__internal__/AbstractSink.js";

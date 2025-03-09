@@ -1,9 +1,9 @@
 /// <reference types="./Queue.test.d.ts" />
 
 import { Array_length, Array_push } from "../../__internal__/constants.js";
-import { floor, random } from "../../__internal__/math.js";
 import { describe, expectArrayEquals, expectEquals, expectToThrow, test, testModule, } from "../../__internal__/testing.js";
 import { newInstance, none, pipe } from "../../functions.js";
+import { floor, random } from "../../math.js";
 import { DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Queue from "../Queue.js";
 const createPriorityQueue = /*@__PURE__*/ (() => {

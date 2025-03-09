@@ -3,7 +3,6 @@ import ReactDOMClient from "react-dom/client";
 import * as WebElement from "@reactive-js/core/web/Element";
 import {
   Optional,
-  incrementBy,
   isTrue,
   none,
   pipeLazy,
@@ -12,6 +11,7 @@ import {
 import { useDisposable } from "@reactive-js/core/react";
 import * as Computation from "@reactive-js/core/computations/Computation";
 import * as EventSource from "@reactive-js/core/computations/EventSource";
+import { incrementBy } from "@reactive-js/core/math";
 
 const EventSourcModule = { map: EventSource.map };
 

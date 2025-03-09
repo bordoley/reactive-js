@@ -471,10 +471,6 @@ interface FunctionsModule {
 
   debug<T>(v: T): T;
 
-  decrement(x: number): number;
-
-  decrementBy(decr: number): Updater<number>;
-
   error(message?: unknown): Error;
 
   errorWithDebugMessage(message: string): Error;
@@ -486,10 +482,6 @@ interface FunctionsModule {
   identityLazy<T>(): Updater<T>;
 
   ignore(..._args: unknown[]): void;
-
-  increment(x: number): number;
-
-  incrementBy(incr: number): Updater<number>;
 
   invoke<
     T extends Record<TKey, (...args: any[]) => any>,
@@ -1293,8 +1285,6 @@ interface FunctionsModule {
 
   returns<T>(v: T): (..._args: unknown[]) => T;
 
-  scale(start: number, end: number): Function1<number, number>;
-
   strictEquality<T>(a: T, b: T): boolean;
 
   tuple<TA>(a: TA): Tuple1<TA>;
@@ -1430,18 +1420,6 @@ export const debug: Signature["debug"] = <T>(v: T) => {
 };
 
 /**
- * An updater function that returns the result of decrementing `x`.
- */
-export const decrement: Signature["decrement"] = (x: number) => x - 1;
-
-/**
- * Returns a function that decrements a number `x` by the value `decr`.
- */
-export const decrementBy: Signature["decrementBy"] =
-  (decr: number) => (x: number) =>
-    x - decr;
-
-/**
  * The identity function.
  *
  * @returns `v`
@@ -1454,18 +1432,6 @@ export const identityLazy: Signature["identityLazy"] = () => identity;
  * A function that always returns `undefined`.
  */
 export const ignore: Signature["ignore"] = (..._args: unknown[]): void => {};
-
-/**
- * An updater function that returns the result of incrementing `x`.
- */
-export const increment: Signature["increment"] = (x: number) => x + 1;
-
-/**
- * Returns a function that increments a number `x` by the value `incr`.
- */
-export const incrementBy: Signature["incrementBy"] =
-  (incr: number) => (x: number) =>
-    x + incr;
 
 /**
  * Enables invoking a method on an object as a unary function within
@@ -1851,11 +1817,6 @@ export const returns: Signature["returns"] =
   <T>(v: T) =>
   () =>
     v;
-
-export const scale: Signature["scale"] = (start: number, end: number) => {
-  const diff = end - start;
-  return (v: number) => start + v * diff;
-};
 
 /**
  * The javascript strict equality function.

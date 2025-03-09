@@ -1,9 +1,9 @@
 /// <reference types="./HostScheduler.d.ts" />
 
 import { MAX_VALUE, globalObject } from "../__internal__/constants.js";
-import { clampPositiveInteger } from "../__internal__/math.js";
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
 import { isNone, isSome, newInstance, none, pipe, pipeLazy, } from "../functions.js";
+import { clampPositiveInteger } from "../math.js";
 import CurrentTimeSchedulerMixin from "../utils/__mixins__/CurrentTimeSchedulerMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SerialDisposableLike_current, } from "../utils.js";
 import * as Disposable from "./Disposable.js";

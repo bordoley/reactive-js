@@ -3,8 +3,8 @@ import {
   Array_push,
   MAX_SAFE_INTEGER,
 } from "../../../__internal__/constants.js";
-import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { newInstance } from "../../../functions.js";
+import { clampPositiveNonZeroInteger } from "../../../math.js";
 import {
   SinkLike,
   SinkLike_complete,

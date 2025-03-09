@@ -1,5 +1,4 @@
 import { MAX_VALUE } from "../../../__internal__/constants.js";
-import { abs, clamp, min } from "../../../__internal__/math.js";
 import * as Computation from "../../../computations/Computation.js";
 import {
   Tuple3,
@@ -8,6 +7,7 @@ import {
   returns,
   tuple,
 } from "../../../functions.js";
+import { abs, clamp, min } from "../../../math.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
 import Observable_scan from "./Observable.scan.js";

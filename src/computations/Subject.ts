@@ -5,7 +5,6 @@ import {
   Set_has,
   Set_size,
 } from "../__internal__/constants.js";
-import { clampPositiveInteger } from "../__internal__/math.js";
 import {
   Mutable,
   include,
@@ -29,6 +28,7 @@ import {
   none,
   pipe,
 } from "../functions.js";
+import { clampPositiveInteger } from "../math.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import QueueMixin from "../utils/__mixins__/QueueMixin.js";

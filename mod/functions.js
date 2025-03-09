@@ -62,14 +62,6 @@ export const debug = (v) => {
     return v;
 };
 /**
- * An updater function that returns the result of decrementing `x`.
- */
-export const decrement = (x) => x - 1;
-/**
- * Returns a function that decrements a number `x` by the value `decr`.
- */
-export const decrementBy = (decr) => (x) => x - decr;
-/**
  * The identity function.
  *
  * @returns `v`
@@ -80,14 +72,6 @@ export const identityLazy = () => identity;
  * A function that always returns `undefined`.
  */
 export const ignore = (..._args) => { };
-/**
- * An updater function that returns the result of incrementing `x`.
- */
-export const increment = (x) => x + 1;
-/**
- * Returns a function that increments a number `x` by the value `incr`.
- */
-export const incrementBy = (incr) => (x) => x + incr;
 /**
  * Enables invoking a method on an object as a unary function within
  * a pipeline operation.
@@ -324,10 +308,6 @@ export const raiseIfNone = (v, message) => raiseIf(isNone(v), message);
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */
 export const returns = (v) => () => v;
-export const scale = (start, end) => {
-    const diff = end - start;
-    return (v) => start + v * diff;
-};
 /**
  * The javascript strict equality function.
  */

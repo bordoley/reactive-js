@@ -28,6 +28,7 @@
 - [computations/Subject](computations/Subject/README.md)
 - [computations/WritableStore](computations/WritableStore/README.md)
 - [functions](functions/README.md)
+- [math](math/README.md)
 - [node/NodeStream](node/NodeStream/README.md)
 - [react](react/README.md)
 - [react/Scheduler](react/Scheduler/README.md)

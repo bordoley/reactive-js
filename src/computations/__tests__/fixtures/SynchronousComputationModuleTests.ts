@@ -14,11 +14,11 @@ import {
 import {
   Optional,
   ignore,
-  increment,
   pipe,
   pipeLazy,
   returns,
 } from "../../../functions.js";
+import { increment } from "../../../math.js";
 import * as Iterable from "../../Iterable.js";
 import * as Runnable from "../../Runnable.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";

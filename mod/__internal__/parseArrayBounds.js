@@ -1,7 +1,7 @@
 /// <reference types="./parseArrayBounds.d.ts" />
 
+import { abs, clamp, min } from "../math.js";
 import { Array_length, MAX_SAFE_INTEGER } from "./constants.js";
-import { abs, clamp, min } from "./math.js";
 const parseArrayBounds = (array, options) => {
     const valuesLength = array[Array_length];
     const { start: startOption, count: countOption = MAX_SAFE_INTEGER } = options ?? {};
