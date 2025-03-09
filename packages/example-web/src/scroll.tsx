@@ -57,15 +57,15 @@ const ScrollApp = () => {
       spring?.[PauseableLike_pause]();
 
       if (!done && velocity > 0) {
-        spring?.[QueueableLike_enqueue](_ => ({
+        spring?.[QueueableLike_enqueue]({
           from: pos,
           to: [pos + 0.05, pos],
-        }));
+        });
       } else if (!done && velocity < 0) {
-        spring?.[QueueableLike_enqueue](_ => ({
+        spring?.[QueueableLike_enqueue]({
           from: pos,
           to: [pos - 0.01, pos],
-        }));
+        });
       }
 
       if (!done) {

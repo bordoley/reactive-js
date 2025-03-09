@@ -110,7 +110,7 @@ export const Wordle = () => {
   const springController = useDispatcher(spring);
 
   useEffect(() => {
-    springController.enqueue(_ => ({ from: 0, to: 180 * items.length }));
+    springController.enqueue({ from: 0, to: 180 * items.length });
   }, [springController, state]);
 
   const isAnimationRunning = useObserve(spring) ?? false;

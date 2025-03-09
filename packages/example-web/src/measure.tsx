@@ -14,7 +14,7 @@ const Measure = () => {
   const springIsAnimating = useObserve(spring) ?? false;
 
   useEffect(() => {
-    spring?.[QueueableLike_enqueue](_ => (state ? boxWidth : 0));
+    spring?.[QueueableLike_enqueue](state ? boxWidth : 0);
   }, [boxWidth, state]);
 
   const width =

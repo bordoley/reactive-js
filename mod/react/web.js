@@ -51,7 +51,7 @@ export const useScroll = (callback, deps) => {
     return setElement;
 };
 export const useSpring = (initialValue, options) => {
-    const animationScheduler = options?.animationScheduler ?? AnimationFrameScheduler.get();
+    const animationScheduler = AnimationFrameScheduler.get();
     return useStream(() => Streamable.spring(initialValue, {
         ...options,
         animationScheduler,

@@ -190,7 +190,7 @@
 
 ### spring()
 
-> **spring**(`initialValue`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `boolean`, [`AnimationStreamLike`](AnimationStreamLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `number`\>\>
+> **spring**(`initialValue`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `boolean`, [`SpringStreamLike`](SpringStreamLike.md)\>
 
 #### Parameters
 
@@ -218,7 +218,7 @@
 
 #### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `boolean`, [`AnimationStreamLike`](AnimationStreamLike.md)\<[`Function1`](../../../functions/type-aliases/Function1.md)\<`number`, `number` \| readonly `number`[] \| \{ `from`: `number`; `to`: `number` \| readonly `number`[]; \}\>, `number`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `boolean`, [`SpringStreamLike`](SpringStreamLike.md)\>
 
 ***
 

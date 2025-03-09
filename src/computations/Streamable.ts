@@ -41,6 +41,22 @@ export interface AnimationStreamLike<TEvent, out T>
     EventSourceLike<T>,
     PauseableLike {}
 
+export type SpringCommand =
+  | number
+  | ReadonlyArray<number>
+  | {
+      readonly from: number;
+      readonly to: number | ReadonlyArray<number>;
+      readonly stiffness?: number;
+      readonly damping?: number;
+      readonly precision?: number;
+    };
+
+export type SpringEvent = SpringCommand | Function1<number, SpringCommand>;
+
+export interface SpringStreamLike
+  extends AnimationStreamLike<SpringEvent, number> {}
+
 /**
  * @noInheritDoc
  */
@@ -92,24 +108,7 @@ export interface StreamableModule {
       readonly damping?: number;
       readonly precision?: number;
     },
-  ): StreamableLike<
-    Function1<
-      number,
-      | number
-      | { from: number; to: number | ReadonlyArray<number> }
-      | ReadonlyArray<number>
-    >,
-    boolean,
-    AnimationStreamLike<
-      Function1<
-        number,
-        | number
-        | { from: number; to: number | ReadonlyArray<number> }
-        | ReadonlyArray<number>
-      >,
-      number
-    >
-  >;
+  ): StreamableLike<SpringEvent, boolean, SpringStreamLike>;
 
   /**
    * Returns a new `StateStoreLike` instance that stores state which can

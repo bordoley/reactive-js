@@ -13,6 +13,11 @@ import { ReadonlyObjectMapLike } from "../collections.js";
 import * as EventSource from "../computations/EventSource.js";
 import * as Streamable from "../computations/Streamable.js";
 import {
+  AnimationGroupStreamLike,
+  AnimationStreamLike,
+  SpringStreamLike,
+} from "../computations/Streamable.js";
+import {
   EventSourceLike,
   PureSynchronousObservableLike,
   StoreLike_value,
@@ -75,7 +80,7 @@ interface ReactWebModule {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly animationScheduler?: SchedulerLike;
     },
-  ): Optional<Streamable.AnimationStreamLike<unknown, T>>;
+  ): Optional<AnimationStreamLike<unknown, T>>;
   useAnimation<TEvent, T>(
     animation:
       | Function1<TEvent, PureSynchronousObservableLike<T>>
@@ -84,7 +89,7 @@ interface ReactWebModule {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly animationScheduler?: SchedulerLike;
     },
-  ): Optional<Streamable.AnimationStreamLike<TEvent, T>>;
+  ): Optional<AnimationStreamLike<TEvent, T>>;
 
   useAnimationGroup<T, TKey extends string = string>(
     animationGroup: ReadonlyObjectMapLike<
@@ -95,7 +100,7 @@ interface ReactWebModule {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly animationScheduler?: SchedulerLike;
     },
-  ): Optional<Streamable.AnimationGroupStreamLike<unknown, TKey, T>>;
+  ): Optional<AnimationGroupStreamLike<unknown, TKey, T>>;
   useAnimationGroup<T, TKey extends string, TEvent>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
@@ -106,7 +111,7 @@ interface ReactWebModule {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly animationScheduler?: SchedulerLike;
     },
-  ): Optional<Streamable.AnimationGroupStreamLike<TEvent, TKey, T>>;
+  ): Optional<AnimationGroupStreamLike<TEvent, TKey, T>>;
 
   /**
    */
@@ -119,22 +124,11 @@ interface ReactWebModule {
     initialValue: number,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly animationScheduler?: SchedulerLike;
       readonly stiffness?: number;
       readonly damping?: number;
       readonly precision?: number;
     },
-  ): Optional<
-    Streamable.AnimationStreamLike<
-      Function1<
-        number,
-        | number
-        | { from: number; to: number | ReadonlyArray<number> }
-        | ReadonlyArray<number>
-      >,
-      number
-    >
-  >;
+  ): Optional<SpringStreamLike>;
 
   /**
    */
@@ -277,14 +271,12 @@ export const useSpring: Signature["useSpring"] = (
   initialValue: number,
   options?: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly animationScheduler?: SchedulerLike;
     readonly stiffness?: number;
     readonly damping?: number;
     readonly precision?: number;
   },
 ) => {
-  const animationScheduler =
-    options?.animationScheduler ?? AnimationFrameScheduler.get();
+  const animationScheduler = AnimationFrameScheduler.get();
 
   return useStream(
     () =>

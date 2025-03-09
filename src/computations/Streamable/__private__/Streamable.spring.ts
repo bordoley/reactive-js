@@ -8,19 +8,16 @@ import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
 import * as Publisher from "../../../computations/Publisher.js";
 import {
-  DeferredComputationWithSideEffects,
-  DeferredComputationWithSideEffectsLike,
   DeferredObservableLike,
-  DeferredObservableWithSideEffectsLike,
   PureSynchronousObservableLike,
   StreamableLike,
   StreamableLike_stream,
 } from "../../../computations.js";
 import {
-  Function1,
   Optional,
   Tuple2,
   compose,
+  isFunction,
   isNumber,
   isReadonlyArray,
   pipe,
@@ -52,7 +49,6 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
     fromReadonlyArray: Observable.fromReadonlyArray,
     keep: Observable.keep,
     map: Observable.map,
-    switchAll: Observable.switchAll,
   };
 
   const SpringStream_create = mixInstanceFactory(
@@ -61,7 +57,7 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
       DelegatingPauseableMixin,
       DelegatingEventSourceMixin(),
     ),
-    function AnimationStream(
+    function SpringStream(
       instance: unknown,
       initialValue: number,
       scheduler: SchedulerLike,
@@ -76,117 +72,81 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
         readonly replay?: number;
         readonly capacity?: number;
       }>,
-    ): Streamable.AnimationStreamLike<
-      Function1<number, number | ReadonlyArray<number>>,
-      number
-    > &
-      DisposableLike {
+    ): Streamable.SpringStreamLike & DisposableLike {
       const pauseableScheduler = PauseableScheduler.create(animationScheduler);
-
       const publisher = Publisher.create<number>();
-
       const accFeedbackStream = Subject.create<number>({ replay: 1 });
 
-      const operator: Function1<
-        DeferredObservableLike<
-          Function1<
-            number,
-            | number
-            | { from: number; to: number | ReadonlyArray<number> }
-            | ReadonlyArray<number>
-          >
-        >,
-        DeferredObservableWithSideEffectsLike<boolean>
-      > = compose(
+      const operator = compose(
         Observable.withLatestFrom<
-          Function1<
-            number,
-            | number
-            | { from: number; to: number | ReadonlyArray<number> }
-            | ReadonlyArray<number>
-          >,
+          Streamable.SpringEvent,
           number,
-          Tuple2<
-            | number
-            | ReadonlyArray<number>
-            | { from: number; to: number | ReadonlyArray<number> },
-            number
-          >
-        >(accFeedbackStream, (updater, acc) => tuple(updater(acc), acc)),
-        Computation.flatMap(ObservableModule, "switchAll")<
-          Tuple2<
-            | number
-            | ReadonlyArray<number>
-            | { from: number; to: number | ReadonlyArray<number> },
-            number
-          >,
-          boolean,
-          DeferredComputationWithSideEffectsLike
-        >(
-          ([updated, acc]) => {
-            const initialValue =
-              isNumber(updated) || isReadonlyArray(updated)
-                ? acc
-                : updated.from;
+          DeferredObservableLike<boolean>
+        >(accFeedbackStream, (updater, acc) => {
+          const command = isFunction(updater) ? updater(acc) : updater;
+          const springCommandOptions =
+            isNumber(command) || isReadonlyArray(command)
+              ? springOptions
+              : {
+                  stiffness: command.stiffness ?? springOptions?.stiffness,
+                  damping: command.damping ?? springOptions?.damping,
+                  precision: command.precision ?? springOptions?.precision,
+                };
 
-            const destinations = isNumber(updated)
-              ? [updated]
-              : isReadonlyArray(updated)
-                ? updated
-                : isNumber(updated.to)
-                  ? [updated.to]
-                  : updated.to;
+          const startValue =
+            isNumber(command) || isReadonlyArray(command) ? acc : command.from;
 
-            const sources = pipe(
-              destinations,
-              Iterable.scan<number, Tuple2<number, number>>(
-                ([, prev], v) => tuple(prev, v),
-                returns(tuple(initialValue, initialValue)),
-              ),
-              Iterable.reduce(
-                (
-                  animations: Array<PureSynchronousObservableLike<number>>,
-                  [prev, next],
-                ) => {
-                  if (prev !== next) {
-                    animations[Array_push](
-                      pipe(
-                        Observable.spring(springOptions),
-                        Observable.map(scale(prev, next)),
-                      ),
-                    );
-                  }
-                  return animations;
-                },
-                (): Array<PureSynchronousObservableLike<number>> => [],
-              ),
-            );
+          const destinations = isNumber(command)
+            ? [command]
+            : isReadonlyArray(command)
+              ? command
+              : isNumber(command.to)
+                ? [command.to]
+                : command.to;
 
-            return sources[Array_length] > 0
-              ? pipe(
-                  sources,
-                  Computation.concatMany(ObservableModule),
-                  Computation.notify(ObservableModule)(publisher),
-                  Computation.notify(ObservableModule)(accFeedbackStream),
-                  Computation.ignoreElements(ObservableModule)(),
-                  Observable.subscribeOn(pauseableScheduler),
-                  Computation.startWith(ObservableModule)(true),
-                  Computation.endWith(ObservableModule)(false),
-                )
-              : Observable.empty();
-          },
+          const sources = pipe(
+            destinations,
+            Iterable.scan<number, Tuple2<number, number>>(
+              ([, prev], v) => tuple(prev, v),
+              returns(tuple(startValue, startValue)),
+            ),
+            Iterable.reduce(
+              (
+                animations: Array<PureSynchronousObservableLike<number>>,
+                [prev, next],
+              ) => {
+                if (prev !== next) {
+                  animations[Array_push](
+                    pipe(
+                      Observable.spring(springCommandOptions),
+                      Observable.map(scale(prev, next)),
+                    ),
+                  );
+                }
+                return animations;
+              },
+              () => [],
+            ),
+          );
 
-          {
-            innerType: DeferredComputationWithSideEffects,
-          },
-        ),
+          return sources[Array_length] > 0
+            ? pipe(
+                sources,
+                Computation.concatMany(ObservableModule),
+                Computation.notify(ObservableModule)(publisher),
+                Computation.notify(ObservableModule)(accFeedbackStream),
+                Computation.ignoreElements(ObservableModule)(),
+                Observable.subscribeOn(pauseableScheduler),
+                Computation.startWith(ObservableModule)(true),
+                Computation.endWith(ObservableModule)(false),
+              )
+            : Observable.empty();
+        }),
+        Observable.switchAll(),
       );
 
       init(
-        StreamMixin<
-          Function1<number, number | ReadonlyArray<number>>,
-          boolean
-        >(),
+        StreamMixin<Streamable.SpringEvent, boolean>(),
         instance,
         operator,
         scheduler,
@@ -221,17 +181,9 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
       readonly precision?: number;
     },
   ): StreamableLike<
-    Function1<
-      number,
-      | number
-      | { from: number; to: number | ReadonlyArray<number> }
-      | ReadonlyArray<number>
-    >,
+    Streamable.SpringEvent,
     boolean,
-    Streamable.AnimationStreamLike<
-      Function1<number, number | ReadonlyArray<number>>,
-      number
-    >
+    Streamable.SpringStreamLike
   > => ({
     [StreamableLike_stream]: (scheduler, options) =>
       SpringStream_create(

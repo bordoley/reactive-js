@@ -10,11 +10,14 @@
 
 - [AnimationGroupStreamLike](interfaces/AnimationGroupStreamLike.md)
 - [AnimationStreamLike](interfaces/AnimationStreamLike.md)
+- [SpringStreamLike](interfaces/SpringStreamLike.md)
 - [StreamableModule](interfaces/StreamableModule.md)
 
 ## Type Aliases
 
 - [Signature](type-aliases/Signature.md)
+- [SpringCommand](type-aliases/SpringCommand.md)
+- [SpringEvent](type-aliases/SpringEvent.md)
 
 ## Functions
 

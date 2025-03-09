@@ -5,8 +5,8 @@ import { include, init, mixInstanceFactory, } from "../../../__internal__/mixins
 import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
 import * as Publisher from "../../../computations/Publisher.js";
-import { DeferredComputationWithSideEffects, StreamableLike_stream, } from "../../../computations.js";
-import { compose, isNumber, isReadonlyArray, pipe, returns, tuple, } from "../../../functions.js";
+import { StreamableLike_stream, } from "../../../computations.js";
+import { compose, isFunction, isNumber, isReadonlyArray, pipe, returns, tuple, } from "../../../functions.js";
 import { scale } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
@@ -24,35 +24,38 @@ const Streamable_spring = /*@__PURE__*/ (() => {
         fromReadonlyArray: Observable.fromReadonlyArray,
         keep: Observable.keep,
         map: Observable.map,
-        switchAll: Observable.switchAll,
     };
-    const SpringStream_create = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin, DelegatingEventSourceMixin()), function AnimationStream(instance, initialValue, scheduler, animationScheduler, springOptions, options) {
+    const SpringStream_create = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin, DelegatingEventSourceMixin()), function SpringStream(instance, initialValue, scheduler, animationScheduler, springOptions, options) {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
         const publisher = Publisher.create();
         const accFeedbackStream = Subject.create({ replay: 1 });
-        const operator = compose(Observable.withLatestFrom(accFeedbackStream, (updater, acc) => tuple(updater(acc), acc)), Computation.flatMap(ObservableModule, "switchAll")(([updated, acc]) => {
-            const initialValue = isNumber(updated) || isReadonlyArray(updated)
-                ? acc
-                : updated.from;
-            const destinations = isNumber(updated)
-                ? [updated]
-                : isReadonlyArray(updated)
-                    ? updated
-                    : isNumber(updated.to)
-                        ? [updated.to]
-                        : updated.to;
-            const sources = pipe(destinations, Iterable.scan(([, prev], v) => tuple(prev, v), returns(tuple(initialValue, initialValue))), Iterable.reduce((animations, [prev, next]) => {
+        const operator = compose(Observable.withLatestFrom(accFeedbackStream, (updater, acc) => {
+            const command = isFunction(updater) ? updater(acc) : updater;
+            const springCommandOptions = isNumber(command) || isReadonlyArray(command)
+                ? springOptions
+                : {
+                    stiffness: command.stiffness ?? springOptions?.stiffness,
+                    damping: command.damping ?? springOptions?.damping,
+                    precision: command.precision ?? springOptions?.precision,
+                };
+            const startValue = isNumber(command) || isReadonlyArray(command) ? acc : command.from;
+            const destinations = isNumber(command)
+                ? [command]
+                : isReadonlyArray(command)
+                    ? command
+                    : isNumber(command.to)
+                        ? [command.to]
+                        : command.to;
+            const sources = pipe(destinations, Iterable.scan(([, prev], v) => tuple(prev, v), returns(tuple(startValue, startValue))), Iterable.reduce((animations, [prev, next]) => {
                 if (prev !== next) {
-                    animations[Array_push](pipe(Observable.spring(springOptions), Observable.map(scale(prev, next))));
+                    animations[Array_push](pipe(Observable.spring(springCommandOptions), Observable.map(scale(prev, next))));
                 }
                 return animations;
             }, () => []));
             return sources[Array_length] > 0
                 ? pipe(sources, Computation.concatMany(ObservableModule), Computation.notify(ObservableModule)(publisher), Computation.notify(ObservableModule)(accFeedbackStream), Computation.ignoreElements(ObservableModule)(), Observable.subscribeOn(pauseableScheduler), Computation.startWith(ObservableModule)(true), Computation.endWith(ObservableModule)(false))
                 : Observable.empty();
-        }, {
-            innerType: DeferredComputationWithSideEffects,
-        }));
+        }), Observable.switchAll());
         init(StreamMixin(), instance, operator, scheduler, options);
         init(DelegatingPauseableMixin, instance, pauseableScheduler);
         init(DelegatingEventSourceMixin(), instance, publisher);
