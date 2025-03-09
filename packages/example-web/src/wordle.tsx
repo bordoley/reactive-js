@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useAnimate, useAnimation } from "@reactive-js/core/react/web";
+import { useAnimate, useSpring } from "@reactive-js/core/react/web";
 import { Property } from "csstype";
 import { useDispatcher, useObserve } from "@reactive-js/core/react";
-import { Optional, pipe } from "@reactive-js/core/functions";
+import { Optional } from "@reactive-js/core/functions";
 import { EventSourceLike } from "@reactive-js/core/computations";
-import * as Observable from "@reactive-js/core/computations/Observable";
-import { scale } from "@reactive-js/core/functions";
 
 const items = ["W", "O", "R", "D", "L", "E"];
 
@@ -39,40 +37,43 @@ const clamp = (min: number, v: number, max: number): number =>
 
 const clampPositive180deg = (v: number) => clamp(0, v, 180);
 
-const calcXRotation = (direction: boolean, value: number, i: number) => {
-  const clamped = clampPositive180deg(value / (i + 1));
-  return direction ? clamped : 180 - clamped;
+const calcXRotation = (value: number, i: number) => {
+  return clampPositive180deg(value / (i + 1));
 };
 
 const AnimatedBox = ({
   label,
   animation,
   index,
+  direction,
 }: {
   label: string;
-  animation: Optional<EventSourceLike<{ direction: boolean; value: number }>>;
+  animation: Optional<EventSourceLike<number>>;
   index: number;
+  direction: boolean;
 }) => {
   const frontBox: React.Ref<HTMLDivElement> = useAnimate(
     animation,
-    ({ direction, value }) => ({
+    value => ({
       transform: `perspective(600px) rotateX(${
-        180 - calcXRotation(direction, value, index)
+        direction
+          ? 180 - calcXRotation(value, index)
+          : calcXRotation(value, index)
       }deg)`,
     }),
-    [index],
+    [index, direction],
   );
 
   const backBox: React.Ref<HTMLDivElement> = useAnimate(
     animation,
-    ({ direction, value }) => ({
-      transform: `perspective(600px) rotateX(${calcXRotation(
-        direction,
-        value,
-        index,
-      )}deg)`,
+    value => ({
+      transform: `perspective(600px) rotateX(${
+        direction
+          ? calcXRotation(value, index)
+          : 180 - calcXRotation(value, index)
+      }deg)`,
     }),
-    [index],
+    [index, direction],
   );
 
   return (
@@ -106,24 +107,19 @@ const AnimatedBox = ({
 export const Wordle = () => {
   const [state, updateState] = useState(false);
 
-  const animation = useAnimation((direction: boolean) =>
-    pipe(
-      Observable.spring({
-        stiffness: 0.0005,
-        damping: 0.0026,
-        precision: 0.1,
-      }),
-      Observable.map(scale(0, 180 * items.length)),
-      Observable.map((value: number) => ({ direction, value })),
-    ),
-  );
+  const spring = useSpring(0, {
+    stiffness: 0.0005,
+    damping: 0.0026,
+    precision: 0.1,
+  });
 
-  const animationController = useDispatcher(animation);
-  const isAnimationRunning = useObserve(animation) ?? false;
+  const springController = useDispatcher(spring);
 
   useEffect(() => {
-    animationController.enqueue(state);
-  }, [animationController, state]);
+    springController.enqueue(_ => ({ from: 0, to: 180 * items.length }));
+  }, [springController, state]);
+
+  const isAnimationRunning = useObserve(spring) ?? false;
 
   return (
     <div
@@ -133,13 +129,17 @@ export const Wordle = () => {
         marginBottom: 80,
       }}
       onClick={() => {
-        if (!isAnimationRunning) {
-          updateState(x => !x);
-        }
+        !isAnimationRunning && updateState(x => !x);
       }}
     >
       {items.map((x, i) => (
-        <AnimatedBox key={x} label={x} animation={animation} index={i} />
+        <AnimatedBox
+          key={x}
+          label={x}
+          animation={spring}
+          index={i}
+          direction={state}
+        />
       ))}
     </div>
   );
