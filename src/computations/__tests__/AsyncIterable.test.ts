@@ -10,7 +10,7 @@ import {
   Computation_deferredWithSideEffectsOfT,
   Computation_pureDeferredOfT,
 } from "../../computations.js";
-import { error, none, pipe, pipeLazy } from "../../functions.js";
+import { error, none, pipe, pipeLazy, pipeLazyAsync } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import {
@@ -19,6 +19,7 @@ import {
   SchedulerLike_schedule,
 } from "../../utils.js";
 import * as AsyncIterable from "../AsyncIterable.js";
+import * as EventSource from "../EventSource.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
 import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
@@ -37,6 +38,55 @@ testModule(
   ComputationModuleTests(AsyncIterable, AsyncIterableTypes),
   DeferredComputationModuleTests(AsyncIterable, AsyncIterableTypes),
   InteractiveComputationModuleTests(AsyncIterable),
+  describe(
+    "toEventSource",
+    testAsync(
+      "notifies all the values produced by the iterable",
+      pipeLazyAsync(
+        [1, 2, 3, 4],
+        AsyncIterable.fromIterable<number>(),
+        AsyncIterable.toEventSource(),
+        EventSource.toReadonlyArrayAsync<number>(),
+        expectArrayEquals([1, 2, 3, 4]),
+      ),
+    ),
+  ),
+  describe(
+    "toPauseableEventSource",
+    testAsync("iterable that completes", async () => {
+      const flowed = pipe(
+        (async function* foo() {
+          yield 1;
+          yield 2;
+          yield 3;
+        })(),
+        AsyncIterable.of(),
+        AsyncIterable.toPauseableEventSource(),
+      );
+      flowed[PauseableLike_resume]();
+
+      const result = await pipe(flowed, EventSource.toReadonlyArrayAsync());
+
+      pipe(result ?? [], expectArrayEquals([1, 2, 3]));
+    }),
+    testAsync(
+      "iterable that throws",
+      pipeLazy(async () => {
+        const e = error();
+
+        const flowed = pipe(
+          (async function* foo() {
+            throw e;
+          })(),
+          AsyncIterable.of(),
+          AsyncIterable.toPauseableEventSource(),
+        );
+        flowed[PauseableLike_resume]();
+
+        await pipe(flowed, EventSource.toReadonlyArrayAsync());
+      }, expectToThrowAsync),
+    ),
+  ),
   describe(
     "toPauseableObservable",
     testAsync("infinite immediately resolving iterable", async () => {

@@ -21,6 +21,7 @@
 - [addEventHandler](functions/addEventHandler.md)
 - [create](functions/create.md)
 - [empty](functions/empty.md)
+- [fromAsyncIterable](functions/fromAsyncIterable.md)
 - [fromIterable](functions/fromIterable.md)
 - [fromPromise](functions/fromPromise.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)

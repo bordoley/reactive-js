@@ -1,4 +1,4 @@
-import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_multicastOfT, ConcurrentReactiveComputationModule, EventSourceLike, IterableLike } from "../computations.js";
+import { AsyncIterableLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_multicastOfT, ConcurrentReactiveComputationModule, EventSourceLike, IterableLike } from "../computations.js";
 import { Factory, Function1, SideEffect1, Updater } from "../functions.js";
 import { DisposableLike, EventListenerLike } from "../utils.js";
 /**
@@ -16,6 +16,7 @@ export interface EventSourceModule extends ComputationModule<EventSourceComputat
     addEventHandler<T>(handler: SideEffect1<T>): Function1<EventSourceLike<T>, DisposableLike>;
     create<T>(setup: SideEffect1<EventListenerLike<T>>): EventSourceLike<T> & DisposableLike;
     empty<T>(): EventSourceLike<T> & DisposableLike;
+    fromAsyncIterable<T>(): Function1<AsyncIterableLike<T>, EventSourceLike<T> & DisposableLike>;
     fromIterable<T>(): Function1<IterableLike<T>, EventSourceLike<T> & DisposableLike>;
     fromReadonlyArray<T>(options?: {
         readonly count?: number;
@@ -33,6 +34,7 @@ export type Signature = EventSourceModule;
 export declare const addEventHandler: Signature["addEventHandler"];
 export declare const create: Signature["create"];
 export declare const empty: Signature["empty"];
+export declare const fromAsyncIterable: Signature["fromAsyncIterable"];
 export declare const fromIterable: Signature["fromIterable"];
 export declare const fromPromise: Signature["fromPromise"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];

@@ -24,6 +24,7 @@ import {
   HigherOrderInnerComputationLike,
   InteractiveComputationModule,
   IterableLike,
+  PauseableEventSourceLike,
   PauseableObservableLike,
   PureAsyncIterableLike,
 } from "../computations.js";
@@ -58,6 +59,8 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EventListenerLike,
+  EventListenerLike_notify,
   ObserverLike,
   QueueableLike_enqueue,
   SchedulerLike,
@@ -67,9 +70,12 @@ import {
 } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
+import EventSource_create from "./EventSource/__private__/EventSource.create.js";
+import EventSource_fromAsyncIterable from "./EventSource/__private__/EventSource.fromAsyncIterable.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_fromAsyncIterable from "./Observable/__private__/Observable.fromAsyncIterable.js";
 import Observable_multicast from "./Observable/__private__/Observable.multicast.js";
+import * as PauseableEventSource from "./PauseableEventSource.js";
 import * as PauseableObservable from "./PauseableObservable.js";
 
 /**
@@ -101,9 +107,19 @@ export interface AsyncIterableModule
 
   raise: DeferredComputationModule<AsyncIterableComputation>["raise"];
 
+  toEventSource<T>(): Function1<
+    AsyncIterableLike<T>,
+    EventSourceLike<T> & DisposableLike
+  >;
+
   toObservable<T>(): Function1<
     AsyncIterableLike<T>,
     DeferredObservableWithSideEffectsLike<T>
+  >;
+
+  toPauseableEventSource<T>(): Function1<
+    AsyncIterableLike<T>,
+    PauseableEventSourceLike<T> & DisposableLike
   >;
 
   toPauseableObservable<T>(
@@ -679,8 +695,55 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
       factory,
     )) as Signature["throwIfEmpty"];
 
+export const toEventSource: Signature["toEventSource"] =
+  EventSource_fromAsyncIterable;
+
 export const toObservable: Signature["toObservable"] =
   Observable_fromAsyncIterable;
+
+export const toPauseableEventSource: Signature["toPauseableEventSource"] =
+  <T>() =>
+  (iterable: AsyncIterableLike<T>) =>
+    PauseableEventSource.create<T>((modeObs: EventSourceLike<boolean>) =>
+      pipe(
+        EventSource_create((listener: EventListenerLike<T>) => {
+          const iterator = iterable[Symbol.asyncIterator]();
+
+          let isPaused = true;
+
+          const continuation = async () => {
+            try {
+              while (!listener[DisposableLike_isDisposed] && !isPaused) {
+                const next = await iterator[Iterator_next]();
+
+                if (next[Iterator_done]) {
+                  listener[DisposableLike_dispose]();
+                  break;
+                } else if (!listener[DisposableLike_isDisposed]) {
+                  listener[EventListenerLike_notify](next[Iterator_value]);
+                }
+              }
+            } catch (e) {
+              listener[DisposableLike_dispose](error(e));
+            }
+          };
+
+          pipe(
+            modeObs,
+            EventSource_addEventHandler(async (mode: boolean) => {
+              const wasPaused = isPaused;
+              isPaused = mode;
+
+              if (!isPaused && wasPaused) {
+                await continuation();
+              }
+            }),
+            Disposable.bindTo(listener),
+          );
+        }),
+        Disposable.addToContainer(modeObs),
+      ),
+    );
 
 export const toPauseableObservable: Signature["toPauseableObservable"] =
   <T>(
