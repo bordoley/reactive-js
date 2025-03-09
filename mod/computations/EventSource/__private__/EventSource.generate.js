@@ -1,6 +1,6 @@
 /// <reference types="./EventSource.generate.d.ts" />
 
-import { error, none } from "../../../functions.js";
+import { none } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, } from "../../../utils.js";
 import EventSource_create from "./EventSource.create.js";
 const EventSource_generate = (generator, initialValue, options) => EventSource_create(async (listener) => {
@@ -10,13 +10,8 @@ const EventSource_generate = (generator, initialValue, options) => EventSource_c
     await Promise.resolve();
     while (!listener[DisposableLike_isDisposed]) {
         acc = generator(acc);
-        try {
-            listener[EventListenerLike_notify](acc);
-        }
-        catch (e) {
-            listener[DisposableLike_dispose](error(e));
-            break;
-        }
+        // Will never throw.
+        listener[EventListenerLike_notify](acc);
         if (count !== none && (cnt++, cnt >= count)) {
             break;
         }

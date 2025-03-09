@@ -9,8 +9,10 @@
 ## Extended by
 
 - [`AsyncIterableModule`](../AsyncIterable/interfaces/AsyncIterableModule.md)
-- [`SynchronousComputationModule`](SynchronousComputationModule.md)
-- [`ConcurrentReactiveComputationModule`](ConcurrentReactiveComputationModule.md)
+- [`EventSourceModule`](../EventSource/interfaces/EventSourceModule.md)
+- [`IterableModule`](../Iterable/interfaces/IterableModule.md)
+- [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
+- [`RunnableModule`](../Runnable/interfaces/RunnableModule.md)
 
 ## Type Parameters
 
@@ -31,6 +33,20 @@
 [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>
 
 ## Methods
+
+### empty()
+
+> **empty**\<`T`\>(): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+
+***
 
 ### fromIterable()
 
@@ -155,3 +171,25 @@
 #### Returns
 
 [`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
+
+***
+
+### raise()
+
+> **raise**\<`T`\>(`options`?): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### raise?
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+#### Returns
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>

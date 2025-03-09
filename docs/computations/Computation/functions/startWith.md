@@ -16,7 +16,7 @@
 
 ### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"concat"` \| `"fromReadonlyArray"`\>
+`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"concat"` \| `"fromReadonlyArray"`\>
 
 ## Returns
 

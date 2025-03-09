@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>
 
 ## Properties
 
@@ -194,7 +194,7 @@
 
 #### Overrides
 
-[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`empty`](../../interfaces/DeferredReactiveComputationModule.md#empty)
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`empty`](../../interfaces/SynchronousComputationModule.md#empty)
 
 ***
 
@@ -286,7 +286,7 @@
 
 #### Overrides
 
-[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`first`](../../interfaces/DeferredReactiveComputationModule.md#first)
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`first`](../../interfaces/SynchronousComputationModule.md#first)
 
 ***
 
@@ -386,7 +386,7 @@
 
 ### fromIterable()
 
-> **fromIterable**\<`T`\>(`options`?): [`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>
+> **fromIterable**\<`T`\>(`options`?): [`FromIterableSynchronousOperator`](../../type-aliases/FromIterableSynchronousOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>
 
 #### Type Parameters
 
@@ -406,11 +406,11 @@
 
 #### Returns
 
-[`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>
+[`FromIterableSynchronousOperator`](../../type-aliases/FromIterableSynchronousOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>
 
 #### Overrides
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`fromIterable`](../../interfaces/ConcurrentReactiveComputationModule.md#fromiterable)
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`fromIterable`](../../interfaces/SynchronousComputationModule.md#fromiterable)
 
 ***
 
@@ -466,7 +466,7 @@
 
 #### Overrides
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`fromReadonlyArray`](../../interfaces/ConcurrentReactiveComputationModule.md#fromreadonlyarray)
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`fromReadonlyArray`](../../interfaces/SynchronousComputationModule.md#fromreadonlyarray)
 
 ***
 
@@ -506,7 +506,7 @@
 
 #### Overrides
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`fromValue`](../../interfaces/ConcurrentReactiveComputationModule.md#fromvalue)
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`fromValue`](../../interfaces/SynchronousComputationModule.md#fromvalue)
 
 ***
 
@@ -548,7 +548,7 @@
 
 #### Overrides
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`generate`](../../interfaces/ConcurrentReactiveComputationModule.md#generate)
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`generate`](../../interfaces/SynchronousComputationModule.md#generate)
 
 ***
 
@@ -604,7 +604,7 @@
 
 #### Overrides
 
-[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`last`](../../interfaces/DeferredReactiveComputationModule.md#last)
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`last`](../../interfaces/SynchronousComputationModule.md#last)
 
 ***
 
@@ -788,7 +788,7 @@
 
 #### Overrides
 
-[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`raise`](../../interfaces/DeferredReactiveComputationModule.md#raise)
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`raise`](../../interfaces/SynchronousComputationModule.md#raise)
 
 ***
 
@@ -1250,7 +1250,7 @@
 
 #### Overrides
 
-[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`toReadonlyArray`](../../interfaces/DeferredReactiveComputationModule.md#toreadonlyarray)
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`toReadonlyArray`](../../interfaces/SynchronousComputationModule.md#toreadonlyarray)
 
 ***
 
@@ -1282,7 +1282,7 @@
 
 ##### Overrides
 
-`DeferredReactiveComputationModule.toReadonlyArrayAsync`
+`ComputationModule.toReadonlyArrayAsync`
 
 #### Call Signature
 
@@ -1314,7 +1314,7 @@
 
 ##### Overrides
 
-`DeferredReactiveComputationModule.toReadonlyArrayAsync`
+`ComputationModule.toReadonlyArrayAsync`
 
 #### Call Signature
 
@@ -1346,7 +1346,7 @@
 
 ##### Overrides
 
-`DeferredReactiveComputationModule.toReadonlyArrayAsync`
+`ComputationModule.toReadonlyArrayAsync`
 
 ***
 
@@ -1380,7 +1380,7 @@
 
 #### Overrides
 
-[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`toRunnable`](../../interfaces/DeferredReactiveComputationModule.md#torunnable)
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`toRunnable`](../../interfaces/SynchronousComputationModule.md#torunnable)
 
 ***
 

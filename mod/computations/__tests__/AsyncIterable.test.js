@@ -61,11 +61,13 @@ import * as HostScheduler from "../../utils/HostScheduler.js";
 import { PauseableLike_pause, PauseableLike_resume, SchedulerLike_schedule, } from "../../utils.js";
 import * as AsyncIterable from "../AsyncIterable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
+import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
+import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
 const AsyncIterableTypes = {
     [Computation_deferredWithSideEffectsOfT]: pipe((async function* () { })(), AsyncIterable.of()),
     [Computation_pureDeferredOfT]: pipe([], AsyncIterable.fromReadonlyArray()),
 };
-testModule("AsyncIterable", ComputationModuleTests(AsyncIterable, AsyncIterableTypes), describe("toPauseableObservable", testAsync("infinite immediately resolving iterable", async () => {
+testModule("AsyncIterable", ComputationModuleTests(AsyncIterable, AsyncIterableTypes), DeferredComputationModuleTests(AsyncIterable, AsyncIterableTypes), InteractiveComputationModuleTests(AsyncIterable), describe("toPauseableObservable", testAsync("infinite immediately resolving iterable", async () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_1, HostScheduler.create(), false);

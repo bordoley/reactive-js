@@ -8,9 +8,153 @@
 
 ## Extends
 
-- [`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md)\<[`IterableComputation`](IterableComputation.md)\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`IterableComputation`](IterableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`IterableComputation`](IterableComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`IterableComputation`](IterableComputation.md)\>.[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md)\<[`IterableComputation`](IterableComputation.md)\>
 
 ## Properties
+
+### empty()
+
+> **empty**: \<`T`\>() => [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+
+#### Overrides
+
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`empty`](../../interfaces/SynchronousComputationModule.md#empty)
+
+***
+
+### fromIterable()
+
+> **fromIterable**: \<`T`\>() => [`FromIterableSynchronousOperator`](../../type-aliases/FromIterableSynchronousOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`FromIterableSynchronousOperator`](../../type-aliases/FromIterableSynchronousOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`\>
+
+#### Overrides
+
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`fromIterable`](../../interfaces/SynchronousComputationModule.md#fromiterable)
+
+***
+
+### fromReadonlyArray()
+
+> **fromReadonlyArray**: \<`T`\>(`options`?) => [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### count?
+
+`number`
+
+###### start?
+
+`number`
+
+#### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
+
+#### Overrides
+
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`fromReadonlyArray`](../../interfaces/SynchronousComputationModule.md#fromreadonlyarray)
+
+***
+
+### fromValue()
+
+> **fromValue**: \<`T`\>() => [`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
+
+#### Overrides
+
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`fromValue`](../../interfaces/SynchronousComputationModule.md#fromvalue)
+
+***
+
+### generate()
+
+> **generate**: \<`T`\>(`generator`, `initialValue`, `options`?) => [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### generator
+
+[`Updater`](../../../functions/type-aliases/Updater.md)\<`T`\>
+
+##### initialValue
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`T`\>
+
+##### options?
+
+###### count?
+
+`number`
+
+#### Returns
+
+[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+
+#### Overrides
+
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`generate`](../../interfaces/SynchronousComputationModule.md#generate)
+
+***
+
+### raise()
+
+> **raise**: \<`T`\>(`options`?) => [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### raise?
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+#### Returns
+
+[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+
+#### Overrides
+
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`raise`](../../interfaces/SynchronousComputationModule.md#raise)
+
+***
 
 ### toReadonlyArrayAsync()
 
@@ -26,7 +170,7 @@
 
 #### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`toReadonlyArrayAsync`](../../interfaces/InteractiveComputationModule.md#toreadonlyarrayasync)
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`toReadonlyArrayAsync`](../../interfaces/ComputationModule.md#toreadonlyarrayasync)
 
 ***
 
@@ -62,7 +206,7 @@
 
 ##### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`catchError`](../../interfaces/InteractiveComputationModule.md#catcherror)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`catchError`](../../interfaces/DeferredComputationModule.md#catcherror)
 
 #### Call Signature
 
@@ -92,7 +236,7 @@
 
 ##### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`catchError`](../../interfaces/InteractiveComputationModule.md#catcherror)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`catchError`](../../interfaces/DeferredComputationModule.md#catcherror)
 
 ***
 
@@ -118,7 +262,7 @@
 
 ##### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`concat`](../../interfaces/InteractiveComputationModule.md#concat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concat`](../../interfaces/DeferredComputationModule.md#concat)
 
 #### Call Signature
 
@@ -140,7 +284,7 @@
 
 ##### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`concat`](../../interfaces/InteractiveComputationModule.md#concat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concat`](../../interfaces/DeferredComputationModule.md#concat)
 
 #### Call Signature
 
@@ -162,7 +306,7 @@
 
 ##### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`concat`](../../interfaces/InteractiveComputationModule.md#concat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concat`](../../interfaces/DeferredComputationModule.md#concat)
 
 #### Call Signature
 
@@ -184,7 +328,7 @@
 
 ##### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`concat`](../../interfaces/InteractiveComputationModule.md#concat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concat`](../../interfaces/DeferredComputationModule.md#concat)
 
 ***
 
@@ -204,7 +348,7 @@
 
 ##### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`concatAll`](../../interfaces/InteractiveComputationModule.md#concatall)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatAll`](../../interfaces/DeferredComputationModule.md#concatall)
 
 #### Call Signature
 
@@ -230,25 +374,7 @@
 
 ##### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`concatAll`](../../interfaces/InteractiveComputationModule.md#concatall)
-
-***
-
-### empty()
-
-> **empty**\<`T`\>(): [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
-
-#### Inherited from
-
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`empty`](../../interfaces/InteractiveComputationModule.md#empty)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatAll`](../../interfaces/DeferredComputationModule.md#concatall)
 
 ***
 
@@ -262,7 +388,7 @@
 
 #### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`encodeUtf8`](../../interfaces/InteractiveComputationModule.md#encodeutf8)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`encodeUtf8`](../../interfaces/DeferredComputationModule.md#encodeutf8)
 
 ***
 
@@ -280,7 +406,7 @@
 
 #### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`first`](../../interfaces/InteractiveComputationModule.md#first)
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`first`](../../interfaces/SynchronousComputationModule.md#first)
 
 ***
 
@@ -304,107 +430,7 @@
 
 #### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`forEach`](../../interfaces/InteractiveComputationModule.md#foreach)
-
-***
-
-### fromIterable()
-
-> **fromIterable**\<`T`\>(): [`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`\>
-
-#### Inherited from
-
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`fromIterable`](../../interfaces/InteractiveComputationModule.md#fromiterable)
-
-***
-
-### fromReadonlyArray()
-
-> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### count?
-
-`number`
-
-###### start?
-
-`number`
-
-#### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
-
-#### Inherited from
-
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`fromReadonlyArray`](../../interfaces/InteractiveComputationModule.md#fromreadonlyarray)
-
-***
-
-### fromValue()
-
-> **fromValue**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
-
-#### Inherited from
-
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`fromValue`](../../interfaces/InteractiveComputationModule.md#fromvalue)
-
-***
-
-### generate()
-
-> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### generator
-
-[`Updater`](../../../functions/type-aliases/Updater.md)\<`T`\>
-
-##### initialValue
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`T`\>
-
-##### options?
-
-###### count?
-
-`number`
-
-#### Returns
-
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
-
-#### Inherited from
-
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`generate`](../../interfaces/InteractiveComputationModule.md#generate)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`forEach`](../../interfaces/DeferredComputationModule.md#foreach)
 
 ***
 
@@ -428,7 +454,7 @@
 
 #### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`keep`](../../interfaces/InteractiveComputationModule.md#keep)
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`keep`](../../interfaces/ComputationModule.md#keep)
 
 ***
 
@@ -446,7 +472,7 @@
 
 #### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`last`](../../interfaces/InteractiveComputationModule.md#last)
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`last`](../../interfaces/SynchronousComputationModule.md#last)
 
 ***
 
@@ -472,33 +498,7 @@
 
 #### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`map`](../../interfaces/InteractiveComputationModule.md#map)
-
-***
-
-### raise()
-
-> **raise**\<`T`\>(`options`?): [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### raise?
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
-
-#### Returns
-
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
-
-#### Inherited from
-
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`raise`](../../interfaces/InteractiveComputationModule.md#raise)
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`map`](../../interfaces/ComputationModule.md#map)
 
 ***
 
@@ -528,7 +528,7 @@
 
 #### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`reduce`](../../interfaces/InteractiveComputationModule.md#reduce)
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`reduce`](../../interfaces/SynchronousComputationModule.md#reduce)
 
 ***
 
@@ -554,7 +554,7 @@
 
 ##### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`repeat`](../../interfaces/InteractiveComputationModule.md#repeat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
 
 #### Call Signature
 
@@ -576,7 +576,7 @@
 
 ##### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`repeat`](../../interfaces/InteractiveComputationModule.md#repeat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
 
 #### Call Signature
 
@@ -592,7 +592,7 @@
 
 ##### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`repeat`](../../interfaces/InteractiveComputationModule.md#repeat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
 
 ***
 
@@ -616,7 +616,7 @@
 
 #### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`retry`](../../interfaces/InteractiveComputationModule.md#retry)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`retry`](../../interfaces/DeferredComputationModule.md#retry)
 
 ***
 
@@ -646,7 +646,7 @@
 
 #### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`scan`](../../interfaces/InteractiveComputationModule.md#scan)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`scan`](../../interfaces/DeferredComputationModule.md#scan)
 
 ***
 
@@ -672,7 +672,7 @@
 
 #### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`takeFirst`](../../interfaces/InteractiveComputationModule.md#takefirst)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`takeFirst`](../../interfaces/DeferredComputationModule.md#takefirst)
 
 ***
 
@@ -702,7 +702,7 @@
 
 #### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`takeWhile`](../../interfaces/InteractiveComputationModule.md#takewhile)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`takeWhile`](../../interfaces/DeferredComputationModule.md#takewhile)
 
 ***
 
@@ -730,7 +730,7 @@
 
 #### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`throwIfEmpty`](../../interfaces/InteractiveComputationModule.md#throwifempty)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`throwIfEmpty`](../../interfaces/DeferredComputationModule.md#throwifempty)
 
 ***
 
@@ -748,7 +748,7 @@
 
 #### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`toReadonlyArray`](../../interfaces/InteractiveComputationModule.md#toreadonlyarray)
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`toReadonlyArray`](../../interfaces/SynchronousComputationModule.md#toreadonlyarray)
 
 ***
 
@@ -766,4 +766,4 @@
 
 #### Inherited from
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`toRunnable`](../../interfaces/InteractiveComputationModule.md#torunnable)
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`toRunnable`](../../interfaces/SynchronousComputationModule.md#torunnable)

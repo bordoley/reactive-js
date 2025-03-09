@@ -100,7 +100,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"concat"`\>
+`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"concat"`\>
 
 #### Returns
 
@@ -120,7 +120,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"map"` \| `"concatAll"`\>
+`Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputation`\> & [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"map"` \| `"concatAll"`\>
 
 #### Returns
 
@@ -140,7 +140,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"map"` \| `"fromIterable"` \| `"concatAll"`\>
+`Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputation`\> & [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"map"` \| `"fromIterable"` \| `"concatAll"`\>
 
 #### Returns
 
@@ -160,7 +160,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"concat"`\>
+`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"concat"`\>
 
 #### Returns
 
@@ -180,7 +180,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"forEach"`\>
+`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"forEach"`\>
 
 #### Returns
 
@@ -208,7 +208,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"concat"` \| `"fromReadonlyArray"`\>
+`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"concat"` \| `"fromReadonlyArray"`\>
 
 #### Returns
 
@@ -248,7 +248,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"map"`\> & \{ readonly \[key in string \| number \| symbol\]: \{ (): HigherOrderComputationOperator\<TComputation, PureSynchronousComputationLike, PureSynchronousComputationOf\<TComputation, T\>, T\>; (options: \{ innerType: TInnerType \}): HigherOrderComputationOperator\<TComputation, TInnerType, HigherOrderInnerComputationOf\<TComputation, TInnerType, T\>, T\> \} \}
+`Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputation`\>, `"map"`\> & \{ readonly \[key in string \| number \| symbol\]: \{ (): HigherOrderComputationOperator\<TComputation, PureSynchronousComputationLike, PureSynchronousComputationOf\<TComputation, T\>, T\>; (options: \{ innerType: TInnerType \}): HigherOrderComputationOperator\<TComputation, TInnerType, HigherOrderInnerComputationOf\<TComputation, TInnerType, T\>, T\> \} \}
 
 ##### key
 
@@ -274,7 +274,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"map"` \| `"fromIterable"`\> & \{ readonly \[key in string \| number \| symbol\]: \{ (): HigherOrderComputationOperator\<TComputation, PureSynchronousComputationLike, PureSynchronousComputationOf\<TComputation, T\>, T\>; (options: \{ innerType: TInnerType \}): HigherOrderComputationOperator\<TComputation, TInnerType, HigherOrderInnerComputationOf\<TComputation, TInnerType, T\>, T\> \} \}
+`Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputation`\>, `"map"` \| `"fromIterable"`\> & \{ readonly \[key in string \| number \| symbol\]: \{ (): HigherOrderComputationOperator\<TComputation, PureSynchronousComputationLike, PureSynchronousComputationOf\<TComputation, T\>, T\>; (options: \{ innerType: TInnerType \}): HigherOrderComputationOperator\<TComputation, TInnerType, HigherOrderInnerComputationOf\<TComputation, TInnerType, T\>, T\> \} \}
 
 ##### key
 
@@ -542,7 +542,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"forEach"`\>
+`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"forEach"`\>
 
 #### Returns
 
@@ -644,7 +644,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"forEach"`\>
+`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"forEach"`\>
 
 #### Returns
 
@@ -698,7 +698,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"generate"`\>
+`Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputation`\>, `"generate"`\>
 
 #### Returns
 
@@ -728,7 +728,7 @@ readonly `TComputation`[]
 
 ##### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"concat"` \| `"fromReadonlyArray"`\>
+`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"concat"` \| `"fromReadonlyArray"`\>
 
 #### Returns
 

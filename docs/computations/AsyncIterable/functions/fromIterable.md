@@ -6,7 +6,7 @@
 
 # Function: fromIterable()
 
-> **fromIterable**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>, [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\>\>
+> **fromIterable**\<`T`\>(): [`FromIterableDeferredOperator`](../../type-aliases/FromIterableDeferredOperator.md)\<[`AsyncIterableComputation`](../interfaces/AsyncIterableComputation.md), `T`\>
 
 ## Type Parameters
 
@@ -14,4 +14,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>, [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\>\>
+[`FromIterableDeferredOperator`](../../type-aliases/FromIterableDeferredOperator.md)\<[`AsyncIterableComputation`](../interfaces/AsyncIterableComputation.md), `T`\>

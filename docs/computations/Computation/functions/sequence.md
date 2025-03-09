@@ -16,7 +16,7 @@
 
 ### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"generate"`\>
+`Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputation`\>, `"generate"`\>
 
 ## Returns
 

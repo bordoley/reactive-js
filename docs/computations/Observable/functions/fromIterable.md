@@ -6,7 +6,7 @@
 
 # Function: fromIterable()
 
-> **fromIterable**\<`T`\>(`options`?): [`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>
+> **fromIterable**\<`T`\>(`options`?): [`FromIterableSynchronousOperator`](../../type-aliases/FromIterableSynchronousOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>
 
 ## Type Parameters
 
@@ -26,4 +26,4 @@
 
 ## Returns
 
-[`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>
+[`FromIterableSynchronousOperator`](../../type-aliases/FromIterableSynchronousOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>

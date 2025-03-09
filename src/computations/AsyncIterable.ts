@@ -93,7 +93,7 @@ export type Computation = AsyncIterableComputation;
 export interface AsyncIterableModule
   extends ComputationModule<AsyncIterableComputation>,
     DeferredComputationModule<AsyncIterableComputation>,
-    InteractiveComputationModule<AsyncIterableComputation>{
+    InteractiveComputationModule<AsyncIterableComputation> {
   empty: DeferredComputationModule<AsyncIterableComputation>["empty"];
   fromIterable: DeferredComputationModule<AsyncIterableComputation>["fromIterable"];
 
@@ -773,11 +773,9 @@ export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
     return result;
   });
 
-
 class ZipAsyncIterable implements AsyncIterableLike {
   public readonly [ComputationLike_isPure]?: boolean;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
-
 
   constructor(private readonly iters: readonly AsyncIterableLike<any>[]) {
     this[ComputationLike_isPure] = ComputationM.areAllPure(iters);
@@ -787,7 +785,9 @@ class ZipAsyncIterable implements AsyncIterableLike {
     const iterators = this.iters[Array_map](invoke(Symbol.asyncIterator));
 
     while (true) {
-      const next = await Promise.all(iterators[Array_map](invoke(Iterator_next)));
+      const next = await Promise.all(
+        iterators[Array_map](invoke(Iterator_next)),
+      );
 
       if (next.some(x => x[Iterator_done] ?? false)) {
         break;

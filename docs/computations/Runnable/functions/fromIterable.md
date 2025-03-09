@@ -6,7 +6,7 @@
 
 # Function: fromIterable()
 
-> **fromIterable**\<`T`\>(): [`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`\>
+> **fromIterable**\<`T`\>(): [`FromIterableSynchronousOperator`](../../type-aliases/FromIterableSynchronousOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`\>
 
 ## Type Parameters
 
@@ -14,4 +14,4 @@
 
 ## Returns
 
-[`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`\>
+[`FromIterableSynchronousOperator`](../../type-aliases/FromIterableSynchronousOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`\>

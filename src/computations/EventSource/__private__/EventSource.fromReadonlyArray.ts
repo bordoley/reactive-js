@@ -1,5 +1,4 @@
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
-import { error } from "../../../functions.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -19,12 +18,8 @@ const EventSource_fromReadonlyArray: EventSource.Signature["fromReadonlyArray"] 
         await Promise.resolve();
 
         while (count !== 0 && !listener[DisposableLike_isDisposed]) {
-          try {
-            listener[EventListenerLike_notify](arr[start]);
-          } catch (e) {
-            listener[DisposableLike_dispose](error(e));
-            break;
-          }
+          // Will never throw.
+          listener[EventListenerLike_notify](arr[start]);
 
           count > 0 ? (start++, count--) : (start--, count++);
 

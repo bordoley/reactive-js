@@ -30,7 +30,6 @@ import {
   StatefulSynchronousComputationOperator,
   StatelessComputationOperator,
   SynchronousComputationLike,
-  SynchronousComputationModule,
   SynchronousComputationOf,
   SynchronousComputationWithSideEffectsLike,
   SynchronousComputationWithSideEffectsOf,
@@ -254,8 +253,7 @@ export interface Signature {
 
   endWith<TComputation extends ComputationType>(
     m: Pick<
-      DeferredComputationModule<TComputation> &
-        SynchronousComputationModule<TComputation>,
+      DeferredComputationModule<TComputation>,
       "concat" | "fromReadonlyArray"
     >,
   ): <T>(
@@ -360,7 +358,7 @@ export interface Signature {
   ): PickOperator<TComputation>;
 
   sequence<TComputation extends ComputationType>(
-    m: Pick<SynchronousComputationModule<TComputation>, "generate">,
+    m: Pick<ComputationModule<TComputation>, "generate">,
   ): (start: number) => ComputationBaseOf<TComputation, number>;
 
   startWith<TComputation extends ComputationType>(
@@ -632,7 +630,7 @@ export const pick: Signature["pick"] =
 
 export const sequence: Signature["sequence"] =
   <TComputation extends ComputationType>(
-    m: Pick<SynchronousComputationModule<TComputation>, "generate">,
+    m: Pick<ComputationModule<TComputation>, "generate">,
   ) =>
   (start: number) =>
     m.generate<number>(increment, returns(start - 1));

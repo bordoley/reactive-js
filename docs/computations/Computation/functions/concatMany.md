@@ -16,7 +16,7 @@
 
 ### m
 
-`Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<`TComputation`\>, `"concat"`\>
+`Pick`\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"concat"`\>
 
 ## Returns
 
