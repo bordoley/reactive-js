@@ -524,10 +524,25 @@ interface ZipConstructor<TComputation extends ComputationType> {
 }
 
 export interface ComputationModule<TComputation extends ComputationType> {
+  fromIterable<T>(): Function1<
+    PureIterableLike<T>,
+    PureComputationOf<TComputation, T>
+  >;
+
   fromReadonlyArray<T>(options?: {
     readonly count?: number;
     readonly start?: number;
-  }): Function1<readonly T[], ComputationOf<TComputation, T>>;
+  }): Function1<readonly T[], PureComputationOf<TComputation, T>>;
+
+  fromValue<T>(): Function1<T, PureComputationOf<TComputation, T>>;
+
+  generate<T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+    options?: {
+      readonly count?: number;
+    },
+  ): PureComputationOf<TComputation, T>;
 
   keep<T>(
     predicate: Predicate<T>,
@@ -1079,6 +1094,22 @@ export type StreamOf<TStreamable extends StreamableLike> = ReturnType<
 
 export interface AsyncIterableLike<T = unknown>
   extends AsyncIterable<T>,
-    DeferredComputationWithSideEffectsLike {
+    DeferredComputationLike {
+  readonly [ComputationLike_isSynchronous]: false;
+}
+
+export interface PureAsyncIterableLike<T = unknown>
+  extends AsyncIterableLike<T>,
+    PureComputationLike {
+  readonly [ComputationLike_isDeferred]?: true;
+  readonly [ComputationLike_isPure]?: true;
+  readonly [ComputationLike_isSynchronous]: false;
+}
+
+export interface AsyncIterableWithSideEffectsLike<T = unknown>
+  extends AsyncIterableLike<T>,
+    ComputationWithSideEffectsLike {
+  readonly [ComputationLike_isDeferred]?: true;
+  readonly [ComputationLike_isPure]: false;
   readonly [ComputationLike_isSynchronous]: false;
 }

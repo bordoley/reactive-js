@@ -271,6 +271,10 @@
 
 [`FromIterableOperator`](../type-aliases/FromIterableOperator.md)\<`TComputation`, `T`\>
 
+#### Overrides
+
+[`ComputationModule`](ComputationModule.md).[`fromIterable`](ComputationModule.md#fromiterable)
+
 ***
 
 ### fromReadonlyArray()
@@ -297,6 +301,10 @@
 
 [`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>\>
 
+#### Overrides
+
+[`ComputationModule`](ComputationModule.md).[`fromReadonlyArray`](ComputationModule.md#fromreadonlyarray)
+
 ***
 
 ### fromValue()
@@ -310,6 +318,10 @@
 #### Returns
 
 [`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>\>
+
+#### Overrides
+
+[`ComputationModule`](ComputationModule.md).[`fromValue`](ComputationModule.md#fromvalue)
 
 ***
 
@@ -340,6 +352,10 @@
 #### Returns
 
 [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+
+#### Overrides
+
+[`ComputationModule`](ComputationModule.md).[`generate`](ComputationModule.md#generate)
 
 ***
 

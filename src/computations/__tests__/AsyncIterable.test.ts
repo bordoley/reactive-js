@@ -6,7 +6,10 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as Observable from "../../computations/Observable.js";
-import { Computation_deferredWithSideEffectsOfT } from "../../computations.js";
+import {
+  Computation_deferredWithSideEffectsOfT,
+  Computation_pureDeferredOfT,
+} from "../../computations.js";
 import { error, none, pipe, pipeLazy } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
@@ -20,15 +23,16 @@ import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 
 const AsyncIterableTypes = {
   [Computation_deferredWithSideEffectsOfT]: pipe(
-    [],
-    AsyncIterable.fromReadonlyArray(),
+    (async function* () {})(),
+    AsyncIterable.of(),
   ),
+
+  [Computation_pureDeferredOfT]: pipe([], AsyncIterable.fromReadonlyArray()),
 };
 
 testModule(
   "AsyncIterable",
   ComputationModuleTests(AsyncIterable, AsyncIterableTypes),
-
   describe(
     "toPauseableObservable",
     testAsync("infinite immediately resolving iterable", async () => {

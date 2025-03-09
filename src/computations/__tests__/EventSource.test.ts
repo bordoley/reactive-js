@@ -5,18 +5,9 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as Observable from "../../computations/Observable.js";
-import {
-  Computation_multicastOfT,
-} from "../../computations.js";
-import {
-  ignore,
-  pick,
-  pipeLazy,
-  raise,
-} from "../../functions.js";
-import {
-  DisposableLike_error,
-} from "../../utils.js";
+import { Computation_multicastOfT } from "../../computations.js";
+import { ignore, pick, pipeLazy, raise } from "../../functions.js";
+import { DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReactiveComputationModuleTests.js";

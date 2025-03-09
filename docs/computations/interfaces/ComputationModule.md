@@ -32,6 +32,90 @@
 
 ## Methods
 
+### fromIterable()
+
+> **fromIterable**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`PureIterableLike`](PureIterableLike.md)\<`T`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureIterableLike`](PureIterableLike.md)\<`T`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>\>
+
+***
+
+### fromReadonlyArray()
+
+> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### count?
+
+`number`
+
+###### start?
+
+`number`
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>\>
+
+***
+
+### fromValue()
+
+> **fromValue**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>\>
+
+***
+
+### generate()
+
+> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### generator
+
+[`Updater`](../../functions/type-aliases/Updater.md)\<`T`\>
+
+##### initialValue
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`T`\>
+
+##### options?
+
+###### count?
+
+`number`
+
+#### Returns
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+
+***
+
 ### keep()
 
 > **keep**\<`T`\>(`predicate`): [`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputation`, `T`, `T`\>

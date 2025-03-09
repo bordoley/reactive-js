@@ -24,8 +24,18 @@
 
 ### \[Computation\_deferredWithSideEffectsOfT\]?
 
-> `readonly` `optional` **\[Computation\_deferredWithSideEffectsOfT\]**: [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`unknown`\>
+> `readonly` `optional` **\[Computation\_deferredWithSideEffectsOfT\]**: [`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`unknown`\>
 
 #### Overrides
 
 `ComputationType.[Computation_deferredWithSideEffectsOfT]`
+
+***
+
+### \[Computation\_pureDeferredOfT\]?
+
+> `readonly` `optional` **\[Computation\_pureDeferredOfT\]**: [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`unknown`\>
+
+#### Overrides
+
+`ComputationType.[Computation_pureDeferredOfT]`

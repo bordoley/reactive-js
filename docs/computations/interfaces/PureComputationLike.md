@@ -13,6 +13,7 @@
 ## Extended by
 
 - [`PureObservableLike`](PureObservableLike.md)
+- [`PureAsyncIterableLike`](PureAsyncIterableLike.md)
 
 ## Properties
 

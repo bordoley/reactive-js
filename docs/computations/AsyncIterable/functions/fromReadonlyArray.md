@@ -6,12 +6,24 @@
 
 # Function: fromReadonlyArray()
 
-> **fromReadonlyArray**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>\>
+> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\>\>
 
 ## Type Parameters
 
 • **T**
 
+## Parameters
+
+### options?
+
+#### count?
+
+`number`
+
+#### start?
+
+`number`
+
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\>\>

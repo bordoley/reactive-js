@@ -142,6 +142,15 @@ interface ZipConstructor<TComputation extends ComputationType> {
     <TA, TB, TC, TD>(a: PureComputationOf<TComputation, TA>, b: PureComputationOf<TComputation, TB>, c: PureComputationOf<TComputation, TC>, d: PureComputationOf<TComputation, TD>): PureDeferredComputationOf<TComputation, Tuple4<TA, TB, TC, TD>>;
 }
 export interface ComputationModule<TComputation extends ComputationType> {
+    fromIterable<T>(): Function1<PureIterableLike<T>, PureComputationOf<TComputation, T>>;
+    fromReadonlyArray<T>(options?: {
+        readonly count?: number;
+        readonly start?: number;
+    }): Function1<readonly T[], PureComputationOf<TComputation, T>>;
+    fromValue<T>(): Function1<T, PureComputationOf<TComputation, T>>;
+    generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
+        readonly count?: number;
+    }): PureComputationOf<TComputation, T>;
     keep<T>(predicate: Predicate<T>): StatelessComputationOperator<TComputation, T, T>;
     map<TA, TB>(selector: Function1<TA, TB>): StatelessComputationOperator<TComputation, TA, TB>;
     toReadonlyArrayAsync: <T>() => AsyncFunction1<ComputationOf<TComputation, T>, ReadonlyArray<T>>;
@@ -409,7 +418,17 @@ export interface StreamableLike<TReq = unknown, out T = unknown, TStream extends
     }): TStream;
 }
 export type StreamOf<TStreamable extends StreamableLike> = ReturnType<TStreamable[typeof StreamableLike_stream]>;
-export interface AsyncIterableLike<T = unknown> extends AsyncIterable<T>, DeferredComputationWithSideEffectsLike {
+export interface AsyncIterableLike<T = unknown> extends AsyncIterable<T>, DeferredComputationLike {
+    readonly [ComputationLike_isSynchronous]: false;
+}
+export interface PureAsyncIterableLike<T = unknown> extends AsyncIterableLike<T>, PureComputationLike {
+    readonly [ComputationLike_isDeferred]?: true;
+    readonly [ComputationLike_isPure]?: true;
+    readonly [ComputationLike_isSynchronous]: false;
+}
+export interface AsyncIterableWithSideEffectsLike<T = unknown> extends AsyncIterableLike<T>, ComputationWithSideEffectsLike {
+    readonly [ComputationLike_isDeferred]?: true;
+    readonly [ComputationLike_isPure]: false;
     readonly [ComputationLike_isSynchronous]: false;
 }
 export {};

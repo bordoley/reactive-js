@@ -14,7 +14,7 @@
 
 ### toReadonlyArrayAsync()
 
-> **toReadonlyArrayAsync**: \<`T`\>() => [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>, readonly `T`[]\>
+> **toReadonlyArrayAsync**: \<`T`\>() => [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> \| [`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> \| `never` \| `never` \| `never`, readonly `T`[]\>
 
 #### Type Parameters
 
@@ -22,7 +22,7 @@
 
 #### Returns
 
-[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>, readonly `T`[]\>
+[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> \| [`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> \| `never` \| `never` \| `never`, readonly `T`[]\>
 
 #### Inherited from
 
@@ -30,9 +30,9 @@
 
 ## Methods
 
-### fromReadonlyArray()
+### fromIterable()
 
-> **fromReadonlyArray**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>\>
+> **fromIterable**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>, [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -40,7 +40,93 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>, [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\>\>
+
+#### Overrides
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`fromIterable`](../../interfaces/ComputationModule.md#fromiterable)
+
+***
+
+### fromReadonlyArray()
+
+> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### count?
+
+`number`
+
+###### start?
+
+`number`
+
+#### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\>\>
+
+#### Overrides
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`fromReadonlyArray`](../../interfaces/ComputationModule.md#fromreadonlyarray)
+
+***
+
+### fromValue()
+
+> **fromValue**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\>\>
+
+#### Overrides
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`fromValue`](../../interfaces/ComputationModule.md#fromvalue)
+
+***
+
+### generate()
+
+> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### generator
+
+[`Updater`](../../../functions/type-aliases/Updater.md)\<`T`\>
+
+##### initialValue
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`T`\>
+
+##### options?
+
+###### count?
+
+`number`
+
+#### Returns
+
+[`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\>
+
+#### Overrides
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`generate`](../../interfaces/ComputationModule.md#generate)
 
 ***
 
@@ -96,7 +182,7 @@
 
 ### of()
 
-> **of**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`AsyncIterable`\<`T`, `any`, `any`\>, [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>\>
+> **of**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`AsyncIterable`\<`T`, `any`, `any`\>, [`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -104,13 +190,13 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`AsyncIterable`\<`T`, `any`, `any`\>, [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`AsyncIterable`\<`T`, `any`, `any`\>, [`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\>\>
 
 ***
 
 ### toObservable()
 
-> **toObservable**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`AsyncIterable`\<`T`, `any`, `any`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
+> **toObservable**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -118,7 +204,7 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`AsyncIterable`\<`T`, `any`, `any`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
 
 ***
 
