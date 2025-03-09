@@ -950,9 +950,7 @@ testModule(
       pipe(
         Observable.generate(increment, returns(-1), { delay: 3 }),
         Observable.takeFirst({ count: 3 }),
-        Observable.forEach<number>(x => {
-          store[StoreLike_value] = x;
-        }),
+        Computation.notify(Observable)(store),
         Observable.subscribe(vts),
       );
 

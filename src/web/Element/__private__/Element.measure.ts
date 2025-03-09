@@ -2,9 +2,8 @@ import { Array_every } from "../../../__internal__/constants.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as EventSource from "../../../computations/EventSource.js";
 import * as WritableStore from "../../../computations/WritableStore.js";
-import { StoreLike_value } from "../../../computations.js";
-import { isNull, pipe, pipeLazy } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import { EventSourceLike_addEventListener } from "../../../computations.js";
+import { invoke, isNull, pipe, pipeLazy } from "../../../functions.js";
 import { Rect } from "../../../web.js";
 import type * as Element from "../../Element.js";
 import Element_eventSource from "./Element.eventSource.js";
@@ -90,10 +89,7 @@ const Element_measure: Element.Signature["measure"] =
         ...scrollContainerEventSources,
       ),
       EventSource.map(pipeLazy(element, measureElement)),
-      EventSource.addEventHandler<Rect>(rect => {
-        store[StoreLike_value] = rect;
-      }),
-      Disposable.bindTo(store),
+      invoke(EventSourceLike_addEventListener, store),
     );
 
     return store;
