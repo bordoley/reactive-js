@@ -29,6 +29,7 @@
 
 ## Functions
 
+- [actionReducer](functions/actionReducer.md)
 - [backpressureStrategy](functions/backpressureStrategy.md)
 - [buffer](functions/buffer.md)
 - [catchError](functions/catchError.md)

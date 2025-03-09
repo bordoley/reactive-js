@@ -65,7 +65,6 @@ import {
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
 import * as SingleUseObservable from "./__internal__/SingleUseObservable.js";
-import { SingleUseObservableLike_observer } from "./__internal__/SingleUseObservable.js";
 
 export const CacheLike_get = Symbol("CacheLike_get");
 
@@ -171,10 +170,10 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
         persistentStore,
       } = options ?? {};
 
-      const singleUseObservable =
+      const dispatcher =
         SingleUseObservable.create<
           ReadonlyObjectMapLike<string, Updater<Optional<T>>>
-        >();
+        >(options);
 
       const store = newInstance<Map<string, T>>(Map);
       const subscriptions =
@@ -195,8 +194,8 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
         }
       };
 
-      const observableSubscription = pipe(
-        singleUseObservable,
+      pipe(
+        dispatcher,
         Observable.map(
           (
             updaters: ReadonlyObjectMapLike<
@@ -320,6 +319,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
             )
           : Computation.ignoreElements(ObservableModule)(),
         Observable.subscribe(scheduler, options),
+        Disposable.addTo(dispatcher),
       );
 
       let cleanupJob = Disposable.disposed;
@@ -341,7 +341,6 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
       };
 
-      const dispatcher = singleUseObservable[SingleUseObservableLike_observer];
       init(DelegatingDisposableMixin, instance, dispatcher);
       init(
         DelegatingDispatcherMixin<
@@ -350,8 +349,6 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
         instance,
         dispatcher,
       );
-
-      pipe(observableSubscription, Disposable.addTo(instance));
 
       return instance;
     },

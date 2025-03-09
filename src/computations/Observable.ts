@@ -48,6 +48,7 @@ import {
 import {
   AsyncFunction1,
   AsyncFunction2,
+  Equality,
   Factory,
   Function1,
   Function2,
@@ -68,6 +69,7 @@ import {
   QueueableLike,
   SchedulerLike,
 } from "../utils.js";
+import Observable_actionReducer from "./Observable/__private__/Observable.actionReducer.js";
 import Observable_backpressureStrategy from "./Observable/__private__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
@@ -374,6 +376,12 @@ export interface ObservableModule
     SynchronousComputationModule<ObservableComputation>,
     DeferredReactiveComputationModule<ObservableComputation>,
     ConcurrentReactiveComputationModule<ObservableComputation> {
+  actionReducer<TAction, T>(
+    reducer: Reducer<TAction, T>,
+    initialState: Factory<T>,
+    options?: { readonly equality?: Equality<T> },
+  ): StatefulSynchronousComputationOperator<ObservableComputation, TAction, T>;
+
   backpressureStrategy<T>(
     capacity: number,
     backpressureStrategy: BackpressureStrategy,
@@ -758,6 +766,8 @@ export interface ObservableModule
 
 export type Signature = ObservableModule;
 
+export const actionReducer: Signature["actionReducer"] =
+  Observable_actionReducer;
 export const backpressureStrategy: Signature["backpressureStrategy"] =
   Observable_backpressureStrategy;
 export const buffer: Signature["buffer"] = Observable_buffer;

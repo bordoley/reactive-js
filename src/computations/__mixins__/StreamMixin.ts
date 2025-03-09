@@ -11,12 +11,10 @@ import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposab
 import {
   BackpressureStrategy,
   DisposableLike,
-  ObserverLike,
   SchedulerLike,
 } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as SingleUseObservable from "../__internal__/SingleUseObservable.js";
-import { SingleUseObservableLike_observer } from "../__internal__/SingleUseObservable.js";
 import DelegatingMulticastObservableMixin from "../__mixins__/DelegatingMulticastObservableMixin.js";
 
 const StreamMixin: <TReq, T>() => Mixin3<
@@ -49,17 +47,13 @@ const StreamMixin: <TReq, T>() => Mixin3<
           backpressureStrategy?: BackpressureStrategy;
         },
       ): StreamLike<TReq, T> & DisposableLike {
-        const singleUseObservable = SingleUseObservable.create<TReq>();
+        const dispatcher = SingleUseObservable.create<TReq>(options);
 
         const delegate = pipe(
-          singleUseObservable,
+          dispatcher,
           op,
           Observable.multicast<T>(scheduler, options),
-        );
-
-        const dispatcher = pipe(
-          singleUseObservable[SingleUseObservableLike_observer] as ObserverLike,
-          Disposable.add(delegate),
+          Disposable.addTo(dispatcher),
         );
 
         init(DelegatingDisposableMixin, instance, dispatcher);

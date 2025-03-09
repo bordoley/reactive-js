@@ -1,6 +1,7 @@
 /// <reference types="./Observable.d.ts" />
 
 import { Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
+import Observable_actionReducer from "./Observable/__private__/Observable.actionReducer.js";
 import Observable_backpressureStrategy from "./Observable/__private__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
@@ -78,6 +79,7 @@ export const CombineLatestComputeMode = ObservableCompute_CombineLatestComputeMo
 export const ThrottleFirstMode = ObservableThrottle_ThrottleFirstMode;
 export const ThrottleLastMode = ObservableThrottle_ThrottleLastMode;
 export const ThrottleIntervalMode = ObservableThrottle_ThrottleIntervalMode;
+export const actionReducer = Observable_actionReducer;
 export const backpressureStrategy = Observable_backpressureStrategy;
 export const buffer = Observable_buffer;
 export const catchError = Observable_catchError;

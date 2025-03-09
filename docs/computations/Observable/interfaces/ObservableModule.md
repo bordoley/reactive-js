@@ -36,6 +36,38 @@
 
 ## Methods
 
+### actionReducer()
+
+> **actionReducer**\<`TAction`, `T`\>(`reducer`, `initialState`, `options`?): [`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TAction`, `T`\>
+
+#### Type Parameters
+
+• **TAction**
+
+• **T**
+
+#### Parameters
+
+##### reducer
+
+[`Reducer`](../../../functions/type-aliases/Reducer.md)\<`TAction`, `T`\>
+
+##### initialState
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`T`\>
+
+##### options?
+
+###### equality?
+
+[`Equality`](../../../functions/type-aliases/Equality.md)\<`T`\>
+
+#### Returns
+
+[`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TAction`, `T`\>
+
+***
+
 ### backpressureStrategy()
 
 > **backpressureStrategy**\<`T`\>(`capacity`, `backpressureStrategy`): [`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
