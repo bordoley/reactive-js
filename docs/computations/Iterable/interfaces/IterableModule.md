@@ -12,6 +12,16 @@
 
 ## Properties
 
+### \[ComputationModuleLike\_computationType\]?
+
+> `optional` **\[ComputationModuleLike\_computationType\]**: [`IterableComputation`](IterableComputation.md)
+
+#### Inherited from
+
+[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`[ComputationModuleLike_computationType]`](../../interfaces/InteractiveComputationModule.md#computationmodulelike_computationtype)
+
+***
+
 ### empty()
 
 > **empty**: \<`T`\>() => [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>

@@ -10,6 +10,7 @@ export const Computation_deferredWithSideEffectsOfT = Symbol("Computation_deferr
 export const Computation_pureSynchronousOfT = Symbol("Computation_pureSynchronousOfT");
 export const Computation_synchronousWithSideEffectsOfT = Symbol("Computation_synchronousWithSideEffectsOfT");
 export const Computation_multicastOfT = Symbol("Computation_multicastOfT");
+const ComputationModuleLike_computationType = Symbol("ComputationModuleLike_tComputation");
 export const RunnableLike_eval = Symbol("RunnableLike_eval");
 export const PureSynchronousComputation = {
     [ComputationLike_isDeferred]: true,

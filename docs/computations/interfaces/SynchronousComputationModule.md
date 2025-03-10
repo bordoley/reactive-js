@@ -6,6 +6,10 @@
 
 # Interface: SynchronousComputationModule\<TComputation\>
 
+## Extends
+
+- [`ComputationModuleLike`](ComputationModuleLike.md)\<`TComputation`\>
+
 ## Extended by
 
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
@@ -15,6 +19,16 @@
 ## Type Parameters
 
 • **TComputation** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
+
+## Properties
+
+### \[ComputationModuleLike\_computationType\]?
+
+> `optional` **\[ComputationModuleLike\_computationType\]**: `TComputation`
+
+#### Inherited from
+
+[`ComputationModuleLike`](ComputationModuleLike.md).[`[ComputationModuleLike_computationType]`](ComputationModuleLike.md#computationmodulelike_computationtype)
 
 ## Methods
 

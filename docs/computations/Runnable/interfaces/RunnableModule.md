@@ -12,6 +12,16 @@
 
 ## Properties
 
+### \[ComputationModuleLike\_computationType\]?
+
+> `optional` **\[ComputationModuleLike\_computationType\]**: [`RunnableComputation`](RunnableComputation.md)
+
+#### Inherited from
+
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`[ComputationModuleLike_computationType]`](../../interfaces/SynchronousComputationModule.md#computationmodulelike_computationtype)
+
+***
+
 ### empty()
 
 > **empty**: \<`T`\>() => [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>

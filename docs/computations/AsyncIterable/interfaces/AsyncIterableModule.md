@@ -12,6 +12,16 @@
 
 ## Properties
 
+### \[ComputationModuleLike\_computationType\]?
+
+> `optional` **\[ComputationModuleLike\_computationType\]**: [`AsyncIterableComputation`](AsyncIterableComputation.md)
+
+#### Inherited from
+
+[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`[ComputationModuleLike_computationType]`](../../interfaces/InteractiveComputationModule.md#computationmodulelike_computationtype)
+
+***
+
 ### empty()
 
 > **empty**: \<`T`\>() => [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>

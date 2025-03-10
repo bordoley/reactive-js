@@ -534,7 +534,42 @@ interface ZipConstructor<TComputation extends ComputationType> {
   ): PureDeferredComputationOf<TComputation, Tuple4<TA, TB, TC, TD>>;
 }
 
-export interface ComputationModule<TComputation extends ComputationType> {
+const ComputationModuleLike_computationType = Symbol(
+  "ComputationModuleLike_tComputation",
+);
+
+export interface ComputationModuleLike<
+  TComputationType extends ComputationType = ComputationType,
+> {
+  [ComputationModuleLike_computationType]?: TComputationType;
+}
+
+export type ComputationTypeOfModule<TModule extends ComputationModuleLike> =
+  NonNullable<TModule[typeof ComputationModuleLike_computationType]>;
+
+export type PickComputationModule<
+  TComputation extends ComputationType,
+  TComputationModule extends ComputationModuleLike<TComputation>,
+  K extends keyof TComputationModule,
+> = Pick<TComputationModule, K | typeof ComputationModuleLike_computationType>;
+
+export type ComputationOfModule<
+  TModule extends ComputationModuleLike,
+  T,
+> = ComputationOf<ComputationTypeOfModule<TModule>, T>;
+
+export type DeferredComputationOfModule<
+  TModule extends ComputationModuleLike,
+  T,
+> = DeferredComputationOf<ComputationTypeOfModule<TModule>, T>;
+
+export type MulticastComputationOfModule<
+  TModule extends ComputationModuleLike,
+  T,
+> = MulticastComputationOf<ComputationTypeOfModule<TModule>, T>;
+
+export interface ComputationModule<TComputation extends ComputationType>
+  extends ComputationModuleLike<TComputation> {
   empty<T>(): PureComputationOf<TComputation, T>;
 
   firstAsync<T>(): AsyncFunction1<ComputationOf<TComputation, T>, T>;
@@ -584,9 +619,8 @@ export interface ComputationModule<TComputation extends ComputationType> {
   >;
 }
 
-export interface DeferredComputationModule<
-  TComputation extends ComputationType,
-> {
+export interface DeferredComputationModule<TComputation extends ComputationType>
+  extends ComputationModuleLike<TComputation> {
   catchError<T>(
     onError: SideEffect1<Error>,
   ): StatefulSynchronousComputationOperator<TComputation, T, T>;
@@ -723,7 +757,7 @@ export interface DeferredComputationModule<
 
 export interface SynchronousComputationModule<
   TComputation extends ComputationType,
-> {
+> extends ComputationModuleLike<TComputation> {
   empty<T>(): PureSynchronousComputationOf<TComputation, T>;
 
   first<T>(): Function1<SynchronousComputationOf<TComputation, T>, Optional<T>>;
@@ -769,13 +803,13 @@ export interface SynchronousComputationModule<
 
 export interface InteractiveComputationModule<
   TComputation extends ComputationType,
-> {
+> extends ComputationModuleLike<TComputation> {
   zip: ZipConstructor<TComputation>;
 }
 
 export interface DeferredReactiveComputationModule<
   TComputation extends ComputationType,
-> {
+> extends ComputationModuleLike<TComputation> {
   buffer<T>(options?: {
     count?: number;
   }): StatefulSynchronousComputationOperator<TComputation, T, readonly T[]>;
@@ -807,7 +841,7 @@ export interface DeferredReactiveComputationModule<
 
 export interface ConcurrentReactiveComputationModule<
   TComputation extends ComputationType,
-> {
+> extends ComputationModuleLike<TComputation> {
   fromPromise<T>(): Function1<
     Promise<T>,
     MulticastComputationOf<TComputation, T>

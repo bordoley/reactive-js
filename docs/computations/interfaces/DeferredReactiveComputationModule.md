@@ -6,6 +6,10 @@
 
 # Interface: DeferredReactiveComputationModule\<TComputation\>
 
+## Extends
+
+- [`ComputationModuleLike`](ComputationModuleLike.md)\<`TComputation`\>
+
 ## Extended by
 
 - [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
@@ -14,6 +18,16 @@
 ## Type Parameters
 
 • **TComputation** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
+
+## Properties
+
+### \[ComputationModuleLike\_computationType\]?
+
+> `optional` **\[ComputationModuleLike\_computationType\]**: `TComputation`
+
+#### Inherited from
+
+[`ComputationModuleLike`](ComputationModuleLike.md).[`[ComputationModuleLike_computationType]`](ComputationModuleLike.md#computationmodulelike_computationtype)
 
 ## Methods
 
