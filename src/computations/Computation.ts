@@ -46,7 +46,7 @@ import {
   debug as breakPoint,
   compose,
   log as consoleLog,
-  newInstance,
+  memoize,
   pickUnsafe,
   pipe,
   returns,
@@ -437,23 +437,6 @@ export interface Signature {
   ) => StatelessComputationOperator<TComputation, T, T>;
 }
 
-const memoizeF = <
-  TModule extends object,
-  TFunction extends (...args: any[]) => any,
->(
-  makeFunction: (m: TModule) => TFunction,
-) => {
-  const cache = newInstance<WeakMap<TModule, TFunction>>(WeakMap);
-
-  return (m: TModule) =>
-    cache.get(m) ??
-    (() => {
-      const f = makeFunction(m);
-      cache.set(m, f);
-      return f;
-    })();
-};
-
 export const areAllDeferred: Signature["areAllDeferred"] = <
   TComputation extends ComputationLike,
 >(
@@ -482,33 +465,33 @@ export const areAllSynchronous: Signature["areAllSynchronous"] = <
 ): computations is readonly (TComputation & SynchronousComputationLike)[] =>
   computations.every(isSynchronous);
 
-export const concatMap: Signature["concatMap"] = /*@__PURE__*/ memoizeF(m =>
+export const concatMap: Signature["concatMap"] = /*@__PURE__*/ memoize(m =>
   flatMap(m, "concatAll"),
 ) as Signature["concatMap"];
 
 export const concatMapIterable: Signature["concatMapIterable"] =
-  /*@__PURE__*/ memoizeF(m =>
+  /*@__PURE__*/ memoize(m =>
     flatMapIterable(m, "concatAll"),
   ) as Signature["concatMapIterable"];
 
-export const concatMany: Signature["concatMany"] = /*@__PURE__*/ memoizeF(
+export const concatMany: Signature["concatMany"] = /*@__PURE__*/ memoize(
   m =>
     <T>(computations: DeferredComputationOfModule<typeof m, T>[]) =>
       m.concat<T>(...computations),
 ) as Signature["concatMany"];
 
-export const concatWith: Signature["concatWith"] = /*@__PURE__*/ memoizeF(
+export const concatWith: Signature["concatWith"] = /*@__PURE__*/ memoize(
   m =>
     <T>(...tail: DeferredComputationOfModule<typeof m, T>[]) =>
     (fst: DeferredComputationOfModule<typeof m, T>) =>
       m.concat(fst, ...tail),
 ) as Signature["concatWith"];
 
-export const debug: Signature["debug"] = /*@__PURE__*/ memoizeF(
+export const debug: Signature["debug"] = /*@__PURE__*/ memoize(
   m => () => m.forEach(breakPoint),
 );
 
-export const endWith: Signature["endWith"] = /*@__PURE__*/ memoizeF(
+export const endWith: Signature["endWith"] = /*@__PURE__*/ memoize(
   m =>
     <T>(...values: readonly T[]) =>
       concatWith(m)(m.fromReadonlyArray<T>()(values)),
@@ -575,7 +558,7 @@ export const hasSideEffects: Signature["hasSideEffects"] = <
   !(computation[ComputationLike_isPure] ?? true);
 
 export const ignoreElements: Signature["ignoreElements"] =
-  /*@__PURE__*/ memoizeF(
+  /*@__PURE__*/ memoize(
     m => () => m.keep(alwaysFalse),
   ) as Signature["ignoreElements"];
 
@@ -642,52 +625,52 @@ export const isSynchronousWithSideEffects: Signature["isSynchronousWithSideEffec
     (computation[ComputationLike_isDeferred] ?? true) &&
     !(computation[ComputationLike_isPure] ?? true);
 
-export const keepType: Signature["keepType"] = /*@__PURE__*/ memoizeF(
+export const keepType: Signature["keepType"] = /*@__PURE__*/ memoize(
   m =>
     <TA, TB>(predicate: TypePredicate<TA, TB>) =>
       m.keep(predicate),
 ) as Signature["keepType"];
 
-export const log: Signature["log"] = /*@__PURE__*/ memoizeF(
+export const log: Signature["log"] = /*@__PURE__*/ memoize(
   m => () => m.forEach(consoleLog),
 );
 
-export const mapTo: Signature["mapTo"] = /*@__PURE__*/ memoizeF(
+export const mapTo: Signature["mapTo"] = /*@__PURE__*/ memoize(
   m =>
     <T>(v: T) =>
       m.map(returns(v)),
 );
 
-export const mergeMany: Signature["mergeMany"] = /*@__PURE__*/ memoizeF(
+export const mergeMany: Signature["mergeMany"] = /*@__PURE__*/ memoize(
   m =>
     <T>(computations: MulticastComputationOfModule<typeof m, T>[]) =>
       m.merge<T>(...computations),
 ) as Signature["mergeMany"];
 
-export const mergeWith: Signature["mergeWith"] = /*@__PURE__*/ memoizeF(
+export const mergeWith: Signature["mergeWith"] = /*@__PURE__*/ memoize(
   m =>
     <T>(...tail: ComputationOfModule<typeof m, T>[]) =>
     (fst: ComputationOfModule<typeof m, T>) =>
       m.merge<T>(fst, ...tail),
 ) as Signature["mergeWith"];
 
-export const notify: Signature["notify"] = /*@__PURE__*/ memoizeF(
+export const notify: Signature["notify"] = /*@__PURE__*/ memoize(
   m =>
     <T>(eventListener: EventListenerLike<T>) =>
       m.forEach(bindMethod(eventListener, EventListenerLike_notify)),
 );
 
-export const pick: Signature["pick"] = /*@__PURE__*/ memoizeF(
+export const pick: Signature["pick"] = /*@__PURE__*/ memoize(
   m =>
     (...keys: (string | number | symbol)[]) =>
       m.map(pickUnsafe(...keys)),
 );
 
-export const sequence: Signature["sequence"] = /*@__PURE__*/ memoizeF(
+export const sequence: Signature["sequence"] = /*@__PURE__*/ memoize(
   m => (start: number) => m.generate<number>(increment, returns(start - 1)),
 );
 
-export const startWith: Signature["startWith"] = /*@__PURE__*/ memoizeF(
+export const startWith: Signature["startWith"] = /*@__PURE__*/ memoize(
   m =>
     <T>(...values: readonly T[]) =>
     (computation: DeferredComputationOfModule<typeof m, T>) =>

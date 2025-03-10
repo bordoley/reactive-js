@@ -161,14 +161,27 @@ export const bind = /*@__PURE__*/ (() => {
                     })()),
                 objectMap.get(thiz) ??
                     (() => {
-                        const memoizedF = f.bind(thiz);
-                        boundFunctions.add(memoizedF);
-                        objectMap.set(thiz, memoizedF);
-                        return memoizedF;
+                        const memoize1dF = f.bind(thiz);
+                        boundFunctions.add(memoize1dF);
+                        objectMap.set(thiz, memoize1dF);
+                        return memoize1dF;
                     })())
             : f;
     };
 })();
+/**
+ * Returns a function that takes an arbitrary number of arguments and always returns `v`.
+ */
+export const returns = (v) => () => v;
+export const memoize = (makeFunction) => {
+    const cache = newInstance(WeakMap);
+    return (m) => cache.get(m) ??
+        (() => {
+            const f = makeFunction(m);
+            cache.set(m, f);
+            return f;
+        })();
+};
 /**
  * An alias for undefined.
  */
@@ -304,10 +317,6 @@ export const raiseIf = (condition, message) => {
     }
 };
 export const raiseIfNone = (v, message) => raiseIf(isNone(v), message);
-/**
- * Returns a function that takes an arbitrary number of arguments and always returns `v`.
- */
-export const returns = (v) => () => v;
 /**
  * The javascript strict equality function.
  */

@@ -186,6 +186,7 @@ interface FunctionsModule {
     isTrue(v: boolean): v is true;
     lessThan(v: number): Predicate<number>;
     log<T>(v: T): T;
+    memoize<TObj extends object, TMemoized>(makeFunction: Function1<TObj, TMemoized>): TMemoized;
     negate(v: boolean): boolean;
     newInstance<T>(Constructor: Constructor<T>): T;
     newInstance<T, TA>(Constructor: Constructor1<TA, T>, a: TA): T;
@@ -386,6 +387,11 @@ export declare const newInstance: Signature["newInstance"];
  */
 export declare const bind: Signature["bind"];
 /**
+ * Returns a function that takes an arbitrary number of arguments and always returns `v`.
+ */
+export declare const returns: Signature["returns"];
+export declare const memoize: <TObj extends object, TMemoized>(makeFunction: Function1<TObj, TMemoized>) => Function1<TObj, TMemoized>;
+/**
  * An alias for undefined.
  */
 export declare const none: Signature["none"];
@@ -448,10 +454,6 @@ export declare const raise: Signature["raise"];
  */
 export declare const raiseIf: Signature["raiseIf"];
 export declare const raiseIfNone: Signature["raiseIfNone"];
-/**
- * Returns a function that takes an arbitrary number of arguments and always returns `v`.
- */
-export declare const returns: Signature["returns"];
 /**
  * The javascript strict equality function.
  */

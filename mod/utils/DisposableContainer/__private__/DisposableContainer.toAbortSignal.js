@@ -1,17 +1,11 @@
 /// <reference types="./DisposableContainer.toAbortSignal.d.ts" />
 
-import { bindMethod, newInstance, pipe } from "../../../functions.js";
+import { bindMethod, memoize, newInstance, pipe } from "../../../functions.js";
 import DisposableContainer_onDisposed from "./DisposableContainer.onDisposed.js";
 const DisposableContainer_toAbortSignal = 
-/*@__PURE__*/ (() => {
-    const abortSignalCache = newInstance(WeakMap);
-    return (disposable) => abortSignalCache.get(disposable) ??
-        (() => {
-            const abortController = newInstance(AbortController);
-            pipe(disposable, DisposableContainer_onDisposed(bindMethod(abortController, "abort")));
-            const abortSignal = abortController.signal;
-            abortSignalCache.set(disposable, abortSignal);
-            return abortSignal;
-        })();
-})();
+/*@__PURE__*/ memoize((disposable) => {
+    const abortController = newInstance(AbortController);
+    pipe(disposable, DisposableContainer_onDisposed(bindMethod(abortController, "abort")));
+    return abortController.signal;
+});
 export default DisposableContainer_toAbortSignal;

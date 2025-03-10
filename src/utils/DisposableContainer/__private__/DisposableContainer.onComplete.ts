@@ -1,10 +1,9 @@
 import {
   Optional,
   SideEffect,
-  SideEffect1,
   Updater,
   isNone,
-  newInstance,
+  memoize,
 } from "../../../functions.js";
 import {
   DisposableContainerLike,
@@ -14,33 +13,22 @@ import type * as DisposableContainer from "../../DisposableContainer.js";
 
 const DisposableContainer_onComplete: DisposableContainer.Signature["onComplete"] =
   /*@__PURE__*/ (() => {
-    const onDisposedCache: WeakMap<
-      SideEffect,
-      SideEffect1<Optional<Error>>
-    > = newInstance<WeakMap<SideEffect, SideEffect1<Optional<Error>>>>(WeakMap);
+    const createOnDisposed = memoize(
+      (teardown: SideEffect) =>
+        function onDisposableContainerOnCompleteDisposed(
+          this: DisposableContainerLike,
+          e: Optional<Error>,
+        ) {
+          if (isNone(e)) {
+            teardown.call(this);
+          }
+        },
+    );
 
     return <TDisposable extends DisposableContainerLike>(
       teardown: SideEffect,
     ): Updater<TDisposable> => {
-      const onDisposed =
-        onDisposedCache.get(teardown) ??
-        (() => {
-          function onDisposableContainerOnCompleteDisposed(
-            this: TDisposable,
-            e: Optional<Error>,
-          ) {
-            if (isNone(e)) {
-              teardown.call(this);
-            }
-          }
-
-          onDisposedCache.set(
-            teardown,
-            onDisposableContainerOnCompleteDisposed,
-          );
-
-          return onDisposableContainerOnCompleteDisposed;
-        })();
+      const onDisposed = createOnDisposed(teardown);
 
       return (disposable: TDisposable) => {
         disposable[DisposableContainerLike_add](onDisposed);

@@ -535,6 +535,10 @@ interface FunctionsModule {
 
   log<T>(v: T): T;
 
+  memoize<TObj extends object, TMemoized>(
+    makeFunction: Function1<TObj, TMemoized>,
+  ): TMemoized;
+
   negate(v: boolean): boolean;
 
   newInstance<T>(Constructor: Constructor<T>): T;
@@ -1590,16 +1594,38 @@ export const bind: Signature["bind"] = /*@__PURE__*/ (() => {
           })()),
         objectMap.get(thiz) ??
           (() => {
-            const memoizedF = f.bind(thiz);
+            const memoize1dF = f.bind(thiz);
 
-            boundFunctions.add(memoizedF);
-            objectMap.set(thiz, memoizedF);
+            boundFunctions.add(memoize1dF);
+            objectMap.set(thiz, memoize1dF);
 
-            return memoizedF;
+            return memoize1dF;
           })())
       : f;
   };
 })();
+
+/**
+ * Returns a function that takes an arbitrary number of arguments and always returns `v`.
+ */
+export const returns: Signature["returns"] =
+  <T>(v: T) =>
+  () =>
+    v;
+
+export const memoize = <TObj extends object, TMemoized>(
+  makeFunction: Function1<TObj, TMemoized>,
+): Function1<TObj, TMemoized> => {
+  const cache = newInstance<WeakMap<TObj, TMemoized>>(WeakMap);
+
+  return (m: TObj) =>
+    cache.get(m) ??
+    (() => {
+      const f = makeFunction(m);
+      cache.set(m, f);
+      return f;
+    })();
+};
 
 /**
  * An alias for undefined.
@@ -1809,14 +1835,6 @@ export const raiseIfNone: Signature["raiseIfNone"] = <T>(
   v: Optional<T>,
   message: string,
 ): asserts v is T => raiseIf(isNone(v), message);
-
-/**
- * Returns a function that takes an arbitrary number of arguments and always returns `v`.
- */
-export const returns: Signature["returns"] =
-  <T>(v: T) =>
-  () =>
-    v;
 
 /**
  * The javascript strict equality function.

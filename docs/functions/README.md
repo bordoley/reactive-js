@@ -105,6 +105,7 @@
 - [isTrue](functions/isTrue.md)
 - [lessThan](functions/lessThan.md)
 - [log](functions/log.md)
+- [memoize](functions/memoize.md)
 - [negate](functions/negate.md)
 - [newInstance](functions/newInstance.md)
 - [partial](functions/partial.md)
