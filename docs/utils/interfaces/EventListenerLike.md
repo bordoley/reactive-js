@@ -13,7 +13,6 @@
 ## Extended by
 
 - [`PublisherLike`](../../computations/interfaces/PublisherLike.md)
-- [`WritableStoreLike`](../../computations/interfaces/WritableStoreLike.md)
 - [`SubjectLike`](../../computations/interfaces/SubjectLike.md)
 
 ## Type Parameters

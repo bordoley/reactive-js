@@ -979,8 +979,7 @@ export interface StoreLike<T = unknown> extends EventSourceLike<T> {
  */
 export interface WritableStoreLike<T = unknown>
   extends StoreLike<T>,
-    DisposableLike,
-    EventListenerLike<T> {
+    PublisherLike<T> {
   [StoreLike_value]: T;
 }
 

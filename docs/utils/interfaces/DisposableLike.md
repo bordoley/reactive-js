@@ -12,7 +12,6 @@
 
 ## Extended by
 
-- [`WritableStoreLike`](../../computations/interfaces/WritableStoreLike.md)
 - [`SerialDisposableLike`](SerialDisposableLike.md)
 - [`VirtualTimeSchedulerLike`](VirtualTimeSchedulerLike.md)
 - [`EventListenerLike`](EventListenerLike.md)

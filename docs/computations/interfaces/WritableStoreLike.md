@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`StoreLike`](StoreLike.md)\<`T`\>.[`DisposableLike`](../../utils/interfaces/DisposableLike.md).[`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)\<`T`\>
+- [`StoreLike`](StoreLike.md)\<`T`\>.[`PublisherLike`](PublisherLike.md)\<`T`\>
 
 ## Type Parameters
 

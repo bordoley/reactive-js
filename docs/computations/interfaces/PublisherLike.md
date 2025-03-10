@@ -10,6 +10,10 @@
 
 - [`EventSourceLike`](EventSourceLike.md)\<`T`\>.[`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)\<`T`\>
 
+## Extended by
+
+- [`WritableStoreLike`](WritableStoreLike.md)
+
 ## Type Parameters
 
 • **T** = `unknown`
