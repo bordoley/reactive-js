@@ -14,13 +14,13 @@ const PublisherMixin = /*@__PURE__*/ (() => {
     const Publisher_onListenerDisposed = Symbol("Publisher_onListenerDisposed");
     function onEventPublisherDisposed(e) {
         const maybeListeners = this[Publisher_listeners];
-        if (maybeListeners instanceof Set) {
-            for (const listener of maybeListeners) {
-                listener[DisposableLike_dispose](e);
-            }
-        }
-        else if (isSome(maybeListeners)) {
-            maybeListeners[DisposableLike_dispose](e);
+        const listeners = maybeListeners instanceof Set
+            ? maybeListeners
+            : isSome(maybeListeners)
+                ? [maybeListeners]
+                : [];
+        for (const listener of listeners) {
+            listener[DisposableLike_dispose](e);
         }
         this[Publisher_listeners] = none;
     }
@@ -74,17 +74,12 @@ const PublisherMixin = /*@__PURE__*/ (() => {
             }
         },
         [EventSourceLike_addEventListener](listener) {
-            this;
             pipe(listener, Disposable.addToContainer(this));
-            if (this[DisposableLike_isDisposed] || listener === this) {
-                return;
-            }
             const maybeListeners = this[Publisher_listeners];
-            if (isNone(maybeListeners)) {
-                this[Publisher_listeners];
-            }
-            if ((maybeListeners instanceof Set &&
-                maybeListeners[Set_has](listener)) ||
+            if (this[DisposableLike_isDisposed] ||
+                listener === this ||
+                (maybeListeners instanceof Set &&
+                    maybeListeners[Set_has](listener)) ||
                 maybeListeners === listener) {
                 return;
             }

@@ -23,6 +23,7 @@ import {
   Method,
   Optional,
   error,
+  isNone,
   isSome,
   newInstance,
   none,
@@ -45,6 +46,7 @@ import {
   QueueableLike_enqueue,
   SchedulerLike_inContinuation,
 } from "../utils.js";
+import * as Iterable from "./Iterable.js";
 
 export const create: <T>(options?: {
   readonly replay?: number;
@@ -54,18 +56,29 @@ export const create: <T>(options?: {
   const Subject_onObserverDisposed = Symbol("Subject_onObserverDisposed");
 
   type TProperties = {
-    readonly [Subject_observers]: Set<ObserverLike<T>>;
+    [Subject_observers]: Optional<
+      Set<ObserverLike<T>> | Optional<ObserverLike<T>>
+    >;
     readonly [Subject_onObserverDisposed]: Method<ObserverLike<T>>;
   };
 
   function onSubjectDisposed(this: TProperties, e: Optional<Error>) {
-    for (const observer of this[Subject_observers]) {
+    const maybeObservers = this[Subject_observers];
+    const observers =
+      maybeObservers instanceof Set
+        ? maybeObservers
+        : isSome(maybeObservers)
+          ? [maybeObservers]
+          : [];
+
+    for (const observer of observers) {
       if (isSome(e)) {
         observer[DisposableLike_dispose](e);
       } else {
         observer[DispatcherLike_complete]();
       }
     }
+    this[Subject_observers] = none;
   }
 
   return mixInstanceFactory(
@@ -102,11 +115,22 @@ export const create: <T>(options?: {
       this[Subject_onObserverDisposed] = function onObserverDisposed(
         this: ObserverLike<T>,
       ) {
-        const observers = instance[Subject_observers];
-        observers[Set_delete](this);
+        const maybeObservers = instance[Subject_observers];
 
-        if (autoDispose && instance[Subject_observers][Set_size] === 0) {
+        if (maybeObservers instanceof Set) {
+          maybeObservers[Set_delete](this);
+        } else if (maybeObservers === this) {
+          instance[Subject_observers] = none;
+        }
+
+        if (maybeObservers instanceof Set && maybeObservers[Set_size] == 1) {
+          instance[Subject_observers] =
+            Iterable.first<ObserverLike<T>>()(maybeObservers);
+        }
+
+        if (autoDispose && isNone(instance[Subject_observers])) {
           instance[DisposableLike_dispose]();
+          instance[Subject_observers] = none;
         }
       };
 
@@ -132,7 +156,15 @@ export const create: <T>(options?: {
 
         this[QueueableLike_enqueue](next);
 
-        for (const observer of this[Subject_observers]) {
+        const maybeObservers = this[Subject_observers];
+        const observers =
+          maybeObservers instanceof Set
+            ? maybeObservers
+            : isSome(maybeObservers)
+              ? [maybeObservers]
+              : [];
+
+        for (const observer of observers) {
           try {
             if (observer[SchedulerLike_inContinuation]) {
               observer[ObserverLike_notify](next);
@@ -149,9 +181,13 @@ export const create: <T>(options?: {
         this: TProperties & SubjectLike<T> & QueueLike<T>,
         observer: ObserverLike<T>,
       ) {
-        const observers = this[Subject_observers];
+        const maybeObservers = this[Subject_observers];
 
-        if (observers[Set_has](observer)) {
+        if (
+          (maybeObservers instanceof Set &&
+            maybeObservers[Set_has](observer)) ||
+          maybeObservers === observer
+        ) {
           return;
         }
 
@@ -160,7 +196,16 @@ export const create: <T>(options?: {
           return;
         }
 
-        observers[Set_add](observer);
+        if (maybeObservers instanceof Set) {
+          maybeObservers[Set_add](observer);
+        } else if (isSome(maybeObservers)) {
+          const listeners = (this[Subject_observers] =
+            newInstance<Set<ObserverLike<T>>>(Set));
+          listeners[Set_add](maybeObservers);
+          listeners[Set_add](observer);
+        } else {
+          this[Subject_observers] = observer;
+        }
 
         pipe(
           observer,
