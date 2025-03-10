@@ -1,13 +1,9 @@
 import {
   Mutable,
-  include,
-  init,
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
-import ObservableMixin from "../../../computations/__mixins__/ObservableMixin.js";
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   DeferredObservableWithSideEffectsLike,
@@ -19,6 +15,7 @@ import {
 } from "../../../computations.js";
 import { SideEffect1, error, none } from "../../../functions.js";
 import { DisposableLike_dispose, ObserverLike } from "../../../utils.js";
+import * as Computation from "../../Computation.js";
 
 interface ObservableCreateWithConfig {
   createWithConfig<T>(
@@ -67,10 +64,11 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
 
     type TProperties = {
       readonly [CreateObservable_effect]: SideEffect1<ObserverLike>;
+      readonly [ComputationLike_isPure]: boolean;
+      readonly [ComputationLike_isSynchronous]: boolean;
     };
 
     return mixInstanceFactory(
-      include(ObservableMixin),
       function CreateObservable(
         this: Pick<ObservableLike, typeof ObservableLike_observe> &
           Mutable<TProperties>,
@@ -80,17 +78,19 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
           readonly [ComputationLike_isSynchronous]: boolean;
         },
       ): ObservableLike {
-        init(ObservableMixin, this, config);
         this[CreateObservable_effect] = effect;
+
+        this[ComputationLike_isSynchronous] = Computation.isSynchronous(config);
+        this[ComputationLike_isPure] = Computation.isPure(config);
 
         return this;
       },
       props<TProperties>({
         [CreateObservable_effect]: none,
+        [ComputationLike_isPure]: false,
+        [ComputationLike_isSynchronous]: false,
       }),
       {
-        [ComputationLike_isDeferred]: true as const,
-
         [ObservableLike_observe](this: TProperties, observer: ObserverLike) {
           try {
             this[CreateObservable_effect](observer);
