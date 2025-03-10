@@ -620,18 +620,18 @@ export const flatMapIterable: Signature["flatMapIterable"] = /*@__PURE__*/ (<
         ComputationModule<TComputation>,
         "map" | "fromIterable"
       > & {
-        readonly [key in TFlattenKey]: key extends TFlattenKey
+        readonly [key in
+          | TFlattenKey
+          | string
+          | symbol
+          | number]: key extends TFlattenKey
           ? DeferredComputationModule<TComputation>["concatAll"]
           : unknown;
       },
     ) =>
       (key: TFlattenKey, selector, options) => {
         const mapper = compose(selector, m.fromIterable());
-        return flatMap<TComputation, TFlattenKey>(m as any /* I give up */)(
-          key,
-          mapper,
-          options,
-        );
+        return flatMap<TComputation, TFlattenKey>(m)(key, mapper, options);
       },
   ))() as Signature["flatMapIterable"];
 

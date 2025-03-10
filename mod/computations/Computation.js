@@ -19,7 +19,7 @@ export const endWith = /*@__PURE__*/ memoize(m => (...values) => concatWith(m)(m
 export const flatMap = /*@__PURE__*/ (() => memoize((m) => (flatten, selector, options) => compose((x) => x, m.map(selector), m[flatten](options))))();
 export const flatMapIterable = /*@__PURE__*/ (() => memoize((m) => (key, selector, options) => {
     const mapper = compose(selector, m.fromIterable());
-    return flatMap(m /* I give up */)(key, mapper, options);
+    return flatMap(m)(key, mapper, options);
 }))();
 export const hasSideEffects = (computation) => !(computation[ComputationLike_isPure] ?? true);
 export const ignoreElements = 
