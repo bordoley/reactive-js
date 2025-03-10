@@ -358,7 +358,8 @@ export interface Signature {
   flatMapIterable<
     TComputation extends ComputationType,
     TFlattenKey extends string | number | symbol,
-    TModule extends PickComputationModule<
+  >(
+    m: PickComputationModule<
       TComputation,
       ComputationModule<TComputation>,
       "map" | "fromIterable"
@@ -371,8 +372,6 @@ export interface Signature {
         ? DeferredComputationModule<TComputation>["concatAll"]
         : unknown;
     },
-  >(
-    m: TModule,
   ): FlatMapIterableOperator<TComputation, TFlattenKey>;
 
   hasSideEffects<TComputation extends ComputationLike>(
@@ -548,7 +547,7 @@ export const concatMapIterable: Signature["concatMapIterable"] =
         >,
       ) =>
         (selector, options) =>
-          flatMapIterable<TComputation, "concatAll", typeof m>(m)(
+          flatMapIterable<TComputation, "concatAll">(m)(
             "concatAll",
             selector,
             options,

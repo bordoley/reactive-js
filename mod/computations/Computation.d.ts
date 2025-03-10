@@ -71,9 +71,9 @@ export interface Signature {
     flatMap<TComputation extends ComputationType, TFlattenKey extends string | number | symbol>(m: PickComputationModule<TComputation, ComputationModule<TComputation>, "map"> & {
         readonly [key in TFlattenKey | string | symbol | number]: key extends TFlattenKey ? DeferredComputationModule<TComputation>["concatAll"] : unknown;
     }): FlatMapOperator<TComputation, TFlattenKey>;
-    flatMapIterable<TComputation extends ComputationType, TFlattenKey extends string | number | symbol, TModule extends PickComputationModule<TComputation, ComputationModule<TComputation>, "map" | "fromIterable"> & {
+    flatMapIterable<TComputation extends ComputationType, TFlattenKey extends string | number | symbol>(m: PickComputationModule<TComputation, ComputationModule<TComputation>, "map" | "fromIterable"> & {
         readonly [key in TFlattenKey | string | symbol | number]: key extends TFlattenKey ? DeferredComputationModule<TComputation>["concatAll"] : unknown;
-    }>(m: TModule): FlatMapIterableOperator<TComputation, TFlattenKey>;
+    }): FlatMapIterableOperator<TComputation, TFlattenKey>;
     hasSideEffects<TComputation extends ComputationLike>(computation: TComputation): computation is TComputation & ComputationWithSideEffectsLike;
     ignoreElements<TComputation extends ComputationType>(m: PickComputationModule<TComputation, ComputationModule<TComputation>, "keep">): <T>() => StatelessComputationOperator<TComputation, any, T>;
     isDeferred<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & DeferredComputationLike;
