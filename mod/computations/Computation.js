@@ -14,7 +14,7 @@ export const concatMapIterable =
 (() => memoize((m) => (selector, options) => flatMapIterable(m)("concatAll", selector, options)))();
 export const concatMany = /*@__PURE__*/ memoize(m => (computations) => m.concat(...computations));
 export const concatWith = /*@__PURE__*/ memoize(m => (...tail) => (fst) => m.concat(fst, ...tail));
-export const debug = /*@__PURE__*/ memoize(m => () => m.forEach(breakPoint));
+export const debug = /*@__PURE__*/ memoize(m => returns(m.forEach(breakPoint)));
 export const endWith = /*@__PURE__*/ memoize(m => (...values) => concatWith(m)(m.fromReadonlyArray()(values)));
 export const flatMap = /*@__PURE__*/ (() => memoize((m) => (flatten, selector, options) => compose((x) => x, m.map(selector), m[flatten](options))))();
 export const flatMapIterable = /*@__PURE__*/ (() => memoize((m) => (key, selector, options) => {
@@ -23,7 +23,7 @@ export const flatMapIterable = /*@__PURE__*/ (() => memoize((m) => (key, selecto
 }))();
 export const hasSideEffects = (computation) => !(computation[ComputationLike_isPure] ?? true);
 export const ignoreElements = 
-/*@__PURE__*/ memoize(m => () => m.keep(alwaysFalse));
+/*@__PURE__*/ memoize(m => returns(m.keep(alwaysFalse)));
 export const isDeferred = (computation) => computation[ComputationLike_isDeferred] ?? true;
 export const isDeferredWithSideEffects = (computation) => (computation[ComputationLike_isDeferred] ?? true) &&
     !(computation[ComputationLike_isPure] ?? true);
@@ -42,7 +42,7 @@ export const isSynchronousWithSideEffects = (computation) => (computation[Comput
     (computation[ComputationLike_isDeferred] ?? true) &&
     !(computation[ComputationLike_isPure] ?? true);
 export const keepType = /*@__PURE__*/ memoize(m => (predicate) => m.keep(predicate));
-export const log = /*@__PURE__*/ memoize(m => () => m.forEach(consoleLog));
+export const log = /*@__PURE__*/ memoize(m => returns(m.forEach(consoleLog)));
 export const mapTo = /*@__PURE__*/ memoize(m => (v) => m.map(returns(v)));
 export const mergeMany = /*@__PURE__*/ memoize(m => (computations) => m.merge(...computations));
 export const mergeWith = /*@__PURE__*/ memoize(m => (...tail) => (fst) => m.merge(fst, ...tail));

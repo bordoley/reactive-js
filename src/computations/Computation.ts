@@ -567,8 +567,8 @@ export const concatWith: Signature["concatWith"] = /*@__PURE__*/ memoize(
       m.concat(fst, ...tail),
 ) as Signature["concatWith"];
 
-export const debug: Signature["debug"] = /*@__PURE__*/ memoize(
-  m => () => m.forEach(breakPoint),
+export const debug: Signature["debug"] = /*@__PURE__*/ memoize(m =>
+  returns(m.forEach(breakPoint)),
 );
 
 export const endWith: Signature["endWith"] = /*@__PURE__*/ memoize(
@@ -642,8 +642,8 @@ export const hasSideEffects: Signature["hasSideEffects"] = <
   !(computation[ComputationLike_isPure] ?? true);
 
 export const ignoreElements: Signature["ignoreElements"] =
-  /*@__PURE__*/ memoize(
-    m => () => m.keep(alwaysFalse),
+  /*@__PURE__*/ memoize(m =>
+    returns(m.keep(alwaysFalse)),
   ) as Signature["ignoreElements"];
 
 export const isDeferred: Signature["isDeferred"] = <
@@ -715,8 +715,8 @@ export const keepType: Signature["keepType"] = /*@__PURE__*/ memoize(
       m.keep(predicate),
 ) as Signature["keepType"];
 
-export const log: Signature["log"] = /*@__PURE__*/ memoize(
-  m => () => m.forEach(consoleLog),
+export const log: Signature["log"] = /*@__PURE__*/ memoize(m =>
+  returns(m.forEach(consoleLog)),
 );
 
 export const mapTo: Signature["mapTo"] = /*@__PURE__*/ memoize(
