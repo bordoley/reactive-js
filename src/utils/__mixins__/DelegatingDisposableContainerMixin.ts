@@ -24,19 +24,16 @@ const DelegatingDisposableContainerMixin: Mixin1<
 
   return mix(
     function DelegatingDisposableMixin(
-      instance: Pick<
-        DisposableContainerLike,
-        typeof DisposableContainerLike_add
-      > &
+      this: Pick<DisposableContainerLike, typeof DisposableContainerLike_add> &
         TProperties,
       delegate: DisposableContainerLike,
     ): DisposableContainerLike {
-      instance[DelegatingDisposableContainer_delegate] =
+      this[DelegatingDisposableContainer_delegate] =
         (delegate as unknown as TProperties)[
           DelegatingDisposableContainer_delegate
         ] ?? delegate;
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [DelegatingDisposableContainer_delegate]: none,

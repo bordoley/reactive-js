@@ -28,7 +28,7 @@ const createObserver: <T>(
   return mixInstanceFactory(
     include(DisposableMixin, ObserverMixin<T>()),
     function SubscribeObserver(
-      instance: unknown,
+      this: unknown,
       scheduler: SchedulerLike,
       config: Pick<
         QueueableLike,
@@ -36,10 +36,10 @@ const createObserver: <T>(
         | typeof QueueableLike_backpressureStrategy
       >,
     ): ObserverLike<T> {
-      init(DisposableMixin, instance);
-      init(ObserverMixin(), instance, scheduler, config);
+      init(DisposableMixin, this);
+      init(ObserverMixin(), this, scheduler, config);
 
-      return instance;
+      return this;
     },
   );
 })();

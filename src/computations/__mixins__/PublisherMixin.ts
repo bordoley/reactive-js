@@ -64,7 +64,7 @@ const PublisherMixin: <T>() => Mixin1<
     mix(
       include(DisposableMixin),
       function EventPublisher(
-        instance: Pick<
+        this: Pick<
           PublisherLike<T>,
           | typeof EventSourceLike_addEventListener
           | typeof EventListenerLike_notify
@@ -74,19 +74,17 @@ const PublisherMixin: <T>() => Mixin1<
           Mutable<TProperties>,
         options: Optional<{ readonly autoDispose?: boolean }>,
       ): PublisherLike<T> {
-        init(DisposableMixin, instance);
+        init(DisposableMixin, this);
 
-        instance[Publisher_listeners] =
-          newInstance<Set<EventListenerLike<T>>>(Set);
+        this[Publisher_listeners] = newInstance<Set<EventListenerLike<T>>>(Set);
 
         const autoDispose = options?.autoDispose ?? false;
 
-        pipe(
-          instance,
-          DisposableContainer.onDisposed(onEventPublisherDisposed),
-        );
+        pipe(this, DisposableContainer.onDisposed(onEventPublisherDisposed));
 
-        instance[Publisher_onListenerDisposed] = function onListenerDisposed(
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const instance = this;
+        this[Publisher_onListenerDisposed] = function onListenerDisposed(
           this: EventListenerLike<T>,
         ) {
           const listeners = instance[Publisher_listeners];
@@ -97,7 +95,7 @@ const PublisherMixin: <T>() => Mixin1<
           }
         };
 
-        return instance;
+        return this;
       },
       props<TProperties>({
         [Publisher_listeners]: none,

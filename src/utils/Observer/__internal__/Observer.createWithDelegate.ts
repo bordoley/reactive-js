@@ -17,14 +17,14 @@ const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
     mixInstanceFactory(
       include(DisposableMixin, ObserverMixin<T>(), LiftedObserverMixin()),
       function DelegatingObserver(
-        instance: unknown,
+        this: unknown,
         delegate: ObserverLike<T>,
       ): ObserverLike<T> {
-        init(DisposableMixin, instance);
-        init(ObserverMixin(), instance, delegate, delegate);
-        init(LiftedObserverMixin(), instance, delegate);
+        init(DisposableMixin, this);
+        init(ObserverMixin(), this, delegate, delegate);
+        init(LiftedObserverMixin(), this, delegate);
 
-        return instance;
+        return this;
       },
       props(),
       {

@@ -27,16 +27,16 @@ const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (() => {
     mixInstanceFactory(
       include(DelegatingDisposableMixin),
       function MapEventListener(
-        instance: Pick<EventListenerLike<TA>, typeof EventListenerLike_notify> &
+        this: Pick<EventListenerLike<TA>, typeof EventListenerLike_notify> &
           TProperties<TA, TB>,
         delegate: EventListenerLike<TB>,
         selector: Function1<TA, TB>,
       ): EventListenerLike<TA> {
-        init(DelegatingDisposableMixin, instance, delegate);
-        instance[MapEventListener_selector] = selector;
-        instance[MapEventListener_delegate] = delegate;
+        init(DelegatingDisposableMixin, this, delegate);
+        this[MapEventListener_selector] = selector;
+        this[MapEventListener_delegate] = delegate;
 
-        return instance;
+        return this;
       },
       props<TProperties<TA, TB>>({
         [MapEventListener_selector]: none,

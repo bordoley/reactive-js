@@ -8,6 +8,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import { Optional, none, partial, pipe } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
@@ -60,32 +61,32 @@ const createBufferObserver: <T>(
   mixInstanceFactory(
     include(DisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function BufferObserver(
-      instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProps<T>,
+      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProps<T>,
       delegate: ObserverLike<readonly T[]>,
       count?: number,
     ): ObserverLike<T> {
-      init(DisposableMixin, instance);
-      init(ObserverMixin(), instance, delegate, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DisposableMixin, this);
+      init(ObserverMixin(), this, delegate, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
-      instance[BufferObserver_count] = clampPositiveNonZeroInteger(
+      this[BufferObserver_count] = clampPositiveNonZeroInteger(
         count ?? MAX_SAFE_INTEGER,
       );
-      instance[BufferObserver_buffer] = [];
+      this[BufferObserver_buffer] = [];
 
       pipe(
-        instance,
+        this,
         Disposable.addTo(delegate),
         DisposableContainer.onComplete(onBufferObserverCompleted),
       );
 
-      return instance;
+      return this;
     },
     props<TProps<T>>({
       [BufferObserver_buffer]: none,
       [BufferObserver_count]: 0,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProps<T> & LiftedObserverLike<T, readonly T[]>,
         next: T,
@@ -100,7 +101,7 @@ const createBufferObserver: <T>(
           this[LiftedObserverLike_delegate][ObserverLike_notify](buffer);
         }
       }),
-    },
+    }),
   ))();
 
 const Observable_buffer: Observable.Signature["buffer"] = <T>(options?: {

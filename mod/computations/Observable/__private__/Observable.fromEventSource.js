@@ -11,10 +11,10 @@ import * as EventSource from "../../EventSource.js";
 const Observable_fromEventSource = 
 /*@__PURE__*/ (() => {
     const FromEventSourceObservable_eventSource = Symbol("FromEventSourceObservable_eventSource");
-    return returns(mixInstanceFactory(include(DelegatingDisposableContainerMixin), function FromEventSourceObservable(instance, eventSource) {
-        instance[FromEventSourceObservable_eventSource] = eventSource;
-        init(DelegatingDisposableContainerMixin, instance, eventSource);
-        return instance;
+    return returns(mixInstanceFactory(include(DelegatingDisposableContainerMixin), function FromEventSourceObservable(eventSource) {
+        this[FromEventSourceObservable_eventSource] = eventSource;
+        init(DelegatingDisposableContainerMixin, this, eventSource);
+        return this;
     }, props({
         [FromEventSourceObservable_eventSource]: none,
     }), {

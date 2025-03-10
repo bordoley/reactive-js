@@ -25,7 +25,7 @@ const Streamable_spring = /*@__PURE__*/ (() => {
         keep: Observable.keep,
         map: Observable.map,
     };
-    const SpringStream_create = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin, DelegatingEventSourceMixin()), function SpringStream(instance, scheduler, animationScheduler, springOptions, options) {
+    const SpringStream_create = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin, DelegatingEventSourceMixin()), function SpringStream(scheduler, animationScheduler, springOptions, options) {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
         const publisher = Publisher.create();
         const accFeedbackStream = Subject.create({ replay: 1 });
@@ -56,13 +56,13 @@ const Streamable_spring = /*@__PURE__*/ (() => {
                 ? pipe(sources, Computation.concatMany(ObservableModule), Computation.notify(ObservableModule)(publisher), Computation.notify(ObservableModule)(accFeedbackStream), Computation.ignoreElements(ObservableModule)(), Observable.subscribeOn(pauseableScheduler), Computation.startWith(ObservableModule)(true), Computation.endWith(ObservableModule)(false))
                 : Observable.empty();
         }), Observable.switchAll());
-        init(StreamMixin(), instance, operator, scheduler, options);
-        init(DelegatingPauseableMixin, instance, pauseableScheduler);
-        init(DelegatingEventSourceMixin(), instance, publisher);
-        pipe(instance, Disposable.add(publisher), Disposable.add(accFeedbackStream), Disposable.add(pauseableScheduler));
-        instance[PauseableLike_resume]();
+        init(StreamMixin(), this, operator, scheduler, options);
+        init(DelegatingPauseableMixin, this, pauseableScheduler);
+        init(DelegatingEventSourceMixin(), this, publisher);
+        pipe(this, Disposable.add(publisher), Disposable.add(accFeedbackStream), Disposable.add(pauseableScheduler));
+        this[PauseableLike_resume]();
         accFeedbackStream[EventListenerLike_notify](0);
-        return instance;
+        return this;
     });
     return (creationOptions) => ({
         [StreamableLike_stream]: (scheduler, options) => SpringStream_create(scheduler, creationOptions?.animationScheduler ?? scheduler, creationOptions, options),

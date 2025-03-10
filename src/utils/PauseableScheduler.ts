@@ -171,7 +171,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   return mixInstanceFactory(
     include(SchedulerMixin, SerialDisposableMixin(), QueueMixin()),
     function PauseableScheduler(
-      instance: Pick<
+      this: Pick<
         PauseableSchedulerLike,
         typeof PauseableLike_pause | typeof PauseableLike_resume
       > &
@@ -179,22 +179,22 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         Mutable<TProperties>,
       host: SchedulerLike,
     ): PauseableSchedulerLike & DisposableLike {
-      init(SchedulerMixin, instance);
-      init(SerialDisposableMixin(), instance, Disposable.disposed);
-      init(QueueMixin<SchedulerContinuationLike>(), instance, {
+      init(SchedulerMixin, this);
+      init(SerialDisposableMixin(), this, Disposable.disposed);
+      init(QueueMixin<SchedulerContinuationLike>(), this, {
         comparator: SchedulerContinuation.compare,
       });
 
-      instance[PauseableScheduler_hostScheduler] = host;
+      this[PauseableScheduler_hostScheduler] = host;
 
-      instance[PauseableScheduler_pausedTime] = host[SchedulerLike_now];
-      instance[PauseableScheduler_timeDrift] = 0;
+      this[PauseableScheduler_pausedTime] = host[SchedulerLike_now];
+      this[PauseableScheduler_timeDrift] = 0;
 
-      instance[PauseableLike_isPaused] = WritableStore.create(true);
+      this[PauseableLike_isPaused] = WritableStore.create(true);
 
-      host[DisposableContainerLike_add](instance);
+      host[DisposableContainerLike_add](this);
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [PauseableLike_isPaused]: none,

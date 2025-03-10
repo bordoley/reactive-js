@@ -3,6 +3,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import {
   Factory,
@@ -44,31 +45,31 @@ const createScanObserver: <T, TAcc>(
   return mixInstanceFactory(
     include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function ScanObserver(
-      instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
         TProperties<T, TAcc>,
       delegate: ObserverLike<TAcc>,
       reducer: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, instance, delegate);
-      init(ObserverMixin(), instance, delegate, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, this, delegate);
+      init(ObserverMixin(), this, delegate, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
-      instance[ScanObserver_reducer] = reducer;
+      this[ScanObserver_reducer] = reducer;
 
       try {
-        instance[ScanObserver_acc] = initialValue();
+        this[ScanObserver_acc] = initialValue();
       } catch (e) {
-        instance[DisposableLike_dispose](error(e));
+        this[DisposableLike_dispose](error(e));
       }
 
-      return instance;
+      return this;
     },
     props<TProperties<T, TAcc>>({
       [ScanObserver_acc]: none,
       [ScanObserver_reducer]: none,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties<T, TAcc> & LiftedObserverLike<T, TAcc>,
         next: T,
@@ -80,7 +81,7 @@ const createScanObserver: <T, TAcc>(
         this[ScanObserver_acc] = nextAcc;
         this[LiftedObserverLike_delegate][ObserverLike_notify](nextAcc);
       }),
-    },
+    }),
   );
 })();
 

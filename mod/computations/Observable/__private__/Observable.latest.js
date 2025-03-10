@@ -1,7 +1,7 @@
 /// <reference types="./Observable.latest.d.ts" />
 
 import { Array_every, Array_length, Array_push, } from "../../../__internal__/constants.js";
-import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as Computation from "../../../computations/Computation.js";
 import { ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike_observe, } from "../../../computations.js";
@@ -28,17 +28,17 @@ const Observable_latest = /*@__PURE__*/ (() => {
     const LatestObserver_ctx = Symbol("LatestObserver_ctx");
     const LatestObserver_latest = Symbol("LatestObserver_latest");
     const LatestObserver_ready = Symbol("LatestObserver_ready");
-    const createLatestObserver = mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin()), function LatestObserver(instance, ctx, delegate) {
-        init(DisposableMixin, instance);
-        init(DelegatingObserverMixin(), instance, delegate);
-        instance[LatestObserver_ctx] = ctx;
-        pipe(instance, DisposableContainer.onComplete(onLatestObserverCompleted));
-        return instance;
+    const createLatestObserver = mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin()), function LatestObserver(ctx, delegate) {
+        init(DisposableMixin, this);
+        init(DelegatingObserverMixin(), this, delegate);
+        this[LatestObserver_ctx] = ctx;
+        pipe(this, DisposableContainer.onComplete(onLatestObserverCompleted));
+        return this;
     }, props({
         [LatestObserver_ready]: false,
         [LatestObserver_latest]: none,
         [LatestObserver_ctx]: none,
-    }), {
+    }), proto({
         [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             const ctx = this[LatestObserver_ctx];
             const mode = ctx[LatestCtx_mode];
@@ -57,7 +57,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
                 }
             }
         }),
-    });
+    }));
     return (observables, mode) => {
         const onSubscribe = (delegate) => {
             const ctx = {

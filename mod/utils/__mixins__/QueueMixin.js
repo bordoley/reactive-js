@@ -35,13 +35,13 @@ const QueueMixin = /*@__PURE__*/ (() => {
         }
         return dest;
     };
-    return returns(mix(function QueueMixin(instance, config) {
-        instance[QueueableLike_backpressureStrategy] =
+    return returns(mix(function QueueMixin(config) {
+        this[QueueableLike_backpressureStrategy] =
             config?.backpressureStrategy ?? OverflowBackpressureStrategy;
-        instance[QueueableLike_capacity] = clampPositiveInteger(config?.capacity ?? MAX_SAFE_INTEGER);
-        instance[QueueMixin_comparator] = config?.comparator;
-        instance[QueueMixin_values] = none;
-        return instance;
+        this[QueueableLike_capacity] = clampPositiveInteger(config?.capacity ?? MAX_SAFE_INTEGER);
+        this[QueueMixin_comparator] = config?.comparator;
+        this[QueueMixin_values] = none;
+        return this;
     }, props({
         [QueueLike_count]: 0,
         [QueueableLike_backpressureStrategy]: OverflowBackpressureStrategy,

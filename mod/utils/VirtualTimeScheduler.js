@@ -10,13 +10,13 @@ import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTim
 const VirtualTimeScheduler_maxMicroTaskTicks = Symbol("VirtualTimeScheduler_maxMicroTaskTicks");
 const VirtualTimeScheduler_microTaskTicks = Symbol("VirtualTimeScheduler_microTaskTicks");
 const VirtualTimeScheduler_queue = Symbol("VirtualTimeScheduler_queue");
-const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFactory(include(SchedulerMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
-    init(SchedulerMixin, instance);
-    instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
-    instance[VirtualTimeScheduler_queue] = Queue.create({
+const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFactory(include(SchedulerMixin), function VirtualTimeScheduler(maxMicroTaskTicks) {
+    init(SchedulerMixin, this);
+    this[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
+    this[VirtualTimeScheduler_queue] = Queue.create({
         comparator: SchedulerContinuation.compare,
     });
-    return instance;
+    return this;
 }, props({
     [SchedulerLike_now]: 0,
     [VirtualTimeScheduler_maxMicroTaskTicks]: MAX_SAFE_INTEGER,

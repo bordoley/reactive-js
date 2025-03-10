@@ -76,15 +76,15 @@ const Observable_concat: Observable.Signature["concat"] = /*@__PURE__*/ (<
 
   const createConcatObservable = mixInstanceFactory(
     function ConcatObservable(
-      instance: TProperties<T> & ObservableLike<T>,
+      this: TProperties<T> & ObservableLike<T>,
       observables: readonly ObservableLike<T>[],
     ): ObservableLike<T> {
-      instance[ComputationLike_isPure] = Computation.areAllPure(observables);
-      instance[ComputationLike_isSynchronous] =
+      this[ComputationLike_isPure] = Computation.areAllPure(observables);
+      this[ComputationLike_isSynchronous] =
         Computation.areAllSynchronous(observables);
-      instance[ConcatObservable_observables] = flattenObservables(observables);
+      this[ConcatObservable_observables] = flattenObservables(observables);
 
-      return instance;
+      return this;
     },
     props<TProperties<T>>({
       [ComputationLike_isPure]: false,

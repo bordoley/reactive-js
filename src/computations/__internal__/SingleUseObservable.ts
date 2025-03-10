@@ -66,7 +66,7 @@ export const create: <T>(config?: {
   return mixInstanceFactory(
     include(DisposableMixin, QueueMixin()),
     function SingleUseObservable(
-      instance: Omit<
+      this: Omit<
         SingleUseObservableLike<T>,
         | keyof DisposableLike
         | typeof QueueableLike_backpressureStrategy
@@ -78,13 +78,11 @@ export const create: <T>(config?: {
         backpressureStrategy?: BackpressureStrategy;
       }>,
     ): SingleUseObservableLike<T> {
-      init(DisposableMixin, instance);
-      init(QueueMixin<T>(), instance, config);
+      init(DisposableMixin, this);
+      init(QueueMixin<T>(), this, config);
 
-      instance[DispatcherLike_state] = WritableStore.create(
-        DispatcherState_ready,
-      );
-      return instance;
+      this[DispatcherLike_state] = WritableStore.create(DispatcherState_ready);
+      return this;
     },
     props<TProperties>({
       [SingleUseObservableLike_delegate]: none,

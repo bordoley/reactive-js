@@ -57,7 +57,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
   return mixInstanceFactory(
     include(DelegatingDisposableMixin, DelegatingEventSourceMixin()),
     function PauseableEventSource(
-      instance: Pick<
+      this: Pick<
         PauseableEventSourceLike<T>,
         typeof PauseableLike_pause | typeof PauseableLike_resume
       > &
@@ -67,15 +67,15 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
         EventSourceLike<T>
       >,
     ): PauseableEventSourceLike<T> & DisposableLike {
-      const writableStore = (instance[PauseableLike_isPaused] =
+      const writableStore = (this[PauseableLike_isPaused] =
         WritableStore.create(true));
 
       const delegate = pipe(writableStore, op);
 
-      init(DelegatingDisposableMixin, instance, writableStore);
-      init(DelegatingEventSourceMixin<T>(), instance, delegate);
+      init(DelegatingDisposableMixin, this, writableStore);
+      init(DelegatingEventSourceMixin<T>(), this, delegate);
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [PauseableLike_isPaused]: none,

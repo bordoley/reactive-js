@@ -4,6 +4,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
 import {
@@ -35,22 +36,22 @@ const Observer_createEnqueueObserver: <T>(
   return mixInstanceFactory(
     include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
     function EnqueueObserver(
-      instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
       queue: QueueableLike<T>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, instance, delegate);
-      init(ObserverMixin(), instance, delegate, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
-      instance[EnqueueObserver_queue] = queue;
+      init(DelegatingDisposableMixin, this, delegate);
+      init(ObserverMixin(), this, delegate, delegate);
+      init(LiftedObserverMixin(), this, delegate);
+      this[EnqueueObserver_queue] = queue;
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [EnqueueObserver_queue]: none,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties & LiftedObserverLike<T>,
         next: T,
@@ -60,7 +61,7 @@ const Observer_createEnqueueObserver: <T>(
         }
         this[LiftedObserverLike_delegate][ObserverLike_notify](next);
       }),
-    },
+    }),
   );
 })();
 

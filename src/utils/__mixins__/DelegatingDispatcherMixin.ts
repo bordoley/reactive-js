@@ -25,7 +25,7 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
   return returns(
     mix(
       function DelegatingDispatcherMixin(
-        instance: Pick<
+        this: Pick<
           DispatcherLike,
           | typeof DispatcherLike_complete
           | typeof DispatcherLike_state
@@ -36,9 +36,9 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
           TProperties,
         delegate: DispatcherLike<TReq>,
       ): Omit<DispatcherLike<TReq>, keyof DisposableContainerLike> {
-        instance[DelegatingDispatcherMixin_delegate] = delegate;
+        this[DelegatingDispatcherMixin_delegate] = delegate;
 
-        return instance;
+        return this;
       },
       props<TProperties>({
         [DelegatingDispatcherMixin_delegate]: none,

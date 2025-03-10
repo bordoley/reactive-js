@@ -3,6 +3,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
 import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
@@ -37,26 +38,25 @@ const createTakeWhileObserver: <T>(
   mixInstanceFactory(
     include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function TakeWhileObserver(
-      instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
-        TProperties<T>,
+      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProperties<T>,
       delegate: ObserverLike<T>,
       predicate: Predicate<T>,
       inclusive?: boolean,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, instance, delegate);
-      init(ObserverMixin(), instance, delegate, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, this, delegate);
+      init(ObserverMixin(), this, delegate, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
-      instance[TakeWhileObserver_predicate] = predicate;
-      instance[TakeWhileObserver_inclusive] = inclusive ?? false;
+      this[TakeWhileObserver_predicate] = predicate;
+      this[TakeWhileObserver_inclusive] = inclusive ?? false;
 
-      return instance;
+      return this;
     },
     props<TProperties<T>>({
       [TakeWhileObserver_predicate]: none,
       [TakeWhileObserver_inclusive]: none,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties<T> & LiftedObserverLike<T>,
         next: T,
@@ -71,7 +71,7 @@ const createTakeWhileObserver: <T>(
           this[DisposableLike_dispose]();
         }
       }),
-    },
+    }),
   ))();
 
 const Observable_takeWhile: Observable.Signature["takeWhile"] = <T>(

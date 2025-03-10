@@ -8,11 +8,11 @@ import EventSource_lift from "./EventSource.lift.js";
 const EventSource_map = /*@__PURE__*/ (() => {
     const MapEventListener_selector = Symbol("MapEventListener_selector");
     const MapEventListener_delegate = Symbol("MapEventListener_delegate");
-    const createMapEventListener = (() => mixInstanceFactory(include(DelegatingDisposableMixin), function MapEventListener(instance, delegate, selector) {
-        init(DelegatingDisposableMixin, instance, delegate);
-        instance[MapEventListener_selector] = selector;
-        instance[MapEventListener_delegate] = delegate;
-        return instance;
+    const createMapEventListener = (() => mixInstanceFactory(include(DelegatingDisposableMixin), function MapEventListener(delegate, selector) {
+        init(DelegatingDisposableMixin, this, delegate);
+        this[MapEventListener_selector] = selector;
+        this[MapEventListener_delegate] = delegate;
+        return this;
     }, props({
         [MapEventListener_selector]: none,
         [MapEventListener_delegate]: none,

@@ -4,6 +4,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import { Function2, none, partial, pipe } from "../../../functions.js";
 import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
@@ -37,23 +38,23 @@ const createWithCurrentTimeObserver: <TA, TB>(
   return mixInstanceFactory(
     include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
     function WithCurrentTimeObserver(
-      instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
+      this: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<TB>,
       selector: Function2<number, TA, TB>,
     ): ObserverLike<TA> {
-      init(DelegatingDisposableMixin, instance, delegate);
-      init(ObserverMixin(), instance, delegate, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, this, delegate);
+      init(ObserverMixin(), this, delegate, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
-      instance[WithCurrentTimeObserver_selector] = selector;
+      this[WithCurrentTimeObserver_selector] = selector;
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [WithCurrentTimeObserver_selector]: none,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties & LiftedObserverLike<TA, TB>,
         next: TA,
@@ -65,7 +66,7 @@ const createWithCurrentTimeObserver: <TA, TB>(
         );
         this[LiftedObserverLike_delegate][ObserverLike_notify](mapped);
       }),
-    },
+    }),
   );
 })();
 

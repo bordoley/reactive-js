@@ -71,18 +71,18 @@ export const create = /*@PURE__*/ (() => {
             ctx[ContinuationContextLike_yield](clampPositiveInteger(delay));
         }
     }
-    return mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), QueueMixin()), function PauseableScheduler(instance, host) {
-        init(SchedulerMixin, instance);
-        init(SerialDisposableMixin(), instance, Disposable.disposed);
-        init(QueueMixin(), instance, {
+    return mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), QueueMixin()), function PauseableScheduler(host) {
+        init(SchedulerMixin, this);
+        init(SerialDisposableMixin(), this, Disposable.disposed);
+        init(QueueMixin(), this, {
             comparator: SchedulerContinuation.compare,
         });
-        instance[PauseableScheduler_hostScheduler] = host;
-        instance[PauseableScheduler_pausedTime] = host[SchedulerLike_now];
-        instance[PauseableScheduler_timeDrift] = 0;
-        instance[PauseableLike_isPaused] = WritableStore.create(true);
-        host[DisposableContainerLike_add](instance);
-        return instance;
+        this[PauseableScheduler_hostScheduler] = host;
+        this[PauseableScheduler_pausedTime] = host[SchedulerLike_now];
+        this[PauseableScheduler_timeDrift] = 0;
+        this[PauseableLike_isPaused] = WritableStore.create(true);
+        host[DisposableContainerLike_add](this);
+        return this;
     }, props({
         [PauseableLike_isPaused]: none,
         [PauseableScheduler_hostScheduler]: none,

@@ -58,7 +58,7 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
       DelegatingEventSourceMixin(),
     ),
     function SpringStream(
-      instance: unknown,
+      this: unknown,
       scheduler: SchedulerLike,
       animationScheduler: SchedulerLike,
       springOptions: Optional<{
@@ -146,28 +146,28 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
 
       init(
         StreamMixin<Streamable.SpringEvent, boolean>(),
-        instance,
+        this,
         operator,
         scheduler,
         options,
       );
 
-      init(DelegatingPauseableMixin, instance, pauseableScheduler);
+      init(DelegatingPauseableMixin, this, pauseableScheduler);
 
-      init(DelegatingEventSourceMixin(), instance, publisher);
+      init(DelegatingEventSourceMixin(), this, publisher);
 
       pipe(
-        instance,
+        this,
         Disposable.add(publisher),
         Disposable.add(accFeedbackStream),
         Disposable.add(pauseableScheduler),
       );
 
-      instance[PauseableLike_resume]();
+      this[PauseableLike_resume]();
 
       accFeedbackStream[EventListenerLike_notify](0);
 
-      return instance;
+      return this;
     },
   );
 

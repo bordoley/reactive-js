@@ -63,7 +63,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
   mixInstanceFactory(
     include(SchedulerMixin),
     function VirtualTimeScheduler(
-      instance: Pick<
+      this: Pick<
         VirtualTimeSchedulerLike,
         typeof VirtualTimeSchedulerLike_run
       > &
@@ -71,14 +71,14 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         SchedulerMixinHostLike,
       maxMicroTaskTicks: number,
     ): VirtualTimeSchedulerLike {
-      init(SchedulerMixin, instance);
+      init(SchedulerMixin, this);
 
-      instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
-      instance[VirtualTimeScheduler_queue] = Queue.create({
+      this[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
+      this[VirtualTimeScheduler_queue] = Queue.create({
         comparator: SchedulerContinuation.compare,
       });
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [SchedulerLike_now]: 0,

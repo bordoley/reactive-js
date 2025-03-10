@@ -24,14 +24,14 @@ const EventListener_createInternal: <T>(
   return mixInstanceFactory(
     include(DisposableMixin),
     function EventListener(
-      instance: Mutable<TProperties>,
+      this: Mutable<TProperties>,
       notify: (this: EventListenerLike<T>, a: T) => void,
     ): EventListenerLike<T> {
-      init(DisposableMixin, instance);
+      init(DisposableMixin, this);
 
-      instance[EventListenerLike_notify] = notify;
+      this[EventListenerLike_notify] = notify;
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [EventListenerLike_notify]: none,

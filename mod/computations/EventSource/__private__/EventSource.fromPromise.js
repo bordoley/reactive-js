@@ -9,14 +9,14 @@ import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_no
 const EventSource_fromPromise = 
 /*@__PURE__*/ (() => {
     const FromPromiseEventSource_promise = Symbol("FromPromiseEventSource_promise");
-    return returns(mixInstanceFactory(include(DelegatingDisposableContainerMixin), function FromPromiseEventSource(instance, promise) {
-        instance[FromPromiseEventSource_promise] = promise;
+    return returns(mixInstanceFactory(include(DelegatingDisposableContainerMixin), function FromPromiseEventSource(promise) {
+        this[FromPromiseEventSource_promise] = promise;
         const disposable = Disposable.create();
-        init(DelegatingDisposableContainerMixin, instance, disposable);
+        init(DelegatingDisposableContainerMixin, this, disposable);
         promise
             .catch(Disposable.toErrorHandler(disposable))
             .finally(bindMethod(disposable, DisposableLike_dispose));
-        return instance;
+        return this;
     }, props({
         [FromPromiseEventSource_promise]: none,
     }), {

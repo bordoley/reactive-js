@@ -9,6 +9,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as Computation from "../../../computations/Computation.js";
@@ -70,26 +71,26 @@ const Observable_latest = /*@__PURE__*/ (() => {
   const createLatestObserver = mixInstanceFactory(
     include(DisposableMixin, DelegatingObserverMixin()),
     function LatestObserver(
-      instance: Pick<ObserverLike, typeof ObserverLike_notify> &
+      this: Pick<ObserverLike, typeof ObserverLike_notify> &
         Mutable<TProperties>,
       ctx: LatestCtx,
       delegate: ObserverLike,
     ): ObserverLike & TProperties {
-      init(DisposableMixin, instance);
-      init(DelegatingObserverMixin(), instance, delegate);
+      init(DisposableMixin, this);
+      init(DelegatingObserverMixin(), this, delegate);
 
-      instance[LatestObserver_ctx] = ctx;
+      this[LatestObserver_ctx] = ctx;
 
-      pipe(instance, DisposableContainer.onComplete(onLatestObserverCompleted));
+      pipe(this, DisposableContainer.onComplete(onLatestObserverCompleted));
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [LatestObserver_ready]: false,
       [LatestObserver_latest]: none,
       [LatestObserver_ctx]: none,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties & ObserverLike,
         next: unknown,
@@ -118,7 +119,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
           }
         }
       }),
-    },
+    }),
   );
 
   return (

@@ -119,7 +119,7 @@ const ObserverMixin: <T>() => Mixin2<
     >(
       include(QueueMixin(), SerialDisposableMixin()),
       function ObserverMixin(
-        instance: Omit<SchedulerLike, keyof DisposableContainerLike> &
+        this: Omit<SchedulerLike, keyof DisposableContainerLike> &
           DisposableLike &
           Pick<
             ObserverLike<T>,
@@ -135,23 +135,23 @@ const ObserverMixin: <T>() => Mixin2<
           | typeof QueueableLike_backpressureStrategy
         >,
       ): ObserverLike<T> {
-        init(QueueMixin<T>(), instance, {
+        init(QueueMixin<T>(), this, {
           backpressureStrategy: config[QueueableLike_backpressureStrategy],
           capacity: config[QueueableLike_capacity],
         });
 
-        init(SerialDisposableMixin(), instance, Disposable.disposed);
+        init(SerialDisposableMixin(), this, Disposable.disposed);
 
-        instance[ObserverMixin_scheduler] =
+        this[ObserverMixin_scheduler] =
           (scheduler as unknown as TProperties)[ObserverMixin_scheduler] ??
           scheduler;
 
-        instance[DispatcherLike_state] = pipe(
+        this[DispatcherLike_state] = pipe(
           WritableStore.create<DispatcherState>(DispatcherState_ready),
-          Disposable.addTo(instance),
+          Disposable.addTo(this),
         );
 
-        return instance;
+        return this;
       },
       props<TProperties>({
         [DispatcherLike_state]: none,

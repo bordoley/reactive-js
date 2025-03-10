@@ -1,7 +1,7 @@
 /// <reference types="./Observable.buffer.d.ts" />
 
 import { Array_length, Array_push, MAX_SAFE_INTEGER, } from "../../../__internal__/constants.js";
-import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -26,18 +26,18 @@ function onBufferObserverCompleted() {
         delegate[DisposableLike_dispose]();
     }
 }
-const createBufferObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DisposableMixin, ObserverMixin(), LiftedObserverMixin()), function BufferObserver(instance, delegate, count) {
-    init(DisposableMixin, instance);
-    init(ObserverMixin(), instance, delegate, delegate);
-    init(LiftedObserverMixin(), instance, delegate);
-    instance[BufferObserver_count] = clampPositiveNonZeroInteger(count ?? MAX_SAFE_INTEGER);
-    instance[BufferObserver_buffer] = [];
-    pipe(instance, Disposable.addTo(delegate), DisposableContainer.onComplete(onBufferObserverCompleted));
-    return instance;
+const createBufferObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DisposableMixin, ObserverMixin(), LiftedObserverMixin()), function BufferObserver(delegate, count) {
+    init(DisposableMixin, this);
+    init(ObserverMixin(), this, delegate, delegate);
+    init(LiftedObserverMixin(), this, delegate);
+    this[BufferObserver_count] = clampPositiveNonZeroInteger(count ?? MAX_SAFE_INTEGER);
+    this[BufferObserver_buffer] = [];
+    pipe(this, Disposable.addTo(delegate), DisposableContainer.onComplete(onBufferObserverCompleted));
+    return this;
 }, props({
     [BufferObserver_buffer]: none,
     [BufferObserver_count]: 0,
-}), {
+}), proto({
     [ObserverLike_notify]: Observer_assertObserverState(function (next) {
         const buffer = this[BufferObserver_buffer];
         const count = this[BufferObserver_count];
@@ -47,6 +47,6 @@ const createBufferObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(Dis
             this[LiftedObserverLike_delegate][ObserverLike_notify](buffer);
         }
     }),
-}))();
+})))();
 const Observable_buffer = (options) => pipe((createBufferObserver), partial(options?.count), Observable_liftPureDeferred);
 export default Observable_buffer;

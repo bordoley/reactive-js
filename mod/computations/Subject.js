@@ -22,24 +22,26 @@ export const create = /*@__PURE__*/ (() => {
             }
         }
     }
-    return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function Subject(instance, options) {
+    return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function Subject(options) {
         const replay = clampPositiveInteger(options?.replay ?? 0);
-        init(DisposableMixin, instance);
-        init(QueueMixin(), instance, {
+        init(DisposableMixin, this);
+        init(QueueMixin(), this, {
             backpressureStrategy: DropOldestBackpressureStrategy,
             capacity: replay,
         });
-        instance[Subject_observers] = newInstance(Set);
+        this[Subject_observers] = newInstance(Set);
         const autoDispose = options?.autoDispose ?? false;
-        instance[Subject_onObserverDisposed] = function onObserverDisposed() {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const instance = this;
+        this[Subject_onObserverDisposed] = function onObserverDisposed() {
             const observers = instance[Subject_observers];
             observers[Set_delete](this);
             if (autoDispose && instance[Subject_observers][Set_size] === 0) {
                 instance[DisposableLike_dispose]();
             }
         };
-        pipe(instance, DisposableContainer.onDisposed(onSubjectDisposed));
-        return instance;
+        pipe(this, DisposableContainer.onDisposed(onSubjectDisposed));
+        return this;
     }, props({
         [Subject_observers]: none,
         [Subject_onObserverDisposed]: none,

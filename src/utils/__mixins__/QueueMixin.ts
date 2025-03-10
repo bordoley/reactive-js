@@ -112,7 +112,7 @@ const QueueMixin: <T>() => Mixin1<
   return returns(
     mix(
       function QueueMixin(
-        instance: Omit<
+        this: Omit<
           QueueLike<T>,
           typeof QueueLike_count | typeof QueueableLike_capacity
         > &
@@ -123,16 +123,16 @@ const QueueMixin: <T>() => Mixin1<
           backpressureStrategy?: BackpressureStrategy;
         },
       ): QueueLike<T> {
-        instance[QueueableLike_backpressureStrategy] =
+        this[QueueableLike_backpressureStrategy] =
           config?.backpressureStrategy ?? OverflowBackpressureStrategy;
-        instance[QueueableLike_capacity] = clampPositiveInteger(
+        this[QueueableLike_capacity] = clampPositiveInteger(
           config?.capacity ?? MAX_SAFE_INTEGER,
         );
 
-        instance[QueueMixin_comparator] = config?.comparator;
-        instance[QueueMixin_values] = none;
+        this[QueueMixin_comparator] = config?.comparator;
+        this[QueueMixin_values] = none;
 
-        return instance;
+        return this;
       },
       props<TProperties>({
         [QueueLike_count]: 0,

@@ -30,7 +30,7 @@ const ObservableMixin: Mixin1<
 
   return mix(
     function ObservableMixin(
-      instance: TProperties,
+      this: TProperties,
       config: Pick<
         ObservableLike,
         | typeof ComputationLike_isDeferred
@@ -71,12 +71,11 @@ const ObservableMixin: Mixin1<
         );
       }
 
-      instance[ComputationLike_isSynchronous] =
-        configSynchronousObservable ?? true;
-      instance[ComputationLike_isDeferred] = configDeferred ?? true;
-      instance[ComputationLike_isPure] = configPure ?? true;
+      this[ComputationLike_isSynchronous] = configSynchronousObservable ?? true;
+      this[ComputationLike_isDeferred] = configDeferred ?? true;
+      this[ComputationLike_isPure] = configPure ?? true;
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [ComputationLike_isDeferred]: false,

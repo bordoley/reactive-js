@@ -37,23 +37,23 @@ const Observable_fromPromise: Observable.Signature["fromPromise"] =
       mixInstanceFactory(
         include(DelegatingDisposableContainerMixin),
         function FromPromiseObservable(
-          instance: Omit<
+          this: Omit<
             MulticastObservableLike<T>,
             keyof DisposableContainerLike
           > &
             TProperties,
           promise: Promise<T>,
         ): MulticastObservableLike<T> {
-          instance[FromPromiseObservable_promise] = promise;
+          this[FromPromiseObservable_promise] = promise;
 
           const disposable = Disposable.create();
-          init(DelegatingDisposableContainerMixin, instance, disposable);
+          init(DelegatingDisposableContainerMixin, this, disposable);
 
           promise
             .catch(Disposable.toErrorHandler(disposable))
             .finally(bindMethod(disposable, DisposableLike_dispose));
 
-          return instance;
+          return this;
         },
         props<TProperties>({
           [FromPromiseObservable_promise]: none,

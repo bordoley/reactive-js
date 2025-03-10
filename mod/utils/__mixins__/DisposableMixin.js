@@ -26,8 +26,8 @@ const isDisposableContainer = (disposable) => {
     return (!isFunction(disposable) &&
         isSome(disposable[DisposableContainerLike_add]));
 };
-const DisposableMixin = /*@__PURE__*/ mix(function DisposableMixin(instance) {
-    return instance;
+const DisposableMixin = /*@__PURE__*/ mix(function DisposableMixin() {
+    return this;
 }, props({
     [DisposableMixin_onChildDisposed]: none,
     [DisposableLike_error]: none,

@@ -34,14 +34,14 @@ const createPairwiseObserver: <T>(
       LiftedObserverMixin(),
     ),
     function PairwiseObserver(
-      instance: unknown,
+      this: unknown,
       delegate: ObserverLike<Tuple2<T, T>>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, instance, delegate);
-      init(ObserverMixin(), instance, delegate, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, this, delegate);
+      init(ObserverMixin(), this, delegate, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
-      return instance;
+      return this;
     },
     props<TProperties<T>>({
       [PairwiseObserver_prev]: none,

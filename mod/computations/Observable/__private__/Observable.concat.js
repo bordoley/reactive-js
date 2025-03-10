@@ -37,12 +37,12 @@ const Observable_concat = /*@__PURE__*/ (() => {
             ? flattenObservables(observable[ConcatObservable_observables])
             : observable)
         : observables;
-    const createConcatObservable = mixInstanceFactory(function ConcatObservable(instance, observables) {
-        instance[ComputationLike_isPure] = Computation.areAllPure(observables);
-        instance[ComputationLike_isSynchronous] =
+    const createConcatObservable = mixInstanceFactory(function ConcatObservable(observables) {
+        this[ComputationLike_isPure] = Computation.areAllPure(observables);
+        this[ComputationLike_isSynchronous] =
             Computation.areAllSynchronous(observables);
-        instance[ConcatObservable_observables] = flattenObservables(observables);
-        return instance;
+        this[ConcatObservable_observables] = flattenObservables(observables);
+        return this;
     }, props({
         [ComputationLike_isPure]: false,
         [ComputationLike_isSynchronous]: false,

@@ -3,6 +3,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import {
   Optional,
@@ -87,37 +88,34 @@ const createTakeLastObserver: <T>(
   return mixInstanceFactory(
     include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()),
     function TakeLastObserver(
-      instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProperties,
+      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProperties,
       delegate: ObserverLike<T>,
       takeLastCount: number,
     ): ObserverLike<T> {
-      init(DisposableMixin, instance);
-      init(DelegatingObserverMixin(), instance, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DisposableMixin, this);
+      init(DelegatingObserverMixin(), this, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
-      instance[TakeLastObserver_queue] = Queue.create({
+      this[TakeLastObserver_queue] = Queue.create({
         capacity: takeLastCount,
         backpressureStrategy: DropOldestBackpressureStrategy,
       });
 
-      pipe(
-        instance,
-        DisposableContainer.onComplete(onTakeLastObserverComplete),
-      );
+      pipe(this, DisposableContainer.onComplete(onTakeLastObserverComplete));
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [TakeLastObserver_queue]: none,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
         this[TakeLastObserver_queue][QueueableLike_enqueue](next);
       }),
-    },
+    }),
   );
 })();
 

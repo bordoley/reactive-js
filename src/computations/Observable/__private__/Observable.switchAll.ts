@@ -4,6 +4,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import {
@@ -75,33 +76,27 @@ const createSwitchAllObserver: <T>(
       LiftedObserverMixin(),
     ),
     function SwitchAllObserver(
-      instance: Pick<
-        ObserverLike<ObservableLike<T>>,
-        typeof ObserverLike_notify
-      > &
+      this: Pick<ObserverLike<ObservableLike<T>>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
     ): ObserverLike<ObservableLike<T>> {
-      init(DisposableMixin, instance);
-      init(DelegatingObserverMixin(), instance, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DisposableMixin, this);
+      init(DelegatingObserverMixin(), this, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
-      instance[SwitchAllObserver_currentRef] = pipe(
+      this[SwitchAllObserver_currentRef] = pipe(
         SerialDisposable.create(),
         Disposable.addTo(delegate),
       );
 
-      pipe(
-        instance,
-        DisposableContainer.onComplete(onSwitchAllObserverComplete),
-      );
+      pipe(this, DisposableContainer.onComplete(onSwitchAllObserverComplete));
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [SwitchAllObserver_currentRef]: none,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties &
           LiftedObserverLike<ObservableLike<T>, T> &
@@ -123,7 +118,7 @@ const createSwitchAllObserver: <T>(
           ),
         );
       }),
-    },
+    }),
   );
 })();
 

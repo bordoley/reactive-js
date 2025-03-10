@@ -18,13 +18,13 @@ const Observable_merge = /*@__PURE__*/ (() => {
             ? flattenObservables(observable[MergeObservable_observables])
             : observable)
         : observables;
-    const MergeObservableMixin = mix(function MergeObservable(instance, observables) {
+    const MergeObservableMixin = mix(function MergeObservable(observables) {
         observables = flattenObservables(observables);
-        instance[ComputationLike_isPure] = Computation.areAllPure(observables);
-        instance[ComputationLike_isSynchronous] =
+        this[ComputationLike_isPure] = Computation.areAllPure(observables);
+        this[ComputationLike_isSynchronous] =
             Computation.areAllSynchronous(observables);
-        instance[MergeObservable_observables] = observables;
-        return instance;
+        this[MergeObservable_observables] = observables;
+        return this;
     }, props({
         [ComputationLike_isPure]: false,
         [ComputationLike_isSynchronous]: false,
@@ -44,14 +44,14 @@ const Observable_merge = /*@__PURE__*/ (() => {
             }
         },
     });
-    const createDeferredMergeObservable = mixInstanceFactory(include(MergeObservableMixin), function DeferredMergeObservable(instance, observables) {
-        init(MergeObservableMixin, instance, observables);
-        return instance;
+    const createDeferredMergeObservable = mixInstanceFactory(include(MergeObservableMixin), function DeferredMergeObservable(observables) {
+        init(MergeObservableMixin, this, observables);
+        return this;
     });
-    const createMulticastMergeObservable = mixInstanceFactory(include(MergeObservableMixin, DelegatingDisposableContainerMixin), function MulticastMergeObservable(instance, observables) {
+    const createMulticastMergeObservable = mixInstanceFactory(include(MergeObservableMixin, DelegatingDisposableContainerMixin), function MulticastMergeObservable(observables) {
         const disposable = Disposable.create();
-        init(DelegatingDisposableContainerMixin, instance, disposable);
-        init(MergeObservableMixin, instance, observables);
+        init(DelegatingDisposableContainerMixin, this, disposable);
+        init(MergeObservableMixin, this, observables);
         const count = observables[Array_length];
         let completed = 0;
         for (const observable of observables) {
@@ -62,7 +62,7 @@ const Observable_merge = /*@__PURE__*/ (() => {
                 }
             }));
         }
-        return instance;
+        return this;
     }, props(), {
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,

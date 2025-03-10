@@ -21,10 +21,10 @@ const CurrentTimeSchedulerMixin: Mixin<
   >(
     include(SchedulerMixin),
     function CurrentTimeSchedulerMixin(
-      instance: SchedulerMixinHostLike,
+      this: SchedulerMixinHostLike,
     ): SchedulerLike & DisposableLike {
-      init(SchedulerMixin, instance);
-      return instance;
+      init(SchedulerMixin, this);
+      return this;
     },
     props(),
     {

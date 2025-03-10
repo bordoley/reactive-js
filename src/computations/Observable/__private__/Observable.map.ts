@@ -3,6 +3,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import { Function1, none, partial, pipe } from "../../../functions.js";
 import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
@@ -29,23 +30,23 @@ const createMapObserver: <TA, TB>(
   mixInstanceFactory(
     include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function MapObserver(
-      instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
+      this: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
         TProperties<TA, TB>,
       delegate: ObserverLike<TB>,
       selector: Function1<TA, TB>,
     ): ObserverLike<TA> {
-      init(DelegatingDisposableMixin, instance, delegate);
-      init(ObserverMixin(), instance, delegate, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, this, delegate);
+      init(ObserverMixin(), this, delegate, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
-      instance[MapObserver_selector] = selector;
+      this[MapObserver_selector] = selector;
 
-      return instance;
+      return this;
     },
     props<TProperties<TA, TB>>({
       [MapObserver_selector]: none,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties<TA, TB> & LiftedObserverLike<TA, TB>,
         next: TA,
@@ -53,7 +54,7 @@ const createMapObserver: <TA, TB>(
         const mapped = this[MapObserver_selector](next);
         this[LiftedObserverLike_delegate][ObserverLike_notify](mapped);
       }),
-    },
+    }),
   ))();
 
 const Observable_map: Observable.Signature["map"] = <TA, TB>(

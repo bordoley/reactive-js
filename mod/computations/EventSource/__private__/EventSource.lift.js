@@ -7,11 +7,11 @@ import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/Delega
 const LiftedEventSource_source = Symbol("LiftedEventSource_source");
 const LiftedEventSource_operators = Symbol("LiftedEventSource_operators");
 const createLiftedEventSource = /*@__PURE__*/ (() => {
-    return mixInstanceFactory(include(DelegatingDisposableContainerMixin), function LiftedEventSource(instance, source, ops) {
-        instance[LiftedEventSource_source] = source;
-        instance[LiftedEventSource_operators] = ops;
-        init(DelegatingDisposableContainerMixin, instance, source);
-        return instance;
+    return mixInstanceFactory(include(DelegatingDisposableContainerMixin), function LiftedEventSource(source, ops) {
+        this[LiftedEventSource_source] = source;
+        this[LiftedEventSource_operators] = ops;
+        init(DelegatingDisposableContainerMixin, this, source);
+        return this;
     }, props({
         [LiftedEventSource_source]: none,
         [LiftedEventSource_operators]: none,

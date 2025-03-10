@@ -72,7 +72,7 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] =
     const AnimationGroupStream_create = mixInstanceFactory(
       include(StreamMixin(), DelegatingPauseableMixin),
       function AnimationGroupStream(
-        instance: TProperties &
+        this: TProperties &
           Pick<
             DictionaryLike<TKey, EventSourceLike<T>>,
             typeof DictionaryLike_keys | typeof DictionaryLike_get
@@ -128,26 +128,26 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] =
 
         init(
           StreamMixin<TEvent, boolean>(),
-          instance,
+          this,
           operator,
           scheduler,
           options,
         );
 
-        init(DelegatingPauseableMixin, instance, pauseableScheduler);
+        init(DelegatingPauseableMixin, this, pauseableScheduler);
 
-        pipe(instance, Disposable.add(pauseableScheduler));
+        pipe(this, Disposable.add(pauseableScheduler));
 
-        const publishers = (instance[AnimationGroupStream_eventSources] = pipe(
+        const publishers = (this[AnimationGroupStream_eventSources] = pipe(
           animationGroup,
           ReadonlyObjectMap.map<unknown, PublisherLike<T>, string>(_ =>
-            pipe(Publisher.create<T>(), Disposable.addTo(instance)),
+            pipe(Publisher.create<T>(), Disposable.addTo(this)),
           ),
         ));
 
-        instance[PauseableLike_resume]();
+        this[PauseableLike_resume]();
 
-        return instance;
+        return this;
       },
       props<TProperties>({
         [AnimationGroupStream_eventSources]: none,

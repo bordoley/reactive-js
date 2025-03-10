@@ -10,10 +10,10 @@ import { SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../utils.js"
 const createPostTaskScheduler = /*@__PURE__*/ (() => {
     const postTaskScheduler = globalThis.scheduler;
     const PostTaskScheduler_priority = Symbol("PostTaskScheduler_priority");
-    return mixInstanceFactory(include(CurrentTimeSchedulerMixin), function PostTaskScheduler(instance, priority) {
-        init(CurrentTimeSchedulerMixin, instance);
-        instance[PostTaskScheduler_priority] = priority;
-        return instance;
+    return mixInstanceFactory(include(CurrentTimeSchedulerMixin), function PostTaskScheduler(priority) {
+        init(CurrentTimeSchedulerMixin, this);
+        this[PostTaskScheduler_priority] = priority;
+        return this;
     }, props({
         [PostTaskScheduler_priority]: "user-visible",
     }), {

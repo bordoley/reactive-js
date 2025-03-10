@@ -6,10 +6,10 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
 import { DisposableContainerLike_add, } from "../../../utils.js";
 const createObserver = /*@__PURE__*/ (() => {
-    return mixInstanceFactory(include(DisposableMixin, ObserverMixin()), function SubscribeObserver(instance, scheduler, config) {
-        init(DisposableMixin, instance);
-        init(ObserverMixin(), instance, scheduler, config);
-        return instance;
+    return mixInstanceFactory(include(DisposableMixin, ObserverMixin()), function SubscribeObserver(scheduler, config) {
+        init(DisposableMixin, this);
+        init(ObserverMixin(), this, scheduler, config);
+        return this;
     });
 })();
 const Observable_subscribeWithConfig = (scheduler, config) => (observable) => {

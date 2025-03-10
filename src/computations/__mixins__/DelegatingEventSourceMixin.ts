@@ -23,13 +23,13 @@ const DelegatingEventSourceMixin: <T>() => Mixin1<
   return returns(
     mix(
       function DelegatingEventSourceMixin(
-        instance: Omit<EventSourceLike<T>, keyof DisposableContainerLike> &
+        this: Omit<EventSourceLike<T>, keyof DisposableContainerLike> &
           TProperties,
         delegate: EventSourceLike<T>,
       ): Omit<EventSourceLike<T>, keyof DisposableContainerLike> {
-        instance[DelegatingEventSourceMixin_delegate] = delegate;
+        this[DelegatingEventSourceMixin_delegate] = delegate;
 
-        return instance;
+        return this;
       },
       props<TProperties>({
         [DelegatingEventSourceMixin_delegate]: none,

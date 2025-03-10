@@ -4,6 +4,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import { ObservableLike } from "../../../computations.js";
 import {
@@ -120,30 +121,27 @@ const createThrottleObserver: <T>(
   return mixInstanceFactory(
     include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()),
     function ThrottleObserver(
-      instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
       durationFunction: Function1<T, ObservableLike>,
       mode: Observable.ThrottleMode,
     ): ObserverLike<T> {
-      init(DisposableMixin, instance);
-      init(DelegatingObserverMixin(), instance, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DisposableMixin, this);
+      init(DelegatingObserverMixin(), this, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
-      instance[ThrottleObserver_durationFunction] = durationFunction;
-      instance[ThrottleObserver_mode] = mode;
+      this[ThrottleObserver_durationFunction] = durationFunction;
+      this[ThrottleObserver_mode] = mode;
 
-      instance[ThrottleObserver_durationSubscription] = pipe(
+      this[ThrottleObserver_durationSubscription] = pipe(
         SerialDisposable.create(),
         Disposable.addTo(delegate),
       );
 
-      pipe(
-        instance,
-        DisposableContainer.onComplete(onThrottleObserverComplete),
-      );
+      pipe(this, DisposableContainer.onComplete(onThrottleObserverComplete));
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [ThrottleObserver_value]: none,
@@ -152,7 +150,7 @@ const createThrottleObserver: <T>(
       [ThrottleObserver_durationFunction]: none,
       [ThrottleObserver_mode]: ThrottleIntervalMode,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: LiftedObserverLike<T> & TProperties,
         next: T,
@@ -174,7 +172,7 @@ const createThrottleObserver: <T>(
           setupDurationSubscription(this, next);
         }
       }),
-    },
+    }),
   );
 })();
 

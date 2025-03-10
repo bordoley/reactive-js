@@ -3,6 +3,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import {
   Equality,
@@ -45,24 +46,24 @@ const createDistinctUntilChangedObserver: <T>(
   mixInstanceFactory(
     include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
     function DistinctUntilChangedObserver(
-      instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProps<T>,
+      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProps<T>,
       delegate: ObserverLike<T>,
       equality: Equality<T>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, instance, delegate);
-      init(ObserverMixin(), instance, delegate, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, this, delegate);
+      init(ObserverMixin(), this, delegate, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
-      instance[DistinctUntilChangedObserver_equality] = equality;
+      this[DistinctUntilChangedObserver_equality] = equality;
 
-      return instance;
+      return this;
     },
     props<TProps<T>>({
       [DistinctUntilChangedObserver_equality]: none,
       [DistinctUntilChangedObserver_prev]: none,
       [DistinctUntilChangedObserver_hasValue]: false,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProps<T> & LiftedObserverLike<T>,
         next: T,
@@ -80,7 +81,7 @@ const createDistinctUntilChangedObserver: <T>(
           this[LiftedObserverLike_delegate][ObserverLike_notify](next);
         }
       }),
-    },
+    }),
   ))();
 
 const Observable_distinctUntilChanged: Observable.Signature["distinctUntilChanged"] =

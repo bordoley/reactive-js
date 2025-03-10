@@ -22,12 +22,12 @@ const createWithLatestFromEventListener = /*@__PURE__*/ (() => {
         this[WithLatestFromEventListener_hasLatest] = true;
         this[WithLatestFromEventListener_otherLatest] = next;
     }
-    return mixInstanceFactory(include(DelegatingDisposableMixin), function WithLatestFromEventListener(instance, delegate, other, selector) {
-        init(DelegatingDisposableMixin, instance, delegate);
-        instance[WithLatestFromEventListener_selector] = selector;
-        instance[WithLatestFromEventListener_delegate] = delegate;
-        pipe(other, EventSource_addEventHandler(bind(onOtherNotify, instance)), Disposable.addTo(instance), DisposableContainer.onComplete(bind(onWithLatestFromEventListenerOtherSubscriptionComplete, instance)));
-        return instance;
+    return mixInstanceFactory(include(DelegatingDisposableMixin), function WithLatestFromEventListener(delegate, other, selector) {
+        init(DelegatingDisposableMixin, this, delegate);
+        this[WithLatestFromEventListener_selector] = selector;
+        this[WithLatestFromEventListener_delegate] = delegate;
+        pipe(other, EventSource_addEventHandler(bind(onOtherNotify, this)), Disposable.addTo(this), DisposableContainer.onComplete(bind(onWithLatestFromEventListenerOtherSubscriptionComplete, this)));
+        return this;
     }, props({
         [WithLatestFromEventListener_hasLatest]: false,
         [WithLatestFromEventListener_otherLatest]: none,

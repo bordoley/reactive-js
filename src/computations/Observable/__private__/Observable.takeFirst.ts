@@ -3,6 +3,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import { partial, pipe } from "../../../functions.js";
 import { clampPositiveInteger, max } from "../../../math.js";
@@ -35,26 +36,26 @@ const createTakeFirstObserver: <T>(
   mixInstanceFactory(
     include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function TakeFirstObserver(
-      instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProperties,
+      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProperties,
       delegate: ObserverLike<T>,
       takeCount?: number,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, instance, delegate);
-      init(ObserverMixin(), instance, delegate, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, this, delegate);
+      init(ObserverMixin(), this, delegate, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
-      instance[TakeFirstObserver_count] = clampPositiveInteger(takeCount ?? 1);
+      this[TakeFirstObserver_count] = clampPositiveInteger(takeCount ?? 1);
 
       if (takeCount === 0) {
-        instance[DisposableLike_dispose]();
+        this[DisposableLike_dispose]();
       }
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [TakeFirstObserver_count]: 0,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties & LiftedObserverLike<T>,
         next: T,
@@ -68,7 +69,7 @@ const createTakeFirstObserver: <T>(
           this[DisposableLike_dispose]();
         }
       }),
-    },
+    }),
   ))();
 
 const Observable_takeFirst: Observable.Signature["takeFirst"] = <T>(options?: {

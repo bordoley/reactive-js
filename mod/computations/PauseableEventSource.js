@@ -10,13 +10,13 @@ import * as EventSource from "./EventSource.js";
 import * as WritableStore from "./WritableStore.js";
 import DelegatingEventSourceMixin from "./__mixins__/DelegatingEventSourceMixin.js";
 export const create = /*@__PURE__*/ (() => {
-    return mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingEventSourceMixin()), function PauseableEventSource(instance, op) {
-        const writableStore = (instance[PauseableLike_isPaused] =
+    return mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingEventSourceMixin()), function PauseableEventSource(op) {
+        const writableStore = (this[PauseableLike_isPaused] =
             WritableStore.create(true));
         const delegate = pipe(writableStore, op);
-        init(DelegatingDisposableMixin, instance, writableStore);
-        init(DelegatingEventSourceMixin(), instance, delegate);
-        return instance;
+        init(DelegatingDisposableMixin, this, writableStore);
+        init(DelegatingEventSourceMixin(), this, delegate);
+        return this;
     }, props({
         [PauseableLike_isPaused]: none,
     }), {

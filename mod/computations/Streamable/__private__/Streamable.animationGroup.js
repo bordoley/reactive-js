@@ -27,7 +27,7 @@ const Streamable_animationGroup =
         merge: Observable.merge,
         switchAll: Observable.switchAll,
     };
-    const AnimationGroupStream_create = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin), function AnimationGroupStream(instance, animationGroup, scheduler, animationScheduler, options) {
+    const AnimationGroupStream_create = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin), function AnimationGroupStream(animationGroup, scheduler, animationScheduler, options) {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
         const operator = Computation.flatMap(ObservableModule, "switchAll")((event) => pipe(animationGroup, ReadonlyObjectMap.entries(), Iterable.map(([key, factory]) => {
             const publisher = publishers[key];
@@ -35,12 +35,12 @@ const Streamable_animationGroup =
         }), ReadonlyArray.fromIterable(), Computation.mergeMany(ObservableModule), Computation.ignoreElements(ObservableModule)(), Computation.startWith(ObservableModule)(true), Computation.endWith(ObservableModule)(false)), {
             innerType: DeferredComputationWithSideEffects,
         });
-        init(StreamMixin(), instance, operator, scheduler, options);
-        init(DelegatingPauseableMixin, instance, pauseableScheduler);
-        pipe(instance, Disposable.add(pauseableScheduler));
-        const publishers = (instance[AnimationGroupStream_eventSources] = pipe(animationGroup, ReadonlyObjectMap.map(_ => pipe(Publisher.create(), Disposable.addTo(instance)))));
-        instance[PauseableLike_resume]();
-        return instance;
+        init(StreamMixin(), this, operator, scheduler, options);
+        init(DelegatingPauseableMixin, this, pauseableScheduler);
+        pipe(this, Disposable.add(pauseableScheduler));
+        const publishers = (this[AnimationGroupStream_eventSources] = pipe(animationGroup, ReadonlyObjectMap.map(_ => pipe(Publisher.create(), Disposable.addTo(this)))));
+        this[PauseableLike_resume]();
+        return this;
     }, props({
         [AnimationGroupStream_eventSources]: none,
     }), {

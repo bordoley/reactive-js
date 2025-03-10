@@ -11,11 +11,11 @@ import * as WritableStore from "../WritableStore.js";
 export const create = (() => {
     const SingleUseObservableLike_delegate = Symbol("SingleUseObservableLike_delegate");
     const queueProtoype = getPrototype(QueueMixin());
-    return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function SingleUseObservable(instance, config) {
-        init(DisposableMixin, instance);
-        init(QueueMixin(), instance, config);
-        instance[DispatcherLike_state] = WritableStore.create(DispatcherState_ready);
-        return instance;
+    return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function SingleUseObservable(config) {
+        init(DisposableMixin, this);
+        init(QueueMixin(), this, config);
+        this[DispatcherLike_state] = WritableStore.create(DispatcherState_ready);
+        return this;
     }, props({
         [SingleUseObservableLike_delegate]: none,
         [DispatcherLike_state]: none,

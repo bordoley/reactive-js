@@ -52,11 +52,11 @@ export const get = /*@__PURE__*/ (() => {
             animationFrameScheduler[AnimationFrameScheduler_rafIsRunning] = false;
         }
     };
-    const createAnimationFrameScheduler = mixInstanceFactory(include(CurrentTimeSchedulerMixin), function AnimationFrameScheduler(instance) {
-        init(CurrentTimeSchedulerMixin, instance);
-        instance[AnimationFrameScheduler_rafQueue] =
+    const createAnimationFrameScheduler = mixInstanceFactory(include(CurrentTimeSchedulerMixin), function AnimationFrameScheduler() {
+        init(CurrentTimeSchedulerMixin, this);
+        this[AnimationFrameScheduler_rafQueue] =
             Queue.create();
-        return instance;
+        return this;
     }, props({
         [AnimationFrameScheduler_rafIsRunning]: false,
         [AnimationFrameScheduler_rafQueue]: none,

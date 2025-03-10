@@ -52,15 +52,15 @@ const EventSource_merge: EventSource.Signature["merge"] = /*@__PURE__*/ (<
   return mixInstanceFactory(
     include(DelegatingDisposableContainerMixin),
     function MergeEventSource(
-      instance: TProperties<T> &
+      this: TProperties<T> &
         Omit<EventSourceLike<T>, keyof DisposableContainerLike>,
       ...eventSources: readonly EventSourceLike<T>[]
     ): EventSourceLike<T> {
       eventSources = flattenEventSources(eventSources);
-      instance[MergeEventSource_eventSources] = eventSources;
+      this[MergeEventSource_eventSources] = eventSources;
 
       const disposable = Disposable.create();
-      init(DelegatingDisposableContainerMixin, instance, disposable);
+      init(DelegatingDisposableContainerMixin, this, disposable);
 
       const count = eventSources[Array_length];
       let completed = 0;
@@ -76,7 +76,7 @@ const EventSource_merge: EventSource.Signature["merge"] = /*@__PURE__*/ (<
         );
       }
 
-      return instance;
+      return this;
     },
     props<TProperties<T>>({
       [MergeEventSource_eventSources]: none,

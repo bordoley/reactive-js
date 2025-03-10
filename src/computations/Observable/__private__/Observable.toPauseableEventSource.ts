@@ -34,7 +34,7 @@ const Observable_toPauseableEventSource: Observable.Signature["toPauseableEventS
           DelegatingEventSourceMixin(),
         ),
         function PauseableEventSourceFromSynchronousObservable(
-          instance: Pick<
+          this: Pick<
             PauseableEventSourceLike<T>,
             | typeof PauseableLike_pause
             | typeof PauseableLike_resume
@@ -55,11 +55,11 @@ const Observable_toPauseableEventSource: Observable.Signature["toPauseableEventS
             Disposable.bindTo(pauseableScheduler),
           );
 
-          init(DelegatingDisposableMixin, instance, pauseableScheduler);
-          init(DelegatingPauseableMixin, instance, pauseableScheduler);
-          init(DelegatingEventSourceMixin(), instance, eventSource);
+          init(DelegatingDisposableMixin, this, pauseableScheduler);
+          init(DelegatingPauseableMixin, this, pauseableScheduler);
+          init(DelegatingEventSourceMixin(), this, eventSource);
 
-          return instance;
+          return this;
         },
       );
     return (

@@ -36,7 +36,7 @@ const createBackpressureObserver: <T>(
       LiftedObserverMixin(),
     ),
     function EnqueueObserver(
-      instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
+      this: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
       delegate: ObserverLike<T>,
       config: Pick<
         QueueableLike,
@@ -44,11 +44,11 @@ const createBackpressureObserver: <T>(
         | typeof QueueableLike_backpressureStrategy
       >,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, instance, delegate);
-      init(ObserverMixin<T>(), instance, delegate, config);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, this, delegate);
+      init(ObserverMixin<T>(), this, delegate, config);
+      init(LiftedObserverMixin(), this, delegate);
 
-      return instance;
+      return this;
     },
     props(),
     {

@@ -36,7 +36,7 @@ export const create: <T>(
   return mixInstanceFactory(
     include(PublisherMixin<T>()),
     function WritableStore(
-      instance: TProperties &
+      this: TProperties &
         Omit<
           WritableStoreLike<T>,
           keyof DisposableLike | typeof EventSourceLike_addEventListener
@@ -47,12 +47,12 @@ export const create: <T>(
         readonly autoDispose?: boolean;
       },
     ): WritableStoreLike<T> {
-      init(PublisherMixin<T>(), instance, options);
+      init(PublisherMixin<T>(), this, options);
 
-      instance[WritableStore_value] = initialValue;
-      instance[WritableStore_equality] = options?.equality ?? strictEquality;
+      this[WritableStore_value] = initialValue;
+      this[WritableStore_equality] = options?.equality ?? strictEquality;
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [WritableStore_equality]: none,

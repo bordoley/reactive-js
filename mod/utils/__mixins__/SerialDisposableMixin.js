@@ -6,10 +6,10 @@ import { DisposableLike_dispose, SerialDisposableLike_current, } from "../../uti
 import * as Disposable from "../Disposable.js";
 const SerialDisposableMixin = /*@__PURE__*/ (() => {
     const SerialDisposableMixin_current = Symbol("SerialDisposableMixin_current");
-    return pipe(mix(function SerialDisposableMixin(instance, defaultValue) {
-        instance[SerialDisposableMixin_current] = defaultValue;
-        pipe(instance, Disposable.add(defaultValue));
-        return instance;
+    return pipe(mix(function SerialDisposableMixin(defaultValue) {
+        this[SerialDisposableMixin_current] = defaultValue;
+        pipe(this, Disposable.add(defaultValue));
+        return this;
     }, props({
         [SerialDisposableMixin_current]: none,
     }), {

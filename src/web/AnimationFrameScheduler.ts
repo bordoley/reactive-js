@@ -117,15 +117,15 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
   const createAnimationFrameScheduler = mixInstanceFactory(
     include(CurrentTimeSchedulerMixin),
     function AnimationFrameScheduler(
-      instance: Omit<SchedulerMixinHostLike, typeof SchedulerLike_now> &
+      this: Omit<SchedulerMixinHostLike, typeof SchedulerLike_now> &
         TProperties,
     ): SchedulerLike & DisposableLike {
-      init(CurrentTimeSchedulerMixin, instance);
+      init(CurrentTimeSchedulerMixin, this);
 
-      instance[AnimationFrameScheduler_rafQueue] =
+      this[AnimationFrameScheduler_rafQueue] =
         Queue.create<SchedulerContinuationLike>();
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [AnimationFrameScheduler_rafIsRunning]: false,

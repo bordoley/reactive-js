@@ -1,6 +1,6 @@
 /// <reference types="./Observable.withLatestFrom.d.ts" />
 
-import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { bind, none, partial, pipe, tuple, } from "../../../functions.js";
@@ -27,18 +27,18 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
         this[WithLatestFromObserver_hasLatest] = true;
         this[WithLatestFromObserver_otherLatest] = next;
     }
-    return mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()), function WithLatestFromObserver(instance, delegate, other, selector) {
-        init(DelegatingDisposableMixin, instance, delegate);
-        init(ObserverMixin(), instance, delegate, delegate);
-        init(LiftedObserverMixin(), instance, delegate);
-        instance[WithLatestFromObserver_selector] = selector;
-        pipe(other, Observable_forEach(bind(onOtherNotify, instance)), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(instance), DisposableContainer.onComplete(bind(onWithLatestFromObserverOtherSubscriptionComplete, instance)));
-        return instance;
+    return mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()), function WithLatestFromObserver(delegate, other, selector) {
+        init(DelegatingDisposableMixin, this, delegate);
+        init(ObserverMixin(), this, delegate, delegate);
+        init(LiftedObserverMixin(), this, delegate);
+        this[WithLatestFromObserver_selector] = selector;
+        pipe(other, Observable_forEach(bind(onOtherNotify, this)), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(this), DisposableContainer.onComplete(bind(onWithLatestFromObserverOtherSubscriptionComplete, this)));
+        return this;
     }, props({
         [WithLatestFromObserver_hasLatest]: false,
         [WithLatestFromObserver_otherLatest]: none,
         [WithLatestFromObserver_selector]: none,
-    }), {
+    }), proto({
         [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             if (!this[DisposableLike_isDisposed] &&
                 this[WithLatestFromObserver_hasLatest]) {
@@ -46,7 +46,7 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
                 this[LiftedObserverLike_delegate][ObserverLike_notify](result);
             }
         }),
-    });
+    }));
 })();
 const Observable_withLatestFrom = ((other, selector = tuple) => pipe(createWithLatestFromObserver, partial(other, selector), Observable_lift({
     [ObservableLift_isStateless]: Computation.isMulticasted(other),

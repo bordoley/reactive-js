@@ -56,27 +56,23 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
   return mixInstanceFactory(
     include(DelegatingDisposableMixin, DelegatingMulticastObservableMixin()),
     function PauseableObservable(
-      instance: Pick<
+      this: Pick<
         PauseableObservableLike<T>,
         typeof PauseableLike_pause | typeof PauseableLike_resume
       > &
         TProperties,
       op: Function1<EventSourceLike<boolean>, MulticastObservableLike<T>>,
     ): PauseableObservableLike<T> & DisposableLike {
-      const writableStore = (instance[PauseableLike_isPaused] =
+      const writableStore = (this[PauseableLike_isPaused] =
         WritableStore.create(true));
 
       const observableDelegate = pipe(writableStore, op);
       pipe(writableStore, Disposable.addToContainer(observableDelegate));
 
-      init(DelegatingDisposableMixin, instance, writableStore);
-      init(
-        DelegatingMulticastObservableMixin<T>(),
-        instance,
-        observableDelegate,
-      );
+      init(DelegatingDisposableMixin, this, writableStore);
+      init(DelegatingMulticastObservableMixin<T>(), this, observableDelegate);
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [PauseableLike_isPaused]: none,

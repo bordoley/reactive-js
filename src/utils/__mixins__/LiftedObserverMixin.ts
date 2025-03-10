@@ -30,12 +30,12 @@ const LiftedObserverMixin: <
   return returns(
     mix(
       function LiftedObserverMixin(
-        instance: ObserverLike<TA> & TProperties,
+        this: ObserverLike<TA> & TProperties,
         delegate: TObserver,
       ): LiftedObserverLike<TA, TB, TObserver> {
-        instance[LiftedObserverLike_delegate] = delegate;
+        this[LiftedObserverLike_delegate] = delegate;
 
-        return instance;
+        return this;
       },
       props<TProperties>({
         [LiftedObserverLike_delegate]: none,

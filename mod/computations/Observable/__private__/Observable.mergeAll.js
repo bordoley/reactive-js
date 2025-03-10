@@ -1,7 +1,7 @@
 /// <reference types="./Observable.mergeAll.d.ts" />
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { bind, bindMethod, isSome, none, pipe, } from "../../../functions.js";
@@ -47,23 +47,23 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
             this[LiftedObserverLike_delegate][DisposableLike_dispose]();
         }
     }
-    const createMergeAllObserver = mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
-        init(DisposableMixin, instance);
-        init(DelegatingObserverMixin(), instance, delegate);
-        init(LiftedObserverMixin(), instance, delegate);
-        instance[MergeAllObserver_observablesQueue] = Queue.create({
+    const createMergeAllObserver = mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()), function MergeAllObserver(delegate, capacity, backpressureStrategy, concurrency) {
+        init(DisposableMixin, this);
+        init(DelegatingObserverMixin(), this, delegate);
+        init(LiftedObserverMixin(), this, delegate);
+        this[MergeAllObserver_observablesQueue] = Queue.create({
             capacity,
             backpressureStrategy,
         });
-        instance[MergeAllObserver_concurrency] = concurrency;
-        instance[MergeAllObserver_activeCount] = 0;
-        pipe(instance, DisposableContainer.onComplete(onMergeAllObserverComplete));
-        return instance;
+        this[MergeAllObserver_concurrency] = concurrency;
+        this[MergeAllObserver_activeCount] = 0;
+        pipe(this, DisposableContainer.onComplete(onMergeAllObserverComplete));
+        return this;
     }, props({
         [MergeAllObserver_activeCount]: 0,
         [MergeAllObserver_concurrency]: 0,
         [MergeAllObserver_observablesQueue]: none,
-    }), {
+    }), proto({
         [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             if (this[MergeAllObserver_activeCount] <
                 this[MergeAllObserver_concurrency]) {
@@ -73,7 +73,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
                 this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
             }
         }),
-    });
+    }));
     return (options = {}) => {
         const concurrency = clampPositiveNonZeroInteger(options.concurrency ?? MAX_SAFE_INTEGER);
         const capacity = clampPositiveInteger(options.capacity ?? MAX_SAFE_INTEGER);

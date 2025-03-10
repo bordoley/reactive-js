@@ -41,18 +41,15 @@ const Observable_fromStore: Observable.Signature["fromStore"] = /*@__PURE__*/ (<
     mixInstanceFactory(
       include(DelegatingDisposableContainerMixin),
       function FromEventSourceObservable(
-        instance: Omit<
-          MulticastObservableLike<T>,
-          keyof DisposableContainerLike
-        > &
+        this: Omit<MulticastObservableLike<T>, keyof DisposableContainerLike> &
           TProperties,
         store: StoreLike<T>,
       ): MulticastObservableLike<T> {
-        instance[FromStoreObservable_eventSource] = store;
+        this[FromStoreObservable_eventSource] = store;
 
-        init(DelegatingDisposableContainerMixin, instance, store);
+        init(DelegatingDisposableContainerMixin, this, store);
 
-        return instance;
+        return this;
       },
       props<TProperties>({
         [FromStoreObservable_eventSource]: none,

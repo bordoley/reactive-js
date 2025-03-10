@@ -64,13 +64,13 @@ const createPostTaskScheduler = /*@__PURE__*/ (() => {
   return mixInstanceFactory(
     include(CurrentTimeSchedulerMixin),
     function PostTaskScheduler(
-      instance: Omit<SchedulerMixinHostLike, typeof SchedulerLike_now> &
+      this: Omit<SchedulerMixinHostLike, typeof SchedulerLike_now> &
         TProperties,
       priority: "user-blocking" | "user-visible" | "background",
     ): SchedulerLike & DisposableLike {
-      init(CurrentTimeSchedulerMixin, instance);
-      instance[PostTaskScheduler_priority] = priority;
-      return instance;
+      init(CurrentTimeSchedulerMixin, this);
+      this[PostTaskScheduler_priority] = priority;
+      return this;
     },
     props<TProperties>({
       [PostTaskScheduler_priority]: "user-visible",

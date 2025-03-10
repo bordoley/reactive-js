@@ -27,7 +27,7 @@ export const create = /*@__PURE__*/ (() => {
         keep: Observable.keep,
         map: Observable.map,
     };
-    return mixInstanceFactory(include(DelegatingDispatcherMixin(), DelegatingDisposableMixin), function Cache(instance, scheduler, options) {
+    return mixInstanceFactory(include(DelegatingDispatcherMixin(), DelegatingDisposableMixin), function Cache(scheduler, options) {
         const { maxEntries = MAX_SAFE_INTEGER, cleanupScheduler = scheduler, persistentStore, } = options ?? {};
         const dispatcher = SingleUseObservable.create(options);
         const store = newInstance(Map);
@@ -45,7 +45,7 @@ export const create = /*@__PURE__*/ (() => {
                 ctx[ContinuationContextLike_yield]();
             }
         };
-        pipe(dispatcher, Observable.map((updaters) => tuple(updaters, pipe(updaters, ReadonlyObjectMap.map((_, k) => instance[CacheStream_store][Map_get](k))))), isSome(persistentStore)
+        pipe(dispatcher, Observable.map((updaters) => tuple(updaters, pipe(updaters, ReadonlyObjectMap.map((_, k) => this[CacheStream_store][Map_get](k))))), isSome(persistentStore)
             ? Computation.concatMap(ObservableModule)(next => {
                 const [updaters, values] = next;
                 const keys = pipe(values, ReadonlyObjectMap.keep(isNone), Collection.keySet(ReadonlyObjectMap.keys));
@@ -59,14 +59,14 @@ export const create = /*@__PURE__*/ (() => {
         // This could be the cached value or the value
         // loaded from a persistent store.
         updater(values[k])))), Observable.forEach(ReadonlyObjectMap.forEach((v, key) => {
-            const oldValue = instance[CacheStream_store][Map_get](key);
+            const oldValue = this[CacheStream_store][Map_get](key);
             if (isNone(v)) {
-                instance[CacheStream_store][Map_delete](key);
+                this[CacheStream_store][Map_delete](key);
             }
             else {
-                instance[CacheStream_store][Map_set](key, v);
+                this[CacheStream_store][Map_set](key, v);
             }
-            const subject = instance[CacheStream_subscriptions][Map_get](key);
+            const subject = this[CacheStream_subscriptions][Map_get](key);
             // We want to publish none, when the cache does not have the value
             // when initially subscribing to the key.
             const shouldPublish = isNone(v) || oldValue !== v;
@@ -74,17 +74,17 @@ export const create = /*@__PURE__*/ (() => {
                 subject[EventListenerLike_notify](v);
                 return;
             }
-            instance[CacheStream_scheduleCleanup](key);
+            this[CacheStream_scheduleCleanup](key);
         })), isSome(persistentStore)
             ? Computation.concatMap(ObservableModule)(bindMethod(persistentStore, "store"), {
                 innerType: DeferredComputationWithSideEffects,
             })
             : Computation.ignoreElements(ObservableModule)(), Observable.subscribe(scheduler, options), Disposable.addTo(dispatcher));
         let cleanupJob = Disposable.disposed;
-        instance[CacheStream_store] = store;
-        instance[CacheStream_subscriptions] = subscriptions;
-        instance[CacheStream_scheduleCleanup] = (key) => {
-            if (isNone(instance[CacheStream_store][Map_get](key))) {
+        this[CacheStream_store] = store;
+        this[CacheStream_subscriptions] = subscriptions;
+        this[CacheStream_scheduleCleanup] = (key) => {
+            if (isNone(this[CacheStream_store][Map_get](key))) {
                 return;
             }
             cleanupQueue[QueueableLike_enqueue](key);
@@ -94,9 +94,9 @@ export const create = /*@__PURE__*/ (() => {
             cleanupJob =
                 cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
         };
-        init(DelegatingDisposableMixin, instance, dispatcher);
-        init(DelegatingDispatcherMixin(), instance, dispatcher);
-        return instance;
+        init(DelegatingDisposableMixin, this, dispatcher);
+        init(DelegatingDispatcherMixin(), this, dispatcher);
+        return this;
     }, props({
         [CacheStream_scheduleCleanup]: none,
         [CacheStream_store]: none,

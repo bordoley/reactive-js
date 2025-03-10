@@ -49,12 +49,12 @@ const createReactScheduler = /*@__PURE__*/ (() => {
   return mixInstanceFactory(
     include(SchedulerMixin),
     function ReactPriorityScheduler(
-      instance: SchedulerMixinHostLike & TProperties,
+      this: SchedulerMixinHostLike & TProperties,
       priority: 1 | 2 | 3 | 4 | 5,
     ): SchedulerLike & DisposableLike {
-      init(SchedulerMixin, instance);
-      instance[ReactScheduler_priority] = priority;
-      return instance;
+      init(SchedulerMixin, this);
+      this[ReactScheduler_priority] = priority;
+      return this;
     },
     props<TProperties>({
       [ReactScheduler_priority]: 3,

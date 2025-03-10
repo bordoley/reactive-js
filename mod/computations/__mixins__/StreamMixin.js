@@ -8,12 +8,12 @@ import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposab
 import * as Observable from "../Observable.js";
 import * as SingleUseObservable from "../__internal__/SingleUseObservable.js";
 import DelegatingMulticastObservableMixin from "../__mixins__/DelegatingMulticastObservableMixin.js";
-const StreamMixin = /*@__PURE__*/ (() => returns(mix(include(DelegatingDisposableMixin, DelegatingDispatcherMixin(), DelegatingMulticastObservableMixin()), function Stream(instance, op, scheduler, options) {
+const StreamMixin = /*@__PURE__*/ (() => returns(mix(include(DelegatingDisposableMixin, DelegatingDispatcherMixin(), DelegatingMulticastObservableMixin()), function Stream(op, scheduler, options) {
     const dispatcher = SingleUseObservable.create(options);
     const delegate = pipe(dispatcher, op, Observable.multicast(scheduler, options), Disposable.addTo(dispatcher));
-    init(DelegatingDisposableMixin, instance, dispatcher);
-    init(DelegatingDispatcherMixin(), instance, dispatcher);
-    init(DelegatingMulticastObservableMixin(), instance, delegate);
-    return instance;
+    init(DelegatingDisposableMixin, this, dispatcher);
+    init(DelegatingDispatcherMixin(), this, dispatcher);
+    init(DelegatingMulticastObservableMixin(), this, delegate);
+    return this;
 })))();
 export default StreamMixin;

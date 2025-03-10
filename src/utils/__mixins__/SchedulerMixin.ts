@@ -7,6 +7,7 @@ import {
   mix,
   mixInstanceFactory,
   props,
+  proto,
   unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
@@ -236,7 +237,7 @@ const SchedulerMixin: Mixin<
         QueueMixin<QueueableSchedulerContinuationLike>(),
       ),
       function QueueableContinuation(
-        instance: Pick<
+        this: Pick<
           QueueableSchedulerContinuationLike,
           typeof SchedulerContinuationLike_run
         > &
@@ -246,22 +247,22 @@ const SchedulerMixin: Mixin<
         effect: SideEffect1<ContinuationContextLike>,
         dueTime: number,
       ): QueueableSchedulerContinuationLike & ContinuationContextLike {
-        init(DisposableMixin, instance);
+        init(DisposableMixin, this);
 
-        init(QueueMixin<QueueableSchedulerContinuationLike>(), instance, none);
+        init(QueueMixin<QueueableSchedulerContinuationLike>(), this, none);
 
-        instance[SchedulerContinuationLike_dueTime] = dueTime;
+        this[SchedulerContinuationLike_dueTime] = dueTime;
 
-        instance[SchedulerContinuationLike_id] = ++scheduler[
+        this[SchedulerContinuationLike_id] = ++scheduler[
           SchedulerMixinLike_taskIDCounter
         ];
 
-        instance[QueueableContinuation_scheduler] = scheduler;
-        instance[QueueableContinuation_effect] = effect;
+        this[QueueableContinuation_scheduler] = scheduler;
+        this[QueueableContinuation_effect] = effect;
 
-        pipe(instance, DisposableContainer.onDisposed(onContinuationDisposed));
+        pipe(this, DisposableContainer.onDisposed(onContinuationDisposed));
 
-        return instance;
+        return this;
       },
       props<TProperties>({
         [QueueableSchedulerContinuationLike_parent]: none,
@@ -271,7 +272,7 @@ const SchedulerMixin: Mixin<
         [SchedulerContinuationLike_dueTime]: 0,
         [SchedulerContinuationLike_id]: 0,
       }),
-      {
+      proto({
         [SchedulerContinuationLike_run](
           this: QueueableSchedulerContinuationLike &
             QueueLike<QueueableSchedulerContinuationLike> &
@@ -392,7 +393,7 @@ const SchedulerMixin: Mixin<
             throw newInstance(ContinuationYieldError, delay);
           }
         },
-      },
+      }),
     );
   })();
 
@@ -420,11 +421,11 @@ const SchedulerMixin: Mixin<
   >(
     include(DisposableMixin),
     function SchedulerMixin(
-      instance: SchedulerMixinLike,
+      this: SchedulerMixinLike,
     ): SchedulerLike & DisposableLike {
-      init(DisposableMixin, instance);
+      init(DisposableMixin, this);
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [SchedulerMixinLike_currentContinuation]: none,

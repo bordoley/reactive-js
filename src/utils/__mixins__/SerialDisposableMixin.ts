@@ -37,7 +37,7 @@ const SerialDisposableMixin: <TDisposable extends DisposableLike>() => Mixin1<
       TDisposable
     >(
       function SerialDisposableMixin(
-        instance: Pick<
+        this: Pick<
           SerialDisposableLike<TDisposable>,
           typeof SerialDisposableLike_current
         > &
@@ -45,10 +45,10 @@ const SerialDisposableMixin: <TDisposable extends DisposableLike>() => Mixin1<
           Mutable<TProperties>,
         defaultValue: TDisposable,
       ): SerialDisposableLike<TDisposable> {
-        instance[SerialDisposableMixin_current] = defaultValue;
-        pipe(instance, Disposable.add(defaultValue));
+        this[SerialDisposableMixin_current] = defaultValue;
+        pipe(this, Disposable.add(defaultValue));
 
-        return instance;
+        return this;
       },
       props<TProperties>({
         [SerialDisposableMixin_current]: none,

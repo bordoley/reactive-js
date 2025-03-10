@@ -29,14 +29,14 @@ const DelegatingObserverMixin: <T>() => Mixin1<
     >(
       include(ObserverMixin<T>()),
       function DelegatingObserverMixin(
-        instance: DisposableLike &
+        this: DisposableLike &
           Pick<ObserverLike<T>, typeof ObserverLike_notify>,
         delegate: ObserverLike,
       ): ObserverLike<T> {
-        init(ObserverMixin<T>(), instance, delegate, delegate);
-        pipe(instance, Disposable.addTo(delegate));
+        init(ObserverMixin<T>(), this, delegate, delegate);
+        pipe(this, Disposable.addTo(delegate));
 
-        return instance;
+        return this;
       },
       props(),
       {

@@ -33,7 +33,7 @@ const Observable_toPauseableObservable: Observable.Signature["toPauseableObserva
         DelegatingPauseableMixin,
       ),
       function PauseableSynchronousObservable(
-        instance: Pick<
+        this: Pick<
           PauseableObservableLike<T>,
           | typeof PauseableLike_pause
           | typeof PauseableLike_resume
@@ -48,18 +48,18 @@ const Observable_toPauseableObservable: Observable.Signature["toPauseableObserva
         }>,
       ): PauseableObservableLike<T> & DisposableLike {
         const pauseableScheduler = PauseableScheduler.create(scheduler);
-        init(DelegatingDisposableMixin, instance, pauseableScheduler);
-        init(DelegatingPauseableMixin, instance, pauseableScheduler);
+        init(DelegatingDisposableMixin, this, pauseableScheduler);
+        init(DelegatingPauseableMixin, this, pauseableScheduler);
 
         const multicastObs = pipe(
           obs,
           Observable_multicast(pauseableScheduler, multicastOptions),
-          Disposable.bindTo(instance),
+          Disposable.bindTo(this),
         );
 
-        init(DelegatingMulticastObservableMixin<T>(), instance, multicastObs);
+        init(DelegatingMulticastObservableMixin<T>(), this, multicastObs);
 
-        return instance;
+        return this;
       },
     );
 

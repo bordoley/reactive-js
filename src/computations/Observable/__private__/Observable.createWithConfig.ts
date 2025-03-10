@@ -72,7 +72,7 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
     return mixInstanceFactory(
       include(ObservableMixin),
       function CreateObservable(
-        instance: Pick<ObservableLike, typeof ObservableLike_observe> &
+        this: Pick<ObservableLike, typeof ObservableLike_observe> &
           Mutable<TProperties>,
         effect: SideEffect1<ObserverLike>,
         config: {
@@ -80,10 +80,10 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
           readonly [ComputationLike_isSynchronous]: boolean;
         },
       ): ObservableLike {
-        init(ObservableMixin, instance, config);
-        instance[CreateObservable_effect] = effect;
+        init(ObservableMixin, this, config);
+        this[CreateObservable_effect] = effect;
 
-        return instance;
+        return this;
       },
       props<TProperties>({
         [CreateObservable_effect]: none,

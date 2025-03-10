@@ -10,13 +10,13 @@ import DelegatingEventSourceMixin from "../../__mixins__/DelegatingEventSourceMi
 import Observable_toEventSource from "./Observable.toEventSource.js";
 const Observable_toPauseableEventSource = 
 /*@__PURE__*/ (() => {
-    const createPauseableEventSourceFromSynchronousObservable = mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingPauseableMixin, DelegatingEventSourceMixin()), function PauseableEventSourceFromSynchronousObservable(instance, obs, scheduler, options) {
+    const createPauseableEventSourceFromSynchronousObservable = mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingPauseableMixin, DelegatingEventSourceMixin()), function PauseableEventSourceFromSynchronousObservable(obs, scheduler, options) {
         const pauseableScheduler = PauseableScheduler.create(scheduler);
         const eventSource = pipe(obs, Observable_toEventSource(scheduler, options), Disposable.bindTo(pauseableScheduler));
-        init(DelegatingDisposableMixin, instance, pauseableScheduler);
-        init(DelegatingPauseableMixin, instance, pauseableScheduler);
-        init(DelegatingEventSourceMixin(), instance, eventSource);
-        return instance;
+        init(DelegatingDisposableMixin, this, pauseableScheduler);
+        init(DelegatingPauseableMixin, this, pauseableScheduler);
+        init(DelegatingEventSourceMixin(), this, eventSource);
+        return this;
     });
     return (scheduler, options) => (obs) => createPauseableEventSourceFromSynchronousObservable(obs, scheduler, options);
 })();

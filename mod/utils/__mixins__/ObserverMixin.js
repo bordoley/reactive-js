@@ -35,17 +35,17 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         }
     };
     const queueProtoype = getPrototype(QueueMixin());
-    return returns(mix(include(QueueMixin(), SerialDisposableMixin()), function ObserverMixin(instance, scheduler, config) {
-        init(QueueMixin(), instance, {
+    return returns(mix(include(QueueMixin(), SerialDisposableMixin()), function ObserverMixin(scheduler, config) {
+        init(QueueMixin(), this, {
             backpressureStrategy: config[QueueableLike_backpressureStrategy],
             capacity: config[QueueableLike_capacity],
         });
-        init(SerialDisposableMixin(), instance, Disposable.disposed);
-        instance[ObserverMixin_scheduler] =
+        init(SerialDisposableMixin(), this, Disposable.disposed);
+        this[ObserverMixin_scheduler] =
             scheduler[ObserverMixin_scheduler] ??
                 scheduler;
-        instance[DispatcherLike_state] = pipe(WritableStore.create(DispatcherState_ready), Disposable.addTo(instance));
-        return instance;
+        this[DispatcherLike_state] = pipe(WritableStore.create(DispatcherState_ready), Disposable.addTo(this));
+        return this;
     }, props({
         [DispatcherLike_state]: none,
         [ObserverMixin_scheduler]: none,

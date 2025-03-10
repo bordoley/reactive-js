@@ -4,6 +4,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import {
   Factory,
@@ -65,29 +66,29 @@ const createThrowIfEmptyObserver: <T>(
       LiftedObserverMixin(),
     ),
     function ThrowIfEmptyObserver(
-      instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
       factory: Factory<unknown>,
     ): ObserverLike<T> {
-      init(DisposableMixin, instance);
-      init(DelegatingObserverMixin(), instance, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DisposableMixin, this);
+      init(DelegatingObserverMixin(), this, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
-      instance[ThrowIfEmptyObserver_factory] = factory;
+      this[ThrowIfEmptyObserver_factory] = factory;
 
       pipe(
-        instance,
+        this,
         DisposableContainer.onComplete(onThrowIfEmptyObserverComplete),
       );
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [ThrowIfEmptyObserver_isEmpty]: true,
       [ThrowIfEmptyObserver_factory]: none,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties & LiftedObserverLike<T>,
         next: T,
@@ -95,7 +96,7 @@ const createThrowIfEmptyObserver: <T>(
         this[ThrowIfEmptyObserver_isEmpty] = false;
         this[LiftedObserverLike_delegate][ObserverLike_notify](next);
       }),
-    },
+    }),
   );
 })();
 

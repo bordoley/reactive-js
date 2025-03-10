@@ -5,6 +5,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import {
@@ -138,7 +139,7 @@ const createMergeAllObserverOperator: <T>(options?: {
       LiftedObserverMixin(),
     ),
     function MergeAllObserver(
-      instance: Pick<
+      this: Pick<
         ObserverLike<DeferredObservableWithSideEffectsLike<T>>,
         typeof ObserverLike_notify
       > &
@@ -148,31 +149,28 @@ const createMergeAllObserverOperator: <T>(options?: {
       backpressureStrategy: BackpressureStrategy,
       concurrency: number,
     ): ObserverLike<ObservableLike<T>> {
-      init(DisposableMixin, instance);
-      init(DelegatingObserverMixin(), instance, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DisposableMixin, this);
+      init(DelegatingObserverMixin(), this, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
-      instance[MergeAllObserver_observablesQueue] = Queue.create({
+      this[MergeAllObserver_observablesQueue] = Queue.create({
         capacity,
         backpressureStrategy,
       });
-      instance[MergeAllObserver_concurrency] = concurrency;
+      this[MergeAllObserver_concurrency] = concurrency;
 
-      instance[MergeAllObserver_activeCount] = 0;
+      this[MergeAllObserver_activeCount] = 0;
 
-      pipe(
-        instance,
-        DisposableContainer.onComplete(onMergeAllObserverComplete),
-      );
+      pipe(this, DisposableContainer.onComplete(onMergeAllObserverComplete));
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [MergeAllObserver_activeCount]: 0,
       [MergeAllObserver_concurrency]: 0,
       [MergeAllObserver_observablesQueue]: none,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties &
           LiftedObserverLike<DeferredObservableWithSideEffectsLike<T>, T>,
@@ -187,7 +185,7 @@ const createMergeAllObserverOperator: <T>(options?: {
           this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
         }
       }),
-    },
+    }),
   );
 
   return (

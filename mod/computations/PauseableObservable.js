@@ -12,14 +12,14 @@ import Observable_dispatchTo from "./Observable/__private__/Observable.dispatchT
 import * as WritableStore from "./WritableStore.js";
 import DelegatingMulticastObservableMixin from "./__mixins__/DelegatingMulticastObservableMixin.js";
 export const create = /*@__PURE__*/ (() => {
-    return mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingMulticastObservableMixin()), function PauseableObservable(instance, op) {
-        const writableStore = (instance[PauseableLike_isPaused] =
+    return mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingMulticastObservableMixin()), function PauseableObservable(op) {
+        const writableStore = (this[PauseableLike_isPaused] =
             WritableStore.create(true));
         const observableDelegate = pipe(writableStore, op);
         pipe(writableStore, Disposable.addToContainer(observableDelegate));
-        init(DelegatingDisposableMixin, instance, writableStore);
-        init(DelegatingMulticastObservableMixin(), instance, observableDelegate);
-        return instance;
+        init(DelegatingDisposableMixin, this, writableStore);
+        init(DelegatingMulticastObservableMixin(), this, observableDelegate);
+        return this;
     }, props({
         [PauseableLike_isPaused]: none,
     }), {

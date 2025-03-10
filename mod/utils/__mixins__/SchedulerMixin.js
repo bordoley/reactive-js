@@ -1,7 +1,7 @@
 /// <reference types="./SchedulerMixin.d.ts" />
 
 import { __DEV__ } from "../../__internal__/constants.js";
-import { include, init, mix, mixInstanceFactory, props, unsafeCast, } from "../../__internal__/mixins.js";
+import { include, init, mix, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { error, isNone, isSome, newInstance, none, pipe, raiseIf, } from "../../functions.js";
 import { abs, clampPositiveInteger, floor } from "../../math.js";
 import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
@@ -89,15 +89,15 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
             this[QueueableContinuation_effect] =
                 none;
         }
-        return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function QueueableContinuation(instance, scheduler, effect, dueTime) {
-            init(DisposableMixin, instance);
-            init(QueueMixin(), instance, none);
-            instance[SchedulerContinuationLike_dueTime] = dueTime;
-            instance[SchedulerContinuationLike_id] = ++scheduler[SchedulerMixinLike_taskIDCounter];
-            instance[QueueableContinuation_scheduler] = scheduler;
-            instance[QueueableContinuation_effect] = effect;
-            pipe(instance, DisposableContainer.onDisposed(onContinuationDisposed));
-            return instance;
+        return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function QueueableContinuation(scheduler, effect, dueTime) {
+            init(DisposableMixin, this);
+            init(QueueMixin(), this, none);
+            this[SchedulerContinuationLike_dueTime] = dueTime;
+            this[SchedulerContinuationLike_id] = ++scheduler[SchedulerMixinLike_taskIDCounter];
+            this[QueueableContinuation_scheduler] = scheduler;
+            this[QueueableContinuation_effect] = effect;
+            pipe(this, DisposableContainer.onDisposed(onContinuationDisposed));
+            return this;
         }, props({
             [QueueableSchedulerContinuationLike_parent]: none,
             [QueueableSchedulerContinuationLike_isReschedulingChildren]: false,
@@ -105,7 +105,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
             [QueueableContinuation_effect]: none,
             [SchedulerContinuationLike_dueTime]: 0,
             [SchedulerContinuationLike_id]: 0,
-        }), {
+        }), proto({
             [SchedulerContinuationLike_run]() {
                 if (this[DisposableLike_isDisposed]) {
                     return;
@@ -187,11 +187,11 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                     throw newInstance(ContinuationYieldError, delay);
                 }
             },
-        });
+        }));
     })();
-    return mix(include(DisposableMixin), function SchedulerMixin(instance) {
-        init(DisposableMixin, instance);
-        return instance;
+    return mix(include(DisposableMixin), function SchedulerMixin() {
+        init(DisposableMixin, this);
+        return this;
     }, props({
         [SchedulerMixinLike_currentContinuation]: none,
         [SchedulerMixinLike_yieldRequested]: false,

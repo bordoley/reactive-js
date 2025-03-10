@@ -216,15 +216,15 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   const createHostSchedulerInstance = mixInstanceFactory(
     include(CurrentTimeSchedulerMixin, SerialDisposableMixin(), QueueMixin()),
     function HostScheduler(
-      instance: Omit<SchedulerMixinHostLike, typeof SchedulerLike_now> &
+      this: Omit<SchedulerMixinHostLike, typeof SchedulerLike_now> &
         Mutable<TProperties>,
       maxYieldInterval: number,
     ): SchedulerLike & DisposableLike {
-      instance[SchedulerLike_maxYieldInterval] = maxYieldInterval;
+      this[SchedulerLike_maxYieldInterval] = maxYieldInterval;
 
-      init(CurrentTimeSchedulerMixin, instance);
-      init(SerialDisposableMixin(), instance, Disposable.disposed);
-      init(QueueMixin<SchedulerContinuationLike>(), instance, {
+      init(CurrentTimeSchedulerMixin, this);
+      init(SerialDisposableMixin(), this, Disposable.disposed);
+      init(QueueMixin<SchedulerContinuationLike>(), this, {
         comparator: SchedulerContinuation.compare,
       });
 
@@ -233,14 +233,14 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
       if (isSome(MessageChannel) && isNone(setImmediate)) {
         const channel = newInstance(MessageChannel);
-        instance[HostScheduler_messageChannel] = channel;
+        this[HostScheduler_messageChannel] = channel;
         channel.port1.onmessage = () =>
-          hostSchedulerContinuation(instance, Disposable.disposed);
+          hostSchedulerContinuation(this, Disposable.disposed);
 
-        pipe(instance, DisposableContainer.onDisposed(onHostSchedulerDisposed));
+        pipe(this, DisposableContainer.onDisposed(onHostSchedulerDisposed));
       }
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [SchedulerLike_maxYieldInterval]: 300,

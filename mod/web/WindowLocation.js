@@ -56,14 +56,14 @@ const createSyncToHistoryStream = (f, scheduler, options) => Streamable.create(c
 })))[StreamableLike_stream](scheduler, options);
 export const subscribe = /*@__PURE__*/ (() => {
     const WindowLocation_delegate = Symbol("WindowLocation_delegate");
-    const createWindowLocationObservable = mixInstanceFactory(include(DelegatingDisposableMixin), function WindowLocationStream(instance, delegate, scheduler) {
-        init(DelegatingDisposableMixin, instance, delegate);
-        instance[WindowLocation_delegate] = delegate;
-        instance[WindowLocationLike_canGoBack] = pipe(WritableStore.create(false), Disposable.addTo(instance));
+    const createWindowLocationObservable = mixInstanceFactory(include(DelegatingDisposableMixin), function WindowLocationStream(delegate, scheduler) {
+        init(DelegatingDisposableMixin, this, delegate);
+        this[WindowLocation_delegate] = delegate;
+        this[WindowLocationLike_canGoBack] = pipe(WritableStore.create(false), Disposable.addTo(this));
         pipe(delegate, Observable.forEach(({ counter }) => {
-            instance[WindowLocationLike_canGoBack][StoreLike_value] = counter > 0;
-        }), Observable.subscribe(scheduler), Disposable.addTo(instance));
-        return instance;
+            this[WindowLocationLike_canGoBack][StoreLike_value] = counter > 0;
+        }), Observable.subscribe(scheduler), Disposable.addTo(this));
+        return this;
     }, props({
         [WindowLocation_delegate]: none,
         [WindowLocationLike_canGoBack]: none,

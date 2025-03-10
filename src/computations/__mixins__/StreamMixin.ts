@@ -35,7 +35,7 @@ const StreamMixin: <TReq, T>() => Mixin3<
         DelegatingMulticastObservableMixin<T>(),
       ),
       function Stream(
-        instance: unknown,
+        this: unknown,
         op: Function1<
           PureDeferredObservableLike<TReq>,
           DeferredObservableLike<T>
@@ -56,11 +56,11 @@ const StreamMixin: <TReq, T>() => Mixin3<
           Disposable.addTo(dispatcher),
         );
 
-        init(DelegatingDisposableMixin, instance, dispatcher);
-        init(DelegatingDispatcherMixin<TReq>(), instance, dispatcher);
-        init(DelegatingMulticastObservableMixin<T>(), instance, delegate);
+        init(DelegatingDisposableMixin, this, dispatcher);
+        init(DelegatingDispatcherMixin<TReq>(), this, dispatcher);
+        init(DelegatingMulticastObservableMixin<T>(), this, delegate);
 
-        return instance;
+        return this;
       },
     ),
   ))();

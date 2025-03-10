@@ -40,12 +40,12 @@ const DelegatingPauseableMixin: Mixin1<
     PauseableLike
   >(
     function DelegatingPauseableMixin(
-      instance: TProperties & PauseableLike,
+      this: TProperties & PauseableLike,
       delegate: PauseableLike,
     ): PauseableLike {
-      instance[DelegatingPauseableMixin_delegate] = delegate;
+      this[DelegatingPauseableMixin_delegate] = delegate;
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [DelegatingPauseableMixin_delegate]: none,

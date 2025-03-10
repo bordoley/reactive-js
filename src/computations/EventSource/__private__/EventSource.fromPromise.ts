@@ -36,20 +36,20 @@ const EventSource_fromPromise: EventSource.Signature["fromPromise"] =
       mixInstanceFactory(
         include(DelegatingDisposableContainerMixin),
         function FromPromiseEventSource(
-          instance: TProperties<T> &
+          this: TProperties<T> &
             Omit<EventSourceLike<T>, keyof DisposableContainerLike>,
           promise: Promise<T>,
         ): EventSourceLike<T> {
-          instance[FromPromiseEventSource_promise] = promise;
+          this[FromPromiseEventSource_promise] = promise;
 
           const disposable = Disposable.create();
-          init(DelegatingDisposableContainerMixin, instance, disposable);
+          init(DelegatingDisposableContainerMixin, this, disposable);
 
           promise
             .catch(Disposable.toErrorHandler(disposable))
             .finally(bindMethod(disposable, DisposableLike_dispose));
 
-          return instance;
+          return this;
         },
         props<TProperties<T>>({
           [FromPromiseEventSource_promise]: none,

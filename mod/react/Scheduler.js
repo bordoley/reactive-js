@@ -9,10 +9,10 @@ import SchedulerMixin, { SchedulerContinuationLike_dueTime, SchedulerContinuatio
 import { SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../utils.js";
 const createReactScheduler = /*@__PURE__*/ (() => {
     const ReactScheduler_priority = Symbol("ReactScheduler_priority");
-    return mixInstanceFactory(include(SchedulerMixin), function ReactPriorityScheduler(instance, priority) {
-        init(SchedulerMixin, instance);
-        instance[ReactScheduler_priority] = priority;
-        return instance;
+    return mixInstanceFactory(include(SchedulerMixin), function ReactPriorityScheduler(priority) {
+        init(SchedulerMixin, this);
+        this[ReactScheduler_priority] = priority;
+        return this;
     }, props({
         [ReactScheduler_priority]: 3,
     }), {

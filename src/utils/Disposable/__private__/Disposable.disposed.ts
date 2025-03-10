@@ -11,9 +11,9 @@ const Disposable_disposed: Disposable.Signature["disposed"] =
   /*@__PURE__*/ (() => {
     const disposed = mixInstanceFactory<DisposableLike, DisposableLike>(
       include(DisposableMixin),
-      function DisposedDisposable(instance: DisposableLike) {
-        init(DisposableMixin, instance);
-        return instance;
+      function DisposedDisposable(this: DisposableLike) {
+        init(DisposableMixin, this);
+        return this;
       },
     )();
     disposed[DisposableLike_dispose]();

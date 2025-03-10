@@ -39,18 +39,18 @@ const Observable_fromEventSource: Observable.Signature["fromEventSource"] =
       mixInstanceFactory(
         include(DelegatingDisposableContainerMixin),
         function FromEventSourceObservable(
-          instance: Omit<
+          this: Omit<
             MulticastObservableLike<T>,
             keyof DisposableContainerLike
           > &
             TProperties,
           eventSource: EventSourceLike<T>,
         ): MulticastObservableLike<T> {
-          instance[FromEventSourceObservable_eventSource] = eventSource;
+          this[FromEventSourceObservable_eventSource] = eventSource;
 
-          init(DelegatingDisposableContainerMixin, instance, eventSource);
+          init(DelegatingDisposableContainerMixin, this, eventSource);
 
-          return instance;
+          return this;
         },
         props<TProperties>({
           [FromEventSourceObservable_eventSource]: none,

@@ -4,6 +4,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -59,7 +60,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
       LiftedObserverMixin(),
     ),
     function DecodeWithCharsetObserver(
-      instance: Pick<ObserverLike<ArrayBuffer>, typeof ObserverLike_notify> &
+      this: Pick<ObserverLike<ArrayBuffer>, typeof ObserverLike_notify> &
         TProperties,
       delegate: ObserverLike<string>,
       charset: string,
@@ -68,24 +69,24 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         ignoreBOM?: boolean;
       },
     ): ObserverLike<ArrayBuffer> {
-      init(DisposableMixin, instance);
-      init(DelegatingObserverMixin<ArrayBuffer>(), instance, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DisposableMixin, this);
+      init(DelegatingObserverMixin<ArrayBuffer>(), this, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
       const textDecoder = newInstance(TextDecoder, charset, options);
-      instance[DecodeWithCharsetObserver_textDecoder] = textDecoder;
+      this[DecodeWithCharsetObserver_textDecoder] = textDecoder;
 
       pipe(
-        instance,
+        this,
         DisposableContainer.onComplete(onDecodeWithCharsetObserverComplete),
       );
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [DecodeWithCharsetObserver_textDecoder]: none,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties & LiftedObserverLike<ArrayBuffer, string>,
         next: ArrayBuffer,
@@ -97,7 +98,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
           this[LiftedObserverLike_delegate][ObserverLike_notify](data);
         }
       }),
-    },
+    }),
   );
 })();
 

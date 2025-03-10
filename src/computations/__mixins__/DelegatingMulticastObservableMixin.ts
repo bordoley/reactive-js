@@ -25,16 +25,13 @@ const DelegatingMulticastObservableMixin: <T>() => Mixin1<
   return returns(
     mix(
       function DelegatingMulticastObservableMixin(
-        instance: Omit<
-          MulticastObservableLike<T>,
-          keyof DisposableContainerLike
-        > &
+        this: Omit<MulticastObservableLike<T>, keyof DisposableContainerLike> &
           TProperties,
         delegate: TReplayObservable,
       ): Omit<MulticastObservableLike<T>, keyof DisposableContainerLike> {
-        instance[DelegatingMulticastObservableMixin_delegate] = delegate;
+        this[DelegatingMulticastObservableMixin_delegate] = delegate;
 
-        return instance;
+        return this;
       },
       props<TProperties>({
         [DelegatingMulticastObservableMixin_delegate]: none,

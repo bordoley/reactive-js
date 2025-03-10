@@ -8,11 +8,11 @@ import EventSource_lift from "./EventSource.lift.js";
 const EventSource_keep = /*@__PURE__*/ (() => {
     const KeepEventListener_predicate = Symbol("KeepEventListener_predicate");
     const KeepEventListener_delegate = Symbol("KeepEventListener_delegate");
-    const createKeepEventListener = (() => mixInstanceFactory(include(DelegatingDisposableMixin), function KeepEventListener(instance, delegate, predicate) {
-        init(DelegatingDisposableMixin, instance, delegate);
-        instance[KeepEventListener_predicate] = predicate;
-        instance[KeepEventListener_delegate] = delegate;
-        return instance;
+    const createKeepEventListener = (() => mixInstanceFactory(include(DelegatingDisposableMixin), function KeepEventListener(delegate, predicate) {
+        init(DelegatingDisposableMixin, this, delegate);
+        this[KeepEventListener_predicate] = predicate;
+        this[KeepEventListener_delegate] = delegate;
+        return this;
     }, props({
         [KeepEventListener_predicate]: none,
         [KeepEventListener_delegate]: none,

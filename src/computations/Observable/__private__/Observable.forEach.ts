@@ -29,16 +29,16 @@ const createForEachObserver: <T>(
   return mixInstanceFactory(
     include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
     function ForEachObserver(
-      instance: TProperties,
+      this: TProperties,
       delegate: ObserverLike<T>,
       effect: SideEffect1<T>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, instance, delegate);
-      init(ObserverMixin(), instance, delegate, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
-      instance[ForEachObserver_effect] = effect;
+      init(DelegatingDisposableMixin, this, delegate);
+      init(ObserverMixin(), this, delegate, delegate);
+      init(LiftedObserverMixin(), this, delegate);
+      this[ForEachObserver_effect] = effect;
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [ForEachObserver_effect]: none,

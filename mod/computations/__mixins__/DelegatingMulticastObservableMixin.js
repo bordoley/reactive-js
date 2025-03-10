@@ -5,9 +5,9 @@ import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ObservableLi
 import { none, returns } from "../../functions.js";
 const DelegatingMulticastObservableMixin = /*@__PURE__*/ (() => {
     const DelegatingMulticastObservableMixin_delegate = Symbol("DelegatingMulticastObservableMixin_delegate");
-    return returns(mix(function DelegatingMulticastObservableMixin(instance, delegate) {
-        instance[DelegatingMulticastObservableMixin_delegate] = delegate;
-        return instance;
+    return returns(mix(function DelegatingMulticastObservableMixin(delegate) {
+        this[DelegatingMulticastObservableMixin_delegate] = delegate;
+        return this;
     }, props({
         [DelegatingMulticastObservableMixin_delegate]: none,
     }), {

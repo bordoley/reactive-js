@@ -10,12 +10,12 @@ import { ObserverLike_notify } from "../../../utils.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 const createForEachObserver = /*@__PURE__*/ (() => {
     const ForEachObserver_effect = Symbol("ForEachObserver_effect");
-    return mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()), function ForEachObserver(instance, delegate, effect) {
-        init(DelegatingDisposableMixin, instance, delegate);
-        init(ObserverMixin(), instance, delegate, delegate);
-        init(LiftedObserverMixin(), instance, delegate);
-        instance[ForEachObserver_effect] = effect;
-        return instance;
+    return mixInstanceFactory(include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()), function ForEachObserver(delegate, effect) {
+        init(DelegatingDisposableMixin, this, delegate);
+        init(ObserverMixin(), this, delegate, delegate);
+        init(LiftedObserverMixin(), this, delegate);
+        this[ForEachObserver_effect] = effect;
+        return this;
     }, props({
         [ForEachObserver_effect]: none,
     }), {

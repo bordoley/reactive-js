@@ -3,6 +3,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import { partial, pipe } from "../../../functions.js";
 import { clampPositiveInteger, max } from "../../../math.js";
@@ -31,22 +32,22 @@ const createSkipFirstObserver: <T>(
   mixInstanceFactory(
     include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function SkipFirstObserver(
-      instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProperties,
+      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProperties,
       delegate: ObserverLike<T>,
       skipCount?: number,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, instance, delegate);
-      init(ObserverMixin(), instance, delegate, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, this, delegate);
+      init(ObserverMixin(), this, delegate, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
-      instance[SkipFirstObserver_count] = clampPositiveInteger(skipCount ?? 1);
+      this[SkipFirstObserver_count] = clampPositiveInteger(skipCount ?? 1);
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [SkipFirstObserver_count]: 0,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties & LiftedObserverLike<T>,
         next: T,
@@ -59,7 +60,7 @@ const createSkipFirstObserver: <T>(
           this[LiftedObserverLike_delegate][ObserverLike_notify](next);
         }
       }),
-    },
+    }),
   ))();
 
 const Observable_skipFirst: Observable.Signature["skipFirst"] = <T>(options?: {

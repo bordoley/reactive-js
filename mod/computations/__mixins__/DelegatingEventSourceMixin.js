@@ -5,9 +5,9 @@ import { ComputationLike_isDeferred, ComputationLike_isSynchronous, EventSourceL
 import { none, returns } from "../../functions.js";
 const DelegatingEventSourceMixin = /*@__PURE__*/ (() => {
     const DelegatingEventSourceMixin_delegate = Symbol("DelegatingEventSourceMixin_delegate");
-    return returns(mix(function DelegatingEventSourceMixin(instance, delegate) {
-        instance[DelegatingEventSourceMixin_delegate] = delegate;
-        return instance;
+    return returns(mix(function DelegatingEventSourceMixin(delegate) {
+        this[DelegatingEventSourceMixin_delegate] = delegate;
+        return this;
     }, props({
         [DelegatingEventSourceMixin_delegate]: none,
     }), {

@@ -8,10 +8,10 @@ import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/Delega
 const LiftedObservableLike_source = Symbol("LiftedObservableMixin_source");
 const LiftedObservableLike_operators = Symbol("LiftedObservableMixin_operators");
 const createLiftedObservable = /*@__PURE__*/ (() => {
-    const LiftedObservableMixin = mix(function LiftedObservable(instance, source, ops) {
-        instance[LiftedObservableLike_source] = source;
-        instance[LiftedObservableLike_operators] = ops;
-        return instance;
+    const LiftedObservableMixin = mix(function LiftedObservable(source, ops) {
+        this[LiftedObservableLike_source] = source;
+        this[LiftedObservableLike_operators] = ops;
+        return this;
     }, props({
         [LiftedObservableLike_source]: none,
         [LiftedObservableLike_operators]: none,
@@ -20,20 +20,20 @@ const createLiftedObservable = /*@__PURE__*/ (() => {
             pipeUnsafe(observer, ...this[LiftedObservableLike_operators], bindMethod(this[LiftedObservableLike_source], ObservableLike_observe));
         },
     });
-    const createDeferredLiftedObservable = mixInstanceFactory(include(LiftedObservableMixin), function DeferredLiftedObservable(instance, source, ops, config) {
-        init(LiftedObservableMixin, instance, source, ops);
-        instance[ComputationLike_isPure] = config[ComputationLike_isPure];
-        instance[ComputationLike_isSynchronous] =
+    const createDeferredLiftedObservable = mixInstanceFactory(include(LiftedObservableMixin), function DeferredLiftedObservable(source, ops, config) {
+        init(LiftedObservableMixin, this, source, ops);
+        this[ComputationLike_isPure] = config[ComputationLike_isPure];
+        this[ComputationLike_isSynchronous] =
             config[ComputationLike_isSynchronous];
-        return instance;
+        return this;
     }, props({
         [ComputationLike_isPure]: true,
         [ComputationLike_isSynchronous]: true,
     }));
-    const createMulticastLiftedObservable = mixInstanceFactory(include(LiftedObservableMixin, DelegatingDisposableContainerMixin), function DeferredLiftedObservable(instance, source, ops) {
-        init(LiftedObservableMixin, instance, source, ops);
-        init(DelegatingDisposableContainerMixin, instance, source);
-        return instance;
+    const createMulticastLiftedObservable = mixInstanceFactory(include(LiftedObservableMixin, DelegatingDisposableContainerMixin), function DeferredLiftedObservable(source, ops) {
+        init(LiftedObservableMixin, this, source, ops);
+        init(DelegatingDisposableContainerMixin, this, source);
+        return this;
     }, props(), {
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,

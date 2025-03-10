@@ -8,17 +8,17 @@ import { DisposableLike_dispose, } from "../../../utils.js";
 import * as Publisher from "../../Publisher.js";
 const EventSource_create = /*@__PURE__*/ (() => {
     const CreateEventSource_delegate = Symbol("CreateEventSource_delegate");
-    return mixInstanceFactory(include(DelegatingDisposableMixin), function CreateEventSource(instance, setup, options) {
-        const delegate = (instance[CreateEventSource_delegate] =
+    return mixInstanceFactory(include(DelegatingDisposableMixin), function CreateEventSource(setup, options) {
+        const delegate = (this[CreateEventSource_delegate] =
             Publisher.create(options));
-        init(DelegatingDisposableMixin, instance, delegate);
+        init(DelegatingDisposableMixin, this, delegate);
         try {
             setup(delegate);
         }
         catch (e) {
             delegate[DisposableLike_dispose](error(e));
         }
-        return instance;
+        return this;
     }, props({
         [CreateEventSource_delegate]: none,
     }), {

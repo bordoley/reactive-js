@@ -8,10 +8,10 @@ import { DisposableLike_dispose } from "../../../utils.js";
 const Observable_createWithConfig = 
 /*@__PURE__*/ (() => {
     const CreateObservable_effect = Symbol("CreateObservable_effect");
-    return mixInstanceFactory(include(ObservableMixin), function CreateObservable(instance, effect, config) {
-        init(ObservableMixin, instance, config);
-        instance[CreateObservable_effect] = effect;
-        return instance;
+    return mixInstanceFactory(include(ObservableMixin), function CreateObservable(effect, config) {
+        init(ObservableMixin, this, config);
+        this[CreateObservable_effect] = effect;
+        return this;
     }, props({
         [CreateObservable_effect]: none,
     }), {

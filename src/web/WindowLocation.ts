@@ -164,30 +164,30 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
   const createWindowLocationObservable = mixInstanceFactory(
     include(DelegatingDisposableMixin),
     function WindowLocationStream(
-      instance: Omit<WindowLocationLike, keyof DisposableContainerLike> &
+      this: Omit<WindowLocationLike, keyof DisposableContainerLike> &
         TProperties,
       delegate: StreamLike<Updater<TState>, TState> & DisposableLike,
       scheduler: SchedulerLike,
     ): WindowLocationLike & DisposableLike {
-      init(DelegatingDisposableMixin, instance, delegate);
+      init(DelegatingDisposableMixin, this, delegate);
 
-      instance[WindowLocation_delegate] = delegate;
+      this[WindowLocation_delegate] = delegate;
 
-      instance[WindowLocationLike_canGoBack] = pipe(
+      this[WindowLocationLike_canGoBack] = pipe(
         WritableStore.create(false),
-        Disposable.addTo(instance),
+        Disposable.addTo(this),
       );
 
       pipe(
         delegate,
         Observable.forEach<TState>(({ counter }) => {
-          instance[WindowLocationLike_canGoBack][StoreLike_value] = counter > 0;
+          this[WindowLocationLike_canGoBack][StoreLike_value] = counter > 0;
         }),
         Observable.subscribe(scheduler),
-        Disposable.addTo(instance),
+        Disposable.addTo(this),
       );
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [WindowLocation_delegate]: none,

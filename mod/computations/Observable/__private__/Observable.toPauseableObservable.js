@@ -10,13 +10,13 @@ import DelegatingMulticastObservableMixin from "../../__mixins__/DelegatingMulti
 import Observable_multicast from "./Observable.multicast.js";
 const Observable_toPauseableObservable = 
 /*@__PURE__*/ (() => {
-    const createPauseableSynchronousObservable = mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingMulticastObservableMixin(), DelegatingPauseableMixin), function PauseableSynchronousObservable(instance, obs, scheduler, multicastOptions) {
+    const createPauseableSynchronousObservable = mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingMulticastObservableMixin(), DelegatingPauseableMixin), function PauseableSynchronousObservable(obs, scheduler, multicastOptions) {
         const pauseableScheduler = PauseableScheduler.create(scheduler);
-        init(DelegatingDisposableMixin, instance, pauseableScheduler);
-        init(DelegatingPauseableMixin, instance, pauseableScheduler);
-        const multicastObs = pipe(obs, Observable_multicast(pauseableScheduler, multicastOptions), Disposable.bindTo(instance));
-        init(DelegatingMulticastObservableMixin(), instance, multicastObs);
-        return instance;
+        init(DelegatingDisposableMixin, this, pauseableScheduler);
+        init(DelegatingPauseableMixin, this, pauseableScheduler);
+        const multicastObs = pipe(obs, Observable_multicast(pauseableScheduler, multicastOptions), Disposable.bindTo(this));
+        init(DelegatingMulticastObservableMixin(), this, multicastObs);
+        return this;
     });
     return (scheduler, options) => (obs) => createPauseableSynchronousObservable(obs, scheduler, options);
 })();

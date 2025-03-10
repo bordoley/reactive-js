@@ -9,14 +9,14 @@ import { DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDispo
 const Observable_fromPromise = 
 /*@__PURE__*/ (() => {
     const FromPromiseObservable_promise = Symbol("FromPromiseObservable_promise");
-    return returns(mixInstanceFactory(include(DelegatingDisposableContainerMixin), function FromPromiseObservable(instance, promise) {
-        instance[FromPromiseObservable_promise] = promise;
+    return returns(mixInstanceFactory(include(DelegatingDisposableContainerMixin), function FromPromiseObservable(promise) {
+        this[FromPromiseObservable_promise] = promise;
         const disposable = Disposable.create();
-        init(DelegatingDisposableContainerMixin, instance, disposable);
+        init(DelegatingDisposableContainerMixin, this, disposable);
         promise
             .catch(Disposable.toErrorHandler(disposable))
             .finally(bindMethod(disposable, DisposableLike_dispose));
-        return instance;
+        return this;
     }, props({
         [FromPromiseObservable_promise]: none,
     }), {

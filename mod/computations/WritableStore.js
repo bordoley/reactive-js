@@ -9,11 +9,11 @@ export const create = /*@__PURE__*/ (() => {
     const WritableStore_equality = Symbol("WritableStore_equality");
     const WritableStore_value = Symbol("WritableStore_value");
     const publisherPrototype = getPrototype(PublisherMixin());
-    return mixInstanceFactory(include(PublisherMixin()), function WritableStore(instance, initialValue, options) {
-        init(PublisherMixin(), instance, options);
-        instance[WritableStore_value] = initialValue;
-        instance[WritableStore_equality] = options?.equality ?? strictEquality;
-        return instance;
+    return mixInstanceFactory(include(PublisherMixin()), function WritableStore(initialValue, options) {
+        init(PublisherMixin(), this, options);
+        this[WritableStore_value] = initialValue;
+        this[WritableStore_equality] = options?.equality ?? strictEquality;
+        return this;
     }, props({
         [WritableStore_equality]: none,
         [WritableStore_value]: none,

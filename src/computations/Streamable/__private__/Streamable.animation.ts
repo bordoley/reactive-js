@@ -47,7 +47,7 @@ const Streamable_animation: Streamable.Signature["animation"] = /*@__PURE__*/ (<
       DelegatingEventSourceMixin(),
     ),
     function AnimationStream(
-      instance: unknown,
+      this: unknown,
       animation:
         | Function1<TEvent, PureSynchronousObservableLike<T>>
         | PureSynchronousObservableLike<T>,
@@ -81,27 +81,17 @@ const Streamable_animation: Streamable.Signature["animation"] = /*@__PURE__*/ (<
         },
       );
 
-      init(
-        StreamMixin<TEvent, boolean>(),
-        instance,
-        operator,
-        scheduler,
-        options,
-      );
+      init(StreamMixin<TEvent, boolean>(), this, operator, scheduler, options);
 
-      init(DelegatingPauseableMixin, instance, pauseableScheduler);
+      init(DelegatingPauseableMixin, this, pauseableScheduler);
 
-      init(DelegatingEventSourceMixin(), instance, publisher);
+      init(DelegatingEventSourceMixin(), this, publisher);
 
-      pipe(
-        instance,
-        Disposable.add(publisher),
-        Disposable.add(pauseableScheduler),
-      );
+      pipe(this, Disposable.add(publisher), Disposable.add(pauseableScheduler));
 
-      instance[PauseableLike_resume]();
+      this[PauseableLike_resume]();
 
-      return instance;
+      return this;
     },
   );
 

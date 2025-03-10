@@ -1,6 +1,6 @@
 /// <reference types="./Observable.throwIfEmpty.d.ts" />
 
-import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
@@ -26,22 +26,22 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
         }
         delegate[DisposableLike_dispose](err);
     }
-    return mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()), function ThrowIfEmptyObserver(instance, delegate, factory) {
-        init(DisposableMixin, instance);
-        init(DelegatingObserverMixin(), instance, delegate);
-        init(LiftedObserverMixin(), instance, delegate);
-        instance[ThrowIfEmptyObserver_factory] = factory;
-        pipe(instance, DisposableContainer.onComplete(onThrowIfEmptyObserverComplete));
-        return instance;
+    return mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()), function ThrowIfEmptyObserver(delegate, factory) {
+        init(DisposableMixin, this);
+        init(DelegatingObserverMixin(), this, delegate);
+        init(LiftedObserverMixin(), this, delegate);
+        this[ThrowIfEmptyObserver_factory] = factory;
+        pipe(this, DisposableContainer.onComplete(onThrowIfEmptyObserverComplete));
+        return this;
     }, props({
         [ThrowIfEmptyObserver_isEmpty]: true,
         [ThrowIfEmptyObserver_factory]: none,
-    }), {
+    }), proto({
         [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             this[ThrowIfEmptyObserver_isEmpty] = false;
             this[LiftedObserverLike_delegate][ObserverLike_notify](next);
         }),
-    });
+    }));
 })();
 const Observable_throwIfEmpty = (factory) => pipe((createThrowIfEmptyObserver), partial(factory), Observable_liftPureDeferred);
 export default Observable_throwIfEmpty;

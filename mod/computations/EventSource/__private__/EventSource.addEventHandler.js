@@ -6,10 +6,10 @@ import { none } from "../../../functions.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { EventListenerLike_notify } from "../../../utils.js";
 const EventListener_createInternal = /*@__PURE__*/ (() => {
-    return mixInstanceFactory(include(DisposableMixin), function EventListener(instance, notify) {
-        init(DisposableMixin, instance);
-        instance[EventListenerLike_notify] = notify;
-        return instance;
+    return mixInstanceFactory(include(DisposableMixin), function EventListener(notify) {
+        init(DisposableMixin, this);
+        this[EventListenerLike_notify] = notify;
+        return this;
     }, props({
         [EventListenerLike_notify]: none,
     }));

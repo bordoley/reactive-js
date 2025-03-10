@@ -33,7 +33,7 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
   return mixInstanceFactory(
     include(DelegatingDisposableMixin),
     function CreateEventSource(
-      instance: Pick<
+      this: Pick<
         EventSourceLike<T>,
         | typeof EventSourceLike_addEventListener
         | typeof ComputationLike_isSynchronous
@@ -45,10 +45,10 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
         readonly autoDispose?: boolean;
       },
     ): EventSourceLike<T> & DisposableLike {
-      const delegate = (instance[CreateEventSource_delegate] =
+      const delegate = (this[CreateEventSource_delegate] =
         Publisher.create<T>(options));
 
-      init(DelegatingDisposableMixin, instance, delegate);
+      init(DelegatingDisposableMixin, this, delegate);
 
       try {
         setup(delegate);
@@ -56,7 +56,7 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
         delegate[DisposableLike_dispose](error(e));
       }
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [CreateEventSource_delegate]: none,

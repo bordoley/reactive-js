@@ -19,11 +19,11 @@ export const create: Signature["create"] = /*@__PURE__*/ (<
   mixInstanceFactory(
     include(DisposableMixin, SerialDisposableMixin<TDisposable>()),
     function SerialDisposable(
-      instance: unknown,
+      this: unknown,
       initialValue: TDisposable = Disposable.disposed as TDisposable,
     ): SerialDisposableLike<TDisposable> {
-      init(DisposableMixin, instance);
-      init(SerialDisposableMixin<TDisposable>(), instance, initialValue);
-      return instance;
+      init(DisposableMixin, this);
+      init(SerialDisposableMixin<TDisposable>(), this, initialValue);
+      return this;
     },
   ))();

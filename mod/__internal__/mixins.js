@@ -14,7 +14,7 @@ function initUnsafe(mixin, instance, ...args) {
             raiseIf(!Obj.hasOwn(instance, key), `Failed to include ${mixin[Mixin_init].name}.`);
         }
     }
-    f(instance, ...args);
+    f.call(instance, ...args);
 }
 export const init = initUnsafe;
 export const include = (...mixins) => {
@@ -88,3 +88,4 @@ export const props = (o) => {
 };
 export const getPrototype = (mixin) => mixin[Mixin_prototype];
 export function unsafeCast(_v) { }
+export const proto = (o) => o;

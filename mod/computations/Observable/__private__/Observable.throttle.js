@@ -1,6 +1,6 @@
 /// <reference types="./Observable.throttle.d.ts" />
 
-import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { bind, isSome, none, partial, pipe, pipeLazy, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -46,22 +46,22 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
             delegate[DispatcherLike_complete]();
         }
     }
-    return mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()), function ThrottleObserver(instance, delegate, durationFunction, mode) {
-        init(DisposableMixin, instance);
-        init(DelegatingObserverMixin(), instance, delegate);
-        init(LiftedObserverMixin(), instance, delegate);
-        instance[ThrottleObserver_durationFunction] = durationFunction;
-        instance[ThrottleObserver_mode] = mode;
-        instance[ThrottleObserver_durationSubscription] = pipe(SerialDisposable.create(), Disposable.addTo(delegate));
-        pipe(instance, DisposableContainer.onComplete(onThrottleObserverComplete));
-        return instance;
+    return mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()), function ThrottleObserver(delegate, durationFunction, mode) {
+        init(DisposableMixin, this);
+        init(DelegatingObserverMixin(), this, delegate);
+        init(LiftedObserverMixin(), this, delegate);
+        this[ThrottleObserver_durationFunction] = durationFunction;
+        this[ThrottleObserver_mode] = mode;
+        this[ThrottleObserver_durationSubscription] = pipe(SerialDisposable.create(), Disposable.addTo(delegate));
+        pipe(this, DisposableContainer.onComplete(onThrottleObserverComplete));
+        return this;
     }, props({
         [ThrottleObserver_value]: none,
         [ThrottleObserver_hasValue]: false,
         [ThrottleObserver_durationSubscription]: none,
         [ThrottleObserver_durationFunction]: none,
         [ThrottleObserver_mode]: ThrottleIntervalMode,
-    }), {
+    }), proto({
         [ObserverLike_notify]: Observer_assertObserverState(function (next) {
             this[ThrottleObserver_value] = next;
             this[ThrottleObserver_hasValue] = true;
@@ -74,7 +74,7 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
                 setupDurationSubscription(this, next);
             }
         }),
-    });
+    }));
 })();
 const Observable_throttle = (duration, options = {}) => {
     const { mode = ThrottleIntervalMode } = options;

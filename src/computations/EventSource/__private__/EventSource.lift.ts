@@ -33,7 +33,7 @@ const createLiftedEventSource: <TIn, TOut>(
   return mixInstanceFactory(
     include(DelegatingDisposableContainerMixin),
     function LiftedEventSource(
-      instance: TProperties &
+      this: TProperties &
         Pick<
           EventSourceLike,
           | typeof EventSourceLike_addEventListener
@@ -43,12 +43,12 @@ const createLiftedEventSource: <TIn, TOut>(
       source: EventSourceLike<TIn>,
       ops: readonly Function1<EventListenerLike<any>, EventListenerLike<any>>[],
     ) {
-      instance[LiftedEventSource_source] = source;
-      instance[LiftedEventSource_operators] = ops;
+      this[LiftedEventSource_source] = source;
+      this[LiftedEventSource_operators] = ops;
 
-      init(DelegatingDisposableContainerMixin, instance, source);
+      init(DelegatingDisposableContainerMixin, this, source);
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [LiftedEventSource_source]: none,

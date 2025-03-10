@@ -5,9 +5,9 @@ import { none, returns } from "../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_state, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 const DelegatingDispatcherMixin = /*@__PURE__*/ (() => {
     const DelegatingDispatcherMixin_delegate = Symbol("DelegatingDispatcherMixin_delegate");
-    return returns(mix(function DelegatingDispatcherMixin(instance, delegate) {
-        instance[DelegatingDispatcherMixin_delegate] = delegate;
-        return instance;
+    return returns(mix(function DelegatingDispatcherMixin(delegate) {
+        this[DelegatingDispatcherMixin_delegate] = delegate;
+        return this;
     }, props({
         [DelegatingDispatcherMixin_delegate]: none,
     }), {

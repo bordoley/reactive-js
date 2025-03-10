@@ -27,16 +27,16 @@ const EventSource_keep: EventSource.Signature["keep"] = /*@__PURE__*/ (() => {
     mixInstanceFactory(
       include(DelegatingDisposableMixin),
       function KeepEventListener(
-        instance: Pick<EventListenerLike<T>, typeof EventListenerLike_notify> &
+        this: Pick<EventListenerLike<T>, typeof EventListenerLike_notify> &
           TProperties<T>,
         delegate: EventListenerLike<T>,
         predicate: Predicate<T>,
       ): EventListenerLike<T> {
-        init(DelegatingDisposableMixin, instance, delegate);
-        instance[KeepEventListener_predicate] = predicate;
-        instance[KeepEventListener_delegate] = delegate;
+        init(DelegatingDisposableMixin, this, delegate);
+        this[KeepEventListener_predicate] = predicate;
+        this[KeepEventListener_delegate] = delegate;
 
-        return instance;
+        return this;
       },
       props<TProperties<T>>({
         [KeepEventListener_predicate]: none,

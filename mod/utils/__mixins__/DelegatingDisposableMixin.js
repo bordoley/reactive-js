@@ -10,13 +10,13 @@ const DelegatingDisposableMixin =
     function onDelegatingDisposableMixinDisposed() {
         this[DisposableLike_isDisposed] = true;
     }
-    return mix(function DelegatingDisposableMixin(instance, delegate) {
-        instance[DelegatingDisposable_delegate] = delegate;
-        instance[DelegatingDisposable_delegate] =
+    return mix(function DelegatingDisposableMixin(delegate) {
+        this[DelegatingDisposable_delegate] = delegate;
+        this[DelegatingDisposable_delegate] =
             delegate[DelegatingDisposable_delegate] ??
                 delegate;
-        pipe(instance, DisposableContainer.onDisposed(onDelegatingDisposableMixinDisposed));
-        return instance;
+        pipe(this, DisposableContainer.onDisposed(onDelegatingDisposableMixinDisposed));
+        return this;
     }, props({
         [DelegatingDisposable_delegate]: none,
         [DisposableLike_isDisposed]: false,

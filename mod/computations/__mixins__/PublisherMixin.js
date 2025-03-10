@@ -16,20 +16,21 @@ const PublisherMixin = /*@__PURE__*/ (() => {
             listener[DisposableLike_dispose](e);
         }
     }
-    return returns(mix(include(DisposableMixin), function EventPublisher(instance, options) {
-        init(DisposableMixin, instance);
-        instance[Publisher_listeners] =
-            newInstance(Set);
+    return returns(mix(include(DisposableMixin), function EventPublisher(options) {
+        init(DisposableMixin, this);
+        this[Publisher_listeners] = newInstance(Set);
         const autoDispose = options?.autoDispose ?? false;
-        pipe(instance, DisposableContainer.onDisposed(onEventPublisherDisposed));
-        instance[Publisher_onListenerDisposed] = function onListenerDisposed() {
+        pipe(this, DisposableContainer.onDisposed(onEventPublisherDisposed));
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const instance = this;
+        this[Publisher_onListenerDisposed] = function onListenerDisposed() {
             const listeners = instance[Publisher_listeners];
             listeners[Set_delete](this);
             if (autoDispose && listeners[Set_size] === 0) {
                 instance[DisposableLike_dispose]();
             }
         };
-        return instance;
+        return this;
     }, props({
         [Publisher_listeners]: none,
         [Publisher_onListenerDisposed]: none,

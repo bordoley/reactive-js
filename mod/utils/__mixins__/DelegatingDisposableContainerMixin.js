@@ -5,10 +5,10 @@ import { bind, isFunction, none, } from "../../functions.js";
 import { DisposableContainerLike_add, } from "../../utils.js";
 const DelegatingDisposableContainerMixin = /*@__PURE__*/ (() => {
     const DelegatingDisposableContainer_delegate = Symbol("DelegatingDisposableContainer_delegate");
-    return mix(function DelegatingDisposableMixin(instance, delegate) {
-        instance[DelegatingDisposableContainer_delegate] =
+    return mix(function DelegatingDisposableMixin(delegate) {
+        this[DelegatingDisposableContainer_delegate] =
             delegate[DelegatingDisposableContainer_delegate] ?? delegate;
-        return instance;
+        return this;
     }, props({
         [DelegatingDisposableContainer_delegate]: none,
     }), {

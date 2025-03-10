@@ -3,6 +3,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import {
@@ -80,36 +81,35 @@ const createWithLatestFromObserver: <TA, TB, T>(
   return mixInstanceFactory(
     include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
     function WithLatestFromObserver(
-      instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
-        TProperties,
+      this: Pick<ObserverLike<TA>, typeof ObserverLike_notify> & TProperties,
       delegate: ObserverLike<T>,
       other: ObservableLike<TB>,
       selector: Function2<TA, TB, T>,
     ): ObserverLike<TA> {
-      init(DelegatingDisposableMixin, instance, delegate);
-      init(ObserverMixin(), instance, delegate, delegate);
-      init(LiftedObserverMixin(), instance, delegate);
+      init(DelegatingDisposableMixin, this, delegate);
+      init(ObserverMixin(), this, delegate, delegate);
+      init(LiftedObserverMixin(), this, delegate);
 
-      instance[WithLatestFromObserver_selector] = selector;
+      this[WithLatestFromObserver_selector] = selector;
 
       pipe(
         other,
-        Observable_forEach(bind(onOtherNotify, instance)),
+        Observable_forEach(bind(onOtherNotify, this)),
         Observable_subscribeWithConfig(delegate, delegate),
-        Disposable.addTo(instance),
+        Disposable.addTo(this),
         DisposableContainer.onComplete(
-          bind(onWithLatestFromObserverOtherSubscriptionComplete, instance),
+          bind(onWithLatestFromObserverOtherSubscriptionComplete, this),
         ),
       );
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [WithLatestFromObserver_hasLatest]: false,
       [WithLatestFromObserver_otherLatest]: none,
       [WithLatestFromObserver_selector]: none,
     }),
-    {
+    proto({
       [ObserverLike_notify]: Observer_assertObserverState(function (
         this: TProperties & LiftedObserverLike<TA, T>,
         next: TA,
@@ -125,7 +125,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
           this[LiftedObserverLike_delegate][ObserverLike_notify](result);
         }
       }),
-    },
+    }),
   );
 })();
 

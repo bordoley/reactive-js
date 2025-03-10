@@ -17,11 +17,11 @@ const EventSource_merge = /*@__PURE__*/ (() => {
             ? flattenEventSources(observable[MergeEventSource_eventSources])
             : observable)
         : observables;
-    return mixInstanceFactory(include(DelegatingDisposableContainerMixin), function MergeEventSource(instance, ...eventSources) {
+    return mixInstanceFactory(include(DelegatingDisposableContainerMixin), function MergeEventSource(...eventSources) {
         eventSources = flattenEventSources(eventSources);
-        instance[MergeEventSource_eventSources] = eventSources;
+        this[MergeEventSource_eventSources] = eventSources;
         const disposable = Disposable.create();
-        init(DelegatingDisposableContainerMixin, instance, disposable);
+        init(DelegatingDisposableContainerMixin, this, disposable);
         const count = eventSources[Array_length];
         let completed = 0;
         for (const eventSource of eventSources) {
@@ -32,7 +32,7 @@ const EventSource_merge = /*@__PURE__*/ (() => {
                 }
             }));
         }
-        return instance;
+        return this;
     }, props({
         [MergeEventSource_eventSources]: none,
     }), {

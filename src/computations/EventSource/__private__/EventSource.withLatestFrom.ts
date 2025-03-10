@@ -69,30 +69,27 @@ const createWithLatestFromEventListener: <TA, TB, T>(
   return mixInstanceFactory(
     include(DelegatingDisposableMixin),
     function WithLatestFromEventListener(
-      instance: Pick<EventListenerLike<TA>, typeof EventListenerLike_notify> &
+      this: Pick<EventListenerLike<TA>, typeof EventListenerLike_notify> &
         TProperties,
       delegate: EventListenerLike<T>,
       other: EventSourceLike<TB>,
       selector: Function2<TA, TB, T>,
     ): EventListenerLike<TA> {
-      init(DelegatingDisposableMixin, instance, delegate);
+      init(DelegatingDisposableMixin, this, delegate);
 
-      instance[WithLatestFromEventListener_selector] = selector;
-      instance[WithLatestFromEventListener_delegate] = delegate;
+      this[WithLatestFromEventListener_selector] = selector;
+      this[WithLatestFromEventListener_delegate] = delegate;
 
       pipe(
         other,
-        EventSource_addEventHandler(bind(onOtherNotify, instance)),
-        Disposable.addTo(instance),
+        EventSource_addEventHandler(bind(onOtherNotify, this)),
+        Disposable.addTo(this),
         DisposableContainer.onComplete(
-          bind(
-            onWithLatestFromEventListenerOtherSubscriptionComplete,
-            instance,
-          ),
+          bind(onWithLatestFromEventListenerOtherSubscriptionComplete, this),
         ),
       );
 
-      return instance;
+      return this;
     },
     props<TProperties>({
       [WithLatestFromEventListener_hasLatest]: false,

@@ -71,13 +71,13 @@ const isDisposableContainer = (
 
 const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
   function DisposableMixin(
-    instance: Pick<
+    this: Pick<
       DisposableLike,
       typeof DisposableLike_dispose | typeof DisposableContainerLike_add
     > &
       TProperties,
   ): DisposableLike {
-    return instance;
+    return this;
   },
   props<TProperties>({
     [DisposableMixin_onChildDisposed]: none,

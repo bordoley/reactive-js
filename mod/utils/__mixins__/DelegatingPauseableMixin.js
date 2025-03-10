@@ -5,9 +5,9 @@ import { none } from "../../functions.js";
 import { PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } from "../../utils.js";
 const DelegatingPauseableMixin = /*@__PURE__*/ (() => {
     const DelegatingPauseableMixin_delegate = Symbol("DelegatingPauseableMixin_delegate");
-    return mix(function DelegatingPauseableMixin(instance, delegate) {
-        instance[DelegatingPauseableMixin_delegate] = delegate;
-        return instance;
+    return mix(function DelegatingPauseableMixin(delegate) {
+        this[DelegatingPauseableMixin_delegate] = delegate;
+        return this;
     }, props({
         [DelegatingPauseableMixin_delegate]: none,
     }), {

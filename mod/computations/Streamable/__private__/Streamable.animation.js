@@ -21,18 +21,18 @@ const Streamable_animation = /*@__PURE__*/ (() => {
         map: Observable.map,
         switchAll: Observable.switchAll,
     };
-    const AnimationStream_create = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin, DelegatingEventSourceMixin()), function AnimationStream(instance, animation, scheduler, animationScheduler, options) {
+    const AnimationStream_create = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin, DelegatingEventSourceMixin()), function AnimationStream(animation, scheduler, animationScheduler, options) {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
         const publisher = Publisher.create();
         const operator = Computation.flatMap(ObservableModule, "switchAll")((event) => pipe(isFunction(animation) ? animation(event) : animation, Computation.notify(ObservableModule)(publisher), Computation.ignoreElements(ObservableModule)(), Observable.subscribeOn(pauseableScheduler), Computation.startWith(ObservableModule)(true), Computation.endWith(ObservableModule)(false)), {
             innerType: DeferredComputationWithSideEffects,
         });
-        init(StreamMixin(), instance, operator, scheduler, options);
-        init(DelegatingPauseableMixin, instance, pauseableScheduler);
-        init(DelegatingEventSourceMixin(), instance, publisher);
-        pipe(instance, Disposable.add(publisher), Disposable.add(pauseableScheduler));
-        instance[PauseableLike_resume]();
-        return instance;
+        init(StreamMixin(), this, operator, scheduler, options);
+        init(DelegatingPauseableMixin, this, pauseableScheduler);
+        init(DelegatingEventSourceMixin(), this, publisher);
+        pipe(this, Disposable.add(publisher), Disposable.add(pauseableScheduler));
+        this[PauseableLike_resume]();
+        return this;
     });
     return (animationGroup, creationOptions) => ({
         [StreamableLike_stream]: (scheduler, options) => AnimationStream_create(animationGroup, scheduler, creationOptions?.animationScheduler ?? scheduler, options),

@@ -10,10 +10,10 @@ import { DispatcherLike_complete, DisposableLike_dispose, QueueableLike_enqueue,
 import * as EventSource from "../../EventSource.js";
 const Observable_fromStore = /*@__PURE__*/ (() => {
     const FromStoreObservable_eventSource = Symbol("FromStoreObservable_eventSource");
-    return returns(mixInstanceFactory(include(DelegatingDisposableContainerMixin), function FromEventSourceObservable(instance, store) {
-        instance[FromStoreObservable_eventSource] = store;
-        init(DelegatingDisposableContainerMixin, instance, store);
-        return instance;
+    return returns(mixInstanceFactory(include(DelegatingDisposableContainerMixin), function FromEventSourceObservable(store) {
+        this[FromStoreObservable_eventSource] = store;
+        init(DelegatingDisposableContainerMixin, this, store);
+        return this;
     }, props({
         [FromStoreObservable_eventSource]: none,
     }), {

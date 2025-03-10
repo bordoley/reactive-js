@@ -145,7 +145,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
       DelegatingDisposableMixin,
     ),
     function Cache(
-      instance: TProperties<T> & Pick<CacheLike<T>, typeof CacheLike_get>,
+      this: TProperties<T> & Pick<CacheLike<T>, typeof CacheLike_get>,
       scheduler: SchedulerLike,
       options: Optional<{
         readonly backpressureStrategy?: BackpressureStrategy;
@@ -208,8 +208,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
               pipe(
                 updaters,
                 ReadonlyObjectMap.map(
-                  (_, k: string) =>
-                    instance[CacheStream_store][Map_get](k) as T,
+                  (_, k: string) => this[CacheStream_store][Map_get](k) as T,
                 ),
               ),
             ),
@@ -288,15 +287,15 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
         ),
         Observable.forEach(
           ReadonlyObjectMap.forEach((v: T, key: string) => {
-            const oldValue = instance[CacheStream_store][Map_get](key);
+            const oldValue = this[CacheStream_store][Map_get](key);
 
             if (isNone(v)) {
-              instance[CacheStream_store][Map_delete](key);
+              this[CacheStream_store][Map_delete](key);
             } else {
-              instance[CacheStream_store][Map_set](key, v);
+              this[CacheStream_store][Map_set](key, v);
             }
 
-            const subject = instance[CacheStream_subscriptions][Map_get](key);
+            const subject = this[CacheStream_subscriptions][Map_get](key);
 
             // We want to publish none, when the cache does not have the value
             // when initially subscribing to the key.
@@ -307,7 +306,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
               return;
             }
 
-            instance[CacheStream_scheduleCleanup](key);
+            this[CacheStream_scheduleCleanup](key);
           }),
         ),
         isSome(persistentStore)
@@ -324,10 +323,10 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
 
       let cleanupJob = Disposable.disposed;
 
-      instance[CacheStream_store] = store;
-      instance[CacheStream_subscriptions] = subscriptions;
-      instance[CacheStream_scheduleCleanup] = (key: string) => {
-        if (isNone(instance[CacheStream_store][Map_get](key))) {
+      this[CacheStream_store] = store;
+      this[CacheStream_subscriptions] = subscriptions;
+      this[CacheStream_scheduleCleanup] = (key: string) => {
+        if (isNone(this[CacheStream_store][Map_get](key))) {
           return;
         }
 
@@ -341,16 +340,16 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
       };
 
-      init(DelegatingDisposableMixin, instance, dispatcher);
+      init(DelegatingDisposableMixin, this, dispatcher);
       init(
         DelegatingDispatcherMixin<
           ReadonlyObjectMapLike<string, Function1<Optional<T>, T>>
         >(),
-        instance,
+        this,
         dispatcher,
       );
 
-      return instance;
+      return this;
     },
     props<TProperties<T>>({
       [CacheStream_scheduleCleanup]: none,
