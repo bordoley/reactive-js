@@ -8,18 +8,19 @@ export const areAllDeferred = (computations) => computations.every(isDeferred);
 export const areAllMulticasted = (computations) => computations.every(isMulticasted);
 export const areAllPure = (computations) => computations.every(isPure);
 export const areAllSynchronous = (computations) => computations.every(isSynchronous);
-export const concatMap = /*@__PURE__*/ memoize(m => flatMap(m, "concatAll"));
+export const concatMap = /*@__PURE__*/ memoize(m => (selector, options) => flatMap(m)("concatAll", selector, options));
 export const concatMapIterable = 
-/*@__PURE__*/ memoize(m => flatMapIterable(m, "concatAll"));
+/*@__PURE__*/
+(() => memoize((m) => (selector, options) => flatMapIterable(m)("concatAll", selector, options)))();
 export const concatMany = /*@__PURE__*/ memoize(m => (computations) => m.concat(...computations));
 export const concatWith = /*@__PURE__*/ memoize(m => (...tail) => (fst) => m.concat(fst, ...tail));
 export const debug = /*@__PURE__*/ memoize(m => () => m.forEach(breakPoint));
 export const endWith = /*@__PURE__*/ memoize(m => (...values) => concatWith(m)(m.fromReadonlyArray()(values)));
-export const flatMap = ((m, flatten) => (selector, options) => compose((x) => x, m.map(selector), m[flatten](options)));
-export const flatMapIterable = ((m, flatten) => (selector, options) => {
+export const flatMap = /*@__PURE__*/ (() => memoize((m) => (flatten, selector, options) => compose((x) => x, m.map(selector), m[flatten](options))))();
+export const flatMapIterable = /*@__PURE__*/ (() => memoize((m) => (key, selector, options) => {
     const mapper = compose(selector, m.fromIterable());
-    return flatMap(m, flatten)(mapper, options);
-});
+    return flatMap(m /* I give up */)(key, mapper, options);
+}))();
 export const hasSideEffects = (computation) => !(computation[ComputationLike_isPure] ?? true);
 export const ignoreElements = 
 /*@__PURE__*/ memoize(m => () => m.keep(alwaysFalse));

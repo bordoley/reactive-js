@@ -29,7 +29,7 @@ const Streamable_animationGroup =
     };
     const AnimationGroupStream_create = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin), function AnimationGroupStream(animationGroup, scheduler, animationScheduler, options) {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
-        const operator = Computation.flatMap(ObservableModule, "switchAll")((event) => pipe(animationGroup, ReadonlyObjectMap.entries(), Iterable.map(([key, factory]) => {
+        const operator = Computation.flatMap(ObservableModule)("switchAll", (event) => pipe(animationGroup, ReadonlyObjectMap.entries(), Iterable.map(([key, factory]) => {
             const publisher = publishers[key];
             return pipe(isFunction(factory) ? factory(event) : factory, Computation.notify(ObservableModule)(publisher), Observable.subscribeOn(pauseableScheduler));
         }), ReadonlyArray.fromIterable(), Computation.mergeMany(ObservableModule), Computation.ignoreElements(ObservableModule)(), Computation.startWith(ObservableModule)(true), Computation.endWith(ObservableModule)(false)), {

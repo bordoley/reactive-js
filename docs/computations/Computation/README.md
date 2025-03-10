@@ -9,6 +9,8 @@
 ## Interfaces
 
 - [ConcatManyOperator](interfaces/ConcatManyOperator.md)
+- [ConcatMapIterableOperator](interfaces/ConcatMapIterableOperator.md)
+- [ConcatMapOperator](interfaces/ConcatMapOperator.md)
 - [ConcatWithOperator](interfaces/ConcatWithOperator.md)
 - [FlatMapIterableOperator](interfaces/FlatMapIterableOperator.md)
 - [FlatMapOperator](interfaces/FlatMapOperator.md)

@@ -69,7 +69,60 @@ export interface ConcatManyOperator<TComputation extends ComputationType> {
   ): DeferredComputationWithSideEffectsOf<TComputation, T>;
 }
 
-export interface FlatMapOperator<TComputation extends ComputationType> {
+export interface FlatMapOperator<
+  TComputation extends ComputationType,
+  TFlattenKey extends string | number | symbol,
+> {
+  <TA, TB>(
+    key: TFlattenKey,
+    selector: Function1<TA, PureSynchronousComputationOf<TComputation, TB>>,
+  ): HigherOrderComputationOperator<
+    TComputation,
+    PureSynchronousComputationLike,
+    TA,
+    TB
+  >;
+
+  <TA, TB, TInnerType extends HigherOrderInnerComputationLike>(
+    key: TFlattenKey,
+    selector: Function1<
+      TA,
+      HigherOrderInnerComputationOf<TComputation, TInnerType, TB>
+    >,
+    options?: {
+      readonly innerType: TInnerType;
+    },
+  ): HigherOrderComputationOperator<TComputation, TInnerType, TA, TB>;
+}
+
+export interface FlatMapIterableOperator<
+  TComputation extends ComputationType,
+  TFlattenKey extends string | number | symbol,
+> {
+  <TA, TB>(
+    key: TFlattenKey,
+    selector: Function1<TA, PureIterableLike<TB>>,
+  ): HigherOrderComputationOperator<
+    TComputation,
+    PureSynchronousComputationLike,
+    TA,
+    TB
+  >;
+  <TA, TB>(
+    key: TFlattenKey,
+    selector: Function1<TA, PureIterableLike<TB>>,
+    options: {
+      readonly innerType: PureSynchronousComputationLike;
+    },
+  ): HigherOrderComputationOperator<
+    TComputation,
+    PureSynchronousComputationLike,
+    TA,
+    TB
+  >;
+}
+
+export interface ConcatMapOperator<TComputation extends ComputationType> {
   <TA, TB>(
     selector: Function1<TA, PureSynchronousComputationOf<TComputation, TB>>,
   ): HigherOrderComputationOperator<
@@ -90,7 +143,9 @@ export interface FlatMapOperator<TComputation extends ComputationType> {
   ): HigherOrderComputationOperator<TComputation, TInnerType, TA, TB>;
 }
 
-export interface FlatMapIterableOperator<TComputation extends ComputationType> {
+export interface ConcatMapIterableOperator<
+  TComputation extends ComputationType,
+> {
   <TA, TB>(
     selector: Function1<TA, PureIterableLike<TB>>,
   ): HigherOrderComputationOperator<
@@ -236,7 +291,7 @@ export interface Signature {
       ComputationModule<TComputation> & DeferredComputationModule<TComputation>,
       "concatAll" | "map"
     >,
-  ): FlatMapOperator<TComputation>;
+  ): ConcatMapOperator<TComputation>;
 
   concatMapIterable<TComputation extends ComputationType>(
     m: PickComputationModule<
@@ -244,7 +299,7 @@ export interface Signature {
       ComputationModule<TComputation> & DeferredComputationModule<TComputation>,
       "concatAll" | "map" | "fromIterable"
     >,
-  ): FlatMapIterableOperator<TComputation>;
+  ): ConcatMapIterableOperator<TComputation>;
 
   concatMany<TComputation extends ComputationType>(
     m: PickComputationModule<
@@ -290,24 +345,35 @@ export interface Signature {
       ComputationModule<TComputation>,
       "map"
     > & {
-      readonly [key in TFlattenKey]: DeferredComputationModule<TComputation>["concatAll"];
+      readonly [key in
+        | TFlattenKey
+        | string
+        | symbol
+        | number]: key extends TFlattenKey
+        ? DeferredComputationModule<TComputation>["concatAll"]
+        : unknown;
     },
-    key: TFlattenKey,
-  ): FlatMapOperator<TComputation>;
+  ): FlatMapOperator<TComputation, TFlattenKey>;
 
   flatMapIterable<
     TComputation extends ComputationType,
     TFlattenKey extends string | number | symbol,
-  >(
-    m: PickComputationModule<
+    TModule extends PickComputationModule<
       TComputation,
       ComputationModule<TComputation>,
       "map" | "fromIterable"
     > & {
-      readonly [key in TFlattenKey]: DeferredComputationModule<TComputation>["concatAll"];
+      readonly [key in
+        | TFlattenKey
+        | string
+        | symbol
+        | number]: key extends TFlattenKey
+        ? DeferredComputationModule<TComputation>["concatAll"]
+        : unknown;
     },
-    key: TFlattenKey,
-  ): FlatMapIterableOperator<TComputation>;
+  >(
+    m: TModule,
+  ): FlatMapIterableOperator<TComputation, TFlattenKey>;
 
   hasSideEffects<TComputation extends ComputationLike>(
     computation: TComputation,
@@ -465,14 +531,29 @@ export const areAllSynchronous: Signature["areAllSynchronous"] = <
 ): computations is readonly (TComputation & SynchronousComputationLike)[] =>
   computations.every(isSynchronous);
 
-export const concatMap: Signature["concatMap"] = /*@__PURE__*/ memoize(m =>
-  flatMap(m, "concatAll"),
+export const concatMap: Signature["concatMap"] = /*@__PURE__*/ memoize(
+  m => (selector, options) => flatMap(m)("concatAll", selector, options),
 ) as Signature["concatMap"];
 
 export const concatMapIterable: Signature["concatMapIterable"] =
-  /*@__PURE__*/ memoize(m =>
-    flatMapIterable(m, "concatAll"),
-  ) as Signature["concatMapIterable"];
+  /*@__PURE__*/
+  (<TComputation extends ComputationType>() =>
+    memoize(
+      (
+        m: PickComputationModule<
+          TComputation,
+          ComputationModule<TComputation> &
+            DeferredComputationModule<TComputation>,
+          "concatAll" | "map" | "fromIterable"
+        >,
+      ) =>
+        (selector, options) =>
+          flatMapIterable<TComputation, "concatAll", typeof m>(m)(
+            "concatAll",
+            selector,
+            options,
+          ),
+    ))() as Signature["concatMapIterable"];
 
 export const concatMany: Signature["concatMany"] = /*@__PURE__*/ memoize(
   m =>
@@ -497,58 +578,62 @@ export const endWith: Signature["endWith"] = /*@__PURE__*/ memoize(
       concatWith(m)(m.fromReadonlyArray<T>()(values)),
 ) as Signature["endWith"];
 
-export const flatMap: Signature["flatMap"] = (<
-    TComputation extends ComputationType,
-    TFlattenKey extends string | number | symbol,
-  >(
-    m: PickComputationModule<
-      TComputation,
-      ComputationModule<TComputation>,
-      "map"
-    > & {
-      readonly [key in TFlattenKey]: DeferredComputationModule<TComputation>["concatAll"];
-    },
-    flatten: TFlattenKey,
-  ) =>
-  <TA, TB, TInnerType extends HigherOrderInnerComputationLike>(
-    selector: Function1<
-      TA,
-      HigherOrderInnerComputationOf<TComputation, TInnerType, TB>
-    >,
-    options: {
-      innerType: TInnerType;
-    },
-  ) =>
-    compose(
-      (x: ComputationBaseOf<TComputation, TA>) => x,
-      m.map(selector),
-      m[flatten]<TB, TInnerType>(options),
-    )) as Signature["flatMap"];
+export const flatMap: Signature["flatMap"] = /*@__PURE__*/ (<
+  TComputation extends ComputationType,
+  TFlattenKey extends string | number | symbol,
+>() =>
+  memoize(
+    (
+      m: PickComputationModule<
+        TComputation,
+        ComputationModule<TComputation>,
+        "map"
+      > & {
+        readonly [key in TFlattenKey]: DeferredComputationModule<TComputation>["concatAll"];
+      },
+    ) =>
+      <TA, TB, TInnerType extends HigherOrderInnerComputationLike>(
+        flatten: TFlattenKey,
+        selector: Function1<
+          TA,
+          HigherOrderInnerComputationOf<TComputation, TInnerType, TB>
+        >,
+        options: {
+          readonly innerType: TInnerType;
+        },
+      ) =>
+        compose(
+          (x: ComputationOf<TComputation, TA>) => x,
+          m.map(selector),
+          m[flatten]<TB, TInnerType>(options),
+        ),
+  ))() as Signature["flatMap"];
 
-export const flatMapIterable: Signature["flatMapIterable"] = (<
-    TComputation extends ComputationType,
-    TFlattenKey extends string | number | symbol,
-  >(
-    m: PickComputationModule<
-      TComputation,
-      ComputationModule<TComputation>,
-      "map" | "fromIterable"
-    > & {
-      readonly [key in TFlattenKey]: DeferredComputationModule<TComputation>["concatAll"];
-    },
-    flatten: TFlattenKey,
-  ) =>
-  <TA, TB>(
-    selector: Function1<TA, PureIterableLike<TB>>,
-    options?: {
-      readonly innerType:
-        | PureSynchronousComputationLike
-        | SynchronousComputationWithSideEffectsLike;
-    },
-  ) => {
-    const mapper = compose(selector, m.fromIterable<TB>());
-    return flatMap(m, flatten)(mapper, options);
-  }) as Signature["flatMapIterable"];
+export const flatMapIterable: Signature["flatMapIterable"] = /*@__PURE__*/ (<
+  TComputation extends ComputationType,
+  TFlattenKey extends string | number | symbol,
+>() =>
+  memoize(
+    (
+      m: PickComputationModule<
+        TComputation,
+        ComputationModule<TComputation>,
+        "map" | "fromIterable"
+      > & {
+        readonly [key in TFlattenKey]: key extends TFlattenKey
+          ? DeferredComputationModule<TComputation>["concatAll"]
+          : unknown;
+      },
+    ) =>
+      (key: TFlattenKey, selector, options) => {
+        const mapper = compose(selector, m.fromIterable());
+        return flatMap<TComputation, TFlattenKey>(m as any /* I give up */)(
+          key,
+          mapper,
+          options,
+        );
+      },
+  ))() as Signature["flatMapIterable"];
 
 export const hasSideEffects: Signature["hasSideEffects"] = <
   TComputation extends ComputationLike,

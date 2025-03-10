@@ -24,7 +24,7 @@ const Streamable_animation = /*@__PURE__*/ (() => {
     const AnimationStream_create = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin, DelegatingEventSourceMixin()), function AnimationStream(animation, scheduler, animationScheduler, options) {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
         const publisher = Publisher.create();
-        const operator = Computation.flatMap(ObservableModule, "switchAll")((event) => pipe(isFunction(animation) ? animation(event) : animation, Computation.notify(ObservableModule)(publisher), Computation.ignoreElements(ObservableModule)(), Observable.subscribeOn(pauseableScheduler), Computation.startWith(ObservableModule)(true), Computation.endWith(ObservableModule)(false)), {
+        const operator = Computation.flatMap(ObservableModule)("switchAll", (event) => pipe(isFunction(animation) ? animation(event) : animation, Computation.notify(ObservableModule)(publisher), Computation.ignoreElements(ObservableModule)(), Observable.subscribeOn(pauseableScheduler), Computation.startWith(ObservableModule)(true), Computation.endWith(ObservableModule)(false)), {
             innerType: DeferredComputationWithSideEffects,
         });
         init(StreamMixin(), this, operator, scheduler, options);

@@ -55,7 +55,8 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
         pipe(
           observable,
           Observable_withLatestFrom<T, TAcc>(accFeedbackStream),
-          Computation.flatMap(ObservableModule, "switchAll")(
+          Computation.flatMap(ObservableModule)(
+            "switchAll",
             ([next, acc]) => scanner(acc, next),
             {
               innerType: {

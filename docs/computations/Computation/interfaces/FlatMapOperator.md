@@ -4,13 +4,15 @@
 
 [Reactive-JS](../../../README.md) / [computations/Computation](../README.md) / FlatMapOperator
 
-# Interface: FlatMapOperator()\<TComputation\>
+# Interface: FlatMapOperator()\<TComputation, TFlattenKey\>
 
 ## Type Parameters
 
 • **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
-> **FlatMapOperator**\<`TA`, `TB`\>(`selector`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
+• **TFlattenKey** *extends* `string` \| `number` \| `symbol`
+
+> **FlatMapOperator**\<`TA`, `TB`\>(`key`, `selector`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -20,6 +22,10 @@
 
 ## Parameters
 
+### key
+
+`TFlattenKey`
+
 ### selector
 
 [`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureSynchronousComputationOf`](../../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `TB`\>\>
@@ -28,7 +34,7 @@
 
 [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
 
-> **FlatMapOperator**\<`TA`, `TB`, `TInnerType`\>(`selector`, `options`?): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, `TInnerType`, `TA`, `TB`\>
+> **FlatMapOperator**\<`TA`, `TB`, `TInnerType`\>(`key`, `selector`, `options`?): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, `TInnerType`, `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -39,6 +45,10 @@
 • **TInnerType** *extends* [`HigherOrderInnerComputationLike`](../../type-aliases/HigherOrderInnerComputationLike.md)
 
 ## Parameters
+
+### key
+
+`TFlattenKey`
 
 ### selector
 

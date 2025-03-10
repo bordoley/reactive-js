@@ -4,13 +4,15 @@
 
 [Reactive-JS](../../../README.md) / [computations/Computation](../README.md) / FlatMapIterableOperator
 
-# Interface: FlatMapIterableOperator()\<TComputation\>
+# Interface: FlatMapIterableOperator()\<TComputation, TFlattenKey\>
 
 ## Type Parameters
 
 • **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
-> **FlatMapIterableOperator**\<`TA`, `TB`\>(`selector`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
+• **TFlattenKey** *extends* `string` \| `number` \| `symbol`
+
+> **FlatMapIterableOperator**\<`TA`, `TB`\>(`key`, `selector`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -19,6 +21,10 @@
 • **TB**
 
 ## Parameters
+
+### key
+
+`TFlattenKey`
 
 ### selector
 
@@ -28,7 +34,7 @@
 
 [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
 
-> **FlatMapIterableOperator**\<`TA`, `TB`\>(`selector`, `options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
+> **FlatMapIterableOperator**\<`TA`, `TB`\>(`key`, `selector`, `options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -37,6 +43,10 @@
 • **TB**
 
 ## Parameters
+
+### key
+
+`TFlattenKey`
 
 ### selector
 

@@ -1022,10 +1022,7 @@ testModule(
         await pipeAsync(
           [1, 2, 3],
           Observable.fromReadonlyArray(),
-          Computation.flatMap(
-            Observable,
-            "mergeAll",
-          )<number, number>(x =>
+          Computation.flatMap(Observable)<number, number>("mergeAll", x =>
             pipe([x, x, x], Observable.fromReadonlyArray<number>()),
           ),
           Observable.toReadonlyArrayAsync(scheduler),
@@ -1293,10 +1290,9 @@ testModule(
       pipeLazy(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
-        Computation.flatMap(
-          Observable,
-          "switchAll",
-        )<number, number>(_ => pipe([1, 2, 3], Observable.fromReadonlyArray())),
+        Computation.flatMap(Observable)<number, number>("switchAll", _ =>
+          pipe([1, 2, 3], Observable.fromReadonlyArray()),
+        ),
         Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
       ),
@@ -1306,10 +1302,7 @@ testModule(
       pipeLazy(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
-        Computation.flatMap(
-          Observable,
-          "switchAll",
-        )<number, number>(x =>
+        Computation.flatMap(Observable)<number, number>("switchAll", x =>
           pipe(
             [x, x, x],
             Observable.fromReadonlyArray<number>({
@@ -1327,10 +1320,7 @@ testModule(
       pipeLazy(
         [none, none, none],
         Observable.fromReadonlyArray({ delay: 4 }),
-        Computation.flatMap(
-          Observable,
-          "switchAll",
-        )<void, number>(_ =>
+        Computation.flatMap(Observable)<void, number>("switchAll", _ =>
           pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
         ),
         Observable.toReadonlyArray(),
@@ -1342,10 +1332,9 @@ testModule(
       pipeLazy(
         [1, 2, 3],
         Observable.fromReadonlyArray({ delay: 1 }),
-        Computation.flatMap(
-          Observable,
-          "switchAll",
-        )<number, number>(_ => pipe([1, 2, 3], Observable.fromReadonlyArray())),
+        Computation.flatMap(Observable)<number, number>("switchAll", _ =>
+          pipe([1, 2, 3], Observable.fromReadonlyArray()),
+        ),
         Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
       ),

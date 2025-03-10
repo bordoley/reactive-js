@@ -92,11 +92,12 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] =
       ): Streamable.AnimationGroupStreamLike<TEvent, TKey, T> & DisposableLike {
         const pauseableScheduler =
           PauseableScheduler.create(animationScheduler);
-        const operator = Computation.flatMap(ObservableModule, "switchAll")<
+        const operator = Computation.flatMap(ObservableModule)<
           TEvent,
           boolean,
           DeferredComputationWithSideEffectsLike
         >(
+          "switchAll",
           (event: TEvent) =>
             pipe(
               animationGroup,

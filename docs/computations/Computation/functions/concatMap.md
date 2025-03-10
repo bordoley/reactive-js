@@ -6,7 +6,7 @@
 
 # Function: concatMap()
 
-> **concatMap**\<`TComputation`\>(`m`): [`FlatMapOperator`](../interfaces/FlatMapOperator.md)\<`TComputation`\>
+> **concatMap**\<`TComputation`\>(`m`): [`ConcatMapOperator`](../interfaces/ConcatMapOperator.md)\<`TComputation`\>
 
 ## Type Parameters
 
@@ -20,4 +20,4 @@
 
 ## Returns
 
-[`FlatMapOperator`](../interfaces/FlatMapOperator.md)\<`TComputation`\>
+[`ConcatMapOperator`](../interfaces/ConcatMapOperator.md)\<`TComputation`\>

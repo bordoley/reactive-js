@@ -62,11 +62,12 @@ const Streamable_animation: Streamable.Signature["animation"] = /*@__PURE__*/ (<
       const pauseableScheduler = PauseableScheduler.create(animationScheduler);
       const publisher = Publisher.create();
 
-      const operator = Computation.flatMap(ObservableModule, "switchAll")<
+      const operator = Computation.flatMap(ObservableModule)<
         TEvent,
         boolean,
         DeferredComputationWithSideEffectsLike
       >(
+        "switchAll",
         (event: TEvent) =>
           pipe(
             isFunction(animation) ? animation(event) : animation,

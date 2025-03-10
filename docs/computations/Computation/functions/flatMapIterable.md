@@ -6,7 +6,7 @@
 
 # Function: flatMapIterable()
 
-> **flatMapIterable**\<`TComputation`, `TFlattenKey`\>(`m`, `key`): [`FlatMapIterableOperator`](../interfaces/FlatMapIterableOperator.md)\<`TComputation`\>
+> **flatMapIterable**\<`TComputation`, `TFlattenKey`, `TModule`\>(`m`): [`FlatMapIterableOperator`](../interfaces/FlatMapIterableOperator.md)\<`TComputation`, `TFlattenKey`\>
 
 ## Type Parameters
 
@@ -14,16 +14,14 @@
 
 • **TFlattenKey** *extends* `string` \| `number` \| `symbol`
 
+• **TModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputation`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputation`\>, `"map"` \| `"fromIterable"`\> & \{ readonly \[key in string \| number \| symbol\]: key extends TFlattenKey ? \{ (): HigherOrderComputationOperator\<TComputation, PureSynchronousComputationLike, PureSynchronousComputationOf\<TComputation, T\>, T\>; (options: \{ innerType: TInnerType \}): HigherOrderComputationOperator\<TComputation, TInnerType, HigherOrderInnerComputationOf\<TComputation, TInnerType, T\>, T\> \} : unknown \}
+
 ## Parameters
 
 ### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputation`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputation`\>, `"map"` \| `"fromIterable"`\> & \{ readonly \[key in string \| number \| symbol\]: \{ (): HigherOrderComputationOperator\<TComputation, PureSynchronousComputationLike, PureSynchronousComputationOf\<TComputation, T\>, T\>; (options: \{ innerType: TInnerType \}): HigherOrderComputationOperator\<TComputation, TInnerType, HigherOrderInnerComputationOf\<TComputation, TInnerType, T\>, T\> \} \}
-
-### key
-
-`TFlattenKey`
+`TModule`
 
 ## Returns
 
-[`FlatMapIterableOperator`](../interfaces/FlatMapIterableOperator.md)\<`TComputation`\>
+[`FlatMapIterableOperator`](../interfaces/FlatMapIterableOperator.md)\<`TComputation`, `TFlattenKey`\>

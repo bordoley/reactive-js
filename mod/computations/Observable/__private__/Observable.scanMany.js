@@ -28,7 +28,7 @@ const Observable_scanMany = ((scanner, initialValue, options) => {
             observable[ComputationLike_isSynchronous];
         return Observable_createWithConfig(observer => {
             const accFeedbackStream = pipe(Subject.create(), Disposable.addTo(observer));
-            pipe(observable, Observable_withLatestFrom(accFeedbackStream), Computation.flatMap(ObservableModule, "switchAll")(([next, acc]) => scanner(acc, next), {
+            pipe(observable, Observable_withLatestFrom(accFeedbackStream), Computation.flatMap(ObservableModule)("switchAll", ([next, acc]) => scanner(acc, next), {
                 innerType: {
                     [ComputationLike_isDeferred]: true,
                     [ComputationLike_isPure]: false,

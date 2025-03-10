@@ -6,7 +6,7 @@
 
 # Function: concatMapIterable()
 
-> **concatMapIterable**\<`TComputation`\>(`m`): [`FlatMapIterableOperator`](../interfaces/FlatMapIterableOperator.md)\<`TComputation`\>
+> **concatMapIterable**\<`TComputation`\>(`m`): [`ConcatMapIterableOperator`](../interfaces/ConcatMapIterableOperator.md)\<`TComputation`\>
 
 ## Type Parameters
 
@@ -20,4 +20,4 @@
 
 ## Returns
 
-[`FlatMapIterableOperator`](../interfaces/FlatMapIterableOperator.md)\<`TComputation`\>
+[`ConcatMapIterableOperator`](../interfaces/ConcatMapIterableOperator.md)\<`TComputation`\>
