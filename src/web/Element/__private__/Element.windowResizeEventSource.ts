@@ -1,9 +1,5 @@
-import * as EventSource from "../../../computations/EventSource.js";
-import {
-  EventSourceLike,
-  EventSourceLike_addEventListener,
-} from "../../../computations.js";
-import { Optional, invoke, none, pipe } from "../../../functions.js";
+import { EventSourceLike } from "../../../computations.js";
+import { Optional, none, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Element_eventSource from "./Element.eventSource.js";
 
@@ -13,20 +9,13 @@ const Element_windowResizeEventSource = /*@__PURE__*/ (() => {
   return (): EventSourceLike<Event> =>
     windowResizeEventSourceRef ??
     (() => {
-      windowResizeEventSourceRef = EventSource.create(listener => {
-        pipe(
-          listener,
-          DisposableContainer.onDisposed(() => {
-            windowResizeEventSourceRef = none;
-          }),
-        );
-
-        pipe(
-          window,
-          Element_eventSource<Window, "resize">("resize"),
-          invoke(EventSourceLike_addEventListener, listener),
-        );
-      });
+      windowResizeEventSourceRef = pipe(
+        window,
+        Element_eventSource<Window, "resize">("resize", { autoDispose: true }),
+        DisposableContainer.onDisposed(_ => {
+          windowResizeEventSourceRef = none;
+        }),
+      );
       return windowResizeEventSourceRef;
     })();
 })();

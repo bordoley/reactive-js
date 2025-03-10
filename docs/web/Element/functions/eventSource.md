@@ -22,6 +22,10 @@
 
 ### options?
 
+#### autoDispose?
+
+`boolean`
+
 #### capture?
 
 `boolean`

@@ -6,7 +6,7 @@
 
 # Function: scrollEventSource()
 
-> **scrollEventSource**\<`TElement`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<[`ScrollValue`](../../interfaces/ScrollValue.md)\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+> **scrollEventSource**\<`TElement`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<[`ScrollValue`](../../interfaces/ScrollValue.md)\>\>
 
 ## Type Parameters
 
@@ -14,4 +14,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<[`ScrollValue`](../../interfaces/ScrollValue.md)\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<[`ScrollValue`](../../interfaces/ScrollValue.md)\>\>

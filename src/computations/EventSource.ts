@@ -56,6 +56,9 @@ export interface EventSourceModule
 
   create<T>(
     setup: SideEffect1<EventListenerLike<T>>,
+    options?: {
+      readonly autoDispose?: boolean;
+    },
   ): EventSourceLike<T> & DisposableLike;
 
   empty<T>(): EventSourceLike<T> & DisposableLike;

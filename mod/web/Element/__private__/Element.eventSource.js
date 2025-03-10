@@ -21,5 +21,5 @@ const Element_eventSource = (eventName, options) => (target) => EventSource.crea
     pipe(listener, DisposableContainer.onDisposed(_ => {
         target.removeEventListener(eventName, eventHandler);
     }));
-});
+}, options);
 export default Element_eventSource;

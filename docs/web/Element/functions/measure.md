@@ -6,20 +6,12 @@
 
 # Function: measure()
 
-> **measure**\<`TElement`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`StoreLike`](../../../computations/interfaces/StoreLike.md)\<[`Rect`](../../interfaces/Rect.md)\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+> **measure**\<`TElement`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`StoreLike`](../../../computations/interfaces/StoreLike.md)\<[`Rect`](../../interfaces/Rect.md)\>\>
 
 ## Type Parameters
 
 • **TElement** *extends* `HTMLElement` \| `SVGElement`
 
-## Parameters
-
-### options?
-
-#### autoDispose?
-
-`boolean`
-
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`StoreLike`](../../../computations/interfaces/StoreLike.md)\<[`Rect`](../../interfaces/Rect.md)\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`StoreLike`](../../../computations/interfaces/StoreLike.md)\<[`Rect`](../../interfaces/Rect.md)\>\>

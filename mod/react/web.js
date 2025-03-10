@@ -6,7 +6,7 @@ import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
 import * as EventSource from "../computations/EventSource.js";
 import * as Streamable from "../computations/Streamable.js";
 import { StoreLike_value, } from "../computations.js";
-import { identity, isFunction, isNull, none, pipe, pipeSomeLazy, } from "../functions.js";
+import { identity, isFunction, isNull, none, pipe, pipeSome, pipeSomeLazy, } from "../functions.js";
 import { useDisposable, useListen, useObserve, useStore, useStream, } from "../react.js";
 import * as AnimationFrameScheduler from "../web/AnimationFrameScheduler.js";
 import * as WebElement from "../web/Element.js";
@@ -41,7 +41,7 @@ export const useAnimationGroup = (animationGroup, options) => {
 };
 export const useMeasure = () => {
     const [container, setContainer] = useState(null);
-    const rect = useStore(pipeSomeLazy(container ?? none, WebElement.measure()), [container]);
+    const rect = useStore(pipeSome(container ?? none, WebElement.measure()));
     return [setContainer, rect];
 };
 export const useScroll = (callback, deps) => {

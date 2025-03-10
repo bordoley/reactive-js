@@ -14,7 +14,9 @@ export type Computation = EventSourceComputation;
  */
 export interface EventSourceModule extends ComputationModule<EventSourceComputation>, ConcurrentReactiveComputationModule<EventSourceComputation> {
     addEventHandler<T>(handler: SideEffect1<T>): Function1<EventSourceLike<T>, DisposableLike>;
-    create<T>(setup: SideEffect1<EventListenerLike<T>>): EventSourceLike<T> & DisposableLike;
+    create<T>(setup: SideEffect1<EventListenerLike<T>>, options?: {
+        readonly autoDispose?: boolean;
+    }): EventSourceLike<T> & DisposableLike;
     empty<T>(): EventSourceLike<T> & DisposableLike;
     fromAsyncIterable<T>(): Function1<AsyncIterableLike<T>, EventSourceLike<T> & DisposableLike>;
     fromIterable<T>(): Function1<IterableLike<T>, EventSourceLike<T> & DisposableLike>;

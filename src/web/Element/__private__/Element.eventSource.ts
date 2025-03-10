@@ -15,7 +15,7 @@ const Element_eventSource: Element.Signature["eventSource"] =
     TEventName extends EventKeysOf<TEventTarget>,
   >(
     eventName: TEventName,
-    options?: { passive?: boolean; capture?: boolean },
+    options?: { passive?: boolean; capture?: boolean; autoDispose?: boolean },
   ) =>
   (target: TEventTarget) =>
     EventSource.create(
@@ -46,6 +46,7 @@ const Element_eventSource: Element.Signature["eventSource"] =
           }),
         );
       },
+      options,
     );
 
 export default Element_eventSource;

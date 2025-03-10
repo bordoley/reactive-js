@@ -6,7 +6,7 @@
 
 # Function: intersectionEventSource()
 
-> **intersectionEventSource**(`parent`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Element`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<`IntersectionObserverEntry`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+> **intersectionEventSource**(`parent`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Element`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<`IntersectionObserverEntry`\>\>
 
 ## Parameters
 
@@ -16,4 +16,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`Element`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<`IntersectionObserverEntry`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Element`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<`IntersectionObserverEntry`\>\>

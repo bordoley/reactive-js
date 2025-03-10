@@ -4,8 +4,8 @@ import { Array_every } from "../../../__internal__/constants.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as EventSource from "../../../computations/EventSource.js";
 import * as WritableStore from "../../../computations/WritableStore.js";
-import { EventSourceLike_addEventListener } from "../../../computations.js";
-import { invoke, isNull, pipe, pipeLazy } from "../../../functions.js";
+import { EventSourceLike_addEventListener, } from "../../../computations.js";
+import { invoke, isNull, newInstance, pipe, pipeLazy, returns, } from "../../../functions.js";
 import Element_eventSource from "./Element.eventSource.js";
 import Element_windowResizeEventSource from "./Element.windowResizeEventSource.js";
 import Element_windowScrollEventSource from "./Element.windowScrollEventSource.js";
@@ -50,15 +50,22 @@ const measureElement = (element) => {
         y,
     };
 };
-const Element_measure = options => (element) => {
-    const store = WritableStore.create(measureElement(element), {
-        equality: areBoundsEqual,
-        ...(options ?? {}),
-    });
-    const windowResizeEventSource = Element_windowResizeEventSource();
-    const windowScrollEventSource = Element_windowScrollEventSource();
-    const scrollContainerEventSources = pipe(findScrollContainers(element), ReadonlyArray.map(Element_eventSource("scroll")));
-    pipe(EventSource.merge(windowResizeEventSource, windowScrollEventSource, ...scrollContainerEventSources), EventSource.map(pipeLazy(element, measureElement)), invoke(EventSourceLike_addEventListener, store));
-    return store;
-};
+const Element_measure = /*@__PURE__*/ (() => {
+    const measureStoreCache = newInstance(WeakMap);
+    return returns((element) => measureStoreCache.get(element) ??
+        (() => {
+            const store = WritableStore.create(measureElement(element), {
+                equality: areBoundsEqual,
+                autoDispose: true,
+            });
+            measureStoreCache.set(element, store);
+            const windowResizeEventSource = Element_windowResizeEventSource();
+            const windowScrollEventSource = Element_windowScrollEventSource();
+            const scrollContainerEventSources = pipe(findScrollContainers(element), ReadonlyArray.map(Element_eventSource("scroll", {
+                autoDispose: true,
+            })));
+            pipe(EventSource.merge(windowResizeEventSource, windowScrollEventSource, ...scrollContainerEventSources), EventSource.map(pipeLazy(element, measureElement)), invoke(EventSourceLike_addEventListener, store));
+            return store;
+        })());
+})();
 export default Element_measure;

@@ -41,9 +41,12 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
       > &
         TProperties,
       setup: SideEffect1<EventListenerLike<T>>,
+      options?: {
+        readonly autoDispose?: boolean;
+      },
     ): EventSourceLike<T> & DisposableLike {
       const delegate = (instance[CreateEventSource_delegate] =
-        Publisher.create<T>());
+        Publisher.create<T>(options));
 
       init(DelegatingDisposableMixin, instance, delegate);
 

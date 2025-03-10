@@ -33,6 +33,7 @@ import {
   isNull,
   none,
   pipe,
+  pipeSome,
   pipeSomeLazy,
 } from "../functions.js";
 import {
@@ -237,10 +238,7 @@ export const useMeasure = (): Tuple2<
 > => {
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
 
-  const rect = useStore<Rect>(
-    pipeSomeLazy(container ?? none, WebElement.measure()),
-    [container],
-  );
+  const rect = useStore(pipeSome(container ?? none, WebElement.measure()));
 
   return [setContainer, rect];
 };
