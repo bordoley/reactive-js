@@ -381,11 +381,12 @@ testModule(
     testAsync("awaiting a Multicast Observable", async () => {
       using scheduler = HostScheduler.create();
       const subject = Subject.create<number>({ replay: 2 });
+      subject[EventListenerLike_notify](200);
       subject[EventListenerLike_notify](100);
 
       await pipeAsync(
         Observable.computeDeferred(() => {
-          const result = __observe(subject);
+          const result = __await(subject);
           __do(bindMethod(subject, DisposableLike_dispose));
 
           return result;
@@ -393,7 +394,7 @@ testModule(
         Observable.forEach(console.log),
         Observable.distinctUntilChanged<number>(),
         Observable.toReadonlyArrayAsync(scheduler),
-        expectArrayEquals([1]),
+        expectArrayEquals([200]),
       );
     }),
     ComputationTest.isDeferredWithSideEffects(
