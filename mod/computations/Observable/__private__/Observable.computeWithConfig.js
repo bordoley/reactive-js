@@ -126,6 +126,9 @@ class ComputeContext {
         }
         else {
             effect[AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
+            effect[AwaitOrObserveEffect_observable] = observable;
+            effect[AwaitOrObserveEffect_value] = none;
+            effect[AwaitOrObserveEffect_hasValue] = false;
             effect[AwaitOrObserveEffect_subscription] = pipe(observable, Observable_forEach((next) => {
                 effect[AwaitOrObserveEffect_value] = next;
                 effect[AwaitOrObserveEffect_hasValue] = true;
@@ -140,9 +143,6 @@ class ComputeContext {
                             : scheduledComputationSubscription;
                 }
             }), Observable_subscribeWithConfig(observer, observer), Disposable.addTo(observer), DisposableContainer.onComplete(this[ComputeContext_cleanup]));
-            effect[AwaitOrObserveEffect_observable] = observable;
-            effect[AwaitOrObserveEffect_value] = none;
-            effect[AwaitOrObserveEffect_hasValue] = false;
             return shouldAwait ? raiseError(awaiting) : none;
         }
     }
@@ -195,6 +195,7 @@ const Observable_computeWithConfig = ((computation, config, { mode = BatchedComp
         let isAwaiting = false;
         currentCtx = ctx;
         try {
+            ctx[ComputeContext_index] = 0;
             result = computation();
         }
         catch (e) {
@@ -236,9 +237,7 @@ const Observable_computeWithConfig = ((computation, config, { mode = BatchedComp
                 break;
             }
         }
-        const combineLatestModeShouldNotify = mode === CombineLatestComputeMode &&
-            allObserveEffectsHaveValues &&
-            hasOutstandingEffects;
+        const combineLatestModeShouldNotify = mode === CombineLatestComputeMode && allObserveEffectsHaveValues;
         const hasError = isSome(err);
         const shouldNotify = !hasError &&
             !isAwaiting &&

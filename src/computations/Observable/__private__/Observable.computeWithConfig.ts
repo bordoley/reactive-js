@@ -278,6 +278,9 @@ class ComputeContext {
       return effect[AwaitOrObserveEffect_value] as Optional<T>;
     } else {
       effect[AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
+      effect[AwaitOrObserveEffect_observable] = observable;
+      effect[AwaitOrObserveEffect_value] = none;
+      effect[AwaitOrObserveEffect_hasValue] = false;
 
       effect[AwaitOrObserveEffect_subscription] = pipe(
         observable,
@@ -304,10 +307,6 @@ class ComputeContext {
         Disposable.addTo(observer),
         DisposableContainer.onComplete(this[ComputeContext_cleanup]),
       );
-
-      effect[AwaitOrObserveEffect_observable] = observable;
-      effect[AwaitOrObserveEffect_value] = none;
-      effect[AwaitOrObserveEffect_hasValue] = false;
 
       return shouldAwait ? raiseError(awaiting) : none;
     }
@@ -432,6 +431,10 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
 
         currentCtx = ctx;
         try {
+          // Explicitly reset the count before running the computation
+          // for the combine-latest case where runComputation can
+          // be invoked recursively on itself.
+          ctx[ComputeContext_index] = 0;
           result = computation();
         } catch (e) {
           isAwaiting = e === awaiting;
@@ -493,9 +496,7 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
         }
 
         const combineLatestModeShouldNotify =
-          mode === CombineLatestComputeMode &&
-          allObserveEffectsHaveValues &&
-          hasOutstandingEffects;
+          mode === CombineLatestComputeMode && allObserveEffectsHaveValues;
 
         const hasError = isSome(err);
 
