@@ -6,18 +6,21 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { partial, pipe } from "../../../functions.js";
-import { clampPositiveInteger, max } from "../../../math.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
+import { clampPositiveInteger } from "../../../math.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
+import ObserverMixin, {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
+  DispatcherLike_complete,
   DisposableLike_dispose,
   ObserverLike,
-  ObserverLike_notify,
+  QueueableLike_enqueue,
 } from "../../../utils.js";
 
 import type * as Observable from "../../Observable.js";
@@ -36,7 +39,7 @@ const createTakeFirstObserver: <T>(
   mixInstanceFactory(
     include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function TakeFirstObserver(
-      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProperties,
+      this: ObserverMixinBaseLike<T> & TProperties,
       delegate: ObserverLike<T>,
       takeCount?: number,
     ): ObserverLike<T> {
@@ -56,19 +59,22 @@ const createTakeFirstObserver: <T>(
       [TakeFirstObserver_count]: 0,
     }),
     proto({
-      [ObserverLike_notify]: Observer_assertObserverState(function (
+      [ObserverMixinBaseLike_notify](
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
-        this[TakeFirstObserver_count] = max(
-          this[TakeFirstObserver_count] - 1,
-          -1,
-        );
-        this[LiftedObserverLike_delegate][ObserverLike_notify](next);
+        this[TakeFirstObserver_count];
+        this[TakeFirstObserver_count]--;
+
+        const result =
+          this[LiftedObserverLike_delegate][QueueableLike_enqueue](next);
+
         if (this[TakeFirstObserver_count] <= 0) {
-          this[DisposableLike_dispose]();
+          this[DispatcherLike_complete]();
         }
-      }),
+
+        return result;
+      },
     }),
   ))();
 

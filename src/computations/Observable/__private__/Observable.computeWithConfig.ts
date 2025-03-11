@@ -32,7 +32,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
-  ObserverLike_notify,
+  QueueableLike_enqueue,
   SchedulerLike_schedule,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -508,7 +508,7 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
         const shouldDispose = !hasOutstandingEffects || hasError;
 
         if (shouldNotify) {
-          observer[ObserverLike_notify](result as T);
+          observer[QueueableLike_enqueue](result as T);
         }
 
         if (shouldDispose) {

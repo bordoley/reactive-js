@@ -23,19 +23,22 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
+import ObserverMixin, {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
+  DispatcherLike,
+  DispatcherLike_complete,
   DisposableLike,
-  DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
-  ObserverLike_notify,
+  QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -66,10 +69,10 @@ const createWithLatestFromObserver: <TA, TB, T>(
   };
 
   function onWithLatestFromObserverOtherSubscriptionComplete(
-    this: TProperties & DisposableLike,
+    this: TProperties & DisposableLike & DispatcherLike,
   ) {
     if (!this[WithLatestFromObserver_hasLatest]) {
-      this[DisposableLike_dispose]();
+      this[DispatcherLike_complete]();
     }
   }
 
@@ -81,7 +84,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
   return mixInstanceFactory(
     include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
     function WithLatestFromObserver(
-      this: Pick<ObserverLike<TA>, typeof ObserverLike_notify> & TProperties,
+      this: ObserverMixinBaseLike<TA> & TProperties,
       delegate: ObserverLike<T>,
       other: ObservableLike<TB>,
       selector: Function2<TA, TB, T>,
@@ -110,21 +113,24 @@ const createWithLatestFromObserver: <TA, TB, T>(
       [WithLatestFromObserver_selector]: none,
     }),
     proto({
-      [ObserverLike_notify]: Observer_assertObserverState(function (
+      [ObserverMixinBaseLike_notify](
         this: TProperties & LiftedObserverLike<TA, T>,
         next: TA,
       ) {
+        let result = true;
+
         if (
           !this[DisposableLike_isDisposed] &&
           this[WithLatestFromObserver_hasLatest]
         ) {
-          const result = this[WithLatestFromObserver_selector](
+          const v = this[WithLatestFromObserver_selector](
             next,
             this[WithLatestFromObserver_otherLatest] as TB,
           );
-          this[LiftedObserverLike_delegate][ObserverLike_notify](result);
+          result = this[LiftedObserverLike_delegate][QueueableLike_enqueue](v);
         }
-      }),
+        return result;
+      },
     }),
   );
 })();

@@ -19,7 +19,6 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
@@ -33,7 +32,6 @@ import {
   DispatcherState_completed,
   DisposableLike_isDisposed,
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike_enqueue,
   SerialDisposableLike,
   SerialDisposableLike_current,
@@ -43,6 +41,10 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_fromValue from "./Observable.fromValue.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
 
 export const ThrottleFirstMode = "first";
 export const ThrottleLastMode = "last";
@@ -85,7 +87,7 @@ const createThrottleObserver: <T>(
       this[ThrottleObserver_value] = none;
       this[ThrottleObserver_hasValue] = false;
 
-      delegate[ObserverLike_notify](value);
+      delegate[QueueableLike_enqueue](value);
 
       setupDurationSubscription(this, value);
     }
@@ -129,8 +131,7 @@ const createThrottleObserver: <T>(
   return mixInstanceFactory(
     include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()),
     function ThrottleObserver(
-      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
-        Mutable<TProperties>,
+      this: ObserverMixinBaseLike<T> & Mutable<TProperties>,
       delegate: ObserverLike<T>,
       durationFunction: Function1<T, ObservableLike>,
       mode: Observable.ThrottleMode,
@@ -159,7 +160,7 @@ const createThrottleObserver: <T>(
       [ThrottleObserver_mode]: ThrottleIntervalMode,
     }),
     proto({
-      [ObserverLike_notify]: Observer_assertObserverState(function (
+      [ObserverMixinBaseLike_notify](
         this: LiftedObserverLike<T> & TProperties,
         next: T,
       ) {
@@ -179,7 +180,9 @@ const createThrottleObserver: <T>(
         } else if (durationSubscriptionDisposableIsDisposed) {
           setupDurationSubscription(this, next);
         }
-      }),
+
+        return true;
+      },
     }),
   );
 })();

@@ -7,7 +7,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
-  ObserverLike_notify,
+  QueueableLike_enqueue,
   SchedulerLike_schedule,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -29,7 +29,7 @@ const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
       const continuation = (ctx: ContinuationContextLike) => {
         while (!observer[DisposableLike_isDisposed] && count !== 0) {
           const next = arr[start];
-          observer[ObserverLike_notify](next);
+          observer[QueueableLike_enqueue](next);
 
           count > 0 ? (start++, count--) : (start--, count++);
 

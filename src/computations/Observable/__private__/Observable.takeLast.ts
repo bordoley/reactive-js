@@ -16,7 +16,6 @@ import {
 import { clampPositiveInteger } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
@@ -30,7 +29,6 @@ import {
   DisposableLike_dispose,
   DropOldestBackpressureStrategy,
   ObserverLike,
-  ObserverLike_notify,
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
@@ -39,6 +37,10 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
+import {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
 
 const createTakeLastObserver: <T>(
   delegate: ObserverLike<T>,
@@ -59,7 +61,7 @@ const createTakeLastObserver: <T>(
 
     let v: Optional<T> = none;
     while (((v = queue[QueueLike_dequeue]()), isSome(v))) {
-      delegate[ObserverLike_notify](v);
+      delegate[QueueableLike_enqueue](v);
 
       if (queue[QueueLike_count] > 0) {
         ctx[ContinuationContextLike_yield]();
@@ -88,7 +90,7 @@ const createTakeLastObserver: <T>(
   return mixInstanceFactory(
     include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()),
     function TakeLastObserver(
-      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProperties,
+      this: ObserverMixinBaseLike<T> & TProperties,
       delegate: ObserverLike<T>,
       takeLastCount: number,
     ): ObserverLike<T> {
@@ -109,12 +111,12 @@ const createTakeLastObserver: <T>(
       [TakeLastObserver_queue]: none,
     }),
     proto({
-      [ObserverLike_notify]: Observer_assertObserverState(function (
+      [ObserverMixinBaseLike_notify](
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
-        this[TakeLastObserver_queue][QueueableLike_enqueue](next);
-      }),
+        return this[TakeLastObserver_queue][QueueableLike_enqueue](next);
+      },
     }),
   );
 })();

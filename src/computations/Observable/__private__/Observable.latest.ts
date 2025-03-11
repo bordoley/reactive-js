@@ -21,15 +21,18 @@ import {
 } from "../../../computations.js";
 import { none, pick, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
   DisposableLike_dispose,
   ObserverLike,
-  ObserverLike_notify,
+  QueueableLike_enqueue,
 } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
+import {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
 
 type LatestMode = 1 | 2;
 const zipMode = 2;
@@ -71,8 +74,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
   const createLatestObserver = mixInstanceFactory(
     include(DisposableMixin, DelegatingObserverMixin()),
     function LatestObserver(
-      this: Pick<ObserverLike, typeof ObserverLike_notify> &
-        Mutable<TProperties>,
+      this: ObserverMixinBaseLike & Mutable<TProperties>,
       ctx: LatestCtx,
       delegate: ObserverLike,
     ): ObserverLike & TProperties {
@@ -91,7 +93,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
       [LatestObserver_ctx]: none,
     }),
     proto({
-      [ObserverLike_notify]: Observer_assertObserverState(function (
+      [ObserverMixinBaseLike_notify](
         this: TProperties & ObserverLike,
         next: unknown,
       ) {
@@ -104,12 +106,14 @@ const Observable_latest = /*@__PURE__*/ (() => {
 
         const isReady = observers[Array_every](pick(LatestObserver_ready));
 
+        let result = true;
         if (isReady) {
-          const result = pipe(
+          const value = pipe(
             observers,
             ReadonlyArray.map(pick(LatestObserver_latest)),
           );
-          ctx[LatestCtx_delegate][ObserverLike_notify](result);
+
+          result = ctx[LatestCtx_delegate][QueueableLike_enqueue](value);
 
           if (mode === zipMode) {
             for (const sub of observers) {
@@ -118,7 +122,9 @@ const Observable_latest = /*@__PURE__*/ (() => {
             }
           }
         }
-      }),
+
+        return result;
+      },
     }),
   );
 

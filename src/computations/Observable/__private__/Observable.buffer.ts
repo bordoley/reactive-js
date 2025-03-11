@@ -14,18 +14,18 @@ import { Optional, none, partial, pipe } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
+import ObserverMixin, {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
   DispatcherLike_complete,
-  DisposableLike_dispose,
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -50,7 +50,7 @@ function onBufferObserverCompleted<T>(
     delegate[QueueableLike_enqueue](buffer);
     delegate[DispatcherLike_complete]();
   } else {
-    delegate[DisposableLike_dispose]();
+    delegate[DispatcherLike_complete]();
   }
 }
 
@@ -61,7 +61,7 @@ const createBufferObserver: <T>(
   mixInstanceFactory(
     include(DisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function BufferObserver(
-      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProps<T>,
+      this: ObserverMixinBaseLike<T> & TProps<T>,
       delegate: ObserverLike<readonly T[]>,
       count?: number,
     ): ObserverLike<T> {
@@ -87,7 +87,7 @@ const createBufferObserver: <T>(
       [BufferObserver_count]: 0,
     }),
     proto({
-      [ObserverLike_notify]: Observer_assertObserverState(function (
+      [ObserverMixinBaseLike_notify](
         this: TProps<T> & LiftedObserverLike<T, readonly T[]>,
         next: T,
       ) {
@@ -98,9 +98,15 @@ const createBufferObserver: <T>(
 
         if (buffer[Array_length] === count) {
           this[BufferObserver_buffer] = [];
-          this[LiftedObserverLike_delegate][ObserverLike_notify](buffer);
+          return this[LiftedObserverLike_delegate][QueueableLike_enqueue](
+            buffer,
+          );
         }
-      }),
+        return buffer[Array_length] === count
+          ? ((this[BufferObserver_buffer] = []),
+            this[LiftedObserverLike_delegate][QueueableLike_enqueue](buffer))
+          : true;
+      },
     }),
   ))();
 

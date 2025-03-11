@@ -31,7 +31,6 @@ import {
 } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
@@ -44,7 +43,6 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
-  ObserverLike_notify,
   OverflowBackpressureStrategy,
   QueueLike,
   QueueLike_count,
@@ -57,6 +55,10 @@ import Observable_lift, {
   ObservableLift_isStateless,
 } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
 
 const createMergeAllObserverOperator: <T>(options?: {
   readonly backpressureStrategy?: BackpressureStrategy;
@@ -87,7 +89,10 @@ const createMergeAllObserverOperator: <T>(options?: {
     pipe(
       nextObs,
       Observable_forEach(
-        bindMethod(observer[LiftedObserverLike_delegate], ObserverLike_notify),
+        bindMethod(
+          observer[LiftedObserverLike_delegate],
+          QueueableLike_enqueue,
+        ),
       ),
       Observable_subscribeWithConfig(
         observer[LiftedObserverLike_delegate],
@@ -139,10 +144,7 @@ const createMergeAllObserverOperator: <T>(options?: {
       LiftedObserverMixin(),
     ),
     function MergeAllObserver(
-      this: Pick<
-        ObserverLike<DeferredObservableWithSideEffectsLike<T>>,
-        typeof ObserverLike_notify
-      > &
+      this: ObserverMixinBaseLike<DeferredObservableWithSideEffectsLike<T>> &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
       capacity: number,
@@ -171,20 +173,18 @@ const createMergeAllObserverOperator: <T>(options?: {
       [MergeAllObserver_observablesQueue]: none,
     }),
     proto({
-      [ObserverLike_notify]: Observer_assertObserverState(function (
+      [ObserverMixinBaseLike_notify](
         this: TProperties &
           LiftedObserverLike<DeferredObservableWithSideEffectsLike<T>, T>,
         next: DeferredObservableWithSideEffectsLike<T>,
       ) {
-        if (
-          this[MergeAllObserver_activeCount] <
+        return this[MergeAllObserver_activeCount] <
           this[MergeAllObserver_concurrency]
-        ) {
-          subscribeToObservable(this, next);
-        } else {
-          this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
-        }
-      }),
+          ? (subscribeToObservable(this, next), true)
+          : this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](
+              next,
+            );
+      },
     }),
   );
 
