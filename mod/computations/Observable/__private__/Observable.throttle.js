@@ -43,8 +43,8 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
             !delegate[DisposableLike_isDisposed] &&
             isSome(this[ThrottleObserver_value])) {
             delegate[QueueableLike_enqueue](this[ThrottleObserver_value]);
-            delegate[DispatcherLike_complete]();
         }
+        delegate[DispatcherLike_complete]();
     }
     return mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()), function ThrottleObserver(delegate, durationFunction, mode) {
         init(DisposableMixin, this);

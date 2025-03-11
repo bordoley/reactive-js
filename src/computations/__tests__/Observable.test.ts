@@ -1415,7 +1415,7 @@ testModule(
           delay: 1,
           delayStart: true,
         }),
-        Observable.takeFirst({ count: 100 }),
+        Observable.takeFirst({ count: 101 }),
         Observable.throttle<number>(50, { mode: "first" }),
         Observable.toReadonlyArray(),
         expectArrayEquals([0, 49, 99]),

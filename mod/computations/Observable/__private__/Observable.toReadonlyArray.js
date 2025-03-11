@@ -1,12 +1,7 @@
 /// <reference types="./Observable.toReadonlyArray.d.ts" />
 
-import { Array_push } from "../../../__internal__/constants.js";
-import { bindMethod, pipe } from "../../../functions.js";
-import Observable_forEach from "./Observable.forEach.js";
-import Observable_run from "./Observable.run.js";
-const Observable_toReadonlyArray = (options) => observable => {
-    const result = [];
-    pipe(observable, Observable_forEach(bindMethod(result, Array_push)), Observable_run(options));
-    return result;
-};
+import { pipe } from "../../../functions.js";
+import Observable_buffer from "./Observable.buffer.js";
+import Observable_first from "./Observable.first.js";
+const Observable_toReadonlyArray = (options) => observable => pipe(observable, Observable_buffer(), Observable_first(options)) ?? [];
 export default Observable_toReadonlyArray;

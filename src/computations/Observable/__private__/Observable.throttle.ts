@@ -114,8 +114,8 @@ const createThrottleObserver: <T>(
       isSome(this[ThrottleObserver_value])
     ) {
       delegate[QueueableLike_enqueue](this[ThrottleObserver_value]);
-      delegate[DispatcherLike_complete]();
     }
+    delegate[DispatcherLike_complete]();
   }
 
   return mixInstanceFactory(
