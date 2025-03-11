@@ -47,6 +47,7 @@ import * as DisposableContainer from "../DisposableContainer.js";
 import Observer_assertObserverState from "../Observer/__internal__/Observer.assertObserverState.js";
 import QueueMixin from "./QueueMixin.js";
 import SerialDisposableMixin from "./SerialDisposableMixin.js";
+import * as DisposableContainer from "../DisposableContainer.js";
 
 const ObserverMixin: <T>() => Mixin2<
   ObserverLike<T>,
