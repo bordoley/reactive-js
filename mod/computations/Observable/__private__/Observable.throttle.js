@@ -1,6 +1,7 @@
 /// <reference types="./Observable.throttle.d.ts" />
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
+import { StoreLike_value } from "../../../computations.js";
 import { bind, isSome, none, partial, pipe, pipeLazy, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -9,7 +10,7 @@ import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { DispatcherLike_complete, DisposableLike_isDisposed, ObserverLike_notify, QueueableLike_enqueue, SerialDisposableLike_current, } from "../../../utils.js";
+import { DispatcherLike_complete, DispatcherLike_state, DispatcherState_completed, DisposableLike_isDisposed, ObserverLike_notify, QueueableLike_enqueue, SerialDisposableLike_current, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_fromValue from "./Observable.fromValue.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -25,7 +26,9 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
     const ThrottleObserver_mode = Symbol("ThrottleObserver_mode");
     function notifyThrottleObserverDelegate(_) {
         const delegate = this[LiftedObserverLike_delegate];
-        if (this[ThrottleObserver_hasValue]) {
+        const delegateIsCompleted = delegate[DispatcherLike_state][StoreLike_value] ===
+            DispatcherState_completed;
+        if (this[ThrottleObserver_hasValue] && !delegateIsCompleted) {
             const value = this[ThrottleObserver_value];
             this[ThrottleObserver_value] = none;
             this[ThrottleObserver_hasValue] = false;
@@ -42,7 +45,10 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
             this[ThrottleObserver_hasValue] &&
             !delegate[DisposableLike_isDisposed] &&
             isSome(this[ThrottleObserver_value])) {
-            delegate[QueueableLike_enqueue](this[ThrottleObserver_value]);
+            const value = this[ThrottleObserver_value];
+            this[ThrottleObserver_value] = none;
+            this[ThrottleObserver_hasValue] = false;
+            delegate[QueueableLike_enqueue](value);
         }
         delegate[DispatcherLike_complete]();
     }

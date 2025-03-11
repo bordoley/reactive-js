@@ -43,6 +43,7 @@ import {
   SerialDisposableLike_current,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
+import * as DisposableContainer from "../DisposableContainer.js";
 import Observer_assertObserverState from "../Observer/__internal__/Observer.assertObserverState.js";
 import QueueMixin from "./QueueMixin.js";
 import SerialDisposableMixin from "./SerialDisposableMixin.js";
@@ -149,6 +150,14 @@ const ObserverMixin: <T>() => Mixin2<
         this[DispatcherLike_state] = pipe(
           WritableStore.create<DispatcherState>(DispatcherState_ready),
           Disposable.addTo(this),
+        );
+
+        pipe(
+          this,
+          DisposableContainer.onDisposed(_ => {
+            this[DispatcherLike_state][StoreLike_value] =
+              DispatcherState_completed;
+          }),
         );
 
         return this;

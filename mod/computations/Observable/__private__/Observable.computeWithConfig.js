@@ -195,6 +195,9 @@ const Observable_computeWithConfig = ((computation, config, { mode = BatchedComp
         let isAwaiting = false;
         currentCtx = ctx;
         try {
+            // Explicitly reset the count before running the computation
+            // for the combine-latest case where runComputation can
+            // be invoked recursively on itself.
             ctx[ComputeContext_index] = 0;
             result = computation();
         }

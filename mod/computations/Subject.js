@@ -102,19 +102,21 @@ export const create = /*@__PURE__*/ (() => {
                 observer[DisposableLike_dispose](this[DisposableLike_error]);
                 return;
             }
-            if (maybeObservers instanceof Set) {
-                maybeObservers[Set_add](observer);
+            if (!this[DisposableLike_isDisposed]) {
+                if (maybeObservers instanceof Set) {
+                    maybeObservers[Set_add](observer);
+                }
+                else if (isSome(maybeObservers)) {
+                    const listeners = (this[Subject_observers] =
+                        newInstance(Set));
+                    listeners[Set_add](maybeObservers);
+                    listeners[Set_add](observer);
+                }
+                else {
+                    this[Subject_observers] = observer;
+                }
+                pipe(observer, DisposableContainer.onDisposed(this[Subject_onObserverDisposed]));
             }
-            else if (isSome(maybeObservers)) {
-                const listeners = (this[Subject_observers] =
-                    newInstance(Set));
-                listeners[Set_add](maybeObservers);
-                listeners[Set_add](observer);
-            }
-            else {
-                this[Subject_observers] = observer;
-            }
-            pipe(observer, DisposableContainer.onDisposed(this[Subject_onObserverDisposed]));
             for (const next of this) {
                 observer[QueueableLike_enqueue](next);
             }

@@ -6,6 +6,7 @@ import { StoreLike_value } from "../../computations.js";
 import { call, none, pipe, returns } from "../../functions.js";
 import { ContinuationContextLike_yield, DispatcherLike_complete, DispatcherLike_state, DispatcherState_capacityExceeded, DispatcherState_completed, DispatcherState_ready, DisposableLike_dispose, DisposableLike_isDisposed, ObserverLike_notify, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
+import * as DisposableContainer from "../DisposableContainer.js";
 import Observer_assertObserverState from "../Observer/__internal__/Observer.assertObserverState.js";
 import QueueMixin from "./QueueMixin.js";
 import SerialDisposableMixin from "./SerialDisposableMixin.js";
@@ -45,6 +46,10 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             scheduler[ObserverMixin_scheduler] ??
                 scheduler;
         this[DispatcherLike_state] = pipe(WritableStore.create(DispatcherState_ready), Disposable.addTo(this));
+        pipe(this, DisposableContainer.onDisposed(_ => {
+            this[DispatcherLike_state][StoreLike_value] =
+                DispatcherState_completed;
+        }));
         return this;
     }, props({
         [DispatcherLike_state]: none,

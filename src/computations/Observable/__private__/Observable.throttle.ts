@@ -6,7 +6,7 @@ import {
   props,
   proto,
 } from "../../../__internal__/mixins.js";
-import { ObservableLike } from "../../../computations.js";
+import { ObservableLike, StoreLike_value } from "../../../computations.js";
 import {
   Function1,
   Optional,
@@ -29,6 +29,8 @@ import LiftedObserverMixin, {
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   DispatcherLike_complete,
+  DispatcherLike_state,
+  DispatcherState_completed,
   DisposableLike_isDisposed,
   ObserverLike,
   ObserverLike_notify,
@@ -74,8 +76,11 @@ const createThrottleObserver: <T>(
     _?: unknown,
   ) {
     const delegate = this[LiftedObserverLike_delegate];
+    const delegateIsCompleted =
+      delegate[DispatcherLike_state][StoreLike_value] ===
+      DispatcherState_completed;
 
-    if (this[ThrottleObserver_hasValue]) {
+    if (this[ThrottleObserver_hasValue] && !delegateIsCompleted) {
       const value = this[ThrottleObserver_value] as T;
       this[ThrottleObserver_value] = none;
       this[ThrottleObserver_hasValue] = false;
@@ -113,7 +118,10 @@ const createThrottleObserver: <T>(
       !delegate[DisposableLike_isDisposed] &&
       isSome(this[ThrottleObserver_value])
     ) {
-      delegate[QueueableLike_enqueue](this[ThrottleObserver_value]);
+      const value = this[ThrottleObserver_value];
+      this[ThrottleObserver_value] = none;
+      this[ThrottleObserver_hasValue] = false;
+      delegate[QueueableLike_enqueue](value);
     }
     delegate[DispatcherLike_complete]();
   }

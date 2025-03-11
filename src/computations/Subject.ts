@@ -196,21 +196,23 @@ export const create: <T>(options?: {
           return;
         }
 
-        if (maybeObservers instanceof Set) {
-          maybeObservers[Set_add](observer);
-        } else if (isSome(maybeObservers)) {
-          const listeners = (this[Subject_observers] =
-            newInstance<Set<ObserverLike<T>>>(Set));
-          listeners[Set_add](maybeObservers);
-          listeners[Set_add](observer);
-        } else {
-          this[Subject_observers] = observer;
-        }
+        if (!this[DisposableLike_isDisposed]) {
+          if (maybeObservers instanceof Set) {
+            maybeObservers[Set_add](observer);
+          } else if (isSome(maybeObservers)) {
+            const listeners = (this[Subject_observers] =
+              newInstance<Set<ObserverLike<T>>>(Set));
+            listeners[Set_add](maybeObservers);
+            listeners[Set_add](observer);
+          } else {
+            this[Subject_observers] = observer;
+          }
 
-        pipe(
-          observer,
-          DisposableContainer.onDisposed(this[Subject_onObserverDisposed]),
-        );
+          pipe(
+            observer,
+            DisposableContainer.onDisposed(this[Subject_onObserverDisposed]),
+          );
+        }
 
         for (const next of this) {
           observer[QueueableLike_enqueue](next);
