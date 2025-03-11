@@ -14,7 +14,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
-  ObserverLike_notify,
+  QueueableLike_enqueue,
   SchedulerLike_schedule,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -49,7 +49,7 @@ const Observable_fromIterable: Observable.Signature["fromIterable"] = (<
           }
 
           if (isSome(next) && !next[Iterator_done]) {
-            observer[ObserverLike_notify](next[Iterator_value]);
+            observer[QueueableLike_enqueue](next[Iterator_value]);
             ctx[ContinuationContextLike_yield](delay);
           } else {
             observer[DisposableLike_dispose]();

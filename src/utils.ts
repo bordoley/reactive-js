@@ -333,7 +333,6 @@ export interface DispatcherLike<T = unknown>
   [DispatcherLike_complete](): void;
 }
 
-export const ObserverLike_notify = Symbol("ObserverLike_notify");
 /**
  * A consumer of push-based notifications.
  *
@@ -342,11 +341,4 @@ export const ObserverLike_notify = Symbol("ObserverLike_notify");
 export interface ObserverLike<T = unknown>
   extends DispatcherLike<T>,
     SchedulerLike,
-    DisposableLike {
-  /**
-   * Notifies the observer of the next notification produced by the source.
-   *
-   * @param next - The next notification value.
-   */
-  [ObserverLike_notify](event: T): void;
-}
+    DisposableLike {}

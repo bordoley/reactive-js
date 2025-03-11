@@ -216,9 +216,17 @@ testModule(
       using scheduler = HostScheduler.create();
       await expectToThrowAsync(
         pipeLazyAsync(
-          Observable.create(observer => {
-            for (let i = 0; i < 10; i++) {
-              observer[QueueableLike_enqueue](i);
+          Observable.create(async observer => {
+            await Promise.resolve();
+
+            try {
+              for (let i = 0; i < 10; i++) {
+                observer[QueueableLike_enqueue](i);
+              }
+
+              observer[DispatcherLike_complete]();
+            } catch (e) {
+              observer[DisposableLike_dispose](error(e));
             }
           }),
           Observable.backpressureStrategy(1, ThrowBackpressureStrategy),
@@ -229,7 +237,8 @@ testModule(
     testAsync("with a drop latest backpressure strategy", async () => {
       using scheduler = HostScheduler.create();
       await pipeAsync(
-        Observable.create(observer => {
+        Observable.create(async observer => {
+          await Promise.resolve();
           for (let i = 0; i < 10; i++) {
             observer[QueueableLike_enqueue](i);
           }
@@ -243,7 +252,9 @@ testModule(
     testAsync("with a drop-oldest latest backpressure strategy", async () => {
       using scheduler = HostScheduler.create();
       await pipeAsync(
-        Observable.create(observer => {
+        Observable.create(async observer => {
+          await Promise.resolve();
+
           for (let i = 0; i < 10; i++) {
             observer[QueueableLike_enqueue](i);
           }
@@ -370,15 +381,16 @@ testModule(
     testAsync("awaiting a Multicast Observable", async () => {
       using scheduler = HostScheduler.create();
       const subject = Subject.create<number>({ replay: 2 });
-      subject[EventListenerLike_notify](1);
+      subject[EventListenerLike_notify](100);
 
       await pipeAsync(
         Observable.computeDeferred(() => {
-          const result = __await(subject);
+          const result = __observe(subject);
           __do(bindMethod(subject, DisposableLike_dispose));
 
           return result;
-        }),
+        }, {mode:"combine-latest"}),
+        Observable.forEach(console.log),
         Observable.distinctUntilChanged<number>(),
         Observable.toReadonlyArrayAsync(scheduler),
         expectArrayEquals([1]),
@@ -1360,16 +1372,11 @@ testModule(
     test(
       "takes until the notifier notifies its first notification",
       pipeLazy(
-        [1, 2, 3, 4, 5],
-        Observable.fromReadonlyArray({ delay: 1 }),
-        Observable.takeUntil(
-          pipe(
-            [1],
-            Observable.fromReadonlyArray({ delay: 3, delayStart: true }),
-          ),
-        ),
+        [10, 20, 30, 40, 50],
+        Observable.fromReadonlyArray({ delay: 2 }),
+        Observable.takeUntil(pipe([1], Observable.fromValue({ delay: 3 }))),
         Observable.toReadonlyArray<number>(),
-        expectArrayEquals([1, 2, 3]),
+        expectArrayEquals([10, 20]),
       ),
     ),
     StatefulSynchronousComputationOperatorTests(

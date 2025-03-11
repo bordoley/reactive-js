@@ -10,14 +10,17 @@ import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
+import ObserverMixin, {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
   BackpressureStrategy,
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
+  QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -36,7 +39,7 @@ const createBackpressureObserver: <T>(
       LiftedObserverMixin(),
     ),
     function EnqueueObserver(
-      this: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
+      this: ObserverMixinBaseLike<T>,
       delegate: ObserverLike<T>,
       config: Pick<
         QueueableLike,
@@ -52,8 +55,8 @@ const createBackpressureObserver: <T>(
     },
     props(),
     {
-      [ObserverLike_notify](this: LiftedObserverLike<T>, next: T) {
-        this[LiftedObserverLike_delegate][ObserverLike_notify](next);
+      [ObserverMixinBaseLike_notify](this: LiftedObserverLike<T>, next: T) {
+        return this[LiftedObserverLike_delegate][QueueableLike_enqueue](next);
       },
     },
   ))();

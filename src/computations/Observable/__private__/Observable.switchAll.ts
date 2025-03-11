@@ -17,7 +17,6 @@ import {
 import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
@@ -29,7 +28,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
-  ObserverLike_notify,
+  QueueableLike_enqueue,
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../utils.js";
@@ -39,6 +38,10 @@ import Observable_lift, {
   ObservableLift_isStateless,
 } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
 
 const createSwitchAllObserver: <T>(
   o: ObserverLike<T>,
@@ -76,8 +79,7 @@ const createSwitchAllObserver: <T>(
       LiftedObserverMixin(),
     ),
     function SwitchAllObserver(
-      this: Pick<ObserverLike<ObservableLike<T>>, typeof ObserverLike_notify> &
-        Mutable<TProperties>,
+      this: ObserverMixinBaseLike<ObservableLike<T>> & Mutable<TProperties>,
       delegate: ObserverLike<T>,
     ): ObserverLike<ObservableLike<T>> {
       init(DisposableMixin, this);
@@ -97,7 +99,7 @@ const createSwitchAllObserver: <T>(
       [SwitchAllObserver_currentRef]: none,
     }),
     proto({
-      [ObserverLike_notify]: Observer_assertObserverState(function (
+      [ObserverMixinBaseLike_notify](
         this: TProperties &
           LiftedObserverLike<ObservableLike<T>, T> &
           SerialDisposableLike,
@@ -106,7 +108,10 @@ const createSwitchAllObserver: <T>(
         this[SwitchAllObserver_currentRef][SerialDisposableLike_current] = pipe(
           next,
           Observable_forEach(
-            bindMethod(this[LiftedObserverLike_delegate], ObserverLike_notify),
+            bindMethod(
+              this[LiftedObserverLike_delegate],
+              QueueableLike_enqueue,
+            ),
           ),
           Observable_subscribeWithConfig(
             this[LiftedObserverLike_delegate],
@@ -117,7 +122,8 @@ const createSwitchAllObserver: <T>(
             bind(onSwitchAllObserverInnerObservableComplete, this),
           ),
         );
-      }),
+        return true;
+      },
     }),
   );
 })();

@@ -5,14 +5,16 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { SideEffect1, none, partial, pipe } from "../../../functions.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
-import { ObserverLike, ObserverLike_notify } from "../../../utils.js";
+import ObserverMixin, {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
+import { ObserverLike, QueueableLike_enqueue } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 
@@ -29,7 +31,7 @@ const createForEachObserver: <T>(
   return mixInstanceFactory(
     include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
     function ForEachObserver(
-      this: TProperties,
+      this: TProperties & ObserverMixinBaseLike<T>,
       delegate: ObserverLike<T>,
       effect: SideEffect1<T>,
     ): ObserverLike<T> {
@@ -44,13 +46,13 @@ const createForEachObserver: <T>(
       [ForEachObserver_effect]: none,
     }),
     {
-      [ObserverLike_notify]: Observer_assertObserverState(function (
+      [ObserverMixinBaseLike_notify](
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
         this[ForEachObserver_effect](next);
-        this[LiftedObserverLike_delegate][ObserverLike_notify](next);
-      }),
+        return this[LiftedObserverLike_delegate][QueueableLike_enqueue](next);
+      },
     },
   );
 })();

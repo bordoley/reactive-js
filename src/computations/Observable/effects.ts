@@ -31,10 +31,10 @@ import {
 import * as Disposable from "../../utils/Disposable.js";
 import {
   BackpressureStrategy,
+  DispatcherLike_complete,
   DisposableLike,
-  DisposableLike_dispose,
   ObserverLike,
-  ObserverLike_notify,
+  QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_schedule,
 } from "../../utils.js";
@@ -143,8 +143,8 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
     create(observer => {
       const callback = () => {
         f(...args);
-        observer[ObserverLike_notify](none);
-        observer[DisposableLike_dispose]();
+        observer[QueueableLike_enqueue](none);
+        observer[DispatcherLike_complete]();
       };
 
       pipe(

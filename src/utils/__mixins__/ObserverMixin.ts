@@ -24,7 +24,6 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
-  ObserverLike_notify,
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
@@ -43,11 +42,15 @@ import {
   SerialDisposableLike_current,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
-import * as DisposableContainer from "../DisposableContainer.js";
-import Observer_assertObserverState from "../Observer/__internal__/Observer.assertObserverState.js";
 import QueueMixin from "./QueueMixin.js";
 import SerialDisposableMixin from "./SerialDisposableMixin.js";
 import * as DisposableContainer from "../DisposableContainer.js";
+
+export const ObserverMixinBaseLike_notify = Symbol("ObserverLike_notify");
+
+export interface ObserverMixinBaseLike<T = unknown> {
+  [ObserverMixinBaseLike_notify](next: T): boolean;
+}
 
 const ObserverMixin: <T>() => Mixin2<
   ObserverLike<T>,
@@ -56,7 +59,7 @@ const ObserverMixin: <T>() => Mixin2<
     QueueableLike,
     typeof QueueableLike_capacity | typeof QueueableLike_backpressureStrategy
   >,
-  DisposableLike
+  ObserverMixinBaseLike<T> & DisposableLike
 > = /*@__PURE__*/ (<T>() => {
   const ObserverMixin_scheduler = Symbol("ObserverMixin_scheduler");
 
@@ -75,7 +78,7 @@ const ObserverMixin: <T>() => Mixin2<
       const continuation = (ctx: ContinuationContextLike) => {
         while (observer[QueueLike_count] > 0) {
           const next = observer[QueueLike_dequeue]() as T;
-          observer[ObserverLike_notify](next);
+          observer[QueueableLike_enqueue](next);
 
           if (observer[QueueLike_count] > 0) {
             ctx[ContinuationContextLike_yield]();
@@ -107,11 +110,11 @@ const ObserverMixin: <T>() => Mixin2<
       Omit<SchedulerLike, keyof DisposableContainerLike> &
         Pick<
           ObserverLike<T>,
-          | typeof ObserverLike_notify
+          | typeof QueueableLike_enqueue
           | typeof DispatcherLike_complete
           | typeof QueueableLike_enqueue
         >,
-      DisposableLike,
+      ObserverMixinBaseLike<T> & DisposableLike,
       SchedulerLike,
       Pick<
         QueueableLike,
@@ -125,11 +128,12 @@ const ObserverMixin: <T>() => Mixin2<
           DisposableLike &
           Pick<
             ObserverLike<T>,
-            | typeof ObserverLike_notify
+            | typeof QueueableLike_enqueue
             | typeof DispatcherLike_complete
             | typeof QueueableLike_enqueue
           > &
-          TProperties,
+          TProperties &
+          ObserverMixinBaseLike<T>,
         scheduler: SchedulerLike,
         config: Pick<
           QueueableLike,
@@ -212,26 +216,33 @@ const ObserverMixin: <T>() => Mixin2<
           this: TProperties &
             ObserverLike<T> &
             QueueLike<T> &
-            SerialDisposableLike,
+            SerialDisposableLike &
+            ObserverMixinBaseLike<T>,
           next: T,
         ): boolean {
           let result = true;
-          if (
-            !(
-              this[DispatcherLike_state][StoreLike_value] ===
-              DispatcherState_completed
-            ) &&
-            !this[DisposableLike_isDisposed]
-          ) {
-            result = call(queueProtoype[QueueableLike_enqueue], this, next);
 
-            if (!result) {
-              this[DispatcherLike_state][StoreLike_value] =
-                DispatcherState_capacityExceeded;
-            }
+          const isCompleted =
+            this[DispatcherLike_state][StoreLike_value] ===
+            DispatcherState_completed;
+          const isDisposed = this[DisposableLike_isDisposed];
+          const inSchedulerContinuation = this[SchedulerLike_inContinuation];
+
+          if ((isCompleted && !inSchedulerContinuation) || isDisposed) {
+            // noop
+          } else if (inSchedulerContinuation) {
+            result = this[ObserverMixinBaseLike_notify](next);
+          } else {
+            result = call(queueProtoype[QueueableLike_enqueue], this, next);
 
             scheduleDrainQueue(this);
           }
+
+          if (!isCompleted && !result) {
+            this[DispatcherLike_state][StoreLike_value] =
+              DispatcherState_capacityExceeded;
+          }
+
           return result;
         },
 
@@ -247,18 +258,10 @@ const ObserverMixin: <T>() => Mixin2<
           this[DispatcherLike_state][StoreLike_value] =
             DispatcherState_completed;
 
-          if (
-            this[SerialDisposableLike_current][DisposableLike_isDisposed] &&
-            !isCompleted
-          ) {
-            this[DisposableLike_dispose]();
+          if (!isCompleted) {
+            scheduleDrainQueue(this);
           }
         },
-
-        [ObserverLike_notify]: Observer_assertObserverState(function (
-          this: ObserverLike,
-          _: T,
-        ) {}),
       },
     ),
   );

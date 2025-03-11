@@ -41,10 +41,8 @@ import {
   DropOldestBackpressureStrategy,
   EventListenerLike_notify,
   ObserverLike,
-  ObserverLike_notify,
   QueueLike,
   QueueableLike_enqueue,
-  SchedulerLike_inContinuation,
 } from "../utils.js";
 import * as Iterable from "./Iterable.js";
 
@@ -75,7 +73,7 @@ export const create: <T>(options?: {
       if (isSome(e)) {
         observer[DisposableLike_dispose](e);
       } else {
-        observer[DispatcherLike_complete]();
+        observer[DisposableLike_dispose]();
       }
     }
     this[Subject_observers] = none;
@@ -166,11 +164,7 @@ export const create: <T>(options?: {
 
         for (const observer of observers) {
           try {
-            if (observer[SchedulerLike_inContinuation]) {
-              observer[ObserverLike_notify](next);
-            } else {
-              observer[QueueableLike_enqueue](next);
-            }
+            observer[QueueableLike_enqueue](next);
           } catch (e) {
             observer[DisposableLike_dispose](error(e));
           }

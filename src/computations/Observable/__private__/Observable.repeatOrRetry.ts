@@ -17,7 +17,7 @@ import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Ob
 import {
   DisposableLike_dispose,
   ObserverLike,
-  ObserverLike_notify,
+  QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -55,7 +55,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
 
         pipe(
           observable,
-          Observable_forEach(bindMethod(delegate, ObserverLike_notify)),
+          Observable_forEach(bindMethod(delegate, QueueableLike_enqueue)),
           Observable_subscribeWithConfig(delegate, delegate),
           Disposable.addToContainer(delegate),
           DisposableContainer.onDisposed(doOnDispose),

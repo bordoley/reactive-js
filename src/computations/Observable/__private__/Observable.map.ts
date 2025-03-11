@@ -6,14 +6,16 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Function1, none, partial, pipe } from "../../../functions.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
-import { ObserverLike, ObserverLike_notify } from "../../../utils.js";
+import ObserverMixin, {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
+import { ObserverLike, QueueableLike_enqueue } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
@@ -30,8 +32,7 @@ const createMapObserver: <TA, TB>(
   mixInstanceFactory(
     include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function MapObserver(
-      this: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
-        TProperties<TA, TB>,
+      this: ObserverMixinBaseLike<TA> & TProperties<TA, TB>,
       delegate: ObserverLike<TB>,
       selector: Function1<TA, TB>,
     ): ObserverLike<TA> {
@@ -47,13 +48,13 @@ const createMapObserver: <TA, TB>(
       [MapObserver_selector]: none,
     }),
     proto({
-      [ObserverLike_notify]: Observer_assertObserverState(function (
+      [ObserverMixinBaseLike_notify](
         this: TProperties<TA, TB> & LiftedObserverLike<TA, TB>,
         next: TA,
       ) {
         const mapped = this[MapObserver_selector](next);
-        this[LiftedObserverLike_delegate][ObserverLike_notify](mapped);
-      }),
+        return this[LiftedObserverLike_delegate][QueueableLike_enqueue](mapped);
+      },
     }),
   ))();
 

@@ -6,7 +6,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
-  ObserverLike_notify,
+  QueueableLike_enqueue,
   SchedulerLike_schedule,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -30,7 +30,7 @@ const Observable_generate: Observable.Signature["generate"] = <T>(
     const continuation = (ctx: ContinuationContextLike) => {
       while (!observer[DisposableLike_isDisposed]) {
         acc = generator(acc);
-        observer[ObserverLike_notify](acc);
+        observer[QueueableLike_enqueue](acc);
 
         if (count !== none && (cnt++, cnt >= count)) {
           observer[DisposableLike_dispose]();

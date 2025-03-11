@@ -8,7 +8,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
@@ -19,11 +18,14 @@ import {
   DispatcherLike_complete,
   DisposableLike_dispose,
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
+import {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
 
 const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
   const DecodeWithCharsetObserver_textDecoder = Symbol(
@@ -60,8 +62,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
       LiftedObserverMixin(),
     ),
     function DecodeWithCharsetObserver(
-      this: Pick<ObserverLike<ArrayBuffer>, typeof ObserverLike_notify> &
-        TProperties,
+      this: ObserverMixinBaseLike<ArrayBuffer> & TProperties,
       delegate: ObserverLike<string>,
       charset: string,
       options?: {
@@ -87,17 +88,18 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
       [DecodeWithCharsetObserver_textDecoder]: none,
     }),
     proto({
-      [ObserverLike_notify]: Observer_assertObserverState(function (
+      [ObserverMixinBaseLike_notify](
         this: TProperties & LiftedObserverLike<ArrayBuffer, string>,
         next: ArrayBuffer,
       ) {
         const data = this[DecodeWithCharsetObserver_textDecoder].decode(next, {
           stream: true,
         });
-        if (data[Array_length] > 0) {
-          this[LiftedObserverLike_delegate][ObserverLike_notify](data);
-        }
-      }),
+
+        return data[Array_length] > 0
+          ? this[LiftedObserverLike_delegate][QueueableLike_enqueue](data)
+          : true;
+      },
     }),
   );
 })();

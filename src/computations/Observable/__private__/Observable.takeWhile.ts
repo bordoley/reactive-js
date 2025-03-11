@@ -6,17 +6,19 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
+import ObserverMixin, {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
-  DisposableLike_dispose,
+  DispatcherLike_complete,
   ObserverLike,
-  ObserverLike_notify,
+  QueueableLike_enqueue,
 } from "../../../utils.js";
 
 import type * as Observable from "../../Observable.js";
@@ -38,7 +40,7 @@ const createTakeWhileObserver: <T>(
   mixInstanceFactory(
     include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()),
     function TakeWhileObserver(
-      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> & TProperties<T>,
+      this: ObserverMixinBaseLike<T> & TProperties<T>,
       delegate: ObserverLike<T>,
       predicate: Predicate<T>,
       inclusive?: boolean,
@@ -57,20 +59,23 @@ const createTakeWhileObserver: <T>(
       [TakeWhileObserver_inclusive]: none,
     }),
     proto({
-      [ObserverLike_notify]: Observer_assertObserverState(function (
+      [ObserverMixinBaseLike_notify](
         this: TProperties<T> & LiftedObserverLike<T>,
         next: T,
       ) {
         const satisfiesPredicate = this[TakeWhileObserver_predicate](next);
 
-        if (satisfiesPredicate || this[TakeWhileObserver_inclusive]) {
-          this[LiftedObserverLike_delegate][ObserverLike_notify](next);
-        }
+        const result =
+          satisfiesPredicate || this[TakeWhileObserver_inclusive]
+            ? this[LiftedObserverLike_delegate][QueueableLike_enqueue](next)
+            : true;
 
         if (!satisfiesPredicate) {
-          this[DisposableLike_dispose]();
+          this[DispatcherLike_complete]();
         }
-      }),
+
+        return result;
+      },
     }),
   ))();
 

@@ -9,7 +9,6 @@ import {
 import { none } from "../../../functions.js";
 import {
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike,
   QueueableLike_enqueue,
   SchedulerLike_requestYield,
@@ -19,9 +18,10 @@ import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
 } from "../../__mixins__/LiftedObserverMixin.js";
-import ObserverMixin from "../../__mixins__/ObserverMixin.js";
-
-import Observer_assertObserverState from "./Observer.assertObserverState.js";
+import ObserverMixin, {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../__mixins__/ObserverMixin.js";
 
 const Observer_createEnqueueObserver: <T>(
   delegate: ObserverLike<T>,
@@ -36,8 +36,7 @@ const Observer_createEnqueueObserver: <T>(
   return mixInstanceFactory(
     include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
     function EnqueueObserver(
-      this: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
-        Mutable<TProperties>,
+      this: ObserverMixinBaseLike<T> & Mutable<TProperties>,
       delegate: ObserverLike<T>,
       queue: QueueableLike<T>,
     ): ObserverLike<T> {
@@ -52,15 +51,15 @@ const Observer_createEnqueueObserver: <T>(
       [EnqueueObserver_queue]: none,
     }),
     proto({
-      [ObserverLike_notify]: Observer_assertObserverState(function (
+      [ObserverMixinBaseLike_notify](
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
         if (!this[EnqueueObserver_queue][QueueableLike_enqueue](next)) {
           this[SchedulerLike_requestYield]();
         }
-        this[LiftedObserverLike_delegate][ObserverLike_notify](next);
-      }),
+        return this[LiftedObserverLike_delegate][QueueableLike_enqueue](next);
+      },
     }),
   );
 })();
