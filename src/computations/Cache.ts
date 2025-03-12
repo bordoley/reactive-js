@@ -54,6 +54,7 @@ import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DispatcherLike,
+  DisposableContainerLike,
   DisposableLike,
   DisposableLike_isDisposed,
   EventListenerLike_notify,
@@ -72,7 +73,8 @@ export const CacheLike_get = Symbol("CacheLike_get");
  * @noInheritDoc
  */
 export interface CacheLike<T>
-  extends DispatcherLike<ReadonlyObjectMapLike<string, Updater<Optional<T>>>> {
+  extends DispatcherLike<ReadonlyObjectMapLike<string, Updater<Optional<T>>>>,
+    DisposableContainerLike {
   [CacheLike_get](index: string): ObservableLike<T>;
 }
 

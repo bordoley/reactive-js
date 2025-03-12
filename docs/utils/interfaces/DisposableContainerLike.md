@@ -8,11 +8,11 @@
 
 ## Extended by
 
+- [`CacheLike`](../../computations/Cache/interfaces/CacheLike.md)
 - [`MulticastLike`](../../computations/interfaces/MulticastLike.md)
 - [`DisposableLike`](DisposableLike.md)
 - [`SchedulerLike`](SchedulerLike.md)
 - [`PauseableLike`](PauseableLike.md)
-- [`DispatcherLike`](DispatcherLike.md)
 
 ## Methods
 

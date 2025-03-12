@@ -312,9 +312,7 @@ export const DispatcherLike_onReady = Symbol("DispatcherLike_onReady");
  *
  * @noInheritDoc
  */
-export interface DispatcherLike<T = unknown>
-  extends QueueableLike<T>,
-    DisposableContainerLike {
+export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
   readonly [DispatcherLike_isCompleted]: boolean;
   readonly [DispatcherLike_onReady]: EventSourceLike<void>;
 
