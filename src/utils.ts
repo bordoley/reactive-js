@@ -1,5 +1,5 @@
 import { Error, Symbol as GlobalSymbol } from "./__internal__/constants.js";
-import type { StoreLike } from "./computations.js";
+import type { EventSourceLike, StoreLike } from "./computations.js";
 import { Method1, Optional, SideEffect1, isNone } from "./functions.js";
 
 export const DisposableContainerLike_add = Symbol(
@@ -302,19 +302,9 @@ export interface EventListenerLike<T = unknown> extends DisposableLike {
   [EventListenerLike_notify](event: T): void;
 }
 
-export const DispatcherState_ready = Symbol("DispatcherState_ready");
-export const DispatcherState_capacityExceeded = Symbol(
-  "DispatcherState_capacityExceeded",
-);
-export const DispatcherState_completed = Symbol("DispatcherState_completed");
-
-export type DispatcherState =
-  | typeof DispatcherState_ready
-  | typeof DispatcherState_capacityExceeded
-  | typeof DispatcherState_completed;
-
+export const DispatcherLike_isCompleted = Symbol("DispatcherLike_isCompleted");
 export const DispatcherLike_complete = Symbol("DispatcherLike_complete");
-export const DispatcherLike_state = Symbol("DispatcherLike_state");
+export const DispatcherLike_onReady = Symbol("DispatcherLike_onReady");
 
 /**
  * A `QueueableLike` type that consumes enqueued events to
@@ -325,7 +315,8 @@ export const DispatcherLike_state = Symbol("DispatcherLike_state");
 export interface DispatcherLike<T = unknown>
   extends QueueableLike<T>,
     DisposableContainerLike {
-  readonly [DispatcherLike_state]: StoreLike<DispatcherState>;
+  readonly [DispatcherLike_isCompleted]: boolean;
+  readonly [DispatcherLike_onReady]: EventSourceLike<void>;
 
   /**
    * Communicates to the dispatcher that no more events will be enqueued.

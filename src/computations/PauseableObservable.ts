@@ -14,24 +14,22 @@ import {
   StoreLike_value,
   WritableStoreLike,
 } from "../computations.js";
-import { Function1, invoke, none, pipe } from "../functions.js";
+import { bindMethod, Function1, invoke, none, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   DispatcherLike,
-  DispatcherLike_state,
-  DispatcherState_capacityExceeded,
-  DispatcherState_completed,
-  DispatcherState_ready,
+  DispatcherLike_onReady,
   DisposableLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
+  QueueableLike_enqueue,
 } from "../utils.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
-import Observable_dispatchTo from "./Observable/__private__/Observable.dispatchTo.js";
 import * as WritableStore from "./WritableStore.js";
 import DelegatingMulticastObservableMixin from "./__mixins__/DelegatingMulticastObservableMixin.js";
+import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
 
 interface PauseableObservableModule {
   create<T>(
@@ -94,23 +92,18 @@ export const dispatchTo: Signature["dispatchTo"] =
   (src: PauseableObservableLike<T>) =>
     Observable_create<T>(observer => {
       pipe(
-        dispatcher[DispatcherLike_state],
-        EventSource.addEventHandler(ev => {
-          if (
-            ev === DispatcherState_capacityExceeded ||
-            ev === DispatcherState_completed
-          ) {
-            src[PauseableLike_pause]();
-          } else if (ev === DispatcherState_ready) {
-            src[PauseableLike_resume]();
-          }
-        }),
+        dispatcher[DispatcherLike_onReady],
+        EventSource.addEventHandler(bindMethod(src, PauseableLike_resume)),
         Disposable.addTo(observer),
       );
 
       pipe(
         src,
-        Observable_dispatchTo(dispatcher),
+        Observable_forEach<T>(v => {
+          if (!dispatcher[QueueableLike_enqueue](v)) {
+            src[PauseableLike_pause]();
+          }
+        }),
         invoke(ObservableLike_observe, observer),
       );
 

@@ -76,8 +76,7 @@ import * as Queue from "../../utils/Queue.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
   DispatcherLike_complete,
-  DispatcherLike_state,
-  DispatcherState_completed,
+  DispatcherLike_isCompleted,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
@@ -627,8 +626,7 @@ testModule(
       );
 
       pipe(
-        stream[DispatcherLike_state][StoreLike_value] ===
-          DispatcherState_completed,
+        stream[DispatcherLike_isCompleted],
         expectTrue("expected stream to be completed"),
       );
     }),
@@ -647,8 +645,7 @@ testModule(
       );
 
       pipe(
-        stream[DispatcherLike_state][StoreLike_value] ===
-          DispatcherState_completed,
+        stream[DispatcherLike_isCompleted],
         expectTrue("expected stream to be completed"),
       );
     }),
@@ -1022,7 +1019,10 @@ testModule(
         [
           pipe([1, 3, 5], Observable.fromReadonlyArray({ delay: 3 })),
           pipe([2, 4, 6], Observable.fromReadonlyArray({ delay: 3 })),
-          pipe([9, 10], Observable.fromReadonlyArray({ delay: 3, delayStart: true })),
+          pipe(
+            [9, 10],
+            Observable.fromReadonlyArray({ delay: 3, delayStart: true }),
+          ),
         ],
         Observable.fromReadonlyArray(),
         Observable.mergeAll<number>({

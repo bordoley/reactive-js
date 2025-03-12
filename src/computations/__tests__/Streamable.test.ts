@@ -14,7 +14,7 @@ import { DictionaryCollection } from "../../collections/Dictionary.js";
 import { DictionaryLike_get } from "../../collections.js";
 import * as Observable from "../../computations/Observable.js";
 import * as Streamable from "../../computations/Streamable.js";
-import { StoreLike_value, StreamableLike_stream } from "../../computations.js";
+import {  StreamableLike_stream } from "../../computations.js";
 import {
   bindMethod,
   invoke,
@@ -26,8 +26,7 @@ import {
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
   DispatcherLike_complete,
-  DispatcherLike_state,
-  DispatcherState_completed,
+  DispatcherLike_isCompleted,
   DropLatestBackpressureStrategy,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
@@ -135,16 +134,14 @@ testModule(
       });
 
       pipe(
-        stateStream[DispatcherLike_state][StoreLike_value] ===
-          DispatcherState_completed,
+        stateStream[DispatcherLike_isCompleted],
         expectFalse("expected stream not to be completed"),
       );
 
       stateStream[DispatcherLike_complete]();
 
       pipe(
-        stateStream[DispatcherLike_state][StoreLike_value] ===
-          DispatcherState_completed,
+        stateStream[DispatcherLike_isCompleted],
         expectTrue("expected stream to be completed"),
       );
     }),
@@ -165,8 +162,7 @@ testModule(
               Observable.map(x => (_: number) => x),
               Observable.takeFirst({ count: 2 }),
             ),
-          (_oldState, _newState) =>
-            Observable.empty(),
+          (_oldState, _newState) => Observable.empty(),
         ),
         invoke(StreamableLike_stream, vts),
       );
