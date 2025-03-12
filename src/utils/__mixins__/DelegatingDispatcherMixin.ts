@@ -3,7 +3,8 @@ import { none, returns } from "../../functions.js";
 import {
   DispatcherLike,
   DispatcherLike_complete,
-  DispatcherLike_state,
+  DispatcherLike_isCompleted,
+  DispatcherLike_onReady,
   DisposableContainerLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
@@ -28,10 +29,11 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
         this: Pick<
           DispatcherLike,
           | typeof DispatcherLike_complete
-          | typeof DispatcherLike_state
           | typeof QueueableLike_backpressureStrategy
           | typeof QueueableLike_capacity
           | typeof QueueableLike_enqueue
+          | typeof DispatcherLike_isCompleted
+          | typeof DispatcherLike_onReady
         > &
           TProperties,
         delegate: DispatcherLike<TReq>,
@@ -44,9 +46,18 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
         [DelegatingDispatcherMixin_delegate]: none,
       }),
       {
-        get [DispatcherLike_state]() {
+        get [DispatcherLike_isCompleted]() {
           unsafeCast<TProperties>(this);
-          return this[DelegatingDispatcherMixin_delegate][DispatcherLike_state];
+          return this[DelegatingDispatcherMixin_delegate][
+            DispatcherLike_isCompleted
+          ];
+        },
+
+        get [DispatcherLike_onReady]() {
+          unsafeCast<TProperties>(this);
+          return this[DelegatingDispatcherMixin_delegate][
+            DispatcherLike_onReady
+          ];
         },
 
         get [QueueableLike_backpressureStrategy]() {

@@ -16,10 +16,7 @@ import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   DispatcherLike,
-  DispatcherLike_state,
-  DispatcherState_capacityExceeded,
-  DispatcherState_completed,
-  DispatcherState_ready,
+  DispatcherLike_onReady,
   DisposableLike,
   EventListenerLike,
   PauseableLike_isPaused,
@@ -97,25 +94,18 @@ export const dispatchTo: Signature["dispatchTo"] =
   (src: PauseableEventSourceLike<T>) =>
     EventSource.create((listener: EventListenerLike<T>) => {
       pipe(
-        dispatcher[DispatcherLike_state],
-        EventSource.addEventHandler(ev => {
-          if (
-            ev === DispatcherState_capacityExceeded ||
-            ev === DispatcherState_completed
-          ) {
-            src[PauseableLike_pause]();
-          } else if (ev === DispatcherState_ready) {
-            src[PauseableLike_resume]();
-          }
-        }),
+        dispatcher[DispatcherLike_onReady],
+        EventSource.addEventHandler(bindMethod(src, PauseableLike_resume)),
         Disposable.addTo(listener),
       );
 
       pipe(
         src,
-        EventSource.addEventHandler(
-          bindMethod(dispatcher, QueueableLike_enqueue),
-        ),
+        EventSource.addEventHandler(v => {
+          if (!dispatcher[QueueableLike_enqueue](v)) {
+            src[PauseableLike_pause]();
+          }
+        }),
         Disposable.addTo(listener),
       );
 

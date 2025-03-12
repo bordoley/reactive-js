@@ -10,9 +10,8 @@ import {
   ComputationLike_isSynchronous,
   EventSourceLike_addEventListener,
   ObservableLike_observe,
+  PublisherLike,
   PureDeferredObservableLike,
-  StoreLike_value,
-  WritableStoreLike,
 } from "../../computations.js";
 import {
   Optional,
@@ -29,10 +28,8 @@ import {
   BackpressureStrategy,
   DispatcherLike,
   DispatcherLike_complete,
-  DispatcherLike_state,
-  DispatcherState,
-  DispatcherState_completed,
-  DispatcherState_ready,
+  DispatcherLike_isCompleted,
+  DispatcherLike_onReady,
   DisposableLike,
   ObserverLike,
   QueueLike,
@@ -41,7 +38,7 @@ import {
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../utils.js";
-import * as WritableStore from "../WritableStore.js";
+import * as Publisher from "../Publisher.js";
 
 export interface SingleUseObservableLike<out T>
   extends PureDeferredObservableLike<T>,
@@ -58,7 +55,8 @@ export const create: <T>(config?: {
 
   type TProperties = {
     [SingleUseObservableLike_delegate]: ObserverLike<T>;
-    [DispatcherLike_state]: WritableStoreLike<DispatcherState>;
+    [DispatcherLike_onReady]: PublisherLike<void>;
+    [DispatcherLike_isCompleted]: boolean;
   };
 
   const queueProtoype = getPrototype(QueueMixin<T>());
@@ -81,12 +79,13 @@ export const create: <T>(config?: {
       init(DisposableMixin, this);
       init(QueueMixin<T>(), this, config);
 
-      this[DispatcherLike_state] = WritableStore.create(DispatcherState_ready);
+      this[DispatcherLike_onReady] = Publisher.create();
       return this;
     },
     props<TProperties>({
       [SingleUseObservableLike_delegate]: none,
-      [DispatcherLike_state]: none,
+      [DispatcherLike_onReady]: none,
+      [DispatcherLike_isCompleted]: false,
     }),
     {
       [ComputationLike_isDeferred]: true as const,
@@ -104,9 +103,7 @@ export const create: <T>(config?: {
         this[SingleUseObservableLike_delegate] = observer;
         pipe(this, Disposable.bindTo(observer));
 
-        const isCompleted =
-          this[DispatcherLike_state][StoreLike_value] ===
-          DispatcherState_completed;
+        const isCompleted = this[DispatcherLike_isCompleted];
 
         let v: Optional<T> = none;
         while (((v = this[QueueLike_dequeue]()), isSome(v))) {
@@ -116,31 +113,25 @@ export const create: <T>(config?: {
         if (isCompleted) {
           observer[DispatcherLike_complete]();
         } else {
-          observer[DispatcherLike_state][EventSourceLike_addEventListener](
-            this[DispatcherLike_state],
+          observer[DispatcherLike_onReady][EventSourceLike_addEventListener](
+            this[DispatcherLike_onReady],
           );
         }
       },
 
       [DispatcherLike_complete](this: TProperties & DisposableLike) {
         const delegate = this[SingleUseObservableLike_delegate];
-        const isAlreadyCompleted =
-          this[DispatcherLike_state][StoreLike_value] ===
-          DispatcherState_completed;
+        const isAlreadyCompleted = this[DispatcherLike_isCompleted];
+        this[DispatcherLike_isCompleted] = true;
 
         if (isSome(delegate) && !isAlreadyCompleted) {
           delegate[DispatcherLike_complete]();
-        } else if (!isAlreadyCompleted) {
-          this[DispatcherLike_state][StoreLike_value] =
-            DispatcherState_completed;
         }
       },
 
       [QueueableLike_enqueue](this: TProperties, v: T): boolean {
         const delegate = this[SingleUseObservableLike_delegate];
-        const isCompleted =
-          this[DispatcherLike_state][StoreLike_value] ===
-          DispatcherState_completed;
+        const isCompleted = this[DispatcherLike_isCompleted];
 
         return (
           isCompleted ||

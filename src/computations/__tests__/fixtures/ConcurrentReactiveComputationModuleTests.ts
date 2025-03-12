@@ -110,7 +110,7 @@ const ConcurrentReactiveComputationModuleTests = <
           m.fromPromise(),
           m.toObservable<number>(),
           Observable.lastAsync(scheduler),
-          expectEquals<Optional<number>>(1)
+          expectEquals<Optional<number>>(1),
         );
       }),
 

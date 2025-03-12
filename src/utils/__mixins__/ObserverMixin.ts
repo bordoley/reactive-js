@@ -7,8 +7,8 @@ import {
   props,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import * as WritableStore from "../../computations/WritableStore.js";
-import { StoreLike_value, WritableStoreLike } from "../../computations.js";
+import * as Publisher from "../../computations/Publisher.js";
+import { PublisherLike } from "../../computations.js";
 import {
   Method1,
   SideEffect1,
@@ -22,15 +22,13 @@ import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DispatcherLike_complete,
-  DispatcherLike_state,
-  DispatcherState,
-  DispatcherState_capacityExceeded,
-  DispatcherState_completed,
-  DispatcherState_ready,
+  DispatcherLike_isCompleted,
+  DispatcherLike_onReady,
   DisposableContainerLike,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EventListenerLike_notify,
   ObserverLike,
   QueueLike,
   QueueLike_count,
@@ -82,7 +80,8 @@ const ObserverMixin: <T>() => Mixin2<
       SideEffect1<ContinuationContextLike>,
       ContinuationContextLike
     >;
-    [DispatcherLike_state]: WritableStoreLike<DispatcherState>;
+    [DispatcherLike_isCompleted]: boolean;
+    [DispatcherLike_onReady]: PublisherLike<void>;
     [SchedulerLike_inContinuation]: boolean;
   };
 
@@ -103,14 +102,10 @@ const ObserverMixin: <T>() => Mixin2<
           }
         }
 
-        if (
-          observer[DispatcherLike_state][StoreLike_value] ===
-          DispatcherState_completed
-        ) {
+        if (observer[DispatcherLike_isCompleted]) {
           observer[DisposableLike_dispose]();
         } else {
-          observer[DispatcherLike_state][StoreLike_value] =
-            DispatcherState_ready;
+          observer[DispatcherLike_onReady][EventListenerLike_notify](none);
         }
       };
 
@@ -177,8 +172,8 @@ const ObserverMixin: <T>() => Mixin2<
           (scheduler as unknown as TProperties)[ObserverMixin_rootScheduler] ??
           scheduler;
 
-        this[DispatcherLike_state] = pipe(
-          WritableStore.create<DispatcherState>(DispatcherState_ready),
+        this[DispatcherLike_onReady] = pipe(
+          Publisher.create<void>(),
           Disposable.addTo(this),
         );
 
@@ -198,19 +193,19 @@ const ObserverMixin: <T>() => Mixin2<
         pipe(
           this,
           DisposableContainer.onDisposed(_ => {
-            this[DispatcherLike_state][StoreLike_value] =
-              DispatcherState_completed;
+            this[DispatcherLike_isCompleted] = true;
           }),
         );
 
         return this;
       },
       props<TProperties>({
-        [DispatcherLike_state]: none,
         [ObserverMixin_scheduler]: none,
         [SchedulerLike_inContinuation]: false,
         [ObserverMixin_rootScheduler]: none,
         [ObserverMixin_schedulerCallback]: none,
+        [DispatcherLike_isCompleted]: false,
+        [DispatcherLike_onReady]: none,
       }),
       {
         get [SchedulerLike_maxYieldInterval]() {
@@ -260,9 +255,7 @@ const ObserverMixin: <T>() => Mixin2<
         ): boolean {
           let result = true;
 
-          const isCompleted =
-            this[DispatcherLike_state][StoreLike_value] ===
-            DispatcherState_completed;
+          const isCompleted = this[DispatcherLike_isCompleted];
           const isDisposed = this[DisposableLike_isDisposed];
           const inSchedulerContinuation = this[SchedulerLike_inContinuation];
 
@@ -276,11 +269,6 @@ const ObserverMixin: <T>() => Mixin2<
             scheduleDrainQueue(this);
           }
 
-          if (!isCompleted && !result) {
-            this[DispatcherLike_state][StoreLike_value] =
-              DispatcherState_capacityExceeded;
-          }
-
           return result;
         },
 
@@ -290,11 +278,8 @@ const ObserverMixin: <T>() => Mixin2<
             QueueLike<T> &
             SerialDisposableLike,
         ) {
-          const isCompleted =
-            this[DispatcherLike_state][StoreLike_value] ===
-            DispatcherState_completed;
-          this[DispatcherLike_state][StoreLike_value] =
-            DispatcherState_completed;
+          const isCompleted = this[DispatcherLike_isCompleted];
+          this[DispatcherLike_isCompleted] = true;
 
           if (!isCompleted && this[QueueLike_count] > 0) {
             scheduleDrainQueue(this);
