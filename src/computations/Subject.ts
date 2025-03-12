@@ -73,7 +73,7 @@ export const create: <T>(options?: {
       if (isSome(e)) {
         observer[DisposableLike_dispose](e);
       } else {
-        observer[DisposableLike_dispose]();
+        observer[DispatcherLike_complete]();
       }
     }
     this[Subject_observers] = none;

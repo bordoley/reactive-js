@@ -35,7 +35,8 @@ const Observable_concat: Observable.Signature["concat"] = /*@__PURE__*/ (<
     const next = this[ConcatObserverCtx_nextIndex];
     if (next < observables[Array_length]) {
       this[ConcatObserverCtx_nextIndex]++;
-      observables[next][ObservableLike_observe](createConcatObserver(this));
+      const concatObserver = createConcatObserver(this);
+      observables[next][ObservableLike_observe](concatObserver);
     } else {
       delegate[DisposableLike_dispose]();
     }

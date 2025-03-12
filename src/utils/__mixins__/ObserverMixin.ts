@@ -9,7 +9,15 @@ import {
 } from "../../__internal__/mixins.js";
 import * as WritableStore from "../../computations/WritableStore.js";
 import { StoreLike_value, WritableStoreLike } from "../../computations.js";
-import { SideEffect1, call, none, pipe, returns } from "../../functions.js";
+import {
+  Method1,
+  SideEffect1,
+  bind,
+  call,
+  none,
+  pipe,
+  returns,
+} from "../../functions.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
@@ -62,10 +70,20 @@ const ObserverMixin: <T>() => Mixin2<
   ObserverMixinBaseLike<T> & DisposableLike
 > = /*@__PURE__*/ (<T>() => {
   const ObserverMixin_scheduler = Symbol("ObserverMixin_scheduler");
+  const ObserverMixin_rootScheduler = Symbol("ObserverMixin_rootScheduler");
+  const ObserverMixin_schedulerCallback = Symbol(
+    "ObserverMixin_schedulerCallback",
+  );
 
   type TProperties = {
     [ObserverMixin_scheduler]: SchedulerLike;
+    [ObserverMixin_rootScheduler]: SchedulerLike;
+    [ObserverMixin_schedulerCallback]: Method1<
+      SideEffect1<ContinuationContextLike>,
+      ContinuationContextLike
+    >;
     [DispatcherLike_state]: WritableStoreLike<DispatcherState>;
+    [SchedulerLike_inContinuation]: boolean;
   };
 
   const scheduleDrainQueue = (
@@ -107,7 +125,10 @@ const ObserverMixin: <T>() => Mixin2<
     mix<
       ObserverLike<T>,
       TProperties,
-      Omit<SchedulerLike, keyof DisposableContainerLike> &
+      Omit<
+        SchedulerLike,
+        keyof DisposableContainerLike | typeof SchedulerLike_inContinuation
+      > &
         Pick<
           ObserverLike<T>,
           | typeof QueueableLike_enqueue
@@ -124,7 +145,10 @@ const ObserverMixin: <T>() => Mixin2<
     >(
       include(QueueMixin(), SerialDisposableMixin()),
       function ObserverMixin(
-        this: Omit<SchedulerLike, keyof DisposableContainerLike> &
+        this: Omit<
+          SchedulerLike,
+          keyof DisposableContainerLike | typeof SchedulerLike_inContinuation
+        > &
           DisposableLike &
           Pick<
             ObserverLike<T>,
@@ -148,14 +172,28 @@ const ObserverMixin: <T>() => Mixin2<
 
         init(SerialDisposableMixin(), this, Disposable.disposed);
 
-        this[ObserverMixin_scheduler] =
-          (scheduler as unknown as TProperties)[ObserverMixin_scheduler] ??
+        this[ObserverMixin_scheduler] = scheduler;
+        this[ObserverMixin_rootScheduler] =
+          (scheduler as unknown as TProperties)[ObserverMixin_rootScheduler] ??
           scheduler;
 
         this[DispatcherLike_state] = pipe(
           WritableStore.create<DispatcherState>(DispatcherState_ready),
           Disposable.addTo(this),
         );
+
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const instance = this;
+
+        this[ObserverMixin_schedulerCallback] =
+          function ObserverMixinSchedulerCallback(
+            this: SideEffect1<ContinuationContextLike>,
+            ctx: ContinuationContextLike,
+          ) {
+            instance[SchedulerLike_inContinuation] = true;
+            this(ctx);
+            instance[SchedulerLike_inContinuation] = false;
+          };
 
         pipe(
           this,
@@ -170,30 +208,30 @@ const ObserverMixin: <T>() => Mixin2<
       props<TProperties>({
         [DispatcherLike_state]: none,
         [ObserverMixin_scheduler]: none,
+        [SchedulerLike_inContinuation]: false,
+        [ObserverMixin_rootScheduler]: none,
+        [ObserverMixin_schedulerCallback]: none,
       }),
       {
-        get [SchedulerLike_inContinuation]() {
-          unsafeCast<TProperties>(this);
-          return this[ObserverMixin_scheduler][SchedulerLike_inContinuation];
-        },
-
         get [SchedulerLike_maxYieldInterval]() {
           unsafeCast<TProperties>(this);
-          return this[ObserverMixin_scheduler][SchedulerLike_maxYieldInterval];
+          return this[ObserverMixin_rootScheduler][
+            SchedulerLike_maxYieldInterval
+          ];
         },
 
         get [SchedulerLike_now]() {
           unsafeCast<TProperties>(this);
-          return this[ObserverMixin_scheduler][SchedulerLike_now];
+          return this[ObserverMixin_rootScheduler][SchedulerLike_now];
         },
 
         get [SchedulerLike_shouldYield]() {
           unsafeCast<TProperties>(this);
-          return this[ObserverMixin_scheduler][SchedulerLike_shouldYield];
+          return this[ObserverMixin_rootScheduler][SchedulerLike_shouldYield];
         },
 
         [SchedulerLike_requestYield](this: TProperties) {
-          this[ObserverMixin_scheduler][SchedulerLike_requestYield]();
+          this[ObserverMixin_rootScheduler][SchedulerLike_requestYield]();
         },
 
         [SchedulerLike_schedule](
@@ -205,7 +243,7 @@ const ObserverMixin: <T>() => Mixin2<
         ): DisposableLike {
           return pipe(
             this[ObserverMixin_scheduler][SchedulerLike_schedule](
-              continuation,
+              bind(this[ObserverMixin_schedulerCallback], continuation),
               options,
             ),
             Disposable.addToContainer(this),
@@ -258,8 +296,10 @@ const ObserverMixin: <T>() => Mixin2<
           this[DispatcherLike_state][StoreLike_value] =
             DispatcherState_completed;
 
-          if (!isCompleted) {
+          if (!isCompleted && this[QueueLike_count] > 0) {
             scheduleDrainQueue(this);
+          } else {
+            this[DisposableLike_dispose]();
           }
         },
       },

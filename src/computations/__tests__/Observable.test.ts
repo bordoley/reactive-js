@@ -385,16 +385,20 @@ testModule(
       subject[EventListenerLike_notify](100);
 
       await pipeAsync(
-        Observable.computeDeferred(() => {
-          const result = __await(subject);
-          __do(bindMethod(subject, DisposableLike_dispose));
+        Observable.computeDeferred(
+          () => {
+            const result = __await(subject);
 
-          return result;
-        }, {mode:"combine-latest"}),
-        Observable.forEach(console.log),
+            // Need to dispose the subject or the test will hang
+            __do(bindMethod(subject, DisposableLike_dispose));
+
+            return result;
+          },
+          { mode: "combine-latest" },
+        ),
         Observable.distinctUntilChanged<number>(),
         Observable.toReadonlyArrayAsync(scheduler),
-        expectArrayEquals([200]),
+        expectArrayEquals([200, 100]),
       );
     }),
     ComputationTest.isDeferredWithSideEffects(
@@ -1018,7 +1022,7 @@ testModule(
         [
           pipe([1, 3, 5], Observable.fromReadonlyArray({ delay: 3 })),
           pipe([2, 4, 6], Observable.fromReadonlyArray({ delay: 3 })),
-          pipe([9, 10], Observable.fromReadonlyArray({ delay: 3 })),
+          pipe([9, 10], Observable.fromReadonlyArray({ delay: 3, delayStart: true })),
         ],
         Observable.fromReadonlyArray(),
         Observable.mergeAll<number>({
@@ -1525,7 +1529,7 @@ testModule(
 
       const generateObservable = pipe(
         Observable.generate(increment, returns(-1), {
-          delay: 1,
+          delay: 2,
           delayStart: true,
         }),
         Observable.toPauseableObservable(vts),
@@ -1541,7 +1545,7 @@ testModule(
             expectTrue("expect observable to be paused"),
           );
         },
-        { delay: 2 },
+        { delay: 3 },
       );
 
       vts[SchedulerLike_schedule](
