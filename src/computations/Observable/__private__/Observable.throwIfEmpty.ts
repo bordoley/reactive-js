@@ -22,16 +22,16 @@ import LiftedObserverMixin, {
   LiftedObserverLike_delegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
+import {
   DisposableLike_dispose,
   ObserverLike,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-import {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 
 const createThrowIfEmptyObserver: <T>(
   delegate: ObserverLike<T>,

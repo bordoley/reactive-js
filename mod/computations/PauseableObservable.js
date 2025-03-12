@@ -3,12 +3,12 @@
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import * as EventSource from "../computations/EventSource.js";
 import { ObservableLike_observe, StoreLike_value, } from "../computations.js";
-import { invoke, none, pipe } from "../functions.js";
+import { bindMethod, invoke, none, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
-import { DispatcherLike_state, DispatcherState_capacityExceeded, DispatcherState_completed, DispatcherState_ready, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } from "../utils.js";
+import { DispatcherLike_onReady, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, } from "../utils.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
-import Observable_dispatchTo from "./Observable/__private__/Observable.dispatchTo.js";
+import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
 import * as WritableStore from "./WritableStore.js";
 import DelegatingMulticastObservableMixin from "./__mixins__/DelegatingMulticastObservableMixin.js";
 export const create = /*@__PURE__*/ (() => {
@@ -32,15 +32,11 @@ export const create = /*@__PURE__*/ (() => {
     });
 })();
 export const dispatchTo = (dispatcher) => (src) => Observable_create(observer => {
-    pipe(dispatcher[DispatcherLike_state], EventSource.addEventHandler(ev => {
-        if (ev === DispatcherState_capacityExceeded ||
-            ev === DispatcherState_completed) {
+    pipe(dispatcher[DispatcherLike_onReady], EventSource.addEventHandler(bindMethod(src, PauseableLike_resume)), Disposable.addTo(observer));
+    pipe(src, Observable_forEach(v => {
+        if (!dispatcher[QueueableLike_enqueue](v)) {
             src[PauseableLike_pause]();
         }
-        else if (ev === DispatcherState_ready) {
-            src[PauseableLike_resume]();
-        }
-    }), Disposable.addTo(observer));
-    pipe(src, Observable_dispatchTo(dispatcher), invoke(ObservableLike_observe, observer));
+    }), invoke(ObservableLike_observe, observer));
     src[PauseableLike_resume]();
 });

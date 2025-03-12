@@ -2,11 +2,10 @@
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
-import { ObserverLike_notify } from "../../../utils.js";
+import ObserverMixin, { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
+import { QueueableLike_enqueue } from "../../../utils.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 const createForEachObserver = /*@__PURE__*/ (() => {
     const ForEachObserver_effect = Symbol("ForEachObserver_effect");
@@ -19,10 +18,12 @@ const createForEachObserver = /*@__PURE__*/ (() => {
     }, props({
         [ForEachObserver_effect]: none,
     }), {
-        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
+        [ObserverMixinBaseLike_notify](next) {
+            const delegate = this[LiftedObserverLike_delegate];
             this[ForEachObserver_effect](next);
-            this[LiftedObserverLike_delegate][ObserverLike_notify](next);
-        }),
+            return (delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
+                delegate[QueueableLike_enqueue](next));
+        },
     });
 })();
 const Observable_forEach = (effect) => pipe((createForEachObserver), partial(effect), Observable_liftWithSideEffects);

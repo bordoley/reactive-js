@@ -3,11 +3,11 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { DisposableLike_dispose, ObserverLike_notify, } from "../../../utils.js";
+import { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
+import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
     const ThrowIfEmptyObserver_isEmpty = Symbol("ThrowIfEmptyObserver_isEmpty");
@@ -37,10 +37,12 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
         [ThrowIfEmptyObserver_isEmpty]: true,
         [ThrowIfEmptyObserver_factory]: none,
     }), proto({
-        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
+        [ObserverMixinBaseLike_notify](next) {
+            const delegate = this[LiftedObserverLike_delegate];
             this[ThrowIfEmptyObserver_isEmpty] = false;
-            this[LiftedObserverLike_delegate][ObserverLike_notify](next);
-        }),
+            return (delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
+                delegate[QueueableLike_enqueue](next));
+        },
     }));
 })();
 const Observable_throwIfEmpty = (factory) => pipe((createThrowIfEmptyObserver), partial(factory), Observable_liftPureDeferred);

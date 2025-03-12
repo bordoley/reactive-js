@@ -2,7 +2,7 @@
 
 import { none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, ObserverLike_notify, SchedulerLike_schedule, } from "../../../utils.js";
+import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, SchedulerLike_schedule, } from "../../../utils.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
 const Observable_generate = (generator, initialValue, options) => Observable_createPureSynchronousObservable((observer) => {
     const { count, delay = 0, delayStart = false } = options ?? {};
@@ -11,7 +11,7 @@ const Observable_generate = (generator, initialValue, options) => Observable_cre
     const continuation = (ctx) => {
         while (!observer[DisposableLike_isDisposed]) {
             acc = generator(acc);
-            observer[ObserverLike_notify](acc);
+            observer[QueueableLike_enqueue](acc);
             if (count !== none && (cnt++, cnt >= count)) {
                 observer[DisposableLike_dispose]();
                 break;

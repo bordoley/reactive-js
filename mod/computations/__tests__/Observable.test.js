@@ -67,7 +67,7 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Queue from "../../utils/Queue.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
-import { DispatcherLike_complete, DispatcherLike_state, DispatcherState_completed, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_schedule, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { DispatcherLike_complete, DispatcherLike_isCompleted, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_schedule, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 import * as WritableStore from "../WritableStore.js";
@@ -105,9 +105,16 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_1, HostScheduler.create(), false);
-        await expectToThrowAsync(pipeLazyAsync(Observable.create(observer => {
-            for (let i = 0; i < 10; i++) {
-                observer[QueueableLike_enqueue](i);
+        await expectToThrowAsync(pipeLazyAsync(Observable.create(async (observer) => {
+            await Promise.resolve();
+            try {
+                for (let i = 0; i < 10; i++) {
+                    observer[QueueableLike_enqueue](i);
+                }
+                observer[DispatcherLike_complete]();
+            }
+            catch (e) {
+                observer[DisposableLike_dispose](error(e));
             }
         }), Observable.backpressureStrategy(1, ThrowBackpressureStrategy), Observable.toReadonlyArrayAsync(scheduler)));
     }
@@ -122,7 +129,8 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
     const env_2 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_2, HostScheduler.create(), false);
-        await pipeAsync(Observable.create(observer => {
+        await pipeAsync(Observable.create(async (observer) => {
+            await Promise.resolve();
             for (let i = 0; i < 10; i++) {
                 observer[QueueableLike_enqueue](i);
             }
@@ -140,7 +148,8 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
     const env_3 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_3, HostScheduler.create(), false);
-        await pipeAsync(Observable.create(observer => {
+        await pipeAsync(Observable.create(async (observer) => {
+            await Promise.resolve();
             for (let i = 0; i < 10; i++) {
                 observer[QueueableLike_enqueue](i);
             }
@@ -212,12 +221,14 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
     try {
         const scheduler = __addDisposableResource(env_6, HostScheduler.create(), false);
         const subject = Subject.create({ replay: 2 });
-        subject[EventListenerLike_notify](1);
+        subject[EventListenerLike_notify](200);
+        subject[EventListenerLike_notify](100);
         await pipeAsync(Observable.computeDeferred(() => {
             const result = __await(subject);
+            // Need to dispose the subject or the test will hang
             __do(bindMethod(subject, DisposableLike_dispose));
             return result;
-        }), Observable.distinctUntilChanged(), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1]));
+        }, { mode: "combine-latest" }), Observable.distinctUntilChanged(), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([200, 100]));
     }
     catch (e_6) {
         env_6.error = e_6;
@@ -330,8 +341,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             capacity: 1,
         });
         pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Observable.toReadonlyArray());
-        pipe(stream[DispatcherLike_state][StoreLike_value] ===
-            DispatcherState_completed, expectTrue("expected stream to be completed"));
+        pipe(stream[DispatcherLike_isCompleted], expectTrue("expected stream to be completed"));
     }
     catch (e_10) {
         env_10.error = e_10;
@@ -349,8 +359,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             capacity: 1,
         });
         pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray({ delay: 1 }), Observable.dispatchTo(stream), Observable.toReadonlyArray());
-        pipe(stream[DispatcherLike_state][StoreLike_value] ===
-            DispatcherState_completed, expectTrue("expected stream to be completed"));
+        pipe(stream[DispatcherLike_isCompleted], expectTrue("expected stream to be completed"));
     }
     catch (e_11) {
         env_11.error = e_11;
@@ -622,7 +631,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
 })), describe("mergeAll", test("with queueing", pipeLazy([
     pipe([1, 3, 5], Observable.fromReadonlyArray({ delay: 3 })),
     pipe([2, 4, 6], Observable.fromReadonlyArray({ delay: 3 })),
-    pipe([9, 10], Observable.fromReadonlyArray({ delay: 3 })),
+    pipe([9, 10], Observable.fromReadonlyArray({ delay: 3, delayStart: true })),
 ], Observable.fromReadonlyArray(), Observable.mergeAll({
     concurrency: 2,
 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]))), testAsync("without delay, merge all observables as they are produced", async () => {
@@ -787,7 +796,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     innerType: PureDeferredComputation,
 }), Observable.switchAll({
     innerType: DeferredComputationWithSideEffects,
-}))), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 1 }), Observable.takeUntil(pipe([1], Observable.fromReadonlyArray({ delay: 3, delayStart: true }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), StatefulSynchronousComputationOperatorTests(ObservableTypes, Observable.takeUntil(Observable.empty({ delay: 1 }))), ComputationOperatorWithSideEffectsTests(ObservableTypes, Observable.takeUntil(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)))), StatefulAsynchronousComputationOperatorTests(ObservableTypes, Observable.takeUntil(pipe(Observable.empty(), Observable.subscribeOn(HostScheduler.create())))), AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests(ObservableTypes, Observable.takeUntil(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), Observable.forEach(ignore)))), StatelessAsynchronousComputationOperatorTests(ObservableTypes, Observable.takeUntil(Subject.create()))), describe("throttle", test("first", pipeLazy(Observable.generate(increment, returns(-1), {
+}))), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([10, 20, 30, 40, 50], Observable.fromReadonlyArray({ delay: 2 }), Observable.takeUntil(pipe([1], Observable.fromValue({ delay: 3 }))), Observable.toReadonlyArray(), expectArrayEquals([10, 20]))), StatefulSynchronousComputationOperatorTests(ObservableTypes, Observable.takeUntil(Observable.empty({ delay: 1 }))), ComputationOperatorWithSideEffectsTests(ObservableTypes, Observable.takeUntil(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)))), StatefulAsynchronousComputationOperatorTests(ObservableTypes, Observable.takeUntil(pipe(Observable.empty(), Observable.subscribeOn(HostScheduler.create())))), AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests(ObservableTypes, Observable.takeUntil(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), Observable.forEach(ignore)))), StatelessAsynchronousComputationOperatorTests(ObservableTypes, Observable.takeUntil(Subject.create()))), describe("throttle", test("first", pipeLazy(Observable.generate(increment, returns(-1), {
     delay: 1,
     delayStart: true,
 }), Observable.takeFirst({ count: 101 }), Observable.throttle(50, { mode: "first" }), Observable.toReadonlyArray(), expectArrayEquals([0, 49, 99]))), test("last", pipeLazy(Observable.generate(increment, returns(-1), {
@@ -825,14 +834,14 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     try {
         const vts = __addDisposableResource(env_36, VirtualTimeScheduler.create(), false);
         const generateObservable = pipe(Observable.generate(increment, returns(-1), {
-            delay: 1,
+            delay: 2,
             delayStart: true,
         }), Observable.toPauseableObservable(vts));
         generateObservable[PauseableLike_resume]();
         vts[SchedulerLike_schedule](() => {
             generateObservable[PauseableLike_pause]();
             pipe(generateObservable[PauseableLike_isPaused][StoreLike_value], expectTrue("expect observable to be paused"));
-        }, { delay: 2 });
+        }, { delay: 3 });
         vts[SchedulerLike_schedule](() => {
             generateObservable[PauseableLike_resume]();
             pipe(generateObservable[PauseableLike_isPaused][StoreLike_value], expectFalse("expect observable to not be paused"));

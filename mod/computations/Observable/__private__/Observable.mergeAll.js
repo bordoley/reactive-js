@@ -8,12 +8,12 @@ import { bind, bindMethod, isSome, none, pipe, } from "../../../functions.js";
 import { clampPositiveInteger, clampPositiveNonZeroInteger, } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, ObserverLike_notify, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
+import { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -23,7 +23,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
     const MergeAllObserver_observablesQueue = Symbol("MergeAllObserver_observablesQueue");
     const subscribeToObservable = (observer, nextObs) => {
         observer[MergeAllObserver_activeCount]++;
-        pipe(nextObs, Observable_forEach(bindMethod(observer[LiftedObserverLike_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(observer[LiftedObserverLike_delegate], observer), Disposable.addTo(observer[LiftedObserverLike_delegate]), DisposableContainer.onComplete(bind(onMergeAllObserverInnerObservableComplete, observer)));
+        pipe(nextObs, Observable_forEach(bindMethod(observer[LiftedObserverLike_delegate], QueueableLike_enqueue)), Observable_subscribeWithConfig(observer[LiftedObserverLike_delegate], observer), Disposable.addTo(observer[LiftedObserverLike_delegate]), DisposableContainer.onComplete(bind(onMergeAllObserverInnerObservableComplete, observer)));
     };
     function onMergeAllObserverComplete() {
         const delegate = this[LiftedObserverLike_delegate];
@@ -64,15 +64,12 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         [MergeAllObserver_concurrency]: 0,
         [MergeAllObserver_observablesQueue]: none,
     }), proto({
-        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
-            if (this[MergeAllObserver_activeCount] <
-                this[MergeAllObserver_concurrency]) {
-                subscribeToObservable(this, next);
-            }
-            else {
-                this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
-            }
-        }),
+        [ObserverMixinBaseLike_notify](next) {
+            return this[MergeAllObserver_activeCount] <
+                this[MergeAllObserver_concurrency]
+                ? (subscribeToObservable(this, next), true)
+                : this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
+        },
     }));
     return (options = {}) => {
         const concurrency = clampPositiveNonZeroInteger(options.concurrency ?? MAX_SAFE_INTEGER);

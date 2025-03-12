@@ -5,12 +5,12 @@ import { bind, isSome, none, partial, pipe, } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { ContinuationContextLike_yield, DisposableLike_dispose, DropOldestBackpressureStrategy, ObserverLike_notify, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, SchedulerLike_schedule, } from "../../../utils.js";
+import { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
+import { ContinuationContextLike_yield, DisposableLike_dispose, DropOldestBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, SchedulerLike_schedule, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createTakeLastObserver = /*@__PURE__*/ (() => {
     const TakeLastObserver_queue = Symbol("TakeLastObserver_queue");
@@ -19,7 +19,7 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
         const delegate = this[LiftedObserverLike_delegate];
         let v = none;
         while (((v = queue[QueueLike_dequeue]()), isSome(v))) {
-            delegate[ObserverLike_notify](v);
+            delegate[QueueableLike_enqueue](v);
             if (queue[QueueLike_count] > 0) {
                 ctx[ContinuationContextLike_yield]();
             }
@@ -47,9 +47,9 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
     }, props({
         [TakeLastObserver_queue]: none,
     }), proto({
-        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
-            this[TakeLastObserver_queue][QueueableLike_enqueue](next);
-        }),
+        [ObserverMixinBaseLike_notify](next) {
+            return this[TakeLastObserver_queue][QueueableLike_enqueue](next);
+        },
     }));
 })();
 const Observable_takeLast = (options = {}) => pipe((createTakeLastObserver), partial(clampPositiveInteger(options.count ?? 1)), Observable_liftPureDeferred);

@@ -24,15 +24,15 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
+import {
   DisposableLike_dispose,
   ObserverLike,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
-import {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 
 type LatestMode = 1 | 2;
 const zipMode = 2;

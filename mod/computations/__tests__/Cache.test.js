@@ -125,26 +125,26 @@ testModule("Cache", describe("inMemory", test("it publishes none on subscribe wh
         let abcSubscription3 = Disposable.disposed;
         pipe([
             tuple(1, () => Cache.set(cache, "abc", 1)),
-            tuple(2, () => {
+            tuple(3, () => {
                 abcSubscription2 = pipe(Cache.get(cache, "abc"), Observable.forEach(bindMethod(result2, Array_push)), Observable.subscribe(vts));
             }),
-            tuple(3, () => Cache.set(cache, "abc", 2)),
-            tuple(4, () => {
+            tuple(5, () => Cache.set(cache, "abc", 2)),
+            tuple(7, () => {
                 abcSubscription2[DisposableLike_dispose]();
             }),
-            tuple(4, () => Cache.setMany(cache, { abc: 2, def: 0 })),
-            tuple(5, () => Cache.set(cache, "abc", 3)),
-            tuple(6, () => {
+            tuple(9, () => Cache.setMany(cache, { abc: 2, def: 0 })),
+            tuple(11, () => Cache.set(cache, "abc", 3)),
+            tuple(13, () => {
                 abcSubscription1[DisposableLike_dispose]();
             }),
-            tuple(7, () => Cache.set(cache, "abc", 3)),
-            tuple(8, () => {
+            tuple(15, () => Cache.set(cache, "abc", 3)),
+            tuple(17, () => {
                 abcSubscription3 = pipe(Cache.get(cache, "abc"), Observable.forEach(bindMethod(result3, Array_push)), Observable.subscribe(vts));
             }),
-            tuple(9, () => {
+            tuple(19, () => {
                 abcSubscription3[DisposableLike_dispose]();
             }),
-            tuple(10, () => Cache.setMany(cache, {
+            tuple(21, () => Cache.setMany(cache, {
                 abc: 3,
                 def: 1,
                 ghi: 2,

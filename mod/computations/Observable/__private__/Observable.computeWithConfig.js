@@ -5,7 +5,7 @@ import { ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../.
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseIf, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, ObserverLike_notify, SchedulerLike_schedule, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, SchedulerLike_schedule, } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -247,7 +247,7 @@ const Observable_computeWithConfig = ((computation, config, { mode = BatchedComp
             (combineLatestModeShouldNotify || mode === BatchedComputeMode);
         const shouldDispose = !hasOutstandingEffects || hasError;
         if (shouldNotify) {
-            observer[ObserverLike_notify](result);
+            observer[QueueableLike_enqueue](result);
         }
         if (shouldDispose) {
             observer[DisposableLike_dispose](err);

@@ -2,13 +2,13 @@
 
 import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { ContinuationContextLike_yield, DisposableLike_isDisposed, ObserverLike_notify, SchedulerLike_now, SchedulerLike_schedule, } from "../../../utils.js";
+import { ContinuationContextLike_yield, DisposableLike_isDisposed, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_schedule, } from "../../../utils.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
 const Observable_currentTime = 
 /*@__PURE__*/ Observable_createPureSynchronousObservable((observer) => {
     const continuation = (ctx) => {
         while (!observer[DisposableLike_isDisposed]) {
-            observer[ObserverLike_notify](observer[SchedulerLike_now]);
+            observer[QueueableLike_enqueue](observer[SchedulerLike_now]);
             ctx[ContinuationContextLike_yield]();
         }
     };

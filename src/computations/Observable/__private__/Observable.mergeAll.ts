@@ -39,6 +39,10 @@ import LiftedObserverMixin, {
   LiftedObserverLike_delegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
+import {
   BackpressureStrategy,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -55,10 +59,6 @@ import Observable_lift, {
   ObservableLift_isStateless,
 } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
-import {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 
 const createMergeAllObserverOperator: <T>(options?: {
   readonly backpressureStrategy?: BackpressureStrategy;
