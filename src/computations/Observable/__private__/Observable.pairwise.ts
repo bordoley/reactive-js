@@ -14,7 +14,11 @@ import ObserverMixin, {
   ObserverMixinBaseLike,
   ObserverMixinBaseLike_notify,
 } from "../../../utils/__mixins__/ObserverMixin.js";
-import { ObserverLike, QueueableLike_enqueue } from "../../../utils.js";
+import {
+  ObserverLike,
+  QueueableLike_enqueue,
+  QueueableLike_isReady,
+} from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
@@ -67,7 +71,7 @@ const createPairwiseObserver: <T>(
             ((pair = tuple(prev, next)),
             delegate?.[ObserverMixinBaseLike_notify]?.(pair) ??
               delegate[QueueableLike_enqueue](pair))) ||
-          !hasPrev
+          delegate[QueueableLike_isReady]
         );
       },
     },

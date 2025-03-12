@@ -93,22 +93,24 @@ export type BackpressureStrategy =
   | typeof OverflowBackpressureStrategy
   | typeof ThrowBackpressureStrategy;
 
+export const QueueableLike_isReady = Symbol("QueueableLike_isReady");
 export const QueueableLike_isCompleted = Symbol("QueueableLike_isCompleted");
 export const QueueableLike_complete = Symbol("QueueableLike_complete");
 export const QueueableLike_onReady = Symbol("QueueableLike_onReady");
 
 /**
  * A `QueueableLike` type that consumes enqueued events to
- * be dispatched from any execution constext.
+ * be consumed.
  *
  * @noInheritDoc
  */
 export interface QueueableLike<T = unknown> {
   readonly [QueueableLike_isCompleted]: boolean;
+  readonly [QueueableLike_isReady]: boolean;
   readonly [QueueableLike_onReady]: EventSourceLike<void>;
 
   /**
-   * Communicates to the dispatcher that no more events will be enqueued.
+   * Communicates to the queue that no more events will be enqueued.
    */
   [QueueableLike_complete](): void;
 

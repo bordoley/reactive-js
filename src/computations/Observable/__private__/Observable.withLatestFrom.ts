@@ -39,6 +39,7 @@ import {
   QueueableLike,
   QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isReady,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -132,7 +133,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
             )),
             delegate?.[ObserverMixinBaseLike_notify]?.(v) ??
               delegate[QueueableLike_enqueue](v))) ||
-          !shouldEmit
+          delegate[QueueableLike_isReady]
         );
       },
     }),

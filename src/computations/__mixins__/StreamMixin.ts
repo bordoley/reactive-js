@@ -6,8 +6,8 @@ import {
 } from "../../computations.js";
 import { Function1, Optional, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
-import DelegatingDispatcherMixin from "../../utils/__mixins__/DelegatingDispatcherMixin.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingQueueableMixin from "../../utils/__mixins__/DelegatingQueueableMixin.js";
 import {
   BackpressureStrategy,
   DisposableLike,
@@ -31,7 +31,7 @@ const StreamMixin: <TReq, T>() => Mixin3<
     mix(
       include(
         DelegatingDisposableMixin,
-        DelegatingDispatcherMixin(),
+        DelegatingQueueableMixin(),
         DelegatingMulticastObservableMixin<T>(),
       ),
       function Stream(
@@ -47,17 +47,17 @@ const StreamMixin: <TReq, T>() => Mixin3<
           backpressureStrategy?: BackpressureStrategy;
         },
       ): StreamLike<TReq, T> & DisposableLike {
-        const dispatcher = SingleUseObservable.create<TReq>(options);
+        const queue = SingleUseObservable.create<TReq>(options);
 
         const delegate = pipe(
-          dispatcher,
+          queue,
           op,
           Observable.multicast<T>(scheduler, options),
-          Disposable.addTo(dispatcher),
+          Disposable.addTo(queue),
         );
 
-        init(DelegatingDisposableMixin, this, dispatcher);
-        init(DelegatingDispatcherMixin<TReq>(), this, dispatcher);
+        init(DelegatingDisposableMixin, this, queue);
+        init(DelegatingQueueableMixin<TReq>(), this, queue);
         init(DelegatingMulticastObservableMixin<T>(), this, delegate);
 
         return this;

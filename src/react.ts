@@ -82,7 +82,7 @@ interface ReactModule {
     },
   ): Function1<TProps, React.ReactNode>;
 
-  useDispatcher<TReq>(dispatcher: Optional<QueueableLike<TReq>>): {
+  useDispatcher<TReq>(queue: Optional<QueueableLike<TReq>>): {
     enqueue: Function1<TReq, boolean>;
     complete: SideEffect;
   };
@@ -189,13 +189,13 @@ export const createComponent: Signature["createComponent"] = <TProps>(
 };
 
 export const useDispatcher: Signature["useDispatcher"] = <TReq>(
-  dispatcher: Optional<QueueableLike<TReq>>,
+  queue: Optional<QueueableLike<TReq>>,
 ) => {
   const stableDispatcherRef = useRef<Optional<QueueableLike<TReq>>>(none);
 
   useEffect(() => {
-    stableDispatcherRef.current = dispatcher;
-  }, [dispatcher]);
+    stableDispatcherRef.current = queue;
+  }, [queue]);
 
   const enqueue = useCallback(
     (req: TReq) =>

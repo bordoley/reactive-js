@@ -6,7 +6,11 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import { pipe, returns } from "../../functions.js";
-import { DisposableLike, ObserverLike } from "../../utils.js";
+import {
+  DisposableLike,
+  ObserverLike,
+  QueueableLike_isReady,
+} from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import ObserverMixin, {
   ObserverMixinBaseLike,
@@ -39,7 +43,7 @@ const DelegatingObserverMixin: <T>() => Mixin1<
       props(),
       {
         [ObserverMixinBaseLike_notify](this: ObserverLike, _: T) {
-          return false;
+          return this[QueueableLike_isReady];
         },
       },
     ),

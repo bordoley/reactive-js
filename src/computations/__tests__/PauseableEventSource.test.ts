@@ -22,8 +22,8 @@ import * as Streamable from "../Streamable.js";
 testModule(
   "PauseableEventSource",
   describe(
-    "dispatchTo",
-    test("dispatching a pauseable observable into a stream with backpressure", () => {
+    "enqueue",
+    test("a pauseable observable enqueueing into a stream with backpressure", () => {
       using vts = VirtualTimeScheduler.create();
 
       const dest = Streamable.identity<number>()[StreamableLike_stream](vts, {
@@ -31,14 +31,14 @@ testModule(
         capacity: 1,
       });
 
-      const dispatchToSubscription = pipe(
+      const enqueueSubscription = pipe(
         Observable.generate(increment, returns(-1), {
           delay: 1,
           delayStart: true,
         }),
         Observable.takeFirst<number>({ count: 5 }),
         Observable.toPauseableEventSource(vts),
-        PauseableEventSource.dispatchTo(dest),
+        PauseableEventSource.enqueue(dest),
       );
 
       const result: number[] = [];
@@ -50,7 +50,7 @@ testModule(
 
       vts[VirtualTimeSchedulerLike_run]();
 
-      pipe(dispatchToSubscription[DisposableLike_isDisposed], expectTrue());
+      pipe(enqueueSubscription[DisposableLike_isDisposed], expectTrue());
 
       pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
     }),

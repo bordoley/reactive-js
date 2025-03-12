@@ -19,6 +19,7 @@ import {
   ObserverLike,
   QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isReady,
 } from "../../../utils.js";
 
 import type * as Observable from "../../Observable.js";
@@ -71,7 +72,7 @@ const createTakeWhileObserver: <T>(
           ((satisfiesPredicate || isInclusive) &&
             (delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
               delegate[QueueableLike_enqueue](next))) ||
-          !satisfiesPredicate;
+          delegate[QueueableLike_isReady];
 
         if (!satisfiesPredicate) {
           this[QueueableLike_complete]();

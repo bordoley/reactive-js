@@ -52,6 +52,7 @@ import {
   QueueLike_count,
   QueueLike_dequeue,
   QueueableLike_enqueue,
+  QueueableLike_isReady,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -178,9 +179,11 @@ const createMergeAllObserverOperator: <T>(options?: {
           LiftedObserverLike<DeferredObservableWithSideEffectsLike<T>, T>,
         next: DeferredObservableWithSideEffectsLike<T>,
       ) {
+        const delegate = this[LiftedObserverLike_delegate];
+
         return this[MergeAllObserver_activeCount] <
           this[MergeAllObserver_concurrency]
-          ? (subscribeToObservable(this, next), true)
+          ? (subscribeToObservable(this, next), delegate[QueueableLike_isReady])
           : this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](
               next,
             );

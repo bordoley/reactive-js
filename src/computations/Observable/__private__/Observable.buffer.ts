@@ -27,6 +27,7 @@ import {
   ObserverLike,
   QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isReady,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -104,7 +105,7 @@ const createBufferObserver: <T>(
             ((this[BufferObserver_buffer] = []),
             delegate?.[ObserverMixinBaseLike_notify]?.(buffer) ??
               delegate[QueueableLike_enqueue](buffer))) ||
-          !shouldEmit
+          delegate[QueueableLike_isReady]
         );
       },
     }),

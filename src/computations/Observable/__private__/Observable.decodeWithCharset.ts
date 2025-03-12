@@ -23,6 +23,7 @@ import {
   ObserverLike,
   QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isReady,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -104,7 +105,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
           (shouldEmit &&
             (delegate?.[ObserverMixinBaseLike_notify]?.(data) ??
               delegate[QueueableLike_enqueue](data))) ||
-          !shouldEmit
+          delegate[QueueableLike_isReady]
         );
       },
     }),

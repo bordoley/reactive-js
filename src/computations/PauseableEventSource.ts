@@ -36,8 +36,8 @@ interface PauseableEventSourceModule {
     >,
   ): PauseableEventSourceLike<T> & DisposableLike;
 
-  dispatchTo<T>(
-    dispatcher: QueueableLike<T>,
+  enqueue<T>(
+    queue: QueueableLike<T>,
   ): Function1<
     PauseableEventSourceLike<T>,
     EventSourceLike<T> & DisposableLike
@@ -89,12 +89,12 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
   );
 })();
 
-export const dispatchTo: Signature["dispatchTo"] =
-  <T>(dispatcher: QueueableLike<T>) =>
+export const enqueue: Signature["enqueue"] =
+  <T>(queue: QueueableLike<T>) =>
   (src: PauseableEventSourceLike<T>) =>
     EventSource.create((listener: EventListenerLike<T>) => {
       pipe(
-        dispatcher[QueueableLike_onReady],
+        queue[QueueableLike_onReady],
         EventSource.addEventHandler(bindMethod(src, PauseableLike_resume)),
         Disposable.addTo(listener),
       );
@@ -102,7 +102,7 @@ export const dispatchTo: Signature["dispatchTo"] =
       pipe(
         src,
         EventSource.addEventHandler(v => {
-          if (!dispatcher[QueueableLike_enqueue](v)) {
+          if (!queue[QueueableLike_enqueue](v)) {
             src[PauseableLike_pause]();
           }
         }),
