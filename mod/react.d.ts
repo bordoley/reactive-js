@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import * as Cache from "./computations/Cache.js";
 import { DeferredObservableLike, EventSourceLike, MulticastObservableLike, ObservableLike, StoreLike, StreamOf, StreamableLike } from "./computations.js";
 import { Factory, Function1, Optional, SideEffect } from "./functions.js";
-import { BackpressureStrategy, DispatcherLike, DisposableLike, PauseableLike } from "./utils.js";
+import { BackpressureStrategy, DisposableLike, PauseableLike, QueueableLike } from "./utils.js";
 interface ReactModule {
     CacheProvider<T>(props: {
         readonly cacheContext: React.Context<Optional<Cache.CacheLike<T>>>;
@@ -22,7 +22,7 @@ interface ReactModule {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): Function1<TProps, React.ReactNode>;
-    useDispatcher<TReq>(dispatcher: Optional<DispatcherLike<TReq>>): {
+    useDispatcher<TReq>(dispatcher: Optional<QueueableLike<TReq>>): {
         enqueue: Function1<TReq, boolean>;
         complete: SideEffect;
     };

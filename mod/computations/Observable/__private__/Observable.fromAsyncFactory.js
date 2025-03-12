@@ -2,14 +2,14 @@
 
 import { error } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DispatcherLike_complete, DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_dispose, QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_create from "./Observable.create.js";
 const Observable_fromAsyncFactory = () => (f) => Observable_create(async (observer) => {
     const abortSignal = DisposableContainer.toAbortSignal(observer);
     try {
         const result = await f(abortSignal);
         observer[QueueableLike_enqueue](result);
-        observer[DispatcherLike_complete]();
+        observer[QueueableLike_complete]();
     }
     catch (e) {
         observer[DisposableLike_dispose](error(e));

@@ -15,14 +15,14 @@ import { Function1, bindMethod, none, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
-  DispatcherLike,
-  DispatcherLike_onReady,
   DisposableLike,
   EventListenerLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
+  QueueableLike,
   QueueableLike_enqueue,
+  QueueableLike_onReady,
 } from "../utils.js";
 import * as EventSource from "./EventSource.js";
 import * as WritableStore from "./WritableStore.js";
@@ -37,7 +37,7 @@ interface PauseableEventSourceModule {
   ): PauseableEventSourceLike<T> & DisposableLike;
 
   dispatchTo<T>(
-    dispatcher: DispatcherLike<T>,
+    dispatcher: QueueableLike<T>,
   ): Function1<
     PauseableEventSourceLike<T>,
     EventSourceLike<T> & DisposableLike
@@ -90,11 +90,11 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
 })();
 
 export const dispatchTo: Signature["dispatchTo"] =
-  <T>(dispatcher: DispatcherLike<T>) =>
+  <T>(dispatcher: QueueableLike<T>) =>
   (src: PauseableEventSourceLike<T>) =>
     EventSource.create((listener: EventListenerLike<T>) => {
       pipe(
-        dispatcher[DispatcherLike_onReady],
+        dispatcher[QueueableLike_onReady],
         EventSource.addEventHandler(bindMethod(src, PauseableLike_resume)),
         Disposable.addTo(listener),
       );

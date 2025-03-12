@@ -34,7 +34,6 @@ import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import QueueMixin from "../utils/__mixins__/QueueMixin.js";
 import {
-  DispatcherLike_complete,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
@@ -42,6 +41,7 @@ import {
   EventListenerLike_notify,
   ObserverLike,
   QueueLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
 } from "../utils.js";
 import * as Iterable from "./Iterable.js";
@@ -73,7 +73,7 @@ export const create: <T>(options?: {
       if (isSome(e)) {
         observer[DisposableLike_dispose](e);
       } else {
-        observer[DispatcherLike_complete]();
+        observer[QueueableLike_complete]();
       }
     }
     this[Subject_observers] = none;
@@ -213,7 +213,7 @@ export const create: <T>(options?: {
         }
 
         if (this[DisposableLike_isDisposed]) {
-          observer[DispatcherLike_complete]();
+          observer[QueueableLike_complete]();
         }
       },
     },

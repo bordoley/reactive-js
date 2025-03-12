@@ -10,6 +10,8 @@ import {
   props,
   unsafeCast,
 } from "../../__internal__/mixins.js";
+import * as Publisher from "../../computations/Publisher.js";
+import { PublisherLike } from "../../computations.js";
 import {
   Comparator,
   Optional,
@@ -23,8 +25,10 @@ import { clampPositiveInteger, floor } from "../../math.js";
 import {
   BackPressureError,
   BackpressureStrategy,
+  DisposableLike_dispose,
   DropLatestBackpressureStrategy,
   DropOldestBackpressureStrategy,
+  EventListenerLike_notify,
   OverflowBackpressureStrategy,
   QueueLike,
   QueueLike_count,
@@ -32,7 +36,10 @@ import {
   QueueLike_head,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
+  QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isCompleted,
+  QueueableLike_onReady,
   ThrowBackpressureStrategy,
 } from "../../utils.js";
 
@@ -49,6 +56,8 @@ const QueueMixin: <T>() => Mixin1<
     | typeof QueueableLike_backpressureStrategy
     | typeof QueueLike_count
     | typeof QueueableLike_capacity
+    | typeof QueueableLike_isCompleted
+    | typeof QueueableLike_onReady
   >
 > = /*@__PURE__*/ (<T>() => {
   const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
@@ -66,6 +75,8 @@ const QueueMixin: <T>() => Mixin1<
     [QueueMixin_capacityMask]: number;
     [QueueMixin_values]: Optional<Optional<T>[] | T>;
     readonly [QueueMixin_comparator]: Optional<Comparator<T>>;
+    [QueueableLike_isCompleted]: boolean;
+    [QueueableLike_onReady]: PublisherLike<void>;
   };
 
   const computeIndex = (
@@ -131,6 +142,7 @@ const QueueMixin: <T>() => Mixin1<
 
         this[QueueMixin_comparator] = config?.comparator;
         this[QueueMixin_values] = none;
+        this[QueueableLike_onReady] = Publisher.create<void>();
 
         return this;
       },
@@ -143,6 +155,8 @@ const QueueMixin: <T>() => Mixin1<
         [QueueMixin_capacityMask]: 31,
         [QueueMixin_values]: none,
         [QueueMixin_comparator]: none,
+        [QueueableLike_isCompleted]: false,
+        [QueueableLike_onReady]: none,
       }),
       {
         get [QueueLike_head]() {
@@ -169,11 +183,18 @@ const QueueMixin: <T>() => Mixin1<
         [QueueLike_dequeue](this: TProperties & QueueLike<T>) {
           const count = this[QueueLike_count];
           const values = this[QueueMixin_values];
+          const capacity = this[QueueableLike_capacity];
+          const isCompleted = this[QueueableLike_isCompleted];
+          const shouldNotifyReady = count === capacity && !isCompleted;
+          const onReadySignal = this[QueueableLike_onReady];
 
           if (count <= 1) {
             const item = this[QueueMixin_values] as Optional<T>;
             this[QueueLike_count] = 0;
             this[QueueMixin_values] = none;
+
+            shouldNotifyReady && onReadySignal[EventListenerLike_notify]();
+
             return item;
           }
 
@@ -190,6 +211,9 @@ const QueueMixin: <T>() => Mixin1<
           if (newCount === 1) {
             const newHead = (head + 1) & capacityMask;
             this[QueueMixin_values] = values[newHead];
+
+            shouldNotifyReady && onReadySignal[EventListenerLike_notify]();
+
             return item;
           }
 
@@ -277,6 +301,8 @@ const QueueMixin: <T>() => Mixin1<
 
           this[QueueMixin_capacityMask] = newCapacityMask;
 
+          shouldNotifyReady && onReadySignal[EventListenerLike_notify]();
+
           return item;
         },
 
@@ -311,7 +337,11 @@ const QueueMixin: <T>() => Mixin1<
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
           const capacity = this[QueueableLike_capacity];
           const applyBackpressure = this[QueueLike_count] >= capacity;
+          const isCompleted = this[QueueableLike_isCompleted];
 
+          if (isCompleted) {
+            return false;
+          }
           if (
             (backpressureStrategy === DropLatestBackpressureStrategy &&
               applyBackpressure) ||
@@ -416,6 +446,11 @@ const QueueMixin: <T>() => Mixin1<
           this[QueueMixin_capacityMask] = newCapacityMask;
 
           return newCount < capacity;
+        },
+
+        [QueueableLike_complete](this: TProperties) {
+          this[QueueableLike_isCompleted] = true;
+          this[QueueableLike_onReady][DisposableLike_dispose]();
         },
       },
     ),

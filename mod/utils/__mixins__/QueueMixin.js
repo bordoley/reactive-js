@@ -2,9 +2,10 @@
 
 import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/constants.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
+import * as Publisher from "../../computations/Publisher.js";
 import { isSome, newInstance, none, raiseError, returns, } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
-import { BackPressureError, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, ThrowBackpressureStrategy, } from "../../utils.js";
+import { BackPressureError, DisposableLike_dispose, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, QueueableLike_onReady, ThrowBackpressureStrategy, } from "../../utils.js";
 const QueueMixin = /*@__PURE__*/ (() => {
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
     const QueueMixin_head = Symbol("QueueMixin_head");
@@ -41,6 +42,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
         this[QueueableLike_capacity] = clampPositiveInteger(config?.capacity ?? MAX_SAFE_INTEGER);
         this[QueueMixin_comparator] = config?.comparator;
         this[QueueMixin_values] = none;
+        this[QueueableLike_onReady] = Publisher.create();
         return this;
     }, props({
         [QueueLike_count]: 0,
@@ -51,6 +53,8 @@ const QueueMixin = /*@__PURE__*/ (() => {
         [QueueMixin_capacityMask]: 31,
         [QueueMixin_values]: none,
         [QueueMixin_comparator]: none,
+        [QueueableLike_isCompleted]: false,
+        [QueueableLike_onReady]: none,
     }), {
         get [QueueLike_head]() {
             unsafeCast(this);
@@ -73,10 +77,15 @@ const QueueMixin = /*@__PURE__*/ (() => {
         [QueueLike_dequeue]() {
             const count = this[QueueLike_count];
             const values = this[QueueMixin_values];
+            const capacity = this[QueueableLike_capacity];
+            const isCompleted = this[QueueableLike_isCompleted];
+            const shouldNotifyReady = count === capacity && !isCompleted;
+            const onReadySignal = this[QueueableLike_onReady];
             if (count <= 1) {
                 const item = this[QueueMixin_values];
                 this[QueueLike_count] = 0;
                 this[QueueMixin_values] = none;
+                shouldNotifyReady && onReadySignal[EventListenerLike_notify]();
                 return item;
             }
             unsafeCast(values);
@@ -90,6 +99,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
             if (newCount === 1) {
                 const newHead = (head + 1) & capacityMask;
                 this[QueueMixin_values] = values[newHead];
+                shouldNotifyReady && onReadySignal[EventListenerLike_notify]();
                 return item;
             }
             if (isSorted) {
@@ -153,6 +163,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
                 this[QueueMixin_tail] = newCount;
             }
             this[QueueMixin_capacityMask] = newCapacityMask;
+            shouldNotifyReady && onReadySignal[EventListenerLike_notify]();
             return item;
         },
         *[Symbol.iterator]() {
@@ -180,6 +191,10 @@ const QueueMixin = /*@__PURE__*/ (() => {
             const backpressureStrategy = this[QueueableLike_backpressureStrategy];
             const capacity = this[QueueableLike_capacity];
             const applyBackpressure = this[QueueLike_count] >= capacity;
+            const isCompleted = this[QueueableLike_isCompleted];
+            if (isCompleted) {
+                return false;
+            }
             if ((backpressureStrategy === DropLatestBackpressureStrategy &&
                 applyBackpressure) ||
                 // Special case the 0 capacity queue so that we don't fall through
@@ -251,6 +266,10 @@ const QueueMixin = /*@__PURE__*/ (() => {
             }
             this[QueueMixin_capacityMask] = newCapacityMask;
             return newCount < capacity;
+        },
+        [QueueableLike_complete]() {
+            this[QueueableLike_isCompleted] = true;
+            this[QueueableLike_onReady][DisposableLike_dispose]();
         },
     }));
 })();

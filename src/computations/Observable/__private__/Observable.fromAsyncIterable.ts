@@ -6,10 +6,10 @@ import {
 import { error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import {
-  DispatcherLike_complete,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
@@ -41,7 +41,7 @@ const Observable_fromAsyncIterable: Observable.Signature["fromAsyncIterable"] =
             const next = await iterator[Iterator_next]();
 
             if (next[Iterator_done]) {
-              observer[DispatcherLike_complete]();
+              observer[QueueableLike_complete]();
               done = true;
               break;
             } else if (!observer[QueueableLike_enqueue](next[Iterator_value])) {

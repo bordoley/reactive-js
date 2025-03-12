@@ -53,12 +53,12 @@ import {
   BackpressureStrategy,
   ContinuationContextLike,
   ContinuationContextLike_yield,
-  DispatcherLike,
   DisposableContainerLike,
   DisposableLike,
   DisposableLike_isDisposed,
   EventListenerLike_notify,
   QueueLike_dequeue,
+  QueueableLike,
   QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_schedule,
@@ -73,7 +73,7 @@ export const CacheLike_get = Symbol("CacheLike_get");
  * @noInheritDoc
  */
 export interface CacheLike<T>
-  extends DispatcherLike<ReadonlyObjectMapLike<string, Updater<Optional<T>>>>,
+  extends QueueableLike<ReadonlyObjectMapLike<string, Updater<Optional<T>>>>,
     DisposableContainerLike {
   [CacheLike_get](index: string): ObservableLike<T>;
 }

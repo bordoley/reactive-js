@@ -10,7 +10,7 @@ Represents a duplex stream
 
 ## Extends
 
-- [`DispatcherLike`](../../utils/interfaces/DispatcherLike.md)\<`TReq`\>.[`MulticastObservableLike`](MulticastObservableLike.md)\<`T`\>
+- [`QueueableLike`](../../utils/interfaces/QueueableLike.md)\<`TReq`\>.[`MulticastObservableLike`](MulticastObservableLike.md)\<`T`\>
 
 ## Extended by
 

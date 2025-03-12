@@ -19,9 +19,9 @@ import {
   ObserverMixinBaseLike_notify,
 } from "../../../utils/__mixins__/ObserverMixin.js";
 import {
-  DispatcherLike_complete,
   DisposableLike_dispose,
   ObserverLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -49,7 +49,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
 
     if (data[Array_length] > 0) {
       delegate[QueueableLike_enqueue](data);
-      delegate[DispatcherLike_complete]();
+      delegate[QueueableLike_complete]();
     } else {
       delegate[DisposableLike_dispose]();
     }

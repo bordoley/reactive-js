@@ -3,7 +3,7 @@
 import { ComputationLike_isSynchronous, StreamableLike_stream, } from "../../computations.js";
 import { isSome, none, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
-import { DispatcherLike_complete, QueueableLike_enqueue, SchedulerLike_schedule, } from "../../utils.js";
+import { QueueableLike_complete, QueueableLike_enqueue, SchedulerLike_schedule, } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
 import { ComputeContext_awaitOrObserve, ComputeContext_constant, ComputeContext_memoOrUse, ComputeContext_observableConfig, ComputeContext_observer, assertCurrentContext, } from "./__private__/Observable.computeWithConfig.js";
@@ -29,7 +29,7 @@ export const __do = /*@__PURE__*/ (() => {
         const callback = () => {
             f(...args);
             observer[QueueableLike_enqueue](none);
-            observer[DispatcherLike_complete]();
+            observer[QueueableLike_complete]();
         };
         pipe(observer[SchedulerLike_schedule](callback), Disposable.addTo(observer));
     });

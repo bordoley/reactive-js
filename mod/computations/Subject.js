@@ -8,7 +8,7 @@ import { clampPositiveInteger } from "../math.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import QueueMixin from "../utils/__mixins__/QueueMixin.js";
-import { DispatcherLike_complete, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, QueueableLike_enqueue, } from "../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, QueueableLike_complete, QueueableLike_enqueue, } from "../utils.js";
 import * as Iterable from "./Iterable.js";
 export const create = /*@__PURE__*/ (() => {
     const Subject_observers = Symbol("Subject_observers");
@@ -25,7 +25,7 @@ export const create = /*@__PURE__*/ (() => {
                 observer[DisposableLike_dispose](e);
             }
             else {
-                observer[DispatcherLike_complete]();
+                observer[QueueableLike_complete]();
             }
         }
         this[Subject_observers] = none;
@@ -116,7 +116,7 @@ export const create = /*@__PURE__*/ (() => {
                 observer[QueueableLike_enqueue](next);
             }
             if (this[DisposableLike_isDisposed]) {
-                observer[DispatcherLike_complete]();
+                observer[QueueableLike_complete]();
             }
         },
     });

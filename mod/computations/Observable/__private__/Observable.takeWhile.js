@@ -5,7 +5,7 @@ import { none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import ObserverMixin, { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
-import { DispatcherLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
+import { QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const TakeWhileObserver_inclusive = Symbol("TakeWhileObserver_inclusive");
 const TakeWhileObserver_predicate = Symbol("TakeWhileObserver_predicate");
@@ -29,7 +29,7 @@ const createTakeWhileObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(
                 delegate[QueueableLike_enqueue](next))) ||
             !satisfiesPredicate;
         if (!satisfiesPredicate) {
-            this[DispatcherLike_complete]();
+            this[QueueableLike_complete]();
         }
         return result;
     },

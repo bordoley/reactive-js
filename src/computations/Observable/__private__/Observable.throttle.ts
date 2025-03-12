@@ -31,11 +31,11 @@ import {
   ObserverMixinBaseLike_notify,
 } from "../../../utils/__mixins__/ObserverMixin.js";
 import {
-  DispatcherLike_complete,
-  DispatcherLike_isCompleted,
   DisposableLike_isDisposed,
   ObserverLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isCompleted,
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../utils.js";
@@ -77,7 +77,7 @@ const createThrottleObserver: <T>(
     _?: unknown,
   ) {
     const delegate = this[LiftedObserverLike_delegate];
-    const delegateIsCompleted = delegate[DispatcherLike_isCompleted];
+    const delegateIsCompleted = delegate[QueueableLike_isCompleted];
 
     if (this[ThrottleObserver_hasValue] && !delegateIsCompleted) {
       const value = this[ThrottleObserver_value] as T;
@@ -122,7 +122,7 @@ const createThrottleObserver: <T>(
       this[ThrottleObserver_hasValue] = false;
       delegate[QueueableLike_enqueue](value);
     }
-    delegate[DispatcherLike_complete]();
+    delegate[QueueableLike_complete]();
   }
 
   return mixInstanceFactory(

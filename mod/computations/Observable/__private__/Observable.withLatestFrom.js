@@ -9,7 +9,7 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import ObserverMixin, { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
-import { DispatcherLike_complete, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_isDisposed, QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -19,7 +19,7 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
     const WithLatestFromObserver_selector = Symbol("WithLatestFromObserver_selector");
     function onWithLatestFromObserverOtherSubscriptionComplete() {
         if (!this[WithLatestFromObserver_hasLatest]) {
-            this[DispatcherLike_complete]();
+            this[QueueableLike_complete]();
         }
     }
     function onOtherNotify(next) {

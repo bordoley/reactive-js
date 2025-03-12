@@ -13,7 +13,6 @@
 ## Interfaces
 
 - [ContinuationContextLike](interfaces/ContinuationContextLike.md)
-- [DispatcherLike](interfaces/DispatcherLike.md)
 - [DisposableContainerLike](interfaces/DisposableContainerLike.md)
 - [DisposableLike](interfaces/DisposableLike.md)
 - [EventListenerLike](interfaces/EventListenerLike.md)
@@ -34,9 +33,6 @@
 ## Variables
 
 - [ContinuationContextLike\_yield](variables/ContinuationContextLike_yield.md)
-- [DispatcherLike\_complete](variables/DispatcherLike_complete.md)
-- [DispatcherLike\_isCompleted](variables/DispatcherLike_isCompleted.md)
-- [DispatcherLike\_onReady](variables/DispatcherLike_onReady.md)
 - [DisposableContainerLike\_add](variables/DisposableContainerLike_add.md)
 - [DisposableLike\_dispose](variables/DisposableLike_dispose.md)
 - [DisposableLike\_error](variables/DisposableLike_error.md)
@@ -50,7 +46,10 @@
 - [PauseableLike\_resume](variables/PauseableLike_resume.md)
 - [QueueableLike\_backpressureStrategy](variables/QueueableLike_backpressureStrategy.md)
 - [QueueableLike\_capacity](variables/QueueableLike_capacity.md)
+- [QueueableLike\_complete](variables/QueueableLike_complete.md)
 - [QueueableLike\_enqueue](variables/QueueableLike_enqueue.md)
+- [QueueableLike\_isCompleted](variables/QueueableLike_isCompleted.md)
+- [QueueableLike\_onReady](variables/QueueableLike_onReady.md)
 - [QueueLike\_count](variables/QueueLike_count.md)
 - [QueueLike\_dequeue](variables/QueueLike_dequeue.md)
 - [QueueLike\_head](variables/QueueLike_head.md)

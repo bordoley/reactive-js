@@ -11,10 +11,10 @@ import * as Disposable from "../../../utils/Disposable.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
-  DispatcherLike_complete,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
   SchedulerLike_schedule,
 } from "../../../utils.js";
@@ -53,7 +53,7 @@ const Observable_fromIterable: Observable.Signature["fromIterable"] = (<
             observer[QueueableLike_enqueue](next[Iterator_value]);
             ctx[ContinuationContextLike_yield](delay);
           } else {
-            observer[DispatcherLike_complete]();
+            observer[QueueableLike_complete]();
           }
         }
       };

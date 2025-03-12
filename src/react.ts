@@ -41,8 +41,6 @@ import * as ReactScheduler from "./react/Scheduler.js";
 import * as DisposableContainer from "./utils/DisposableContainer.js";
 import {
   BackpressureStrategy,
-  DispatcherLike,
-  DispatcherLike_complete,
   DisposableLike,
   DisposableLike_dispose,
   EventListenerLike_notify,
@@ -50,6 +48,8 @@ import {
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
+  QueueableLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
 } from "./utils.js";
 
@@ -82,7 +82,7 @@ interface ReactModule {
     },
   ): Function1<TProps, React.ReactNode>;
 
-  useDispatcher<TReq>(dispatcher: Optional<DispatcherLike<TReq>>): {
+  useDispatcher<TReq>(dispatcher: Optional<QueueableLike<TReq>>): {
     enqueue: Function1<TReq, boolean>;
     complete: SideEffect;
   };
@@ -189,9 +189,9 @@ export const createComponent: Signature["createComponent"] = <TProps>(
 };
 
 export const useDispatcher: Signature["useDispatcher"] = <TReq>(
-  dispatcher: Optional<DispatcherLike<TReq>>,
+  dispatcher: Optional<QueueableLike<TReq>>,
 ) => {
-  const stableDispatcherRef = useRef<Optional<DispatcherLike<TReq>>>(none);
+  const stableDispatcherRef = useRef<Optional<QueueableLike<TReq>>>(none);
 
   useEffect(() => {
     stableDispatcherRef.current = dispatcher;
@@ -204,7 +204,7 @@ export const useDispatcher: Signature["useDispatcher"] = <TReq>(
   );
 
   const complete = useCallback(
-    () => stableDispatcherRef?.current?.[DispatcherLike_complete](),
+    () => stableDispatcherRef?.current?.[QueueableLike_complete](),
     [stableDispatcherRef],
   );
 

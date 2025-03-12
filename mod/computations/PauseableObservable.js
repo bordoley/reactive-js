@@ -6,7 +6,7 @@ import { ObservableLike_observe, StoreLike_value, } from "../computations.js";
 import { bindMethod, invoke, none, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
-import { DispatcherLike_onReady, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, } from "../utils.js";
+import { PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, QueueableLike_onReady, } from "../utils.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
 import * as WritableStore from "./WritableStore.js";
@@ -32,7 +32,7 @@ export const create = /*@__PURE__*/ (() => {
     });
 })();
 export const dispatchTo = (dispatcher) => (src) => Observable_create(observer => {
-    pipe(dispatcher[DispatcherLike_onReady], EventSource.addEventHandler(bindMethod(src, PauseableLike_resume)), Disposable.addTo(observer));
+    pipe(dispatcher[QueueableLike_onReady], EventSource.addEventHandler(bindMethod(src, PauseableLike_resume)), Disposable.addTo(observer));
     pipe(src, Observable_forEach(v => {
         if (!dispatcher[QueueableLike_enqueue](v)) {
             src[PauseableLike_pause]();

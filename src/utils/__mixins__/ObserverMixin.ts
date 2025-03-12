@@ -7,12 +7,11 @@ import {
   props,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import * as Publisher from "../../computations/Publisher.js";
-import { PublisherLike } from "../../computations.js";
 import {
   Method1,
   SideEffect1,
   bind,
+  bindMethod,
   call,
   none,
   pipe,
@@ -21,14 +20,10 @@ import {
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
-  DispatcherLike_complete,
-  DispatcherLike_isCompleted,
-  DispatcherLike_onReady,
   DisposableContainerLike,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  EventListenerLike_notify,
   ObserverLike,
   QueueLike,
   QueueLike_count,
@@ -36,7 +31,9 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
+  QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isCompleted,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -80,8 +77,6 @@ const ObserverMixin: <T>() => Mixin2<
       SideEffect1<ContinuationContextLike>,
       ContinuationContextLike
     >;
-    [DispatcherLike_isCompleted]: boolean;
-    [DispatcherLike_onReady]: PublisherLike<void>;
     [SchedulerLike_inContinuation]: boolean;
   };
 
@@ -89,23 +84,22 @@ const ObserverMixin: <T>() => Mixin2<
     observer: TProperties &
       ObserverLike<T> &
       QueueLike<T> &
-      SerialDisposableLike,
+      SerialDisposableLike &
+      ObserverMixinBaseLike<T>,
   ) => {
     if (observer[SerialDisposableLike_current][DisposableLike_isDisposed]) {
       const continuation = (ctx: ContinuationContextLike) => {
         while (observer[QueueLike_count] > 0) {
           const next = observer[QueueLike_dequeue]() as T;
-          observer[QueueableLike_enqueue](next);
+          observer[ObserverMixinBaseLike_notify](next);
 
           if (observer[QueueLike_count] > 0) {
             ctx[ContinuationContextLike_yield]();
           }
         }
 
-        if (observer[DispatcherLike_isCompleted]) {
+        if (observer[QueueableLike_isCompleted]) {
           observer[DisposableLike_dispose]();
-        } else {
-          observer[DispatcherLike_onReady][EventListenerLike_notify](none);
         }
       };
 
@@ -127,7 +121,7 @@ const ObserverMixin: <T>() => Mixin2<
         Pick<
           ObserverLike<T>,
           | typeof QueueableLike_enqueue
-          | typeof DispatcherLike_complete
+          | typeof QueueableLike_complete
           | typeof QueueableLike_enqueue
         >,
       ObserverMixinBaseLike<T> & DisposableLike,
@@ -148,7 +142,7 @@ const ObserverMixin: <T>() => Mixin2<
           Pick<
             ObserverLike<T>,
             | typeof QueueableLike_enqueue
-            | typeof DispatcherLike_complete
+            | typeof QueueableLike_complete
             | typeof QueueableLike_enqueue
           > &
           TProperties &
@@ -172,11 +166,6 @@ const ObserverMixin: <T>() => Mixin2<
           (scheduler as unknown as TProperties)[ObserverMixin_rootScheduler] ??
           scheduler;
 
-        this[DispatcherLike_onReady] = pipe(
-          Publisher.create<void>(),
-          Disposable.addTo(this),
-        );
-
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const instance = this;
 
@@ -192,9 +181,9 @@ const ObserverMixin: <T>() => Mixin2<
 
         pipe(
           this,
-          DisposableContainer.onDisposed(_ => {
-            this[DispatcherLike_isCompleted] = true;
-          }),
+          DisposableContainer.onDisposed(
+            bindMethod(this, QueueableLike_complete),
+          ),
         );
 
         return this;
@@ -204,8 +193,6 @@ const ObserverMixin: <T>() => Mixin2<
         [SchedulerLike_inContinuation]: false,
         [ObserverMixin_rootScheduler]: none,
         [ObserverMixin_schedulerCallback]: none,
-        [DispatcherLike_isCompleted]: false,
-        [DispatcherLike_onReady]: none,
       }),
       {
         get [SchedulerLike_maxYieldInterval]() {
@@ -253,35 +240,36 @@ const ObserverMixin: <T>() => Mixin2<
             ObserverMixinBaseLike<T>,
           next: T,
         ): boolean {
-          let result = true;
-
-          const isCompleted = this[DispatcherLike_isCompleted];
+          const isCompleted = this[QueueableLike_isCompleted];
           const isDisposed = this[DisposableLike_isDisposed];
           const inSchedulerContinuation = this[SchedulerLike_inContinuation];
 
-          if ((isCompleted && !inSchedulerContinuation) || isDisposed) {
-            // noop
-          } else if (inSchedulerContinuation) {
-            result = this[ObserverMixinBaseLike_notify](next);
-          } else {
-            result = call(queueProtoype[QueueableLike_enqueue], this, next);
+          const shouldIgnore = isCompleted || isDisposed;
+          const shouldNotify = inSchedulerContinuation && !shouldIgnore;
+          const shouldEnqueue = !inSchedulerContinuation && !shouldIgnore;
 
-            scheduleDrainQueue(this);
-          }
-
-          return result;
+          return (
+            (shouldNotify && this[ObserverMixinBaseLike_notify](next)) ||
+            (shouldEnqueue &&
+              (scheduleDrainQueue(this),
+              call(queueProtoype[QueueableLike_enqueue], this, next))) ||
+            shouldIgnore
+          );
         },
 
-        [DispatcherLike_complete](
+        [QueueableLike_complete](
           this: TProperties &
             ObserverLike<T> &
             QueueLike<T> &
-            SerialDisposableLike,
+            SerialDisposableLike &
+            ObserverMixinBaseLike<T>,
         ) {
-          const isCompleted = this[DispatcherLike_isCompleted];
-          this[DispatcherLike_isCompleted] = true;
+          const isCompleted = this[QueueableLike_isCompleted];
+          const isDisposed = this[DisposableLike_isDisposed];
 
-          if (!isCompleted && this[QueueLike_count] > 0) {
+          call(queueProtoype[QueueableLike_complete], this);
+
+          if (!isCompleted && this[QueueLike_count] > 0 && !isDisposed) {
             scheduleDrainQueue(this);
           } else {
             this[DisposableLike_dispose]();

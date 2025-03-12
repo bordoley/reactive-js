@@ -9,7 +9,7 @@ import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserve
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
-import { DispatcherLike_complete, DispatcherLike_isCompleted, DisposableLike_isDisposed, QueueableLike_enqueue, SerialDisposableLike_current, } from "../../../utils.js";
+import { DisposableLike_isDisposed, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, SerialDisposableLike_current, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_fromValue from "./Observable.fromValue.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -25,7 +25,7 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
     const ThrottleObserver_mode = Symbol("ThrottleObserver_mode");
     function notifyThrottleObserverDelegate(_) {
         const delegate = this[LiftedObserverLike_delegate];
-        const delegateIsCompleted = delegate[DispatcherLike_isCompleted];
+        const delegateIsCompleted = delegate[QueueableLike_isCompleted];
         if (this[ThrottleObserver_hasValue] && !delegateIsCompleted) {
             const value = this[ThrottleObserver_value];
             this[ThrottleObserver_value] = none;
@@ -48,7 +48,7 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
             this[ThrottleObserver_hasValue] = false;
             delegate[QueueableLike_enqueue](value);
         }
-        delegate[DispatcherLike_complete]();
+        delegate[QueueableLike_complete]();
     }
     return mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()), function ThrottleObserver(delegate, durationFunction, mode) {
         init(DisposableMixin, this);

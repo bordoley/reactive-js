@@ -9,7 +9,7 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import ObserverMixin, { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
-import { DispatcherLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
+import { QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const BufferObserver_buffer = Symbol("BufferObserver_buffer");
 const BufferObserver_count = Symbol("BufferingLike_count");
@@ -19,10 +19,10 @@ function onBufferObserverCompleted() {
     this[BufferObserver_buffer] = [];
     if (buffer[Array_length] > 0) {
         delegate[QueueableLike_enqueue](buffer);
-        delegate[DispatcherLike_complete]();
+        delegate[QueueableLike_complete]();
     }
     else {
-        delegate[DispatcherLike_complete]();
+        delegate[QueueableLike_complete]();
     }
 }
 const createBufferObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DisposableMixin, ObserverMixin(), LiftedObserverMixin()), function BufferObserver(delegate, count) {

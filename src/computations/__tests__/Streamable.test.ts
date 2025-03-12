@@ -25,12 +25,12 @@ import {
 } from "../../functions.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
-  DispatcherLike_complete,
-  DispatcherLike_isCompleted,
   DropLatestBackpressureStrategy,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
+  QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isCompleted,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
 import * as Computation from "../Computation.js";
@@ -111,7 +111,7 @@ testModule(
 
       stateStream[QueueableLike_enqueue](returns(2));
       stateStream[QueueableLike_enqueue](returns(3));
-      stateStream[DispatcherLike_complete]();
+      stateStream[QueueableLike_complete]();
 
       let result: number[] = [];
 
@@ -134,14 +134,14 @@ testModule(
       });
 
       pipe(
-        stateStream[DispatcherLike_isCompleted],
+        stateStream[QueueableLike_isCompleted],
         expectFalse("expected stream not to be completed"),
       );
 
-      stateStream[DispatcherLike_complete]();
+      stateStream[QueueableLike_complete]();
 
       pipe(
-        stateStream[DispatcherLike_isCompleted],
+        stateStream[QueueableLike_isCompleted],
         expectTrue("expected stream to be completed"),
       );
     }),
