@@ -47,8 +47,8 @@ import {
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Queue from "../utils/Queue.js";
-import DelegatingDispatcherMixin from "../utils/__mixins__/DelegatingDispatcherMixin.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingQueueableMixin from "../utils/__mixins__/DelegatingQueueableMixin.js";
 import {
   BackpressureStrategy,
   ContinuationContextLike,
@@ -138,7 +138,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
 
   return mixInstanceFactory(
     include(
-      DelegatingDispatcherMixin<
+      DelegatingQueueableMixin<
         ReadonlyObjectMapLike<
           string,
           ReadonlyObjectMapLike<string, Updater<Optional<T>>>
@@ -172,7 +172,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
         persistentStore,
       } = options ?? {};
 
-      const dispatcher =
+      const queue =
         SingleUseObservable.create<
           ReadonlyObjectMapLike<string, Updater<Optional<T>>>
         >(options);
@@ -197,7 +197,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
       };
 
       pipe(
-        dispatcher,
+        queue,
         Observable.map(
           (
             updaters: ReadonlyObjectMapLike<
@@ -320,7 +320,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
             )
           : Computation.ignoreElements(ObservableModule)(),
         Observable.subscribe(scheduler, options),
-        Disposable.addTo(dispatcher),
+        Disposable.addTo(queue),
       );
 
       let cleanupJob = Disposable.disposed;
@@ -342,13 +342,13 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
       };
 
-      init(DelegatingDisposableMixin, this, dispatcher);
+      init(DelegatingDisposableMixin, this, queue);
       init(
-        DelegatingDispatcherMixin<
+        DelegatingQueueableMixin<
           ReadonlyObjectMapLike<string, Function1<Optional<T>, T>>
         >(),
         this,
-        dispatcher,
+        queue,
       );
 
       return this;

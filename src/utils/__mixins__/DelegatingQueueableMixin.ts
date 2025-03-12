@@ -8,24 +8,25 @@ import {
   QueueableLike_complete,
   QueueableLike_enqueue,
   QueueableLike_isCompleted,
+  QueueableLike_isReady,
   QueueableLike_onReady,
 } from "../../utils.js";
 
-const DelegatingDispatcherMixin: <TReq>() => Mixin1<
+const DelegatingQueueableMixin: <TReq>() => Mixin1<
   Omit<QueueableLike<TReq>, keyof DisposableContainerLike>,
   QueueableLike<TReq>
 > = /*@__PURE__*/ (<TReq>() => {
-  const DelegatingDispatcherMixin_delegate = Symbol(
-    "DelegatingDispatcherMixin_delegate",
+  const DelegatingQueueableMixin_delegate = Symbol(
+    "DelegatingQueueableMixin_delegate",
   );
 
   type TProperties = {
-    [DelegatingDispatcherMixin_delegate]: QueueableLike<TReq>;
+    [DelegatingQueueableMixin_delegate]: QueueableLike<TReq>;
   };
 
   return returns(
     mix(
-      function DelegatingDispatcherMixin(
+      function DelegatingQueueableMixin(
         this: Pick<
           QueueableLike,
           | typeof QueueableLike_complete
@@ -33,59 +34,63 @@ const DelegatingDispatcherMixin: <TReq>() => Mixin1<
           | typeof QueueableLike_capacity
           | typeof QueueableLike_enqueue
           | typeof QueueableLike_isCompleted
+          | typeof QueueableLike_isReady
           | typeof QueueableLike_onReady
         > &
           TProperties,
         delegate: QueueableLike<TReq>,
       ): Omit<QueueableLike<TReq>, keyof DisposableContainerLike> {
-        this[DelegatingDispatcherMixin_delegate] = delegate;
+        this[DelegatingQueueableMixin_delegate] = delegate;
 
         return this;
       },
       props<TProperties>({
-        [DelegatingDispatcherMixin_delegate]: none,
+        [DelegatingQueueableMixin_delegate]: none,
       }),
       {
         get [QueueableLike_isCompleted]() {
           unsafeCast<TProperties>(this);
-          return this[DelegatingDispatcherMixin_delegate][
+          return this[DelegatingQueueableMixin_delegate][
             QueueableLike_isCompleted
           ];
         },
 
+        get [QueueableLike_isReady]() {
+          unsafeCast<TProperties>(this);
+          return this[DelegatingQueueableMixin_delegate][QueueableLike_isReady];
+        },
+
         get [QueueableLike_onReady]() {
           unsafeCast<TProperties>(this);
-          return this[DelegatingDispatcherMixin_delegate][
-            QueueableLike_onReady
-          ];
+          return this[DelegatingQueueableMixin_delegate][QueueableLike_onReady];
         },
 
         get [QueueableLike_backpressureStrategy]() {
           unsafeCast<TProperties>(this);
-          return this[DelegatingDispatcherMixin_delegate][
+          return this[DelegatingQueueableMixin_delegate][
             QueueableLike_backpressureStrategy
           ];
         },
 
         get [QueueableLike_capacity](): number {
           unsafeCast<TProperties>(this);
-          return this[DelegatingDispatcherMixin_delegate][
+          return this[DelegatingQueueableMixin_delegate][
             QueueableLike_capacity
           ];
         },
 
         [QueueableLike_enqueue](this: TProperties, v: TReq): boolean {
-          return this[DelegatingDispatcherMixin_delegate][
-            QueueableLike_enqueue
-          ](v);
+          return this[DelegatingQueueableMixin_delegate][QueueableLike_enqueue](
+            v,
+          );
         },
 
         [QueueableLike_complete](this: TProperties) {
-          this[DelegatingDispatcherMixin_delegate][QueueableLike_complete]();
+          this[DelegatingQueueableMixin_delegate][QueueableLike_complete]();
         },
       },
     ),
   );
 })();
 
-export default DelegatingDispatcherMixin;
+export default DelegatingQueueableMixin;

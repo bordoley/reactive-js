@@ -47,7 +47,7 @@ const Observable_fromAsyncIterable: Observable.Signature["fromAsyncIterable"] =
             } else if (!observer[QueueableLike_enqueue](next[Iterator_value])) {
               // An async iterable can produce resolved promises which are immediately
               // scheduled on the microtask queue. This prevents the observer's scheduler
-              // from running and draining dispatched events.
+              // from running and draining queued events.
               //
               // Check the observer's buffer size so we can avoid queueing forever
               // in this situation.

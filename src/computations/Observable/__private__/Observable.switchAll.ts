@@ -33,6 +33,7 @@ import {
   DisposableLike_isDisposed,
   ObserverLike,
   QueueableLike_enqueue,
+  QueueableLike_isReady,
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../utils.js";
@@ -105,24 +106,17 @@ const createSwitchAllObserver: <T>(
           SerialDisposableLike,
         next: ObservableLike<T>,
       ) {
+        const delegate = this[LiftedObserverLike_delegate];
         this[SwitchAllObserver_currentRef][SerialDisposableLike_current] = pipe(
           next,
-          Observable_forEach(
-            bindMethod(
-              this[LiftedObserverLike_delegate],
-              QueueableLike_enqueue,
-            ),
-          ),
-          Observable_subscribeWithConfig(
-            this[LiftedObserverLike_delegate],
-            this,
-          ),
-          Disposable.addTo(this[LiftedObserverLike_delegate]),
+          Observable_forEach(bindMethod(delegate, QueueableLike_enqueue)),
+          Observable_subscribeWithConfig(delegate, this),
+          Disposable.addTo(delegate),
           DisposableContainer.onComplete(
             bind(onSwitchAllObserverInnerObservableComplete, this),
           ),
         );
-        return true;
+        return delegate[QueueableLike_isReady];
       },
     }),
   );

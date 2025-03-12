@@ -61,7 +61,7 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
           ),
           { innerType: DeferredComputationWithSideEffects },
         ),
-        Observable.dispatchTo<Updater<T>>(stream),
+        Observable.enqueue<Updater<T>>(stream),
         Computation.ignoreElements(ObservableModule)(),
         Observable.subscribe(scheduler),
         Disposable.addTo(stream),

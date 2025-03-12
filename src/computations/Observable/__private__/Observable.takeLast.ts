@@ -37,6 +37,7 @@ import {
   QueueLike_count,
   QueueLike_dequeue,
   QueueableLike_enqueue,
+  QueueableLike_isReady,
   SchedulerLike_schedule,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -115,7 +116,8 @@ const createTakeLastObserver: <T>(
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
-        return this[TakeLastObserver_queue][QueueableLike_enqueue](next);
+        this[TakeLastObserver_queue][QueueableLike_enqueue](next);
+        return this[QueueableLike_isReady];
       },
     }),
   );

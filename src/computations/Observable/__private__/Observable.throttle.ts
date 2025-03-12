@@ -36,6 +36,7 @@ import {
   QueueableLike_complete,
   QueueableLike_enqueue,
   QueueableLike_isCompleted,
+  QueueableLike_isReady,
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../utils.js";
@@ -94,16 +95,14 @@ const createThrottleObserver: <T>(
     observer: LiftedObserverLike<T> & TProperties,
     next: T,
   ) => {
+    const delegate = observer[LiftedObserverLike_delegate];
     observer[ThrottleObserver_durationSubscription][
       SerialDisposableLike_current
     ] = pipe(
       observer[ThrottleObserver_durationFunction](next),
       Observable_forEach(bind(notifyThrottleObserverDelegate, observer)),
-      Observable_subscribeWithConfig(
-        observer[LiftedObserverLike_delegate],
-        observer,
-      ),
-      Disposable.addTo(observer[LiftedObserverLike_delegate]),
+      Observable_subscribeWithConfig(delegate, observer),
+      Disposable.addTo(delegate),
     );
   };
 
@@ -178,7 +177,7 @@ const createThrottleObserver: <T>(
           setupDurationSubscription(this, next);
         }
 
-        return true;
+        return this[LiftedObserverLike_delegate][QueueableLike_isReady];
       },
     }),
   );

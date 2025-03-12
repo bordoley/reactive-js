@@ -39,6 +39,7 @@ import {
   QueueableLike_complete,
   QueueableLike_enqueue,
   QueueableLike_isCompleted,
+  QueueableLike_isReady,
   QueueableLike_onReady,
   ThrowBackpressureStrategy,
 } from "../../utils.js";
@@ -179,6 +180,15 @@ const QueueMixin: <T>() => Mixin1<
 
           return head === tail ? none : values[index];
         },*/
+
+        get [QueueableLike_isReady]() {
+          unsafeCast<TProperties>(this);
+          const count = this[QueueLike_count];
+          const capacity = this[QueueableLike_capacity];
+          const isCompleted = this[QueueableLike_isCompleted];
+
+          return !isCompleted && count < capacity;
+        },
 
         [QueueLike_dequeue](this: TProperties & QueueLike<T>) {
           const count = this[QueueLike_count];
@@ -445,7 +455,7 @@ const QueueMixin: <T>() => Mixin1<
 
           this[QueueMixin_capacityMask] = newCapacityMask;
 
-          return newCount < capacity;
+          return this[QueueableLike_isReady];
         },
 
         [QueueableLike_complete](this: TProperties) {

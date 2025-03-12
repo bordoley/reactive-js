@@ -90,10 +90,10 @@ type Signature = WebEffectsModule;
 const returnsNone = returns(none);
 const makeRefSetter =
   (
-    dispatcher: QueueableLike<Updater<Optional<HTMLElement | null>>>,
+    queue: QueueableLike<Updater<Optional<HTMLElement | null>>>,
   ): SideEffect1<HTMLElement | null | undefined> =>
   ele =>
-    dispatcher[QueueableLike_enqueue](returns(ele));
+    queue[QueueableLike_enqueue](returns(ele));
 
 const animateHtmlElement = <T>(
   element: Optional<HTMLElement | null>,

@@ -36,9 +36,11 @@ import {
   QueueableLike_complete,
   QueueableLike_enqueue,
   QueueableLike_isCompleted,
+  QueueableLike_isReady,
   QueueableLike_onReady,
 } from "../../utils.js";
 import * as Publisher from "../Publisher.js";
+import * as EventSource from "../EventSource.js";
 
 export interface SingleUseObservableLike<out T>
   extends PureDeferredObservableLike<T>,
@@ -57,6 +59,7 @@ export const create: <T>(config?: {
     [SingleUseObservableLike_delegate]: ObserverLike<T>;
     [QueueableLike_onReady]: PublisherLike<void>;
     [QueueableLike_isCompleted]: boolean;
+    [QueueableLike_isReady]: boolean;
   };
 
   const queueProtoype = getPrototype(QueueMixin<T>());
@@ -79,13 +82,23 @@ export const create: <T>(config?: {
       init(DisposableMixin, this);
       init(QueueMixin<T>(), this, config);
 
-      this[QueueableLike_onReady] = Publisher.create();
+      const publisher = (this[QueueableLike_onReady] = Publisher.create());
+
+      pipe(
+        publisher,
+        EventSource.addEventHandler(() => {
+          this[QueueableLike_isReady] = true;
+        }),
+        Disposable.addTo(this),
+      );
+
       return this;
     },
     props<TProperties>({
       [SingleUseObservableLike_delegate]: none,
       [QueueableLike_onReady]: none,
       [QueueableLike_isCompleted]: false,
+      [QueueableLike_isReady]: true,
     }),
     {
       [ComputationLike_isDeferred]: true as const,
@@ -113,6 +126,7 @@ export const create: <T>(config?: {
         if (isCompleted) {
           observer[QueueableLike_complete]();
         } else {
+          this[QueueableLike_isReady] = observer[QueueableLike_isReady];
           observer[QueueableLike_onReady][EventSourceLike_addEventListener](
             this[QueueableLike_onReady],
           );
@@ -133,12 +147,14 @@ export const create: <T>(config?: {
         const delegate = this[SingleUseObservableLike_delegate];
         const isCompleted = this[QueueableLike_isCompleted];
 
-        return (
+        const result =
           isCompleted ||
           (isSome(delegate)
             ? delegate[QueueableLike_enqueue](v)
-            : call(queueProtoype[QueueableLike_enqueue], this, v))
-        );
+            : call(queueProtoype[QueueableLike_enqueue], this, v));
+
+        this[QueueableLike_isReady] = result;
+        return result;
       },
     },
   );

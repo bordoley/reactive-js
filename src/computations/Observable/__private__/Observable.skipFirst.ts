@@ -16,7 +16,11 @@ import ObserverMixin, {
   ObserverMixinBaseLike,
   ObserverMixinBaseLike_notify,
 } from "../../../utils/__mixins__/ObserverMixin.js";
-import { ObserverLike, QueueableLike_enqueue } from "../../../utils.js";
+import {
+  ObserverLike,
+  QueueableLike_enqueue,
+  QueueableLike_isReady,
+} from "../../../utils.js";
 
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -67,7 +71,7 @@ const createSkipFirstObserver: <T>(
           (shouldEmit &&
             (delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
               delegate[QueueableLike_enqueue](next))) ||
-          !shouldEmit
+          delegate[QueueableLike_isReady]
         );
       },
     }),

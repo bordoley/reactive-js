@@ -85,7 +85,6 @@ import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_currentTime from "./Observable/__private__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__private__/Observable.decodeWithCharset.js";
 import Observable_defer from "./Observable/__private__/Observable.defer.js";
-import Observable_dispatchTo from "./Observable/__private__/Observable.dispatchTo.js";
 import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__private__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__private__/Observable.encodeUtf8.js";
@@ -411,10 +410,6 @@ export interface ObservableModule
   defer<T>(
     f: Factory<MulticastObservableLike<T> & DisposableLike>,
   ): PureDeferredObservableLike<T>;
-
-  dispatchTo<T>(
-    dispatcher: QueueableLike<T>,
-  ): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
 
   empty<T>(options?: {
     readonly delay: number;
@@ -784,7 +779,6 @@ export const currentTime: Signature["currentTime"] = Observable_currentTime;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Observable_decodeWithCharset;
 export const defer: Signature["defer"] = Observable_defer;
-export const dispatchTo: Signature["dispatchTo"] = Observable_dispatchTo;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const empty: Signature["empty"] = Observable_empty;

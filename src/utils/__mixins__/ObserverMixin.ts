@@ -34,6 +34,7 @@ import {
   QueueableLike_complete,
   QueueableLike_enqueue,
   QueueableLike_isCompleted,
+  QueueableLike_isReady,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -91,7 +92,9 @@ const ObserverMixin: <T>() => Mixin2<
       const continuation = (ctx: ContinuationContextLike) => {
         while (observer[QueueLike_count] > 0) {
           const next = observer[QueueLike_dequeue]() as T;
-          observer[ObserverMixinBaseLike_notify](next);
+          if (!observer[ObserverMixinBaseLike_notify](next)) {
+            observer[SchedulerLike_requestYield]();
+          }
 
           if (observer[QueueLike_count] > 0) {
             ctx[ContinuationContextLike_yield]();
@@ -240,21 +243,20 @@ const ObserverMixin: <T>() => Mixin2<
             ObserverMixinBaseLike<T>,
           next: T,
         ): boolean {
-          const isCompleted = this[QueueableLike_isCompleted];
-          const isDisposed = this[DisposableLike_isDisposed];
           const inSchedulerContinuation = this[SchedulerLike_inContinuation];
 
-          const shouldIgnore = isCompleted || isDisposed;
+          const shouldIgnore =
+            this[QueueableLike_isCompleted] || this[DisposableLike_isDisposed];
           const shouldNotify = inSchedulerContinuation && !shouldIgnore;
           const shouldEnqueue = !inSchedulerContinuation && !shouldIgnore;
 
-          return (
+          const result =
             (shouldNotify && this[ObserverMixinBaseLike_notify](next)) ||
             (shouldEnqueue &&
               (scheduleDrainQueue(this),
-              call(queueProtoype[QueueableLike_enqueue], this, next))) ||
-            shouldIgnore
-          );
+              call(queueProtoype[QueueableLike_enqueue], this, next)));
+
+          return result && this[QueueableLike_isReady];
         },
 
         [QueueableLike_complete](

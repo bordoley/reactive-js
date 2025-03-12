@@ -20,6 +20,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
+  QueueableLike_isReady,
   SchedulerLike,
 } from "../../../utils.js";
 
@@ -48,8 +49,8 @@ const createObserver: <T>(
     },
     props(),
     proto({
-      [ObserverMixinBaseLike_notify](_: T) {
-        return true;
+      [ObserverMixinBaseLike_notify](this: ObserverLike<T>, _: T) {
+        return this[QueueableLike_isReady];
       },
     }),
   );
