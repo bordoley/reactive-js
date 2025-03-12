@@ -2,7 +2,7 @@
 
 import { mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { none, returns } from "../../functions.js";
-import { DispatcherLike_complete, DispatcherLike_state, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
+import { DispatcherLike_complete, DispatcherLike_isCompleted, DispatcherLike_onReady, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 const DelegatingDispatcherMixin = /*@__PURE__*/ (() => {
     const DelegatingDispatcherMixin_delegate = Symbol("DelegatingDispatcherMixin_delegate");
     return returns(mix(function DelegatingDispatcherMixin(delegate) {
@@ -11,9 +11,13 @@ const DelegatingDispatcherMixin = /*@__PURE__*/ (() => {
     }, props({
         [DelegatingDispatcherMixin_delegate]: none,
     }), {
-        get [DispatcherLike_state]() {
+        get [DispatcherLike_isCompleted]() {
             unsafeCast(this);
-            return this[DelegatingDispatcherMixin_delegate][DispatcherLike_state];
+            return this[DelegatingDispatcherMixin_delegate][DispatcherLike_isCompleted];
+        },
+        get [DispatcherLike_onReady]() {
+            unsafeCast(this);
+            return this[DelegatingDispatcherMixin_delegate][DispatcherLike_onReady];
         },
         get [QueueableLike_backpressureStrategy]() {
             unsafeCast(this);

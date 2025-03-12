@@ -27,6 +27,10 @@ import LiftedObserverMixin, {
   LiftedObserverLike_delegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
+import {
   DispatcherLike_complete,
   DispatcherLike_isCompleted,
   DisposableLike_isDisposed,
@@ -40,10 +44,6 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_fromValue from "./Observable.fromValue.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
-import {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 
 export const ThrottleFirstMode = "first";
 export const ThrottleLastMode = "last";

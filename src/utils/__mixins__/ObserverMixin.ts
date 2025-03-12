@@ -48,9 +48,9 @@ import {
   SerialDisposableLike_current,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
+import * as DisposableContainer from "../DisposableContainer.js";
 import QueueMixin from "./QueueMixin.js";
 import SerialDisposableMixin from "./SerialDisposableMixin.js";
-import * as DisposableContainer from "../DisposableContainer.js";
 
 export const ObserverMixinBaseLike_notify = Symbol("ObserverLike_notify");
 

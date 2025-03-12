@@ -15,21 +15,3 @@ A consumer of push-based notifications.
 ## Type Parameters
 
 • **T** = `unknown`
-
-## Methods
-
-### \[ObserverLike\_notify\]()
-
-> **\[ObserverLike\_notify\]**(`event`): `void`
-
-Notifies the observer of the next notification produced by the source.
-
-#### Parameters
-
-##### event
-
-`T`
-
-#### Returns
-
-`void`

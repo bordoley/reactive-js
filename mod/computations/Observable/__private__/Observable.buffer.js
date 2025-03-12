@@ -6,11 +6,10 @@ import { none, partial, pipe } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
-import { DispatcherLike_complete, DisposableLike_dispose, ObserverLike_notify, QueueableLike_enqueue, } from "../../../utils.js";
+import ObserverMixin, { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
+import { DispatcherLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const BufferObserver_buffer = Symbol("BufferObserver_buffer");
 const BufferObserver_count = Symbol("BufferingLike_count");
@@ -23,7 +22,7 @@ function onBufferObserverCompleted() {
         delegate[DispatcherLike_complete]();
     }
     else {
-        delegate[DisposableLike_dispose]();
+        delegate[DispatcherLike_complete]();
     }
 }
 const createBufferObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DisposableMixin, ObserverMixin(), LiftedObserverMixin()), function BufferObserver(delegate, count) {
@@ -38,15 +37,18 @@ const createBufferObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(Dis
     [BufferObserver_buffer]: none,
     [BufferObserver_count]: 0,
 }), proto({
-    [ObserverLike_notify]: Observer_assertObserverState(function (next) {
+    [ObserverMixinBaseLike_notify](next) {
+        const delegate = this[LiftedObserverLike_delegate];
         const buffer = this[BufferObserver_buffer];
         const count = this[BufferObserver_count];
         buffer[Array_push](next);
-        if (buffer[Array_length] === count) {
-            this[BufferObserver_buffer] = [];
-            this[LiftedObserverLike_delegate][ObserverLike_notify](buffer);
-        }
-    }),
+        const shouldEmit = buffer[Array_length] === count;
+        return ((shouldEmit &&
+            ((this[BufferObserver_buffer] = []),
+                delegate?.[ObserverMixinBaseLike_notify]?.(buffer) ??
+                    delegate[QueueableLike_enqueue](buffer))) ||
+            !shouldEmit);
+    },
 })))();
 const Observable_buffer = (options) => pipe((createBufferObserver), partial(options?.count), Observable_liftPureDeferred);
 export default Observable_buffer;

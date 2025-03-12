@@ -7,10 +7,10 @@ import * as Computation from "../../../computations/Computation.js";
 import { ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike_observe, } from "../../../computations.js";
 import { none, pick, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import { DisposableLike_dispose, ObserverLike_notify, } from "../../../utils.js";
+import { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
+import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 const zipMode = 2;
 const Observable_latest = /*@__PURE__*/ (() => {
@@ -39,16 +39,17 @@ const Observable_latest = /*@__PURE__*/ (() => {
         [LatestObserver_latest]: none,
         [LatestObserver_ctx]: none,
     }), proto({
-        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
+        [ObserverMixinBaseLike_notify](next) {
             const ctx = this[LatestObserver_ctx];
             const mode = ctx[LatestCtx_mode];
             const observers = ctx[LatestCtx_observers];
             this[LatestObserver_latest] = next;
             this[LatestObserver_ready] = true;
             const isReady = observers[Array_every](pick(LatestObserver_ready));
+            let result = true;
             if (isReady) {
-                const result = pipe(observers, ReadonlyArray.map(pick(LatestObserver_latest)));
-                ctx[LatestCtx_delegate][ObserverLike_notify](result);
+                const value = pipe(observers, ReadonlyArray.map(pick(LatestObserver_latest)));
+                result = ctx[LatestCtx_delegate][QueueableLike_enqueue](value);
                 if (mode === zipMode) {
                     for (const sub of observers) {
                         sub[LatestObserver_ready] = false;
@@ -56,7 +57,8 @@ const Observable_latest = /*@__PURE__*/ (() => {
                     }
                 }
             }
-        }),
+            return result;
+        },
     }));
     return (observables, mode) => {
         const onSubscribe = (delegate) => {

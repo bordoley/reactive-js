@@ -25,6 +25,10 @@ import LiftedObserverMixin, {
   LiftedObserverLike_delegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
+import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
@@ -38,10 +42,6 @@ import Observable_lift, {
   ObservableLift_isStateless,
 } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
-import {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 
 const createSwitchAllObserver: <T>(
   o: ObserverLike<T>,

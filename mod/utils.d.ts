@@ -1,5 +1,5 @@
 import { Error } from "./__internal__/constants.js";
-import type { StoreLike } from "./computations.js";
+import type { EventSourceLike, StoreLike } from "./computations.js";
 import { Method1, Optional, SideEffect1 } from "./functions.js";
 export declare const DisposableContainerLike_add: unique symbol;
 export interface DisposableContainerLike {
@@ -222,12 +222,9 @@ export interface EventListenerLike<T = unknown> extends DisposableLike {
      */
     [EventListenerLike_notify](event: T): void;
 }
-export declare const DispatcherState_ready: unique symbol;
-export declare const DispatcherState_capacityExceeded: unique symbol;
-export declare const DispatcherState_completed: unique symbol;
-export type DispatcherState = typeof DispatcherState_ready | typeof DispatcherState_capacityExceeded | typeof DispatcherState_completed;
+export declare const DispatcherLike_isCompleted: unique symbol;
 export declare const DispatcherLike_complete: unique symbol;
-export declare const DispatcherLike_state: unique symbol;
+export declare const DispatcherLike_onReady: unique symbol;
 /**
  * A `QueueableLike` type that consumes enqueued events to
  * be dispatched from any execution constext.
@@ -235,23 +232,17 @@ export declare const DispatcherLike_state: unique symbol;
  * @noInheritDoc
  */
 export interface DispatcherLike<T = unknown> extends QueueableLike<T>, DisposableContainerLike {
-    readonly [DispatcherLike_state]: StoreLike<DispatcherState>;
+    readonly [DispatcherLike_isCompleted]: boolean;
+    readonly [DispatcherLike_onReady]: EventSourceLike<void>;
     /**
      * Communicates to the dispatcher that no more events will be enqueued.
      */
     [DispatcherLike_complete](): void;
 }
-export declare const ObserverLike_notify: unique symbol;
 /**
  * A consumer of push-based notifications.
  *
  * @noInheritDoc
  */
 export interface ObserverLike<T = unknown> extends DispatcherLike<T>, SchedulerLike, DisposableLike {
-    /**
-     * Notifies the observer of the next notification produced by the source.
-     *
-     * @param next - The next notification value.
-     */
-    [ObserverLike_notify](event: T): void;
 }

@@ -25,9 +25,15 @@ be dispatched from any execution constext.
 
 ## Properties
 
-### \[DispatcherLike\_state\]
+### \[DispatcherLike\_isCompleted\]
 
-> `readonly` **\[DispatcherLike\_state\]**: [`StoreLike`](../../computations/interfaces/StoreLike.md)\<[`DispatcherState`](../type-aliases/DispatcherState.md)\>
+> `readonly` **\[DispatcherLike\_isCompleted\]**: `boolean`
+
+***
+
+### \[DispatcherLike\_onReady\]
+
+> `readonly` **\[DispatcherLike\_onReady\]**: [`EventSourceLike`](../../computations/interfaces/EventSourceLike.md)\<`void`\>
 
 ## Methods
 

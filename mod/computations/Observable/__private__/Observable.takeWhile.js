@@ -2,11 +2,10 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin from "../../../utils/__mixins__/ObserverMixin.js";
-import { DisposableLike_dispose, ObserverLike_notify, } from "../../../utils.js";
+import ObserverMixin, { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
+import { DispatcherLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const TakeWhileObserver_inclusive = Symbol("TakeWhileObserver_inclusive");
 const TakeWhileObserver_predicate = Symbol("TakeWhileObserver_predicate");
@@ -21,15 +20,19 @@ const createTakeWhileObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(
     [TakeWhileObserver_predicate]: none,
     [TakeWhileObserver_inclusive]: none,
 }), proto({
-    [ObserverLike_notify]: Observer_assertObserverState(function (next) {
+    [ObserverMixinBaseLike_notify](next) {
+        const delegate = this[LiftedObserverLike_delegate];
         const satisfiesPredicate = this[TakeWhileObserver_predicate](next);
-        if (satisfiesPredicate || this[TakeWhileObserver_inclusive]) {
-            this[LiftedObserverLike_delegate][ObserverLike_notify](next);
-        }
+        const isInclusive = this[TakeWhileObserver_inclusive];
+        const result = ((satisfiesPredicate || isInclusive) &&
+            (delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
+                delegate[QueueableLike_enqueue](next))) ||
+            !satisfiesPredicate;
         if (!satisfiesPredicate) {
-            this[DisposableLike_dispose]();
+            this[DispatcherLike_complete]();
         }
-    }),
+        return result;
+    },
 })))();
 const Observable_takeWhile = (predicate, options = {}) => pipe((createTakeWhileObserver), partial(predicate, options?.inclusive), Observable_liftPureDeferred);
 export default Observable_takeWhile;

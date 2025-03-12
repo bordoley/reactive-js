@@ -14,7 +14,7 @@ import {
   StoreLike_value,
   WritableStoreLike,
 } from "../computations.js";
-import { bindMethod, Function1, invoke, none, pipe } from "../functions.js";
+import { Function1, bindMethod, invoke, none, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
@@ -27,9 +27,9 @@ import {
   QueueableLike_enqueue,
 } from "../utils.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
+import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
 import * as WritableStore from "./WritableStore.js";
 import DelegatingMulticastObservableMixin from "./__mixins__/DelegatingMulticastObservableMixin.js";
-import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
 
 interface PauseableObservableModule {
   create<T>(

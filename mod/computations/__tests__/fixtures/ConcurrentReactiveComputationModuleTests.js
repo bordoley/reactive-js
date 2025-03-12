@@ -57,7 +57,7 @@ import { describe, expectArrayEquals, expectEquals, expectToThrow, expectToThrow
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as Observable from "../../../computations/Observable.js";
 import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../../computations.js";
-import { arrayEquality, bind, bindMethod, compose, newInstance, none, pipe, pipeLazy, returns, tuple, } from "../../../functions.js";
+import { arrayEquality, bind, bindMethod, compose, newInstance, pipe, pipeAsync, pipeLazy, returns, tuple, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as HostScheduler from "../../../utils/HostScheduler.js";
 import * as VirtualTimeScheduler from "../../../utils/VirtualTimeScheduler.js";
@@ -76,11 +76,7 @@ const ConcurrentReactiveComputationModuleTests = (m, computationType) => {
         try {
             const scheduler = __addDisposableResource(env_1, HostScheduler.create(), false);
             const promise = Promise.resolve(1);
-            let result = none;
-            await pipe(promise, m.fromPromise(), m.toObservable(), Observable.forEach(e => {
-                result = e;
-            }), Observable.lastAsync(scheduler));
-            pipe(result, expectEquals(1));
+            await pipeAsync(promise, m.fromPromise(), m.toObservable(), Observable.lastAsync(scheduler), expectEquals(1));
         }
         catch (e_1) {
             env_1.error = e_1;

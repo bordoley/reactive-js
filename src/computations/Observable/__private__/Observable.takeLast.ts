@@ -24,6 +24,10 @@ import LiftedObserverMixin, {
   LiftedObserverLike_delegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
+  ObserverMixinBaseLike,
+  ObserverMixinBaseLike_notify,
+} from "../../../utils/__mixins__/ObserverMixin.js";
+import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DisposableLike_dispose,
@@ -37,10 +41,6 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-import {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 
 const createTakeLastObserver: <T>(
   delegate: ObserverLike<T>,

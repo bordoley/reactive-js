@@ -1,16 +1,15 @@
 /// <reference types="./Observable.throttle.d.ts" />
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
-import { StoreLike_value } from "../../../computations.js";
 import { bind, isSome, none, partial, pipe, pipeLazy, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_assertObserverState from "../../../utils/Observer/__internal__/Observer.assertObserverState.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { DispatcherLike_complete, DispatcherLike_state, DispatcherState_completed, DisposableLike_isDisposed, ObserverLike_notify, QueueableLike_enqueue, SerialDisposableLike_current, } from "../../../utils.js";
+import { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
+import { DispatcherLike_complete, DispatcherLike_isCompleted, DisposableLike_isDisposed, QueueableLike_enqueue, SerialDisposableLike_current, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_fromValue from "./Observable.fromValue.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -26,13 +25,12 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
     const ThrottleObserver_mode = Symbol("ThrottleObserver_mode");
     function notifyThrottleObserverDelegate(_) {
         const delegate = this[LiftedObserverLike_delegate];
-        const delegateIsCompleted = delegate[DispatcherLike_state][StoreLike_value] ===
-            DispatcherState_completed;
+        const delegateIsCompleted = delegate[DispatcherLike_isCompleted];
         if (this[ThrottleObserver_hasValue] && !delegateIsCompleted) {
             const value = this[ThrottleObserver_value];
             this[ThrottleObserver_value] = none;
             this[ThrottleObserver_hasValue] = false;
-            delegate[ObserverLike_notify](value);
+            delegate[QueueableLike_enqueue](value);
             setupDurationSubscription(this, value);
         }
     }
@@ -68,7 +66,7 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
         [ThrottleObserver_durationFunction]: none,
         [ThrottleObserver_mode]: ThrottleIntervalMode,
     }), proto({
-        [ObserverLike_notify]: Observer_assertObserverState(function (next) {
+        [ObserverMixinBaseLike_notify](next) {
             this[ThrottleObserver_value] = next;
             this[ThrottleObserver_hasValue] = true;
             const durationSubscriptionDisposableIsDisposed = this[ThrottleObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed];
@@ -79,7 +77,8 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
             else if (durationSubscriptionDisposableIsDisposed) {
                 setupDurationSubscription(this, next);
             }
-        }),
+            return true;
+        },
     }));
 })();
 const Observable_throttle = (duration, options = {}) => {
