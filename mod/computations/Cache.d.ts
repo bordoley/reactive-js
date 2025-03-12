@@ -1,12 +1,12 @@
 import { ReadonlyObjectMapLike } from "../collections.js";
 import { DeferredObservableLike, ObservableLike } from "../computations.js";
 import { Optional, Updater } from "../functions.js";
-import { BackpressureStrategy, DispatcherLike, DisposableLike, SchedulerLike } from "../utils.js";
+import { BackpressureStrategy, DispatcherLike, DisposableContainerLike, DisposableLike, SchedulerLike } from "../utils.js";
 export declare const CacheLike_get: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface CacheLike<T> extends DispatcherLike<ReadonlyObjectMapLike<string, Updater<Optional<T>>>> {
+export interface CacheLike<T> extends DispatcherLike<ReadonlyObjectMapLike<string, Updater<Optional<T>>>>, DisposableContainerLike {
     [CacheLike_get](index: string): ObservableLike<T>;
 }
 interface CacheModule {
