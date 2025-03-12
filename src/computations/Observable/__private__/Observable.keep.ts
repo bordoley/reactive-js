@@ -52,9 +52,15 @@ const createKeepObserver: <T>(
         this: TProperties<T> & LiftedObserverLike<T>,
         next: T,
       ) {
-        return this[KeepObserver_predicate](next)
-          ? this[LiftedObserverLike_delegate][QueueableLike_enqueue](next)
-          : true;
+        const shouldNotify = this[KeepObserver_predicate](next);
+        const delegate = this[LiftedObserverLike_delegate];
+
+        return (
+          (shouldNotify &&
+            (delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
+              delegate[QueueableLike_enqueue](next))) ||
+          !shouldNotify
+        );
       },
     }),
   ))();

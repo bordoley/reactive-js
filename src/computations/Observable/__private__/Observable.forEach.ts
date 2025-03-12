@@ -50,8 +50,14 @@ const createForEachObserver: <T>(
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
+        const delegate = this[LiftedObserverLike_delegate];
+
         this[ForEachObserver_effect](next);
-        return this[LiftedObserverLike_delegate][QueueableLike_enqueue](next);
+
+        return (
+          delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
+          delegate[QueueableLike_enqueue](next)
+        );
       },
     },
   );

@@ -55,10 +55,15 @@ const Observer_createEnqueueObserver: <T>(
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
+        const delegate = this[LiftedObserverLike_delegate];
+
         if (!this[EnqueueObserver_queue][QueueableLike_enqueue](next)) {
           this[SchedulerLike_requestYield]();
         }
-        return this[LiftedObserverLike_delegate][QueueableLike_enqueue](next);
+        return (
+          delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
+          delegate[QueueableLike_enqueue](next)
+        );
       },
     }),
   );

@@ -117,19 +117,23 @@ const createWithLatestFromObserver: <TA, TB, T>(
         this: TProperties & LiftedObserverLike<TA, T>,
         next: TA,
       ) {
-        let result = true;
-
-        if (
+        const delegate = this[LiftedObserverLike_delegate];
+        const shouldEmit =
           !this[DisposableLike_isDisposed] &&
-          this[WithLatestFromObserver_hasLatest]
-        ) {
-          const v = this[WithLatestFromObserver_selector](
-            next,
-            this[WithLatestFromObserver_otherLatest] as TB,
-          );
-          result = this[LiftedObserverLike_delegate][QueueableLike_enqueue](v);
-        }
-        return result;
+          this[WithLatestFromObserver_hasLatest];
+
+        let v = none as T;
+
+        return (
+          (shouldEmit &&
+            ((v = this[WithLatestFromObserver_selector](
+              next,
+              this[WithLatestFromObserver_otherLatest] as TB,
+            )),
+            delegate?.[ObserverMixinBaseLike_notify]?.(v) ??
+              delegate[QueueableLike_enqueue](v))) ||
+          !shouldEmit
+        );
       },
     }),
   );

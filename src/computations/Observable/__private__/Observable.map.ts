@@ -53,7 +53,12 @@ const createMapObserver: <TA, TB>(
         next: TA,
       ) {
         const mapped = this[MapObserver_selector](next);
-        return this[LiftedObserverLike_delegate][QueueableLike_enqueue](mapped);
+        const delegate = this[LiftedObserverLike_delegate];
+
+        return (
+          delegate?.[ObserverMixinBaseLike_notify]?.(mapped) ??
+          delegate[QueueableLike_enqueue](mapped)
+        );
       },
     }),
   ))();

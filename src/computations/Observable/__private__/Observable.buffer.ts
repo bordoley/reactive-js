@@ -91,21 +91,21 @@ const createBufferObserver: <T>(
         this: TProps<T> & LiftedObserverLike<T, readonly T[]>,
         next: T,
       ) {
+        const delegate = this[LiftedObserverLike_delegate];
         const buffer = this[BufferObserver_buffer];
         const count = this[BufferObserver_count];
 
         buffer[Array_push](next);
 
-        if (buffer[Array_length] === count) {
-          this[BufferObserver_buffer] = [];
-          return this[LiftedObserverLike_delegate][QueueableLike_enqueue](
-            buffer,
-          );
-        }
-        return buffer[Array_length] === count
-          ? ((this[BufferObserver_buffer] = []),
-            this[LiftedObserverLike_delegate][QueueableLike_enqueue](buffer))
-          : true;
+        const shouldEmit = buffer[Array_length] === count;
+
+        return (
+          (shouldEmit &&
+            ((this[BufferObserver_buffer] = []),
+            delegate?.[ObserverMixinBaseLike_notify]?.(buffer) ??
+              delegate[QueueableLike_enqueue](buffer))) ||
+          !shouldEmit
+        );
       },
     }),
   ))();

@@ -92,13 +92,20 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         this: TProperties & LiftedObserverLike<ArrayBuffer, string>,
         next: ArrayBuffer,
       ) {
+        const delegate = this[LiftedObserverLike_delegate];
+
         const data = this[DecodeWithCharsetObserver_textDecoder].decode(next, {
           stream: true,
         });
 
-        return data[Array_length] > 0
-          ? this[LiftedObserverLike_delegate][QueueableLike_enqueue](data)
-          : true;
+        const shouldEmit = data[Array_length] > 0;
+
+        return (
+          (shouldEmit &&
+            (delegate?.[ObserverMixinBaseLike_notify]?.(data) ??
+              delegate[QueueableLike_enqueue](data))) ||
+          !shouldEmit
+        );
       },
     }),
   );
