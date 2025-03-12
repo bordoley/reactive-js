@@ -1,8 +1,8 @@
+import { increment } from "@reactive-js/core/math";
 import { benchmarkTest, benchmarkGroup } from "./benchmark.js";
 import {
   pipeLazy,
   isEven,
-  increment,
   isOdd,
   returns,
   none,
