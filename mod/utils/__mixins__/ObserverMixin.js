@@ -1,9 +1,8 @@
 /// <reference types="./ObserverMixin.d.ts" />
 
 import { getPrototype, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
-import * as Publisher from "../../computations/Publisher.js";
-import { bind, call, none, pipe, returns, } from "../../functions.js";
-import { ContinuationContextLike_yield, DispatcherLike_complete, DispatcherLike_isCompleted, DispatcherLike_onReady, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, } from "../../utils.js";
+import { bind, bindMethod, call, none, pipe, returns, } from "../../functions.js";
+import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import QueueMixin from "./QueueMixin.js";
@@ -18,16 +17,13 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             const continuation = (ctx) => {
                 while (observer[QueueLike_count] > 0) {
                     const next = observer[QueueLike_dequeue]();
-                    observer[QueueableLike_enqueue](next);
+                    observer[ObserverMixinBaseLike_notify](next);
                     if (observer[QueueLike_count] > 0) {
                         ctx[ContinuationContextLike_yield]();
                     }
                 }
-                if (observer[DispatcherLike_isCompleted]) {
+                if (observer[QueueableLike_isCompleted]) {
                     observer[DisposableLike_dispose]();
-                }
-                else {
-                    observer[DispatcherLike_onReady][EventListenerLike_notify](none);
                 }
             };
             observer[SerialDisposableLike_current] =
@@ -45,7 +41,6 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         this[ObserverMixin_rootScheduler] =
             scheduler[ObserverMixin_rootScheduler] ??
                 scheduler;
-        this[DispatcherLike_onReady] = pipe(Publisher.create(), Disposable.addTo(this));
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const instance = this;
         this[ObserverMixin_schedulerCallback] =
@@ -54,17 +49,13 @@ const ObserverMixin = /*@__PURE__*/ (() => {
                 this(ctx);
                 instance[SchedulerLike_inContinuation] = false;
             };
-        pipe(this, DisposableContainer.onDisposed(_ => {
-            this[DispatcherLike_isCompleted] = true;
-        }));
+        pipe(this, DisposableContainer.onDisposed(bindMethod(this, QueueableLike_complete)));
         return this;
     }, props({
         [ObserverMixin_scheduler]: none,
         [SchedulerLike_inContinuation]: false,
         [ObserverMixin_rootScheduler]: none,
         [ObserverMixin_schedulerCallback]: none,
-        [DispatcherLike_isCompleted]: false,
-        [DispatcherLike_onReady]: none,
     }), {
         get [SchedulerLike_maxYieldInterval]() {
             unsafeCast(this);
@@ -85,26 +76,23 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             return pipe(this[ObserverMixin_scheduler][SchedulerLike_schedule](bind(this[ObserverMixin_schedulerCallback], continuation), options), Disposable.addToContainer(this));
         },
         [QueueableLike_enqueue](next) {
-            let result = true;
-            const isCompleted = this[DispatcherLike_isCompleted];
+            const isCompleted = this[QueueableLike_isCompleted];
             const isDisposed = this[DisposableLike_isDisposed];
             const inSchedulerContinuation = this[SchedulerLike_inContinuation];
-            if ((isCompleted && !inSchedulerContinuation) || isDisposed) {
-                // noop
-            }
-            else if (inSchedulerContinuation) {
-                result = this[ObserverMixinBaseLike_notify](next);
-            }
-            else {
-                result = call(queueProtoype[QueueableLike_enqueue], this, next);
-                scheduleDrainQueue(this);
-            }
-            return result;
+            const shouldIgnore = isCompleted || isDisposed;
+            const shouldNotify = inSchedulerContinuation && !shouldIgnore;
+            const shouldEnqueue = !inSchedulerContinuation && !shouldIgnore;
+            return ((shouldNotify && this[ObserverMixinBaseLike_notify](next)) ||
+                (shouldEnqueue &&
+                    (scheduleDrainQueue(this),
+                        call(queueProtoype[QueueableLike_enqueue], this, next))) ||
+                shouldIgnore);
         },
-        [DispatcherLike_complete]() {
-            const isCompleted = this[DispatcherLike_isCompleted];
-            this[DispatcherLike_isCompleted] = true;
-            if (!isCompleted && this[QueueLike_count] > 0) {
+        [QueueableLike_complete]() {
+            const isCompleted = this[QueueableLike_isCompleted];
+            const isDisposed = this[DisposableLike_isDisposed];
+            call(queueProtoype[QueueableLike_complete], this);
+            if (!isCompleted && this[QueueLike_count] > 0 && !isDisposed) {
                 scheduleDrainQueue(this);
             }
             else {

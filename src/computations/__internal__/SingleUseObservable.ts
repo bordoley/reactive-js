@@ -26,23 +26,23 @@ import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import QueueMixin from "../../utils/__mixins__/QueueMixin.js";
 import {
   BackpressureStrategy,
-  DispatcherLike,
-  DispatcherLike_complete,
-  DispatcherLike_isCompleted,
-  DispatcherLike_onReady,
   DisposableLike,
   ObserverLike,
   QueueLike,
   QueueLike_dequeue,
+  QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
+  QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isCompleted,
+  QueueableLike_onReady,
 } from "../../utils.js";
 import * as Publisher from "../Publisher.js";
 
 export interface SingleUseObservableLike<out T>
   extends PureDeferredObservableLike<T>,
-    DispatcherLike,
+    QueueableLike,
     DisposableLike {}
 
 export const create: <T>(config?: {
@@ -55,8 +55,8 @@ export const create: <T>(config?: {
 
   type TProperties = {
     [SingleUseObservableLike_delegate]: ObserverLike<T>;
-    [DispatcherLike_onReady]: PublisherLike<void>;
-    [DispatcherLike_isCompleted]: boolean;
+    [QueueableLike_onReady]: PublisherLike<void>;
+    [QueueableLike_isCompleted]: boolean;
   };
 
   const queueProtoype = getPrototype(QueueMixin<T>());
@@ -79,13 +79,13 @@ export const create: <T>(config?: {
       init(DisposableMixin, this);
       init(QueueMixin<T>(), this, config);
 
-      this[DispatcherLike_onReady] = Publisher.create();
+      this[QueueableLike_onReady] = Publisher.create();
       return this;
     },
     props<TProperties>({
       [SingleUseObservableLike_delegate]: none,
-      [DispatcherLike_onReady]: none,
-      [DispatcherLike_isCompleted]: false,
+      [QueueableLike_onReady]: none,
+      [QueueableLike_isCompleted]: false,
     }),
     {
       [ComputationLike_isDeferred]: true as const,
@@ -103,7 +103,7 @@ export const create: <T>(config?: {
         this[SingleUseObservableLike_delegate] = observer;
         pipe(this, Disposable.bindTo(observer));
 
-        const isCompleted = this[DispatcherLike_isCompleted];
+        const isCompleted = this[QueueableLike_isCompleted];
 
         let v: Optional<T> = none;
         while (((v = this[QueueLike_dequeue]()), isSome(v))) {
@@ -111,27 +111,27 @@ export const create: <T>(config?: {
         }
 
         if (isCompleted) {
-          observer[DispatcherLike_complete]();
+          observer[QueueableLike_complete]();
         } else {
-          observer[DispatcherLike_onReady][EventSourceLike_addEventListener](
-            this[DispatcherLike_onReady],
+          observer[QueueableLike_onReady][EventSourceLike_addEventListener](
+            this[QueueableLike_onReady],
           );
         }
       },
 
-      [DispatcherLike_complete](this: TProperties & DisposableLike) {
+      [QueueableLike_complete](this: TProperties & DisposableLike) {
         const delegate = this[SingleUseObservableLike_delegate];
-        const isAlreadyCompleted = this[DispatcherLike_isCompleted];
-        this[DispatcherLike_isCompleted] = true;
+        const isAlreadyCompleted = this[QueueableLike_isCompleted];
+        this[QueueableLike_isCompleted] = true;
 
         if (isSome(delegate) && !isAlreadyCompleted) {
-          delegate[DispatcherLike_complete]();
+          delegate[QueueableLike_complete]();
         }
       },
 
       [QueueableLike_enqueue](this: TProperties, v: T): boolean {
         const delegate = this[SingleUseObservableLike_delegate];
-        const isCompleted = this[DispatcherLike_isCompleted];
+        const isCompleted = this[QueueableLike_isCompleted];
 
         return (
           isCompleted ||

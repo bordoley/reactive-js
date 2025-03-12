@@ -60,12 +60,22 @@ export declare const DropOldestBackpressureStrategy = "drop-oldest";
 export declare const OverflowBackpressureStrategy = "overflow";
 export declare const ThrowBackpressureStrategy = "throw";
 export type BackpressureStrategy = typeof DropLatestBackpressureStrategy | typeof DropOldestBackpressureStrategy | typeof OverflowBackpressureStrategy | typeof ThrowBackpressureStrategy;
+export declare const QueueableLike_isCompleted: unique symbol;
+export declare const QueueableLike_complete: unique symbol;
+export declare const QueueableLike_onReady: unique symbol;
 /**
- * An interface for types that support buffering items with backpressure.
+ * A `QueueableLike` type that consumes enqueued events to
+ * be dispatched from any execution constext.
  *
  * @noInheritDoc
  */
 export interface QueueableLike<T = unknown> {
+    readonly [QueueableLike_isCompleted]: boolean;
+    readonly [QueueableLike_onReady]: EventSourceLike<void>;
+    /**
+     * Communicates to the dispatcher that no more events will be enqueued.
+     */
+    [QueueableLike_complete](): void;
     /**
      * The back pressure strategy utilized by the queue when it is at capacity.
      */
@@ -222,27 +232,10 @@ export interface EventListenerLike<T = unknown> extends DisposableLike {
      */
     [EventListenerLike_notify](event: T): void;
 }
-export declare const DispatcherLike_isCompleted: unique symbol;
-export declare const DispatcherLike_complete: unique symbol;
-export declare const DispatcherLike_onReady: unique symbol;
-/**
- * A `QueueableLike` type that consumes enqueued events to
- * be dispatched from any execution constext.
- *
- * @noInheritDoc
- */
-export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
-    readonly [DispatcherLike_isCompleted]: boolean;
-    readonly [DispatcherLike_onReady]: EventSourceLike<void>;
-    /**
-     * Communicates to the dispatcher that no more events will be enqueued.
-     */
-    [DispatcherLike_complete](): void;
-}
 /**
  * A consumer of push-based notifications.
  *
  * @noInheritDoc
  */
-export interface ObserverLike<T = unknown> extends DispatcherLike<T>, SchedulerLike, DisposableLike {
+export interface ObserverLike<T = unknown> extends QueueableLike<T>, SchedulerLike, DisposableLike {
 }

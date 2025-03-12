@@ -17,10 +17,10 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import {
-  DispatcherLike_complete,
   DisposableContainerLike,
   DisposableLike_dispose,
   ObserverLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";
@@ -65,7 +65,7 @@ const Observable_fromStore: Observable.Signature["fromStore"] = /*@__PURE__*/ (<
           pipe(
             this[FromStoreObservable_eventSource],
             DisposableContainer.onComplete(
-              bindMethod(observer, DispatcherLike_complete),
+              bindMethod(observer, QueueableLike_complete),
             ),
             DisposableContainer.onError(
               bindMethod(observer, DisposableLike_dispose),

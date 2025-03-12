@@ -17,9 +17,9 @@ import ObserverMixin, {
   ObserverMixinBaseLike_notify,
 } from "../../../utils/__mixins__/ObserverMixin.js";
 import {
-  DispatcherLike_complete,
   DisposableLike_dispose,
   ObserverLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 
@@ -73,7 +73,7 @@ const createTakeFirstObserver: <T>(
           delegate[QueueableLike_enqueue](next);
 
         if (this[TakeFirstObserver_count] <= 0) {
-          this[DispatcherLike_complete]();
+          this[QueueableLike_complete]();
         }
 
         return result;

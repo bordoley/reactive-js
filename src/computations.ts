@@ -15,12 +15,12 @@ import type {
 } from "./functions.js";
 import type {
   BackpressureStrategy,
-  DispatcherLike,
   DisposableContainerLike,
   DisposableLike,
   EventListenerLike,
   ObserverLike,
   PauseableLike,
+  QueueableLike,
   SchedulerLike,
   SinkLike,
 } from "./utils.js";
@@ -1135,7 +1135,7 @@ export interface PauseableObservableLike<out T = unknown>
  * @noInheritDoc
  */
 export interface StreamLike<TReq, out T>
-  extends DispatcherLike<TReq>,
+  extends QueueableLike<TReq>,
     MulticastObservableLike<T> {}
 
 export const StreamableLike_stream = Symbol("StreamableLike_stream");

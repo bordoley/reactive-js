@@ -18,13 +18,13 @@ import { Function1, bindMethod, invoke, none, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
-  DispatcherLike,
-  DispatcherLike_onReady,
   DisposableLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
+  QueueableLike,
   QueueableLike_enqueue,
+  QueueableLike_onReady,
 } from "../utils.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
@@ -37,7 +37,7 @@ interface PauseableObservableModule {
   ): PauseableObservableLike<T> & DisposableLike;
 
   dispatchTo<T>(
-    dispatcher: DispatcherLike<T>,
+    dispatcher: QueueableLike<T>,
   ): Function1<
     PauseableObservableLike<T>,
     DeferredObservableWithSideEffectsLike<T>
@@ -88,11 +88,11 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
 })();
 
 export const dispatchTo: Signature["dispatchTo"] =
-  <T>(dispatcher: DispatcherLike<T>) =>
+  <T>(dispatcher: QueueableLike<T>) =>
   (src: PauseableObservableLike<T>) =>
     Observable_create<T>(observer => {
       pipe(
-        dispatcher[DispatcherLike_onReady],
+        dispatcher[QueueableLike_onReady],
         EventSource.addEventHandler(bindMethod(src, PauseableLike_resume)),
         Disposable.addTo(observer),
       );

@@ -62,7 +62,7 @@ import * as Streamable from "../../computations/Streamable.js";
 import { StreamableLike_stream } from "../../computations.js";
 import { bindMethod, invoke, none, pipe, pipeSome, returns, } from "../../functions.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
-import { DispatcherLike_complete, DispatcherLike_isCompleted, DropLatestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { DropLatestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 testModule("Streamable", describe("animation", test("integration", () => {
@@ -121,7 +121,7 @@ testModule("Streamable", describe("animation", test("integration", () => {
         pipe(stateStream[QueueableLike_backpressureStrategy], expectEquals(DropLatestBackpressureStrategy));
         stateStream[QueueableLike_enqueue](returns(2));
         stateStream[QueueableLike_enqueue](returns(3));
-        stateStream[DispatcherLike_complete]();
+        stateStream[QueueableLike_complete]();
         let result = [];
         pipe(stateStream, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
@@ -143,9 +143,9 @@ testModule("Streamable", describe("animation", test("integration", () => {
             capacity: 20,
             backpressureStrategy: DropLatestBackpressureStrategy,
         });
-        pipe(stateStream[DispatcherLike_isCompleted], expectFalse("expected stream not to be completed"));
-        stateStream[DispatcherLike_complete]();
-        pipe(stateStream[DispatcherLike_isCompleted], expectTrue("expected stream to be completed"));
+        pipe(stateStream[QueueableLike_isCompleted], expectFalse("expected stream not to be completed"));
+        stateStream[QueueableLike_complete]();
+        pipe(stateStream[QueueableLike_isCompleted], expectTrue("expected stream to be completed"));
     }
     catch (e_4) {
         env_4.error = e_4;

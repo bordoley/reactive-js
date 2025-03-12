@@ -1,9 +1,9 @@
 import { error } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import {
-  DispatcherLike_complete,
   DisposableLike_dispose,
   ObserverLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -17,7 +17,7 @@ const Observable_fromAsyncFactory: Observable.Signature["fromAsyncFactory"] =
       try {
         const result = await f(abortSignal);
         observer[QueueableLike_enqueue](result);
-        observer[DispatcherLike_complete]();
+        observer[QueueableLike_complete]();
       } catch (e) {
         observer[DisposableLike_dispose](error(e));
       }

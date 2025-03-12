@@ -6,7 +6,7 @@ import { call, isSome, none, pipe, raiseIf, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import QueueMixin from "../../utils/__mixins__/QueueMixin.js";
-import { DispatcherLike_complete, DispatcherLike_isCompleted, DispatcherLike_onReady, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
+import { QueueLike_dequeue, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, QueueableLike_onReady, } from "../../utils.js";
 import * as Publisher from "../Publisher.js";
 export const create = (() => {
     const SingleUseObservableLike_delegate = Symbol("SingleUseObservableLike_delegate");
@@ -14,12 +14,12 @@ export const create = (() => {
     return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function SingleUseObservable(config) {
         init(DisposableMixin, this);
         init(QueueMixin(), this, config);
-        this[DispatcherLike_onReady] = Publisher.create();
+        this[QueueableLike_onReady] = Publisher.create();
         return this;
     }, props({
         [SingleUseObservableLike_delegate]: none,
-        [DispatcherLike_onReady]: none,
-        [DispatcherLike_isCompleted]: false,
+        [QueueableLike_onReady]: none,
+        [QueueableLike_isCompleted]: false,
     }), {
         [ComputationLike_isDeferred]: true,
         [ComputationLike_isSynchronous]: false,
@@ -27,29 +27,29 @@ export const create = (() => {
             raiseIf(isSome(this[SingleUseObservableLike_delegate]), "SingleUseObservable already subscribed.");
             this[SingleUseObservableLike_delegate] = observer;
             pipe(this, Disposable.bindTo(observer));
-            const isCompleted = this[DispatcherLike_isCompleted];
+            const isCompleted = this[QueueableLike_isCompleted];
             let v = none;
             while (((v = this[QueueLike_dequeue]()), isSome(v))) {
                 observer[QueueableLike_enqueue](v);
             }
             if (isCompleted) {
-                observer[DispatcherLike_complete]();
+                observer[QueueableLike_complete]();
             }
             else {
-                observer[DispatcherLike_onReady][EventSourceLike_addEventListener](this[DispatcherLike_onReady]);
+                observer[QueueableLike_onReady][EventSourceLike_addEventListener](this[QueueableLike_onReady]);
             }
         },
-        [DispatcherLike_complete]() {
+        [QueueableLike_complete]() {
             const delegate = this[SingleUseObservableLike_delegate];
-            const isAlreadyCompleted = this[DispatcherLike_isCompleted];
-            this[DispatcherLike_isCompleted] = true;
+            const isAlreadyCompleted = this[QueueableLike_isCompleted];
+            this[QueueableLike_isCompleted] = true;
             if (isSome(delegate) && !isAlreadyCompleted) {
-                delegate[DispatcherLike_complete]();
+                delegate[QueueableLike_complete]();
             }
         },
         [QueueableLike_enqueue](v) {
             const delegate = this[SingleUseObservableLike_delegate];
-            const isCompleted = this[DispatcherLike_isCompleted];
+            const isCompleted = this[QueueableLike_isCompleted];
             return (isCompleted ||
                 (isSome(delegate)
                     ? delegate[QueueableLike_enqueue](v)

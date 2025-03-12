@@ -8,7 +8,7 @@ import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserve
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
-import { DispatcherLike_complete, DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_dispose, QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
     const DecodeWithCharsetObserver_textDecoder = Symbol("DecodeWithCharsetObserver_textDecoder");
@@ -19,7 +19,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         });
         if (data[Array_length] > 0) {
             delegate[QueueableLike_enqueue](data);
-            delegate[DispatcherLike_complete]();
+            delegate[QueueableLike_complete]();
         }
         else {
             delegate[DisposableLike_dispose]();

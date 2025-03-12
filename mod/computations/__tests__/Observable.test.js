@@ -67,7 +67,7 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Queue from "../../utils/Queue.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
-import { DispatcherLike_complete, DispatcherLike_isCompleted, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_schedule, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, SchedulerLike_now, SchedulerLike_schedule, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 import * as WritableStore from "../WritableStore.js";
@@ -111,7 +111,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
                 for (let i = 0; i < 10; i++) {
                     observer[QueueableLike_enqueue](i);
                 }
-                observer[DispatcherLike_complete]();
+                observer[QueueableLike_complete]();
             }
             catch (e) {
                 observer[DisposableLike_dispose](error(e));
@@ -134,7 +134,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
             for (let i = 0; i < 10; i++) {
                 observer[QueueableLike_enqueue](i);
             }
-            observer[DispatcherLike_complete]();
+            observer[QueueableLike_complete]();
         }), Observable.backpressureStrategy(1, DropLatestBackpressureStrategy), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([0]));
     }
     catch (e_2) {
@@ -153,7 +153,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
             for (let i = 0; i < 10; i++) {
                 observer[QueueableLike_enqueue](i);
             }
-            observer[DispatcherLike_complete]();
+            observer[QueueableLike_complete]();
         }), Observable.backpressureStrategy(1, DropOldestBackpressureStrategy), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([9]));
     }
     catch (e_3) {
@@ -341,7 +341,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             capacity: 1,
         });
         pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Observable.toReadonlyArray());
-        pipe(stream[DispatcherLike_isCompleted], expectTrue("expected stream to be completed"));
+        pipe(stream[QueueableLike_isCompleted], expectTrue("expected stream to be completed"));
     }
     catch (e_10) {
         env_10.error = e_10;
@@ -359,7 +359,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             capacity: 1,
         });
         pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray({ delay: 1 }), Observable.dispatchTo(stream), Observable.toReadonlyArray());
-        pipe(stream[DispatcherLike_isCompleted], expectTrue("expected stream to be completed"));
+        pipe(stream[QueueableLike_isCompleted], expectTrue("expected stream to be completed"));
     }
     catch (e_11) {
         env_11.error = e_11;

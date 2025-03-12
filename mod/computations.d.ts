@@ -1,5 +1,5 @@
 import type { AsyncFunction1, Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4, Updater } from "./functions.js";
-import type { BackpressureStrategy, DispatcherLike, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, PauseableLike, SchedulerLike, SinkLike } from "./utils.js";
+import type { BackpressureStrategy, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, PauseableLike, QueueableLike, SchedulerLike, SinkLike } from "./utils.js";
 export declare const ComputationLike_isPure: unique symbol;
 export declare const ComputationLike_isDeferred: unique symbol;
 export declare const ComputationLike_isSynchronous: unique symbol;
@@ -417,7 +417,7 @@ export interface PauseableObservableLike<out T = unknown> extends MulticastObser
  *
  * @noInheritDoc
  */
-export interface StreamLike<TReq, out T> extends DispatcherLike<TReq>, MulticastObservableLike<T> {
+export interface StreamLike<TReq, out T> extends QueueableLike<TReq>, MulticastObservableLike<T> {
 }
 export declare const StreamableLike_stream: unique symbol;
 /**

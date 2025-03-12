@@ -6,7 +6,7 @@ import { bindMethod, none, pipe, returns } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
-import { DispatcherLike_complete, DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_dispose, QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";
 const Observable_fromStore = /*@__PURE__*/ (() => {
     const FromStoreObservable_eventSource = Symbol("FromStoreObservable_eventSource");
@@ -22,7 +22,7 @@ const Observable_fromStore = /*@__PURE__*/ (() => {
         [ObservableLike_observe](observer) {
             const store = this[FromStoreObservable_eventSource];
             observer[QueueableLike_enqueue](store[StoreLike_value]);
-            pipe(this[FromStoreObservable_eventSource], DisposableContainer.onComplete(bindMethod(observer, DispatcherLike_complete)), DisposableContainer.onError(bindMethod(observer, DisposableLike_dispose)), EventSource.addEventHandler(bindMethod(observer, QueueableLike_enqueue)), Disposable.addTo(observer));
+            pipe(this[FromStoreObservable_eventSource], DisposableContainer.onComplete(bindMethod(observer, QueueableLike_complete)), DisposableContainer.onError(bindMethod(observer, DisposableLike_dispose)), EventSource.addEventHandler(bindMethod(observer, QueueableLike_enqueue)), Disposable.addTo(observer));
         },
     }));
 })();

@@ -93,12 +93,25 @@ export type BackpressureStrategy =
   | typeof OverflowBackpressureStrategy
   | typeof ThrowBackpressureStrategy;
 
+export const QueueableLike_isCompleted = Symbol("QueueableLike_isCompleted");
+export const QueueableLike_complete = Symbol("QueueableLike_complete");
+export const QueueableLike_onReady = Symbol("QueueableLike_onReady");
+
 /**
- * An interface for types that support buffering items with backpressure.
+ * A `QueueableLike` type that consumes enqueued events to
+ * be dispatched from any execution constext.
  *
  * @noInheritDoc
  */
 export interface QueueableLike<T = unknown> {
+  readonly [QueueableLike_isCompleted]: boolean;
+  readonly [QueueableLike_onReady]: EventSourceLike<void>;
+
+  /**
+   * Communicates to the dispatcher that no more events will be enqueued.
+   */
+  [QueueableLike_complete](): void;
+
   /**
    * The back pressure strategy utilized by the queue when it is at capacity.
    */
@@ -302,32 +315,12 @@ export interface EventListenerLike<T = unknown> extends DisposableLike {
   [EventListenerLike_notify](event: T): void;
 }
 
-export const DispatcherLike_isCompleted = Symbol("DispatcherLike_isCompleted");
-export const DispatcherLike_complete = Symbol("DispatcherLike_complete");
-export const DispatcherLike_onReady = Symbol("DispatcherLike_onReady");
-
-/**
- * A `QueueableLike` type that consumes enqueued events to
- * be dispatched from any execution constext.
- *
- * @noInheritDoc
- */
-export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
-  readonly [DispatcherLike_isCompleted]: boolean;
-  readonly [DispatcherLike_onReady]: EventSourceLike<void>;
-
-  /**
-   * Communicates to the dispatcher that no more events will be enqueued.
-   */
-  [DispatcherLike_complete](): void;
-}
-
 /**
  * A consumer of push-based notifications.
  *
  * @noInheritDoc
  */
 export interface ObserverLike<T = unknown>
-  extends DispatcherLike<T>,
+  extends QueueableLike<T>,
     SchedulerLike,
     DisposableLike {}

@@ -75,8 +75,6 @@ import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Queue from "../../utils/Queue.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
-  DispatcherLike_complete,
-  DispatcherLike_isCompleted,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
@@ -87,7 +85,9 @@ import {
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
+  QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isCompleted,
   SchedulerLike_now,
   SchedulerLike_schedule,
   ThrowBackpressureStrategy,
@@ -223,7 +223,7 @@ testModule(
                 observer[QueueableLike_enqueue](i);
               }
 
-              observer[DispatcherLike_complete]();
+              observer[QueueableLike_complete]();
             } catch (e) {
               observer[DisposableLike_dispose](error(e));
             }
@@ -241,7 +241,7 @@ testModule(
           for (let i = 0; i < 10; i++) {
             observer[QueueableLike_enqueue](i);
           }
-          observer[DispatcherLike_complete]();
+          observer[QueueableLike_complete]();
         }),
         Observable.backpressureStrategy(1, DropLatestBackpressureStrategy),
         Observable.toReadonlyArrayAsync<number>(scheduler),
@@ -257,7 +257,7 @@ testModule(
           for (let i = 0; i < 10; i++) {
             observer[QueueableLike_enqueue](i);
           }
-          observer[DispatcherLike_complete]();
+          observer[QueueableLike_complete]();
         }),
         Observable.backpressureStrategy(1, DropOldestBackpressureStrategy),
         Observable.toReadonlyArrayAsync<number>(scheduler),
@@ -626,7 +626,7 @@ testModule(
       );
 
       pipe(
-        stream[DispatcherLike_isCompleted],
+        stream[QueueableLike_isCompleted],
         expectTrue("expected stream to be completed"),
       );
     }),
@@ -645,7 +645,7 @@ testModule(
       );
 
       pipe(
-        stream[DispatcherLike_isCompleted],
+        stream[QueueableLike_isCompleted],
         expectTrue("expected stream to be completed"),
       );
     }),

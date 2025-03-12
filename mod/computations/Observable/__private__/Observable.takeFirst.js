@@ -6,7 +6,7 @@ import { clampPositiveInteger } from "../../../math.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import ObserverMixin, { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
-import { DispatcherLike_complete, DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_dispose, QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const TakeFirstObserver_count = Symbol("TakeFirstObserver_count");
 const createTakeFirstObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()), function TakeFirstObserver(delegate, takeCount) {
@@ -28,7 +28,7 @@ const createTakeFirstObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(
         const result = delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
             delegate[QueueableLike_enqueue](next);
         if (this[TakeFirstObserver_count] <= 0) {
-            this[DispatcherLike_complete]();
+            this[QueueableLike_complete]();
         }
         return result;
     },

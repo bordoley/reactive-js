@@ -63,7 +63,6 @@ import {
 } from "../functions.js";
 import {
   BackpressureStrategy,
-  DispatcherLike,
   DisposableLike,
   ObserverLike,
   QueueableLike,
@@ -414,7 +413,7 @@ export interface ObservableModule
   ): PureDeferredObservableLike<T>;
 
   dispatchTo<T>(
-    dispatcher: DispatcherLike<T>,
+    dispatcher: QueueableLike<T>,
   ): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
 
   empty<T>(options?: {

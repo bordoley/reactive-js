@@ -24,8 +24,8 @@ import ObserverMixin, {
   ObserverMixinBaseLike_notify,
 } from "../../../utils/__mixins__/ObserverMixin.js";
 import {
-  DispatcherLike_complete,
   ObserverLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -48,9 +48,9 @@ function onBufferObserverCompleted<T>(
 
   if (buffer[Array_length] > 0) {
     delegate[QueueableLike_enqueue](buffer);
-    delegate[DispatcherLike_complete]();
+    delegate[QueueableLike_complete]();
   } else {
-    delegate[DispatcherLike_complete]();
+    delegate[QueueableLike_complete]();
   }
 }
 

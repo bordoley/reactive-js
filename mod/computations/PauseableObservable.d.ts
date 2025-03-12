@@ -1,9 +1,9 @@
 import { DeferredObservableWithSideEffectsLike, EventSourceLike, MulticastObservableLike, PauseableObservableLike } from "../computations.js";
 import { Function1 } from "../functions.js";
-import { DispatcherLike, DisposableLike } from "../utils.js";
+import { DisposableLike, QueueableLike } from "../utils.js";
 interface PauseableObservableModule {
     create<T>(op: Function1<EventSourceLike<boolean>, MulticastObservableLike<T>>): PauseableObservableLike<T> & DisposableLike;
-    dispatchTo<T>(dispatcher: DispatcherLike<T>): Function1<PauseableObservableLike<T>, DeferredObservableWithSideEffectsLike<T>>;
+    dispatchTo<T>(dispatcher: QueueableLike<T>): Function1<PauseableObservableLike<T>, DeferredObservableWithSideEffectsLike<T>>;
 }
 export type Signature = PauseableObservableModule;
 export declare const create: Signature["create"];

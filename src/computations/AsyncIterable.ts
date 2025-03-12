@@ -55,13 +55,13 @@ import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import {
   BackpressureStrategy,
-  DispatcherLike_complete,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EventListenerLike,
   EventListenerLike_notify,
   ObserverLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
@@ -791,7 +791,7 @@ export const toPauseableObservable: Signature["toPauseableObservable"] =
                 const next = await iterator[Iterator_next]();
 
                 if (next[Iterator_done]) {
-                  observer[DispatcherLike_complete]();
+                  observer[QueueableLike_complete]();
                   break;
                 } else if (
                   !observer[QueueableLike_enqueue](next[Iterator_value])
@@ -832,7 +832,7 @@ export const toPauseableObservable: Signature["toPauseableObservable"] =
             }),
             Disposable.addTo(observer),
             DisposableContainer.onComplete(
-              bindMethod(observer, DispatcherLike_complete),
+              bindMethod(observer, QueueableLike_complete),
             ),
           );
         }),

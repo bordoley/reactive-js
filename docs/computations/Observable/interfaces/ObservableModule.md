@@ -196,7 +196,7 @@
 
 ##### dispatcher
 
-[`DispatcherLike`](../../../utils/interfaces/DispatcherLike.md)\<`T`\>
+[`QueueableLike`](../../../utils/interfaces/QueueableLike.md)\<`T`\>
 
 #### Returns
 

@@ -5,7 +5,7 @@ import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ObservableLi
 import { bindMethod, none, returns } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
-import { DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 const Observable_fromPromise = 
 /*@__PURE__*/ (() => {
     const FromPromiseObservable_promise = Symbol("FromPromiseObservable_promise");
@@ -26,7 +26,7 @@ const Observable_fromPromise =
             this[FromPromiseObservable_promise].then(next => {
                 if (!observer[DisposableLike_isDisposed]) {
                     observer[QueueableLike_enqueue](next);
-                    observer[DispatcherLike_complete]();
+                    observer[QueueableLike_complete]();
                 }
             }, Disposable.toErrorHandler(observer));
         },

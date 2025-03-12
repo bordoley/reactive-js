@@ -3,7 +3,7 @@
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
 import { none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { ContinuationContextLike_yield, DispatcherLike_complete, DisposableLike_isDisposed, QueueableLike_enqueue, SchedulerLike_schedule, } from "../../../utils.js";
+import { ContinuationContextLike_yield, DisposableLike_isDisposed, QueueableLike_complete, QueueableLike_enqueue, SchedulerLike_schedule, } from "../../../utils.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
 const Observable_fromReadonlyArray = (options) => (arr) => Observable_createPureSynchronousObservable((observer) => {
     const { delay = 0, delayStart = false } = options ?? {};
@@ -17,7 +17,7 @@ const Observable_fromReadonlyArray = (options) => (arr) => Observable_createPure
                 ctx[ContinuationContextLike_yield](delay);
             }
         }
-        observer[DispatcherLike_complete]();
+        observer[QueueableLike_complete]();
     };
     pipe(observer[SchedulerLike_schedule](continuation, delayStart ? { delay } : none), Disposable.addTo(observer));
 });

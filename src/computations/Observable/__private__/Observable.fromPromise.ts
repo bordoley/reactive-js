@@ -14,11 +14,11 @@ import { bindMethod, none, returns } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import {
-  DispatcherLike_complete,
   DisposableContainerLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -69,7 +69,7 @@ const Observable_fromPromise: Observable.Signature["fromPromise"] =
             this[FromPromiseObservable_promise].then(next => {
               if (!observer[DisposableLike_isDisposed]) {
                 observer[QueueableLike_enqueue](next);
-                observer[DispatcherLike_complete]();
+                observer[QueueableLike_complete]();
               }
             }, Disposable.toErrorHandler(observer));
           },

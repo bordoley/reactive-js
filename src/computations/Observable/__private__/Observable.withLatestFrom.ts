@@ -33,11 +33,11 @@ import ObserverMixin, {
   ObserverMixinBaseLike_notify,
 } from "../../../utils/__mixins__/ObserverMixin.js";
 import {
-  DispatcherLike,
-  DispatcherLike_complete,
   DisposableLike,
   DisposableLike_isDisposed,
   ObserverLike,
+  QueueableLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -69,10 +69,10 @@ const createWithLatestFromObserver: <TA, TB, T>(
   };
 
   function onWithLatestFromObserverOtherSubscriptionComplete(
-    this: TProperties & DisposableLike & DispatcherLike,
+    this: TProperties & DisposableLike & QueueableLike,
   ) {
     if (!this[WithLatestFromObserver_hasLatest]) {
-      this[DispatcherLike_complete]();
+      this[QueueableLike_complete]();
     }
   }
 
