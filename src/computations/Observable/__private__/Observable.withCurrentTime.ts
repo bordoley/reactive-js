@@ -60,12 +60,16 @@ const createWithCurrentTimeObserver: <TA, TB>(
         this: TProperties & LiftedObserverLike<TA, TB>,
         next: TA,
       ) {
+        const delegate = this[LiftedObserverLike_delegate];
         const currentTime = this[SchedulerLike_now];
         const mapped = this[WithCurrentTimeObserver_selector](
           currentTime,
           next,
         );
-        return this[LiftedObserverLike_delegate][QueueableLike_enqueue](mapped);
+        return (
+          delegate?.[ObserverMixinBaseLike_notify]?.(mapped) ??
+          delegate[QueueableLike_enqueue](mapped)
+        );
       },
     }),
   );

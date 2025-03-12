@@ -14,7 +14,7 @@ import { DictionaryCollection } from "../../collections/Dictionary.js";
 import { DictionaryLike_get } from "../../collections.js";
 import * as Observable from "../../computations/Observable.js";
 import * as Streamable from "../../computations/Streamable.js";
-import {  StreamableLike_stream } from "../../computations.js";
+import { StreamableLike_stream } from "../../computations.js";
 import {
   bindMethod,
   invoke,

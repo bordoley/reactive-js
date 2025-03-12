@@ -54,13 +54,21 @@ const createSkipFirstObserver: <T>(
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
+        const delegate = this[LiftedObserverLike_delegate];
+
         this[SkipFirstObserver_count] = max(
           this[SkipFirstObserver_count] - 1,
           -1,
         );
-        return this[SkipFirstObserver_count] < 0
-          ? this[LiftedObserverLike_delegate][QueueableLike_enqueue](next)
-          : true;
+
+        const shouldEmit = this[SkipFirstObserver_count] < 0;
+
+        return (
+          (shouldEmit &&
+            (delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
+              delegate[QueueableLike_enqueue](next))) ||
+          !shouldEmit
+        );
       },
     }),
   ))();

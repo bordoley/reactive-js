@@ -75,14 +75,16 @@ const createScanObserver: <T, TAcc>(
         this: TProperties<T, TAcc> & LiftedObserverLike<T, TAcc>,
         next: T,
       ) {
+        const delegate = this[LiftedObserverLike_delegate];
         const nextAcc = this[ScanObserver_reducer](
           this[ScanObserver_acc],
           next,
         );
         this[ScanObserver_acc] = nextAcc;
 
-        return this[LiftedObserverLike_delegate][QueueableLike_enqueue](
-          nextAcc,
+        return (
+          delegate?.[ObserverMixinBaseLike_notify]?.(nextAcc) ??
+          delegate[QueueableLike_enqueue](nextAcc)
         );
       },
     }),

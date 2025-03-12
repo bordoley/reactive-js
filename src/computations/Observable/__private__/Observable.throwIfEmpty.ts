@@ -95,8 +95,13 @@ const createThrowIfEmptyObserver: <T>(
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
+        const delegate = this[LiftedObserverLike_delegate];
+
         this[ThrowIfEmptyObserver_isEmpty] = false;
-        return this[LiftedObserverLike_delegate][QueueableLike_enqueue](next);
+        return (
+          delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
+          delegate[QueueableLike_enqueue](next)
+        );
       },
     }),
   );

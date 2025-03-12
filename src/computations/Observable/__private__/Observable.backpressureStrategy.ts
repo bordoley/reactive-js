@@ -56,7 +56,12 @@ const createBackpressureObserver: <T>(
     props(),
     {
       [ObserverMixinBaseLike_notify](this: LiftedObserverLike<T>, next: T) {
-        return this[LiftedObserverLike_delegate][QueueableLike_enqueue](next);
+        const delegate = this[LiftedObserverLike_delegate];
+
+        return (
+          delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
+          delegate[QueueableLike_enqueue](next)
+        );
       },
     },
   ))();

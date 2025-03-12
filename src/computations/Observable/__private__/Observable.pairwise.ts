@@ -54,16 +54,21 @@ const createPairwiseObserver: <T>(
         this: TProperties<T> & LiftedObserverLike<T, Tuple2<T, T>>,
         next: T,
       ) {
+        const delegate = this[LiftedObserverLike_delegate];
         const prev = this[PairwiseObserver_prev];
         const hasPrev = this[PairwiseObserver_hasPrev];
+
         this[PairwiseObserver_hasPrev] = true;
         this[PairwiseObserver_prev] = next;
 
-        return hasPrev
-          ? this[LiftedObserverLike_delegate][QueueableLike_enqueue](
-              tuple(prev, next),
-            )
-          : true;
+        let pair = none as unknown as Tuple2<T, T>;
+        return (
+          (hasPrev &&
+            ((pair = tuple(prev, next)),
+            delegate?.[ObserverMixinBaseLike_notify]?.(pair) ??
+              delegate[QueueableLike_enqueue](pair))) ||
+          !hasPrev
+        );
       },
     },
   ))();

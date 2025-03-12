@@ -70,6 +70,8 @@ const createDistinctUntilChangedObserver: <T>(
         this: TProps<T> & LiftedObserverLike<T>,
         next: T,
       ) {
+        const delegate = this[LiftedObserverLike_delegate];
+
         const shouldEmit =
           !this[DistinctUntilChangedObserver_hasValue] ||
           !this[DistinctUntilChangedObserver_equality](
@@ -77,11 +79,14 @@ const createDistinctUntilChangedObserver: <T>(
             next,
           );
 
-        return shouldEmit
-          ? ((this[DistinctUntilChangedObserver_prev] = next),
+        return (
+          (shouldEmit &&
+            ((this[DistinctUntilChangedObserver_prev] = next),
             (this[DistinctUntilChangedObserver_hasValue] = true),
-            this[LiftedObserverLike_delegate][QueueableLike_enqueue](next))
-          : true;
+            delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
+              delegate[QueueableLike_enqueue](next))) ||
+          !shouldEmit
+        );
       },
     }),
   ))();

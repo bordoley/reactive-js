@@ -63,12 +63,15 @@ const createTakeWhileObserver: <T>(
         this: TProperties<T> & LiftedObserverLike<T>,
         next: T,
       ) {
+        const delegate = this[LiftedObserverLike_delegate];
         const satisfiesPredicate = this[TakeWhileObserver_predicate](next);
+        const isInclusive = this[TakeWhileObserver_inclusive];
 
         const result =
-          satisfiesPredicate || this[TakeWhileObserver_inclusive]
-            ? this[LiftedObserverLike_delegate][QueueableLike_enqueue](next)
-            : true;
+          ((satisfiesPredicate || isInclusive) &&
+            (delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
+              delegate[QueueableLike_enqueue](next))) ||
+          !satisfiesPredicate;
 
         if (!satisfiesPredicate) {
           this[DispatcherLike_complete]();

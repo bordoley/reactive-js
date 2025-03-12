@@ -1,6 +1,7 @@
 import { Mixin1, mix, props } from "../../__internal__/mixins.js";
 import { none, returns } from "../../functions.js";
 import { ObserverLike } from "../../utils.js";
+import { ObserverMixinBaseLike } from "./ObserverMixin.js";
 
 export const LiftedObserverLike_delegate = Symbol(
   "LiftedObserverLike_delegate",
@@ -11,7 +12,8 @@ export interface LiftedObserverLike<
   TB = TA,
   TObserver extends ObserverLike<TB> = ObserverLike<TB>,
 > extends ObserverLike<TA> {
-  readonly [LiftedObserverLike_delegate]: TObserver;
+  readonly [LiftedObserverLike_delegate]: TObserver &
+    Partial<ObserverMixinBaseLike<TB>>;
 }
 
 const LiftedObserverMixin: <
