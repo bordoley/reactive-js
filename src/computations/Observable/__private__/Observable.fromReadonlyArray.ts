@@ -4,7 +4,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
-  DisposableLike_dispose,
+  DispatcherLike_complete,
   DisposableLike_isDisposed,
   ObserverLike,
   QueueableLike_enqueue,
@@ -33,9 +33,11 @@ const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
 
           count > 0 ? (start++, count--) : (start--, count++);
 
-          ctx[ContinuationContextLike_yield](delay);
+          if (count !== 0) {
+            ctx[ContinuationContextLike_yield](delay);
+          }
         }
-        observer[DisposableLike_dispose]();
+        observer[DispatcherLike_complete]();
       };
 
       pipe(

@@ -165,10 +165,8 @@ testModule(
               Observable.map(x => (_: number) => x),
               Observable.takeFirst({ count: 2 }),
             ),
-          (oldState, newState) =>
-            newState !== oldState
-              ? Observable.empty({ delay: 0 })
-              : Observable.empty({ delay: 0 }),
+          (_oldState, _newState) =>
+            Observable.empty(),
         ),
         invoke(StreamableLike_stream, vts),
       );
@@ -200,11 +198,9 @@ testModule(
         Streamable.stateStore(returns(-1)),
         Streamable.syncState(
           _state => Observable.empty({ delay: 1 }),
-          (oldState, newState) => {
+          (_oldState, _newState) => {
             updateCnt++;
-            return newState !== oldState
-              ? Observable.empty({ delay: 1 })
-              : Observable.empty({ delay: 1 });
+            return Observable.empty({ delay: 1 });
           },
           { throttleDuration: 20 },
         ),
@@ -214,7 +210,7 @@ testModule(
       pipe(
         (x: number) => x + 2,
         Observable.fromValue({ delay: 1 }),
-        Observable.repeat(19),
+        Observable.repeat(24),
         Observable.enqueue(stream),
         Observable.subscribe(vts),
       );

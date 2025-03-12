@@ -36,8 +36,8 @@ import {
   bindMethod,
   compose,
   newInstance,
-  none,
   pipe,
+  pipeAsync,
   pipeLazy,
   returns,
   tuple,
@@ -105,19 +105,13 @@ const ConcurrentReactiveComputationModuleTests = <
         using scheduler = HostScheduler.create();
         const promise = Promise.resolve(1);
 
-        let result: Optional<number> = none;
-
-        await pipe(
+        await pipeAsync(
           promise,
           m.fromPromise(),
           m.toObservable<number>(),
-          Observable.forEach<number>(e => {
-            result = e;
-          }),
           Observable.lastAsync(scheduler),
+          expectEquals<Optional<number>>(1)
         );
-
-        pipe(result, expectEquals<Optional<number>>(1));
       }),
 
       testAsync("when the promise reject", async () => {
