@@ -4,7 +4,7 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { none, partial, pipe, strictEquality, } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { QueueableLike_enqueue, QueueableLike_isReady, } from "../../../utils.js";
+import { QueueableLike_enqueue } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const DistinctUntilChangedObserver_equality = Symbol("DistinctUntilChangedObserver_equality");
 const DistinctUntilChangedObserver_prev = Symbol("DistinctUntilChangedObserver_prev");
@@ -23,12 +23,11 @@ const createDistinctUntilChangedObserver = /*@__PURE__*/ (() => mixInstanceFacto
         const delegate = this[LiftedObserverLike_delegate];
         const shouldEmit = !this[DistinctUntilChangedObserver_hasValue] ||
             !this[DistinctUntilChangedObserver_equality](this[DistinctUntilChangedObserver_prev], next);
-        return ((shouldEmit &&
-            ((this[DistinctUntilChangedObserver_prev] = next),
-                (this[DistinctUntilChangedObserver_hasValue] = true),
-                delegate?.[LiftedObserverLike_notify]?.(next) ??
-                    delegate[QueueableLike_enqueue](next))) ||
-            delegate[QueueableLike_isReady]);
+        if (shouldEmit) {
+            this[DistinctUntilChangedObserver_prev] = next;
+            this[DistinctUntilChangedObserver_hasValue] = true;
+            delegate[QueueableLike_enqueue](next);
+        }
     },
 })))();
 const Observable_distinctUntilChanged = (options) => pipe((createDistinctUntilChangedObserver), partial(options?.equality ?? strictEquality), Observable_liftPureDeferred);

@@ -5,8 +5,8 @@ export declare const LiftedObserverLike_delegate: unique symbol;
 export declare const LiftedObserverLike_notify: unique symbol;
 export declare const LiftedObserverLike_complete: unique symbol;
 export interface LiftedObserverLike<TA = unknown, TB = TA, TDelegateObserver extends ObserverLike<TB> = ObserverLike<TB>> extends ObserverLike<TA> {
-    readonly [LiftedObserverLike_delegate]: TDelegateObserver & Partial<Pick<LiftedObserverLike<TB>, typeof LiftedObserverLike_notify>>;
-    [LiftedObserverLike_notify](next: TA): boolean;
+    readonly [LiftedObserverLike_delegate]: TDelegateObserver;
+    [LiftedObserverLike_notify](next: TA): void;
     [LiftedObserverLike_complete](): void;
 }
 declare const LiftedObserverMixin: <TA, TB = TA, TDelegateObserver extends ObserverLike<TB> = ObserverLike<TB>>() => Mixin2<LiftedObserverLike<TA, TB, TDelegateObserver>, TDelegateObserver, Optional<{

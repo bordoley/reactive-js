@@ -13,8 +13,7 @@ const Observer_createWithDelegate =
 }, props(), proto({
     [LiftedObserverLike_notify](next) {
         const delegate = this[LiftedObserverLike_delegate];
-        return (delegate?.[LiftedObserverLike_notify]?.(next) ??
-            delegate[QueueableLike_enqueue](next));
+        delegate[QueueableLike_enqueue](next);
     },
     [LiftedObserverLike_complete]() {
         this[DisposableLike_dispose]();

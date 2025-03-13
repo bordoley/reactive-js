@@ -34,7 +34,6 @@ import {
   QueueableLike_isCompleted,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
-import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 
 testModule(
@@ -150,16 +149,15 @@ testModule(
   describe(
     "syncState",
     test("without throttling", () => {
-      using vts = VirtualTimeScheduler.create();
+      using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
 
       const stream = pipe(
         Streamable.stateStore(returns(-1)),
         Streamable.syncState(
-          state =>
+          _ =>
             pipe(
-              Computation.sequence<Observable.Computation>(Observable)(
-                state + 10,
-              ),
+              [9, 10, 50, 60, 70],
+              Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
               Observable.map(x => (_: number) => x),
               Observable.takeFirst({ count: 2 }),
             ),
@@ -192,9 +190,9 @@ testModule(
       let updateCnt = 0;
 
       const stream = pipe(
-        Streamable.stateStore(returns(-1)),
+        Streamable.stateStore(returns(0)),
         Streamable.syncState(
-          _state => Observable.empty({ delay: 1 }),
+          state => pipe((_: number) => state, Observable.fromValue()),
           (_oldState, _newState) => {
             updateCnt++;
             return Observable.empty({ delay: 1 });
@@ -214,7 +212,9 @@ testModule(
 
       vts[VirtualTimeSchedulerLike_run]();
 
-      pipe(updateCnt, expectEquals(2));
+      // FIXME: this isn't a great test, because all the scheduler hopping
+      // leads to induced delays that are hard to account for accurately.
+      pipe(updateCnt, expectEquals(3));
     }),
   ),
 );

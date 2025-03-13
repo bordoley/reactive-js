@@ -17,6 +17,7 @@ import {
   call,
   none,
   pipe,
+  raise,
   returns,
 } from "../../functions.js";
 import {
@@ -116,7 +117,10 @@ const LiftedObserverMixin: <
     if (observer[SerialDisposableLike_current][DisposableLike_isDisposed]) {
       const continuation = (ctx: ContinuationContextLike) => {
         const delegate = observer[LiftedObserverLike_delegate];
-        while (observer[QueueLike_count] > 0 && !observer[DisposableLike_isDisposed]) {
+        while (
+          observer[QueueLike_count] > 0 &&
+          !observer[DisposableLike_isDisposed]
+        ) {
           if (!delegate[QueueableLike_isReady]) {
             observer[SchedulerLike_requestYield]();
             ctx[ContinuationContextLike_yield]();
@@ -276,17 +280,24 @@ const LiftedObserverMixin: <
           next: TA,
         ): boolean {
           const inSchedulerContinuation = this[SchedulerLike_inContinuation];
+          const isCompleted = this[QueueableLike_isCompleted];
 
-          const shouldIgnore =
-            this[QueueableLike_isCompleted] || this[DisposableLike_isDisposed];
+          if (isCompleted) {
+            raise("observer is completed");
+          }
+
+          const shouldIgnore = isCompleted || this[DisposableLike_isDisposed];
 
           const delegate = this[LiftedObserverLike_delegate];
           const isDelegateReady = delegate[QueueableLike_isReady];
           const count = this[QueueLike_count];
 
           const shouldNotify =
-            inSchedulerContinuation && !shouldIgnore && isDelegateReady && count == 0 ;
-       
+            inSchedulerContinuation &&
+            !shouldIgnore &&
+            isDelegateReady &&
+            count == 0;
+
           if (shouldNotify) {
             this[LiftedObserverLike_notify](next);
           } else if (!shouldIgnore) {

@@ -23,9 +23,9 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         observer[MergeAllObserver_activeCount]++;
         const delegate = observer[LiftedObserverLike_delegate];
         pipe(nextObs, Observable_forEach(v => {
-            const result = delegate?.[LiftedObserverLike_notify]?.(v) ??
-                delegate[QueueableLike_enqueue](v);
-            if (!result) {
+            // FIXME: consider trying to wrap delegate in a delegate observe
+            // and subscribing with it directly.
+            if (!delegate[QueueableLike_enqueue](v)) {
                 delegate[SchedulerLike_requestYield]();
             }
         }), Observable_subscribeWithConfig(observer, observer), Disposable.addTo(observer), DisposableContainer.onComplete(bind(onMergeAllObserverInnerObservableComplete, observer)));

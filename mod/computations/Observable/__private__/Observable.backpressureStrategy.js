@@ -13,8 +13,7 @@ const createBackpressureObserver = /*@__PURE__*/ (() => mixInstanceFactory(inclu
 }, props(), {
     [LiftedObserverLike_notify](next) {
         const delegate = this[LiftedObserverLike_delegate];
-        return (delegate?.[LiftedObserverLike_notify]?.(next) ??
-            delegate[QueueableLike_enqueue](next));
+        delegate[QueueableLike_enqueue](next);
     },
 }))();
 const Observable_backpressureStrategy = (options) => pipe((createBackpressureObserver), partial(options), (Observable_liftPureDeferred));
