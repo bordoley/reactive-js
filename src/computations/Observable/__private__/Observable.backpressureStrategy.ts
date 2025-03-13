@@ -8,12 +8,9 @@ import { partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
+  LiftedObserverLike_notify,
   LiftedObserverLike_delegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin, {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
   BackpressureStrategy,
   ObserverLike,
@@ -33,33 +30,23 @@ const createBackpressureObserver: <T>(
   >,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(
-      ObserverMixin<T>(),
-      DelegatingDisposableMixin,
-      LiftedObserverMixin(),
-    ),
+    include(LiftedObserverMixin<T>(), DelegatingDisposableMixin),
     function EnqueueObserver(
-      this: ObserverMixinBaseLike<T>,
+      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify>,
       delegate: ObserverLike<T>,
-      config: Pick<
-        QueueableLike,
-        | typeof QueueableLike_capacity
-        | typeof QueueableLike_backpressureStrategy
-      >,
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, delegate);
-      init(ObserverMixin<T>(), this, delegate, config);
-      init(LiftedObserverMixin(), this, delegate);
+      init(LiftedObserverMixin<T>(), this, delegate);
 
       return this;
     },
     props(),
     {
-      [ObserverMixinBaseLike_notify](this: LiftedObserverLike<T>, next: T) {
+      [LiftedObserverLike_notify](this: LiftedObserverLike<T>, next: T) {
         const delegate = this[LiftedObserverLike_delegate];
 
         return (
-          delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
+          delegate?.[LiftedObserverLike_notify]?.(next) ??
           delegate[QueueableLike_enqueue](next)
         );
       },

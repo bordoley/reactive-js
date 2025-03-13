@@ -16,11 +16,8 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
+  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin, {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
   ObserverLike,
   QueueableLike_enqueue,
@@ -50,15 +47,15 @@ const createDistinctUntilChangedObserver: <T>(
   equality: Equality<T>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
+    include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function DistinctUntilChangedObserver(
-      this: ObserverMixinBaseLike<T> & TProps<T>,
+      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
+        TProps<T>,
       delegate: ObserverLike<T>,
       equality: Equality<T>,
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, delegate);
-      init(ObserverMixin(), this, delegate, delegate);
-      init(LiftedObserverMixin(), this, delegate);
+      init(LiftedObserverMixin<T>(), this, delegate);
 
       this[DistinctUntilChangedObserver_equality] = equality;
 
@@ -70,7 +67,7 @@ const createDistinctUntilChangedObserver: <T>(
       [DistinctUntilChangedObserver_hasValue]: false,
     }),
     proto({
-      [ObserverMixinBaseLike_notify](
+      [LiftedObserverLike_notify](
         this: TProps<T> & LiftedObserverLike<T>,
         next: T,
       ) {
@@ -87,7 +84,7 @@ const createDistinctUntilChangedObserver: <T>(
           (shouldEmit &&
             ((this[DistinctUntilChangedObserver_prev] = next),
             (this[DistinctUntilChangedObserver_hasValue] = true),
-            delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
+            delegate?.[LiftedObserverLike_notify]?.(next) ??
               delegate[QueueableLike_enqueue](next))) ||
           delegate[QueueableLike_isReady]
         );

@@ -39,8 +39,8 @@ import {
   QueueableLike_isReady,
   QueueableLike_onReady,
 } from "../../utils.js";
-import * as Publisher from "../Publisher.js";
 import * as EventSource from "../EventSource.js";
+import * as Publisher from "../Publisher.js";
 
 export interface SingleUseObservableLike<out T>
   extends PureDeferredObservableLike<T>,

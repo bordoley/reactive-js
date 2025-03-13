@@ -9,11 +9,8 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
+  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin, {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
   ObserverLike,
   QueueableLike_enqueue,
@@ -34,18 +31,13 @@ const createPairwiseObserver: <T>(
   delegate: ObserverLike<Tuple2<T, T>>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(
-      DelegatingDisposableMixin,
-      ObserverMixin<T>(),
-      LiftedObserverMixin(),
-    ),
+    include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function PairwiseObserver(
-      this: ObserverMixinBaseLike<T>,
+      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify>,
       delegate: ObserverLike<Tuple2<T, T>>,
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, delegate);
-      init(ObserverMixin(), this, delegate, delegate);
-      init(LiftedObserverMixin(), this, delegate);
+      init(LiftedObserverMixin<T,  Tuple2<T, T>>(), this, delegate);
 
       return this;
     },
@@ -54,7 +46,7 @@ const createPairwiseObserver: <T>(
       [PairwiseObserver_hasPrev]: false,
     }),
     {
-      [ObserverMixinBaseLike_notify](
+      [LiftedObserverLike_notify](
         this: TProperties<T> & LiftedObserverLike<T, Tuple2<T, T>>,
         next: T,
       ) {
@@ -69,7 +61,7 @@ const createPairwiseObserver: <T>(
         return (
           (hasPrev &&
             ((pair = tuple(prev, next)),
-            delegate?.[ObserverMixinBaseLike_notify]?.(pair) ??
+            delegate?.[LiftedObserverLike_notify]?.(pair) ??
               delegate[QueueableLike_enqueue](pair))) ||
           delegate[QueueableLike_isReady]
         );

@@ -12,37 +12,62 @@ import {
   QueueableLike_isReady,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
-import ObserverMixin, {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "./ObserverMixin.js";
+import LiftedObserverMixin, {
+  LiftedObserverLike,
+  LiftedObserverLike_notify,
+} from "./LiftedObserverMixin.js";
 
-const DelegatingObserverMixin: <T>() => Mixin1<
-  ObserverLike<T>,
-  ObserverLike,
-  ObserverMixinBaseLike<T> & DisposableLike
-> = /*@__PURE__*/ (<T>() =>
+const DelegatingObserverMixin: <
+  TA,
+  TB = TA,
+  TDelegateObserver extends ObserverLike<TB> = ObserverLike<TB>,
+>() => Mixin1<
+  LiftedObserverLike<TA, TB, TDelegateObserver>,
+  ObserverLike<TB>,
+  Pick<
+    LiftedObserverLike<TA, TB, TDelegateObserver>,
+    keyof DisposableLike | typeof LiftedObserverLike_notify
+  >
+> = /*@__PURE__*/ (<
+  TA,
+  TB = TA,
+  TDelegateObserver extends ObserverLike<TB> = ObserverLike<TB>,
+>() =>
   returns(
     mix<
-      ObserverLike<T>,
+      LiftedObserverLike<TA, TB, TDelegateObserver>,
       object,
-      ObserverMixinBaseLike<T>,
-      ObserverMixinBaseLike<T> & DisposableLike,
-      ObserverLike<T>
+      Pick<
+        LiftedObserverLike<TA, TB, TDelegateObserver>,
+        typeof LiftedObserverLike_notify
+      >,
+      Pick<
+        LiftedObserverLike<TA, TB, TDelegateObserver>,
+        keyof DisposableLike | typeof LiftedObserverLike_notify
+      >,
+      TDelegateObserver
     >(
-      include(ObserverMixin<T>()),
+      include(LiftedObserverMixin<TA, TB, TDelegateObserver>()),
       function DelegatingObserverMixin(
-        this: DisposableLike & ObserverMixinBaseLike<T>,
-        delegate: ObserverLike,
-      ): ObserverLike<T> {
-        init(ObserverMixin<T>(), this, delegate, delegate);
+        this: Pick<
+          LiftedObserverLike<TA, TB, TDelegateObserver>,
+          keyof DisposableLike | typeof LiftedObserverLike_notify
+        >,
+        delegate: TDelegateObserver,
+      ): LiftedObserverLike<TA, TB, TDelegateObserver> {
+        init(
+          LiftedObserverMixin<TA, TB, TDelegateObserver>(),
+          this,
+          delegate,
+          delegate,
+        );
         pipe(this, Disposable.addTo(delegate));
 
         return this;
       },
       props(),
       {
-        [ObserverMixinBaseLike_notify](this: ObserverLike, _: T) {
+        [LiftedObserverLike_notify](this: ObserverLike, _: TA) {
           return this[QueueableLike_isReady];
         },
       },

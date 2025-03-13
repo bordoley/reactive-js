@@ -10,14 +10,11 @@ import { newInstance, none, partial, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import LiftedObserverMixin, {
+import {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
+  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
   DisposableLike_dispose,
   ObserverLike,
@@ -57,13 +54,13 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
   }
 
   return mixInstanceFactory(
-    include(
-      DisposableMixin,
-      DelegatingObserverMixin<ArrayBuffer>(),
-      LiftedObserverMixin(),
-    ),
+    include(DisposableMixin, DelegatingObserverMixin<ArrayBuffer>()),
     function DecodeWithCharsetObserver(
-      this: ObserverMixinBaseLike<ArrayBuffer> & TProperties,
+      this: Pick<
+        LiftedObserverLike<ArrayBuffer, string>,
+        typeof LiftedObserverLike_notify
+      > &
+        TProperties,
       delegate: ObserverLike<string>,
       charset: string,
       options?: {
@@ -72,8 +69,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
       },
     ): ObserverLike<ArrayBuffer> {
       init(DisposableMixin, this);
-      init(DelegatingObserverMixin<ArrayBuffer>(), this, delegate);
-      init(LiftedObserverMixin(), this, delegate);
+      init(DelegatingObserverMixin<ArrayBuffer, string>(), this, delegate);
 
       const textDecoder = newInstance(TextDecoder, charset, options);
       this[DecodeWithCharsetObserver_textDecoder] = textDecoder;
@@ -89,7 +85,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
       [DecodeWithCharsetObserver_textDecoder]: none,
     }),
     proto({
-      [ObserverMixinBaseLike_notify](
+      [LiftedObserverLike_notify](
         this: TProperties & LiftedObserverLike<ArrayBuffer, string>,
         next: ArrayBuffer,
       ) {
@@ -103,7 +99,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
 
         return (
           (shouldEmit &&
-            (delegate?.[ObserverMixinBaseLike_notify]?.(data) ??
+            (delegate?.[LiftedObserverLike_notify]?.(data) ??
               delegate[QueueableLike_enqueue](data))) ||
           delegate[QueueableLike_isReady]
         );
