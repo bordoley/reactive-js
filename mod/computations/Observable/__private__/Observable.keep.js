@@ -4,7 +4,7 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { QueueableLike_enqueue, QueueableLike_isReady, } from "../../../utils.js";
+import { QueueableLike_enqueue } from "../../../utils.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 const KeepObserver_predicate = Symbol("KeepObserver_predicate");
 const createKeepObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function KeepObserver(delegate, predicate) {
@@ -18,10 +18,9 @@ const createKeepObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(Deleg
     [LiftedObserverLike_notify](next) {
         const shouldNotify = this[KeepObserver_predicate](next);
         const delegate = this[LiftedObserverLike_delegate];
-        return ((shouldNotify &&
-            (delegate?.[LiftedObserverLike_notify]?.(next) ??
-                delegate[QueueableLike_enqueue](next))) ||
-            delegate[QueueableLike_isReady]);
+        if (shouldNotify) {
+            delegate[QueueableLike_enqueue](next);
+        }
     },
 })))();
 const Observable_keep = (predicate) => pipe((createKeepObserver), partial(predicate), Observable_liftPure);

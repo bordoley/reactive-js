@@ -21,8 +21,7 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
         [LiftedObserverLike_notify](next) {
             const delegate = this[LiftedObserverLike_delegate];
             this[ThrowIfEmptyObserver_isEmpty] = false;
-            return (delegate?.[LiftedObserverLike_notify]?.(next) ??
-                delegate[QueueableLike_enqueue](next));
+            delegate[QueueableLike_enqueue](next);
         },
         [LiftedObserverLike_complete]() {
             const factory = this[ThrowIfEmptyObserver_factory];

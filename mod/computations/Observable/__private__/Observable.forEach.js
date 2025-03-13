@@ -19,8 +19,7 @@ const createForEachObserver = /*@__PURE__*/ (() => {
         [LiftedObserverLike_notify](next) {
             const delegate = this[LiftedObserverLike_delegate];
             this[ForEachObserver_effect](next);
-            return (delegate?.[LiftedObserverLike_notify]?.(next) ??
-                delegate[QueueableLike_enqueue](next));
+            delegate[QueueableLike_enqueue](next);
         },
     });
 })();

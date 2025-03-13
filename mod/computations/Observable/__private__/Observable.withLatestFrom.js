@@ -8,7 +8,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, QueueableLike_isReady, } from "../../../utils.js";
+import { QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -40,12 +40,10 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
             const delegate = this[LiftedObserverLike_delegate];
             const shouldEmit = !this[QueueableLike_isCompleted] &&
                 this[WithLatestFromObserver_hasLatest];
-            let v = none;
-            return ((shouldEmit &&
-                ((v = this[WithLatestFromObserver_selector](next, this[WithLatestFromObserver_otherLatest])),
-                    delegate?.[LiftedObserverLike_notify]?.(v) ??
-                        delegate[QueueableLike_enqueue](v))) ||
-                delegate[QueueableLike_isReady]);
+            if (shouldEmit) {
+                const v = this[WithLatestFromObserver_selector](next, this[WithLatestFromObserver_otherLatest]);
+                delegate[QueueableLike_enqueue](v);
+            }
         },
     }));
 })();

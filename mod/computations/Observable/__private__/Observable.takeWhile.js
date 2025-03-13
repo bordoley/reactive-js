@@ -4,7 +4,7 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isReady, } from "../../../utils.js";
+import { QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const TakeWhileObserver_inclusive = Symbol("TakeWhileObserver_inclusive");
 const TakeWhileObserver_predicate = Symbol("TakeWhileObserver_predicate");
@@ -22,14 +22,12 @@ const createTakeWhileObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(
         const delegate = this[LiftedObserverLike_delegate];
         const satisfiesPredicate = this[TakeWhileObserver_predicate](next);
         const isInclusive = this[TakeWhileObserver_inclusive];
-        const result = ((satisfiesPredicate || isInclusive) &&
-            (delegate?.[LiftedObserverLike_notify]?.(next) ??
-                delegate[QueueableLike_enqueue](next))) ||
-            delegate[QueueableLike_isReady];
+        if (satisfiesPredicate || isInclusive) {
+            delegate[QueueableLike_enqueue](next);
+        }
         if (!satisfiesPredicate) {
             this[QueueableLike_complete]();
         }
-        return result;
     },
 })))();
 const Observable_takeWhile = (predicate, options = {}) => pipe((createTakeWhileObserver), partial(predicate, options?.inclusive), Observable_liftPureDeferred);

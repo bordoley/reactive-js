@@ -20,8 +20,7 @@ const createWithCurrentTimeObserver = /*@__PURE__*/ (() => {
             const delegate = this[LiftedObserverLike_delegate];
             const currentTime = this[SchedulerLike_now];
             const mapped = this[WithCurrentTimeObserver_selector](currentTime, next);
-            return (delegate?.[LiftedObserverLike_notify]?.(mapped) ??
-                delegate[QueueableLike_enqueue](mapped));
+            delegate[QueueableLike_enqueue](mapped);
         },
     }));
 })();

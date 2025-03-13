@@ -18,8 +18,7 @@ const createMapObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(Delega
     [LiftedObserverLike_notify](next) {
         const mapped = this[MapObserver_selector](next);
         const delegate = this[LiftedObserverLike_delegate];
-        return (delegate?.[LiftedObserverLike_notify]?.(mapped) ??
-            delegate[QueueableLike_enqueue](mapped));
+        delegate[QueueableLike_enqueue](mapped);
     },
 })))();
 const Observable_map = (selector) => pipe((createMapObserver), partial(selector), Observable_liftPure);

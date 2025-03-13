@@ -15,10 +15,11 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
         const delegate = this[LiftedObserverLike_delegate];
         let v = none;
         while (((v = queue[QueueLike_dequeue]()), isSome(v))) {
-            // FIXME: before dequeing see if the delegate is ready before pushing.
-            const result = delegate?.[LiftedObserverLike_notify]?.(v) ??
-                delegate[QueueableLike_enqueue](v);
-            if (!result) {
+            if (!delegate[QueueableLike_isReady]) {
+                delegate[SchedulerLike_requestYield]();
+                ctx[ContinuationContextLike_yield]();
+            }
+            if (!delegate[QueueableLike_enqueue](v)) {
                 delegate[SchedulerLike_requestYield]();
             }
             if (queue[QueueLike_count] > 0) {

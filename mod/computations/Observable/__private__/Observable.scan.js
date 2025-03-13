@@ -28,8 +28,7 @@ const createScanObserver = /*@__PURE__*/ (() => {
             const delegate = this[LiftedObserverLike_delegate];
             const nextAcc = this[ScanObserver_reducer](this[ScanObserver_acc], next);
             this[ScanObserver_acc] = nextAcc;
-            return (delegate?.[LiftedObserverLike_notify]?.(nextAcc) ??
-                delegate[QueueableLike_enqueue](nextAcc));
+            delegate[QueueableLike_enqueue](nextAcc);
         },
     }));
 })();

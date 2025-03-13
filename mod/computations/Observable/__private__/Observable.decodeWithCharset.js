@@ -5,7 +5,7 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { newInstance, none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isReady, } from "../../../utils.js";
+import { QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
     const DecodeWithCharsetObserver_textDecoder = Symbol("DecodeWithCharsetObserver_textDecoder");
@@ -24,10 +24,9 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
                 stream: true,
             });
             const shouldEmit = data[Array_length] > 0;
-            return ((shouldEmit &&
-                (delegate?.[LiftedObserverLike_notify]?.(data) ??
-                    delegate[QueueableLike_enqueue](data))) ||
-                delegate[QueueableLike_isReady]);
+            if (shouldEmit) {
+                delegate[QueueableLike_enqueue](data);
+            }
         },
         [LiftedObserverLike_complete]() {
             const delegate = this[LiftedObserverLike_delegate];

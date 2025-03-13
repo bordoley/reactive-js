@@ -6,7 +6,7 @@ import { none, partial, pipe } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isReady, } from "../../../utils.js";
+import { QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createBufferObserver = /*@__PURE__*/ (() => {
     const BufferObserver_buffer = Symbol("BufferObserver_buffer");
@@ -27,11 +27,10 @@ const createBufferObserver = /*@__PURE__*/ (() => {
             const count = this[BufferObserver_count];
             buffer[Array_push](next);
             const shouldEmit = buffer[Array_length] === count;
-            return ((shouldEmit &&
-                ((this[BufferObserver_buffer] = []),
-                    delegate?.[LiftedObserverLike_notify]?.(buffer) ??
-                        delegate[QueueableLike_enqueue](buffer))) ||
-                delegate[QueueableLike_isReady]);
+            if (shouldEmit) {
+                this[BufferObserver_buffer] = [];
+                delegate[QueueableLike_enqueue](buffer);
+            }
         },
         [LiftedObserverLike_complete]() {
             const delegate = this[LiftedObserverLike_delegate];

@@ -13,10 +13,7 @@ import LiftedObserverMixin, {
   LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import {
-  ObserverLike,
-  QueueableLike_enqueue,
-} from "../../../utils.js";
+import { ObserverLike, QueueableLike_enqueue } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 

@@ -1,7 +1,7 @@
 /// <reference types="./LiftedObserverMixin.d.ts" />
 
 import { getPrototype, include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
-import { bind, bindMethod, call, none, pipe, returns, } from "../../functions.js";
+import { bind, bindMethod, call, none, pipe, raise, returns, } from "../../functions.js";
 import { ContinuationContextLike_yield, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, QueueableLike_isReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
@@ -16,11 +16,15 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (observer) => {
         if (observer[SerialDisposableLike_current][DisposableLike_isDisposed]) {
             const continuation = (ctx) => {
-                while (observer[QueueLike_count] > 0) {
-                    const next = observer[QueueLike_dequeue]();
-                    if (!observer[LiftedObserverLike_notify](next)) {
+                const delegate = observer[LiftedObserverLike_delegate];
+                while (observer[QueueLike_count] > 0 &&
+                    !observer[DisposableLike_isDisposed]) {
+                    if (!delegate[QueueableLike_isReady]) {
                         observer[SchedulerLike_requestYield]();
+                        ctx[ContinuationContextLike_yield]();
                     }
+                    const next = observer[QueueLike_dequeue]();
+                    observer[LiftedObserverLike_notify](next);
                     if (observer[QueueLike_count] > 0) {
                         ctx[ContinuationContextLike_yield]();
                     }
@@ -77,34 +81,39 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
             this[LiftedObserverMixin_scheduler][SchedulerLike_requestYield]();
         },
         [SchedulerLike_schedule](continuation, options) {
-            return pipe(this[LiftedObserverMixin_scheduler][SchedulerLike_schedule](bind(this[LiftedObserverMixin_schedulerCallback], continuation), options), Disposable.addToContainer(this));
+            return pipe(this[LiftedObserverLike_delegate][SchedulerLike_schedule](bind(this[LiftedObserverMixin_schedulerCallback], continuation), options), Disposable.addToContainer(this));
         },
         [QueueableLike_enqueue](next) {
             const inSchedulerContinuation = this[SchedulerLike_inContinuation];
-            const shouldIgnore = this[QueueableLike_isCompleted] || this[DisposableLike_isDisposed];
-            const shouldNotify = inSchedulerContinuation && !shouldIgnore;
-            const shouldEnqueue = !inSchedulerContinuation && !shouldIgnore;
-            const result = (shouldNotify && this[LiftedObserverLike_notify](next)) ||
-                (shouldEnqueue &&
-                    (scheduleDrainQueue(this),
-                        call(queueProtoype[QueueableLike_enqueue], this, next)));
-            return result && this[QueueableLike_isReady];
+            const isCompleted = this[QueueableLike_isCompleted];
+            if (isCompleted) {
+                raise("observer is completed");
+            }
+            const shouldIgnore = isCompleted || this[DisposableLike_isDisposed];
+            const delegate = this[LiftedObserverLike_delegate];
+            const isDelegateReady = delegate[QueueableLike_isReady];
+            const count = this[QueueLike_count];
+            const shouldNotify = inSchedulerContinuation &&
+                !shouldIgnore &&
+                isDelegateReady &&
+                count == 0;
+            if (shouldNotify) {
+                this[LiftedObserverLike_notify](next);
+            }
+            else if (!shouldIgnore) {
+                scheduleDrainQueue(this);
+                call(queueProtoype[QueueableLike_enqueue], this, next);
+            }
+            return this[QueueableLike_isReady];
         },
         [QueueableLike_complete]() {
             const isCompleted = this[QueueableLike_isCompleted];
             const isDisposed = this[DisposableLike_isDisposed];
-            const inSchedulerContinuation = this[SchedulerLike_inContinuation];
-            const count = this[QueueLike_count];
             call(queueProtoype[QueueableLike_complete], this);
             if (isCompleted || isDisposed) {
                 return;
             }
-            if (inSchedulerContinuation && count === 0) {
-                this[LiftedObserverLike_complete]();
-            }
-            else {
-                scheduleDrainQueue(this);
-            }
+            scheduleDrainQueue(this);
         },
         [LiftedObserverLike_complete]() {
             this[LiftedObserverLike_delegate][QueueableLike_complete]();

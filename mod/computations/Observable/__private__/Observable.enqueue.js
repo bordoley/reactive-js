@@ -21,8 +21,7 @@ const Observer_createEnqueueObserver = /*@__PURE__*/ (() => {
             if (!this[EnqueueObserver_queue][QueueableLike_enqueue](next)) {
                 this[SchedulerLike_requestYield]();
             }
-            return (delegate?.[LiftedObserverLike_notify]?.(next) ??
-                delegate[QueueableLike_enqueue](next));
+            delegate[QueueableLike_enqueue](next);
         },
         [LiftedObserverLike_complete]() {
             // FIXME: maybe we shouldn't complete

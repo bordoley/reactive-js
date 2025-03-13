@@ -7,13 +7,16 @@ import {
 } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
+  LiftedObserverLike_complete,
   LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
+  DisposableLike_dispose,
   ObserverLike,
   QueueableLike_complete,
   QueueableLike_enqueue,
@@ -32,15 +35,17 @@ const createTakeFirstObserver: <T>(
   count?: number,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedObserverMixin()),
+    include(DisposableMixin, LiftedObserverMixin()),
     function TakeFirstObserver(
       this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
         TProperties,
       delegate: ObserverLike<T>,
       takeCount?: number,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, this, delegate);
+      init(DisposableMixin, this, delegate);
       init(LiftedObserverMixin<T>(), this, delegate, none);
+
+      pipe(this, Disposable.addTo(delegate));
 
       this[TakeFirstObserver_count] = clampPositiveInteger(takeCount ?? 1);
 
@@ -68,6 +73,11 @@ const createTakeFirstObserver: <T>(
         if (this[TakeFirstObserver_count] <= 0) {
           this[QueueableLike_complete]();
         }
+      },
+
+      [LiftedObserverLike_complete](this: LiftedObserverLike<T>) {
+        this[LiftedObserverLike_delegate][QueueableLike_complete]();
+        this[DisposableLike_dispose]();
       },
     }),
   ))();
