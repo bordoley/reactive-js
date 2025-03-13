@@ -16,13 +16,12 @@ import {
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   DisposableLike_dispose,
   ObserverLike,
-  QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -71,14 +70,13 @@ const createScanObserver: <T, TAcc>(
         this: TProperties<T, TAcc> & LiftedObserverLike<T, TAcc>,
         next: T,
       ) {
-        const delegate = this[LiftedObserverLike_delegate];
         const nextAcc = this[ScanObserver_reducer](
           this[ScanObserver_acc],
           next,
         );
         this[ScanObserver_acc] = nextAcc;
 
-        delegate[QueueableLike_enqueue](nextAcc);
+        this[LiftedObserverLike_notifyDelegate](nextAcc);
       },
     }),
   );
