@@ -259,7 +259,7 @@ const LiftedObserverMixin: <
           },
         ): DisposableLike {
           return pipe(
-            this[LiftedObserverMixin_scheduler][SchedulerLike_schedule](
+            this[LiftedObserverLike_delegate][SchedulerLike_schedule](
               bind(this[LiftedObserverMixin_schedulerCallback], continuation),
               options,
             ),
