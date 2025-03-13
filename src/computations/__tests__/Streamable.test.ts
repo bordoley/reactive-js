@@ -23,6 +23,7 @@ import {
   pipeSome,
   returns,
 } from "../../functions.js";
+import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
   DropLatestBackpressureStrategy,
@@ -170,7 +171,7 @@ testModule(
       pipe(
         (x: number) => x + 2,
         Observable.fromValue({ delay: 5 }),
-        Observable.enqueue(stream),
+        Observable.forEach(bindMethod(stream, QueueableLike_enqueue)),
         Observable.subscribe(vts),
       );
 
@@ -204,10 +205,10 @@ testModule(
       );
 
       pipe(
-        (x: number) => x + 2,
+        increment,
         Observable.fromValue({ delay: 1 }),
         Observable.repeat(24),
-        Observable.enqueue(stream),
+        Observable.forEach(bindMethod(stream, QueueableLike_enqueue)),
         Observable.subscribe(vts),
       );
 

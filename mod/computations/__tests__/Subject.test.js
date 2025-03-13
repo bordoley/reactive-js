@@ -57,7 +57,7 @@ import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsSome, e
 import * as Observable from "../../computations/Observable.js";
 import * as Subject from "../../computations/Subject.js";
 import { ObservableLike_observe } from "../../computations.js";
-import { bindMethod, pipe, returns } from "../../functions.js";
+import { bindMethod, ignore, pipe, returns, } from "../../functions.js";
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_notify, SchedulerLike_schedule, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
@@ -162,7 +162,7 @@ testModule("Subject", describe("create", test("with replay", () => {
     try {
         const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
         const subject = Subject.create();
-        const subscription = pipe(subject, Observable.subscribe(vts, {
+        const subscription = pipe(subject, Observable.forEach(ignore), Observable.subscribe(vts, {
             backpressureStrategy: ThrowBackpressureStrategy,
             capacity: 1,
         }));

@@ -14,8 +14,8 @@ import {
   partial,
   pipe,
 } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
@@ -60,11 +60,7 @@ const createThrowIfEmptyObserver: <T>(
   }
 
   return mixInstanceFactory(
-    include(
-      DisposableMixin,
-      DelegatingObserverMixin<T>(),
-      LiftedObserverMixin(),
-    ),
+    include(DisposableMixin, LiftedObserverMixin<T>()),
     function ThrowIfEmptyObserver(
       this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
         Mutable<TProperties>,
@@ -72,7 +68,9 @@ const createThrowIfEmptyObserver: <T>(
       factory: Factory<unknown>,
     ): ObserverLike<T> {
       init(DisposableMixin, this);
-      init(DelegatingObserverMixin<T>(), this, delegate);
+      init(LiftedObserverMixin<T>(), this, delegate, none);
+
+      pipe(this, Disposable.addTo(delegate));
 
       this[ThrowIfEmptyObserver_factory] = factory;
 

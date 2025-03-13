@@ -3,9 +3,9 @@ import { Function1 } from "../functions.js";
 import { DisposableLike, QueueableLike } from "../utils.js";
 interface PauseableObservableModule {
     create<T>(op: Function1<EventSourceLike<boolean>, MulticastObservableLike<T>>): PauseableObservableLike<T> & DisposableLike;
-    dispatchTo<T>(dispatcher: QueueableLike<T>): Function1<PauseableObservableLike<T>, DeferredObservableWithSideEffectsLike<T>>;
+    enqueue<T>(queue: QueueableLike<T>): Function1<PauseableObservableLike<T>, DeferredObservableWithSideEffectsLike<T>>;
 }
 export type Signature = PauseableObservableModule;
 export declare const create: Signature["create"];
-export declare const dispatchTo: Signature["dispatchTo"];
+export declare const enqueue: Signature["enqueue"];
 export {};

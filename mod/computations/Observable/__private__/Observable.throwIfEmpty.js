@@ -2,11 +2,10 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
+import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
@@ -26,10 +25,10 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
         }
         delegate[DisposableLike_dispose](err);
     }
-    return mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()), function ThrowIfEmptyObserver(delegate, factory) {
+    return mixInstanceFactory(include(DisposableMixin, LiftedObserverMixin()), function ThrowIfEmptyObserver(delegate, factory) {
         init(DisposableMixin, this);
-        init(DelegatingObserverMixin(), this, delegate);
-        init(LiftedObserverMixin(), this, delegate);
+        init(LiftedObserverMixin(), this, delegate, none);
+        pipe(this, Disposable.addTo(delegate));
         this[ThrowIfEmptyObserver_factory] = factory;
         pipe(this, DisposableContainer.onComplete(onThrowIfEmptyObserverComplete));
         return this;
@@ -37,10 +36,10 @@ const createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
         [ThrowIfEmptyObserver_isEmpty]: true,
         [ThrowIfEmptyObserver_factory]: none,
     }), proto({
-        [ObserverMixinBaseLike_notify](next) {
+        [LiftedObserverLike_notify](next) {
             const delegate = this[LiftedObserverLike_delegate];
             this[ThrowIfEmptyObserver_isEmpty] = false;
-            return (delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
+            return (delegate?.[LiftedObserverLike_notify]?.(next) ??
                 delegate[QueueableLike_enqueue](next));
         },
     }));

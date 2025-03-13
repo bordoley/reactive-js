@@ -12,6 +12,7 @@ import {
   pipe,
   strictEquality,
 } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
@@ -55,7 +56,9 @@ const createDistinctUntilChangedObserver: <T>(
       equality: Equality<T>,
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, delegate);
-      init(LiftedObserverMixin<T>(), this, delegate);
+      init(LiftedObserverMixin<T>(), this, delegate, none);
+
+      pipe(this, Disposable.addTo(delegate));
 
       this[DistinctUntilChangedObserver_equality] = equality;
 

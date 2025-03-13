@@ -6,11 +6,9 @@ import { clampPositiveInteger } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Queue from "../../../utils/Queue.js";
-import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
-import { ContinuationContextLike_yield, DisposableLike_dispose, DropOldestBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, SchedulerLike_schedule, } from "../../../utils.js";
+import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { ContinuationContextLike_yield, DisposableLike_dispose, DropOldestBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, QueueableLike_isReady, SchedulerLike_schedule, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createTakeLastObserver = /*@__PURE__*/ (() => {
     const TakeLastObserver_queue = Symbol("TakeLastObserver_queue");
@@ -34,10 +32,10 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
         const delegate = this[LiftedObserverLike_delegate];
         pipe(delegate[SchedulerLike_schedule](bind(notifyDelegate, this)), Disposable.addTo(delegate));
     }
-    return mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()), function TakeLastObserver(delegate, takeLastCount) {
+    return mixInstanceFactory(include(DisposableMixin, LiftedObserverMixin()), function TakeLastObserver(delegate, takeLastCount) {
         init(DisposableMixin, this);
-        init(DelegatingObserverMixin(), this, delegate);
-        init(LiftedObserverMixin(), this, delegate);
+        init(LiftedObserverMixin(), this, delegate, none);
+        pipe(this, Disposable.addTo(delegate));
         this[TakeLastObserver_queue] = Queue.create({
             capacity: takeLastCount,
             backpressureStrategy: DropOldestBackpressureStrategy,
@@ -47,8 +45,9 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
     }, props({
         [TakeLastObserver_queue]: none,
     }), proto({
-        [ObserverMixinBaseLike_notify](next) {
-            return this[TakeLastObserver_queue][QueueableLike_enqueue](next);
+        [LiftedObserverLike_notify](next) {
+            this[TakeLastObserver_queue][QueueableLike_enqueue](next);
+            return this[QueueableLike_isReady];
         },
     }));
 })();

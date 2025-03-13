@@ -64,7 +64,7 @@ Adds the given teardown function to this container or disposes it if the contain
 
 ###### teardown
 
-[`Method1`](../../functions/type-aliases/Method1.md)\<[`DisposableContainerLike`](DisposableContainerLike.md), [`Optional`](../../functions/type-aliases/Optional.md)\<`Error`\>\>
+[`Method1`](../../functions/type-aliases/Method1.md)\<[`DisposableLike`](DisposableLike.md), [`Optional`](../../functions/type-aliases/Optional.md)\<`Error`\>\>
 
 The teardown function to add.
 

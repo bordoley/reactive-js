@@ -20,6 +20,7 @@ export const DropLatestBackpressureStrategy = "drop-latest";
 export const DropOldestBackpressureStrategy = "drop-oldest";
 export const OverflowBackpressureStrategy = "overflow";
 export const ThrowBackpressureStrategy = "throw";
+export const QueueableLike_isReady = Symbol("QueueableLike_isReady");
 export const QueueableLike_isCompleted = Symbol("QueueableLike_isCompleted");
 export const QueueableLike_complete = Symbol("QueueableLike_complete");
 export const QueueableLike_onReady = Symbol("QueueableLike_onReady");

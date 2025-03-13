@@ -6,11 +6,11 @@ import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as Computation from "../../../computations/Computation.js";
 import { ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike_observe, } from "../../../computations.js";
 import { none, pick, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
-import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
+import LiftedObserverMixin, { LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 const zipMode = 2;
 const Observable_latest = /*@__PURE__*/ (() => {
@@ -22,15 +22,16 @@ const Observable_latest = /*@__PURE__*/ (() => {
         const ctx = this[LatestObserver_ctx];
         ctx[LatestCtx_completedCount]++;
         if (ctx[LatestCtx_completedCount] === ctx[LatestCtx_observers][Array_length]) {
-            ctx[LatestCtx_delegate][DisposableLike_dispose]();
+            ctx[LatestCtx_delegate][QueueableLike_complete]();
         }
     }
     const LatestObserver_ctx = Symbol("LatestObserver_ctx");
     const LatestObserver_latest = Symbol("LatestObserver_latest");
     const LatestObserver_ready = Symbol("LatestObserver_ready");
-    const createLatestObserver = mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin()), function LatestObserver(ctx, delegate) {
+    const createLatestObserver = mixInstanceFactory(include(DisposableMixin, LiftedObserverMixin()), function LatestObserver(ctx, delegate) {
         init(DisposableMixin, this);
-        init(DelegatingObserverMixin(), this, delegate);
+        init(LiftedObserverMixin(), this, delegate, none);
+        pipe(this, Disposable.addTo(delegate));
         this[LatestObserver_ctx] = ctx;
         pipe(this, DisposableContainer.onComplete(onLatestObserverCompleted));
         return this;
@@ -39,7 +40,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         [LatestObserver_latest]: none,
         [LatestObserver_ctx]: none,
     }), proto({
-        [ObserverMixinBaseLike_notify](next) {
+        [LiftedObserverLike_notify](next) {
             const ctx = this[LatestObserver_ctx];
             const mode = ctx[LatestCtx_mode];
             const observers = ctx[LatestCtx_observers];

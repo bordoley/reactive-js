@@ -17,7 +17,6 @@ import { clampPositiveInteger } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Queue from "../../../utils/Queue.js";
-import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
@@ -86,7 +85,7 @@ const createTakeLastObserver: <T>(
   }
 
   return mixInstanceFactory(
-    include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()),
+    include(DisposableMixin, LiftedObserverMixin()),
     function TakeLastObserver(
       this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
         TProperties,
@@ -94,7 +93,9 @@ const createTakeLastObserver: <T>(
       takeLastCount: number,
     ): ObserverLike<T> {
       init(DisposableMixin, this);
-      init(DelegatingObserverMixin<T>(), this, delegate);
+      init(LiftedObserverMixin<T>(), this, delegate, none);
+
+      pipe(this, Disposable.addTo(delegate));
 
       this[TakeLastObserver_queue] = Queue.create({
         capacity: takeLastCount,

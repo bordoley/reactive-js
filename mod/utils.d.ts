@@ -20,7 +20,7 @@ export interface DisposableContainerLike {
      *
      * @param teardown - The teardown function to add.
      */
-    [DisposableContainerLike_add](teardown: Method1<this, Optional<Error>>): void;
+    [DisposableContainerLike_add](teardown: Method1<DisposableLike, Optional<Error>>): void;
 }
 export declare const DisposableLike_dispose: typeof Symbol.dispose;
 export declare const DisposableLike_error: unique symbol;
@@ -60,20 +60,22 @@ export declare const DropOldestBackpressureStrategy = "drop-oldest";
 export declare const OverflowBackpressureStrategy = "overflow";
 export declare const ThrowBackpressureStrategy = "throw";
 export type BackpressureStrategy = typeof DropLatestBackpressureStrategy | typeof DropOldestBackpressureStrategy | typeof OverflowBackpressureStrategy | typeof ThrowBackpressureStrategy;
+export declare const QueueableLike_isReady: unique symbol;
 export declare const QueueableLike_isCompleted: unique symbol;
 export declare const QueueableLike_complete: unique symbol;
 export declare const QueueableLike_onReady: unique symbol;
 /**
  * A `QueueableLike` type that consumes enqueued events to
- * be dispatched from any execution constext.
+ * be consumed.
  *
  * @noInheritDoc
  */
 export interface QueueableLike<T = unknown> {
     readonly [QueueableLike_isCompleted]: boolean;
+    readonly [QueueableLike_isReady]: boolean;
     readonly [QueueableLike_onReady]: EventSourceLike<void>;
     /**
-     * Communicates to the dispatcher that no more events will be enqueued.
+     * Communicates to the queue that no more events will be enqueued.
      */
     [QueueableLike_complete](): void;
     /**

@@ -4,7 +4,7 @@ import { bindMethod, error, isSome, none, partial, pipe, } from "../../../functi
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
-import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_dispose, QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -21,8 +21,11 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
                 shouldComplete = true;
                 err = isSome(err) ? error([error(e), err]) : error(e);
             }
-            if (shouldComplete) {
+            if (shouldComplete && isSome(err)) {
                 delegate[DisposableLike_dispose](err);
+            }
+            else if (shouldComplete) {
+                delegate[QueueableLike_complete]();
             }
             else {
                 count++;

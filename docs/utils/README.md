@@ -49,6 +49,7 @@
 - [QueueableLike\_complete](variables/QueueableLike_complete.md)
 - [QueueableLike\_enqueue](variables/QueueableLike_enqueue.md)
 - [QueueableLike\_isCompleted](variables/QueueableLike_isCompleted.md)
+- [QueueableLike\_isReady](variables/QueueableLike_isReady.md)
 - [QueueableLike\_onReady](variables/QueueableLike_onReady.md)
 - [QueueLike\_count](variables/QueueLike_count.md)
 - [QueueLike\_dequeue](variables/QueueLike_dequeue.md)

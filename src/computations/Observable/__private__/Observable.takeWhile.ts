@@ -6,6 +6,7 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
@@ -18,7 +19,6 @@ import {
   QueueableLike_enqueue,
   QueueableLike_isReady,
 } from "../../../utils.js";
-
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
@@ -45,7 +45,9 @@ const createTakeWhileObserver: <T>(
       inclusive?: boolean,
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, delegate);
-      init(LiftedObserverMixin<T>(), this, delegate);
+      init(LiftedObserverMixin<T>(), this, delegate, none);
+
+      pipe(this, Disposable.addTo(delegate));
 
       this[TakeWhileObserver_predicate] = predicate;
       this[TakeWhileObserver_inclusive] = inclusive ?? false;

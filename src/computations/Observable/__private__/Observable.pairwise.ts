@@ -4,7 +4,8 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
-import { Tuple2, none, tuple } from "../../../functions.js";
+import { Tuple2, none, pipe, tuple } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
@@ -37,7 +38,9 @@ const createPairwiseObserver: <T>(
       delegate: ObserverLike<Tuple2<T, T>>,
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, delegate);
-      init(LiftedObserverMixin<T,  Tuple2<T, T>>(), this, delegate);
+      init(LiftedObserverMixin<T, Tuple2<T, T>>(), this, delegate, none);
+
+      pipe(this, Disposable.addTo(delegate));
 
       return this;
     },

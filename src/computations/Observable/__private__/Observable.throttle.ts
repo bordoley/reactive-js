@@ -20,7 +20,6 @@ import {
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
-import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
@@ -122,7 +121,7 @@ const createThrottleObserver: <T>(
   }
 
   return mixInstanceFactory(
-    include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()),
+    include(DisposableMixin, LiftedObserverMixin()),
     function ThrottleObserver(
       this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
         Mutable<TProperties>,
@@ -131,7 +130,7 @@ const createThrottleObserver: <T>(
       mode: Observable.ThrottleMode,
     ): ObserverLike<T> {
       init(DisposableMixin, this);
-      init(DelegatingObserverMixin<T>(), this, delegate);
+      init(LiftedObserverMixin<T>(), this, delegate, none);
 
       this[ThrottleObserver_durationFunction] = durationFunction;
       this[ThrottleObserver_mode] = mode;
@@ -141,7 +140,11 @@ const createThrottleObserver: <T>(
         Disposable.addTo(delegate),
       );
 
-      pipe(this, DisposableContainer.onComplete(onThrottleObserverComplete));
+      pipe(
+        this,
+        DisposableContainer.onComplete(onThrottleObserverComplete),
+        Disposable.addTo(delegate),
+      );
 
       return this;
     },

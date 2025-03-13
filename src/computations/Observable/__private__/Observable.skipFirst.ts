@@ -5,8 +5,9 @@ import {
   props,
   proto,
 } from "../../../__internal__/mixins.js";
-import { partial, pipe } from "../../../functions.js";
+import { none, partial, pipe } from "../../../functions.js";
 import { clampPositiveInteger, max } from "../../../math.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
@@ -18,7 +19,6 @@ import {
   QueueableLike_enqueue,
   QueueableLike_isReady,
 } from "../../../utils.js";
-
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
@@ -41,7 +41,9 @@ const createSkipFirstObserver: <T>(
       skipCount?: number,
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, delegate);
-      init(LiftedObserverMixin<T>(), this, delegate);
+      init(LiftedObserverMixin<T>(), this, delegate, none);
+
+      pipe(this, Disposable.addTo(delegate));
 
       this[SkipFirstObserver_count] = clampPositiveInteger(skipCount ?? 1);
 

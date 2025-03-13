@@ -116,7 +116,10 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
             catch (e) {
                 observer[DisposableLike_dispose](error(e));
             }
-        }), Observable.backpressureStrategy(1, ThrowBackpressureStrategy), Observable.toReadonlyArrayAsync(scheduler)));
+        }), Observable.backpressureStrategy({
+            capacity: 1,
+            backpressureStrategy: ThrowBackpressureStrategy,
+        }), Observable.toReadonlyArrayAsync(scheduler)));
     }
     catch (e_1) {
         env_1.error = e_1;
@@ -135,7 +138,10 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
                 observer[QueueableLike_enqueue](i);
             }
             observer[QueueableLike_complete]();
-        }), Observable.backpressureStrategy(1, DropLatestBackpressureStrategy), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([0]));
+        }), Observable.backpressureStrategy({
+            capacity: 1,
+            backpressureStrategy: DropLatestBackpressureStrategy,
+        }), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([0]));
     }
     catch (e_2) {
         env_2.error = e_2;
@@ -154,7 +160,10 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
                 observer[QueueableLike_enqueue](i);
             }
             observer[QueueableLike_complete]();
-        }), Observable.backpressureStrategy(1, DropOldestBackpressureStrategy), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([9]));
+        }), Observable.backpressureStrategy({
+            capacity: 1,
+            backpressureStrategy: DropOldestBackpressureStrategy,
+        }), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([9]));
     }
     catch (e_3) {
         env_3.error = e_3;
@@ -163,7 +172,13 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
     finally {
         __disposeResources(env_3);
     }
-}), test("it passes through notifications", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.backpressureStrategy(1, DropLatestBackpressureStrategy), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), StatefulSynchronousComputationOperatorTests(ObservableTypes, Observable.backpressureStrategy(10, DropLatestBackpressureStrategy))), describe("catchError", test("when the error handler throws an error from a delayed source", () => {
+}), test("it passes through notifications", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.backpressureStrategy({
+    capacity: 1,
+    backpressureStrategy: DropLatestBackpressureStrategy,
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), StatefulSynchronousComputationOperatorTests(ObservableTypes, Observable.backpressureStrategy({
+    capacity: 10,
+    backpressureStrategy: DropLatestBackpressureStrategy,
+}))), describe("catchError", test("when the error handler throws an error from a delayed source", () => {
     const e1 = "e1";
     const e2 = "e2";
     let result = none;
@@ -315,15 +330,16 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_8);
     }
-}), ComputationTest.isPureDeferred(Observable.defer(Subject.create))), describe("dispatchTo", ComputationOperatorWithSideEffectsTests(ObservableTypes, Observable.dispatchTo(Streamable.identity()[StreamableLike_stream](VirtualTimeScheduler.create()))), test("when backpressure exception is thrown", () => {
+}), ComputationTest.isPureDeferred(Observable.defer(Subject.create))), describe("empty", test("with delay", () => {
     const env_9 = { stack: [], error: void 0, hasError: false };
     try {
+        let disposedTime = -1;
         const vts = __addDisposableResource(env_9, VirtualTimeScheduler.create(), false);
-        const stream = Streamable.identity()[StreamableLike_stream](vts, {
-            backpressureStrategy: ThrowBackpressureStrategy,
-            capacity: 1,
-        });
-        expectToThrow(pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Observable.run()));
+        pipe(Observable.empty({ delay: 5 }), Observable.subscribe(vts), DisposableContainer.onComplete(() => {
+            disposedTime = vts[SchedulerLike_now];
+        }));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(disposedTime, expectEquals(5));
     }
     catch (e_9) {
         env_9.error = e_9;
@@ -332,16 +348,15 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_9);
     }
-}), test("when completed successfully", () => {
+})), describe("enqueue", test("when backpressure exception is thrown", () => {
     const env_10 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_10, VirtualTimeScheduler.create(), false);
         const stream = Streamable.identity()[StreamableLike_stream](vts, {
-            backpressureStrategy: OverflowBackpressureStrategy,
+            backpressureStrategy: ThrowBackpressureStrategy,
             capacity: 1,
         });
-        pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Observable.toReadonlyArray());
-        pipe(stream[QueueableLike_isCompleted], expectTrue("expected stream to be completed"));
+        expectToThrow(pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.enqueue(stream), Observable.run()));
     }
     catch (e_10) {
         env_10.error = e_10;
@@ -350,7 +365,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_10);
     }
-}), test("when completed successfully from delayed source", () => {
+}), test("when completed successfully", () => {
     const env_11 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_11, VirtualTimeScheduler.create(), false);
@@ -358,7 +373,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             backpressureStrategy: OverflowBackpressureStrategy,
             capacity: 1,
         });
-        pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray({ delay: 1 }), Observable.dispatchTo(stream), Observable.toReadonlyArray());
+        pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.enqueue(stream), Observable.toReadonlyArray());
         pipe(stream[QueueableLike_isCompleted], expectTrue("expected stream to be completed"));
     }
     catch (e_11) {
@@ -368,16 +383,16 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_11);
     }
-})), describe("empty", test("with delay", () => {
+}), test("when completed successfully from delayed source", () => {
     const env_12 = { stack: [], error: void 0, hasError: false };
     try {
-        let disposedTime = -1;
         const vts = __addDisposableResource(env_12, VirtualTimeScheduler.create(), false);
-        pipe(Observable.empty({ delay: 5 }), Observable.subscribe(vts), DisposableContainer.onComplete(() => {
-            disposedTime = vts[SchedulerLike_now];
-        }));
-        vts[VirtualTimeSchedulerLike_run]();
-        pipe(disposedTime, expectEquals(5));
+        const stream = Streamable.identity()[StreamableLike_stream](vts, {
+            backpressureStrategy: OverflowBackpressureStrategy,
+            capacity: 1,
+        });
+        pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray({ delay: 1 }), Observable.enqueue(stream), Observable.toReadonlyArray());
+        pipe(stream[QueueableLike_isCompleted], expectTrue("expected stream to be completed"));
     }
     catch (e_12) {
         env_12.error = e_12;
@@ -386,7 +401,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_12);
     }
-})), describe("enqueue", ComputationOperatorWithSideEffectsTests(ObservableTypes, Observable.enqueue(Queue.create()))), describe("exhaust", test("when the initial observable never disposes", pipeLazy([
+}), ComputationOperatorWithSideEffectsTests(ObservableTypes, Observable.enqueue(Queue.create()))), describe("exhaust", test("when the initial observable never disposes", pipeLazy([
     pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
     pipe([4, 5, 6], Observable.fromReadonlyArray()),
     pipe([7, 8, 9], Observable.fromReadonlyArray()),

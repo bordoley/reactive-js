@@ -10,7 +10,7 @@ import * as Disposable from "../utils/Disposable.js";
 import { QueueableLike_enqueue, } from "../utils.js";
 import * as AnimationFrameScheduler from "./AnimationFrameScheduler.js";
 const returnsNone = returns(none);
-const makeRefSetter = (dispatcher) => ele => dispatcher[QueueableLike_enqueue](returns(ele));
+const makeRefSetter = (queue) => ele => queue[QueueableLike_enqueue](returns(ele));
 const animateHtmlElement = (element, animation, selector) => 
 // Just in case a caller sets it to null instead of undefined
 element != nullObject

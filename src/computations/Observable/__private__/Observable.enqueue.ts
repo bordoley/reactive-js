@@ -7,6 +7,7 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { bindMethod, none, partial, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
@@ -43,7 +44,9 @@ const Observer_createEnqueueObserver: <T>(
       queue: QueueableLike<T>,
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, delegate);
-      init(LiftedObserverMixin<T>(), this, delegate);
+      init(LiftedObserverMixin<T>(), this, delegate, none);
+
+      pipe(this, Disposable.addTo(delegate));
 
       this[EnqueueObserver_queue] = queue;
 

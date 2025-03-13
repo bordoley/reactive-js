@@ -32,7 +32,6 @@ import {
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Queue from "../../../utils/Queue.js";
-import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
@@ -138,8 +137,7 @@ const createMergeAllObserverOperator: <T>(options?: {
   const createMergeAllObserver = mixInstanceFactory(
     include(
       DisposableMixin,
-      DelegatingObserverMixin<DeferredObservableWithSideEffectsLike<T>>(),
-      LiftedObserverMixin(),
+      LiftedObserverMixin<DeferredObservableWithSideEffectsLike<T>>(),
     ),
     function MergeAllObserver(
       this: Pick<
@@ -153,7 +151,9 @@ const createMergeAllObserverOperator: <T>(options?: {
       concurrency: number,
     ): ObserverLike<ObservableLike<T>> {
       init(DisposableMixin, this);
-      init(DelegatingObserverMixin<ObservableLike<T>, T>(), this, delegate);
+      init(LiftedObserverMixin<ObservableLike<T>, T>(), this, delegate, none);
+
+      pipe(this, Disposable.addTo(delegate));
 
       this[MergeAllObserver_observablesQueue] = Queue.create({
         capacity,

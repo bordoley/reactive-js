@@ -5,6 +5,7 @@ import {
   props,
   proto,
 } from "../../../__internal__/mixins.js";
+import { none } from "../../../functions.js";
 import { ObserverLike, QueueableLike_enqueue } from "../../../utils.js";
 import DisposableMixin from "../../__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
@@ -22,7 +23,7 @@ const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
         delegate: ObserverLike<T>,
       ): ObserverLike<T> {
         init(DisposableMixin, this);
-        init(LiftedObserverMixin<T>(), this, delegate);
+        init(LiftedObserverMixin<T>(), this, delegate, none);
 
         return this;
       },

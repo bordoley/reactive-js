@@ -9,11 +9,9 @@ import { clampPositiveInteger, clampPositiveNonZeroInteger, } from "../../../mat
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Queue from "../../../utils/Queue.js";
-import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
+import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_enqueue, QueueableLike_isReady, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -47,10 +45,10 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
             this[LiftedObserverLike_delegate][DisposableLike_dispose]();
         }
     }
-    const createMergeAllObserver = mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()), function MergeAllObserver(delegate, capacity, backpressureStrategy, concurrency) {
+    const createMergeAllObserver = mixInstanceFactory(include(DisposableMixin, LiftedObserverMixin()), function MergeAllObserver(delegate, capacity, backpressureStrategy, concurrency) {
         init(DisposableMixin, this);
-        init(DelegatingObserverMixin(), this, delegate);
-        init(LiftedObserverMixin(), this, delegate);
+        init(LiftedObserverMixin(), this, delegate, none);
+        pipe(this, Disposable.addTo(delegate));
         this[MergeAllObserver_observablesQueue] = Queue.create({
             capacity,
             backpressureStrategy,
@@ -64,10 +62,11 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         [MergeAllObserver_concurrency]: 0,
         [MergeAllObserver_observablesQueue]: none,
     }), proto({
-        [ObserverMixinBaseLike_notify](next) {
+        [LiftedObserverLike_notify](next) {
+            const delegate = this[LiftedObserverLike_delegate];
             return this[MergeAllObserver_activeCount] <
                 this[MergeAllObserver_concurrency]
-                ? (subscribeToObservable(this, next), true)
+                ? (subscribeToObservable(this, next), delegate[QueueableLike_isReady])
                 : this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
         },
     }));

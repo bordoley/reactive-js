@@ -28,10 +28,10 @@ export const create = /*@__PURE__*/ (() => {
         },
     });
 })();
-export const dispatchTo = (dispatcher) => (src) => EventSource.create((listener) => {
-    pipe(dispatcher[QueueableLike_onReady], EventSource.addEventHandler(bindMethod(src, PauseableLike_resume)), Disposable.addTo(listener));
+export const enqueue = (queue) => (src) => EventSource.create((listener) => {
+    pipe(queue[QueueableLike_onReady], EventSource.addEventHandler(bindMethod(src, PauseableLike_resume)), Disposable.addTo(listener));
     pipe(src, EventSource.addEventHandler(v => {
-        if (!dispatcher[QueueableLike_enqueue](v)) {
+        if (!queue[QueueableLike_enqueue](v)) {
             src[PauseableLike_pause]();
         }
     }), Disposable.addTo(listener));
