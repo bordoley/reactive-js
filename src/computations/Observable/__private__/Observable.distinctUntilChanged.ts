@@ -21,7 +21,6 @@ import LiftedObserverMixin, {
 import {
   ObserverLike,
   QueueableLike_enqueue,
-  QueueableLike_isReady,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -80,14 +79,11 @@ const createDistinctUntilChangedObserver: <T>(
             next,
           );
 
-        return (
-          (shouldEmit &&
-            ((this[DistinctUntilChangedObserver_prev] = next),
-            (this[DistinctUntilChangedObserver_hasValue] = true),
-            delegate?.[LiftedObserverLike_notify]?.(next) ??
-              delegate[QueueableLike_enqueue](next))) ||
-          delegate[QueueableLike_isReady]
-        );
+        if (shouldEmit) {
+          this[DistinctUntilChangedObserver_prev] = next;
+          this[DistinctUntilChangedObserver_hasValue] = true;
+          delegate[QueueableLike_enqueue](next);
+        }
       },
     }),
   ))();

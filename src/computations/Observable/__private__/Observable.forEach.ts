@@ -52,10 +52,7 @@ const createForEachObserver: <T>(
 
         this[ForEachObserver_effect](next);
 
-        return (
-          delegate?.[LiftedObserverLike_notify]?.(next) ??
-          delegate[QueueableLike_enqueue](next)
-        );
+        delegate[QueueableLike_enqueue](next);
       },
     },
   );

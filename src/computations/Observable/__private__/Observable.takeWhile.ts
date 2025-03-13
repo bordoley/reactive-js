@@ -16,7 +16,6 @@ import {
   ObserverLike,
   QueueableLike_complete,
   QueueableLike_enqueue,
-  QueueableLike_isReady,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -64,17 +63,13 @@ const createTakeWhileObserver: <T>(
         const satisfiesPredicate = this[TakeWhileObserver_predicate](next);
         const isInclusive = this[TakeWhileObserver_inclusive];
 
-        const result =
-          ((satisfiesPredicate || isInclusive) &&
-            (delegate?.[LiftedObserverLike_notify]?.(next) ??
-              delegate[QueueableLike_enqueue](next))) ||
-          delegate[QueueableLike_isReady];
+        if (satisfiesPredicate || isInclusive) {
+          delegate[QueueableLike_enqueue](next);
+        }
 
         if (!satisfiesPredicate) {
           this[QueueableLike_complete]();
         }
-
-        return result;
       },
     }),
   ))();

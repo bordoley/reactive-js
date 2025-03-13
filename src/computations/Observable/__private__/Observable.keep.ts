@@ -15,7 +15,6 @@ import LiftedObserverMixin, {
 import {
   ObserverLike,
   QueueableLike_enqueue,
-  QueueableLike_isReady,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPure from "./Observable.liftPure.js";
@@ -56,12 +55,9 @@ const createKeepObserver: <T>(
         const shouldNotify = this[KeepObserver_predicate](next);
         const delegate = this[LiftedObserverLike_delegate];
 
-        return (
-          (shouldNotify &&
-            (delegate?.[LiftedObserverLike_notify]?.(next) ??
-              delegate[QueueableLike_enqueue](next))) ||
-          delegate[QueueableLike_isReady]
-        );
+        if (shouldNotify) {
+          delegate[QueueableLike_enqueue](next);
+        }
       },
     }),
   ))();

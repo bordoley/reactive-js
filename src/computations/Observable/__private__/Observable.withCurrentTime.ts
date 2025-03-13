@@ -62,10 +62,8 @@ const createWithCurrentTimeObserver: <TA, TB>(
           currentTime,
           next,
         );
-        return (
-          delegate?.[LiftedObserverLike_notify]?.(mapped) ??
-          delegate[QueueableLike_enqueue](mapped)
-        );
+
+        delegate[QueueableLike_enqueue](mapped);
       },
     }),
   );

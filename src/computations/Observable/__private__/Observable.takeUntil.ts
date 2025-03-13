@@ -76,11 +76,7 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = /*@__PURE__*/ (<
         next: T,
       ) {
         const delegate = this[LiftedObserverLike_delegate];
-
-        return (
-          delegate?.[LiftedObserverLike_notify]?.(next) ??
-          delegate[QueueableLike_enqueue](next)
-        );
+        delegate[QueueableLike_enqueue](next);
       },
     }),
   );

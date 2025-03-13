@@ -65,10 +65,9 @@ export interface LiftedObserverLike<
   TB = TA,
   TDelegateObserver extends ObserverLike<TB> = ObserverLike<TB>,
 > extends ObserverLike<TA> {
-  readonly [LiftedObserverLike_delegate]: TDelegateObserver &
-    Partial<Pick<LiftedObserverLike<TB>, typeof LiftedObserverLike_notify>>;
+  readonly [LiftedObserverLike_delegate]: TDelegateObserver;
 
-  [LiftedObserverLike_notify](next: TA): boolean;
+  [LiftedObserverLike_notify](next: TA): void;
   [LiftedObserverLike_complete](): void;
 }
 
@@ -116,11 +115,15 @@ const LiftedObserverMixin: <
   ) => {
     if (observer[SerialDisposableLike_current][DisposableLike_isDisposed]) {
       const continuation = (ctx: ContinuationContextLike) => {
-        while (observer[QueueLike_count] > 0) {
-          const next = observer[QueueLike_dequeue]() as TA;
-          if (!observer[LiftedObserverLike_notify](next)) {
+        const delegate = observer[LiftedObserverLike_delegate];
+        while (observer[QueueLike_count] > 0 && !observer[DisposableLike_isDisposed]) {
+          if (!delegate[QueueableLike_isReady]) {
             observer[SchedulerLike_requestYield]();
+            ctx[ContinuationContextLike_yield]();
           }
+
+          const next = observer[QueueLike_dequeue]() as TA;
+          observer[LiftedObserverLike_notify](next);
 
           if (observer[QueueLike_count] > 0) {
             ctx[ContinuationContextLike_yield]();
@@ -276,16 +279,22 @@ const LiftedObserverMixin: <
 
           const shouldIgnore =
             this[QueueableLike_isCompleted] || this[DisposableLike_isDisposed];
-          const shouldNotify = inSchedulerContinuation && !shouldIgnore;
-          const shouldEnqueue = !inSchedulerContinuation && !shouldIgnore;
 
-          const result =
-            (shouldNotify && this[LiftedObserverLike_notify](next)) ||
-            (shouldEnqueue &&
-              (scheduleDrainQueue(this),
-              call(queueProtoype[QueueableLike_enqueue], this, next)));
+          const delegate = this[LiftedObserverLike_delegate];
+          const isDelegateReady = delegate[QueueableLike_isReady];
+          const count = this[QueueLike_count];
 
-          return result && this[QueueableLike_isReady];
+          const shouldNotify =
+            inSchedulerContinuation && !shouldIgnore && isDelegateReady && count == 0 ;
+       
+          if (shouldNotify) {
+            this[LiftedObserverLike_notify](next);
+          } else if (!shouldIgnore) {
+            scheduleDrainQueue(this);
+            call(queueProtoype[QueueableLike_enqueue], this, next);
+          }
+
+          return this[QueueableLike_isReady];
         },
 
         [QueueableLike_complete](
@@ -297,8 +306,6 @@ const LiftedObserverMixin: <
         ) {
           const isCompleted = this[QueueableLike_isCompleted];
           const isDisposed = this[DisposableLike_isDisposed];
-          const inSchedulerContinuation = this[SchedulerLike_inContinuation];
-          const count = this[QueueLike_count];
 
           call(queueProtoype[QueueableLike_complete], this);
 
@@ -306,11 +313,7 @@ const LiftedObserverMixin: <
             return;
           }
 
-          if (inSchedulerContinuation && count === 0) {
-            this[LiftedObserverLike_complete]();
-          } else {
-            scheduleDrainQueue(this);
-          }
+          scheduleDrainQueue(this);
         },
 
         [LiftedObserverLike_complete](this: TProperties) {

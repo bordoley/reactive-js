@@ -14,7 +14,6 @@ import LiftedObserverMixin, {
 import {
   ObserverLike,
   QueueableLike_enqueue,
-  QueueableLike_isReady,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -57,14 +56,11 @@ const createPairwiseObserver: <T>(
         this[PairwiseObserver_hasPrev] = true;
         this[PairwiseObserver_prev] = next;
 
-        let pair = none as unknown as Tuple2<T, T>;
-        return (
-          (hasPrev &&
-            ((pair = tuple(prev, next)),
-            delegate?.[LiftedObserverLike_notify]?.(pair) ??
-              delegate[QueueableLike_enqueue](pair))) ||
-          delegate[QueueableLike_isReady]
-        );
+        if (hasPrev) {
+          const pair = tuple(prev, next);
+
+          delegate[QueueableLike_enqueue](pair);
+        }
       },
     },
   ))();
