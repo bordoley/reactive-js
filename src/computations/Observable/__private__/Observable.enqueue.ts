@@ -13,6 +13,7 @@ import LiftedObserverMixin, {
   LiftedObserverLike_complete,
   LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   ObserverLike,
@@ -57,13 +58,11 @@ const Observer_createEnqueueObserver: <T>(
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
-        const delegate = this[LiftedObserverLike_delegate];
-
         if (!this[EnqueueObserver_queue][QueueableLike_enqueue](next)) {
           this[SchedulerLike_requestYield]();
         }
 
-        delegate[QueueableLike_enqueue](next);
+        this[LiftedObserverLike_notifyDelegate](next);
       },
       [LiftedObserverLike_complete](
         this: TProperties & LiftedObserverLike<T, readonly T[]>,

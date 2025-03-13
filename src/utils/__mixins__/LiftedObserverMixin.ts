@@ -215,6 +215,9 @@ const LiftedObserverMixin: <
           ],
         );
 
+        // FIXME: We should add some inSchedulerContinuation checks
+        // for the case when the delegate is lifted and notified
+        // in dev
         this[LiftedObserverLike_notifyDelegate] = delegateIsLifted
           ? bindMethod(
               delegate as unknown as LiftedObserverLike<TB>,
@@ -304,8 +307,8 @@ const LiftedObserverMixin: <
           const inSchedulerContinuation = this[SchedulerLike_inContinuation];
           const isCompleted = this[QueueableLike_isCompleted];
 
+          // FIXME: Put this in a dev check
           if (isCompleted) {
-            debugger
             raise("observer is completed");
           }
 

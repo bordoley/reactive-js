@@ -32,7 +32,6 @@ import {
   QueueableLike_complete,
   QueueableLike_enqueue,
   QueueableLike_isCompleted,
-  QueueableLike_isReady,
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../utils.js";
@@ -152,8 +151,6 @@ const createThrottleObserver: <T>(
         } else if (durationSubscriptionDisposableIsDisposed) {
           setupDurationSubscription(this, next);
         }
-
-        return this[LiftedObserverLike_delegate][QueueableLike_isReady];
       },
 
       [LiftedObserverLike_complete](this: TProperties & LiftedObserverLike<T>) {

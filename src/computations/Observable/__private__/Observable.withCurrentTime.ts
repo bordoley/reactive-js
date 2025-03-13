@@ -10,12 +10,11 @@ import { Function2, none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   ObserverLike,
-  QueueableLike_enqueue,
   SchedulerLike_now,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -56,14 +55,13 @@ const createWithCurrentTimeObserver: <TA, TB>(
         this: TProperties & LiftedObserverLike<TA, TB>,
         next: TA,
       ) {
-        const delegate = this[LiftedObserverLike_delegate];
         const currentTime = this[SchedulerLike_now];
         const mapped = this[WithCurrentTimeObserver_selector](
           currentTime,
           next,
         );
 
-        delegate[QueueableLike_enqueue](mapped);
+       this[LiftedObserverLike_notifyDelegate](mapped); 
       },
     }),
   );

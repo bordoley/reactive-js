@@ -7,19 +7,18 @@ import {
 } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   ObserverLike,
   QueueableLike_complete,
-  QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const TakeFirstObserver_count = Symbol("TakeFirstObserver_count");
 
@@ -58,12 +57,10 @@ const createTakeFirstObserver: <T>(
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
-        const delegate = this[LiftedObserverLike_delegate];
-
         this[TakeFirstObserver_count];
         this[TakeFirstObserver_count]--;
-
-        delegate[QueueableLike_enqueue](next);
+        
+        this[LiftedObserverLike_notifyDelegate](next);
 
         if (this[TakeFirstObserver_count] <= 0) {
           this[QueueableLike_complete]();

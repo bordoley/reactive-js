@@ -18,6 +18,7 @@ import LiftedObserverMixin, {
   LiftedObserverLike_complete,
   LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   ObserverLike,
@@ -69,7 +70,6 @@ const createBufferObserver: <T>(
         this: TProperties & LiftedObserverLike<T, readonly T[]>,
         next: T,
       ) {
-        const delegate = this[LiftedObserverLike_delegate];
         const buffer = this[BufferObserver_buffer];
         const count = this[BufferObserver_count];
 
@@ -79,7 +79,7 @@ const createBufferObserver: <T>(
 
         if (shouldEmit) {
           this[BufferObserver_buffer] = [];
-          delegate[QueueableLike_enqueue](buffer);
+          this[LiftedObserverLike_notifyDelegate](buffer);
         }
       },
       [LiftedObserverLike_complete](

@@ -20,12 +20,12 @@ import LiftedObserverMixin, {
   LiftedObserverLike_complete,
   LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   DisposableLike_dispose,
   ObserverLike,
   QueueableLike_complete,
-  QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -66,11 +66,8 @@ const createThrowIfEmptyObserver: <T>(
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
-        const delegate = this[LiftedObserverLike_delegate];
-
         this[ThrowIfEmptyObserver_isEmpty] = false;
-
-        delegate[QueueableLike_enqueue](next);
+        this[LiftedObserverLike_notifyDelegate](next);  
       },
       [LiftedObserverLike_complete](this: TProperties & LiftedObserverLike<T>) {
         const factory = this[ThrowIfEmptyObserver_factory];

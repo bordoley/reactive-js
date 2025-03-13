@@ -19,10 +19,7 @@ import LiftedObserverMixin, {
   LiftedObserverLike_notify,
   LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import {
-  DisposableLike_dispose,
-  ObserverLike,
-} from "../../../utils.js";
+import { DisposableLike_dispose, ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
