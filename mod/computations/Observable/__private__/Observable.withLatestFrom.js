@@ -8,7 +8,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { DisposableLike_isDisposed, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isReady, } from "../../../utils.js";
+import { QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, QueueableLike_isReady, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -28,7 +28,6 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function WithLatestFromObserver(delegate, other, selector) {
         init(DelegatingDisposableMixin, this, delegate);
         init(LiftedObserverMixin(), this, delegate, none);
-        pipe(this, Disposable.addTo(delegate));
         this[WithLatestFromObserver_selector] = selector;
         pipe(other, Observable_forEach(bind(onOtherNotify, this)), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(this), DisposableContainer.onComplete(bind(onWithLatestFromObserverOtherSubscriptionComplete, this)));
         return this;
@@ -39,7 +38,7 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
     }), proto({
         [LiftedObserverLike_notify](next) {
             const delegate = this[LiftedObserverLike_delegate];
-            const shouldEmit = !this[DisposableLike_isDisposed] &&
+            const shouldEmit = !this[QueueableLike_isCompleted] &&
                 this[WithLatestFromObserver_hasLatest];
             let v = none;
             return ((shouldEmit &&

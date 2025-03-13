@@ -1,8 +1,7 @@
 /// <reference types="./Observable.pairwise.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { none, pipe, tuple } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import { none, tuple } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { QueueableLike_enqueue, QueueableLike_isReady, } from "../../../utils.js";
@@ -12,7 +11,6 @@ const PairwiseObserver_prev = Symbol("PairwiseObserver_prev");
 const createPairwiseObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function PairwiseObserver(delegate) {
     init(DelegatingDisposableMixin, this, delegate);
     init(LiftedObserverMixin(), this, delegate, none);
-    pipe(this, Disposable.addTo(delegate));
     return this;
 }, props({
     [PairwiseObserver_prev]: none,

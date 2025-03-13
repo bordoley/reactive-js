@@ -2,7 +2,6 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe, strictEquality, } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { QueueableLike_enqueue, QueueableLike_isReady, } from "../../../utils.js";
@@ -13,7 +12,6 @@ const DistinctUntilChangedObserver_hasValue = Symbol("DistinctUntilChangedObserv
 const createDistinctUntilChangedObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function DistinctUntilChangedObserver(delegate, equality) {
     init(DelegatingDisposableMixin, this, delegate);
     init(LiftedObserverMixin(), this, delegate, none);
-    pipe(this, Disposable.addTo(delegate));
     this[DistinctUntilChangedObserver_equality] = equality;
     return this;
 }, props({

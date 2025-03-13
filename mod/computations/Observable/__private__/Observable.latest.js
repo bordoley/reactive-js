@@ -6,10 +6,8 @@ import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as Computation from "../../../computations/Computation.js";
 import { ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike_observe, } from "../../../computations.js";
 import { none, pick, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 const zipMode = 2;
@@ -18,22 +16,13 @@ const Observable_latest = /*@__PURE__*/ (() => {
     const LatestCtx_delegate = Symbol("LatestCtx_delegate");
     const LatestCtx_mode = Symbol("LatestCtx_mode");
     const LatestCtx_observers = Symbol("LatestCtx_observers");
-    function onLatestObserverCompleted() {
-        const ctx = this[LatestObserver_ctx];
-        ctx[LatestCtx_completedCount]++;
-        if (ctx[LatestCtx_completedCount] === ctx[LatestCtx_observers][Array_length]) {
-            ctx[LatestCtx_delegate][QueueableLike_complete]();
-        }
-    }
     const LatestObserver_ctx = Symbol("LatestObserver_ctx");
     const LatestObserver_latest = Symbol("LatestObserver_latest");
     const LatestObserver_ready = Symbol("LatestObserver_ready");
-    const createLatestObserver = mixInstanceFactory(include(DisposableMixin, LiftedObserverMixin()), function LatestObserver(ctx, delegate) {
-        init(DisposableMixin, this);
+    const createLatestObserver = mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function LatestObserver(ctx, delegate) {
+        init(DelegatingDisposableMixin, this, delegate);
         init(LiftedObserverMixin(), this, delegate, none);
-        pipe(this, Disposable.addTo(delegate));
         this[LatestObserver_ctx] = ctx;
-        pipe(this, DisposableContainer.onComplete(onLatestObserverCompleted));
         return this;
     }, props({
         [LatestObserver_ready]: false,
@@ -59,6 +48,14 @@ const Observable_latest = /*@__PURE__*/ (() => {
                 }
             }
             return result;
+        },
+        [LiftedObserverLike_complete]() {
+            const ctx = this[LatestObserver_ctx];
+            ctx[LatestCtx_completedCount]++;
+            if (ctx[LatestCtx_completedCount] ===
+                ctx[LatestCtx_observers][Array_length]) {
+                ctx[LatestCtx_delegate][QueueableLike_complete]();
+            }
         },
     }));
     return (observables, mode) => {

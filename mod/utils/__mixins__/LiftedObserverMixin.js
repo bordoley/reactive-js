@@ -2,13 +2,14 @@
 
 import { getPrototype, include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { bind, bindMethod, call, none, pipe, returns, } from "../../functions.js";
-import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, QueueableLike_isReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, } from "../../utils.js";
+import { ContinuationContextLike_yield, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, QueueableLike_isReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import QueueMixin from "./QueueMixin.js";
 import SerialDisposableMixin from "./SerialDisposableMixin.js";
 export const LiftedObserverLike_delegate = Symbol("LiftedObserverLike_delegate");
 export const LiftedObserverLike_notify = Symbol("LiftedObserverLike_notify");
+export const LiftedObserverLike_complete = Symbol("LiftedObserverLike_complete");
 const LiftedObserverMixin = /*@__PURE__*/ (() => {
     const LiftedObserverMixin_scheduler = Symbol("LiftedObserverMixin_scheduler");
     const LiftedObserverMixin_schedulerCallback = Symbol("LiftedObserverMixin_schedulerCallback");
@@ -25,7 +26,7 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
                     }
                 }
                 if (observer[QueueableLike_isCompleted]) {
-                    observer[DisposableLike_dispose]();
+                    observer[LiftedObserverLike_complete]();
                 }
             };
             observer[SerialDisposableLike_current] =
@@ -92,13 +93,21 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
         [QueueableLike_complete]() {
             const isCompleted = this[QueueableLike_isCompleted];
             const isDisposed = this[DisposableLike_isDisposed];
+            const inSchedulerContinuation = this[SchedulerLike_inContinuation];
+            const count = this[QueueLike_count];
             call(queueProtoype[QueueableLike_complete], this);
-            if (!isCompleted && this[QueueLike_count] > 0 && !isDisposed) {
-                scheduleDrainQueue(this);
+            if (isCompleted || isDisposed) {
+                return;
+            }
+            if (inSchedulerContinuation && count === 0) {
+                this[LiftedObserverLike_complete]();
             }
             else {
-                this[DisposableLike_dispose]();
+                scheduleDrainQueue(this);
             }
+        },
+        [LiftedObserverLike_complete]() {
+            this[LiftedObserverLike_delegate][QueueableLike_complete]();
         },
     })));
 })();

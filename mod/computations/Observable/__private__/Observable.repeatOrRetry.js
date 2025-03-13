@@ -29,7 +29,7 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
             }
             else {
                 count++;
-                pipe(observable, Observable_forEach(bindMethod(delegate, QueueableLike_enqueue)), Observable_subscribeWithConfig(delegate, delegate), Disposable.addToContainer(delegate), DisposableContainer.onDisposed(doOnDispose));
+                pipe(observable, Observable_forEach(bindMethod(delegate, QueueableLike_enqueue)), Observable_subscribeWithConfig(delegate, delegate), DisposableContainer.onDisposed(doOnDispose));
             }
         };
         return pipe(Observer_createWithDelegate(delegate), Disposable.addToContainer(delegate), DisposableContainer.onDisposed(doOnDispose));

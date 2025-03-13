@@ -2,7 +2,6 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { QueueableLike_enqueue, SchedulerLike_now, } from "../../../utils.js";
@@ -12,7 +11,6 @@ const createWithCurrentTimeObserver = /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function WithCurrentTimeObserver(delegate, selector) {
         init(DelegatingDisposableMixin, this, delegate);
         init(LiftedObserverMixin(), this, delegate, none);
-        pipe(this, Disposable.addTo(delegate));
         this[WithCurrentTimeObserver_selector] = selector;
         return this;
     }, props({

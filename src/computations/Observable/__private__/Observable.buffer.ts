@@ -12,6 +12,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Optional, none, partial, pipe } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_complete,
@@ -26,7 +27,6 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const createBufferObserver: <T>(
   delegate: ObserverLike<readonly T[]>,

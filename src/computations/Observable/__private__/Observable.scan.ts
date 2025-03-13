@@ -13,6 +13,7 @@ import {
   partial,
   pipe,
 } from "../../../functions.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
@@ -25,7 +26,6 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const ScanObserver_acc = Symbol("ScanObserver_acc");
 const ScanObserver_reducer = Symbol("ScanObserver_reducer");

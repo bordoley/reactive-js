@@ -12,6 +12,7 @@ import {
   pipe,
   strictEquality,
 } from "../../../functions.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
@@ -24,7 +25,6 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const DistinctUntilChangedObserver_equality = Symbol(
   "DistinctUntilChangedObserver_equality",

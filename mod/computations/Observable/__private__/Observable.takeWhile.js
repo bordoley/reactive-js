@@ -2,7 +2,6 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isReady, } from "../../../utils.js";
@@ -12,7 +11,6 @@ const TakeWhileObserver_predicate = Symbol("TakeWhileObserver_predicate");
 const createTakeWhileObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function TakeWhileObserver(delegate, predicate, inclusive) {
     init(DelegatingDisposableMixin, this, delegate);
     init(LiftedObserverMixin(), this, delegate, none);
-    pipe(this, Disposable.addTo(delegate));
     this[TakeWhileObserver_predicate] = predicate;
     this[TakeWhileObserver_inclusive] = inclusive ?? false;
     return this;

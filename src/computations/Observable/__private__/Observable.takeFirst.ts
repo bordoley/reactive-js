@@ -7,20 +7,19 @@ import {
 } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
-  DisposableLike_dispose,
   ObserverLike,
   QueueableLike_complete,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const TakeFirstObserver_count = Symbol("TakeFirstObserver_count");
 

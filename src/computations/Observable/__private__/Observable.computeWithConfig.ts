@@ -511,12 +511,12 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
         if (hasError) {
           observer[DisposableLike_dispose](err);
           return;
-        } 
+        }
 
         if (shouldNotify) {
           observer[QueueableLike_enqueue](result as T);
-        } 
-        
+        }
+
         if (shouldComplete) {
           observer[QueueableLike_complete]();
         }

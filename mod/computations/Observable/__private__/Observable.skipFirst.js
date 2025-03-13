@@ -3,7 +3,6 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { clampPositiveInteger, max } from "../../../math.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { QueueableLike_enqueue, QueueableLike_isReady, } from "../../../utils.js";
@@ -12,7 +11,6 @@ const SkipFirstObserver_count = Symbol("SkipFirstObserver_count");
 const createSkipFirstObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function SkipFirstObserver(delegate, skipCount) {
     init(DelegatingDisposableMixin, this, delegate);
     init(LiftedObserverMixin(), this, delegate, none);
-    pipe(this, Disposable.addTo(delegate));
     this[SkipFirstObserver_count] = clampPositiveInteger(skipCount ?? 1);
     return this;
 }, props({

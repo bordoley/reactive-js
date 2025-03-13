@@ -2,7 +2,6 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
@@ -13,7 +12,6 @@ const createScanObserver = /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function ScanObserver(delegate, reducer, initialValue) {
         init(DelegatingDisposableMixin, this, delegate);
         init(LiftedObserverMixin(), this, delegate, none);
-        pipe(this, Disposable.addTo(delegate));
         this[ScanObserver_reducer] = reducer;
         try {
             this[ScanObserver_acc] = initialValue();

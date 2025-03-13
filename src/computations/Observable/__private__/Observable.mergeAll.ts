@@ -28,8 +28,10 @@ import {
   clampPositiveInteger,
   clampPositiveNonZeroInteger,
 } from "../../../math.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Queue from "../../../utils/Queue.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_complete,
@@ -50,13 +52,11 @@ import {
   SchedulerLike_requestYield,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, {
   ObservableLift_isStateless,
 } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const createMergeAllObserverOperator: <T>(options?: {
   readonly backpressureStrategy?: BackpressureStrategy;
@@ -97,10 +97,7 @@ const createMergeAllObserverOperator: <T>(options?: {
           delegate[SchedulerLike_requestYield]();
         }
       }),
-      Observable_subscribeWithConfig(
-        observer,
-        observer,
-      ),
+      Observable_subscribeWithConfig(observer, observer),
       Disposable.addTo(observer),
       DisposableContainer.onComplete(
         bind(onMergeAllObserverInnerObservableComplete, observer),
