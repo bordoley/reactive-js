@@ -153,6 +153,16 @@ const LiftedObserverMixin: <
 
   const queueProtoype = getPrototype(QueueMixin<TA>());
 
+  function notifyLiftedDelegate(this: TProperties, next: TB) {
+    (this[LiftedObserverLike_delegate] as unknown as LiftedObserverLike<TB>)[
+      LiftedObserverLike_notify
+    ](next);
+  }
+
+  function enqueueDelegate(this: TProperties, next: TB) {
+    this[LiftedObserverLike_delegate][QueueableLike_enqueue](next);
+  }
+
   return returns(
     mix<
       LiftedObserverLike<TA, TB, TDelegateObserver>,
@@ -219,11 +229,8 @@ const LiftedObserverMixin: <
         // for the case when the delegate is lifted and notified
         // in dev
         this[LiftedObserverLike_notifyDelegate] = delegateIsLifted
-          ? bindMethod(
-              delegate as unknown as LiftedObserverLike<TB>,
-              LiftedObserverLike_notify,
-            )
-          : bindMethod(delegate, QueueableLike_enqueue);
+          ? notifyLiftedDelegate
+          : enqueueDelegate;
 
         this[LiftedObserverLike_delegate] = delegate;
         this[LiftedObserverMixin_scheduler] =
