@@ -78,10 +78,7 @@ const createScanObserver: <T, TAcc>(
         );
         this[ScanObserver_acc] = nextAcc;
 
-        return (
-          delegate?.[LiftedObserverLike_notify]?.(nextAcc) ??
-          delegate[QueueableLike_enqueue](nextAcc)
-        );
+        delegate[QueueableLike_enqueue](nextAcc);
       },
     }),
   );

@@ -37,10 +37,7 @@ const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
         [LiftedObserverLike_notify](this: LiftedObserverLike<T>, next: T) {
           const delegate = this[LiftedObserverLike_delegate];
 
-          return (
-            delegate?.[LiftedObserverLike_notify]?.(next) ??
-            delegate[QueueableLike_enqueue](next)
-          );
+          delegate[QueueableLike_enqueue](next);
         },
         [LiftedObserverLike_complete](this: LiftedObserverLike<T>) {
           this[DisposableLike_dispose]();

@@ -45,11 +45,7 @@ const createBackpressureObserver: <T>(
     {
       [LiftedObserverLike_notify](this: LiftedObserverLike<T>, next: T) {
         const delegate = this[LiftedObserverLike_delegate];
-
-        return (
-          delegate?.[LiftedObserverLike_notify]?.(next) ??
-          delegate[QueueableLike_enqueue](next)
-        );
+        delegate[QueueableLike_enqueue](next);
       },
     },
   ))();

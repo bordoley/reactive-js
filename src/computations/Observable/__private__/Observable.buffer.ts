@@ -23,7 +23,6 @@ import {
   ObserverLike,
   QueueableLike_complete,
   QueueableLike_enqueue,
-  QueueableLike_isReady,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -78,13 +77,10 @@ const createBufferObserver: <T>(
 
         const shouldEmit = buffer[Array_length] === count;
 
-        return (
-          (shouldEmit &&
-            ((this[BufferObserver_buffer] = []),
-            delegate?.[LiftedObserverLike_notify]?.(buffer) ??
-              delegate[QueueableLike_enqueue](buffer))) ||
-          delegate[QueueableLike_isReady]
-        );
+        if (shouldEmit) {
+          this[BufferObserver_buffer] = [];
+          delegate[QueueableLike_enqueue](buffer);
+        }
       },
       [LiftedObserverLike_complete](
         this: TProperties & LiftedObserverLike<T, readonly T[]>,

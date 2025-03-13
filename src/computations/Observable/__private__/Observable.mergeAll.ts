@@ -89,11 +89,9 @@ const createMergeAllObserverOperator: <T>(options?: {
     pipe(
       nextObs,
       Observable_forEach<T>(v => {
-        const result =
-          delegate?.[LiftedObserverLike_notify]?.(v) ??
-          delegate[QueueableLike_enqueue](v);
-
-        if (!result) {
+        // FIXME: consider trying to wrap delegate in a delegate observe
+        // and subscribing with it directly.
+        if (!delegate[QueueableLike_enqueue](v)) {
           delegate[SchedulerLike_requestYield]();
         }
       }),

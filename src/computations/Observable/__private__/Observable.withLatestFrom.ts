@@ -36,7 +36,6 @@ import {
   QueueableLike_complete,
   QueueableLike_enqueue,
   QueueableLike_isCompleted,
-  QueueableLike_isReady,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -120,18 +119,13 @@ const createWithLatestFromObserver: <TA, TB, T>(
           !this[QueueableLike_isCompleted] &&
           this[WithLatestFromObserver_hasLatest];
 
-        let v = none as T;
-
-        return (
-          (shouldEmit &&
-            ((v = this[WithLatestFromObserver_selector](
-              next,
-              this[WithLatestFromObserver_otherLatest] as TB,
-            )),
-            delegate?.[LiftedObserverLike_notify]?.(v) ??
-              delegate[QueueableLike_enqueue](v))) ||
-          delegate[QueueableLike_isReady]
-        );
+        if (shouldEmit) {
+          const v = this[WithLatestFromObserver_selector](
+            next,
+            this[WithLatestFromObserver_otherLatest] as TB,
+          );
+          delegate[QueueableLike_enqueue](v);
+        }
       },
     }),
   );

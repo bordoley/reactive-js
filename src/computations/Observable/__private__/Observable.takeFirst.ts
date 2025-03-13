@@ -63,15 +63,11 @@ const createTakeFirstObserver: <T>(
         this[TakeFirstObserver_count];
         this[TakeFirstObserver_count]--;
 
-        const result =
-          delegate?.[LiftedObserverLike_notify]?.(next) ??
-          delegate[QueueableLike_enqueue](next);
+        delegate[QueueableLike_enqueue](next);
 
         if (this[TakeFirstObserver_count] <= 0) {
           this[QueueableLike_complete]();
         }
-
-        return result;
       },
     }),
   ))();
