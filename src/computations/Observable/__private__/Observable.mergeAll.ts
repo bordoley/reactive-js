@@ -37,11 +37,8 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
+  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
   BackpressureStrategy,
   DisposableLike_dispose,
@@ -145,7 +142,10 @@ const createMergeAllObserverOperator: <T>(options?: {
       LiftedObserverMixin(),
     ),
     function MergeAllObserver(
-      this: ObserverMixinBaseLike<DeferredObservableWithSideEffectsLike<T>> &
+      this: Pick<
+        LiftedObserverLike<DeferredObservableWithSideEffectsLike<T>>,
+        typeof LiftedObserverLike_notify
+      > &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
       capacity: number,
@@ -153,8 +153,7 @@ const createMergeAllObserverOperator: <T>(options?: {
       concurrency: number,
     ): ObserverLike<ObservableLike<T>> {
       init(DisposableMixin, this);
-      init(DelegatingObserverMixin(), this, delegate);
-      init(LiftedObserverMixin(), this, delegate);
+      init(DelegatingObserverMixin<ObservableLike<T>, T>(), this, delegate);
 
       this[MergeAllObserver_observablesQueue] = Queue.create({
         capacity,
@@ -174,7 +173,7 @@ const createMergeAllObserverOperator: <T>(options?: {
       [MergeAllObserver_observablesQueue]: none,
     }),
     proto({
-      [ObserverMixinBaseLike_notify](
+      [LiftedObserverLike_notify](
         this: TProperties &
           LiftedObserverLike<DeferredObservableWithSideEffectsLike<T>, T>,
         next: DeferredObservableWithSideEffectsLike<T>,

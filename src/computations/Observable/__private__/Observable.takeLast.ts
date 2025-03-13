@@ -22,11 +22,8 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
+  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
@@ -91,13 +88,13 @@ const createTakeLastObserver: <T>(
   return mixInstanceFactory(
     include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()),
     function TakeLastObserver(
-      this: ObserverMixinBaseLike<T> & TProperties,
+      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
+        TProperties,
       delegate: ObserverLike<T>,
       takeLastCount: number,
     ): ObserverLike<T> {
       init(DisposableMixin, this);
-      init(DelegatingObserverMixin(), this, delegate);
-      init(LiftedObserverMixin(), this, delegate);
+      init(DelegatingObserverMixin<T>(), this, delegate);
 
       this[TakeLastObserver_queue] = Queue.create({
         capacity: takeLastCount,
@@ -112,7 +109,7 @@ const createTakeLastObserver: <T>(
       [TakeLastObserver_queue]: none,
     }),
     proto({
-      [ObserverMixinBaseLike_notify](
+      [LiftedObserverLike_notify](
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {

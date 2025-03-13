@@ -23,11 +23,8 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
+  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -80,12 +77,15 @@ const createSwitchAllObserver: <T>(
       LiftedObserverMixin(),
     ),
     function SwitchAllObserver(
-      this: ObserverMixinBaseLike<ObservableLike<T>> & Mutable<TProperties>,
+      this: Pick<
+        LiftedObserverLike<ObservableLike<T>>,
+        typeof LiftedObserverLike_notify
+      > &
+        Mutable<TProperties>,
       delegate: ObserverLike<T>,
     ): ObserverLike<ObservableLike<T>> {
       init(DisposableMixin, this);
-      init(DelegatingObserverMixin(), this, delegate);
-      init(LiftedObserverMixin(), this, delegate);
+      init(DelegatingObserverMixin<ObservableLike<T>, T>(), this, delegate);
 
       this[SwitchAllObserver_currentRef] = pipe(
         SerialDisposable.create(),
@@ -100,7 +100,7 @@ const createSwitchAllObserver: <T>(
       [SwitchAllObserver_currentRef]: none,
     }),
     proto({
-      [ObserverMixinBaseLike_notify](
+      [LiftedObserverLike_notify](
         this: TProperties &
           LiftedObserverLike<ObservableLike<T>, T> &
           SerialDisposableLike,

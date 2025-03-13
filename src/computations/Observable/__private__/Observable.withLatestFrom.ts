@@ -27,11 +27,8 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
+  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin, {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
   DisposableLike,
   DisposableLike_isDisposed,
@@ -83,16 +80,16 @@ const createWithLatestFromObserver: <TA, TB, T>(
   }
 
   return mixInstanceFactory(
-    include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
+    include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function WithLatestFromObserver(
-      this: ObserverMixinBaseLike<TA> & TProperties,
+      this: Pick<LiftedObserverLike<TA>, typeof LiftedObserverLike_notify> &
+        TProperties,
       delegate: ObserverLike<T>,
       other: ObservableLike<TB>,
       selector: Function2<TA, TB, T>,
     ): ObserverLike<TA> {
       init(DelegatingDisposableMixin, this, delegate);
-      init(ObserverMixin(), this, delegate, delegate);
-      init(LiftedObserverMixin(), this, delegate);
+      init(LiftedObserverMixin<TA, T>(), this, delegate);
 
       this[WithLatestFromObserver_selector] = selector;
 
@@ -114,7 +111,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
       [WithLatestFromObserver_selector]: none,
     }),
     proto({
-      [ObserverMixinBaseLike_notify](
+      [LiftedObserverLike_notify](
         this: TProperties & LiftedObserverLike<TA, T>,
         next: TA,
       ) {
@@ -131,7 +128,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
               next,
               this[WithLatestFromObserver_otherLatest] as TB,
             )),
-            delegate?.[ObserverMixinBaseLike_notify]?.(v) ??
+            delegate?.[LiftedObserverLike_notify]?.(v) ??
               delegate[QueueableLike_enqueue](v))) ||
           delegate[QueueableLike_isReady]
         );

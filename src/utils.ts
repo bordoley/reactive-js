@@ -26,7 +26,9 @@ export interface DisposableContainerLike {
    *
    * @param teardown - The teardown function to add.
    */
-  [DisposableContainerLike_add](teardown: Method1<this, Optional<Error>>): void;
+  [DisposableContainerLike_add](
+    teardown: Method1<DisposableLike, Optional<Error>>,
+  ): void;
 }
 
 export const DisposableLike_dispose: typeof Symbol.dispose =

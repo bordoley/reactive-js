@@ -24,9 +24,9 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
+  LiftedObserverLike,
+  LiftedObserverLike_notify,
+} from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   DisposableLike_dispose,
   ObserverLike,
@@ -74,7 +74,8 @@ const Observable_latest = /*@__PURE__*/ (() => {
   const createLatestObserver = mixInstanceFactory(
     include(DisposableMixin, DelegatingObserverMixin()),
     function LatestObserver(
-      this: ObserverMixinBaseLike & Mutable<TProperties>,
+      this: Pick<LiftedObserverLike, typeof LiftedObserverLike_notify> &
+        Mutable<TProperties>,
       ctx: LatestCtx,
       delegate: ObserverLike,
     ): ObserverLike & TProperties {
@@ -93,7 +94,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
       [LatestObserver_ctx]: none,
     }),
     proto({
-      [ObserverMixinBaseLike_notify](
+      [LiftedObserverLike_notify](
         this: TProperties & ObserverLike,
         next: unknown,
       ) {

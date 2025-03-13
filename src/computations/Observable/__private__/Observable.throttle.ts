@@ -25,11 +25,8 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
+  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
   DisposableLike_isDisposed,
   ObserverLike,
@@ -127,14 +124,14 @@ const createThrottleObserver: <T>(
   return mixInstanceFactory(
     include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()),
     function ThrottleObserver(
-      this: ObserverMixinBaseLike<T> & Mutable<TProperties>,
+      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
+        Mutable<TProperties>,
       delegate: ObserverLike<T>,
       durationFunction: Function1<T, ObservableLike>,
       mode: Observable.ThrottleMode,
     ): ObserverLike<T> {
       init(DisposableMixin, this);
-      init(DelegatingObserverMixin(), this, delegate);
-      init(LiftedObserverMixin(), this, delegate);
+      init(DelegatingObserverMixin<T>(), this, delegate);
 
       this[ThrottleObserver_durationFunction] = durationFunction;
       this[ThrottleObserver_mode] = mode;
@@ -156,7 +153,7 @@ const createThrottleObserver: <T>(
       [ThrottleObserver_mode]: ThrottleIntervalMode,
     }),
     proto({
-      [ObserverMixinBaseLike_notify](
+      [LiftedObserverLike_notify](
         this: LiftedObserverLike<T> & TProperties,
         next: T,
       ) {

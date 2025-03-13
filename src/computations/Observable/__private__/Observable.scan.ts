@@ -17,11 +17,8 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
+  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin, {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
   DisposableLike_dispose,
   ObserverLike,
@@ -45,16 +42,16 @@ const createScanObserver: <T, TAcc>(
   initialValue: Factory<TAcc>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T, TAcc>() => {
   return mixInstanceFactory(
-    include(DelegatingDisposableMixin, ObserverMixin(), LiftedObserverMixin()),
+    include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function ScanObserver(
-      this: ObserverMixinBaseLike<T> & TProperties<T, TAcc>,
+      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
+        TProperties<T, TAcc>,
       delegate: ObserverLike<TAcc>,
       reducer: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, delegate);
-      init(ObserverMixin(), this, delegate, delegate);
-      init(LiftedObserverMixin(), this, delegate);
+      init(LiftedObserverMixin<T, TAcc>(), this, delegate);
 
       this[ScanObserver_reducer] = reducer;
 
@@ -71,7 +68,7 @@ const createScanObserver: <T, TAcc>(
       [ScanObserver_reducer]: none,
     }),
     proto({
-      [ObserverMixinBaseLike_notify](
+      [LiftedObserverLike_notify](
         this: TProperties<T, TAcc> & LiftedObserverLike<T, TAcc>,
         next: T,
       ) {
@@ -83,7 +80,7 @@ const createScanObserver: <T, TAcc>(
         this[ScanObserver_acc] = nextAcc;
 
         return (
-          delegate?.[ObserverMixinBaseLike_notify]?.(nextAcc) ??
+          delegate?.[LiftedObserverLike_notify]?.(nextAcc) ??
           delegate[QueueableLike_enqueue](nextAcc)
         );
       },

@@ -9,11 +9,8 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
+  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin, {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 import { ObserverLike, QueueableLike_enqueue } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
@@ -29,15 +26,16 @@ const createForEachObserver: <T>(
   }
 
   return mixInstanceFactory(
-    include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
+    include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function ForEachObserver(
-      this: TProperties & ObserverMixinBaseLike<T>,
+      this: TProperties &
+        Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify>,
       delegate: ObserverLike<T>,
       effect: SideEffect1<T>,
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, delegate);
-      init(ObserverMixin(), this, delegate, delegate);
-      init(LiftedObserverMixin(), this, delegate);
+      init(LiftedObserverMixin<T>(), this, delegate);
+
       this[ForEachObserver_effect] = effect;
 
       return this;
@@ -46,7 +44,7 @@ const createForEachObserver: <T>(
       [ForEachObserver_effect]: none,
     }),
     {
-      [ObserverMixinBaseLike_notify](
+      [LiftedObserverLike_notify](
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
@@ -55,7 +53,7 @@ const createForEachObserver: <T>(
         this[ForEachObserver_effect](next);
 
         return (
-          delegate?.[ObserverMixinBaseLike_notify]?.(next) ??
+          delegate?.[LiftedObserverLike_notify]?.(next) ??
           delegate[QueueableLike_enqueue](next)
         );
       },

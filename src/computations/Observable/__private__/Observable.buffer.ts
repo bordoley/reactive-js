@@ -18,11 +18,8 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
+  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin, {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
   ObserverLike,
   QueueableLike_complete,
@@ -32,43 +29,46 @@ import {
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
-const BufferObserver_buffer = Symbol("BufferObserver_buffer");
-const BufferObserver_count = Symbol("BufferingLike_count");
-
-interface TProps<T> {
-  [BufferObserver_buffer]: T[];
-  [BufferObserver_count]: number;
-}
-
-function onBufferObserverCompleted<T>(
-  this: TProps<T> & LiftedObserverLike<T, readonly T[]>,
-) {
-  const delegate = this[LiftedObserverLike_delegate];
-  const buffer = this[BufferObserver_buffer];
-  this[BufferObserver_buffer] = [];
-
-  if (buffer[Array_length] > 0) {
-    delegate[QueueableLike_enqueue](buffer);
-    delegate[QueueableLike_complete]();
-  } else {
-    delegate[QueueableLike_complete]();
-  }
-}
-
 const createBufferObserver: <T>(
   delegate: ObserverLike<readonly T[]>,
   count: Optional<number>,
-) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
-  mixInstanceFactory(
-    include(DisposableMixin, ObserverMixin(), LiftedObserverMixin()),
+) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
+  const BufferObserver_buffer = Symbol("BufferObserver_buffer");
+  const BufferObserver_count = Symbol("BufferingLike_count");
+
+  interface TProperties {
+    [BufferObserver_buffer]: T[];
+    [BufferObserver_count]: number;
+  }
+
+  function onBufferObserverCompleted(
+    this: TProperties & LiftedObserverLike<T, readonly T[]>,
+  ) {
+    const delegate = this[LiftedObserverLike_delegate];
+    const buffer = this[BufferObserver_buffer];
+    this[BufferObserver_buffer] = [];
+
+    if (buffer[Array_length] > 0) {
+      delegate[QueueableLike_enqueue](buffer);
+      delegate[QueueableLike_complete]();
+    } else {
+      delegate[QueueableLike_complete]();
+    }
+  }
+
+  return mixInstanceFactory(
+    include(DisposableMixin, LiftedObserverMixin()),
     function BufferObserver(
-      this: ObserverMixinBaseLike<T> & TProps<T>,
+      this: Pick<
+        LiftedObserverLike<T, readonly T[]>,
+        typeof LiftedObserverLike_notify
+      > &
+        TProperties,
       delegate: ObserverLike<readonly T[]>,
       count?: number,
     ): ObserverLike<T> {
       init(DisposableMixin, this);
-      init(ObserverMixin(), this, delegate, delegate);
-      init(LiftedObserverMixin(), this, delegate);
+      init(LiftedObserverMixin<T, readonly T[]>(), this, delegate);
 
       this[BufferObserver_count] = clampPositiveNonZeroInteger(
         count ?? MAX_SAFE_INTEGER,
@@ -83,13 +83,13 @@ const createBufferObserver: <T>(
 
       return this;
     },
-    props<TProps<T>>({
+    props<TProperties>({
       [BufferObserver_buffer]: none,
       [BufferObserver_count]: 0,
     }),
     proto({
-      [ObserverMixinBaseLike_notify](
-        this: TProps<T> & LiftedObserverLike<T, readonly T[]>,
+      [LiftedObserverLike_notify](
+        this: TProperties & LiftedObserverLike<T, readonly T[]>,
         next: T,
       ) {
         const delegate = this[LiftedObserverLike_delegate];
@@ -103,13 +103,14 @@ const createBufferObserver: <T>(
         return (
           (shouldEmit &&
             ((this[BufferObserver_buffer] = []),
-            delegate?.[ObserverMixinBaseLike_notify]?.(buffer) ??
+            delegate?.[LiftedObserverLike_notify]?.(buffer) ??
               delegate[QueueableLike_enqueue](buffer))) ||
           delegate[QueueableLike_isReady]
         );
       },
     }),
-  ))();
+  );
+})();
 
 const Observable_buffer: Observable.Signature["buffer"] = <T>(options?: {
   count?: number;

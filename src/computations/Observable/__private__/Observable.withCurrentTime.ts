@@ -11,11 +11,8 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
+  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import ObserverMixin, {
-  ObserverMixinBaseLike,
-  ObserverMixinBaseLike_notify,
-} from "../../../utils/__mixins__/ObserverMixin.js";
 import {
   ObserverLike,
   QueueableLike_enqueue,
@@ -38,15 +35,15 @@ const createWithCurrentTimeObserver: <TA, TB>(
   };
 
   return mixInstanceFactory(
-    include(ObserverMixin(), DelegatingDisposableMixin, LiftedObserverMixin()),
+    include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function WithCurrentTimeObserver(
-      this: ObserverMixinBaseLike<TA> & Mutable<TProperties>,
+      this: Pick<LiftedObserverLike<TA, TB>, typeof LiftedObserverLike_notify> &
+        Mutable<TProperties>,
       delegate: ObserverLike<TB>,
       selector: Function2<number, TA, TB>,
     ): ObserverLike<TA> {
       init(DelegatingDisposableMixin, this, delegate);
-      init(ObserverMixin(), this, delegate, delegate);
-      init(LiftedObserverMixin(), this, delegate);
+      init(LiftedObserverMixin<TA, TB>(), this, delegate);
 
       this[WithCurrentTimeObserver_selector] = selector;
 
@@ -56,7 +53,7 @@ const createWithCurrentTimeObserver: <TA, TB>(
       [WithCurrentTimeObserver_selector]: none,
     }),
     proto({
-      [ObserverMixinBaseLike_notify](
+      [LiftedObserverLike_notify](
         this: TProperties & LiftedObserverLike<TA, TB>,
         next: TA,
       ) {
@@ -67,7 +64,7 @@ const createWithCurrentTimeObserver: <TA, TB>(
           next,
         );
         return (
-          delegate?.[ObserverMixinBaseLike_notify]?.(mapped) ??
+          delegate?.[LiftedObserverLike_notify]?.(mapped) ??
           delegate[QueueableLike_enqueue](mapped)
         );
       },
