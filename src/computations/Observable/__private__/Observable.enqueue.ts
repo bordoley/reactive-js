@@ -7,6 +7,7 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_complete,
@@ -22,7 +23,6 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const Observer_createEnqueueObserver: <T>(
   delegate: ObserverLike<T>,

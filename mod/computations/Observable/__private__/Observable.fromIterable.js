@@ -4,7 +4,7 @@ import { Iterator_done, Iterator_next, Iterator_value, Symbol, } from "../../../
 import * as Computation from "../../../computations/Computation.js";
 import { error, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_complete, QueueableLike_enqueue, SchedulerLike_schedule, } from "../../../utils.js";
+import { ContinuationContextLike_yield, DisposableLike_dispose, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, SchedulerLike_schedule, } from "../../../utils.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
 import Observable_createSynchronousObservableWithSideEffects from "./Observable.createSynchronousObservableWithSideEffects.js";
 const Observable_fromIterable = ((options) => (iterable) => {
@@ -15,7 +15,7 @@ const Observable_fromIterable = ((options) => (iterable) => {
         const { delay = 0, delayStart = false } = options ?? {};
         const iterator = iterable[Symbol.iterator]();
         const continuation = (ctx) => {
-            while (!observer[DisposableLike_isDisposed]) {
+            while (!observer[QueueableLike_isCompleted]) {
                 let next = none;
                 try {
                     next = iterator[Iterator_next]();
@@ -23,6 +23,7 @@ const Observable_fromIterable = ((options) => (iterable) => {
                 catch (e) {
                     // Catch any errors thrown by the iterator
                     observer[DisposableLike_dispose](error(e));
+                    break;
                 }
                 if (isSome(next) && !next[Iterator_done]) {
                     observer[QueueableLike_enqueue](next[Iterator_value]);

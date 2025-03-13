@@ -1,11 +1,9 @@
 /// <reference types="./Observable.enqueue.d.ts" />
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
-import { bindMethod, none, partial, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import { none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { QueueableLike_complete, QueueableLike_enqueue, SchedulerLike_requestYield, } from "../../../utils.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 const Observer_createEnqueueObserver = /*@__PURE__*/ (() => {
@@ -13,9 +11,7 @@ const Observer_createEnqueueObserver = /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function EnqueueObserver(delegate, queue) {
         init(DelegatingDisposableMixin, this, delegate);
         init(LiftedObserverMixin(), this, delegate, none);
-        pipe(this, Disposable.addTo(delegate));
         this[EnqueueObserver_queue] = queue;
-        pipe(this, DisposableContainer.onComplete(bindMethod(queue, QueueableLike_complete)));
         return this;
     }, props({
         [EnqueueObserver_queue]: none,
@@ -27,6 +23,11 @@ const Observer_createEnqueueObserver = /*@__PURE__*/ (() => {
             }
             return (delegate?.[LiftedObserverLike_notify]?.(next) ??
                 delegate[QueueableLike_enqueue](next));
+        },
+        [LiftedObserverLike_complete]() {
+            // FIXME: maybe we shouldn't complete
+            this[EnqueueObserver_queue][QueueableLike_complete]();
+            this[LiftedObserverLike_delegate][QueueableLike_complete]();
         },
     }));
 })();

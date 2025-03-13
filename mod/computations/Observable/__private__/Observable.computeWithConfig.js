@@ -5,7 +5,7 @@ import { ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../.
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseIf, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, SchedulerLike_schedule, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_complete, QueueableLike_enqueue, SchedulerLike_schedule, } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -101,7 +101,7 @@ class ComputeContext {
             !effect[AwaitOrObserveEffect_subscription][DisposableLike_isDisposed]) >= 0;
         if (!hasOutstandingEffects &&
             this[ComputeContext_scheduledComputationSubscription][DisposableLike_isDisposed]) {
-            this[ComputeContext_observer][DisposableLike_dispose]();
+            this[ComputeContext_observer][QueueableLike_complete]();
         }
     };
     constructor(observer, runComputation, mode, config) {
@@ -245,12 +245,16 @@ const Observable_computeWithConfig = ((computation, config, { mode = BatchedComp
         const shouldNotify = !hasError &&
             !isAwaiting &&
             (combineLatestModeShouldNotify || mode === BatchedComputeMode);
-        const shouldDispose = !hasOutstandingEffects || hasError;
+        const shouldComplete = !hasOutstandingEffects;
+        if (hasError) {
+            observer[DisposableLike_dispose](err);
+            return;
+        }
         if (shouldNotify) {
             observer[QueueableLike_enqueue](result);
         }
-        if (shouldDispose) {
-            observer[DisposableLike_dispose](err);
+        if (shouldComplete) {
+            observer[QueueableLike_complete]();
         }
     };
     const ctx = newInstance(ComputeContext, observer, runComputation, mode, config);

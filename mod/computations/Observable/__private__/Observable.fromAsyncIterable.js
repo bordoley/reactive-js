@@ -3,7 +3,7 @@
 import { Iterator_done, Iterator_next, Iterator_value, } from "../../../__internal__/constants.js";
 import { error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_complete, QueueableLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, } from "../../../utils.js";
+import { DisposableLike_dispose, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, } from "../../../utils.js";
 import Observable_create from "./Observable.create.js";
 const Observable_fromAsyncIterable = () => (iterable) => Observable_create((observer) => {
     const iterator = iterable[Symbol.asyncIterator]();
@@ -14,7 +14,7 @@ const Observable_fromAsyncIterable = () => (iterable) => Observable_create((obse
         // unless we enter the loop.
         let done = true;
         try {
-            while (!observer[DisposableLike_isDisposed] &&
+            while (!observer[QueueableLike_isCompleted] &&
                 observer[SchedulerLike_now] - startTime < maxYieldInterval) {
                 done = false;
                 const next = await iterator[Iterator_next]();

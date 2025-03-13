@@ -6,7 +6,7 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { QueueableLike_enqueue, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-const createBackpressureObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(LiftedObserverMixin(), DelegatingDisposableMixin), function EnqueueObserver(delegate, options) {
+const createBackpressureObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function BackpressureObserver(delegate, options) {
     init(DelegatingDisposableMixin, this, delegate);
     init(LiftedObserverMixin(), this, delegate, options);
     return this;

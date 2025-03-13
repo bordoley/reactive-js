@@ -20,6 +20,7 @@ import {
   ObservableLike_observe,
 } from "../../../computations.js";
 import { none, pick, pipe } from "../../../functions.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_complete,
@@ -31,7 +32,6 @@ import {
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 type LatestMode = 1 | 2;
 const zipMode = 2;

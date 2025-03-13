@@ -3,13 +3,13 @@
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
 import { none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { ContinuationContextLike_yield, DisposableLike_isDisposed, QueueableLike_complete, QueueableLike_enqueue, SchedulerLike_schedule, } from "../../../utils.js";
+import { ContinuationContextLike_yield, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, SchedulerLike_schedule, } from "../../../utils.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
 const Observable_fromReadonlyArray = (options) => (arr) => Observable_createPureSynchronousObservable((observer) => {
     const { delay = 0, delayStart = false } = options ?? {};
     let [start, count] = parseArrayBounds(arr, options);
     const continuation = (ctx) => {
-        while (!observer[DisposableLike_isDisposed] && count !== 0) {
+        while (!observer[QueueableLike_isCompleted] && count !== 0) {
             const next = arr[start];
             observer[QueueableLike_enqueue](next);
             count > 0 ? (start++, count--) : (start--, count++);

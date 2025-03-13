@@ -12,11 +12,7 @@ import { bind, bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
-import {
-  DisposableLike_dispose,
-  ObserverLike,
-  QueueableLike_complete,
-} from "../../../utils.js";
+import { ObserverLike, QueueableLike_complete } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_empty from "./Observable.empty.js";
 
