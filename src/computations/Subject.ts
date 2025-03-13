@@ -22,6 +22,7 @@ import {
 import {
   Method,
   Optional,
+  call,
   error,
   isNone,
   isSome,
@@ -43,6 +44,7 @@ import {
   QueueLike,
   QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isCompleted,
 } from "../utils.js";
 import * as Iterable from "./Iterable.js";
 
@@ -163,6 +165,13 @@ export const create: <T>(options?: {
               : [];
 
         for (const observer of observers) {
+          if (observer[QueueableLike_isCompleted]) {
+            // be sure to remove completed observers
+            // ideally we would get notified when an observer
+            // is completed but this api does not yet exist.
+            call(this[Subject_onObserverDisposed], observer);
+            continue;
+          }
           try {
             observer[QueueableLike_enqueue](next);
           } catch (e) {
