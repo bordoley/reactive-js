@@ -12,11 +12,9 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Optional, none, partial, pipe } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
+  LiftedObserverLike_complete,
   LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
@@ -28,6 +26,7 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const createBufferObserver: <T>(
   delegate: ObserverLike<readonly T[]>,
@@ -41,45 +40,24 @@ const createBufferObserver: <T>(
     [BufferObserver_count]: number;
   }
 
-  function onBufferObserverCompleted(
-    this: TProperties & LiftedObserverLike<T, readonly T[]>,
-  ) {
-    const delegate = this[LiftedObserverLike_delegate];
-    const buffer = this[BufferObserver_buffer];
-    this[BufferObserver_buffer] = [];
-
-    if (buffer[Array_length] > 0) {
-      delegate[QueueableLike_enqueue](buffer);
-      delegate[QueueableLike_complete]();
-    } else {
-      delegate[QueueableLike_complete]();
-    }
-  }
-
   return mixInstanceFactory(
-    include(DisposableMixin, LiftedObserverMixin()),
+    include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function BufferObserver(
       this: Pick<
         LiftedObserverLike<T, readonly T[]>,
-        typeof LiftedObserverLike_notify
+        typeof LiftedObserverLike_notify | typeof LiftedObserverLike_complete
       > &
         TProperties,
       delegate: ObserverLike<readonly T[]>,
       count?: number,
     ): ObserverLike<T> {
-      init(DisposableMixin, this);
+      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T, readonly T[]>(), this, delegate, none);
 
       this[BufferObserver_count] = clampPositiveNonZeroInteger(
         count ?? MAX_SAFE_INTEGER,
       );
       this[BufferObserver_buffer] = [];
-
-      pipe(
-        this,
-        Disposable.addTo(delegate),
-        DisposableContainer.onComplete(onBufferObserverCompleted),
-      );
 
       return this;
     },
@@ -107,6 +85,20 @@ const createBufferObserver: <T>(
               delegate[QueueableLike_enqueue](buffer))) ||
           delegate[QueueableLike_isReady]
         );
+      },
+      [LiftedObserverLike_complete](
+        this: TProperties & LiftedObserverLike<T, readonly T[]>,
+      ) {
+        const delegate = this[LiftedObserverLike_delegate];
+        const buffer = this[BufferObserver_buffer];
+        this[BufferObserver_buffer] = [];
+
+        if (buffer[Array_length] > 0) {
+          delegate[QueueableLike_enqueue](buffer);
+          delegate[QueueableLike_complete]();
+        } else {
+          delegate[QueueableLike_complete]();
+        }
       },
     }),
   );

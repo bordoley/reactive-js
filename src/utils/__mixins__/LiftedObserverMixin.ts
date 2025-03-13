@@ -24,7 +24,6 @@ import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DisposableLike,
-  DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
   QueueLike,
@@ -57,6 +56,9 @@ export const LiftedObserverLike_delegate = Symbol(
 );
 
 export const LiftedObserverLike_notify = Symbol("LiftedObserverLike_notify");
+export const LiftedObserverLike_complete = Symbol(
+  "LiftedObserverLike_complete",
+);
 
 export interface LiftedObserverLike<
   TA = unknown,
@@ -64,9 +66,10 @@ export interface LiftedObserverLike<
   TDelegateObserver extends ObserverLike<TB> = ObserverLike<TB>,
 > extends ObserverLike<TA> {
   readonly [LiftedObserverLike_delegate]: TDelegateObserver &
-    Partial<LiftedObserverLike<TB>>;
+    Partial<Pick<LiftedObserverLike<TB>, typeof LiftedObserverLike_notify>>;
 
   [LiftedObserverLike_notify](next: TA): boolean;
+  [LiftedObserverLike_complete](): void;
 }
 
 const LiftedObserverMixin: <
@@ -82,7 +85,7 @@ const LiftedObserverMixin: <
   }>,
   Pick<
     LiftedObserverLike<TA, TB, TDelegateObserver>,
-    keyof DisposableLike | typeof LiftedObserverLike_notify
+    typeof LiftedObserverLike_notify | keyof DisposableLike
   >
 > = /*@__PURE__*/ (<
   TA,
@@ -125,7 +128,7 @@ const LiftedObserverMixin: <
         }
 
         if (observer[QueueableLike_isCompleted]) {
-          observer[DisposableLike_dispose]();
+          observer[LiftedObserverLike_complete]();
         }
       };
 
@@ -151,11 +154,14 @@ const LiftedObserverMixin: <
         | typeof QueueableLike_capacity
         | typeof SchedulerLike_inContinuation
         | typeof LiftedObserverLike_notify
+        | typeof LiftedObserverLike_complete
         | typeof LiftedObserverLike_delegate
       >,
       Pick<
         LiftedObserverLike<TA, TB, TDelegateObserver>,
-        keyof DisposableLike | typeof LiftedObserverLike_notify
+        | typeof LiftedObserverLike_notify
+        | typeof LiftedObserverLike_complete
+        | keyof DisposableLike
       >,
       TDelegateObserver,
       Optional<{
@@ -186,7 +192,6 @@ const LiftedObserverMixin: <
           capacity: delegate[QueueableLike_capacity],
           ...(options ?? {}),
         });
-
         init(SerialDisposableMixin(), this, Disposable.disposed);
 
         this[LiftedObserverLike_delegate] = delegate;
@@ -292,14 +297,24 @@ const LiftedObserverMixin: <
         ) {
           const isCompleted = this[QueueableLike_isCompleted];
           const isDisposed = this[DisposableLike_isDisposed];
+          const inSchedulerContinuation = this[SchedulerLike_inContinuation];
+          const count = this[QueueLike_count];
 
           call(queueProtoype[QueueableLike_complete], this);
 
-          if (!isCompleted && this[QueueLike_count] > 0 && !isDisposed) {
-            scheduleDrainQueue(this);
-          } else {
-            this[DisposableLike_dispose]();
+          if (isCompleted || isDisposed) {
+            return;
           }
+
+          if (inSchedulerContinuation && count === 0) {
+            this[LiftedObserverLike_complete]();
+          } else {
+            scheduleDrainQueue(this);
+          }
+        },
+
+        [LiftedObserverLike_complete](this: TProperties) {
+          this[LiftedObserverLike_delegate][QueueableLike_complete]();
         },
       }),
     ),

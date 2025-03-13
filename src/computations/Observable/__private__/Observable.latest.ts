@@ -20,11 +20,9 @@ import {
   ObservableLike_observe,
 } from "../../../computations.js";
 import { none, pick, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
+  LiftedObserverLike_complete,
   LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
@@ -33,6 +31,7 @@ import {
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 type LatestMode = 1 | 2;
 const zipMode = 2;
@@ -50,17 +49,6 @@ const Observable_latest = /*@__PURE__*/ (() => {
     [LatestCtx_observers]: TProperties[];
   };
 
-  function onLatestObserverCompleted(this: TProperties) {
-    const ctx = this[LatestObserver_ctx];
-    ctx[LatestCtx_completedCount]++;
-
-    if (
-      ctx[LatestCtx_completedCount] === ctx[LatestCtx_observers][Array_length]
-    ) {
-      ctx[LatestCtx_delegate][QueueableLike_complete]();
-    }
-  }
-
   const LatestObserver_ctx = Symbol("LatestObserver_ctx");
   const LatestObserver_latest = Symbol("LatestObserver_latest");
   const LatestObserver_ready = Symbol("LatestObserver_ready");
@@ -72,21 +60,17 @@ const Observable_latest = /*@__PURE__*/ (() => {
   };
 
   const createLatestObserver = mixInstanceFactory(
-    include(DisposableMixin, LiftedObserverMixin()),
+    include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function LatestObserver(
       this: Pick<LiftedObserverLike, typeof LiftedObserverLike_notify> &
         Mutable<TProperties>,
       ctx: LatestCtx,
       delegate: ObserverLike,
     ): ObserverLike & TProperties {
-      init(DisposableMixin, this);
+      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin(), this, delegate, none);
 
-      pipe(this, Disposable.addTo(delegate));
-
       this[LatestObserver_ctx] = ctx;
-
-      pipe(this, DisposableContainer.onComplete(onLatestObserverCompleted));
 
       return this;
     },
@@ -127,6 +111,18 @@ const Observable_latest = /*@__PURE__*/ (() => {
         }
 
         return result;
+      },
+
+      [LiftedObserverLike_complete](this: TProperties) {
+        const ctx = this[LatestObserver_ctx];
+        ctx[LatestCtx_completedCount]++;
+
+        if (
+          ctx[LatestCtx_completedCount] ===
+          ctx[LatestCtx_observers][Array_length]
+        ) {
+          ctx[LatestCtx_delegate][QueueableLike_complete]();
+        }
       },
     }),
   );

@@ -7,8 +7,6 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Function2, none, partial, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
@@ -21,6 +19,7 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const createWithCurrentTimeObserver: <TA, TB>(
   delegate: ObserverLike<TB>,
@@ -44,8 +43,6 @@ const createWithCurrentTimeObserver: <TA, TB>(
     ): ObserverLike<TA> {
       init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<TA, TB>(), this, delegate, none);
-
-      pipe(this, Disposable.addTo(delegate));
 
       this[WithCurrentTimeObserver_selector] = selector;
 

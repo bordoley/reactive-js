@@ -4,10 +4,10 @@ import * as Disposable from "../../../utils/Disposable.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
-  DisposableLike_isDisposed,
   ObserverLike,
   QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isCompleted,
   SchedulerLike_schedule,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -27,7 +27,7 @@ const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
       let [start, count] = parseArrayBounds(arr, options);
 
       const continuation = (ctx: ContinuationContextLike) => {
-        while (!observer[DisposableLike_isDisposed] && count !== 0) {
+        while (!observer[QueueableLike_isCompleted] && count !== 0) {
           const next = arr[start];
           observer[QueueableLike_enqueue](next);
 

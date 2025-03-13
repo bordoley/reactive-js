@@ -12,10 +12,10 @@ import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DisposableLike_dispose,
-  DisposableLike_isDisposed,
   ObserverLike,
   QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isCompleted,
   SchedulerLike_schedule,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -39,7 +39,7 @@ const Observable_fromIterable: Observable.Signature["fromIterable"] = (<
       const iterator = iterable[Symbol.iterator]();
 
       const continuation = (ctx: ContinuationContextLike) => {
-        while (!observer[DisposableLike_isDisposed]) {
+        while (!observer[QueueableLike_isCompleted]) {
           let next: Optional<IteratorResult<T, any>> = none;
 
           try {
@@ -47,6 +47,7 @@ const Observable_fromIterable: Observable.Signature["fromIterable"] = (<
           } catch (e) {
             // Catch any errors thrown by the iterator
             observer[DisposableLike_dispose](error(e));
+            break;
           }
 
           if (isSome(next) && !next[Iterator_done]) {

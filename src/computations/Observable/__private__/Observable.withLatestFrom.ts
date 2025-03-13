@@ -23,7 +23,6 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
@@ -31,11 +30,11 @@ import LiftedObserverMixin, {
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   DisposableLike,
-  DisposableLike_isDisposed,
   ObserverLike,
   QueueableLike,
   QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isCompleted,
   QueueableLike_isReady,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -44,6 +43,7 @@ import Observable_lift, {
   ObservableLift_isStateless,
 } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const createWithLatestFromObserver: <TA, TB, T>(
   delegate: ObserverLike<T>,
@@ -91,8 +91,6 @@ const createWithLatestFromObserver: <TA, TB, T>(
       init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<TA, T>(), this, delegate, none);
 
-      pipe(this, Disposable.addTo(delegate));
-
       this[WithLatestFromObserver_selector] = selector;
 
       pipe(
@@ -119,7 +117,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
       ) {
         const delegate = this[LiftedObserverLike_delegate];
         const shouldEmit =
-          !this[DisposableLike_isDisposed] &&
+          !this[QueueableLike_isCompleted] &&
           this[WithLatestFromObserver_hasLatest];
 
         let v = none as T;

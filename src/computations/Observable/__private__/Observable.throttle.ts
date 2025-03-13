@@ -18,11 +18,10 @@ import {
   pipeLazy,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
-import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
+  LiftedObserverLike_complete,
   LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
@@ -41,6 +40,7 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_fromValue from "./Observable.fromValue.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 export const ThrottleFirstMode = "first";
 export const ThrottleLastMode = "last";
@@ -102,26 +102,8 @@ const createThrottleObserver: <T>(
     );
   };
 
-  function onThrottleObserverComplete(
-    this: TProperties & LiftedObserverLike<T>,
-  ) {
-    const delegate = this[LiftedObserverLike_delegate];
-    if (
-      this[ThrottleObserver_mode] !== ThrottleFirstMode &&
-      this[ThrottleObserver_hasValue] &&
-      !delegate[DisposableLike_isDisposed] &&
-      isSome(this[ThrottleObserver_value])
-    ) {
-      const value = this[ThrottleObserver_value];
-      this[ThrottleObserver_value] = none;
-      this[ThrottleObserver_hasValue] = false;
-      delegate[QueueableLike_enqueue](value);
-    }
-    delegate[QueueableLike_complete]();
-  }
-
   return mixInstanceFactory(
-    include(DisposableMixin, LiftedObserverMixin()),
+    include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function ThrottleObserver(
       this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
         Mutable<TProperties>,
@@ -129,7 +111,7 @@ const createThrottleObserver: <T>(
       durationFunction: Function1<T, ObservableLike>,
       mode: Observable.ThrottleMode,
     ): ObserverLike<T> {
-      init(DisposableMixin, this);
+      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T>(), this, delegate, none);
 
       this[ThrottleObserver_durationFunction] = durationFunction;
@@ -137,12 +119,6 @@ const createThrottleObserver: <T>(
 
       this[ThrottleObserver_durationSubscription] = pipe(
         SerialDisposable.create(),
-        Disposable.addTo(delegate),
-      );
-
-      pipe(
-        this,
-        DisposableContainer.onComplete(onThrottleObserverComplete),
         Disposable.addTo(delegate),
       );
 
@@ -178,6 +154,22 @@ const createThrottleObserver: <T>(
         }
 
         return this[LiftedObserverLike_delegate][QueueableLike_isReady];
+      },
+
+      [LiftedObserverLike_complete](this: TProperties & LiftedObserverLike<T>) {
+        const delegate = this[LiftedObserverLike_delegate];
+        if (
+          this[ThrottleObserver_mode] !== ThrottleFirstMode &&
+          this[ThrottleObserver_hasValue] &&
+          !delegate[QueueableLike_isCompleted] &&
+          isSome(this[ThrottleObserver_value])
+        ) {
+          const value = this[ThrottleObserver_value];
+          this[ThrottleObserver_value] = none;
+          this[ThrottleObserver_hasValue] = false;
+          delegate[QueueableLike_enqueue](value);
+        }
+        delegate[QueueableLike_complete]();
       },
     }),
   );

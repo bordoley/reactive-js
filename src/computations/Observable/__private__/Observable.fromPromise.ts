@@ -16,10 +16,10 @@ import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/Delega
 import {
   DisposableContainerLike,
   DisposableLike_dispose,
-  DisposableLike_isDisposed,
   ObserverLike,
   QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isCompleted,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 
@@ -67,7 +67,7 @@ const Observable_fromPromise: Observable.Signature["fromPromise"] =
             observer: ObserverLike<T>,
           ) {
             this[FromPromiseObservable_promise].then(next => {
-              if (!observer[DisposableLike_isDisposed]) {
+              if (!observer[QueueableLike_isCompleted]) {
                 observer[QueueableLike_enqueue](next);
                 observer[QueueableLike_complete]();
               }

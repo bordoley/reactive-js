@@ -7,10 +7,10 @@ import { error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import {
   DisposableLike_dispose,
-  DisposableLike_isDisposed,
   ObserverLike,
   QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isCompleted,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
   SchedulerLike_schedule,
@@ -34,7 +34,7 @@ const Observable_fromAsyncIterable: Observable.Signature["fromAsyncIterable"] =
 
         try {
           while (
-            !observer[DisposableLike_isDisposed] &&
+            !observer[QueueableLike_isCompleted] &&
             observer[SchedulerLike_now] - startTime < maxYieldInterval
           ) {
             done = false;

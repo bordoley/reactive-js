@@ -21,7 +21,11 @@ import {
 } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
-import { DisposableLike_dispose, ObserverLike } from "../../../utils.js";
+import {
+  DisposableLike_dispose,
+  ObserverLike,
+  QueueableLike_complete,
+} from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_lift, {
   ObservableLift_isStateless,
@@ -35,7 +39,7 @@ const Observable_catchError: Observable.Signature["catchError"] =
         pipe(
           Observer_createWithDelegate<T>(delegate),
           DisposableContainer.onComplete(
-            bindMethod(delegate, DisposableLike_dispose),
+            bindMethod(delegate, QueueableLike_complete),
           ),
           DisposableContainer.onError(bind(onErrorHandler, delegate)),
         );
@@ -57,7 +61,7 @@ const Observable_catchError: Observable.Signature["catchError"] =
         if (isSome(action)) {
           action[ObservableLike_observe](this);
         } else {
-          this[DisposableLike_dispose]();
+          this[QueueableLike_complete]();
         }
       }
 

@@ -3,9 +3,9 @@ import * as Disposable from "../../../utils/Disposable.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
-  DisposableLike_isDisposed,
   ObserverLike,
   QueueableLike_enqueue,
+  QueueableLike_isCompleted,
   SchedulerLike_now,
   SchedulerLike_schedule,
 } from "../../../utils.js";
@@ -16,7 +16,7 @@ const Observable_currentTime: Observable.Signature["currentTime"] =
   /*@__PURE__*/ Observable_createPureSynchronousObservable(
     (observer: ObserverLike<number>) => {
       const continuation = (ctx: ContinuationContextLike) => {
-        while (!observer[DisposableLike_isDisposed]) {
+        while (!observer[QueueableLike_isCompleted]) {
           observer[QueueableLike_enqueue](observer[SchedulerLike_now]);
           ctx[ContinuationContextLike_yield]();
         }

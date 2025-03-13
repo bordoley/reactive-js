@@ -26,6 +26,7 @@ import {
   DisposableContainerLike,
   DisposableLike_dispose,
   ObserverLike,
+  QueueableLike_complete,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 
@@ -96,7 +97,7 @@ const Observable_merge: Observable.Signature["merge"] = /*@__PURE__*/ (<
             DisposableContainer.onComplete(() => {
               completed++;
               if (completed >= count) {
-                observer[DisposableLike_dispose]();
+                observer[QueueableLike_complete]();
               }
             }),
             bindMethod(observable, ObservableLike_observe),

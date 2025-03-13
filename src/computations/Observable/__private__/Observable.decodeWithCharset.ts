@@ -7,16 +7,13 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
+  LiftedObserverLike_complete,
   LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
-  DisposableLike_dispose,
   ObserverLike,
   QueueableLike_complete,
   QueueableLike_enqueue,
@@ -24,6 +21,7 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
   const DecodeWithCharsetObserver_textDecoder = Symbol(
@@ -34,31 +32,12 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
     [DecodeWithCharsetObserver_textDecoder]: TextDecoder;
   };
 
-  function onDecodeWithCharsetObserverComplete(
-    this: TProperties & LiftedObserverLike<ArrayBuffer, string>,
-  ) {
-    const delegate = this[LiftedObserverLike_delegate];
-    const data = this[DecodeWithCharsetObserver_textDecoder].decode(
-      newInstance(Uint8Array, []),
-      {
-        stream: false,
-      },
-    );
-
-    if (data[Array_length] > 0) {
-      delegate[QueueableLike_enqueue](data);
-      delegate[QueueableLike_complete]();
-    } else {
-      delegate[DisposableLike_dispose]();
-    }
-  }
-
   return mixInstanceFactory(
-    include(DisposableMixin, LiftedObserverMixin<ArrayBuffer>()),
+    include(DelegatingDisposableMixin, LiftedObserverMixin<ArrayBuffer>()),
     function DecodeWithCharsetObserver(
       this: Pick<
         LiftedObserverLike<ArrayBuffer, string>,
-        typeof LiftedObserverLike_notify
+        typeof LiftedObserverLike_notify | typeof LiftedObserverLike_complete
       > &
         TProperties,
       delegate: ObserverLike<string>,
@@ -68,18 +47,11 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         ignoreBOM?: boolean;
       },
     ): ObserverLike<ArrayBuffer> {
-      init(DisposableMixin, this);
+      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<ArrayBuffer, string>(), this, delegate, none);
-
-      pipe(this, Disposable.addTo(delegate));
 
       const textDecoder = newInstance(TextDecoder, charset, options);
       this[DecodeWithCharsetObserver_textDecoder] = textDecoder;
-
-      pipe(
-        this,
-        DisposableContainer.onComplete(onDecodeWithCharsetObserverComplete),
-      );
 
       return this;
     },
@@ -105,6 +77,24 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
               delegate[QueueableLike_enqueue](data))) ||
           delegate[QueueableLike_isReady]
         );
+      },
+
+      [LiftedObserverLike_complete](
+        this: TProperties & LiftedObserverLike<ArrayBuffer, string>,
+      ) {
+        const delegate = this[LiftedObserverLike_delegate];
+        const data = this[DecodeWithCharsetObserver_textDecoder].decode(
+          newInstance(Uint8Array, []),
+          {
+            stream: false,
+          },
+        );
+
+        if (data[Array_length] > 0) {
+          delegate[QueueableLike_enqueue](data);
+        }
+
+        delegate[QueueableLike_complete]();
       },
     }),
   );
