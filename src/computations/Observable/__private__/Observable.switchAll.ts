@@ -18,17 +18,18 @@ import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
-import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
+  LiftedObserverLike_complete,
   LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
-  DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isCompleted,
   QueueableLike_isReady,
   SerialDisposableLike,
   SerialDisposableLike_current,
@@ -39,6 +40,7 @@ import Observable_lift, {
   ObservableLift_isStateless,
 } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const createSwitchAllObserver: <T>(
   o: ObserverLike<T>,
@@ -49,28 +51,19 @@ const createSwitchAllObserver: <T>(
     readonly [SwitchAllObserver_currentRef]: SerialDisposableLike;
   };
 
-  function onSwitchAllObserverComplete(
-    this: TProperties & LiftedObserverLike<ObservableLike<T>, T>,
-  ) {
-    if (
-      this[SwitchAllObserver_currentRef][SerialDisposableLike_current][
-        DisposableLike_isDisposed
-      ]
-    ) {
-      this[LiftedObserverLike_delegate][DisposableLike_dispose]();
-    }
-  }
-
   function onSwitchAllObserverInnerObservableComplete(
     this: TProperties & LiftedObserverLike<ObservableLike<T>, T>,
   ) {
-    if (this[DisposableLike_isDisposed]) {
-      this[LiftedObserverLike_delegate][DisposableLike_dispose]();
+    if (this[QueueableLike_isCompleted]) {
+      this[LiftedObserverLike_delegate][QueueableLike_complete]();
     }
   }
 
   return mixInstanceFactory(
-    include(DisposableMixin, LiftedObserverMixin<ObservableLike<T>>()),
+    include(
+      DelegatingDisposableMixin,
+      LiftedObserverMixin<ObservableLike<T>>(),
+    ),
     function SwitchAllObserver(
       this: Pick<
         LiftedObserverLike<ObservableLike<T>>,
@@ -79,17 +72,13 @@ const createSwitchAllObserver: <T>(
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
     ): ObserverLike<ObservableLike<T>> {
-      init(DisposableMixin, this);
+      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<ObservableLike<T>, T>(), this, delegate, none);
-
-      pipe(this, Disposable.addTo(delegate));
 
       this[SwitchAllObserver_currentRef] = pipe(
         SerialDisposable.create(),
         Disposable.addTo(delegate),
       );
-
-      pipe(this, DisposableContainer.onComplete(onSwitchAllObserverComplete));
 
       return this;
     },
@@ -114,6 +103,18 @@ const createSwitchAllObserver: <T>(
           ),
         );
         return delegate[QueueableLike_isReady];
+      },
+
+      [LiftedObserverLike_complete](
+        this: TProperties & LiftedObserverLike<ObservableLike<T>, T>,
+      ) {
+        if (
+          this[SwitchAllObserver_currentRef][SerialDisposableLike_current][
+            DisposableLike_isDisposed
+          ]
+        ) {
+          this[LiftedObserverLike_delegate][QueueableLike_complete]();
+        }
       },
     }),
   );

@@ -6,8 +6,6 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
@@ -20,6 +18,7 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPure from "./Observable.liftPure.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const KeepObserver_predicate = Symbol("KeepObserver_predicate");
 
@@ -41,8 +40,6 @@ const createKeepObserver: <T>(
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T>(), this, delegate, none);
-
-      pipe(this, Disposable.addTo(delegate));
 
       this[KeepObserver_predicate] = predicate;
 

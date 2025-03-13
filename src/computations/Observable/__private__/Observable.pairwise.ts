@@ -4,9 +4,7 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
-import { Tuple2, none, pipe, tuple } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { Tuple2, none, tuple } from "../../../functions.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_delegate,
@@ -19,6 +17,7 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const PairwiseObserver_hasPrev = Symbol("PairwiseObserver_hasPrev");
 const PairwiseObserver_prev = Symbol("PairwiseObserver_prev");
@@ -39,8 +38,6 @@ const createPairwiseObserver: <T>(
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T, Tuple2<T, T>>(), this, delegate, none);
-
-      pipe(this, Disposable.addTo(delegate));
 
       return this;
     },

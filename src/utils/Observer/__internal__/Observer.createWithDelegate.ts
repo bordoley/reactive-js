@@ -6,10 +6,15 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
-import { ObserverLike, QueueableLike_enqueue } from "../../../utils.js";
+import {
+  DisposableLike_dispose,
+  ObserverLike,
+  QueueableLike_enqueue,
+} from "../../../utils.js";
 import DisposableMixin from "../../__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
+  LiftedObserverLike_complete,
   LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
 } from "../../__mixins__/LiftedObserverMixin.js";
@@ -36,6 +41,9 @@ const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
             delegate?.[LiftedObserverLike_notify]?.(next) ??
             delegate[QueueableLike_enqueue](next)
           );
+        },
+        [LiftedObserverLike_complete](this: LiftedObserverLike<T>) {
+          this[DisposableLike_dispose]();
         },
       }),
     ))();

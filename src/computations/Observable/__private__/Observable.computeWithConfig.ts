@@ -32,6 +32,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
   SchedulerLike_schedule,
 } from "../../../utils.js";
@@ -235,7 +236,7 @@ class ComputeContext {
         DisposableLike_isDisposed
       ]
     ) {
-      this[ComputeContext_observer][DisposableLike_dispose]();
+      this[ComputeContext_observer][QueueableLike_complete]();
     }
   };
 
@@ -505,14 +506,19 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
           !isAwaiting &&
           (combineLatestModeShouldNotify || mode === BatchedComputeMode);
 
-        const shouldDispose = !hasOutstandingEffects || hasError;
+        const shouldComplete = !hasOutstandingEffects;
+
+        if (hasError) {
+          observer[DisposableLike_dispose](err);
+          return;
+        } 
 
         if (shouldNotify) {
           observer[QueueableLike_enqueue](result as T);
-        }
-
-        if (shouldDispose) {
-          observer[DisposableLike_dispose](err);
+        } 
+        
+        if (shouldComplete) {
+          observer[QueueableLike_complete]();
         }
       };
 

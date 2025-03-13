@@ -6,12 +6,10 @@ import {
   props,
   proto,
 } from "../../../__internal__/mixins.js";
-import { bindMethod, none, partial, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { none, partial, pipe } from "../../../functions.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
+  LiftedObserverLike_complete,
   LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
@@ -24,6 +22,7 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const Observer_createEnqueueObserver: <T>(
   delegate: ObserverLike<T>,
@@ -46,16 +45,7 @@ const Observer_createEnqueueObserver: <T>(
       init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T>(), this, delegate, none);
 
-      pipe(this, Disposable.addTo(delegate));
-
       this[EnqueueObserver_queue] = queue;
-
-      pipe(
-        this,
-        DisposableContainer.onComplete(
-          bindMethod(queue, QueueableLike_complete),
-        ),
-      );
 
       return this;
     },
@@ -76,6 +66,13 @@ const Observer_createEnqueueObserver: <T>(
           delegate?.[LiftedObserverLike_notify]?.(next) ??
           delegate[QueueableLike_enqueue](next)
         );
+      },
+      [LiftedObserverLike_complete](
+        this: TProperties & LiftedObserverLike<T, readonly T[]>,
+      ) {
+        // FIXME: maybe we shouldn't complete
+        this[EnqueueObserver_queue][QueueableLike_complete]();
+        this[LiftedObserverLike_delegate][QueueableLike_complete]();
       },
     }),
   );

@@ -3,10 +3,10 @@ import * as Disposable from "../../../utils/Disposable.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
-  DisposableLike_dispose,
-  DisposableLike_isDisposed,
   ObserverLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
+  QueueableLike_isCompleted,
   SchedulerLike_schedule,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -28,12 +28,12 @@ const Observable_generate: Observable.Signature["generate"] = <T>(
     let cnt = 0;
 
     const continuation = (ctx: ContinuationContextLike) => {
-      while (!observer[DisposableLike_isDisposed]) {
+      while (!observer[QueueableLike_isCompleted]) {
         acc = generator(acc);
         observer[QueueableLike_enqueue](acc);
 
         if (count !== none && (cnt++, cnt >= count)) {
-          observer[DisposableLike_dispose]();
+          observer[QueueableLike_complete]();
           break;
         }
 

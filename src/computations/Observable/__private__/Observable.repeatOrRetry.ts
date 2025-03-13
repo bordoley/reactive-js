@@ -60,7 +60,6 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
           observable,
           Observable_forEach(bindMethod(delegate, QueueableLike_enqueue)),
           Observable_subscribeWithConfig(delegate, delegate),
-          Disposable.addToContainer(delegate),
           DisposableContainer.onDisposed(doOnDispose),
         );
       }
