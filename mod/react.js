@@ -22,11 +22,11 @@ export const createComponent = (fn, options = {}) => {
     };
     return ObservableComponent;
 };
-export const useDispatcher = (dispatcher) => {
+export const useDispatcher = (queue) => {
     const stableDispatcherRef = useRef(none);
     useEffect(() => {
-        stableDispatcherRef.current = dispatcher;
-    }, [dispatcher]);
+        stableDispatcherRef.current = queue;
+    }, [queue]);
     const enqueue = useCallback((req) => stableDispatcherRef?.current?.[QueueableLike_enqueue](req) ?? true, [stableDispatcherRef]);
     const complete = useCallback(() => stableDispatcherRef?.current?.[QueueableLike_complete](), [stableDispatcherRef]);
     return useMemo(() => ({ enqueue, complete }), [enqueue, complete]);

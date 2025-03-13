@@ -56,7 +56,10 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     actionReducer<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
         readonly equality?: Equality<T>;
     }): StatefulSynchronousComputationOperator<ObservableComputation, TAction, T>;
-    backpressureStrategy<T>(capacity: number, backpressureStrategy: BackpressureStrategy): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
+    backpressureStrategy<T>(options: {
+        capacity: number;
+        backpressureStrategy: BackpressureStrategy;
+    }): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
     combineLatest: CombineConstructor;
     computeDeferred<T>(computation: Factory<T>, options?: {
         readonly mode?: ComputeMode;
@@ -67,7 +70,6 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     create<T>(f: SideEffect1<ObserverLike<T>>): DeferredObservableWithSideEffectsLike<T>;
     currentTime: PureSynchronousObservableLike<number>;
     defer<T>(f: Factory<MulticastObservableLike<T> & DisposableLike>): PureDeferredObservableLike<T>;
-    dispatchTo<T>(dispatcher: QueueableLike<T>): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
     empty<T>(options?: {
         readonly delay: number;
     }): PureSynchronousObservableLike<T>;
@@ -250,7 +252,6 @@ export declare const create: Signature["create"];
 export declare const currentTime: Signature["currentTime"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const defer: Signature["defer"];
-export declare const dispatchTo: Signature["dispatchTo"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];
 export declare const encodeUtf8: Signature["encodeUtf8"];

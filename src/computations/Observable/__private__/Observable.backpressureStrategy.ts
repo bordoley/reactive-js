@@ -8,15 +8,12 @@ import { partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_notify,
   LiftedObserverLike_delegate,
+  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   BackpressureStrategy,
   ObserverLike,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -24,19 +21,23 @@ import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const createBackpressureObserver: <T>(
   delegate: ObserverLike<T>,
-  config: Pick<
-    QueueableLike,
-    typeof QueueableLike_capacity | typeof QueueableLike_backpressureStrategy
-  >,
+  options: {
+    capacity: number;
+    backpressureStrategy: BackpressureStrategy;
+  },
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
     include(LiftedObserverMixin<T>(), DelegatingDisposableMixin),
     function EnqueueObserver(
       this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify>,
       delegate: ObserverLike<T>,
+      options: {
+        capacity: number;
+        backpressureStrategy: BackpressureStrategy;
+      },
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, delegate);
-      init(LiftedObserverMixin<T>(), this, delegate);
+      init(LiftedObserverMixin<T>(), this, delegate, options);
 
       return this;
     },
@@ -54,13 +55,13 @@ const createBackpressureObserver: <T>(
   ))();
 
 const Observable_backpressureStrategy: Observable.Signature["backpressureStrategy"] =
-  <T>(capacity: number, backpressureStrategy: BackpressureStrategy) =>
+  <T>(options: {
+    capacity: number;
+    backpressureStrategy: BackpressureStrategy;
+  }) =>
     pipe(
       createBackpressureObserver<T>,
-      partial({
-        [QueueableLike_backpressureStrategy]: backpressureStrategy,
-        [QueueableLike_capacity]: capacity,
-      }),
+      partial(options),
       Observable_liftPureDeferred<T, T>,
     );
 

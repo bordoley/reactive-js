@@ -1,5 +1,5 @@
 import {
-  Mixin1,
+  Mixin2,
   getPrototype,
   include,
   init,
@@ -10,6 +10,7 @@ import {
 } from "../../__internal__/mixins.js";
 import {
   Method1,
+  Optional,
   SideEffect1,
   bind,
   bindMethod,
@@ -19,6 +20,7 @@ import {
   returns,
 } from "../../functions.js";
 import {
+  BackpressureStrategy,
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DisposableLike,
@@ -71,9 +73,13 @@ const LiftedObserverMixin: <
   TA,
   TB = TA,
   TDelegateObserver extends ObserverLike<TB> = ObserverLike<TB>,
->() => Mixin1<
+>() => Mixin2<
   LiftedObserverLike<TA, TB, TDelegateObserver>,
   TDelegateObserver,
+  Optional<{
+    capacity?: number;
+    backpressureStrategy?: BackpressureStrategy;
+  }>,
   Pick<
     LiftedObserverLike<TA, TB, TDelegateObserver>,
     keyof DisposableLike | typeof LiftedObserverLike_notify
@@ -151,7 +157,11 @@ const LiftedObserverMixin: <
         LiftedObserverLike<TA, TB, TDelegateObserver>,
         keyof DisposableLike | typeof LiftedObserverLike_notify
       >,
-      TDelegateObserver
+      TDelegateObserver,
+      Optional<{
+        capacity?: number;
+        backpressureStrategy?: BackpressureStrategy;
+      }>
     >(
       include(QueueMixin(), SerialDisposableMixin()),
       function LiftedObserverMixin(
@@ -166,13 +176,19 @@ const LiftedObserverMixin: <
             | typeof QueueableLike_capacity
           >,
         delegate: TDelegateObserver,
+        options: Optional<{
+          capacity?: number;
+          backpressureStrategy?: BackpressureStrategy;
+        }>,
       ): LiftedObserverLike<TA, TB, TDelegateObserver> {
         init(QueueMixin<TA>(), this, {
           backpressureStrategy: delegate[QueueableLike_backpressureStrategy],
           capacity: delegate[QueueableLike_capacity],
+          ...(options ?? {}),
         });
 
         init(SerialDisposableMixin(), this, Disposable.disposed);
+
         this[LiftedObserverLike_delegate] = delegate;
         this[LiftedObserverMixin_scheduler] =
           (delegate as unknown as TProperties)[LiftedObserverMixin_scheduler] ??
@@ -180,7 +196,6 @@ const LiftedObserverMixin: <
 
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const instance = this;
-
         this[LiftedObserverMixin_schedulerCallback] =
           function ObserverMixinSchedulerCallback(
             this: SideEffect1<ContinuationContextLike>,
@@ -290,36 +305,5 @@ const LiftedObserverMixin: <
     ),
   );
 })();
-
-/*
-const LiftedObserverMixin: <
-  TA,
-  TB = TA,
-  TDelegateObserver extends ObserverLike<TB> = ObserverLike<TB>,
->() => Mixin1<
-  LiftedObserverLike<TA, TB, TDelegateObserver>,
-  TDelegateObserver,
-  ObserverLike<TA>
-> =  (<TA, TB, TObserver extends ObserverLike<TB>>() => {
-  type TProperties = {
-    [LiftedObserverLike_delegate]: TObserver;
-  };
-
-  return returns(
-    mix(
-      function LiftedObserverMixin(
-        this: ObserverLike<TA> & TProperties,
-        delegate: TObserver,
-      ): LiftedObserverLike<TA, TB, TObserver> {
-        this[LiftedObserverLike_delegate] = delegate;
-
-        return this;
-      },
-      props<TProperties>({
-        [LiftedObserverLike_delegate]: none,
-      }),
-    ),
-  );
-})();*/
 
 export default LiftedObserverMixin;

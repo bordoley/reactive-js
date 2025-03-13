@@ -6,6 +6,7 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Function1, none, partial, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
@@ -35,7 +36,9 @@ const createMapObserver: <TA, TB>(
       selector: Function1<TA, TB>,
     ): ObserverLike<TA> {
       init(DelegatingDisposableMixin, this, delegate);
-      init(LiftedObserverMixin<TA, TB>(), this, delegate);
+      init(LiftedObserverMixin<TA, TB>(), this, delegate, none);
+
+      pipe(this, Disposable.addTo(delegate));
 
       this[MapObserver_selector] = selector;
 

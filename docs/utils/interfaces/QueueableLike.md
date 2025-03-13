@@ -7,7 +7,7 @@
 # Interface: QueueableLike\<T\>
 
 A `QueueableLike` type that consumes enqueued events to
-be dispatched from any execution constext.
+be consumed.
 
 ## Extended by
 
@@ -44,6 +44,12 @@ The number of items the queue is capable of efficiently buffering.
 
 ***
 
+### \[QueueableLike\_isReady\]
+
+> `readonly` **\[QueueableLike\_isReady\]**: `boolean`
+
+***
+
 ### \[QueueableLike\_onReady\]
 
 > `readonly` **\[QueueableLike\_onReady\]**: [`EventSourceLike`](../../computations/interfaces/EventSourceLike.md)\<`void`\>
@@ -54,7 +60,7 @@ The number of items the queue is capable of efficiently buffering.
 
 > **\[QueueableLike\_complete\]**(): `void`
 
-Communicates to the dispatcher that no more events will be enqueued.
+Communicates to the queue that no more events will be enqueued.
 
 #### Returns
 

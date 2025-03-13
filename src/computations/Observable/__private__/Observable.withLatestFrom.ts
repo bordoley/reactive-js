@@ -89,7 +89,9 @@ const createWithLatestFromObserver: <TA, TB, T>(
       selector: Function2<TA, TB, T>,
     ): ObserverLike<TA> {
       init(DelegatingDisposableMixin, this, delegate);
-      init(LiftedObserverMixin<TA, T>(), this, delegate);
+      init(LiftedObserverMixin<TA, T>(), this, delegate, none);
+
+      pipe(this, Disposable.addTo(delegate));
 
       this[WithLatestFromObserver_selector] = selector;
 

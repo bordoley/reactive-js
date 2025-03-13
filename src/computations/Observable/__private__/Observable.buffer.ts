@@ -68,7 +68,7 @@ const createBufferObserver: <T>(
       count?: number,
     ): ObserverLike<T> {
       init(DisposableMixin, this);
-      init(LiftedObserverMixin<T, readonly T[]>(), this, delegate);
+      init(LiftedObserverMixin<T, readonly T[]>(), this, delegate, none);
 
       this[BufferObserver_count] = clampPositiveNonZeroInteger(
         count ?? MAX_SAFE_INTEGER,

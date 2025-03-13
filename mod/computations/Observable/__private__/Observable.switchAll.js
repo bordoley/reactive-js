@@ -7,11 +7,9 @@ import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
-import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_delegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { ObserverMixinBaseLike_notify, } from "../../../utils/__mixins__/ObserverMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, SerialDisposableLike_current, } from "../../../utils.js";
+import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_isReady, SerialDisposableLike_current, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -27,19 +25,20 @@ const createSwitchAllObserver = /*@__PURE__*/ (() => {
             this[LiftedObserverLike_delegate][DisposableLike_dispose]();
         }
     }
-    return mixInstanceFactory(include(DisposableMixin, DelegatingObserverMixin(), LiftedObserverMixin()), function SwitchAllObserver(delegate) {
+    return mixInstanceFactory(include(DisposableMixin, LiftedObserverMixin()), function SwitchAllObserver(delegate) {
         init(DisposableMixin, this);
-        init(DelegatingObserverMixin(), this, delegate);
-        init(LiftedObserverMixin(), this, delegate);
+        init(LiftedObserverMixin(), this, delegate, none);
+        pipe(this, Disposable.addTo(delegate));
         this[SwitchAllObserver_currentRef] = pipe(SerialDisposable.create(), Disposable.addTo(delegate));
         pipe(this, DisposableContainer.onComplete(onSwitchAllObserverComplete));
         return this;
     }, props({
         [SwitchAllObserver_currentRef]: none,
     }), proto({
-        [ObserverMixinBaseLike_notify](next) {
-            this[SwitchAllObserver_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(bindMethod(this[LiftedObserverLike_delegate], QueueableLike_enqueue)), Observable_subscribeWithConfig(this[LiftedObserverLike_delegate], this), Disposable.addTo(this[LiftedObserverLike_delegate]), DisposableContainer.onComplete(bind(onSwitchAllObserverInnerObservableComplete, this)));
-            return true;
+        [LiftedObserverLike_notify](next) {
+            const delegate = this[LiftedObserverLike_delegate];
+            this[SwitchAllObserver_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(bindMethod(delegate, QueueableLike_enqueue)), Observable_subscribeWithConfig(delegate, this), Disposable.addTo(delegate), DisposableContainer.onComplete(bind(onSwitchAllObserverInnerObservableComplete, this)));
+            return delegate[QueueableLike_isReady];
         },
     }));
 })();

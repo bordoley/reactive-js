@@ -6,7 +6,7 @@
 
 # Function: backpressureStrategy()
 
-> **backpressureStrategy**\<`T`\>(`capacity`, `backpressureStrategy`): [`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>
+> **backpressureStrategy**\<`T`\>(`options`): [`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>
 
 ## Type Parameters
 
@@ -14,13 +14,15 @@
 
 ## Parameters
 
-### capacity
+### options
 
-`number`
-
-### backpressureStrategy
+#### backpressureStrategy
 
 [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
+
+#### capacity
+
+`number`
 
 ## Returns
 

@@ -20,7 +20,7 @@ const Streamable_syncState = (onInit, onChange, syncStateOptions) => (streamable
             ? Observable.throttle(throttleDuration)
             : identity, Observable.pairwise(), Computation.concatMap(ObservableModule)(([oldValue, newValue]) => onChange(oldValue, newValue), {
             innerType: DeferredComputationWithSideEffects,
-        })), { innerType: DeferredComputationWithSideEffects }), Observable.dispatchTo(stream), Computation.ignoreElements(ObservableModule)(), Observable.subscribe(scheduler), Disposable.addTo(stream));
+        })), { innerType: DeferredComputationWithSideEffects }), Observable.enqueue(stream), Computation.ignoreElements(ObservableModule)(), Observable.subscribe(scheduler), Disposable.addTo(stream));
         return stream;
     },
 });

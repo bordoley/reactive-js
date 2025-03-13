@@ -17,6 +17,7 @@ import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Ob
 import {
   DisposableLike_dispose,
   ObserverLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -48,8 +49,10 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
         err = isSome(err) ? error([error(e), err]) : error(e);
       }
 
-      if (shouldComplete) {
+      if (shouldComplete && isSome(err)) {
         delegate[DisposableLike_dispose](err);
+      } else if (shouldComplete) {
+        delegate[QueueableLike_complete]();
       } else {
         count++;
 

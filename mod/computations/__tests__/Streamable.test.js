@@ -61,6 +61,7 @@ import * as Observable from "../../computations/Observable.js";
 import * as Streamable from "../../computations/Streamable.js";
 import { StreamableLike_stream } from "../../computations.js";
 import { bindMethod, invoke, none, pipe, pipeSome, returns, } from "../../functions.js";
+import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import { DropLatestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as Computation from "../Computation.js";
@@ -159,7 +160,7 @@ testModule("Streamable", describe("animation", test("integration", () => {
     try {
         const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
         const stream = pipe(Streamable.stateStore(returns(-1)), Streamable.syncState(state => pipe(Computation.sequence(Observable)(state + 10), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (_oldState, _newState) => Observable.empty()), invoke(StreamableLike_stream, vts));
-        pipe((x) => x + 2, Observable.fromValue({ delay: 5 }), Observable.enqueue(stream), Observable.subscribe(vts));
+        pipe((x) => x + 2, Observable.fromValue({ delay: 5 }), Observable.forEach(bindMethod(stream, QueueableLike_enqueue)), Observable.subscribe(vts));
         const result = [];
         pipe(stream, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
@@ -181,7 +182,7 @@ testModule("Streamable", describe("animation", test("integration", () => {
             updateCnt++;
             return Observable.empty({ delay: 1 });
         }, { throttleDuration: 20 }), invoke(StreamableLike_stream, vts));
-        pipe((x) => x + 2, Observable.fromValue({ delay: 1 }), Observable.repeat(24), Observable.enqueue(stream), Observable.subscribe(vts));
+        pipe(increment, Observable.fromValue({ delay: 1 }), Observable.repeat(24), Observable.forEach(bindMethod(stream, QueueableLike_enqueue)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(updateCnt, expectEquals(2));
     }

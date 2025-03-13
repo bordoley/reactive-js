@@ -380,10 +380,10 @@ export interface ObservableModule
     options?: { readonly equality?: Equality<T> },
   ): StatefulSynchronousComputationOperator<ObservableComputation, TAction, T>;
 
-  backpressureStrategy<T>(
-    capacity: number,
-    backpressureStrategy: BackpressureStrategy,
-  ): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
+  backpressureStrategy<T>(options: {
+    capacity: number;
+    backpressureStrategy: BackpressureStrategy;
+  }): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
 
   combineLatest: CombineConstructor;
 

@@ -228,7 +228,10 @@ testModule(
               observer[DisposableLike_dispose](error(e));
             }
           }),
-          Observable.backpressureStrategy(1, ThrowBackpressureStrategy),
+          Observable.backpressureStrategy({
+            capacity: 1,
+            backpressureStrategy: ThrowBackpressureStrategy,
+          }),
           Observable.toReadonlyArrayAsync<number>(scheduler),
         ),
       );
@@ -243,7 +246,10 @@ testModule(
           }
           observer[QueueableLike_complete]();
         }),
-        Observable.backpressureStrategy(1, DropLatestBackpressureStrategy),
+        Observable.backpressureStrategy({
+          capacity: 1,
+          backpressureStrategy: DropLatestBackpressureStrategy,
+        }),
         Observable.toReadonlyArrayAsync<number>(scheduler),
         expectArrayEquals([0]),
       );
@@ -259,7 +265,10 @@ testModule(
           }
           observer[QueueableLike_complete]();
         }),
-        Observable.backpressureStrategy(1, DropOldestBackpressureStrategy),
+        Observable.backpressureStrategy({
+          capacity: 1,
+          backpressureStrategy: DropOldestBackpressureStrategy,
+        }),
         Observable.toReadonlyArrayAsync<number>(scheduler),
         expectArrayEquals([9]),
       );
@@ -269,14 +278,20 @@ testModule(
       pipeLazy(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
-        Observable.backpressureStrategy(1, DropLatestBackpressureStrategy),
+        Observable.backpressureStrategy({
+          capacity: 1,
+          backpressureStrategy: DropLatestBackpressureStrategy,
+        }),
         Observable.toReadonlyArray<number>(),
         expectArrayEquals([1, 2, 3]),
       ),
     ),
     StatefulSynchronousComputationOperatorTests(
       ObservableTypes,
-      Observable.backpressureStrategy(10, DropLatestBackpressureStrategy),
+      Observable.backpressureStrategy({
+        capacity: 10,
+        backpressureStrategy: DropLatestBackpressureStrategy,
+      }),
     ),
   ),
   describe(

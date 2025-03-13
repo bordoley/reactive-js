@@ -31,10 +31,10 @@ export const create = /*@__PURE__*/ (() => {
         },
     });
 })();
-export const dispatchTo = (dispatcher) => (src) => Observable_create(observer => {
-    pipe(dispatcher[QueueableLike_onReady], EventSource.addEventHandler(bindMethod(src, PauseableLike_resume)), Disposable.addTo(observer));
+export const enqueue = (queue) => (src) => Observable_create(observer => {
+    pipe(queue[QueueableLike_onReady], EventSource.addEventHandler(bindMethod(src, PauseableLike_resume)), Disposable.addTo(observer));
     pipe(src, Observable_forEach(v => {
-        if (!dispatcher[QueueableLike_enqueue](v)) {
+        if (!queue[QueueableLike_enqueue](v)) {
             src[PauseableLike_pause]();
         }
     }), invoke(ObservableLike_observe, observer));

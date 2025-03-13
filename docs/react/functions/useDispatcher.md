@@ -6,7 +6,7 @@
 
 # Function: useDispatcher()
 
-> **useDispatcher**\<`TReq`\>(`dispatcher`): `object`
+> **useDispatcher**\<`TReq`\>(`queue`): `object`
 
 ## Type Parameters
 
@@ -14,7 +14,7 @@
 
 ## Parameters
 
-### dispatcher
+### queue
 
 [`Optional`](../../functions/type-aliases/Optional.md)\<[`QueueableLike`](../../utils/interfaces/QueueableLike.md)\<`TReq`\>\>
 

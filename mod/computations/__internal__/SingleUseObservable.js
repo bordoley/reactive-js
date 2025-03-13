@@ -6,7 +6,8 @@ import { call, isSome, none, pipe, raiseIf, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import QueueMixin from "../../utils/__mixins__/QueueMixin.js";
-import { QueueLike_dequeue, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, QueueableLike_onReady, } from "../../utils.js";
+import { QueueLike_dequeue, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, QueueableLike_isReady, QueueableLike_onReady, } from "../../utils.js";
+import * as EventSource from "../EventSource.js";
 import * as Publisher from "../Publisher.js";
 export const create = (() => {
     const SingleUseObservableLike_delegate = Symbol("SingleUseObservableLike_delegate");
@@ -14,12 +15,16 @@ export const create = (() => {
     return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function SingleUseObservable(config) {
         init(DisposableMixin, this);
         init(QueueMixin(), this, config);
-        this[QueueableLike_onReady] = Publisher.create();
+        const publisher = (this[QueueableLike_onReady] = Publisher.create());
+        pipe(publisher, EventSource.addEventHandler(() => {
+            this[QueueableLike_isReady] = true;
+        }), Disposable.addTo(this));
         return this;
     }, props({
         [SingleUseObservableLike_delegate]: none,
         [QueueableLike_onReady]: none,
         [QueueableLike_isCompleted]: false,
+        [QueueableLike_isReady]: true,
     }), {
         [ComputationLike_isDeferred]: true,
         [ComputationLike_isSynchronous]: false,
@@ -36,6 +41,7 @@ export const create = (() => {
                 observer[QueueableLike_complete]();
             }
             else {
+                this[QueueableLike_isReady] = observer[QueueableLike_isReady];
                 observer[QueueableLike_onReady][EventSourceLike_addEventListener](this[QueueableLike_onReady]);
             }
         },
@@ -50,10 +56,12 @@ export const create = (() => {
         [QueueableLike_enqueue](v) {
             const delegate = this[SingleUseObservableLike_delegate];
             const isCompleted = this[QueueableLike_isCompleted];
-            return (isCompleted ||
+            const result = isCompleted ||
                 (isSome(delegate)
                     ? delegate[QueueableLike_enqueue](v)
-                    : call(queueProtoype[QueueableLike_enqueue], this, v)));
+                    : call(queueProtoype[QueueableLike_enqueue], this, v));
+            this[QueueableLike_isReady] = result;
+            return result;
         },
     });
 })();

@@ -5,7 +5,7 @@ import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import * as Publisher from "../../computations/Publisher.js";
 import { isSome, newInstance, none, raiseError, returns, } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
-import { BackPressureError, DisposableLike_dispose, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, QueueableLike_onReady, ThrowBackpressureStrategy, } from "../../utils.js";
+import { BackPressureError, DisposableLike_dispose, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, QueueableLike_isReady, QueueableLike_onReady, ThrowBackpressureStrategy, } from "../../utils.js";
 const QueueMixin = /*@__PURE__*/ (() => {
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
     const QueueMixin_head = Symbol("QueueMixin_head");
@@ -74,6 +74,13 @@ const QueueMixin = /*@__PURE__*/ (() => {
 
           return head === tail ? none : values[index];
         },*/
+        get [QueueableLike_isReady]() {
+            unsafeCast(this);
+            const count = this[QueueLike_count];
+            const capacity = this[QueueableLike_capacity];
+            const isCompleted = this[QueueableLike_isCompleted];
+            return !isCompleted && count < capacity;
+        },
         [QueueLike_dequeue]() {
             const count = this[QueueLike_count];
             const values = this[QueueMixin_values];
@@ -265,7 +272,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
                 this[QueueMixin_tail] = newCount;
             }
             this[QueueMixin_capacityMask] = newCapacityMask;
-            return newCount < capacity;
+            return this[QueueableLike_isReady];
         },
         [QueueableLike_complete]() {
             this[QueueableLike_isCompleted] = true;

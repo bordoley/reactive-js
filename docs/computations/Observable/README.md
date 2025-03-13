@@ -41,7 +41,6 @@
 - [create](functions/create.md)
 - [decodeWithCharset](functions/decodeWithCharset.md)
 - [defer](functions/defer.md)
-- [dispatchTo](functions/dispatchTo.md)
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [empty](functions/empty.md)
 - [encodeUtf8](functions/encodeUtf8.md)

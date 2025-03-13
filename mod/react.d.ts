@@ -22,7 +22,7 @@ interface ReactModule {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): Function1<TProps, React.ReactNode>;
-    useDispatcher<TReq>(dispatcher: Optional<QueueableLike<TReq>>): {
+    useDispatcher<TReq>(queue: Optional<QueueableLike<TReq>>): {
         enqueue: Function1<TReq, boolean>;
         complete: SideEffect;
     };

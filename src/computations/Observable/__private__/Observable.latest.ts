@@ -20,16 +20,16 @@ import {
   ObservableLike_observe,
 } from "../../../computations.js";
 import { none, pick, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DelegatingObserverMixin from "../../../utils/__mixins__/DelegatingObserverMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import {
+import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
-  DisposableLike_dispose,
   ObserverLike,
+  QueueableLike_complete,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
@@ -57,7 +57,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
     if (
       ctx[LatestCtx_completedCount] === ctx[LatestCtx_observers][Array_length]
     ) {
-      ctx[LatestCtx_delegate][DisposableLike_dispose]();
+      ctx[LatestCtx_delegate][QueueableLike_complete]();
     }
   }
 
@@ -72,7 +72,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
   };
 
   const createLatestObserver = mixInstanceFactory(
-    include(DisposableMixin, DelegatingObserverMixin()),
+    include(DisposableMixin, LiftedObserverMixin()),
     function LatestObserver(
       this: Pick<LiftedObserverLike, typeof LiftedObserverLike_notify> &
         Mutable<TProperties>,
@@ -80,7 +80,9 @@ const Observable_latest = /*@__PURE__*/ (() => {
       delegate: ObserverLike,
     ): ObserverLike & TProperties {
       init(DisposableMixin, this);
-      init(DelegatingObserverMixin(), this, delegate);
+      init(LiftedObserverMixin(), this, delegate, none);
+
+      pipe(this, Disposable.addTo(delegate));
 
       this[LatestObserver_ctx] = ctx;
 
