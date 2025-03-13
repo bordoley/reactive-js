@@ -305,6 +305,7 @@ const LiftedObserverMixin: <
           const isCompleted = this[QueueableLike_isCompleted];
 
           if (isCompleted) {
+            debugger
             raise("observer is completed");
           }
 
@@ -338,11 +339,10 @@ const LiftedObserverMixin: <
             LiftedObserverLike<TA, TB, TDelegateObserver>,
         ) {
           const isCompleted = this[QueueableLike_isCompleted];
-          const isDisposed = this[DisposableLike_isDisposed];
 
           call(queueProtoype[QueueableLike_complete], this);
 
-          if (isCompleted || isDisposed) {
+          if (isCompleted) {
             return;
           }
 

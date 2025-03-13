@@ -15,7 +15,7 @@ import {
 import { bindMethod, none, partial, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_complete,
@@ -45,17 +45,15 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = /*@__PURE__*/ (<
   }
 
   const createTakeUntilObserver = mixInstanceFactory(
-    include(DisposableMixin, LiftedObserverMixin()),
+    include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function TakeUntilObserver(
       this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
         TProperties,
       delegate: ObserverLike<T>,
       notifier: PureSynchronousObservableLike,
     ): ObserverLike<T> {
-      init(DisposableMixin, this, delegate);
+      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T>(), this, delegate, none);
-
-      pipe(this, Disposable.addTo(delegate));
 
       this[TakeUntilObserver_notifier] = notifier;
 
@@ -81,11 +79,6 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = /*@__PURE__*/ (<
       ) {
         const delegate = this[LiftedObserverLike_delegate];
         delegate[QueueableLike_enqueue](next);
-      },
-
-      [LiftedObserverLike_complete](this: LiftedObserverLike<T>) {
-        this[LiftedObserverLike_delegate][QueueableLike_complete]();
-        this[DisposableLike_dispose]();
       },
     }),
   );
