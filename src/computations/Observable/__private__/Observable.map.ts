@@ -9,10 +9,10 @@ import { Function1, none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { ObserverLike, QueueableLike_enqueue } from "../../../utils.js";
+import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
@@ -50,9 +50,7 @@ const createMapObserver: <TA, TB>(
         next: TA,
       ) {
         const mapped = this[MapObserver_selector](next);
-        const delegate = this[LiftedObserverLike_delegate];
-
-        delegate[QueueableLike_enqueue](mapped);
+        this[LiftedObserverLike_notifyDelegate](mapped);
       },
     }),
   ))();

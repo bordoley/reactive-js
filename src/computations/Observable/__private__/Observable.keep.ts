@@ -9,10 +9,10 @@ import { Predicate, none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { ObserverLike, QueueableLike_enqueue } from "../../../utils.js";
+import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
@@ -50,10 +50,9 @@ const createKeepObserver: <T>(
         next: T,
       ) {
         const shouldNotify = this[KeepObserver_predicate](next);
-        const delegate = this[LiftedObserverLike_delegate];
 
         if (shouldNotify) {
-          delegate[QueueableLike_enqueue](next);
+          this[LiftedObserverLike_notifyDelegate](next);
         }
       },
     }),

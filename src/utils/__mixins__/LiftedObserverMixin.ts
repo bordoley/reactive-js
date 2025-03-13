@@ -9,12 +9,14 @@ import {
   unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
+  Function1,
   Method1,
   Optional,
   SideEffect1,
   bind,
   bindMethod,
   call,
+  isSome,
   none,
   pipe,
   raise,
@@ -57,6 +59,9 @@ export const LiftedObserverLike_delegate = Symbol(
 );
 
 export const LiftedObserverLike_notify = Symbol("LiftedObserverLike_notify");
+export const LiftedObserverLike_notifyDelegate = Symbol(
+  "LiftedObserverLike_notifyDelegate",
+);
 export const LiftedObserverLike_complete = Symbol(
   "LiftedObserverLike_complete",
 );
@@ -69,6 +74,7 @@ export interface LiftedObserverLike<
   readonly [LiftedObserverLike_delegate]: TDelegateObserver;
 
   [LiftedObserverLike_notify](next: TA): void;
+  [LiftedObserverLike_notifyDelegate](next: TB): void;
   [LiftedObserverLike_complete](): void;
 }
 
@@ -105,6 +111,7 @@ const LiftedObserverMixin: <
       ContinuationContextLike
     >;
     [SchedulerLike_inContinuation]: boolean;
+    [LiftedObserverLike_notifyDelegate]: Function1<TB, void>;
   };
 
   const scheduleDrainQueue = (
@@ -163,6 +170,7 @@ const LiftedObserverMixin: <
         | typeof LiftedObserverLike_notify
         | typeof LiftedObserverLike_complete
         | typeof LiftedObserverLike_delegate
+        | typeof LiftedObserverLike_notifyDelegate
       >,
       Pick<
         LiftedObserverLike<TA, TB, TDelegateObserver>,
@@ -201,6 +209,19 @@ const LiftedObserverMixin: <
         });
         init(SerialDisposableMixin(), this, Disposable.disposed);
 
+        const delegateIsLifted = isSome(
+          (delegate as Partial<LiftedObserverLike<TB>>)[
+            LiftedObserverLike_notify
+          ],
+        );
+
+        this[LiftedObserverLike_notifyDelegate] = delegateIsLifted
+          ? bindMethod(
+              delegate as unknown as LiftedObserverLike<TB>,
+              LiftedObserverLike_notify,
+            )
+          : bindMethod(delegate, QueueableLike_enqueue);
+
         this[LiftedObserverLike_delegate] = delegate;
         this[LiftedObserverMixin_scheduler] =
           (delegate as unknown as TProperties)[LiftedObserverMixin_scheduler] ??
@@ -229,6 +250,7 @@ const LiftedObserverMixin: <
       },
       props<TProperties>({
         [SchedulerLike_inContinuation]: false,
+        [LiftedObserverLike_notifyDelegate]: none,
         [LiftedObserverLike_delegate]: none,
         [LiftedObserverMixin_scheduler]: none,
         [LiftedObserverMixin_schedulerCallback]: none,
