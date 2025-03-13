@@ -67,7 +67,7 @@ const createThrowIfEmptyObserver: <T>(
         next: T,
       ) {
         this[ThrowIfEmptyObserver_isEmpty] = false;
-        this[LiftedObserverLike_notifyDelegate](next);  
+        this[LiftedObserverLike_notifyDelegate](next);
       },
       [LiftedObserverLike_complete](this: TProperties & LiftedObserverLike<T>) {
         const factory = this[ThrowIfEmptyObserver_factory];
