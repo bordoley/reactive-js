@@ -9,13 +9,12 @@ import { Predicate, none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   ObserverLike,
   QueueableLike_complete,
-  QueueableLike_enqueue,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -59,12 +58,11 @@ const createTakeWhileObserver: <T>(
         this: TProperties<T> & LiftedObserverLike<T>,
         next: T,
       ) {
-        const delegate = this[LiftedObserverLike_delegate];
         const satisfiesPredicate = this[TakeWhileObserver_predicate](next);
         const isInclusive = this[TakeWhileObserver_inclusive];
 
         if (satisfiesPredicate || isInclusive) {
-          delegate[QueueableLike_enqueue](next);
+          this[LiftedObserverLike_notifyDelegate](next);
         }
 
         if (!satisfiesPredicate) {

@@ -26,15 +26,14 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   DisposableLike,
   ObserverLike,
   QueueableLike,
   QueueableLike_complete,
-  QueueableLike_enqueue,
   QueueableLike_isCompleted,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -114,7 +113,6 @@ const createWithLatestFromObserver: <TA, TB, T>(
         this: TProperties & LiftedObserverLike<TA, T>,
         next: TA,
       ) {
-        const delegate = this[LiftedObserverLike_delegate];
         const shouldEmit =
           !this[QueueableLike_isCompleted] &&
           this[WithLatestFromObserver_hasLatest];
@@ -124,7 +122,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
             next,
             this[WithLatestFromObserver_otherLatest] as TB,
           );
-          delegate[QueueableLike_enqueue](v);
+          this[LiftedObserverLike_notifyDelegate](v);
         }
       },
     }),

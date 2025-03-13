@@ -102,7 +102,6 @@ const createTakeLastObserver: <T>(
         next: T,
       ) {
         this[TakeLastObserver_queue][QueueableLike_enqueue](next);
-        return this[QueueableLike_isReady];
       },
       [LiftedObserverLike_complete](this: TProperties & LiftedObserverLike<T>) {
         const delegate = this[LiftedObserverLike_delegate];

@@ -10,10 +10,10 @@ import { clampPositiveInteger, max } from "../../../math.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { ObserverLike, QueueableLike_enqueue } from "../../../utils.js";
+import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
@@ -50,8 +50,6 @@ const createSkipFirstObserver: <T>(
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
-        const delegate = this[LiftedObserverLike_delegate];
-
         this[SkipFirstObserver_count] = max(
           this[SkipFirstObserver_count] - 1,
           -1,
@@ -60,7 +58,7 @@ const createSkipFirstObserver: <T>(
         const shouldEmit = this[SkipFirstObserver_count] < 0;
 
         if (shouldEmit) {
-          delegate[QueueableLike_enqueue](next);
+          this[LiftedObserverLike_notifyDelegate](next);
         }
       },
     }),

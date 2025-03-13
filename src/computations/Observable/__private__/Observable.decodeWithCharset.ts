@@ -13,6 +13,7 @@ import LiftedObserverMixin, {
   LiftedObserverLike_complete,
   LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   ObserverLike,
@@ -62,8 +63,6 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         this: TProperties & LiftedObserverLike<ArrayBuffer, string>,
         next: ArrayBuffer,
       ) {
-        const delegate = this[LiftedObserverLike_delegate];
-
         const data = this[DecodeWithCharsetObserver_textDecoder].decode(next, {
           stream: true,
         });
@@ -71,7 +70,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         const shouldEmit = data[Array_length] > 0;
 
         if (shouldEmit) {
-          delegate[QueueableLike_enqueue](data);
+          this[LiftedObserverLike_notifyDelegate](data);
         }
       },
 

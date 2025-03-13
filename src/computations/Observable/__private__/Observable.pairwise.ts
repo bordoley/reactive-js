@@ -8,10 +8,10 @@ import { Tuple2, none, tuple } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { ObserverLike, QueueableLike_enqueue } from "../../../utils.js";
+import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
@@ -46,7 +46,6 @@ const createPairwiseObserver: <T>(
         this: TProperties<T> & LiftedObserverLike<T, Tuple2<T, T>>,
         next: T,
       ) {
-        const delegate = this[LiftedObserverLike_delegate];
         const prev = this[PairwiseObserver_prev];
         const hasPrev = this[PairwiseObserver_hasPrev];
 
@@ -55,8 +54,7 @@ const createPairwiseObserver: <T>(
 
         if (hasPrev) {
           const pair = tuple(prev, next);
-
-          delegate[QueueableLike_enqueue](pair);
+          this[LiftedObserverLike_notifyDelegate](pair);
         }
       },
     },

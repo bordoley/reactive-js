@@ -8,14 +8,10 @@ import { partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import {
-  BackpressureStrategy,
-  ObserverLike,
-  QueueableLike_enqueue,
-} from "../../../utils.js";
+import { BackpressureStrategy, ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
@@ -44,8 +40,7 @@ const createBackpressureObserver: <T>(
     props(),
     {
       [LiftedObserverLike_notify](this: LiftedObserverLike<T>, next: T) {
-        const delegate = this[LiftedObserverLike_delegate];
-        delegate[QueueableLike_enqueue](next);
+        this[LiftedObserverLike_notifyDelegate](next);
       },
     },
   ))();
