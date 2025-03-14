@@ -1,16 +1,16 @@
 /// <reference types="./AbstractSink.d.ts" />
 
-import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
 export const AbstractSink_delegate = Symbol("AbstractSink_delegate");
 class AbstractSink {
-    [SinkLike_isComplete] = false;
+    [SinkLike_isCompleted] = false;
     [AbstractSink_delegate];
     constructor(sink) {
         this[AbstractSink_delegate] = sink;
     }
     [SinkLike_complete]() {
-        if (!this[SinkLike_isComplete]) {
-            this[SinkLike_isComplete] = true;
+        if (!this[SinkLike_isCompleted]) {
+            this[SinkLike_isCompleted] = true;
             this[AbstractSink_delegate][SinkLike_complete]();
         }
     }

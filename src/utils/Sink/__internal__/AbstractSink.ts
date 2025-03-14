@@ -1,7 +1,7 @@
 import {
   SinkLike,
   SinkLike_complete,
-  SinkLike_isComplete,
+  SinkLike_isCompleted,
   SinkLike_next,
 } from "../../../utils.js";
 
@@ -13,7 +13,7 @@ abstract class AbstractSink<
   TDelegate extends SinkLike<TB> = SinkLike<TB>,
 > implements SinkLike<TA>
 {
-  public [SinkLike_isComplete] = false;
+  public [SinkLike_isCompleted] = false;
   public [AbstractSink_delegate]: TDelegate;
 
   constructor(sink: TDelegate) {
@@ -23,8 +23,8 @@ abstract class AbstractSink<
   abstract [SinkLike_next](next: TA): void;
 
   [SinkLike_complete]() {
-    if (!this[SinkLike_isComplete]) {
-      this[SinkLike_isComplete] = true;
+    if (!this[SinkLike_isCompleted]) {
+      this[SinkLike_isCompleted] = true;
       this[AbstractSink_delegate][SinkLike_complete]();
     }
   }

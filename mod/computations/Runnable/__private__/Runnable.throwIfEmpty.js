@@ -1,12 +1,12 @@
 /// <reference types="./Runnable.throwIfEmpty.d.ts" />
 
 import { error, newInstance, raise } from "../../../functions.js";
-import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class ThrowIfEmptySink {
     sink;
     f;
-    [SinkLike_isComplete] = false;
+    [SinkLike_isCompleted] = false;
     e = true;
     constructor(sink, f) {
         this.sink = sink;
@@ -17,8 +17,8 @@ class ThrowIfEmptySink {
         this.sink[SinkLike_next](next);
     }
     [SinkLike_complete]() {
-        if (!this[SinkLike_isComplete]) {
-            this[SinkLike_isComplete] = true;
+        if (!this[SinkLike_isCompleted]) {
+            this[SinkLike_isCompleted] = true;
             if (this.e) {
                 raise(error(this.f()));
             }

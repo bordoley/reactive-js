@@ -49,8 +49,8 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
+  SinkLike_complete,
+  SinkLike_next,
 } from "./utils.js";
 
 interface ReactModule {
@@ -198,13 +198,12 @@ export const useDispatcher: Signature["useDispatcher"] = <TReq>(
   }, [queue]);
 
   const enqueue = useCallback(
-    (req: TReq) =>
-      stableDispatcherRef?.current?.[QueueableLike_enqueue](req) ?? true,
+    (req: TReq) => stableDispatcherRef?.current?.[SinkLike_next](req) ?? true,
     [stableDispatcherRef],
   );
 
   const complete = useCallback(
-    () => stableDispatcherRef?.current?.[QueueableLike_complete](),
+    () => stableDispatcherRef?.current?.[SinkLike_complete](),
     [stableDispatcherRef],
   );
 

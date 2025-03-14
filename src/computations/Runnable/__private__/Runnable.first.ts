@@ -3,13 +3,13 @@ import { Optional, newInstance, none } from "../../../functions.js";
 import {
   SinkLike,
   SinkLike_complete,
-  SinkLike_isComplete,
+  SinkLike_isCompleted,
   SinkLike_next,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
 class FirstSink<T> implements SinkLike<T> {
-  public [SinkLike_isComplete] = false;
+  public [SinkLike_isCompleted] = false;
   public v: Optional<T> = none;
 
   [SinkLike_next](next: T): void {
@@ -17,7 +17,7 @@ class FirstSink<T> implements SinkLike<T> {
     this[SinkLike_complete]();
   }
   [SinkLike_complete]() {
-    this[SinkLike_isComplete] = true;
+    this[SinkLike_isCompleted] = true;
   }
 }
 

@@ -8,7 +8,7 @@ import { bind, bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
-import { QueueableLike_complete } from "../../../utils.js";
+import { SinkLike_complete } from "../../../utils.js";
 import Observable_empty from "./Observable.empty.js";
 const Observable_concat = /*@__PURE__*/ (() => {
     const ConcatObserverCtx_delegate = Symbol("ConcatObserverCtx_delegate");
@@ -24,7 +24,7 @@ const Observable_concat = /*@__PURE__*/ (() => {
             observables[next][ObservableLike_observe](concatObserver);
         }
         else {
-            delegate[QueueableLike_complete]();
+            delegate[SinkLike_complete]();
         }
     }
     const createConcatObserver = (ctx) => {

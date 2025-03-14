@@ -3,7 +3,7 @@
 import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
 import DelegatingNonCompletingSink from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
-import { SinkLike_complete, SinkLike_isComplete, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 class ConcatRunnable {
     s;
@@ -16,7 +16,7 @@ class ConcatRunnable {
         const delegatingSink = newInstance(DelegatingNonCompletingSink, sink);
         for (const src of this.s) {
             src[RunnableLike_eval](delegatingSink);
-            if (sink[SinkLike_isComplete]) {
+            if (sink[SinkLike_isCompleted]) {
                 break;
             }
         }

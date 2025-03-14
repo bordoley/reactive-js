@@ -34,9 +34,6 @@ import {
   QueueLike_dequeue,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
-  QueueableLike_isCompleted,
   QueueableLike_isReady,
   QueueableLike_onReady,
   SchedulerLike,
@@ -48,6 +45,9 @@ import {
   SchedulerLike_shouldYield,
   SerialDisposableLike,
   SerialDisposableLike_current,
+  SinkLike_complete,
+  SinkLike_isCompleted,
+  SinkLike_next,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
@@ -141,7 +141,7 @@ const LiftedObserverMixin: <
           }
         }
 
-        if (observer[QueueableLike_isCompleted]) {
+        if (observer[SinkLike_isCompleted]) {
           observer[LiftedObserverLike_complete]();
         }
       };
@@ -160,7 +160,7 @@ const LiftedObserverMixin: <
   }
 
   function enqueueDelegate(this: TProperties, next: TB) {
-    this[LiftedObserverLike_delegate][QueueableLike_enqueue](next);
+    this[LiftedObserverLike_delegate][SinkLike_next](next);
   }
 
   return returns(
@@ -172,7 +172,7 @@ const LiftedObserverMixin: <
         | keyof DisposableLike
         | typeof SchedulerLike_inContinuation
         | typeof QueueableLike_isReady
-        | typeof QueueableLike_isCompleted
+        | typeof SinkLike_isCompleted
         | typeof QueueableLike_onReady
         | typeof QueueableLike_backpressureStrategy
         | typeof QueueableLike_capacity
@@ -201,7 +201,7 @@ const LiftedObserverMixin: <
             LiftedObserverLike<TA, TB, TDelegateObserver>,
             | typeof SchedulerLike_inContinuation
             | typeof QueueableLike_isReady
-            | typeof QueueableLike_isCompleted
+            | typeof SinkLike_isCompleted
             | typeof QueueableLike_onReady
             | typeof QueueableLike_backpressureStrategy
             | typeof QueueableLike_capacity
@@ -251,9 +251,7 @@ const LiftedObserverMixin: <
 
         pipe(
           this,
-          DisposableContainer.onDisposed(
-            bindMethod(this, QueueableLike_complete),
-          ),
+          DisposableContainer.onDisposed(bindMethod(this, SinkLike_complete)),
         );
 
         return this;
@@ -303,7 +301,7 @@ const LiftedObserverMixin: <
           );
         },
 
-        [QueueableLike_enqueue](
+        [SinkLike_next](
           this: TProperties &
             ObserverLike<TA> &
             QueueLike<TA> &
@@ -312,7 +310,7 @@ const LiftedObserverMixin: <
           next: TA,
         ): boolean {
           const inSchedulerContinuation = this[SchedulerLike_inContinuation];
-          const isCompleted = this[QueueableLike_isCompleted];
+          const isCompleted = this[SinkLike_isCompleted];
 
           // FIXME: Put this in a dev check
           if (isCompleted) {
@@ -335,22 +333,22 @@ const LiftedObserverMixin: <
             this[LiftedObserverLike_notify](next);
           } else if (!shouldIgnore) {
             scheduleDrainQueue(this);
-            call(queueProtoype[QueueableLike_enqueue], this, next);
+            call(queueProtoype[SinkLike_next], this, next);
           }
 
           return this[QueueableLike_isReady];
         },
 
-        [QueueableLike_complete](
+        [SinkLike_complete](
           this: TProperties &
             ObserverLike<TA> &
             QueueLike<TA> &
             SerialDisposableLike &
             LiftedObserverLike<TA, TB, TDelegateObserver>,
         ) {
-          const isCompleted = this[QueueableLike_isCompleted];
+          const isCompleted = this[SinkLike_isCompleted];
 
-          call(queueProtoype[QueueableLike_complete], this);
+          call(queueProtoype[SinkLike_complete], this);
 
           if (isCompleted) {
             return;
@@ -360,7 +358,7 @@ const LiftedObserverMixin: <
         },
 
         [LiftedObserverLike_complete](this: TProperties) {
-          this[LiftedObserverLike_delegate][QueueableLike_complete]();
+          this[LiftedObserverLike_delegate][SinkLike_complete]();
         },
       }),
     ),

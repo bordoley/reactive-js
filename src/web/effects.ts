@@ -30,8 +30,8 @@ import * as Disposable from "../utils/Disposable.js";
 import {
   DisposableLike,
   QueueableLike,
-  QueueableLike_enqueue,
   SchedulerLike,
+  SinkLike_next,
 } from "../utils.js";
 import { CSSStyleMapLike } from "../web.js";
 import * as AnimationFrameScheduler from "./AnimationFrameScheduler.js";
@@ -93,7 +93,7 @@ const makeRefSetter =
     queue: QueueableLike<Updater<Optional<HTMLElement | null>>>,
   ): SideEffect1<HTMLElement | null | undefined> =>
   ele =>
-    queue[QueueableLike_enqueue](returns(ele));
+    queue[SinkLike_next](returns(ele));
 
 const animateHtmlElement = <T>(
   element: Optional<HTMLElement | null>,

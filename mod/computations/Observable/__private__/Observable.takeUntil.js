@@ -6,31 +6,26 @@ import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isS
 import { bindMethod, none, partial, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { DisposableLike_dispose, QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { SinkLike_complete, SinkLike_next, } from "../../../utils.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 import Observable_takeFirst from "./Observable.takeFirst.js";
 const Observable_takeUntil = /*@__PURE__*/ (() => {
     const TakeUntilObserver_notifier = Symbol("TakeUntilObserver_notifier");
-    const createTakeUntilObserver = mixInstanceFactory(include(DisposableMixin, LiftedObserverMixin()), function TakeUntilObserver(delegate, notifier) {
-        init(DisposableMixin, this, delegate);
+    const createTakeUntilObserver = mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function TakeUntilObserver(delegate, notifier) {
+        init(DelegatingDisposableMixin, this, delegate);
         init(LiftedObserverMixin(), this, delegate, none);
-        pipe(this, Disposable.addTo(delegate));
         this[TakeUntilObserver_notifier] = notifier;
-        pipe(notifier, Observable_takeFirst(), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(this), DisposableContainer.onComplete(bindMethod(this, QueueableLike_complete)));
+        pipe(notifier, Observable_takeFirst(), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(this), DisposableContainer.onComplete(bindMethod(this, SinkLike_complete)));
         return this;
     }, props({
         [TakeUntilObserver_notifier]: none,
     }), proto({
         [LiftedObserverLike_notify](next) {
             const delegate = this[LiftedObserverLike_delegate];
-            delegate[QueueableLike_enqueue](next);
-        },
-        [LiftedObserverLike_complete]() {
-            this[LiftedObserverLike_delegate][QueueableLike_complete]();
-            this[DisposableLike_dispose]();
+            delegate[SinkLike_next](next);
         },
     }));
     return (notifier) => pipe(createTakeUntilObserver, partial(notifier), Observable_lift({

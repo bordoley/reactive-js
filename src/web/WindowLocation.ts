@@ -45,8 +45,8 @@ import {
   DisposableLike,
   DropOldestBackpressureStrategy,
   ObserverLike,
-  QueueableLike_enqueue,
   SchedulerLike,
+  SinkLike_next,
 } from "../utils.js";
 import {
   WindowLocationLike,
@@ -201,34 +201,30 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
         this: TProperties,
         stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
       ) {
-        this[WindowLocation_delegate][QueueableLike_enqueue](
-          (prevState: TState) => {
-            const uri = createSerializableWindowLocationURI(
-              isFunction(stateOrUpdater)
-                ? stateOrUpdater(prevState.uri)
-                : stateOrUpdater,
-            );
+        this[WindowLocation_delegate][SinkLike_next]((prevState: TState) => {
+          const uri = createSerializableWindowLocationURI(
+            isFunction(stateOrUpdater)
+              ? stateOrUpdater(prevState.uri)
+              : stateOrUpdater,
+          );
 
-            return { uri, replace: false, counter: prevState.counter + 1 };
-          },
-        );
+          return { uri, replace: false, counter: prevState.counter + 1 };
+        });
       },
 
       [WindowLocationLike_replace](
         this: TProperties,
         stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
       ) {
-        this[WindowLocation_delegate][QueueableLike_enqueue](
-          (prevState: TState) => {
-            const uri = createSerializableWindowLocationURI(
-              isFunction(stateOrUpdater)
-                ? stateOrUpdater(prevState.uri)
-                : stateOrUpdater,
-            );
+        this[WindowLocation_delegate][SinkLike_next]((prevState: TState) => {
+          const uri = createSerializableWindowLocationURI(
+            isFunction(stateOrUpdater)
+              ? stateOrUpdater(prevState.uri)
+              : stateOrUpdater,
+          );
 
-            return { uri, replace: true, counter: prevState.counter };
-          },
-        );
+          return { uri, replace: true, counter: prevState.counter };
+        });
       },
 
       [WindowLocationLike_goBack](this: WindowLocationLike): void {

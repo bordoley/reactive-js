@@ -3,11 +3,11 @@
 import { isSome, newInstance, none } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
 import * as Queue from "../../../utils/Queue.js";
-import { DropOldestBackpressureStrategy, QueueLike_dequeue, QueueableLike_enqueue, SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
+import { DropOldestBackpressureStrategy, QueueLike_dequeue, SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class TakeLastSink {
     sink;
-    [SinkLike_isComplete] = false;
+    [SinkLike_isCompleted] = false;
     q;
     constructor(sink, cnt) {
         this.sink = sink;
@@ -17,15 +17,15 @@ class TakeLastSink {
         });
     }
     [SinkLike_next](next) {
-        this.q[QueueableLike_enqueue](next);
+        this.q[SinkLike_next](next);
     }
     [SinkLike_complete]() {
-        this[SinkLike_isComplete] = true;
+        this[SinkLike_isCompleted] = true;
         const queue = this.q;
         const sink = this.sink;
         let v = none;
         while (((v = queue[QueueLike_dequeue]()),
-            !sink[SinkLike_isComplete] && isSome(v))) {
+            !sink[SinkLike_isCompleted] && isSome(v))) {
             sink[SinkLike_next](v);
         }
         sink[SinkLike_complete]();

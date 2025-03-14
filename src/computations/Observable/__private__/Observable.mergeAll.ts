@@ -45,11 +45,11 @@ import {
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
-  QueueableLike_isCompleted,
   QueueableLike_isReady,
   SchedulerLike_requestYield,
+  SinkLike_complete,
+  SinkLike_isCompleted,
+  SinkLike_next,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -91,7 +91,8 @@ const createMergeAllObserverOperator: <T>(options?: {
       Observable_forEach<T>(v => {
         // FIXME: consider trying to wrap delegate in a delegate observe
         // and subscribing with it directly.
-        if (!delegate[QueueableLike_enqueue](v)) {
+        delegate[SinkLike_next](v);
+        if (!delegate[QueueableLike_isReady]) {
           delegate[SchedulerLike_requestYield]();
         }
       }),
@@ -113,10 +114,10 @@ const createMergeAllObserverOperator: <T>(options?: {
     if (isSome(nextObs)) {
       subscribeToObservable(this, nextObs);
     } else if (
-      this[QueueableLike_isCompleted] &&
+      this[SinkLike_isCompleted] &&
       this[MergeAllObserver_activeCount] <= 0
     ) {
-      this[LiftedObserverLike_delegate][QueueableLike_complete]();
+      this[LiftedObserverLike_delegate][SinkLike_complete]();
     }
   }
 
@@ -165,7 +166,7 @@ const createMergeAllObserverOperator: <T>(options?: {
         ) {
           subscribeToObservable(this, next);
         } else {
-          this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
+          this[MergeAllObserver_observablesQueue][SinkLike_next](next);
         }
 
         return this[QueueableLike_isReady];
@@ -180,7 +181,7 @@ const createMergeAllObserverOperator: <T>(options?: {
             this[MergeAllObserver_activeCount] ===
           0
         ) {
-          delegate[QueueableLike_complete]();
+          delegate[SinkLike_complete]();
         }
       },
     }),

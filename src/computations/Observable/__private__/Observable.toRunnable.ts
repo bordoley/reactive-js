@@ -10,7 +10,7 @@ import {
   BackpressureStrategy,
   SinkLike,
   SinkLike_complete,
-  SinkLike_isComplete,
+  SinkLike_isCompleted,
   SinkLike_next,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -35,7 +35,7 @@ class SynchronousObservableRunnable<T> implements RunnableLike<T> {
   [RunnableLike_eval](sink: SinkLike<T>): void {
     pipe(
       this.obs,
-      Observable_takeWhile<T>(_ => !sink[SinkLike_isComplete]),
+      Observable_takeWhile<T>(_ => !sink[SinkLike_isCompleted]),
       Observable_forEach(bindMethod(sink, SinkLike_next)),
       Observable_run(this.options),
     );

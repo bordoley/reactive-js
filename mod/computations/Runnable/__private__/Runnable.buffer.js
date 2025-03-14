@@ -3,13 +3,13 @@
 import { Array_length, Array_push, MAX_SAFE_INTEGER, } from "../../../__internal__/constants.js";
 import { newInstance } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
-import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class BufferSink {
     sink;
     count;
     buffer = [];
-    [SinkLike_isComplete] = false;
+    [SinkLike_isCompleted] = false;
     constructor(sink, count) {
         this.sink = sink;
         this.count = count;
@@ -23,13 +23,13 @@ class BufferSink {
         }
     }
     [SinkLike_complete]() {
-        if (!this[SinkLike_isComplete]) {
+        if (!this[SinkLike_isCompleted]) {
             const { buffer } = this;
             this.buffer = [];
             if (buffer[Array_length] > 0) {
                 this.sink[SinkLike_next](buffer);
             }
-            this[SinkLike_isComplete] = true;
+            this[SinkLike_isCompleted] = true;
             this.sink[SinkLike_complete]();
         }
     }

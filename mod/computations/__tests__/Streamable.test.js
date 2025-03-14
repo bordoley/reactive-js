@@ -63,7 +63,7 @@ import { StreamableLike_stream } from "../../computations.js";
 import { bindMethod, invoke, none, pipe, pipeSome, returns, } from "../../functions.js";
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
-import { DropLatestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { DropLatestBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, SinkLike_complete, SinkLike_isCompleted, SinkLike_next, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 testModule("Streamable", describe("animation", test("integration", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
@@ -74,7 +74,7 @@ testModule("Streamable", describe("animation", test("integration", () => {
         pipeSome(stream, EventSource.addEventHandler(ev => {
             result = ev;
         }));
-        stream[QueueableLike_enqueue](none);
+        stream[SinkLike_next](none);
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectEquals(1));
     }
@@ -97,7 +97,7 @@ testModule("Streamable", describe("animation", test("integration", () => {
         pipeSome(stream[DictionaryLike_get]("a"), EventSource.addEventHandler(ev => {
             result = ev;
         }));
-        stream[QueueableLike_enqueue](none);
+        stream[SinkLike_next](none);
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectEquals(1));
     }
@@ -119,9 +119,9 @@ testModule("Streamable", describe("animation", test("integration", () => {
         });
         pipe(stateStream[QueueableLike_capacity], expectEquals(20));
         pipe(stateStream[QueueableLike_backpressureStrategy], expectEquals(DropLatestBackpressureStrategy));
-        stateStream[QueueableLike_enqueue](returns(2));
-        stateStream[QueueableLike_enqueue](returns(3));
-        stateStream[QueueableLike_complete]();
+        stateStream[SinkLike_next](returns(2));
+        stateStream[SinkLike_next](returns(3));
+        stateStream[SinkLike_complete]();
         let result = [];
         pipe(stateStream, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
@@ -143,9 +143,9 @@ testModule("Streamable", describe("animation", test("integration", () => {
             capacity: 20,
             backpressureStrategy: DropLatestBackpressureStrategy,
         });
-        pipe(stateStream[QueueableLike_isCompleted], expectFalse("expected stream not to be completed"));
-        stateStream[QueueableLike_complete]();
-        pipe(stateStream[QueueableLike_isCompleted], expectTrue("expected stream to be completed"));
+        pipe(stateStream[SinkLike_isCompleted], expectFalse("expected stream not to be completed"));
+        stateStream[SinkLike_complete]();
+        pipe(stateStream[SinkLike_isCompleted], expectTrue("expected stream to be completed"));
     }
     catch (e_4) {
         env_4.error = e_4;
@@ -159,7 +159,7 @@ testModule("Streamable", describe("animation", test("integration", () => {
     try {
         const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 }), false);
         const stream = pipe(Streamable.stateStore(returns(-1)), Streamable.syncState(_ => pipe([9, 10, 50, 60, 70], Observable.fromReadonlyArray({ delay: 1, delayStart: true }), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (_oldState, _newState) => Observable.empty()), invoke(StreamableLike_stream, vts));
-        pipe((x) => x + 2, Observable.fromValue({ delay: 5 }), Observable.forEach(bindMethod(stream, QueueableLike_enqueue)), Observable.subscribe(vts));
+        pipe((x) => x + 2, Observable.fromValue({ delay: 5 }), Observable.forEach(bindMethod(stream, SinkLike_next)), Observable.subscribe(vts));
         const result = [];
         pipe(stream, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
@@ -181,7 +181,7 @@ testModule("Streamable", describe("animation", test("integration", () => {
             updateCnt++;
             return Observable.empty({ delay: 1 });
         }, { throttleDuration: 20 }), invoke(StreamableLike_stream, vts));
-        pipe(increment, Observable.fromValue({ delay: 1 }), Observable.repeat(24), Observable.forEach(bindMethod(stream, QueueableLike_enqueue)), Observable.subscribe(vts));
+        pipe(increment, Observable.fromValue({ delay: 1 }), Observable.repeat(24), Observable.forEach(bindMethod(stream, SinkLike_next)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
         // FIXME: this isn't a great test, because all the scheduler hopping
         // leads to induced delays that are hard to account for accurately.

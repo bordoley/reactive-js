@@ -67,7 +67,7 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Queue from "../../utils/Queue.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, SchedulerLike_now, SchedulerLike_schedule, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, SinkLike_next, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 import * as WritableStore from "../WritableStore.js";
@@ -109,9 +109,9 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
             await Promise.resolve();
             try {
                 for (let i = 0; i < 10; i++) {
-                    observer[QueueableLike_enqueue](i);
+                    observer[SinkLike_next](i);
                 }
-                observer[QueueableLike_complete]();
+                observer[SinkLike_complete]();
             }
             catch (e) {
                 observer[DisposableLike_dispose](error(e));
@@ -135,9 +135,9 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         await pipeAsync(Observable.create(async (observer) => {
             await Promise.resolve();
             for (let i = 0; i < 10; i++) {
-                observer[QueueableLike_enqueue](i);
+                observer[SinkLike_next](i);
             }
-            observer[QueueableLike_complete]();
+            observer[SinkLike_complete]();
         }), Observable.backpressureStrategy({
             capacity: 1,
             backpressureStrategy: DropLatestBackpressureStrategy,
@@ -157,9 +157,9 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         await pipeAsync(Observable.create(async (observer) => {
             await Promise.resolve();
             for (let i = 0; i < 10; i++) {
-                observer[QueueableLike_enqueue](i);
+                observer[SinkLike_next](i);
             }
-            observer[QueueableLike_complete]();
+            observer[SinkLike_complete]();
         }), Observable.backpressureStrategy({
             capacity: 1,
             backpressureStrategy: DropOldestBackpressureStrategy,
@@ -196,7 +196,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         const scheduler = __addDisposableResource(env_4, HostScheduler.create(), false);
         await pipeAsync(Observable.computeDeferred(() => {
             const stream = __stream(Streamable.identity());
-            const push = bindMethod(stream, QueueableLike_enqueue);
+            const push = bindMethod(stream, SinkLike_next);
             const result = __observe(stream) ?? 0;
             __do(push, result + 1);
             return result;
@@ -216,7 +216,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         await pipeAsync(Observable.computeDeferred(() => {
             const initialState = __constant(() => 0);
             const state = __state(initialState);
-            const push = bindMethod(state, QueueableLike_enqueue);
+            const push = bindMethod(state, SinkLike_next);
             const result = __observe(state) ?? -1;
             if (result > -1) {
                 __do(push, () => result + 1);
@@ -374,7 +374,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             capacity: 1,
         });
         pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.enqueue(stream), Observable.toReadonlyArray());
-        pipe(stream[QueueableLike_isCompleted], expectTrue("expected stream to be completed"));
+        pipe(stream[SinkLike_isCompleted], expectTrue("expected stream to be completed"));
     }
     catch (e_11) {
         env_11.error = e_11;
@@ -392,7 +392,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             capacity: 1,
         });
         pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray({ delay: 1 }), Observable.enqueue(stream), Observable.toReadonlyArray());
-        pipe(stream[QueueableLike_isCompleted], expectTrue("expected stream to be completed"));
+        pipe(stream[SinkLike_isCompleted], expectTrue("expected stream to be completed"));
     }
     catch (e_12) {
         env_12.error = e_12;

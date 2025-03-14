@@ -22,8 +22,8 @@ import LiftedObserverMixin, {
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   ObserverLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
+  SinkLike_complete,
+  SinkLike_next,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -90,10 +90,10 @@ const createBufferObserver: <T>(
         this[BufferObserver_buffer] = [];
 
         if (buffer[Array_length] > 0) {
-          delegate[QueueableLike_enqueue](buffer);
-          delegate[QueueableLike_complete]();
+          delegate[SinkLike_next](buffer);
+          delegate[SinkLike_complete]();
         } else {
-          delegate[QueueableLike_complete]();
+          delegate[SinkLike_complete]();
         }
       },
     }),

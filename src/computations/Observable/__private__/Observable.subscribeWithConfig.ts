@@ -27,9 +27,6 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
-  QueueableLike_isCompleted,
   QueueableLike_isReady,
   QueueableLike_onReady,
   SchedulerLike,
@@ -39,6 +36,9 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
+  SinkLike_complete,
+  SinkLike_isCompleted,
+  SinkLike_next,
 } from "../../../utils.js";
 import EventSource_never from "../../EventSource/__private__/EventSource.never.js";
 
@@ -108,7 +108,7 @@ const createObserver: <T>(
       [QueueableLike_onReady]: none,
     }),
     proto({
-      get [QueueableLike_isCompleted]() {
+      get [SinkLike_isCompleted]() {
         unsafeCast<DisposableLike>(this);
         return this[DisposableLike_isDisposed];
       },
@@ -135,11 +135,11 @@ const createObserver: <T>(
         ];
       },
 
-      [QueueableLike_enqueue]() {
+      [SinkLike_next]() {
         return true;
       },
 
-      [QueueableLike_complete](this: DisposableLike) {
+      [SinkLike_complete](this: DisposableLike) {
         this[DisposableLike_dispose]();
       },
 

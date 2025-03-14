@@ -18,9 +18,10 @@ import LiftedObserverMixin, {
 import {
   ObserverLike,
   QueueableLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
+  QueueableLike_isReady,
   SchedulerLike_requestYield,
+  SinkLike_complete,
+  SinkLike_next,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
@@ -58,7 +59,9 @@ const Observer_createEnqueueObserver: <T>(
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
-        if (!this[EnqueueObserver_queue][QueueableLike_enqueue](next)) {
+        const queue = this[EnqueueObserver_queue];
+        queue[SinkLike_next](next);
+        if (!queue[QueueableLike_isReady]) {
           this[SchedulerLike_requestYield]();
         }
 
@@ -68,8 +71,8 @@ const Observer_createEnqueueObserver: <T>(
         this: TProperties & LiftedObserverLike<T, readonly T[]>,
       ) {
         // FIXME: maybe we shouldn't complete
-        this[EnqueueObserver_queue][QueueableLike_complete]();
-        this[LiftedObserverLike_delegate][QueueableLike_complete]();
+        this[EnqueueObserver_queue][SinkLike_complete]();
+        this[LiftedObserverLike_delegate][SinkLike_complete]();
       },
     }),
   );

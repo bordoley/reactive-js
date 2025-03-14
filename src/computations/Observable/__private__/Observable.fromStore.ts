@@ -20,8 +20,8 @@ import {
   DisposableContainerLike,
   DisposableLike_dispose,
   ObserverLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
+  SinkLike_complete,
+  SinkLike_next,
 } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";
 import type * as Observable from "../../Observable.js";
@@ -60,19 +60,17 @@ const Observable_fromStore: Observable.Signature["fromStore"] = /*@__PURE__*/ (<
 
         [ObservableLike_observe](this: TProperties, observer: ObserverLike<T>) {
           const store = this[FromStoreObservable_eventSource];
-          observer[QueueableLike_enqueue](store[StoreLike_value]);
+          observer[SinkLike_next](store[StoreLike_value]);
 
           pipe(
             this[FromStoreObservable_eventSource],
             DisposableContainer.onComplete(
-              bindMethod(observer, QueueableLike_complete),
+              bindMethod(observer, SinkLike_complete),
             ),
             DisposableContainer.onError(
               bindMethod(observer, DisposableLike_dispose),
             ),
-            EventSource.addEventHandler(
-              bindMethod(observer, QueueableLike_enqueue),
-            ),
+            EventSource.addEventHandler(bindMethod(observer, SinkLike_next)),
             Disposable.addTo(observer),
           );
         },

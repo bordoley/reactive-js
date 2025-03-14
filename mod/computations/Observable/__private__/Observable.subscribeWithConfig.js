@@ -6,7 +6,7 @@ import { ObservableLike_observe, } from "../../../computations.js";
 import { bind, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, OverflowBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, QueueableLike_isReady, QueueableLike_onReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../utils.js";
+import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, OverflowBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, QueueableLike_onReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
 import EventSource_never from "../../EventSource/__private__/EventSource.never.js";
 const createObserver = /*@__PURE__*/ (() => {
     const SubscribeObserver_scheduler = Symbol("SubscribeObserver_scheduler");
@@ -35,7 +35,7 @@ const createObserver = /*@__PURE__*/ (() => {
         [QueueableLike_backpressureStrategy]: OverflowBackpressureStrategy,
         [QueueableLike_onReady]: none,
     }), proto({
-        get [QueueableLike_isCompleted]() {
+        get [SinkLike_isCompleted]() {
             unsafeCast(this);
             return this[DisposableLike_isDisposed];
         },
@@ -55,10 +55,10 @@ const createObserver = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[SubscribeObserver_scheduler][SchedulerLike_maxYieldInterval];
         },
-        [QueueableLike_enqueue]() {
+        [SinkLike_next]() {
             return true;
         },
-        [QueueableLike_complete]() {
+        [SinkLike_complete]() {
             this[DisposableLike_dispose]();
         },
         [SchedulerLike_requestYield]() {

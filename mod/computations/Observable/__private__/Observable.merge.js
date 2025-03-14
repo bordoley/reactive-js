@@ -9,7 +9,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
-import { DisposableLike_dispose, QueueableLike_complete, } from "../../../utils.js";
+import { DisposableLike_dispose, SinkLike_complete, } from "../../../utils.js";
 const Observable_merge = /*@__PURE__*/ (() => {
     const MergeObservable_observables = Symbol("MergeObservable_observables");
     const isMergeObservable = (observable) => isSome(observable[MergeObservable_observables]);
@@ -38,7 +38,7 @@ const Observable_merge = /*@__PURE__*/ (() => {
                 pipe(Observer_createWithDelegate(observer), Disposable.addTo(observer), DisposableContainer.onComplete(() => {
                     completed++;
                     if (completed >= count) {
-                        observer[QueueableLike_complete]();
+                        observer[SinkLike_complete]();
                     }
                 }), bindMethod(observable, ObservableLike_observe));
             }

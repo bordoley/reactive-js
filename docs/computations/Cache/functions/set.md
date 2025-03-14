@@ -6,7 +6,7 @@
 
 # Function: set()
 
-> **set**\<`T`\>(`cache`, `key`, `v`): `boolean`
+> **set**\<`T`\>(`cache`, `key`, `v`): `void`
 
 ## Type Parameters
 
@@ -28,4 +28,4 @@
 
 ## Returns
 
-`boolean`
+`void`

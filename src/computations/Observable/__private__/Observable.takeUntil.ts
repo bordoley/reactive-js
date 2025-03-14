@@ -23,8 +23,8 @@ import LiftedObserverMixin, {
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   ObserverLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
+  SinkLike_complete,
+  SinkLike_next,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_lift, {
@@ -60,9 +60,7 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = /*@__PURE__*/ (<
         Observable_takeFirst(),
         Observable_subscribeWithConfig(delegate, delegate),
         Disposable.addTo(this),
-        DisposableContainer.onComplete(
-          bindMethod(this, QueueableLike_complete),
-        ),
+        DisposableContainer.onComplete(bindMethod(this, SinkLike_complete)),
       );
 
       return this;
@@ -76,7 +74,7 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = /*@__PURE__*/ (<
         next: T,
       ) {
         const delegate = this[LiftedObserverLike_delegate];
-        delegate[QueueableLike_enqueue](next);
+        delegate[SinkLike_next](next);
       },
     }),
   );

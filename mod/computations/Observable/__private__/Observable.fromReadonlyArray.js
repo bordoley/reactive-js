@@ -3,21 +3,21 @@
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
 import { none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { ContinuationContextLike_yield, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, SchedulerLike_schedule, } from "../../../utils.js";
+import { ContinuationContextLike_yield, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
 const Observable_fromReadonlyArray = (options) => (arr) => Observable_createPureSynchronousObservable((observer) => {
     const { delay = 0, delayStart = false } = options ?? {};
     let [start, count] = parseArrayBounds(arr, options);
     const continuation = (ctx) => {
-        while (!observer[QueueableLike_isCompleted] && count !== 0) {
+        while (!observer[SinkLike_isCompleted] && count !== 0) {
             const next = arr[start];
-            observer[QueueableLike_enqueue](next);
+            observer[SinkLike_next](next);
             count > 0 ? (start++, count--) : (start--, count++);
             if (count !== 0) {
                 ctx[ContinuationContextLike_yield](delay);
             }
         }
-        observer[QueueableLike_complete]();
+        observer[SinkLike_complete]();
     };
     pipe(observer[SchedulerLike_schedule](continuation, delayStart ? { delay } : none), Disposable.addTo(observer));
 });

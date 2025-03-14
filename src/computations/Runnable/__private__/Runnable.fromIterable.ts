@@ -8,7 +8,7 @@ import { newInstance } from "../../../functions.js";
 import {
   SinkLike,
   SinkLike_complete,
-  SinkLike_isComplete,
+  SinkLike_isCompleted,
   SinkLike_next,
 } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
@@ -23,7 +23,7 @@ class FromIterableRunnable<T> implements RunnableLike<T> {
 
   [RunnableLike_eval](sink: SinkLike<T>): void {
     for (const v of this.i) {
-      if (sink[SinkLike_isComplete]) {
+      if (sink[SinkLike_isCompleted]) {
         break;
       }
 

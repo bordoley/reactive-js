@@ -30,11 +30,11 @@ import {
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
   QueueableLike_isReady,
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
+  SinkLike_complete,
+  SinkLike_next,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -63,7 +63,8 @@ const createTakeLastObserver: <T>(
         ctx[ContinuationContextLike_yield]();
       }
 
-      if (!delegate[QueueableLike_enqueue](v)) {
+      delegate[SinkLike_next](v);
+      if (!delegate[QueueableLike_isReady]) {
         delegate[SchedulerLike_requestYield]();
       }
 
@@ -72,7 +73,7 @@ const createTakeLastObserver: <T>(
       }
     }
 
-    delegate[QueueableLike_complete]();
+    delegate[SinkLike_complete]();
   }
 
   return mixInstanceFactory(
@@ -101,14 +102,14 @@ const createTakeLastObserver: <T>(
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
-        this[TakeLastObserver_queue][QueueableLike_enqueue](next);
+        this[TakeLastObserver_queue][SinkLike_next](next);
       },
       [LiftedObserverLike_complete](this: TProperties & LiftedObserverLike<T>) {
         const delegate = this[LiftedObserverLike_delegate];
         const count = this[TakeLastObserver_queue][QueueLike_count];
 
         if (count === 0) {
-          delegate[QueueableLike_complete]();
+          delegate[SinkLike_complete]();
         }
 
         delegate[SchedulerLike_schedule](bind(notifyDelegate, this));

@@ -2,14 +2,14 @@ import { Factory, error, newInstance, raise } from "../../../functions.js";
 import {
   SinkLike,
   SinkLike_complete,
-  SinkLike_isComplete,
+  SinkLike_isCompleted,
   SinkLike_next,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
 
 class ThrowIfEmptySink<T> implements SinkLike<T> {
-  [SinkLike_isComplete] = false;
+  [SinkLike_isCompleted] = false;
   private e = true;
 
   constructor(
@@ -23,8 +23,8 @@ class ThrowIfEmptySink<T> implements SinkLike<T> {
   }
 
   [SinkLike_complete](): void {
-    if (!this[SinkLike_isComplete]) {
-      this[SinkLike_isComplete] = true;
+    if (!this[SinkLike_isCompleted]) {
+      this[SinkLike_isCompleted] = true;
 
       if (this.e) {
         raise(error(this.f()));

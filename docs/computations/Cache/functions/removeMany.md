@@ -6,7 +6,7 @@
 
 # Function: removeMany()
 
-> **removeMany**\<`T`\>(`cache`, `keys`): `boolean`
+> **removeMany**\<`T`\>(`cache`, `keys`): `void`
 
 ## Type Parameters
 
@@ -24,4 +24,4 @@ readonly `string`[]
 
 ## Returns
 
-`boolean`
+`void`

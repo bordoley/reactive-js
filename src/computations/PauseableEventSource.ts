@@ -21,8 +21,9 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike,
-  QueueableLike_enqueue,
+  QueueableLike_isReady,
   QueueableLike_onReady,
+  SinkLike_next,
 } from "../utils.js";
 import * as EventSource from "./EventSource.js";
 import * as WritableStore from "./WritableStore.js";
@@ -102,7 +103,9 @@ export const enqueue: Signature["enqueue"] =
       pipe(
         src,
         EventSource.addEventHandler(v => {
-          if (!queue[QueueableLike_enqueue](v)) {
+          queue[SinkLike_next](v);
+
+          if (!queue[QueueableLike_isReady]) {
             src[PauseableLike_pause]();
           }
         }),

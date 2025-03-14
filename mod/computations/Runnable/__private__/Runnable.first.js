@@ -2,16 +2,16 @@
 
 import { RunnableLike_eval } from "../../../computations.js";
 import { newInstance, none } from "../../../functions.js";
-import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
 class FirstSink {
-    [SinkLike_isComplete] = false;
+    [SinkLike_isCompleted] = false;
     v = none;
     [SinkLike_next](next) {
         this.v = next;
         this[SinkLike_complete]();
     }
     [SinkLike_complete]() {
-        this[SinkLike_isComplete] = true;
+        this[SinkLike_isCompleted] = true;
     }
 }
 const Runnable_first = () => (deferable) => {

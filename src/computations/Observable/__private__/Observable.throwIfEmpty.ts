@@ -25,7 +25,7 @@ import LiftedObserverMixin, {
 import {
   DisposableLike_dispose,
   ObserverLike,
-  QueueableLike_complete,
+  SinkLike_complete,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -82,7 +82,7 @@ const createThrowIfEmptyObserver: <T>(
           }
           delegate[DisposableLike_dispose](err);
         } else {
-          delegate[QueueableLike_complete]();
+          delegate[SinkLike_complete]();
         }
       },
     }),

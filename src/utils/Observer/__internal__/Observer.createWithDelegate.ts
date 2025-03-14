@@ -9,7 +9,7 @@ import { none } from "../../../functions.js";
 import {
   DisposableLike_dispose,
   ObserverLike,
-  QueueableLike_enqueue,
+  SinkLike_next,
 } from "../../../utils.js";
 import DisposableMixin from "../../__mixins__/DisposableMixin.js";
 import LiftedObserverMixin, {
@@ -37,7 +37,7 @@ const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
         [LiftedObserverLike_notify](this: LiftedObserverLike<T>, next: T) {
           const delegate = this[LiftedObserverLike_delegate];
 
-          delegate[QueueableLike_enqueue](next);
+          delegate[SinkLike_next](next);
         },
         [LiftedObserverLike_complete](this: LiftedObserverLike<T>) {
           this[DisposableLike_dispose]();

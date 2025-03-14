@@ -32,9 +32,9 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
   SchedulerLike_schedule,
+  SinkLike_complete,
+  SinkLike_next,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
@@ -236,7 +236,7 @@ class ComputeContext {
         DisposableLike_isDisposed
       ]
     ) {
-      this[ComputeContext_observer][QueueableLike_complete]();
+      this[ComputeContext_observer][SinkLike_complete]();
     }
   };
 
@@ -514,11 +514,11 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
         }
 
         if (shouldNotify) {
-          observer[QueueableLike_enqueue](result as T);
+          observer[SinkLike_next](result as T);
         }
 
         if (shouldComplete) {
-          observer[QueueableLike_complete]();
+          observer[SinkLike_complete]();
         }
       };
 

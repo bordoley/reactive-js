@@ -14,7 +14,7 @@ import DelegatingNonCompletingSink from "../../../utils/Sink/__internal__/Delega
 import {
   SinkLike,
   SinkLike_complete,
-  SinkLike_isComplete,
+  SinkLike_isCompleted,
 } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
@@ -38,7 +38,7 @@ class RepeatRunnable<T> implements RunnableLike<T> {
     while (true) {
       source[RunnableLike_eval](delegatingSink);
       cnt++;
-      if (sink[SinkLike_isComplete] || !predicate(cnt)) {
+      if (sink[SinkLike_isCompleted] || !predicate(cnt)) {
         break;
       }
     }

@@ -1,67 +1,68 @@
 /// <reference types="./SingleUseObservable.d.ts" />
 
-import { getPrototype, include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isSynchronous, EventSourceLike_addEventListener, ObservableLike_observe, } from "../../computations.js";
-import { call, isSome, none, pipe, raiseIf, } from "../../functions.js";
+import { include, init, mixInstanceFactory, props, unsafeCast, } from "../../__internal__/mixins.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ObservableLike_observe, } from "../../computations.js";
+import { bindMethod, isSome, none, pipe } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as Queue from "../../utils/Queue.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
-import QueueMixin from "../../utils/__mixins__/QueueMixin.js";
-import { QueueLike_dequeue, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, QueueableLike_isReady, QueueableLike_onReady, } from "../../utils.js";
+import { EventListenerLike_notify, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, QueueableLike_onReady, SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 import * as Publisher from "../Publisher.js";
 export const create = (() => {
     const SingleUseObservableLike_delegate = Symbol("SingleUseObservableLike_delegate");
-    const queueProtoype = getPrototype(QueueMixin());
-    return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function SingleUseObservable(config) {
+    return mixInstanceFactory(include(DisposableMixin), function SingleUseObservable(config) {
         init(DisposableMixin, this);
-        init(QueueMixin(), this, config);
-        const publisher = (this[QueueableLike_onReady] = Publisher.create());
-        pipe(publisher, EventSource.addEventHandler(() => {
-            this[QueueableLike_isReady] = true;
-        }), Disposable.addTo(this));
+        const onReadyPublisher = pipe(Publisher.create(), Disposable.addTo(this));
+        this[QueueableLike_onReady] = onReadyPublisher;
+        const queue = Queue.create(config);
+        this[SingleUseObservableLike_delegate] = queue;
+        pipe(queue[QueueableLike_onReady], EventSource.addEventHandler(bindMethod(onReadyPublisher, EventListenerLike_notify)), Disposable.addTo(this));
         return this;
     }, props({
         [SingleUseObservableLike_delegate]: none,
         [QueueableLike_onReady]: none,
-        [QueueableLike_isCompleted]: false,
-        [QueueableLike_isReady]: true,
     }), {
         [ComputationLike_isDeferred]: true,
         [ComputationLike_isSynchronous]: false,
+        get [QueueableLike_backpressureStrategy]() {
+            unsafeCast(this);
+            return this[SingleUseObservableLike_delegate][QueueableLike_backpressureStrategy];
+        },
+        get [QueueableLike_capacity]() {
+            unsafeCast(this);
+            return this[SingleUseObservableLike_delegate][QueueableLike_capacity];
+        },
+        get [QueueableLike_isReady]() {
+            unsafeCast(this);
+            return this[SingleUseObservableLike_delegate][QueueableLike_isReady];
+        },
+        get [SinkLike_isCompleted]() {
+            unsafeCast(this);
+            return this[SingleUseObservableLike_delegate][SinkLike_isCompleted];
+        },
         [ObservableLike_observe](observer) {
-            raiseIf(isSome(this[SingleUseObservableLike_delegate]), "SingleUseObservable already subscribed.");
+            const oldDelegate = this[SingleUseObservableLike_delegate];
             this[SingleUseObservableLike_delegate] = observer;
             pipe(this, Disposable.bindTo(observer));
-            const isCompleted = this[QueueableLike_isCompleted];
-            let v = none;
-            while (((v = this[QueueLike_dequeue]()), isSome(v))) {
-                observer[QueueableLike_enqueue](v);
+            pipe(observer[QueueableLike_onReady], EventSource.addEventHandler(bindMethod(this[QueueableLike_onReady], EventListenerLike_notify)), Disposable.addTo(this));
+            if (isSome(oldDelegate[QueueLike_dequeue])) {
+                unsafeCast(oldDelegate);
+                let v = none;
+                while (((v = oldDelegate[QueueLike_dequeue]()), isSome(v))) {
+                    observer[SinkLike_next](v);
+                }
             }
-            if (isCompleted) {
-                observer[QueueableLike_complete]();
+            if (oldDelegate[SinkLike_isCompleted]) {
+                observer[SinkLike_complete]();
             }
-            else {
-                this[QueueableLike_isReady] = observer[QueueableLike_isReady];
-                observer[QueueableLike_onReady][EventSourceLike_addEventListener](this[QueueableLike_onReady]);
-            }
+            oldDelegate[SinkLike_complete]();
         },
-        [QueueableLike_complete]() {
-            const delegate = this[SingleUseObservableLike_delegate];
-            const isAlreadyCompleted = this[QueueableLike_isCompleted];
-            this[QueueableLike_isCompleted] = true;
-            if (isSome(delegate) && !isAlreadyCompleted) {
-                delegate[QueueableLike_complete]();
-            }
+        [SinkLike_complete]() {
+            this[SingleUseObservableLike_delegate][SinkLike_complete]();
         },
-        [QueueableLike_enqueue](v) {
-            const delegate = this[SingleUseObservableLike_delegate];
-            const isCompleted = this[QueueableLike_isCompleted];
-            const result = isCompleted ||
-                (isSome(delegate)
-                    ? delegate[QueueableLike_enqueue](v)
-                    : call(queueProtoype[QueueableLike_enqueue], this, v));
-            this[QueueableLike_isReady] = result;
-            return result;
+        [SinkLike_next](v) {
+            this[SingleUseObservableLike_delegate][SinkLike_next](v);
         },
     });
 })();

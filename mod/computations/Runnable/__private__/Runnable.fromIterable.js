@@ -2,7 +2,7 @@
 
 import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
-import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 class FromIterableRunnable {
     i;
@@ -13,7 +13,7 @@ class FromIterableRunnable {
     }
     [RunnableLike_eval](sink) {
         for (const v of this.i) {
-            if (sink[SinkLike_isComplete]) {
+            if (sink[SinkLike_isCompleted]) {
                 break;
             }
             sink[SinkLike_next](v);

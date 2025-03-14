@@ -15,7 +15,7 @@ import {
   QueueLike_count,
   QueueLike_dequeue,
   QueueLike_head,
-  QueueableLike_enqueue,
+  SinkLike_next,
   ThrowBackpressureStrategy,
 } from "../../utils.js";
 import * as Queue from "../Queue.js";
@@ -54,7 +54,7 @@ testModule(
     const queue = Queue.create<number>();
 
     for (let i = 0; i < 127; i++) {
-      queue[QueueableLike_enqueue](i);
+      queue[SinkLike_next](i);
     }
 
     for (let i = 0; i < 62; i++) {
@@ -62,7 +62,7 @@ testModule(
     }
 
     for (let i = 128; i < 255; i++) {
-      queue[QueueableLike_enqueue](i);
+      queue[SinkLike_next](i);
     }
 
     pipe(queue[QueueLike_count], expectEquals(192));
@@ -74,7 +74,7 @@ testModule(
     pipe(queue[QueueLike_dequeue](), expectEquals(none as Optional<number>));
 
     for (let i = 0; i < 8; i++) {
-      queue[QueueableLike_enqueue](i);
+      queue[SinkLike_next](i);
       pipe(queue[QueueLike_head], expectEquals<Optional<number>>(0));
     }
 
@@ -90,7 +90,7 @@ testModule(
     pipe(queue[QueueLike_head], expectEquals(3 as Optional<number>));
 
     for (let i = 8; i < 16; i++) {
-      queue[QueueableLike_enqueue](i);
+      queue[SinkLike_next](i);
       pipe(queue[QueueLike_head], expectEquals(3 as Optional<number>));
     }
 
@@ -104,7 +104,7 @@ testModule(
     pipe(queue[QueueLike_head], expectEquals(6 as Optional<number>));
 
     for (let i = 16; i < 32; i++) {
-      queue[QueueableLike_enqueue](i);
+      queue[SinkLike_next](i);
       pipe(queue[QueueLike_head], expectEquals(6 as Optional<number>));
     }
 
@@ -118,7 +118,7 @@ testModule(
     const queue = Queue.create<number>();
 
     for (let i = 0; i < 300; i++) {
-      queue[QueueableLike_enqueue](i);
+      queue[SinkLike_next](i);
     }
 
     for (let i = 0; i < 50; i++) {
@@ -128,7 +128,7 @@ testModule(
     pipe(queue[QueueLike_head], expectEquals(50 as Optional<number>));
 
     for (let i = 300; i < 500; i++) {
-      queue[QueueableLike_enqueue](i);
+      queue[SinkLike_next](i);
     }
 
     for (let i = 0; i < 200; i++) {
@@ -141,7 +141,7 @@ testModule(
     const queue = Queue.create<number>();
 
     for (let i = 0; i < 31; i++) {
-      queue[QueueableLike_enqueue](i);
+      queue[SinkLike_next](i);
     }
 
     for (let i = 0; i < 10; i++) {
@@ -149,7 +149,7 @@ testModule(
     }
 
     for (let i = 31; i < 40; i++) {
-      queue[QueueableLike_enqueue](i);
+      queue[SinkLike_next](i);
     }
 
     let prev = 9;
@@ -164,7 +164,7 @@ testModule(
       const queue = createPriorityQueue();
       const shuffledArray = makeShuffledArray(100);
       for (let i = 0; i < shuffledArray[Array_length]; i++) {
-        queue[QueueableLike_enqueue](shuffledArray[i]);
+        queue[SinkLike_next](shuffledArray[i]);
       }
 
       const acc: number[] = [];
@@ -183,8 +183,8 @@ testModule(
         backpressureStrategy: DropLatestBackpressureStrategy,
       });
 
-      queue[QueueableLike_enqueue](0);
-      queue[QueueableLike_enqueue](1);
+      queue[SinkLike_next](0);
+      queue[SinkLike_next](1);
 
       pipe(queue[QueueLike_count], expectEquals(1));
       pipe(queue[QueueLike_head], expectEquals<Optional<number>>(0));
@@ -198,8 +198,8 @@ testModule(
         backpressureStrategy: DropOldestBackpressureStrategy,
       });
 
-      queue[QueueableLike_enqueue](0);
-      queue[QueueableLike_enqueue](1);
+      queue[SinkLike_next](0);
+      queue[SinkLike_next](1);
 
       pipe(queue[QueueLike_count], expectEquals(1));
       pipe(queue[QueueLike_head], expectEquals<Optional<number>>(1));
@@ -213,10 +213,10 @@ testModule(
         backpressureStrategy: ThrowBackpressureStrategy,
       });
 
-      queue[QueueableLike_enqueue](0);
+      queue[SinkLike_next](0);
 
       expectToThrow(() => {
-        queue[QueueableLike_enqueue](1);
+        queue[SinkLike_next](1);
       });
 
       pipe(queue[QueueLike_count], expectEquals(1));

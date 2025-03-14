@@ -29,9 +29,9 @@ import {
   DropLatestBackpressureStrategy,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
-  QueueableLike_isCompleted,
+  SinkLike_complete,
+  SinkLike_isCompleted,
+  SinkLike_next,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
@@ -55,7 +55,7 @@ testModule(
         }),
       );
 
-      stream[QueueableLike_enqueue](none);
+      stream[SinkLike_next](none);
 
       vts[VirtualTimeSchedulerLike_run]();
 
@@ -86,7 +86,7 @@ testModule(
         }),
       );
 
-      stream[QueueableLike_enqueue](none);
+      stream[SinkLike_next](none);
 
       vts[VirtualTimeSchedulerLike_run]();
 
@@ -109,9 +109,9 @@ testModule(
         expectEquals(DropLatestBackpressureStrategy),
       );
 
-      stateStream[QueueableLike_enqueue](returns(2));
-      stateStream[QueueableLike_enqueue](returns(3));
-      stateStream[QueueableLike_complete]();
+      stateStream[SinkLike_next](returns(2));
+      stateStream[SinkLike_next](returns(3));
+      stateStream[SinkLike_complete]();
 
       let result: number[] = [];
 
@@ -134,14 +134,14 @@ testModule(
       });
 
       pipe(
-        stateStream[QueueableLike_isCompleted],
+        stateStream[SinkLike_isCompleted],
         expectFalse("expected stream not to be completed"),
       );
 
-      stateStream[QueueableLike_complete]();
+      stateStream[SinkLike_complete]();
 
       pipe(
-        stateStream[QueueableLike_isCompleted],
+        stateStream[SinkLike_isCompleted],
         expectTrue("expected stream to be completed"),
       );
     }),
@@ -169,7 +169,7 @@ testModule(
       pipe(
         (x: number) => x + 2,
         Observable.fromValue({ delay: 5 }),
-        Observable.forEach(bindMethod(stream, QueueableLike_enqueue)),
+        Observable.forEach(bindMethod(stream, SinkLike_next)),
         Observable.subscribe(vts),
       );
 
@@ -206,7 +206,7 @@ testModule(
         increment,
         Observable.fromValue({ delay: 1 }),
         Observable.repeat(24),
-        Observable.forEach(bindMethod(stream, QueueableLike_enqueue)),
+        Observable.forEach(bindMethod(stream, SinkLike_next)),
         Observable.subscribe(vts),
       );
 
