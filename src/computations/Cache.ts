@@ -65,7 +65,7 @@ import {
 } from "../utils.js";
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
-import * as SingleUseObservable from "./__internal__/SingleUseObservable.js";
+import * as QueueableObservable from "./__internal__/QueueableObservable.js";
 
 export const CacheLike_get = Symbol("CacheLike_get");
 
@@ -173,7 +173,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
       } = options ?? {};
 
       const queue =
-        SingleUseObservable.create<
+        QueueableObservable.create<
           ReadonlyObjectMapLike<string, Updater<Optional<T>>>
         >(options);
 
