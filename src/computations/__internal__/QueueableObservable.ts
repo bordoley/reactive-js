@@ -35,7 +35,7 @@ import {
 import * as EventSource from "../EventSource.js";
 import * as Publisher from "../Publisher.js";
 
-export interface SingleUseObservableLike<out T>
+export interface QueueableObservableLike<out T>
   extends PureDeferredObservableLike<T>,
     QueueableLike,
     DisposableLike {}
@@ -43,33 +43,33 @@ export interface SingleUseObservableLike<out T>
 export const create: <T>(config?: {
   capacity?: number;
   backpressureStrategy?: BackpressureStrategy;
-}) => SingleUseObservableLike<T> = (<T>() => {
-  const SingleUseObservableLike_delegate = Symbol(
-    "SingleUseObservableLike_delegate",
+}) => QueueableObservableLike<T> = (<T>() => {
+  const QueueableObservableLike_delegate = Symbol(
+    "QueueableObservableLike_delegate",
   );
 
   type TProperties = {
-    [SingleUseObservableLike_delegate]: QueueableLike<T>;
+    [QueueableObservableLike_delegate]: QueueableLike<T>;
     [QueueableLike_onReady]: PublisherLike<void>;
   };
 
   return mixInstanceFactory(
     include(DisposableMixin),
-    function SingleUseObservable(
-      this: Omit<SingleUseObservableLike<T>, keyof DisposableLike> &
+    function QueueableObservable(
+      this: Omit<QueueableObservableLike<T>, keyof DisposableLike> &
         TProperties,
       config: Optional<{
         capacity?: number;
         backpressureStrategy?: BackpressureStrategy;
       }>,
-    ): SingleUseObservableLike<T> {
+    ): QueueableObservableLike<T> {
       init(DisposableMixin, this);
 
       const onReadyPublisher = pipe(Publisher.create(), Disposable.addTo(this));
       this[QueueableLike_onReady] = onReadyPublisher;
 
       const queue = Queue.create(config);
-      this[SingleUseObservableLike_delegate] = queue;
+      this[QueueableObservableLike_delegate] = queue;
 
       pipe(
         queue[QueueableLike_onReady],
@@ -82,7 +82,7 @@ export const create: <T>(config?: {
       return this;
     },
     props<TProperties>({
-      [SingleUseObservableLike_delegate]: none,
+      [QueueableObservableLike_delegate]: none,
       [QueueableLike_onReady]: none,
     }),
     {
@@ -91,32 +91,32 @@ export const create: <T>(config?: {
 
       get [QueueableLike_backpressureStrategy]() {
         unsafeCast<TProperties>(this);
-        return this[SingleUseObservableLike_delegate][
+        return this[QueueableObservableLike_delegate][
           QueueableLike_backpressureStrategy
         ];
       },
 
       get [QueueableLike_capacity]() {
         unsafeCast<TProperties>(this);
-        return this[SingleUseObservableLike_delegate][QueueableLike_capacity];
+        return this[QueueableObservableLike_delegate][QueueableLike_capacity];
       },
 
       get [QueueableLike_isReady]() {
         unsafeCast<TProperties>(this);
-        return this[SingleUseObservableLike_delegate][QueueableLike_isReady];
+        return this[QueueableObservableLike_delegate][QueueableLike_isReady];
       },
 
       get [SinkLike_isCompleted]() {
         unsafeCast<TProperties>(this);
-        return this[SingleUseObservableLike_delegate][SinkLike_isCompleted];
+        return this[QueueableObservableLike_delegate][SinkLike_isCompleted];
       },
 
       [ObservableLike_observe](
-        this: SingleUseObservableLike<T> & TProperties,
+        this: QueueableObservableLike<T> & TProperties,
         observer: ObserverLike<T>,
       ) {
-        const oldDelegate = this[SingleUseObservableLike_delegate];
-        this[SingleUseObservableLike_delegate] = observer;
+        const oldDelegate = this[QueueableObservableLike_delegate];
+        this[QueueableObservableLike_delegate] = observer;
         pipe(this, Disposable.bindTo(observer));
 
         pipe(
@@ -144,11 +144,11 @@ export const create: <T>(config?: {
       },
 
       [SinkLike_complete](this: TProperties & DisposableLike) {
-        this[SingleUseObservableLike_delegate][SinkLike_complete]();
+        this[QueueableObservableLike_delegate][SinkLike_complete]();
       },
 
       [SinkLike_push](this: TProperties, v: T): void {
-        this[SingleUseObservableLike_delegate][SinkLike_push](v);
+        this[QueueableObservableLike_delegate][SinkLike_push](v);
       },
     },
   );

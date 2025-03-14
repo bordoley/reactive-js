@@ -16,7 +16,7 @@ import DelegatingQueueableMixin from "../utils/__mixins__/DelegatingQueueableMix
 import { ContinuationContextLike_yield, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_dequeue, SchedulerLike_schedule, SinkLike_push, } from "../utils.js";
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
-import * as SingleUseObservable from "./__internal__/SingleUseObservable.js";
+import * as QueueableObservable from "./__internal__/QueueableObservable.js";
 export const CacheLike_get = Symbol("CacheLike_get");
 export const create = /*@__PURE__*/ (() => {
     const CacheStream_scheduleCleanup = Symbol("CacheStream_scheduleCleanup");
@@ -29,7 +29,7 @@ export const create = /*@__PURE__*/ (() => {
     };
     return mixInstanceFactory(include(DelegatingQueueableMixin(), DelegatingDisposableMixin), function Cache(scheduler, options) {
         const { maxEntries = MAX_SAFE_INTEGER, cleanupScheduler = scheduler, persistentStore, } = options ?? {};
-        const queue = SingleUseObservable.create(options);
+        const queue = QueueableObservable.create(options);
         const store = newInstance(Map);
         const subscriptions = newInstance(Map);
         const cleanupQueue = Queue.create();
