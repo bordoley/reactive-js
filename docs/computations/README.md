@@ -70,6 +70,7 @@
 - [EmptyOf](type-aliases/EmptyOf.md)
 - [FromAsyncIterableOperator](type-aliases/FromAsyncIterableOperator.md)
 - [FromIterableOperator](type-aliases/FromIterableOperator.md)
+- [FromObservableOperator](type-aliases/FromObservableOperator.md)
 - [FromReadonlyArrayOperator](type-aliases/FromReadonlyArrayOperator.md)
 - [FromValueOperator](type-aliases/FromValueOperator.md)
 - [GeneratorOf](type-aliases/GeneratorOf.md)

@@ -525,6 +525,26 @@ export type FromAsyncIterableOperator<
     : DeferredComputationWithSideEffectsOf<TComputationType, T>;
 
 // prettier-ignore
+export type FromObservableOperator<
+  TComputationType extends ComputationType,
+  T,
+> = <TObservable extends ObservableLike<T>>(
+  iterable: TObservable,
+) => TObservable extends PureDeferredObservableLike ? (  
+  PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? 
+    PureDeferredComputationOf<TComputationType, T> :
+    MulticastComputationOf<TComputationType, T> & DisposableLike
+) : TObservable extends DeferredObservableWithSideEffectsLike ? (
+  DeferredComputationWithSideEffectsOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? 
+  DeferredComputationWithSideEffectsOf<TComputationType, T> :
+  MulticastComputationOf<TComputationType, T> & DisposableLike
+) : TObservable extends MulticastObservableLike ? (
+  MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
+    MulticastComputationOf<TComputationType, T> & DisposableLike :
+    PureDeferredComputationOf<TComputationType, T>
+) : never;
+
+// prettier-ignore
 export type FromIterableOperator<
   TComputationType extends ComputationType,
   T,
@@ -977,10 +997,7 @@ export interface ConcurrentReactiveComputationModule<
       readonly capacity?: number;
       readonly backpressureStrategy?: BackpressureStrategy;
     },
-  ) => Function1<
-    ObservableLike<T>,
-    MulticastComputationOf<TComputationType, T> & DisposableLike
-  >;
+  ) => FromObservableOperator<TComputationType, T>;
 
   fromPromise<T>(): Function1<
     Promise<T>,

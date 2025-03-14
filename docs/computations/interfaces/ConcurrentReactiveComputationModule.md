@@ -33,7 +33,7 @@
 
 ### fromObservable()
 
-> **fromObservable**: \<`T`\>(`scheduler`, `options`?) => [`Function1`](../../functions/type-aliases/Function1.md)\<[`ObservableLike`](ObservableLike.md)\<`T`\>, [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)\>
+> **fromObservable**: \<`T`\>(`scheduler`, `options`?) => [`FromObservableOperator`](../type-aliases/FromObservableOperator.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -57,7 +57,7 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`ObservableLike`](ObservableLike.md)\<`T`\>, [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)\>
+[`FromObservableOperator`](../type-aliases/FromObservableOperator.md)\<`TComputationType`, `T`\>
 
 ## Methods
 

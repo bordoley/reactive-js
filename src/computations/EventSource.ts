@@ -73,7 +73,7 @@ export const fromAsyncIterable: Signature["fromAsyncIterable"] =
   EventSource_fromAsyncIterable;
 export const fromIterable: Signature["fromIterable"] = EventSource_fromIterable;
 export const fromObservable: Signature["fromObservable"] =
-  Observable_toEventSource;
+  Observable_toEventSource as Signature["fromObservable"];
 export const fromPromise: Signature["fromPromise"] = EventSource_fromPromise;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   EventSource_fromReadonlyArray;
