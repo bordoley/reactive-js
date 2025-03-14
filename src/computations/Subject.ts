@@ -7,11 +7,11 @@ import {
 } from "../__internal__/constants.js";
 import {
   Mutable,
-  getPrototype,
   include,
   init,
   mixInstanceFactory,
   props,
+  super_,
 } from "../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
@@ -80,8 +80,6 @@ export const create: <T>(options?: {
     }
     this[Subject_observers] = none;
   }
-
-  const queueProtoype = getPrototype(QueueMixin<T>());
 
   return mixInstanceFactory(
     include(DisposableMixin, QueueMixin()),
@@ -156,7 +154,7 @@ export const create: <T>(options?: {
           return;
         }
 
-        call(queueProtoype[EventListenerLike_notify], this, next);
+        super_(QueueMixin<T>(), this, EventListenerLike_notify, next);
 
         const maybeObservers = this[Subject_observers];
         const observers =

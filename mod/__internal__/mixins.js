@@ -86,6 +86,6 @@ const emptyProps = {};
 export const props = (o) => {
     return (o ?? emptyProps);
 };
-export const getPrototype = (mixin) => mixin[Mixin_prototype];
 export function unsafeCast(_v) { }
 export const proto = (o) => o;
+export const super_ = ((mixin, thiz, method, ...args) => mixin[Mixin_prototype][method].call(thiz, ...args));

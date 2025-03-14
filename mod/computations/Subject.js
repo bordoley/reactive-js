@@ -1,7 +1,7 @@
 /// <reference types="./Subject.d.ts" />
 
 import { Set, Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
-import { getPrototype, include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, super_, } from "../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ObservableLike_observe, } from "../computations.js";
 import { call, error, isNone, isSome, newInstance, none, pipe, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
@@ -30,7 +30,6 @@ export const create = /*@__PURE__*/ (() => {
         }
         this[Subject_observers] = none;
     }
-    const queueProtoype = getPrototype(QueueMixin());
     return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function Subject(options) {
         const replay = clampPositiveInteger(options?.replay ?? 0);
         init(DisposableMixin, this);
@@ -71,7 +70,7 @@ export const create = /*@__PURE__*/ (() => {
             if (this[DisposableLike_isDisposed]) {
                 return;
             }
-            call(queueProtoype[EventListenerLike_notify], this, next);
+            super_(QueueMixin(), this, EventListenerLike_notify, next);
             const maybeObservers = this[Subject_observers];
             const observers = maybeObservers instanceof Set
                 ? maybeObservers

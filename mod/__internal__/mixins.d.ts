@@ -301,6 +301,7 @@ interface Signature {
     };
     props(): object;
     proto<TPrototype extends object>(o: TPrototype): TPrototype;
+    super_<TPrototype extends Record<TKey, TFunction>, TKey extends keyof TPrototype, TFunction extends (...args: any) => any>(mixin: PartialMixin<TPrototype>, thiz: unknown, method: TKey, ...args: Parameters<TPrototype[TKey]>): ReturnType<TPrototype[TKey]>;
 }
 export declare const init: Signature["init"];
 export declare const include: Signature["include"];
@@ -308,7 +309,7 @@ export declare const mix: Signature["mix"];
 export declare const createInstanceFactory: Signature["createInstanceFactory"];
 export declare const mixInstanceFactory: Signature["mixInstanceFactory"];
 export declare const props: Signature["props"];
-export declare const getPrototype: <TPrototype extends object>(mixin: PartialMixin<TPrototype>) => TPrototype;
 export declare function unsafeCast<T>(_v: unknown): asserts _v is T;
 export declare const proto: <TPrototype extends object>(o: TPrototype) => TPrototype;
+export declare const super_: Signature["super_"];
 export {};

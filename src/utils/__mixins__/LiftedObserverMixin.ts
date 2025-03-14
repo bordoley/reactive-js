@@ -1,12 +1,12 @@
 import { __DEV__ } from "../../__internal__/constants.js";
 import {
   Mixin2,
-  getPrototype,
   include,
   init,
   mix,
   props,
   proto,
+  super_,
   unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
@@ -17,7 +17,6 @@ import {
   SideEffect1,
   bind,
   bindMethod,
-  call,
   isSome,
   none,
   pipe,
@@ -170,8 +169,6 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
       );
     }
   };
-
-  const queueProtoype = getPrototype(QueueMixin<TA>());
 
   function notifyLiftedDelegate(this: TProperties, next: TB) {
     const delegate = this[
@@ -390,7 +387,8 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
             this[LiftedObserverLike_notify](next);
           } else if (!shouldIgnore) {
             scheduleDrainQueue(this);
-            call(queueProtoype[EventListenerLike_notify], this, next);
+
+            super_(QueueMixin<TA>(), this, EventListenerLike_notify, next);
           }
         },
 
@@ -405,7 +403,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           const isCompleted = this[SinkLike_isCompleted];
           const count = this[QueueLike_count];
 
-          call(queueProtoype[SinkLike_complete], this);
+          super_(QueueMixin<TA>(), this, SinkLike_complete);
 
           if (isCompleted) {
             return;

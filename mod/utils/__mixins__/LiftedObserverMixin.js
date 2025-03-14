@@ -1,8 +1,8 @@
 /// <reference types="./LiftedObserverMixin.d.ts" />
 
 import { __DEV__ } from "../../__internal__/constants.js";
-import { getPrototype, include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
-import { bind, bindMethod, call, isSome, none, pipe, raiseIf, returns, } from "../../functions.js";
+import { include, init, mix, props, proto, super_, unsafeCast, } from "../../__internal__/mixins.js";
+import { bind, bindMethod, isSome, none, pipe, raiseIf, returns, } from "../../functions.js";
 import { ContinuationContextLike_yield, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
@@ -42,7 +42,6 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
             observer[SerialDisposableLike_current] = observer[SchedulerLike_schedule](bind(liftedObserverSchedulerContinuation, observer));
         }
     };
-    const queueProtoype = getPrototype(QueueMixin());
     function notifyLiftedDelegate(next) {
         const delegate = this[LiftedObserverLike_delegate];
         if (__DEV__) {
@@ -144,14 +143,14 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
             }
             else if (!shouldIgnore) {
                 scheduleDrainQueue(this);
-                call(queueProtoype[EventListenerLike_notify], this, next);
+                super_(QueueMixin(), this, EventListenerLike_notify, next);
             }
         },
         [SinkLike_complete]() {
             const inSchedulerContinuation = this[SchedulerLike_inContinuation];
             const isCompleted = this[SinkLike_isCompleted];
             const count = this[QueueLike_count];
-            call(queueProtoype[SinkLike_complete], this);
+            super_(QueueMixin(), this, SinkLike_complete);
             if (isCompleted) {
                 return;
             }

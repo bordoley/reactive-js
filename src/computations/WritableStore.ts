@@ -1,9 +1,9 @@
 import {
-  getPrototype,
   include,
   init,
   mixInstanceFactory,
   props,
+  super_,
   unsafeCast,
 } from "../__internal__/mixins.js";
 import {
@@ -13,7 +13,7 @@ import {
   StoreLike_value,
   WritableStoreLike,
 } from "../computations.js";
-import { Equality, call, none, strictEquality } from "../functions.js";
+import { Equality, none, strictEquality } from "../functions.js";
 import { DisposableLike, EventListenerLike_notify } from "../utils.js";
 import PublisherMixin from "./__mixins__/PublisherMixin.js";
 
@@ -31,7 +31,6 @@ export const create: <T>(
     [WritableStore_equality]: Equality<T>;
     [WritableStore_value]: T;
   };
-  const publisherPrototype = getPrototype(PublisherMixin<T>());
 
   return mixInstanceFactory(
     include(PublisherMixin<T>()),
@@ -76,7 +75,8 @@ export const create: <T>(
       ) {
         if (!this[WritableStore_equality](this[WritableStore_value], v)) {
           this[WritableStore_value] = v;
-          call(publisherPrototype[EventListenerLike_notify], this, v);
+
+          super_(PublisherMixin<T>(), this, EventListenerLike_notify, v);
         }
       },
     },

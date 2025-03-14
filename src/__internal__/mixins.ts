@@ -1062,6 +1062,17 @@ interface Signature {
   props(): object;
 
   proto<TPrototype extends object>(o: TPrototype): TPrototype;
+
+  super_<
+    TPrototype extends Record<TKey, TFunction>,
+    TKey extends keyof TPrototype,
+    TFunction extends (...args: any) => any,
+  >(
+    mixin: PartialMixin<TPrototype>,
+    thiz: unknown,
+    method: TKey,
+    ...args: Parameters<TPrototype[TKey]>
+  ): ReturnType<TPrototype[TKey]>;
 }
 
 function initUnsafe<TReturn>(
@@ -1190,11 +1201,18 @@ export const props: Signature["props"] = <TProperties>(
   };
 };
 
-export const getPrototype = <TPrototype extends object>(
-  mixin: PartialMixin<TPrototype>,
-): TPrototype => mixin[Mixin_prototype];
-
 export function unsafeCast<T>(_v: unknown): asserts _v is T {}
 
 export const proto = <TPrototype extends object>(o: TPrototype): TPrototype =>
   o;
+
+export const super_: Signature["super_"] = (<TPrototype extends object>(
+  mixin: PartialMixin<TPrototype>,
+  thiz: unknown,
+  method: keyof TPrototype,
+  ...args: any[]
+): unknown =>
+  (mixin[Mixin_prototype][method] as Function).call(
+    thiz,
+    ...args,
+  )) as Signature["super_"];
