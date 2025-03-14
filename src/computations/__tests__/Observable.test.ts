@@ -39,7 +39,6 @@ import {
   Computation_synchronousWithSideEffectsOfT,
   DeferredComputationWithSideEffects,
   MulticastComputation,
-  ObservableLike,
   PureDeferredComputation,
   PureSynchronousComputation,
   PureSynchronousObservableLike,
@@ -197,10 +196,6 @@ testModule(
   ConcurrentReactiveComputationModuleTests(
     {
       ...Observable,
-      fromObservable:
-        <T>() =>
-        (v: ObservableLike<T>) =>
-          v as ComputationOf<Observable.Computation, T>,
       toObservable:
         <T>() =>
         (v: ComputationOf<Observable.Computation, T>) =>

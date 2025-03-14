@@ -14,7 +14,6 @@ import {
   DeferredComputationModule,
   DeferredComputationWithSideEffectsLike,
   DeferredComputationWithSideEffectsOf,
-  DeferredObservableLike,
   DeferredObservableWithSideEffectsLike,
   DeferredReactiveComputationModule,
   EventSourceLike,
@@ -567,7 +566,7 @@ export interface ObservableModule
       readonly backpressureStrategy?: BackpressureStrategy;
     },
   ): Function1<
-    DeferredObservableLike<T>,
+    ObservableLike<T>,
     MulticastObservableLike<T> & DisposableLike
   >;
 
@@ -806,7 +805,7 @@ export const fromEventSource: Signature["fromEventSource"] =
   Observable_fromEventSource;
 export const fromIterable: Signature["fromIterable"] = Observable_fromIterable;
 export const fromObservable: Signature["fromObservable"] =
-  Observable_subscribeOn;
+  Observable_multicast;
 export const fromPromise: Signature["fromPromise"] = Observable_fromPromise;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   Observable_fromReadonlyArray;

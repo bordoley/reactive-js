@@ -147,7 +147,7 @@ const ConcurrentReactiveComputationModuleTests = <
         const result: number[] = [];
 
         pipe(
-          m.merge(
+          m.merge<number>(
             pipe(
               [0, 2, 3, 5, 6],
               Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
@@ -210,7 +210,7 @@ const ConcurrentReactiveComputationModuleTests = <
                 ),
                 m.fromObservable(vts),
               ),
-              m.merge(
+              m.merge<number>(
                 pipe(
                   Observable.empty({ delay: 6 }),
                   Computation.concatWith(Observable)(

@@ -871,7 +871,7 @@ export interface ConcurrentReactiveComputationModule<
       readonly capacity?: number;
       readonly backpressureStrategy?: BackpressureStrategy;
     },
-  ) => Function1<ObservableLike<T>, ComputationOf<TComputation, T>>;
+  ) => Function1<ObservableLike<T>, MulticastComputationOf<TComputation, T> & DisposableLike>;
 
   fromPromise<T>(): Function1<
     Promise<T>,
