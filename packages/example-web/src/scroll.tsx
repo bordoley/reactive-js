@@ -9,7 +9,7 @@ import { EventSourceLike } from "@reactive-js/core/computations";
 import * as Publisher from "@reactive-js/core/computations/Publisher";
 import {
   EventListenerLike_notify,
-  QueueableLike_enqueue,
+  SinkLike_push,
   PauseableLike_pause,
   PauseableLike_resume,
 } from "@reactive-js/core/utils";
@@ -57,12 +57,12 @@ const ScrollApp = () => {
       spring?.[PauseableLike_pause]();
 
       if (!done && velocity > 0) {
-        spring?.[QueueableLike_enqueue]({
+        spring?.[SinkLike_push]({
           from: pos,
           to: [pos + 0.05, pos],
         });
       } else if (!done && velocity < 0) {
-        spring?.[QueueableLike_enqueue]({
+        spring?.[SinkLike_push]({
           from: pos,
           to: [pos - 0.01, pos],
         });

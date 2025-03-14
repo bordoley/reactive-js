@@ -10,7 +10,7 @@ import * as Observable from "@reactive-js/core/computations/Observable";
 import {
   CacheProvider,
   createComponent,
-  useDispatcher,
+  useSink,
   usePauseable,
   useObserve,
   useDisposable,
@@ -57,7 +57,7 @@ import {
   PauseableLike_resume,
   PauseableLike_isPaused,
   PauseableLike_pause,
-  QueueableLike_enqueue,
+  SinkLike_push,
 } from "@reactive-js/core/utils";
 import * as AnimationFrameScheduler from "@reactive-js/core/web/AnimationFrameScheduler";
 import * as Cache from "@reactive-js/core/computations/Cache";
@@ -113,7 +113,7 @@ const AnimationGroup = () => {
     ),
   });
 
-  const animationController = useDispatcher(animation);
+  const animationController = useSink(animation);
   const isAnimationRunning = useObserve(animation) ?? false;
 
   return (
@@ -132,7 +132,7 @@ const AnimationGroup = () => {
       </div>
       <div>
         <button
-          onClick={animationController.enqueue}
+          onClick={animationController.push}
           disabled={isAnimationRunning}
         >
           Run Animation
@@ -289,7 +289,7 @@ const RxComponent = createComponent(
       const isAnimationPaused =
         __observe(isAnimationPausedObservable) ??
         animation[PauseableLike_isPaused][StoreLike_value];
-      const runAnimation = bindMethod(animation, QueueableLike_enqueue);
+      const runAnimation = bindMethod(animation, SinkLike_push);
 
       const pauseAnimation = bindMethod(animation, PauseableLike_pause);
       const resumeAnimation = bindMethod(animation, PauseableLike_resume);
