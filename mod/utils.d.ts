@@ -217,5 +217,5 @@ export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {
  *
  * @noInheritDoc
  */
-export interface ObserverLike<T = unknown> extends QueueableLike<T>, SchedulerLike, DisposableLike {
+export interface ObserverLike<T = unknown> extends QueueableLike<T>, SchedulerLike {
 }

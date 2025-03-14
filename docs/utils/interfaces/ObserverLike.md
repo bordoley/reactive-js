@@ -10,7 +10,7 @@ A consumer of push-based notifications.
 
 ## Extends
 
-- [`QueueableLike`](QueueableLike.md)\<`T`\>.[`SchedulerLike`](SchedulerLike.md).[`DisposableLike`](DisposableLike.md)
+- [`QueueableLike`](QueueableLike.md)\<`T`\>.[`SchedulerLike`](SchedulerLike.md)
 
 ## Type Parameters
 

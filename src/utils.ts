@@ -300,5 +300,4 @@ export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {}
  */
 export interface ObserverLike<T = unknown>
   extends QueueableLike<T>,
-    SchedulerLike,
-    DisposableLike {}
+    SchedulerLike {}
