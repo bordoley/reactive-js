@@ -340,16 +340,14 @@ const QueueMixin: <T>() => Mixin1<
           }
         },
 
-        [SinkLike_push](this: TProperties & QueueLike<T>, item: T): boolean {
+        [SinkLike_push](this: TProperties & QueueLike<T>, item: T) {
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
           const capacity = this[QueueableLike_capacity];
           const applyBackpressure = this[QueueLike_count] >= capacity;
           const isCompleted = this[SinkLike_isCompleted];
 
-          if (isCompleted) {
-            return false;
-          }
           if (
+            isCompleted ||
             (backpressureStrategy === DropLatestBackpressureStrategy &&
               applyBackpressure) ||
             // Special case the 0 capacity queue so that we don't fall through
@@ -357,7 +355,7 @@ const QueueMixin: <T>() => Mixin1<
             (backpressureStrategy === DropOldestBackpressureStrategy &&
               capacity === 0)
           ) {
-            return false;
+            return;
           } else if (
             backpressureStrategy === DropOldestBackpressureStrategy &&
             applyBackpressure
@@ -379,7 +377,7 @@ const QueueMixin: <T>() => Mixin1<
           const newCount = ++this[QueueLike_count];
           if (newCount === 1) {
             this[QueueMixin_values] = item;
-            return newCount < capacity;
+            return;
           }
 
           const compare = this[QueueMixin_comparator] as Comparator<T>;
@@ -451,8 +449,6 @@ const QueueMixin: <T>() => Mixin1<
           }
 
           this[QueueMixin_capacityMask] = newCapacityMask;
-
-          return this[QueueableLike_isReady];
         },
 
         [SinkLike_complete](this: TProperties) {

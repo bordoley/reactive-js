@@ -120,7 +120,6 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
                 scheduleDrainQueue(this);
                 call(queueProtoype[SinkLike_push], this, next);
             }
-            return this[QueueableLike_isReady];
         },
         [SinkLike_complete]() {
             const isCompleted = this[SinkLike_isCompleted];

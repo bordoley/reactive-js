@@ -199,16 +199,14 @@ const QueueMixin = /*@__PURE__*/ (() => {
             const capacity = this[QueueableLike_capacity];
             const applyBackpressure = this[QueueLike_count] >= capacity;
             const isCompleted = this[SinkLike_isCompleted];
-            if (isCompleted) {
-                return false;
-            }
-            if ((backpressureStrategy === DropLatestBackpressureStrategy &&
-                applyBackpressure) ||
+            if (isCompleted ||
+                (backpressureStrategy === DropLatestBackpressureStrategy &&
+                    applyBackpressure) ||
                 // Special case the 0 capacity queue so that we don't fall through
                 // to pushing an item onto the queue
                 (backpressureStrategy === DropOldestBackpressureStrategy &&
                     capacity === 0)) {
-                return false;
+                return;
             }
             else if (backpressureStrategy === DropOldestBackpressureStrategy &&
                 applyBackpressure) {
@@ -225,7 +223,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
             const newCount = ++this[QueueLike_count];
             if (newCount === 1) {
                 this[QueueMixin_values] = item;
-                return newCount < capacity;
+                return;
             }
             const compare = this[QueueMixin_comparator];
             const oldValues = this[QueueMixin_values];
@@ -272,7 +270,6 @@ const QueueMixin = /*@__PURE__*/ (() => {
                 this[QueueMixin_tail] = newCount;
             }
             this[QueueMixin_capacityMask] = newCapacityMask;
-            return this[QueueableLike_isReady];
         },
         [SinkLike_complete]() {
             this[SinkLike_isCompleted] = true;
