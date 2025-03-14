@@ -8,7 +8,10 @@ import { QueueableLike_backpressureStrategy, QueueableLike_capacity, SinkLike_co
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_enqueue from "./Observable.enqueue.js";
 import Observable_subscribe from "./Observable.subscribe.js";
-const Observable_subscribeOn = ((scheduler, options) => (observable) => Observable_createWithConfig(observer => pipe(observable, Observable_enqueue(observer), Observable_subscribe(scheduler, {
+const Observable_subscribeOn = ((scheduler, options) => (observable) => Observable_createWithConfig(observer => 
+// FIXME: Conceivably could do some introspection to determine if the observer
+// is using the same scheduler and backpressure config and bypass the intermediary
+pipe(observable, Observable_enqueue(observer), Observable_subscribe(scheduler, {
     [QueueableLike_capacity]: options?.capacity ?? observer[QueueableLike_capacity],
     [QueueableLike_backpressureStrategy]: options?.backpressureStrategy ??
         observer[QueueableLike_backpressureStrategy],

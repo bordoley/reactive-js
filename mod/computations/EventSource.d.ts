@@ -39,6 +39,7 @@ export declare const empty: Signature["empty"];
 export declare const firstAsync: Signature["firstAsync"];
 export declare const fromAsyncIterable: Signature["fromAsyncIterable"];
 export declare const fromIterable: Signature["fromIterable"];
+export declare const fromObservable: Signature["fromObservable"];
 export declare const fromPromise: Signature["fromPromise"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const fromValue: Signature["fromValue"];

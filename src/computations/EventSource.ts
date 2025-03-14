@@ -30,6 +30,7 @@ import EventSource_raise from "./EventSource/__private__/EventSource.raise.js";
 import EventSource_reduceAsync from "./EventSource/__private__/EventSource.reduceAsync.js";
 import EventSource_toReadonlyArrayAsync from "./EventSource/__private__/EventSource.toReadonlyArrayAsync.js";
 import EventSource_withLatestFrom from "./EventSource/__private__/EventSource.withLatestFrom.js";
+import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
 
 /**
  * @noInheritDoc
@@ -103,6 +104,8 @@ export const firstAsync: Signature["firstAsync"] = EventSource_firstAsync;
 export const fromAsyncIterable: Signature["fromAsyncIterable"] =
   EventSource_fromAsyncIterable;
 export const fromIterable: Signature["fromIterable"] = EventSource_fromIterable;
+export const fromObservable: Signature["fromObservable"] =
+  Observable_toEventSource;
 export const fromPromise: Signature["fromPromise"] = EventSource_fromPromise;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   EventSource_fromReadonlyArray;

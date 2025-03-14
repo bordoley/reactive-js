@@ -55,6 +55,7 @@
 - [fromAsyncIterable](functions/fromAsyncIterable.md)
 - [fromEventSource](functions/fromEventSource.md)
 - [fromIterable](functions/fromIterable.md)
+- [fromObservable](functions/fromObservable.md)
 - [fromPromise](functions/fromPromise.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
 - [fromStore](functions/fromStore.md)

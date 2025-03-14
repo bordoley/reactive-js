@@ -13,7 +13,6 @@ const EventSourceTypes = {
 };
 testModule("EventSource", ComputationModuleTests(EventSource, EventSourceTypes), ConcurrentReactiveComputationModuleTests({
     ...EventSource,
-    fromObservable: Observable.toEventSource,
     toObservable: Observable.fromEventSource,
 }, EventSourceTypes), describe("create", test("when the setup function throws", pipeLazy(EventSource.create(_ => raise()), EventSource.addEventHandler(ignore), pick(DisposableLike_error), expectIsSome))));
 ((_) => { })(EventSource);

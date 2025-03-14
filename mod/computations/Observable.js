@@ -105,6 +105,7 @@ export const fromAsyncFactory = Observable_fromAsyncFactory;
 export const fromAsyncIterable = Observable_fromAsyncIterable;
 export const fromEventSource = Observable_fromEventSource;
 export const fromIterable = Observable_fromIterable;
+export const fromObservable = Observable_subscribeOn;
 export const fromPromise = Observable_fromPromise;
 export const fromReadonlyArray = Observable_fromReadonlyArray;
 export const fromStore = Observable_fromStore;

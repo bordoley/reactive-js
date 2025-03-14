@@ -24,6 +24,7 @@
 - [firstAsync](functions/firstAsync.md)
 - [fromAsyncIterable](functions/fromAsyncIterable.md)
 - [fromIterable](functions/fromIterable.md)
+- [fromObservable](functions/fromObservable.md)
 - [fromPromise](functions/fromPromise.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
 - [fromValue](functions/fromValue.md)

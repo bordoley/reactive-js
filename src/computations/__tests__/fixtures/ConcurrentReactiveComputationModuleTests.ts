@@ -41,7 +41,7 @@ import {
 import * as Disposable from "../../../utils/Disposable.js";
 import * as HostScheduler from "../../../utils/HostScheduler.js";
 import * as VirtualTimeScheduler from "../../../utils/VirtualTimeScheduler.js";
-import { SchedulerLike, VirtualTimeSchedulerLike_run } from "../../../utils.js";
+import { VirtualTimeSchedulerLike_run } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
 import AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests from "./operators/AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests.js";
@@ -54,9 +54,6 @@ const ConcurrentReactiveComputationModuleTests = <
   TComputation extends ComputationType,
 >(
   m: ConcurrentReactiveComputationModule<TComputation> & {
-    fromObservable: <T>(
-      scheduler: SchedulerLike,
-    ) => Function1<ObservableLike<T>, ComputationOf<TComputation, T>>;
     toObservable: <T>() => Function1<
       ComputationOf<TComputation, T>,
       ObservableLike<T>

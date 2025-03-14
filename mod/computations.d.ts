@@ -264,6 +264,10 @@ export interface DeferredReactiveComputationModule<TComputation extends Computat
     }): StatefulSynchronousComputationOperator<TComputation, T, T>;
 }
 export interface ConcurrentReactiveComputationModule<TComputation extends ComputationType> extends ComputationModuleLike<TComputation> {
+    fromObservable: <T>(scheduler: SchedulerLike, options?: {
+        readonly capacity?: number;
+        readonly backpressureStrategy?: BackpressureStrategy;
+    }) => Function1<ObservableLike<T>, ComputationOf<TComputation, T>>;
     fromPromise<T>(): Function1<Promise<T>, MulticastComputationOf<TComputation, T>>;
     merge<T>(...computations: readonly PureSynchronousComputationOf<TComputation, T>[]): PureSynchronousComputationOf<TComputation, T>;
     merge<T>(...computations: readonly SynchronousComputationOf<TComputation, T>[]): SynchronousComputationWithSideEffectsOf<TComputation, T>;

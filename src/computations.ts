@@ -865,6 +865,14 @@ export interface DeferredReactiveComputationModule<
 export interface ConcurrentReactiveComputationModule<
   TComputation extends ComputationType,
 > extends ComputationModuleLike<TComputation> {
+  fromObservable: <T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly capacity?: number;
+      readonly backpressureStrategy?: BackpressureStrategy;
+    },
+  ) => Function1<ObservableLike<T>, ComputationOf<TComputation, T>>;
+
   fromPromise<T>(): Function1<
     Promise<T>,
     MulticastComputationOf<TComputation, T>

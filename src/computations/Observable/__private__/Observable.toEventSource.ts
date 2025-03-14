@@ -1,9 +1,9 @@
 import * as Computation from "../../../computations/Computation.js";
-import * as EventSource from "../../../computations/EventSource.js";
 import { ObservableLike } from "../../../computations.js";
 import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { BackpressureStrategy, SchedulerLike } from "../../../utils.js";
+import EventSource_create from "../../EventSource/__private__/EventSource.create.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
@@ -19,7 +19,7 @@ const Observable_toEventSource: Observable.Signature["toEventSource"] =
     },
   ) =>
   (obs: ObservableLike<T>) =>
-    EventSource.create<T>(listener =>
+    EventSource_create<T>(listener =>
       pipe(
         obs,
         Computation.notify(ObservableModule)(listener),

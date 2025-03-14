@@ -266,6 +266,7 @@ export declare const fromAsyncFactory: Signature["fromAsyncFactory"];
 export declare const fromAsyncIterable: Signature["fromAsyncIterable"];
 export declare const fromEventSource: Signature["fromEventSource"];
 export declare const fromIterable: Signature["fromIterable"];
+export declare const fromObservable: Signature["fromObservable"];
 export declare const fromPromise: Signature["fromPromise"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const fromStore: Signature["fromStore"];

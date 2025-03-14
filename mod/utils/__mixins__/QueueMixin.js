@@ -2,7 +2,7 @@
 
 import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/constants.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
-import * as EventSource from "../../computations/EventSource.js";
+import EventSource_addEventHandler from "../../computations/EventSource/__private__/EventSource.addEventHandler.js";
 import * as Publisher from "../../computations/Publisher.js";
 import { isSome, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
@@ -279,7 +279,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
             this[QueueMixin_onReadyPublisher][DisposableLike_dispose]();
         },
         [QueueableLike_addOnReadyListener](callback) {
-            return pipe(this[QueueMixin_onReadyPublisher], EventSource.addEventHandler(callback), Disposable.addTo(this));
+            return pipe(this[QueueMixin_onReadyPublisher], EventSource_addEventHandler(callback), Disposable.addTo(this));
         },
     }));
 })();

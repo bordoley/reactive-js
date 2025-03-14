@@ -10,7 +10,7 @@ import {
   props,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import * as EventSource from "../../computations/EventSource.js";
+import EventSource_addEventHandler from "../../computations/EventSource/__private__/EventSource.addEventHandler.js";
 import * as Publisher from "../../computations/Publisher.js";
 import { PublisherLike } from "../../computations.js";
 import {
@@ -490,7 +490,7 @@ const QueueMixin: <T>() => Mixin1<
         ) {
           return pipe(
             this[QueueMixin_onReadyPublisher],
-            EventSource.addEventHandler(callback),
+            EventSource_addEventHandler(callback),
             Disposable.addTo(this),
           );
         },

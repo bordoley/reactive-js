@@ -29,6 +29,36 @@
 
 [`ComputationModuleLike`](ComputationModuleLike.md).[`[ComputationModuleLike_computationType]`](ComputationModuleLike.md#computationmodulelike_computationtype)
 
+***
+
+### fromObservable()
+
+> **fromObservable**: \<`T`\>(`scheduler`, `options`?) => [`Function1`](../../functions/type-aliases/Function1.md)\<[`ObservableLike`](ObservableLike.md)\<`T`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### scheduler
+
+[`SchedulerLike`](../../utils/interfaces/SchedulerLike.md)
+
+##### options?
+
+###### backpressureStrategy?
+
+[`BackpressureStrategy`](../../utils/type-aliases/BackpressureStrategy.md)
+
+###### capacity?
+
+`number`
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`ObservableLike`](ObservableLike.md)\<`T`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>\>
+
 ## Methods
 
 ### fromPromise()

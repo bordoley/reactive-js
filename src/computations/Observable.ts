@@ -805,6 +805,8 @@ export const fromAsyncIterable: Signature["fromAsyncIterable"] =
 export const fromEventSource: Signature["fromEventSource"] =
   Observable_fromEventSource;
 export const fromIterable: Signature["fromIterable"] = Observable_fromIterable;
+export const fromObservable: Signature["fromObservable"] =
+  Observable_subscribeOn;
 export const fromPromise: Signature["fromPromise"] = Observable_fromPromise;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   Observable_fromReadonlyArray;

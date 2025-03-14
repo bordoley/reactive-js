@@ -22,7 +22,6 @@ testModule(
   ConcurrentReactiveComputationModuleTests(
     {
       ...EventSource,
-      fromObservable: Observable.toEventSource,
       toObservable: Observable.fromEventSource,
     },
     EventSourceTypes,

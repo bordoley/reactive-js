@@ -28,6 +28,8 @@ const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
   (observable: ObservableLike<T>) =>
     Observable_createWithConfig<T>(
       observer =>
+        // FIXME: Conceivably could do some introspection to determine if the observer
+        // is using the same scheduler and backpressure config and bypass the intermediary
         pipe(
           observable,
           Observable_enqueue(observer),
