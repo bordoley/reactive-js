@@ -110,7 +110,7 @@ export const Wordle = () => {
   const springController = useSink(spring);
 
   useEffect(() => {
-    springController.push({ from: 0, to: 180 * items.length });
+    springController.notify({ from: 0, to: 180 * items.length });
   }, [springController, state]);
 
   const isAnimationRunning = useObserve(spring) ?? false;
