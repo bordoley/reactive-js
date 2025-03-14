@@ -137,6 +137,29 @@ export type ComputationType = GenericComputationType<
   MulticastLike
 >;
 
+export interface ComputationTypeOf<
+  TComputation extends ComputationType,
+  T = unknown,
+> {
+  readonly [Computation_pureSynchronousOfT]?: PureSynchronousComputationOf<
+    TComputation,
+    T
+  >;
+  readonly [Computation_synchronousWithSideEffectsOfT]?: SynchronousComputationWithSideEffectsOf<
+    TComputation,
+    T
+  >;
+  readonly [Computation_pureDeferredOfT]?: PureDeferredComputationOf<
+    TComputation,
+    T
+  >;
+  readonly [Computation_deferredWithSideEffectsOfT]?: DeferredComputationWithSideEffectsOf<
+    TComputation,
+    T
+  >;
+  readonly [Computation_multicastOfT]?: MulticastComputationOf<TComputation, T>;
+}
+
 export type ComputationBaseOf<
   TComputation extends ComputationType,
   T,

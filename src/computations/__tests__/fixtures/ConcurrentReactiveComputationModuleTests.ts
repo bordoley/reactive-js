@@ -14,18 +14,14 @@ import * as Observable from "../../../computations/Observable.js";
 import {
   ComputationOf,
   ComputationType,
+  ComputationTypeOf,
   Computation_deferredWithSideEffectsOfT,
   Computation_multicastOfT,
   Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
   ConcurrentReactiveComputationModule,
-  DeferredComputationWithSideEffectsOf,
-  MulticastComputationOf,
   ObservableLike,
-  PureDeferredComputationOf,
-  PureSynchronousComputationOf,
-  SynchronousComputationWithSideEffectsOf,
 } from "../../../computations.js";
 import {
   Function1,
@@ -66,28 +62,7 @@ const ConcurrentReactiveComputationModuleTests = <
       ObservableLike<T>
     >;
   },
-  computationType: {
-    readonly [Computation_pureSynchronousOfT]?: PureSynchronousComputationOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_synchronousWithSideEffectsOfT]?: SynchronousComputationWithSideEffectsOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_pureDeferredOfT]?: PureDeferredComputationOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_deferredWithSideEffectsOfT]?: DeferredComputationWithSideEffectsOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_multicastOfT]?: MulticastComputationOf<
-      TComputation,
-      unknown
-    >;
-  },
+  computationType: ComputationTypeOf<TComputation>,
 ) => {
   const {
     [Computation_pureSynchronousOfT]: pureSynchronousOfT,

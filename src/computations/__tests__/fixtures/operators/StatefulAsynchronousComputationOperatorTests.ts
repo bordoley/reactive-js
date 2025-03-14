@@ -1,17 +1,13 @@
 import { describe, test } from "../../../../__internal__/testing.js";
 import {
   ComputationType,
+  ComputationTypeOf,
   Computation_deferredWithSideEffectsOfT,
   Computation_multicastOfT,
   Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
-  DeferredComputationWithSideEffectsOf,
-  MulticastComputationOf,
-  PureDeferredComputationOf,
-  PureSynchronousComputationOf,
   StatefulAsynchronousComputationOperator,
-  SynchronousComputationWithSideEffectsOf,
 } from "../../../../computations.js";
 import { pipeSomeLazy } from "../../../../functions.js";
 import * as ComputationExpect from "../helpers/ComputationExpect.js";
@@ -19,28 +15,7 @@ import * as ComputationExpect from "../helpers/ComputationExpect.js";
 const StatefulAsynchronousComputationOperatorTests = <
   TComputation extends ComputationType,
 >(
-  computationType: {
-    readonly [Computation_pureSynchronousOfT]?: PureSynchronousComputationOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_synchronousWithSideEffectsOfT]?: SynchronousComputationWithSideEffectsOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_pureDeferredOfT]?: PureDeferredComputationOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_deferredWithSideEffectsOfT]?: DeferredComputationWithSideEffectsOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_multicastOfT]?: MulticastComputationOf<
-      TComputation,
-      unknown
-    >;
-  },
+  computationType: ComputationTypeOf<TComputation>,
   operator: StatefulAsynchronousComputationOperator<
     TComputation,
     unknown,

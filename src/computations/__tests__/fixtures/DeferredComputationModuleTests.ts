@@ -13,6 +13,7 @@ import {
   ComputationLike_isPure,
   ComputationModule,
   ComputationType,
+  ComputationTypeOf,
   Computation_deferredWithSideEffectsOfT,
   Computation_multicastOfT,
   Computation_pureDeferredOfT,
@@ -21,14 +22,9 @@ import {
   DeferredComputationModule,
   DeferredComputationOf,
   DeferredComputationWithSideEffects,
-  DeferredComputationWithSideEffectsOf,
-  MulticastComputationOf,
   PureDeferredComputation,
-  PureDeferredComputationOf,
   PureSynchronousComputation,
-  PureSynchronousComputationOf,
   SynchronousComputationWithSideEffects,
-  SynchronousComputationWithSideEffectsOf,
 } from "../../../computations.js";
 import {
   Optional,
@@ -55,28 +51,7 @@ import StatelessComputationOperatorTests from "./operators/StatelessComputationO
 
 const DeferredComputationModuleTests = <TComputation extends ComputationType>(
   m: DeferredComputationModule<TComputation> & ComputationModule<TComputation>,
-  computationType: {
-    readonly [Computation_pureSynchronousOfT]?: PureSynchronousComputationOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_synchronousWithSideEffectsOfT]?: SynchronousComputationWithSideEffectsOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_pureDeferredOfT]?: PureDeferredComputationOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_deferredWithSideEffectsOfT]?: DeferredComputationWithSideEffectsOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_multicastOfT]?: MulticastComputationOf<
-      TComputation,
-      unknown
-    >;
-  },
+  computationType: ComputationTypeOf<TComputation>,
 ) => {
   const {
     [Computation_pureSynchronousOfT]: pureSynchronousOfT,

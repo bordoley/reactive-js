@@ -12,16 +12,7 @@ import {
 import {
   ComputationModule,
   ComputationType,
-  Computation_deferredWithSideEffectsOfT,
-  Computation_multicastOfT,
-  Computation_pureDeferredOfT,
-  Computation_pureSynchronousOfT,
-  Computation_synchronousWithSideEffectsOfT,
-  DeferredComputationWithSideEffectsOf,
-  MulticastComputationOf,
-  PureDeferredComputationOf,
-  PureSynchronousComputationOf,
-  SynchronousComputationWithSideEffectsOf,
+  ComputationTypeOf,
 } from "../../../computations.js";
 import {
   alwaysTrue,
@@ -40,28 +31,7 @@ import StatelessComputationOperatorTests from "./operators/StatelessComputationO
 
 const ComputationModuleTests = <TComputation extends ComputationType>(
   m: ComputationModule<TComputation>,
-  computationType: {
-    readonly [Computation_pureSynchronousOfT]?: PureSynchronousComputationOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_synchronousWithSideEffectsOfT]?: SynchronousComputationWithSideEffectsOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_pureDeferredOfT]?: PureDeferredComputationOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_deferredWithSideEffectsOfT]?: DeferredComputationWithSideEffectsOf<
-      TComputation,
-      unknown
-    >;
-    readonly [Computation_multicastOfT]?: MulticastComputationOf<
-      TComputation,
-      unknown
-    >;
-  },
+  computationType: ComputationTypeOf<TComputation>,
 ) =>
   describe(
     "ComputationModule",

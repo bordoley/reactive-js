@@ -59,6 +59,13 @@ export interface GenericComputationType<TComputationBaseOfT extends ComputationL
     readonly [Computation_multicastOfT]?: TMulticastComputationOfT;
 }
 export type ComputationType = GenericComputationType<ComputationLike, PureDeferredComputationLike, DeferredComputationWithSideEffectsLike, PureSynchronousComputationLike, SynchronousComputationWithSideEffectsLike, MulticastLike>;
+export interface ComputationTypeOf<TComputation extends ComputationType, T = unknown> {
+    readonly [Computation_pureSynchronousOfT]?: PureSynchronousComputationOf<TComputation, T>;
+    readonly [Computation_synchronousWithSideEffectsOfT]?: SynchronousComputationWithSideEffectsOf<TComputation, T>;
+    readonly [Computation_pureDeferredOfT]?: PureDeferredComputationOf<TComputation, T>;
+    readonly [Computation_deferredWithSideEffectsOfT]?: DeferredComputationWithSideEffectsOf<TComputation, T>;
+    readonly [Computation_multicastOfT]?: MulticastComputationOf<TComputation, T>;
+}
 export type ComputationBaseOf<TComputation extends ComputationType, T> = TComputation extends {
     readonly [Computation_baseOfT]?: unknown;
 } ? NonNullable<(TComputation & {

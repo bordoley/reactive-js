@@ -1,7 +1,7 @@
 /// <reference types="./HigherOrderComputationOperatorTests.d.ts" />
 
 import { describe, test } from "../../../../__internal__/testing.js";
-import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../../../computations.js";
+import { Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../../../computations.js";
 import { pipeSomeLazy } from "../../../../functions.js";
 import * as ComputationExpect from "../helpers/ComputationExpect.js";
 const HigherOrderComputationOperatorTests = (computationType, operatorPureSynchronousInner, operatorSynchronousWithSideEffectsInner, operatorPureDeferredInner, operatorDeferredWithSideEffectsInner) => describe("HigherOrderComputationOperator", computationType[Computation_pureSynchronousOfT] &&
