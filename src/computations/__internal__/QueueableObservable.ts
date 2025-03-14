@@ -44,12 +44,10 @@ export const create: <T>(config?: {
   capacity?: number;
   backpressureStrategy?: BackpressureStrategy;
 }) => QueueableObservableLike<T> = (<T>() => {
-  const QueueableObservableLike_delegate = Symbol(
-    "QueueableObservableLike_delegate",
-  );
+  const QueueableObservable_delegate = Symbol("QueueableObservable_delegate");
 
   type TProperties = {
-    [QueueableObservableLike_delegate]: QueueableLike<T>;
+    [QueueableObservable_delegate]: QueueableLike<T>;
     [QueueableLike_onReady]: PublisherLike<void>;
   };
 
@@ -69,7 +67,7 @@ export const create: <T>(config?: {
       this[QueueableLike_onReady] = onReadyPublisher;
 
       const queue = Queue.create(config);
-      this[QueueableObservableLike_delegate] = queue;
+      this[QueueableObservable_delegate] = queue;
 
       pipe(
         queue[QueueableLike_onReady],
@@ -82,7 +80,7 @@ export const create: <T>(config?: {
       return this;
     },
     props<TProperties>({
-      [QueueableObservableLike_delegate]: none,
+      [QueueableObservable_delegate]: none,
       [QueueableLike_onReady]: none,
     }),
     {
@@ -91,32 +89,32 @@ export const create: <T>(config?: {
 
       get [QueueableLike_backpressureStrategy]() {
         unsafeCast<TProperties>(this);
-        return this[QueueableObservableLike_delegate][
+        return this[QueueableObservable_delegate][
           QueueableLike_backpressureStrategy
         ];
       },
 
       get [QueueableLike_capacity]() {
         unsafeCast<TProperties>(this);
-        return this[QueueableObservableLike_delegate][QueueableLike_capacity];
+        return this[QueueableObservable_delegate][QueueableLike_capacity];
       },
 
       get [QueueableLike_isReady]() {
         unsafeCast<TProperties>(this);
-        return this[QueueableObservableLike_delegate][QueueableLike_isReady];
+        return this[QueueableObservable_delegate][QueueableLike_isReady];
       },
 
       get [SinkLike_isCompleted]() {
         unsafeCast<TProperties>(this);
-        return this[QueueableObservableLike_delegate][SinkLike_isCompleted];
+        return this[QueueableObservable_delegate][SinkLike_isCompleted];
       },
 
       [ObservableLike_observe](
         this: QueueableObservableLike<T> & TProperties,
         observer: ObserverLike<T>,
       ) {
-        const oldDelegate = this[QueueableObservableLike_delegate];
-        this[QueueableObservableLike_delegate] = observer;
+        const oldDelegate = this[QueueableObservable_delegate];
+        this[QueueableObservable_delegate] = observer;
         pipe(this, Disposable.bindTo(observer));
 
         pipe(
@@ -144,11 +142,11 @@ export const create: <T>(config?: {
       },
 
       [SinkLike_complete](this: TProperties & DisposableLike) {
-        this[QueueableObservableLike_delegate][SinkLike_complete]();
+        this[QueueableObservable_delegate][SinkLike_complete]();
       },
 
       [SinkLike_push](this: TProperties, v: T): void {
-        this[QueueableObservableLike_delegate][SinkLike_push](v);
+        this[QueueableObservable_delegate][SinkLike_push](v);
       },
     },
   );
