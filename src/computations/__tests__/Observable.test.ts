@@ -405,11 +405,11 @@ testModule(
     ),
   ),
   describe(
-    "computeSynchronousObservable",
+    "computeSynchronous",
     test("batch mode", () => {
       const result: number[] = [];
       pipe(
-        Observable.computeSynchronousObservable(() => {
+        Observable.computeSynchronous(() => {
           const fromValueWithDelay = __constant(
             (delay: number, value: number): SynchronousObservableLike<number> =>
               pipe([value], Observable.fromReadonlyArray({ delay })),
@@ -433,7 +433,7 @@ testModule(
     test("combined-latest mode", () => {
       const result: number[] = [];
       pipe(
-        Observable.computeSynchronousObservable(
+        Observable.computeSynchronous(
           () => {
             const oneTwoThreeDelayed = __constant(
               pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
@@ -460,7 +460,7 @@ testModule(
       const error = newInstance(Error);
 
       const subscription = pipe(
-        Observable.computeSynchronousObservable(() => {
+        Observable.computeSynchronous(() => {
           raise(error);
         }),
         Observable.subscribe(vts),
@@ -476,7 +476,7 @@ testModule(
     test(
       "conditional hooks",
       pipeLazy(
-        Observable.computeSynchronousObservable(
+        Observable.computeSynchronous(
           () => {
             const src = __constant(
               pipe(
@@ -505,7 +505,7 @@ testModule(
     test(
       "conditional await",
       pipeLazy(
-        Observable.computeSynchronousObservable<number>(() => {
+        Observable.computeSynchronous<number>(() => {
           const src = __constant(
             pipe(
               [0, 1, 2, 3, 4, 5],
@@ -536,7 +536,7 @@ testModule(
       ),
     ),
     ComputationTest.isSynchronousWithSideEffects(
-      Observable.computeSynchronousObservable(() => {}),
+      Observable.computeSynchronous(() => {}),
     ),
   ),
   describe(
@@ -1300,6 +1300,7 @@ testModule(
         pipeLazy(
           [1, 2, 3, 4],
           Observable.fromReadonlyArray(),
+          Observable.forEach(ignore),
           Observable.run({
             capacity: 0,
             backpressureStrategy: ThrowBackpressureStrategy,
@@ -1497,6 +1498,7 @@ testModule(
         pipeLazy(
           [],
           Observable.fromReadonlyArray({ delay: 1 }),
+          Observable.forEach(ignore),
           Observable.throwIfEmpty(() => error),
           Observable.run(),
         ),
@@ -1510,6 +1512,7 @@ testModule(
         pipeLazy(
           [],
           Observable.fromReadonlyArray({ delay: 1 }),
+          Observable.forEach(ignore),
           Observable.throwIfEmpty(() => {
             throw error;
           }),

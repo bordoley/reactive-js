@@ -220,6 +220,7 @@ export interface SynchronousComputationModule<TComputationType extends Computati
     first<T>(): Function1<SynchronousComputationOf<TComputationType, T>, Optional<T>>;
     last<T>(): Function1<SynchronousComputationOf<TComputationType, T>, Optional<T>>;
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<SynchronousComputationOf<TComputationType, T>, TAcc>;
+    run<T>(): SideEffect1<SynchronousComputationWithSideEffectsOf<TComputationType, T>>;
     toRunnable<T>(): ToRunnableOperator<TComputationType, T>;
     toReadonlyArray<T>(): Function1<SynchronousComputationOf<TComputationType, T>, ReadonlyArray<T>>;
 }

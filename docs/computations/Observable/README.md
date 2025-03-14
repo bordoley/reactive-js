@@ -35,7 +35,7 @@
 - [catchError](functions/catchError.md)
 - [combineLatest](functions/combineLatest.md)
 - [computeDeferred](functions/computeDeferred.md)
-- [computeSynchronousObservable](functions/computeSynchronousObservable.md)
+- [computeSynchronous](functions/computeSynchronous.md)
 - [concat](functions/concat.md)
 - [concatAll](functions/concatAll.md)
 - [create](functions/create.md)

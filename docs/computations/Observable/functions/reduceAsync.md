@@ -28,19 +28,11 @@
 
 #### options?
 
-##### autoDispose?
-
-`boolean`
-
 ##### backpressureStrategy?
 
 [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
 
 ##### capacity?
-
-`number`
-
-##### replay?
 
 `number`
 
@@ -74,19 +66,11 @@
 
 #### options?
 
-##### autoDispose?
-
-`boolean`
-
 ##### backpressureStrategy?
 
 [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
 
 ##### capacity?
-
-`number`
-
-##### replay?
 
 `number`
 

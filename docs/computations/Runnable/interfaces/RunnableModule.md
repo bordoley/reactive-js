@@ -768,6 +768,24 @@
 
 ***
 
+### run()
+
+> **run**\<`T`\>(): [`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>\>
+
+#### Inherited from
+
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`run`](../../interfaces/SynchronousComputationModule.md#run)
+
+***
+
 ### scan()
 
 > **scan**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`, `TAcc`\>

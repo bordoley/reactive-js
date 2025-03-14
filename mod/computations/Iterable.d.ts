@@ -32,6 +32,7 @@ export declare const reduce: Signature["reduce"];
 export declare const reduceAsync: Signature["reduceAsync"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
+export declare const run: Signature["run"];
 export declare const scan: Signature["scan"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeWhile: Signature["takeWhile"];

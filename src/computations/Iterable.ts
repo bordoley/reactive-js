@@ -479,6 +479,14 @@ class ScanIterable<T, TAcc> {
   }
 }
 
+export const run: Signature["run"] =
+  <T>() =>
+  (iter: IterableLike<T>) => {
+    for (const _v of iter) {
+      // no op
+    }
+  };
+
 export const scan: Signature["scan"] = (<T, TAcc>(
     scanner: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,

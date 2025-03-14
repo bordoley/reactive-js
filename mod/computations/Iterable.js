@@ -288,6 +288,11 @@ class ScanIterable {
         }
     }
 }
+export const run = () => (iter) => {
+    for (const _v of iter) {
+        // no op
+    }
+};
 export const scan = ((scanner, initialValue) => (iter) => newInstance(ScanIterable, iter, scanner, initialValue));
 class TakeFirstIterable {
     s;

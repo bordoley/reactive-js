@@ -86,6 +86,20 @@
 
 ***
 
+### run()
+
+> **run**\<`T`\>(): [`SideEffect1`](../../functions/type-aliases/SideEffect1.md)\<[`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`SideEffect1`](../../functions/type-aliases/SideEffect1.md)\<[`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
+
+***
+
 ### toReadonlyArray()
 
 > **toReadonlyArray**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, readonly `T`[]\>

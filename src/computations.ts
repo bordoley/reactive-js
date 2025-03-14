@@ -936,6 +936,10 @@ export interface SynchronousComputationModule<
     initialValue: Factory<TAcc>,
   ): Function1<SynchronousComputationOf<TComputationType, T>, TAcc>;
 
+  run<T>(): SideEffect1<
+    SynchronousComputationWithSideEffectsOf<TComputationType, T>
+  >;
+
   toRunnable<T>(): ToRunnableOperator<TComputationType, T>;
 
   toReadonlyArray<T>(): Function1<

@@ -64,7 +64,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     computeDeferred<T>(computation: Factory<T>, options?: {
         readonly mode?: ComputeMode;
     }): DeferredObservableWithSideEffectsLike<T>;
-    computeSynchronousObservable<T>(computation: Factory<T>, options?: {
+    computeSynchronous<T>(computation: Factory<T>, options?: {
         readonly mode?: ComputeMode;
     }): SynchronousObservableWithSideEffectsLike<T>;
     create<T>(f: SideEffect1<ObserverLike<T>>): DeferredObservableWithSideEffectsLike<T>;
@@ -99,7 +99,6 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly delay: number;
         readonly delayStart?: boolean;
     }): FromIterableOperator<ObservableComputation, T>;
-    fromPromise<T>(): Function1<Promise<T>, MulticastObservableLike<T>>;
     fromReadonlyArray<T>(options?: {
         readonly delay?: number;
         readonly delayStart?: boolean;
@@ -154,14 +153,10 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly delay?: number;
     }): PureSynchronousObservableLike<T>;
     reduceAsync<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: {
-        readonly autoDispose?: boolean;
-        readonly replay?: number;
         readonly capacity?: number;
         readonly backpressureStrategy?: BackpressureStrategy;
     }): AsyncFunction1<ObservableLike<T>, TAcc>;
     reduceAsync<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, scheduler: SchedulerLike, options?: {
-        readonly autoDispose?: boolean;
-        readonly replay?: number;
         readonly capacity?: number;
         readonly backpressureStrategy?: BackpressureStrategy;
     }): AsyncFunction1<ObservableLike<T>, TAcc>;
@@ -169,7 +164,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly maxMicroTaskTicks?: number;
-    }): SideEffect1<SynchronousObservableLike<T>>;
+    }): SideEffect1<SynchronousObservableWithSideEffectsLike<T>>;
     scanMany<T, TAcc>(scanner: Function2<TAcc, T, PureSynchronousObservableLike<TAcc>>, initialValue: Factory<TAcc>): HigherOrderComputationOperator<ObservableComputation, PureSynchronousObservableLike, T, TAcc>;
     scanMany<T, TAcc, TInnerLike extends HigherOrderInnerComputationLike>(scanner: Function2<TAcc, T, HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, T>>, initialValue: Factory<TAcc>, options: {
         readonly innerType: TInnerLike;
@@ -225,10 +220,6 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): AsyncFunction1<ObservableLike<T>, ReadonlyArray<T>>;
-    toReadonlyArrayAsync<T>(scheduler: SchedulerLike, options?: {
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-    }): AsyncFunction1<ObservableLike<T>, ReadonlyArray<T>>;
     toRunnable<T>(options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
@@ -244,7 +235,7 @@ export declare const buffer: Signature["buffer"];
 export declare const catchError: Signature["catchError"];
 export declare const combineLatest: Signature["combineLatest"];
 export declare const computeDeferred: Signature["computeDeferred"];
-export declare const computeSynchronousObservable: Signature["computeSynchronousObservable"];
+export declare const computeSynchronous: Signature["computeSynchronous"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concat: Signature["concat"];
 export declare const create: Signature["create"];

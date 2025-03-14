@@ -120,9 +120,9 @@
 
 ***
 
-### computeSynchronousObservable()
+### computeSynchronous()
 
-> **computeSynchronousObservable**\<`T`\>(`computation`, `options`?): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
+> **computeSynchronous**\<`T`\>(`computation`, `options`?): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 #### Type Parameters
 
@@ -445,24 +445,6 @@
 #### Overrides
 
 [`ComputationModule`](../../interfaces/ComputationModule.md).[`fromIterable`](../../interfaces/ComputationModule.md#fromiterable)
-
-***
-
-### fromPromise()
-
-> **fromPromise**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`T`\>\>
-
-#### Overrides
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`fromPromise`](../../interfaces/ConcurrentReactiveComputationModule.md#frompromise)
 
 ***
 
@@ -884,19 +866,11 @@
 
 ###### options?
 
-###### autoDispose?
-
-`boolean`
-
 ###### backpressureStrategy?
 
 [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
 
 ###### capacity?
-
-`number`
-
-###### replay?
 
 `number`
 
@@ -934,19 +908,11 @@
 
 ###### options?
 
-###### autoDispose?
-
-`boolean`
-
 ###### backpressureStrategy?
 
 [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
 
 ###### capacity?
-
-`number`
-
-###### replay?
 
 `number`
 
@@ -962,7 +928,7 @@
 
 ### run()
 
-> **run**\<`T`\>(`options`?): [`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>\>
+> **run**\<`T`\>(`options`?): [`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -986,7 +952,11 @@
 
 #### Returns
 
-[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>\>
+[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>\>
+
+#### Overrides
+
+[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`run`](../../interfaces/SynchronousComputationModule.md#run)
 
 ***
 
@@ -1445,38 +1415,6 @@
 ##### Overrides
 
 [`ComputationModule`](../../interfaces/ComputationModule.md).[`toReadonlyArrayAsync`](../../interfaces/ComputationModule.md#toreadonlyarrayasync)
-
-#### Call Signature
-
-> **toReadonlyArrayAsync**\<`T`\>(`scheduler`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, readonly `T`[]\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### scheduler
-
-[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-###### options?
-
-###### backpressureStrategy?
-
-[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
-
-###### capacity?
-
-`number`
-
-##### Returns
-
-[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, readonly `T`[]\>
-
-##### Overrides
-
-`ComputationModule.toReadonlyArrayAsync`
 
 #### Call Signature
 

@@ -249,9 +249,9 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
     finally {
         __disposeResources(env_6);
     }
-}), ComputationTest.isDeferredWithSideEffects(Observable.computeDeferred(() => { }))), describe("computeSynchronousObservable", test("batch mode", () => {
+}), ComputationTest.isDeferredWithSideEffects(Observable.computeDeferred(() => { }))), describe("computeSynchronous", test("batch mode", () => {
     const result = [];
-    pipe(Observable.computeSynchronousObservable(() => {
+    pipe(Observable.computeSynchronous(() => {
         const fromValueWithDelay = __constant((delay, value) => pipe([value], Observable.fromReadonlyArray({ delay })));
         const obs1 = __memo(fromValueWithDelay, 10, 5);
         const result1 = __await(obs1);
@@ -264,7 +264,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
     pipe(result, expectArrayEquals([22]));
 }), test("combined-latest mode", () => {
     const result = [];
-    pipe(Observable.computeSynchronousObservable(() => {
+    pipe(Observable.computeSynchronous(() => {
         const oneTwoThreeDelayed = __constant(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })));
         const createOneTwoThree = __constant((_) => pipe([1, 2, 3], Observable.fromReadonlyArray()));
         const v = __await(oneTwoThreeDelayed);
@@ -277,7 +277,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
     try {
         const vts = __addDisposableResource(env_7, VirtualTimeScheduler.create(), false);
         const error = newInstance(Error);
-        const subscription = pipe(Observable.computeSynchronousObservable(() => {
+        const subscription = pipe(Observable.computeSynchronous(() => {
             raise(error);
         }), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
@@ -290,7 +290,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
     finally {
         __disposeResources(env_7);
     }
-}), test("conditional hooks", pipeLazy(Observable.computeSynchronousObservable(() => {
+}), test("conditional hooks", pipeLazy(Observable.computeSynchronous(() => {
     const src = __constant(pipe([0, 1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 5 })));
     const src2 = __constant(Observable.generate(increment, returns(100), { delay: 2 }));
     const v = __await(src);
@@ -299,7 +299,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         return __await(src2);
     }
     return v;
-}, { mode: "batched" }), Observable.toReadonlyArray(), expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]))), test("conditional await", pipeLazy(Observable.computeSynchronousObservable(() => {
+}, { mode: "batched" }), Observable.toReadonlyArray(), expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]))), test("conditional await", pipeLazy(Observable.computeSynchronous(() => {
     const src = __constant(pipe([0, 1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 5 })));
     const src2 = __constant(Observable.generate(increment, returns(100), { delay: 2 }));
     const src3 = __constant(pipe(1, Observable.fromValue({ delay: 1 }), Observable.repeat(40)));
@@ -312,7 +312,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         __await(src3);
         return v;
     }
-}), Observable.distinctUntilChanged(), Observable.toReadonlyArray(), expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]))), ComputationTest.isSynchronousWithSideEffects(Observable.computeSynchronousObservable(() => { }))), describe("concat", test("concats the input containers in order, when sources have delay", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("create", ComputationTest.isDeferredWithSideEffects(Observable.create(ignore))), describe("currentTime", test("publish current time from VTS", pipeLazy(Observable.currentTime, Observable.takeFirst({ count: 5 }), Observable.toReadonlyArray(), 
+}), Observable.distinctUntilChanged(), Observable.toReadonlyArray(), expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]))), ComputationTest.isSynchronousWithSideEffects(Observable.computeSynchronous(() => { }))), describe("concat", test("concats the input containers in order, when sources have delay", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("create", ComputationTest.isDeferredWithSideEffects(Observable.create(ignore))), describe("currentTime", test("publish current time from VTS", pipeLazy(Observable.currentTime, Observable.takeFirst({ count: 5 }), Observable.toReadonlyArray(), 
 // Only delayed scheduled continuations increment the clock
 expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observable.currentTime)), describe("defer", testAsync("defering a promise converted to an Observable", async () => {
     const env_8 = { stack: [], error: void 0, hasError: false };
@@ -802,7 +802,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     backpressureStrategy: OverflowBackpressureStrategy,
 }), Observable.last({
     capacity: 0,
-}), expectIsNone)), test("with a capacity of 0 and throw backpressure strategy", pipeLazy(pipeLazy([1, 2, 3, 4], Observable.fromReadonlyArray(), Observable.run({
+}), expectIsNone)), test("with a capacity of 0 and throw backpressure strategy", pipeLazy(pipeLazy([1, 2, 3, 4], Observable.fromReadonlyArray(), Observable.forEach(ignore), Observable.run({
     capacity: 0,
     backpressureStrategy: ThrowBackpressureStrategy,
 })), expectToThrow))), describe("subscribeOn", StatefulAsynchronousComputationOperatorTests(ObservableTypes, Observable.subscribeOn(VirtualTimeScheduler.create()))), describe("switchAll", test("with empty source", pipeLazy(Observable.empty({ delay: 1 }), Observable.switchAll(), Observable.toReadonlyArray(), expectArrayEquals([]))), test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Computation.flatMap(Observable)("switchAll", _ => pipe([1, 2, 3], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("only produce the last observable", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Computation.flatMap(Observable)("switchAll", x => pipe([x, x, x], Observable.fromReadonlyArray({
@@ -827,10 +827,10 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     delayStart: true,
 }), Observable.takeFirst({ count: 200 }), Observable.throttle(75, { mode: "interval" }), Observable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199]))), StatefulSynchronousComputationOperatorTests(ObservableTypes, Observable.throttle(1))), describe("throwIfEmpty", test("when source is empty and delayed", () => {
     const error = new Error();
-    pipe(pipeLazy([], Observable.fromReadonlyArray({ delay: 1 }), Observable.throwIfEmpty(() => error), Observable.run()), expectToThrowError(error));
+    pipe(pipeLazy([], Observable.fromReadonlyArray({ delay: 1 }), Observable.forEach(ignore), Observable.throwIfEmpty(() => error), Observable.run()), expectToThrowError(error));
 }), test("when factory throws after a delay", () => {
     const error = new Error();
-    pipe(pipeLazy([], Observable.fromReadonlyArray({ delay: 1 }), Observable.throwIfEmpty(() => {
+    pipe(pipeLazy([], Observable.fromReadonlyArray({ delay: 1 }), Observable.forEach(ignore), Observable.throwIfEmpty(() => {
         throw error;
     }), Observable.run()), expectToThrowError(error));
 }), test("when source is not empty with delay", pipeLazy([1], Observable.fromReadonlyArray({ delay: 1 }), Observable.throwIfEmpty(returns(none)), Observable.toReadonlyArray(), expectArrayEquals([1])))), describe("toEventSource", test("when the source completes without error", () => {

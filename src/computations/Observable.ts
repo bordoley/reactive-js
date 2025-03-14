@@ -77,7 +77,7 @@ import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__private__/Observable.combineLatest.js";
 import Observable_computeDeferred from "./Observable/__private__/Observable.computeDeferred.js";
-import Observable_computeSynchronousObservable from "./Observable/__private__/Observable.computeSynchronousObservable.js";
+import Observable_computeSynchronous from "./Observable/__private__/Observable.computeSynchronous.js";
 import {
   BatchedComputeMode as ObservableCompute_BatchedComputeMode,
   CombineLatestComputeMode as ObservableCompute_CombineLatestComputeMode,
@@ -398,7 +398,7 @@ export interface ObservableModule
     },
   ): DeferredObservableWithSideEffectsLike<T>;
 
-  computeSynchronousObservable<T>(
+  computeSynchronous<T>(
     computation: Factory<T>,
     options?: {
       readonly mode?: ComputeMode;
@@ -482,8 +482,6 @@ export interface ObservableModule
     readonly delay: number;
     readonly delayStart?: boolean;
   }): FromIterableOperator<ObservableComputation, T>;
-
-  fromPromise<T>(): Function1<Promise<T>, MulticastObservableLike<T>>;
 
   fromReadonlyArray<T>(options?: {
     readonly delay?: number;
@@ -578,8 +576,6 @@ export interface ObservableModule
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
     options?: {
-      readonly autoDispose?: boolean;
-      readonly replay?: number;
       readonly capacity?: number;
       readonly backpressureStrategy?: BackpressureStrategy;
     },
@@ -589,8 +585,6 @@ export interface ObservableModule
     initialValue: Factory<TAcc>,
     scheduler: SchedulerLike,
     options?: {
-      readonly autoDispose?: boolean;
-      readonly replay?: number;
       readonly capacity?: number;
       readonly backpressureStrategy?: BackpressureStrategy;
     },
@@ -600,7 +594,7 @@ export interface ObservableModule
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
     readonly maxMicroTaskTicks?: number;
-  }): SideEffect1<SynchronousObservableLike<T>>;
+  }): SideEffect1<SynchronousObservableWithSideEffectsLike<T>>;
 
   scanMany<T, TAcc>(
     scanner: Function2<TAcc, T, PureSynchronousObservableLike<TAcc>>,
@@ -726,18 +720,11 @@ export interface ObservableModule
     readonly capacity?: number;
     readonly maxMicroTaskTicks?: number;
   }): Function1<SynchronousObservableLike<T>, ReadonlyArray<T>>;
+
   toReadonlyArrayAsync<T>(options?: {
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
   }): AsyncFunction1<ObservableLike<T>, ReadonlyArray<T>>;
-  toReadonlyArrayAsync<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-    },
-  ): AsyncFunction1<ObservableLike<T>, ReadonlyArray<T>>;
-
   toReadonlyArrayAsync<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -771,8 +758,8 @@ export const combineLatest: Signature["combineLatest"] =
   Observable_combineLatest;
 export const computeDeferred: Signature["computeDeferred"] =
   Observable_computeDeferred;
-export const computeSynchronousObservable: Signature["computeSynchronousObservable"] =
-  Observable_computeSynchronousObservable;
+export const computeSynchronous: Signature["computeSynchronous"] =
+  Observable_computeSynchronous;
 export const concatAll: Signature["concatAll"] = Observable_concatAll;
 export const concat: Signature["concat"] = Observable_concat;
 export const create: Signature["create"] = Observable_create;

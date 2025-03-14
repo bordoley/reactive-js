@@ -43,6 +43,7 @@
 - [reduceAsync](functions/reduceAsync.md)
 - [repeat](functions/repeat.md)
 - [retry](functions/retry.md)
+- [run](functions/run.md)
 - [scan](functions/scan.md)
 - [skipFirst](functions/skipFirst.md)
 - [takeFirst](functions/takeFirst.md)

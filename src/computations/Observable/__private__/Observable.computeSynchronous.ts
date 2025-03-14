@@ -7,7 +7,7 @@ import { Factory } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
 import Observable_computeWithConfig from "./Observable.computeWithConfig.js";
 
-const Observable_computeSynchronousObservable: Observable.Signature["computeSynchronousObservable"] =
+const Observable_computeSynchronous: Observable.Signature["computeSynchronous"] =
   <T>(
     computation: Factory<T>,
     options: { mode?: "batched" | "combine-latest" } = {},
@@ -21,4 +21,4 @@ const Observable_computeSynchronousObservable: Observable.Signature["computeSync
       },
       options,
     );
-export default Observable_computeSynchronousObservable;
+export default Observable_computeSynchronous;
