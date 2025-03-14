@@ -2,6 +2,7 @@
 
 import { Computation_baseOfT, Computation_multicastOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
 import { identity, returns } from "../functions.js";
+import Observable_fromRunnable from "./Observable/__private__/Observable.fromRunnable.js";
 import Runnable_buffer from "./Runnable/__private__/Runnable.buffer.js";
 import Runnable_catchError from "./Runnable/__private__/Runnable.catchError.js";
 import Runnable_concat from "./Runnable/__private__/Runnable.concat.js";
@@ -66,7 +67,7 @@ export const takeFirst = Runnable_takeFirst;
 export const takeLast = Runnable_takeLast;
 export const takeWhile = Runnable_takeWhile;
 export const throwIfEmpty = Runnable_throwIfEmpty;
-export const toRunnable = 
-/*@__PURE__*/ returns(identity);
+export const toObservable = Observable_fromRunnable;
 export const toReadonlyArray = Runnable_toReadonlyArray;
 export const toReadonlyArrayAsync = Runnable_toReadonlyArrayAsync;
+export const toRunnable = /*@__PURE__*/ returns(identity);

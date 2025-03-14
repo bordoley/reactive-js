@@ -934,6 +934,24 @@
 
 ***
 
+### toObservable()
+
+> **toObservable**\<`T`\>(): [`ToObservableOperator`](../../type-aliases/ToObservableOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`ToObservableOperator`](../../type-aliases/ToObservableOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
+
+#### Inherited from
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`toObservable`](../../interfaces/ComputationModule.md#toobservable)
+
+***
+
 ### toReadonlyArray()
 
 > **toReadonlyArray**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>, readonly `T`[]\>
@@ -972,7 +990,7 @@
 
 ### toRunnable()
 
-> **toRunnable**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>, [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>\>
+> **toRunnable**\<`T`\>(): [`ToRunnableOperator`](../../type-aliases/ToRunnableOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
 
 #### Type Parameters
 
@@ -980,7 +998,7 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>, [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>\>
+[`ToRunnableOperator`](../../type-aliases/ToRunnableOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
 
 #### Inherited from
 

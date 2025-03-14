@@ -34,7 +34,6 @@ import {
   ObserverLike,
   QueueableLike,
   SinkLike_complete,
-  SinkLike_isCompleted,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -113,8 +112,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
         this: TProperties & LiftedObserverLike<TA, T>,
         next: TA,
       ) {
-        const shouldEmit =
-          !this[SinkLike_isCompleted] && this[WithLatestFromObserver_hasLatest];
+        const shouldEmit = this[WithLatestFromObserver_hasLatest];
 
         if (shouldEmit) {
           const v = this[WithLatestFromObserver_selector](

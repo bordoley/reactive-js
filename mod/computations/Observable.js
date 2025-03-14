@@ -1,6 +1,7 @@
 /// <reference types="./Observable.d.ts" />
 
 import { Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
+import { identity, returns, } from "../functions.js";
 import Observable_actionReducer from "./Observable/__private__/Observable.actionReducer.js";
 import Observable_backpressureStrategy from "./Observable/__private__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
@@ -105,7 +106,7 @@ export const fromAsyncFactory = Observable_fromAsyncFactory;
 export const fromAsyncIterable = Observable_fromAsyncIterable;
 export const fromEventSource = Observable_fromEventSource;
 export const fromIterable = Observable_fromIterable;
-export const fromObservable = Observable_subscribeOn;
+export const fromObservable = Observable_multicast;
 export const fromPromise = Observable_fromPromise;
 export const fromReadonlyArray = Observable_fromReadonlyArray;
 export const fromStore = Observable_fromStore;
@@ -142,6 +143,7 @@ export const takeWhile = Observable_takeWhile;
 export const throttle = Observable_throttle;
 export const throwIfEmpty = Observable_throwIfEmpty;
 export const toEventSource = Observable_toEventSource;
+export const toObservable = /*@__PURE__*/ returns(identity);
 export const toPauseableEventSource = Observable_toPauseableEventSource;
 export const toPauseableObservable = Observable_toPauseableObservable;
 export const toReadonlyArray = Observable_toReadonlyArray;

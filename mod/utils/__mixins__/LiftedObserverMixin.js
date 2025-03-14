@@ -65,20 +65,8 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
         }
         delegate[LiftedObserverLike_notify](next);
     }
-    function completeLiftedDelegate() {
-        const delegate = this[LiftedObserverLike_delegate];
-        if (__DEV__) {
-            raiseIf(!delegate[SchedulerLike_inContinuation], "Observer can only be notified from within a Scheduler continuation");
-            raiseIf(delegate[SinkLike_isCompleted], "Observer is completed");
-            raiseIf(delegate[DisposableLike_isDisposed], "Observer is disposed");
-        }
-        delegate[LiftedObserverLike_complete]();
-    }
     function pushDelegate(next) {
         this[LiftedObserverLike_delegate][EventListenerLike_notify](next);
-    }
-    function sinkCompleteDelegate() {
-        this[LiftedObserverLike_delegate][SinkLike_complete]();
     }
     return returns(mix(include(QueueMixin(), SerialDisposableMixin()), function LiftedObserverMixin(delegate, options) {
         init(QueueMixin(), this, {
@@ -91,9 +79,6 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
         this[LiftedObserverLike_notifyDelegate] = delegateIsLifted
             ? notifyLiftedDelegate
             : pushDelegate;
-        this[LiftedObserverLike_completeDelegate] = delegateIsLifted
-            ? completeLiftedDelegate
-            : sinkCompleteDelegate;
         this[LiftedObserverLike_delegate] = delegate;
         this[LiftedObserverMixin_consumer] =
             delegate[LiftedObserverMixin_consumer] ??
@@ -114,7 +99,6 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
         [LiftedObserverMixin_consumer]: none,
         [LiftedObserverMixin_consumerCallback]: none,
         [LiftedObserverLike_notifyDelegate]: none,
-        [LiftedObserverLike_completeDelegate]: none,
     }), proto({
         get [LiftedObserverLike_isReady]() {
             unsafeCast(this);
@@ -175,11 +159,16 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
                 scheduleDrainQueue(this);
             }
         },
+        [LiftedObserverLike_completeDelegate]() {
+            // We always want to call SinkLike_complete to ensure
+            // cleanup code is invoked.
+            this[LiftedObserverLike_delegate][SinkLike_complete]();
+        },
         [LiftedObserverLike_notify](next) {
             this[LiftedObserverLike_notifyDelegate](next);
         },
         [LiftedObserverLike_complete]() {
-            this[LiftedObserverLike_delegate][SinkLike_complete]();
+            this[LiftedObserverLike_completeDelegate]();
         },
     })));
 })();

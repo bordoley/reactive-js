@@ -49,6 +49,8 @@ import {
 } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as ComputationM from "./Computation.js";
+import Iterable_first from "./Iterable/__private__/Iterable.first.js";
+import Observable_fromIterable from "./Observable/__private__/Observable.fromIterable.js";
 import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 
 /**
@@ -189,14 +191,7 @@ export const encodeUtf8: Signature["encodeUtf8"] = (() =>
   (iterable: IterableLike<string>) =>
     newInstance(EncodeUtf8Iterable, iterable)) as Signature["encodeUtf8"];
 
-export const first: Signature["first"] = /*@__PURE__*/ returns(
-  (iter: IterableLike) => {
-    for (const v of iter) {
-      return v;
-    }
-    return none;
-  },
-) as Signature["first"];
+export const first: Signature["first"] = Iterable_first;
 
 export const firstAsync: Signature["firstAsync"] = /*@__PURE__*/ returns(
   async (iter: IterableLike) => {
@@ -614,6 +609,9 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
       factory,
     )) as Signature["throwIfEmpty"];
 
+export const toObservable: Signature["toObservable"] =
+  Observable_fromIterable as Signature["toObservable"];
+
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   ReadonlyArray.fromIterable;
 
@@ -622,7 +620,8 @@ export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
     pipe(iter, toReadonlyArray<unknown>()),
   ) as Signature["toReadonlyArrayAsync"];
 
-export const toRunnable: Signature["toRunnable"] = Runnable_fromIterable;
+export const toRunnable: Signature["toRunnable"] =
+  Runnable_fromIterable as Signature["toRunnable"];
 
 class ZipIterable {
   public readonly [ComputationLike_isPure]?: boolean;

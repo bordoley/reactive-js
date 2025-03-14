@@ -30,6 +30,7 @@ import EventSource_raise from "./EventSource/__private__/EventSource.raise.js";
 import EventSource_reduceAsync from "./EventSource/__private__/EventSource.reduceAsync.js";
 import EventSource_toReadonlyArrayAsync from "./EventSource/__private__/EventSource.toReadonlyArrayAsync.js";
 import EventSource_withLatestFrom from "./EventSource/__private__/EventSource.withLatestFrom.js";
+import Observable_fromEventSource from "./Observable/__private__/Observable.fromEventSource.js";
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
 
 /**
@@ -118,6 +119,8 @@ export const merge: Signature["merge"] = EventSource_merge;
 export const never: Signature["never"] = EventSource_never;
 export const raise: Signature["raise"] = EventSource_raise;
 export const reduceAsync: Signature["reduceAsync"] = EventSource_reduceAsync;
+export const toObservable: Signature["toObservable"] =
+  Observable_fromEventSource as Signature["toObservable"];
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   EventSource_toReadonlyArrayAsync;
 export const withLatestFrom: Signature["withLatestFrom"] =

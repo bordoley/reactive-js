@@ -31,7 +31,6 @@ import * as Observable from "../../computations/Observable.js";
 import * as Streamable from "../../computations/Streamable.js";
 import * as Subject from "../../computations/Subject.js";
 import {
-  ComputationOf,
   Computation_deferredWithSideEffectsOfT,
   Computation_multicastOfT,
   Computation_pureDeferredOfT,
@@ -91,6 +90,7 @@ import {
   ThrowBackpressureStrategy,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
+import * as AsyncIterable from "../AsyncIterable.js";
 import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 import * as WritableStore from "../WritableStore.js";
@@ -193,16 +193,7 @@ testModule(
   DeferredComputationModuleTests(Observable, ObservableTypes),
   DeferredReactiveComputationModuleTests(Observable, ObservableTypes),
   SynchronousComputationModuleTests<Observable.Computation>(Observable),
-  ConcurrentReactiveComputationModuleTests(
-    {
-      ...Observable,
-      toObservable:
-        <T>() =>
-        (v: ComputationOf<Observable.Computation, T>) =>
-          v,
-    },
-    ObservableTypes,
-  ),
+  ConcurrentReactiveComputationModuleTests(Observable, ObservableTypes),
   describe(
     "backpressureStrategy",
     testAsync("with a throw backpressure strategy", async () => {
@@ -863,6 +854,7 @@ testModule(
             yield i++;
           }
         })(),
+        AsyncIterable.of(),
         Observable.fromAsyncIterable(),
         Observable.takeFirst({ count: 10 }),
         Observable.buffer<number>(),
@@ -879,6 +871,7 @@ testModule(
           yield 2;
           yield 3;
         })(),
+        AsyncIterable.of(),
         Observable.fromAsyncIterable(),
         Observable.buffer<number>(),
         Observable.lastAsync(scheduler, { capacity: 1 }),
@@ -896,6 +889,7 @@ testModule(
           (async function* foo() {
             throw e;
           })(),
+          AsyncIterable.of(),
           Observable.fromAsyncIterable(),
           Observable.lastAsync(scheduler, { capacity: 1 }),
         );
@@ -911,6 +905,7 @@ testModule(
             yield i++;
           }
         })(),
+        AsyncIterable.of(),
         Observable.fromAsyncIterable(),
       ),
     ),

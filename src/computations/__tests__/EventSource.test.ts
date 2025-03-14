@@ -4,7 +4,6 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Observable from "../../computations/Observable.js";
 import { Computation_multicastOfT } from "../../computations.js";
 import { ignore, pick, pipeLazy, raise } from "../../functions.js";
 import { DisposableLike_error } from "../../utils.js";
@@ -19,13 +18,7 @@ const EventSourceTypes = {
 testModule(
   "EventSource",
   ComputationModuleTests(EventSource, EventSourceTypes),
-  ConcurrentReactiveComputationModuleTests(
-    {
-      ...EventSource,
-      toObservable: Observable.fromEventSource,
-    },
-    EventSourceTypes,
-  ),
+  ConcurrentReactiveComputationModuleTests(EventSource, EventSourceTypes),
   describe(
     "create",
     test(

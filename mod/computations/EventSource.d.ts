@@ -51,5 +51,6 @@ export declare const merge: Signature["merge"];
 export declare const never: Signature["never"];
 export declare const raise: Signature["raise"];
 export declare const reduceAsync: Signature["reduceAsync"];
+export declare const toObservable: Signature["toObservable"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
 export declare const withLatestFrom: Signature["withLatestFrom"];

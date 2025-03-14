@@ -7,7 +7,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import { DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
-import * as EventSource from "../../EventSource.js";
+import EventSource_addEventHandler from "../../EventSource/__private__/EventSource.addEventHandler.js";
 const Observable_fromEventSource = 
 /*@__PURE__*/ (() => {
     const FromEventSourceObservable_eventSource = Symbol("FromEventSourceObservable_eventSource");
@@ -21,7 +21,7 @@ const Observable_fromEventSource =
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
         [ObservableLike_observe](observer) {
-            pipe(this[FromEventSourceObservable_eventSource], DisposableContainer.onComplete(bindMethod(observer, SinkLike_complete)), DisposableContainer.onError(bindMethod(observer, DisposableLike_dispose)), EventSource.addEventHandler(bindMethod(observer, EventListenerLike_notify)), Disposable.addTo(observer));
+            pipe(this[FromEventSourceObservable_eventSource], DisposableContainer.onComplete(bindMethod(observer, SinkLike_complete)), DisposableContainer.onError(bindMethod(observer, DisposableLike_dispose)), EventSource_addEventHandler(bindMethod(observer, EventListenerLike_notify)), Disposable.addTo(observer));
         },
     }));
 })();

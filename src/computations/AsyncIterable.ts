@@ -18,7 +18,6 @@ import {
   Computation_deferredWithSideEffectsOfT,
   Computation_pureDeferredOfT,
   DeferredComputationModule,
-  DeferredObservableWithSideEffectsLike,
   EventSourceLike,
   HigherOrderInnerComputationLike,
   InteractiveComputationModule,
@@ -110,11 +109,6 @@ export interface AsyncIterableModule
   toEventSource<T>(): Function1<
     AsyncIterableLike<T>,
     EventSourceLike<T> & DisposableLike
-  >;
-
-  toObservable<T>(): Function1<
-    AsyncIterableLike<T>,
-    DeferredObservableWithSideEffectsLike<T>
   >;
 
   toPauseableEventSource<T>(): Function1<
@@ -714,7 +708,7 @@ export const toEventSource: Signature["toEventSource"] =
   EventSource_fromAsyncIterable;
 
 export const toObservable: Signature["toObservable"] =
-  Observable_fromAsyncIterable;
+  Observable_fromAsyncIterable as Signature["toObservable"];
 
 export const toPauseableEventSource: Signature["toPauseableEventSource"] =
   <T>() =>

@@ -14,6 +14,7 @@ import {
   SynchronousComputationModule,
 } from "../computations.js";
 import { identity, returns } from "../functions.js";
+import Observable_fromRunnable from "./Observable/__private__/Observable.fromRunnable.js";
 import Runnable_buffer from "./Runnable/__private__/Runnable.buffer.js";
 import Runnable_catchError from "./Runnable/__private__/Runnable.catchError.js";
 import Runnable_concat from "./Runnable/__private__/Runnable.concat.js";
@@ -114,9 +115,12 @@ export const takeFirst: Signature["takeFirst"] = Runnable_takeFirst;
 export const takeLast: Signature["takeLast"] = Runnable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Runnable_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Runnable_throwIfEmpty;
-export const toRunnable: Signature["toRunnable"] =
-  /*@__PURE__*/ returns(identity);
+export const toObservable: Signature["toObservable"] =
+  Observable_fromRunnable as Signature["toObservable"];
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Runnable_toReadonlyArray;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   Runnable_toReadonlyArrayAsync;
+export const toRunnable: Signature["toRunnable"] = /*@__PURE__*/ returns(
+  identity,
+) as Signature["toRunnable"];

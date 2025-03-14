@@ -1,4 +1,4 @@
-import { ComputationModule, ComputationOf, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredComputationWithSideEffectsLike, DeferredComputationWithSideEffectsOf, DeferredObservableLike, DeferredObservableWithSideEffectsLike, DeferredReactiveComputationModule, EventSourceLike, FromIterableSynchronousOperator, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastComputationLike, MulticastObservableLike, ObservableLike, PauseableEventSourceLike, PauseableObservableLike, PureComputationOf, PureDeferredComputationLike, PureDeferredComputationOf, PureDeferredObservableLike, PureSynchronousComputationOf, PureSynchronousObservableLike, RunnableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StatelessAsynchronousComputationOperator, StatelessComputationOperator, StoreLike, SynchronousComputationModule, SynchronousComputationOf, SynchronousComputationWithSideEffectsOf, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../computations.js";
+import { ComputationModule, ComputationOf, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredComputationWithSideEffectsLike, DeferredComputationWithSideEffectsOf, DeferredObservableWithSideEffectsLike, DeferredReactiveComputationModule, EventSourceLike, FromIterableSynchronousOperator, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastComputationLike, MulticastObservableLike, ObservableLike, PauseableEventSourceLike, PauseableObservableLike, PureComputationOf, PureDeferredComputationLike, PureDeferredComputationOf, PureDeferredObservableLike, PureSynchronousComputationOf, PureSynchronousObservableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StatelessAsynchronousComputationOperator, StatelessComputationOperator, StoreLike, SynchronousComputationModule, SynchronousComputationOf, SynchronousComputationWithSideEffectsOf, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike, ToRunnableOperator } from "../computations.js";
 import { AsyncFunction1, AsyncFunction2, Equality, Factory, Function1, Function2, Optional, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Updater } from "../functions.js";
 import { BackpressureStrategy, DisposableLike, ObserverLike, QueueableLike, QueueableLike_backpressureStrategy, QueueableLike_capacity, SchedulerLike } from "../utils.js";
 export interface ObservableComputation extends ComputationType {
@@ -94,7 +94,6 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     flatMapAsync<TA, TB>(f: AsyncFunction2<TA, AbortSignal, TB>): HigherOrderComputationOperator<ObservableComputation, DeferredComputationWithSideEffectsLike, TA, TB>;
     forkMerge: ForkMerge;
     fromAsyncFactory<T>(): Function1<AsyncFunction1<AbortSignal, T>, DeferredObservableWithSideEffectsLike<T>>;
-    fromAsyncIterable<T>(): Function1<AsyncIterable<T>, DeferredObservableWithSideEffectsLike<T>>;
     fromEventSource<T>(): Function1<EventSourceLike<T>, MulticastObservableLike<T>>;
     fromIterable<T>(options?: {
         readonly delay: number;
@@ -148,7 +147,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly replay?: number;
         readonly capacity?: number;
         readonly backpressureStrategy?: BackpressureStrategy;
-    }): Function1<DeferredObservableLike<T>, MulticastObservableLike<T> & DisposableLike>;
+    }): Function1<ObservableLike<T>, MulticastObservableLike<T> & DisposableLike>;
     onSubscribe<T>(f: Factory<DisposableLike | SideEffect1<Optional<Error>>> | SideEffect): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
     raise<T>(options?: {
         readonly raise?: Factory<unknown>;
@@ -234,7 +233,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly maxMicroTaskTicks?: number;
-    }): Function1<SynchronousObservableLike<T>, RunnableLike<T>>;
+    }): ToRunnableOperator<ObservableComputation, T>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): StatefulSynchronousComputationOperator<ObservableComputation, TA, TB>;
     zipLatest: CombineConstructor;
 }
@@ -303,6 +302,7 @@ export declare const takeWhile: Signature["takeWhile"];
 export declare const throttle: Signature["throttle"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const toEventSource: Signature["toEventSource"];
+export declare const toObservable: Signature["toObservable"];
 export declare const toPauseableEventSource: Signature["toPauseableEventSource"];
 export declare const toPauseableObservable: Signature["toPauseableObservable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];

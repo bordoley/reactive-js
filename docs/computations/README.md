@@ -67,6 +67,7 @@
 - [DeferredComputationOf](type-aliases/DeferredComputationOf.md)
 - [DeferredComputationOfModule](type-aliases/DeferredComputationOfModule.md)
 - [DeferredComputationWithSideEffectsOf](type-aliases/DeferredComputationWithSideEffectsOf.md)
+- [FromAsyncIterableOperator](type-aliases/FromAsyncIterableOperator.md)
 - [FromIterableDeferredOperator](type-aliases/FromIterableDeferredOperator.md)
 - [FromIterableSynchronousOperator](type-aliases/FromIterableSynchronousOperator.md)
 - [HigherOrderComputationOperator](type-aliases/HigherOrderComputationOperator.md)
@@ -85,6 +86,8 @@
 - [StreamOf](type-aliases/StreamOf.md)
 - [SynchronousComputationOf](type-aliases/SynchronousComputationOf.md)
 - [SynchronousComputationWithSideEffectsOf](type-aliases/SynchronousComputationWithSideEffectsOf.md)
+- [ToObservableOperator](type-aliases/ToObservableOperator.md)
+- [ToRunnableOperator](type-aliases/ToRunnableOperator.md)
 
 ## Variables
 

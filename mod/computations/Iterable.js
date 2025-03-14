@@ -7,6 +7,8 @@ import { ComputationLike_isPure, Computation_baseOfT, Computation_pureSynchronou
 import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raise as raiseError, returns, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as ComputationM from "./Computation.js";
+import Iterable_first from "./Iterable/__private__/Iterable.first.js";
+import Observable_fromIterable from "./Observable/__private__/Observable.fromIterable.js";
 import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 class CatchErrorIterable {
     s;
@@ -66,12 +68,7 @@ class EncodeUtf8Iterable {
     }
 }
 export const encodeUtf8 = (() => (iterable) => newInstance(EncodeUtf8Iterable, iterable));
-export const first = /*@__PURE__*/ returns((iter) => {
-    for (const v of iter) {
-        return v;
-    }
-    return none;
-});
+export const first = Iterable_first;
 export const firstAsync = /*@__PURE__*/ returns(async (iter) => {
     await Promise.resolve();
     return first()(iter);
@@ -363,6 +360,7 @@ class ThrowIfEmptyIterable {
     }
 }
 export const throwIfEmpty = ((factory) => (iter) => newInstance(ThrowIfEmptyIterable, iter, factory));
+export const toObservable = Observable_fromIterable;
 export const toReadonlyArray = ReadonlyArray.fromIterable;
 export const toReadonlyArrayAsync = 
 /*@__PURE__*/ returns(async (iter) => pipe(iter, toReadonlyArray()));

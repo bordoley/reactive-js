@@ -44,13 +44,18 @@ class SynchronousObservableRunnable<T> implements RunnableLike<T> {
   }
 }
 
-const Observable_toRunnable: Observable.Signature["toRunnable"] =
-  <T>(options?: {
+const Observable_toRunnable: Observable.Signature["toRunnable"] = (<
+    T,
+  >(options?: {
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
     readonly maxMicroTaskTicks?: number;
   }) =>
   (runnable: SynchronousObservableLike<T>) =>
-    newInstance(SynchronousObservableRunnable, runnable, options);
+    newInstance(
+      SynchronousObservableRunnable,
+      runnable,
+      options,
+    )) as Observable.Signature["toRunnable"];
 
 export default Observable_toRunnable;

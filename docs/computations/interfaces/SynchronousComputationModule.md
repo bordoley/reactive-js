@@ -222,7 +222,7 @@
 
 ### toRunnable()
 
-> **toRunnable**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, [`RunnableLike`](RunnableLike.md)\<`T`\>\>
+> **toRunnable**\<`T`\>(): [`ToRunnableOperator`](../type-aliases/ToRunnableOperator.md)\<`TComputation`, `T`\>
 
 #### Type Parameters
 
@@ -230,4 +230,4 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, [`RunnableLike`](RunnableLike.md)\<`T`\>\>
+[`ToRunnableOperator`](../type-aliases/ToRunnableOperator.md)\<`TComputation`, `T`\>

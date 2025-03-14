@@ -8,7 +8,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { SinkLike_complete, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribe from "./Observable.subscribe.js";
@@ -37,7 +37,7 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
         [WithLatestFromObserver_selector]: none,
     }), proto({
         [LiftedObserverLike_notify](next) {
-            const shouldEmit = !this[SinkLike_isCompleted] && this[WithLatestFromObserver_hasLatest];
+            const shouldEmit = this[WithLatestFromObserver_hasLatest];
             if (shouldEmit) {
                 const v = this[WithLatestFromObserver_selector](next, this[WithLatestFromObserver_otherLatest]);
                 this[LiftedObserverLike_notifyDelegate](v);

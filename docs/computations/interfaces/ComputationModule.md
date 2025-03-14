@@ -250,6 +250,20 @@
 
 ***
 
+### toObservable()
+
+> **toObservable**\<`T`\>(): [`ToObservableOperator`](../type-aliases/ToObservableOperator.md)\<`TComputation`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`ToObservableOperator`](../type-aliases/ToObservableOperator.md)\<`TComputation`, `T`\>
+
+***
+
 ### toReadonlyArrayAsync()
 
 > **toReadonlyArrayAsync**\<`T`\>(): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>

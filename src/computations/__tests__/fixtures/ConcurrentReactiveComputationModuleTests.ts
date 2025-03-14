@@ -12,6 +12,7 @@ import {
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as Observable from "../../../computations/Observable.js";
 import {
+  ComputationModule,
   ComputationOf,
   ComputationType,
   ComputationTypeOf,
@@ -21,10 +22,8 @@ import {
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
   ConcurrentReactiveComputationModule,
-  ObservableLike,
 } from "../../../computations.js";
 import {
-  Function1,
   Optional,
   Tuple2,
   arrayEquality,
@@ -53,12 +52,8 @@ import StatelessAsynchronousComputationOperatorTests from "./operators/Stateless
 const ConcurrentReactiveComputationModuleTests = <
   TComputation extends ComputationType,
 >(
-  m: ConcurrentReactiveComputationModule<TComputation> & {
-    toObservable: <T>() => Function1<
-      ComputationOf<TComputation, T>,
-      ObservableLike<T>
-    >;
-  },
+  m: ConcurrentReactiveComputationModule<TComputation> &
+    ComputationModule<TComputation>,
   computationType: ComputationTypeOf<TComputation>,
 ) => {
   const {

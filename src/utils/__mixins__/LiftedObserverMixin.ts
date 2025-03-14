@@ -13,7 +13,6 @@ import {
   Function1,
   Method1,
   Optional,
-  SideEffect,
   SideEffect1,
   bind,
   bindMethod,
@@ -127,7 +126,6 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
     >;
     [SchedulerLike_inContinuation]: boolean;
     [LiftedObserverLike_notifyDelegate]: Function1<TB, void>;
-    [LiftedObserverLike_completeDelegate]: SideEffect;
   };
 
   function liftedObserverSchedulerContinuation(
@@ -222,29 +220,8 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
     delegate[LiftedObserverLike_notify](next);
   }
 
-  function completeLiftedDelegate(this: TProperties) {
-    const delegate = this[
-      LiftedObserverLike_delegate
-    ] as unknown as LiftedObserverLike<TB>;
-
-    if (__DEV__) {
-      raiseIf(
-        !delegate[SchedulerLike_inContinuation],
-        "Observer can only be notified from within a Scheduler continuation",
-      );
-      raiseIf(delegate[SinkLike_isCompleted], "Observer is completed");
-      raiseIf(delegate[DisposableLike_isDisposed], "Observer is disposed");
-    }
-
-    delegate[LiftedObserverLike_complete]();
-  }
-
   function pushDelegate(this: TProperties, next: TB) {
     this[LiftedObserverLike_delegate][EventListenerLike_notify](next);
-  }
-
-  function sinkCompleteDelegate(this: TProperties) {
-    this[LiftedObserverLike_delegate][SinkLike_complete]();
   }
 
   return returns(
@@ -265,12 +242,12 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         | typeof LiftedObserverLike_complete
         | typeof LiftedObserverLike_delegate
         | typeof LiftedObserverLike_notifyDelegate
-        | typeof LiftedObserverLike_completeDelegate
       >,
       Pick<
         LiftedObserverLike<TA, TB>,
         | typeof LiftedObserverLike_notify
         | typeof LiftedObserverLike_complete
+        | typeof LiftedObserverLike_completeDelegate
         | keyof DisposableLike
       >,
       ObserverLike<TB>,
@@ -314,10 +291,6 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           ? notifyLiftedDelegate
           : pushDelegate;
 
-        this[LiftedObserverLike_completeDelegate] = delegateIsLifted
-          ? completeLiftedDelegate
-          : sinkCompleteDelegate;
-
         this[LiftedObserverLike_delegate] = delegate;
         this[LiftedObserverMixin_consumer] =
           (delegate as unknown as TProperties)[LiftedObserverMixin_consumer] ??
@@ -348,7 +321,6 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         [LiftedObserverMixin_consumer]: none,
         [LiftedObserverMixin_consumerCallback]: none,
         [LiftedObserverLike_notifyDelegate]: none,
-        [LiftedObserverLike_completeDelegate]: none,
       }),
       proto({
         get [LiftedObserverLike_isReady]() {
@@ -451,12 +423,18 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           }
         },
 
+        [LiftedObserverLike_completeDelegate](this: TProperties) {
+          // We always want to call SinkLike_complete to ensure
+          // cleanup code is invoked.
+          this[LiftedObserverLike_delegate][SinkLike_complete]();
+        },
+
         [LiftedObserverLike_notify](this: TProperties, next: TA) {
           this[LiftedObserverLike_notifyDelegate](next as unknown as TB);
         },
 
-        [LiftedObserverLike_complete](this: TProperties) {
-          this[LiftedObserverLike_delegate][SinkLike_complete]();
+        [LiftedObserverLike_complete](this: LiftedObserverLike) {
+          this[LiftedObserverLike_completeDelegate]();
         },
       }),
     ),

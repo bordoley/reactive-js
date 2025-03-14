@@ -1,7 +1,6 @@
 /// <reference types="./EventSource.test.d.ts" />
 
 import { describe, expectIsSome, test, testModule, } from "../../__internal__/testing.js";
-import * as Observable from "../../computations/Observable.js";
 import { Computation_multicastOfT } from "../../computations.js";
 import { ignore, pick, pipeLazy, raise } from "../../functions.js";
 import { DisposableLike_error } from "../../utils.js";
@@ -11,8 +10,5 @@ import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReact
 const EventSourceTypes = {
     [Computation_multicastOfT]: EventSource.never(),
 };
-testModule("EventSource", ComputationModuleTests(EventSource, EventSourceTypes), ConcurrentReactiveComputationModuleTests({
-    ...EventSource,
-    toObservable: Observable.fromEventSource,
-}, EventSourceTypes), describe("create", test("when the setup function throws", pipeLazy(EventSource.create(_ => raise()), EventSource.addEventHandler(ignore), pick(DisposableLike_error), expectIsSome))));
+testModule("EventSource", ComputationModuleTests(EventSource, EventSourceTypes), ConcurrentReactiveComputationModuleTests(EventSource, EventSourceTypes), describe("create", test("when the setup function throws", pipeLazy(EventSource.create(_ => raise()), EventSource.addEventHandler(ignore), pick(DisposableLike_error), expectIsSome))));
 ((_) => { })(EventSource);

@@ -32,7 +32,6 @@ import {
   PureDeferredObservableLike,
   PureSynchronousComputationOf,
   PureSynchronousObservableLike,
-  RunnableLike,
   StatefulAsynchronousComputationOperator,
   StatefulSynchronousComputationOperator,
   StatelessAsynchronousComputationOperator,
@@ -43,6 +42,7 @@ import {
   SynchronousComputationWithSideEffectsOf,
   SynchronousObservableLike,
   SynchronousObservableWithSideEffectsLike,
+  ToRunnableOperator,
 } from "../computations.js";
 import {
   AsyncFunction1,
@@ -59,6 +59,8 @@ import {
   Tuple3,
   Tuple4,
   Updater,
+  identity,
+  returns,
 } from "../functions.js";
 import {
   BackpressureStrategy,
@@ -470,11 +472,6 @@ export interface ObservableModule
     DeferredObservableWithSideEffectsLike<T>
   >;
 
-  fromAsyncIterable<T>(): Function1<
-    AsyncIterable<T>,
-    DeferredObservableWithSideEffectsLike<T>
-  >;
-
   fromEventSource<T>(): Function1<
     EventSourceLike<T>,
     MulticastObservableLike<T>
@@ -565,10 +562,7 @@ export interface ObservableModule
       readonly capacity?: number;
       readonly backpressureStrategy?: BackpressureStrategy;
     },
-  ): Function1<
-    ObservableLike<T>,
-    MulticastObservableLike<T> & DisposableLike
-  >;
+  ): Function1<ObservableLike<T>, MulticastObservableLike<T> & DisposableLike>;
 
   onSubscribe<T>(
     f: Factory<DisposableLike | SideEffect1<Optional<Error>>> | SideEffect,
@@ -695,7 +689,6 @@ export interface ObservableModule
     options?: { readonly mode?: ThrottleMode },
   ): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
 
-  // FIXME: Shouldn't return DisposableLike if input is
   toEventSource<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -756,7 +749,7 @@ export interface ObservableModule
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
     readonly maxMicroTaskTicks?: number;
-  }): Function1<SynchronousObservableLike<T>, RunnableLike<T>>;
+  }): ToRunnableOperator<ObservableComputation, T>;
 
   withCurrentTime<TA, TB>(
     selector: Function2<number, TA, TB>,
@@ -804,8 +797,7 @@ export const fromAsyncIterable: Signature["fromAsyncIterable"] =
 export const fromEventSource: Signature["fromEventSource"] =
   Observable_fromEventSource;
 export const fromIterable: Signature["fromIterable"] = Observable_fromIterable;
-export const fromObservable: Signature["fromObservable"] =
-  Observable_multicast;
+export const fromObservable: Signature["fromObservable"] = Observable_multicast;
 export const fromPromise: Signature["fromPromise"] = Observable_fromPromise;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   Observable_fromReadonlyArray;
@@ -844,6 +836,9 @@ export const throttle: Signature["throttle"] = Observable_throttle;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
 export const toEventSource: Signature["toEventSource"] =
   Observable_toEventSource;
+export const toObservable: Signature["toObservable"] = /*@__PURE__*/ returns(
+  identity,
+) as Signature["toObservable"];
 export const toPauseableEventSource: Signature["toPauseableEventSource"] =
   Observable_toPauseableEventSource;
 export const toPauseableObservable: Signature["toPauseableObservable"] =

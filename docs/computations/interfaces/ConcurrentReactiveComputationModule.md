@@ -33,7 +33,7 @@
 
 ### fromObservable()
 
-> **fromObservable**: \<`T`\>(`scheduler`, `options`?) => [`Function1`](../../functions/type-aliases/Function1.md)\<[`ObservableLike`](ObservableLike.md)\<`T`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>\>
+> **fromObservable**: \<`T`\>(`scheduler`, `options`?) => [`Function1`](../../functions/type-aliases/Function1.md)\<[`ObservableLike`](ObservableLike.md)\<`T`\>, [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputation`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)\>
 
 #### Type Parameters
 
@@ -57,9 +57,23 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`ObservableLike`](ObservableLike.md)\<`T`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`ObservableLike`](ObservableLike.md)\<`T`\>, [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputation`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)\>
 
 ## Methods
+
+### fromAsyncIterable()
+
+> **fromAsyncIterable**\<`T`\>(): [`FromAsyncIterableOperator`](../type-aliases/FromAsyncIterableOperator.md)\<`TComputation`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`FromAsyncIterableOperator`](../type-aliases/FromAsyncIterableOperator.md)\<`TComputation`, `T`\>
+
+***
 
 ### fromPromise()
 

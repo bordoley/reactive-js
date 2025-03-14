@@ -21,5 +21,5 @@ class SynchronousObservableRunnable {
         sink[SinkLike_complete]();
     }
 }
-const Observable_toRunnable = (options) => (runnable) => newInstance(SynchronousObservableRunnable, runnable, options);
+const Observable_toRunnable = ((options) => (runnable) => newInstance(SynchronousObservableRunnable, runnable, options));
 export default Observable_toRunnable;

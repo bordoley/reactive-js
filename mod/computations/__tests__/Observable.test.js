@@ -68,6 +68,7 @@ import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Queue from "../../utils/Queue.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import * as AsyncIterable from "../AsyncIterable.js";
 import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 import * as WritableStore from "../WritableStore.js";
@@ -97,11 +98,7 @@ const CombineConstructorTests = (operator) => {
 };
 testModule("Observable", describe("effects", test("calling an effect from outside a computation expression throws", () => {
     expectToThrow(() => __constant(0));
-})), ComputationModuleTests(Observable, ObservableTypes), DeferredComputationModuleTests(Observable, ObservableTypes), DeferredReactiveComputationModuleTests(Observable, ObservableTypes), SynchronousComputationModuleTests(Observable), ConcurrentReactiveComputationModuleTests({
-    ...Observable,
-    fromObservable: () => (v) => v,
-    toObservable: () => (v) => v,
-}, ObservableTypes), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", async () => {
+})), ComputationModuleTests(Observable, ObservableTypes), DeferredComputationModuleTests(Observable, ObservableTypes), DeferredReactiveComputationModuleTests(Observable, ObservableTypes), SynchronousComputationModuleTests(Observable), ConcurrentReactiveComputationModuleTests(Observable, ObservableTypes), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", async () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_1, HostScheduler.create(), false);
@@ -547,7 +544,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             while (true) {
                 yield i++;
             }
-        })(), Observable.fromAsyncIterable(), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler, { capacity: 5 }));
+        })(), AsyncIterable.of(), Observable.fromAsyncIterable(), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler, { capacity: 5 }));
         pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
     catch (e_21) {
@@ -565,7 +562,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             yield 1;
             yield 2;
             yield 3;
-        })(), Observable.fromAsyncIterable(), Observable.buffer(), Observable.lastAsync(scheduler, { capacity: 1 }));
+        })(), AsyncIterable.of(), Observable.fromAsyncIterable(), Observable.buffer(), Observable.lastAsync(scheduler, { capacity: 1 }));
         pipe(result ?? [], expectArrayEquals([1, 2, 3]));
     }
     catch (e_22) {
@@ -582,7 +579,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
         const e = error();
         const result = await pipe((async function* foo() {
             throw e;
-        })(), Observable.fromAsyncIterable(), Observable.lastAsync(scheduler, { capacity: 1 }));
+        })(), AsyncIterable.of(), Observable.fromAsyncIterable(), Observable.lastAsync(scheduler, { capacity: 1 }));
         pipe(result, expectEquals(e));
     }
     catch (e_23) {
@@ -597,7 +594,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     while (true) {
         yield i++;
     }
-})(), Observable.fromAsyncIterable()))), describe("fromEventSource", ComputationTest.isMulticastedAndNotDisposable(pipe(EventSource.create(ignore), Observable.fromEventSource()))), describe("fromIterable", test("with delay", pipeLazy([9, 9, 9, 9], Observable.fromIterable({ delay: 2 }), Observable.withCurrentTime(t => t), Observable.toReadonlyArray(), expectArrayEquals([0, 2, 4, 6]))), test("with delay and delayed start", pipeLazy([9, 9, 9, 9], Observable.fromIterable({ delay: 2, delayStart: true }), Observable.withCurrentTime(t => t), Observable.toReadonlyArray(), expectArrayEquals([2, 4, 6, 8])))), describe("fromStore", test("it publishes the current value and all subsequent values", () => {
+})(), AsyncIterable.of(), Observable.fromAsyncIterable()))), describe("fromEventSource", ComputationTest.isMulticastedAndNotDisposable(pipe(EventSource.create(ignore), Observable.fromEventSource()))), describe("fromIterable", test("with delay", pipeLazy([9, 9, 9, 9], Observable.fromIterable({ delay: 2 }), Observable.withCurrentTime(t => t), Observable.toReadonlyArray(), expectArrayEquals([0, 2, 4, 6]))), test("with delay and delayed start", pipeLazy([9, 9, 9, 9], Observable.fromIterable({ delay: 2, delayStart: true }), Observable.withCurrentTime(t => t), Observable.toReadonlyArray(), expectArrayEquals([2, 4, 6, 8])))), describe("fromStore", test("it publishes the current value and all subsequent values", () => {
     const env_24 = { stack: [], error: void 0, hasError: false };
     try {
         const store = WritableStore.create(-1);
