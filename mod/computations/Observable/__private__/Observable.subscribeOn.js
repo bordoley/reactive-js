@@ -1,9 +1,10 @@
 /// <reference types="./Observable.subscribeOn.d.ts" />
 
 import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
-import { pipe } from "../../../functions.js";
+import { bindMethod, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../utils.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import { QueueableLike_backpressureStrategy, QueueableLike_capacity, SinkLike_complete, } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_enqueue from "./Observable.enqueue.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -11,7 +12,7 @@ const Observable_subscribeOn = ((scheduler, options) => (observable) => Observab
     [QueueableLike_capacity]: options?.capacity ?? observer[QueueableLike_capacity],
     [QueueableLike_backpressureStrategy]: options?.backpressureStrategy ??
         observer[QueueableLike_backpressureStrategy],
-}), Disposable.addTo(observer)), {
+}), Disposable.addTo(observer), DisposableContainer.onComplete(bindMethod(observer, SinkLike_complete))), {
     [ComputationLike_isPure]: observable[ComputationLike_isPure],
     [ComputationLike_isSynchronous]: false,
 }));

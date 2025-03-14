@@ -15,14 +15,11 @@ import {
   DeferredObservableWithSideEffectsLike,
   HigherOrderInnerComputationLike,
   ObservableLike,
-  ObservableLike_observe,
 } from "../../../computations.js";
 import {
   Function1,
   Optional,
   bind,
-  bindMethod,
-  invoke,
   isSome,
   none,
   pipe,
@@ -31,16 +28,17 @@ import {
   clampPositiveInteger,
   clampPositiveNonZeroInteger,
 } from "../../../math.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_complete,
   LiftedObserverLike_completeDelegate,
-  LiftedObserverLike_delegate,
+  LiftedObserverLike_isReady,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   BackpressureStrategy,
@@ -49,14 +47,16 @@ import {
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
-  QueueableLike_isReady,
+  SchedulerLike_requestYield,
   SinkLike_isCompleted,
   SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
+import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, {
   ObservableLift_isStateless,
 } from "./Observable.lift.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 const createMergeAllObserverOperator: <T>(options?: {
   readonly backpressureStrategy?: BackpressureStrategy;
@@ -85,12 +85,18 @@ const createMergeAllObserverOperator: <T>(options?: {
     observer[MergeAllObserver_activeCount]++;
 
     pipe(
-      observer[LiftedObserverLike_delegate],
-      Observer_createWithDelegate<T>,
+      nextObs,
+      Observable_forEach<T>(v => {
+        observer[LiftedObserverLike_notifyDelegate](v);
+        if (!observer[LiftedObserverLike_isReady]) {
+          observer[SchedulerLike_requestYield]();
+        }
+      }),
+      Observable_subscribeWithConfig(observer, observer),
+      Disposable.addTo(observer),
       DisposableContainer.onComplete(
         bind(onMergeAllObserverInnerObservableComplete, observer),
       ),
-      bindMethod(nextObs, ObservableLike_observe),
     );
   };
 
@@ -158,8 +164,6 @@ const createMergeAllObserverOperator: <T>(options?: {
         } else {
           this[MergeAllObserver_observablesQueue][SinkLike_push](next);
         }
-
-        return this[QueueableLike_isReady];
       },
 
       [LiftedObserverLike_complete](

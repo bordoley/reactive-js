@@ -20,7 +20,7 @@ import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_complete,
   LiftedObserverLike_completeDelegate,
-  LiftedObserverLike_delegate,
+  LiftedObserverLike_isReady,
   LiftedObserverLike_notify,
   LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
@@ -32,7 +32,6 @@ import {
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
-  QueueableLike_isReady,
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SinkLike_push,
@@ -55,18 +54,17 @@ const createTakeLastObserver: <T>(
     ctx: ContinuationContextLike,
   ) {
     const queue = this[TakeLastObserver_queue];
-    const delegate = this[LiftedObserverLike_delegate];
 
     let v: Optional<T> = none;
     while (((v = queue[QueueLike_dequeue]()), isSome(v))) {
-      if (!delegate[QueueableLike_isReady]) {
+      if (!this[LiftedObserverLike_isReady]) {
         this[SchedulerLike_requestYield]();
         ctx[ContinuationContextLike_yield]();
       }
 
       this[LiftedObserverLike_notifyDelegate](v);
 
-      if (!delegate[QueueableLike_isReady]) {
+      if (!this[LiftedObserverLike_isReady]) {
         this[SchedulerLike_requestYield]();
       }
 

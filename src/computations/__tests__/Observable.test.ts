@@ -620,7 +620,6 @@ testModule(
   ),
   describe(
     "enqueue",
-
     test("when backpressure exception is thrown", () => {
       using vts = VirtualTimeScheduler.create();
       const stream = Streamable.identity()[StreamableLike_stream](vts, {
@@ -653,7 +652,7 @@ testModule(
 
       pipe(
         stream[SinkLike_isCompleted],
-        expectTrue("expected stream to be completed"),
+        expectFalse("expected stream not to be completed"),
       );
     }),
     test("when completed successfully from delayed source", () => {
@@ -672,7 +671,7 @@ testModule(
 
       pipe(
         stream[SinkLike_isCompleted],
-        expectTrue("expected stream to be completed"),
+        expectFalse("expected stream not to be completed"),
       );
     }),
     ComputationOperatorWithSideEffectsTests(

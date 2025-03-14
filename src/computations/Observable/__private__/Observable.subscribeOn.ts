@@ -3,13 +3,15 @@ import {
   ComputationLike_isSynchronous,
   ObservableLike,
 } from "../../../computations.js";
-import { pipe } from "../../../functions.js";
+import { bindMethod, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import {
   BackpressureStrategy,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   SchedulerLike,
+  SinkLike_complete,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
@@ -37,6 +39,9 @@ const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
               observer[QueueableLike_backpressureStrategy],
           }),
           Disposable.addTo(observer),
+          DisposableContainer.onComplete(
+            bindMethod(observer, SinkLike_complete),
+          ),
         ),
       {
         [ComputationLike_isPure]: observable[ComputationLike_isPure],

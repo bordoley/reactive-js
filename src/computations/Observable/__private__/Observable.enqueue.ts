@@ -10,8 +10,6 @@ import { none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_complete,
-  LiftedObserverLike_completeDelegate,
   LiftedObserverLike_notify,
   LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
@@ -20,7 +18,6 @@ import {
   QueueableLike,
   QueueableLike_isReady,
   SchedulerLike_requestYield,
-  SinkLike_complete,
   SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -66,13 +63,6 @@ const Observer_createEnqueueObserver: <T>(
         }
 
         this[LiftedObserverLike_notifyDelegate](next);
-      },
-      [LiftedObserverLike_complete](
-        this: TProperties & LiftedObserverLike<T, readonly T[]>,
-      ) {
-        // FIXME: maybe we shouldn't complete
-        this[EnqueueObserver_queue][SinkLike_complete]();
-        this[LiftedObserverLike_completeDelegate]();
       },
     }),
   );

@@ -13,9 +13,8 @@ import {
   ComputationLike_isSynchronous,
   HigherOrderInnerComputationLike,
   ObservableLike,
-  ObservableLike_observe,
 } from "../../../computations.js";
-import { bind, bindMethod, none, pipe } from "../../../functions.js";
+import { bind, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
@@ -24,13 +23,14 @@ import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_complete,
   LiftedObserverLike_completeDelegate,
-  LiftedObserverLike_delegate,
+  LiftedObserverLike_isReady,
   LiftedObserverLike_notify,
   LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   DisposableLike_isDisposed,
   ObserverLike,
+  SchedulerLike_requestYield,
   SerialDisposableLike,
   SerialDisposableLike_current,
   SinkLike_isCompleted,
@@ -41,7 +41,6 @@ import Observable_lift, {
   ObservableLift_isStateless,
 } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
-import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
 
 const createSwitchAllObserver: <T>(
   o: ObserverLike<T>,
@@ -94,15 +93,22 @@ const createSwitchAllObserver: <T>(
         next: ObservableLike<T>,
       ) {
         const subscriber = pipe(
-          Observer_createWithDelegate(this[LiftedObserverLike_delegate]),
+          next,
+          Observable_forEach<T>(v => {
+            this[LiftedObserverLike_notifyDelegate](v);
+            if (!this[LiftedObserverLike_isReady]) {
+              this[SchedulerLike_requestYield]();
+            }
+          }),
+          Observable_subscribeWithConfig(this, this),
           Disposable.addTo(this),
           DisposableContainer.onComplete(
             bind(onSwitchAllObserverInnerObservableComplete, this),
           ),
         );
-        next[ObservableLike_observe](subscriber)
-        
-        this[SwitchAllObserver_currentRef][SerialDisposableLike_current] = subscriber;
+
+        this[SwitchAllObserver_currentRef][SerialDisposableLike_current] =
+          subscriber;
       },
 
       [LiftedObserverLike_complete](
