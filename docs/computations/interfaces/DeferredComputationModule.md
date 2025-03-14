@@ -195,20 +195,6 @@
 
 ***
 
-### empty()
-
-> **empty**\<`T`\>(): [`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `T`\>
-
-***
-
 ### encodeUtf8()
 
 > **encodeUtf8**(): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
@@ -236,20 +222,6 @@
 #### Returns
 
 [`ComputationOperatorWithSideEffects`](../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `T`, `T`\>
-
-***
-
-### fromIterable()
-
-> **fromIterable**\<`T`\>(): [`FromIterableDeferredOperator`](../type-aliases/FromIterableDeferredOperator.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`FromIterableDeferredOperator`](../type-aliases/FromIterableDeferredOperator.md)\<`TComputationType`, `T`\>
 
 ***
 

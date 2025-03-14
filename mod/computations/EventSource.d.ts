@@ -1,4 +1,4 @@
-import { AsyncIterableLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_multicastOfT, ConcurrentReactiveComputationModule, EventSourceLike, IterableLike } from "../computations.js";
+import { AsyncIterableLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_multicastOfT, ConcurrentReactiveComputationModule, EventSourceLike } from "../computations.js";
 import { Factory, Function1, SideEffect1, Updater } from "../functions.js";
 import { DisposableLike, EventListenerLike } from "../utils.js";
 /**
@@ -17,9 +17,7 @@ export interface EventSourceModule extends ComputationModule<EventSourceComputat
     create<T>(setup: SideEffect1<EventListenerLike<T>>, options?: {
         readonly autoDispose?: boolean;
     }): EventSourceLike<T> & DisposableLike;
-    empty<T>(): EventSourceLike<T> & DisposableLike;
     fromAsyncIterable<T>(): Function1<AsyncIterableLike<T>, EventSourceLike<T> & DisposableLike>;
-    fromIterable<T>(): Function1<IterableLike<T>, EventSourceLike<T> & DisposableLike>;
     fromReadonlyArray<T>(options?: {
         readonly count?: number;
         readonly start?: number;

@@ -463,23 +463,25 @@ export type HigherOrderComputationOperator<
           >
         : never;
 
-export type FromIterableDeferredOperator<
+// prettier-ignore
+export type FromIterableOperator<
   TComputationType extends ComputationType,
   T,
 > = <TIterable extends IterableLike<T>>(
   iterable: TIterable,
-) => TIterable extends PureIterableLike
-  ? PureDeferredComputationOf<TComputationType, T>
-  : DeferredComputationWithSideEffectsOf<TComputationType, T>;
-
-export type FromIterableSynchronousOperator<
-  TComputationType extends ComputationType,
-  T,
-> = <TIterable extends IterableLike<T>>(
-  iterable: TIterable,
-) => TIterable extends PureIterableLike
-  ? PureSynchronousComputationOf<TComputationType, T>
-  : SynchronousComputationWithSideEffectsOf<TComputationType, T>;
+) => TIterable extends PureIterableLike ? (
+  PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType,T> ? 
+    PureSynchronousComputationOf<TComputationType, T> : 
+  PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? 
+    PureDeferredComputationOf<TComputationType, T> : 
+    MulticastComputationOf<TComputationType, T> & DisposableLike
+) : TIterable extends IterableWithSideEffectsLike ? (  
+  SynchronousComputationWithSideEffectsOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? 
+    SynchronousComputationWithSideEffectsOf<TComputationType, T> : 
+  DeferredComputationWithSideEffectsOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? 
+    DeferredComputationWithSideEffectsOf<TComputationType, T> :
+    MulticastComputationOf<TComputationType, T> & DisposableLike
+) : ComputationBaseOf<TComputationType, T> ;
 
 export type FromAsyncIterableOperator<
   TComputationType extends ComputationType,
@@ -493,6 +495,18 @@ export type FromAsyncIterableOperator<
   : DeferredComputationWithSideEffectsOf<TComputationType, T> extends never
     ? MulticastComputationOf<TComputationType, T>
     : DeferredComputationWithSideEffectsOf<TComputationType, T>;
+
+// prettier-ignore
+export type EmptyOperator<
+  TComputationType extends ComputationType,
+> = <T>(
+) => PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
+    PureSynchronousComputationOf<TComputationType, T>  :
+  PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
+    PureDeferredComputationOf<TComputationType, T> :
+  MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
+  MulticastComputationOf<TComputationType, T> & DisposableLike
+  : never;
 
 export type ToObservableOperator<
   TComputationType extends ComputationType,
@@ -663,14 +677,11 @@ export type MulticastComputationOfModule<
 
 export interface ComputationModule<TComputationType extends ComputationType>
   extends ComputationModuleLike<TComputationType> {
-  empty<T>(): PureComputationOf<TComputationType, T>;
+  empty: EmptyOperator<TComputationType>;
 
   firstAsync<T>(): AsyncFunction1<ComputationOf<TComputationType, T>, T>;
 
-  fromIterable<T>(): Function1<
-    PureIterableLike<T>,
-    PureComputationOf<TComputationType, T>
-  >;
+  fromIterable<T>(): FromIterableOperator<TComputationType, T>;
 
   fromReadonlyArray<T>(options?: {
     readonly count?: number;
@@ -765,8 +776,6 @@ export interface DeferredComputationModule<
     T
   >;
 
-  empty<T>(): PureDeferredComputationOf<TComputationType, T>;
-
   encodeUtf8(): StatefulSynchronousComputationOperator<
     TComputationType,
     string,
@@ -776,8 +785,6 @@ export interface DeferredComputationModule<
   forEach<T>(
     sideEffect: SideEffect1<T>,
   ): ComputationOperatorWithSideEffects<TComputationType, T, T>;
-
-  fromIterable<T>(): FromIterableDeferredOperator<TComputationType, T>;
 
   fromReadonlyArray<T>(options?: {
     readonly count?: number;
@@ -857,14 +864,10 @@ export interface DeferredComputationModule<
 export interface SynchronousComputationModule<
   TComputationType extends ComputationType,
 > extends ComputationModuleLike<TComputationType> {
-  empty<T>(): PureSynchronousComputationOf<TComputationType, T>;
-
   first<T>(): Function1<
     SynchronousComputationOf<TComputationType, T>,
     Optional<T>
   >;
-
-  fromIterable<T>(): FromIterableSynchronousOperator<TComputationType, T>;
 
   fromReadonlyArray<T>(options?: {
     readonly count?: number;

@@ -6,7 +6,7 @@
 
 # Function: fromIterable()
 
-> **fromIterable**\<`T`\>(): [`FromIterableDeferredOperator`](../../type-aliases/FromIterableDeferredOperator.md)\<[`AsyncIterableComputation`](../interfaces/AsyncIterableComputation.md), `T`\>
+> **fromIterable**\<`T`\>(): [`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`AsyncIterableComputation`](../interfaces/AsyncIterableComputation.md), `T`\>
 
 ## Type Parameters
 
@@ -14,4 +14,4 @@
 
 ## Returns
 
-[`FromIterableDeferredOperator`](../../type-aliases/FromIterableDeferredOperator.md)\<[`AsyncIterableComputation`](../interfaces/AsyncIterableComputation.md), `T`\>
+[`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`AsyncIterableComputation`](../interfaces/AsyncIterableComputation.md), `T`\>

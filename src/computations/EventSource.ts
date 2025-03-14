@@ -7,7 +7,6 @@ import {
   Computation_multicastOfT,
   ConcurrentReactiveComputationModule,
   EventSourceLike,
-  IterableLike,
 } from "../computations.js";
 import { Factory, Function1, SideEffect1, Updater } from "../functions.js";
 import { DisposableLike, EventListenerLike } from "../utils.js";
@@ -63,15 +62,8 @@ export interface EventSourceModule
     },
   ): EventSourceLike<T> & DisposableLike;
 
-  empty<T>(): EventSourceLike<T> & DisposableLike;
-
   fromAsyncIterable<T>(): Function1<
     AsyncIterableLike<T>,
-    EventSourceLike<T> & DisposableLike
-  >;
-
-  fromIterable<T>(): Function1<
-    IterableLike<T>,
     EventSourceLike<T> & DisposableLike
   >;
 

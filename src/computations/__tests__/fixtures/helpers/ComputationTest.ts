@@ -1,26 +1,22 @@
 import { test } from "../../../../__internal__/testing.js";
 import {
+  ComputationLike,
   DeferredComputationWithSideEffectsLike,
   MulticastComputationLike,
   PureDeferredComputationLike,
-  PureSynchronousComputationLike,
-  SynchronousComputationWithSideEffectsLike,
 } from "../../../../computations.js";
 import { pipeLazy } from "../../../../functions.js";
 import { DisposableLike } from "../../../../utils.js";
 import * as ComputationExpect from "./ComputationExpect.js";
 
-export const isPureSynchronous = (
-  obs: PureSynchronousComputationLike,
-  description?: string,
-) =>
+export const isPureSynchronous = (obs: ComputationLike, description?: string) =>
   test(
     "is PureSynchronousComputationLike" + (description ?? ""),
     pipeLazy(obs, ComputationExpect.isPureSynchronous),
   );
 
 export const isSynchronousWithSideEffects = (
-  obs: SynchronousComputationWithSideEffectsLike,
+  obs: ComputationLike,
   description?: string,
 ) =>
   test(

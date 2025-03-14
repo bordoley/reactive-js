@@ -11,8 +11,6 @@ export interface AsyncIterableComputation extends ComputationType {
 }
 export type Computation = AsyncIterableComputation;
 export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, DeferredComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation> {
-    empty: DeferredComputationModule<AsyncIterableComputation>["empty"];
-    fromIterable: DeferredComputationModule<AsyncIterableComputation>["fromIterable"];
     of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
     raise: DeferredComputationModule<AsyncIterableComputation>["raise"];
     toEventSource<T>(): Function1<AsyncIterableLike<T>, EventSourceLike<T> & DisposableLike>;

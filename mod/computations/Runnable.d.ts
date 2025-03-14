@@ -10,8 +10,6 @@ export interface RunnableComputation extends ComputationType {
 }
 export type Computation = RunnableComputation;
 export interface RunnableModule extends ComputationModule<RunnableComputation>, DeferredComputationModule<RunnableComputation>, DeferredReactiveComputationModule<RunnableComputation>, SynchronousComputationModule<RunnableComputation> {
-    empty: SynchronousComputationModule<RunnableComputation>["empty"];
-    fromIterable: SynchronousComputationModule<RunnableComputation>["fromIterable"];
     fromReadonlyArray: SynchronousComputationModule<RunnableComputation>["fromReadonlyArray"];
     fromValue: SynchronousComputationModule<RunnableComputation>["fromValue"];
     generate: SynchronousComputationModule<RunnableComputation>["generate"];

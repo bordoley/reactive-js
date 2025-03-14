@@ -6,6 +6,7 @@ import {
   test,
 } from "../../../__internal__/testing.js";
 import {
+  ComputationModule,
   ComputationType,
   ComputationTypeOf,
   DeferredComputationModule,
@@ -25,7 +26,8 @@ import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSyn
 const DeferredReactiveComputationModuleTests = <
   TComputationType extends ComputationType,
 >(
-  m: DeferredComputationModule<TComputationType> &
+  m: ComputationModule<TComputationType> &
+    DeferredComputationModule<TComputationType> &
     DeferredReactiveComputationModule<TComputationType> &
     SynchronousComputationModule<TComputationType>,
   computations: ComputationTypeOf<TComputationType>,

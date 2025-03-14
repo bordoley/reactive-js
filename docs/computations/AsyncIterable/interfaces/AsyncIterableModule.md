@@ -22,39 +22,13 @@
 
 ***
 
-### empty()
+### empty
 
-> **empty**: \<`T`\>() => [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
+> **empty**: [`EmptyOperator`](../../type-aliases/EmptyOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>
 
-#### Type Parameters
+#### Inherited from
 
-• **T**
-
-#### Returns
-
-[`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
-
-#### Overrides
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`empty`](../../interfaces/DeferredComputationModule.md#empty)
-
-***
-
-### fromIterable()
-
-> **fromIterable**: \<`T`\>() => [`FromIterableDeferredOperator`](../../type-aliases/FromIterableDeferredOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`FromIterableDeferredOperator`](../../type-aliases/FromIterableDeferredOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
-
-#### Overrides
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`fromIterable`](../../interfaces/DeferredComputationModule.md#fromiterable)
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`empty`](../../interfaces/ComputationModule.md#empty)
 
 ***
 
@@ -341,6 +315,24 @@
 #### Inherited from
 
 [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`forEach`](../../interfaces/DeferredComputationModule.md#foreach)
+
+***
+
+### fromIterable()
+
+> **fromIterable**\<`T`\>(): [`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
+
+#### Inherited from
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`fromIterable`](../../interfaces/ComputationModule.md#fromiterable)
 
 ***
 

@@ -52,7 +52,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "returns the first value",
         pipeLazyAsync(
           [1, 2, 3, 4, 5],
-          m.fromIterable(),
+          m.fromIterable<number>(),
           m.firstAsync(),
           expectEquals(1),
         ),
@@ -242,7 +242,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "returns the last value",
         pipeLazyAsync(
           [1, 2, 3, 4, 5],
-          m.fromIterable(),
+          m.fromIterable<number>(),
           m.lastAsync(),
           expectEquals(5),
         ),
@@ -329,7 +329,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "returns the sum of values",
         pipeLazyAsync(
           [1, 1, 1, 1, 1],
-          m.fromIterable(),
+          m.fromIterable<number>(),
           m.reduceAsync(
             (acc, next) => next + acc,
             () => 0,
@@ -341,7 +341,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "empty source",
         pipeLazyAsync(
           [],
-          m.fromIterable(),
+          m.fromIterable<number>(),
           m.reduceAsync(
             (acc, next) => next + acc,
             () => 0,
@@ -356,7 +356,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
             (function* Generator() {
               throw newInstance(Error);
             })(),
-            m.fromIterable(),
+            m.fromIterable<number>(),
             m.reduceAsync(
               (acc, next) => next + acc,
               () => 0,

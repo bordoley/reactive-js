@@ -9,8 +9,6 @@ export interface IterableComputation extends ComputationType {
 }
 export type Computation = IterableComputation;
 export interface IterableModule extends ComputationModule<IterableComputation>, DeferredComputationModule<IterableComputation>, SynchronousComputationModule<IterableComputation>, InteractiveComputationModule<IterableComputation> {
-    empty: SynchronousComputationModule<IterableComputation>["empty"];
-    fromIterable: SynchronousComputationModule<IterableComputation>["fromIterable"];
     fromReadonlyArray: SynchronousComputationModule<IterableComputation>["fromReadonlyArray"];
     fromValue: SynchronousComputationModule<IterableComputation>["fromValue"];
     generate: SynchronousComputationModule<IterableComputation>["generate"];

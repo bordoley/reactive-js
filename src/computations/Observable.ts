@@ -17,7 +17,7 @@ import {
   DeferredObservableWithSideEffectsLike,
   DeferredReactiveComputationModule,
   EventSourceLike,
-  FromIterableSynchronousOperator,
+  FromIterableOperator,
   HigherOrderComputationOperator,
   HigherOrderInnerComputationLike,
   HigherOrderInnerComputationOf,
@@ -480,7 +480,7 @@ export interface ObservableModule
   fromIterable<T>(options?: {
     readonly delay: number;
     readonly delayStart?: boolean;
-  }): FromIterableSynchronousOperator<ObservableComputation, T>;
+  }): FromIterableOperator<ObservableComputation, T>;
 
   fromPromise<T>(): Function1<Promise<T>, MulticastObservableLike<T>>;
 

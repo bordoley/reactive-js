@@ -22,39 +22,13 @@
 
 ***
 
-### empty()
+### empty
 
-> **empty**: \<`T`\>() => [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+> **empty**: [`EmptyOperator`](../../type-aliases/EmptyOperator.md)\<[`RunnableComputation`](RunnableComputation.md)\>
 
-#### Type Parameters
+#### Inherited from
 
-• **T**
-
-#### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
-
-#### Overrides
-
-[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`empty`](../../interfaces/SynchronousComputationModule.md#empty)
-
-***
-
-### fromIterable()
-
-> **fromIterable**: \<`T`\>() => [`FromIterableSynchronousOperator`](../../type-aliases/FromIterableSynchronousOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`FromIterableSynchronousOperator`](../../type-aliases/FromIterableSynchronousOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
-
-#### Overrides
-
-[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`fromIterable`](../../interfaces/SynchronousComputationModule.md#fromiterable)
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`empty`](../../interfaces/ComputationModule.md#empty)
 
 ***
 
@@ -513,6 +487,24 @@
 #### Inherited from
 
 [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`forEach`](../../interfaces/DeferredComputationModule.md#foreach)
+
+***
+
+### fromIterable()
+
+> **fromIterable**\<`T`\>(): [`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
+
+#### Inherited from
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`fromIterable`](../../interfaces/ComputationModule.md#fromiterable)
 
 ***
 

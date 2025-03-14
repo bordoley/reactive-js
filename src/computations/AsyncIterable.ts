@@ -99,9 +99,6 @@ export interface AsyncIterableModule
   extends ComputationModule<AsyncIterableComputation>,
     DeferredComputationModule<AsyncIterableComputation>,
     InteractiveComputationModule<AsyncIterableComputation> {
-  empty: DeferredComputationModule<AsyncIterableComputation>["empty"];
-  fromIterable: DeferredComputationModule<AsyncIterableComputation>["fromIterable"];
-
   of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
 
   raise: DeferredComputationModule<AsyncIterableComputation>["raise"];
@@ -276,8 +273,8 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
     return newInstance(FromReadonlyArrayAsyncIterable, arr, count, start);
   };
 
-export const empty: Signature["empty"] = (() =>
-  pipe([], fromReadonlyArray(), returns))();
+export const empty: Signature["empty"] = (<T>() =>
+  pipe([], fromReadonlyArray<T>(), returns))() as Signature["empty"];
 
 class EncodeUtf8AsyncIterable
   implements AsyncIterableLike<Uint8Array<ArrayBufferLike>>

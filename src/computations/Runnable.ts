@@ -71,8 +71,6 @@ export interface RunnableModule
     DeferredComputationModule<RunnableComputation>,
     DeferredReactiveComputationModule<RunnableComputation>,
     SynchronousComputationModule<RunnableComputation> {
-  empty: SynchronousComputationModule<RunnableComputation>["empty"];
-  fromIterable: SynchronousComputationModule<RunnableComputation>["fromIterable"];
   fromReadonlyArray: SynchronousComputationModule<RunnableComputation>["fromReadonlyArray"];
   fromValue: SynchronousComputationModule<RunnableComputation>["fromValue"];
   generate: SynchronousComputationModule<RunnableComputation>["generate"];

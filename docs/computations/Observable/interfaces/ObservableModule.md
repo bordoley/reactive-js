@@ -208,7 +208,7 @@
 
 #### Overrides
 
-[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`empty`](../../interfaces/SynchronousComputationModule.md#empty)
+`ComputationModule.empty`
 
 ***
 
@@ -420,7 +420,7 @@
 
 ### fromIterable()
 
-> **fromIterable**\<`T`\>(`options`?): [`FromIterableSynchronousOperator`](../../type-aliases/FromIterableSynchronousOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>
+> **fromIterable**\<`T`\>(`options`?): [`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>
 
 #### Type Parameters
 
@@ -440,11 +440,11 @@
 
 #### Returns
 
-[`FromIterableSynchronousOperator`](../../type-aliases/FromIterableSynchronousOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>
+[`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>
 
 #### Overrides
 
-[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`fromIterable`](../../interfaces/SynchronousComputationModule.md#fromiterable)
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`fromIterable`](../../interfaces/ComputationModule.md#fromiterable)
 
 ***
 

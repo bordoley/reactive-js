@@ -32,21 +32,13 @@
 
 [`ComputationModuleLike`](ComputationModuleLike.md).[`[ComputationModuleLike_computationType]`](ComputationModuleLike.md#computationmodulelike_computationtype)
 
-## Methods
-
-### empty()
-
-> **empty**\<`T`\>(): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
-
 ***
+
+### empty
+
+> **empty**: [`EmptyOperator`](../type-aliases/EmptyOperator.md)\<`TComputationType`\>
+
+## Methods
 
 ### firstAsync()
 
@@ -64,7 +56,7 @@
 
 ### fromIterable()
 
-> **fromIterable**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`PureIterableLike`](PureIterableLike.md)\<`T`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
+> **fromIterable**\<`T`\>(): [`FromIterableOperator`](../type-aliases/FromIterableOperator.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -72,7 +64,7 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureIterableLike`](PureIterableLike.md)\<`T`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
+[`FromIterableOperator`](../type-aliases/FromIterableOperator.md)\<`TComputationType`, `T`\>
 
 ***
 
