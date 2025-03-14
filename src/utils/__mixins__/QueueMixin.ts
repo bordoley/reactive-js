@@ -10,11 +10,13 @@ import {
   props,
   unsafeCast,
 } from "../../__internal__/mixins.js";
+import * as EventSource from "../../computations/EventSource.js";
 import * as Publisher from "../../computations/Publisher.js";
 import { PublisherLike } from "../../computations.js";
 import {
   Comparator,
   Optional,
+  SideEffect1,
   isSome,
   newInstance,
   none,
@@ -36,10 +38,10 @@ import {
   QueueLike_count,
   QueueLike_dequeue,
   QueueLike_head,
+  QueueableLike_addOnReadyListener,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_isReady,
-  QueueableLike_onReady,
   SinkLike_complete,
   SinkLike_isCompleted,
   ThrowBackpressureStrategy,
@@ -69,6 +71,7 @@ const QueueMixin: <T>() => Mixin1<
   const QueueMixin_tail = Symbol("QueueMixin_tail");
   const QueueMixin_values = Symbol("QueueMixin_values");
   const QueueMixin_comparator = Symbol("QueueMixin_comparator");
+  const QueueMixin_onReadyPublisher = Symbol("QueueMixin_onReadyPublisher");
 
   type TProperties = {
     [QueueLike_count]: number;
@@ -80,7 +83,7 @@ const QueueMixin: <T>() => Mixin1<
     [QueueMixin_values]: Optional<Optional<T>[] | T>;
     readonly [QueueMixin_comparator]: Optional<Comparator<T>>;
     [SinkLike_isCompleted]: boolean;
-    [QueueableLike_onReady]: PublisherLike<void>;
+    [QueueMixin_onReadyPublisher]: PublisherLike<void>;
   };
 
   const computeIndex = (
@@ -136,6 +139,7 @@ const QueueMixin: <T>() => Mixin1<
         | typeof Symbol.iterator
         | typeof EventListenerLike_notify
         | typeof SinkLike_complete
+        | typeof QueueableLike_addOnReadyListener
       >,
       DisposableLike,
       Optional<{
@@ -164,7 +168,7 @@ const QueueMixin: <T>() => Mixin1<
 
         this[QueueMixin_comparator] = config?.comparator;
         this[QueueMixin_values] = none;
-        this[QueueableLike_onReady] = pipe(
+        this[QueueMixin_onReadyPublisher] = pipe(
           Publisher.create<void>(),
           Disposable.addTo(this),
         );
@@ -181,7 +185,7 @@ const QueueMixin: <T>() => Mixin1<
         [QueueMixin_values]: none,
         [QueueMixin_comparator]: none,
         [SinkLike_isCompleted]: false,
-        [QueueableLike_onReady]: none,
+        [QueueMixin_onReadyPublisher]: none,
       }),
       {
         get [QueueLike_head]() {
@@ -220,7 +224,7 @@ const QueueMixin: <T>() => Mixin1<
           const capacity = this[QueueableLike_capacity];
           const isCompleted = this[SinkLike_isCompleted];
           const shouldNotifyReady = count === capacity && !isCompleted;
-          const onReadySignal = this[QueueableLike_onReady];
+          const onReadySignal = this[QueueMixin_onReadyPublisher];
 
           if (count <= 1) {
             const item = this[QueueMixin_values] as Optional<T>;
@@ -477,7 +481,18 @@ const QueueMixin: <T>() => Mixin1<
 
         [SinkLike_complete](this: TProperties) {
           this[SinkLike_isCompleted] = true;
-          this[QueueableLike_onReady][DisposableLike_dispose]();
+          this[QueueMixin_onReadyPublisher][DisposableLike_dispose]();
+        },
+
+        [QueueableLike_addOnReadyListener](
+          this: TProperties & DisposableLike,
+          callback: SideEffect1<void>,
+        ) {
+          return pipe(
+            this[QueueMixin_onReadyPublisher],
+            EventSource.addEventHandler(callback),
+            Disposable.addTo(this),
+          );
         },
       },
     ),

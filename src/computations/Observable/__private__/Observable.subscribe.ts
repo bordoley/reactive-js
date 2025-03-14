@@ -8,7 +8,6 @@ import {
   unsafeCast,
 } from "../../../__internal__/mixins.js";
 import {
-  EventSourceLike,
   ObservableLike,
   ObservableLike_observe,
 } from "../../../computations.js";
@@ -26,10 +25,10 @@ import {
   ObserverLike,
   OverflowBackpressureStrategy,
   QueueableLike,
+  QueueableLike_addOnReadyListener,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_isReady,
-  QueueableLike_onReady,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -40,7 +39,6 @@ import {
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../../utils.js";
-import EventSource_never from "../../EventSource/__private__/EventSource.never.js";
 import type * as Observable from "../../Observable.js";
 
 const createObserver: <T>(
@@ -64,7 +62,6 @@ const createObserver: <T>(
     [SchedulerLike_inContinuation]: boolean;
     [QueueableLike_capacity]: number;
     [QueueableLike_backpressureStrategy]: BackpressureStrategy;
-    [QueueableLike_onReady]: EventSourceLike<void>;
   };
 
   return mixInstanceFactory(
@@ -83,8 +80,6 @@ const createObserver: <T>(
       this[QueueableLike_capacity] = config[QueueableLike_capacity];
       this[QueueableLike_backpressureStrategy] =
         config[QueueableLike_backpressureStrategy];
-
-      this[QueueableLike_onReady] = EventSource_never();
 
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const instance = this;
@@ -106,7 +101,6 @@ const createObserver: <T>(
       [SchedulerLike_inContinuation]: false,
       [QueueableLike_capacity]: MAX_SAFE_INTEGER,
       [QueueableLike_backpressureStrategy]: OverflowBackpressureStrategy,
-      [QueueableLike_onReady]: none,
     }),
     proto({
       get [SinkLike_isCompleted]() {
@@ -115,8 +109,10 @@ const createObserver: <T>(
       },
 
       get [QueueableLike_isReady]() {
-        unsafeCast<DisposableLike>(this);
-        return !this[DisposableLike_isDisposed];
+        unsafeCast<QueueableLike>(this);
+        return (
+          this[QueueableLike_capacity] > 0 && !this[DisposableLike_isDisposed]
+        );
       },
 
       get [SchedulerLike_now]() {
@@ -134,6 +130,12 @@ const createObserver: <T>(
         return this[SubscribeObserver_scheduler][
           SchedulerLike_maxYieldInterval
         ];
+      },
+
+      [QueueableLike_addOnReadyListener](
+        _callback: SideEffect1<void>,
+      ): DisposableLike {
+        return Disposable.disposed;
       },
 
       [EventListenerLike_notify]() {

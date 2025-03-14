@@ -1288,6 +1288,24 @@ testModule(
     ComputationTest.isPureSynchronous(Observable.spring()),
   ),
   describe(
+    "subscribe",
+    test(
+      "with a capacity of 0",
+      pipeLazy(
+        [1, 2, 3, 4],
+        Observable.fromReadonlyArray(),
+        Observable.backpressureStrategy({
+          capacity: 1,
+          backpressureStrategy: OverflowBackpressureStrategy,
+        }),
+        Observable.last({
+          capacity: 0,
+        }),
+        expectIsNone,
+      ),
+    ),
+  ),
+  describe(
     "subscribeOn",
     StatefulAsynchronousComputationOperatorTests(
       ObservableTypes,

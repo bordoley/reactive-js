@@ -22,8 +22,8 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike,
+  QueueableLike_addOnReadyListener,
   QueueableLike_isReady,
-  QueueableLike_onReady,
 } from "../utils.js";
 import * as EventSource from "./EventSource.js";
 import * as WritableStore from "./WritableStore.js";
@@ -95,8 +95,9 @@ export const enqueue: Signature["enqueue"] =
   (src: PauseableEventSourceLike<T>) =>
     EventSource.create((listener: EventListenerLike<T>) => {
       pipe(
-        queue[QueueableLike_onReady],
-        EventSource.addEventHandler(bindMethod(src, PauseableLike_resume)),
+        queue[QueueableLike_addOnReadyListener](
+          bindMethod(src, PauseableLike_resume),
+        ),
         Disposable.addTo(listener),
       );
 

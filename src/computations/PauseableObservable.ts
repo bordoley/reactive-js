@@ -4,7 +4,6 @@ import {
   mixInstanceFactory,
   props,
 } from "../__internal__/mixins.js";
-import * as EventSource from "../computations/EventSource.js";
 import {
   DeferredObservableWithSideEffectsLike,
   EventSourceLike,
@@ -24,8 +23,8 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike,
+  QueueableLike_addOnReadyListener,
   QueueableLike_isReady,
-  QueueableLike_onReady,
 } from "../utils.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
@@ -93,8 +92,9 @@ export const enqueue: Signature["enqueue"] =
   (src: PauseableObservableLike<T>) =>
     Observable_create<T>(observer => {
       pipe(
-        queue[QueueableLike_onReady],
-        EventSource.addEventHandler(bindMethod(src, PauseableLike_resume)),
+        queue[QueueableLike_addOnReadyListener](
+          bindMethod(src, PauseableLike_resume),
+        ),
         Disposable.addTo(observer),
       );
 

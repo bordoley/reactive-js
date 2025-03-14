@@ -1,5 +1,5 @@
 import { Error, Symbol as GlobalSymbol } from "./__internal__/constants.js";
-import type { EventSourceLike, StoreLike } from "./computations.js";
+import type { StoreLike } from "./computations.js";
 import { Method1, Optional, SideEffect1, isNone } from "./functions.js";
 
 export const DisposableContainerLike_add = Symbol(
@@ -120,7 +120,9 @@ export const QueueableLike_backpressureStrategy = Symbol(
 );
 export const QueueableLike_capacity = Symbol("QueueableLike_capacity");
 export const QueueableLike_isReady = Symbol("QueueableLike_isReady");
-export const QueueableLike_onReady = Symbol("QueueableLike_onReady");
+export const QueueableLike_addOnReadyListener = Symbol(
+  "QueueableLike_addOnReadyListener",
+);
 
 /**
  * A `QueueableLike` type that consumes enqueued events to
@@ -130,7 +132,6 @@ export const QueueableLike_onReady = Symbol("QueueableLike_onReady");
  */
 export interface QueueableLike<T = unknown> extends SinkLike<T> {
   readonly [QueueableLike_isReady]: boolean;
-  readonly [QueueableLike_onReady]: EventSourceLike<void>;
 
   /**
    * The back pressure strategy utilized by the queue when it is at capacity.
@@ -141,6 +142,10 @@ export interface QueueableLike<T = unknown> extends SinkLike<T> {
    * The number of items the queue is capable of efficiently buffering.
    */
   readonly [QueueableLike_capacity]: number;
+
+  [QueueableLike_addOnReadyListener](
+    callback: SideEffect1<void>,
+  ): DisposableLike;
 }
 
 export const QueueLike_head = Symbol("QueueLike_head");

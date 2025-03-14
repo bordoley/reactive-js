@@ -18,8 +18,10 @@ import {
   bind,
   bindMethod,
   isSome,
+  memoize,
   none,
   pipe,
+  pipeLazy,
   raiseIf,
   returns,
 } from "../../functions.js";
@@ -34,10 +36,10 @@ import {
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
+  QueueableLike_addOnReadyListener,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_isReady,
-  QueueableLike_onReady,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -111,15 +113,15 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
   TA,
   TB = TA,
 >() => {
-  const LiftedObserverMixin_scheduler = Symbol("LiftedObserverMixin_scheduler");
-  const LiftedObserverMixin_schedulerCallback = Symbol(
-    "LiftedObserverMixin_schedulerCallback",
+  const LiftedObserverMixin_consumer = Symbol("LiftedObserverMixin_consumer");
+  const LiftedObserverMixin_consumerCallback = Symbol(
+    "LiftedObserverMixin_consumerCallback",
   );
 
   type TProperties = {
     [LiftedObserverLike_delegate]: ObserverLike<TB>;
-    [LiftedObserverMixin_scheduler]: ObserverLike;
-    [LiftedObserverMixin_schedulerCallback]: Method1<
+    [LiftedObserverMixin_consumer]: ObserverLike;
+    [LiftedObserverMixin_consumerCallback]: Method1<
       SideEffect1<ContinuationContextLike>,
       ContinuationContextLike
     >;
@@ -129,18 +131,23 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
   };
 
   function liftedObserverSchedulerContinuation(
-    this: LiftedObserverLike<TA, TB> & TProperties & QueueLike<TA>,
+    this: TProperties &
+      ObserverLike<TA> &
+      QueueLike<TA> &
+      SerialDisposableLike &
+      LiftedObserverLike<TA, TB>,
     ctx: ContinuationContextLike,
   ) {
     // This is the ultimate downstream consumer of events.
-    const scheduler = this[LiftedObserverMixin_scheduler];
+    const scheduler = this[LiftedObserverMixin_consumer];
 
     while (this[QueueLike_count] > 0 && !this[DisposableLike_isDisposed]) {
       // Avoid dequeing values if the downstream consumer
       // is applying backpressure.
       if (!scheduler[QueueableLike_isReady]) {
-        scheduler[SchedulerLike_requestYield]();
-        ctx[ContinuationContextLike_yield]();
+        // Set up the onReady listener
+        scheduleDrainQueue(this);
+        break;
       }
 
       const next = this[QueueLike_dequeue]() as TA;
@@ -156,6 +163,26 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
     }
   }
 
+  // memoize to avoid adding a local proper to track if
+  // we already have a consumer lister setup. Not that performant.
+  const setUpOnConsumerReadyListenerMemoized = memoize(
+    (
+      observer: TProperties &
+        ObserverLike<TA> &
+        QueueLike<TA> &
+        SerialDisposableLike &
+        LiftedObserverLike<TA, TB>,
+    ) => {
+      const consumer = observer[LiftedObserverMixin_consumer];
+      return pipe(
+        consumer[QueueableLike_addOnReadyListener](
+          pipeLazy(observer, scheduleDrainQueue),
+        ),
+        Disposable.addTo(observer),
+      );
+    },
+  );
+
   const scheduleDrainQueue = (
     observer: TProperties &
       ObserverLike<TA> &
@@ -163,10 +190,18 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
       SerialDisposableLike &
       LiftedObserverLike<TA, TB>,
   ) => {
-    if (observer[SerialDisposableLike_current][DisposableLike_isDisposed]) {
+    const consumer = observer[LiftedObserverMixin_consumer];
+    const isConsumerReady = consumer[QueueableLike_isReady];
+    const isConumerDisposed = consumer[DisposableLike_isDisposed];
+    const isDrainScheduled =
+      !observer[SerialDisposableLike_current][DisposableLike_isDisposed];
+
+    if (!isDrainScheduled && isConsumerReady) {
       observer[SerialDisposableLike_current] = observer[SchedulerLike_schedule](
         bind(liftedObserverSchedulerContinuation, observer),
       );
+    } else if (!isConsumerReady && !isConumerDisposed) {
+      setUpOnConsumerReadyListenerMemoized(observer);
     }
   };
 
@@ -222,7 +257,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         | typeof SchedulerLike_inContinuation
         | typeof QueueableLike_isReady
         | typeof SinkLike_isCompleted
-        | typeof QueueableLike_onReady
+        | typeof QueueableLike_addOnReadyListener
         | typeof QueueableLike_backpressureStrategy
         | typeof QueueableLike_capacity
         | typeof SchedulerLike_inContinuation
@@ -252,7 +287,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
             | typeof SchedulerLike_inContinuation
             | typeof QueueableLike_isReady
             | typeof SinkLike_isCompleted
-            | typeof QueueableLike_onReady
+            | typeof QueueableLike_addOnReadyListener
             | typeof QueueableLike_backpressureStrategy
             | typeof QueueableLike_capacity
           >,
@@ -284,13 +319,13 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           : sinkCompleteDelegate;
 
         this[LiftedObserverLike_delegate] = delegate;
-        this[LiftedObserverMixin_scheduler] =
-          (delegate as unknown as TProperties)[LiftedObserverMixin_scheduler] ??
+        this[LiftedObserverMixin_consumer] =
+          (delegate as unknown as TProperties)[LiftedObserverMixin_consumer] ??
           delegate;
 
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const instance = this;
-        this[LiftedObserverMixin_schedulerCallback] =
+        this[LiftedObserverMixin_consumerCallback] =
           function ObserverMixinSchedulerCallback(
             this: SideEffect1<ContinuationContextLike>,
             ctx: ContinuationContextLike,
@@ -310,36 +345,36 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
       props<TProperties>({
         [SchedulerLike_inContinuation]: false,
         [LiftedObserverLike_delegate]: none,
-        [LiftedObserverMixin_scheduler]: none,
-        [LiftedObserverMixin_schedulerCallback]: none,
+        [LiftedObserverMixin_consumer]: none,
+        [LiftedObserverMixin_consumerCallback]: none,
         [LiftedObserverLike_notifyDelegate]: none,
         [LiftedObserverLike_completeDelegate]: none,
       }),
       proto({
         get [LiftedObserverLike_isReady]() {
           unsafeCast<TProperties>(this);
-          return this[LiftedObserverMixin_scheduler][QueueableLike_isReady];
+          return this[LiftedObserverMixin_consumer][QueueableLike_isReady];
         },
 
         get [SchedulerLike_maxYieldInterval]() {
           unsafeCast<TProperties>(this);
-          return this[LiftedObserverMixin_scheduler][
+          return this[LiftedObserverMixin_consumer][
             SchedulerLike_maxYieldInterval
           ];
         },
 
         get [SchedulerLike_now]() {
           unsafeCast<TProperties>(this);
-          return this[LiftedObserverMixin_scheduler][SchedulerLike_now];
+          return this[LiftedObserverMixin_consumer][SchedulerLike_now];
         },
 
         get [SchedulerLike_shouldYield]() {
           unsafeCast<TProperties>(this);
-          return this[LiftedObserverMixin_scheduler][SchedulerLike_shouldYield];
+          return this[LiftedObserverMixin_consumer][SchedulerLike_shouldYield];
         },
 
         [SchedulerLike_requestYield](this: TProperties) {
-          this[LiftedObserverMixin_scheduler][SchedulerLike_requestYield]();
+          this[LiftedObserverMixin_consumer][SchedulerLike_requestYield]();
         },
 
         [SchedulerLike_schedule](
@@ -351,7 +386,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         ): DisposableLike {
           return pipe(
             this[LiftedObserverLike_delegate][SchedulerLike_schedule](
-              bind(this[LiftedObserverMixin_schedulerCallback], continuation),
+              bind(this[LiftedObserverMixin_consumerCallback], continuation),
               options,
             ),
             Disposable.addToContainer(this),
@@ -373,7 +408,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           // Make queueing decisions based upon whether the root non-lifted observer
           // wants to apply back pressure, as lifted observers just pass through
           // notifications and never queue in practice.
-          const scheduler = this[LiftedObserverMixin_scheduler];
+          const scheduler = this[LiftedObserverMixin_consumer];
           const isDelegateReady = scheduler[QueueableLike_isReady];
           const count = this[QueueLike_count];
 
@@ -403,11 +438,11 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           const isCompleted = this[SinkLike_isCompleted];
           const count = this[QueueLike_count];
 
-          super_(QueueMixin<TA>(), this, SinkLike_complete);
-
           if (isCompleted) {
             return;
           }
+
+          super_(QueueMixin<TA>(), this, SinkLike_complete);
 
           if (inSchedulerContinuation && count == 0) {
             this[LiftedObserverLike_complete]();

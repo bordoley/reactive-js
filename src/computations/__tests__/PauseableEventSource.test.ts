@@ -2,6 +2,7 @@ import { Array_push } from "../../__internal__/constants.js";
 import {
   describe,
   expectArrayEquals,
+  expectIsNone,
   expectTrue,
   test,
   testModule,
@@ -11,6 +12,7 @@ import { bindMethod, pipe, returns } from "../../functions.js";
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
+  DisposableLike_error,
   DisposableLike_isDisposed,
   ThrowBackpressureStrategy,
   VirtualTimeSchedulerLike_run,
@@ -51,7 +53,7 @@ testModule(
       vts[VirtualTimeSchedulerLike_run]();
 
       pipe(enqueueSubscription[DisposableLike_isDisposed], expectTrue());
-
+      pipe(enqueueSubscription[DisposableLike_error], expectIsNone);
       pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
     }),
   ),

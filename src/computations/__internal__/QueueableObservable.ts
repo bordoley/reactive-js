@@ -12,7 +12,14 @@ import {
   PublisherLike,
   PureDeferredObservableLike,
 } from "../../computations.js";
-import { Optional, bindMethod, isSome, none, pipe } from "../../functions.js";
+import {
+  Optional,
+  SideEffect1,
+  bindMethod,
+  isSome,
+  none,
+  pipe,
+} from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Queue from "../../utils/Queue.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
@@ -24,10 +31,10 @@ import {
   QueueLike,
   QueueLike_dequeue,
   QueueableLike,
+  QueueableLike_addOnReadyListener,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_isReady,
-  QueueableLike_onReady,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
@@ -44,10 +51,13 @@ export const create: <T>(config?: {
   backpressureStrategy?: BackpressureStrategy;
 }) => QueueableObservableLike<T> = (<T>() => {
   const QueueableObservable_delegate = Symbol("QueueableObservable_delegate");
+  const QueueableObservable_onReadyPublisher = Symbol(
+    "QueueableObservable_onReadyPublisher",
+  );
 
   type TProperties = {
     [QueueableObservable_delegate]: QueueableLike<T>;
-    [QueueableLike_onReady]: PublisherLike<void>;
+    [QueueableObservable_onReadyPublisher]: PublisherLike<void>;
   };
 
   return mixInstanceFactory(
@@ -63,14 +73,13 @@ export const create: <T>(config?: {
       init(DisposableMixin, this);
 
       const onReadyPublisher = pipe(Publisher.create(), Disposable.addTo(this));
-      this[QueueableLike_onReady] = onReadyPublisher;
-
       const queue = pipe(Queue.create(config), Disposable.addTo(this));
+
       this[QueueableObservable_delegate] = queue;
+      this[QueueableObservable_onReadyPublisher] = onReadyPublisher;
 
       pipe(
-        queue[QueueableLike_onReady],
-        EventSource.addEventHandler(
+        queue[QueueableLike_addOnReadyListener](
           bindMethod(onReadyPublisher, EventListenerLike_notify),
         ),
         Disposable.addTo(this),
@@ -80,7 +89,7 @@ export const create: <T>(config?: {
     },
     props<TProperties>({
       [QueueableObservable_delegate]: none,
-      [QueueableLike_onReady]: none,
+      [QueueableObservable_onReadyPublisher]: none,
     }),
     {
       [ComputationLike_isDeferred]: true as const,
@@ -117,9 +126,11 @@ export const create: <T>(config?: {
         pipe(this, Disposable.bindTo(observer));
 
         pipe(
-          observer[QueueableLike_onReady],
-          EventSource.addEventHandler(
-            bindMethod(this[QueueableLike_onReady], EventListenerLike_notify),
+          observer[QueueableLike_addOnReadyListener](
+            bindMethod(
+              this[QueueableObservable_onReadyPublisher],
+              EventListenerLike_notify,
+            ),
           ),
           Disposable.addTo(this),
         );
@@ -146,6 +157,17 @@ export const create: <T>(config?: {
 
       [EventListenerLike_notify](this: TProperties, v: T): void {
         this[QueueableObservable_delegate][EventListenerLike_notify](v);
+      },
+
+      [QueueableLike_addOnReadyListener](
+        this: TProperties & DisposableLike,
+        callback: SideEffect1<void>,
+      ) {
+        return pipe(
+          this[QueueableObservable_onReadyPublisher],
+          EventSource.addEventHandler(callback),
+          Disposable.addTo(this),
+        );
       },
     },
   );

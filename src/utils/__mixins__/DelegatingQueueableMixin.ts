@@ -6,14 +6,14 @@ import {
   props,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import { none, returns } from "../../functions.js";
+import { SideEffect1, none, returns } from "../../functions.js";
 import {
   EventListenerLike_notify,
   QueueableLike,
+  QueueableLike_addOnReadyListener,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_isReady,
-  QueueableLike_onReady,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
@@ -43,7 +43,7 @@ const DelegatingQueueableMixin: <TReq>() => Mixin1<
           | typeof EventListenerLike_notify
           | typeof SinkLike_isCompleted
           | typeof QueueableLike_isReady
-          | typeof QueueableLike_onReady
+          | typeof QueueableLike_addOnReadyListener
         > &
           TProperties,
         delegate: QueueableLike<TReq>,
@@ -67,11 +67,6 @@ const DelegatingQueueableMixin: <TReq>() => Mixin1<
           return this[DelegatingQueueableMixin_delegate][QueueableLike_isReady];
         },
 
-        get [QueueableLike_onReady]() {
-          unsafeCast<TProperties>(this);
-          return this[DelegatingQueueableMixin_delegate][QueueableLike_onReady];
-        },
-
         get [QueueableLike_backpressureStrategy]() {
           unsafeCast<TProperties>(this);
           return this[DelegatingQueueableMixin_delegate][
@@ -92,6 +87,15 @@ const DelegatingQueueableMixin: <TReq>() => Mixin1<
 
         [SinkLike_complete](this: TProperties) {
           this[DelegatingQueueableMixin_delegate][SinkLike_complete]();
+        },
+
+        [QueueableLike_addOnReadyListener](
+          this: TProperties,
+          callback: SideEffect1<void>,
+        ) {
+          return this[DelegatingQueueableMixin_delegate][
+            QueueableLike_addOnReadyListener
+          ](callback);
         },
       },
     ),
