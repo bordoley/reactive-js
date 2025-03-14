@@ -6,18 +6,18 @@
 
 # Function: concatMap()
 
-> **concatMap**\<`TComputation`\>(`m`): [`ConcatMapOperator`](../interfaces/ConcatMapOperator.md)\<`TComputation`\>
+> **concatMap**\<`TComputationType`\>(`m`): [`ConcatMapOperator`](../interfaces/ConcatMapOperator.md)\<`TComputationType`\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
 ## Parameters
 
 ### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputation`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputation`\> & [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"map"` \| `"concatAll"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`\> & [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputationType`\>, `"map"` \| `"concatAll"`\>
 
 ## Returns
 
-[`ConcatMapOperator`](../interfaces/ConcatMapOperator.md)\<`TComputation`\>
+[`ConcatMapOperator`](../interfaces/ConcatMapOperator.md)\<`TComputationType`\>

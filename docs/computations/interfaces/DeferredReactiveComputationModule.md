@@ -4,11 +4,11 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / DeferredReactiveComputationModule
 
-# Interface: DeferredReactiveComputationModule\<TComputation\>
+# Interface: DeferredReactiveComputationModule\<TComputationType\>
 
 ## Extends
 
-- [`ComputationModuleLike`](ComputationModuleLike.md)\<`TComputation`\>
+- [`ComputationModuleLike`](ComputationModuleLike.md)\<`TComputationType`\>
 
 ## Extended by
 
@@ -17,13 +17,13 @@
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
 
 ## Properties
 
 ### \[ComputationModuleLike\_computationType\]?
 
-> `optional` **\[ComputationModuleLike\_computationType\]**: `TComputation`
+> `optional` **\[ComputationModuleLike\_computationType\]**: `TComputationType`
 
 #### Inherited from
 
@@ -33,7 +33,7 @@
 
 ### buffer()
 
-> **buffer**\<`T`\>(`options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, readonly `T`[]\>
+> **buffer**\<`T`\>(`options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, readonly `T`[]\>
 
 #### Type Parameters
 
@@ -49,13 +49,13 @@
 
 #### Returns
 
-[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, readonly `T`[]\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, readonly `T`[]\>
 
 ***
 
 ### decodeWithCharset()
 
-> **decodeWithCharset**(`options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `ArrayBuffer`, `string`\>
+> **decodeWithCharset**(`options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -75,13 +75,13 @@
 
 #### Returns
 
-[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `ArrayBuffer`, `string`\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `ArrayBuffer`, `string`\>
 
 ***
 
 ### distinctUntilChanged()
 
-> **distinctUntilChanged**\<`T`\>(`options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **distinctUntilChanged**\<`T`\>(`options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -97,13 +97,13 @@
 
 #### Returns
 
-[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ***
 
 ### pairwise()
 
-> **pairwise**\<`T`\>(): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
+> **pairwise**\<`T`\>(): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
 
 #### Type Parameters
 
@@ -111,13 +111,13 @@
 
 #### Returns
 
-[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
 
 ***
 
 ### skipFirst()
 
-> **skipFirst**\<`T`\>(`options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **skipFirst**\<`T`\>(`options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -133,13 +133,13 @@
 
 #### Returns
 
-[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ***
 
 ### takeLast()
 
-> **takeLast**\<`T`\>(`options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **takeLast**\<`T`\>(`options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -155,4 +155,4 @@
 
 #### Returns
 
-[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>

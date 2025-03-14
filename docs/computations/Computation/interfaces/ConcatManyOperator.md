@@ -4,29 +4,13 @@
 
 [Reactive-JS](../../../README.md) / [computations/Computation](../README.md) / ConcatManyOperator
 
-# Interface: ConcatManyOperator()\<TComputation\>
+# Interface: ConcatManyOperator()\<TComputationType\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
-> **ConcatManyOperator**\<`T`\>(`computations`): [`PureSynchronousComputationOf`](../../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
-
-## Type Parameters
-
-• **T**
-
-## Parameters
-
-### computations
-
-readonly [`PureSynchronousComputationOf`](../../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>[]
-
-## Returns
-
-[`PureSynchronousComputationOf`](../../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
-
-> **ConcatManyOperator**\<`T`\>(`computations`): [`SynchronousComputationWithSideEffectsOf`](../../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+> **ConcatManyOperator**\<`T`\>(`computations`): [`PureSynchronousComputationOf`](../../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>
 
 ## Type Parameters
 
@@ -36,13 +20,13 @@ readonly [`PureSynchronousComputationOf`](../../type-aliases/PureSynchronousComp
 
 ### computations
 
-readonly [`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>[]
+readonly [`PureSynchronousComputationOf`](../../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>[]
 
 ## Returns
 
-[`SynchronousComputationWithSideEffectsOf`](../../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+[`PureSynchronousComputationOf`](../../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>
 
-> **ConcatManyOperator**\<`T`\>(`computations`): [`PureDeferredComputationOf`](../../type-aliases/PureDeferredComputationOf.md)\<`TComputation`, `T`\>
+> **ConcatManyOperator**\<`T`\>(`computations`): [`SynchronousComputationWithSideEffectsOf`](../../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 ## Type Parameters
 
@@ -52,13 +36,13 @@ readonly [`SynchronousComputationOf`](../../type-aliases/SynchronousComputationO
 
 ### computations
 
-readonly [`PureDeferredComputationOf`](../../type-aliases/PureDeferredComputationOf.md)\<`TComputation`, `T`\>[]
+readonly [`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>[]
 
 ## Returns
 
-[`PureDeferredComputationOf`](../../type-aliases/PureDeferredComputationOf.md)\<`TComputation`, `T`\>
+[`SynchronousComputationWithSideEffectsOf`](../../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
-> **ConcatManyOperator**\<`T`\>(`computations`): [`DeferredComputationWithSideEffectsOf`](../../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+> **ConcatManyOperator**\<`T`\>(`computations`): [`PureDeferredComputationOf`](../../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `T`\>
 
 ## Type Parameters
 
@@ -68,8 +52,24 @@ readonly [`PureDeferredComputationOf`](../../type-aliases/PureDeferredComputatio
 
 ### computations
 
-readonly [`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<`TComputation`, `T`\>[]
+readonly [`PureDeferredComputationOf`](../../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `T`\>[]
 
 ## Returns
 
-[`DeferredComputationWithSideEffectsOf`](../../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+[`PureDeferredComputationOf`](../../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `T`\>
+
+> **ConcatManyOperator**\<`T`\>(`computations`): [`DeferredComputationWithSideEffectsOf`](../../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
+
+## Type Parameters
+
+• **T**
+
+## Parameters
+
+### computations
+
+readonly [`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<`TComputationType`, `T`\>[]
+
+## Returns
+
+[`DeferredComputationWithSideEffectsOf`](../../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>

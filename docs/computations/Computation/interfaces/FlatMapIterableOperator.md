@@ -4,15 +4,15 @@
 
 [Reactive-JS](../../../README.md) / [computations/Computation](../README.md) / FlatMapIterableOperator
 
-# Interface: FlatMapIterableOperator()\<TComputation, TFlattenKey\>
+# Interface: FlatMapIterableOperator()\<TComputationType, TFlattenKey\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
 • **TFlattenKey** *extends* `string` \| `number` \| `symbol`
 
-> **FlatMapIterableOperator**\<`TA`, `TB`\>(`key`, `selector`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
+> **FlatMapIterableOperator**\<`TA`, `TB`\>(`key`, `selector`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -32,9 +32,9 @@
 
 ## Returns
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
+[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
 
-> **FlatMapIterableOperator**\<`TA`, `TB`\>(`key`, `selector`, `options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
+> **FlatMapIterableOperator**\<`TA`, `TB`\>(`key`, `selector`, `options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -60,4 +60,4 @@
 
 ## Returns
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
+[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>

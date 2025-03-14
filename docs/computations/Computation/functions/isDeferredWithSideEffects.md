@@ -6,18 +6,18 @@
 
 # Function: isDeferredWithSideEffects()
 
-> **isDeferredWithSideEffects**\<`TComputation`\>(`computation`): `computation is TComputation & DeferredComputationWithSideEffectsLike`
+> **isDeferredWithSideEffects**\<`TComputationType`\>(`computation`): `computation is TComputationType & DeferredComputationWithSideEffectsLike`
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputationType** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 ## Parameters
 
 ### computation
 
-`TComputation`
+`TComputationType`
 
 ## Returns
 
-`computation is TComputation & DeferredComputationWithSideEffectsLike`
+`computation is TComputationType & DeferredComputationWithSideEffectsLike`

@@ -25,8 +25,8 @@ const computationToTypeString = (x: ComputationLike) =>
             ? "Multicasted"
             : "illegal state";
 
-export const isPureSynchronous = <TComputation extends ComputationLike>(
-  x: TComputation,
+export const isPureSynchronous = <TComputationType extends ComputationLike>(
+  x: TComputationType,
 ) => {
   pipe(
     x,
@@ -38,8 +38,8 @@ export const isPureSynchronous = <TComputation extends ComputationLike>(
   return x;
 };
 
-export const isNotPureSynchronous = <TComputation extends ComputationLike>(
-  x: TComputation,
+export const isNotPureSynchronous = <TComputationType extends ComputationLike>(
+  x: TComputationType,
 ) => {
   pipe(
     x,
@@ -52,9 +52,9 @@ export const isNotPureSynchronous = <TComputation extends ComputationLike>(
 };
 
 export const isSynchronousWithSideEffects = <
-  TComputation extends ComputationLike,
+  TComputationType extends ComputationLike,
 >(
-  x: TComputation,
+  x: TComputationType,
 ) => {
   pipe(
     x,
@@ -67,9 +67,9 @@ export const isSynchronousWithSideEffects = <
 };
 
 export const isNotSynchronousWithSideEffects = <
-  TComputation extends ComputationLike,
+  TComputationType extends ComputationLike,
 >(
-  x: TComputation,
+  x: TComputationType,
 ) => {
   pipe(
     x,
@@ -81,8 +81,8 @@ export const isNotSynchronousWithSideEffects = <
   return x;
 };
 
-export const isNotSynchronous = <TComputation extends ComputationLike>(
-  x: TComputation,
+export const isNotSynchronous = <TComputationType extends ComputationLike>(
+  x: TComputationType,
 ) => {
   pipe(
     x,
@@ -94,8 +94,8 @@ export const isNotSynchronous = <TComputation extends ComputationLike>(
   return x;
 };
 
-export const isPureDeferred = <TComputation extends ComputationLike>(
-  x: TComputation,
+export const isPureDeferred = <TComputationType extends ComputationLike>(
+  x: TComputationType,
 ) => {
   pipe(
     x,
@@ -107,8 +107,10 @@ export const isPureDeferred = <TComputation extends ComputationLike>(
   return x;
 };
 
-export const isDeferredWithSideEffects = <TComputation extends ComputationLike>(
-  x: TComputation,
+export const isDeferredWithSideEffects = <
+  TComputationType extends ComputationLike,
+>(
+  x: TComputationType,
 ) => {
   pipe(
     x,
@@ -120,8 +122,8 @@ export const isDeferredWithSideEffects = <TComputation extends ComputationLike>(
   return x;
 };
 
-export const isMulticasted = <TComputation extends ComputationLike>(
-  x: TComputation,
+export const isMulticasted = <TComputationType extends ComputationLike>(
+  x: TComputationType,
 ) => {
   pipe(
     x,
@@ -135,9 +137,9 @@ export const isMulticasted = <TComputation extends ComputationLike>(
 };
 
 export const isMulticastedAndNotDisposable = <
-  TComputation extends ComputationLike,
+  TComputationType extends ComputationLike,
 >(
-  x: TComputation,
+  x: TComputationType,
 ) => {
   isMulticasted(x);
 
@@ -146,9 +148,9 @@ export const isMulticastedAndNotDisposable = <
 };
 
 export const isMulticastedAndDisposable = <
-  TComputation extends ComputationLike,
+  TComputationType extends ComputationLike,
 >(
-  x: TComputation,
+  x: TComputationType,
 ) => {
   isMulticasted(x);
 

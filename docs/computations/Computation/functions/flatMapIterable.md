@@ -6,11 +6,11 @@
 
 # Function: flatMapIterable()
 
-> **flatMapIterable**\<`TComputation`, `TFlattenKey`\>(`m`): [`FlatMapIterableOperator`](../interfaces/FlatMapIterableOperator.md)\<`TComputation`, `TFlattenKey`\>
+> **flatMapIterable**\<`TComputationType`, `TFlattenKey`\>(`m`): [`FlatMapIterableOperator`](../interfaces/FlatMapIterableOperator.md)\<`TComputationType`, `TFlattenKey`\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
 • **TFlattenKey** *extends* `string` \| `number` \| `symbol`
 
@@ -18,8 +18,8 @@
 
 ### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputation`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputation`\>, `"map"` \| `"fromIterable"`\> & \{ readonly \[key in string \| number \| symbol\]: key extends TFlattenKey ? \{ (): HigherOrderComputationOperator\<TComputation, PureSynchronousComputationLike, PureSynchronousComputationOf\<TComputation, T\>, T\>; (options: \{ innerType: TInnerType \}): HigherOrderComputationOperator\<TComputation, TInnerType, HigherOrderInnerComputationOf\<TComputation, TInnerType, T\>, T\> \} : unknown \}
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`\>, `"map"` \| `"fromIterable"`\> & \{ readonly \[key in string \| number \| symbol\]: key extends TFlattenKey ? \{ (): HigherOrderComputationOperator\<TComputationType, PureSynchronousComputationLike, PureSynchronousComputationOf\<TComputationType, T\>, T\>; (options: \{ innerType: TInnerLike \}): HigherOrderComputationOperator\<TComputationType, TInnerLike, HigherOrderInnerComputationOf\<TComputationType, TInnerLike, T\>, T\> \} : unknown \}
 
 ## Returns
 
-[`FlatMapIterableOperator`](../interfaces/FlatMapIterableOperator.md)\<`TComputation`, `TFlattenKey`\>
+[`FlatMapIterableOperator`](../interfaces/FlatMapIterableOperator.md)\<`TComputationType`, `TFlattenKey`\>

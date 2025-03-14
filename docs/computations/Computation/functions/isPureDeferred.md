@@ -6,18 +6,18 @@
 
 # Function: isPureDeferred()
 
-> **isPureDeferred**\<`TComputation`\>(`computation`): `computation is TComputation & PureDeferredComputationLike`
+> **isPureDeferred**\<`TComputationType`\>(`computation`): `computation is TComputationType & PureDeferredComputationLike`
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputationType** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 ## Parameters
 
 ### computation
 
-`TComputation`
+`TComputationType`
 
 ## Returns
 
-`computation is TComputation & PureDeferredComputationLike`
+`computation is TComputationType & PureDeferredComputationLike`

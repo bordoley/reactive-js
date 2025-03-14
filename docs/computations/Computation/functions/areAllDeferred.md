@@ -6,18 +6,18 @@
 
 # Function: areAllDeferred()
 
-> **areAllDeferred**\<`TComputation`\>(`computations`): `computations is readonly (TComputation & DeferredComputationLike)[]`
+> **areAllDeferred**\<`TComputationType`\>(`computations`): `computations is readonly (TComputationType & DeferredComputationLike)[]`
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputationType** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 ## Parameters
 
 ### computations
 
-readonly `TComputation`[]
+readonly `TComputationType`[]
 
 ## Returns
 
-`computations is readonly (TComputation & DeferredComputationLike)[]`
+`computations is readonly (TComputationType & DeferredComputationLike)[]`

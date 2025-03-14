@@ -225,27 +225,27 @@ interface ForkMerge {
     TOut
   >;
 
-  <TIn, TOut, TInnerType extends DeferredComputationWithSideEffectsLike>(
+  <TIn, TOut, TInnerLike extends DeferredComputationWithSideEffectsLike>(
     fst: Function1<
       MulticastObservableLike<TIn>,
-      HigherOrderInnerComputationOf<ObservableComputation, TInnerType, TOut>
+      HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, TOut>
     >,
     snd: Function1<
       MulticastObservableLike<TIn>,
-      HigherOrderInnerComputationOf<ObservableComputation, TInnerType, TOut>
+      HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, TOut>
     >,
     ...tail: readonly [
       ...Function1<
         MulticastObservableLike<TIn>,
-        HigherOrderInnerComputationOf<ObservableComputation, TInnerType, TOut>
+        HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, TOut>
       >[],
       {
-        innerType?: TInnerType;
+        innerType?: TInnerLike;
       },
     ]
   ): HigherOrderComputationOperator<
     ObservableComputation,
-    TInnerType,
+    TInnerLike,
     TIn,
     TOut
   >;
@@ -428,12 +428,12 @@ export interface ObservableModule
     PureSynchronousObservableLike<T>,
     T
   >;
-  exhaust<T, TInnerType extends HigherOrderInnerComputationLike>(options: {
-    readonly innerType: TInnerType;
+  exhaust<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
+    readonly innerType: TInnerLike;
   }): HigherOrderComputationOperator<
     ObservableComputation,
-    TInnerType,
-    HigherOrderInnerComputationOf<ObservableComputation, TInnerType, T>,
+    TInnerLike,
+    HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, T>,
     T
   >;
 
@@ -542,15 +542,15 @@ export interface ObservableModule
     PureSynchronousObservableLike<T>,
     T
   >;
-  mergeAll<T, TInnerType extends HigherOrderInnerComputationLike>(options: {
+  mergeAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
     readonly concurrency?: number;
-    readonly innerType: TInnerType;
+    readonly innerType: TInnerLike;
   }): HigherOrderComputationOperator<
     ObservableComputation,
-    TInnerType,
-    HigherOrderInnerComputationOf<ObservableComputation, TInnerType, T>,
+    TInnerLike,
+    HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, T>,
     T
   >;
 
@@ -610,17 +610,17 @@ export interface ObservableModule
     T,
     TAcc
   >;
-  scanMany<T, TAcc, TInnerType extends HigherOrderInnerComputationLike>(
+  scanMany<T, TAcc, TInnerLike extends HigherOrderInnerComputationLike>(
     scanner: Function2<
       TAcc,
       T,
-      HigherOrderInnerComputationOf<ObservableComputation, TInnerType, T>
+      HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, T>
     >,
     initialValue: Factory<TAcc>,
     options: {
-      readonly innerType: TInnerType;
+      readonly innerType: TInnerLike;
     },
-  ): HigherOrderComputationOperator<ObservableComputation, TInnerType, T, TAcc>;
+  ): HigherOrderComputationOperator<ObservableComputation, TInnerLike, T, TAcc>;
 
   spring(options?: {
     readonly stiffness?: number;
@@ -656,12 +656,12 @@ export interface ObservableModule
     PureSynchronousObservableLike<T>,
     T
   >;
-  switchAll<T, TInnerType extends HigherOrderInnerComputationLike>(options: {
-    readonly innerType: TInnerType;
+  switchAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
+    readonly innerType: TInnerLike;
   }): HigherOrderComputationOperator<
     ObservableComputation,
-    TInnerType,
-    HigherOrderInnerComputationOf<ObservableComputation, TInnerType, T>,
+    TInnerLike,
+    HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, T>,
     T
   >;
 

@@ -4,12 +4,12 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / PureComputationOf
 
-# Type Alias: PureComputationOf\<TComputation, T\>
+# Type Alias: PureComputationOf\<TComputationType, T\>
 
-> **PureComputationOf**\<`TComputation`, `T`\>: [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputation`, `T`\> \| [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputation`, `T`\> \| [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputation`, `T`\>
+> **PureComputationOf**\<`TComputationType`, `T`\>: [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputationType`, `T`\> \| [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputationType`, `T`\> \| [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `T`\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
 
 • **T**

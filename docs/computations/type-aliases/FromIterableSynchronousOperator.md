@@ -4,13 +4,13 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / FromIterableSynchronousOperator
 
-# Type Alias: FromIterableSynchronousOperator()\<TComputation, T\>
+# Type Alias: FromIterableSynchronousOperator()\<TComputationType, T\>
 
-> **FromIterableSynchronousOperator**\<`TComputation`, `T`\>: \<`TIterable`\>(`iterable`) => `TIterable` *extends* [`PureIterableLike`](../interfaces/PureIterableLike.md) ? [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputation`, `T`\> : [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+> **FromIterableSynchronousOperator**\<`TComputationType`, `T`\>: \<`TIterable`\>(`iterable`) => `TIterable` *extends* [`PureIterableLike`](../interfaces/PureIterableLike.md) ? [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputationType`, `T`\> : [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
 
 • **T**
 
@@ -26,4 +26,4 @@
 
 ## Returns
 
-`TIterable` *extends* [`PureIterableLike`](../interfaces/PureIterableLike.md) ? [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputation`, `T`\> : [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+`TIterable` *extends* [`PureIterableLike`](../interfaces/PureIterableLike.md) ? [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputationType`, `T`\> : [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>

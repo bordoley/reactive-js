@@ -4,13 +4,13 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / FromAsyncIterableOperator
 
-# Type Alias: FromAsyncIterableOperator()\<TComputation, T\>
+# Type Alias: FromAsyncIterableOperator()\<TComputationType, T\>
 
-> **FromAsyncIterableOperator**\<`TComputation`, `T`\>: \<`TIterable`\>(`iterable`) => `TIterable` *extends* [`PureAsyncIterableLike`](../interfaces/PureAsyncIterableLike.md)\<`T`\> ? [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputation`, `T`\> *extends* `never` ? [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputation`, `T`\> : [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputation`, `T`\> : [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\> *extends* `never` ? [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputation`, `T`\> : [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+> **FromAsyncIterableOperator**\<`TComputationType`, `T`\>: \<`TIterable`\>(`iterable`) => `TIterable` *extends* [`PureAsyncIterableLike`](../interfaces/PureAsyncIterableLike.md)\<`T`\> ? [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputationType`, `T`\> *extends* `never` ? [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `T`\> : [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputationType`, `T`\> : [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> *extends* `never` ? [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `T`\> : [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
 
 • **T**
 
@@ -26,4 +26,4 @@
 
 ## Returns
 
-`TIterable` *extends* [`PureAsyncIterableLike`](../interfaces/PureAsyncIterableLike.md)\<`T`\> ? [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputation`, `T`\> *extends* `never` ? [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputation`, `T`\> : [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputation`, `T`\> : [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\> *extends* `never` ? [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputation`, `T`\> : [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+`TIterable` *extends* [`PureAsyncIterableLike`](../interfaces/PureAsyncIterableLike.md)\<`T`\> ? [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputationType`, `T`\> *extends* `never` ? [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `T`\> : [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputationType`, `T`\> : [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> *extends* `never` ? [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `T`\> : [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>

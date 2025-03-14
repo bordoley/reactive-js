@@ -6,18 +6,18 @@
 
 # Function: isMulticasted()
 
-> **isMulticasted**\<`TComputation`\>(`computation`): `computation is TComputation & MulticastComputationLike`
+> **isMulticasted**\<`TComputationType`\>(`computation`): `computation is TComputationType & MulticastComputationLike`
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputationType** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 ## Parameters
 
 ### computation
 
-`TComputation`
+`TComputationType`
 
 ## Returns
 
-`computation is TComputation & MulticastComputationLike`
+`computation is TComputationType & MulticastComputationLike`

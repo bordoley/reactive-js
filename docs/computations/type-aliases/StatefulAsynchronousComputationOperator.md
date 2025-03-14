@@ -4,13 +4,13 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / StatefulAsynchronousComputationOperator
 
-# Type Alias: StatefulAsynchronousComputationOperator()\<TComputation, TA, TB\>
+# Type Alias: StatefulAsynchronousComputationOperator()\<TComputationType, TA, TB\>
 
-> **StatefulAsynchronousComputationOperator**\<`TComputation`, `TA`, `TB`\>: \<`TComputationOf`\>(`computation`) => `TComputationOf` *extends* [`PureComputationOf`](PureComputationOf.md)\<`TComputation`, `TA`\> ? [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputation`, `TB`\> : [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `TB`\>
+> **StatefulAsynchronousComputationOperator**\<`TComputationType`, `TA`, `TB`\>: \<`TComputationOf`\>(`computation`) => `TComputationOf` *extends* [`PureComputationOf`](PureComputationOf.md)\<`TComputationType`, `TA`\> ? [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputationType`, `TB`\> : [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `TB`\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
 
 • **TA**
 
@@ -18,7 +18,7 @@
 
 ## Type Parameters
 
-• **TComputationOf** *extends* [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputation`, `TA`\>
+• **TComputationOf** *extends* [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `TA`\>
 
 ## Parameters
 
@@ -28,4 +28,4 @@
 
 ## Returns
 
-`TComputationOf` *extends* [`PureComputationOf`](PureComputationOf.md)\<`TComputation`, `TA`\> ? [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputation`, `TB`\> : [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `TB`\>
+`TComputationOf` *extends* [`PureComputationOf`](PureComputationOf.md)\<`TComputationType`, `TA`\> ? [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputationType`, `TB`\> : [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `TB`\>

@@ -24,11 +24,11 @@ import * as Runnable from "../../Runnable.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
 
 const SynchronousComputationModuleTests = <
-  TComputation extends ComputationType,
+  TComputationType extends ComputationType,
 >(
-  m: SynchronousComputationModule<TComputation> &
-    DeferredComputationModule<TComputation> &
-    ComputationModule<TComputation>,
+  m: SynchronousComputationModule<TComputationType> &
+    DeferredComputationModule<TComputationType> &
+    ComputationModule<TComputationType>,
 ) => {
   return describe(
     "SynchronousComputationModule",

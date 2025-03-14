@@ -6,18 +6,18 @@
 
 # Function: areAllMulticasted()
 
-> **areAllMulticasted**\<`TComputation`\>(`computations`): `computations is readonly (TComputation & MulticastComputationLike)[]`
+> **areAllMulticasted**\<`TComputationType`\>(`computations`): `computations is readonly (TComputationType & MulticastComputationLike)[]`
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputationType** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 ## Parameters
 
 ### computations
 
-readonly `TComputation`[]
+readonly `TComputationType`[]
 
 ## Returns
 
-`computations is readonly (TComputation & MulticastComputationLike)[]`
+`computations is readonly (TComputationType & MulticastComputationLike)[]`

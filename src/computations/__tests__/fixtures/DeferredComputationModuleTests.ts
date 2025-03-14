@@ -49,22 +49,25 @@ import HigherOrderComputationOperatorTests from "./operators/HigherOrderComputat
 import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSynchronousComputationOperatorTests.js";
 import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
 
-const DeferredComputationModuleTests = <TComputation extends ComputationType>(
-  m: DeferredComputationModule<TComputation> & ComputationModule<TComputation>,
-  computationType: ComputationTypeOf<TComputation>,
+const DeferredComputationModuleTests = <
+  TComputationType extends ComputationType,
+>(
+  m: DeferredComputationModule<TComputationType> &
+    ComputationModule<TComputationType>,
+  computations: ComputationTypeOf<TComputationType>,
 ) => {
   const {
     [Computation_pureSynchronousOfT]: pureSynchronousOfT,
     [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffectsOfT,
     [Computation_pureDeferredOfT]: pureDeferredOfT,
     [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT,
-  } = computationType;
+  } = computations;
   return describe(
     "DeferredComputationModule",
     describe(
       "catchError",
       HigherOrderComputationOperatorTests(
-        computationType,
+        computations,
         pureSynchronousOfT &&
           m.catchError(_ => pureSynchronousOfT, {
             innerType: PureSynchronousComputation,
@@ -83,7 +86,7 @@ const DeferredComputationModuleTests = <TComputation extends ComputationType>(
           }),
       ),
       StatefulSynchronousComputationOperatorTests(
-        computationType,
+        computations,
         m.catchError(_ => console.log()),
       ),
       testAsync("when the source throws", async () => {
@@ -137,7 +140,7 @@ const DeferredComputationModuleTests = <TComputation extends ComputationType>(
     describe(
       "concatAll",
       HigherOrderComputationOperatorTests(
-        computationType,
+        computations,
         m.concatAll({
           innerType: PureSynchronousComputation,
         }),
@@ -225,19 +228,16 @@ const DeferredComputationModuleTests = <TComputation extends ComputationType>(
         ComputationTest.isDeferredWithSideEffects(
           m.concat<any>(
             deferredWithSideEffectsOfT as DeferredComputationOf<
-              TComputation,
+              TComputationType,
               any
             >,
-            pureSynchronousOfT as DeferredComputationOf<TComputation, any>,
+            pureSynchronousOfT as DeferredComputationOf<TComputationType, any>,
           ),
         ),
     ),
     describe(
       "encodeUtf8",
-      StatefulSynchronousComputationOperatorTests(
-        computationType,
-        m.encodeUtf8(),
-      ),
+      StatefulSynchronousComputationOperatorTests(computations, m.encodeUtf8()),
       testAsync("encoding ascii", async () => {
         const str = "abcdefghijklmnsopqrstuvwxyz";
 
@@ -258,10 +258,7 @@ const DeferredComputationModuleTests = <TComputation extends ComputationType>(
     ),
     describe(
       "forEach",
-      ComputationOperatorWithSideEffectsTests(
-        computationType,
-        m.forEach(ignore),
-      ),
+      ComputationOperatorWithSideEffectsTests(computations, m.forEach(ignore)),
       testAsync("invokes the effect for each notified value", async () => {
         const result: number[] = [];
 
@@ -308,7 +305,7 @@ const DeferredComputationModuleTests = <TComputation extends ComputationType>(
       "repeat",
       StatelessComputationOperatorTests(
         {
-          ...computationType,
+          ...computations,
           // Repeat does not support multicasted input
           [Computation_multicastOfT]: none,
         },
@@ -364,7 +361,7 @@ const DeferredComputationModuleTests = <TComputation extends ComputationType>(
       "retry",
       StatelessComputationOperatorTests(
         {
-          ...computationType,
+          ...computations,
           // Repeat does not support multicasted input
           [Computation_multicastOfT]: none,
         },
@@ -420,7 +417,7 @@ const DeferredComputationModuleTests = <TComputation extends ComputationType>(
     describe(
       "scan",
       StatefulSynchronousComputationOperatorTests(
-        computationType,
+        computations,
         m.scan(increment, returns(0)),
       ),
       testAsync(
@@ -468,10 +465,7 @@ const DeferredComputationModuleTests = <TComputation extends ComputationType>(
     ),
     describe(
       "takeFirst",
-      StatefulSynchronousComputationOperatorTests(
-        computationType,
-        m.takeFirst(),
-      ),
+      StatefulSynchronousComputationOperatorTests(computations, m.takeFirst()),
       testAsync(
         "with default count",
         pipeLazyAsync(
@@ -546,7 +540,7 @@ const DeferredComputationModuleTests = <TComputation extends ComputationType>(
     describe(
       "takeWhile",
       StatefulSynchronousComputationOperatorTests(
-        computationType,
+        computations,
         m.takeWhile(alwaysTrue),
       ),
       testAsync("exclusive", async () => {
@@ -604,7 +598,7 @@ const DeferredComputationModuleTests = <TComputation extends ComputationType>(
     describe(
       "throwIfEmpty",
       StatefulSynchronousComputationOperatorTests(
-        computationType,
+        computations,
         m.throwIfEmpty(() => new Error()),
       ),
       testAsync("when source is empty", async () => {

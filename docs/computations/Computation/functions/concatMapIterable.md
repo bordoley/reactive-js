@@ -6,18 +6,18 @@
 
 # Function: concatMapIterable()
 
-> **concatMapIterable**\<`TComputation`\>(`m`): [`ConcatMapIterableOperator`](../interfaces/ConcatMapIterableOperator.md)\<`TComputation`\>
+> **concatMapIterable**\<`TComputationType`\>(`m`): [`ConcatMapIterableOperator`](../interfaces/ConcatMapIterableOperator.md)\<`TComputationType`\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
 ## Parameters
 
 ### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputation`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputation`\> & [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"map"` \| `"fromIterable"` \| `"concatAll"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`\> & [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputationType`\>, `"map"` \| `"fromIterable"` \| `"concatAll"`\>
 
 ## Returns
 
-[`ConcatMapIterableOperator`](../interfaces/ConcatMapIterableOperator.md)\<`TComputation`\>
+[`ConcatMapIterableOperator`](../interfaces/ConcatMapIterableOperator.md)\<`TComputationType`\>

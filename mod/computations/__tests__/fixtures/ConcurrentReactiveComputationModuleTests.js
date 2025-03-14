@@ -69,8 +69,8 @@ import ComputationOperatorWithSideEffectsTests from "./operators/ComputationOper
 import StatefulAsynchronousComputationOperatorTests from "./operators/StatefulAsynchronousComputationOperatorTests.js";
 import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSynchronousComputationOperatorTests.js";
 import StatelessAsynchronousComputationOperatorTests from "./operators/StatelessAsynchronousComputationOperatorTests.js";
-const ConcurrentReactiveComputationModuleTests = (m, computationType) => {
-    const { [Computation_pureSynchronousOfT]: pureSynchronousOfT, [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffectsOfT, [Computation_pureDeferredOfT]: pureDeferredOfT, [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT, [Computation_multicastOfT]: multicastOfT, } = computationType;
+const ConcurrentReactiveComputationModuleTests = (m, computations) => {
+    const { [Computation_pureSynchronousOfT]: pureSynchronousOfT, [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffectsOfT, [Computation_pureDeferredOfT]: pureDeferredOfT, [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT, [Computation_multicastOfT]: multicastOfT, } = computations;
     return describe("ConcurrentReactiveComputationModule", describe("fromPromise", testAsync("when the promise resolves", async () => {
         const env_1 = { stack: [], error: void 0, hasError: false };
         try {
@@ -245,10 +245,10 @@ const ConcurrentReactiveComputationModuleTests = (m, computationType) => {
             __disposeResources(env_10);
         }
     }), pureSynchronousOfT &&
-        StatefulSynchronousComputationOperatorTests(computationType, m.withLatestFrom(pureSynchronousOfT)), synchronousWithSideEffectsOfT &&
-        ComputationOperatorWithSideEffectsTests(computationType, m.withLatestFrom(synchronousWithSideEffectsOfT)), pureDeferredOfT &&
-        StatefulAsynchronousComputationOperatorTests(computationType, m.withLatestFrom(pureDeferredOfT)), deferredWithSideEffectsOfT &&
-        AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests(computationType, m.withLatestFrom(deferredWithSideEffectsOfT)), multicastOfT &&
-        StatelessAsynchronousComputationOperatorTests(computationType, m.withLatestFrom(multicastOfT))));
+        StatefulSynchronousComputationOperatorTests(computations, m.withLatestFrom(pureSynchronousOfT)), synchronousWithSideEffectsOfT &&
+        ComputationOperatorWithSideEffectsTests(computations, m.withLatestFrom(synchronousWithSideEffectsOfT)), pureDeferredOfT &&
+        StatefulAsynchronousComputationOperatorTests(computations, m.withLatestFrom(pureDeferredOfT)), deferredWithSideEffectsOfT &&
+        AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests(computations, m.withLatestFrom(deferredWithSideEffectsOfT)), multicastOfT &&
+        StatelessAsynchronousComputationOperatorTests(computations, m.withLatestFrom(multicastOfT))));
 };
 export default ConcurrentReactiveComputationModuleTests;

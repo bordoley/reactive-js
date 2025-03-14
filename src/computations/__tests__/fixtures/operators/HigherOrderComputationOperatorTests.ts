@@ -16,29 +16,29 @@ import { pipeSomeLazy } from "../../../../functions.js";
 import * as ComputationExpect from "../helpers/ComputationExpect.js";
 
 const HigherOrderComputationOperatorTests = <
-  TComputation extends ComputationType,
+  TComputationType extends ComputationType,
 >(
-  computationType: ComputationTypeOf<TComputation>,
+  computations: ComputationTypeOf<TComputationType>,
   operatorPureSynchronousInner?: HigherOrderComputationOperator<
-    TComputation,
+    TComputationType,
     PureSynchronousComputationLike,
     any,
     unknown
   >,
   operatorSynchronousWithSideEffectsInner?: HigherOrderComputationOperator<
-    TComputation,
+    TComputationType,
     SynchronousComputationWithSideEffectsLike,
     any,
     unknown
   >,
   operatorPureDeferredInner?: HigherOrderComputationOperator<
-    TComputation,
+    TComputationType,
     PureDeferredComputationLike,
     any,
     unknown
   >,
   operatorDeferredWithSideEffectsInner?: HigherOrderComputationOperator<
-    TComputation,
+    TComputationType,
     DeferredComputationWithSideEffectsLike,
     any,
     unknown
@@ -47,38 +47,38 @@ const HigherOrderComputationOperatorTests = <
   describe(
     "HigherOrderComputationOperator",
 
-    computationType[Computation_pureSynchronousOfT] &&
+    computations[Computation_pureSynchronousOfT] &&
       operatorPureSynchronousInner &&
       describe(
         "with PureSynchronousInner",
 
-        computationType[Computation_pureSynchronousOfT] &&
+        computations[Computation_pureSynchronousOfT] &&
           test(
             "with PureSynchronous input, returns PureSynchronous output",
             pipeSomeLazy(
-              computationType[Computation_pureSynchronousOfT],
+              computations[Computation_pureSynchronousOfT],
               ComputationExpect.isPureSynchronous,
               operatorPureSynchronousInner,
               ComputationExpect.isPureSynchronous,
             ),
           ),
 
-        computationType[Computation_synchronousWithSideEffectsOfT] &&
+        computations[Computation_synchronousWithSideEffectsOfT] &&
           test(
             "with SynchronousWithSideEffects input, returns SynchronousWithSideEffects output",
             pipeSomeLazy(
-              computationType[Computation_synchronousWithSideEffectsOfT],
+              computations[Computation_synchronousWithSideEffectsOfT],
               ComputationExpect.isSynchronousWithSideEffects,
               operatorPureSynchronousInner,
               ComputationExpect.isSynchronousWithSideEffects,
             ),
           ),
 
-        computationType[Computation_pureDeferredOfT] &&
+        computations[Computation_pureDeferredOfT] &&
           test(
             "with PureDeferred input, returns PureDeferred output",
             pipeSomeLazy(
-              computationType[Computation_pureDeferredOfT],
+              computations[Computation_pureDeferredOfT],
               ComputationExpect.isPureDeferred,
               ComputationExpect.isNotSynchronous,
               operatorPureSynchronousInner,
@@ -87,11 +87,11 @@ const HigherOrderComputationOperatorTests = <
             ),
           ),
 
-        computationType[Computation_deferredWithSideEffectsOfT] &&
+        computations[Computation_deferredWithSideEffectsOfT] &&
           test(
             "with DeferredWithSideEffects input, returns DeferredWithSideEffects output",
             pipeSomeLazy(
-              computationType[Computation_deferredWithSideEffectsOfT],
+              computations[Computation_deferredWithSideEffectsOfT],
               ComputationExpect.isDeferredWithSideEffects,
               ComputationExpect.isNotSynchronous,
               operatorPureSynchronousInner,
@@ -100,38 +100,38 @@ const HigherOrderComputationOperatorTests = <
             ),
           ),
       ),
-    computationType[Computation_synchronousWithSideEffectsOfT] &&
+    computations[Computation_synchronousWithSideEffectsOfT] &&
       operatorSynchronousWithSideEffectsInner &&
       describe(
         "with SynchronousWithSideEffectsInner",
 
-        computationType[Computation_pureSynchronousOfT] &&
+        computations[Computation_pureSynchronousOfT] &&
           test(
             "with PureSynchronous input, returns SynchronousWithSideEffects output",
             pipeSomeLazy(
-              computationType[Computation_pureSynchronousOfT],
+              computations[Computation_pureSynchronousOfT],
               ComputationExpect.isPureSynchronous,
               operatorSynchronousWithSideEffectsInner,
               ComputationExpect.isSynchronousWithSideEffects,
             ),
           ),
 
-        computationType[Computation_synchronousWithSideEffectsOfT] &&
+        computations[Computation_synchronousWithSideEffectsOfT] &&
           test(
             "with SynchronousWithSideEffects input, returns SynchronousWithSideEffects output",
             pipeSomeLazy(
-              computationType[Computation_synchronousWithSideEffectsOfT],
+              computations[Computation_synchronousWithSideEffectsOfT],
               ComputationExpect.isSynchronousWithSideEffects,
               operatorSynchronousWithSideEffectsInner,
               ComputationExpect.isSynchronousWithSideEffects,
             ),
           ),
 
-        computationType[Computation_pureDeferredOfT] &&
+        computations[Computation_pureDeferredOfT] &&
           test(
             "with PureDeferred input, returns DeferredWithSideEffects output",
             pipeSomeLazy(
-              computationType[Computation_pureDeferredOfT],
+              computations[Computation_pureDeferredOfT],
               ComputationExpect.isPureDeferred,
               ComputationExpect.isNotSynchronous,
               operatorSynchronousWithSideEffectsInner,
@@ -140,11 +140,11 @@ const HigherOrderComputationOperatorTests = <
             ),
           ),
 
-        computationType[Computation_deferredWithSideEffectsOfT] &&
+        computations[Computation_deferredWithSideEffectsOfT] &&
           test(
             "with DeferredWithSideEffects input, returns DeferredWithSideEffects output",
             pipeSomeLazy(
-              computationType[Computation_deferredWithSideEffectsOfT],
+              computations[Computation_deferredWithSideEffectsOfT],
               ComputationExpect.isDeferredWithSideEffects,
               ComputationExpect.isNotSynchronous,
               operatorSynchronousWithSideEffectsInner,
@@ -153,16 +153,16 @@ const HigherOrderComputationOperatorTests = <
             ),
           ),
       ),
-    computationType[Computation_pureDeferredOfT] &&
+    computations[Computation_pureDeferredOfT] &&
       operatorPureDeferredInner &&
       describe(
         "with PureDeferredInner",
 
-        computationType[Computation_pureSynchronousOfT] &&
+        computations[Computation_pureSynchronousOfT] &&
           test(
             "with PureSynchronous input, returns PureDeferred output",
             pipeSomeLazy(
-              computationType[Computation_pureSynchronousOfT],
+              computations[Computation_pureSynchronousOfT],
               ComputationExpect.isPureSynchronous,
               operatorPureDeferredInner,
               ComputationExpect.isPureDeferred,
@@ -170,11 +170,11 @@ const HigherOrderComputationOperatorTests = <
             ),
           ),
 
-        computationType[Computation_synchronousWithSideEffectsOfT] &&
+        computations[Computation_synchronousWithSideEffectsOfT] &&
           test(
             "with SynchronousWithSideEffects input, returns DeferredWithSideEffects output",
             pipeSomeLazy(
-              computationType[Computation_synchronousWithSideEffectsOfT],
+              computations[Computation_synchronousWithSideEffectsOfT],
               ComputationExpect.isSynchronousWithSideEffects,
               operatorPureDeferredInner,
               ComputationExpect.isDeferredWithSideEffects,
@@ -182,11 +182,11 @@ const HigherOrderComputationOperatorTests = <
             ),
           ),
 
-        computationType[Computation_pureDeferredOfT] &&
+        computations[Computation_pureDeferredOfT] &&
           test(
             "with PureDeferred input, returns PureDeferred output",
             pipeSomeLazy(
-              computationType[Computation_pureDeferredOfT],
+              computations[Computation_pureDeferredOfT],
               ComputationExpect.isPureDeferred,
               ComputationExpect.isNotSynchronous,
               operatorPureDeferredInner,
@@ -195,11 +195,11 @@ const HigherOrderComputationOperatorTests = <
             ),
           ),
 
-        computationType[Computation_deferredWithSideEffectsOfT] &&
+        computations[Computation_deferredWithSideEffectsOfT] &&
           test(
             "with DeferredWithSideEffects input, returns DeferredWithSideEffects output",
             pipeSomeLazy(
-              computationType[Computation_deferredWithSideEffectsOfT],
+              computations[Computation_deferredWithSideEffectsOfT],
               ComputationExpect.isDeferredWithSideEffects,
               ComputationExpect.isNotSynchronous,
               operatorPureDeferredInner,
@@ -208,16 +208,16 @@ const HigherOrderComputationOperatorTests = <
             ),
           ),
       ),
-    computationType[Computation_deferredWithSideEffectsOfT] &&
+    computations[Computation_deferredWithSideEffectsOfT] &&
       operatorDeferredWithSideEffectsInner &&
       describe(
         "with DeferredWithSideEffectsInner",
 
-        computationType[Computation_pureSynchronousOfT] &&
+        computations[Computation_pureSynchronousOfT] &&
           test(
             "with PureSynchronous input, returns DeferredWithSideEffects output",
             pipeSomeLazy(
-              computationType[Computation_pureSynchronousOfT],
+              computations[Computation_pureSynchronousOfT],
               ComputationExpect.isPureSynchronous,
               operatorDeferredWithSideEffectsInner,
               ComputationExpect.isDeferredWithSideEffects,
@@ -225,11 +225,11 @@ const HigherOrderComputationOperatorTests = <
             ),
           ),
 
-        computationType[Computation_synchronousWithSideEffectsOfT] &&
+        computations[Computation_synchronousWithSideEffectsOfT] &&
           test(
             "with SynchronousWithSideEffects input, returns DeferredWithSideEffects output",
             pipeSomeLazy(
-              computationType[Computation_synchronousWithSideEffectsOfT],
+              computations[Computation_synchronousWithSideEffectsOfT],
               ComputationExpect.isSynchronousWithSideEffects,
               operatorDeferredWithSideEffectsInner,
               ComputationExpect.isDeferredWithSideEffects,
@@ -237,11 +237,11 @@ const HigherOrderComputationOperatorTests = <
             ),
           ),
 
-        computationType[Computation_pureDeferredOfT] &&
+        computations[Computation_pureDeferredOfT] &&
           test(
             "with PureDeferred input, returns PureDeferred output",
             pipeSomeLazy(
-              computationType[Computation_pureDeferredOfT],
+              computations[Computation_pureDeferredOfT],
               ComputationExpect.isPureDeferred,
               ComputationExpect.isNotSynchronous,
               operatorDeferredWithSideEffectsInner,
@@ -250,11 +250,11 @@ const HigherOrderComputationOperatorTests = <
             ),
           ),
 
-        computationType[Computation_deferredWithSideEffectsOfT] &&
+        computations[Computation_deferredWithSideEffectsOfT] &&
           test(
             "with DeferredWithSideEffects input, returns DeferredWithSideEffects output",
             pipeSomeLazy(
-              computationType[Computation_deferredWithSideEffectsOfT],
+              computations[Computation_deferredWithSideEffectsOfT],
               ComputationExpect.isDeferredWithSideEffects,
               ComputationExpect.isNotSynchronous,
               operatorDeferredWithSideEffectsInner,

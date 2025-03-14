@@ -6,17 +6,17 @@
 
 # Function: sequence()
 
-> **sequence**\<`TComputation`\>(`m`): (`start`) => [`ComputationBaseOf`](../../type-aliases/ComputationBaseOf.md)\<`TComputation`, `number`\>
+> **sequence**\<`TComputationType`\>(`m`): (`start`) => [`ComputationBaseOf`](../../type-aliases/ComputationBaseOf.md)\<`TComputationType`, `number`\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
 ## Parameters
 
 ### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputation`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputation`\>, `"generate"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`\>, `"generate"`\>
 
 ## Returns
 
@@ -30,4 +30,4 @@
 
 ### Returns
 
-[`ComputationBaseOf`](../../type-aliases/ComputationBaseOf.md)\<`TComputation`, `number`\>
+[`ComputationBaseOf`](../../type-aliases/ComputationBaseOf.md)\<`TComputationType`, `number`\>

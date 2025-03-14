@@ -4,12 +4,12 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / SynchronousComputationOf
 
-# Type Alias: SynchronousComputationOf\<TComputation, T\>
+# Type Alias: SynchronousComputationOf\<TComputationType, T\>
 
-> **SynchronousComputationOf**\<`TComputation`, `T`\>: [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputation`, `T`\> \| [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+> **SynchronousComputationOf**\<`TComputationType`, `T`\>: [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputationType`, `T`\> \| [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
 
 • **T**

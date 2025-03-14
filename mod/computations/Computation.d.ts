@@ -1,98 +1,98 @@
 import { ComputationBaseOf, ComputationLike, ComputationModule, ComputationOf, ComputationOperatorWithSideEffects, ComputationType, ComputationWithSideEffectsLike, ConcurrentReactiveComputationModule, DeferredComputationLike, DeferredComputationModule, DeferredComputationOf, DeferredComputationWithSideEffectsLike, DeferredComputationWithSideEffectsOf, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastComputationLike, MulticastComputationOf, PickComputationModule, PureComputationLike, PureDeferredComputationLike, PureDeferredComputationOf, PureIterableLike, PureSynchronousComputationLike, PureSynchronousComputationOf, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StatelessComputationOperator, SynchronousComputationLike, SynchronousComputationOf, SynchronousComputationWithSideEffectsLike, SynchronousComputationWithSideEffectsOf } from "../computations.js";
 import { Function1, TypePredicate } from "../functions.js";
 import { EventListenerLike } from "../utils.js";
-export interface ConcatManyOperator<TComputation extends ComputationType> {
-    <T>(computations: readonly PureSynchronousComputationOf<TComputation, T>[]): PureSynchronousComputationOf<TComputation, T>;
-    <T>(computations: readonly SynchronousComputationOf<TComputation, T>[]): SynchronousComputationWithSideEffectsOf<TComputation, T>;
-    <T>(computations: readonly PureDeferredComputationOf<TComputation, T>[]): PureDeferredComputationOf<TComputation, T>;
-    <T>(computations: readonly DeferredComputationOf<TComputation, T>[]): DeferredComputationWithSideEffectsOf<TComputation, T>;
+export interface ConcatManyOperator<TComputationType extends ComputationType> {
+    <T>(computations: readonly PureSynchronousComputationOf<TComputationType, T>[]): PureSynchronousComputationOf<TComputationType, T>;
+    <T>(computations: readonly SynchronousComputationOf<TComputationType, T>[]): SynchronousComputationWithSideEffectsOf<TComputationType, T>;
+    <T>(computations: readonly PureDeferredComputationOf<TComputationType, T>[]): PureDeferredComputationOf<TComputationType, T>;
+    <T>(computations: readonly DeferredComputationOf<TComputationType, T>[]): DeferredComputationWithSideEffectsOf<TComputationType, T>;
 }
-export interface FlatMapOperator<TComputation extends ComputationType, TFlattenKey extends string | number | symbol> {
-    <TA, TB>(key: TFlattenKey, selector: Function1<TA, PureSynchronousComputationOf<TComputation, TB>>): HigherOrderComputationOperator<TComputation, PureSynchronousComputationLike, TA, TB>;
-    <TA, TB, TInnerType extends HigherOrderInnerComputationLike>(key: TFlattenKey, selector: Function1<TA, HigherOrderInnerComputationOf<TComputation, TInnerType, TB>>, options?: {
-        readonly innerType: TInnerType;
-    }): HigherOrderComputationOperator<TComputation, TInnerType, TA, TB>;
+export interface FlatMapOperator<TComputationType extends ComputationType, TFlattenKey extends string | number | symbol> {
+    <TA, TB>(key: TFlattenKey, selector: Function1<TA, PureSynchronousComputationOf<TComputationType, TB>>): HigherOrderComputationOperator<TComputationType, PureSynchronousComputationLike, TA, TB>;
+    <TA, TB, TInnerLike extends HigherOrderInnerComputationLike>(key: TFlattenKey, selector: Function1<TA, HigherOrderInnerComputationOf<TComputationType, TInnerLike, TB>>, options?: {
+        readonly innerType: TInnerLike;
+    }): HigherOrderComputationOperator<TComputationType, TInnerLike, TA, TB>;
 }
-export interface FlatMapIterableOperator<TComputation extends ComputationType, TFlattenKey extends string | number | symbol> {
-    <TA, TB>(key: TFlattenKey, selector: Function1<TA, PureIterableLike<TB>>): HigherOrderComputationOperator<TComputation, PureSynchronousComputationLike, TA, TB>;
+export interface FlatMapIterableOperator<TComputationType extends ComputationType, TFlattenKey extends string | number | symbol> {
+    <TA, TB>(key: TFlattenKey, selector: Function1<TA, PureIterableLike<TB>>): HigherOrderComputationOperator<TComputationType, PureSynchronousComputationLike, TA, TB>;
     <TA, TB>(key: TFlattenKey, selector: Function1<TA, PureIterableLike<TB>>, options: {
         readonly innerType: PureSynchronousComputationLike;
-    }): HigherOrderComputationOperator<TComputation, PureSynchronousComputationLike, TA, TB>;
+    }): HigherOrderComputationOperator<TComputationType, PureSynchronousComputationLike, TA, TB>;
 }
-export interface ConcatMapOperator<TComputation extends ComputationType> {
-    <TA, TB>(selector: Function1<TA, PureSynchronousComputationOf<TComputation, TB>>): HigherOrderComputationOperator<TComputation, PureSynchronousComputationLike, TA, TB>;
-    <TA, TB, TInnerType extends HigherOrderInnerComputationLike>(selector: Function1<TA, HigherOrderInnerComputationOf<TComputation, TInnerType, TB>>, options?: {
-        readonly innerType: TInnerType;
-    }): HigherOrderComputationOperator<TComputation, TInnerType, TA, TB>;
+export interface ConcatMapOperator<TComputationType extends ComputationType> {
+    <TA, TB>(selector: Function1<TA, PureSynchronousComputationOf<TComputationType, TB>>): HigherOrderComputationOperator<TComputationType, PureSynchronousComputationLike, TA, TB>;
+    <TA, TB, TInnerLike extends HigherOrderInnerComputationLike>(selector: Function1<TA, HigherOrderInnerComputationOf<TComputationType, TInnerLike, TB>>, options?: {
+        readonly innerType: TInnerLike;
+    }): HigherOrderComputationOperator<TComputationType, TInnerLike, TA, TB>;
 }
-export interface ConcatMapIterableOperator<TComputation extends ComputationType> {
-    <TA, TB>(selector: Function1<TA, PureIterableLike<TB>>): HigherOrderComputationOperator<TComputation, PureSynchronousComputationLike, TA, TB>;
+export interface ConcatMapIterableOperator<TComputationType extends ComputationType> {
+    <TA, TB>(selector: Function1<TA, PureIterableLike<TB>>): HigherOrderComputationOperator<TComputationType, PureSynchronousComputationLike, TA, TB>;
     <TA, TB>(selector: Function1<TA, PureIterableLike<TB>>, options: {
         readonly innerType: PureSynchronousComputationLike;
-    }): HigherOrderComputationOperator<TComputation, PureSynchronousComputationLike, TA, TB>;
+    }): HigherOrderComputationOperator<TComputationType, PureSynchronousComputationLike, TA, TB>;
 }
-export interface ConcatWithOperator<TComputation extends ComputationType> {
-    <T>(snd: PureSynchronousComputationOf<TComputation, T>, ...tail: readonly PureSynchronousComputationOf<TComputation, T>[]): StatelessComputationOperator<TComputation, T, T>;
-    <T>(snd: SynchronousComputationOf<TComputation, T>, ...tail: readonly SynchronousComputationOf<TComputation, T>[]): ComputationOperatorWithSideEffects<TComputation, T, T>;
-    <T>(snd: PureDeferredComputationOf<TComputation, T>, ...tail: readonly PureDeferredComputationOf<TComputation, T>[]): StatefulAsynchronousComputationOperator<TComputation, T, T>;
-    <T>(snd: DeferredComputationOf<TComputation, T>, ...tail: readonly DeferredComputationOf<TComputation, T>[]): Function1<DeferredComputationOf<TComputation, T>, DeferredComputationWithSideEffectsOf<TComputation, T>>;
+export interface ConcatWithOperator<TComputationType extends ComputationType> {
+    <T>(snd: PureSynchronousComputationOf<TComputationType, T>, ...tail: readonly PureSynchronousComputationOf<TComputationType, T>[]): StatelessComputationOperator<TComputationType, T, T>;
+    <T>(snd: SynchronousComputationOf<TComputationType, T>, ...tail: readonly SynchronousComputationOf<TComputationType, T>[]): ComputationOperatorWithSideEffects<TComputationType, T, T>;
+    <T>(snd: PureDeferredComputationOf<TComputationType, T>, ...tail: readonly PureDeferredComputationOf<TComputationType, T>[]): StatefulAsynchronousComputationOperator<TComputationType, T, T>;
+    <T>(snd: DeferredComputationOf<TComputationType, T>, ...tail: readonly DeferredComputationOf<TComputationType, T>[]): Function1<DeferredComputationOf<TComputationType, T>, DeferredComputationWithSideEffectsOf<TComputationType, T>>;
 }
-export interface MergeManyOperator<TComputation extends ComputationType> {
-    <T>(computations: readonly PureSynchronousComputationOf<TComputation, T>[]): PureSynchronousComputationOf<TComputation, T>;
-    <T>(computations: readonly SynchronousComputationOf<TComputation, T>[]): SynchronousComputationWithSideEffectsOf<TComputation, T>;
-    <T>(computations: readonly PureDeferredComputationOf<TComputation, T>[]): PureDeferredComputationOf<TComputation, T>;
-    <T>(computations: readonly DeferredComputationOf<TComputation, T>[]): DeferredComputationWithSideEffectsOf<TComputation, T>;
-    <T>(computations: readonly ComputationBaseOf<TComputation, T>[]): ComputationBaseOf<TComputation, T>;
+export interface MergeManyOperator<TComputationType extends ComputationType> {
+    <T>(computations: readonly PureSynchronousComputationOf<TComputationType, T>[]): PureSynchronousComputationOf<TComputationType, T>;
+    <T>(computations: readonly SynchronousComputationOf<TComputationType, T>[]): SynchronousComputationWithSideEffectsOf<TComputationType, T>;
+    <T>(computations: readonly PureDeferredComputationOf<TComputationType, T>[]): PureDeferredComputationOf<TComputationType, T>;
+    <T>(computations: readonly DeferredComputationOf<TComputationType, T>[]): DeferredComputationWithSideEffectsOf<TComputationType, T>;
+    <T>(computations: readonly ComputationBaseOf<TComputationType, T>[]): ComputationBaseOf<TComputationType, T>;
 }
-export interface MergeWithOperator<TComputation extends ComputationType> {
-    <T>(snd: PureSynchronousComputationOf<TComputation, T>, ...tail: readonly PureSynchronousComputationOf<TComputation, T>[]): StatefulSynchronousComputationOperator<TComputation, T, T>;
-    <T>(snd: SynchronousComputationOf<TComputation, T>, ...tail: readonly SynchronousComputationOf<TComputation, T>[]): ComputationOperatorWithSideEffects<TComputation, T, T>;
-    <T>(snd: PureDeferredComputationOf<TComputation, T>, ...tail: readonly PureDeferredComputationOf<TComputation, T>[]): StatefulAsynchronousComputationOperator<TComputation, T, T>;
-    <T>(snd: DeferredComputationOf<TComputation, T>, ...tail: readonly DeferredComputationOf<TComputation, T>[]): Function1<ComputationOf<TComputation, T>, DeferredComputationWithSideEffectsOf<TComputation, T>>;
-    <T>(snd: MulticastComputationOf<TComputation, T>, ...tail: readonly MulticastComputationOf<TComputation, T>[]): Function1<MulticastComputationOf<TComputation, T>, MulticastComputationOf<TComputation, T>>;
-    <T>(snd: ComputationBaseOf<TComputation, T>, ...tail: readonly ComputationBaseOf<TComputation, T>[]): Function1<ComputationBaseOf<TComputation, T>, ComputationBaseOf<TComputation, T>>;
+export interface MergeWithOperator<TComputationType extends ComputationType> {
+    <T>(snd: PureSynchronousComputationOf<TComputationType, T>, ...tail: readonly PureSynchronousComputationOf<TComputationType, T>[]): StatefulSynchronousComputationOperator<TComputationType, T, T>;
+    <T>(snd: SynchronousComputationOf<TComputationType, T>, ...tail: readonly SynchronousComputationOf<TComputationType, T>[]): ComputationOperatorWithSideEffects<TComputationType, T, T>;
+    <T>(snd: PureDeferredComputationOf<TComputationType, T>, ...tail: readonly PureDeferredComputationOf<TComputationType, T>[]): StatefulAsynchronousComputationOperator<TComputationType, T, T>;
+    <T>(snd: DeferredComputationOf<TComputationType, T>, ...tail: readonly DeferredComputationOf<TComputationType, T>[]): Function1<ComputationOf<TComputationType, T>, DeferredComputationWithSideEffectsOf<TComputationType, T>>;
+    <T>(snd: MulticastComputationOf<TComputationType, T>, ...tail: readonly MulticastComputationOf<TComputationType, T>[]): Function1<MulticastComputationOf<TComputationType, T>, MulticastComputationOf<TComputationType, T>>;
+    <T>(snd: ComputationBaseOf<TComputationType, T>, ...tail: readonly ComputationBaseOf<TComputationType, T>[]): Function1<ComputationBaseOf<TComputationType, T>, ComputationBaseOf<TComputationType, T>>;
 }
-export interface PickOperator<TComputation extends ComputationType> {
-    <T, TKeyOfT extends keyof T>(key: TKeyOfT): StatelessComputationOperator<TComputation, T, T[TKeyOfT]>;
-    <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(keyA: TKeyOfTA, keyB: TKeyOfTB): StatelessComputationOperator<TComputation, T, T[TKeyOfTA][TKeyOfTB]>;
-    <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA], TKeyOfTC extends keyof T[TKeyOfTA][TKeyOfTB]>(keyA: TKeyOfTA, keyB: TKeyOfTB, keyC: TKeyOfTC): StatelessComputationOperator<TComputation, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
+export interface PickOperator<TComputationType extends ComputationType> {
+    <T, TKeyOfT extends keyof T>(key: TKeyOfT): StatelessComputationOperator<TComputationType, T, T[TKeyOfT]>;
+    <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(keyA: TKeyOfTA, keyB: TKeyOfTB): StatelessComputationOperator<TComputationType, T, T[TKeyOfTA][TKeyOfTB]>;
+    <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA], TKeyOfTC extends keyof T[TKeyOfTA][TKeyOfTB]>(keyA: TKeyOfTA, keyB: TKeyOfTB, keyC: TKeyOfTC): StatelessComputationOperator<TComputationType, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
 }
 export interface Signature {
-    areAllDeferred<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & DeferredComputationLike)[];
-    areAllMulticasted<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & MulticastComputationLike)[];
-    areAllPure<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & PureComputationLike)[];
-    areAllSynchronous<TComputation extends ComputationLike>(computations: readonly TComputation[]): computations is readonly (TComputation & SynchronousComputationLike)[];
-    concatMap<TComputation extends ComputationType>(m: PickComputationModule<TComputation, ComputationModule<TComputation> & DeferredComputationModule<TComputation>, "concatAll" | "map">): ConcatMapOperator<TComputation>;
-    concatMapIterable<TComputation extends ComputationType>(m: PickComputationModule<TComputation, ComputationModule<TComputation> & DeferredComputationModule<TComputation>, "concatAll" | "map" | "fromIterable">): ConcatMapIterableOperator<TComputation>;
-    concatMany<TComputation extends ComputationType>(m: PickComputationModule<TComputation, DeferredComputationModule<TComputation>, "concat">): ConcatManyOperator<TComputation>;
-    concatWith<TComputation extends ComputationType>(m: PickComputationModule<TComputation, DeferredComputationModule<TComputation>, "concat">): ConcatWithOperator<TComputation>;
-    debug<TComputation extends ComputationType>(m: PickComputationModule<TComputation, DeferredComputationModule<TComputation>, "forEach">): <T>() => ComputationOperatorWithSideEffects<TComputation, T, T>;
-    endWith<TComputation extends ComputationType>(m: PickComputationModule<TComputation, DeferredComputationModule<TComputation>, "concat" | "fromReadonlyArray">): <T>(value: T, ...values: readonly T[]) => StatelessComputationOperator<TComputation, T, T>;
-    flatMap<TComputation extends ComputationType, TFlattenKey extends string | number | symbol>(m: PickComputationModule<TComputation, ComputationModule<TComputation>, "map"> & {
-        readonly [key in TFlattenKey | string | symbol | number]: key extends TFlattenKey ? DeferredComputationModule<TComputation>["concatAll"] : unknown;
-    }): FlatMapOperator<TComputation, TFlattenKey>;
-    flatMapIterable<TComputation extends ComputationType, TFlattenKey extends string | number | symbol>(m: PickComputationModule<TComputation, ComputationModule<TComputation>, "map" | "fromIterable"> & {
-        readonly [key in TFlattenKey | string | symbol | number]: key extends TFlattenKey ? DeferredComputationModule<TComputation>["concatAll"] : unknown;
-    }): FlatMapIterableOperator<TComputation, TFlattenKey>;
-    hasSideEffects<TComputation extends ComputationLike>(computation: TComputation): computation is TComputation & ComputationWithSideEffectsLike;
-    ignoreElements<TComputation extends ComputationType>(m: PickComputationModule<TComputation, ComputationModule<TComputation>, "keep">): <T>() => StatelessComputationOperator<TComputation, any, T>;
-    isDeferred<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & DeferredComputationLike;
-    isDeferredWithSideEffects<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & DeferredComputationWithSideEffectsLike;
-    isMulticasted<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & MulticastComputationLike;
-    isPure<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & PureComputationLike;
-    isPureDeferred<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & PureDeferredComputationLike;
-    isPureSynchronous<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & PureSynchronousComputationLike;
-    isSynchronous<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & SynchronousComputationLike;
-    isSynchronousWithSideEffects<TComputation extends ComputationLike = ComputationLike>(computation: TComputation): computation is TComputation & SynchronousComputationWithSideEffectsLike;
-    keepType<TComputation extends ComputationType>(m: PickComputationModule<TComputation, ComputationModule<TComputation>, "keep">): <TA, TB>(predicate: TypePredicate<TA, TB>) => StatelessComputationOperator<TComputation, TA, TB>;
-    log<TComputation extends ComputationType>(m: PickComputationModule<TComputation, DeferredComputationModule<TComputation>, "forEach">): <T>() => ComputationOperatorWithSideEffects<TComputation, T, T>;
-    mapTo<TComputation extends ComputationType>(m: PickComputationModule<TComputation, ComputationModule<TComputation>, "map">): <T>(value: T) => StatelessComputationOperator<TComputation, unknown, T>;
-    mergeMany<TComputation extends ComputationType>(m: PickComputationModule<TComputation, ConcurrentReactiveComputationModule<TComputation>, "merge">): MergeManyOperator<TComputation>;
-    mergeWith<TComputation extends ComputationType>(m: PickComputationModule<TComputation, ConcurrentReactiveComputationModule<TComputation>, "merge">): MergeWithOperator<TComputation>;
-    notify<TComputation extends ComputationType>(m: PickComputationModule<TComputation, DeferredComputationModule<TComputation>, "forEach">): <T>(eventListener: EventListenerLike<T>) => ComputationOperatorWithSideEffects<TComputation, T, T>;
-    pick<TComputation extends ComputationType>(m: PickComputationModule<TComputation, ComputationModule<TComputation>, "map">): PickOperator<TComputation>;
-    sequence<TComputation extends ComputationType>(m: PickComputationModule<TComputation, ComputationModule<TComputation>, "generate">): (start: number) => ComputationBaseOf<TComputation, number>;
-    startWith<TComputation extends ComputationType>(m: PickComputationModule<TComputation, DeferredComputationModule<TComputation>, "concat" | "fromReadonlyArray">): <T>(value: T, ...values: readonly T[]) => StatelessComputationOperator<TComputation, T, T>;
+    areAllDeferred<TComputationType extends ComputationLike>(computations: readonly TComputationType[]): computations is readonly (TComputationType & DeferredComputationLike)[];
+    areAllMulticasted<TComputationType extends ComputationLike>(computations: readonly TComputationType[]): computations is readonly (TComputationType & MulticastComputationLike)[];
+    areAllPure<TComputationType extends ComputationLike>(computations: readonly TComputationType[]): computations is readonly (TComputationType & PureComputationLike)[];
+    areAllSynchronous<TComputationType extends ComputationLike>(computations: readonly TComputationType[]): computations is readonly (TComputationType & SynchronousComputationLike)[];
+    concatMap<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType> & DeferredComputationModule<TComputationType>, "concatAll" | "map">): ConcatMapOperator<TComputationType>;
+    concatMapIterable<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType> & DeferredComputationModule<TComputationType>, "concatAll" | "map" | "fromIterable">): ConcatMapIterableOperator<TComputationType>;
+    concatMany<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType>, "concat">): ConcatManyOperator<TComputationType>;
+    concatWith<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType>, "concat">): ConcatWithOperator<TComputationType>;
+    debug<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType>, "forEach">): <T>() => ComputationOperatorWithSideEffects<TComputationType, T, T>;
+    endWith<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType>, "concat" | "fromReadonlyArray">): <T>(value: T, ...values: readonly T[]) => StatelessComputationOperator<TComputationType, T, T>;
+    flatMap<TComputationType extends ComputationType, TFlattenKey extends string | number | symbol>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "map"> & {
+        readonly [key in TFlattenKey | string | symbol | number]: key extends TFlattenKey ? DeferredComputationModule<TComputationType>["concatAll"] : unknown;
+    }): FlatMapOperator<TComputationType, TFlattenKey>;
+    flatMapIterable<TComputationType extends ComputationType, TFlattenKey extends string | number | symbol>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "map" | "fromIterable"> & {
+        readonly [key in TFlattenKey | string | symbol | number]: key extends TFlattenKey ? DeferredComputationModule<TComputationType>["concatAll"] : unknown;
+    }): FlatMapIterableOperator<TComputationType, TFlattenKey>;
+    hasSideEffects<TComputationType extends ComputationLike>(computation: TComputationType): computation is TComputationType & ComputationWithSideEffectsLike;
+    ignoreElements<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "keep">): <T>() => StatelessComputationOperator<TComputationType, any, T>;
+    isDeferred<TComputationType extends ComputationLike = ComputationLike>(computation: TComputationType): computation is TComputationType & DeferredComputationLike;
+    isDeferredWithSideEffects<TComputationType extends ComputationLike = ComputationLike>(computation: TComputationType): computation is TComputationType & DeferredComputationWithSideEffectsLike;
+    isMulticasted<TComputationType extends ComputationLike = ComputationLike>(computation: TComputationType): computation is TComputationType & MulticastComputationLike;
+    isPure<TComputationType extends ComputationLike = ComputationLike>(computation: TComputationType): computation is TComputationType & PureComputationLike;
+    isPureDeferred<TComputationType extends ComputationLike = ComputationLike>(computation: TComputationType): computation is TComputationType & PureDeferredComputationLike;
+    isPureSynchronous<TComputationType extends ComputationLike = ComputationLike>(computation: TComputationType): computation is TComputationType & PureSynchronousComputationLike;
+    isSynchronous<TComputationType extends ComputationLike = ComputationLike>(computation: TComputationType): computation is TComputationType & SynchronousComputationLike;
+    isSynchronousWithSideEffects<TComputationType extends ComputationLike = ComputationLike>(computation: TComputationType): computation is TComputationType & SynchronousComputationWithSideEffectsLike;
+    keepType<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "keep">): <TA, TB>(predicate: TypePredicate<TA, TB>) => StatelessComputationOperator<TComputationType, TA, TB>;
+    log<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType>, "forEach">): <T>() => ComputationOperatorWithSideEffects<TComputationType, T, T>;
+    mapTo<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "map">): <T>(value: T) => StatelessComputationOperator<TComputationType, unknown, T>;
+    mergeMany<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ConcurrentReactiveComputationModule<TComputationType>, "merge">): MergeManyOperator<TComputationType>;
+    mergeWith<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ConcurrentReactiveComputationModule<TComputationType>, "merge">): MergeWithOperator<TComputationType>;
+    notify<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType>, "forEach">): <T>(eventListener: EventListenerLike<T>) => ComputationOperatorWithSideEffects<TComputationType, T, T>;
+    pick<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "map">): PickOperator<TComputationType>;
+    sequence<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "generate">): (start: number) => ComputationBaseOf<TComputationType, number>;
+    startWith<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType>, "concat" | "fromReadonlyArray">): <T>(value: T, ...values: readonly T[]) => StatelessComputationOperator<TComputationType, T, T>;
 }
 export declare const areAllDeferred: Signature["areAllDeferred"];
 export declare const areAllMulticasted: Signature["areAllMulticasted"];

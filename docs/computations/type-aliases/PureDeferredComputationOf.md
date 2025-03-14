@@ -4,12 +4,12 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / PureDeferredComputationOf
 
-# Type Alias: PureDeferredComputationOf\<TComputation, T\>
+# Type Alias: PureDeferredComputationOf\<TComputationType, T\>
 
-> **PureDeferredComputationOf**\<`TComputation`, `T`\>: `TComputation` *extends* `object` ? `NonNullable`\<`TComputation` & `object`\[*typeof* [`Computation_pureDeferredOfT`](../variables/Computation_pureDeferredOfT.md)\] & [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputation`, `T`\>\> : `object`
+> **PureDeferredComputationOf**\<`TComputationType`, `T`\>: `TComputationType` *extends* `object` ? `NonNullable`\<`TComputationType` & `object`\[*typeof* [`Computation_pureDeferredOfT`](../variables/Computation_pureDeferredOfT.md)\] & [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `T`\>\> : `object`
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
 
 • **T**

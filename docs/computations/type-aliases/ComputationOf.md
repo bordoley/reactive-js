@@ -4,12 +4,12 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / ComputationOf
 
-# Type Alias: ComputationOf\<TComputation, T\>
+# Type Alias: ComputationOf\<TComputationType, T\>
 
-> **ComputationOf**\<`TComputation`, `T`\>: [`DeferredComputationOf`](DeferredComputationOf.md)\<`TComputation`, `T`\> \| [`SynchronousComputationOf`](SynchronousComputationOf.md)\<`TComputation`, `T`\> \| [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputation`, `T`\>
+> **ComputationOf**\<`TComputationType`, `T`\>: [`DeferredComputationOf`](DeferredComputationOf.md)\<`TComputationType`, `T`\> \| [`SynchronousComputationOf`](SynchronousComputationOf.md)\<`TComputationType`, `T`\> \| [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `T`\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
 
 • **T**

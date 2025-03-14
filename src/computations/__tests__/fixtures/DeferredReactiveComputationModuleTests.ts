@@ -23,18 +23,18 @@ import {
 import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSynchronousComputationOperatorTests.js";
 
 const DeferredReactiveComputationModuleTests = <
-  TComputation extends ComputationType,
+  TComputationType extends ComputationType,
 >(
-  m: DeferredComputationModule<TComputation> &
-    DeferredReactiveComputationModule<TComputation> &
-    SynchronousComputationModule<TComputation>,
-  computationType: ComputationTypeOf<TComputation>,
+  m: DeferredComputationModule<TComputationType> &
+    DeferredReactiveComputationModule<TComputationType> &
+    SynchronousComputationModule<TComputationType>,
+  computations: ComputationTypeOf<TComputationType>,
 ) =>
   describe(
     "DeferredReactiveComputationModule",
     describe(
       "buffer",
-      StatefulSynchronousComputationOperatorTests(computationType, m.buffer()),
+      StatefulSynchronousComputationOperatorTests(computations, m.buffer()),
       test(
         "with multiple sub buffers",
         pipeLazy(
@@ -85,7 +85,7 @@ const DeferredReactiveComputationModuleTests = <
     describe(
       "decodeWithCharset",
       StatefulSynchronousComputationOperatorTests(
-        computationType,
+        computations,
         m.decodeWithCharset(),
       ),
       test("decoding ascii", () => {
@@ -150,7 +150,7 @@ const DeferredReactiveComputationModuleTests = <
     describe(
       "distinctUntilChanged",
       StatefulSynchronousComputationOperatorTests(
-        computationType,
+        computations,
         m.distinctUntilChanged(),
       ),
       test(
@@ -203,10 +203,7 @@ const DeferredReactiveComputationModuleTests = <
     ),
     describe(
       "pairwise",
-      StatefulSynchronousComputationOperatorTests(
-        computationType,
-        m.pairwise(),
-      ),
+      StatefulSynchronousComputationOperatorTests(computations, m.pairwise()),
       test(
         "when there are more than one input value",
         pipeLazy(
@@ -245,10 +242,7 @@ const DeferredReactiveComputationModuleTests = <
     ),
     describe(
       "skipFirst",
-      StatefulSynchronousComputationOperatorTests(
-        computationType,
-        m.skipFirst(),
-      ),
+      StatefulSynchronousComputationOperatorTests(computations, m.skipFirst()),
       test(
         "with default count",
         pipeLazy(
@@ -282,10 +276,7 @@ const DeferredReactiveComputationModuleTests = <
     ),
     describe(
       "takeLast",
-      StatefulSynchronousComputationOperatorTests(
-        computationType,
-        m.takeLast(),
-      ),
+      StatefulSynchronousComputationOperatorTests(computations, m.takeLast()),
       test(
         "with default count",
         pipeLazy(

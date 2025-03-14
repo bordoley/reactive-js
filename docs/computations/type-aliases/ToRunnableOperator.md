@@ -6,7 +6,7 @@
 
 # Type Alias: ToRunnableOperator()\<TComputationType, T\>
 
-> **ToRunnableOperator**\<`TComputationType`, `T`\>: \<`TComputation`\>(`computation`) => `TComputation` *extends* [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputationType`, `T`\> ? [`PureRunnableLike`](../interfaces/PureRunnableLike.md)\<`T`\> : `TComputation` *extends* [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`RunnableWithSideEffectsLike`](../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> : `never`
+> **ToRunnableOperator**\<`TComputationType`, `T`\>: \<`TComputationBaseOf`\>(`computation`) => `TComputationBaseOf` *extends* [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputationType`, `T`\> ? [`PureRunnableLike`](../interfaces/PureRunnableLike.md)\<`T`\> : `TComputationBaseOf` *extends* [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`RunnableWithSideEffectsLike`](../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> : `never`
 
 ## Type Parameters
 
@@ -16,14 +16,14 @@
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `T`\>
+• **TComputationBaseOf** *extends* [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `T`\>
 
 ## Parameters
 
 ### computation
 
-`TComputation`
+`TComputationBaseOf`
 
 ## Returns
 
-`TComputation` *extends* [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputationType`, `T`\> ? [`PureRunnableLike`](../interfaces/PureRunnableLike.md)\<`T`\> : `TComputation` *extends* [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`RunnableWithSideEffectsLike`](../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> : `never`
+`TComputationBaseOf` *extends* [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputationType`, `T`\> ? [`PureRunnableLike`](../interfaces/PureRunnableLike.md)\<`T`\> : `TComputationBaseOf` *extends* [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`RunnableWithSideEffectsLike`](../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> : `never`

@@ -32,7 +32,7 @@ const ObservableModule = { merge: Observable_merge };
 const Observable_forkMerge: Observable.Signature["forkMerge"] = (<
     TIn,
     TOut,
-    TInnerType extends
+    TInnerLike extends
       | PureDeferredComputationLike
       | DeferredComputationWithSideEffectsLike = PureDeferredComputationLike,
   >(
@@ -42,19 +42,19 @@ const Observable_forkMerge: Observable.Signature["forkMerge"] = (<
             MulticastObservableLike<TIn>,
             HigherOrderInnerComputationOf<
               Observable.Computation,
-              TInnerType,
+              TInnerLike,
               TOut
             >
           >[],
           {
-            innerType?: TInnerType;
+            innerType?: TInnerLike;
           },
         ]
       | readonly Function1<
           MulticastObservableLike<TIn>,
           HigherOrderInnerComputationOf<
             Observable.Computation,
-            TInnerType,
+            TInnerLike,
             TOut
           >
         >[]
@@ -62,14 +62,14 @@ const Observable_forkMerge: Observable.Signature["forkMerge"] = (<
   (obs: ObservableLike<TIn>) => {
     const argsLength = args[Array_length];
     const lastArg = args[argsLength - 1];
-    const maybeConfig: Optional<{ innerType?: TInnerType }> =
+    const maybeConfig: Optional<{ innerType?: TInnerLike }> =
       isSome(lastArg) && !isFunction(lastArg) ? lastArg : none;
     const ops = (
       isSome(maybeConfig) ? args.slice(0, argsLength - 1) : args
     ) as ReadonlyArray<
       Function1<
         MulticastObservableLike<TIn>,
-        HigherOrderInnerComputationOf<Observable.Computation, TInnerType, TOut>
+        HigherOrderInnerComputationOf<Observable.Computation, TInnerLike, TOut>
       >
     >;
     const innerType = maybeConfig?.innerType ?? {};

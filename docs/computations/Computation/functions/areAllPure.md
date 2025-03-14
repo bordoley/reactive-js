@@ -6,18 +6,18 @@
 
 # Function: areAllPure()
 
-> **areAllPure**\<`TComputation`\>(`computations`): `computations is readonly (TComputation & PureComputationLike)[]`
+> **areAllPure**\<`TComputationType`\>(`computations`): `computations is readonly (TComputationType & PureComputationLike)[]`
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputationType** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 ## Parameters
 
 ### computations
 
-readonly `TComputation`[]
+readonly `TComputationType`[]
 
 ## Returns
 
-`computations is readonly (TComputation & PureComputationLike)[]`
+`computations is readonly (TComputationType & PureComputationLike)[]`

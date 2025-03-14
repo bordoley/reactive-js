@@ -4,15 +4,15 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / HigherOrderComputationOperator
 
-# Type Alias: HigherOrderComputationOperator()\<TComputation, TInnerType, TA, TB\>
+# Type Alias: HigherOrderComputationOperator()\<TComputationType, TInnerLike, TA, TB\>
 
-> **HigherOrderComputationOperator**\<`TComputation`, `TInnerType`, `TA`, `TB`\>: \<`TComputationIn`\>(`computation`) => `TComputationIn` *extends* [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputation`, `TA`\> ? `HigherOrderPureSynchronousComputationOut`\<`TComputation`, `TInnerType`, `TB`\> : `TComputationIn` *extends* [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `TA`\> ? `HigherOrderSynchronousComputationWithSideEffectsOut`\<`TComputation`, `TInnerType`, `TB`\> : `TComputationIn` *extends* [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputation`, `TA`\> ? `HigherOrderPureDeferredComputationOut`\<`TComputation`, `TInnerType`, `TB`\> : `TComputationIn` *extends* [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `TA`\> ? `HigherOrderDeferredComputationWithSideEffectsOut`\<`TComputation`, `TInnerType`, `TB`\> : `never`
+> **HigherOrderComputationOperator**\<`TComputationType`, `TInnerLike`, `TA`, `TB`\>: \<`TComputationIn`\>(`computation`) => `TComputationIn` *extends* [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputationType`, `TA`\> ? `HigherOrderPureSynchronousComputationOut`\<`TComputationType`, `TInnerLike`, `TB`\> : `TComputationIn` *extends* [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `TA`\> ? `HigherOrderSynchronousComputationWithSideEffectsOut`\<`TComputationType`, `TInnerLike`, `TB`\> : `TComputationIn` *extends* [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputationType`, `TA`\> ? `HigherOrderPureDeferredComputationOut`\<`TComputationType`, `TInnerLike`, `TB`\> : `TComputationIn` *extends* [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `TA`\> ? `HigherOrderDeferredComputationWithSideEffectsOut`\<`TComputationType`, `TInnerLike`, `TB`\> : `never`
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
 
-• **TInnerType** *extends* [`HigherOrderInnerComputationLike`](HigherOrderInnerComputationLike.md)
+• **TInnerLike** *extends* [`HigherOrderInnerComputationLike`](HigherOrderInnerComputationLike.md)
 
 • **TA**
 
@@ -20,7 +20,7 @@
 
 ## Type Parameters
 
-• **TComputationIn** *extends* [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputation`, `TA`\>
+• **TComputationIn** *extends* [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `TA`\>
 
 ## Parameters
 
@@ -30,4 +30,4 @@
 
 ## Returns
 
-`TComputationIn` *extends* [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputation`, `TA`\> ? `HigherOrderPureSynchronousComputationOut`\<`TComputation`, `TInnerType`, `TB`\> : `TComputationIn` *extends* [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `TA`\> ? `HigherOrderSynchronousComputationWithSideEffectsOut`\<`TComputation`, `TInnerType`, `TB`\> : `TComputationIn` *extends* [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputation`, `TA`\> ? `HigherOrderPureDeferredComputationOut`\<`TComputation`, `TInnerType`, `TB`\> : `TComputationIn` *extends* [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `TA`\> ? `HigherOrderDeferredComputationWithSideEffectsOut`\<`TComputation`, `TInnerType`, `TB`\> : `never`
+`TComputationIn` *extends* [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputationType`, `TA`\> ? `HigherOrderPureSynchronousComputationOut`\<`TComputationType`, `TInnerLike`, `TB`\> : `TComputationIn` *extends* [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `TA`\> ? `HigherOrderSynchronousComputationWithSideEffectsOut`\<`TComputationType`, `TInnerLike`, `TB`\> : `TComputationIn` *extends* [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputationType`, `TA`\> ? `HigherOrderPureDeferredComputationOut`\<`TComputationType`, `TInnerLike`, `TB`\> : `TComputationIn` *extends* [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `TA`\> ? `HigherOrderDeferredComputationWithSideEffectsOut`\<`TComputationType`, `TInnerLike`, `TB`\> : `never`

@@ -6,18 +6,18 @@
 
 # Function: hasSideEffects()
 
-> **hasSideEffects**\<`TComputation`\>(`computation`): `computation is TComputation & ComputationWithSideEffectsLike`
+> **hasSideEffects**\<`TComputationType`\>(`computation`): `computation is TComputationType & ComputationWithSideEffectsLike`
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputationType** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 ## Parameters
 
 ### computation
 
-`TComputation`
+`TComputationType`
 
 ## Returns
 
-`computation is TComputation & ComputationWithSideEffectsLike`
+`computation is TComputationType & ComputationWithSideEffectsLike`

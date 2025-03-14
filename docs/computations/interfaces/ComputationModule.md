@@ -4,11 +4,11 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / ComputationModule
 
-# Interface: ComputationModule\<TComputation\>
+# Interface: ComputationModule\<TComputationType\>
 
 ## Extends
 
-- [`ComputationModuleLike`](ComputationModuleLike.md)\<`TComputation`\>
+- [`ComputationModuleLike`](ComputationModuleLike.md)\<`TComputationType`\>
 
 ## Extended by
 
@@ -20,13 +20,13 @@
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
 
 ## Properties
 
 ### \[ComputationModuleLike\_computationType\]?
 
-> `optional` **\[ComputationModuleLike\_computationType\]**: `TComputation`
+> `optional` **\[ComputationModuleLike\_computationType\]**: `TComputationType`
 
 #### Inherited from
 
@@ -36,7 +36,7 @@
 
 ### empty()
 
-> **empty**\<`T`\>(): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+> **empty**\<`T`\>(): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -44,13 +44,13 @@
 
 #### Returns
 
-[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
 
 ***
 
 ### firstAsync()
 
-> **firstAsync**\<`T`\>(): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, `T`\>
+> **firstAsync**\<`T`\>(): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, `T`\>
 
 #### Type Parameters
 
@@ -58,13 +58,13 @@
 
 #### Returns
 
-[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, `T`\>
+[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, `T`\>
 
 ***
 
 ### fromIterable()
 
-> **fromIterable**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`PureIterableLike`](PureIterableLike.md)\<`T`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>\>
+> **fromIterable**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`PureIterableLike`](PureIterableLike.md)\<`T`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
 
 #### Type Parameters
 
@@ -72,13 +72,13 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureIterableLike`](PureIterableLike.md)\<`T`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureIterableLike`](PureIterableLike.md)\<`T`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
 
 ***
 
 ### fromReadonlyArray()
 
-> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>\>
+> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
 
 #### Type Parameters
 
@@ -98,13 +98,13 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
 
 ***
 
 ### fromValue()
 
-> **fromValue**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>\>
+> **fromValue**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
 
 #### Type Parameters
 
@@ -112,13 +112,13 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
 
 ***
 
 ### generate()
 
-> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -142,13 +142,13 @@
 
 #### Returns
 
-[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
 
 ***
 
 ### keep()
 
-> **keep**\<`T`\>(`predicate`): [`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputation`, `T`, `T`\>
+> **keep**\<`T`\>(`predicate`): [`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -162,13 +162,13 @@
 
 #### Returns
 
-[`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputation`, `T`, `T`\>
+[`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ***
 
 ### lastAsync()
 
-> **lastAsync**\<`T`\>(): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, `T`\>
+> **lastAsync**\<`T`\>(): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, `T`\>
 
 #### Type Parameters
 
@@ -176,13 +176,13 @@
 
 #### Returns
 
-[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, `T`\>
+[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, `T`\>
 
 ***
 
 ### map()
 
-> **map**\<`TA`, `TB`\>(`selector`): [`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
+> **map**\<`TA`, `TB`\>(`selector`): [`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `TA`, `TB`\>
 
 #### Type Parameters
 
@@ -198,13 +198,13 @@
 
 #### Returns
 
-[`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputation`, `TA`, `TB`\>
+[`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `TA`, `TB`\>
 
 ***
 
 ### raise()
 
-> **raise**\<`T`\>(`options`?): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+> **raise**\<`T`\>(`options`?): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -220,13 +220,13 @@
 
 #### Returns
 
-[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputation`, `T`\>
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
 
 ***
 
 ### reduceAsync()
 
-> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, `TAcc`\>
+> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, `TAcc`\>
 
 #### Type Parameters
 
@@ -246,13 +246,13 @@
 
 #### Returns
 
-[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, `TAcc`\>
+[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, `TAcc`\>
 
 ***
 
 ### toObservable()
 
-> **toObservable**\<`T`\>(): [`ToObservableOperator`](../type-aliases/ToObservableOperator.md)\<`TComputation`, `T`\>
+> **toObservable**\<`T`\>(): [`ToObservableOperator`](../type-aliases/ToObservableOperator.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -260,13 +260,13 @@
 
 #### Returns
 
-[`ToObservableOperator`](../type-aliases/ToObservableOperator.md)\<`TComputation`, `T`\>
+[`ToObservableOperator`](../type-aliases/ToObservableOperator.md)\<`TComputationType`, `T`\>
 
 ***
 
 ### toReadonlyArrayAsync()
 
-> **toReadonlyArrayAsync**\<`T`\>(): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>
+> **toReadonlyArrayAsync**\<`T`\>(): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, readonly `T`[]\>
 
 #### Type Parameters
 
@@ -274,4 +274,4 @@
 
 #### Returns
 
-[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>
+[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, readonly `T`[]\>

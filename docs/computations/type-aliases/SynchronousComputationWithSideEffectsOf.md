@@ -4,12 +4,12 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / SynchronousComputationWithSideEffectsOf
 
-# Type Alias: SynchronousComputationWithSideEffectsOf\<TComputation, T\>
+# Type Alias: SynchronousComputationWithSideEffectsOf\<TComputationType, T\>
 
-> **SynchronousComputationWithSideEffectsOf**\<`TComputation`, `T`\>: `TComputation` *extends* `object` ? `NonNullable`\<`TComputation` & `object`\[*typeof* [`Computation_synchronousWithSideEffectsOfT`](../variables/Computation_synchronousWithSideEffectsOfT.md)\] & [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputation`, `T`\>\> : `object`
+> **SynchronousComputationWithSideEffectsOf**\<`TComputationType`, `T`\>: `TComputationType` *extends* `object` ? `NonNullable`\<`TComputationType` & `object`\[*typeof* [`Computation_synchronousWithSideEffectsOfT`](../variables/Computation_synchronousWithSideEffectsOfT.md)\] & [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `T`\>\> : `object`
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
 
 • **T**

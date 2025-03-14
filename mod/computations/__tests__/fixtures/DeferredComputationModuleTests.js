@@ -13,9 +13,9 @@ import ComputationOperatorWithSideEffectsTests from "./operators/ComputationOper
 import HigherOrderComputationOperatorTests from "./operators/HigherOrderComputationOperatorTests.js";
 import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSynchronousComputationOperatorTests.js";
 import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
-const DeferredComputationModuleTests = (m, computationType) => {
-    const { [Computation_pureSynchronousOfT]: pureSynchronousOfT, [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffectsOfT, [Computation_pureDeferredOfT]: pureDeferredOfT, [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT, } = computationType;
-    return describe("DeferredComputationModule", describe("catchError", HigherOrderComputationOperatorTests(computationType, pureSynchronousOfT &&
+const DeferredComputationModuleTests = (m, computations) => {
+    const { [Computation_pureSynchronousOfT]: pureSynchronousOfT, [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffectsOfT, [Computation_pureDeferredOfT]: pureDeferredOfT, [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT, } = computations;
+    return describe("DeferredComputationModule", describe("catchError", HigherOrderComputationOperatorTests(computations, pureSynchronousOfT &&
         m.catchError(_ => pureSynchronousOfT, {
             innerType: PureSynchronousComputation,
         }), synchronousWithSideEffectsOfT &&
@@ -27,7 +27,7 @@ const DeferredComputationModuleTests = (m, computationType) => {
         }), deferredWithSideEffectsOfT &&
         m.catchError(_ => deferredWithSideEffectsOfT, {
             innerType: DeferredComputationWithSideEffects,
-        })), StatefulSynchronousComputationOperatorTests(computationType, m.catchError(_ => console.log())), testAsync("when the source throws", async () => {
+        })), StatefulSynchronousComputationOperatorTests(computations, m.catchError(_ => console.log())), testAsync("when the source throws", async () => {
         const e1 = "e1";
         let result = none;
         await pipeAsync(m.raise({ raise: () => e1 }), m.catchError((e) => {
@@ -44,7 +44,7 @@ const DeferredComputationModuleTests = (m, computationType) => {
             result = e.cause;
         }), m.toReadonlyArrayAsync());
         pipe(result, ReadonlyArray.map(x => x.message), expectArrayEquals(["e2", "e1"]));
-    }), testAsync("when error handler returns a computation", pipeLazyAsync([1, 2, 3], m.fromReadonlyArray(), Computation.concatWith(m)(m.raise()), m.catchError(pipeLazy([4, 5, 6], m.fromReadonlyArray())), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("concatAll", HigherOrderComputationOperatorTests(computationType, m.concatAll({
+    }), testAsync("when error handler returns a computation", pipeLazyAsync([1, 2, 3], m.fromReadonlyArray(), Computation.concatWith(m)(m.raise()), m.catchError(pipeLazy([4, 5, 6], m.fromReadonlyArray())), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("concatAll", HigherOrderComputationOperatorTests(computations, m.concatAll({
         innerType: PureSynchronousComputation,
     }), m.concatAll({
         innerType: SynchronousComputationWithSideEffects,
@@ -66,12 +66,12 @@ const DeferredComputationModuleTests = (m, computationType) => {
         pureSynchronousOfT &&
         ComputationTest.isSynchronousWithSideEffects(m.concat(synchronousWithSideEffectsOfT, pureSynchronousOfT)), deferredWithSideEffectsOfT &&
         pureSynchronousOfT &&
-        ComputationTest.isDeferredWithSideEffects(m.concat(deferredWithSideEffectsOfT, pureSynchronousOfT))), describe("encodeUtf8", StatefulSynchronousComputationOperatorTests(computationType, m.encodeUtf8()), testAsync("encoding ascii", async () => {
+        ComputationTest.isDeferredWithSideEffects(m.concat(deferredWithSideEffectsOfT, pureSynchronousOfT))), describe("encodeUtf8", StatefulSynchronousComputationOperatorTests(computations, m.encodeUtf8()), testAsync("encoding ascii", async () => {
         const str = "abcdefghijklmnsopqrstuvwxyz";
         const textDecoder = new TextDecoder();
         const result = await pipeAsync([str], m.fromReadonlyArray(), m.encodeUtf8(), m.map(x => textDecoder.decode(x)), m.toReadonlyArrayAsync());
         pipe(result.join(), expectEquals(str));
-    })), describe("forEach", ComputationOperatorWithSideEffectsTests(computationType, m.forEach(ignore)), testAsync("invokes the effect for each notified value", async () => {
+    })), describe("forEach", ComputationOperatorWithSideEffectsTests(computations, m.forEach(ignore)), testAsync("invokes the effect for each notified value", async () => {
         const result = [];
         await pipeAsync([1, 2, 3], m.fromReadonlyArray(), m.forEach((x) => {
             result[Array_push](x + 10);
@@ -83,7 +83,7 @@ const DeferredComputationModuleTests = (m, computationType) => {
             throw err;
         }), m.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
     })), describe("fromIterable", testAsync("from Iterable that has side effects", pipeLazyAsync([1, 2, 3], Iterable.forEach(() => { }), m.fromIterable(), pick(ComputationLike_isPure), x => x, expectFalse("expected iterable to have side effects")))), describe("repeat", StatelessComputationOperatorTests({
-        ...computationType,
+        ...computations,
         // Repeat does not support multicasted input
         [Computation_multicastOfT]: none,
     }, m.repeat()), testAsync("when repeating forever.", pipeLazyAsync([1, 2, 3], m.fromReadonlyArray(), m.repeat(), m.takeFirst({ count: 8 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2]))), testAsync("when repeating a finite amount of times.", pipeLazyAsync([1, 2, 3], m.fromReadonlyArray(), m.repeat(3), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), testAsync("when repeating with a predicate", pipeLazyAsync([1, 2, 3], m.fromReadonlyArray(), m.repeat(lessThan(1)), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]))), testAsync("when the repeat function throws", async () => {
@@ -92,10 +92,10 @@ const DeferredComputationModuleTests = (m, computationType) => {
             throw err;
         }), m.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
     })), describe("retry", StatelessComputationOperatorTests({
-        ...computationType,
+        ...computations,
         // Repeat does not support multicasted input
         [Computation_multicastOfT]: none,
-    }, m.retry()), testAsync("retrys the container on an exception", pipeLazyAsync(m.concat(m.generate(increment, returns(0), { count: 3 }), m.raise()), m.retry(alwaysTrue), m.takeFirst({ count: 6 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), testAsync("retrys with the default predicate", pipeLazyAsync(m.concat(m.generate(increment, returns(0), { count: 3 }), m.raise()), m.retry(), m.takeFirst({ count: 6 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), testAsync("when source and the retry predicate throw", pipeLazyAsync(pipeLazyAsync(m.raise(), m.retry(raise), m.toReadonlyArrayAsync()), expectToThrowAsync)), testAsync("retrys only twice", pipeLazyAsync(m.concat(m.generate(increment, returns(0), { count: 3 }), m.raise()), m.retry((count, _) => count < 2), m.takeFirst({ count: 10 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("scan", StatefulSynchronousComputationOperatorTests(computationType, m.scan(increment, returns(0))), testAsync("sums all the values in the array emitting intermediate values.", pipeLazyAsync([1, 1, 1], m.fromReadonlyArray(), m.scan((a, b) => a + b, returns(0)), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]))), testAsync("throws when the scan function throws", async () => {
+    }, m.retry()), testAsync("retrys the container on an exception", pipeLazyAsync(m.concat(m.generate(increment, returns(0), { count: 3 }), m.raise()), m.retry(alwaysTrue), m.takeFirst({ count: 6 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), testAsync("retrys with the default predicate", pipeLazyAsync(m.concat(m.generate(increment, returns(0), { count: 3 }), m.raise()), m.retry(), m.takeFirst({ count: 6 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), testAsync("when source and the retry predicate throw", pipeLazyAsync(pipeLazyAsync(m.raise(), m.retry(raise), m.toReadonlyArrayAsync()), expectToThrowAsync)), testAsync("retrys only twice", pipeLazyAsync(m.concat(m.generate(increment, returns(0), { count: 3 }), m.raise()), m.retry((count, _) => count < 2), m.takeFirst({ count: 10 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("scan", StatefulSynchronousComputationOperatorTests(computations, m.scan(increment, returns(0))), testAsync("sums all the values in the array emitting intermediate values.", pipeLazyAsync([1, 1, 1], m.fromReadonlyArray(), m.scan((a, b) => a + b, returns(0)), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]))), testAsync("throws when the scan function throws", async () => {
         const err = new Error();
         const scanner = (_acc, _next) => {
             throw err;
@@ -107,7 +107,7 @@ const DeferredComputationModuleTests = (m, computationType) => {
             throw err;
         };
         await pipeAsync(pipeLazy([1, 1], m.fromReadonlyArray(), m.scan((a, b) => a + b, initialValue), m.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
-    })), describe("takeFirst", StatefulSynchronousComputationOperatorTests(computationType, m.takeFirst()), testAsync("with default count", pipeLazyAsync([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeFirst(), m.toReadonlyArrayAsync(), expectArrayEquals([1]))), testAsync("when taking fewer than the total number of elements in the source", pipeLazyAsync([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeFirst({ count: 3 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]))), testAsync("when taking more than all the items produced by the source", pipeLazyAsync([1, 2], m.fromReadonlyArray(), m.takeFirst({ count: 3 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2]))), testAsync("from iterable source", pipeLazyAsync([1, 2, 3, 4], m.fromIterable(), m.takeFirst({ count: 2 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2]))), testAsync("when source is empty", pipeLazyAsync([], m.fromReadonlyArray(), m.takeFirst({ count: 3 }), m.toReadonlyArrayAsync(), expectArrayEquals([]))), testAsync("with default count", pipeLazyAsync([1, 2, 3], m.fromReadonlyArray(), m.takeFirst(), m.toReadonlyArrayAsync(), expectArrayEquals([1]))), testAsync("when count is 0", pipeLazyAsync([1, 2, 3], m.fromReadonlyArray(), m.takeFirst({ count: 0 }), m.toReadonlyArrayAsync(), expectArrayEquals([])))), describe("takeWhile", StatefulSynchronousComputationOperatorTests(computationType, m.takeWhile(alwaysTrue)), testAsync("exclusive", async () => {
+    })), describe("takeFirst", StatefulSynchronousComputationOperatorTests(computations, m.takeFirst()), testAsync("with default count", pipeLazyAsync([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeFirst(), m.toReadonlyArrayAsync(), expectArrayEquals([1]))), testAsync("when taking fewer than the total number of elements in the source", pipeLazyAsync([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeFirst({ count: 3 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]))), testAsync("when taking more than all the items produced by the source", pipeLazyAsync([1, 2], m.fromReadonlyArray(), m.takeFirst({ count: 3 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2]))), testAsync("from iterable source", pipeLazyAsync([1, 2, 3, 4], m.fromIterable(), m.takeFirst({ count: 2 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2]))), testAsync("when source is empty", pipeLazyAsync([], m.fromReadonlyArray(), m.takeFirst({ count: 3 }), m.toReadonlyArrayAsync(), expectArrayEquals([]))), testAsync("with default count", pipeLazyAsync([1, 2, 3], m.fromReadonlyArray(), m.takeFirst(), m.toReadonlyArrayAsync(), expectArrayEquals([1]))), testAsync("when count is 0", pipeLazyAsync([1, 2, 3], m.fromReadonlyArray(), m.takeFirst({ count: 0 }), m.toReadonlyArrayAsync(), expectArrayEquals([])))), describe("takeWhile", StatefulSynchronousComputationOperatorTests(computations, m.takeWhile(alwaysTrue)), testAsync("exclusive", async () => {
         await pipeAsync([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeWhile(lessThan(4)), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]));
         await pipeAsync([1, 2, 3], m.fromReadonlyArray(), m.takeWhile(alwaysTrue), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]));
         await pipeAsync([], m.fromReadonlyArray(), m.takeWhile(alwaysTrue), m.toReadonlyArrayAsync(), expectArrayEquals([]));
@@ -117,7 +117,7 @@ const DeferredComputationModuleTests = (m, computationType) => {
             throw err;
         };
         await pipeAsync(pipeLazy([1, 1], m.fromReadonlyArray(), m.takeWhile(predicate), m.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
-    })), describe("throwIfEmpty", StatefulSynchronousComputationOperatorTests(computationType, m.throwIfEmpty(() => new Error())), testAsync("when source is empty", async () => {
+    })), describe("throwIfEmpty", StatefulSynchronousComputationOperatorTests(computations, m.throwIfEmpty(() => new Error())), testAsync("when source is empty", async () => {
         const error = new Error();
         await pipe(pipeLazy([], m.fromReadonlyArray(), m.throwIfEmpty(() => error), m.toReadonlyArrayAsync()), expectToThrowErrorAsync(error));
     }), testAsync("when factory throw", async () => {

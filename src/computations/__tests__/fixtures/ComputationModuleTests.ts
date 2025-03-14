@@ -29,9 +29,9 @@ import {
 import { increment } from "../../../math.js";
 import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
 
-const ComputationModuleTests = <TComputation extends ComputationType>(
-  m: ComputationModule<TComputation>,
-  computationType: ComputationTypeOf<TComputation>,
+const ComputationModuleTests = <TComputationType extends ComputationType>(
+  m: ComputationModule<TComputationType>,
+  computations: ComputationTypeOf<TComputationType>,
 ) =>
   describe(
     "ComputationModule",
@@ -177,7 +177,7 @@ const ComputationModuleTests = <TComputation extends ComputationType>(
     ),
     describe(
       "keep",
-      StatelessComputationOperatorTests(computationType, m.keep(alwaysTrue)),
+      StatelessComputationOperatorTests(computations, m.keep(alwaysTrue)),
       testAsync(
         "keeps only values greater than 5",
         pipeLazyAsync(
@@ -207,7 +207,7 @@ const ComputationModuleTests = <TComputation extends ComputationType>(
     ),
     describe(
       "map",
-      StatelessComputationOperatorTests(computationType, m.map(identity)),
+      StatelessComputationOperatorTests(computations, m.map(identity)),
       testAsync(
         "maps every value",
         pipeLazyAsync(

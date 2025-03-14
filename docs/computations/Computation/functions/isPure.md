@@ -6,18 +6,18 @@
 
 # Function: isPure()
 
-> **isPure**\<`TComputation`\>(`computation`): `computation is TComputation & PureComputationLike`
+> **isPure**\<`TComputationType`\>(`computation`): `computation is TComputationType & PureComputationLike`
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputationType** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 ## Parameters
 
 ### computation
 
-`TComputation`
+`TComputationType`
 
 ## Returns
 
-`computation is TComputation & PureComputationLike`
+`computation is TComputationType & PureComputationLike`

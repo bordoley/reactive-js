@@ -4,15 +4,15 @@
 
 [Reactive-JS](../../../README.md) / [computations/Computation](../README.md) / FlatMapOperator
 
-# Interface: FlatMapOperator()\<TComputation, TFlattenKey\>
+# Interface: FlatMapOperator()\<TComputationType, TFlattenKey\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
 • **TFlattenKey** *extends* `string` \| `number` \| `symbol`
 
-> **FlatMapOperator**\<`TA`, `TB`\>(`key`, `selector`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
+> **FlatMapOperator**\<`TA`, `TB`\>(`key`, `selector`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -28,13 +28,13 @@
 
 ### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureSynchronousComputationOf`](../../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`PureSynchronousComputationOf`](../../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `TB`\>\>
 
 ## Returns
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
+[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `TA`, `TB`\>
 
-> **FlatMapOperator**\<`TA`, `TB`, `TInnerType`\>(`key`, `selector`, `options`?): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, `TInnerType`, `TA`, `TB`\>
+> **FlatMapOperator**\<`TA`, `TB`, `TInnerLike`\>(`key`, `selector`, `options`?): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, `TInnerLike`, `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -42,7 +42,7 @@
 
 • **TB**
 
-• **TInnerType** *extends* [`HigherOrderInnerComputationLike`](../../type-aliases/HigherOrderInnerComputationLike.md)
+• **TInnerLike** *extends* [`HigherOrderInnerComputationLike`](../../type-aliases/HigherOrderInnerComputationLike.md)
 
 ## Parameters
 
@@ -52,14 +52,14 @@
 
 ### selector
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<`TComputation`, `TInnerType`, `TB`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TA`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<`TComputationType`, `TInnerLike`, `TB`\>\>
 
 ### options?
 
 #### innerType
 
-`TInnerType`
+`TInnerLike`
 
 ## Returns
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputation`, `TInnerType`, `TA`, `TB`\>
+[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, `TInnerLike`, `TA`, `TB`\>

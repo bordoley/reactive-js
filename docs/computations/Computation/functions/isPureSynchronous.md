@@ -6,18 +6,18 @@
 
 # Function: isPureSynchronous()
 
-> **isPureSynchronous**\<`TComputation`\>(`computation`): `computation is TComputation & PureSynchronousComputationLike`
+> **isPureSynchronous**\<`TComputationType`\>(`computation`): `computation is TComputationType & PureSynchronousComputationLike`
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputationType** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 ## Parameters
 
 ### computation
 
-`TComputation`
+`TComputationType`
 
 ## Returns
 
-`computation is TComputation & PureSynchronousComputationLike`
+`computation is TComputationType & PureSynchronousComputationLike`

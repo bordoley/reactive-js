@@ -4,11 +4,11 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / ComputationTypeOf
 
-# Interface: ComputationTypeOf\<TComputation, T\>
+# Interface: ComputationTypeOf\<TComputationType, T\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
 
 • **T** = `unknown`
 
@@ -16,28 +16,28 @@
 
 ### \[Computation\_deferredWithSideEffectsOfT\]?
 
-> `readonly` `optional` **\[Computation\_deferredWithSideEffectsOfT\]**: [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+> `readonly` `optional` **\[Computation\_deferredWithSideEffectsOfT\]**: [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 ***
 
 ### \[Computation\_multicastOfT\]?
 
-> `readonly` `optional` **\[Computation\_multicastOfT\]**: [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputation`, `T`\>
+> `readonly` `optional` **\[Computation\_multicastOfT\]**: [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `T`\>
 
 ***
 
 ### \[Computation\_pureDeferredOfT\]?
 
-> `readonly` `optional` **\[Computation\_pureDeferredOfT\]**: [`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputation`, `T`\>
+> `readonly` `optional` **\[Computation\_pureDeferredOfT\]**: [`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `T`\>
 
 ***
 
 ### \[Computation\_pureSynchronousOfT\]?
 
-> `readonly` `optional` **\[Computation\_pureSynchronousOfT\]**: [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+> `readonly` `optional` **\[Computation\_pureSynchronousOfT\]**: [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>
 
 ***
 
 ### \[Computation\_synchronousWithSideEffectsOfT\]?
 
-> `readonly` `optional` **\[Computation\_synchronousWithSideEffectsOfT\]**: [`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+> `readonly` `optional` **\[Computation\_synchronousWithSideEffectsOfT\]**: [`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>

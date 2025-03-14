@@ -6,7 +6,7 @@
 
 # Type Alias: ToObservableOperator()\<TComputationType, T\>
 
-> **ToObservableOperator**\<`TComputationType`, `T`\>: \<`TComputation`\>(`computation`) => `TComputation` *extends* [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputationType`, `T`\> ? [`PureSynchronousObservableLike`](../interfaces/PureSynchronousObservableLike.md)\<`T`\> : `TComputation` *extends* [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`SynchronousObservableWithSideEffectsLike`](../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> : `TComputation` *extends* [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputationType`, `T`\> ? [`PureDeferredObservableLike`](../interfaces/PureDeferredObservableLike.md)\<`T`\> : `TComputation` *extends* [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `TComputation` *extends* [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `T`\> ? [`MulticastObservableLike`](../interfaces/MulticastObservableLike.md)\<`T`\> : `never`
+> **ToObservableOperator**\<`TComputationType`, `T`\>: \<`TComputationBaseOf`\>(`computation`) => `TComputationBaseOf` *extends* [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputationType`, `T`\> ? [`PureSynchronousObservableLike`](../interfaces/PureSynchronousObservableLike.md)\<`T`\> : `TComputationBaseOf` *extends* [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`SynchronousObservableWithSideEffectsLike`](../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> : `TComputationBaseOf` *extends* [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputationType`, `T`\> ? [`PureDeferredObservableLike`](../interfaces/PureDeferredObservableLike.md)\<`T`\> : `TComputationBaseOf` *extends* [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `TComputationBaseOf` *extends* [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `T`\> ? [`MulticastObservableLike`](../interfaces/MulticastObservableLike.md)\<`T`\> : `never`
 
 ## Type Parameters
 
@@ -16,14 +16,14 @@
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `T`\>
+• **TComputationBaseOf** *extends* [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `T`\>
 
 ## Parameters
 
 ### computation
 
-`TComputation`
+`TComputationBaseOf`
 
 ## Returns
 
-`TComputation` *extends* [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputationType`, `T`\> ? [`PureSynchronousObservableLike`](../interfaces/PureSynchronousObservableLike.md)\<`T`\> : `TComputation` *extends* [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`SynchronousObservableWithSideEffectsLike`](../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> : `TComputation` *extends* [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputationType`, `T`\> ? [`PureDeferredObservableLike`](../interfaces/PureDeferredObservableLike.md)\<`T`\> : `TComputation` *extends* [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `TComputation` *extends* [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `T`\> ? [`MulticastObservableLike`](../interfaces/MulticastObservableLike.md)\<`T`\> : `never`
+`TComputationBaseOf` *extends* [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputationType`, `T`\> ? [`PureSynchronousObservableLike`](../interfaces/PureSynchronousObservableLike.md)\<`T`\> : `TComputationBaseOf` *extends* [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`SynchronousObservableWithSideEffectsLike`](../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> : `TComputationBaseOf` *extends* [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputationType`, `T`\> ? [`PureDeferredObservableLike`](../interfaces/PureDeferredObservableLike.md)\<`T`\> : `TComputationBaseOf` *extends* [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`DeferredObservableWithSideEffectsLike`](../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> : `TComputationBaseOf` *extends* [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `T`\> ? [`MulticastObservableLike`](../interfaces/MulticastObservableLike.md)\<`T`\> : `never`

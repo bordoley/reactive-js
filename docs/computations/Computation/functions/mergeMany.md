@@ -6,18 +6,18 @@
 
 # Function: mergeMany()
 
-> **mergeMany**\<`TComputation`\>(`m`): [`MergeManyOperator`](../interfaces/MergeManyOperator.md)\<`TComputation`\>
+> **mergeMany**\<`TComputationType`\>(`m`): [`MergeManyOperator`](../interfaces/MergeManyOperator.md)\<`TComputationType`\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
 ## Parameters
 
 ### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputation`, [`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<`TComputation`\>, `"merge"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<`TComputationType`\>, `"merge"`\>
 
 ## Returns
 
-[`MergeManyOperator`](../interfaces/MergeManyOperator.md)\<`TComputation`\>
+[`MergeManyOperator`](../interfaces/MergeManyOperator.md)\<`TComputationType`\>

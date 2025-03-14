@@ -4,11 +4,11 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / SynchronousComputationModule
 
-# Interface: SynchronousComputationModule\<TComputation\>
+# Interface: SynchronousComputationModule\<TComputationType\>
 
 ## Extends
 
-- [`ComputationModuleLike`](ComputationModuleLike.md)\<`TComputation`\>
+- [`ComputationModuleLike`](ComputationModuleLike.md)\<`TComputationType`\>
 
 ## Extended by
 
@@ -18,13 +18,13 @@
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
 
 ## Properties
 
 ### \[ComputationModuleLike\_computationType\]?
 
-> `optional` **\[ComputationModuleLike\_computationType\]**: `TComputation`
+> `optional` **\[ComputationModuleLike\_computationType\]**: `TComputationType`
 
 #### Inherited from
 
@@ -34,7 +34,7 @@
 
 ### empty()
 
-> **empty**\<`T`\>(): [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+> **empty**\<`T`\>(): [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -42,13 +42,13 @@
 
 #### Returns
 
-[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>
 
 ***
 
 ### first()
 
-> **first**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
+> **first**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -56,13 +56,13 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
 
 ***
 
 ### fromIterable()
 
-> **fromIterable**\<`T`\>(): [`FromIterableSynchronousOperator`](../type-aliases/FromIterableSynchronousOperator.md)\<`TComputation`, `T`\>
+> **fromIterable**\<`T`\>(): [`FromIterableSynchronousOperator`](../type-aliases/FromIterableSynchronousOperator.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -70,13 +70,13 @@
 
 #### Returns
 
-[`FromIterableSynchronousOperator`](../type-aliases/FromIterableSynchronousOperator.md)\<`TComputation`, `T`\>
+[`FromIterableSynchronousOperator`](../type-aliases/FromIterableSynchronousOperator.md)\<`TComputationType`, `T`\>
 
 ***
 
 ### fromReadonlyArray()
 
-> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>\>
+> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>\>
 
 #### Type Parameters
 
@@ -96,13 +96,13 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>\>
 
 ***
 
 ### fromValue()
 
-> **fromValue**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>\>
+> **fromValue**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>\>
 
 #### Type Parameters
 
@@ -110,13 +110,13 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>\>
 
 ***
 
 ### generate()
 
-> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -140,13 +140,13 @@
 
 #### Returns
 
-[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>
 
 ***
 
 ### last()
 
-> **last**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
+> **last**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -154,13 +154,13 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
 
 ***
 
 ### raise()
 
-> **raise**\<`T`\>(`options`?): [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+> **raise**\<`T`\>(`options`?): [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -176,13 +176,13 @@
 
 #### Returns
 
-[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputation`, `T`\>
+[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>
 
 ***
 
 ### reduce()
 
-> **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, `TAcc`\>
+> **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, `TAcc`\>
 
 #### Type Parameters
 
@@ -202,13 +202,13 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, `TAcc`\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, `TAcc`\>
 
 ***
 
 ### toReadonlyArray()
 
-> **toReadonlyArray**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>
+> **toReadonlyArray**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, readonly `T`[]\>
 
 #### Type Parameters
 
@@ -216,13 +216,13 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputation`, `T`\>, readonly `T`[]\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, readonly `T`[]\>
 
 ***
 
 ### toRunnable()
 
-> **toRunnable**\<`T`\>(): [`ToRunnableOperator`](../type-aliases/ToRunnableOperator.md)\<`TComputation`, `T`\>
+> **toRunnable**\<`T`\>(): [`ToRunnableOperator`](../type-aliases/ToRunnableOperator.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -230,4 +230,4 @@
 
 #### Returns
 
-[`ToRunnableOperator`](../type-aliases/ToRunnableOperator.md)\<`TComputation`, `T`\>
+[`ToRunnableOperator`](../type-aliases/ToRunnableOperator.md)\<`TComputationType`, `T`\>

@@ -6,18 +6,18 @@
 
 # Function: concatWith()
 
-> **concatWith**\<`TComputation`\>(`m`): [`ConcatWithOperator`](../interfaces/ConcatWithOperator.md)\<`TComputation`\>
+> **concatWith**\<`TComputationType`\>(`m`): [`ConcatWithOperator`](../interfaces/ConcatWithOperator.md)\<`TComputationType`\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
 ## Parameters
 
 ### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputation`, [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputation`\>, `"concat"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputationType`\>, `"concat"`\>
 
 ## Returns
 
-[`ConcatWithOperator`](../interfaces/ConcatWithOperator.md)\<`TComputation`\>
+[`ConcatWithOperator`](../interfaces/ConcatWithOperator.md)\<`TComputationType`\>

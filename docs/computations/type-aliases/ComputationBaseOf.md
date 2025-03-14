@@ -4,12 +4,12 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / ComputationBaseOf
 
-# Type Alias: ComputationBaseOf\<TComputation, T\>
+# Type Alias: ComputationBaseOf\<TComputationType, T\>
 
-> **ComputationBaseOf**\<`TComputation`, `T`\>: `TComputation` *extends* `object` ? `NonNullable`\<`TComputation` & `object`\[*typeof* [`Computation_baseOfT`](../variables/Computation_baseOfT.md)\]\> : `object`
+> **ComputationBaseOf**\<`TComputationType`, `T`\>: `TComputationType` *extends* `object` ? `NonNullable`\<`TComputationType` & `object`\[*typeof* [`Computation_baseOfT`](../variables/Computation_baseOfT.md)\]\> : `object`
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
 
 • **T**

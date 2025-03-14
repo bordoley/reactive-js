@@ -4,12 +4,12 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / DeferredComputationWithSideEffectsOf
 
-# Type Alias: DeferredComputationWithSideEffectsOf\<TComputation, T\>
+# Type Alias: DeferredComputationWithSideEffectsOf\<TComputationType, T\>
 
-> **DeferredComputationWithSideEffectsOf**\<`TComputation`, `T`\>: `TComputation` *extends* `object` ? `NonNullable`\<`TComputation` & `object`\[*typeof* [`Computation_deferredWithSideEffectsOfT`](../variables/Computation_deferredWithSideEffectsOfT.md)\] & [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputation`, `T`\>\> : `object`
+> **DeferredComputationWithSideEffectsOf**\<`TComputationType`, `T`\>: `TComputationType` *extends* `object` ? `NonNullable`\<`TComputationType` & `object`\[*typeof* [`Computation_deferredWithSideEffectsOfT`](../variables/Computation_deferredWithSideEffectsOfT.md)\] & [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `T`\>\> : `object`
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
 
 • **T**

@@ -4,12 +4,12 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / DeferredComputationOf
 
-# Type Alias: DeferredComputationOf\<TComputation, T\>
+# Type Alias: DeferredComputationOf\<TComputationType, T\>
 
-> **DeferredComputationOf**\<`TComputation`, `T`\>: [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputation`, `T`\> \| [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputation`, `T`\>
+> **DeferredComputationOf**\<`TComputationType`, `T`\>: [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputationType`, `T`\> \| [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
 
 • **T**

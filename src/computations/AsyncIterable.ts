@@ -165,11 +165,11 @@ class CatchErrorAsyncIterable<T> implements AsyncIterableLike<T> {
 
 export const catchError: Signature["catchError"] = (<
     T,
-    TInnerType extends HigherOrderInnerComputationLike,
+    TInnerLike extends HigherOrderInnerComputationLike,
   >(
     onError: SideEffect1<Error> | Function1<Error, AsyncIterableLike<T>>,
     options?: {
-      readonly innerType: TInnerType;
+      readonly innerType: TInnerLike;
     },
   ) =>
   (iter: AsyncIterableLike<T>) =>
@@ -199,9 +199,9 @@ class ConcatAllAsyncIterable<T> implements AsyncIterableLike<T> {
 }
 export const concatAll: Signature["concatAll"] = (<
     T,
-    TInnerType extends HigherOrderInnerComputationLike,
+    TInnerLike extends HigherOrderInnerComputationLike,
   >(options?: {
-    readonly innerType: TInnerType;
+    readonly innerType: TInnerLike;
   }) =>
   (iterable: AsyncIterableLike<AsyncIterableLike<T>>) =>
     newInstance(

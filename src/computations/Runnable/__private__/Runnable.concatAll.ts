@@ -44,9 +44,9 @@ class ConcatAllSink<T> extends AbstractSink<
 
 const Runnable_concatAll: Runnable.Signature["concatAll"] = (<
   T,
-  TInnerType extends HigherOrderInnerComputationLike,
+  TInnerLike extends HigherOrderInnerComputationLike,
 >(options?: {
-  readonly innerType: TInnerType;
+  readonly innerType: TInnerLike;
 }) =>
   Runnable_lift((sink: SinkLike<T>) => {
     const innerSink = newInstance(DelegatingNonCompletingSink, sink);

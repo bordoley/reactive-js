@@ -50,11 +50,11 @@ import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSyn
 import StatelessAsynchronousComputationOperatorTests from "./operators/StatelessAsynchronousComputationOperatorTests.js";
 
 const ConcurrentReactiveComputationModuleTests = <
-  TComputation extends ComputationType,
+  TComputationType extends ComputationType,
 >(
-  m: ConcurrentReactiveComputationModule<TComputation> &
-    ComputationModule<TComputation>,
-  computationType: ComputationTypeOf<TComputation>,
+  m: ConcurrentReactiveComputationModule<TComputationType> &
+    ComputationModule<TComputationType>,
+  computations: ComputationTypeOf<TComputationType>,
 ) => {
   const {
     [Computation_pureSynchronousOfT]: pureSynchronousOfT,
@@ -62,7 +62,7 @@ const ConcurrentReactiveComputationModuleTests = <
     [Computation_pureDeferredOfT]: pureDeferredOfT,
     [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT,
     [Computation_multicastOfT]: multicastOfT,
-  } = computationType;
+  } = computations;
 
   return describe(
     "ConcurrentReactiveComputationModule",
@@ -115,7 +115,7 @@ const ConcurrentReactiveComputationModuleTests = <
           ],
           ReadonlyArray.map<
             number[],
-            ComputationOf<TComputation, number>,
+            ComputationOf<TComputationType, number>,
             number
           >(
             compose(
@@ -378,27 +378,27 @@ const ConcurrentReactiveComputationModuleTests = <
       }),
       pureSynchronousOfT &&
         StatefulSynchronousComputationOperatorTests(
-          computationType,
+          computations,
           m.withLatestFrom(pureSynchronousOfT),
         ),
       synchronousWithSideEffectsOfT &&
         ComputationOperatorWithSideEffectsTests(
-          computationType,
+          computations,
           m.withLatestFrom(synchronousWithSideEffectsOfT),
         ),
       pureDeferredOfT &&
         StatefulAsynchronousComputationOperatorTests(
-          computationType,
+          computations,
           m.withLatestFrom(pureDeferredOfT),
         ),
       deferredWithSideEffectsOfT &&
         AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests(
-          computationType,
+          computations,
           m.withLatestFrom(deferredWithSideEffectsOfT),
         ),
       multicastOfT &&
         StatelessAsynchronousComputationOperatorTests(
-          computationType,
+          computations,
           m.withLatestFrom(multicastOfT),
         ),
     ),

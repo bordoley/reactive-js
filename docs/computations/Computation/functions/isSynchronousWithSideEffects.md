@@ -6,18 +6,18 @@
 
 # Function: isSynchronousWithSideEffects()
 
-> **isSynchronousWithSideEffects**\<`TComputation`\>(`computation`): `computation is TComputation & SynchronousComputationWithSideEffectsLike`
+> **isSynchronousWithSideEffects**\<`TComputationType`\>(`computation`): `computation is TComputationType & SynchronousComputationWithSideEffectsLike`
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputationType** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
 
 ## Parameters
 
 ### computation
 
-`TComputation`
+`TComputationType`
 
 ## Returns
 
-`computation is TComputation & SynchronousComputationWithSideEffectsLike`
+`computation is TComputationType & SynchronousComputationWithSideEffectsLike`

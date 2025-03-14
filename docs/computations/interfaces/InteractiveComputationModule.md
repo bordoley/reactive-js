@@ -4,11 +4,11 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / InteractiveComputationModule
 
-# Interface: InteractiveComputationModule\<TComputation\>
+# Interface: InteractiveComputationModule\<TComputationType\>
 
 ## Extends
 
-- [`ComputationModuleLike`](ComputationModuleLike.md)\<`TComputation`\>
+- [`ComputationModuleLike`](ComputationModuleLike.md)\<`TComputationType`\>
 
 ## Extended by
 
@@ -17,13 +17,13 @@
 
 ## Type Parameters
 
-• **TComputation** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
 
 ## Properties
 
 ### \[ComputationModuleLike\_computationType\]?
 
-> `optional` **\[ComputationModuleLike\_computationType\]**: `TComputation`
+> `optional` **\[ComputationModuleLike\_computationType\]**: `TComputationType`
 
 #### Inherited from
 
@@ -33,4 +33,4 @@
 
 ### zip
 
-> **zip**: `ZipConstructor`\<`TComputation`\>
+> **zip**: `ZipConstructor`\<`TComputationType`\>
