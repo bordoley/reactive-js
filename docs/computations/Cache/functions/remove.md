@@ -6,7 +6,7 @@
 
 # Function: remove()
 
-> **remove**\<`T`\>(`cache`, `key`): `boolean`
+> **remove**\<`T`\>(`cache`, `key`): `void`
 
 ## Type Parameters
 
@@ -24,4 +24,4 @@
 
 ## Returns
 
-`boolean`
+`void`

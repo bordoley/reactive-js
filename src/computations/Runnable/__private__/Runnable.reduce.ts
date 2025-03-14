@@ -3,13 +3,13 @@ import { Factory, Reducer, newInstance } from "../../../functions.js";
 import {
   SinkLike,
   SinkLike_complete,
-  SinkLike_isComplete,
+  SinkLike_isCompleted,
   SinkLike_next,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
 class ReducerSink<T, TAcc> implements SinkLike<T> {
-  public [SinkLike_isComplete] = false;
+  public [SinkLike_isCompleted] = false;
 
   constructor(
     private readonly r: Reducer<T, TAcc>,
@@ -20,7 +20,7 @@ class ReducerSink<T, TAcc> implements SinkLike<T> {
     this.acc = this.r(this.acc, next);
   }
   [SinkLike_complete]() {
-    this[SinkLike_isComplete] = true;
+    this[SinkLike_isCompleted] = true;
   }
 }
 

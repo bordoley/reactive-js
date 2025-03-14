@@ -3,7 +3,7 @@
 import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { alwaysTrue, isFunction, isNone, newInstance, } from "../../../functions.js";
 import DelegatingNonCompletingSink from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
-import { SinkLike_complete, SinkLike_isComplete, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 class RepeatRunnable {
     s;
@@ -22,7 +22,7 @@ class RepeatRunnable {
         while (true) {
             source[RunnableLike_eval](delegatingSink);
             cnt++;
-            if (sink[SinkLike_isComplete] || !predicate(cnt)) {
+            if (sink[SinkLike_isCompleted] || !predicate(cnt)) {
                 break;
             }
         }

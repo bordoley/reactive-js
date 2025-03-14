@@ -59,9 +59,9 @@ import {
   EventListenerLike_notify,
   QueueLike_dequeue,
   QueueableLike,
-  QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_schedule,
+  SinkLike_next,
 } from "../utils.js";
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
@@ -99,22 +99,22 @@ interface CacheModule {
     },
   ): CacheLike<T> & DisposableLike;
   get<T>(cache: CacheLike<T>, key: string): ObservableLike<T>;
-  remove<T>(cache: CacheLike<T>, key: string): boolean;
-  removeMany<T>(cache: CacheLike<T>, keys: ReadonlyArray<string>): boolean;
-  set<T>(cache: CacheLike<T>, key: string, v: Optional<T>): boolean;
+  remove<T>(cache: CacheLike<T>, key: string): void;
+  removeMany<T>(cache: CacheLike<T>, keys: ReadonlyArray<string>): void;
+  set<T>(cache: CacheLike<T>, key: string, v: Optional<T>): void;
   setMany<T>(
     cache: CacheLike<T>,
     keyValues: ReadonlyObjectMapLike<string, Optional<T>>,
-  ): boolean;
+  ): void;
   update<T>(
     cache: CacheLike<T>,
     key: string,
     updater: Updater<Optional<T>>,
-  ): boolean;
+  ): void;
   updateMany<T>(
     cache: CacheLike<T>,
     keyValues: ReadonlyObjectMapLike<string, Updater<Optional<T>>>,
-  ): boolean;
+  ): void;
 }
 
 export type Signature = CacheModule;
@@ -332,7 +332,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           return;
         }
 
-        cleanupQueue[QueueableLike_enqueue](key);
+        cleanupQueue[SinkLike_next](key);
 
         if (!cleanupJob[DisposableLike_isDisposed]) {
           return;
@@ -393,7 +393,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
               subject[EventListenerLike_notify](initialValue);
             } else {
               // Try to load the value from the persistence store
-              this[QueueableLike_enqueue]({
+              this[SinkLike_next]({
                 [key]: identity,
               });
             }
@@ -409,13 +409,13 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
 export const get = <T>(cache: CacheLike<T>, key: string): ObservableLike<T> =>
   cache[CacheLike_get](key);
 
-export const remove = <T>(cache: CacheLike<T>, key: string): boolean =>
+export const remove = <T>(cache: CacheLike<T>, key: string) =>
   updateMany(cache, { [key]: alwaysNone });
 
 export const removeMany = <T>(
   cache: CacheLike<T>,
   keys: ReadonlyArray<string>,
-): boolean =>
+) =>
   updateMany(
     cache,
     pipe(
@@ -428,16 +428,13 @@ export const removeMany = <T>(
     ),
   );
 
-export const set = <T>(
-  cache: CacheLike<T>,
-  key: string,
-  v: Optional<T>,
-): boolean => update(cache, key, returns(v));
+export const set = <T>(cache: CacheLike<T>, key: string, v: Optional<T>) =>
+  update(cache, key, returns(v));
 
 export const setMany = <T>(
   cache: CacheLike<T>,
   keyValues: ReadonlyObjectMapLike<string, Optional<T>>,
-): boolean =>
+) =>
   updateMany(
     cache,
     pipe(
@@ -450,9 +447,9 @@ export const update = <T>(
   cache: CacheLike<T>,
   key: string,
   updater: Updater<Optional<T>>,
-): boolean => updateMany(cache, { [key]: updater });
+) => updateMany(cache, { [key]: updater });
 
 export const updateMany = <T>(
   cache: CacheLike<T>,
   keyValues: ReadonlyObjectMapLike<string, Updater<Optional<T>>>,
-): boolean => cache[QueueableLike_enqueue](keyValues);
+) => cache[SinkLike_next](keyValues);

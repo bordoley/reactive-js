@@ -5,7 +5,7 @@ import { ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../.
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseIf, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_complete, QueueableLike_enqueue, SchedulerLike_schedule, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, SchedulerLike_schedule, SinkLike_complete, SinkLike_next, } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -101,7 +101,7 @@ class ComputeContext {
             !effect[AwaitOrObserveEffect_subscription][DisposableLike_isDisposed]) >= 0;
         if (!hasOutstandingEffects &&
             this[ComputeContext_scheduledComputationSubscription][DisposableLike_isDisposed]) {
-            this[ComputeContext_observer][QueueableLike_complete]();
+            this[ComputeContext_observer][SinkLike_complete]();
         }
     };
     constructor(observer, runComputation, mode, config) {
@@ -251,10 +251,10 @@ const Observable_computeWithConfig = ((computation, config, { mode = BatchedComp
             return;
         }
         if (shouldNotify) {
-            observer[QueueableLike_enqueue](result);
+            observer[SinkLike_next](result);
         }
         if (shouldComplete) {
-            observer[QueueableLike_complete]();
+            observer[SinkLike_complete]();
         }
     };
     const ctx = newInstance(ComputeContext, observer, runComputation, mode, config);

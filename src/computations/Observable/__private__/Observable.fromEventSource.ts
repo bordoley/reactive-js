@@ -19,8 +19,8 @@ import {
   DisposableContainerLike,
   DisposableLike_dispose,
   ObserverLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
+  SinkLike_complete,
+  SinkLike_next,
 } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";
 import type * as Observable from "../../Observable.js";
@@ -66,14 +66,12 @@ const Observable_fromEventSource: Observable.Signature["fromEventSource"] =
             pipe(
               this[FromEventSourceObservable_eventSource],
               DisposableContainer.onComplete(
-                bindMethod(observer, QueueableLike_complete),
+                bindMethod(observer, SinkLike_complete),
               ),
               DisposableContainer.onError(
                 bindMethod(observer, DisposableLike_dispose),
               ),
-              EventSource.addEventHandler(
-                bindMethod(observer, QueueableLike_enqueue),
-              ),
+              EventSource.addEventHandler(bindMethod(observer, SinkLike_next)),
               Disposable.addTo(observer),
             );
           },

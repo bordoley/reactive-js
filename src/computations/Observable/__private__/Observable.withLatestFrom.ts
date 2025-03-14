@@ -33,8 +33,8 @@ import {
   DisposableLike,
   ObserverLike,
   QueueableLike,
-  QueueableLike_complete,
-  QueueableLike_isCompleted,
+  SinkLike_complete,
+  SinkLike_isCompleted,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -68,7 +68,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
     this: TProperties & DisposableLike & QueueableLike,
   ) {
     if (!this[WithLatestFromObserver_hasLatest]) {
-      this[QueueableLike_complete]();
+      this[SinkLike_complete]();
     }
   }
 
@@ -114,8 +114,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
         next: TA,
       ) {
         const shouldEmit =
-          !this[QueueableLike_isCompleted] &&
-          this[WithLatestFromObserver_hasLatest];
+          !this[SinkLike_isCompleted] && this[WithLatestFromObserver_hasLatest];
 
         if (shouldEmit) {
           const v = this[WithLatestFromObserver_selector](

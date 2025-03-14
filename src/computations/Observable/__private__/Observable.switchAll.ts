@@ -28,11 +28,11 @@ import LiftedObserverMixin, {
 import {
   DisposableLike_isDisposed,
   ObserverLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
-  QueueableLike_isCompleted,
   SerialDisposableLike,
   SerialDisposableLike_current,
+  SinkLike_complete,
+  SinkLike_isCompleted,
+  SinkLike_next,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -53,8 +53,8 @@ const createSwitchAllObserver: <T>(
   function onSwitchAllObserverInnerObservableComplete(
     this: TProperties & LiftedObserverLike<ObservableLike<T>, T>,
   ) {
-    if (this[QueueableLike_isCompleted]) {
-      this[LiftedObserverLike_delegate][QueueableLike_complete]();
+    if (this[SinkLike_isCompleted]) {
+      this[LiftedObserverLike_delegate][SinkLike_complete]();
     }
   }
 
@@ -94,7 +94,7 @@ const createSwitchAllObserver: <T>(
         const delegate = this[LiftedObserverLike_delegate];
         this[SwitchAllObserver_currentRef][SerialDisposableLike_current] = pipe(
           next,
-          Observable_forEach(bindMethod(delegate, QueueableLike_enqueue)),
+          Observable_forEach(bindMethod(delegate, SinkLike_next)),
           Observable_subscribeWithConfig(delegate, this),
           Disposable.addTo(delegate),
           DisposableContainer.onComplete(
@@ -111,7 +111,7 @@ const createSwitchAllObserver: <T>(
             DisposableLike_isDisposed
           ]
         ) {
-          this[LiftedObserverLike_delegate][QueueableLike_complete]();
+          this[LiftedObserverLike_delegate][SinkLike_complete]();
         }
       },
     }),

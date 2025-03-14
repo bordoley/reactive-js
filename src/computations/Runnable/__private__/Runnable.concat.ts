@@ -8,7 +8,7 @@ import DelegatingNonCompletingSink from "../../../utils/Sink/__internal__/Delega
 import {
   SinkLike,
   SinkLike_complete,
-  SinkLike_isComplete,
+  SinkLike_isCompleted,
 } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
@@ -26,7 +26,7 @@ class ConcatRunnable<T> implements RunnableLike<T> {
     for (const src of this.s) {
       src[RunnableLike_eval](delegatingSink);
 
-      if (sink[SinkLike_isComplete]) {
+      if (sink[SinkLike_isCompleted]) {
         break;
       }
     }

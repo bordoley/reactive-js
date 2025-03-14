@@ -12,7 +12,7 @@ import { bind, bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
-import { ObserverLike, QueueableLike_complete } from "../../../utils.js";
+import { ObserverLike, SinkLike_complete } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_empty from "./Observable.empty.js";
 
@@ -38,7 +38,7 @@ const Observable_concat: Observable.Signature["concat"] = /*@__PURE__*/ (<
       const concatObserver = createConcatObserver(this);
       observables[next][ObservableLike_observe](concatObserver);
     } else {
-      delegate[QueueableLike_complete]();
+      delegate[SinkLike_complete]();
     }
   }
 

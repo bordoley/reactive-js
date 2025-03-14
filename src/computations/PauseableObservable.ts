@@ -23,8 +23,9 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike,
-  QueueableLike_enqueue,
+  QueueableLike_isReady,
   QueueableLike_onReady,
+  SinkLike_next,
 } from "../utils.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
@@ -100,7 +101,9 @@ export const enqueue: Signature["enqueue"] =
       pipe(
         src,
         Observable_forEach<T>(v => {
-          if (!queue[QueueableLike_enqueue](v)) {
+          queue[SinkLike_next](v);
+
+          if (!queue[QueueableLike_isReady]) {
             src[PauseableLike_pause]();
           }
         }),

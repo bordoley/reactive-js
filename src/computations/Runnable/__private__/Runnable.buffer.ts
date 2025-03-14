@@ -8,7 +8,7 @@ import { clampPositiveNonZeroInteger } from "../../../math.js";
 import {
   SinkLike,
   SinkLike_complete,
-  SinkLike_isComplete,
+  SinkLike_isCompleted,
   SinkLike_next,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
@@ -16,7 +16,7 @@ import Runnable_lift from "./Runnable.lift.js";
 
 class BufferSink<T> implements SinkLike<T> {
   public buffer: T[] = [];
-  public [SinkLike_isComplete] = false;
+  public [SinkLike_isCompleted] = false;
 
   constructor(
     private readonly sink: SinkLike<readonly T[]>,
@@ -33,13 +33,13 @@ class BufferSink<T> implements SinkLike<T> {
     }
   }
   [SinkLike_complete]() {
-    if (!this[SinkLike_isComplete]) {
+    if (!this[SinkLike_isCompleted]) {
       const { buffer } = this;
       this.buffer = [];
       if (buffer[Array_length] > 0) {
         this.sink[SinkLike_next](buffer);
       }
-      this[SinkLike_isComplete] = true;
+      this[SinkLike_isCompleted] = true;
       this.sink[SinkLike_complete]();
     }
   }

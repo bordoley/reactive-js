@@ -13,7 +13,7 @@ import {
 import {
   SinkLike,
   SinkLike_complete,
-  SinkLike_isComplete,
+  SinkLike_isCompleted,
   SinkLike_next,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
@@ -33,7 +33,7 @@ class GeneratorRunnable<T> implements PureRunnableLike<T> {
 
     for (
       let cnt = 0;
-      (count === none || cnt < count) && !sink[SinkLike_isComplete];
+      (count === none || cnt < count) && !sink[SinkLike_isCompleted];
       cnt++
     ) {
       acc = generator(acc);

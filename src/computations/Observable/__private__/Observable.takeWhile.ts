@@ -12,7 +12,7 @@ import LiftedObserverMixin, {
   LiftedObserverLike_notify,
   LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { ObserverLike, QueueableLike_complete } from "../../../utils.js";
+import { ObserverLike, SinkLike_complete } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
@@ -63,7 +63,7 @@ const createTakeWhileObserver: <T>(
         }
 
         if (!satisfiesPredicate) {
-          this[QueueableLike_complete]();
+          this[SinkLike_complete]();
         }
       },
     }),

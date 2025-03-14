@@ -7,7 +7,7 @@ import { alwaysTrue, bindMethod, error, invoke, isFunction, isNone, isSome, newI
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, QueueableLike_complete, QueueableLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, } from "../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, QueueableLike_isReady, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SinkLike_complete, SinkLike_next, } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource/__private__/EventSource.create.js";
@@ -454,10 +454,11 @@ export const toPauseableObservable = (scheduler, options) => (iterable) => Pause
                 observer[SchedulerLike_now] - startTime < maxYieldInterval) {
                 const next = await iterator[Iterator_next]();
                 if (next[Iterator_done]) {
-                    observer[QueueableLike_complete]();
+                    observer[SinkLike_complete]();
                     break;
                 }
-                else if (!observer[QueueableLike_enqueue](next[Iterator_value])) {
+                else if ((observer[SinkLike_next](next[Iterator_value]),
+                    !observer[QueueableLike_isReady])) {
                     // An async iterable can produce resolved promises which are immediately
                     // scheduled on the microtask queue. This prevents the observer's scheduler
                     // from running and draining queued events.
@@ -481,7 +482,7 @@ export const toPauseableObservable = (scheduler, options) => (iterable) => Pause
         if (!isPaused && wasPaused) {
             pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
         }
-    }), Disposable.addTo(observer), DisposableContainer.onComplete(bindMethod(observer, QueueableLike_complete)));
+    }), Disposable.addTo(observer), DisposableContainer.onComplete(bindMethod(observer, SinkLike_complete)));
 }), Observable_multicast(scheduler, options), Disposable.addToContainer(modeObs)));
 export const toReadonlyArrayAsync = 
 /*@__PURE__*/

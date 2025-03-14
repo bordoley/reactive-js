@@ -3,8 +3,8 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
+import LiftedObserverMixin, { LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const ScanObserver_acc = Symbol("ScanObserver_acc");
 const ScanObserver_reducer = Symbol("ScanObserver_reducer");
@@ -25,10 +25,9 @@ const createScanObserver = /*@__PURE__*/ (() => {
         [ScanObserver_reducer]: none,
     }), proto({
         [LiftedObserverLike_notify](next) {
-            const delegate = this[LiftedObserverLike_delegate];
             const nextAcc = this[ScanObserver_reducer](this[ScanObserver_acc], next);
             this[ScanObserver_acc] = nextAcc;
-            delegate[QueueableLike_enqueue](nextAcc);
+            this[LiftedObserverLike_notifyDelegate](nextAcc);
         },
     }));
 })();

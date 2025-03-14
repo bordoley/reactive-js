@@ -5,11 +5,11 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
-  QueueableLike_isCompleted,
   QueueableLike_isReady,
   QueueableLike_onReady,
+  SinkLike_complete,
+  SinkLike_isCompleted,
+  SinkLike_next,
 } from "../../utils.js";
 
 const DelegatingQueueableMixin: <TReq>() => Mixin1<
@@ -29,11 +29,11 @@ const DelegatingQueueableMixin: <TReq>() => Mixin1<
       function DelegatingQueueableMixin(
         this: Pick<
           QueueableLike,
-          | typeof QueueableLike_complete
+          | typeof SinkLike_complete
           | typeof QueueableLike_backpressureStrategy
           | typeof QueueableLike_capacity
-          | typeof QueueableLike_enqueue
-          | typeof QueueableLike_isCompleted
+          | typeof SinkLike_next
+          | typeof SinkLike_isCompleted
           | typeof QueueableLike_isReady
           | typeof QueueableLike_onReady
         > &
@@ -48,11 +48,9 @@ const DelegatingQueueableMixin: <TReq>() => Mixin1<
         [DelegatingQueueableMixin_delegate]: none,
       }),
       {
-        get [QueueableLike_isCompleted]() {
+        get [SinkLike_isCompleted]() {
           unsafeCast<TProperties>(this);
-          return this[DelegatingQueueableMixin_delegate][
-            QueueableLike_isCompleted
-          ];
+          return this[DelegatingQueueableMixin_delegate][SinkLike_isCompleted];
         },
 
         get [QueueableLike_isReady]() {
@@ -79,14 +77,12 @@ const DelegatingQueueableMixin: <TReq>() => Mixin1<
           ];
         },
 
-        [QueueableLike_enqueue](this: TProperties, v: TReq): boolean {
-          return this[DelegatingQueueableMixin_delegate][QueueableLike_enqueue](
-            v,
-          );
+        [SinkLike_next](this: TProperties, v: TReq) {
+          this[DelegatingQueueableMixin_delegate][SinkLike_next](v);
         },
 
-        [QueueableLike_complete](this: TProperties) {
-          this[DelegatingQueueableMixin_delegate][QueueableLike_complete]();
+        [SinkLike_complete](this: TProperties) {
+          this[DelegatingQueueableMixin_delegate][SinkLike_complete]();
         },
       },
     ),

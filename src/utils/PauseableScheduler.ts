@@ -24,7 +24,6 @@ import {
   QueueLike,
   QueueLike_dequeue,
   QueueLike_head,
-  QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -33,6 +32,7 @@ import {
   SchedulerLike_shouldYield,
   SerialDisposableLike,
   SerialDisposableLike_current,
+  SinkLike_next,
 } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
@@ -277,7 +277,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           QueueLike<SchedulerContinuationLike>,
         continuation: SchedulerContinuationLike,
       ) {
-        this[QueueableLike_enqueue](continuation);
+        this[SinkLike_next](continuation);
 
         scheduleOnHost(this);
       },

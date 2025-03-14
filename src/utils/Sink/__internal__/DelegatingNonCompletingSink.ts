@@ -1,7 +1,7 @@
 import {
   SinkLike,
   SinkLike_complete,
-  SinkLike_isComplete,
+  SinkLike_isCompleted,
   SinkLike_next,
 } from "../../../utils.js";
 
@@ -16,8 +16,8 @@ class DelegatingNonCompletingSink<T> implements SinkLike<T> {
     this[DelegatingNonCompletingSink_inner] = inner;
   }
 
-  get [SinkLike_isComplete](): boolean {
-    return this[DelegatingNonCompletingSink_inner][SinkLike_isComplete];
+  get [SinkLike_isCompleted](): boolean {
+    return this[DelegatingNonCompletingSink_inner][SinkLike_isCompleted];
   }
 
   [SinkLike_next](next: T): void {

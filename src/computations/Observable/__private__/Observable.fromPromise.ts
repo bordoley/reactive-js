@@ -17,9 +17,9 @@ import {
   DisposableContainerLike,
   DisposableLike_dispose,
   ObserverLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
-  QueueableLike_isCompleted,
+  SinkLike_complete,
+  SinkLike_isCompleted,
+  SinkLike_next,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 
@@ -67,9 +67,9 @@ const Observable_fromPromise: Observable.Signature["fromPromise"] =
             observer: ObserverLike<T>,
           ) {
             this[FromPromiseObservable_promise].then(next => {
-              if (!observer[QueueableLike_isCompleted]) {
-                observer[QueueableLike_enqueue](next);
-                observer[QueueableLike_complete]();
+              if (!observer[SinkLike_isCompleted]) {
+                observer[SinkLike_next](next);
+                observer[SinkLike_complete]();
               }
             }, Disposable.toErrorHandler(observer));
           },

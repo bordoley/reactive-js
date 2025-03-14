@@ -24,7 +24,7 @@ import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Ob
 import {
   DisposableLike_dispose,
   ObserverLike,
-  QueueableLike_complete,
+  SinkLike_complete,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_lift, {
@@ -39,7 +39,7 @@ const Observable_catchError: Observable.Signature["catchError"] =
         pipe(
           Observer_createWithDelegate<T>(delegate),
           DisposableContainer.onComplete(
-            bindMethod(delegate, QueueableLike_complete),
+            bindMethod(delegate, SinkLike_complete),
           ),
           DisposableContainer.onError(bind(onErrorHandler, delegate)),
         );
@@ -61,7 +61,7 @@ const Observable_catchError: Observable.Signature["catchError"] =
         if (isSome(action)) {
           action[ObservableLike_observe](this);
         } else {
-          this[QueueableLike_complete]();
+          this[SinkLike_complete]();
         }
       }
 

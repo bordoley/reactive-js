@@ -7,8 +7,8 @@ import { bind, none, partial, pipe, tuple, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, } from "../../../utils.js";
+import LiftedObserverMixin, { LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -18,7 +18,7 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
     const WithLatestFromObserver_selector = Symbol("WithLatestFromObserver_selector");
     function onWithLatestFromObserverOtherSubscriptionComplete() {
         if (!this[WithLatestFromObserver_hasLatest]) {
-            this[QueueableLike_complete]();
+            this[SinkLike_complete]();
         }
     }
     function onOtherNotify(next) {
@@ -37,12 +37,10 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
         [WithLatestFromObserver_selector]: none,
     }), proto({
         [LiftedObserverLike_notify](next) {
-            const delegate = this[LiftedObserverLike_delegate];
-            const shouldEmit = !this[QueueableLike_isCompleted] &&
-                this[WithLatestFromObserver_hasLatest];
+            const shouldEmit = !this[SinkLike_isCompleted] && this[WithLatestFromObserver_hasLatest];
             if (shouldEmit) {
                 const v = this[WithLatestFromObserver_selector](next, this[WithLatestFromObserver_otherLatest]);
-                delegate[QueueableLike_enqueue](v);
+                this[LiftedObserverLike_notifyDelegate](v);
             }
         },
     }));

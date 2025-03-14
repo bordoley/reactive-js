@@ -2,7 +2,7 @@
 
 import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { newInstance, none, } from "../../../functions.js";
-import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
 class GeneratorRunnable {
     generator;
     count;
@@ -16,7 +16,7 @@ class GeneratorRunnable {
     [RunnableLike_eval](sink) {
         const { count, generator } = this;
         let acc = this.initialValue();
-        for (let cnt = 0; (count === none || cnt < count) && !sink[SinkLike_isComplete]; cnt++) {
+        for (let cnt = 0; (count === none || cnt < count) && !sink[SinkLike_isCompleted]; cnt++) {
             acc = generator(acc);
             sink[SinkLike_next](acc);
         }

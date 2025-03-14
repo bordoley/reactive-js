@@ -8,7 +8,7 @@ import { ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike_o
 import { none, pick, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_next, } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 const zipMode = 2;
 const Observable_latest = /*@__PURE__*/ (() => {
@@ -36,10 +36,9 @@ const Observable_latest = /*@__PURE__*/ (() => {
             this[LatestObserver_latest] = next;
             this[LatestObserver_ready] = true;
             const isReady = observers[Array_every](pick(LatestObserver_ready));
-            let result = true;
             if (isReady) {
                 const value = pipe(observers, ReadonlyArray.map(pick(LatestObserver_latest)));
-                result = ctx[LatestCtx_delegate][QueueableLike_enqueue](value);
+                ctx[LatestCtx_delegate][SinkLike_next](value);
                 if (mode === zipMode) {
                     for (const sub of observers) {
                         sub[LatestObserver_ready] = false;
@@ -47,14 +46,13 @@ const Observable_latest = /*@__PURE__*/ (() => {
                     }
                 }
             }
-            return result;
         },
         [LiftedObserverLike_complete]() {
             const ctx = this[LatestObserver_ctx];
             ctx[LatestCtx_completedCount]++;
             if (ctx[LatestCtx_completedCount] ===
                 ctx[LatestCtx_observers][Array_length]) {
-                ctx[LatestCtx_delegate][QueueableLike_complete]();
+                ctx[LatestCtx_delegate][SinkLike_complete]();
             }
         },
     }));

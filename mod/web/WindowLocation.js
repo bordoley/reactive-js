@@ -12,7 +12,7 @@ import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ObservableLi
 import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, raiseIf, returns, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
-import { DisposableContainerLike_add, DropOldestBackpressureStrategy, QueueableLike_enqueue, } from "../utils.js";
+import { DisposableContainerLike_add, DropOldestBackpressureStrategy, SinkLike_next, } from "../utils.js";
 import { WindowLocationLike_canGoBack, WindowLocationLike_goBack, WindowLocationLike_push, WindowLocationLike_replace, } from "../web.js";
 import * as Element from "./Element.js";
 const { history, location } = window;
@@ -71,7 +71,7 @@ export const subscribe = /*@__PURE__*/ (() => {
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
         [WindowLocationLike_push](stateOrUpdater) {
-            this[WindowLocation_delegate][QueueableLike_enqueue]((prevState) => {
+            this[WindowLocation_delegate][SinkLike_next]((prevState) => {
                 const uri = createSerializableWindowLocationURI(isFunction(stateOrUpdater)
                     ? stateOrUpdater(prevState.uri)
                     : stateOrUpdater);
@@ -79,7 +79,7 @@ export const subscribe = /*@__PURE__*/ (() => {
             });
         },
         [WindowLocationLike_replace](stateOrUpdater) {
-            this[WindowLocation_delegate][QueueableLike_enqueue]((prevState) => {
+            this[WindowLocation_delegate][SinkLike_next]((prevState) => {
                 const uri = createSerializableWindowLocationURI(isFunction(stateOrUpdater)
                     ? stateOrUpdater(prevState.uri)
                     : stateOrUpdater);

@@ -6,15 +6,19 @@
 
 # Interface: SinkLike\<T\>
 
+## Extended by
+
+- [`QueueableLike`](QueueableLike.md)
+
 ## Type Parameters
 
 • **T** = `unknown`
 
 ## Properties
 
-### \[SinkLike\_isComplete\]
+### \[SinkLike\_isCompleted\]
 
-> `readonly` **\[SinkLike\_isComplete\]**: `boolean`
+> `readonly` **\[SinkLike\_isCompleted\]**: `boolean`
 
 ## Methods
 

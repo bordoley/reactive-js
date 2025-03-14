@@ -5,17 +5,16 @@ import {
   DropOldestBackpressureStrategy,
   QueueLike,
   QueueLike_dequeue,
-  QueueableLike_enqueue,
   SinkLike,
   SinkLike_complete,
-  SinkLike_isComplete,
+  SinkLike_isCompleted,
   SinkLike_next,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
 
 class TakeLastSink<T> implements SinkLike<T> {
-  public [SinkLike_isComplete] = false;
+  public [SinkLike_isCompleted] = false;
   private readonly q: QueueLike<T>;
 
   constructor(
@@ -29,18 +28,18 @@ class TakeLastSink<T> implements SinkLike<T> {
   }
 
   [SinkLike_next](next: T): void {
-    this.q[QueueableLike_enqueue](next);
+    this.q[SinkLike_next](next);
   }
 
   [SinkLike_complete](): void {
-    this[SinkLike_isComplete] = true;
+    this[SinkLike_isCompleted] = true;
     const queue = this.q;
     const sink = this.sink;
 
     let v: Optional<T> = none;
     while (
       ((v = queue[QueueLike_dequeue]()),
-      !sink[SinkLike_isComplete] && isSome(v))
+      !sink[SinkLike_isCompleted] && isSome(v))
     ) {
       sink[SinkLike_next](v as T);
     }

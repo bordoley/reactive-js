@@ -36,11 +36,11 @@ import {
   QueueLike_head,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
-  QueueableLike_isCompleted,
   QueueableLike_isReady,
   QueueableLike_onReady,
+  SinkLike_complete,
+  SinkLike_isCompleted,
+  SinkLike_next,
   ThrowBackpressureStrategy,
 } from "../../utils.js";
 
@@ -57,7 +57,7 @@ const QueueMixin: <T>() => Mixin1<
     | typeof QueueableLike_backpressureStrategy
     | typeof QueueLike_count
     | typeof QueueableLike_capacity
-    | typeof QueueableLike_isCompleted
+    | typeof SinkLike_isCompleted
     | typeof QueueableLike_onReady
   >
 > = /*@__PURE__*/ (<T>() => {
@@ -76,7 +76,7 @@ const QueueMixin: <T>() => Mixin1<
     [QueueMixin_capacityMask]: number;
     [QueueMixin_values]: Optional<Optional<T>[] | T>;
     readonly [QueueMixin_comparator]: Optional<Comparator<T>>;
-    [QueueableLike_isCompleted]: boolean;
+    [SinkLike_isCompleted]: boolean;
     [QueueableLike_onReady]: PublisherLike<void>;
   };
 
@@ -156,7 +156,7 @@ const QueueMixin: <T>() => Mixin1<
         [QueueMixin_capacityMask]: 31,
         [QueueMixin_values]: none,
         [QueueMixin_comparator]: none,
-        [QueueableLike_isCompleted]: false,
+        [SinkLike_isCompleted]: false,
         [QueueableLike_onReady]: none,
       }),
       {
@@ -185,7 +185,7 @@ const QueueMixin: <T>() => Mixin1<
           unsafeCast<TProperties>(this);
           const count = this[QueueLike_count];
           const capacity = this[QueueableLike_capacity];
-          const isCompleted = this[QueueableLike_isCompleted];
+          const isCompleted = this[SinkLike_isCompleted];
 
           return !isCompleted && count < capacity;
         },
@@ -194,7 +194,7 @@ const QueueMixin: <T>() => Mixin1<
           const count = this[QueueLike_count];
           const values = this[QueueMixin_values];
           const capacity = this[QueueableLike_capacity];
-          const isCompleted = this[QueueableLike_isCompleted];
+          const isCompleted = this[SinkLike_isCompleted];
           const shouldNotifyReady = count === capacity && !isCompleted;
           const onReadySignal = this[QueueableLike_onReady];
 
@@ -340,14 +340,11 @@ const QueueMixin: <T>() => Mixin1<
           }
         },
 
-        [QueueableLike_enqueue](
-          this: TProperties & QueueLike<T>,
-          item: T,
-        ): boolean {
+        [SinkLike_next](this: TProperties & QueueLike<T>, item: T): boolean {
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
           const capacity = this[QueueableLike_capacity];
           const applyBackpressure = this[QueueLike_count] >= capacity;
-          const isCompleted = this[QueueableLike_isCompleted];
+          const isCompleted = this[SinkLike_isCompleted];
 
           if (isCompleted) {
             return false;
@@ -458,8 +455,8 @@ const QueueMixin: <T>() => Mixin1<
           return this[QueueableLike_isReady];
         },
 
-        [QueueableLike_complete](this: TProperties) {
-          this[QueueableLike_isCompleted] = true;
+        [SinkLike_complete](this: TProperties) {
+          this[SinkLike_isCompleted] = true;
           this[QueueableLike_onReady][DisposableLike_dispose]();
         },
       },

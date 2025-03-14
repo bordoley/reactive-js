@@ -13,7 +13,7 @@ import LiftedObserverMixin, {
   LiftedObserverLike_notify,
   LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { ObserverLike, QueueableLike_complete } from "../../../utils.js";
+import { ObserverLike, SinkLike_complete } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
@@ -41,7 +41,7 @@ const createTakeFirstObserver: <T>(
       this[TakeFirstObserver_count] = clampPositiveInteger(takeCount ?? 1);
 
       if (takeCount === 0) {
-        this[QueueableLike_complete]();
+        this[SinkLike_complete]();
       }
 
       return this;
@@ -60,7 +60,7 @@ const createTakeFirstObserver: <T>(
         this[LiftedObserverLike_notifyDelegate](next);
 
         if (this[TakeFirstObserver_count] <= 0) {
-          this[QueueableLike_complete]();
+          this[SinkLike_complete]();
         }
       },
     }),

@@ -31,7 +31,6 @@ import {
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
-  QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -39,6 +38,7 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
+  SinkLike_next,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
@@ -182,7 +182,7 @@ const SchedulerMixin: Mixin<
       const parent = findNearestNonDisposedParent(continuation);
 
       if (isSome(parent)) {
-        parent[QueueableLike_enqueue](continuation);
+        parent[SinkLike_next](continuation);
       } else {
         continuation[SchedulerContinuationLike_dueTime] =
           scheduler[SchedulerLike_now];
@@ -206,7 +206,7 @@ const SchedulerMixin: Mixin<
         if (head[DisposableLike_isDisposed]) {
           // continue
         } else if (isSome(parent)) {
-          parent[QueueableLike_enqueue](head);
+          parent[SinkLike_next](head);
         } else {
           scheduler[SchedulerMixinLike_schedule](head);
         }
@@ -505,7 +505,7 @@ const SchedulerMixin: Mixin<
         ) {
           this[SchedulerMixinHostLike_schedule](continuation);
         } else {
-          activeContinuation[QueueableLike_enqueue](continuation);
+          activeContinuation[SinkLike_next](continuation);
         }
       },
 

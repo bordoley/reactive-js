@@ -7,10 +7,10 @@ import { __constant, __memo, __observe, __state, __stream, __using, } from "../c
 import * as Streamable from "../computations/Streamable.js";
 import { compose, identity, none, pipe, returns, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
-import { QueueableLike_enqueue, } from "../utils.js";
+import { SinkLike_next, } from "../utils.js";
 import * as AnimationFrameScheduler from "./AnimationFrameScheduler.js";
 const returnsNone = returns(none);
-const makeRefSetter = (queue) => ele => queue[QueueableLike_enqueue](returns(ele));
+const makeRefSetter = (queue) => ele => queue[SinkLike_next](returns(ele));
 const animateHtmlElement = (element, animation, selector) => 
 // Just in case a caller sets it to null instead of undefined
 element != nullObject

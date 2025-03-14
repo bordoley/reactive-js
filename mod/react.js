@@ -10,7 +10,7 @@ import { StoreLike_value, StreamableLike_stream, } from "./computations.js";
 import { bindMethod, isFunction, isNone, isSome, none, pipe, pipeSomeLazy, raiseError, } from "./functions.js";
 import * as ReactScheduler from "./react/Scheduler.js";
 import * as DisposableContainer from "./utils/DisposableContainer.js";
-import { DisposableLike_dispose, EventListenerLike_notify, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_complete, QueueableLike_enqueue, } from "./utils.js";
+import { DisposableLike_dispose, EventListenerLike_notify, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SinkLike_complete, SinkLike_next, } from "./utils.js";
 export const createComponent = (fn, options = {}) => {
     const ObservableComponent = (props) => {
         const propsSubject = useDisposable(() => Subject.create({ replay: 1 }), []);
@@ -27,8 +27,8 @@ export const useDispatcher = (queue) => {
     useEffect(() => {
         stableDispatcherRef.current = queue;
     }, [queue]);
-    const enqueue = useCallback((req) => stableDispatcherRef?.current?.[QueueableLike_enqueue](req) ?? true, [stableDispatcherRef]);
-    const complete = useCallback(() => stableDispatcherRef?.current?.[QueueableLike_complete](), [stableDispatcherRef]);
+    const enqueue = useCallback((req) => stableDispatcherRef?.current?.[SinkLike_next](req) ?? true, [stableDispatcherRef]);
+    const complete = useCallback(() => stableDispatcherRef?.current?.[SinkLike_complete](), [stableDispatcherRef]);
     return useMemo(() => ({ enqueue, complete }), [enqueue, complete]);
 };
 export const useDisposable = (factory, deps) => {

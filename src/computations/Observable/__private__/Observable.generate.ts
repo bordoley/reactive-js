@@ -4,10 +4,10 @@ import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   ObserverLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
-  QueueableLike_isCompleted,
   SchedulerLike_schedule,
+  SinkLike_complete,
+  SinkLike_isCompleted,
+  SinkLike_next,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
@@ -28,12 +28,12 @@ const Observable_generate: Observable.Signature["generate"] = <T>(
     let cnt = 0;
 
     const continuation = (ctx: ContinuationContextLike) => {
-      while (!observer[QueueableLike_isCompleted]) {
+      while (!observer[SinkLike_isCompleted]) {
         acc = generator(acc);
-        observer[QueueableLike_enqueue](acc);
+        observer[SinkLike_next](acc);
 
         if (count !== none && (cnt++, cnt >= count)) {
-          observer[QueueableLike_complete]();
+          observer[SinkLike_complete]();
           break;
         }
 

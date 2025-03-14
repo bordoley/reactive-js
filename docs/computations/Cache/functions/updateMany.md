@@ -6,7 +6,7 @@
 
 # Function: updateMany()
 
-> **updateMany**\<`T`\>(`cache`, `keyValues`): `boolean`
+> **updateMany**\<`T`\>(`cache`, `keyValues`): `void`
 
 ## Type Parameters
 
@@ -24,4 +24,4 @@
 
 ## Returns
 
-`boolean`
+`void`

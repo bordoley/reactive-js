@@ -3,8 +3,8 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { QueueableLike_complete, QueueableLike_enqueue, SchedulerLike_requestYield, } from "../../../utils.js";
+import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_delegate, LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { QueueableLike_isReady, SchedulerLike_requestYield, SinkLike_complete, SinkLike_next, } from "../../../utils.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 const Observer_createEnqueueObserver = /*@__PURE__*/ (() => {
     const EnqueueObserver_queue = Symbol("EnqueueObserver_queue");
@@ -17,16 +17,17 @@ const Observer_createEnqueueObserver = /*@__PURE__*/ (() => {
         [EnqueueObserver_queue]: none,
     }), proto({
         [LiftedObserverLike_notify](next) {
-            const delegate = this[LiftedObserverLike_delegate];
-            if (!this[EnqueueObserver_queue][QueueableLike_enqueue](next)) {
+            const queue = this[EnqueueObserver_queue];
+            queue[SinkLike_next](next);
+            if (!queue[QueueableLike_isReady]) {
                 this[SchedulerLike_requestYield]();
             }
-            delegate[QueueableLike_enqueue](next);
+            this[LiftedObserverLike_notifyDelegate](next);
         },
         [LiftedObserverLike_complete]() {
             // FIXME: maybe we shouldn't complete
-            this[EnqueueObserver_queue][QueueableLike_complete]();
-            this[LiftedObserverLike_delegate][QueueableLike_complete]();
+            this[EnqueueObserver_queue][SinkLike_complete]();
+            this[LiftedObserverLike_delegate][SinkLike_complete]();
         },
     }));
 })();

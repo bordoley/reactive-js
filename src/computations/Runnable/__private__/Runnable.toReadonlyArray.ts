@@ -4,20 +4,20 @@ import { newInstance } from "../../../functions.js";
 import {
   SinkLike,
   SinkLike_complete,
-  SinkLike_isComplete,
+  SinkLike_isCompleted,
   SinkLike_next,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
 class ToReadonlyArraySink<T> implements SinkLike<T> {
-  public [SinkLike_isComplete] = false;
+  public [SinkLike_isCompleted] = false;
   public acc: T[] = [];
 
   [SinkLike_next](next: T): void {
     this.acc[Array_push](next);
   }
   [SinkLike_complete]() {
-    this[SinkLike_isComplete] = true;
+    this[SinkLike_isCompleted] = true;
   }
 }
 

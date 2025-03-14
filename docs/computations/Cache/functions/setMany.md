@@ -6,7 +6,7 @@
 
 # Function: setMany()
 
-> **setMany**\<`T`\>(`cache`, `keyValues`): `boolean`
+> **setMany**\<`T`\>(`cache`, `keyValues`): `void`
 
 ## Type Parameters
 
@@ -24,4 +24,4 @@
 
 ## Returns
 
-`boolean`
+`void`

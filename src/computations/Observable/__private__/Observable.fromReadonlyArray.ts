@@ -5,10 +5,10 @@ import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   ObserverLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
-  QueueableLike_isCompleted,
   SchedulerLike_schedule,
+  SinkLike_complete,
+  SinkLike_isCompleted,
+  SinkLike_next,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
@@ -27,9 +27,9 @@ const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
       let [start, count] = parseArrayBounds(arr, options);
 
       const continuation = (ctx: ContinuationContextLike) => {
-        while (!observer[QueueableLike_isCompleted] && count !== 0) {
+        while (!observer[SinkLike_isCompleted] && count !== 0) {
           const next = arr[start];
-          observer[QueueableLike_enqueue](next);
+          observer[SinkLike_next](next);
 
           count > 0 ? (start++, count--) : (start--, count++);
 
@@ -37,7 +37,7 @@ const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
             ctx[ContinuationContextLike_yield](delay);
           }
         }
-        observer[QueueableLike_complete]();
+        observer[SinkLike_complete]();
       };
 
       pipe(

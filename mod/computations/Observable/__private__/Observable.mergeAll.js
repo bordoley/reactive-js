@@ -11,7 +11,7 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, QueueableLike_isReady, SchedulerLike_requestYield, } from "../../../utils.js";
+import { OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_isReady, SchedulerLike_requestYield, SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -25,7 +25,8 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         pipe(nextObs, Observable_forEach(v => {
             // FIXME: consider trying to wrap delegate in a delegate observe
             // and subscribing with it directly.
-            if (!delegate[QueueableLike_enqueue](v)) {
+            delegate[SinkLike_next](v);
+            if (!delegate[QueueableLike_isReady]) {
                 delegate[SchedulerLike_requestYield]();
             }
         }), Observable_subscribeWithConfig(observer, observer), Disposable.addTo(observer), DisposableContainer.onComplete(bind(onMergeAllObserverInnerObservableComplete, observer)));
@@ -36,9 +37,9 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         if (isSome(nextObs)) {
             subscribeToObservable(this, nextObs);
         }
-        else if (this[QueueableLike_isCompleted] &&
+        else if (this[SinkLike_isCompleted] &&
             this[MergeAllObserver_activeCount] <= 0) {
-            this[LiftedObserverLike_delegate][QueueableLike_complete]();
+            this[LiftedObserverLike_delegate][SinkLike_complete]();
         }
     }
     const createMergeAllObserver = mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function MergeAllObserver(delegate, capacity, backpressureStrategy, concurrency) {
@@ -62,7 +63,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
                 subscribeToObservable(this, next);
             }
             else {
-                this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
+                this[MergeAllObserver_observablesQueue][SinkLike_next](next);
             }
             return this[QueueableLike_isReady];
         },
@@ -71,7 +72,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
             if (this[MergeAllObserver_observablesQueue][QueueLike_count] +
                 this[MergeAllObserver_activeCount] ===
                 0) {
-                delegate[QueueableLike_complete]();
+                delegate[SinkLike_complete]();
             }
         },
     }));

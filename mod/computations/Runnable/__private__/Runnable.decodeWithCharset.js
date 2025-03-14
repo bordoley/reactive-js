@@ -2,12 +2,12 @@
 
 import { Array_length } from "../../../__internal__/constants.js";
 import { newInstance, none } from "../../../functions.js";
-import { SinkLike_complete, SinkLike_isComplete, SinkLike_next, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class DecodeWithCharsetSink {
     sink;
     td;
-    [SinkLike_isComplete] = false;
+    [SinkLike_isCompleted] = false;
     constructor(sink, charset, options) {
         this.sink = sink;
         this.td = newInstance(TextDecoder, charset, options);
@@ -21,12 +21,12 @@ class DecodeWithCharsetSink {
         }
     }
     [SinkLike_complete]() {
-        if (!this[SinkLike_isComplete]) {
+        if (!this[SinkLike_isCompleted]) {
             const data = this.td.decode(newInstance(Uint8Array, []), {
                 stream: false,
             });
             this.td = none;
-            this[SinkLike_isComplete] = true;
+            this[SinkLike_isCompleted] = true;
             if (data[Array_length] > 0) {
                 this.sink[SinkLike_next](data);
             }

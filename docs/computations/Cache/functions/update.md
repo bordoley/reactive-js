@@ -6,7 +6,7 @@
 
 # Function: update()
 
-> **update**\<`T`\>(`cache`, `key`, `updater`): `boolean`
+> **update**\<`T`\>(`cache`, `key`, `updater`): `void`
 
 ## Type Parameters
 
@@ -28,4 +28,4 @@
 
 ## Returns
 
-`boolean`
+`void`

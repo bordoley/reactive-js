@@ -3,12 +3,12 @@
 import { Set, Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ObservableLike_observe, } from "../computations.js";
-import { error, isNone, isSome, newInstance, none, pipe, } from "../functions.js";
+import { call, error, isNone, isSome, newInstance, none, pipe, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import QueueMixin from "../utils/__mixins__/QueueMixin.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, QueueableLike_complete, QueueableLike_enqueue, } from "../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../utils.js";
 import * as Iterable from "./Iterable.js";
 export const create = /*@__PURE__*/ (() => {
     const Subject_observers = Symbol("Subject_observers");
@@ -25,7 +25,7 @@ export const create = /*@__PURE__*/ (() => {
                 observer[DisposableLike_dispose](e);
             }
             else {
-                observer[QueueableLike_complete]();
+                observer[SinkLike_complete]();
             }
         }
         this[Subject_observers] = none;
@@ -70,7 +70,7 @@ export const create = /*@__PURE__*/ (() => {
             if (this[DisposableLike_isDisposed]) {
                 return;
             }
-            this[QueueableLike_enqueue](next);
+            this[SinkLike_next](next);
             const maybeObservers = this[Subject_observers];
             const observers = maybeObservers instanceof Set
                 ? maybeObservers
@@ -78,8 +78,15 @@ export const create = /*@__PURE__*/ (() => {
                     ? [maybeObservers]
                     : [];
             for (const observer of observers) {
+                if (observer[SinkLike_isCompleted]) {
+                    // be sure to remove completed observers
+                    // ideally we would get notified when an observer
+                    // is completed but this api does not yet exist.
+                    call(this[Subject_onObserverDisposed], observer);
+                    continue;
+                }
                 try {
-                    observer[QueueableLike_enqueue](next);
+                    observer[SinkLike_next](next);
                 }
                 catch (e) {
                     observer[DisposableLike_dispose](error(e));
@@ -113,10 +120,10 @@ export const create = /*@__PURE__*/ (() => {
                 pipe(observer, DisposableContainer.onDisposed(this[Subject_onObserverDisposed]));
             }
             for (const next of this) {
-                observer[QueueableLike_enqueue](next);
+                observer[SinkLike_next](next);
             }
             if (this[DisposableLike_isDisposed]) {
-                observer[QueueableLike_complete]();
+                observer[SinkLike_complete]();
             }
         },
     });

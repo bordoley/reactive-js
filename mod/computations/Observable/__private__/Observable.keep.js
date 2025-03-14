@@ -3,8 +3,7 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { QueueableLike_enqueue } from "../../../utils.js";
+import LiftedObserverMixin, { LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 const KeepObserver_predicate = Symbol("KeepObserver_predicate");
 const createKeepObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function KeepObserver(delegate, predicate) {
@@ -17,9 +16,8 @@ const createKeepObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(Deleg
 }), proto({
     [LiftedObserverLike_notify](next) {
         const shouldNotify = this[KeepObserver_predicate](next);
-        const delegate = this[LiftedObserverLike_delegate];
         if (shouldNotify) {
-            delegate[QueueableLike_enqueue](next);
+            this[LiftedObserverLike_notifyDelegate](next);
         }
     },
 })))();

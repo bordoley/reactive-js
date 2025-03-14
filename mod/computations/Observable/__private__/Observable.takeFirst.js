@@ -3,36 +3,29 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { DisposableLike_dispose, QueueableLike_complete, QueueableLike_enqueue, } from "../../../utils.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import LiftedObserverMixin, { LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { SinkLike_complete } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const TakeFirstObserver_count = Symbol("TakeFirstObserver_count");
-const createTakeFirstObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DisposableMixin, LiftedObserverMixin()), function TakeFirstObserver(delegate, takeCount) {
-    init(DisposableMixin, this, delegate);
+const createTakeFirstObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function TakeFirstObserver(delegate, takeCount) {
+    init(DelegatingDisposableMixin, this, delegate);
     init(LiftedObserverMixin(), this, delegate, none);
-    pipe(this, Disposable.addTo(delegate));
     this[TakeFirstObserver_count] = clampPositiveInteger(takeCount ?? 1);
     if (takeCount === 0) {
-        this[QueueableLike_complete]();
+        this[SinkLike_complete]();
     }
     return this;
 }, props({
     [TakeFirstObserver_count]: 0,
 }), proto({
     [LiftedObserverLike_notify](next) {
-        const delegate = this[LiftedObserverLike_delegate];
         this[TakeFirstObserver_count];
         this[TakeFirstObserver_count]--;
-        delegate[QueueableLike_enqueue](next);
+        this[LiftedObserverLike_notifyDelegate](next);
         if (this[TakeFirstObserver_count] <= 0) {
-            this[QueueableLike_complete]();
+            this[SinkLike_complete]();
         }
-    },
-    [LiftedObserverLike_complete]() {
-        this[LiftedObserverLike_delegate][QueueableLike_complete]();
-        this[DisposableLike_dispose]();
     },
 })))();
 const Observable_takeFirst = (options) => pipe((createTakeFirstObserver), partial(options?.count), Observable_liftPureDeferred);

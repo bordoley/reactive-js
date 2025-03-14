@@ -78,11 +78,25 @@ export interface SerialDisposableLike<
   set [SerialDisposableLike_current](v: TDisposable);
 }
 
-export const QueueableLike_backpressureStrategy = Symbol(
-  "QueueableLike_backpressureStrategy",
-);
-export const QueueableLike_capacity = Symbol("QueueableLike_capacity");
-export const QueueableLike_enqueue = Symbol("QueueableLike_enqueue");
+export const SinkLike_next = Symbol("SinkLike_next");
+export const SinkLike_complete = Symbol("SinkLike_complete");
+export const SinkLike_isCompleted = Symbol("SinkLike_isCompleted");
+
+/**
+ * @noInheritDoc
+ */
+export interface SinkLike<T = unknown> {
+  readonly [SinkLike_isCompleted]: boolean;
+
+  /**
+   * Notifies the EventListener of the next notification produced by the source.
+   *
+   * @param next - The next notification value.
+   */
+  [SinkLike_next](next: T): void;
+
+  [SinkLike_complete](): void;
+}
 
 export const DropLatestBackpressureStrategy = "drop-latest";
 export const DropOldestBackpressureStrategy = "drop-oldest";
@@ -95,9 +109,11 @@ export type BackpressureStrategy =
   | typeof OverflowBackpressureStrategy
   | typeof ThrowBackpressureStrategy;
 
+export const QueueableLike_backpressureStrategy = Symbol(
+  "QueueableLike_backpressureStrategy",
+);
+export const QueueableLike_capacity = Symbol("QueueableLike_capacity");
 export const QueueableLike_isReady = Symbol("QueueableLike_isReady");
-export const QueueableLike_isCompleted = Symbol("QueueableLike_isCompleted");
-export const QueueableLike_complete = Symbol("QueueableLike_complete");
 export const QueueableLike_onReady = Symbol("QueueableLike_onReady");
 
 /**
@@ -106,15 +122,9 @@ export const QueueableLike_onReady = Symbol("QueueableLike_onReady");
  *
  * @noInheritDoc
  */
-export interface QueueableLike<T = unknown> {
-  readonly [QueueableLike_isCompleted]: boolean;
+export interface QueueableLike<T = unknown> extends SinkLike<T> {
   readonly [QueueableLike_isReady]: boolean;
   readonly [QueueableLike_onReady]: EventSourceLike<void>;
-
-  /**
-   * Communicates to the queue that no more events will be enqueued.
-   */
-  [QueueableLike_complete](): void;
 
   /**
    * The back pressure strategy utilized by the queue when it is at capacity.
@@ -125,14 +135,6 @@ export interface QueueableLike<T = unknown> {
    * The number of items the queue is capable of efficiently buffering.
    */
   readonly [QueueableLike_capacity]: number;
-
-  /**
-   * Enqueue an item onto the queue.
-   *
-   * @param req - The value to enqueue.
-   * @returns `true` if the queue has additional remaining capacity otherwise `false`.
-   */
-  [QueueableLike_enqueue](req: T): boolean;
 }
 
 export const QueueLike_head = Symbol("QueueLike_head");
@@ -285,25 +287,15 @@ export interface PauseableLike extends DisposableContainerLike {
  */
 export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {}
 
-export const SinkLike_next = Symbol("SinkLike_next");
-export const SinkLike_complete = Symbol("SinkLike_complete");
-export const SinkLike_isComplete = Symbol("SinkLike_isComplete");
-
 /**
+ * A consumer of push-based notifications.
+ *
  * @noInheritDoc
  */
-export interface SinkLike<T = unknown> {
-  readonly [SinkLike_isComplete]: boolean;
-
-  /**
-   * Notifies the EventListener of the next notification produced by the source.
-   *
-   * @param next - The next notification value.
-   */
-  [SinkLike_next](next: T): void;
-
-  [SinkLike_complete](): void;
-}
+export interface ObserverLike<T = unknown>
+  extends QueueableLike<T>,
+    SchedulerLike,
+    DisposableLike {}
 
 export const EventListenerLike_notify = Symbol("EventListenerLike_notify");
 
@@ -318,13 +310,3 @@ export interface EventListenerLike<T = unknown> extends DisposableLike {
    */
   [EventListenerLike_notify](event: T): void;
 }
-
-/**
- * A consumer of push-based notifications.
- *
- * @noInheritDoc
- */
-export interface ObserverLike<T = unknown>
-  extends QueueableLike<T>,
-    SchedulerLike,
-    DisposableLike {}

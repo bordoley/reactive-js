@@ -28,8 +28,8 @@ import LiftedObserverMixin, {
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   ObserverLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
+  SinkLike_complete,
+  SinkLike_next,
 } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 
@@ -93,14 +93,13 @@ const Observable_latest = /*@__PURE__*/ (() => {
 
         const isReady = observers[Array_every](pick(LatestObserver_ready));
 
-        let result = true;
         if (isReady) {
           const value = pipe(
             observers,
             ReadonlyArray.map(pick(LatestObserver_latest)),
           );
 
-          result = ctx[LatestCtx_delegate][QueueableLike_enqueue](value);
+          ctx[LatestCtx_delegate][SinkLike_next](value);
 
           if (mode === zipMode) {
             for (const sub of observers) {
@@ -109,8 +108,6 @@ const Observable_latest = /*@__PURE__*/ (() => {
             }
           }
         }
-
-        return result;
       },
 
       [LiftedObserverLike_complete](this: TProperties) {
@@ -121,7 +118,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
           ctx[LatestCtx_completedCount] ===
           ctx[LatestCtx_observers][Array_length]
         ) {
-          ctx[LatestCtx_delegate][QueueableLike_complete]();
+          ctx[LatestCtx_delegate][SinkLike_complete]();
         }
       },
     }),

@@ -2,18 +2,18 @@
 
 import { none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { ContinuationContextLike_yield, QueueableLike_complete, QueueableLike_enqueue, QueueableLike_isCompleted, SchedulerLike_schedule, } from "../../../utils.js";
+import { ContinuationContextLike_yield, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
 const Observable_generate = (generator, initialValue, options) => Observable_createPureSynchronousObservable((observer) => {
     const { count, delay = 0, delayStart = false } = options ?? {};
     let acc = initialValue();
     let cnt = 0;
     const continuation = (ctx) => {
-        while (!observer[QueueableLike_isCompleted]) {
+        while (!observer[SinkLike_isCompleted]) {
             acc = generator(acc);
-            observer[QueueableLike_enqueue](acc);
+            observer[SinkLike_next](acc);
             if (count !== none && (cnt++, cnt >= count)) {
-                observer[QueueableLike_complete]();
+                observer[SinkLike_complete]();
                 break;
             }
             ctx[ContinuationContextLike_yield](delay);

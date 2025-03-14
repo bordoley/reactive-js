@@ -61,12 +61,13 @@ import {
   EventListenerLike,
   EventListenerLike_notify,
   ObserverLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
+  QueueableLike_isReady,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
   SchedulerLike_schedule,
+  SinkLike_complete,
+  SinkLike_next,
 } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
@@ -791,10 +792,11 @@ export const toPauseableObservable: Signature["toPauseableObservable"] =
                 const next = await iterator[Iterator_next]();
 
                 if (next[Iterator_done]) {
-                  observer[QueueableLike_complete]();
+                  observer[SinkLike_complete]();
                   break;
                 } else if (
-                  !observer[QueueableLike_enqueue](next[Iterator_value])
+                  (observer[SinkLike_next](next[Iterator_value]),
+                  !observer[QueueableLike_isReady])
                 ) {
                   // An async iterable can produce resolved promises which are immediately
                   // scheduled on the microtask queue. This prevents the observer's scheduler
@@ -832,7 +834,7 @@ export const toPauseableObservable: Signature["toPauseableObservable"] =
             }),
             Disposable.addTo(observer),
             DisposableContainer.onComplete(
-              bindMethod(observer, QueueableLike_complete),
+              bindMethod(observer, SinkLike_complete),
             ),
           );
         }),

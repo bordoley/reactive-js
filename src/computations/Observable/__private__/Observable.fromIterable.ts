@@ -13,10 +13,10 @@ import {
   ContinuationContextLike_yield,
   DisposableLike_dispose,
   ObserverLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
-  QueueableLike_isCompleted,
   SchedulerLike_schedule,
+  SinkLike_complete,
+  SinkLike_isCompleted,
+  SinkLike_next,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
@@ -39,7 +39,7 @@ const Observable_fromIterable: Observable.Signature["fromIterable"] = (<
       const iterator = iterable[Symbol.iterator]();
 
       const continuation = (ctx: ContinuationContextLike) => {
-        while (!observer[QueueableLike_isCompleted]) {
+        while (!observer[SinkLike_isCompleted]) {
           let next: Optional<IteratorResult<T, any>> = none;
 
           try {
@@ -51,10 +51,10 @@ const Observable_fromIterable: Observable.Signature["fromIterable"] = (<
           }
 
           if (isSome(next) && !next[Iterator_done]) {
-            observer[QueueableLike_enqueue](next[Iterator_value]);
+            observer[SinkLike_next](next[Iterator_value]);
             ctx[ContinuationContextLike_yield](delay);
           } else {
-            observer[QueueableLike_complete]();
+            observer[SinkLike_complete]();
           }
         }
       };

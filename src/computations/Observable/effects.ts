@@ -33,10 +33,10 @@ import {
   BackpressureStrategy,
   DisposableLike,
   ObserverLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_schedule,
+  SinkLike_complete,
+  SinkLike_next,
 } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
@@ -143,8 +143,8 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
     create(observer => {
       const callback = () => {
         f(...args);
-        observer[QueueableLike_enqueue](none);
-        observer[QueueableLike_complete]();
+        observer[SinkLike_next](none);
+        observer[SinkLike_complete]();
       };
 
       pipe(

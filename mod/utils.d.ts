@@ -52,17 +52,30 @@ export interface SerialDisposableLike<TDisposable extends DisposableLike = Dispo
     get [SerialDisposableLike_current](): TDisposable;
     set [SerialDisposableLike_current](v: TDisposable);
 }
-export declare const QueueableLike_backpressureStrategy: unique symbol;
-export declare const QueueableLike_capacity: unique symbol;
-export declare const QueueableLike_enqueue: unique symbol;
+export declare const SinkLike_next: unique symbol;
+export declare const SinkLike_complete: unique symbol;
+export declare const SinkLike_isCompleted: unique symbol;
+/**
+ * @noInheritDoc
+ */
+export interface SinkLike<T = unknown> {
+    readonly [SinkLike_isCompleted]: boolean;
+    /**
+     * Notifies the EventListener of the next notification produced by the source.
+     *
+     * @param next - The next notification value.
+     */
+    [SinkLike_next](next: T): void;
+    [SinkLike_complete](): void;
+}
 export declare const DropLatestBackpressureStrategy = "drop-latest";
 export declare const DropOldestBackpressureStrategy = "drop-oldest";
 export declare const OverflowBackpressureStrategy = "overflow";
 export declare const ThrowBackpressureStrategy = "throw";
 export type BackpressureStrategy = typeof DropLatestBackpressureStrategy | typeof DropOldestBackpressureStrategy | typeof OverflowBackpressureStrategy | typeof ThrowBackpressureStrategy;
+export declare const QueueableLike_backpressureStrategy: unique symbol;
+export declare const QueueableLike_capacity: unique symbol;
 export declare const QueueableLike_isReady: unique symbol;
-export declare const QueueableLike_isCompleted: unique symbol;
-export declare const QueueableLike_complete: unique symbol;
 export declare const QueueableLike_onReady: unique symbol;
 /**
  * A `QueueableLike` type that consumes enqueued events to
@@ -70,14 +83,9 @@ export declare const QueueableLike_onReady: unique symbol;
  *
  * @noInheritDoc
  */
-export interface QueueableLike<T = unknown> {
-    readonly [QueueableLike_isCompleted]: boolean;
+export interface QueueableLike<T = unknown> extends SinkLike<T> {
     readonly [QueueableLike_isReady]: boolean;
     readonly [QueueableLike_onReady]: EventSourceLike<void>;
-    /**
-     * Communicates to the queue that no more events will be enqueued.
-     */
-    [QueueableLike_complete](): void;
     /**
      * The back pressure strategy utilized by the queue when it is at capacity.
      */
@@ -86,13 +94,6 @@ export interface QueueableLike<T = unknown> {
      * The number of items the queue is capable of efficiently buffering.
      */
     readonly [QueueableLike_capacity]: number;
-    /**
-     * Enqueue an item onto the queue.
-     *
-     * @param req - The value to enqueue.
-     * @returns `true` if the queue has additional remaining capacity otherwise `false`.
-     */
-    [QueueableLike_enqueue](req: T): boolean;
 }
 export declare const QueueLike_head: unique symbol;
 export declare const QueueLike_dequeue: unique symbol;
@@ -206,21 +207,12 @@ export interface PauseableLike extends DisposableContainerLike {
  */
 export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {
 }
-export declare const SinkLike_next: unique symbol;
-export declare const SinkLike_complete: unique symbol;
-export declare const SinkLike_isComplete: unique symbol;
 /**
+ * A consumer of push-based notifications.
+ *
  * @noInheritDoc
  */
-export interface SinkLike<T = unknown> {
-    readonly [SinkLike_isComplete]: boolean;
-    /**
-     * Notifies the EventListener of the next notification produced by the source.
-     *
-     * @param next - The next notification value.
-     */
-    [SinkLike_next](next: T): void;
-    [SinkLike_complete](): void;
+export interface ObserverLike<T = unknown> extends QueueableLike<T>, SchedulerLike, DisposableLike {
 }
 export declare const EventListenerLike_notify: unique symbol;
 /**
@@ -233,11 +225,4 @@ export interface EventListenerLike<T = unknown> extends DisposableLike {
      * @param next - The next notification value.
      */
     [EventListenerLike_notify](event: T): void;
-}
-/**
- * A consumer of push-based notifications.
- *
- * @noInheritDoc
- */
-export interface ObserverLike<T = unknown> extends QueueableLike<T>, SchedulerLike, DisposableLike {
 }

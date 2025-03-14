@@ -9,6 +9,10 @@
 A `QueueableLike` type that consumes enqueued events to
 be consumed.
 
+## Extends
+
+- [`SinkLike`](SinkLike.md)\<`T`\>
+
 ## Extended by
 
 - [`CacheLike`](../../computations/Cache/interfaces/CacheLike.md)
@@ -38,12 +42,6 @@ The number of items the queue is capable of efficiently buffering.
 
 ***
 
-### \[QueueableLike\_isCompleted\]
-
-> `readonly` **\[QueueableLike\_isCompleted\]**: `boolean`
-
-***
-
 ### \[QueueableLike\_isReady\]
 
 > `readonly` **\[QueueableLike\_isReady\]**: `boolean`
@@ -53,37 +51,3 @@ The number of items the queue is capable of efficiently buffering.
 ### \[QueueableLike\_onReady\]
 
 > `readonly` **\[QueueableLike\_onReady\]**: [`EventSourceLike`](../../computations/interfaces/EventSourceLike.md)\<`void`\>
-
-## Methods
-
-### \[QueueableLike\_complete\]()
-
-> **\[QueueableLike\_complete\]**(): `void`
-
-Communicates to the queue that no more events will be enqueued.
-
-#### Returns
-
-`void`
-
-***
-
-### \[QueueableLike\_enqueue\]()
-
-> **\[QueueableLike\_enqueue\]**(`req`): `boolean`
-
-Enqueue an item onto the queue.
-
-#### Parameters
-
-##### req
-
-`T`
-
-The value to enqueue.
-
-#### Returns
-
-`boolean`
-
-`true` if the queue has additional remaining capacity otherwise `false`.

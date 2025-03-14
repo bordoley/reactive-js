@@ -42,9 +42,9 @@ import {
   EventListenerLike_notify,
   ObserverLike,
   QueueLike,
-  QueueableLike_complete,
-  QueueableLike_enqueue,
-  QueueableLike_isCompleted,
+  SinkLike_complete,
+  SinkLike_isCompleted,
+  SinkLike_next,
 } from "../utils.js";
 import * as Iterable from "./Iterable.js";
 
@@ -75,7 +75,7 @@ export const create: <T>(options?: {
       if (isSome(e)) {
         observer[DisposableLike_dispose](e);
       } else {
-        observer[QueueableLike_complete]();
+        observer[SinkLike_complete]();
       }
     }
     this[Subject_observers] = none;
@@ -154,7 +154,7 @@ export const create: <T>(options?: {
           return;
         }
 
-        this[QueueableLike_enqueue](next);
+        this[SinkLike_next](next);
 
         const maybeObservers = this[Subject_observers];
         const observers =
@@ -165,7 +165,7 @@ export const create: <T>(options?: {
               : [];
 
         for (const observer of observers) {
-          if (observer[QueueableLike_isCompleted]) {
+          if (observer[SinkLike_isCompleted]) {
             // be sure to remove completed observers
             // ideally we would get notified when an observer
             // is completed but this api does not yet exist.
@@ -173,7 +173,7 @@ export const create: <T>(options?: {
             continue;
           }
           try {
-            observer[QueueableLike_enqueue](next);
+            observer[SinkLike_next](next);
           } catch (e) {
             observer[DisposableLike_dispose](error(e));
           }
@@ -218,11 +218,11 @@ export const create: <T>(options?: {
         }
 
         for (const next of this) {
-          observer[QueueableLike_enqueue](next);
+          observer[SinkLike_next](next);
         }
 
         if (this[DisposableLike_isDisposed]) {
-          observer[QueueableLike_complete]();
+          observer[SinkLike_complete]();
         }
       },
     },
