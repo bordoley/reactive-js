@@ -4,7 +4,7 @@ import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
@@ -16,7 +16,7 @@ class ReducerSink<T, TAcc> implements SinkLike<T> {
     public acc: TAcc,
   ) {}
 
-  [SinkLike_next](next: T): void {
+  [SinkLike_push](next: T): void {
     this.acc = this.r(this.acc, next);
   }
   [SinkLike_complete]() {

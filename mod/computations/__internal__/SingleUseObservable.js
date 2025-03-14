@@ -6,7 +6,7 @@ import { bindMethod, isSome, none, pipe } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Queue from "../../utils/Queue.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
-import { EventListenerLike_notify, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, QueueableLike_onReady, SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../utils.js";
+import { EventListenerLike_notify, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, QueueableLike_onReady, SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 import * as Publisher from "../Publisher.js";
 export const create = (() => {
@@ -50,7 +50,7 @@ export const create = (() => {
                 unsafeCast(oldDelegate);
                 let v = none;
                 while (((v = oldDelegate[QueueLike_dequeue]()), isSome(v))) {
-                    observer[SinkLike_next](v);
+                    observer[SinkLike_push](v);
                 }
             }
             if (oldDelegate[SinkLike_isCompleted]) {
@@ -61,8 +61,8 @@ export const create = (() => {
         [SinkLike_complete]() {
             this[SingleUseObservableLike_delegate][SinkLike_complete]();
         },
-        [SinkLike_next](v) {
-            this[SingleUseObservableLike_delegate][SinkLike_next](v);
+        [SinkLike_push](v) {
+            this[SingleUseObservableLike_delegate][SinkLike_push](v);
         },
     });
 })();

@@ -23,7 +23,7 @@ import LiftedObserverMixin, {
 import {
   ObserverLike,
   SinkLike_complete,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -90,7 +90,7 @@ const createBufferObserver: <T>(
         this[BufferObserver_buffer] = [];
 
         if (buffer[Array_length] > 0) {
-          delegate[SinkLike_next](buffer);
+          delegate[SinkLike_push](buffer);
           delegate[SinkLike_complete]();
         } else {
           delegate[SinkLike_complete]();

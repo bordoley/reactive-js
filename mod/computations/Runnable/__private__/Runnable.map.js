@@ -2,7 +2,7 @@
 
 import { newInstance } from "../../../functions.js";
 import AbstractSink, { AbstractSink_delegate, } from "../../../utils/Sink/__internal__/AbstractSink.js";
-import { SinkLike_next } from "../../../utils.js";
+import { SinkLike_push } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class MapSink extends AbstractSink {
     s;
@@ -10,9 +10,9 @@ class MapSink extends AbstractSink {
         super(sink);
         this.s = s;
     }
-    [SinkLike_next](next) {
+    [SinkLike_push](next) {
         const mapped = this.s(next);
-        this[AbstractSink_delegate][SinkLike_next](mapped);
+        this[AbstractSink_delegate][SinkLike_push](mapped);
     }
 }
 const Runnable_map = (selector) => Runnable_lift((sink) => newInstance((MapSink), sink, selector));

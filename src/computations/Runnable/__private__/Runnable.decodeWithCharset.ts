@@ -4,7 +4,7 @@ import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
@@ -24,12 +24,12 @@ class DecodeWithCharsetSink implements SinkLike<ArrayBuffer> {
     this.td = newInstance(TextDecoder, charset, options);
   }
 
-  [SinkLike_next](next: ArrayBuffer): void {
+  [SinkLike_push](next: ArrayBuffer): void {
     const data = this.td.decode(next, {
       stream: true,
     });
     if (data[Array_length] > 0) {
-      this.sink[SinkLike_next](data);
+      this.sink[SinkLike_push](data);
     }
   }
 
@@ -43,7 +43,7 @@ class DecodeWithCharsetSink implements SinkLike<ArrayBuffer> {
       this[SinkLike_isCompleted] = true;
 
       if (data[Array_length] > 0) {
-        this.sink[SinkLike_next](data);
+        this.sink[SinkLike_push](data);
       }
 
       this.sink[SinkLike_complete]();

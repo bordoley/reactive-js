@@ -2,7 +2,7 @@
 
 import { getPrototype, include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { bind, bindMethod, call, isSome, none, pipe, raise, returns, } from "../../functions.js";
-import { ContinuationContextLike_yield, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../utils.js";
+import { ContinuationContextLike_yield, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import QueueMixin from "./QueueMixin.js";
@@ -43,7 +43,7 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
         this[LiftedObserverLike_delegate][LiftedObserverLike_notify](next);
     }
     function enqueueDelegate(next) {
-        this[LiftedObserverLike_delegate][SinkLike_next](next);
+        this[LiftedObserverLike_delegate][SinkLike_push](next);
     }
     return returns(mix(include(QueueMixin(), SerialDisposableMixin()), function LiftedObserverMixin(delegate, options) {
         init(QueueMixin(), this, {
@@ -98,7 +98,7 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
         [SchedulerLike_schedule](continuation, options) {
             return pipe(this[LiftedObserverLike_delegate][SchedulerLike_schedule](bind(this[LiftedObserverMixin_schedulerCallback], continuation), options), Disposable.addToContainer(this));
         },
-        [SinkLike_next](next) {
+        [SinkLike_push](next) {
             const inSchedulerContinuation = this[SchedulerLike_inContinuation];
             const isCompleted = this[SinkLike_isCompleted];
             // FIXME: Put this in a dev check
@@ -118,7 +118,7 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
             }
             else if (!shouldIgnore) {
                 scheduleDrainQueue(this);
-                call(queueProtoype[SinkLike_next], this, next);
+                call(queueProtoype[SinkLike_push], this, next);
             }
             return this[QueueableLike_isReady];
         },

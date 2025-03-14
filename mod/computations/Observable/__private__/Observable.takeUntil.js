@@ -8,7 +8,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { SinkLike_complete, SinkLike_next, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_push, } from "../../../utils.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 import Observable_takeFirst from "./Observable.takeFirst.js";
@@ -25,7 +25,7 @@ const Observable_takeUntil = /*@__PURE__*/ (() => {
     }), proto({
         [LiftedObserverLike_notify](next) {
             const delegate = this[LiftedObserverLike_delegate];
-            delegate[SinkLike_next](next);
+            delegate[SinkLike_push](next);
         },
     }));
     return (notifier) => pipe(createTakeUntilObserver, partial(notifier), Observable_lift({

@@ -31,7 +31,7 @@ import {
   QueueableLike_capacity,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
@@ -55,7 +55,7 @@ testModule(
         }),
       );
 
-      stream[SinkLike_next](none);
+      stream[SinkLike_push](none);
 
       vts[VirtualTimeSchedulerLike_run]();
 
@@ -86,7 +86,7 @@ testModule(
         }),
       );
 
-      stream[SinkLike_next](none);
+      stream[SinkLike_push](none);
 
       vts[VirtualTimeSchedulerLike_run]();
 
@@ -109,8 +109,8 @@ testModule(
         expectEquals(DropLatestBackpressureStrategy),
       );
 
-      stateStream[SinkLike_next](returns(2));
-      stateStream[SinkLike_next](returns(3));
+      stateStream[SinkLike_push](returns(2));
+      stateStream[SinkLike_push](returns(3));
       stateStream[SinkLike_complete]();
 
       let result: number[] = [];
@@ -169,7 +169,7 @@ testModule(
       pipe(
         (x: number) => x + 2,
         Observable.fromValue({ delay: 5 }),
-        Observable.forEach(bindMethod(stream, SinkLike_next)),
+        Observable.forEach(bindMethod(stream, SinkLike_push)),
         Observable.subscribe(vts),
       );
 
@@ -206,7 +206,7 @@ testModule(
         increment,
         Observable.fromValue({ delay: 1 }),
         Observable.repeat(24),
-        Observable.forEach(bindMethod(stream, SinkLike_next)),
+        Observable.forEach(bindMethod(stream, SinkLike_push)),
         Observable.subscribe(vts),
       );
 

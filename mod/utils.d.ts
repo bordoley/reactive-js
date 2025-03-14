@@ -52,7 +52,7 @@ export interface SerialDisposableLike<TDisposable extends DisposableLike = Dispo
     get [SerialDisposableLike_current](): TDisposable;
     set [SerialDisposableLike_current](v: TDisposable);
 }
-export declare const SinkLike_next: unique symbol;
+export declare const SinkLike_push: unique symbol;
 export declare const SinkLike_complete: unique symbol;
 export declare const SinkLike_isCompleted: unique symbol;
 /**
@@ -65,7 +65,7 @@ export interface SinkLike<T = unknown> {
      *
      * @param next - The next notification value.
      */
-    [SinkLike_next](next: T): void;
+    [SinkLike_push](next: T): void;
     [SinkLike_complete](): void;
 }
 export declare const DropLatestBackpressureStrategy = "drop-latest";

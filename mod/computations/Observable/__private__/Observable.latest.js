@@ -8,7 +8,7 @@ import { ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike_o
 import { none, pick, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { SinkLike_complete, SinkLike_next, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_push, } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 const zipMode = 2;
 const Observable_latest = /*@__PURE__*/ (() => {
@@ -38,7 +38,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
             const isReady = observers[Array_every](pick(LatestObserver_ready));
             if (isReady) {
                 const value = pipe(observers, ReadonlyArray.map(pick(LatestObserver_latest)));
-                ctx[LatestCtx_delegate][SinkLike_next](value);
+                ctx[LatestCtx_delegate][SinkLike_push](value);
                 if (mode === zipMode) {
                     for (const sub of observers) {
                         sub[LatestObserver_ready] = false;

@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import * as Cache from "./computations/Cache.js";
 import { DeferredObservableLike, EventSourceLike, MulticastObservableLike, ObservableLike, StoreLike, StreamOf, StreamableLike } from "./computations.js";
 import { Factory, Function1, Optional, SideEffect } from "./functions.js";
-import { BackpressureStrategy, DisposableLike, PauseableLike, QueueableLike } from "./utils.js";
+import { BackpressureStrategy, DisposableLike, PauseableLike, SinkLike } from "./utils.js";
 interface ReactModule {
     CacheProvider<T>(props: {
         readonly cacheContext: React.Context<Optional<Cache.CacheLike<T>>>;
@@ -22,8 +22,8 @@ interface ReactModule {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): Function1<TProps, React.ReactNode>;
-    useDispatcher<TReq>(queue: Optional<QueueableLike<TReq>>): {
-        enqueue: Function1<TReq, boolean>;
+    useSink<TReq>(queue: Optional<SinkLike<TReq>>): {
+        push: Function1<TReq, boolean>;
         complete: SideEffect;
     };
     /**
@@ -71,7 +71,7 @@ interface ReactModule {
 }
 type Signature = ReactModule;
 export declare const createComponent: Signature["createComponent"];
-export declare const useDispatcher: Signature["useDispatcher"];
+export declare const useSink: Signature["useSink"];
 export declare const useDisposable: Signature["useDisposable"];
 export declare const useListen: Signature["useListen"];
 export declare const useObserve: Signature["useObserve"];

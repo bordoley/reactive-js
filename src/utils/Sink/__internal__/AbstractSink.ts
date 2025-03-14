@@ -2,7 +2,7 @@ import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 
 export const AbstractSink_delegate = Symbol("AbstractSink_delegate");
@@ -20,7 +20,7 @@ abstract class AbstractSink<
     this[AbstractSink_delegate] = sink;
   }
 
-  abstract [SinkLike_next](next: TA): void;
+  abstract [SinkLike_push](next: TA): void;
 
   [SinkLike_complete]() {
     if (!this[SinkLike_isCompleted]) {

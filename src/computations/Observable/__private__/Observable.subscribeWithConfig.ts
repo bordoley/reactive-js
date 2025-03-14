@@ -38,7 +38,7 @@ import {
   SchedulerLike_shouldYield,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import EventSource_never from "../../EventSource/__private__/EventSource.never.js";
 
@@ -135,7 +135,7 @@ const createObserver: <T>(
         ];
       },
 
-      [SinkLike_next]() {
+      [SinkLike_push]() {
         return true;
       },
 

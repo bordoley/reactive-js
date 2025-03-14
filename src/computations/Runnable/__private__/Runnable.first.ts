@@ -4,7 +4,7 @@ import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
@@ -12,7 +12,7 @@ class FirstSink<T> implements SinkLike<T> {
   public [SinkLike_isCompleted] = false;
   public v: Optional<T> = none;
 
-  [SinkLike_next](next: T): void {
+  [SinkLike_push](next: T): void {
     this.v = next;
     this[SinkLike_complete]();
   }

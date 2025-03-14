@@ -34,7 +34,7 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SinkLike_complete,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -63,7 +63,7 @@ const createTakeLastObserver: <T>(
         ctx[ContinuationContextLike_yield]();
       }
 
-      delegate[SinkLike_next](v);
+      delegate[SinkLike_push](v);
       if (!delegate[QueueableLike_isReady]) {
         delegate[SchedulerLike_requestYield]();
       }
@@ -102,7 +102,7 @@ const createTakeLastObserver: <T>(
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
-        this[TakeLastObserver_queue][SinkLike_next](next);
+        this[TakeLastObserver_queue][SinkLike_push](next);
       },
       [LiftedObserverLike_complete](this: TProperties & LiftedObserverLike<T>) {
         const delegate = this[LiftedObserverLike_delegate];

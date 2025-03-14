@@ -32,7 +32,7 @@ import {
   SerialDisposableLike_current,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -94,7 +94,7 @@ const createSwitchAllObserver: <T>(
         const delegate = this[LiftedObserverLike_delegate];
         this[SwitchAllObserver_currentRef][SerialDisposableLike_current] = pipe(
           next,
-          Observable_forEach(bindMethod(delegate, SinkLike_next)),
+          Observable_forEach(bindMethod(delegate, SinkLike_push)),
           Observable_subscribeWithConfig(delegate, this),
           Disposable.addTo(delegate),
           DisposableContainer.onComplete(

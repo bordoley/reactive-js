@@ -33,7 +33,7 @@ import {
   SerialDisposableLike_current,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -80,7 +80,7 @@ const createThrottleObserver: <T>(
       this[ThrottleObserver_value] = none;
       this[ThrottleObserver_hasValue] = false;
 
-      delegate[SinkLike_next](value);
+      delegate[SinkLike_push](value);
 
       setupDurationSubscription(this, value);
     }
@@ -164,7 +164,7 @@ const createThrottleObserver: <T>(
           const value = this[ThrottleObserver_value];
           this[ThrottleObserver_value] = none;
           this[ThrottleObserver_hasValue] = false;
-          delegate[SinkLike_next](value);
+          delegate[SinkLike_push](value);
         }
         delegate[SinkLike_complete]();
       },

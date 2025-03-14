@@ -11,7 +11,7 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_isReady, SchedulerLike_requestYield, SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
+import { OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_isReady, SchedulerLike_requestYield, SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -25,7 +25,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         pipe(nextObs, Observable_forEach(v => {
             // FIXME: consider trying to wrap delegate in a delegate observe
             // and subscribing with it directly.
-            delegate[SinkLike_next](v);
+            delegate[SinkLike_push](v);
             if (!delegate[QueueableLike_isReady]) {
                 delegate[SchedulerLike_requestYield]();
             }
@@ -63,7 +63,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
                 subscribeToObservable(this, next);
             }
             else {
-                this[MergeAllObserver_observablesQueue][SinkLike_next](next);
+                this[MergeAllObserver_observablesQueue][SinkLike_push](next);
             }
             return this[QueueableLike_isReady];
         },

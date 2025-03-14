@@ -9,7 +9,7 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { DisposableLike_isDisposed, SerialDisposableLike_current, SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
+import { DisposableLike_isDisposed, SerialDisposableLike_current, SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -30,7 +30,7 @@ const createSwitchAllObserver = /*@__PURE__*/ (() => {
     }), proto({
         [LiftedObserverLike_notify](next) {
             const delegate = this[LiftedObserverLike_delegate];
-            this[SwitchAllObserver_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(bindMethod(delegate, SinkLike_next)), Observable_subscribeWithConfig(delegate, this), Disposable.addTo(delegate), DisposableContainer.onComplete(bind(onSwitchAllObserverInnerObservableComplete, this)));
+            this[SwitchAllObserver_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(bindMethod(delegate, SinkLike_push)), Observable_subscribeWithConfig(delegate, this), Disposable.addTo(delegate), DisposableContainer.onComplete(bind(onSwitchAllObserverInnerObservableComplete, this)));
         },
         [LiftedObserverLike_complete]() {
             if (this[SwitchAllObserver_currentRef][SerialDisposableLike_current][DisposableLike_isDisposed]) {

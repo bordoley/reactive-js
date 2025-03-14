@@ -2,7 +2,7 @@ import { Predicate, newInstance } from "../../../functions.js";
 import AbstractSink, {
   AbstractSink_delegate,
 } from "../../../utils/Sink/__internal__/AbstractSink.js";
-import { SinkLike, SinkLike_complete, SinkLike_next } from "../../../utils.js";
+import { SinkLike, SinkLike_complete, SinkLike_push } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
 
@@ -15,11 +15,11 @@ class TakeWhileSink<T> extends AbstractSink<T> {
     super(sink);
   }
 
-  [SinkLike_next](next: T): void {
+  [SinkLike_push](next: T): void {
     const satisfiesPredicate = this.p(next);
 
     if (satisfiesPredicate || this.inclusive) {
-      this[AbstractSink_delegate][SinkLike_next](next);
+      this[AbstractSink_delegate][SinkLike_push](next);
     }
 
     if (!satisfiesPredicate) {

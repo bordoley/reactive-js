@@ -29,7 +29,7 @@ import LiftedObserverMixin, {
 import {
   ObserverLike,
   SinkLike_complete,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 
@@ -99,7 +99,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
             ReadonlyArray.map(pick(LatestObserver_latest)),
           );
 
-          ctx[LatestCtx_delegate][SinkLike_next](value);
+          ctx[LatestCtx_delegate][SinkLike_push](value);
 
           if (mode === zipMode) {
             for (const sub of observers) {

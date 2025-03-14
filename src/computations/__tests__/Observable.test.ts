@@ -89,7 +89,7 @@ import {
   SchedulerLike_schedule,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
   ThrowBackpressureStrategy,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
@@ -220,7 +220,7 @@ testModule(
 
             try {
               for (let i = 0; i < 10; i++) {
-                observer[SinkLike_next](i);
+                observer[SinkLike_push](i);
               }
 
               observer[SinkLike_complete]();
@@ -242,7 +242,7 @@ testModule(
         Observable.create(async observer => {
           await Promise.resolve();
           for (let i = 0; i < 10; i++) {
-            observer[SinkLike_next](i);
+            observer[SinkLike_push](i);
           }
           observer[SinkLike_complete]();
         }),
@@ -261,7 +261,7 @@ testModule(
           await Promise.resolve();
 
           for (let i = 0; i < 10; i++) {
-            observer[SinkLike_next](i);
+            observer[SinkLike_push](i);
           }
           observer[SinkLike_complete]();
         }),
@@ -356,7 +356,7 @@ testModule(
       await pipeAsync(
         Observable.computeDeferred(() => {
           const stream = __stream(Streamable.identity<number>());
-          const push = bindMethod(stream, SinkLike_next);
+          const push = bindMethod(stream, SinkLike_push);
 
           const result = __observe(stream) ?? 0;
           __do(push, result + 1);
@@ -376,7 +376,7 @@ testModule(
         Observable.computeDeferred(() => {
           const initialState = __constant((): number => 0);
           const state = __state(initialState);
-          const push = bindMethod(state, SinkLike_next);
+          const push = bindMethod(state, SinkLike_push);
           const result = __observe(state) ?? -1;
 
           if (result > -1) {

@@ -49,7 +49,7 @@ import {
   SchedulerLike_requestYield,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -91,7 +91,7 @@ const createMergeAllObserverOperator: <T>(options?: {
       Observable_forEach<T>(v => {
         // FIXME: consider trying to wrap delegate in a delegate observe
         // and subscribing with it directly.
-        delegate[SinkLike_next](v);
+        delegate[SinkLike_push](v);
         if (!delegate[QueueableLike_isReady]) {
           delegate[SchedulerLike_requestYield]();
         }
@@ -166,7 +166,7 @@ const createMergeAllObserverOperator: <T>(options?: {
         ) {
           subscribeToObservable(this, next);
         } else {
-          this[MergeAllObserver_observablesQueue][SinkLike_next](next);
+          this[MergeAllObserver_observablesQueue][SinkLike_push](next);
         }
 
         return this[QueueableLike_isReady];

@@ -3,11 +3,11 @@
 import { Array_push } from "../../../__internal__/constants.js";
 import { RunnableLike_eval } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
-import { SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../../utils.js";
 class ToReadonlyArraySink {
     [SinkLike_isCompleted] = false;
     acc = [];
-    [SinkLike_next](next) {
+    [SinkLike_push](next) {
         this.acc[Array_push](next);
     }
     [SinkLike_complete]() {

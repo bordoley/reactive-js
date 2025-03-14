@@ -2,7 +2,7 @@ import { Function1, newInstance } from "../../../functions.js";
 import AbstractSink, {
   AbstractSink_delegate,
 } from "../../../utils/Sink/__internal__/AbstractSink.js";
-import { SinkLike, SinkLike_next } from "../../../utils.js";
+import { SinkLike, SinkLike_push } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
 
@@ -14,9 +14,9 @@ class MapSink<TA, TB> extends AbstractSink<TA, TB> {
     super(sink);
   }
 
-  [SinkLike_next](next: TA): void {
+  [SinkLike_push](next: TA): void {
     const mapped = this.s(next);
-    this[AbstractSink_delegate][SinkLike_next](mapped);
+    this[AbstractSink_delegate][SinkLike_push](mapped);
   }
 }
 

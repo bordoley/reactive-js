@@ -44,7 +44,7 @@ import {
   QueueLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../utils.js";
 import * as Iterable from "./Iterable.js";
 
@@ -154,7 +154,7 @@ export const create: <T>(options?: {
           return;
         }
 
-        this[SinkLike_next](next);
+        this[SinkLike_push](next);
 
         const maybeObservers = this[Subject_observers];
         const observers =
@@ -173,7 +173,7 @@ export const create: <T>(options?: {
             continue;
           }
           try {
-            observer[SinkLike_next](next);
+            observer[SinkLike_push](next);
           } catch (e) {
             observer[DisposableLike_dispose](error(e));
           }
@@ -218,7 +218,7 @@ export const create: <T>(options?: {
         }
 
         for (const next of this) {
-          observer[SinkLike_next](next);
+          observer[SinkLike_push](next);
         }
 
         if (this[DisposableLike_isDisposed]) {

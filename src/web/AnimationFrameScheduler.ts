@@ -38,7 +38,7 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-  SinkLike_next,
+  SinkLike_push,
 } from "../utils.js";
 
 interface Signature {
@@ -98,7 +98,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
         ((continuation = newWorkQueue[QueueLike_dequeue]()),
         isSome(continuation))
       ) {
-        workQueue[SinkLike_next](continuation);
+        workQueue[SinkLike_push](continuation);
       }
       animationFrameScheduler[AnimationFrameScheduler_rafQueue] = workQueue;
     }
@@ -160,7 +160,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
             Disposable.addTo(continuation),
           );
         } else {
-          this[AnimationFrameScheduler_rafQueue][SinkLike_next](continuation);
+          this[AnimationFrameScheduler_rafQueue][SinkLike_push](continuation);
 
           if (!this[AnimationFrameScheduler_rafIsRunning]) {
             this[AnimationFrameScheduler_rafIsRunning] = true;

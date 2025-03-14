@@ -9,7 +9,7 @@ import {
   QueueableLike_onReady,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../utils.js";
 
 const DelegatingQueueableMixin: <TReq>() => Mixin1<
@@ -32,7 +32,7 @@ const DelegatingQueueableMixin: <TReq>() => Mixin1<
           | typeof SinkLike_complete
           | typeof QueueableLike_backpressureStrategy
           | typeof QueueableLike_capacity
-          | typeof SinkLike_next
+          | typeof SinkLike_push
           | typeof SinkLike_isCompleted
           | typeof QueueableLike_isReady
           | typeof QueueableLike_onReady
@@ -77,8 +77,8 @@ const DelegatingQueueableMixin: <TReq>() => Mixin1<
           ];
         },
 
-        [SinkLike_next](this: TProperties, v: TReq) {
-          this[DelegatingQueueableMixin_delegate][SinkLike_next](v);
+        [SinkLike_push](this: TProperties, v: TReq) {
+          this[DelegatingQueueableMixin_delegate][SinkLike_push](v);
         },
 
         [SinkLike_complete](this: TProperties) {

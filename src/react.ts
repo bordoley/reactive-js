@@ -49,8 +49,9 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike,
+  SinkLike,
   SinkLike_complete,
-  SinkLike_next,
+  SinkLike_push,
 } from "./utils.js";
 
 interface ReactModule {
@@ -82,8 +83,8 @@ interface ReactModule {
     },
   ): Function1<TProps, React.ReactNode>;
 
-  useDispatcher<TReq>(queue: Optional<QueueableLike<TReq>>): {
-    enqueue: Function1<TReq, boolean>;
+  useSink<TReq>(queue: Optional<SinkLike<TReq>>): {
+    push: Function1<TReq, boolean>;
     complete: SideEffect;
   };
 
@@ -188,7 +189,7 @@ export const createComponent: Signature["createComponent"] = <TProps>(
   return ObservableComponent;
 };
 
-export const useDispatcher: Signature["useDispatcher"] = <TReq>(
+export const useSink: Signature["useSink"] = <TReq>(
   queue: Optional<QueueableLike<TReq>>,
 ) => {
   const stableDispatcherRef = useRef<Optional<QueueableLike<TReq>>>(none);
@@ -197,8 +198,8 @@ export const useDispatcher: Signature["useDispatcher"] = <TReq>(
     stableDispatcherRef.current = queue;
   }, [queue]);
 
-  const enqueue = useCallback(
-    (req: TReq) => stableDispatcherRef?.current?.[SinkLike_next](req) ?? true,
+  const push = useCallback(
+    (req: TReq) => stableDispatcherRef?.current?.[SinkLike_push](req) ?? true,
     [stableDispatcherRef],
   );
 
@@ -207,7 +208,7 @@ export const useDispatcher: Signature["useDispatcher"] = <TReq>(
     [stableDispatcherRef],
   );
 
-  return useMemo(() => ({ enqueue, complete }), [enqueue, complete]);
+  return useMemo(() => ({ push, complete }), [push, complete]);
 };
 
 export const useDisposable: Signature["useDisposable"] = <

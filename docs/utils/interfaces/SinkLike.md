@@ -32,9 +32,9 @@
 
 ***
 
-### \[SinkLike\_next\]()
+### \[SinkLike\_push\]()
 
-> **\[SinkLike\_next\]**(`next`): `void`
+> **\[SinkLike\_push\]**(`next`): `void`
 
 Notifies the EventListener of the next notification produced by the source.
 

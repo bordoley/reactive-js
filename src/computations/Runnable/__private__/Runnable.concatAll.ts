@@ -15,7 +15,7 @@ import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
@@ -25,7 +25,7 @@ class ConcatAllSink<T> extends AbstractSink<
   T,
   DelegatingNonCompletingSink<T>
 > {
-  [SinkLike_next](next: RunnableLike<T>): void {
+  [SinkLike_push](next: RunnableLike<T>): void {
     const sink = this[AbstractSink_delegate];
     next[RunnableLike_eval](sink);
 

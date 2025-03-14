@@ -5,7 +5,7 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { newInstance, none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_delegate, LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { SinkLike_complete, SinkLike_next, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_push, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
     const DecodeWithCharsetObserver_textDecoder = Symbol("DecodeWithCharsetObserver_textDecoder");
@@ -33,7 +33,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
                 stream: false,
             });
             if (data[Array_length] > 0) {
-                delegate[SinkLike_next](data);
+                delegate[SinkLike_push](data);
             }
             delegate[SinkLike_complete]();
         },

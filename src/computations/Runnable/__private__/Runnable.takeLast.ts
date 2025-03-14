@@ -8,7 +8,7 @@ import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
@@ -27,8 +27,8 @@ class TakeLastSink<T> implements SinkLike<T> {
     });
   }
 
-  [SinkLike_next](next: T): void {
-    this.q[SinkLike_next](next);
+  [SinkLike_push](next: T): void {
+    this.q[SinkLike_push](next);
   }
 
   [SinkLike_complete](): void {
@@ -41,7 +41,7 @@ class TakeLastSink<T> implements SinkLike<T> {
       ((v = queue[QueueLike_dequeue]()),
       !sink[SinkLike_isCompleted] && isSome(v))
     ) {
-      sink[SinkLike_next](v as T);
+      sink[SinkLike_push](v as T);
     }
 
     sink[SinkLike_complete]();

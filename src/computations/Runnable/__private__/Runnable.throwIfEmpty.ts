@@ -3,7 +3,7 @@ import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
@@ -17,9 +17,9 @@ class ThrowIfEmptySink<T> implements SinkLike<T> {
     private f: Factory<unknown>,
   ) {}
 
-  [SinkLike_next](next: T): void {
+  [SinkLike_push](next: T): void {
     this.e = false;
-    this.sink[SinkLike_next](next);
+    this.sink[SinkLike_push](next);
   }
 
   [SinkLike_complete](): void {
