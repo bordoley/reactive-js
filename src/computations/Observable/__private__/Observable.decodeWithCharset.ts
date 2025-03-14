@@ -11,15 +11,11 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_complete,
-  LiftedObserverLike_delegate,
+  LiftedObserverLike_completeDelegate,
   LiftedObserverLike_notify,
   LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import {
-  ObserverLike,
-  SinkLike_complete,
-  SinkLike_push,
-} from "../../../utils.js";
+import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
@@ -77,7 +73,6 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
       [LiftedObserverLike_complete](
         this: TProperties & LiftedObserverLike<ArrayBuffer, string>,
       ) {
-        const delegate = this[LiftedObserverLike_delegate];
         const data = this[DecodeWithCharsetObserver_textDecoder].decode(
           newInstance(Uint8Array, []),
           {
@@ -86,10 +81,10 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         );
 
         if (data[Array_length] > 0) {
-          delegate[SinkLike_push](data);
+          this[LiftedObserverLike_notifyDelegate](data);
         }
 
-        delegate[SinkLike_complete]();
+        this[LiftedObserverLike_completeDelegate]();
       },
     }),
   );

@@ -1,3 +1,5 @@
+
+
 import * as Computation from "../../../computations/Computation.js";
 import {
   ComputationLike_isDeferred,
@@ -9,16 +11,14 @@ import {
 } from "../../../computations.js";
 import {
   Function1,
-  Method1,
   Optional,
   SideEffect1,
-  bind,
-  bindMethod,
   error,
   isSome,
   none,
   pipe,
 } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
 import {
@@ -31,51 +31,42 @@ import Observable_lift, {
   ObservableLift_isStateless,
 } from "./Observable.lift.js";
 
-const Observable_catchError: Observable.Signature["catchError"] =
-  /*@__PURE__*/ (<T>() => {
-    const createCatchErrorObserver =
-      (onErrorHandler: Method1<ObserverLike<T>, Error>) =>
-      (delegate: ObserverLike<T>) =>
-        pipe(
-          Observer_createWithDelegate<T>(delegate),
-          DisposableContainer.onComplete(
-            bindMethod(delegate, SinkLike_complete),
-          ),
-          DisposableContainer.onError(bind(onErrorHandler, delegate)),
-        );
+const Observable_catchError: Observable.Signature["catchError"] = (<T>(
+  errorHandler: SideEffect1<Error> | Function1<Error, ObservableLike<T>>,
+  options?: {
+    readonly innerType?: HigherOrderInnerComputationLike;
+  },
+) =>
+  pipe(
+    (delegate: ObserverLike<T>) =>
+      pipe(
+        Observer_createWithDelegate(delegate),
+        Disposable.addToContainer(delegate),
+        DisposableContainer.onError(err => {
+          let action: Optional<ObservableLike<T>> = none;
+          try {
+            action = errorHandler(err) as Optional<ObservableLike<T>>;
+          } catch (e) {
+            delegate[DisposableLike_dispose](error([error(e), err]));
+          }
 
-    return (
-      errorHandler: SideEffect1<Error> | Function1<Error, ObservableLike<T>>,
-      options?: {
-        readonly innerType?: HigherOrderInnerComputationLike;
-      },
-    ) => {
-      function onErrorHandler(this: ObserverLike<T>, err: Error) {
-        let action: Optional<ObservableLike<T>> = none;
-        try {
-          action = errorHandler(err) as Optional<ObservableLike<T>>;
-        } catch (e) {
-          this[DisposableLike_dispose](error([error(e), err]));
-        }
-
-        if (isSome(action)) {
-          action[ObservableLike_observe](this);
-        } else {
-          this[SinkLike_complete]();
-        }
-      }
-
-      return Observable_lift({
-        [ObservableLift_isStateless]: false,
-        [ComputationLike_isDeferred]: Computation.isDeferred(
-          options?.innerType ?? {},
-        ),
-        [ComputationLike_isPure]: Computation.isPure(options?.innerType ?? {}),
-        [ComputationLike_isSynchronous]: Computation.isSynchronous(
-          options?.innerType ?? {},
-        ),
-      })(createCatchErrorObserver(onErrorHandler));
-    };
-  })() as Observable.Signature["catchError"];
+          if (isSome(action)) {
+            action[ObservableLike_observe](delegate);
+          } else {
+            delegate[SinkLike_complete]();
+          }
+        }),
+      ),
+    Observable_lift({
+      [ObservableLift_isStateless]: false,
+      [ComputationLike_isDeferred]: Computation.isDeferred(
+        options?.innerType ?? {},
+      ),
+      [ComputationLike_isPure]: Computation.isPure(options?.innerType ?? {}),
+      [ComputationLike_isSynchronous]: Computation.isSynchronous(
+        options?.innerType ?? {},
+      ),
+    }),
+  )) as Observable.Signature["catchError"];
 
 export default Observable_catchError;

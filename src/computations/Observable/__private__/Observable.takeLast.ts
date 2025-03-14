@@ -19,8 +19,10 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_complete,
+  LiftedObserverLike_completeDelegate,
   LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   ContinuationContextLike,
@@ -33,7 +35,6 @@ import {
   QueueableLike_isReady,
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
-  SinkLike_complete,
   SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -59,13 +60,14 @@ const createTakeLastObserver: <T>(
     let v: Optional<T> = none;
     while (((v = queue[QueueLike_dequeue]()), isSome(v))) {
       if (!delegate[QueueableLike_isReady]) {
-        delegate[SchedulerLike_requestYield]();
+        this[SchedulerLike_requestYield]();
         ctx[ContinuationContextLike_yield]();
       }
 
-      delegate[SinkLike_push](v);
+      this[LiftedObserverLike_notifyDelegate](v);
+
       if (!delegate[QueueableLike_isReady]) {
-        delegate[SchedulerLike_requestYield]();
+        this[SchedulerLike_requestYield]();
       }
 
       if (queue[QueueLike_count] > 0) {
@@ -73,7 +75,7 @@ const createTakeLastObserver: <T>(
       }
     }
 
-    delegate[SinkLike_complete]();
+    this[LiftedObserverLike_completeDelegate]();
   }
 
   return mixInstanceFactory(
@@ -105,14 +107,13 @@ const createTakeLastObserver: <T>(
         this[TakeLastObserver_queue][SinkLike_push](next);
       },
       [LiftedObserverLike_complete](this: TProperties & LiftedObserverLike<T>) {
-        const delegate = this[LiftedObserverLike_delegate];
         const count = this[TakeLastObserver_queue][QueueLike_count];
 
         if (count === 0) {
-          delegate[SinkLike_complete]();
+          this[LiftedObserverLike_completeDelegate]();
         }
 
-        delegate[SchedulerLike_schedule](bind(notifyDelegate, this));
+        this[SchedulerLike_schedule](bind(notifyDelegate, this));
       },
     }),
   );

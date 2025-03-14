@@ -18,15 +18,11 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_complete,
-  LiftedObserverLike_delegate,
+  LiftedObserverLike_completeDelegate,
   LiftedObserverLike_notify,
   LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import {
-  DisposableLike_dispose,
-  ObserverLike,
-  SinkLike_complete,
-} from "../../../utils.js";
+import { DisposableLike_dispose, ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
@@ -71,7 +67,6 @@ const createThrowIfEmptyObserver: <T>(
       },
       [LiftedObserverLike_complete](this: TProperties & LiftedObserverLike<T>) {
         const factory = this[ThrowIfEmptyObserver_factory];
-        const delegate = this[LiftedObserverLike_delegate];
 
         let err: Optional<Error> = none;
         if (this[ThrowIfEmptyObserver_isEmpty]) {
@@ -80,9 +75,9 @@ const createThrowIfEmptyObserver: <T>(
           } catch (e) {
             err = error(e);
           }
-          delegate[DisposableLike_dispose](err);
+          this[DisposableLike_dispose](err);
         } else {
-          delegate[SinkLike_complete]();
+          this[LiftedObserverLike_completeDelegate]();
         }
       },
     }),

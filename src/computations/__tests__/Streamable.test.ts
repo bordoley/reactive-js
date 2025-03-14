@@ -212,9 +212,7 @@ testModule(
 
       vts[VirtualTimeSchedulerLike_run]();
 
-      // FIXME: this isn't a great test, because all the scheduler hopping
-      // leads to induced delays that are hard to account for accurately.
-      pipe(updateCnt, expectEquals(3));
+      pipe(updateCnt, expectEquals(2));
     }),
   ),
 );
