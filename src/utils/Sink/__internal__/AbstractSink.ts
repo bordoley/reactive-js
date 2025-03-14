@@ -1,26 +1,30 @@
 import {
+  EventListenerLike_notify,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../../../utils.js";
+import AbstractDelegatingDisposableSink from "./AbstractDelegatingDisposableSink.js";
 
 export const AbstractSink_delegate = Symbol("AbstractSink_delegate");
 
 abstract class AbstractSink<
-  TA,
-  TB = TA,
-  TDelegate extends SinkLike<TB> = SinkLike<TB>,
-> implements SinkLike<TA>
+    TA,
+    TB = TA,
+    TDelegate extends SinkLike<TB> = SinkLike<TB>,
+  >
+  extends AbstractDelegatingDisposableSink<TA>
+  implements SinkLike<TA>
 {
   public [SinkLike_isCompleted] = false;
   public [AbstractSink_delegate]: TDelegate;
 
   constructor(sink: TDelegate) {
+    super(sink);
     this[AbstractSink_delegate] = sink;
   }
 
-  abstract [SinkLike_push](next: TA): void;
+  abstract [EventListenerLike_notify](next: TA): void;
 
   [SinkLike_complete]() {
     if (!this[SinkLike_isCompleted]) {

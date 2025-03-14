@@ -18,9 +18,9 @@ import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/Delega
 import {
   DisposableContainerLike,
   DisposableLike_dispose,
+  EventListenerLike_notify,
   ObserverLike,
   SinkLike_complete,
-  SinkLike_push,
 } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";
 import type * as Observable from "../../Observable.js";
@@ -71,7 +71,9 @@ const Observable_fromEventSource: Observable.Signature["fromEventSource"] =
               DisposableContainer.onError(
                 bindMethod(observer, DisposableLike_dispose),
               ),
-              EventSource.addEventHandler(bindMethod(observer, SinkLike_push)),
+              EventSource.addEventHandler(
+                bindMethod(observer, EventListenerLike_notify),
+              ),
               Disposable.addTo(observer),
             );
           },

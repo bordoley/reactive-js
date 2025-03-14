@@ -50,7 +50,6 @@ import {
   PauseableLike_resume,
   SinkLike,
   SinkLike_complete,
-  SinkLike_push,
 } from "./utils.js";
 
 interface ReactModule {
@@ -83,7 +82,7 @@ interface ReactModule {
   ): Function1<TProps, React.ReactNode>;
 
   useSink<TReq>(queue: Optional<SinkLike<TReq>>): {
-    push: Function1<TReq, boolean>;
+    notify: Function1<TReq, boolean>;
     complete: SideEffect;
   };
 
@@ -197,8 +196,9 @@ export const useSink: Signature["useSink"] = <TReq>(
     stableSinkRef.current = sink;
   }, [sink]);
 
-  const push = useCallback(
-    (req: TReq) => stableSinkRef?.current?.[SinkLike_push](req) ?? true,
+  const notify = useCallback(
+    (req: TReq) =>
+      stableSinkRef?.current?.[EventListenerLike_notify](req) ?? true,
     [stableSinkRef],
   );
 
@@ -207,7 +207,7 @@ export const useSink: Signature["useSink"] = <TReq>(
     [stableSinkRef],
   );
 
-  return useMemo(() => ({ push, complete }), [push, complete]);
+  return useMemo(() => ({ notify, complete }), [notify, complete]);
 };
 
 export const useDisposable: Signature["useDisposable"] = <

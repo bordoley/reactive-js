@@ -18,6 +18,7 @@ import {
   isSome,
   newInstance,
   none,
+  pipe,
   raiseError,
   returns,
 } from "../../functions.js";
@@ -25,6 +26,7 @@ import { clampPositiveInteger, floor } from "../../math.js";
 import {
   BackPressureError,
   BackpressureStrategy,
+  DisposableLike,
   DisposableLike_dispose,
   DropLatestBackpressureStrategy,
   DropOldestBackpressureStrategy,
@@ -40,9 +42,9 @@ import {
   QueueableLike_onReady,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
   ThrowBackpressureStrategy,
 } from "../../utils.js";
+import * as Disposable from "../Disposable.js";
 
 const QueueMixin: <T>() => Mixin1<
   QueueLike<T>,
@@ -51,14 +53,15 @@ const QueueMixin: <T>() => Mixin1<
     comparator?: Comparator<T>;
     backpressureStrategy?: BackpressureStrategy;
   }>,
-  unknown,
-  Omit<
+  DisposableLike,
+  Pick<
     QueueLike<T>,
-    | typeof QueueableLike_backpressureStrategy
-    | typeof QueueLike_count
-    | typeof QueueableLike_capacity
-    | typeof SinkLike_isCompleted
-    | typeof QueueableLike_onReady
+    | typeof QueueLike_head
+    | typeof QueueableLike_isReady
+    | typeof QueueLike_dequeue
+    | typeof Symbol.iterator
+    | typeof EventListenerLike_notify
+    | typeof SinkLike_complete
   >
 > = /*@__PURE__*/ (<T>() => {
   const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
@@ -122,18 +125,36 @@ const QueueMixin: <T>() => Mixin1<
   };
 
   return returns(
-    mix(
+    mix<
+      QueueLike<T>,
+      TProperties,
+      Pick<
+        QueueLike<T>,
+        | typeof QueueLike_head
+        | typeof QueueableLike_isReady
+        | typeof QueueLike_dequeue
+        | typeof Symbol.iterator
+        | typeof EventListenerLike_notify
+        | typeof SinkLike_complete
+      >,
+      DisposableLike,
+      Optional<{
+        capacity?: number;
+        comparator?: Comparator<T>;
+        backpressureStrategy?: BackpressureStrategy;
+      }>
+    >(
       function QueueMixin(
         this: Omit<
           QueueLike<T>,
           typeof QueueLike_count | typeof QueueableLike_capacity
         > &
           Mutable<TProperties>,
-        config?: {
+        config: Optional<{
           capacity?: number;
           comparator?: Comparator<T>;
           backpressureStrategy?: BackpressureStrategy;
-        },
+        }>,
       ): QueueLike<T> {
         this[QueueableLike_backpressureStrategy] =
           config?.backpressureStrategy ?? OverflowBackpressureStrategy;
@@ -143,7 +164,10 @@ const QueueMixin: <T>() => Mixin1<
 
         this[QueueMixin_comparator] = config?.comparator;
         this[QueueMixin_values] = none;
-        this[QueueableLike_onReady] = Publisher.create<void>();
+        this[QueueableLike_onReady] = pipe(
+          Publisher.create<void>(),
+          Disposable.addTo(this),
+        );
 
         return this;
       },
@@ -340,7 +364,7 @@ const QueueMixin: <T>() => Mixin1<
           }
         },
 
-        [SinkLike_push](this: TProperties & QueueLike<T>, item: T) {
+        [EventListenerLike_notify](this: TProperties & QueueLike<T>, item: T) {
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
           const capacity = this[QueueableLike_capacity];
           const applyBackpressure = this[QueueLike_count] >= capacity;

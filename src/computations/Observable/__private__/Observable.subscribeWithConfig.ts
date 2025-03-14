@@ -22,6 +22,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EventListenerLike_notify,
   ObserverLike,
   OverflowBackpressureStrategy,
   QueueableLike,
@@ -38,7 +39,6 @@ import {
   SchedulerLike_shouldYield,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../../../utils.js";
 import EventSource_never from "../../EventSource/__private__/EventSource.never.js";
 
@@ -135,7 +135,7 @@ const createObserver: <T>(
         ];
       },
 
-      [SinkLike_push]() {
+      [EventListenerLike_notify]() {
         return true;
       },
 

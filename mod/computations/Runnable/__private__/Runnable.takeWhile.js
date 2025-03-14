@@ -2,7 +2,7 @@
 
 import { newInstance } from "../../../functions.js";
 import AbstractSink, { AbstractSink_delegate, } from "../../../utils/Sink/__internal__/AbstractSink.js";
-import { SinkLike_complete, SinkLike_push } from "../../../utils.js";
+import { EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class TakeWhileSink extends AbstractSink {
     p;
@@ -12,10 +12,10 @@ class TakeWhileSink extends AbstractSink {
         this.p = p;
         this.inclusive = inclusive;
     }
-    [SinkLike_push](next) {
+    [EventListenerLike_notify](next) {
         const satisfiesPredicate = this.p(next);
         if (satisfiesPredicate || this.inclusive) {
-            this[AbstractSink_delegate][SinkLike_push](next);
+            this[AbstractSink_delegate][EventListenerLike_notify](next);
         }
         if (!satisfiesPredicate) {
             this[SinkLike_complete]();

@@ -1,19 +1,28 @@
 import { Array_push } from "../../../__internal__/constants.js";
 import { RunnableLike, RunnableLike_eval } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import AbstractDelegatingDisposableSink from "../../../utils/Sink/__internal__/AbstractDelegatingDisposableSink.js";
 import {
+  DisposableLike_dispose,
+  EventListenerLike_notify,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
-class ToReadonlyArraySink<T> implements SinkLike<T> {
+class ToReadonlyArraySink<T>
+  extends AbstractDelegatingDisposableSink<T>
+  implements SinkLike<T>
+{
+  constructor() {
+    super(Disposable.create());
+  }
   public [SinkLike_isCompleted] = false;
   public acc: T[] = [];
 
-  [SinkLike_push](next: T): void {
+  [EventListenerLike_notify](next: T): void {
     this.acc[Array_push](next);
   }
   [SinkLike_complete]() {
@@ -26,6 +35,7 @@ const Runnable_toReadonlyArray: Runnable.Signature["toReadonlyArray"] =
   (deferable: RunnableLike<T>) => {
     const sink = newInstance(ToReadonlyArraySink<T>);
     deferable[RunnableLike_eval](sink);
+    sink[DisposableLike_dispose]();
     return sink.acc;
   };
 

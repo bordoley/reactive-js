@@ -1,7 +1,14 @@
-import { Mixin1, mix, props, unsafeCast } from "../../__internal__/mixins.js";
+import {
+  Mixin1,
+  include,
+  init,
+  mix,
+  props,
+  unsafeCast,
+} from "../../__internal__/mixins.js";
 import { none, returns } from "../../functions.js";
 import {
-  DisposableContainerLike,
+  EventListenerLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
@@ -9,11 +16,11 @@ import {
   QueueableLike_onReady,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../../utils.js";
+import DelegatingDisposableMixin from "./DelegatingDisposableMixin.js";
 
 const DelegatingQueueableMixin: <TReq>() => Mixin1<
-  Omit<QueueableLike<TReq>, keyof DisposableContainerLike>,
+  QueueableLike<TReq>,
   QueueableLike<TReq>
 > = /*@__PURE__*/ (<TReq>() => {
   const DelegatingQueueableMixin_delegate = Symbol(
@@ -26,20 +33,22 @@ const DelegatingQueueableMixin: <TReq>() => Mixin1<
 
   return returns(
     mix(
+      include(DelegatingDisposableMixin),
       function DelegatingQueueableMixin(
         this: Pick<
           QueueableLike,
           | typeof SinkLike_complete
           | typeof QueueableLike_backpressureStrategy
           | typeof QueueableLike_capacity
-          | typeof SinkLike_push
+          | typeof EventListenerLike_notify
           | typeof SinkLike_isCompleted
           | typeof QueueableLike_isReady
           | typeof QueueableLike_onReady
         > &
           TProperties,
         delegate: QueueableLike<TReq>,
-      ): Omit<QueueableLike<TReq>, keyof DisposableContainerLike> {
+      ): QueueableLike<TReq> {
+        init(DelegatingDisposableMixin, this, delegate);
         this[DelegatingQueueableMixin_delegate] = delegate;
 
         return this;
@@ -77,8 +86,8 @@ const DelegatingQueueableMixin: <TReq>() => Mixin1<
           ];
         },
 
-        [SinkLike_push](this: TProperties, v: TReq) {
-          this[DelegatingQueueableMixin_delegate][SinkLike_push](v);
+        [EventListenerLike_notify](this: TProperties, v: TReq) {
+          this[DelegatingQueueableMixin_delegate][EventListenerLike_notify](v);
         },
 
         [SinkLike_complete](this: TProperties) {

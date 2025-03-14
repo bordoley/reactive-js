@@ -1,19 +1,30 @@
-import { Optional, isSome, newInstance, none } from "../../../functions.js";
+import {
+  Optional,
+  isSome,
+  newInstance,
+  none,
+  pipe,
+} from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import * as Queue from "../../../utils/Queue.js";
+import AbstractDelegatingDisposableSink from "../../../utils/Sink/__internal__/AbstractDelegatingDisposableSink.js";
 import {
   DropOldestBackpressureStrategy,
+  EventListenerLike_notify,
   QueueLike,
   QueueLike_dequeue,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
 
-class TakeLastSink<T> implements SinkLike<T> {
+class TakeLastSink<T>
+  extends AbstractDelegatingDisposableSink<T>
+  implements SinkLike<T>
+{
   public [SinkLike_isCompleted] = false;
   private readonly q: QueueLike<T>;
 
@@ -21,14 +32,19 @@ class TakeLastSink<T> implements SinkLike<T> {
     private readonly sink: SinkLike<T>,
     cnt: number,
   ) {
-    this.q = Queue.create({
-      capacity: cnt,
-      backpressureStrategy: DropOldestBackpressureStrategy,
-    });
+    super(sink);
+
+    this.q = pipe(
+      Queue.create<T>({
+        capacity: cnt,
+        backpressureStrategy: DropOldestBackpressureStrategy,
+      }),
+      Disposable.addTo(this),
+    );
   }
 
-  [SinkLike_push](next: T): void {
-    this.q[SinkLike_push](next);
+  [EventListenerLike_notify](next: T): void {
+    this.q[EventListenerLike_notify](next);
   }
 
   [SinkLike_complete](): void {
@@ -41,7 +57,7 @@ class TakeLastSink<T> implements SinkLike<T> {
       ((v = queue[QueueLike_dequeue]()),
       !sink[SinkLike_isCompleted] && isSome(v))
     ) {
-      sink[SinkLike_push](v as T);
+      sink[EventListenerLike_notify](v as T);
     }
 
     sink[SinkLike_complete]();

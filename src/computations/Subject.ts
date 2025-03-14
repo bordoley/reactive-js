@@ -7,6 +7,7 @@ import {
 } from "../__internal__/constants.js";
 import {
   Mutable,
+  getPrototype,
   include,
   init,
   mixInstanceFactory,
@@ -44,7 +45,6 @@ import {
   QueueLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../utils.js";
 import * as Iterable from "./Iterable.js";
 
@@ -80,6 +80,8 @@ export const create: <T>(options?: {
     }
     this[Subject_observers] = none;
   }
+
+  const queueProtoype = getPrototype(QueueMixin<T>());
 
   return mixInstanceFactory(
     include(DisposableMixin, QueueMixin()),
@@ -154,7 +156,7 @@ export const create: <T>(options?: {
           return;
         }
 
-        this[SinkLike_push](next);
+        call(queueProtoype[EventListenerLike_notify], this, next);
 
         const maybeObservers = this[Subject_observers];
         const observers =
@@ -173,7 +175,7 @@ export const create: <T>(options?: {
             continue;
           }
           try {
-            observer[SinkLike_push](next);
+            observer[EventListenerLike_notify](next);
           } catch (e) {
             observer[DisposableLike_dispose](error(e));
           }
@@ -218,7 +220,7 @@ export const create: <T>(options?: {
         }
 
         for (const next of this) {
-          observer[SinkLike_push](next);
+          observer[EventListenerLike_notify](next);
         }
 
         if (this[DisposableLike_isDisposed]) {

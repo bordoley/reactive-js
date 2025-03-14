@@ -4,10 +4,10 @@ import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computation
 import { newInstance } from "../../../functions.js";
 import AbstractSink, { AbstractSink_delegate, } from "../../../utils/Sink/__internal__/AbstractSink.js";
 import DelegatingNonCompletingSink, { DelegatingNonCompletingSink_inner, } from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
-import { SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../../utils.js";
+import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class ConcatAllSink extends AbstractSink {
-    [SinkLike_push](next) {
+    [EventListenerLike_notify](next) {
         const sink = this[AbstractSink_delegate];
         next[RunnableLike_eval](sink);
         if (sink[DelegatingNonCompletingSink_inner][SinkLike_isCompleted]) {

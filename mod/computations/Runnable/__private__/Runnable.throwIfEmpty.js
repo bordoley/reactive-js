@@ -1,20 +1,22 @@
 /// <reference types="./Runnable.throwIfEmpty.d.ts" />
 
 import { error, newInstance, raise } from "../../../functions.js";
-import { SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../../utils.js";
+import AbstractDelegatingDisposableSink from "../../../utils/Sink/__internal__/AbstractDelegatingDisposableSink.js";
+import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
-class ThrowIfEmptySink {
+class ThrowIfEmptySink extends AbstractDelegatingDisposableSink {
     sink;
     f;
     [SinkLike_isCompleted] = false;
     e = true;
     constructor(sink, f) {
+        super(sink);
         this.sink = sink;
         this.f = f;
     }
-    [SinkLike_push](next) {
+    [EventListenerLike_notify](next) {
         this.e = false;
-        this.sink[SinkLike_push](next);
+        this.sink[EventListenerLike_notify](next);
     }
     [SinkLike_complete]() {
         if (!this[SinkLike_isCompleted]) {

@@ -4,11 +4,11 @@ import * as Disposable from "../../../utils/Disposable.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
+  EventListenerLike_notify,
   ObserverLike,
   SchedulerLike_schedule,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
@@ -29,7 +29,7 @@ const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
       const continuation = (ctx: ContinuationContextLike) => {
         while (!observer[SinkLike_isCompleted] && count !== 0) {
           const next = arr[start];
-          observer[SinkLike_push](next);
+          observer[EventListenerLike_notify](next);
 
           count > 0 ? (start++, count--) : (start--, count++);
 

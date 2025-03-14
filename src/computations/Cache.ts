@@ -47,7 +47,6 @@ import {
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Queue from "../utils/Queue.js";
-import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingQueueableMixin from "../utils/__mixins__/DelegatingQueueableMixin.js";
 import {
   BackpressureStrategy,
@@ -61,7 +60,6 @@ import {
   QueueableLike,
   SchedulerLike,
   SchedulerLike_schedule,
-  SinkLike_push,
 } from "../utils.js";
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
@@ -144,7 +142,6 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           ReadonlyObjectMapLike<string, Updater<Optional<T>>>
         >
       >(),
-      DelegatingDisposableMixin,
     ),
     function Cache(
       this: TProperties<T> & Pick<CacheLike<T>, typeof CacheLike_get>,
@@ -180,7 +177,10 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
       const store = newInstance<Map<string, T>>(Map);
       const subscriptions =
         newInstance<Map<string, SubjectLike<Optional<T>>>>(Map);
-      const cleanupQueue = Queue.create<string>();
+      const cleanupQueue = pipe(
+        Queue.create<string>(),
+        Disposable.addTo(queue),
+      );
 
       const cleanupContinuation = (ctx: ContinuationContextLike) => {
         while (store[Map_size] > maxEntries) {
@@ -332,7 +332,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           return;
         }
 
-        cleanupQueue[SinkLike_push](key);
+        cleanupQueue[EventListenerLike_notify](key);
 
         if (!cleanupJob[DisposableLike_isDisposed]) {
           return;
@@ -342,7 +342,6 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
       };
 
-      init(DelegatingDisposableMixin, this, queue);
       init(
         DelegatingQueueableMixin<
           ReadonlyObjectMapLike<string, Function1<Optional<T>, T>>
@@ -393,7 +392,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
               subject[EventListenerLike_notify](initialValue);
             } else {
               // Try to load the value from the persistence store
-              this[SinkLike_push]({
+              this[EventListenerLike_notify]({
                 [key]: identity,
               });
             }
@@ -452,4 +451,4 @@ export const update = <T>(
 export const updateMany = <T>(
   cache: CacheLike<T>,
   keyValues: ReadonlyObjectMapLike<string, Updater<Optional<T>>>,
-) => cache[SinkLike_push](keyValues);
+) => cache[EventListenerLike_notify](keyValues);

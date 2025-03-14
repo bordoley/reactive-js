@@ -2,7 +2,7 @@
 
 import { newInstance } from "../../../functions.js";
 import AbstractSink, { AbstractSink_delegate, } from "../../../utils/Sink/__internal__/AbstractSink.js";
-import { SinkLike_push } from "../../../utils.js";
+import { EventListenerLike_notify } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class ScanSink extends AbstractSink {
     r;
@@ -12,10 +12,10 @@ class ScanSink extends AbstractSink {
         this.r = r;
         this.acc = acc;
     }
-    [SinkLike_push](next) {
+    [EventListenerLike_notify](next) {
         const nextAcc = this.r(this.acc, next);
         this.acc = nextAcc;
-        this[AbstractSink_delegate][SinkLike_push](nextAcc);
+        this[AbstractSink_delegate][EventListenerLike_notify](nextAcc);
     }
 }
 const Runnable_scan = (reducer, initialValue) => Runnable_lift((sink) => newInstance((ScanSink), sink, reducer, initialValue()), true);

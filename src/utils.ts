@@ -78,22 +78,28 @@ export interface SerialDisposableLike<
   set [SerialDisposableLike_current](v: TDisposable);
 }
 
-export const SinkLike_push = Symbol("SinkLike_push");
+export const EventListenerLike_notify = Symbol("EventListenerLike_notify");
+
+/**
+ * @noInheritDoc
+ */
+export interface EventListenerLike<T = unknown> extends DisposableLike {
+  /**
+   * Notifies the EventListener of the next notification produced by the source.
+   *
+   * @param next - The next notification value.
+   */
+  [EventListenerLike_notify](event: T): void;
+}
+
 export const SinkLike_complete = Symbol("SinkLike_complete");
 export const SinkLike_isCompleted = Symbol("SinkLike_isCompleted");
 
 /**
  * @noInheritDoc
  */
-export interface SinkLike<T = unknown> {
+export interface SinkLike<T = unknown> extends EventListenerLike<T> {
   readonly [SinkLike_isCompleted]: boolean;
-
-  /**
-   * Notifies the EventListener of the next notification produced by the source.
-   *
-   * @param next - The next notification value.
-   */
-  [SinkLike_push](next: T): void;
 
   [SinkLike_complete](): void;
 }
@@ -296,17 +302,3 @@ export interface ObserverLike<T = unknown>
   extends QueueableLike<T>,
     SchedulerLike,
     DisposableLike {}
-
-export const EventListenerLike_notify = Symbol("EventListenerLike_notify");
-
-/**
- * @noInheritDoc
- */
-export interface EventListenerLike<T = unknown> extends DisposableLike {
-  /**
-   * Notifies the EventListener of the next notification produced by the source.
-   *
-   * @param next - The next notification value.
-   */
-  [EventListenerLike_notify](event: T): void;
-}

@@ -4,7 +4,7 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { QueueableLike_isReady, SchedulerLike_requestYield, SinkLike_push, } from "../../../utils.js";
+import { EventListenerLike_notify, QueueableLike_isReady, SchedulerLike_requestYield, } from "../../../utils.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 const Observer_createEnqueueObserver = /*@__PURE__*/ (() => {
     const EnqueueObserver_queue = Symbol("EnqueueObserver_queue");
@@ -18,7 +18,7 @@ const Observer_createEnqueueObserver = /*@__PURE__*/ (() => {
     }), proto({
         [LiftedObserverLike_notify](next) {
             const queue = this[EnqueueObserver_queue];
-            queue[SinkLike_push](next);
+            queue[EventListenerLike_notify](next);
             if (!queue[QueueableLike_isReady]) {
                 this[SchedulerLike_requestYield]();
             }

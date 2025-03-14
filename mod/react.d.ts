@@ -23,7 +23,7 @@ interface ReactModule {
         readonly capacity?: number;
     }): Function1<TProps, React.ReactNode>;
     useSink<TReq>(queue: Optional<SinkLike<TReq>>): {
-        push: Function1<TReq, boolean>;
+        notify: Function1<TReq, boolean>;
         complete: SideEffect;
     };
     /**

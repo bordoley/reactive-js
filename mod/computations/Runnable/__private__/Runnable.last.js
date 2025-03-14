@@ -2,11 +2,16 @@
 
 import { RunnableLike_eval } from "../../../computations.js";
 import { newInstance, none } from "../../../functions.js";
-import { SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../../utils.js";
-class LastSink {
+import * as Disposable from "../../../utils/Disposable.js";
+import AbstractDelegatingDisposableSink from "../../../utils/Sink/__internal__/AbstractDelegatingDisposableSink.js";
+import { DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+class LastSink extends AbstractDelegatingDisposableSink {
     [SinkLike_isCompleted] = false;
     v = none;
-    [SinkLike_push](next) {
+    constructor() {
+        super(Disposable.create());
+    }
+    [EventListenerLike_notify](next) {
         this.v = next;
     }
     [SinkLike_complete]() {
@@ -16,6 +21,7 @@ class LastSink {
 const Runnable_last = () => (deferable) => {
     const sink = newInstance((LastSink));
     deferable[RunnableLike_eval](sink);
+    sink[DisposableLike_dispose]();
     return sink.v;
 };
 export default Runnable_last;

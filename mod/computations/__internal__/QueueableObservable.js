@@ -6,7 +6,7 @@ import { bindMethod, isSome, none, pipe } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Queue from "../../utils/Queue.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
-import { EventListenerLike_notify, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, QueueableLike_onReady, SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../utils.js";
+import { EventListenerLike_notify, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, QueueableLike_onReady, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 import * as Publisher from "../Publisher.js";
 export const create = (() => {
@@ -15,7 +15,7 @@ export const create = (() => {
         init(DisposableMixin, this);
         const onReadyPublisher = pipe(Publisher.create(), Disposable.addTo(this));
         this[QueueableLike_onReady] = onReadyPublisher;
-        const queue = Queue.create(config);
+        const queue = pipe(Queue.create(config), Disposable.addTo(this));
         this[QueueableObservable_delegate] = queue;
         pipe(queue[QueueableLike_onReady], EventSource.addEventHandler(bindMethod(onReadyPublisher, EventListenerLike_notify)), Disposable.addTo(this));
         return this;
@@ -50,7 +50,7 @@ export const create = (() => {
                 unsafeCast(oldDelegate);
                 let v = none;
                 while (((v = oldDelegate[QueueLike_dequeue]()), isSome(v))) {
-                    observer[SinkLike_push](v);
+                    observer[EventListenerLike_notify](v);
                 }
             }
             if (oldDelegate[SinkLike_isCompleted]) {
@@ -61,8 +61,8 @@ export const create = (() => {
         [SinkLike_complete]() {
             this[QueueableObservable_delegate][SinkLike_complete]();
         },
-        [SinkLike_push](v) {
-            this[QueueableObservable_delegate][SinkLike_push](v);
+        [EventListenerLike_notify](v) {
+            this[QueueableObservable_delegate][EventListenerLike_notify](v);
         },
     });
 })();

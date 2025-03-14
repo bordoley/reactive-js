@@ -27,9 +27,9 @@ import LiftedObserverMixin, {
   LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
+  EventListenerLike_notify,
   ObserverLike,
   SinkLike_complete,
-  SinkLike_push,
 } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 
@@ -99,7 +99,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
             ReadonlyArray.map(pick(LatestObserver_latest)),
           );
 
-          ctx[LatestCtx_delegate][SinkLike_push](value);
+          ctx[LatestCtx_delegate][EventListenerLike_notify](value);
 
           if (mode === zipMode) {
             for (const sub of observers) {

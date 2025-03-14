@@ -67,7 +67,7 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Queue from "../../utils/Queue.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, SinkLike_push, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 import * as WritableStore from "../WritableStore.js";
@@ -109,7 +109,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
             await Promise.resolve();
             try {
                 for (let i = 0; i < 10; i++) {
-                    observer[SinkLike_push](i);
+                    observer[EventListenerLike_notify](i);
                 }
                 observer[SinkLike_complete]();
             }
@@ -135,7 +135,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         await pipeAsync(Observable.create(async (observer) => {
             await Promise.resolve();
             for (let i = 0; i < 10; i++) {
-                observer[SinkLike_push](i);
+                observer[EventListenerLike_notify](i);
             }
             observer[SinkLike_complete]();
         }), Observable.backpressureStrategy({
@@ -157,7 +157,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         await pipeAsync(Observable.create(async (observer) => {
             await Promise.resolve();
             for (let i = 0; i < 10; i++) {
-                observer[SinkLike_push](i);
+                observer[EventListenerLike_notify](i);
             }
             observer[SinkLike_complete]();
         }), Observable.backpressureStrategy({
@@ -196,7 +196,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         const scheduler = __addDisposableResource(env_4, HostScheduler.create(), false);
         await pipeAsync(Observable.computeDeferred(() => {
             const stream = __stream(Streamable.identity());
-            const push = bindMethod(stream, SinkLike_push);
+            const push = bindMethod(stream, EventListenerLike_notify);
             const result = __observe(stream) ?? 0;
             __do(push, result + 1);
             return result;
@@ -216,7 +216,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         await pipeAsync(Observable.computeDeferred(() => {
             const initialState = __constant(() => 0);
             const state = __state(initialState);
-            const push = bindMethod(state, SinkLike_push);
+            const push = bindMethod(state, EventListenerLike_notify);
             const result = __observe(state) ?? -1;
             if (result > -1) {
                 __do(push, () => result + 1);

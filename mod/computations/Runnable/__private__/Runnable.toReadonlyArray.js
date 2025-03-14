@@ -3,11 +3,16 @@
 import { Array_push } from "../../../__internal__/constants.js";
 import { RunnableLike_eval } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
-import { SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../../utils.js";
-class ToReadonlyArraySink {
+import * as Disposable from "../../../utils/Disposable.js";
+import AbstractDelegatingDisposableSink from "../../../utils/Sink/__internal__/AbstractDelegatingDisposableSink.js";
+import { DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+class ToReadonlyArraySink extends AbstractDelegatingDisposableSink {
+    constructor() {
+        super(Disposable.create());
+    }
     [SinkLike_isCompleted] = false;
     acc = [];
-    [SinkLike_push](next) {
+    [EventListenerLike_notify](next) {
         this.acc[Array_push](next);
     }
     [SinkLike_complete]() {
@@ -17,6 +22,7 @@ class ToReadonlyArraySink {
 const Runnable_toReadonlyArray = () => (deferable) => {
     const sink = newInstance((ToReadonlyArraySink));
     deferable[RunnableLike_eval](sink);
+    sink[DisposableLike_dispose]();
     return sink.acc;
 };
 export default Runnable_toReadonlyArray;

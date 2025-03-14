@@ -14,11 +14,11 @@ import LiftedObserverMixin, {
   LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
+  EventListenerLike_notify,
   ObserverLike,
   QueueableLike,
   QueueableLike_isReady,
   SchedulerLike_requestYield,
-  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
@@ -57,7 +57,7 @@ const Observer_createEnqueueObserver: <T>(
         next: T,
       ) {
         const queue = this[EnqueueObserver_queue];
-        queue[SinkLike_push](next);
+        queue[EventListenerLike_notify](next);
         if (!queue[QueueableLike_isReady]) {
           this[SchedulerLike_requestYield]();
         }

@@ -30,7 +30,6 @@ import {
   QueueableLike_onReady,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 import * as Publisher from "../Publisher.js";
@@ -66,7 +65,7 @@ export const create: <T>(config?: {
       const onReadyPublisher = pipe(Publisher.create(), Disposable.addTo(this));
       this[QueueableLike_onReady] = onReadyPublisher;
 
-      const queue = Queue.create(config);
+      const queue = pipe(Queue.create(config), Disposable.addTo(this));
       this[QueueableObservable_delegate] = queue;
 
       pipe(
@@ -130,7 +129,7 @@ export const create: <T>(config?: {
 
           let v: Optional<T> = none;
           while (((v = oldDelegate[QueueLike_dequeue]()), isSome(v))) {
-            observer[SinkLike_push](v);
+            observer[EventListenerLike_notify](v);
           }
         }
 
@@ -145,8 +144,8 @@ export const create: <T>(config?: {
         this[QueueableObservable_delegate][SinkLike_complete]();
       },
 
-      [SinkLike_push](this: TProperties, v: T): void {
-        this[QueueableObservable_delegate][SinkLike_push](v);
+      [EventListenerLike_notify](this: TProperties, v: T): void {
+        this[QueueableObservable_delegate][EventListenerLike_notify](v);
       },
     },
   );

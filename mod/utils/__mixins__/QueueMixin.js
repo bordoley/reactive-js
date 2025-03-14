@@ -3,9 +3,10 @@
 import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/constants.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import * as Publisher from "../../computations/Publisher.js";
-import { isSome, newInstance, none, raiseError, returns, } from "../../functions.js";
+import { isSome, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
-import { BackPressureError, DisposableLike_dispose, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, QueueableLike_onReady, SinkLike_complete, SinkLike_isCompleted, SinkLike_push, ThrowBackpressureStrategy, } from "../../utils.js";
+import { BackPressureError, DisposableLike_dispose, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, QueueableLike_onReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../utils.js";
+import * as Disposable from "../Disposable.js";
 const QueueMixin = /*@__PURE__*/ (() => {
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
     const QueueMixin_head = Symbol("QueueMixin_head");
@@ -42,7 +43,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
         this[QueueableLike_capacity] = clampPositiveInteger(config?.capacity ?? MAX_SAFE_INTEGER);
         this[QueueMixin_comparator] = config?.comparator;
         this[QueueMixin_values] = none;
-        this[QueueableLike_onReady] = Publisher.create();
+        this[QueueableLike_onReady] = pipe(Publisher.create(), Disposable.addTo(this));
         return this;
     }, props({
         [QueueLike_count]: 0,
@@ -194,7 +195,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
                 }
             }
         },
-        [SinkLike_push](item) {
+        [EventListenerLike_notify](item) {
             const backpressureStrategy = this[QueueableLike_backpressureStrategy];
             const capacity = this[QueueableLike_capacity];
             const applyBackpressure = this[QueueLike_count] >= capacity;

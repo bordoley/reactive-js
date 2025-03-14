@@ -67,7 +67,6 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
   SinkLike_complete,
-  SinkLike_push,
 } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
@@ -795,7 +794,7 @@ export const toPauseableObservable: Signature["toPauseableObservable"] =
                   observer[SinkLike_complete]();
                   break;
                 } else if (
-                  (observer[SinkLike_push](next[Iterator_value]),
+                  (observer[EventListenerLike_notify](next[Iterator_value]),
                   !observer[QueueableLike_isReady])
                 ) {
                   // An async iterable can produce resolved promises which are immediately

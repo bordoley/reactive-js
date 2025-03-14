@@ -26,6 +26,6 @@
 
 > **complete**: [`SideEffect`](../../functions/type-aliases/SideEffect.md)
 
-### push
+### notify
 
-> **push**: [`Function1`](../../functions/type-aliases/Function1.md)\<`TReq`, `boolean`\>
+> **notify**: [`Function1`](../../functions/type-aliases/Function1.md)\<`TReq`, `boolean`\>

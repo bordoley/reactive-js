@@ -2,7 +2,7 @@
 
 import { newInstance } from "../../../functions.js";
 import AbstractSink, { AbstractSink_delegate, } from "../../../utils/Sink/__internal__/AbstractSink.js";
-import { SinkLike_push } from "../../../utils.js";
+import { EventListenerLike_notify } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class KeepSink extends AbstractSink {
     p;
@@ -10,9 +10,9 @@ class KeepSink extends AbstractSink {
         super(sink);
         this.p = p;
     }
-    [SinkLike_push](next) {
+    [EventListenerLike_notify](next) {
         if (this.p(next)) {
-            this[AbstractSink_delegate][SinkLike_push](next);
+            this[AbstractSink_delegate][EventListenerLike_notify](next);
         }
     }
 }

@@ -30,6 +30,7 @@ import {
 } from "../utils/__mixins__/SchedulerMixin.js";
 import {
   DisposableLike,
+  EventListenerLike_notify,
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
@@ -38,7 +39,6 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-  SinkLike_push,
 } from "../utils.js";
 
 interface Signature {
@@ -98,7 +98,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
         ((continuation = newWorkQueue[QueueLike_dequeue]()),
         isSome(continuation))
       ) {
-        workQueue[SinkLike_push](continuation);
+        workQueue[EventListenerLike_notify](continuation);
       }
       animationFrameScheduler[AnimationFrameScheduler_rafQueue] = workQueue;
     }
@@ -160,7 +160,9 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
             Disposable.addTo(continuation),
           );
         } else {
-          this[AnimationFrameScheduler_rafQueue][SinkLike_push](continuation);
+          this[AnimationFrameScheduler_rafQueue][EventListenerLike_notify](
+            continuation,
+          );
 
           if (!this[AnimationFrameScheduler_rafIsRunning]) {
             this[AnimationFrameScheduler_rafIsRunning] = true;

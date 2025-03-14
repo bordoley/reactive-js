@@ -32,11 +32,11 @@ import * as Disposable from "../../utils/Disposable.js";
 import {
   BackpressureStrategy,
   DisposableLike,
+  EventListenerLike_notify,
   ObserverLike,
   SchedulerLike,
   SchedulerLike_schedule,
   SinkLike_complete,
-  SinkLike_push,
 } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
@@ -143,7 +143,7 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
     create(observer => {
       const callback = () => {
         f(...args);
-        observer[SinkLike_push](none);
+        observer[EventListenerLike_notify](none);
         observer[SinkLike_complete]();
       };
 

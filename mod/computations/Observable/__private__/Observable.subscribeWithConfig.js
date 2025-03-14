@@ -6,7 +6,7 @@ import { ObservableLike_observe, } from "../../../computations.js";
 import { bind, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, OverflowBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, QueueableLike_onReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../../utils.js";
+import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, OverflowBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, QueueableLike_onReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import EventSource_never from "../../EventSource/__private__/EventSource.never.js";
 const createObserver = /*@__PURE__*/ (() => {
     const SubscribeObserver_scheduler = Symbol("SubscribeObserver_scheduler");
@@ -55,7 +55,7 @@ const createObserver = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[SubscribeObserver_scheduler][SchedulerLike_maxYieldInterval];
         },
-        [SinkLike_push]() {
+        [EventListenerLike_notify]() {
             return true;
         },
         [SinkLike_complete]() {

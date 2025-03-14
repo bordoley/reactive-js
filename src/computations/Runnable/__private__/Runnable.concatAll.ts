@@ -12,10 +12,10 @@ import DelegatingNonCompletingSink, {
   DelegatingNonCompletingSink_inner,
 } from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
 import {
+  EventListenerLike_notify,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
@@ -25,7 +25,7 @@ class ConcatAllSink<T> extends AbstractSink<
   T,
   DelegatingNonCompletingSink<T>
 > {
-  [SinkLike_push](next: RunnableLike<T>): void {
+  [EventListenerLike_notify](next: RunnableLike<T>): void {
     const sink = this[AbstractSink_delegate];
     next[RunnableLike_eval](sink);
 

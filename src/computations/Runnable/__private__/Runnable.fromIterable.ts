@@ -6,10 +6,10 @@ import {
 } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
 import {
+  EventListenerLike_notify,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
@@ -27,7 +27,7 @@ class FromIterableRunnable<T> implements RunnableLike<T> {
         break;
       }
 
-      sink[SinkLike_push](v);
+      sink[EventListenerLike_notify](v);
     }
 
     sink[SinkLike_complete]();

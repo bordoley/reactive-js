@@ -16,10 +16,10 @@ import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/Delega
 import {
   DisposableContainerLike,
   DisposableLike_dispose,
+  EventListenerLike_notify,
   ObserverLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 
@@ -68,7 +68,7 @@ const Observable_fromPromise: Observable.Signature["fromPromise"] =
           ) {
             this[FromPromiseObservable_promise].then(next => {
               if (!observer[SinkLike_isCompleted]) {
-                observer[SinkLike_push](next);
+                observer[EventListenerLike_notify](next);
                 observer[SinkLike_complete]();
               }
             }, Disposable.toErrorHandler(observer));

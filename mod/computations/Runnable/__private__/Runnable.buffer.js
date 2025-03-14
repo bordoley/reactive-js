@@ -3,23 +3,25 @@
 import { Array_length, Array_push, MAX_SAFE_INTEGER, } from "../../../__internal__/constants.js";
 import { newInstance } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
-import { SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../../utils.js";
+import AbstractDelegatingDisposableSink from "../../../utils/Sink/__internal__/AbstractDelegatingDisposableSink.js";
+import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
-class BufferSink {
+class BufferSink extends AbstractDelegatingDisposableSink {
     sink;
     count;
     buffer = [];
     [SinkLike_isCompleted] = false;
     constructor(sink, count) {
+        super(sink);
         this.sink = sink;
         this.count = count;
     }
-    [SinkLike_push](next) {
+    [EventListenerLike_notify](next) {
         const { buffer, count } = this;
         buffer[Array_push](next);
         if (buffer[Array_length] === count) {
             this.buffer = [];
-            this.sink[SinkLike_push](buffer);
+            this.sink[EventListenerLike_notify](buffer);
         }
     }
     [SinkLike_complete]() {
@@ -27,7 +29,7 @@ class BufferSink {
             const { buffer } = this;
             this.buffer = [];
             if (buffer[Array_length] > 0) {
-                this.sink[SinkLike_push](buffer);
+                this.sink[EventListenerLike_notify](buffer);
             }
             this[SinkLike_isCompleted] = true;
             this.sink[SinkLike_complete]();

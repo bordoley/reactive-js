@@ -2,7 +2,7 @@
 
 import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
-import { SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../../utils.js";
+import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 class FromIterableRunnable {
     i;
@@ -16,7 +16,7 @@ class FromIterableRunnable {
             if (sink[SinkLike_isCompleted]) {
                 break;
             }
-            sink[SinkLike_push](v);
+            sink[EventListenerLike_notify](v);
         }
         sink[SinkLike_complete]();
     }

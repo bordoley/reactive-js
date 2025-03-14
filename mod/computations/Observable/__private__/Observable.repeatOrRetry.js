@@ -4,7 +4,7 @@ import { bindMethod, error, isSome, none, partial, pipe, } from "../../../functi
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
-import { DisposableLike_dispose, SinkLike_complete, SinkLike_push, } from "../../../utils.js";
+import { DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -29,7 +29,7 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
             }
             else {
                 count++;
-                pipe(observable, Observable_forEach(bindMethod(delegate, SinkLike_push)), Observable_subscribeWithConfig(delegate, delegate), DisposableContainer.onDisposed(doOnDispose));
+                pipe(observable, Observable_forEach(bindMethod(delegate, EventListenerLike_notify)), Observable_subscribeWithConfig(delegate, delegate), DisposableContainer.onDisposed(doOnDispose));
             }
         };
         return pipe(Observer_createWithDelegate(delegate), Disposable.addToContainer(delegate), DisposableContainer.onDisposed(doOnDispose));

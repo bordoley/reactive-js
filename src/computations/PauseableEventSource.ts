@@ -17,13 +17,13 @@ import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableM
 import {
   DisposableLike,
   EventListenerLike,
+  EventListenerLike_notify,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike,
   QueueableLike_isReady,
   QueueableLike_onReady,
-  SinkLike_push,
 } from "../utils.js";
 import * as EventSource from "./EventSource.js";
 import * as WritableStore from "./WritableStore.js";
@@ -103,7 +103,7 @@ export const enqueue: Signature["enqueue"] =
       pipe(
         src,
         EventSource.addEventHandler(v => {
-          queue[SinkLike_push](v);
+          queue[EventListenerLike_notify](v);
 
           if (!queue[QueueableLike_isReady]) {
             src[PauseableLike_pause]();

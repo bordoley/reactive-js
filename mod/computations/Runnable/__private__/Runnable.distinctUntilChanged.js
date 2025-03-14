@@ -2,7 +2,7 @@
 
 import { newInstance, none, strictEquality, } from "../../../functions.js";
 import AbstractSink, { AbstractSink_delegate, } from "../../../utils/Sink/__internal__/AbstractSink.js";
-import { SinkLike_push } from "../../../utils.js";
+import { EventListenerLike_notify } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class DistinctUntilChangedSink extends AbstractSink {
     eq;
@@ -12,12 +12,12 @@ class DistinctUntilChangedSink extends AbstractSink {
         super(sink);
         this.eq = eq;
     }
-    [SinkLike_push](next) {
+    [EventListenerLike_notify](next) {
         const shouldEmit = !this.hasPrev || !this.eq(this.prev, next);
         if (shouldEmit) {
             this.prev = next;
             this.hasPrev = true;
-            this[AbstractSink_delegate][SinkLike_push](next);
+            this[AbstractSink_delegate][EventListenerLike_notify](next);
         }
     }
 }

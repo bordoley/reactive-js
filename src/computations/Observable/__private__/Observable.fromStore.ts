@@ -19,9 +19,9 @@ import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/Delega
 import {
   DisposableContainerLike,
   DisposableLike_dispose,
+  EventListenerLike_notify,
   ObserverLike,
   SinkLike_complete,
-  SinkLike_push,
 } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";
 import type * as Observable from "../../Observable.js";
@@ -60,7 +60,7 @@ const Observable_fromStore: Observable.Signature["fromStore"] = /*@__PURE__*/ (<
 
         [ObservableLike_observe](this: TProperties, observer: ObserverLike<T>) {
           const store = this[FromStoreObservable_eventSource];
-          observer[SinkLike_push](store[StoreLike_value]);
+          observer[EventListenerLike_notify](store[StoreLike_value]);
 
           pipe(
             this[FromStoreObservable_eventSource],
@@ -70,7 +70,9 @@ const Observable_fromStore: Observable.Signature["fromStore"] = /*@__PURE__*/ (<
             DisposableContainer.onError(
               bindMethod(observer, DisposableLike_dispose),
             ),
-            EventSource.addEventHandler(bindMethod(observer, SinkLike_push)),
+            EventSource.addEventHandler(
+              bindMethod(observer, EventListenerLike_notify),
+            ),
             Disposable.addTo(observer),
           );
         },

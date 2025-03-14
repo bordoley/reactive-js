@@ -11,9 +11,8 @@ import { alwaysNone, bindMethod, identity, isNone, isSome, newInstance, none, pi
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Queue from "../utils/Queue.js";
-import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingQueueableMixin from "../utils/__mixins__/DelegatingQueueableMixin.js";
-import { ContinuationContextLike_yield, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_dequeue, SchedulerLike_schedule, SinkLike_push, } from "../utils.js";
+import { ContinuationContextLike_yield, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_dequeue, SchedulerLike_schedule, } from "../utils.js";
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
 import * as QueueableObservable from "./__internal__/QueueableObservable.js";
@@ -27,12 +26,12 @@ export const create = /*@__PURE__*/ (() => {
         keep: Observable.keep,
         map: Observable.map,
     };
-    return mixInstanceFactory(include(DelegatingQueueableMixin(), DelegatingDisposableMixin), function Cache(scheduler, options) {
+    return mixInstanceFactory(include(DelegatingQueueableMixin()), function Cache(scheduler, options) {
         const { maxEntries = MAX_SAFE_INTEGER, cleanupScheduler = scheduler, persistentStore, } = options ?? {};
         const queue = QueueableObservable.create(options);
         const store = newInstance(Map);
         const subscriptions = newInstance(Map);
-        const cleanupQueue = Queue.create();
+        const cleanupQueue = pipe(Queue.create(), Disposable.addTo(queue));
         const cleanupContinuation = (ctx) => {
             while (store[Map_size] > maxEntries) {
                 const key = cleanupQueue[QueueLike_dequeue]();
@@ -87,14 +86,13 @@ export const create = /*@__PURE__*/ (() => {
             if (isNone(this[CacheStream_store][Map_get](key))) {
                 return;
             }
-            cleanupQueue[SinkLike_push](key);
+            cleanupQueue[EventListenerLike_notify](key);
             if (!cleanupJob[DisposableLike_isDisposed]) {
                 return;
             }
             cleanupJob =
                 cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
         };
-        init(DelegatingDisposableMixin, this, queue);
         init(DelegatingQueueableMixin(), this, queue);
         return this;
     }, props({
@@ -121,7 +119,7 @@ export const create = /*@__PURE__*/ (() => {
                     }
                     else {
                         // Try to load the value from the persistence store
-                        this[SinkLike_push]({
+                        this[EventListenerLike_notify]({
                             [key]: identity,
                         });
                     }
@@ -139,4 +137,4 @@ export const removeMany = (cache, keys) => updateMany(cache, pipe(keys, Readonly
 export const set = (cache, key, v) => update(cache, key, returns(v));
 export const setMany = (cache, keyValues) => updateMany(cache, pipe(keyValues, ReadonlyObjectMap.map(v => returns(v))));
 export const update = (cache, key, updater) => updateMany(cache, { [key]: updater });
-export const updateMany = (cache, keyValues) => cache[SinkLike_push](keyValues);
+export const updateMany = (cache, keyValues) => cache[EventListenerLike_notify](keyValues);

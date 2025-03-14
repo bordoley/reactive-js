@@ -12,11 +12,11 @@ import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DisposableLike_dispose,
+  EventListenerLike_notify,
   ObserverLike,
   SchedulerLike_schedule,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
@@ -51,7 +51,7 @@ const Observable_fromIterable: Observable.Signature["fromIterable"] = (<
           }
 
           if (isSome(next) && !next[Iterator_done]) {
-            observer[SinkLike_push](next[Iterator_value]);
+            observer[EventListenerLike_notify](next[Iterator_value]);
             ctx[ContinuationContextLike_yield](delay);
           } else {
             observer[SinkLike_complete]();

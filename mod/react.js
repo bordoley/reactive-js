@@ -10,7 +10,7 @@ import { StoreLike_value, StreamableLike_stream, } from "./computations.js";
 import { bindMethod, isFunction, isNone, isSome, none, pipe, pipeSomeLazy, raiseError, } from "./functions.js";
 import * as ReactScheduler from "./react/Scheduler.js";
 import * as DisposableContainer from "./utils/DisposableContainer.js";
-import { DisposableLike_dispose, EventListenerLike_notify, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SinkLike_complete, SinkLike_push, } from "./utils.js";
+import { DisposableLike_dispose, EventListenerLike_notify, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SinkLike_complete, } from "./utils.js";
 export const createComponent = (fn, options = {}) => {
     const ObservableComponent = (props) => {
         const propsSubject = useDisposable(() => Subject.create({ replay: 1 }), []);
@@ -27,9 +27,9 @@ export const useSink = (sink) => {
     useEffect(() => {
         stableSinkRef.current = sink;
     }, [sink]);
-    const push = useCallback((req) => stableSinkRef?.current?.[SinkLike_push](req) ?? true, [stableSinkRef]);
+    const notify = useCallback((req) => stableSinkRef?.current?.[EventListenerLike_notify](req) ?? true, [stableSinkRef]);
     const complete = useCallback(() => stableSinkRef?.current?.[SinkLike_complete](), [stableSinkRef]);
-    return useMemo(() => ({ push, complete }), [push, complete]);
+    return useMemo(() => ({ notify, complete }), [notify, complete]);
 };
 export const useDisposable = (factory, deps) => {
     const [disposable, setDisposable] = useState(none);

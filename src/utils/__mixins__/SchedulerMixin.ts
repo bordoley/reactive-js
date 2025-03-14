@@ -28,6 +28,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EventListenerLike_notify,
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
@@ -38,7 +39,6 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-  SinkLike_push,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
@@ -182,7 +182,7 @@ const SchedulerMixin: Mixin<
       const parent = findNearestNonDisposedParent(continuation);
 
       if (isSome(parent)) {
-        parent[SinkLike_push](continuation);
+        parent[EventListenerLike_notify](continuation);
       } else {
         continuation[SchedulerContinuationLike_dueTime] =
           scheduler[SchedulerLike_now];
@@ -206,7 +206,7 @@ const SchedulerMixin: Mixin<
         if (head[DisposableLike_isDisposed]) {
           // continue
         } else if (isSome(parent)) {
-          parent[SinkLike_push](head);
+          parent[EventListenerLike_notify](head);
         } else {
           scheduler[SchedulerMixinLike_schedule](head);
         }
@@ -505,7 +505,7 @@ const SchedulerMixin: Mixin<
         ) {
           this[SchedulerMixinHostLike_schedule](continuation);
         } else {
-          activeContinuation[SinkLike_push](continuation);
+          activeContinuation[EventListenerLike_notify](continuation);
         }
       },
 

@@ -3,7 +3,7 @@
 import { newInstance } from "../../../functions.js";
 import { clampPositiveInteger, max } from "../../../math.js";
 import AbstractSink, { AbstractSink_delegate, } from "../../../utils/Sink/__internal__/AbstractSink.js";
-import { SinkLike_complete, SinkLike_push } from "../../../utils.js";
+import { EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class TakeFirstSink extends AbstractSink {
     cnt;
@@ -14,9 +14,9 @@ class TakeFirstSink extends AbstractSink {
             this[SinkLike_complete]();
         }
     }
-    [SinkLike_push](next) {
+    [EventListenerLike_notify](next) {
         this.cnt = max(this.cnt - 1, -1);
-        this[AbstractSink_delegate][SinkLike_push](next);
+        this[AbstractSink_delegate][EventListenerLike_notify](next);
         if (this.cnt <= 0) {
             this[SinkLike_complete]();
         }

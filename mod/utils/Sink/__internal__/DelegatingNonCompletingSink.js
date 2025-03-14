@@ -1,17 +1,19 @@
 /// <reference types="./DelegatingNonCompletingSink.d.ts" />
 
-import { SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../../utils.js";
+import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import AbstractDelegatingDisposableSink from "./AbstractDelegatingDisposableSink.js";
 export const DelegatingNonCompletingSink_inner = Symbol("DelegatingNonCompletingSink_inner");
-class DelegatingNonCompletingSink {
+class DelegatingNonCompletingSink extends AbstractDelegatingDisposableSink {
     [DelegatingNonCompletingSink_inner];
     constructor(inner) {
+        super(inner);
         this[DelegatingNonCompletingSink_inner] = inner;
     }
     get [SinkLike_isCompleted]() {
         return this[DelegatingNonCompletingSink_inner][SinkLike_isCompleted];
     }
-    [SinkLike_push](next) {
-        this[DelegatingNonCompletingSink_inner][SinkLike_push](next);
+    [EventListenerLike_notify](next) {
+        this[DelegatingNonCompletingSink_inner][EventListenerLike_notify](next);
     }
     [SinkLike_complete]() {
         //ignore;

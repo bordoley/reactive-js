@@ -27,11 +27,11 @@ import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
   DropLatestBackpressureStrategy,
+  EventListenerLike_notify,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
@@ -55,7 +55,7 @@ testModule(
         }),
       );
 
-      stream[SinkLike_push](none);
+      stream[EventListenerLike_notify](none);
 
       vts[VirtualTimeSchedulerLike_run]();
 
@@ -86,7 +86,7 @@ testModule(
         }),
       );
 
-      stream[SinkLike_push](none);
+      stream[EventListenerLike_notify](none);
 
       vts[VirtualTimeSchedulerLike_run]();
 
@@ -109,8 +109,8 @@ testModule(
         expectEquals(DropLatestBackpressureStrategy),
       );
 
-      stateStream[SinkLike_push](returns(2));
-      stateStream[SinkLike_push](returns(3));
+      stateStream[EventListenerLike_notify](returns(2));
+      stateStream[EventListenerLike_notify](returns(3));
       stateStream[SinkLike_complete]();
 
       let result: number[] = [];
@@ -169,7 +169,7 @@ testModule(
       pipe(
         (x: number) => x + 2,
         Observable.fromValue({ delay: 5 }),
-        Observable.forEach(bindMethod(stream, SinkLike_push)),
+        Observable.forEach(bindMethod(stream, EventListenerLike_notify)),
         Observable.subscribe(vts),
       );
 
@@ -206,7 +206,7 @@ testModule(
         increment,
         Observable.fromValue({ delay: 1 }),
         Observable.repeat(24),
-        Observable.forEach(bindMethod(stream, SinkLike_push)),
+        Observable.forEach(bindMethod(stream, EventListenerLike_notify)),
         Observable.subscribe(vts),
       );
 

@@ -3,7 +3,7 @@
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
 import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
-import { SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../../utils.js";
+import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 class FromReadonlyArrayRunnable {
     arr;
     count;
@@ -18,7 +18,7 @@ class FromReadonlyArrayRunnable {
         let { arr, start, count } = this;
         while (count !== 0 && !sink[SinkLike_isCompleted]) {
             const next = arr[start];
-            sink[SinkLike_push](next);
+            sink[EventListenerLike_notify](next);
             count > 0 ? (start++, count--) : (start--, count++);
         }
         sink[SinkLike_complete]();

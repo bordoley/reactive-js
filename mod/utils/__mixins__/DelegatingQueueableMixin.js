@@ -1,11 +1,13 @@
 /// <reference types="./DelegatingQueueableMixin.d.ts" />
 
-import { mix, props, unsafeCast } from "../../__internal__/mixins.js";
+import { include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { none, returns } from "../../functions.js";
-import { QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, QueueableLike_onReady, SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../utils.js";
+import { EventListenerLike_notify, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, QueueableLike_onReady, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import DelegatingDisposableMixin from "./DelegatingDisposableMixin.js";
 const DelegatingQueueableMixin = /*@__PURE__*/ (() => {
     const DelegatingQueueableMixin_delegate = Symbol("DelegatingQueueableMixin_delegate");
-    return returns(mix(function DelegatingQueueableMixin(delegate) {
+    return returns(mix(include(DelegatingDisposableMixin), function DelegatingQueueableMixin(delegate) {
+        init(DelegatingDisposableMixin, this, delegate);
         this[DelegatingQueueableMixin_delegate] = delegate;
         return this;
     }, props({
@@ -31,8 +33,8 @@ const DelegatingQueueableMixin = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[DelegatingQueueableMixin_delegate][QueueableLike_capacity];
         },
-        [SinkLike_push](v) {
-            this[DelegatingQueueableMixin_delegate][SinkLike_push](v);
+        [EventListenerLike_notify](v) {
+            this[DelegatingQueueableMixin_delegate][EventListenerLike_notify](v);
         },
         [SinkLike_complete]() {
             this[DelegatingQueueableMixin_delegate][SinkLike_complete]();

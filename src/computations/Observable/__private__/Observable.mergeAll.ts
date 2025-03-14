@@ -42,6 +42,7 @@ import LiftedObserverMixin, {
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   BackpressureStrategy,
+  EventListenerLike_notify,
   ObserverLike,
   OverflowBackpressureStrategy,
   QueueLike,
@@ -49,7 +50,6 @@ import {
   QueueLike_dequeue,
   SchedulerLike_requestYield,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -136,10 +136,13 @@ const createMergeAllObserverOperator: <T>(options?: {
       init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<ObservableLike<T>, T>(), this, delegate, none);
 
-      this[MergeAllObserver_observablesQueue] = Queue.create({
-        capacity,
-        backpressureStrategy,
-      });
+      this[MergeAllObserver_observablesQueue] = pipe(
+        Queue.create<ObservableLike<T>>({
+          capacity,
+          backpressureStrategy,
+        }),
+        Disposable.addTo(this),
+      );
       this[MergeAllObserver_concurrency] = concurrency;
       this[MergeAllObserver_activeCount] = 0;
 
@@ -162,7 +165,9 @@ const createMergeAllObserverOperator: <T>(options?: {
         ) {
           subscribeToObservable(this, next);
         } else {
-          this[MergeAllObserver_observablesQueue][SinkLike_push](next);
+          this[MergeAllObserver_observablesQueue][EventListenerLike_notify](
+            next,
+          );
         }
       },
 

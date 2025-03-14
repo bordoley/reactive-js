@@ -13,9 +13,9 @@
 ## Extended by
 
 - [`SerialDisposableLike`](SerialDisposableLike.md)
+- [`EventListenerLike`](EventListenerLike.md)
 - [`VirtualTimeSchedulerLike`](VirtualTimeSchedulerLike.md)
 - [`ObserverLike`](ObserverLike.md)
-- [`EventListenerLike`](EventListenerLike.md)
 
 ## Properties
 

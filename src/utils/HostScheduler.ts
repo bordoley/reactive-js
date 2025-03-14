@@ -22,6 +22,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EventListenerLike_notify,
   QueueLike,
   QueueLike_dequeue,
   QueueLike_head,
@@ -31,7 +32,6 @@ import {
   SchedulerLike_now,
   SerialDisposableLike,
   SerialDisposableLike_current,
-  SinkLike_push,
 } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import * as DisposableContainer from "./DisposableContainer.js";
@@ -275,7 +275,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           QueueLike<SchedulerContinuationLike>,
         continuation: SchedulerContinuationLike,
       ) {
-        this[SinkLike_push](continuation);
+        this[EventListenerLike_notify](continuation);
 
         scheduleOnHost(this);
       },

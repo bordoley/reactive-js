@@ -16,9 +16,9 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
 import {
   DisposableLike_dispose,
+  EventListenerLike_notify,
   ObserverLike,
   SinkLike_complete,
-  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -58,7 +58,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
 
         pipe(
           observable,
-          Observable_forEach(bindMethod(delegate, SinkLike_push)),
+          Observable_forEach(bindMethod(delegate, EventListenerLike_notify)),
           Observable_subscribeWithConfig(delegate, delegate),
           DisposableContainer.onDisposed(doOnDispose),
         );

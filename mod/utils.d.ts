@@ -52,20 +52,25 @@ export interface SerialDisposableLike<TDisposable extends DisposableLike = Dispo
     get [SerialDisposableLike_current](): TDisposable;
     set [SerialDisposableLike_current](v: TDisposable);
 }
-export declare const SinkLike_push: unique symbol;
-export declare const SinkLike_complete: unique symbol;
-export declare const SinkLike_isCompleted: unique symbol;
+export declare const EventListenerLike_notify: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface SinkLike<T = unknown> {
-    readonly [SinkLike_isCompleted]: boolean;
+export interface EventListenerLike<T = unknown> extends DisposableLike {
     /**
      * Notifies the EventListener of the next notification produced by the source.
      *
      * @param next - The next notification value.
      */
-    [SinkLike_push](next: T): void;
+    [EventListenerLike_notify](event: T): void;
+}
+export declare const SinkLike_complete: unique symbol;
+export declare const SinkLike_isCompleted: unique symbol;
+/**
+ * @noInheritDoc
+ */
+export interface SinkLike<T = unknown> extends EventListenerLike<T> {
+    readonly [SinkLike_isCompleted]: boolean;
     [SinkLike_complete](): void;
 }
 export declare const DropLatestBackpressureStrategy = "drop-latest";
@@ -213,16 +218,4 @@ export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {
  * @noInheritDoc
  */
 export interface ObserverLike<T = unknown> extends QueueableLike<T>, SchedulerLike, DisposableLike {
-}
-export declare const EventListenerLike_notify: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface EventListenerLike<T = unknown> extends DisposableLike {
-    /**
-     * Notifies the EventListener of the next notification produced by the source.
-     *
-     * @param next - The next notification value.
-     */
-    [EventListenerLike_notify](event: T): void;
 }

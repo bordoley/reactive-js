@@ -30,6 +30,7 @@ import {
   ContinuationContextLike_yield,
   DisposableLike,
   DisposableLike_isDisposed,
+  EventListenerLike_notify,
   ObserverLike,
   QueueLike,
   QueueLike_count,
@@ -49,7 +50,6 @@ import {
   SerialDisposableLike_current,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
@@ -208,7 +208,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
   }
 
   function pushDelegate(this: TProperties, next: TB) {
-    this[LiftedObserverLike_delegate][SinkLike_push](next);
+    this[LiftedObserverLike_delegate][EventListenerLike_notify](next);
   }
 
   function sinkCompleteDelegate(this: TProperties) {
@@ -361,7 +361,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           );
         },
 
-        [SinkLike_push](
+        [EventListenerLike_notify](
           this: TProperties &
             ObserverLike<TA> &
             QueueLike<TA> &
@@ -390,7 +390,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
             this[LiftedObserverLike_notify](next);
           } else if (!shouldIgnore) {
             scheduleDrainQueue(this);
-            call(queueProtoype[SinkLike_push], this, next);
+            call(queueProtoype[EventListenerLike_notify], this, next);
           }
         },
 

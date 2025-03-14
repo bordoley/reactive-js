@@ -1,25 +1,31 @@
 import { Factory, error, newInstance, raise } from "../../../functions.js";
+import AbstractDelegatingDisposableSink from "../../../utils/Sink/__internal__/AbstractDelegatingDisposableSink.js";
 import {
+  EventListenerLike_notify,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
 
-class ThrowIfEmptySink<T> implements SinkLike<T> {
+class ThrowIfEmptySink<T>
+  extends AbstractDelegatingDisposableSink<T>
+  implements SinkLike<T>
+{
   [SinkLike_isCompleted] = false;
   private e = true;
 
   constructor(
     private sink: SinkLike<T>,
     private f: Factory<unknown>,
-  ) {}
+  ) {
+    super(sink);
+  }
 
-  [SinkLike_push](next: T): void {
+  [EventListenerLike_notify](next: T): void {
     this.e = false;
-    this.sink[SinkLike_push](next);
+    this.sink[EventListenerLike_notify](next);
   }
 
   [SinkLike_complete](): void {

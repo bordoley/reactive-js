@@ -6,6 +6,10 @@
 
 # Interface: SinkLike\<T\>
 
+## Extends
+
+- [`EventListenerLike`](EventListenerLike.md)\<`T`\>
+
 ## Extended by
 
 - [`QueueableLike`](QueueableLike.md)
@@ -25,26 +29,6 @@
 ### \[SinkLike\_complete\]()
 
 > **\[SinkLike\_complete\]**(): `void`
-
-#### Returns
-
-`void`
-
-***
-
-### \[SinkLike\_push\]()
-
-> **\[SinkLike\_push\]**(`next`): `void`
-
-Notifies the EventListener of the next notification produced by the source.
-
-#### Parameters
-
-##### next
-
-`T`
-
-The next notification value.
 
 #### Returns
 

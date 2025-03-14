@@ -19,13 +19,13 @@ import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   DisposableLike,
+  EventListenerLike_notify,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike,
   QueueableLike_isReady,
   QueueableLike_onReady,
-  SinkLike_push,
 } from "../utils.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
@@ -101,7 +101,7 @@ export const enqueue: Signature["enqueue"] =
       pipe(
         src,
         Observable_forEach<T>(v => {
-          queue[SinkLike_push](v);
+          queue[EventListenerLike_notify](v);
 
           if (!queue[QueueableLike_isReady]) {
             src[PauseableLike_pause]();

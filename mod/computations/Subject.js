@@ -1,14 +1,14 @@
 /// <reference types="./Subject.d.ts" />
 
 import { Set, Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
-import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
+import { getPrototype, include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ObservableLike_observe, } from "../computations.js";
 import { call, error, isNone, isSome, newInstance, none, pipe, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import QueueMixin from "../utils/__mixins__/QueueMixin.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../utils.js";
 import * as Iterable from "./Iterable.js";
 export const create = /*@__PURE__*/ (() => {
     const Subject_observers = Symbol("Subject_observers");
@@ -30,6 +30,7 @@ export const create = /*@__PURE__*/ (() => {
         }
         this[Subject_observers] = none;
     }
+    const queueProtoype = getPrototype(QueueMixin());
     return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function Subject(options) {
         const replay = clampPositiveInteger(options?.replay ?? 0);
         init(DisposableMixin, this);
@@ -70,7 +71,7 @@ export const create = /*@__PURE__*/ (() => {
             if (this[DisposableLike_isDisposed]) {
                 return;
             }
-            this[SinkLike_push](next);
+            call(queueProtoype[EventListenerLike_notify], this, next);
             const maybeObservers = this[Subject_observers];
             const observers = maybeObservers instanceof Set
                 ? maybeObservers
@@ -86,7 +87,7 @@ export const create = /*@__PURE__*/ (() => {
                     continue;
                 }
                 try {
-                    observer[SinkLike_push](next);
+                    observer[EventListenerLike_notify](next);
                 }
                 catch (e) {
                     observer[DisposableLike_dispose](error(e));
@@ -120,7 +121,7 @@ export const create = /*@__PURE__*/ (() => {
                 pipe(observer, DisposableContainer.onDisposed(this[Subject_onObserverDisposed]));
             }
             for (const next of this) {
-                observer[SinkLike_push](next);
+                observer[EventListenerLike_notify](next);
             }
             if (this[DisposableLike_isDisposed]) {
                 observer[SinkLike_complete]();
