@@ -6,8 +6,7 @@ import { ObservableLike_observe, } from "../../../computations.js";
 import { bind, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, OverflowBackpressureStrategy, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, QueueableLike_onReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
-import EventSource_never from "../../EventSource/__private__/EventSource.never.js";
+import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, OverflowBackpressureStrategy, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 const createObserver = /*@__PURE__*/ (() => {
     const SubscribeObserver_scheduler = Symbol("SubscribeObserver_scheduler");
     const SubscribeObserver_schedulerCallback = Symbol("SubscribeObserver_schedulerCallback");
@@ -17,7 +16,6 @@ const createObserver = /*@__PURE__*/ (() => {
         this[QueueableLike_capacity] = config[QueueableLike_capacity];
         this[QueueableLike_backpressureStrategy] =
             config[QueueableLike_backpressureStrategy];
-        this[QueueableLike_onReady] = EventSource_never();
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const instance = this;
         this[SubscribeObserver_schedulerCallback] =
@@ -33,7 +31,6 @@ const createObserver = /*@__PURE__*/ (() => {
         [SchedulerLike_inContinuation]: false,
         [QueueableLike_capacity]: MAX_SAFE_INTEGER,
         [QueueableLike_backpressureStrategy]: OverflowBackpressureStrategy,
-        [QueueableLike_onReady]: none,
     }), proto({
         get [SinkLike_isCompleted]() {
             unsafeCast(this);
@@ -41,7 +38,7 @@ const createObserver = /*@__PURE__*/ (() => {
         },
         get [QueueableLike_isReady]() {
             unsafeCast(this);
-            return !this[DisposableLike_isDisposed];
+            return (this[QueueableLike_capacity] > 0 && !this[DisposableLike_isDisposed]);
         },
         get [SchedulerLike_now]() {
             unsafeCast(this);
@@ -54,6 +51,9 @@ const createObserver = /*@__PURE__*/ (() => {
         get [SchedulerLike_maxYieldInterval]() {
             unsafeCast(this);
             return this[SubscribeObserver_scheduler][SchedulerLike_maxYieldInterval];
+        },
+        [QueueableLike_addOnReadyListener](_callback) {
+            return Disposable.disposed;
         },
         [EventListenerLike_notify]() {
             return true;

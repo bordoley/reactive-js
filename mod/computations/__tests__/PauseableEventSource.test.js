@@ -53,12 +53,12 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 });
 import { Array_push } from "../../__internal__/constants.js";
-import { describe, expectArrayEquals, expectTrue, test, testModule, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectIsNone, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import { StreamableLike_stream } from "../../computations.js";
 import { bindMethod, pipe, returns } from "../../functions.js";
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
-import { DisposableLike_isDisposed, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { DisposableLike_error, DisposableLike_isDisposed, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as PauseableEventSource from "../PauseableEventSource.js";
 import * as Streamable from "../Streamable.js";
@@ -78,6 +78,7 @@ testModule("PauseableEventSource", describe("enqueue", test("a pauseable observa
         pipe(dest, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(enqueueSubscription[DisposableLike_isDisposed], expectTrue());
+        pipe(enqueueSubscription[DisposableLike_error], expectIsNone);
         pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
     }
     catch (e_1) {

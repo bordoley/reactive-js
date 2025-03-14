@@ -46,8 +46,18 @@ The number of items the queue is capable of efficiently buffering.
 
 > `readonly` **\[QueueableLike\_isReady\]**: `boolean`
 
-***
+## Methods
 
-### \[QueueableLike\_onReady\]
+### \[QueueableLike\_addOnReadyListener\]()
 
-> `readonly` **\[QueueableLike\_onReady\]**: [`EventSourceLike`](../../computations/interfaces/EventSourceLike.md)\<`void`\>
+> **\[QueueableLike\_addOnReadyListener\]**(`callback`): [`DisposableLike`](DisposableLike.md)
+
+#### Parameters
+
+##### callback
+
+[`SideEffect1`](../../functions/type-aliases/SideEffect1.md)\<`void`\>
+
+#### Returns
+
+[`DisposableLike`](DisposableLike.md)

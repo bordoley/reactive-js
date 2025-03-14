@@ -3,18 +3,20 @@
 import { Iterator_done, Iterator_next, Iterator_value, } from "../../../__internal__/constants.js";
 import { error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { DisposableLike_dispose, EventListenerLike_notify, QueueableLike_isReady, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { DisposableLike_dispose, EventListenerLike_notify, QueueableLike_addOnReadyListener, QueueableLike_isReady, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import Observable_create from "./Observable.create.js";
 const Observable_fromAsyncIterable = () => (iterable) => Observable_create((observer) => {
     const iterator = iterable[Symbol.asyncIterator]();
     const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
+    let continuationIsActive = false;
     const continuation = async () => {
-        const startTime = observer[SchedulerLike_now];
-        // Initialized to true so that we don't reschedule
-        // unless we enter the loop.
-        let done = true;
         try {
+            const startTime = observer[SchedulerLike_now];
+            // Initialized to true so that we don't reschedule
+            // unless we enter the loop.
+            let done = true;
             while (!observer[SinkLike_isCompleted] &&
+                observer[QueueableLike_isReady] &&
                 observer[SchedulerLike_now] - startTime < maxYieldInterval) {
                 done = false;
                 const next = await iterator[Iterator_next]();
@@ -34,14 +36,24 @@ const Observable_fromAsyncIterable = () => (iterable) => Observable_create((obse
                     break;
                 }
             }
+            continuationIsActive = false;
+            if (!done && observer[QueueableLike_isReady]) {
+                pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
+                continuationIsActive = true;
+            }
         }
         catch (e) {
             observer[DisposableLike_dispose](error(e));
-        }
-        if (!done) {
-            pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
+            return;
         }
     };
+    observer[QueueableLike_addOnReadyListener](() => {
+        if (!continuationIsActive) {
+            pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
+            continuationIsActive = true;
+        }
+    });
     pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
+    continuationIsActive = true;
 });
 export default Observable_fromAsyncIterable;

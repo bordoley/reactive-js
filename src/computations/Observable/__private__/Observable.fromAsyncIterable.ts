@@ -9,6 +9,7 @@ import {
   DisposableLike_dispose,
   EventListenerLike_notify,
   ObserverLike,
+  QueueableLike_addOnReadyListener,
   QueueableLike_isReady,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
@@ -26,16 +27,17 @@ const Observable_fromAsyncIterable: Observable.Signature["fromAsyncIterable"] =
       const iterator = iterable[Symbol.asyncIterator]();
       const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
 
+      let continuationIsActive = false;
       const continuation = async () => {
-        const startTime = observer[SchedulerLike_now];
-
-        // Initialized to true so that we don't reschedule
-        // unless we enter the loop.
-        let done = true;
-
         try {
+          const startTime = observer[SchedulerLike_now];
+          // Initialized to true so that we don't reschedule
+          // unless we enter the loop.
+          let done = true;
+
           while (
             !observer[SinkLike_isCompleted] &&
+            observer[QueueableLike_isReady] &&
             observer[SchedulerLike_now] - startTime < maxYieldInterval
           ) {
             done = false;
@@ -58,22 +60,36 @@ const Observable_fromAsyncIterable: Observable.Signature["fromAsyncIterable"] =
               break;
             }
           }
+          continuationIsActive = false;
+
+          if (!done && observer[QueueableLike_isReady]) {
+            pipe(
+              observer[SchedulerLike_schedule](continuation),
+              Disposable.addTo(observer),
+            );
+            continuationIsActive = true;
+          }
         } catch (e) {
           observer[DisposableLike_dispose](error(e));
+          return;
         }
+      };
 
-        if (!done) {
+      observer[QueueableLike_addOnReadyListener](() => {
+        if (!continuationIsActive) {
           pipe(
             observer[SchedulerLike_schedule](continuation),
             Disposable.addTo(observer),
           );
+          continuationIsActive = true;
         }
-      };
+      });
 
       pipe(
         observer[SchedulerLike_schedule](continuation),
         Disposable.addTo(observer),
       );
+      continuationIsActive = true;
     });
 
 export default Observable_fromAsyncIterable;

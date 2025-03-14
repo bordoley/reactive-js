@@ -1,5 +1,5 @@
 import { Error } from "./__internal__/constants.js";
-import type { EventSourceLike, StoreLike } from "./computations.js";
+import type { StoreLike } from "./computations.js";
 import { Method1, Optional, SideEffect1 } from "./functions.js";
 export declare const DisposableContainerLike_add: unique symbol;
 export interface DisposableContainerLike {
@@ -81,7 +81,7 @@ export type BackpressureStrategy = typeof DropLatestBackpressureStrategy | typeo
 export declare const QueueableLike_backpressureStrategy: unique symbol;
 export declare const QueueableLike_capacity: unique symbol;
 export declare const QueueableLike_isReady: unique symbol;
-export declare const QueueableLike_onReady: unique symbol;
+export declare const QueueableLike_addOnReadyListener: unique symbol;
 /**
  * A `QueueableLike` type that consumes enqueued events to
  * be consumed.
@@ -90,7 +90,6 @@ export declare const QueueableLike_onReady: unique symbol;
  */
 export interface QueueableLike<T = unknown> extends SinkLike<T> {
     readonly [QueueableLike_isReady]: boolean;
-    readonly [QueueableLike_onReady]: EventSourceLike<void>;
     /**
      * The back pressure strategy utilized by the queue when it is at capacity.
      */
@@ -99,6 +98,7 @@ export interface QueueableLike<T = unknown> extends SinkLike<T> {
      * The number of items the queue is capable of efficiently buffering.
      */
     readonly [QueueableLike_capacity]: number;
+    [QueueableLike_addOnReadyListener](callback: SideEffect1<void>): DisposableLike;
 }
 export declare const QueueLike_head: unique symbol;
 export declare const QueueLike_dequeue: unique symbol;

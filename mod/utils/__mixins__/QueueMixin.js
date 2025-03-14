@@ -2,10 +2,11 @@
 
 import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/constants.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
+import * as EventSource from "../../computations/EventSource.js";
 import * as Publisher from "../../computations/Publisher.js";
 import { isSome, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
-import { BackPressureError, DisposableLike_dispose, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, QueueableLike_onReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../utils.js";
+import { BackPressureError, DisposableLike_dispose, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 const QueueMixin = /*@__PURE__*/ (() => {
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
@@ -13,6 +14,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
     const QueueMixin_tail = Symbol("QueueMixin_tail");
     const QueueMixin_values = Symbol("QueueMixin_values");
     const QueueMixin_comparator = Symbol("QueueMixin_comparator");
+    const QueueMixin_onReadyPublisher = Symbol("QueueMixin_onReadyPublisher");
     const computeIndex = (values, count, head, index) => {
         const valuesLength = values[Array_length];
         const headOffsetIndex = index + head;
@@ -43,7 +45,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
         this[QueueableLike_capacity] = clampPositiveInteger(config?.capacity ?? MAX_SAFE_INTEGER);
         this[QueueMixin_comparator] = config?.comparator;
         this[QueueMixin_values] = none;
-        this[QueueableLike_onReady] = pipe(Publisher.create(), Disposable.addTo(this));
+        this[QueueMixin_onReadyPublisher] = pipe(Publisher.create(), Disposable.addTo(this));
         return this;
     }, props({
         [QueueLike_count]: 0,
@@ -55,7 +57,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
         [QueueMixin_values]: none,
         [QueueMixin_comparator]: none,
         [SinkLike_isCompleted]: false,
-        [QueueableLike_onReady]: none,
+        [QueueMixin_onReadyPublisher]: none,
     }), {
         get [QueueLike_head]() {
             unsafeCast(this);
@@ -88,7 +90,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
             const capacity = this[QueueableLike_capacity];
             const isCompleted = this[SinkLike_isCompleted];
             const shouldNotifyReady = count === capacity && !isCompleted;
-            const onReadySignal = this[QueueableLike_onReady];
+            const onReadySignal = this[QueueMixin_onReadyPublisher];
             if (count <= 1) {
                 const item = this[QueueMixin_values];
                 this[QueueLike_count] = 0;
@@ -274,7 +276,10 @@ const QueueMixin = /*@__PURE__*/ (() => {
         },
         [SinkLike_complete]() {
             this[SinkLike_isCompleted] = true;
-            this[QueueableLike_onReady][DisposableLike_dispose]();
+            this[QueueMixin_onReadyPublisher][DisposableLike_dispose]();
+        },
+        [QueueableLike_addOnReadyListener](callback) {
+            return pipe(this[QueueMixin_onReadyPublisher], EventSource.addEventHandler(callback), Disposable.addTo(this));
         },
     }));
 })();

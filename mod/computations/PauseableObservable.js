@@ -1,12 +1,11 @@
 /// <reference types="./PauseableObservable.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
-import * as EventSource from "../computations/EventSource.js";
 import { ObservableLike_observe, StoreLike_value, } from "../computations.js";
 import { bindMethod, invoke, none, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
-import { EventListenerLike_notify, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_isReady, QueueableLike_onReady, } from "../utils.js";
+import { EventListenerLike_notify, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_addOnReadyListener, QueueableLike_isReady, } from "../utils.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
 import * as WritableStore from "./WritableStore.js";
@@ -32,7 +31,7 @@ export const create = /*@__PURE__*/ (() => {
     });
 })();
 export const enqueue = (queue) => (src) => Observable_create(observer => {
-    pipe(queue[QueueableLike_onReady], EventSource.addEventHandler(bindMethod(src, PauseableLike_resume)), Disposable.addTo(observer));
+    pipe(queue[QueueableLike_addOnReadyListener](bindMethod(src, PauseableLike_resume)), Disposable.addTo(observer));
     pipe(src, Observable_forEach(v => {
         queue[EventListenerLike_notify](v);
         if (!queue[QueueableLike_isReady]) {

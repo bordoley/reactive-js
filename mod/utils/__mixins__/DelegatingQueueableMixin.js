@@ -2,7 +2,7 @@
 
 import { include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { none, returns } from "../../functions.js";
-import { EventListenerLike_notify, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, QueueableLike_onReady, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { EventListenerLike_notify, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import DelegatingDisposableMixin from "./DelegatingDisposableMixin.js";
 const DelegatingQueueableMixin = /*@__PURE__*/ (() => {
     const DelegatingQueueableMixin_delegate = Symbol("DelegatingQueueableMixin_delegate");
@@ -21,10 +21,6 @@ const DelegatingQueueableMixin = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[DelegatingQueueableMixin_delegate][QueueableLike_isReady];
         },
-        get [QueueableLike_onReady]() {
-            unsafeCast(this);
-            return this[DelegatingQueueableMixin_delegate][QueueableLike_onReady];
-        },
         get [QueueableLike_backpressureStrategy]() {
             unsafeCast(this);
             return this[DelegatingQueueableMixin_delegate][QueueableLike_backpressureStrategy];
@@ -38,6 +34,9 @@ const DelegatingQueueableMixin = /*@__PURE__*/ (() => {
         },
         [SinkLike_complete]() {
             this[DelegatingQueueableMixin_delegate][SinkLike_complete]();
+        },
+        [QueueableLike_addOnReadyListener](callback) {
+            return this[DelegatingQueueableMixin_delegate][QueueableLike_addOnReadyListener](callback);
         },
     }));
 })();
