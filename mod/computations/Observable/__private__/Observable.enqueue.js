@@ -3,8 +3,8 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_delegate, LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { QueueableLike_isReady, SchedulerLike_requestYield, SinkLike_complete, SinkLike_push, } from "../../../utils.js";
+import LiftedObserverMixin, { LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { QueueableLike_isReady, SchedulerLike_requestYield, SinkLike_push, } from "../../../utils.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 const Observer_createEnqueueObserver = /*@__PURE__*/ (() => {
     const EnqueueObserver_queue = Symbol("EnqueueObserver_queue");
@@ -23,11 +23,6 @@ const Observer_createEnqueueObserver = /*@__PURE__*/ (() => {
                 this[SchedulerLike_requestYield]();
             }
             this[LiftedObserverLike_notifyDelegate](next);
-        },
-        [LiftedObserverLike_complete]() {
-            // FIXME: maybe we shouldn't complete
-            this[EnqueueObserver_queue][SinkLike_complete]();
-            this[LiftedObserverLike_delegate][SinkLike_complete]();
         },
     }));
 })();

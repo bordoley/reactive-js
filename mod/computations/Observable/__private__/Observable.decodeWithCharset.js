@@ -4,8 +4,7 @@ import { Array_length } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_delegate, LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { SinkLike_complete, SinkLike_push, } from "../../../utils.js";
+import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_completeDelegate, LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
     const DecodeWithCharsetObserver_textDecoder = Symbol("DecodeWithCharsetObserver_textDecoder");
@@ -28,14 +27,13 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
             }
         },
         [LiftedObserverLike_complete]() {
-            const delegate = this[LiftedObserverLike_delegate];
             const data = this[DecodeWithCharsetObserver_textDecoder].decode(newInstance(Uint8Array, []), {
                 stream: false,
             });
             if (data[Array_length] > 0) {
-                delegate[SinkLike_push](data);
+                this[LiftedObserverLike_notifyDelegate](data);
             }
-            delegate[SinkLike_complete]();
+            this[LiftedObserverLike_completeDelegate]();
         },
     }));
 })();

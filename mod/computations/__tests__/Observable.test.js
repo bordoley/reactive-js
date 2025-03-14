@@ -374,7 +374,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             capacity: 1,
         });
         pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.enqueue(stream), Observable.toReadonlyArray());
-        pipe(stream[SinkLike_isCompleted], expectTrue("expected stream to be completed"));
+        pipe(stream[SinkLike_isCompleted], expectFalse("expected stream not to be completed"));
     }
     catch (e_11) {
         env_11.error = e_11;
@@ -392,7 +392,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             capacity: 1,
         });
         pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray({ delay: 1 }), Observable.enqueue(stream), Observable.toReadonlyArray());
-        pipe(stream[SinkLike_isCompleted], expectTrue("expected stream to be completed"));
+        pipe(stream[SinkLike_isCompleted], expectFalse("expected stream not to be completed"));
     }
     catch (e_12) {
         env_12.error = e_12;

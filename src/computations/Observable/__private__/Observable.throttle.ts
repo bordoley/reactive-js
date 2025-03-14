@@ -75,7 +75,7 @@ const createThrottleObserver: <T>(
     const delegate = this[LiftedObserverLike_delegate];
     const delegateIsCompleted = delegate[SinkLike_isCompleted];
 
-    if (this[ThrottleObserver_hasValue]  && !delegateIsCompleted) {
+    if (this[ThrottleObserver_hasValue] && !delegateIsCompleted) {
       const value = this[ThrottleObserver_value] as T;
       this[ThrottleObserver_value] = none;
       this[ThrottleObserver_hasValue] = false;

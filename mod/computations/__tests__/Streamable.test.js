@@ -183,9 +183,7 @@ testModule("Streamable", describe("animation", test("integration", () => {
         }, { throttleDuration: 20 }), invoke(StreamableLike_stream, vts));
         pipe(increment, Observable.fromValue({ delay: 1 }), Observable.repeat(24), Observable.forEach(bindMethod(stream, SinkLike_push)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
-        // FIXME: this isn't a great test, because all the scheduler hopping
-        // leads to induced delays that are hard to account for accurately.
-        pipe(updateCnt, expectEquals(3));
+        pipe(updateCnt, expectEquals(2));
     }
     catch (e_6) {
         env_6.error = e_6;

@@ -5,29 +5,28 @@ import { bind, isSome, none, partial, pipe, } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { ContinuationContextLike_yield, DropOldestBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_isReady, SchedulerLike_requestYield, SchedulerLike_schedule, SinkLike_complete, SinkLike_push, } from "../../../utils.js";
+import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_completeDelegate, LiftedObserverLike_isReady, LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { ContinuationContextLike_yield, DropOldestBackpressureStrategy, QueueLike_count, QueueLike_dequeue, SchedulerLike_requestYield, SchedulerLike_schedule, SinkLike_push, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createTakeLastObserver = /*@__PURE__*/ (() => {
     const TakeLastObserver_queue = Symbol("TakeLastObserver_queue");
     function notifyDelegate(ctx) {
         const queue = this[TakeLastObserver_queue];
-        const delegate = this[LiftedObserverLike_delegate];
         let v = none;
         while (((v = queue[QueueLike_dequeue]()), isSome(v))) {
-            if (!delegate[QueueableLike_isReady]) {
-                delegate[SchedulerLike_requestYield]();
+            if (!this[LiftedObserverLike_isReady]) {
+                this[SchedulerLike_requestYield]();
                 ctx[ContinuationContextLike_yield]();
             }
-            delegate[SinkLike_push](v);
-            if (!delegate[QueueableLike_isReady]) {
-                delegate[SchedulerLike_requestYield]();
+            this[LiftedObserverLike_notifyDelegate](v);
+            if (!this[LiftedObserverLike_isReady]) {
+                this[SchedulerLike_requestYield]();
             }
             if (queue[QueueLike_count] > 0) {
                 ctx[ContinuationContextLike_yield]();
             }
         }
-        delegate[SinkLike_complete]();
+        this[LiftedObserverLike_completeDelegate]();
     }
     return mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function TakeLastObserver(delegate, takeLastCount) {
         init(DelegatingDisposableMixin, this, delegate);
@@ -44,12 +43,11 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
             this[TakeLastObserver_queue][SinkLike_push](next);
         },
         [LiftedObserverLike_complete]() {
-            const delegate = this[LiftedObserverLike_delegate];
             const count = this[TakeLastObserver_queue][QueueLike_count];
             if (count === 0) {
-                delegate[SinkLike_complete]();
+                this[LiftedObserverLike_completeDelegate]();
             }
-            delegate[SchedulerLike_schedule](bind(notifyDelegate, this));
+            this[SchedulerLike_schedule](bind(notifyDelegate, this));
         },
     }));
 })();

@@ -21,7 +21,6 @@ import {
   isSome,
   none,
   pipe,
-  raise,
   raiseIf,
   returns,
 } from "../../functions.js";
@@ -70,10 +69,12 @@ export const LiftedObserverLike_completeDelegate = Symbol(
 export const LiftedObserverLike_delegate = Symbol(
   "LiftedObserverLike_delegate",
 );
+export const LiftedObserverLike_isReady = Symbol("LiftedObserverLike_isReady");
 
 export interface LiftedObserverLike<TA = unknown, TB = TA>
   extends ObserverLike<TA> {
   readonly [LiftedObserverLike_delegate]: ObserverLike<TB>;
+  readonly [LiftedObserverLike_isReady]: boolean;
 
   [LiftedObserverLike_notify](next: TA): void;
   [LiftedObserverLike_complete](): void;
@@ -118,7 +119,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
 
   type TProperties = {
     [LiftedObserverLike_delegate]: ObserverLike<TB>;
-    [LiftedObserverMixin_scheduler]: SchedulerLike;
+    [LiftedObserverMixin_scheduler]: ObserverLike;
     [LiftedObserverMixin_schedulerCallback]: Method1<
       SideEffect1<ContinuationContextLike>,
       ContinuationContextLike
@@ -128,6 +129,34 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
     [LiftedObserverLike_completeDelegate]: SideEffect;
   };
 
+  function liftedObserverSchedulerContinuation(
+    this: LiftedObserverLike<TA, TB> & TProperties & QueueLike<TA>,
+    ctx: ContinuationContextLike,
+  ) {
+    // This is the ultimate downstream consumer of events.
+    const scheduler = this[LiftedObserverMixin_scheduler];
+
+    while (this[QueueLike_count] > 0 && !this[DisposableLike_isDisposed]) {
+      // Avoid dequeing values if the downstream consumer
+      // is applying backpressure.
+      if (!scheduler[QueueableLike_isReady]) {
+        scheduler[SchedulerLike_requestYield]();
+        ctx[ContinuationContextLike_yield]();
+      }
+
+      const next = this[QueueLike_dequeue]() as TA;
+      this[LiftedObserverLike_notify](next);
+
+      if (this[QueueLike_count] > 0) {
+        ctx[ContinuationContextLike_yield]();
+      }
+    }
+
+    if (this[SinkLike_isCompleted]) {
+      this[LiftedObserverLike_complete]();
+    }
+  }
+
   const scheduleDrainQueue = (
     observer: TProperties &
       ObserverLike<TA> &
@@ -136,32 +165,9 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
       LiftedObserverLike<TA, TB>,
   ) => {
     if (observer[SerialDisposableLike_current][DisposableLike_isDisposed]) {
-      const continuation = (ctx: ContinuationContextLike) => {
-        const delegate = observer[LiftedObserverLike_delegate];
-        while (
-          observer[QueueLike_count] > 0 &&
-          !observer[DisposableLike_isDisposed]
-        ) {
-          if (!delegate[QueueableLike_isReady]) {
-            observer[SchedulerLike_requestYield]();
-            ctx[ContinuationContextLike_yield]();
-          }
-
-          const next = observer[QueueLike_dequeue]() as TA;
-          observer[LiftedObserverLike_notify](next);
-
-          if (observer[QueueLike_count] > 0) {
-            ctx[ContinuationContextLike_yield]();
-          }
-        }
-
-        if (observer[SinkLike_isCompleted]) {
-          observer[LiftedObserverLike_complete]();
-        }
-      };
-
-      observer[SerialDisposableLike_current] =
-        observer[SchedulerLike_schedule](continuation);
+      observer[SerialDisposableLike_current] = observer[SchedulerLike_schedule](
+        bind(liftedObserverSchedulerContinuation, observer),
+      );
     }
   };
 
@@ -313,6 +319,11 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         [LiftedObserverLike_completeDelegate]: none,
       }),
       proto({
+        get [LiftedObserverLike_isReady]() {
+          unsafeCast<TProperties>(this);
+          return this[LiftedObserverMixin_scheduler][QueueableLike_isReady];
+        },
+
         get [SchedulerLike_maxYieldInterval]() {
           unsafeCast<TProperties>(this);
           return this[LiftedObserverMixin_scheduler][
@@ -360,16 +371,13 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         ) {
           const inSchedulerContinuation = this[SchedulerLike_inContinuation];
           const isCompleted = this[SinkLike_isCompleted];
-
-          // FIXME: Put this in a dev check
-          if (isCompleted) {
-            raise("observer is completed");
-          }
-
           const shouldIgnore = isCompleted || this[DisposableLike_isDisposed];
 
-          const delegate = this[LiftedObserverLike_delegate];
-          const isDelegateReady = delegate[QueueableLike_isReady];
+          // Make queueing decisions based upon whether the root non-lifted observer
+          // wants to apply back pressure, as lifted observers just pass through
+          // notifications and never queue in practice.
+          const scheduler = this[LiftedObserverMixin_scheduler];
+          const isDelegateReady = scheduler[QueueableLike_isReady];
           const count = this[QueueLike_count];
 
           const shouldNotify =
