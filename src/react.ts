@@ -48,7 +48,6 @@ import {
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
-  QueueableLike,
   SinkLike,
   SinkLike_complete,
   SinkLike_push,
@@ -190,22 +189,22 @@ export const createComponent: Signature["createComponent"] = <TProps>(
 };
 
 export const useSink: Signature["useSink"] = <TReq>(
-  queue: Optional<QueueableLike<TReq>>,
+  sink: Optional<SinkLike<TReq>>,
 ) => {
-  const stableDispatcherRef = useRef<Optional<QueueableLike<TReq>>>(none);
+  const stableSinkRef = useRef<Optional<SinkLike<TReq>>>(none);
 
   useEffect(() => {
-    stableDispatcherRef.current = queue;
-  }, [queue]);
+    stableSinkRef.current = sink;
+  }, [sink]);
 
   const push = useCallback(
-    (req: TReq) => stableDispatcherRef?.current?.[SinkLike_push](req) ?? true,
-    [stableDispatcherRef],
+    (req: TReq) => stableSinkRef?.current?.[SinkLike_push](req) ?? true,
+    [stableSinkRef],
   );
 
   const complete = useCallback(
-    () => stableDispatcherRef?.current?.[SinkLike_complete](),
-    [stableDispatcherRef],
+    () => stableSinkRef?.current?.[SinkLike_complete](),
+    [stableSinkRef],
   );
 
   return useMemo(() => ({ push, complete }), [push, complete]);

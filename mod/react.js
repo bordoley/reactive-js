@@ -22,13 +22,13 @@ export const createComponent = (fn, options = {}) => {
     };
     return ObservableComponent;
 };
-export const useSink = (queue) => {
-    const stableDispatcherRef = useRef(none);
+export const useSink = (sink) => {
+    const stableSinkRef = useRef(none);
     useEffect(() => {
-        stableDispatcherRef.current = queue;
-    }, [queue]);
-    const push = useCallback((req) => stableDispatcherRef?.current?.[SinkLike_push](req) ?? true, [stableDispatcherRef]);
-    const complete = useCallback(() => stableDispatcherRef?.current?.[SinkLike_complete](), [stableDispatcherRef]);
+        stableSinkRef.current = sink;
+    }, [sink]);
+    const push = useCallback((req) => stableSinkRef?.current?.[SinkLike_push](req) ?? true, [stableSinkRef]);
+    const complete = useCallback(() => stableSinkRef?.current?.[SinkLike_complete](), [stableSinkRef]);
     return useMemo(() => ({ push, complete }), [push, complete]);
 };
 export const useDisposable = (factory, deps) => {
