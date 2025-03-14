@@ -40,7 +40,7 @@ import {
   QueueableLike_onReady,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
   ThrowBackpressureStrategy,
 } from "../../utils.js";
 
@@ -340,7 +340,7 @@ const QueueMixin: <T>() => Mixin1<
           }
         },
 
-        [SinkLike_next](this: TProperties & QueueLike<T>, item: T): boolean {
+        [SinkLike_push](this: TProperties & QueueLike<T>, item: T): boolean {
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
           const capacity = this[QueueableLike_capacity];
           const applyBackpressure = this[QueueLike_count] >= capacity;

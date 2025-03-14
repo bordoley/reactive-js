@@ -2,7 +2,7 @@
 
 import { RunnableLike_eval } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
-import { SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../../utils.js";
 class ReducerSink {
     r;
     acc;
@@ -11,7 +11,7 @@ class ReducerSink {
         this.r = r;
         this.acc = acc;
     }
-    [SinkLike_next](next) {
+    [SinkLike_push](next) {
         this.acc = this.r(this.acc, next);
     }
     [SinkLike_complete]() {

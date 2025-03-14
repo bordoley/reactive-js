@@ -6,7 +6,7 @@ import { clampPositiveInteger } from "../../../math.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { ContinuationContextLike_yield, DropOldestBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_isReady, SchedulerLike_requestYield, SchedulerLike_schedule, SinkLike_complete, SinkLike_next, } from "../../../utils.js";
+import { ContinuationContextLike_yield, DropOldestBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueableLike_isReady, SchedulerLike_requestYield, SchedulerLike_schedule, SinkLike_complete, SinkLike_push, } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createTakeLastObserver = /*@__PURE__*/ (() => {
     const TakeLastObserver_queue = Symbol("TakeLastObserver_queue");
@@ -19,7 +19,7 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
                 delegate[SchedulerLike_requestYield]();
                 ctx[ContinuationContextLike_yield]();
             }
-            delegate[SinkLike_next](v);
+            delegate[SinkLike_push](v);
             if (!delegate[QueueableLike_isReady]) {
                 delegate[SchedulerLike_requestYield]();
             }
@@ -41,7 +41,7 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
         [TakeLastObserver_queue]: none,
     }), proto({
         [LiftedObserverLike_notify](next) {
-            this[TakeLastObserver_queue][SinkLike_next](next);
+            this[TakeLastObserver_queue][SinkLike_push](next);
         },
         [LiftedObserverLike_complete]() {
             const delegate = this[LiftedObserverLike_delegate];

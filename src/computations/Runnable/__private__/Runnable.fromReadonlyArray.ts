@@ -9,7 +9,7 @@ import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
@@ -26,7 +26,7 @@ class FromReadonlyArrayRunnable<T> implements PureRunnableLike<T> {
     let { arr, start, count } = this;
     while (count !== 0 && !sink[SinkLike_isCompleted]) {
       const next = arr[start];
-      sink[SinkLike_next](next);
+      sink[SinkLike_push](next);
 
       count > 0 ? (start++, count--) : (start--, count++);
     }

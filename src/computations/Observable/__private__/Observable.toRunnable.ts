@@ -11,7 +11,7 @@ import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -36,7 +36,7 @@ class SynchronousObservableRunnable<T> implements RunnableLike<T> {
     pipe(
       this.obs,
       Observable_takeWhile<T>(_ => !sink[SinkLike_isCompleted]),
-      Observable_forEach(bindMethod(sink, SinkLike_next)),
+      Observable_forEach(bindMethod(sink, SinkLike_push)),
       Observable_run(this.options),
     );
 

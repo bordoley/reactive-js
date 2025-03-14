@@ -21,7 +21,7 @@ import {
   QueueableLike_isReady,
   SchedulerLike_requestYield,
   SinkLike_complete,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
@@ -60,7 +60,7 @@ const Observer_createEnqueueObserver: <T>(
         next: T,
       ) {
         const queue = this[EnqueueObserver_queue];
-        queue[SinkLike_next](next);
+        queue[SinkLike_push](next);
         if (!queue[QueueableLike_isReady]) {
           this[SchedulerLike_requestYield]();
         }

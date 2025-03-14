@@ -7,7 +7,7 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
@@ -17,7 +17,7 @@ const Observable_currentTime: Observable.Signature["currentTime"] =
     (observer: ObserverLike<number>) => {
       const continuation = (ctx: ContinuationContextLike) => {
         while (!observer[SinkLike_isCompleted]) {
-          observer[SinkLike_next](observer[SchedulerLike_now]);
+          observer[SinkLike_push](observer[SchedulerLike_now]);
           ctx[ContinuationContextLike_yield]();
         }
       };

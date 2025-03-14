@@ -34,7 +34,7 @@ import {
   ObserverLike,
   SchedulerLike_schedule,
   SinkLike_complete,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
@@ -514,7 +514,7 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
         }
 
         if (shouldNotify) {
-          observer[SinkLike_next](result as T);
+          observer[SinkLike_push](result as T);
         }
 
         if (shouldComplete) {

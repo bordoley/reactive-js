@@ -14,7 +14,7 @@ import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
@@ -37,7 +37,7 @@ class GeneratorRunnable<T> implements PureRunnableLike<T> {
       cnt++
     ) {
       acc = generator(acc);
-      sink[SinkLike_next](acc);
+      sink[SinkLike_push](acc);
     }
     sink[SinkLike_complete]();
   }

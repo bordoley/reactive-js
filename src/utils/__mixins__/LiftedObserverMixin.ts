@@ -47,7 +47,7 @@ import {
   SerialDisposableLike_current,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
@@ -160,7 +160,7 @@ const LiftedObserverMixin: <
   }
 
   function enqueueDelegate(this: TProperties, next: TB) {
-    this[LiftedObserverLike_delegate][SinkLike_next](next);
+    this[LiftedObserverLike_delegate][SinkLike_push](next);
   }
 
   return returns(
@@ -301,7 +301,7 @@ const LiftedObserverMixin: <
           );
         },
 
-        [SinkLike_next](
+        [SinkLike_push](
           this: TProperties &
             ObserverLike<TA> &
             QueueLike<TA> &
@@ -333,7 +333,7 @@ const LiftedObserverMixin: <
             this[LiftedObserverLike_notify](next);
           } else if (!shouldIgnore) {
             scheduleDrainQueue(this);
-            call(queueProtoype[SinkLike_next], this, next);
+            call(queueProtoype[SinkLike_push], this, next);
           }
 
           return this[QueueableLike_isReady];

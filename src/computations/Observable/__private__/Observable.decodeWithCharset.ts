@@ -18,7 +18,7 @@ import LiftedObserverMixin, {
 import {
   ObserverLike,
   SinkLike_complete,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -86,7 +86,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         );
 
         if (data[Array_length] > 0) {
-          delegate[SinkLike_next](data);
+          delegate[SinkLike_push](data);
         }
 
         delegate[SinkLike_complete]();

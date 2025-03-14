@@ -2,7 +2,7 @@ import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 
 export const DelegatingNonCompletingSink_inner = Symbol(
@@ -20,8 +20,8 @@ class DelegatingNonCompletingSink<T> implements SinkLike<T> {
     return this[DelegatingNonCompletingSink_inner][SinkLike_isCompleted];
   }
 
-  [SinkLike_next](next: T): void {
-    this[DelegatingNonCompletingSink_inner][SinkLike_next](next);
+  [SinkLike_push](next: T): void {
+    this[DelegatingNonCompletingSink_inner][SinkLike_push](next);
   }
 
   [SinkLike_complete](): void {

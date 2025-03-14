@@ -22,7 +22,7 @@ import {
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
-  SinkLike_next,
+  SinkLike_push,
   VirtualTimeSchedulerLike,
   VirtualTimeSchedulerLike_run,
 } from "../utils.js";
@@ -121,12 +121,12 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
             if (continuation[SchedulerContinuationLike_dueTime] > currentTime) {
               // copy the task and all other remaining tasks back to the scheduler queue
 
-              this[VirtualTimeScheduler_queue][SinkLike_next](continuation);
+              this[VirtualTimeScheduler_queue][SinkLike_push](continuation);
               while (
                 ((continuation = queue[QueueLike_dequeue]()),
                 isSome(continuation))
               ) {
-                this[VirtualTimeScheduler_queue][SinkLike_next](continuation);
+                this[VirtualTimeScheduler_queue][SinkLike_push](continuation);
               }
             } else {
               this[VirtualTimeScheduler_microTaskTicks] = 0;
@@ -150,7 +150,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           SchedulerLike,
         continuation: SchedulerContinuationLike,
       ) {
-        this[VirtualTimeScheduler_queue][SinkLike_next](continuation);
+        this[VirtualTimeScheduler_queue][SinkLike_push](continuation);
       },
     },
   ))();

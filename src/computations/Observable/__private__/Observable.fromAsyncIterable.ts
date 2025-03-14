@@ -14,7 +14,7 @@ import {
   SchedulerLike_schedule,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_create from "./Observable.create.js";
@@ -46,7 +46,7 @@ const Observable_fromAsyncIterable: Observable.Signature["fromAsyncIterable"] =
               done = true;
               break;
             } else if (
-              (observer[SinkLike_next](next[Iterator_value]),
+              (observer[SinkLike_push](next[Iterator_value]),
               !observer[QueueableLike_isReady])
             ) {
               // An async iterable can produce resolved promises which are immediately

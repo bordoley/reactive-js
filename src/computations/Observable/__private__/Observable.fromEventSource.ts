@@ -20,7 +20,7 @@ import {
   DisposableLike_dispose,
   ObserverLike,
   SinkLike_complete,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";
 import type * as Observable from "../../Observable.js";
@@ -71,7 +71,7 @@ const Observable_fromEventSource: Observable.Signature["fromEventSource"] =
               DisposableContainer.onError(
                 bindMethod(observer, DisposableLike_dispose),
               ),
-              EventSource.addEventHandler(bindMethod(observer, SinkLike_next)),
+              EventSource.addEventHandler(bindMethod(observer, SinkLike_push)),
               Disposable.addTo(observer),
             );
           },

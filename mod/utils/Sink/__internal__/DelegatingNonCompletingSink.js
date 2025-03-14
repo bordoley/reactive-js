@@ -1,6 +1,6 @@
 /// <reference types="./DelegatingNonCompletingSink.d.ts" />
 
-import { SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../../../utils.js";
+import { SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../../../utils.js";
 export const DelegatingNonCompletingSink_inner = Symbol("DelegatingNonCompletingSink_inner");
 class DelegatingNonCompletingSink {
     [DelegatingNonCompletingSink_inner];
@@ -10,8 +10,8 @@ class DelegatingNonCompletingSink {
     get [SinkLike_isCompleted]() {
         return this[DelegatingNonCompletingSink_inner][SinkLike_isCompleted];
     }
-    [SinkLike_next](next) {
-        this[DelegatingNonCompletingSink_inner][SinkLike_next](next);
+    [SinkLike_push](next) {
+        this[DelegatingNonCompletingSink_inner][SinkLike_push](next);
     }
     [SinkLike_complete]() {
         //ignore;

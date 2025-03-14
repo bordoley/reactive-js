@@ -78,7 +78,7 @@ export interface SerialDisposableLike<
   set [SerialDisposableLike_current](v: TDisposable);
 }
 
-export const SinkLike_next = Symbol("SinkLike_next");
+export const SinkLike_push = Symbol("SinkLike_push");
 export const SinkLike_complete = Symbol("SinkLike_complete");
 export const SinkLike_isCompleted = Symbol("SinkLike_isCompleted");
 
@@ -93,7 +93,7 @@ export interface SinkLike<T = unknown> {
    *
    * @param next - The next notification value.
    */
-  [SinkLike_next](next: T): void;
+  [SinkLike_push](next: T): void;
 
   [SinkLike_complete](): void;
 }

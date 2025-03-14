@@ -9,7 +9,7 @@ import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
@@ -27,7 +27,7 @@ class FromIterableRunnable<T> implements RunnableLike<T> {
         break;
       }
 
-      sink[SinkLike_next](v);
+      sink[SinkLike_push](v);
     }
 
     sink[SinkLike_complete]();

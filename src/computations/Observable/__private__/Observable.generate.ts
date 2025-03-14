@@ -7,7 +7,7 @@ import {
   SchedulerLike_schedule,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
@@ -30,7 +30,7 @@ const Observable_generate: Observable.Signature["generate"] = <T>(
     const continuation = (ctx: ContinuationContextLike) => {
       while (!observer[SinkLike_isCompleted]) {
         acc = generator(acc);
-        observer[SinkLike_next](acc);
+        observer[SinkLike_push](acc);
 
         if (count !== none && (cnt++, cnt >= count)) {
           observer[SinkLike_complete]();

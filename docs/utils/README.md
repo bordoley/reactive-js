@@ -60,6 +60,6 @@
 - [SerialDisposableLike\_current](variables/SerialDisposableLike_current.md)
 - [SinkLike\_complete](variables/SinkLike_complete.md)
 - [SinkLike\_isCompleted](variables/SinkLike_isCompleted.md)
-- [SinkLike\_next](variables/SinkLike_next.md)
+- [SinkLike\_push](variables/SinkLike_push.md)
 - [ThrowBackpressureStrategy](variables/ThrowBackpressureStrategy.md)
 - [VirtualTimeSchedulerLike\_run](variables/VirtualTimeSchedulerLike_run.md)

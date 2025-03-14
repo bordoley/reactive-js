@@ -8,7 +8,7 @@ import { clampPositiveInteger } from "../math.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import QueueMixin from "../utils/__mixins__/QueueMixin.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, SinkLike_next, } from "../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, SinkLike_push, } from "../utils.js";
 import * as Iterable from "./Iterable.js";
 export const create = /*@__PURE__*/ (() => {
     const Subject_observers = Symbol("Subject_observers");
@@ -70,7 +70,7 @@ export const create = /*@__PURE__*/ (() => {
             if (this[DisposableLike_isDisposed]) {
                 return;
             }
-            this[SinkLike_next](next);
+            this[SinkLike_push](next);
             const maybeObservers = this[Subject_observers];
             const observers = maybeObservers instanceof Set
                 ? maybeObservers
@@ -86,7 +86,7 @@ export const create = /*@__PURE__*/ (() => {
                     continue;
                 }
                 try {
-                    observer[SinkLike_next](next);
+                    observer[SinkLike_push](next);
                 }
                 catch (e) {
                     observer[DisposableLike_dispose](error(e));
@@ -120,7 +120,7 @@ export const create = /*@__PURE__*/ (() => {
                 pipe(observer, DisposableContainer.onDisposed(this[Subject_onObserverDisposed]));
             }
             for (const next of this) {
-                observer[SinkLike_next](next);
+                observer[SinkLike_push](next);
             }
             if (this[DisposableLike_isDisposed]) {
                 observer[SinkLike_complete]();

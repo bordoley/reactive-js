@@ -5,7 +5,7 @@ import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
@@ -13,7 +13,7 @@ class ToReadonlyArraySink<T> implements SinkLike<T> {
   public [SinkLike_isCompleted] = false;
   public acc: T[] = [];
 
-  [SinkLike_next](next: T): void {
+  [SinkLike_push](next: T): void {
     this.acc[Array_push](next);
   }
   [SinkLike_complete]() {

@@ -2,7 +2,7 @@ import { SideEffect1, newInstance } from "../../../functions.js";
 import AbstractSink, {
   AbstractSink_delegate,
 } from "../../../utils/Sink/__internal__/AbstractSink.js";
-import { SinkLike, SinkLike_next } from "../../../utils.js";
+import { SinkLike, SinkLike_push } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
 
@@ -14,9 +14,9 @@ class ForEachSink<T> extends AbstractSink<T> {
     super(sink);
   }
 
-  [SinkLike_next](next: T): void {
+  [SinkLike_push](next: T): void {
     this.ef(next);
-    this[AbstractSink_delegate][SinkLike_next](next);
+    this[AbstractSink_delegate][SinkLike_push](next);
   }
 }
 

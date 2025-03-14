@@ -24,7 +24,7 @@ import LiftedObserverMixin, {
 import {
   ObserverLike,
   SinkLike_complete,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_lift, {
@@ -74,7 +74,7 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = /*@__PURE__*/ (<
         next: T,
       ) {
         const delegate = this[LiftedObserverLike_delegate];
-        delegate[SinkLike_next](next);
+        delegate[SinkLike_push](next);
       },
     }),
   );

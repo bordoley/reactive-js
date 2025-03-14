@@ -46,7 +46,7 @@ import {
   DropOldestBackpressureStrategy,
   ObserverLike,
   SchedulerLike,
-  SinkLike_next,
+  SinkLike_push,
 } from "../utils.js";
 import {
   WindowLocationLike,
@@ -201,7 +201,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
         this: TProperties,
         stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
       ) {
-        this[WindowLocation_delegate][SinkLike_next]((prevState: TState) => {
+        this[WindowLocation_delegate][SinkLike_push]((prevState: TState) => {
           const uri = createSerializableWindowLocationURI(
             isFunction(stateOrUpdater)
               ? stateOrUpdater(prevState.uri)
@@ -216,7 +216,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
         this: TProperties,
         stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
       ) {
-        this[WindowLocation_delegate][SinkLike_next]((prevState: TState) => {
+        this[WindowLocation_delegate][SinkLike_push]((prevState: TState) => {
           const uri = createSerializableWindowLocationURI(
             isFunction(stateOrUpdater)
               ? stateOrUpdater(prevState.uri)

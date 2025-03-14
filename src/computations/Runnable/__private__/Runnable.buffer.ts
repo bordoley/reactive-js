@@ -9,7 +9,7 @@ import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
@@ -22,14 +22,14 @@ class BufferSink<T> implements SinkLike<T> {
     private readonly sink: SinkLike<readonly T[]>,
     private readonly count: number,
   ) {}
-  [SinkLike_next](next: T): void {
+  [SinkLike_push](next: T): void {
     const { buffer, count } = this;
 
     buffer[Array_push](next);
 
     if (buffer[Array_length] === count) {
       this.buffer = [];
-      this.sink[SinkLike_next](buffer);
+      this.sink[SinkLike_push](buffer);
     }
   }
   [SinkLike_complete]() {
@@ -37,7 +37,7 @@ class BufferSink<T> implements SinkLike<T> {
       const { buffer } = this;
       this.buffer = [];
       if (buffer[Array_length] > 0) {
-        this.sink[SinkLike_next](buffer);
+        this.sink[SinkLike_push](buffer);
       }
       this[SinkLike_isCompleted] = true;
       this.sink[SinkLike_complete]();

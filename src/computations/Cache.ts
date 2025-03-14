@@ -61,7 +61,7 @@ import {
   QueueableLike,
   SchedulerLike,
   SchedulerLike_schedule,
-  SinkLike_next,
+  SinkLike_push,
 } from "../utils.js";
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
@@ -332,7 +332,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           return;
         }
 
-        cleanupQueue[SinkLike_next](key);
+        cleanupQueue[SinkLike_push](key);
 
         if (!cleanupJob[DisposableLike_isDisposed]) {
           return;
@@ -393,7 +393,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
               subject[EventListenerLike_notify](initialValue);
             } else {
               // Try to load the value from the persistence store
-              this[SinkLike_next]({
+              this[SinkLike_push]({
                 [key]: identity,
               });
             }
@@ -452,4 +452,4 @@ export const update = <T>(
 export const updateMany = <T>(
   cache: CacheLike<T>,
   keyValues: ReadonlyObjectMapLike<string, Updater<Optional<T>>>,
-) => cache[SinkLike_next](keyValues);
+) => cache[SinkLike_push](keyValues);

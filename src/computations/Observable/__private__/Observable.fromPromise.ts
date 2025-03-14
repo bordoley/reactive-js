@@ -19,7 +19,7 @@ import {
   ObserverLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_next,
+  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 
@@ -68,7 +68,7 @@ const Observable_fromPromise: Observable.Signature["fromPromise"] =
           ) {
             this[FromPromiseObservable_promise].then(next => {
               if (!observer[SinkLike_isCompleted]) {
-                observer[SinkLike_next](next);
+                observer[SinkLike_push](next);
                 observer[SinkLike_complete]();
               }
             }, Disposable.toErrorHandler(observer));

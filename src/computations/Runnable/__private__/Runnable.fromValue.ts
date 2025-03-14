@@ -4,7 +4,7 @@ import {
   RunnableLike_eval,
 } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
-import { SinkLike, SinkLike_complete, SinkLike_next } from "../../../utils.js";
+import { SinkLike, SinkLike_complete, SinkLike_push } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
 class FromValueRunnable<T> implements PureRunnableLike<T> {
@@ -13,7 +13,7 @@ class FromValueRunnable<T> implements PureRunnableLike<T> {
   constructor(private readonly v: T) {}
 
   [RunnableLike_eval](sink: SinkLike<T>): void {
-    sink[SinkLike_next](this.v);
+    sink[SinkLike_push](this.v);
     sink[SinkLike_complete]();
   }
 }
