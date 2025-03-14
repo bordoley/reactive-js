@@ -1,5 +1,4 @@
 import {
-  AsyncIterableLike,
   ComputationModule,
   ComputationType,
   Computation_T,
@@ -8,7 +7,7 @@ import {
   ConcurrentReactiveComputationModule,
   EventSourceLike,
 } from "../computations.js";
-import { Factory, Function1, SideEffect1, Updater } from "../functions.js";
+import { Function1, SideEffect1 } from "../functions.js";
 import { DisposableLike, EventListenerLike } from "../utils.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource/__private__/EventSource.create.js";
@@ -61,30 +60,6 @@ export interface EventSourceModule
       readonly autoDispose?: boolean;
     },
   ): EventSourceLike<T> & DisposableLike;
-
-  fromAsyncIterable<T>(): Function1<
-    AsyncIterableLike<T>,
-    EventSourceLike<T> & DisposableLike
-  >;
-
-  fromReadonlyArray<T>(options?: {
-    readonly count?: number;
-    readonly start?: number;
-  }): Function1<readonly T[], EventSourceLike<T> & DisposableLike>;
-
-  fromValue<T>(): Function1<T, EventSourceLike<T> & DisposableLike>;
-
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-    options?: {
-      readonly count?: number;
-    },
-  ): EventSourceLike<T> & DisposableLike;
-
-  raise<T>(options?: {
-    readonly raise?: Factory<unknown>;
-  }): EventSourceLike<T> & DisposableLike;
 }
 
 export type Signature = EventSourceModule;

@@ -107,10 +107,10 @@ class FromReadonlyArrayAsyncIterable {
         }
     }
 }
-export const fromReadonlyArray = (options) => (arr) => {
+export const fromReadonlyArray = ((options) => (arr) => {
     let [start, count] = parseArrayBounds(arr, options);
     return newInstance(FromReadonlyArrayAsyncIterable, arr, count, start);
-};
+});
 export const empty = (() => pipe([], fromReadonlyArray(), returns))();
 class EncodeUtf8AsyncIterable {
     s;
@@ -175,7 +175,7 @@ class GeneratorAsyncIterable {
         }
     }
 }
-export const generate = (generator, initialValue, options) => newInstance(GeneratorAsyncIterable, generator, initialValue, options?.count);
+export const generate = ((generator, initialValue, options) => newInstance(GeneratorAsyncIterable, generator, initialValue, options?.count));
 class KeepAsyncIterable {
     d;
     p;
@@ -267,10 +267,10 @@ class RaiseAsyncIterable {
         raiseError(error(this.r()));
     }
 }
-export const raise = (options) => {
+export const raise = ((options) => {
     const { raise: factory = raise } = options ?? {};
     return newInstance((RaiseAsyncIterable), factory);
-};
+});
 export const reduceAsync = (reducer, initialValue) => async (iterable) => {
     let acc = initialValue();
     for await (let v of iterable) {

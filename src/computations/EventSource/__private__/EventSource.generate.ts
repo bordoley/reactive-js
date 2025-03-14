@@ -8,7 +8,7 @@ import {
 import type * as EventSource from "../../EventSource.js";
 import EventSource_create from "./EventSource.create.js";
 
-const EventSource_generate: EventSource.Signature["generate"] = <T>(
+const EventSource_generate: EventSource.Signature["generate"] = (<T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
   options?: {
@@ -41,6 +41,6 @@ const EventSource_generate: EventSource.Signature["generate"] = <T>(
       }
     }
     listener[DisposableLike_dispose]();
-  });
+  })) as EventSource.Signature["generate"];
 
 export default EventSource_generate;

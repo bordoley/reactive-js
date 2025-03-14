@@ -3,7 +3,7 @@ import { DisposableLike_dispose, EventListenerLike } from "../../../utils.js";
 import type * as EventSource from "../../EventSource.js";
 import EventSource_create from "./EventSource.create.js";
 
-const EventSource_raise: EventSource.Signature["raise"] = (options?: {
+const EventSource_raise: EventSource.Signature["raise"] = ((options?: {
   readonly raise?: Factory<unknown>;
 }) => {
   const { raise: factory = raise } = options ?? {};
@@ -19,6 +19,6 @@ const EventSource_raise: EventSource.Signature["raise"] = (options?: {
 
     listener[DisposableLike_dispose](error(err));
   });
-};
+}) as EventSource.Signature["raise"];
 
 export default EventSource_raise;

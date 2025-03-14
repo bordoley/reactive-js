@@ -1,5 +1,5 @@
-import { AsyncIterableLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_multicastOfT, ConcurrentReactiveComputationModule, EventSourceLike } from "../computations.js";
-import { Factory, Function1, SideEffect1, Updater } from "../functions.js";
+import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_multicastOfT, ConcurrentReactiveComputationModule, EventSourceLike } from "../computations.js";
+import { Function1, SideEffect1 } from "../functions.js";
 import { DisposableLike, EventListenerLike } from "../utils.js";
 /**
  * @noInheritDoc
@@ -16,18 +16,6 @@ export interface EventSourceModule extends ComputationModule<EventSourceComputat
     addEventHandler<T>(handler: SideEffect1<T>): Function1<EventSourceLike<T>, DisposableLike>;
     create<T>(setup: SideEffect1<EventListenerLike<T>>, options?: {
         readonly autoDispose?: boolean;
-    }): EventSourceLike<T> & DisposableLike;
-    fromAsyncIterable<T>(): Function1<AsyncIterableLike<T>, EventSourceLike<T> & DisposableLike>;
-    fromReadonlyArray<T>(options?: {
-        readonly count?: number;
-        readonly start?: number;
-    }): Function1<readonly T[], EventSourceLike<T> & DisposableLike>;
-    fromValue<T>(): Function1<T, EventSourceLike<T> & DisposableLike>;
-    generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
-        readonly count?: number;
-    }): EventSourceLike<T> & DisposableLike;
-    raise<T>(options?: {
-        readonly raise?: Factory<unknown>;
     }): EventSourceLike<T> & DisposableLike;
 }
 export type Signature = EventSourceModule;

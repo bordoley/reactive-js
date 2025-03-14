@@ -67,7 +67,7 @@ export interface Signature {
     concatMany<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType>, "concat">): ConcatManyOperator<TComputationType>;
     concatWith<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType>, "concat">): ConcatWithOperator<TComputationType>;
     debug<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType>, "forEach">): <T>() => ComputationOperatorWithSideEffects<TComputationType, T, T>;
-    endWith<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType>, "concat" | "fromReadonlyArray">): <T>(value: T, ...values: readonly T[]) => StatelessComputationOperator<TComputationType, T, T>;
+    endWith<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType> & ComputationModule<TComputationType>, "concat" | "fromReadonlyArray">): <T>(value: T, ...values: readonly T[]) => StatelessComputationOperator<TComputationType, T, T>;
     flatMap<TComputationType extends ComputationType, TFlattenKey extends string | number | symbol>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "map"> & {
         readonly [key in TFlattenKey | string | symbol | number]: key extends TFlattenKey ? DeferredComputationModule<TComputationType>["concatAll"] : unknown;
     }): FlatMapOperator<TComputationType, TFlattenKey>;
@@ -92,7 +92,7 @@ export interface Signature {
     notify<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType>, "forEach">): <T>(eventListener: EventListenerLike<T>) => ComputationOperatorWithSideEffects<TComputationType, T, T>;
     pick<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "map">): PickOperator<TComputationType>;
     sequence<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "generate">): (start: number) => ComputationBaseOf<TComputationType, number>;
-    startWith<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType>, "concat" | "fromReadonlyArray">): <T>(value: T, ...values: readonly T[]) => StatelessComputationOperator<TComputationType, T, T>;
+    startWith<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType> & ComputationModule<TComputationType>, "concat" | "fromReadonlyArray">): <T>(value: T, ...values: readonly T[]) => StatelessComputationOperator<TComputationType, T, T>;
 }
 export declare const areAllDeferred: Signature["areAllDeferred"];
 export declare const areAllMulticasted: Signature["areAllMulticasted"];

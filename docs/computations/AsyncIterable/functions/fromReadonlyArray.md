@@ -6,7 +6,7 @@
 
 # Function: fromReadonlyArray()
 
-> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], \{ `[ComputationLike_isDeferred]`: `true`; `[ComputationLike_isPure]`: `true`; `[ComputationLike_isSynchronous]`: `false`; \}\>
+> **fromReadonlyArray**\<`T`\>(`options`?): [`FromReadonlyArrayOperator`](../../type-aliases/FromReadonlyArrayOperator.md)\<[`AsyncIterableComputation`](../interfaces/AsyncIterableComputation.md), `T`\>
 
 ## Type Parameters
 
@@ -26,4 +26,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], \{ `[ComputationLike_isDeferred]`: `true`; `[ComputationLike_isPure]`: `true`; `[ComputationLike_isSynchronous]`: `false`; \}\>
+[`FromReadonlyArrayOperator`](../../type-aliases/FromReadonlyArrayOperator.md)\<[`AsyncIterableComputation`](../interfaces/AsyncIterableComputation.md), `T`\>

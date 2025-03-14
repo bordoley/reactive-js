@@ -208,7 +208,7 @@ readonly `TComputationType`[]
 
 ##### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputationType`\>, `"concat"` \| `"fromReadonlyArray"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputationType`\> & [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`\>, `"concat"` \| `"fromReadonlyArray"`\>
 
 #### Returns
 
@@ -720,7 +720,7 @@ readonly `TComputationType`[]
 
 ##### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputationType`\>, `"concat"` \| `"fromReadonlyArray"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputationType`\> & [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`\>, `"concat"` \| `"fromReadonlyArray"`\>
 
 #### Returns
 

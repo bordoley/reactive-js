@@ -46,76 +46,6 @@
 
 ***
 
-### fromReadonlyArray()
-
-> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### count?
-
-`number`
-
-###### start?
-
-`number`
-
-#### Returns
-
-[`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>\>
-
-***
-
-### fromValue()
-
-> **fromValue**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>\>
-
-***
-
-### generate()
-
-> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### generator
-
-[`Updater`](../../functions/type-aliases/Updater.md)\<`T`\>
-
-##### initialValue
-
-[`Factory`](../../functions/type-aliases/Factory.md)\<`T`\>
-
-##### options?
-
-###### count?
-
-`number`
-
-#### Returns
-
-[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>
-
-***
-
 ### last()
 
 > **last**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
@@ -127,28 +57,6 @@
 #### Returns
 
 [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
-
-***
-
-### raise()
-
-> **raise**\<`T`\>(`options`?): [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### raise?
-
-[`Factory`](../../functions/type-aliases/Factory.md)\<`unknown`\>
-
-#### Returns
-
-[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>
 
 ***
 

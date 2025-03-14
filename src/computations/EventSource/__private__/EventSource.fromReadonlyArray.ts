@@ -9,8 +9,7 @@ import type * as EventSource from "../../EventSource.js";
 import EventSource_create from "./EventSource.create.js";
 
 const EventSource_fromReadonlyArray: EventSource.Signature["fromReadonlyArray"] =
-
-    <T>(options?: { count?: number; start?: number }) =>
+  (<T>(options?: { count?: number; start?: number }) =>
     (arr: readonly T[]) => {
       let [start, count] = parseArrayBounds(arr, options);
 
@@ -29,6 +28,6 @@ const EventSource_fromReadonlyArray: EventSource.Signature["fromReadonlyArray"] 
         }
         listener[DisposableLike_dispose]();
       });
-    };
+    }) as EventSource.Signature["fromReadonlyArray"];
 
 export default EventSource_fromReadonlyArray;

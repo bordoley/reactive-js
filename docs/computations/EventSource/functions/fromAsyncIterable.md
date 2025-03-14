@@ -6,7 +6,7 @@
 
 # Function: fromAsyncIterable()
 
-> **fromAsyncIterable**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>, [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+> **fromAsyncIterable**\<`T`\>(): [`FromAsyncIterableOperator`](../../type-aliases/FromAsyncIterableOperator.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `T`\>
 
 ## Type Parameters
 
@@ -14,4 +14,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>, [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+[`FromAsyncIterableOperator`](../../type-aliases/FromAsyncIterableOperator.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `T`\>

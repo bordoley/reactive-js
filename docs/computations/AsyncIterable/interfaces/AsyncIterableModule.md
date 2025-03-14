@@ -22,42 +22,6 @@
 
 ***
 
-### empty
-
-> **empty**: [`EmptyOperator`](../../type-aliases/EmptyOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>
-
-#### Inherited from
-
-[`ComputationModule`](../../interfaces/ComputationModule.md).[`empty`](../../interfaces/ComputationModule.md#empty)
-
-***
-
-### raise()
-
-> **raise**: \<`T`\>(`options`?) => [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### raise?
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
-
-#### Returns
-
-[`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
-
-#### Overrides
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`raise`](../../interfaces/DeferredComputationModule.md#raise)
-
-***
-
 ### zip
 
 > **zip**: `ZipConstructor`\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>
@@ -262,6 +226,24 @@
 
 ***
 
+### empty()
+
+> **empty**\<`T`\>(): `never`
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+`never`
+
+#### Inherited from
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`empty`](../../interfaces/ComputationModule.md#empty)
+
+***
+
 ### encodeUtf8()
 
 > **encodeUtf8**(): [`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
@@ -338,7 +320,7 @@
 
 ### fromReadonlyArray()
 
-> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], \{ `[ComputationLike_isDeferred]`: `true`; `[ComputationLike_isPure]`: `true`; `[ComputationLike_isSynchronous]`: `false`; \}\>
+> **fromReadonlyArray**\<`T`\>(`options`?): [`FromReadonlyArrayOperator`](../../type-aliases/FromReadonlyArrayOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
 
 #### Type Parameters
 
@@ -358,17 +340,17 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], \{ `[ComputationLike_isDeferred]`: `true`; `[ComputationLike_isPure]`: `true`; `[ComputationLike_isSynchronous]`: `false`; \}\>
+[`FromReadonlyArrayOperator`](../../type-aliases/FromReadonlyArrayOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
 
 #### Inherited from
 
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`fromReadonlyArray`](../../interfaces/DeferredComputationModule.md#fromreadonlyarray)
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`fromReadonlyArray`](../../interfaces/ComputationModule.md#fromreadonlyarray)
 
 ***
 
 ### fromValue()
 
-> **fromValue**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, \{ `[ComputationLike_isDeferred]`: `true`; `[ComputationLike_isPure]`: `true`; `[ComputationLike_isSynchronous]`: `false`; \}\>
+> **fromValue**\<`T`\>(): [`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
 
 #### Type Parameters
 
@@ -376,17 +358,17 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, \{ `[ComputationLike_isDeferred]`: `true`; `[ComputationLike_isPure]`: `true`; `[ComputationLike_isSynchronous]`: `false`; \}\>
+[`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
 
 #### Inherited from
 
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`fromValue`](../../interfaces/DeferredComputationModule.md#fromvalue)
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`fromValue`](../../interfaces/ComputationModule.md#fromvalue)
 
 ***
 
 ### generate()
 
-> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): `object`
+> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): `never`
 
 #### Type Parameters
 
@@ -410,23 +392,11 @@
 
 #### Returns
 
-`object`
-
-##### \[ComputationLike\_isDeferred\]?
-
-> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
-
-##### \[ComputationLike\_isPure\]?
-
-> `readonly` `optional` **\[ComputationLike\_isPure\]**: `true`
-
-##### \[ComputationLike\_isSynchronous\]
-
-> `readonly` **\[ComputationLike\_isSynchronous\]**: `false`
+`never`
 
 #### Inherited from
 
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`generate`](../../interfaces/DeferredComputationModule.md#generate)
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`generate`](../../interfaces/ComputationModule.md#generate)
 
 ***
 
@@ -509,6 +479,32 @@
 #### Returns
 
 [`Function1`](../../../functions/type-aliases/Function1.md)\<`AsyncIterable`\<`T`, `any`, `any`\>, [`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\>\>
+
+***
+
+### raise()
+
+> **raise**\<`T`\>(`options`?): `never`
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### raise?
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+#### Returns
+
+`never`
+
+#### Inherited from
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`raise`](../../interfaces/ComputationModule.md#raise)
 
 ***
 

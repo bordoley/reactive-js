@@ -6,7 +6,7 @@
 
 # Function: fromValue()
 
-> **fromValue**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, \{ `[ComputationLike_isDeferred]`: `true`; `[ComputationLike_isPure]`: `true`; `[ComputationLike_isSynchronous]`: `false`; \}\>
+> **fromValue**\<`T`\>(): [`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`AsyncIterableComputation`](../interfaces/AsyncIterableComputation.md), `T`\>
 
 ## Type Parameters
 
@@ -14,4 +14,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, \{ `[ComputationLike_isDeferred]`: `true`; `[ComputationLike_isPure]`: `true`; `[ComputationLike_isSynchronous]`: `false`; \}\>
+[`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`AsyncIterableComputation`](../interfaces/AsyncIterableComputation.md), `T`\>

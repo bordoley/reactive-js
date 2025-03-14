@@ -70,12 +70,7 @@ export interface RunnableModule
   extends ComputationModule<RunnableComputation>,
     DeferredComputationModule<RunnableComputation>,
     DeferredReactiveComputationModule<RunnableComputation>,
-    SynchronousComputationModule<RunnableComputation> {
-  fromReadonlyArray: SynchronousComputationModule<RunnableComputation>["fromReadonlyArray"];
-  fromValue: SynchronousComputationModule<RunnableComputation>["fromValue"];
-  generate: SynchronousComputationModule<RunnableComputation>["generate"];
-  raise: SynchronousComputationModule<RunnableComputation>["raise"];
-}
+    SynchronousComputationModule<RunnableComputation> {}
 
 export type Signature = RunnableModule;
 

@@ -32,13 +32,21 @@
 
 [`ComputationModuleLike`](ComputationModuleLike.md).[`[ComputationModuleLike_computationType]`](ComputationModuleLike.md#computationmodulelike_computationtype)
 
-***
-
-### empty
-
-> **empty**: [`EmptyOperator`](../type-aliases/EmptyOperator.md)\<`TComputationType`\>
-
 ## Methods
+
+### empty()
+
+> **empty**\<`T`\>(): [`EmptyOf`](../type-aliases/EmptyOf.md)\<`TComputationType`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`EmptyOf`](../type-aliases/EmptyOf.md)\<`TComputationType`, `T`\>
+
+***
 
 ### firstAsync()
 
@@ -70,7 +78,7 @@
 
 ### fromReadonlyArray()
 
-> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
+> **fromReadonlyArray**\<`T`\>(`options`?): [`FromReadonlyArrayOperator`](../type-aliases/FromReadonlyArrayOperator.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -90,13 +98,13 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
+[`FromReadonlyArrayOperator`](../type-aliases/FromReadonlyArrayOperator.md)\<`TComputationType`, `T`\>
 
 ***
 
 ### fromValue()
 
-> **fromValue**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
+> **fromValue**\<`T`\>(): [`FromValueOperator`](../type-aliases/FromValueOperator.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -104,13 +112,13 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
+[`FromValueOperator`](../type-aliases/FromValueOperator.md)\<`TComputationType`, `T`\>
 
 ***
 
 ### generate()
 
-> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
+> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`GeneratorOf`](../type-aliases/GeneratorOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -134,7 +142,7 @@
 
 #### Returns
 
-[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
+[`GeneratorOf`](../type-aliases/GeneratorOf.md)\<`TComputationType`, `T`\>
 
 ***
 
@@ -196,7 +204,7 @@
 
 ### raise()
 
-> **raise**\<`T`\>(`options`?): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
+> **raise**\<`T`\>(`options`?): [`RaiseOf`](../type-aliases/RaiseOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -212,7 +220,7 @@
 
 #### Returns
 
-[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
+[`RaiseOf`](../type-aliases/RaiseOf.md)\<`TComputationType`, `T`\>
 
 ***
 

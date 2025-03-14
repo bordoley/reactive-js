@@ -208,7 +208,7 @@
 
 #### Overrides
 
-`ComputationModule.empty`
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`empty`](../../interfaces/ComputationModule.md#empty)
 
 ***
 
@@ -500,7 +500,7 @@
 
 #### Overrides
 
-[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`fromReadonlyArray`](../../interfaces/SynchronousComputationModule.md#fromreadonlyarray)
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`fromReadonlyArray`](../../interfaces/ComputationModule.md#fromreadonlyarray)
 
 ***
 
@@ -540,7 +540,7 @@
 
 #### Overrides
 
-[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`fromValue`](../../interfaces/SynchronousComputationModule.md#fromvalue)
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`fromValue`](../../interfaces/ComputationModule.md#fromvalue)
 
 ***
 
@@ -582,7 +582,7 @@
 
 #### Overrides
 
-[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`generate`](../../interfaces/SynchronousComputationModule.md#generate)
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`generate`](../../interfaces/ComputationModule.md#generate)
 
 ***
 
@@ -856,7 +856,7 @@
 
 #### Overrides
 
-[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`raise`](../../interfaces/SynchronousComputationModule.md#raise)
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`raise`](../../interfaces/ComputationModule.md#raise)
 
 ***
 

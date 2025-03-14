@@ -20,124 +20,6 @@
 
 [`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`[ComputationModuleLike_computationType]`](../../interfaces/SynchronousComputationModule.md#computationmodulelike_computationtype)
 
-***
-
-### empty
-
-> **empty**: [`EmptyOperator`](../../type-aliases/EmptyOperator.md)\<[`RunnableComputation`](RunnableComputation.md)\>
-
-#### Inherited from
-
-[`ComputationModule`](../../interfaces/ComputationModule.md).[`empty`](../../interfaces/ComputationModule.md#empty)
-
-***
-
-### fromReadonlyArray()
-
-> **fromReadonlyArray**: \<`T`\>(`options`?) => [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### count?
-
-`number`
-
-###### start?
-
-`number`
-
-#### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>\>
-
-#### Overrides
-
-[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`fromReadonlyArray`](../../interfaces/SynchronousComputationModule.md#fromreadonlyarray)
-
-***
-
-### fromValue()
-
-> **fromValue**: \<`T`\>() => [`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>\>
-
-#### Overrides
-
-[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`fromValue`](../../interfaces/SynchronousComputationModule.md#fromvalue)
-
-***
-
-### generate()
-
-> **generate**: \<`T`\>(`generator`, `initialValue`, `options`?) => [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### generator
-
-[`Updater`](../../../functions/type-aliases/Updater.md)\<`T`\>
-
-##### initialValue
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`T`\>
-
-##### options?
-
-###### count?
-
-`number`
-
-#### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
-
-#### Overrides
-
-[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`generate`](../../interfaces/SynchronousComputationModule.md#generate)
-
-***
-
-### raise()
-
-> **raise**: \<`T`\>(`options`?) => [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### raise?
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
-
-#### Returns
-
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
-
-#### Overrides
-
-[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`raise`](../../interfaces/SynchronousComputationModule.md#raise)
-
 ## Methods
 
 ### buffer()
@@ -416,6 +298,24 @@
 
 ***
 
+### empty()
+
+> **empty**\<`T`\>(): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+
+#### Inherited from
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`empty`](../../interfaces/ComputationModule.md#empty)
+
+***
+
 ### encodeUtf8()
 
 > **encodeUtf8**(): [`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
@@ -505,6 +405,88 @@
 #### Inherited from
 
 [`ComputationModule`](../../interfaces/ComputationModule.md).[`fromIterable`](../../interfaces/ComputationModule.md#fromiterable)
+
+***
+
+### fromReadonlyArray()
+
+> **fromReadonlyArray**\<`T`\>(`options`?): [`FromReadonlyArrayOperator`](../../type-aliases/FromReadonlyArrayOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### count?
+
+`number`
+
+###### start?
+
+`number`
+
+#### Returns
+
+[`FromReadonlyArrayOperator`](../../type-aliases/FromReadonlyArrayOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
+
+#### Inherited from
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`fromReadonlyArray`](../../interfaces/ComputationModule.md#fromreadonlyarray)
+
+***
+
+### fromValue()
+
+> **fromValue**\<`T`\>(): [`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
+
+#### Inherited from
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`fromValue`](../../interfaces/ComputationModule.md#fromvalue)
+
+***
+
+### generate()
+
+> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### generator
+
+[`Updater`](../../../functions/type-aliases/Updater.md)\<`T`\>
+
+##### initialValue
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`T`\>
+
+##### options?
+
+###### count?
+
+`number`
+
+#### Returns
+
+[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+
+#### Inherited from
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`generate`](../../interfaces/ComputationModule.md#generate)
 
 ***
 
@@ -609,6 +591,32 @@
 #### Inherited from
 
 [`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`pairwise`](../../interfaces/DeferredReactiveComputationModule.md#pairwise)
+
+***
+
+### raise()
+
+> **raise**\<`T`\>(`options`?): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### raise?
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+#### Returns
+
+[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+
+#### Inherited from
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`raise`](../../interfaces/ComputationModule.md#raise)
 
 ***
 

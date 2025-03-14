@@ -464,6 +464,67 @@ export type HigherOrderComputationOperator<
         : never;
 
 // prettier-ignore
+export type EmptyOf<
+  TComputationType extends ComputationType,
+  T
+> = PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
+    PureSynchronousComputationOf<TComputationType, T>  :
+  PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
+    PureDeferredComputationOf<TComputationType, T> :
+  MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
+  MulticastComputationOf<TComputationType, T> & DisposableLike
+  : never;
+
+export type GeneratorOf<TComputationType extends ComputationType, T> =
+  PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<
+    TComputationType,
+    T
+  >
+    ? PureSynchronousComputationOf<TComputationType, T>
+    : PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<
+          TComputationType,
+          T
+        >
+      ? PureDeferredComputationOf<TComputationType, T>
+      : MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<
+            TComputationType,
+            T
+          >
+        ? MulticastComputationOf<TComputationType, T> & DisposableLike
+        : never;
+
+export type RaiseOf<TComputationType extends ComputationType, T> =
+  PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<
+    TComputationType,
+    T
+  >
+    ? PureSynchronousComputationOf<TComputationType, T>
+    : PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<
+          TComputationType,
+          T
+        >
+      ? PureDeferredComputationOf<TComputationType, T>
+      : MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<
+            TComputationType,
+            T
+          >
+        ? MulticastComputationOf<TComputationType, T> & DisposableLike
+        : never;
+
+export type FromAsyncIterableOperator<
+  TComputationType extends ComputationType,
+  T,
+> = <TIterable extends AsyncIterableLike<T>>(
+  iterable: TIterable,
+) => TIterable extends PureAsyncIterableLike<T>
+  ? PureDeferredComputationOf<TComputationType, T> extends never
+    ? MulticastComputationOf<TComputationType, T> & DisposableLike
+    : PureDeferredComputationOf<TComputationType, T>
+  : DeferredComputationWithSideEffectsOf<TComputationType, T> extends never
+    ? MulticastComputationOf<TComputationType, T> & DisposableLike
+    : DeferredComputationWithSideEffectsOf<TComputationType, T>;
+
+// prettier-ignore
 export type FromIterableOperator<
   TComputationType extends ComputationType,
   T,
@@ -483,30 +544,29 @@ export type FromIterableOperator<
     MulticastComputationOf<TComputationType, T> & DisposableLike
 ) : ComputationBaseOf<TComputationType, T> ;
 
-export type FromAsyncIterableOperator<
+// prettier-ignore
+export type FromReadonlyArrayOperator<
   TComputationType extends ComputationType,
   T,
-> = <TIterable extends AsyncIterableLike<T>>(
-  iterable: TIterable,
-) => TIterable extends PureAsyncIterableLike<T>
-  ? PureDeferredComputationOf<TComputationType, T> extends never
-    ? MulticastComputationOf<TComputationType, T>
-    : PureDeferredComputationOf<TComputationType, T>
-  : DeferredComputationWithSideEffectsOf<TComputationType, T> extends never
-    ? MulticastComputationOf<TComputationType, T>
-    : DeferredComputationWithSideEffectsOf<TComputationType, T>;
+> = (
+  array: readonly T[],
+) => PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType,T> ? 
+    PureSynchronousComputationOf<TComputationType, T> : 
+  PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? 
+    PureDeferredComputationOf<TComputationType, T> : 
+    MulticastComputationOf<TComputationType, T> & DisposableLike
 
 // prettier-ignore
-export type EmptyOperator<
+export type FromValueOperator<
   TComputationType extends ComputationType,
-> = <T>(
-) => PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-    PureSynchronousComputationOf<TComputationType, T>  :
-  PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-    PureDeferredComputationOf<TComputationType, T> :
-  MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-  MulticastComputationOf<TComputationType, T> & DisposableLike
-  : never;
+  T,
+> = (
+  value: T,
+) => PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType,T> ? 
+    PureSynchronousComputationOf<TComputationType, T> : 
+  PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? 
+    PureDeferredComputationOf<TComputationType, T> : 
+    MulticastComputationOf<TComputationType, T> & DisposableLike
 
 export type ToObservableOperator<
   TComputationType extends ComputationType,
@@ -677,7 +737,7 @@ export type MulticastComputationOfModule<
 
 export interface ComputationModule<TComputationType extends ComputationType>
   extends ComputationModuleLike<TComputationType> {
-  empty: EmptyOperator<TComputationType>;
+  empty<T>(): EmptyOf<TComputationType, T>;
 
   firstAsync<T>(): AsyncFunction1<ComputationOf<TComputationType, T>, T>;
 
@@ -686,9 +746,9 @@ export interface ComputationModule<TComputationType extends ComputationType>
   fromReadonlyArray<T>(options?: {
     readonly count?: number;
     readonly start?: number;
-  }): Function1<readonly T[], PureComputationOf<TComputationType, T>>;
+  }): FromReadonlyArrayOperator<TComputationType, T>;
 
-  fromValue<T>(): Function1<T, PureComputationOf<TComputationType, T>>;
+  fromValue<T>(): FromValueOperator<TComputationType, T>;
 
   generate<T>(
     generator: Updater<T>,
@@ -696,7 +756,7 @@ export interface ComputationModule<TComputationType extends ComputationType>
     options?: {
       readonly count?: number;
     },
-  ): PureComputationOf<TComputationType, T>;
+  ): GeneratorOf<TComputationType, T>;
 
   keep<T>(
     predicate: Predicate<T>,
@@ -710,7 +770,7 @@ export interface ComputationModule<TComputationType extends ComputationType>
 
   raise<T>(options?: {
     readonly raise?: Factory<unknown>;
-  }): PureComputationOf<TComputationType, T>;
+  }): RaiseOf<TComputationType, T>;
 
   reduceAsync<T, TAcc>(
     reducer: Reducer<T, TAcc>,
@@ -786,29 +846,6 @@ export interface DeferredComputationModule<
     sideEffect: SideEffect1<T>,
   ): ComputationOperatorWithSideEffects<TComputationType, T, T>;
 
-  fromReadonlyArray<T>(options?: {
-    readonly count?: number;
-    readonly start?: number;
-  }): Function1<
-    readonly T[],
-    | PureSynchronousComputationOf<TComputationType, T>
-    | PureDeferredComputationOf<TComputationType, T>
-  >;
-
-  fromValue<T>(): Function1<T, PureDeferredComputationOf<TComputationType, T>>;
-
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-    options?: {
-      readonly count?: number;
-    },
-  ): PureDeferredComputationOf<TComputationType, T>;
-
-  raise<T>(options?: {
-    readonly raise?: Factory<unknown>;
-  }): PureDeferredComputationOf<TComputationType, T>;
-
   repeat<T>(
     predicate: Predicate<number>,
   ): StatelessComputationOperator<
@@ -869,35 +906,10 @@ export interface SynchronousComputationModule<
     Optional<T>
   >;
 
-  fromReadonlyArray<T>(options?: {
-    readonly count?: number;
-    readonly start?: number;
-  }): Function1<
-    readonly T[],
-    PureSynchronousComputationOf<TComputationType, T>
-  >;
-
-  fromValue<T>(): Function1<
-    T,
-    PureSynchronousComputationOf<TComputationType, T>
-  >;
-
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-    options?: {
-      readonly count?: number;
-    },
-  ): PureSynchronousComputationOf<TComputationType, T>;
-
   last<T>(): Function1<
     SynchronousComputationOf<TComputationType, T>,
     Optional<T>
   >;
-
-  raise<T>(options?: {
-    readonly raise?: Factory<unknown>;
-  }): PureSynchronousComputationOf<TComputationType, T>;
 
   reduce<T, TAcc>(
     reducer: Reducer<T, TAcc>,

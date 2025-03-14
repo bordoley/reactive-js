@@ -330,7 +330,8 @@ export interface Signature {
   endWith<TComputationType extends ComputationType>(
     m: PickComputationModule<
       TComputationType,
-      DeferredComputationModule<TComputationType>,
+      DeferredComputationModule<TComputationType> &
+        ComputationModule<TComputationType>,
       "concat" | "fromReadonlyArray"
     >,
   ): <T>(
@@ -498,7 +499,8 @@ export interface Signature {
   startWith<TComputationType extends ComputationType>(
     m: PickComputationModule<
       TComputationType,
-      DeferredComputationModule<TComputationType>,
+      DeferredComputationModule<TComputationType> &
+        ComputationModule<TComputationType>,
       "concat" | "fromReadonlyArray"
     >,
   ): <T>(

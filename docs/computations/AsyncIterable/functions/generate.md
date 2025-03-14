@@ -6,7 +6,7 @@
 
 # Function: generate()
 
-> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): `object`
+> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): `never`
 
 ## Type Parameters
 
@@ -30,16 +30,4 @@
 
 ## Returns
 
-`object`
-
-### \[ComputationLike\_isDeferred\]?
-
-> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
-
-### \[ComputationLike\_isPure\]?
-
-> `readonly` `optional` **\[ComputationLike\_isPure\]**: `true`
-
-### \[ComputationLike\_isSynchronous\]
-
-> `readonly` **\[ComputationLike\_isSynchronous\]**: `false`
+`never`

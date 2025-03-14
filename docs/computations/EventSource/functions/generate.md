@@ -6,7 +6,7 @@
 
 # Function: generate()
 
-> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): `never`
 
 ## Type Parameters
 
@@ -30,4 +30,4 @@
 
 ## Returns
 
-[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+`never`

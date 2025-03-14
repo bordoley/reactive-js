@@ -3,7 +3,7 @@
 import { none } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, } from "../../../utils.js";
 import EventSource_create from "./EventSource.create.js";
-const EventSource_generate = (generator, initialValue, options) => EventSource_create(async (listener) => {
+const EventSource_generate = ((generator, initialValue, options) => EventSource_create(async (listener) => {
     const { count } = options ?? {};
     let acc = initialValue();
     let cnt = 0;
@@ -23,5 +23,5 @@ const EventSource_generate = (generator, initialValue, options) => EventSource_c
         }
     }
     listener[DisposableLike_dispose]();
-});
+}));
 export default EventSource_generate;

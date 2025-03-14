@@ -73,12 +73,7 @@ export interface IterableModule
   extends ComputationModule<IterableComputation>,
     DeferredComputationModule<IterableComputation>,
     SynchronousComputationModule<IterableComputation>,
-    InteractiveComputationModule<IterableComputation> {
-  fromReadonlyArray: SynchronousComputationModule<IterableComputation>["fromReadonlyArray"];
-  fromValue: SynchronousComputationModule<IterableComputation>["fromValue"];
-  generate: SynchronousComputationModule<IterableComputation>["generate"];
-  raise: SynchronousComputationModule<IterableComputation>["raise"];
-}
+    InteractiveComputationModule<IterableComputation> {}
 
 export type Signature = IterableModule;
 

@@ -101,8 +101,6 @@ export interface AsyncIterableModule
     InteractiveComputationModule<AsyncIterableComputation> {
   of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
 
-  raise: DeferredComputationModule<AsyncIterableComputation>["raise"];
-
   toEventSource<T>(): Function1<
     AsyncIterableLike<T>,
     EventSourceLike<T> & DisposableLike
@@ -266,12 +264,16 @@ class FromReadonlyArrayAsyncIterable<T> implements PureAsyncIterableLike<T> {
   }
 }
 
-export const fromReadonlyArray: Signature["fromReadonlyArray"] =
-  <T>(options?: { readonly count?: number; readonly start?: number }) =>
+export const fromReadonlyArray: Signature["fromReadonlyArray"] = (<
+    T,
+  >(options?: {
+    readonly count?: number;
+    readonly start?: number;
+  }) =>
   (arr: readonly T[]) => {
     let [start, count] = parseArrayBounds(arr, options);
     return newInstance(FromReadonlyArrayAsyncIterable, arr, count, start);
-  };
+  }) as Signature["fromReadonlyArray"];
 
 export const empty: Signature["empty"] = (<T>() =>
   pipe([], fromReadonlyArray<T>(), returns))() as Signature["empty"];
@@ -356,14 +358,19 @@ class GeneratorAsyncIterable<T> implements PureAsyncIterableLike<T> {
   }
 }
 
-export const generate: Signature["generate"] = <T>(
+export const generate: Signature["generate"] = (<T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
   options?: {
     readonly count?: number;
   },
 ) =>
-  newInstance(GeneratorAsyncIterable, generator, initialValue, options?.count);
+  newInstance(
+    GeneratorAsyncIterable,
+    generator,
+    initialValue,
+    options?.count,
+  )) as Signature["generate"];
 
 class KeepAsyncIterable<T> implements AsyncIterableLike<T> {
   public readonly [ComputationLike_isPure]?: boolean;
@@ -476,12 +483,12 @@ class RaiseAsyncIterable<T> implements AsyncIterableLike<T> {
   }
 }
 
-export const raise: Signature["raise"] = <T>(options?: {
+export const raise: Signature["raise"] = (<T>(options?: {
   readonly raise?: SideEffect;
 }) => {
   const { raise: factory = raise } = options ?? {};
   return newInstance(RaiseAsyncIterable<T>, factory);
-};
+}) as Signature["raise"];
 
 export const reduceAsync: Signature["reduceAsync"] =
   <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
