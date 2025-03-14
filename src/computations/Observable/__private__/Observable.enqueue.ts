@@ -11,7 +11,7 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_complete,
-  LiftedObserverLike_delegate,
+  LiftedObserverLike_completeDelegate,
   LiftedObserverLike_notify,
   LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
@@ -72,7 +72,7 @@ const Observer_createEnqueueObserver: <T>(
       ) {
         // FIXME: maybe we shouldn't complete
         this[EnqueueObserver_queue][SinkLike_complete]();
-        this[LiftedObserverLike_delegate][SinkLike_complete]();
+        this[LiftedObserverLike_completeDelegate]();
       },
     }),
   );

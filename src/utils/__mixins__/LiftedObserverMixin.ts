@@ -1,3 +1,4 @@
+import { __DEV__ } from "../../__internal__/constants.js";
 import {
   Mixin2,
   getPrototype,
@@ -12,6 +13,7 @@ import {
   Function1,
   Method1,
   Optional,
+  SideEffect,
   SideEffect1,
   bind,
   bindMethod,
@@ -20,6 +22,7 @@ import {
   none,
   pipe,
   raise,
+  raiseIf,
   returns,
 } from "../../functions.js";
 import {
@@ -54,10 +57,6 @@ import * as DisposableContainer from "../DisposableContainer.js";
 import QueueMixin from "./QueueMixin.js";
 import SerialDisposableMixin from "./SerialDisposableMixin.js";
 
-export const LiftedObserverLike_delegate = Symbol(
-  "LiftedObserverLike_delegate",
-);
-
 export const LiftedObserverLike_notify = Symbol("LiftedObserverLike_notify");
 export const LiftedObserverLike_notifyDelegate = Symbol(
   "LiftedObserverLike_notifyDelegate",
@@ -65,38 +64,52 @@ export const LiftedObserverLike_notifyDelegate = Symbol(
 export const LiftedObserverLike_complete = Symbol(
   "LiftedObserverLike_complete",
 );
+export const LiftedObserverLike_completeDelegate = Symbol(
+  "LiftedObserverLike_complete",
+);
+export const LiftedObserverLike_delegate = Symbol(
+  "LiftedObserverLike_delegate",
+);
 
-export interface LiftedObserverLike<
-  TA = unknown,
-  TB = TA,
-  TDelegateObserver extends ObserverLike<TB> = ObserverLike<TB>,
-> extends ObserverLike<TA> {
-  readonly [LiftedObserverLike_delegate]: TDelegateObserver;
+export interface LiftedObserverLike<TA = unknown, TB = TA>
+  extends ObserverLike<TA> {
+  readonly [LiftedObserverLike_delegate]: ObserverLike<TB>;
 
   [LiftedObserverLike_notify](next: TA): void;
-  [LiftedObserverLike_notifyDelegate](next: TB): void;
   [LiftedObserverLike_complete](): void;
+
+  [LiftedObserverLike_notifyDelegate](next: TB): void;
+  [LiftedObserverLike_completeDelegate](): void;
 }
 
-const LiftedObserverMixin: <
+interface LiftedObserverMixinModule {
+  <TA, TB = TA>(): Mixin2<
+    LiftedObserverLike<TA, TB>,
+    ObserverLike<TB>,
+    Optional<{
+      capacity?: number;
+      backpressureStrategy?: BackpressureStrategy;
+    }>,
+    Pick<LiftedObserverLike<TA, TB>, keyof DisposableLike>
+  >;
+
+  <T, TDelegateObserver extends ObserverLike<T> = ObserverLike<T>>(): Mixin2<
+    LiftedObserverLike<T, T>,
+    TDelegateObserver,
+    Optional<{
+      capacity?: number;
+      backpressureStrategy?: BackpressureStrategy;
+    }>,
+    Pick<
+      LiftedObserverLike<T, T>,
+      keyof DisposableLike | typeof LiftedObserverLike_notify
+    >
+  >;
+}
+
+const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
   TA,
   TB = TA,
-  TDelegateObserver extends ObserverLike<TB> = ObserverLike<TB>,
->() => Mixin2<
-  LiftedObserverLike<TA, TB, TDelegateObserver>,
-  TDelegateObserver,
-  Optional<{
-    capacity?: number;
-    backpressureStrategy?: BackpressureStrategy;
-  }>,
-  Pick<
-    LiftedObserverLike<TA, TB, TDelegateObserver>,
-    typeof LiftedObserverLike_notify | keyof DisposableLike
-  >
-> = /*@__PURE__*/ (<
-  TA,
-  TB = TA,
-  TDelegateObserver extends ObserverLike<TB> = ObserverLike<TB>,
 >() => {
   const LiftedObserverMixin_scheduler = Symbol("LiftedObserverMixin_scheduler");
   const LiftedObserverMixin_schedulerCallback = Symbol(
@@ -104,7 +117,7 @@ const LiftedObserverMixin: <
   );
 
   type TProperties = {
-    [LiftedObserverLike_delegate]: TDelegateObserver;
+    [LiftedObserverLike_delegate]: ObserverLike<TB>;
     [LiftedObserverMixin_scheduler]: SchedulerLike;
     [LiftedObserverMixin_schedulerCallback]: Method1<
       SideEffect1<ContinuationContextLike>,
@@ -112,6 +125,7 @@ const LiftedObserverMixin: <
     >;
     [SchedulerLike_inContinuation]: boolean;
     [LiftedObserverLike_notifyDelegate]: Function1<TB, void>;
+    [LiftedObserverLike_completeDelegate]: SideEffect;
   };
 
   const scheduleDrainQueue = (
@@ -119,7 +133,7 @@ const LiftedObserverMixin: <
       ObserverLike<TA> &
       QueueLike<TA> &
       SerialDisposableLike &
-      LiftedObserverLike<TA, TB, TDelegateObserver>,
+      LiftedObserverLike<TA, TB>,
   ) => {
     if (observer[SerialDisposableLike_current][DisposableLike_isDisposed]) {
       const continuation = (ctx: ContinuationContextLike) => {
@@ -154,21 +168,53 @@ const LiftedObserverMixin: <
   const queueProtoype = getPrototype(QueueMixin<TA>());
 
   function notifyLiftedDelegate(this: TProperties, next: TB) {
-    (this[LiftedObserverLike_delegate] as unknown as LiftedObserverLike<TB>)[
-      LiftedObserverLike_notify
-    ](next);
+    const delegate = this[
+      LiftedObserverLike_delegate
+    ] as unknown as LiftedObserverLike<TB>;
+
+    if (__DEV__) {
+      raiseIf(
+        !delegate[SchedulerLike_inContinuation],
+        "Observer can only be notified from within a Scheduler continuation",
+      );
+      raiseIf(delegate[SinkLike_isCompleted], "Observer is completed");
+      raiseIf(delegate[DisposableLike_isDisposed], "Observer is disposed");
+    }
+
+    delegate[LiftedObserverLike_notify](next);
   }
 
-  function enqueueDelegate(this: TProperties, next: TB) {
+  function completeLiftedDelegate(this: TProperties) {
+    const delegate = this[
+      LiftedObserverLike_delegate
+    ] as unknown as LiftedObserverLike<TB>;
+
+    if (__DEV__) {
+      raiseIf(
+        !delegate[SchedulerLike_inContinuation],
+        "Observer can only be notified from within a Scheduler continuation",
+      );
+      raiseIf(delegate[SinkLike_isCompleted], "Observer is completed");
+      raiseIf(delegate[DisposableLike_isDisposed], "Observer is disposed");
+    }
+
+    delegate[LiftedObserverLike_complete]();
+  }
+
+  function pushDelegate(this: TProperties, next: TB) {
     this[LiftedObserverLike_delegate][SinkLike_push](next);
+  }
+
+  function sinkCompleteDelegate(this: TProperties) {
+    this[LiftedObserverLike_delegate][SinkLike_complete]();
   }
 
   return returns(
     mix<
-      LiftedObserverLike<TA, TB, TDelegateObserver>,
+      LiftedObserverLike<TA, TB>,
       TProperties,
       Omit<
-        LiftedObserverLike<TA, TB, TDelegateObserver>,
+        LiftedObserverLike<TA, TB>,
         | keyof DisposableLike
         | typeof SchedulerLike_inContinuation
         | typeof QueueableLike_isReady
@@ -181,14 +227,15 @@ const LiftedObserverMixin: <
         | typeof LiftedObserverLike_complete
         | typeof LiftedObserverLike_delegate
         | typeof LiftedObserverLike_notifyDelegate
+        | typeof LiftedObserverLike_completeDelegate
       >,
       Pick<
-        LiftedObserverLike<TA, TB, TDelegateObserver>,
+        LiftedObserverLike<TA, TB>,
         | typeof LiftedObserverLike_notify
         | typeof LiftedObserverLike_complete
         | keyof DisposableLike
       >,
-      TDelegateObserver,
+      ObserverLike<TB>,
       Optional<{
         capacity?: number;
         backpressureStrategy?: BackpressureStrategy;
@@ -198,7 +245,7 @@ const LiftedObserverMixin: <
       function LiftedObserverMixin(
         this: TProperties &
           Omit<
-            LiftedObserverLike<TA, TB, TDelegateObserver>,
+            LiftedObserverLike<TA, TB>,
             | typeof SchedulerLike_inContinuation
             | typeof QueueableLike_isReady
             | typeof SinkLike_isCompleted
@@ -206,12 +253,12 @@ const LiftedObserverMixin: <
             | typeof QueueableLike_backpressureStrategy
             | typeof QueueableLike_capacity
           >,
-        delegate: TDelegateObserver,
+        delegate: ObserverLike<TB>,
         options: Optional<{
           capacity?: number;
           backpressureStrategy?: BackpressureStrategy;
         }>,
-      ): LiftedObserverLike<TA, TB, TDelegateObserver> {
+      ): LiftedObserverLike<TA, TB> {
         init(QueueMixin<TA>(), this, {
           backpressureStrategy: delegate[QueueableLike_backpressureStrategy],
           capacity: delegate[QueueableLike_capacity],
@@ -225,12 +272,13 @@ const LiftedObserverMixin: <
           ],
         );
 
-        // FIXME: We should add some inSchedulerContinuation checks
-        // for the case when the delegate is lifted and notified
-        // in dev
         this[LiftedObserverLike_notifyDelegate] = delegateIsLifted
           ? notifyLiftedDelegate
-          : enqueueDelegate;
+          : pushDelegate;
+
+        this[LiftedObserverLike_completeDelegate] = delegateIsLifted
+          ? completeLiftedDelegate
+          : sinkCompleteDelegate;
 
         this[LiftedObserverLike_delegate] = delegate;
         this[LiftedObserverMixin_scheduler] =
@@ -258,10 +306,11 @@ const LiftedObserverMixin: <
       },
       props<TProperties>({
         [SchedulerLike_inContinuation]: false,
-        [LiftedObserverLike_notifyDelegate]: none,
         [LiftedObserverLike_delegate]: none,
         [LiftedObserverMixin_scheduler]: none,
         [LiftedObserverMixin_schedulerCallback]: none,
+        [LiftedObserverLike_notifyDelegate]: none,
+        [LiftedObserverLike_completeDelegate]: none,
       }),
       proto({
         get [SchedulerLike_maxYieldInterval]() {
@@ -306,7 +355,7 @@ const LiftedObserverMixin: <
             ObserverLike<TA> &
             QueueLike<TA> &
             SerialDisposableLike &
-            LiftedObserverLike<TA, TB, TDelegateObserver>,
+            LiftedObserverLike<TA, TB>,
           next: TA,
         ) {
           const inSchedulerContinuation = this[SchedulerLike_inContinuation];
@@ -342,9 +391,11 @@ const LiftedObserverMixin: <
             ObserverLike<TA> &
             QueueLike<TA> &
             SerialDisposableLike &
-            LiftedObserverLike<TA, TB, TDelegateObserver>,
+            LiftedObserverLike<TA, TB>,
         ) {
+          const inSchedulerContinuation = this[SchedulerLike_inContinuation];
           const isCompleted = this[SinkLike_isCompleted];
+          const count = this[QueueLike_count];
 
           call(queueProtoype[SinkLike_complete], this);
 
@@ -352,7 +403,15 @@ const LiftedObserverMixin: <
             return;
           }
 
-          scheduleDrainQueue(this);
+          if (inSchedulerContinuation && count == 0) {
+            this[LiftedObserverLike_complete]();
+          } else {
+            scheduleDrainQueue(this);
+          }
+        },
+
+        [LiftedObserverLike_notify](this: TProperties, next: TA) {
+          this[LiftedObserverLike_notifyDelegate](next as unknown as TB);
         },
 
         [LiftedObserverLike_complete](this: TProperties) {

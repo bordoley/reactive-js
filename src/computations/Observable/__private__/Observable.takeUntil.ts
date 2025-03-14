@@ -2,8 +2,6 @@ import {
   include,
   init,
   mixInstanceFactory,
-  props,
-  proto,
 } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import {
@@ -18,14 +16,9 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import {
-  ObserverLike,
-  SinkLike_complete,
-  SinkLike_push,
-} from "../../../utils.js";
+import { ObserverLike, SinkLike_complete } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_lift, {
   ObservableLift_isStateless,
@@ -36,24 +29,15 @@ import Observable_takeFirst from "./Observable.takeFirst.js";
 const Observable_takeUntil: Observable.Signature["takeUntil"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const TakeUntilObserver_notifier = Symbol("TakeUntilObserver_notifier");
-
-  interface TProperties {
-    [TakeUntilObserver_notifier]: PureSynchronousObservableLike;
-  }
-
   const createTakeUntilObserver = mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function TakeUntilObserver(
-      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
-        TProperties,
+      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify>,
       delegate: ObserverLike<T>,
       notifier: PureSynchronousObservableLike,
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T>(), this, delegate, none);
-
-      this[TakeUntilObserver_notifier] = notifier;
 
       pipe(
         notifier,
@@ -65,18 +49,6 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = /*@__PURE__*/ (<
 
       return this;
     },
-    props<TProperties>({
-      [TakeUntilObserver_notifier]: none,
-    }),
-    proto({
-      [LiftedObserverLike_notify](
-        this: TProperties & LiftedObserverLike<T>,
-        next: T,
-      ) {
-        const delegate = this[LiftedObserverLike_delegate];
-        delegate[SinkLike_push](next);
-      },
-    }),
   );
 
   return (notifier: PureSynchronousObservableLike) =>

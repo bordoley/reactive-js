@@ -23,17 +23,17 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_complete,
+  LiftedObserverLike_completeDelegate,
   LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
+  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   DisposableLike_isDisposed,
   ObserverLike,
   SerialDisposableLike,
   SerialDisposableLike_current,
-  SinkLike_complete,
   SinkLike_isCompleted,
-  SinkLike_push,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -75,12 +75,12 @@ const createThrottleObserver: <T>(
     const delegate = this[LiftedObserverLike_delegate];
     const delegateIsCompleted = delegate[SinkLike_isCompleted];
 
-    if (this[ThrottleObserver_hasValue] && !delegateIsCompleted) {
+    if (this[ThrottleObserver_hasValue]  && !delegateIsCompleted) {
       const value = this[ThrottleObserver_value] as T;
       this[ThrottleObserver_value] = none;
       this[ThrottleObserver_hasValue] = false;
 
-      delegate[SinkLike_push](value);
+      this[LiftedObserverLike_notifyDelegate](value);
 
       setupDurationSubscription(this, value);
     }
@@ -90,14 +90,13 @@ const createThrottleObserver: <T>(
     observer: LiftedObserverLike<T> & TProperties,
     next: T,
   ) => {
-    const delegate = observer[LiftedObserverLike_delegate];
     observer[ThrottleObserver_durationSubscription][
       SerialDisposableLike_current
     ] = pipe(
       observer[ThrottleObserver_durationFunction](next),
       Observable_forEach(bind(notifyThrottleObserverDelegate, observer)),
-      Observable_subscribeWithConfig(delegate, observer),
-      Disposable.addTo(delegate),
+      Observable_subscribeWithConfig(observer, observer),
+      Disposable.addTo(observer),
     );
   };
 
@@ -164,9 +163,9 @@ const createThrottleObserver: <T>(
           const value = this[ThrottleObserver_value];
           this[ThrottleObserver_value] = none;
           this[ThrottleObserver_hasValue] = false;
-          delegate[SinkLike_push](value);
+          this[LiftedObserverLike_notifyDelegate](value);
         }
-        delegate[SinkLike_complete]();
+        this[LiftedObserverLike_completeDelegate]();
       },
     }),
   );
