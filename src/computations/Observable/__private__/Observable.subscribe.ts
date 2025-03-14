@@ -11,10 +11,19 @@ import {
   ObservableLike,
   ObservableLike_observe,
 } from "../../../computations.js";
-import { Method1, SideEffect1, bind, none, pipe } from "../../../functions.js";
+import {
+  Method1,
+  SideEffect1,
+  bind,
+  newInstance,
+  none,
+  pipe,
+  raise,
+} from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
+  BackPressureError,
   BackpressureStrategy,
   ContinuationContextLike,
   DisposableContainerLike_add,
@@ -38,6 +47,7 @@ import {
   SchedulerLike_shouldYield,
   SinkLike_complete,
   SinkLike_isCompleted,
+  ThrowBackpressureStrategy,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 
@@ -138,8 +148,16 @@ const createObserver: <T>(
         return Disposable.disposed;
       },
 
-      [EventListenerLike_notify]() {
-        return true;
+      [EventListenerLike_notify](this: QueueableLike) {
+        const capacity = this[QueueableLike_capacity];
+        const backpressureStrategy = this[QueueableLike_backpressureStrategy];
+
+        if (
+          capacity === 0 &&
+          backpressureStrategy === ThrowBackpressureStrategy
+        ) {
+          raise(newInstance(BackPressureError, capacity, backpressureStrategy));
+        }
       },
 
       [SinkLike_complete](this: DisposableLike) {

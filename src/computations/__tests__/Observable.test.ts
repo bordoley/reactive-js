@@ -1304,6 +1304,20 @@ testModule(
         expectIsNone,
       ),
     ),
+    test(
+      "with a capacity of 0 and throw backpressure strategy",
+      pipeLazy(
+        pipeLazy(
+          [1, 2, 3, 4],
+          Observable.fromReadonlyArray(),
+          Observable.run({
+            capacity: 0,
+            backpressureStrategy: ThrowBackpressureStrategy,
+          }),
+        ),
+        expectToThrow,
+      ),
+    ),
   ),
   describe(
     "subscribeOn",

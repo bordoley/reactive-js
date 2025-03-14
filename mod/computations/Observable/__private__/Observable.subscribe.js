@@ -3,10 +3,10 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../../../__internal__/mixins.js";
 import { ObservableLike_observe, } from "../../../computations.js";
-import { bind, none, pipe } from "../../../functions.js";
+import { bind, newInstance, none, pipe, raise, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, OverflowBackpressureStrategy, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { BackPressureError, DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, OverflowBackpressureStrategy, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../../utils.js";
 const createObserver = /*@__PURE__*/ (() => {
     const SubscribeObserver_scheduler = Symbol("SubscribeObserver_scheduler");
     const SubscribeObserver_schedulerCallback = Symbol("SubscribeObserver_schedulerCallback");
@@ -56,7 +56,12 @@ const createObserver = /*@__PURE__*/ (() => {
             return Disposable.disposed;
         },
         [EventListenerLike_notify]() {
-            return true;
+            const capacity = this[QueueableLike_capacity];
+            const backpressureStrategy = this[QueueableLike_backpressureStrategy];
+            if (capacity === 0 &&
+                backpressureStrategy === ThrowBackpressureStrategy) {
+                raise(newInstance(BackPressureError, capacity, backpressureStrategy));
+            }
         },
         [SinkLike_complete]() {
             this[DisposableLike_dispose]();
