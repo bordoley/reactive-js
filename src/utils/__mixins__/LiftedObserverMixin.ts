@@ -308,7 +308,7 @@ const LiftedObserverMixin: <
             SerialDisposableLike &
             LiftedObserverLike<TA, TB, TDelegateObserver>,
           next: TA,
-        ): boolean {
+        ) {
           const inSchedulerContinuation = this[SchedulerLike_inContinuation];
           const isCompleted = this[SinkLike_isCompleted];
 
@@ -335,8 +335,6 @@ const LiftedObserverMixin: <
             scheduleDrainQueue(this);
             call(queueProtoype[SinkLike_push], this, next);
           }
-
-          return this[QueueableLike_isReady];
         },
 
         [SinkLike_complete](
