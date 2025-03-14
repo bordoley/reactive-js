@@ -10,40 +10,40 @@ import { EventListenerLike_notify, QueueLike_dequeue, QueueableLike_backpressure
 import * as EventSource from "../EventSource.js";
 import * as Publisher from "../Publisher.js";
 export const create = (() => {
-    const QueueableObservableLike_delegate = Symbol("QueueableObservableLike_delegate");
+    const QueueableObservable_delegate = Symbol("QueueableObservable_delegate");
     return mixInstanceFactory(include(DisposableMixin), function QueueableObservable(config) {
         init(DisposableMixin, this);
         const onReadyPublisher = pipe(Publisher.create(), Disposable.addTo(this));
         this[QueueableLike_onReady] = onReadyPublisher;
         const queue = Queue.create(config);
-        this[QueueableObservableLike_delegate] = queue;
+        this[QueueableObservable_delegate] = queue;
         pipe(queue[QueueableLike_onReady], EventSource.addEventHandler(bindMethod(onReadyPublisher, EventListenerLike_notify)), Disposable.addTo(this));
         return this;
     }, props({
-        [QueueableObservableLike_delegate]: none,
+        [QueueableObservable_delegate]: none,
         [QueueableLike_onReady]: none,
     }), {
         [ComputationLike_isDeferred]: true,
         [ComputationLike_isSynchronous]: false,
         get [QueueableLike_backpressureStrategy]() {
             unsafeCast(this);
-            return this[QueueableObservableLike_delegate][QueueableLike_backpressureStrategy];
+            return this[QueueableObservable_delegate][QueueableLike_backpressureStrategy];
         },
         get [QueueableLike_capacity]() {
             unsafeCast(this);
-            return this[QueueableObservableLike_delegate][QueueableLike_capacity];
+            return this[QueueableObservable_delegate][QueueableLike_capacity];
         },
         get [QueueableLike_isReady]() {
             unsafeCast(this);
-            return this[QueueableObservableLike_delegate][QueueableLike_isReady];
+            return this[QueueableObservable_delegate][QueueableLike_isReady];
         },
         get [SinkLike_isCompleted]() {
             unsafeCast(this);
-            return this[QueueableObservableLike_delegate][SinkLike_isCompleted];
+            return this[QueueableObservable_delegate][SinkLike_isCompleted];
         },
         [ObservableLike_observe](observer) {
-            const oldDelegate = this[QueueableObservableLike_delegate];
-            this[QueueableObservableLike_delegate] = observer;
+            const oldDelegate = this[QueueableObservable_delegate];
+            this[QueueableObservable_delegate] = observer;
             pipe(this, Disposable.bindTo(observer));
             pipe(observer[QueueableLike_onReady], EventSource.addEventHandler(bindMethod(this[QueueableLike_onReady], EventListenerLike_notify)), Disposable.addTo(this));
             if (isSome(oldDelegate[QueueLike_dequeue])) {
@@ -59,10 +59,10 @@ export const create = (() => {
             oldDelegate[SinkLike_complete]();
         },
         [SinkLike_complete]() {
-            this[QueueableObservableLike_delegate][SinkLike_complete]();
+            this[QueueableObservable_delegate][SinkLike_complete]();
         },
         [SinkLike_push](v) {
-            this[QueueableObservableLike_delegate][SinkLike_push](v);
+            this[QueueableObservable_delegate][SinkLike_push](v);
         },
     });
 })();
