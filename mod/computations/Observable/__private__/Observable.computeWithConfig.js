@@ -9,7 +9,7 @@ import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_no
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 export const BatchedComputeMode = "batched";
 export const CombineLatestComputeMode = "combine-latest";
 const Memo = 1;
@@ -142,7 +142,7 @@ class ComputeContext {
                             ? pipe(observer[SchedulerLike_schedule](runComputation), Disposable.addTo(observer))
                             : scheduledComputationSubscription;
                 }
-            }), Observable_subscribeWithConfig(observer, observer), Disposable.addTo(observer), DisposableContainer.onComplete(this[ComputeContext_cleanup]));
+            }), Observable_subscribe(observer, observer), Disposable.addTo(observer), DisposableContainer.onComplete(this[ComputeContext_cleanup]));
             return shouldAwait ? raiseError(awaiting) : none;
         }
     }

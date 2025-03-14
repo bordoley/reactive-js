@@ -7,7 +7,7 @@ import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Ob
 import { DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_liftPure from "./Observable.liftPure.js";
-import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
     const createRepeatObserver = (delegate, observable, shouldRepeat) => {
         let count = 1;
@@ -29,7 +29,7 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
             }
             else {
                 count++;
-                pipe(observable, Observable_forEach(bindMethod(delegate, EventListenerLike_notify)), Observable_subscribeWithConfig(delegate, delegate), DisposableContainer.onDisposed(doOnDispose));
+                pipe(observable, Observable_forEach(bindMethod(delegate, EventListenerLike_notify)), Observable_subscribe(delegate, delegate), DisposableContainer.onDisposed(doOnDispose));
             }
         };
         return pipe(Observer_createWithDelegate(delegate), Disposable.addToContainer(delegate), DisposableContainer.onDisposed(doOnDispose));

@@ -66,6 +66,8 @@ import {
   DisposableLike,
   ObserverLike,
   QueueableLike,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   SchedulerLike,
 } from "../utils.js";
 import Observable_actionReducer from "./Observable/__private__/Observable.actionReducer.js";
@@ -638,7 +640,13 @@ export interface ObservableModule
     options?: {
       readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
-    },
+    } & Partial<
+      Pick<
+        QueueableLike,
+        | typeof QueueableLike_backpressureStrategy
+        | typeof QueueableLike_capacity
+      >
+    >,
   ): Function1<ObservableLike<T>, DisposableLike>;
 
   subscribeOn<T>(

@@ -11,7 +11,7 @@ import LiftedObserverMixin, { LiftedObserverLike_notify, LiftedObserverLike_noti
 import { SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
-import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 const createWithLatestFromObserver = /*@__PURE__*/ (() => {
     const WithLatestFromObserver_hasLatest = Symbol("WithLatestFromObserver_hasLatest");
     const WithLatestFromObserver_otherLatest = Symbol("WithLatestFromObserver_otherLatest");
@@ -29,7 +29,7 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
         init(DelegatingDisposableMixin, this, delegate);
         init(LiftedObserverMixin(), this, delegate, none);
         this[WithLatestFromObserver_selector] = selector;
-        pipe(other, Observable_forEach(bind(onOtherNotify, this)), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(this), DisposableContainer.onComplete(bind(onWithLatestFromObserverOtherSubscriptionComplete, this)));
+        pipe(other, Observable_forEach(bind(onOtherNotify, this)), Observable_subscribe(delegate, delegate), Disposable.addTo(this), DisposableContainer.onComplete(bind(onWithLatestFromObserverOtherSubscriptionComplete, this)));
         return this;
     }, props({
         [WithLatestFromObserver_hasLatest]: false,

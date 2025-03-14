@@ -1106,13 +1106,7 @@
 
 ##### options?
 
-###### backpressureStrategy?
-
-[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
-
-###### capacity?
-
-`number`
+`object` & `Partial`\<`Pick`\<[`QueueableLike`](../../../utils/interfaces/QueueableLike.md)\<`unknown`\>, *typeof* [`QueueableLike_backpressureStrategy`](../../../utils/variables/QueueableLike_backpressureStrategy.md) \| *typeof* [`QueueableLike_capacity`](../../../utils/variables/QueueableLike_capacity.md)\>\>
 
 #### Returns
 

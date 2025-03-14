@@ -23,7 +23,7 @@ import type * as Observable from "../../Observable.js";
 import Observable_lift, {
   ObservableLift_isStateless,
 } from "./Observable.lift.js";
-import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 import Observable_takeFirst from "./Observable.takeFirst.js";
 
 const Observable_takeUntil: Observable.Signature["takeUntil"] = /*@__PURE__*/ (<
@@ -42,7 +42,7 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = /*@__PURE__*/ (<
       pipe(
         notifier,
         Observable_takeFirst(),
-        Observable_subscribeWithConfig(delegate, delegate),
+        Observable_subscribe(delegate, delegate),
         Disposable.addTo(this),
         DisposableContainer.onComplete(bindMethod(this, SinkLike_complete)),
       );

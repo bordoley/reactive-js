@@ -12,7 +12,7 @@ import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_co
 import { DisposableLike_isDisposed, SchedulerLike_requestYield, SerialDisposableLike_current, SinkLike_isCompleted, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
-import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 const createSwitchAllObserver = /*@__PURE__*/ (() => {
     const SwitchAllObserver_currentRef = Symbol("SwitchAllObserver_currentRef");
     function onSwitchAllObserverInnerObservableComplete() {
@@ -34,7 +34,7 @@ const createSwitchAllObserver = /*@__PURE__*/ (() => {
                 if (!this[LiftedObserverLike_isReady]) {
                     this[SchedulerLike_requestYield]();
                 }
-            }), Observable_subscribeWithConfig(this, this), Disposable.addTo(this), DisposableContainer.onComplete(bind(onSwitchAllObserverInnerObservableComplete, this)));
+            }), Observable_subscribe(this, this), Disposable.addTo(this), DisposableContainer.onComplete(bind(onSwitchAllObserverInnerObservableComplete, this)));
             this[SwitchAllObserver_currentRef][SerialDisposableLike_current] =
                 subscriber;
         },

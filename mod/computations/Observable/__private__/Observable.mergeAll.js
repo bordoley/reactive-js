@@ -14,7 +14,7 @@ import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_co
 import { EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, SchedulerLike_requestYield, SinkLike_isCompleted, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
-import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
     const MergeAllObserver_activeCount = Symbol("MergeAllObserver_activeCount");
     const MergeAllObserver_concurrency = Symbol("MergeAllObserver_concurrency");
@@ -26,7 +26,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
             if (!observer[LiftedObserverLike_isReady]) {
                 observer[SchedulerLike_requestYield]();
             }
-        }), Observable_subscribeWithConfig(observer, observer), Disposable.addTo(observer), DisposableContainer.onComplete(bind(onMergeAllObserverInnerObservableComplete, observer)));
+        }), Observable_subscribe(observer, observer), Disposable.addTo(observer), DisposableContainer.onComplete(bind(onMergeAllObserverInnerObservableComplete, observer)));
     };
     function onMergeAllObserverInnerObservableComplete() {
         this[MergeAllObserver_activeCount]--;

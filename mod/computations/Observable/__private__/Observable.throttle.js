@@ -10,7 +10,7 @@ import { DisposableLike_isDisposed, SerialDisposableLike_current, SinkLike_isCom
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_fromValue from "./Observable.fromValue.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 export const ThrottleFirstMode = "first";
 export const ThrottleLastMode = "last";
 export const ThrottleIntervalMode = "interval";
@@ -32,7 +32,7 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
         }
     }
     const setupDurationSubscription = (observer, next) => {
-        observer[ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[ThrottleObserver_durationFunction](next), Observable_forEach(bind(notifyThrottleObserverDelegate, observer)), Observable_subscribeWithConfig(observer, observer), Disposable.addTo(observer));
+        observer[ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[ThrottleObserver_durationFunction](next), Observable_forEach(bind(notifyThrottleObserverDelegate, observer)), Observable_subscribe(observer, observer), Disposable.addTo(observer));
     };
     return mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function ThrottleObserver(delegate, durationFunction, mode) {
         init(DelegatingDisposableMixin, this, delegate);

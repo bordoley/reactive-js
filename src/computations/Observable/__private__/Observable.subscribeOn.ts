@@ -16,7 +16,7 @@ import {
 import type * as Observable from "../../Observable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_enqueue from "./Observable.enqueue.js";
-import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
     scheduler: SchedulerLike,
@@ -31,7 +31,7 @@ const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
         pipe(
           observable,
           Observable_enqueue(observer),
-          Observable_subscribeWithConfig(scheduler, {
+          Observable_subscribe(scheduler, {
             [QueueableLike_capacity]:
               options?.capacity ?? observer[QueueableLike_capacity],
             [QueueableLike_backpressureStrategy]:

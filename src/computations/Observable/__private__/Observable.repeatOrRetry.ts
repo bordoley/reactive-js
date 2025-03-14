@@ -23,7 +23,7 @@ import {
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_liftPure from "./Observable.liftPure.js";
-import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 
 type ObservableRepeatOrRetry = <T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
@@ -59,7 +59,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
         pipe(
           observable,
           Observable_forEach(bindMethod(delegate, EventListenerLike_notify)),
-          Observable_subscribeWithConfig(delegate, delegate),
+          Observable_subscribe(delegate, delegate),
           DisposableContainer.onDisposed(doOnDispose),
         );
       }

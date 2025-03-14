@@ -39,7 +39,7 @@ import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_fromValue from "./Observable.fromValue.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 
 export const ThrottleFirstMode = "first";
 export const ThrottleLastMode = "last";
@@ -95,7 +95,7 @@ const createThrottleObserver: <T>(
     ] = pipe(
       observer[ThrottleObserver_durationFunction](next),
       Observable_forEach(bind(notifyThrottleObserverDelegate, observer)),
-      Observable_subscribeWithConfig(observer, observer),
+      Observable_subscribe(observer, observer),
       Disposable.addTo(observer),
     );
   };

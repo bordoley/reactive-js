@@ -10,13 +10,13 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { SinkLike_complete } from "../../../utils.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
-import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 import Observable_takeFirst from "./Observable.takeFirst.js";
 const Observable_takeUntil = /*@__PURE__*/ (() => {
     const createTakeUntilObserver = mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function TakeUntilObserver(delegate, notifier) {
         init(DelegatingDisposableMixin, this, delegate);
         init(LiftedObserverMixin(), this, delegate, none);
-        pipe(notifier, Observable_takeFirst(), Observable_subscribeWithConfig(delegate, delegate), Disposable.addTo(this), DisposableContainer.onComplete(bindMethod(this, SinkLike_complete)));
+        pipe(notifier, Observable_takeFirst(), Observable_subscribe(delegate, delegate), Disposable.addTo(this), DisposableContainer.onComplete(bindMethod(this, SinkLike_complete)));
         return this;
     });
     return (notifier) => pipe(createTakeUntilObserver, partial(notifier), Observable_lift({

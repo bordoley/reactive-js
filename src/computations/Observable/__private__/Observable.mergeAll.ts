@@ -56,7 +56,7 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, {
   ObservableLift_isStateless,
 } from "./Observable.lift.js";
-import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 
 const createMergeAllObserverOperator: <T>(options?: {
   readonly backpressureStrategy?: BackpressureStrategy;
@@ -92,7 +92,7 @@ const createMergeAllObserverOperator: <T>(options?: {
           observer[SchedulerLike_requestYield]();
         }
       }),
-      Observable_subscribeWithConfig(observer, observer),
+      Observable_subscribe(observer, observer),
       Disposable.addTo(observer),
       DisposableContainer.onComplete(
         bind(onMergeAllObserverInnerObservableComplete, observer),
