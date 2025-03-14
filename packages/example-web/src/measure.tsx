@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import * as Observable from "@reactive-js/core/computations/Observable";
 import { useObserve } from "@reactive-js/core/react";
 import { useAnimate, useMeasure, useSpring } from "@reactive-js/core/react/web";
-import { QueueableLike_enqueue } from "@reactive-js/core/utils";
+import { SinkLike_push } from "@reactive-js/core/utils";
 
 const Measure = () => {
   const spring = useSpring();
@@ -14,7 +14,7 @@ const Measure = () => {
   const springIsAnimating = useObserve(spring) ?? false;
 
   useEffect(() => {
-    spring?.[QueueableLike_enqueue](state ? boxWidth : 0);
+    spring?.[SinkLike_push](state ? boxWidth : 0);
   }, [boxWidth, state]);
 
   const width =

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAnimate, useSpring } from "@reactive-js/core/react/web";
 import { Property } from "csstype";
-import { useDispatcher, useObserve } from "@reactive-js/core/react";
+import { useSink, useObserve } from "@reactive-js/core/react";
 import { Optional } from "@reactive-js/core/functions";
 import { EventSourceLike } from "@reactive-js/core/computations";
 import { clamp } from "@reactive-js/core/math";
@@ -107,10 +107,10 @@ export const Wordle = () => {
     precision: 0.1,
   });
 
-  const springController = useDispatcher(spring);
+  const springController = useSink(spring);
 
   useEffect(() => {
-    springController.enqueue({ from: 0, to: 180 * items.length });
+    springController.push({ from: 0, to: 180 * items.length });
   }, [springController, state]);
 
   const isAnimationRunning = useObserve(spring) ?? false;
