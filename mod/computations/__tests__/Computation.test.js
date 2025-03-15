@@ -1,9 +1,10 @@
 /// <reference types="./Computation.test.d.ts" />
 
-import { describe, expectArrayEquals, expectToHaveBeenCalledTimes, mockFn, test, testModule, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectToHaveBeenCalledTimes, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../computations.js";
-import { ignore, isSome, none, pipe, pipeLazy, } from "../../functions.js";
+import { ignore, isSome, none, pipe, pipeLazy, pipeLazyAsync, } from "../../functions.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
+import * as AsyncIterable from "../AsyncIterable.js";
 import * as Computation from "../Computation.js";
 import * as Iterable from "../Iterable.js";
 import * as Observable from "../Observable.js";
@@ -26,7 +27,7 @@ testModule("Computation", describe("concatMany", test("concats the input contain
     [1, 2, 3],
     [4, 5, 6],
     [7, 8, 8],
-]), Iterable.takeFirst({ count: 5 }), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])))), describe("concatWith", test("concats two containers together", pipeLazy([0, 1], Computation.concatWith(Iterable)([2, 3, 4]), Iterable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("endWith", test("appends the additional values to the end of the container", pipeLazy([0, 1], Computation.endWith(Iterable)(2, 3, 4), Iterable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("flatMap", test("maps each value to a container and flattens", pipeLazy([0, 1], Computation.concatMap(Iterable)(() => [1, 2, 3]), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("flatMapIterable", test("maps the incoming value with the inline generator function", pipeLazy([none, none], Computation.concatMapIterable(Iterable)(function* (_) {
+]), Iterable.takeFirst({ count: 5 }), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])))), describe("concatWith", test("concats two containers together", pipeLazy([0, 1], Computation.concatWith(Iterable)([2, 3, 4]), Iterable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("endWith", test("appends the additional values to the end of the container", pipeLazy([0, 1], Computation.endWith(Iterable)(2, 3, 4), Iterable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("flatMap", test("maps each value to a container and flattens", pipeLazy([0, 1], Computation.concatMap(Iterable)(() => [1, 2, 3]), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("flatMapAsync", testAsync("mapping a number to a promise", pipeLazyAsync(1, AsyncIterable.fromValue(), Computation.flatMapAsync(AsyncIterable)("concatAll", async (x) => await Promise.resolve(x)), AsyncIterable.toReadonlyArrayAsync(), expectArrayEquals([1])))), describe("flatMapIterable", test("maps the incoming value with the inline generator function", pipeLazy([none, none], Computation.concatMapIterable(Iterable)(function* (_) {
     yield 1;
     yield 2;
     yield 3;

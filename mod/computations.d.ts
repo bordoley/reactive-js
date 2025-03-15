@@ -285,6 +285,11 @@ export interface SynchronousComputationModule<TComputationType extends Computati
 export interface InteractiveComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
     zip: ZipConstructor<TComputationType>;
 }
+export interface ConcurrentDeferredComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
+    fromAsyncFactory<T>(): Function1<(options?: {
+        signal?: AbortSignal;
+    }) => Promise<T>, DeferredComputationWithSideEffectsOf<TComputationType, T>>;
+}
 export interface DeferredReactiveComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
     buffer<T>(options?: {
         count?: number;

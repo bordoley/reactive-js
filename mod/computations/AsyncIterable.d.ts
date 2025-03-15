@@ -1,4 +1,4 @@
-import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, DeferredComputationModule, EventSourceLike, InteractiveComputationModule, PauseableEventSourceLike, PauseableObservableLike, PureAsyncIterableLike } from "../computations.js";
+import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, ConcurrentDeferredComputationModule, DeferredComputationModule, EventSourceLike, InteractiveComputationModule, PauseableEventSourceLike, PauseableObservableLike, PureAsyncIterableLike } from "../computations.js";
 import { Function1 } from "../functions.js";
 import { BackpressureStrategy, DisposableLike, SchedulerLike } from "../utils.js";
 /**
@@ -10,7 +10,7 @@ export interface AsyncIterableComputation extends ComputationType {
     readonly [Computation_pureDeferredOfT]?: PureAsyncIterableLike<this[typeof Computation_T]>;
 }
 export type Computation = AsyncIterableComputation;
-export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, DeferredComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation> {
+export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, DeferredComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation>, ConcurrentDeferredComputationModule<AsyncIterableComputation> {
     of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
     toEventSource<T>(): Function1<AsyncIterableLike<T>, EventSourceLike<T> & DisposableLike>;
     toPauseableEventSource<T>(): Function1<AsyncIterableLike<T>, PauseableEventSourceLike<T> & DisposableLike>;
@@ -25,6 +25,7 @@ export type Signature = AsyncIterableModule;
 export declare const catchError: Signature["catchError"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concat: Signature["concat"];
+export declare const fromAsyncFactory: Signature["fromAsyncFactory"];
 export declare const fromIterable: Signature["fromIterable"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const empty: Signature["empty"];

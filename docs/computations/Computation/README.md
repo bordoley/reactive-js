@@ -32,6 +32,7 @@
 - [debug](functions/debug.md)
 - [endWith](functions/endWith.md)
 - [flatMap](functions/flatMap.md)
+- [flatMapAsync](functions/flatMapAsync.md)
 - [flatMapIterable](functions/flatMapIterable.md)
 - [hasSideEffects](functions/hasSideEffects.md)
 - [ignoreElements](functions/ignoreElements.md)

@@ -75,6 +75,19 @@ class ConcatAsyncIterable {
     }
 }
 export const concat = ((...iterables) => newInstance(ConcatAsyncIterable, iterables));
+class FromAsyncFactoryIterable {
+    f;
+    [ComputationLike_isPure] = false;
+    [ComputationLike_isSynchronous] = false;
+    constructor(f) {
+        this.f = f;
+    }
+    async *[Symbol.asyncIterator]() {
+        const result = await this.f();
+        yield result;
+    }
+}
+export const fromAsyncFactory = returns(factory => newInstance(FromAsyncFactoryIterable, factory));
 class FromIterableAsyncIterable {
     s;
     [ComputationLike_isSynchronous] = false;

@@ -25,6 +25,7 @@ import {
   pipeLazyAsync,
 } from "../../functions.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
+import * as AsyncIterable from "../AsyncIterable.js";
 import * as Computation from "../Computation.js";
 import * as Iterable from "../Iterable.js";
 import * as Observable from "../Observable.js";
@@ -33,7 +34,6 @@ import AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests f
 import ComputationOperatorWithSideEffectsTests from "./fixtures/operators/ComputationOperatorWithSideEffectsTests.js";
 import StatefulAsynchronousComputationOperatorTests from "./fixtures/operators/StatefulAsynchronousComputationOperatorTests.js";
 import StatefulSynchronousComputationOperatorTests from "./fixtures/operators/StatefulSynchronousComputationOperatorTests.js";
-import * as AsyncIterable from "../AsyncIterable.js";
 
 const ObservableTypes = {
   [Computation_pureSynchronousOfT]: Observable.empty({ delay: 1 }),

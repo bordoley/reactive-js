@@ -12,6 +12,7 @@
 - [`DeferredComputationModule`](DeferredComputationModule.md)
 - [`SynchronousComputationModule`](SynchronousComputationModule.md)
 - [`InteractiveComputationModule`](InteractiveComputationModule.md)
+- [`ConcurrentDeferredComputationModule`](ConcurrentDeferredComputationModule.md)
 - [`DeferredReactiveComputationModule`](DeferredReactiveComputationModule.md)
 - [`ConcurrentReactiveComputationModule`](ConcurrentReactiveComputationModule.md)
 

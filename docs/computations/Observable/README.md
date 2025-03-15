@@ -48,7 +48,6 @@
 - [exhaust](functions/exhaust.md)
 - [first](functions/first.md)
 - [firstAsync](functions/firstAsync.md)
-- [flatMapAsync](functions/flatMapAsync.md)
 - [forEach](functions/forEach.md)
 - [forkMerge](functions/forkMerge.md)
 - [fromAsyncFactory](functions/fromAsyncFactory.md)

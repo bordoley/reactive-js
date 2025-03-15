@@ -21,9 +21,9 @@ import {
 import * as AsyncIterable from "../AsyncIterable.js";
 import * as EventSource from "../EventSource.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
+import ConcurrentDeferredComputationModuleTests from "./fixtures/ConcurrentDeferredComputationModuleTests.js";
 import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
 import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
-import ConcurrentDeferredComputationModuleTests from "./fixtures/ConcurrentDeferredComputationModuleTests.js";
 
 const AsyncIterableTypes = {
   [Computation_deferredWithSideEffectsOfT]: pipe(

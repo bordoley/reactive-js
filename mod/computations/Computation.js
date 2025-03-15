@@ -1,6 +1,6 @@
 /// <reference types="./Computation.d.ts" />
 
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, DeferredComputationWithSideEffects, } from "../computations.js";
 import { alwaysFalse, bindMethod, debug as breakPoint, compose, log as consoleLog, memoize, pickUnsafe, pipe, returns, } from "../functions.js";
 import { increment } from "../math.js";
 import { EventListenerLike_notify } from "../utils.js";
@@ -17,6 +17,12 @@ export const concatWith = /*@__PURE__*/ memoize(m => (...tail) => (fst) => m.con
 export const debug = /*@__PURE__*/ memoize(m => returns(m.forEach(breakPoint)));
 export const endWith = /*@__PURE__*/ memoize(m => (...values) => concatWith(m)(m.fromReadonlyArray()(values)));
 export const flatMap = /*@__PURE__*/ (() => memoize((m) => (flatten, selector, options) => compose((x) => x, m.map(selector), m[flatten](options))))();
+export const flatMapAsync = /*@__PURE__*/ (() => memoize((m) => (key, f) => {
+    const mapper = (a) => pipe((options) => f(a, options), m.fromAsyncFactory());
+    return flatMap(m)(key, mapper, {
+        innerType: DeferredComputationWithSideEffects,
+    });
+}))();
 export const flatMapIterable = /*@__PURE__*/ (() => memoize((m) => (key, selector, options) => {
     const mapper = compose(selector, m.fromIterable());
     return flatMap(m)(key, mapper, options);

@@ -1,4 +1,4 @@
-import { ComputationBaseOf, ComputationLike, ComputationModule, ComputationOf, ComputationOperatorWithSideEffects, ComputationType, ComputationWithSideEffectsLike, ConcurrentReactiveComputationModule, DeferredComputationLike, DeferredComputationModule, DeferredComputationOf, DeferredComputationWithSideEffectsLike, DeferredComputationWithSideEffectsOf, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastComputationLike, MulticastComputationOf, PickComputationModule, PureComputationLike, PureDeferredComputationLike, PureDeferredComputationOf, PureIterableLike, PureSynchronousComputationLike, PureSynchronousComputationOf, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StatelessComputationOperator, SynchronousComputationLike, SynchronousComputationOf, SynchronousComputationWithSideEffectsLike, SynchronousComputationWithSideEffectsOf } from "../computations.js";
+import { ComputationBaseOf, ComputationLike, ComputationModule, ComputationOf, ComputationOperatorWithSideEffects, ComputationType, ComputationWithSideEffectsLike, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredComputationLike, DeferredComputationModule, DeferredComputationOf, DeferredComputationWithSideEffectsLike, DeferredComputationWithSideEffectsOf, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastComputationLike, MulticastComputationOf, PickComputationModule, PureComputationLike, PureDeferredComputationLike, PureDeferredComputationOf, PureIterableLike, PureSynchronousComputationLike, PureSynchronousComputationOf, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StatelessComputationOperator, SynchronousComputationLike, SynchronousComputationOf, SynchronousComputationWithSideEffectsLike, SynchronousComputationWithSideEffectsOf } from "../computations.js";
 import { Function1, TypePredicate } from "../functions.js";
 import { EventListenerLike } from "../utils.js";
 export interface ConcatManyOperator<TComputationType extends ComputationType> {
@@ -71,6 +71,11 @@ export interface Signature {
     flatMap<TComputationType extends ComputationType, TFlattenKey extends string | number | symbol>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "map"> & {
         readonly [key in TFlattenKey | string | symbol | number]: key extends TFlattenKey ? DeferredComputationModule<TComputationType>["concatAll"] : unknown;
     }): FlatMapOperator<TComputationType, TFlattenKey>;
+    flatMapAsync<TComputationType extends ComputationType, TFlattenKey extends string | number | symbol>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType> & ConcurrentDeferredComputationModule<TComputationType>, "map" | "fromAsyncFactory"> & {
+        readonly [key in TFlattenKey | string | symbol | number]: key extends TFlattenKey ? DeferredComputationModule<TComputationType>["concatAll"] : unknown;
+    }): <TA, TB>(key: TFlattenKey, selector: (a: TA, options?: {
+        signal?: AbortSignal;
+    }) => Promise<TB>) => HigherOrderComputationOperator<TComputationType, DeferredComputationWithSideEffectsLike, TA, TB>;
     flatMapIterable<TComputationType extends ComputationType, TFlattenKey extends string | number | symbol>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "map" | "fromIterable"> & {
         readonly [key in TFlattenKey | string | symbol | number]: key extends TFlattenKey ? DeferredComputationModule<TComputationType>["concatAll"] : unknown;
     }): FlatMapIterableOperator<TComputationType, TFlattenKey>;
@@ -105,6 +110,7 @@ export declare const concatWith: Signature["concatWith"];
 export declare const debug: Signature["debug"];
 export declare const endWith: Signature["endWith"];
 export declare const flatMap: Signature["flatMap"];
+export declare const flatMapAsync: Signature["flatMapAsync"];
 export declare const flatMapIterable: Signature["flatMapIterable"];
 export declare const hasSideEffects: Signature["hasSideEffects"];
 export declare const ignoreElements: Signature["ignoreElements"];

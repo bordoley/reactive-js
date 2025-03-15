@@ -25,6 +25,7 @@
 - [encodeUtf8](functions/encodeUtf8.md)
 - [firstAsync](functions/firstAsync.md)
 - [forEach](functions/forEach.md)
+- [fromAsyncFactory](functions/fromAsyncFactory.md)
 - [fromIterable](functions/fromIterable.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
 - [fromValue](functions/fromValue.md)
