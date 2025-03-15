@@ -17,6 +17,7 @@ import { WindowLocationLike_canGoBack, WindowLocationLike_goBack, WindowLocation
 import * as Element from "./Element.js";
 const { history, location } = window;
 const ObservableModule = {
+    forEach: Observable.forEach,
     keep: Observable.keep,
     map: Observable.map,
     merge: Observable.merge,
@@ -124,9 +125,9 @@ export const subscribe = /*@__PURE__*/ (() => {
             const push = !replace && locationChanged;
             replace = replace || (titleChanged && !locationChanged);
             return pipe(state, Observable.fromValue(), replace
-                ? Observable.enqueue(replaceState)
+                ? Computation.notify(ObservableModule)(replaceState)
                 : push
-                    ? Observable.enqueue(pushState)
+                    ? Computation.notify(ObservableModule)(pushState)
                     : identity, Computation.ignoreElements(ObservableModule)());
         }), invoke(StreamableLike_stream, scheduler, {
             replay: 1,

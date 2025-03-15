@@ -610,7 +610,7 @@ testModule(
 
       pipe(
         stream[SinkLike_isCompleted],
-        expectFalse("expected stream not to be completed"),
+        expectTrue("expected stream to be completed"),
       );
     }),
     test("when completed successfully from delayed source", () => {
@@ -629,7 +629,7 @@ testModule(
 
       pipe(
         stream[SinkLike_isCompleted],
-        expectFalse("expected stream not to be completed"),
+        expectTrue("expected stream to be completed"),
       );
     }),
     ComputationOperatorWithSideEffectsTests(

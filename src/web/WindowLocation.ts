@@ -71,6 +71,7 @@ type Signature = WebWindowLocationModule;
 const { history, location } = window;
 
 const ObservableModule = {
+  forEach: Observable.forEach,
   keep: Observable.keep,
   map: Observable.map,
   merge: Observable.merge,
@@ -326,9 +327,9 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
             state,
             Observable.fromValue(),
             replace
-              ? Observable.enqueue(replaceState)
+              ? Computation.notify(ObservableModule)(replaceState)
               : push
-                ? Observable.enqueue(pushState)
+                ? Computation.notify(ObservableModule)(pushState)
                 : identity<DeferredObservableLike>,
             Computation.ignoreElements(ObservableModule)(),
           );
