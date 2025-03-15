@@ -1,11 +1,12 @@
 import {
   DeferredObservableLike,
   ObservableLike,
+  ProducerLike_consume,
   StatelessComputationOperator,
 } from "../../../computations.js";
 import {
-  bindMethod,
   error,
+  invoke,
   isSome,
   none,
   partial,
@@ -16,14 +17,12 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as DelegatingObserver from "../../../utils/__internal__/DelegatingObserver.js";
 import {
   DisposableLike_dispose,
-  EventListenerLike_notify,
   ObserverLike,
   SinkLike_complete,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_forEach from "./Observable.forEach.js";
 import Observable_liftPure from "./Observable.liftPure.js";
-import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_toProducer from "./Observable.toProducer.js";
 
 type ObservableRepeatOrRetry = <T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
@@ -49,18 +48,25 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
         err = isSome(err) ? error([error(e), err]) : error(e);
       }
 
-      if (shouldComplete && isSome(err)) {
+      if (isSome(err)) {
         delegate[DisposableLike_dispose](err);
       } else if (shouldComplete) {
         delegate[SinkLike_complete]();
       } else {
         count++;
 
+        const newDelegate = pipe(
+          DelegatingObserver.createNotifyOnlyNonCompletingNonDisposing(
+            delegate,
+          ),
+          Disposable.addToContainer(delegate),
+          DisposableContainer.onDisposed(doOnDispose),
+        );
+
         pipe(
           observable,
-          Observable_forEach(bindMethod(delegate, EventListenerLike_notify)),
-          Observable_subscribe(delegate),
-          DisposableContainer.onDisposed(doOnDispose),
+          Observable_toProducer(delegate),
+          invoke(ProducerLike_consume, newDelegate),
         );
       }
     };

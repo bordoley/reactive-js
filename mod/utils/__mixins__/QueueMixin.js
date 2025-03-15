@@ -44,6 +44,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
         this[QueueableLike_backpressureStrategy] =
             config?.backpressureStrategy ?? OverflowBackpressureStrategy;
         this[QueueableLike_capacity] = clampPositiveInteger(config?.capacity ?? MAX_SAFE_INTEGER);
+        this[QueueMixin_autoDispose] = config?.autoDispose ?? false;
         this[QueueMixin_comparator] = config?.comparator;
         this[QueueMixin_values] = none;
         this[QueueMixin_onReadyPublisher] = pipe(Publisher.create(), Disposable.addTo(this));

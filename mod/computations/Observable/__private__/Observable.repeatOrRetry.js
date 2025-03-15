@@ -1,13 +1,13 @@
 /// <reference types="./Observable.repeatOrRetry.d.ts" />
 
-import { bindMethod, error, isSome, none, partial, pipe, } from "../../../functions.js";
+import { ProducerLike_consume, } from "../../../computations.js";
+import { error, invoke, isSome, none, partial, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as DelegatingObserver from "../../../utils/__internal__/DelegatingObserver.js";
-import { DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
-import Observable_forEach from "./Observable.forEach.js";
+import { DisposableLike_dispose, SinkLike_complete, } from "../../../utils.js";
 import Observable_liftPure from "./Observable.liftPure.js";
-import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_toProducer from "./Observable.toProducer.js";
 const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
     const createRepeatObserver = (delegate, observable, shouldRepeat) => {
         let count = 1;
@@ -21,7 +21,7 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
                 shouldComplete = true;
                 err = isSome(err) ? error([error(e), err]) : error(e);
             }
-            if (shouldComplete && isSome(err)) {
+            if (isSome(err)) {
                 delegate[DisposableLike_dispose](err);
             }
             else if (shouldComplete) {
@@ -29,7 +29,8 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
             }
             else {
                 count++;
-                pipe(observable, Observable_forEach(bindMethod(delegate, EventListenerLike_notify)), Observable_subscribe(delegate), DisposableContainer.onDisposed(doOnDispose));
+                const newDelegate = pipe(DelegatingObserver.createNotifyOnlyNonCompletingNonDisposing(delegate), Disposable.addToContainer(delegate), DisposableContainer.onDisposed(doOnDispose));
+                pipe(observable, Observable_toProducer(delegate), invoke(ProducerLike_consume, newDelegate));
             }
         };
         return pipe(DelegatingObserver.createNotifyOnlyNonCompletingNonDisposing(delegate), Disposable.addToContainer(delegate), DisposableContainer.onDisposed(doOnDispose));

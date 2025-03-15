@@ -170,6 +170,7 @@ const QueueMixin: <T>() => Mixin1<
         this[QueueableLike_capacity] = clampPositiveInteger(
           config?.capacity ?? MAX_SAFE_INTEGER,
         );
+        this[QueueMixin_autoDispose] = config?.autoDispose ?? false;
 
         this[QueueMixin_comparator] = config?.comparator;
         this[QueueMixin_values] = none;
