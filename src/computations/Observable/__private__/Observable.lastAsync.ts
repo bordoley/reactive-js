@@ -1,6 +1,12 @@
 import { Promise } from "../../../__internal__/constants.js";
 import { ObservableLike } from "../../../computations.js";
-import { Optional, newInstance, none, pipe } from "../../../functions.js";
+import {
+  Optional,
+  isNone,
+  newInstance,
+  none,
+  pipe,
+} from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../../utils/HostScheduler.js";
 import { BackpressureStrategy, SchedulerLike } from "../../../utils.js";
@@ -15,9 +21,11 @@ const Observable_lastAsync: Observable.Signature["lastAsync"] =
     readonly backpressureStrategy?: BackpressureStrategy;
   }) =>
   async (observable: ObservableLike<T>) => {
-    const { scheduler } = options ?? {};
+    let scheduler = options?.scheduler;
+    using hostScheduler = isNone(scheduler) ? HostScheduler.create() : none;
+    scheduler = scheduler ?? (hostScheduler as SchedulerLike);
 
-    return await newInstance<
+    const result = await newInstance<
       Promise<T>,
       (
         resolve: (value: T | PromiseLike<T>) => void,
@@ -31,13 +39,15 @@ const Observable_lastAsync: Observable.Signature["lastAsync"] =
         Observable_forEach((next: T) => {
           result = next;
         }),
-        Observable_subscribe(scheduler ?? HostScheduler.get(), options),
+        Observable_subscribe(scheduler, options),
         DisposableContainer.onError(reject),
         DisposableContainer.onComplete(() => {
           resolve(result as T);
         }),
       );
     });
+
+    return result;
   };
 
 export default Observable_lastAsync;

@@ -743,9 +743,9 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     delayStart: true,
 }), Observable.takeFirst({ count: 10 }), Observable.scanMany((_acc, next) => pipe(next, Observable.fromValue({ delay: 2 })), returns(0)), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]))), HigherOrderComputationOperatorTests(ObservableTypes, Observable.scanMany((_acc, _next) => Observable.empty(), returns(0), {
     innerType: PureSynchronousComputation,
-}), Observable.scanMany((_acc, _next) => pipe(Observable.empty(), Observable.forEach(ignore)), returns(0), { innerType: SynchronousComputationWithSideEffects }), Observable.scanMany((_acc, _next) => pipe(Observable.empty(), Observable.subscribeOn(HostScheduler.get())), returns(0), {
+}), Observable.scanMany((_acc, _next) => pipe(Observable.empty(), Observable.forEach(ignore)), returns(0), { innerType: SynchronousComputationWithSideEffects }), Observable.scanMany((_acc, _next) => pipe(Observable.empty(), Observable.subscribeOn(VirtualTimeScheduler.create())), returns(0), {
     innerType: PureDeferredComputation,
-}), Observable.scanMany((_acc, _next) => pipe(Observable.empty(), Observable.forEach(ignore), Observable.subscribeOn(HostScheduler.get())), returns(0), {
+}), Observable.scanMany((_acc, _next) => pipe(Observable.empty(), Observable.forEach(ignore), Observable.subscribeOn(VirtualTimeScheduler.create())), returns(0), {
     innerType: DeferredComputationWithSideEffects,
 }))), describe("spring", testAsync("test with spring", async () => {
     const env_32 = { stack: [], error: void 0, hasError: false };

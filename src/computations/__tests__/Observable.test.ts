@@ -1171,7 +1171,10 @@ testModule(
       ),
       Observable.scanMany(
         (_acc, _next) =>
-          pipe(Observable.empty(), Observable.subscribeOn(HostScheduler.get())),
+          pipe(
+            Observable.empty(),
+            Observable.subscribeOn(VirtualTimeScheduler.create()),
+          ),
         returns(0),
         {
           innerType: PureDeferredComputation,
@@ -1182,7 +1185,7 @@ testModule(
           pipe(
             Observable.empty(),
             Observable.forEach(ignore),
-            Observable.subscribeOn(HostScheduler.get()),
+            Observable.subscribeOn(VirtualTimeScheduler.create()),
           ),
         returns(0),
         {
