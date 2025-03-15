@@ -19,6 +19,7 @@
 ## Functions
 
 - [addEventHandler](functions/addEventHandler.md)
+- [combineLatest](functions/combineLatest.md)
 - [create](functions/create.md)
 - [empty](functions/empty.md)
 - [firstAsync](functions/firstAsync.md)
@@ -40,3 +41,4 @@
 - [toObservable](functions/toObservable.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
 - [withLatestFrom](functions/withLatestFrom.md)
+- [zipLatest](functions/zipLatest.md)

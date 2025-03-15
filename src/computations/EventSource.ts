@@ -10,6 +10,7 @@ import {
 import { Function1, SideEffect1 } from "../functions.js";
 import { DisposableLike, EventListenerLike } from "../utils.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
+import EventSource_combineLatest from "./EventSource/__private__/EventSource.combineLatest.js";
 import EventSource_create from "./EventSource/__private__/EventSource.create.js";
 import EventSource_empty from "./EventSource/__private__/EventSource.empty.js";
 import EventSource_firstAsync from "./EventSource/__private__/EventSource.firstAsync.js";
@@ -29,6 +30,7 @@ import EventSource_raise from "./EventSource/__private__/EventSource.raise.js";
 import EventSource_reduceAsync from "./EventSource/__private__/EventSource.reduceAsync.js";
 import EventSource_toReadonlyArrayAsync from "./EventSource/__private__/EventSource.toReadonlyArrayAsync.js";
 import EventSource_withLatestFrom from "./EventSource/__private__/EventSource.withLatestFrom.js";
+import EventSource_zipLatest from "./EventSource/__private__/EventSource.zipLatest.js";
 import Observable_fromEventSource from "./Observable/__private__/Observable.fromEventSource.js";
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
 
@@ -67,6 +69,8 @@ export type Signature = EventSourceModule;
 
 export const addEventHandler: Signature["addEventHandler"] =
   EventSource_addEventHandler;
+export const combineLatest: Signature["combineLatest"] =
+  EventSource_combineLatest;
 export const create: Signature["create"] = EventSource_create;
 export const empty: Signature["empty"] = EventSource_empty;
 export const firstAsync: Signature["firstAsync"] = EventSource_firstAsync;
@@ -94,3 +98,4 @@ export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   EventSource_toReadonlyArrayAsync;
 export const withLatestFrom: Signature["withLatestFrom"] =
   EventSource_withLatestFrom;
+export const zipLatest: Signature["zipLatest"] = EventSource_zipLatest;

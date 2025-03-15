@@ -20,6 +20,7 @@ export interface EventSourceModule extends ComputationModule<EventSourceComputat
 }
 export type Signature = EventSourceModule;
 export declare const addEventHandler: Signature["addEventHandler"];
+export declare const combineLatest: Signature["combineLatest"];
 export declare const create: Signature["create"];
 export declare const empty: Signature["empty"];
 export declare const firstAsync: Signature["firstAsync"];
@@ -41,3 +42,4 @@ export declare const reduceAsync: Signature["reduceAsync"];
 export declare const toObservable: Signature["toObservable"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
 export declare const withLatestFrom: Signature["withLatestFrom"];
+export declare const zipLatest: Signature["zipLatest"];

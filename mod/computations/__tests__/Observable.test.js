@@ -60,8 +60,8 @@ import * as Observable from "../../computations/Observable.js";
 import * as Streamable from "../../computations/Streamable.js";
 import * as Subject from "../../computations/Subject.js";
 import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, DeferredComputationWithSideEffects, MulticastComputation, PureDeferredComputation, PureSynchronousComputation, StoreLike_value, StreamableLike_stream, SynchronousComputationWithSideEffects, } from "../../computations.js";
-import { arrayEquality, bindMethod, error, ignore, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
-import { increment, incrementBy, scale } from "../../math.js";
+import { bindMethod, error, ignore, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
+import { increment, scale } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
@@ -185,9 +185,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         result = e["cause"];
     }), Observable.toReadonlyArray());
     pipe(result, ReadonlyArray.map(x => x.message), expectArrayEquals(["e2", "e1"]));
-})), describe("combineLatest", test("combineLatest from two interspersing sources", pipeLazy(Observable.combineLatest(pipe(Observable.generate(incrementBy(2), returns(1), { delay: 2 }), Observable.takeFirst({ count: 3 })), pipe(Observable.generate(incrementBy(2), returns(0), { delay: 3 }), Observable.takeFirst({ count: 2 }))), Observable.toReadonlyArray(), expectArrayEquals([tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)], {
-    valuesEquality: arrayEquality(),
-}))), CombineConstructorTests(Observable.combineLatest)), describe("computeDeferred", testAsync("__stream", async () => {
+})), describe("combineLatest", CombineConstructorTests(Observable.combineLatest)), describe("computeDeferred", testAsync("__stream", async () => {
     const env_4 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_4, HostScheduler.create(), false);
@@ -915,5 +913,5 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_38);
     }
-})), describe("withCurrentTime", StatefulSynchronousComputationOperatorTests(ObservableTypes, Observable.withCurrentTime(returns))), describe("zipLatest", test("zip two delayed sources", pipeLazy(Observable.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Observable.fromReadonlyArray({ delay: 1, delayStart: true })), pipe([1, 2, 3, 4], Observable.fromReadonlyArray({ delay: 2, delayStart: true }))), Observable.map(([a, b]) => a + b), Observable.toReadonlyArray(), expectArrayEquals([2, 5, 8, 11]))), CombineConstructorTests(Observable.zipLatest)));
+})), describe("withCurrentTime", StatefulSynchronousComputationOperatorTests(ObservableTypes, Observable.withCurrentTime(returns))), describe("zipLatest", CombineConstructorTests(Observable.zipLatest)));
 ((_) => { })(Observable);

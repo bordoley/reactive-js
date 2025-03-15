@@ -12,21 +12,9 @@
 
 ## Properties
 
-### combineLatest
-
-> **combineLatest**: `CombineConstructor`
-
-***
-
 ### currentTime
 
 > **currentTime**: [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
-
-***
-
-### zipLatest
-
-> **zipLatest**: `CombineConstructor`
 
 ## Methods
 

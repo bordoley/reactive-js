@@ -49,7 +49,6 @@ import {
 import {
   Optional,
   Tuple2,
-  arrayEquality,
   bindMethod,
   error,
   ignore,
@@ -65,7 +64,7 @@ import {
   returns,
   tuple,
 } from "../../functions.js";
-import { increment, incrementBy, scale } from "../../math.js";
+import { increment, scale } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
@@ -307,32 +306,7 @@ testModule(
       );
     }),
   ),
-  describe(
-    "combineLatest",
-    test(
-      "combineLatest from two interspersing sources",
-      pipeLazy(
-        Observable.combineLatest<number, number>(
-          pipe(
-            Observable.generate(incrementBy(2), returns(1), { delay: 2 }),
-            Observable.takeFirst<number>({ count: 3 }),
-          ),
-          pipe(
-            Observable.generate(incrementBy(2), returns(0), { delay: 3 }),
-            Observable.takeFirst<number>({ count: 2 }),
-          ),
-        ),
-        Observable.toReadonlyArray(),
-        expectArrayEquals(
-          [tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)],
-          {
-            valuesEquality: arrayEquality(),
-          },
-        ),
-      ),
-    ),
-    CombineConstructorTests(Observable.combineLatest),
-  ),
+  describe("combineLatest", CombineConstructorTests(Observable.combineLatest)),
   describe(
     "computeDeferred",
     testAsync("__stream", async () => {
@@ -1639,29 +1613,7 @@ testModule(
       Observable.withCurrentTime(returns),
     ),
   ),
-  describe(
-    "zipLatest",
-    test(
-      "zip two delayed sources",
-
-      pipeLazy(
-        Observable.zipLatest(
-          pipe(
-            [1, 2, 3, 4, 5, 6, 7, 8],
-            Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
-          ),
-          pipe(
-            [1, 2, 3, 4],
-            Observable.fromReadonlyArray({ delay: 2, delayStart: true }),
-          ),
-        ),
-        Observable.map<Tuple2<number, number>, number>(([a, b]) => a + b),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([2, 5, 8, 11]),
-      ),
-    ),
-    CombineConstructorTests(Observable.zipLatest),
-  ),
+  describe("zipLatest", CombineConstructorTests(Observable.zipLatest)),
 );
 
 ((_: Observable.Signature) => {})(Observable);

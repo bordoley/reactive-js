@@ -31,6 +31,12 @@
 
 ***
 
+### combineLatest
+
+> **combineLatest**: `CombineConstructor`\<`TComputationType`\>
+
+***
+
 ### forkMerge
 
 > **forkMerge**: [`ForkMerge`](ForkMerge.md)\<`TComputationType`\>
@@ -64,6 +70,12 @@
 #### Returns
 
 [`FromObservableOperator`](../type-aliases/FromObservableOperator.md)\<`TComputationType`, `T`\>
+
+***
+
+### zipLatest
+
+> **zipLatest**: `CombineConstructor`\<`TComputationType`\>
 
 ## Methods
 

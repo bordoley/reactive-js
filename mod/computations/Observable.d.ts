@@ -1,5 +1,5 @@
-import { ComputationModule, ComputationOf, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredComputationWithSideEffectsLike, DeferredComputationWithSideEffectsOf, DeferredObservableWithSideEffectsLike, DeferredReactiveComputationModule, EventSourceLike, FromIterableOperator, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastObservableLike, ObservableLike, PauseableEventSourceLike, PauseableObservableLike, PureComputationOf, PureDeferredComputationOf, PureDeferredObservableLike, PureSynchronousComputationOf, PureSynchronousObservableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StatelessAsynchronousComputationOperator, StoreLike, SynchronousComputationModule, SynchronousComputationOf, SynchronousComputationWithSideEffectsOf, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike, ToRunnableOperator } from "../computations.js";
-import { AsyncFunction1, AsyncFunction2, Equality, Factory, Function1, Function2, Optional, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Updater } from "../functions.js";
+import { ComputationModule, ComputationOf, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredComputationWithSideEffectsLike, DeferredObservableWithSideEffectsLike, DeferredReactiveComputationModule, EventSourceLike, FromIterableOperator, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastObservableLike, ObservableLike, PauseableEventSourceLike, PauseableObservableLike, PureDeferredObservableLike, PureSynchronousObservableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StatelessAsynchronousComputationOperator, StoreLike, SynchronousComputationModule, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike, ToRunnableOperator } from "../computations.js";
+import { AsyncFunction1, AsyncFunction2, Equality, Factory, Function1, Function2, Optional, Reducer, SideEffect, SideEffect1, Updater } from "../functions.js";
 import { BackpressureStrategy, DisposableLike, ObserverLike, QueueableLike, QueueableLike_backpressureStrategy, QueueableLike_capacity, SchedulerLike } from "../utils.js";
 export interface ObservableComputation extends ComputationType {
     readonly [Computation_baseOfT]?: ObservableLike<this[typeof Computation_T]>;
@@ -17,23 +17,6 @@ export declare const ThrottleFirstMode = "first";
 export declare const ThrottleLastMode = "last";
 export declare const ThrottleIntervalMode = "interval";
 export type ThrottleMode = typeof ThrottleFirstMode | typeof ThrottleLastMode | typeof ThrottleIntervalMode;
-interface CombineConstructor {
-    <TA, TB>(a: PureSynchronousComputationOf<ObservableComputation, TA>, b: PureSynchronousComputationOf<ObservableComputation, TB>): PureSynchronousComputationOf<ObservableComputation, Tuple2<TA, TB>>;
-    <TA, TB, TC>(a: PureSynchronousComputationOf<ObservableComputation, TA>, b: PureSynchronousComputationOf<ObservableComputation, TB>, c: PureSynchronousComputationOf<ObservableComputation, TC>): PureSynchronousComputationOf<ObservableComputation, Tuple3<TA, TB, TC>>;
-    <TA, TB, TC, TD>(a: PureSynchronousComputationOf<ObservableComputation, TA>, b: PureSynchronousComputationOf<ObservableComputation, TB>, c: PureSynchronousComputationOf<ObservableComputation, TC>, d: PureSynchronousComputationOf<ObservableComputation, TD>): PureSynchronousComputationOf<ObservableComputation, Tuple4<TA, TB, TC, TD>>;
-    <TA, TB>(a: SynchronousComputationOf<ObservableComputation, TA>, b: SynchronousComputationOf<ObservableComputation, TB>): SynchronousComputationWithSideEffectsOf<ObservableComputation, Tuple2<TA, TB>>;
-    <TA, TB, TC>(a: SynchronousComputationOf<ObservableComputation, TA>, b: SynchronousComputationOf<ObservableComputation, TB>, c: SynchronousComputationOf<ObservableComputation, TC>): SynchronousComputationWithSideEffectsOf<ObservableComputation, Tuple3<TA, TB, TC>>;
-    <TA, TB, TC, TD>(a: SynchronousComputationOf<ObservableComputation, TA>, b: SynchronousComputationOf<ObservableComputation, TB>, c: SynchronousComputationOf<ObservableComputation, TC>, d: SynchronousComputationOf<ObservableComputation, TD>): SynchronousComputationWithSideEffectsOf<ObservableComputation, Tuple4<TA, TB, TC, TD>>;
-    <TA, TB>(a: PureDeferredComputationOf<ObservableComputation, TA>, b: PureDeferredComputationOf<ObservableComputation, TB>): PureDeferredComputationOf<ObservableComputation, Tuple2<TA, TB>>;
-    <TA, TB, TC>(a: PureDeferredComputationOf<ObservableComputation, TA>, b: PureDeferredComputationOf<ObservableComputation, TB>, c: PureDeferredComputationOf<ObservableComputation, TC>): PureDeferredComputationOf<ObservableComputation, Tuple3<TA, TB, TC>>;
-    <TA, TB, TC, TD>(a: PureDeferredComputationOf<ObservableComputation, TA>, b: PureDeferredComputationOf<ObservableComputation, TB>, c: PureDeferredComputationOf<ObservableComputation, TC>, d: PureDeferredComputationOf<ObservableComputation, TD>): PureDeferredComputationOf<ObservableComputation, Tuple4<TA, TB, TC, TD>>;
-    <TA, TB>(a: PureComputationOf<ObservableComputation, TA>, b: PureComputationOf<ObservableComputation, TB>): PureDeferredComputationOf<ObservableComputation, Tuple2<TA, TB>>;
-    <TA, TB, TC>(a: PureComputationOf<ObservableComputation, TA>, b: PureComputationOf<ObservableComputation, TB>, c: PureComputationOf<ObservableComputation, TC>): PureDeferredComputationOf<ObservableComputation, Tuple3<TA, TB, TC>>;
-    <TA, TB, TC, TD>(a: PureComputationOf<ObservableComputation, TA>, b: PureComputationOf<ObservableComputation, TB>, c: PureComputationOf<ObservableComputation, TC>, d: PureComputationOf<ObservableComputation, TD>): PureDeferredComputationOf<ObservableComputation, Tuple4<TA, TB, TC, TD>>;
-    <TA, TB>(a: ComputationOf<ObservableComputation, TA>, b: ComputationOf<ObservableComputation, TB>): DeferredComputationWithSideEffectsOf<ObservableComputation, Tuple2<TA, TB>>;
-    <TA, TB, TC>(a: ComputationOf<ObservableComputation, TA>, b: ComputationOf<ObservableComputation, TB>, c: ComputationOf<ObservableComputation, TC>): DeferredComputationWithSideEffectsOf<ObservableComputation, Tuple3<TA, TB, TC>>;
-    <TA, TB, TC, TD>(a: ComputationOf<ObservableComputation, TA>, b: ComputationOf<ObservableComputation, TB>, c: ComputationOf<ObservableComputation, TC>, d: ComputationOf<ObservableComputation, TD>): DeferredComputationWithSideEffectsOf<ObservableComputation, Tuple4<TA, TB, TC, TD>>;
-}
 /**
  * @noInheritDoc
  */
@@ -45,7 +28,6 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         capacity: number;
         backpressureStrategy: BackpressureStrategy;
     }): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
-    combineLatest: CombineConstructor;
     computeDeferred<T>(computation: Factory<T>, options?: {
         readonly mode?: ComputeMode;
     }): DeferredObservableWithSideEffectsLike<T>;
@@ -210,7 +192,6 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly maxMicroTaskTicks?: number;
     }): ToRunnableOperator<ObservableComputation, T>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): StatefulSynchronousComputationOperator<ObservableComputation, TA, TB>;
-    zipLatest: CombineConstructor;
 }
 export type Signature = ObservableModule;
 export declare const actionReducer: Signature["actionReducer"];
@@ -286,4 +267,3 @@ export declare const toRunnable: Signature["toRunnable"];
 export declare const withCurrentTime: Signature["withCurrentTime"];
 export declare const withLatestFrom: Signature["withLatestFrom"];
 export declare const zipLatest: Signature["zipLatest"];
-export {};

@@ -2,6 +2,7 @@
 
 import { Computation_baseOfT, Computation_multicastOfT, } from "../computations.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
+import EventSource_combineLatest from "./EventSource/__private__/EventSource.combineLatest.js";
 import EventSource_create from "./EventSource/__private__/EventSource.create.js";
 import EventSource_empty from "./EventSource/__private__/EventSource.empty.js";
 import EventSource_firstAsync from "./EventSource/__private__/EventSource.firstAsync.js";
@@ -21,9 +22,11 @@ import EventSource_raise from "./EventSource/__private__/EventSource.raise.js";
 import EventSource_reduceAsync from "./EventSource/__private__/EventSource.reduceAsync.js";
 import EventSource_toReadonlyArrayAsync from "./EventSource/__private__/EventSource.toReadonlyArrayAsync.js";
 import EventSource_withLatestFrom from "./EventSource/__private__/EventSource.withLatestFrom.js";
+import EventSource_zipLatest from "./EventSource/__private__/EventSource.zipLatest.js";
 import Observable_fromEventSource from "./Observable/__private__/Observable.fromEventSource.js";
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
 export const addEventHandler = EventSource_addEventHandler;
+export const combineLatest = EventSource_combineLatest;
 export const create = EventSource_create;
 export const empty = EventSource_empty;
 export const firstAsync = EventSource_firstAsync;
@@ -45,3 +48,4 @@ export const reduceAsync = EventSource_reduceAsync;
 export const toObservable = Observable_fromEventSource;
 export const toReadonlyArrayAsync = EventSource_toReadonlyArrayAsync;
 export const withLatestFrom = EventSource_withLatestFrom;
+export const zipLatest = EventSource_zipLatest;

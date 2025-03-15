@@ -278,6 +278,186 @@
 
 ## Call Signature
 
+> **zipLatest**\<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+### Parameters
+
+#### a
+
+[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`\>
+
+#### b
+
+[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TB`\>
+
+### Returns
+
+[`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+
+## Call Signature
+
+> **zipLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+### Parameters
+
+#### a
+
+[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`\>
+
+#### b
+
+[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TB`\>
+
+#### c
+
+[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TC`\>
+
+### Returns
+
+[`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+
+## Call Signature
+
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+### Parameters
+
+#### a
+
+[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TA`\>
+
+#### b
+
+[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TB`\>
+
+#### c
+
+[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TC`\>
+
+#### d
+
+[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `TD`\>
+
+### Returns
+
+[`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+## Call Signature
+
+> **zipLatest**\<`TA`, `TB`\>(`a`, `b`): [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+### Parameters
+
+#### a
+
+`NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TA`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TA`\>\>
+
+#### b
+
+`NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TB`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TB`\>\>
+
+### Returns
+
+[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+
+## Call Signature
+
+> **zipLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+### Parameters
+
+#### a
+
+`NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TA`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TA`\>\>
+
+#### b
+
+`NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TB`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TB`\>\>
+
+#### c
+
+`NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TC`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TC`\>\>
+
+### Returns
+
+[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+
+## Call Signature
+
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+### Parameters
+
+#### a
+
+`NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TA`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TA`\>\>
+
+#### b
+
+`NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TB`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TB`\>\>
+
+#### c
+
+`NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TC`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TC`\>\>
+
+#### d
+
+`NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`TD`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`TD`\>\>
+
+### Returns
+
+[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+## Call Signature
+
 > **zipLatest**\<`TA`, `TB`\>(`a`, `b`): [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ### Type Parameters
