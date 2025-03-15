@@ -15,6 +15,7 @@ import {
   ComputationTypeOf,
 } from "../../../computations.js";
 import {
+  Optional,
   alwaysTrue,
   greaterThan,
   identity,
@@ -54,7 +55,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
           [1, 2, 3, 4, 5],
           m.fromIterable<number>(),
           m.firstAsync(),
-          expectEquals(1),
+          expectEquals<Optional<number>>(1),
         ),
       ),
       testAsync(
@@ -244,7 +245,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
           [1, 2, 3, 4, 5],
           m.fromIterable<number>(),
           m.lastAsync(),
-          expectEquals(5),
+          expectEquals<Optional<number>>(5),
         ),
       ),
       testAsync(

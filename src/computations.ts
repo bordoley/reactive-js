@@ -1008,7 +1008,7 @@ export interface ComputationModule<
 
   firstAsync<T>(
     options?: TCreationOptions["firstAsync"],
-  ): AsyncFunction1<ComputationOf<TComputationType, T>, T>;
+  ): AsyncFunction1<ComputationOf<TComputationType, T>, Optional<T>>;
 
   fromIterable<T>(
     options?: TCreationOptions["fromIterable"],
@@ -1039,7 +1039,7 @@ export interface ComputationModule<
 
   lastAsync<T>(
     options?: TCreationOptions["lastAsync"],
-  ): AsyncFunction1<ComputationOf<TComputationType, T>, T>;
+  ): AsyncFunction1<ComputationOf<TComputationType, T>, Optional<T>>;
 
   map<TA, TB>(
     selector: Function1<TA, TB>,

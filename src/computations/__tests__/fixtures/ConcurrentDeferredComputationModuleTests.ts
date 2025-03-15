@@ -9,7 +9,13 @@ import {
   ComputationType,
   ConcurrentDeferredComputationModule,
 } from "../../../computations.js";
-import { pipe, pipeLazy, pipeLazyAsync, raise } from "../../../functions.js";
+import {
+  Optional,
+  pipe,
+  pipeLazy,
+  pipeLazyAsync,
+  raise,
+} from "../../../functions.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
 
 const ConcurrentDeferredComputationModuleTests = <
@@ -28,7 +34,7 @@ const ConcurrentDeferredComputationModuleTests = <
           () => Promise.resolve(1),
           m.fromAsyncFactory(),
           m.lastAsync(),
-          expectEquals(1),
+          expectEquals<Optional<number>>(1),
         ),
       ),
       testAsync(

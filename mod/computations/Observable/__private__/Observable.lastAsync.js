@@ -52,27 +52,25 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
     var e = new Error(message);
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 });
-import { Promise } from "../../../__internal__/constants.js";
-import { isNone, newInstance, none, pipe, } from "../../../functions.js";
+import { ProducerLike_consume } from "../../../computations.js";
+import { invoke, isNone, none, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../../utils/HostScheduler.js";
-import Observable_forEach from "./Observable.forEach.js";
-import Observable_subscribe from "./Observable.subscribe.js";
+import * as Queue from "../../../utils/Queue.js";
+import Iterable_first from "../../Iterable/__private__/Iterable.first.js";
+import Observable_toProducer from "./Observable.toProducer.js";
 const Observable_lastAsync = (options) => async (observable) => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         let scheduler = options?.scheduler;
         const hostScheduler = __addDisposableResource(env_1, isNone(scheduler) ? HostScheduler.create() : none, false);
         scheduler = scheduler ?? hostScheduler;
-        const result = await newInstance(Promise, (resolve, reject) => {
-            let result = none;
-            pipe(observable, Observable_forEach((next) => {
-                result = next;
-            }), Observable_subscribe(scheduler), DisposableContainer.onError(reject), DisposableContainer.onComplete(() => {
-                resolve(result);
-            }));
+        const queue = Queue.createDropOldestWithoutBackpressure(1, {
+            autoDispose: true,
         });
-        return result;
+        pipe(observable, Observable_toProducer(scheduler), invoke(ProducerLike_consume, queue));
+        await DisposableContainer.toPromise(queue);
+        return pipe(queue, Iterable_first());
     }
     catch (e_1) {
         env_1.error = e_1;

@@ -55,11 +55,14 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 import { Readable, Writable, pipeline } from "node:stream";
 import zlib from "node:zlib";
 import { describe, expectEquals, expectFalse, expectPromiseToThrow, expectTrue, testAsync, testModule, } from "../../__internal__/testing.js";
+import * as Iterable from "../../computations/Iterable.js";
 import * as Observable from "../../computations/Observable.js";
-import { newInstance, pipe, pipeAsync, returns, } from "../../functions.js";
+import { ProducerLike_consume } from "../../computations.js";
+import { invoke, newInstance, pipe, pipeAsync, returns, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
+import * as Queue from "../../utils/Queue.js";
 import { DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume, } from "../../utils.js";
 import * as NodeStream from "../NodeStream.js";
 testModule("NodeStream", describe("create", testAsync("reading from readable", async () => {
@@ -96,9 +99,13 @@ testModule("NodeStream", describe("create", testAsync("reading from readable", a
         }
         const scheduler = __addDisposableResource(env_2, HostScheduler.create(), false);
         const flowed = pipe(Readable.from(generate()), NodeStream.create, Disposable.addTo(scheduler));
+        const queue = Queue.createDropOldestWithoutBackpressure(1, {
+            autoDispose: true,
+        });
+        pipe(flowed, Observable.fromEventSource(), Observable.decodeWithCharset(), Observable.scan((acc, next) => acc + next, returns("")), Observable.toProducer(scheduler), invoke(ProducerLike_consume, queue));
         flowed[PauseableLike_resume]();
-        const acc = await pipe(flowed, Observable.fromEventSource(), Observable.decodeWithCharset(), Observable.scan((acc, next) => acc + next, returns("")), Observable.lastAsync({ scheduler }));
-        pipe(acc, expectEquals("abcdefg"));
+        await DisposableContainer.toPromise(queue);
+        pipe(queue, Iterable.first(), expectEquals("abcdefg"));
         pipe(flowed[DisposableLike_isDisposed], expectTrue("expected flowed to be disposed"));
     }
     catch (e_2) {

@@ -25,7 +25,8 @@ const createScanObserver = /*@__PURE__*/ (() => {
         [ScanObserver_reducer]: none,
     }), proto({
         [LiftedObserverLike_notify](next) {
-            const nextAcc = this[ScanObserver_reducer](this[ScanObserver_acc], next);
+            const oldAcc = this[ScanObserver_acc];
+            const nextAcc = this[ScanObserver_reducer](oldAcc, next);
             this[ScanObserver_acc] = nextAcc;
             this[LiftedObserverLike_notifyDelegate](nextAcc);
         },

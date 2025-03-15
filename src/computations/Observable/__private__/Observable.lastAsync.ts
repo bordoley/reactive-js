@@ -1,18 +1,12 @@
-import { Promise } from "../../../__internal__/constants.js";
-import { ObservableLike } from "../../../computations.js";
-import {
-  Optional,
-  isNone,
-  newInstance,
-  none,
-  pipe,
-} from "../../../functions.js";
+import { ObservableLike, ProducerLike_consume } from "../../../computations.js";
+import { invoke, isNone, none, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../../utils/HostScheduler.js";
+import * as Queue from "../../../utils/Queue.js";
 import { SchedulerLike } from "../../../utils.js";
+import Iterable_first from "../../Iterable/__private__/Iterable.first.js";
 import type * as Observable from "../../Observable.js";
-import Observable_forEach from "./Observable.forEach.js";
-import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_toProducer from "./Observable.toProducer.js";
 
 const Observable_lastAsync: Observable.Signature["lastAsync"] =
   <T>(options?: { readonly scheduler?: SchedulerLike }) =>
@@ -20,30 +14,19 @@ const Observable_lastAsync: Observable.Signature["lastAsync"] =
     let scheduler = options?.scheduler;
     using hostScheduler = isNone(scheduler) ? HostScheduler.create() : none;
     scheduler = scheduler ?? (hostScheduler as SchedulerLike);
-
-    const result = await newInstance<
-      Promise<T>,
-      (
-        resolve: (value: T | PromiseLike<T>) => void,
-        reject: (ex: unknown) => void,
-      ) => void
-    >(Promise, (resolve, reject) => {
-      let result: Optional<T> = none;
-
-      pipe(
-        observable,
-        Observable_forEach((next: T) => {
-          result = next;
-        }),
-        Observable_subscribe(scheduler),
-        DisposableContainer.onError(reject),
-        DisposableContainer.onComplete(() => {
-          resolve(result as T);
-        }),
-      );
+    const queue = Queue.createDropOldestWithoutBackpressure<T>(1, {
+      autoDispose: true,
     });
 
-    return result;
+    pipe(
+      observable,
+      Observable_toProducer(scheduler),
+      invoke(ProducerLike_consume, queue),
+    );
+
+    await DisposableContainer.toPromise(queue);
+
+    return pipe(queue, Iterable_first<T>());
   };
 
 export default Observable_lastAsync;

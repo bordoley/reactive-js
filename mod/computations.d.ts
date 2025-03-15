@@ -219,7 +219,7 @@ export interface ComputationModule<TComputationType extends ComputationType, TCr
     toReadonlyArrayAsync?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
     empty<T>(options?: TCreationOptions["empty"]): EmptyOf<TComputationType, T>;
-    firstAsync<T>(options?: TCreationOptions["firstAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, T>;
+    firstAsync<T>(options?: TCreationOptions["firstAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, Optional<T>>;
     fromIterable<T>(options?: TCreationOptions["fromIterable"]): FromIterableOperator<TComputationType, T>;
     fromReadonlyArray<T>(options?: {
         readonly count?: number;
@@ -230,7 +230,7 @@ export interface ComputationModule<TComputationType extends ComputationType, TCr
         readonly count?: number;
     } & TCreationOptions["generate"]): GeneratorOf<TComputationType, T>;
     keep<T>(predicate: Predicate<T>): StatelessComputationOperator<TComputationType, T, T>;
-    lastAsync<T>(options?: TCreationOptions["lastAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, T>;
+    lastAsync<T>(options?: TCreationOptions["lastAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, Optional<T>>;
     map<TA, TB>(selector: Function1<TA, TB>): StatelessComputationOperator<TComputationType, TA, TB>;
     raise<T>(options?: {
         readonly raise?: Factory<unknown>;

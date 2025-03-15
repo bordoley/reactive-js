@@ -2,14 +2,7 @@ import {
   ProducerLike_consume,
   SynchronousObservableLike,
 } from "../../../computations.js";
-import {
-  Function1,
-  Optional,
-  invoke,
-  isSome,
-  pipe,
-  raise,
-} from "../../../functions.js";
+import { Function1, invoke, isSome, pipe, raise } from "../../../functions.js";
 import * as Queue from "../../../utils/Queue.js";
 import * as VirtualTimeScheduler from "../../../utils/VirtualTimeScheduler.js";
 import {
@@ -25,7 +18,7 @@ const Observable_toReadonlyArray: Observable.Signature["toReadonlyArray"] =
   }): Function1<SynchronousObservableLike<T>, ReadonlyArray<T>> =>
   observable => {
     using vts = VirtualTimeScheduler.create(options);
-    const queue = Queue.createCollector<T>({autoDispose: true})
+    const queue = Queue.create<T>({ autoDispose: true });
 
     pipe(
       observable,
@@ -40,7 +33,7 @@ const Observable_toReadonlyArray: Observable.Signature["toReadonlyArray"] =
       raise(err);
     }
 
-    return queue.values;
+    return Array.from(queue);
   };
 
 export default Observable_toReadonlyArray;

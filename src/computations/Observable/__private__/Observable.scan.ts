@@ -67,10 +67,8 @@ const createScanObserver: <T, TAcc>(
         this: TProperties<T, TAcc> & LiftedObserverLike<T, TAcc>,
         next: T,
       ) {
-        const nextAcc = this[ScanObserver_reducer](
-          this[ScanObserver_acc],
-          next,
-        );
+        const oldAcc = this[ScanObserver_acc];
+        const nextAcc = this[ScanObserver_reducer](oldAcc, next);
         this[ScanObserver_acc] = nextAcc;
 
         this[LiftedObserverLike_notifyDelegate](nextAcc);

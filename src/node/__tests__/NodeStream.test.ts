@@ -9,9 +9,12 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
+import * as Iterable from "../../computations/Iterable.js";
 import * as Observable from "../../computations/Observable.js";
+import { ProducerLike_consume } from "../../computations.js";
 import {
   Optional,
+  invoke,
   newInstance,
   pipe,
   pipeAsync,
@@ -20,6 +23,7 @@ import {
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
+import * as Queue from "../../utils/Queue.js";
 import {
   DisposableLike_isDisposed,
   PauseableLike_pause,
@@ -78,16 +82,22 @@ testModule(
         Disposable.addTo(scheduler),
       );
 
-      flowed[PauseableLike_resume]();
-
-      const acc = await pipe(
+      const queue = Queue.createDropOldestWithoutBackpressure<string>(1, {
+        autoDispose: true,
+      });
+      pipe(
         flowed,
         Observable.fromEventSource(),
         Observable.decodeWithCharset(),
         Observable.scan((acc: string, next: string) => acc + next, returns("")),
-        Observable.lastAsync<string>({ scheduler }),
+        Observable.toProducer(scheduler),
+        invoke(ProducerLike_consume, queue),
       );
-      pipe(acc, expectEquals<Optional<string>>("abcdefg"));
+      flowed[PauseableLike_resume]();
+
+      await DisposableContainer.toPromise(queue);
+
+      pipe(queue, Iterable.first(), expectEquals<Optional<string>>("abcdefg"));
       pipe(
         flowed[DisposableLike_isDisposed],
         expectTrue("expected flowed to be disposed"),
