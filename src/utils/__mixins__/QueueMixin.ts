@@ -92,7 +92,7 @@ const QueueMixin: <T>() => Mixin1<
     [QueueMixin_values]: Optional<Optional<T>[] | T>;
     readonly [QueueMixin_comparator]: Optional<Comparator<T>>;
     [SinkLike_isCompleted]: boolean;
-    [QueueMixin_onReadyPublisher]: PublisherLike<void>;
+    [QueueMixin_onReadyPublisher]: Optional<PublisherLike<void>>;
   };
 
   const computeIndex = (
@@ -178,10 +178,6 @@ const QueueMixin: <T>() => Mixin1<
 
         this[QueueMixin_comparator] = config?.comparator;
         this[QueueMixin_values] = none;
-        this[QueueMixin_onReadyPublisher] = pipe(
-          Publisher.create<void>(),
-          Disposable.addTo(this),
-        );
 
         return this;
       },
@@ -252,7 +248,7 @@ const QueueMixin: <T>() => Mixin1<
             this[QueueLike_count] = 0;
             this[QueueMixin_values] = none;
 
-            shouldNotifyReady && onReadySignal[EventListenerLike_notify]();
+            shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
 
             return item;
           }
@@ -271,7 +267,7 @@ const QueueMixin: <T>() => Mixin1<
             const newHead = (head + 1) & capacityMask;
             this[QueueMixin_values] = values[newHead];
 
-            shouldNotifyReady && onReadySignal[EventListenerLike_notify]();
+            shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
 
             return item;
           }
@@ -360,7 +356,7 @@ const QueueMixin: <T>() => Mixin1<
 
           this[QueueMixin_capacityMask] = newCapacityMask;
 
-          shouldNotifyReady && onReadySignal[EventListenerLike_notify]();
+          shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
 
           return item;
         },
@@ -502,7 +498,9 @@ const QueueMixin: <T>() => Mixin1<
 
         [SinkLike_complete](this: TProperties & DisposableLike) {
           this[SinkLike_isCompleted] = true;
-          this[QueueMixin_onReadyPublisher][DisposableLike_dispose]();
+
+          this[QueueMixin_onReadyPublisher]?.[DisposableLike_dispose]();
+          this[QueueMixin_onReadyPublisher] = none;
 
           if (this[QueueMixin_autoDispose]) {
             this[DisposableLike_dispose]();
@@ -513,6 +511,11 @@ const QueueMixin: <T>() => Mixin1<
           this: TProperties & DisposableLike,
           callback: SideEffect1<void>,
         ) {
+          const publisher = this[QueueMixin_onReadyPublisher];
+
+          this[QueueMixin_onReadyPublisher] =
+            publisher ?? pipe(Publisher.create<void>(), Disposable.addTo(this));
+
           return pipe(
             this[QueueMixin_onReadyPublisher],
             EventSource_addEventHandler(callback),

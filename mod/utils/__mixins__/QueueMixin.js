@@ -49,7 +49,6 @@ const QueueMixin = /*@__PURE__*/ (() => {
         this[QueueMixin_autoDispose] = config?.autoDispose ?? false;
         this[QueueMixin_comparator] = config?.comparator;
         this[QueueMixin_values] = none;
-        this[QueueMixin_onReadyPublisher] = pipe(Publisher.create(), Disposable.addTo(this));
         return this;
     }, props({
         [QueueMixin_autoDispose]: false,
@@ -108,7 +107,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
                 const item = this[QueueMixin_values];
                 this[QueueLike_count] = 0;
                 this[QueueMixin_values] = none;
-                shouldNotifyReady && onReadySignal[EventListenerLike_notify]();
+                shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
                 return item;
             }
             unsafeCast(values);
@@ -122,7 +121,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
             if (newCount === 1) {
                 const newHead = (head + 1) & capacityMask;
                 this[QueueMixin_values] = values[newHead];
-                shouldNotifyReady && onReadySignal[EventListenerLike_notify]();
+                shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
                 return item;
             }
             if (isSorted) {
@@ -186,7 +185,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
                 this[QueueMixin_tail] = newCount;
             }
             this[QueueMixin_capacityMask] = newCapacityMask;
-            shouldNotifyReady && onReadySignal[EventListenerLike_notify]();
+            shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
             return item;
         },
         *[Symbol.iterator]() {
@@ -289,12 +288,16 @@ const QueueMixin = /*@__PURE__*/ (() => {
         },
         [SinkLike_complete]() {
             this[SinkLike_isCompleted] = true;
-            this[QueueMixin_onReadyPublisher][DisposableLike_dispose]();
+            this[QueueMixin_onReadyPublisher]?.[DisposableLike_dispose]();
+            this[QueueMixin_onReadyPublisher] = none;
             if (this[QueueMixin_autoDispose]) {
                 this[DisposableLike_dispose]();
             }
         },
         [QueueableLike_addOnReadyListener](callback) {
+            const publisher = this[QueueMixin_onReadyPublisher];
+            this[QueueMixin_onReadyPublisher] =
+                publisher ?? pipe(Publisher.create(), Disposable.addTo(this));
             return pipe(this[QueueMixin_onReadyPublisher], EventSource_addEventHandler(callback), Disposable.addTo(this));
         },
     }));
