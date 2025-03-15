@@ -93,6 +93,7 @@
 - [toObservable](functions/toObservable.md)
 - [toPauseableEventSource](functions/toPauseableEventSource.md)
 - [toPauseableObservable](functions/toPauseableObservable.md)
+- [toProducer](functions/toProducer.md)
 - [toReadonlyArray](functions/toReadonlyArray.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
 - [toRunnable](functions/toRunnable.md)

@@ -377,6 +377,15 @@ export interface EventSourceLike<out T = unknown> extends MulticastLike {
     readonly [ComputationLike_isPure]?: true;
     [EventSourceLike_addEventListener](listener: EventListenerLike<T>): void;
 }
+export declare const ProducerLike_consume: unique symbol;
+/**
+ * @noInheritDoc
+ */
+export interface ProducerLike<out T = unknown> extends DeferredComputationLike {
+    readonly [ComputationLike_isDeferred]: true;
+    readonly [ComputationLike_isSynchronous]: false;
+    [ProducerLike_consume](consumer: QueueableLike<T>): void;
+}
 /**
  * @noInheritDoc
  */

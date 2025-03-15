@@ -22,6 +22,7 @@ import {
   ObservableLike,
   PauseableEventSourceLike,
   PauseableObservableLike,
+  ProducerLike,
   PureDeferredObservableLike,
   PureSynchronousObservableLike,
   StatefulAsynchronousComputationOperator,
@@ -47,7 +48,6 @@ import {
   BackpressureStrategy,
   DisposableLike,
   ObserverLike,
-  QueueableLike,
   SchedulerLike,
 } from "../utils.js";
 import Observable_actionReducer from "./Observable/__private__/Observable.actionReducer.js";
@@ -122,6 +122,7 @@ import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIf
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
 import Observable_toPauseableEventSource from "./Observable/__private__/Observable.toPauseableEventSource.js";
 import Observable_toPauseableObservable from "./Observable/__private__/Observable.toPauseableObservable.js";
+import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toReadonlyArray from "./Observable/__private__/Observable.toReadonlyArray.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
 import Observable_toRunnable from "./Observable/__private__/Observable.toRunnable.js";
@@ -366,9 +367,6 @@ export interface ObservableModule
 
   subscribe<T>(
     scheduler: SchedulerLike,
-    options?: {
-      subscriber?: QueueableLike<T>;
-    },
   ): Function1<ObservableLike<T>, DisposableLike>;
 
   subscribeOn<T>(
@@ -415,6 +413,10 @@ export interface ObservableModule
     SynchronousObservableLike<T>,
     PauseableObservableLike<T> & DisposableLike
   >;
+
+  toProducer<T>(
+    scheduler: SchedulerLike,
+  ): Function1<ObservableLike<T>, ProducerLike<T>>;
 
   withCurrentTime<TA, TB>(
     selector: Function2<number, TA, TB>,
@@ -505,6 +507,7 @@ export const toPauseableEventSource: Signature["toPauseableEventSource"] =
   Observable_toPauseableEventSource;
 export const toPauseableObservable: Signature["toPauseableObservable"] =
   Observable_toPauseableObservable;
+export const toProducer: Signature["toProducer"] = Observable_toProducer;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Observable_toReadonlyArray;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =

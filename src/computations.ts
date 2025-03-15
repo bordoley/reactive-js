@@ -1468,6 +1468,18 @@ export interface EventSourceLike<out T = unknown> extends MulticastLike {
   [EventSourceLike_addEventListener](listener: EventListenerLike<T>): void;
 }
 
+export const ProducerLike_consume = Symbol("ProducerLike_consume");
+
+/**
+ * @noInheritDoc
+ */
+export interface ProducerLike<out T = unknown> extends DeferredComputationLike {
+  readonly [ComputationLike_isDeferred]: true;
+  readonly [ComputationLike_isSynchronous]: false;
+
+  [ProducerLike_consume](consumer: QueueableLike<T>): void;
+}
+
 /**
  * @noInheritDoc
  */

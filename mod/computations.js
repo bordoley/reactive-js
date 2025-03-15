@@ -38,6 +38,7 @@ export const MulticastComputation = {
     [ComputationLike_isSynchronous]: false,
 };
 export const EventSourceLike_addEventListener = Symbol("EventSourceLike_addEventListener");
+export const ProducerLike_consume = Symbol("ProducerLike_consume");
 export const StoreLike_value = Symbol("StoreLike_value");
 export const ObservableLike_observe = Symbol("ObservableLike_observe");
 export const StreamableLike_stream = Symbol("StreamableLike_stream");

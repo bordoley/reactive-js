@@ -1,6 +1,6 @@
-import { ComputationModule, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredObservableWithSideEffectsLike, DeferredReactiveComputationModule, EventSourceLike, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastObservableLike, ObservableLike, PauseableEventSourceLike, PauseableObservableLike, PureDeferredObservableLike, PureSynchronousObservableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StoreLike, SynchronousComputationModule, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../computations.js";
+import { ComputationModule, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredObservableWithSideEffectsLike, DeferredReactiveComputationModule, EventSourceLike, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastObservableLike, ObservableLike, PauseableEventSourceLike, PauseableObservableLike, ProducerLike, PureDeferredObservableLike, PureSynchronousObservableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StoreLike, SynchronousComputationModule, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../computations.js";
 import { Equality, Factory, Function1, Function2, Optional, Reducer, SideEffect, SideEffect1 } from "../functions.js";
-import { BackpressureStrategy, DisposableLike, ObserverLike, QueueableLike, SchedulerLike } from "../utils.js";
+import { BackpressureStrategy, DisposableLike, ObserverLike, SchedulerLike } from "../utils.js";
 export interface ObservableComputation extends ComputationType {
     readonly [Computation_baseOfT]?: ObservableLike<this[typeof Computation_T]>;
     readonly [Computation_pureDeferredOfT]?: PureDeferredObservableLike<this[typeof Computation_T]>;
@@ -124,9 +124,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly damping?: number;
         readonly precision?: number;
     }): PureSynchronousObservableLike<number>;
-    subscribe<T>(scheduler: SchedulerLike, options?: {
-        subscriber?: QueueableLike<T>;
-    }): Function1<ObservableLike<T>, DisposableLike>;
+    subscribe<T>(scheduler: SchedulerLike): Function1<ObservableLike<T>, DisposableLike>;
     subscribeOn<T>(scheduler: SchedulerLike): StatefulAsynchronousComputationOperator<ObservableComputation, T, T>;
     switchAll<T>(): HigherOrderComputationOperator<ObservableComputation, PureSynchronousObservableLike, PureSynchronousObservableLike<T>, T>;
     switchAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
@@ -140,6 +138,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     toPauseableObservable<T>(scheduler: SchedulerLike, options?: {
         readonly replay?: number;
     }): Function1<SynchronousObservableLike<T>, PauseableObservableLike<T> & DisposableLike>;
+    toProducer<T>(scheduler: SchedulerLike): Function1<ObservableLike<T>, ProducerLike<T>>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): StatefulSynchronousComputationOperator<ObservableComputation, TA, TB>;
 }
 export type Signature = ObservableModule;
@@ -208,6 +207,7 @@ export declare const toEventSource: Signature["toEventSource"];
 export declare const toObservable: Signature["toObservable"];
 export declare const toPauseableEventSource: Signature["toPauseableEventSource"];
 export declare const toPauseableObservable: Signature["toPauseableObservable"];
+export declare const toProducer: Signature["toProducer"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
 export declare const toRunnable: Signature["toRunnable"];

@@ -67,6 +67,7 @@ import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIf
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
 import Observable_toPauseableEventSource from "./Observable/__private__/Observable.toPauseableEventSource.js";
 import Observable_toPauseableObservable from "./Observable/__private__/Observable.toPauseableObservable.js";
+import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toReadonlyArray from "./Observable/__private__/Observable.toReadonlyArray.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
 import Observable_toRunnable from "./Observable/__private__/Observable.toRunnable.js";
@@ -143,6 +144,7 @@ export const toEventSource = Observable_toEventSource;
 export const toObservable = /*@__PURE__*/ returns(identity);
 export const toPauseableEventSource = Observable_toPauseableEventSource;
 export const toPauseableObservable = Observable_toPauseableObservable;
+export const toProducer = Observable_toProducer;
 export const toReadonlyArray = Observable_toReadonlyArray;
 export const toReadonlyArrayAsync = Observable_toReadonlyArrayAsync;
 export const toRunnable = Observable_toRunnable;

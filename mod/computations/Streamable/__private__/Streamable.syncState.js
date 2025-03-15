@@ -1,8 +1,8 @@
 /// <reference types="./Streamable.syncState.d.ts" />
 
 import * as Computation from "../../../computations/Computation.js";
-import { DeferredComputationWithSideEffects, StreamableLike_stream, } from "../../../computations.js";
-import { compose, identity, pipe, } from "../../../functions.js";
+import { DeferredComputationWithSideEffects, ProducerLike_consume, StreamableLike_stream, } from "../../../computations.js";
+import { compose, identity, invoke, pipe, } from "../../../functions.js";
 import * as Observable from "../../Observable.js";
 const ObservableModule = {
     concatAll: Observable.concatAll,
@@ -19,7 +19,7 @@ const Streamable_syncState = (onInit, onChange, syncStateOptions) => (streamable
             ? Observable.throttle(throttleDuration)
             : identity, Observable.pairwise(), Computation.concatMap(ObservableModule)(([oldValue, newValue]) => onChange(oldValue, newValue), {
             innerType: DeferredComputationWithSideEffects,
-        })), { innerType: DeferredComputationWithSideEffects }), Observable.subscribe(scheduler, { subscriber }));
+        })), { innerType: DeferredComputationWithSideEffects }), Observable.toProducer(scheduler), invoke(ProducerLike_consume, subscriber));
         return subscriber;
     },
 });

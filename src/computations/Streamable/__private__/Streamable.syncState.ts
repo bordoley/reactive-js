@@ -4,6 +4,7 @@ import {
   DeferredComputationWithSideEffectsLike,
   DeferredObservableLike,
   ObservableLike,
+  ProducerLike_consume,
   StreamableLike,
   StreamableLike_stream,
 } from "../../../computations.js";
@@ -12,6 +13,7 @@ import {
   Updater,
   compose,
   identity,
+  invoke,
   pipe,
 } from "../../../functions.js";
 import * as Observable from "../../Observable.js";
@@ -60,7 +62,8 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
           ),
           { innerType: DeferredComputationWithSideEffects },
         ),
-        Observable.subscribe(scheduler, { subscriber }),
+        Observable.toProducer(scheduler),
+        invoke(ProducerLike_consume, subscriber),
       );
 
       return subscriber;

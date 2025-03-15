@@ -460,7 +460,7 @@
 
 ### subscribe()
 
-> **subscribe**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+> **subscribe**\<`T`\>(`scheduler`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 #### Type Parameters
 
@@ -471,12 +471,6 @@
 ##### scheduler
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-##### options?
-
-###### subscriber?
-
-[`QueueableLike`](../../../utils/interfaces/QueueableLike.md)\<`T`\>
 
 #### Returns
 
@@ -631,6 +625,26 @@
 #### Returns
 
 [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, [`PauseableObservableLike`](../../interfaces/PauseableObservableLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+
+***
+
+### toProducer()
+
+> **toProducer**\<`T`\>(`scheduler`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### scheduler
+
+[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
+
+#### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>\>
 
 ***
 
