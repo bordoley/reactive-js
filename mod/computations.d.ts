@@ -140,6 +140,23 @@ export type FromReadonlyArrayOperator<TComputationType extends ComputationType, 
 export type FromValueOperator<TComputationType extends ComputationType, T> = (value: T) => PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? PureSynchronousComputationOf<TComputationType, T> : PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? PureDeferredComputationOf<TComputationType, T> : MulticastComputationOf<TComputationType, T> & DisposableLike;
 export type ToObservableOperator<TComputationType extends ComputationType, T> = <TComputationBaseOf extends ComputationBaseOf<TComputationType, T>>(computation: TComputationBaseOf) => TComputationBaseOf extends PureSynchronousComputationOf<TComputationType, T> ? PureSynchronousObservableLike<T> : TComputationBaseOf extends SynchronousComputationWithSideEffectsOf<TComputationType, T> ? SynchronousObservableWithSideEffectsLike<T> : TComputationBaseOf extends PureDeferredComputationOf<TComputationType, T> ? PureDeferredObservableLike<T> : TComputationBaseOf extends DeferredComputationWithSideEffectsOf<TComputationType, T> ? DeferredObservableWithSideEffectsLike<T> : TComputationBaseOf extends MulticastComputationOf<TComputationType, T> ? MulticastObservableLike<T> : never;
 export type ToRunnableOperator<TComputationType extends ComputationType, T> = <TComputationBaseOf extends ComputationBaseOf<TComputationType, T>>(computation: TComputationBaseOf) => TComputationBaseOf extends PureSynchronousComputationOf<TComputationType, T> ? PureRunnableLike<T> : TComputationBaseOf extends SynchronousComputationWithSideEffectsOf<TComputationType, T> ? RunnableWithSideEffectsLike<T> : never;
+export type ForkMergeDefaultInnerOperator<TComputationType extends ComputationType, TIn, TOut> = PureDeferredComputationOf<TComputationType, TOut> extends ComputationBaseOf<TComputationType, TOut> ? Function1<MulticastComputationOf<TComputationType, TIn>, PureDeferredComputationOf<TComputationType, TOut>> : MulticastComputationOf<TComputationType, TOut> extends ComputationBaseOf<TComputationType, TOut> ? Function1<MulticastComputationOf<TComputationType, TIn>, MulticastComputationOf<TComputationType, TOut>> : never;
+export type ForkMergeDefaultOperator<TComputationType extends ComputationType, TIn, TOut> = PureDeferredComputationOf<TComputationType, TOut> extends ComputationBaseOf<TComputationType, TOut> ? Function1<ComputationOf<TComputationType, TIn>, PureDeferredComputationOf<TComputationType, TOut>> : MulticastComputationOf<TComputationType, TOut> extends ComputationBaseOf<TComputationType, TOut> ? Function1<ComputationOf<TComputationType, TIn>, MulticastComputationOf<TComputationType, TOut>> : never;
+export interface ForkMerge<TComputationType extends ComputationType> {
+    <TIn, TOut>(fst: ForkMergeDefaultInnerOperator<TComputationType, TIn, TOut>, snd: ForkMergeDefaultInnerOperator<TComputationType, TIn, TOut>, ...tail: ForkMergeDefaultInnerOperator<TComputationType, TIn, TOut>[]): ForkMergeDefaultOperator<TComputationType, TIn, TOut>;
+    <TIn, TOut, TInnerLike extends DeferredComputationWithSideEffectsLike>(fst: Function1<MulticastComputationOf<TComputationType, TIn>, HigherOrderInnerComputationOf<TComputationType, TInnerLike, TOut>>, snd: Function1<MulticastComputationOf<TComputationType, TIn>, HigherOrderInnerComputationOf<TComputationType, TInnerLike, TOut>>, ...tail: readonly [
+        ...Function1<MulticastComputationOf<TComputationType, TIn>, HigherOrderInnerComputationOf<TComputationType, TInnerLike, TOut>>[],
+        {
+            innerType?: TInnerLike;
+        }
+    ]): HigherOrderComputationOperator<TComputationType, TInnerLike, TIn, TOut>;
+    <TIn, TOut>(fst: Function1<MulticastComputationOf<TComputationType, TIn>, MulticastComputationOf<TComputationType, TOut>>, snd: Function1<MulticastComputationOf<TComputationType, TIn>, MulticastComputationOf<TComputationType, TOut>>, ...tail: readonly [
+        ...Function1<MulticastComputationOf<TComputationType, TIn>, MulticastComputationOf<TComputationType, TOut>>[],
+        {
+            innerType: MulticastComputationLike;
+        }
+    ]): StatelessComputationOperator<TComputationType, TIn, TOut>;
+}
 interface ZipConstructor<TComputationType extends ComputationType> {
     <TA, TB>(a: PureSynchronousComputationOf<TComputationType, TA>, b: PureSynchronousComputationOf<TComputationType, TB>): PureSynchronousComputationOf<TComputationType, Tuple2<TA, TB>>;
     <TA, TB, TC>(a: PureSynchronousComputationOf<TComputationType, TA>, b: PureSynchronousComputationOf<TComputationType, TB>, c: PureSynchronousComputationOf<TComputationType, TC>): PureSynchronousComputationOf<TComputationType, Tuple3<TA, TB, TC>>;
@@ -248,6 +265,7 @@ export interface DeferredReactiveComputationModule<TComputationType extends Comp
     }): StatefulSynchronousComputationOperator<TComputationType, T, T>;
 }
 export interface ConcurrentReactiveComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
+    forkMerge: ForkMerge<TComputationType>;
     fromAsyncIterable<T>(): FromAsyncIterableOperator<TComputationType, T>;
     fromObservable: <T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;

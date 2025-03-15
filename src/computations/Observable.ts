@@ -21,13 +21,11 @@ import {
   HigherOrderComputationOperator,
   HigherOrderInnerComputationLike,
   HigherOrderInnerComputationOf,
-  MulticastComputationLike,
   MulticastObservableLike,
   ObservableLike,
   PauseableEventSourceLike,
   PauseableObservableLike,
   PureComputationOf,
-  PureDeferredComputationLike,
   PureDeferredComputationOf,
   PureDeferredObservableLike,
   PureSynchronousComputationOf,
@@ -35,7 +33,6 @@ import {
   StatefulAsynchronousComputationOperator,
   StatefulSynchronousComputationOperator,
   StatelessAsynchronousComputationOperator,
-  StatelessComputationOperator,
   StoreLike,
   SynchronousComputationModule,
   SynchronousComputationOf,
@@ -192,79 +189,6 @@ export type ThrottleMode =
   | typeof ThrottleFirstMode
   | typeof ThrottleLastMode
   | typeof ThrottleIntervalMode;
-
-interface ForkMerge {
-  <TIn, TOut>(
-    fst: Function1<
-      MulticastObservableLike<TIn>,
-      HigherOrderInnerComputationOf<
-        ObservableComputation,
-        PureDeferredComputationLike,
-        TOut
-      >
-    >,
-    snd: Function1<
-      MulticastObservableLike<TIn>,
-      HigherOrderInnerComputationOf<
-        ObservableComputation,
-        PureDeferredComputationLike,
-        TOut
-      >
-    >,
-    ...tail: Function1<
-      MulticastObservableLike<TIn>,
-      HigherOrderInnerComputationOf<
-        ObservableComputation,
-        PureDeferredComputationLike,
-        TOut
-      >
-    >[]
-  ): HigherOrderComputationOperator<
-    ObservableComputation,
-    PureDeferredComputationLike,
-    TIn,
-    TOut
-  >;
-
-  <TIn, TOut, TInnerLike extends DeferredComputationWithSideEffectsLike>(
-    fst: Function1<
-      MulticastObservableLike<TIn>,
-      HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, TOut>
-    >,
-    snd: Function1<
-      MulticastObservableLike<TIn>,
-      HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, TOut>
-    >,
-    ...tail: readonly [
-      ...Function1<
-        MulticastObservableLike<TIn>,
-        HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, TOut>
-      >[],
-      {
-        innerType?: TInnerLike;
-      },
-    ]
-  ): HigherOrderComputationOperator<
-    ObservableComputation,
-    TInnerLike,
-    TIn,
-    TOut
-  >;
-
-  <TIn, TOut>(
-    fst: Function1<MulticastObservableLike<TIn>, MulticastObservableLike<TOut>>,
-    snd: Function1<MulticastObservableLike<TIn>, MulticastObservableLike<TOut>>,
-    ...tail: readonly [
-      ...Function1<
-        MulticastObservableLike<TIn>,
-        MulticastObservableLike<TOut>
-      >[],
-      {
-        innerType: MulticastComputationLike;
-      },
-    ]
-  ): StatelessComputationOperator<ObservableComputation, TIn, TOut>;
-}
 
 interface CombineConstructor {
   <TA, TB>(
@@ -465,8 +389,6 @@ export interface ObservableModule
     TA,
     TB
   >;
-
-  forkMerge: ForkMerge;
 
   fromAsyncFactory<T>(): Function1<
     AsyncFunction1<AbortSignal, T>,
@@ -692,6 +614,17 @@ export interface ObservableModule
     },
   ): Function1<ObservableLike<T>, EventSourceLike<T> & DisposableLike>;
 
+  toPauseableEventSource<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: BackpressureStrategy;
+      readonly capacity?: number;
+    },
+  ): Function1<
+    SynchronousObservableLike<T>,
+    PauseableEventSourceLike<T> & DisposableLike
+  >;
+
   toPauseableObservable<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -702,17 +635,6 @@ export interface ObservableModule
   ): Function1<
     SynchronousObservableLike<T>,
     PauseableObservableLike<T> & DisposableLike
-  >;
-
-  toPauseableEventSource<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-    },
-  ): Function1<
-    SynchronousObservableLike<T>,
-    PauseableEventSourceLike<T> & DisposableLike
   >;
 
   toReadonlyArray<T>(options?: {

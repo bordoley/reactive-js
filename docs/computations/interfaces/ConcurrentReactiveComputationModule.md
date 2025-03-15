@@ -31,6 +31,12 @@
 
 ***
 
+### forkMerge
+
+> **forkMerge**: [`ForkMerge`](ForkMerge.md)\<`TComputationType`\>
+
+***
+
 ### fromObservable()
 
 > **fromObservable**: \<`T`\>(`scheduler`, `options`?) => [`FromObservableOperator`](../type-aliases/FromObservableOperator.md)\<`TComputationType`, `T`\>

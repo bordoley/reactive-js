@@ -50,7 +50,6 @@ import {
   Optional,
   Tuple2,
   arrayEquality,
-  bind,
   bindMethod,
   error,
   ignore,
@@ -739,52 +738,6 @@ testModule(
   ),
   describe(
     "forkMerge",
-    test("with pure src and inner runnables with side-effects", () => {
-      using vts = VirtualTimeScheduler.create();
-      const result: number[] = [];
-
-      pipe(
-        [1, 2, 3],
-        Observable.fromReadonlyArray<number>({ delay: 1 }),
-        Observable.forkMerge<number, number>(
-          Computation.concatMapIterable(Observable)(_ => [1, 2]),
-          Computation.concatMapIterable(Observable)(_ => [3, 4]),
-        ),
-        Observable.forEach(bind(result.push, result)),
-        Observable.subscribe(vts),
-      );
-
-      vts[VirtualTimeSchedulerLike_run]();
-
-      pipe(result, expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]));
-    }),
-
-    testAsync("src with side-effects is only subscribed to once", async () => {
-      using vts = VirtualTimeScheduler.create();
-      const result: number[] = [];
-
-      const sideEffect = mockFn();
-      const src = pipe(
-        0,
-        Observable.fromValue(),
-        Observable.forEach(sideEffect),
-      );
-
-      await pipeAsync(
-        src,
-        Observable.forkMerge(
-          Computation.concatMapIterable(Observable)(_ => [1, 2, 3]),
-          Computation.concatMapIterable(Observable)(_ => [4, 5, 6]),
-        ),
-        Observable.forEach(bind(result.push, result)),
-        Observable.subscribe(vts),
-      );
-
-      vts[VirtualTimeSchedulerLike_run]();
-
-      pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
-      pipe(sideEffect, expectToHaveBeenCalledTimes(1));
-    }),
     StatelessComputationOperatorTests(
       ObservableTypes,
       Observable.forkMerge(

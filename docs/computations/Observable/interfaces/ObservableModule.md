@@ -24,12 +24,6 @@
 
 ***
 
-### forkMerge
-
-> **forkMerge**: `ForkMerge`
-
-***
-
 ### zipLatest
 
 > **zipLatest**: `CombineConstructor`

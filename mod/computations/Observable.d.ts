@@ -1,4 +1,4 @@
-import { ComputationModule, ComputationOf, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredComputationWithSideEffectsLike, DeferredComputationWithSideEffectsOf, DeferredObservableWithSideEffectsLike, DeferredReactiveComputationModule, EventSourceLike, FromIterableOperator, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastComputationLike, MulticastObservableLike, ObservableLike, PauseableEventSourceLike, PauseableObservableLike, PureComputationOf, PureDeferredComputationLike, PureDeferredComputationOf, PureDeferredObservableLike, PureSynchronousComputationOf, PureSynchronousObservableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StatelessAsynchronousComputationOperator, StatelessComputationOperator, StoreLike, SynchronousComputationModule, SynchronousComputationOf, SynchronousComputationWithSideEffectsOf, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike, ToRunnableOperator } from "../computations.js";
+import { ComputationModule, ComputationOf, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredComputationWithSideEffectsLike, DeferredComputationWithSideEffectsOf, DeferredObservableWithSideEffectsLike, DeferredReactiveComputationModule, EventSourceLike, FromIterableOperator, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastObservableLike, ObservableLike, PauseableEventSourceLike, PauseableObservableLike, PureComputationOf, PureDeferredComputationOf, PureDeferredObservableLike, PureSynchronousComputationOf, PureSynchronousObservableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StatelessAsynchronousComputationOperator, StoreLike, SynchronousComputationModule, SynchronousComputationOf, SynchronousComputationWithSideEffectsOf, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike, ToRunnableOperator } from "../computations.js";
 import { AsyncFunction1, AsyncFunction2, Equality, Factory, Function1, Function2, Optional, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Updater } from "../functions.js";
 import { BackpressureStrategy, DisposableLike, ObserverLike, QueueableLike, QueueableLike_backpressureStrategy, QueueableLike_capacity, SchedulerLike } from "../utils.js";
 export interface ObservableComputation extends ComputationType {
@@ -17,21 +17,6 @@ export declare const ThrottleFirstMode = "first";
 export declare const ThrottleLastMode = "last";
 export declare const ThrottleIntervalMode = "interval";
 export type ThrottleMode = typeof ThrottleFirstMode | typeof ThrottleLastMode | typeof ThrottleIntervalMode;
-interface ForkMerge {
-    <TIn, TOut>(fst: Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, PureDeferredComputationLike, TOut>>, snd: Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, PureDeferredComputationLike, TOut>>, ...tail: Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, PureDeferredComputationLike, TOut>>[]): HigherOrderComputationOperator<ObservableComputation, PureDeferredComputationLike, TIn, TOut>;
-    <TIn, TOut, TInnerLike extends DeferredComputationWithSideEffectsLike>(fst: Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, TOut>>, snd: Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, TOut>>, ...tail: readonly [
-        ...Function1<MulticastObservableLike<TIn>, HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, TOut>>[],
-        {
-            innerType?: TInnerLike;
-        }
-    ]): HigherOrderComputationOperator<ObservableComputation, TInnerLike, TIn, TOut>;
-    <TIn, TOut>(fst: Function1<MulticastObservableLike<TIn>, MulticastObservableLike<TOut>>, snd: Function1<MulticastObservableLike<TIn>, MulticastObservableLike<TOut>>, ...tail: readonly [
-        ...Function1<MulticastObservableLike<TIn>, MulticastObservableLike<TOut>>[],
-        {
-            innerType: MulticastComputationLike;
-        }
-    ]): StatelessComputationOperator<ObservableComputation, TIn, TOut>;
-}
 interface CombineConstructor {
     <TA, TB>(a: PureSynchronousComputationOf<ObservableComputation, TA>, b: PureSynchronousComputationOf<ObservableComputation, TB>): PureSynchronousComputationOf<ObservableComputation, Tuple2<TA, TB>>;
     <TA, TB, TC>(a: PureSynchronousComputationOf<ObservableComputation, TA>, b: PureSynchronousComputationOf<ObservableComputation, TB>, c: PureSynchronousComputationOf<ObservableComputation, TC>): PureSynchronousComputationOf<ObservableComputation, Tuple3<TA, TB, TC>>;
@@ -92,7 +77,6 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly backpressureStrategy?: BackpressureStrategy;
     }): AsyncFunction1<ObservableLike<T>, Optional<T>>;
     flatMapAsync<TA, TB>(f: AsyncFunction2<TA, AbortSignal, TB>): HigherOrderComputationOperator<ObservableComputation, DeferredComputationWithSideEffectsLike, TA, TB>;
-    forkMerge: ForkMerge;
     fromAsyncFactory<T>(): Function1<AsyncFunction1<AbortSignal, T>, DeferredObservableWithSideEffectsLike<T>>;
     fromEventSource<T>(): Function1<EventSourceLike<T>, MulticastObservableLike<T>>;
     fromIterable<T>(options?: {
@@ -198,15 +182,15 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, EventSourceLike<T> & DisposableLike>;
+    toPauseableEventSource<T>(scheduler: SchedulerLike, options?: {
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+    }): Function1<SynchronousObservableLike<T>, PauseableEventSourceLike<T> & DisposableLike>;
     toPauseableObservable<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly replay?: number;
     }): Function1<SynchronousObservableLike<T>, PauseableObservableLike<T> & DisposableLike>;
-    toPauseableEventSource<T>(scheduler: SchedulerLike, options?: {
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-    }): Function1<SynchronousObservableLike<T>, PauseableEventSourceLike<T> & DisposableLike>;
     toReadonlyArray<T>(options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;

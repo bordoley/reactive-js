@@ -23,6 +23,7 @@ export declare const addEventHandler: Signature["addEventHandler"];
 export declare const create: Signature["create"];
 export declare const empty: Signature["empty"];
 export declare const firstAsync: Signature["firstAsync"];
+export declare const forkMerge: Signature["forkMerge"];
 export declare const fromAsyncIterable: Signature["fromAsyncIterable"];
 export declare const fromIterable: Signature["fromIterable"];
 export declare const fromObservable: Signature["fromObservable"];

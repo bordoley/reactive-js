@@ -22,6 +22,7 @@
 - [create](functions/create.md)
 - [empty](functions/empty.md)
 - [firstAsync](functions/firstAsync.md)
+- [forkMerge](functions/forkMerge.md)
 - [fromAsyncIterable](functions/fromAsyncIterable.md)
 - [fromIterable](functions/fromIterable.md)
 - [fromObservable](functions/fromObservable.md)

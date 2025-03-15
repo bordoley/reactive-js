@@ -67,6 +67,58 @@ const ConcurrentReactiveComputationModuleTests = <
   return describe(
     "ConcurrentReactiveComputationModule",
     describe(
+      "forkMerge",
+      testAsync(
+        "with pure src and inner runnables with side-effects",
+        async () => {
+          using scheduler = HostScheduler.create();
+
+          await pipeAsync(
+            [1, 2, 3],
+            Observable.fromReadonlyArray<number>({ delay: 1 }),
+            m.fromObservable<number>(scheduler),
+            m.forkMerge<number, number>(
+              _ => pipe(Promise.resolve(1), m.fromPromise()),
+              _ => pipe(Promise.resolve(2), m.fromPromise()),
+            ),
+            m.toReadonlyArrayAsync(),
+            expectArrayEquals([1, 2]),
+          );
+        },
+      ),
+      test("with pure src and inner runnables with side-effects", () => {
+        using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
+        const result: number[] = [];
+
+        pipe(
+          [1, 2, 3],
+          Observable.fromReadonlyArray<number>({ delay: 1 }),
+          m.fromObservable<number>(vts),
+          m.forkMerge<number, number>(
+            _ =>
+              pipe(
+                [1, 3],
+                Observable.fromReadonlyArray<number>({ delay: 1 }),
+                m.fromObservable<number>(vts),
+              ),
+            _ =>
+              pipe(
+                [2, 4],
+                Observable.fromReadonlyArray<number>({ delay: 1 }),
+                m.fromObservable<number>(vts),
+              ),
+          ),
+          m.toObservable(),
+          Observable.forEach(bind(result.push, result)),
+          Observable.subscribe(vts),
+        );
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        pipe(result, expectArrayEquals([1, 2, 3, 4]));
+      }),
+    ),
+    describe(
       "fromPromise",
       testAsync("when the promise resolves", async () => {
         using scheduler = HostScheduler.create();
