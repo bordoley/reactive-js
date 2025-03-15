@@ -67,6 +67,7 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
         readonly precision?: number;
       }>,
       options: Optional<{
+        readonly autoDispose?: boolean;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly replay?: number;
         readonly capacity?: number;

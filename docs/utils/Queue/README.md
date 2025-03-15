@@ -9,3 +9,6 @@
 ## Functions
 
 - [create](functions/create.md)
+- [createCollector](functions/createCollector.md)
+- [createDropOldestWithoutBackpressure](functions/createDropOldestWithoutBackpressure.md)
+- [createSorted](functions/createSorted.md)

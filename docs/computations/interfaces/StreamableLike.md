@@ -46,6 +46,10 @@ The scheduler to subscribe to the stream with.
 
 ##### options?
 
+###### autoDispose?
+
+`boolean`
+
 ###### backpressureStrategy?
 
 [`BackpressureStrategy`](../../utils/type-aliases/BackpressureStrategy.md)

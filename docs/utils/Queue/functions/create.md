@@ -16,6 +16,10 @@
 
 ### options?
 
+#### autoDispose?
+
+`boolean`
+
 #### backpressureStrategy?
 
 [`BackpressureStrategy`](../../type-aliases/BackpressureStrategy.md)
@@ -23,10 +27,6 @@
 #### capacity?
 
 `number`
-
-#### comparator?
-
-[`Comparator`](../../../functions/type-aliases/Comparator.md)\<`T`\>
 
 ## Returns
 

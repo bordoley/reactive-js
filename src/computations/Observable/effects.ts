@@ -233,11 +233,13 @@ export const __stream = /*@__PURE__*/ (() => {
   const streamOnSchedulerFactory = <TStreamable extends StreamableLike>(
     streamable: TStreamable,
     scheduler: SchedulerLike,
+    autoDispose: Optional<boolean>,
     replay: Optional<number>,
     capacity: Optional<number>,
     backpressureStrategy: Optional<BackpressureStrategy>,
   ): StreamOf<TStreamable> =>
     streamable[StreamableLike_stream](scheduler, {
+      autoDispose,
       replay,
       backpressureStrategy,
       capacity,
@@ -246,11 +248,13 @@ export const __stream = /*@__PURE__*/ (() => {
   return <TStreamable extends StreamableLike>(
     streamable: TStreamable,
     {
+      autoDispose,
       replay,
       backpressureStrategy,
       capacity,
       scheduler,
     }: {
+      readonly autoDispose?: boolean;
       readonly replay?: number;
       readonly scheduler?: SchedulerLike;
       readonly backpressureStrategy?: BackpressureStrategy;
@@ -262,6 +266,7 @@ export const __stream = /*@__PURE__*/ (() => {
       streamOnSchedulerFactory,
       streamable,
       scheduler ?? currentScheduler,
+      autoDispose,
       replay,
       capacity,
       backpressureStrategy,

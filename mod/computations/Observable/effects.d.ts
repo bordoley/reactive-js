@@ -35,7 +35,8 @@ interface __Using {
 }
 export declare const __using: __Using["__using"];
 export declare const __currentScheduler: () => SchedulerLike;
-export declare const __stream: <TStreamable extends StreamableLike>(streamable: TStreamable, { replay, backpressureStrategy, capacity, scheduler, }?: {
+export declare const __stream: <TStreamable extends StreamableLike>(streamable: TStreamable, { autoDispose, replay, backpressureStrategy, capacity, scheduler, }?: {
+    readonly autoDispose?: boolean;
     readonly replay?: number;
     readonly scheduler?: SchedulerLike;
     readonly backpressureStrategy?: BackpressureStrategy;

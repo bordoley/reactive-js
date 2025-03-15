@@ -10,7 +10,6 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as Queue from "../../../utils/Queue.js";
 import AbstractDelegatingDisposableSink from "../../../utils/Sink/__internal__/AbstractDelegatingDisposableSink.js";
 import {
-  DropOldestBackpressureStrategy,
   EventListenerLike_notify,
   QueueLike,
   QueueLike_dequeue,
@@ -35,10 +34,7 @@ class TakeLastSink<T>
     super(sink);
 
     this.q = pipe(
-      Queue.create<T>({
-        capacity: cnt,
-        backpressureStrategy: DropOldestBackpressureStrategy,
-      }),
+      Queue.createDropOldestWithoutBackpressure<T>(cnt),
       Disposable.addTo(this),
     );
   }

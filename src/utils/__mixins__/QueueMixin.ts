@@ -51,6 +51,7 @@ import * as Disposable from "../Disposable.js";
 const QueueMixin: <T>() => Mixin1<
   QueueLike<T>,
   Optional<{
+    autoDispose?: boolean;
     capacity?: number;
     comparator?: Comparator<T>;
     backpressureStrategy?: BackpressureStrategy;
@@ -66,6 +67,7 @@ const QueueMixin: <T>() => Mixin1<
     | typeof SinkLike_complete
   >
 > = /*@__PURE__*/ (<T>() => {
+  const QueueMixin_autoDispose = Symbol("QueueMixin_autoDispose");
   const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
   const QueueMixin_head = Symbol("QueueMixin_head");
   const QueueMixin_tail = Symbol("QueueMixin_tail");
@@ -74,6 +76,7 @@ const QueueMixin: <T>() => Mixin1<
   const QueueMixin_onReadyPublisher = Symbol("QueueMixin_onReadyPublisher");
 
   type TProperties = {
+    [QueueMixin_autoDispose]: boolean;
     [QueueLike_count]: number;
     readonly [QueueableLike_backpressureStrategy]: BackpressureStrategy;
     readonly [QueueableLike_capacity]: number;
@@ -143,6 +146,7 @@ const QueueMixin: <T>() => Mixin1<
       >,
       DisposableLike,
       Optional<{
+        autoDispose?: boolean;
         capacity?: number;
         comparator?: Comparator<T>;
         backpressureStrategy?: BackpressureStrategy;
@@ -155,6 +159,7 @@ const QueueMixin: <T>() => Mixin1<
         > &
           Mutable<TProperties>,
         config: Optional<{
+          autoDispose?: boolean;
           capacity?: number;
           comparator?: Comparator<T>;
           backpressureStrategy?: BackpressureStrategy;
@@ -176,6 +181,7 @@ const QueueMixin: <T>() => Mixin1<
         return this;
       },
       props<TProperties>({
+        [QueueMixin_autoDispose]: false,
         [QueueLike_count]: 0,
         [QueueableLike_backpressureStrategy]: OverflowBackpressureStrategy,
         [QueueableLike_capacity]: MAX_SAFE_INTEGER,
@@ -479,9 +485,13 @@ const QueueMixin: <T>() => Mixin1<
           this[QueueMixin_capacityMask] = newCapacityMask;
         },
 
-        [SinkLike_complete](this: TProperties) {
+        [SinkLike_complete](this: TProperties & DisposableLike) {
           this[SinkLike_isCompleted] = true;
           this[QueueMixin_onReadyPublisher][DisposableLike_dispose]();
+
+          if (this[QueueMixin_autoDispose]) {
+            this[DisposableLike_dispose]();
+          }
         },
 
         [QueueableLike_addOnReadyListener](

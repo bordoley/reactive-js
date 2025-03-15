@@ -20,6 +20,10 @@
 
 ### \_\_namedParameters?
 
+#### autoDispose?
+
+`boolean`
+
 #### backpressureStrategy?
 
 [`BackpressureStrategy`](../../../../utils/type-aliases/BackpressureStrategy.md)

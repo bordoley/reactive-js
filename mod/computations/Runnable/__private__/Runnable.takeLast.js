@@ -5,7 +5,7 @@ import { clampPositiveInteger } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Queue from "../../../utils/Queue.js";
 import AbstractDelegatingDisposableSink from "../../../utils/Sink/__internal__/AbstractDelegatingDisposableSink.js";
-import { DropOldestBackpressureStrategy, EventListenerLike_notify, QueueLike_dequeue, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { EventListenerLike_notify, QueueLike_dequeue, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class TakeLastSink extends AbstractDelegatingDisposableSink {
     sink;
@@ -14,10 +14,7 @@ class TakeLastSink extends AbstractDelegatingDisposableSink {
     constructor(sink, cnt) {
         super(sink);
         this.sink = sink;
-        this.q = pipe(Queue.create({
-            capacity: cnt,
-            backpressureStrategy: DropOldestBackpressureStrategy,
-        }), Disposable.addTo(this));
+        this.q = pipe(Queue.createDropOldestWithoutBackpressure(cnt), Disposable.addTo(this));
     }
     [EventListenerLike_notify](next) {
         this.q[EventListenerLike_notify](next);

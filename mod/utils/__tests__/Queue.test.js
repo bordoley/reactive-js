@@ -4,11 +4,11 @@ import { Array_length, Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectToThrow, test, testModule, } from "../../__internal__/testing.js";
 import { newInstance, none, pipe } from "../../functions.js";
 import { floor, random } from "../../math.js";
-import { DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, QueueLike_count, QueueLike_dequeue, QueueLike_head, ThrowBackpressureStrategy, } from "../../utils.js";
+import { DropLatestBackpressureStrategy, EventListenerLike_notify, QueueLike_count, QueueLike_dequeue, QueueLike_head, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Queue from "../Queue.js";
-const createPriorityQueue = /*@__PURE__*/ (() => {
+const createSorted = /*@__PURE__*/ (() => {
     const comparator = (a, b) => a - b;
-    return () => Queue.create({ comparator });
+    return () => Queue.createSorted(comparator);
 })();
 const makeSortedArray = (n) => {
     const result = newInstance(Array, n);
@@ -105,7 +105,7 @@ testModule("Queue", test("enqueue", () => {
         prev = v;
     }
 }), describe("priority queue", test("push", () => {
-    const queue = createPriorityQueue();
+    const queue = createSorted();
     const shuffledArray = makeShuffledArray(100);
     for (let i = 0; i < shuffledArray[Array_length]; i++) {
         queue[EventListenerLike_notify](shuffledArray[i]);
@@ -116,9 +116,7 @@ testModule("Queue", test("enqueue", () => {
     }
     pipe(acc, expectArrayEquals(makeSortedArray(100)));
 }), test("drop-latest backpressure", () => {
-    const comparator = (a, b) => a - b;
     const queue = Queue.create({
-        comparator,
         capacity: 1,
         backpressureStrategy: DropLatestBackpressureStrategy,
     });
@@ -127,20 +125,13 @@ testModule("Queue", test("enqueue", () => {
     pipe(queue[QueueLike_count], expectEquals(1));
     pipe(queue[QueueLike_head], expectEquals(0));
 }), test("drop-oldest backpressure", () => {
-    const comparator = (a, b) => a - b;
-    const queue = Queue.create({
-        comparator,
-        capacity: 1,
-        backpressureStrategy: DropOldestBackpressureStrategy,
-    });
+    const queue = Queue.createDropOldestWithoutBackpressure(1);
     queue[EventListenerLike_notify](0);
     queue[EventListenerLike_notify](1);
     pipe(queue[QueueLike_count], expectEquals(1));
     pipe(queue[QueueLike_head], expectEquals(1));
 }), test("throw backpressure", () => {
-    const comparator = (a, b) => a - b;
     const queue = Queue.create({
-        comparator,
         capacity: 1,
         backpressureStrategy: ThrowBackpressureStrategy,
     });

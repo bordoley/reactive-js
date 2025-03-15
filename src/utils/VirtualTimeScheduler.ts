@@ -74,9 +74,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
       init(SchedulerMixin, this);
 
       this[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
-      this[VirtualTimeScheduler_queue] = Queue.create({
-        comparator: SchedulerContinuation.compare,
-      });
+      this[VirtualTimeScheduler_queue] = Queue.createSorted(
+        SchedulerContinuation.compare,
+      );
 
       return this;
     },
@@ -107,9 +107,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           ((queue = this[VirtualTimeScheduler_queue]),
           queue[QueueLike_count] > 0)
         ) {
-          this[VirtualTimeScheduler_queue] = Queue.create({
-            comparator: SchedulerContinuation.compare,
-          });
+          this[VirtualTimeScheduler_queue] = Queue.createSorted(
+            SchedulerContinuation.compare,
+          );
 
           const currentTime = this[SchedulerLike_now];
 

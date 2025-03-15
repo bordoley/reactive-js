@@ -1651,6 +1651,7 @@ export interface StreamableLike<
   [StreamableLike_stream](
     scheduler: SchedulerLike,
     options?: {
+      readonly autoDispose?: boolean;
       /**
        * The number of items to buffer for replay when an observer subscribes
        * to the stream.

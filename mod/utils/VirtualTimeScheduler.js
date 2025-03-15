@@ -13,9 +13,7 @@ const VirtualTimeScheduler_queue = Symbol("VirtualTimeScheduler_queue");
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFactory(include(SchedulerMixin), function VirtualTimeScheduler(maxMicroTaskTicks) {
     init(SchedulerMixin, this);
     this[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
-    this[VirtualTimeScheduler_queue] = Queue.create({
-        comparator: SchedulerContinuation.compare,
-    });
+    this[VirtualTimeScheduler_queue] = Queue.createSorted(SchedulerContinuation.compare);
     return this;
 }, props({
     [SchedulerLike_now]: 0,
@@ -34,9 +32,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFacto
         let queue = none;
         while (((queue = this[VirtualTimeScheduler_queue]),
             queue[QueueLike_count] > 0)) {
-            this[VirtualTimeScheduler_queue] = Queue.create({
-                comparator: SchedulerContinuation.compare,
-            });
+            this[VirtualTimeScheduler_queue] = Queue.createSorted(SchedulerContinuation.compare);
             const currentTime = this[SchedulerLike_now];
             let continuation = none;
             while (((continuation = queue[QueueLike_dequeue]()), isSome(continuation))) {

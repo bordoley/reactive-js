@@ -54,6 +54,7 @@ const Streamable_animation: Streamable.Signature["animation"] = /*@__PURE__*/ (<
       scheduler: SchedulerLike,
       animationScheduler: SchedulerLike,
       options: Optional<{
+        readonly autoDispose?: boolean;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly replay?: number;
         readonly capacity?: number;

@@ -9,6 +9,7 @@ import { clampPositiveInteger, floor } from "../../math.js";
 import { BackPressureError, DisposableLike_dispose, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 const QueueMixin = /*@__PURE__*/ (() => {
+    const QueueMixin_autoDispose = Symbol("QueueMixin_autoDispose");
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
     const QueueMixin_head = Symbol("QueueMixin_head");
     const QueueMixin_tail = Symbol("QueueMixin_tail");
@@ -48,6 +49,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
         this[QueueMixin_onReadyPublisher] = pipe(Publisher.create(), Disposable.addTo(this));
         return this;
     }, props({
+        [QueueMixin_autoDispose]: false,
         [QueueLike_count]: 0,
         [QueueableLike_backpressureStrategy]: OverflowBackpressureStrategy,
         [QueueableLike_capacity]: MAX_SAFE_INTEGER,
@@ -277,6 +279,9 @@ const QueueMixin = /*@__PURE__*/ (() => {
         [SinkLike_complete]() {
             this[SinkLike_isCompleted] = true;
             this[QueueMixin_onReadyPublisher][DisposableLike_dispose]();
+            if (this[QueueMixin_autoDispose]) {
+                this[DisposableLike_dispose]();
+            }
         },
         [QueueableLike_addOnReadyListener](callback) {
             return pipe(this[QueueMixin_onReadyPublisher], EventSource_addEventHandler(callback), Disposable.addTo(this));

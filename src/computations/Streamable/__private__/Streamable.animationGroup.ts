@@ -85,6 +85,7 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] =
         scheduler: SchedulerLike,
         animationScheduler: SchedulerLike,
         options: Optional<{
+          readonly autoDispose?: boolean;
           readonly backpressureStrategy?: BackpressureStrategy;
           readonly replay?: number;
           readonly capacity?: number;

@@ -3,6 +3,7 @@ import { BackpressureStrategy, DisposableLike, QueueableLike } from "../../utils
 export interface QueueableObservableLike<out T> extends PureDeferredObservableLike<T>, QueueableLike, DisposableLike {
 }
 export declare const create: <T>(config?: {
+    autoDispose?: boolean;
     capacity?: number;
     backpressureStrategy?: BackpressureStrategy;
 }) => QueueableObservableLike<T>;

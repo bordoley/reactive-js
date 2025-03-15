@@ -28,7 +28,6 @@ import LiftedObserverMixin, {
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
-  DropOldestBackpressureStrategy,
   EventListenerLike_notify,
   ObserverLike,
   QueueLike,
@@ -89,10 +88,7 @@ const createTakeLastObserver: <T>(
       init(LiftedObserverMixin<T>(), this, delegate, none);
 
       this[TakeLastObserver_queue] = pipe(
-        Queue.create<T>({
-          capacity: takeLastCount,
-          backpressureStrategy: DropOldestBackpressureStrategy,
-        }),
+        Queue.createDropOldestWithoutBackpressure<T>(takeLastCount),
         Disposable.addTo(this),
       );
 

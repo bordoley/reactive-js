@@ -53,14 +53,15 @@ export const __currentScheduler = () => {
     return ctx[ComputeContext_observer];
 };
 export const __stream = /*@__PURE__*/ (() => {
-    const streamOnSchedulerFactory = (streamable, scheduler, replay, capacity, backpressureStrategy) => streamable[StreamableLike_stream](scheduler, {
+    const streamOnSchedulerFactory = (streamable, scheduler, autoDispose, replay, capacity, backpressureStrategy) => streamable[StreamableLike_stream](scheduler, {
+        autoDispose,
         replay,
         backpressureStrategy,
         capacity,
     });
-    return (streamable, { replay, backpressureStrategy, capacity, scheduler, } = {}) => {
+    return (streamable, { autoDispose, replay, backpressureStrategy, capacity, scheduler, } = {}) => {
         const currentScheduler = __currentScheduler();
-        return __using(streamOnSchedulerFactory, streamable, scheduler ?? currentScheduler, replay, capacity, backpressureStrategy);
+        return __using(streamOnSchedulerFactory, streamable, scheduler ?? currentScheduler, autoDispose, replay, capacity, backpressureStrategy);
     };
 })();
 export const __state = /*@__PURE__*/ (() => {

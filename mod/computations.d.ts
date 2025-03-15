@@ -510,6 +510,7 @@ export interface StreamableLike<TReq = unknown, out T = unknown, TStream extends
      * @param options
      */
     [StreamableLike_stream](scheduler: SchedulerLike, options?: {
+        readonly autoDispose?: boolean;
         /**
          * The number of items to buffer for replay when an observer subscribes
          * to the stream.

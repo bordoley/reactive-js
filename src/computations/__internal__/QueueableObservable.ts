@@ -47,6 +47,7 @@ export interface QueueableObservableLike<out T>
     DisposableLike {}
 
 export const create: <T>(config?: {
+  autoDispose?: boolean;
   capacity?: number;
   backpressureStrategy?: BackpressureStrategy;
 }) => QueueableObservableLike<T> = (<T>() => {
@@ -66,6 +67,7 @@ export const create: <T>(config?: {
       this: Omit<QueueableObservableLike<T>, keyof DisposableLike> &
         TProperties,
       config: Optional<{
+        autoDispose?: boolean;
         capacity?: number;
         backpressureStrategy?: BackpressureStrategy;
       }>,
