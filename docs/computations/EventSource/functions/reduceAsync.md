@@ -6,7 +6,7 @@
 
 # Function: reduceAsync()
 
-> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `T`\>, `TAcc`\>
+> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `T`\>, `TAcc`\>
 
 ## Type Parameters
 
@@ -23,6 +23,10 @@
 ### initialValue
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+### options?
+
+`unknown`
 
 ## Returns
 

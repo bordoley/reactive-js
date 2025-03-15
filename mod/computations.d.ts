@@ -206,27 +206,38 @@ export type PickComputationModule<TComputationType extends ComputationType, TCom
 export type ComputationOfModule<TModule extends ComputationModuleLike, T> = ComputationOf<ComputationTypeOfModule<TModule>, T>;
 export type DeferredComputationOfModule<TModule extends ComputationModuleLike, T> = DeferredComputationOf<ComputationTypeOfModule<TModule>, T>;
 export type MulticastComputationOfModule<TModule extends ComputationModuleLike, T> = MulticastComputationOf<ComputationTypeOfModule<TModule>, T>;
-export interface ComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
-    empty<T>(): EmptyOf<TComputationType, T>;
-    firstAsync<T>(): AsyncFunction1<ComputationOf<TComputationType, T>, T>;
-    fromIterable<T>(): FromIterableOperator<TComputationType, T>;
+export interface ComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
+    empty?: Record<string, any>;
+    firstAsync?: Record<string, any>;
+    fromIterable?: Record<string, any>;
+    fromReadonlyArray?: Record<string, any>;
+    fromValue?: Record<string, any>;
+    generate?: Record<string, any>;
+    lastAsync?: Record<string, any>;
+    raise?: Record<string, any>;
+    reduceAsync?: Record<string, any>;
+    toReadonlyArrayAsync?: Record<string, any>;
+} = {}> extends ComputationModuleLike<TComputationType> {
+    empty<T>(options?: TCreationOptions["empty"]): EmptyOf<TComputationType, T>;
+    firstAsync<T>(options?: TCreationOptions["firstAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, T>;
+    fromIterable<T>(options?: TCreationOptions["fromIterable"]): FromIterableOperator<TComputationType, T>;
     fromReadonlyArray<T>(options?: {
         readonly count?: number;
         readonly start?: number;
-    }): FromReadonlyArrayOperator<TComputationType, T>;
-    fromValue<T>(): FromValueOperator<TComputationType, T>;
+    } & TCreationOptions["fromReadonlyArray"]): FromReadonlyArrayOperator<TComputationType, T>;
+    fromValue<T>(options?: TCreationOptions["fromValue"]): FromValueOperator<TComputationType, T>;
     generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
         readonly count?: number;
-    }): GeneratorOf<TComputationType, T>;
+    } & TCreationOptions["generate"]): GeneratorOf<TComputationType, T>;
     keep<T>(predicate: Predicate<T>): StatelessComputationOperator<TComputationType, T, T>;
-    lastAsync<T>(): AsyncFunction1<ComputationOf<TComputationType, T>, T>;
+    lastAsync<T>(options?: TCreationOptions["lastAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, T>;
     map<TA, TB>(selector: Function1<TA, TB>): StatelessComputationOperator<TComputationType, TA, TB>;
     raise<T>(options?: {
         readonly raise?: Factory<unknown>;
-    }): RaiseOf<TComputationType, T>;
-    reduceAsync<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): AsyncFunction1<ComputationOf<TComputationType, T>, TAcc>;
+    } & TCreationOptions["raise"]): RaiseOf<TComputationType, T>;
+    reduceAsync<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: TCreationOptions["reduceAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, TAcc>;
     toObservable<T>(): ToObservableOperator<TComputationType, T>;
-    toReadonlyArrayAsync<T>(): AsyncFunction1<ComputationOf<TComputationType, T>, ReadonlyArray<T>>;
+    toReadonlyArrayAsync<T>(options?: TCreationOptions["toReadonlyArrayAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, ReadonlyArray<T>>;
 }
 export interface DeferredComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
     catchError<T>(onError: SideEffect1<Error>): StatefulSynchronousComputationOperator<TComputationType, T, T>;
@@ -256,13 +267,20 @@ export interface DeferredComputationModule<TComputationType extends ComputationT
     }): StatefulSynchronousComputationOperator<TComputationType, T, T>;
     throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): StatefulSynchronousComputationOperator<TComputationType, T, T>;
 }
-export interface SynchronousComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
-    first<T>(): Function1<SynchronousComputationOf<TComputationType, T>, Optional<T>>;
-    last<T>(): Function1<SynchronousComputationOf<TComputationType, T>, Optional<T>>;
-    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<SynchronousComputationOf<TComputationType, T>, TAcc>;
-    run<T>(): SideEffect1<SynchronousComputationWithSideEffectsOf<TComputationType, T>>;
-    toRunnable<T>(): ToRunnableOperator<TComputationType, T>;
-    toReadonlyArray<T>(): Function1<SynchronousComputationOf<TComputationType, T>, ReadonlyArray<T>>;
+export interface SynchronousComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
+    first?: Record<string, any>;
+    last?: Record<string, any>;
+    reduce?: Record<string, any>;
+    run?: Record<string, any>;
+    toReadonlyArray?: Record<string, any>;
+    toRunnable?: Record<string, any>;
+} = {}> extends ComputationModuleLike<TComputationType> {
+    first<T>(options?: TCreationOptions["first"]): Function1<SynchronousComputationOf<TComputationType, T>, Optional<T>>;
+    last<T>(options?: TCreationOptions["last"]): Function1<SynchronousComputationOf<TComputationType, T>, Optional<T>>;
+    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: TCreationOptions["reduce"]): Function1<SynchronousComputationOf<TComputationType, T>, TAcc>;
+    run<T>(options?: TCreationOptions["run"]): SideEffect1<SynchronousComputationWithSideEffectsOf<TComputationType, T>>;
+    toReadonlyArray<T>(options?: TCreationOptions["toReadonlyArray"]): Function1<SynchronousComputationOf<TComputationType, T>, ReadonlyArray<T>>;
+    toRunnable<T>(options?: TCreationOptions["toRunnable"]): ToRunnableOperator<TComputationType, T>;
 }
 export interface InteractiveComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
     zip: ZipConstructor<TComputationType>;

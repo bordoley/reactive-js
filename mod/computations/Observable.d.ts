@@ -1,5 +1,5 @@
-import { ComputationModule, ComputationOf, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredComputationWithSideEffectsLike, DeferredObservableWithSideEffectsLike, DeferredReactiveComputationModule, EventSourceLike, FromIterableOperator, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastObservableLike, ObservableLike, PauseableEventSourceLike, PauseableObservableLike, PureDeferredObservableLike, PureSynchronousObservableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StatelessAsynchronousComputationOperator, StoreLike, SynchronousComputationModule, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike, ToRunnableOperator } from "../computations.js";
-import { AsyncFunction1, AsyncFunction2, Equality, Factory, Function1, Function2, Optional, Reducer, SideEffect, SideEffect1, Updater } from "../functions.js";
+import { ComputationModule, ComputationOf, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredComputationWithSideEffectsLike, DeferredObservableWithSideEffectsLike, DeferredReactiveComputationModule, EventSourceLike, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastObservableLike, ObservableLike, PauseableEventSourceLike, PauseableObservableLike, PureDeferredObservableLike, PureSynchronousObservableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StatelessAsynchronousComputationOperator, StoreLike, SynchronousComputationModule, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../computations.js";
+import { AsyncFunction1, AsyncFunction2, Equality, Factory, Function1, Function2, Optional, Reducer, SideEffect, SideEffect1 } from "../functions.js";
 import { BackpressureStrategy, DisposableLike, ObserverLike, QueueableLike, QueueableLike_backpressureStrategy, QueueableLike_capacity, SchedulerLike } from "../utils.js";
 export interface ObservableComputation extends ComputationType {
     readonly [Computation_baseOfT]?: ObservableLike<this[typeof Computation_T]>;
@@ -20,7 +20,80 @@ export type ThrottleMode = typeof ThrottleFirstMode | typeof ThrottleLastMode | 
 /**
  * @noInheritDoc
  */
-export interface ObservableModule extends ComputationModule<ObservableComputation>, DeferredComputationModule<ObservableComputation>, SynchronousComputationModule<ObservableComputation>, DeferredReactiveComputationModule<ObservableComputation>, ConcurrentReactiveComputationModule<ObservableComputation> {
+export interface ObservableModule extends ComputationModule<ObservableComputation, {
+    empty: {
+        readonly delay: number;
+    };
+    firstAsync: {
+        readonly scheduler?: SchedulerLike;
+        readonly capacity?: number;
+        readonly backpressureStrategy?: BackpressureStrategy;
+    };
+    fromIterable: {
+        readonly delay: number;
+        readonly delayStart?: boolean;
+    };
+    fromReadonlyArray: {
+        readonly delay?: number;
+        readonly delayStart?: boolean;
+    };
+    fromValue: {
+        readonly delay: number;
+    };
+    generate: {
+        readonly delay?: number;
+        readonly delayStart?: boolean;
+    };
+    lastAsync: {
+        readonly scheduler?: SchedulerLike;
+        readonly capacity?: number;
+        readonly backpressureStrategy?: BackpressureStrategy;
+    };
+    raise: {
+        readonly delay?: number;
+    };
+    reduceAsync: {
+        readonly scheduler?: SchedulerLike;
+        readonly capacity?: number;
+        readonly backpressureStrategy?: BackpressureStrategy;
+    };
+    toReadonlyArrayAsync: {
+        readonly scheduler?: SchedulerLike;
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+    };
+}>, DeferredComputationModule<ObservableComputation>, SynchronousComputationModule<ObservableComputation, {
+    first: {
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+        readonly maxMicroTaskTicks?: number;
+    };
+    last: {
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+        readonly maxMicroTaskTicks?: number;
+    };
+    reduce: {
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+        readonly maxMicroTaskTicks?: number;
+    };
+    run: {
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+        readonly maxMicroTaskTicks?: number;
+    };
+    toReadonlyArray: {
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+        readonly maxMicroTaskTicks?: number;
+    };
+    toRunnable: {
+        readonly backpressureStrategy?: BackpressureStrategy;
+        readonly capacity?: number;
+        readonly maxMicroTaskTicks?: number;
+    };
+}>, DeferredReactiveComputationModule<ObservableComputation>, ConcurrentReactiveComputationModule<ObservableComputation> {
     actionReducer<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
         readonly equality?: Equality<T>;
     }): StatefulSynchronousComputationOperator<ObservableComputation, TAction, T>;
@@ -37,65 +110,18 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     create<T>(f: SideEffect1<ObserverLike<T>>): DeferredObservableWithSideEffectsLike<T>;
     currentTime: PureSynchronousObservableLike<number>;
     defer<T>(f: Factory<MulticastObservableLike<T> & DisposableLike>): PureDeferredObservableLike<T>;
-    empty<T>(options?: {
-        readonly delay: number;
-    }): PureSynchronousObservableLike<T>;
     enqueue<T>(queue: QueueableLike<T>): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
     exhaust<T>(): HigherOrderComputationOperator<ObservableComputation, PureSynchronousObservableLike, PureSynchronousObservableLike<T>, T>;
     exhaust<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
         readonly innerType: TInnerLike;
     }): HigherOrderComputationOperator<ObservableComputation, TInnerLike, HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, T>, T>;
-    first<T>(options?: {
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-        readonly maxMicroTaskTicks?: number;
-    }): Function1<SynchronousObservableLike<T>, Optional<T>>;
-    firstAsync<T>(options?: {
-        readonly capacity?: number;
-        readonly backpressureStrategy?: BackpressureStrategy;
-    }): AsyncFunction1<ObservableLike<T>, Optional<T>>;
-    firstAsync<T>(scheduler: SchedulerLike, options?: {
-        readonly capacity?: number;
-        readonly backpressureStrategy?: BackpressureStrategy;
-    }): AsyncFunction1<ObservableLike<T>, Optional<T>>;
     flatMapAsync<TA, TB>(f: AsyncFunction2<TA, AbortSignal, TB>): HigherOrderComputationOperator<ObservableComputation, DeferredComputationWithSideEffectsLike, TA, TB>;
     fromAsyncFactory<T>(): Function1<AsyncFunction1<AbortSignal, T>, DeferredObservableWithSideEffectsLike<T>>;
     fromEventSource<T>(): Function1<EventSourceLike<T>, MulticastObservableLike<T>>;
-    fromIterable<T>(options?: {
-        readonly delay: number;
-        readonly delayStart?: boolean;
-    }): FromIterableOperator<ObservableComputation, T>;
-    fromReadonlyArray<T>(options?: {
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-        readonly count?: number;
-        readonly start?: number;
-    }): Function1<ReadonlyArray<T>, PureSynchronousObservableLike<T>>;
     fromStore<T>(): Function1<StoreLike<T>, MulticastObservableLike<T>>;
-    fromValue<T>(options?: {
-        readonly delay: number;
-    }): Function1<T, PureSynchronousObservableLike<T>>;
-    generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
-        readonly count?: number;
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-    }): PureSynchronousObservableLike<T>;
     keyFrame(duration: number, options?: {
         readonly easing?: Function1<number, number>;
     }): PureSynchronousObservableLike<number>;
-    last<T>(options?: {
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-        readonly maxMicroTaskTicks?: number;
-    }): Function1<SynchronousObservableLike<T>, Optional<T>>;
-    lastAsync<T>(options?: {
-        readonly capacity?: number;
-        readonly backpressureStrategy?: BackpressureStrategy;
-    }): AsyncFunction1<ObservableLike<T>, Optional<T>>;
-    lastAsync<T>(scheduler: SchedulerLike, options?: {
-        readonly capacity?: number;
-        readonly backpressureStrategy?: BackpressureStrategy;
-    }): AsyncFunction1<ObservableLike<T>, Optional<T>>;
     mergeAll<T>(options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
@@ -114,23 +140,6 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly backpressureStrategy?: BackpressureStrategy;
     }): Function1<ObservableLike<T>, MulticastObservableLike<T> & DisposableLike>;
     onSubscribe<T>(f: Factory<DisposableLike | SideEffect1<Optional<Error>>> | SideEffect): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
-    raise<T>(options?: {
-        readonly raise?: Factory<unknown>;
-        readonly delay?: number;
-    }): PureSynchronousObservableLike<T>;
-    reduceAsync<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: {
-        readonly capacity?: number;
-        readonly backpressureStrategy?: BackpressureStrategy;
-    }): AsyncFunction1<ObservableLike<T>, TAcc>;
-    reduceAsync<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, scheduler: SchedulerLike, options?: {
-        readonly capacity?: number;
-        readonly backpressureStrategy?: BackpressureStrategy;
-    }): AsyncFunction1<ObservableLike<T>, TAcc>;
-    run<T>(options?: {
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-        readonly maxMicroTaskTicks?: number;
-    }): SideEffect1<SynchronousObservableWithSideEffectsLike<T>>;
     scanMany<T, TAcc>(scanner: Function2<TAcc, T, PureSynchronousObservableLike<TAcc>>, initialValue: Factory<TAcc>): HigherOrderComputationOperator<ObservableComputation, PureSynchronousObservableLike, T, TAcc>;
     scanMany<T, TAcc, TInnerLike extends HigherOrderInnerComputationLike>(scanner: Function2<TAcc, T, HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, T>>, initialValue: Factory<TAcc>, options: {
         readonly innerType: TInnerLike;
@@ -173,24 +182,6 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly capacity?: number;
         readonly replay?: number;
     }): Function1<SynchronousObservableLike<T>, PauseableObservableLike<T> & DisposableLike>;
-    toReadonlyArray<T>(options?: {
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-        readonly maxMicroTaskTicks?: number;
-    }): Function1<SynchronousObservableLike<T>, ReadonlyArray<T>>;
-    toReadonlyArrayAsync<T>(options?: {
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-    }): AsyncFunction1<ObservableLike<T>, ReadonlyArray<T>>;
-    toReadonlyArrayAsync<T>(scheduler: SchedulerLike, options?: {
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-    }): AsyncFunction1<ObservableLike<T>, ReadonlyArray<T>>;
-    toRunnable<T>(options?: {
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-        readonly maxMicroTaskTicks?: number;
-    }): ToRunnableOperator<ObservableComputation, T>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): StatefulSynchronousComputationOperator<ObservableComputation, TA, TB>;
 }
 export type Signature = ObservableModule;

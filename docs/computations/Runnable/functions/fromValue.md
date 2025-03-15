@@ -6,11 +6,17 @@
 
 # Function: fromValue()
 
-> **fromValue**\<`T`\>(): [`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`\>
+> **fromValue**\<`T`\>(`options`?): [`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`\>
 
 ## Type Parameters
 
 • **T**
+
+## Parameters
+
+### options?
+
+`unknown`
 
 ## Returns
 

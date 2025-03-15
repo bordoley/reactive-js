@@ -116,7 +116,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         }), Observable.backpressureStrategy({
             capacity: 1,
             backpressureStrategy: ThrowBackpressureStrategy,
-        }), Observable.toReadonlyArrayAsync(scheduler)));
+        }), Observable.toReadonlyArrayAsync({ scheduler })));
     }
     catch (e_1) {
         env_1.error = e_1;
@@ -138,7 +138,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         }), Observable.backpressureStrategy({
             capacity: 1,
             backpressureStrategy: DropLatestBackpressureStrategy,
-        }), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([0]));
+        }), Observable.toReadonlyArrayAsync({ scheduler }), expectArrayEquals([0]));
     }
     catch (e_2) {
         env_2.error = e_2;
@@ -160,7 +160,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         }), Observable.backpressureStrategy({
             capacity: 1,
             backpressureStrategy: DropOldestBackpressureStrategy,
-        }), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([9]));
+        }), Observable.toReadonlyArrayAsync({ scheduler }), expectArrayEquals([9]));
     }
     catch (e_3) {
         env_3.error = e_3;
@@ -195,7 +195,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
             const result = __observe(stream) ?? 0;
             __do(push, result + 1);
             return result;
-        }), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler), x => x ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+        }), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync({ scheduler }), x => x ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
     catch (e_4) {
         env_4.error = e_4;
@@ -217,7 +217,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
                 __do(push, () => result + 1);
             }
             return result;
-        }), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler), x => x ?? [], expectArrayEquals([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8]));
+        }), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync({ scheduler }), x => x ?? [], expectArrayEquals([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8]));
     }
     catch (e_5) {
         env_5.error = e_5;
@@ -238,7 +238,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
             // Need to dispose the subject or the test will hang
             __do(bindMethod(subject, DisposableLike_dispose));
             return result;
-        }, { mode: "combine-latest" }), Observable.distinctUntilChanged(), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([200, 100]));
+        }, { mode: "combine-latest" }), Observable.distinctUntilChanged(), Observable.toReadonlyArrayAsync({ scheduler }), expectArrayEquals([200, 100]));
     }
     catch (e_6) {
         env_6.error = e_6;
@@ -316,7 +316,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     const env_8 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_8, HostScheduler.create(), false);
-        await pipeAsync(Observable.defer(() => pipe(1, Observable.fromValue(), Observable.multicast(scheduler))), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1]));
+        await pipeAsync(Observable.defer(() => pipe(1, Observable.fromValue(), Observable.multicast(scheduler))), Observable.toReadonlyArrayAsync({ scheduler }), expectArrayEquals([1]));
     }
     catch (e_8) {
         env_8.error = e_8;
@@ -412,7 +412,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     const env_13 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_13, HostScheduler.create(), false);
-        await pipeAsync([], Observable.fromReadonlyArray(), Observable.firstAsync(scheduler), expectIsNone);
+        await pipeAsync([], Observable.fromReadonlyArray(), Observable.firstAsync({ scheduler }), expectIsNone);
     }
     catch (e_13) {
         env_13.error = e_13;
@@ -425,7 +425,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     const env_14 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_14, HostScheduler.create(), false);
-        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.firstAsync(scheduler), expectEquals(1));
+        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.firstAsync({ scheduler }), expectEquals(1));
     }
     catch (e_14) {
         env_14.error = e_14;
@@ -438,7 +438,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     const env_15 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_15, HostScheduler.create(), false);
-        await pipeAsync(1, Observable.fromValue(), Observable.flatMapAsync(async (x) => await Promise.resolve(x)), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1]));
+        await pipeAsync(1, Observable.fromValue(), Observable.flatMapAsync(async (x) => await Promise.resolve(x)), Observable.toReadonlyArrayAsync({ scheduler }), expectArrayEquals([1]));
     }
     catch (e_15) {
         env_15.error = e_15;
@@ -456,7 +456,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
         await pipeAsync(async () => {
             await Promise.resolve(1);
             return 2;
-        }, Observable.fromAsyncFactory(), Observable.lastAsync(scheduler), expectEquals(2));
+        }, Observable.fromAsyncFactory(), Observable.lastAsync({ scheduler }), expectEquals(2));
     }
     catch (e_16) {
         env_16.error = e_16;
@@ -472,7 +472,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
         await pipe(pipe(async () => {
             await Promise.resolve(1);
             raise();
-        }, Observable.fromAsyncFactory(), Observable.lastAsync(scheduler)), expectPromiseToThrow);
+        }, Observable.fromAsyncFactory(), Observable.lastAsync({ scheduler })), expectPromiseToThrow);
     }
     catch (e_17) {
         env_17.error = e_17;
@@ -487,7 +487,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
         const scheduler = __addDisposableResource(env_18, HostScheduler.create(), false);
         await pipe(pipe(async () => {
             raise();
-        }, Observable.fromAsyncFactory(), Observable.lastAsync(scheduler)), expectPromiseToThrow);
+        }, Observable.fromAsyncFactory(), Observable.lastAsync({ scheduler })), expectPromiseToThrow);
     }
     catch (e_18) {
         env_18.error = e_18;
@@ -507,7 +507,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             while (true) {
                 yield i++;
             }
-        })(), AsyncIterable.of(), Observable.fromAsyncIterable(), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler, { capacity: 5 }));
+        })(), AsyncIterable.of(), Observable.fromAsyncIterable(), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync({ scheduler, capacity: 5 }));
         pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
     catch (e_19) {
@@ -525,7 +525,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             yield 1;
             yield 2;
             yield 3;
-        })(), AsyncIterable.of(), Observable.fromAsyncIterable(), Observable.buffer(), Observable.lastAsync(scheduler, { capacity: 1 }));
+        })(), AsyncIterable.of(), Observable.fromAsyncIterable(), Observable.buffer(), Observable.lastAsync({ scheduler, capacity: 1 }));
         pipe(result ?? [], expectArrayEquals([1, 2, 3]));
     }
     catch (e_20) {
@@ -542,7 +542,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
         const e = error();
         const result = await pipe((async function* foo() {
             throw e;
-        })(), AsyncIterable.of(), Observable.fromAsyncIterable(), Observable.lastAsync(scheduler, { capacity: 1 }));
+        })(), AsyncIterable.of(), Observable.fromAsyncIterable(), Observable.lastAsync({ scheduler, capacity: 1 }));
         pipe(result, expectEquals(e));
     }
     catch (e_21) {
@@ -581,7 +581,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     const env_23 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_23, HostScheduler.create(), false);
-        await pipeAsync([], Observable.fromReadonlyArray(), Observable.lastAsync(scheduler), expectIsNone);
+        await pipeAsync([], Observable.fromReadonlyArray(), Observable.lastAsync({ scheduler }), expectIsNone);
     }
     catch (e_23) {
         env_23.error = e_23;
@@ -594,7 +594,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     const env_24 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_24, HostScheduler.create(), false);
-        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.lastAsync(scheduler), expectEquals(3));
+        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.lastAsync({ scheduler }), expectEquals(3));
     }
     catch (e_24) {
         env_24.error = e_24;
@@ -613,7 +613,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     const env_25 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_25, HostScheduler.create(), false);
-        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Computation.flatMap(Observable)("mergeAll", x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]));
+        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray(), Computation.flatMap(Observable)("mergeAll", x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArrayAsync({ scheduler }), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]));
     }
     catch (e_25) {
         env_25.error = e_25;
@@ -751,7 +751,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     const env_32 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_32, HostScheduler.create(), false);
-        await pipeAsync(Observable.spring(), Observable.lastAsync(scheduler), expectEquals(1));
+        await pipeAsync(Observable.spring(), Observable.lastAsync({ scheduler }), expectEquals(1));
     }
     catch (e_32) {
         env_32.error = e_32;
@@ -891,7 +891,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     const env_37 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_37, HostScheduler.create(), false);
-        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 3 }), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([1, 2, 3]));
+        await pipeAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 3 }), Observable.toReadonlyArrayAsync({ scheduler }), expectArrayEquals([1, 2, 3]));
     }
     catch (e_37) {
         env_37.error = e_37;
@@ -904,7 +904,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     const env_38 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_38, HostScheduler.create(), false);
-        await pipeAsync(EventSource.create(l => l[DisposableLike_dispose]()), Observable.fromEventSource(), Observable.toReadonlyArrayAsync(scheduler), expectArrayEquals([]));
+        await pipeAsync(EventSource.create(l => l[DisposableLike_dispose]()), Observable.fromEventSource(), Observable.toReadonlyArrayAsync({ scheduler }), expectArrayEquals([]));
     }
     catch (e_38) {
         env_38.error = e_38;

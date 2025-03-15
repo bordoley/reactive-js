@@ -58,7 +58,7 @@ testModule(
         Observable.fromEventSource(),
         Observable.decodeWithCharset(),
         Observable.scan((acc: string, next: string) => acc + next, returns("")),
-        Observable.lastAsync<string>(scheduler),
+        Observable.lastAsync<string>({ scheduler }),
         expectEquals<Optional<string>>("abcdefg"),
       );
 
@@ -85,7 +85,7 @@ testModule(
         Observable.fromEventSource(),
         Observable.decodeWithCharset(),
         Observable.scan((acc: string, next: string) => acc + next, returns("")),
-        Observable.lastAsync<string>(scheduler),
+        Observable.lastAsync<string>({ scheduler }),
       );
       pipe(acc, expectEquals<Optional<string>>("abcdefg"));
       pipe(
@@ -115,7 +115,7 @@ testModule(
       await pipe(
         flowed,
         Observable.fromEventSource(),
-        Observable.lastAsync(scheduler),
+        Observable.lastAsync({ scheduler }),
         expectPromiseToThrow,
       );
     }),

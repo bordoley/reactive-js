@@ -6,11 +6,17 @@
 
 # Function: firstAsync()
 
-> **firstAsync**\<`T`\>(): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`\>, `T`\>
+> **firstAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`\>, `T`\>
 
 ## Type Parameters
 
 • **T**
+
+## Parameters
+
+### options?
+
+`unknown`
 
 ## Returns
 

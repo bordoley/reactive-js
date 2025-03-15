@@ -6,11 +6,17 @@
 
 # Function: empty()
 
-> **empty**\<`T`\>(): [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+> **empty**\<`T`\>(`options`?): [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
 
 ## Type Parameters
 
 • **T**
+
+## Parameters
+
+### options?
+
+`unknown`
 
 ## Returns
 

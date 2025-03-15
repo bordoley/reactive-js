@@ -6,7 +6,7 @@
 
 # Function: generate()
 
-> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
+> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -24,18 +24,8 @@
 
 ### options?
 
-#### count?
-
-`number`
-
-#### delay?
-
-`number`
-
-#### delayStart?
-
-`boolean`
+`object` & `object`
 
 ## Returns
 
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>

@@ -6,11 +6,17 @@
 
 # Function: run()
 
-> **run**\<`T`\>(): [`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
+> **run**\<`T`\>(`options`?): [`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
 
 ## Type Parameters
 
 • **T**
+
+## Parameters
+
+### options?
+
+`unknown`
 
 ## Returns
 

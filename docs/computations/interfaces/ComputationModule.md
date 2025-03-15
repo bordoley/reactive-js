@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / ComputationModule
 
-# Interface: ComputationModule\<TComputationType\>
+# Interface: ComputationModule\<TComputationType, TCreationOptions\>
 
 ## Extends
 
@@ -22,6 +22,8 @@
 
 • **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
 
+• **TCreationOptions** *extends* `object` = \{\}
+
 ## Properties
 
 ### \[ComputationModuleLike\_computationType\]?
@@ -36,11 +38,17 @@
 
 ### empty()
 
-> **empty**\<`T`\>(): [`EmptyOf`](../type-aliases/EmptyOf.md)\<`TComputationType`, `T`\>
+> **empty**\<`T`\>(`options`?): [`EmptyOf`](../type-aliases/EmptyOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"empty"`\]
 
 #### Returns
 
@@ -50,11 +58,17 @@
 
 ### firstAsync()
 
-> **firstAsync**\<`T`\>(): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, `T`\>
+> **firstAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, `T`\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"firstAsync"`\]
 
 #### Returns
 
@@ -64,11 +78,17 @@
 
 ### fromIterable()
 
-> **fromIterable**\<`T`\>(): [`FromIterableOperator`](../type-aliases/FromIterableOperator.md)\<`TComputationType`, `T`\>
+> **fromIterable**\<`T`\>(`options`?): [`FromIterableOperator`](../type-aliases/FromIterableOperator.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"fromIterable"`\]
 
 #### Returns
 
@@ -88,13 +108,7 @@
 
 ##### options?
 
-###### count?
-
-`number`
-
-###### start?
-
-`number`
+`object` & `TCreationOptions`\[`"fromReadonlyArray"`\]
 
 #### Returns
 
@@ -104,11 +118,17 @@
 
 ### fromValue()
 
-> **fromValue**\<`T`\>(): [`FromValueOperator`](../type-aliases/FromValueOperator.md)\<`TComputationType`, `T`\>
+> **fromValue**\<`T`\>(`options`?): [`FromValueOperator`](../type-aliases/FromValueOperator.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"fromValue"`\]
 
 #### Returns
 
@@ -136,9 +156,7 @@
 
 ##### options?
 
-###### count?
-
-`number`
+`object` & `TCreationOptions`\[`"generate"`\]
 
 #### Returns
 
@@ -168,11 +186,17 @@
 
 ### lastAsync()
 
-> **lastAsync**\<`T`\>(): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, `T`\>
+> **lastAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, `T`\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"lastAsync"`\]
 
 #### Returns
 
@@ -214,9 +238,7 @@
 
 ##### options?
 
-###### raise?
-
-[`Factory`](../../functions/type-aliases/Factory.md)\<`unknown`\>
+`object` & `TCreationOptions`\[`"raise"`\]
 
 #### Returns
 
@@ -226,7 +248,7 @@
 
 ### reduceAsync()
 
-> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, `TAcc`\>
+> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `options`?): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, `TAcc`\>
 
 #### Type Parameters
 
@@ -243,6 +265,10 @@
 ##### initialValue
 
 [`Factory`](../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+##### options?
+
+`TCreationOptions`\[`"reduceAsync"`\]
 
 #### Returns
 
@@ -266,11 +292,17 @@
 
 ### toReadonlyArrayAsync()
 
-> **toReadonlyArrayAsync**\<`T`\>(): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, readonly `T`[]\>
+> **toReadonlyArrayAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, readonly `T`[]\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"toReadonlyArrayAsync"`\]
 
 #### Returns
 

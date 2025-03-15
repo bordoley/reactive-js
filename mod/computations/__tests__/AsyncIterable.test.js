@@ -110,7 +110,7 @@ testModule("AsyncIterable", ComputationModuleTests(AsyncIterable, AsyncIterableT
         scheduler[SchedulerLike_schedule](_ => obs[PauseableLike_resume](), {
             delay: 40,
         });
-        const result = await pipe(obs, Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler));
+        const result = await pipe(obs, Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync({ scheduler }));
         pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
     catch (e_1) {
@@ -130,7 +130,7 @@ testModule("AsyncIterable", ComputationModuleTests(AsyncIterable, AsyncIterableT
             yield 3;
         })(), AsyncIterable.of(), AsyncIterable.toPauseableObservable(scheduler, { capacity: 1 }));
         stream[PauseableLike_resume]();
-        const result = await pipe(stream, Observable.buffer(), Observable.lastAsync(scheduler));
+        const result = await pipe(stream, Observable.buffer(), Observable.lastAsync({ scheduler }));
         pipe(result ?? [], expectArrayEquals([1, 2, 3]));
     }
     catch (e_2) {
@@ -149,7 +149,7 @@ testModule("AsyncIterable", ComputationModuleTests(AsyncIterable, AsyncIterableT
             throw e;
         })(), AsyncIterable.of(), AsyncIterable.toPauseableObservable(scheduler, { capacity: 1 }));
         stream[PauseableLike_resume]();
-        await pipe(stream, Observable.lastAsync(scheduler));
+        await pipe(stream, Observable.lastAsync({ scheduler }));
     }
     catch (e_3) {
         env_3.error = e_3;

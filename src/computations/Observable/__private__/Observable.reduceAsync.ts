@@ -8,8 +8,8 @@ import Observable_lastAsync from "./Observable.lastAsync.js";
 const Observable_reduceAsync: Observable.Signature["reduceAsync"] = (<T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-  schedulerOrOptions: SchedulerLike,
-  maybeOptions?: {
+  options?: {
+    readonly scheduler?: SchedulerLike;
     readonly capacity?: number;
     readonly backpressureStrategy?: BackpressureStrategy;
   },
@@ -17,7 +17,7 @@ const Observable_reduceAsync: Observable.Signature["reduceAsync"] = (<T, TAcc>(
   compose(
     identity<ObservableLike<T>>,
     Observable_actionReducer(reducer, initialValue),
-    Observable_lastAsync(schedulerOrOptions, maybeOptions),
+    Observable_lastAsync(options),
   )) as Observable.Signature["reduceAsync"];
 
 export default Observable_reduceAsync;

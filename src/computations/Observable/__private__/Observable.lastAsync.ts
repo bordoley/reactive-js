@@ -1,13 +1,6 @@
 import { Promise } from "../../../__internal__/constants.js";
 import { ObservableLike } from "../../../computations.js";
-import {
-  Optional,
-  isNone,
-  isSome,
-  newInstance,
-  none,
-  pipe,
-} from "../../../functions.js";
+import { Optional, newInstance, none, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../../utils/HostScheduler.js";
 import { BackpressureStrategy, SchedulerLike } from "../../../utils.js";
@@ -16,32 +9,13 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_lastAsync: Observable.Signature["lastAsync"] =
-  <T>(
-    schedulerOrOptions?:
-      | SchedulerLike
-      | {
-          readonly capacity?: number;
-          readonly backpressureStrategy?: BackpressureStrategy;
-        },
-    maybeOptions?: {
-      readonly capacity?: number;
-      readonly backpressureStrategy?: BackpressureStrategy;
-    },
-  ) =>
+  <T>(options?: {
+    readonly scheduler?: SchedulerLike;
+    readonly capacity?: number;
+    readonly backpressureStrategy?: BackpressureStrategy;
+  }) =>
   async (observable: ObservableLike<T>) => {
-    const { scheduler, options } =
-      isNone(schedulerOrOptions) || isSome((schedulerOrOptions as any).capacity)
-        ? {
-            scheduler: HostScheduler.get(),
-            options: schedulerOrOptions as {
-              readonly capacity?: number;
-              readonly backpressureStrategy?: BackpressureStrategy;
-            },
-          }
-        : {
-            scheduler: schedulerOrOptions as SchedulerLike,
-            options: maybeOptions,
-          };
+    const { scheduler } = options ?? {};
 
     return await newInstance<
       Promise<T>,
@@ -57,7 +31,7 @@ const Observable_lastAsync: Observable.Signature["lastAsync"] =
         Observable_forEach((next: T) => {
           result = next;
         }),
-        Observable_subscribe(scheduler, options),
+        Observable_subscribe(scheduler ?? HostScheduler.get(), options),
         DisposableContainer.onError(reject),
         DisposableContainer.onComplete(() => {
           resolve(result as T);

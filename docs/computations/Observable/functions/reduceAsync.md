@@ -6,74 +6,38 @@
 
 # Function: reduceAsync()
 
-## Call Signature
+> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>, `TAcc`\>
 
-> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, `TAcc`\>
-
-### Type Parameters
+## Type Parameters
 
 • **T**
 
 • **TAcc**
 
-### Parameters
+## Parameters
 
-#### reducer
+### reducer
 
 [`Reducer`](../../../functions/type-aliases/Reducer.md)\<`T`, `TAcc`\>
 
-#### initialValue
+### initialValue
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
 
-#### options?
+### options?
 
-##### backpressureStrategy?
+#### backpressureStrategy?
 
 [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
 
-##### capacity?
+#### capacity?
 
 `number`
 
-### Returns
-
-[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, `TAcc`\>
-
-## Call Signature
-
-> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `scheduler`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, `TAcc`\>
-
-### Type Parameters
-
-• **T**
-
-• **TAcc**
-
-### Parameters
-
-#### reducer
-
-[`Reducer`](../../../functions/type-aliases/Reducer.md)\<`T`, `TAcc`\>
-
-#### initialValue
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
-
-#### scheduler
+#### scheduler?
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
 
-#### options?
+## Returns
 
-##### backpressureStrategy?
-
-[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
-
-##### capacity?
-
-`number`
-
-### Returns
-
-[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, `TAcc`\>
+[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>, `TAcc`\>

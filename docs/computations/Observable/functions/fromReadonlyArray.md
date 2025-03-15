@@ -6,7 +6,7 @@
 
 # Function: fromReadonlyArray()
 
-> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
+> **fromReadonlyArray**\<`T`\>(`options`?): [`FromReadonlyArrayOperator`](../../type-aliases/FromReadonlyArrayOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>
 
 ## Type Parameters
 
@@ -16,22 +16,8 @@
 
 ### options?
 
-#### count?
-
-`number`
-
-#### delay?
-
-`number`
-
-#### delayStart?
-
-`boolean`
-
-#### start?
-
-`number`
+`object` & `object`
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
+[`FromReadonlyArrayOperator`](../../type-aliases/FromReadonlyArrayOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>

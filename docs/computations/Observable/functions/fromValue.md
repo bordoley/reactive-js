@@ -6,7 +6,7 @@
 
 # Function: fromValue()
 
-> **fromValue**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
+> **fromValue**\<`T`\>(`options`?): [`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>
 
 ## Type Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
+[`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>

@@ -6,11 +6,17 @@
 
 # Function: empty()
 
-> **empty**\<`T`\>(): `never`
+> **empty**\<`T`\>(`options`?): `never`
 
 ## Type Parameters
 
 • **T**
+
+## Parameters
+
+### options?
+
+`unknown`
 
 ## Returns
 

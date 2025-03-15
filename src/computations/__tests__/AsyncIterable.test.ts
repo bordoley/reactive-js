@@ -126,7 +126,7 @@ testModule(
         obs,
         Observable.takeFirst({ count: 10 }),
         Observable.buffer(),
-        Observable.lastAsync<readonly number[]>(scheduler),
+        Observable.lastAsync<readonly number[]>({ scheduler }),
       );
       pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }),
@@ -146,7 +146,7 @@ testModule(
       const result = await pipe(
         stream,
         Observable.buffer<number>(),
-        Observable.lastAsync(scheduler),
+        Observable.lastAsync({ scheduler }),
       );
 
       pipe(result ?? [], expectArrayEquals([1, 2, 3]));
@@ -166,7 +166,7 @@ testModule(
         );
         stream[PauseableLike_resume]();
 
-        await pipe(stream, Observable.lastAsync(scheduler));
+        await pipe(stream, Observable.lastAsync({ scheduler }));
       }, expectToThrowAsync),
     ),
   ),

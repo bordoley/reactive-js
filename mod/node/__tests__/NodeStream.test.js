@@ -77,7 +77,7 @@ testModule("NodeStream", describe("create", testAsync("reading from readable", a
         flowed[PauseableLike_resume]();
         flowed[PauseableLike_pause]();
         flowed[PauseableLike_resume]();
-        await pipeAsync(flowed, Observable.fromEventSource(), Observable.decodeWithCharset(), Observable.scan((acc, next) => acc + next, returns("")), Observable.lastAsync(scheduler), expectEquals("abcdefg"));
+        await pipeAsync(flowed, Observable.fromEventSource(), Observable.decodeWithCharset(), Observable.scan((acc, next) => acc + next, returns("")), Observable.lastAsync({ scheduler }), expectEquals("abcdefg"));
         pipe(readable.destroyed, expectTrue("expected readable to be destroyed"));
     }
     catch (e_1) {
@@ -97,7 +97,7 @@ testModule("NodeStream", describe("create", testAsync("reading from readable", a
         const scheduler = __addDisposableResource(env_2, HostScheduler.create(), false);
         const flowed = pipe(Readable.from(generate()), NodeStream.create, Disposable.addTo(scheduler));
         flowed[PauseableLike_resume]();
-        const acc = await pipe(flowed, Observable.fromEventSource(), Observable.decodeWithCharset(), Observable.scan((acc, next) => acc + next, returns("")), Observable.lastAsync(scheduler));
+        const acc = await pipe(flowed, Observable.fromEventSource(), Observable.decodeWithCharset(), Observable.scan((acc, next) => acc + next, returns("")), Observable.lastAsync({ scheduler }));
         pipe(acc, expectEquals("abcdefg"));
         pipe(flowed[DisposableLike_isDisposed], expectTrue("expected flowed to be disposed"));
     }
@@ -119,7 +119,7 @@ testModule("NodeStream", describe("create", testAsync("reading from readable", a
         const scheduler = __addDisposableResource(env_3, HostScheduler.create(), false);
         const flowed = pipe(generate(), Readable.from, NodeStream.create, Disposable.addTo(scheduler));
         flowed[PauseableLike_resume]();
-        await pipe(flowed, Observable.fromEventSource(), Observable.lastAsync(scheduler), expectPromiseToThrow);
+        await pipe(flowed, Observable.fromEventSource(), Observable.lastAsync({ scheduler }), expectPromiseToThrow);
     }
     catch (e_3) {
         env_3.error = e_3;

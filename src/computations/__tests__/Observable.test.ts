@@ -215,7 +215,7 @@ testModule(
             capacity: 1,
             backpressureStrategy: ThrowBackpressureStrategy,
           }),
-          Observable.toReadonlyArrayAsync<number>(scheduler),
+          Observable.toReadonlyArrayAsync<number>({ scheduler }),
         ),
       );
     }),
@@ -233,7 +233,7 @@ testModule(
           capacity: 1,
           backpressureStrategy: DropLatestBackpressureStrategy,
         }),
-        Observable.toReadonlyArrayAsync<number>(scheduler),
+        Observable.toReadonlyArrayAsync<number>({ scheduler }),
         expectArrayEquals([0]),
       );
     }),
@@ -252,7 +252,7 @@ testModule(
           capacity: 1,
           backpressureStrategy: DropOldestBackpressureStrategy,
         }),
-        Observable.toReadonlyArrayAsync<number>(scheduler),
+        Observable.toReadonlyArrayAsync<number>({ scheduler }),
         expectArrayEquals([9]),
       );
     }),
@@ -323,7 +323,7 @@ testModule(
         }),
         Observable.takeFirst<number>({ count: 10 }),
         Observable.buffer<number>(),
-        Observable.lastAsync(scheduler),
+        Observable.lastAsync({ scheduler }),
         x => x ?? [],
         expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
       );
@@ -345,7 +345,7 @@ testModule(
         }),
         Observable.takeFirst({ count: 10 }),
         Observable.buffer(),
-        Observable.lastAsync<readonly number[]>(scheduler),
+        Observable.lastAsync<readonly number[]>({ scheduler }),
         x => x ?? [],
         expectArrayEquals([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8]),
       );
@@ -369,7 +369,7 @@ testModule(
           { mode: "combine-latest" },
         ),
         Observable.distinctUntilChanged<number>(),
-        Observable.toReadonlyArrayAsync(scheduler),
+        Observable.toReadonlyArrayAsync({ scheduler }),
         expectArrayEquals([200, 100]),
       );
     }),
@@ -552,7 +552,7 @@ testModule(
         Observable.defer(() =>
           pipe(1, Observable.fromValue(), Observable.multicast(scheduler)),
         ),
-        Observable.toReadonlyArrayAsync(scheduler),
+        Observable.toReadonlyArrayAsync({ scheduler }),
         expectArrayEquals([1]),
       );
     }),
@@ -676,7 +676,7 @@ testModule(
       await pipeAsync(
         [],
         Observable.fromReadonlyArray(),
-        Observable.firstAsync(scheduler),
+        Observable.firstAsync({ scheduler }),
         expectIsNone,
       );
     }),
@@ -685,7 +685,7 @@ testModule(
       await pipeAsync(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
-        Observable.firstAsync(scheduler),
+        Observable.firstAsync({ scheduler }),
         expectEquals<Optional<number>>(1),
       );
     }),
@@ -698,7 +698,7 @@ testModule(
         1,
         Observable.fromValue(),
         Observable.flatMapAsync(async x => await Promise.resolve(x)),
-        Observable.toReadonlyArrayAsync<number>(scheduler),
+        Observable.toReadonlyArrayAsync<number>({ scheduler }),
         expectArrayEquals([1]),
       );
     }),
@@ -733,7 +733,7 @@ testModule(
           return 2;
         },
         Observable.fromAsyncFactory(),
-        Observable.lastAsync(scheduler),
+        Observable.lastAsync({ scheduler }),
         expectEquals<Optional<number>>(2),
       );
     }),
@@ -746,7 +746,7 @@ testModule(
             raise();
           },
           Observable.fromAsyncFactory(),
-          Observable.lastAsync(scheduler),
+          Observable.lastAsync({ scheduler }),
         ),
         expectPromiseToThrow,
       );
@@ -759,7 +759,7 @@ testModule(
             raise();
           },
           Observable.fromAsyncFactory(),
-          Observable.lastAsync(scheduler),
+          Observable.lastAsync({ scheduler }),
         ),
         expectPromiseToThrow,
       );
@@ -785,7 +785,7 @@ testModule(
         Observable.fromAsyncIterable(),
         Observable.takeFirst({ count: 10 }),
         Observable.buffer<number>(),
-        Observable.lastAsync(scheduler, { capacity: 5 }),
+        Observable.lastAsync({ scheduler, capacity: 5 }),
       );
 
       pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
@@ -801,7 +801,7 @@ testModule(
         AsyncIterable.of(),
         Observable.fromAsyncIterable(),
         Observable.buffer<number>(),
-        Observable.lastAsync(scheduler, { capacity: 1 }),
+        Observable.lastAsync({ scheduler, capacity: 1 }),
       );
 
       pipe(result ?? [], expectArrayEquals([1, 2, 3]));
@@ -818,7 +818,7 @@ testModule(
           })(),
           AsyncIterable.of(),
           Observable.fromAsyncIterable(),
-          Observable.lastAsync(scheduler, { capacity: 1 }),
+          Observable.lastAsync({ scheduler, capacity: 1 }),
         );
 
         pipe(result, expectEquals(e as unknown));
@@ -917,7 +917,7 @@ testModule(
       await pipeAsync(
         [],
         Observable.fromReadonlyArray(),
-        Observable.lastAsync(scheduler),
+        Observable.lastAsync({ scheduler }),
         expectIsNone,
       );
     }),
@@ -926,7 +926,7 @@ testModule(
       await pipeAsync(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
-        Observable.lastAsync(scheduler),
+        Observable.lastAsync({ scheduler }),
         expectEquals<Optional<number>>(3),
       );
     }),
@@ -962,7 +962,7 @@ testModule(
           Computation.flatMap(Observable)<number, number>("mergeAll", x =>
             pipe([x, x, x], Observable.fromReadonlyArray<number>()),
           ),
-          Observable.toReadonlyArrayAsync(scheduler),
+          Observable.toReadonlyArrayAsync({ scheduler }),
           expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
         );
       },
@@ -1198,7 +1198,7 @@ testModule(
 
       await pipeAsync(
         Observable.spring(),
-        Observable.lastAsync(scheduler),
+        Observable.lastAsync({ scheduler }),
         expectEquals<Optional<number>>(1),
       );
     }),
@@ -1592,7 +1592,7 @@ testModule(
       await pipeAsync(
         [1, 2, 3],
         Observable.fromReadonlyArray({ delay: 3 }),
-        Observable.toReadonlyArrayAsync<number>(scheduler),
+        Observable.toReadonlyArrayAsync<number>({ scheduler }),
         expectArrayEquals([1, 2, 3]),
       );
     }),
@@ -1601,7 +1601,7 @@ testModule(
       await pipeAsync(
         EventSource.create<number>(l => l[DisposableLike_dispose]()),
         Observable.fromEventSource(),
-        Observable.toReadonlyArrayAsync<number>(scheduler),
+        Observable.toReadonlyArrayAsync<number>({ scheduler }),
         expectArrayEquals<number>([]),
       );
     }),

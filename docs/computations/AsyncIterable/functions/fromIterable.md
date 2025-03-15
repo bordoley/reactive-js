@@ -6,11 +6,17 @@
 
 # Function: fromIterable()
 
-> **fromIterable**\<`T`\>(): [`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`AsyncIterableComputation`](../interfaces/AsyncIterableComputation.md), `T`\>
+> **fromIterable**\<`T`\>(`options`?): [`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`AsyncIterableComputation`](../interfaces/AsyncIterableComputation.md), `T`\>
 
 ## Type Parameters
 
 • **T**
+
+## Parameters
+
+### options?
+
+`unknown`
 
 ## Returns
 

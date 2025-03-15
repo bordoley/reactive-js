@@ -6,11 +6,17 @@
 
 # Function: toRunnable()
 
-> **toRunnable**\<`T`\>(): [`ToRunnableOperator`](../../type-aliases/ToRunnableOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`\>
+> **toRunnable**\<`T`\>(`options`?): [`ToRunnableOperator`](../../type-aliases/ToRunnableOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`\>
 
 ## Type Parameters
 
 • **T**
+
+## Parameters
+
+### options?
+
+`unknown`
 
 ## Returns
 

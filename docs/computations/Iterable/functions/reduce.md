@@ -6,7 +6,7 @@
 
 # Function: reduce()
 
-> **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>, `TAcc`\>
+> **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>, `TAcc`\>
 
 ## Type Parameters
 
@@ -23,6 +23,10 @@
 ### initialValue
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+### options?
+
+`unknown`
 
 ## Returns
 

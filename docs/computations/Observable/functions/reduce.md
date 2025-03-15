@@ -6,7 +6,7 @@
 
 # Function: reduce()
 
-> **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>, `TAcc`\>
+> **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>, `TAcc`\>
 
 ## Type Parameters
 
@@ -23,6 +23,20 @@
 ### initialValue
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+### options?
+
+#### backpressureStrategy?
+
+[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
+
+#### capacity?
+
+`number`
+
+#### maxMicroTaskTicks?
+
+`number`
 
 ## Returns
 

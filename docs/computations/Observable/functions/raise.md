@@ -6,7 +6,7 @@
 
 # Function: raise()
 
-> **raise**\<`T`\>(`options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
+> **raise**\<`T`\>(`options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -16,14 +16,8 @@
 
 ### options?
 
-#### delay?
-
-`number`
-
-#### raise?
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
+`object` & `object`
 
 ## Returns
 
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>

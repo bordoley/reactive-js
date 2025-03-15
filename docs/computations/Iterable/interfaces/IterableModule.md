@@ -228,11 +228,17 @@
 
 ### empty()
 
-> **empty**\<`T`\>(): [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+> **empty**\<`T`\>(`options`?): [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`unknown`
 
 #### Returns
 
@@ -260,11 +266,17 @@
 
 ### first()
 
-> **first**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](IterableComputation.md), `T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+> **first**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](IterableComputation.md), `T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`unknown`
 
 #### Returns
 
@@ -278,11 +290,17 @@
 
 ### firstAsync()
 
-> **firstAsync**\<`T`\>(): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| `never`, `T`\>
+> **firstAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| `never`, `T`\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`unknown`
 
 #### Returns
 
@@ -320,11 +338,17 @@
 
 ### fromIterable()
 
-> **fromIterable**\<`T`\>(): [`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`\>
+> **fromIterable**\<`T`\>(`options`?): [`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`unknown`
 
 #### Returns
 
@@ -368,11 +392,17 @@
 
 ### fromValue()
 
-> **fromValue**\<`T`\>(): [`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`\>
+> **fromValue**\<`T`\>(`options`?): [`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`unknown`
 
 #### Returns
 
@@ -444,11 +474,17 @@
 
 ### last()
 
-> **last**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](IterableComputation.md), `T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+> **last**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](IterableComputation.md), `T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`unknown`
 
 #### Returns
 
@@ -462,11 +498,17 @@
 
 ### lastAsync()
 
-> **lastAsync**\<`T`\>(): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| `never`, `T`\>
+> **lastAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| `never`, `T`\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`unknown`
 
 #### Returns
 
@@ -532,7 +574,7 @@
 
 ### reduce()
 
-> **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](IterableComputation.md), `T`\>, `TAcc`\>
+> **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](IterableComputation.md), `T`\>, `TAcc`\>
 
 #### Type Parameters
 
@@ -549,6 +591,10 @@
 ##### initialValue
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+##### options?
+
+`unknown`
 
 #### Returns
 
@@ -562,7 +608,7 @@
 
 ### reduceAsync()
 
-> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| `never`, `TAcc`\>
+> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| `never`, `TAcc`\>
 
 #### Type Parameters
 
@@ -579,6 +625,10 @@
 ##### initialValue
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+##### options?
+
+`unknown`
 
 #### Returns
 
@@ -680,11 +730,17 @@
 
 ### run()
 
-> **run**\<`T`\>(): [`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
+> **run**\<`T`\>(`options`?): [`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`unknown`
 
 #### Returns
 
@@ -830,11 +886,17 @@
 
 ### toReadonlyArray()
 
-> **toReadonlyArray**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](IterableComputation.md), `T`\>, readonly `T`[]\>
+> **toReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](IterableComputation.md), `T`\>, readonly `T`[]\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`unknown`
 
 #### Returns
 
@@ -848,11 +910,17 @@
 
 ### toReadonlyArrayAsync()
 
-> **toReadonlyArrayAsync**\<`T`\>(): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| `never`, readonly `T`[]\>
+> **toReadonlyArrayAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> \| `never`, readonly `T`[]\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`unknown`
 
 #### Returns
 
@@ -866,11 +934,17 @@
 
 ### toRunnable()
 
-> **toRunnable**\<`T`\>(): [`ToRunnableOperator`](../../type-aliases/ToRunnableOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`\>
+> **toRunnable**\<`T`\>(`options`?): [`ToRunnableOperator`](../../type-aliases/ToRunnableOperator.md)\<[`IterableComputation`](IterableComputation.md), `T`\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`unknown`
 
 #### Returns
 

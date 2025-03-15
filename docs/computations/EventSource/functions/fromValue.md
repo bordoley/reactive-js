@@ -6,11 +6,17 @@
 
 # Function: fromValue()
 
-> **fromValue**\<`T`\>(): [`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `T`\>
+> **fromValue**\<`T`\>(`options`?): [`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`EventSourceComputation`](../interfaces/EventSourceComputation.md), `T`\>
 
 ## Type Parameters
 
 • **T**
+
+## Parameters
+
+### options?
+
+`unknown`
 
 ## Returns
 

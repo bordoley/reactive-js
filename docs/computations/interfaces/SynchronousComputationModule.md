@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / SynchronousComputationModule
 
-# Interface: SynchronousComputationModule\<TComputationType\>
+# Interface: SynchronousComputationModule\<TComputationType, TCreationOptions\>
 
 ## Extends
 
@@ -20,6 +20,8 @@
 
 • **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
 
+• **TCreationOptions** *extends* `object` = \{\}
+
 ## Properties
 
 ### \[ComputationModuleLike\_computationType\]?
@@ -34,11 +36,17 @@
 
 ### first()
 
-> **first**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
+> **first**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"first"`\]
 
 #### Returns
 
@@ -48,11 +56,17 @@
 
 ### last()
 
-> **last**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
+> **last**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"last"`\]
 
 #### Returns
 
@@ -62,7 +76,7 @@
 
 ### reduce()
 
-> **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, `TAcc`\>
+> **reduce**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, `TAcc`\>
 
 #### Type Parameters
 
@@ -80,6 +94,10 @@
 
 [`Factory`](../../functions/type-aliases/Factory.md)\<`TAcc`\>
 
+##### options?
+
+`TCreationOptions`\[`"reduce"`\]
+
 #### Returns
 
 [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, `TAcc`\>
@@ -88,11 +106,17 @@
 
 ### run()
 
-> **run**\<`T`\>(): [`SideEffect1`](../../functions/type-aliases/SideEffect1.md)\<[`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
+> **run**\<`T`\>(`options`?): [`SideEffect1`](../../functions/type-aliases/SideEffect1.md)\<[`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"run"`\]
 
 #### Returns
 
@@ -102,11 +126,17 @@
 
 ### toReadonlyArray()
 
-> **toReadonlyArray**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, readonly `T`[]\>
+> **toReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, readonly `T`[]\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"toReadonlyArray"`\]
 
 #### Returns
 
@@ -116,11 +146,17 @@
 
 ### toRunnable()
 
-> **toRunnable**\<`T`\>(): [`ToRunnableOperator`](../type-aliases/ToRunnableOperator.md)\<`TComputationType`, `T`\>
+> **toRunnable**\<`T`\>(`options`?): [`ToRunnableOperator`](../type-aliases/ToRunnableOperator.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"toRunnable"`\]
 
 #### Returns
 

@@ -85,7 +85,7 @@ const ConcurrentReactiveComputationModuleTests = <
               m.fromObservable(scheduler),
             ),
           ),
-          m.toReadonlyArrayAsync(),
+          m.toReadonlyArrayAsync({ scheduler }),
           expectArrayEquals(
             [tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)],
             {
@@ -157,7 +157,7 @@ const ConcurrentReactiveComputationModuleTests = <
           promise,
           m.fromPromise(),
           m.toObservable<number>(),
-          Observable.lastAsync(scheduler),
+          Observable.lastAsync({ scheduler }),
           expectEquals<Optional<number>>(1),
         );
       }),
@@ -173,7 +173,7 @@ const ConcurrentReactiveComputationModuleTests = <
             promise,
             m.fromPromise(),
             m.toObservable(),
-            Observable.lastAsync(scheduler),
+            Observable.lastAsync({ scheduler }),
           ),
         );
       }),
