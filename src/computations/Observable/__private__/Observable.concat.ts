@@ -11,7 +11,7 @@ import {
 import { bind, bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
+import * as DelegatingObserver from "../../../utils/__internal__/DelegatingObserver.js";
 import { ObserverLike, SinkLike_complete } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_empty from "./Observable.empty.js";
@@ -45,7 +45,7 @@ const Observable_concat: Observable.Signature["concat"] = /*@__PURE__*/ (<
   const createConcatObserver = (ctx: ConcatObserverCtx) => {
     const delegate = ctx[ConcatObserverCtx_delegate];
     return pipe(
-      Observer_createWithDelegate(delegate),
+      DelegatingObserver.createNonDisposing(delegate),
       Disposable.addTo(delegate),
       DisposableContainer.onComplete(bind(onConcatObserverComplete, ctx)),
     );

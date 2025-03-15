@@ -20,7 +20,7 @@ import {
 import { bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
+import * as DelegatingObserver from "../../../utils/__internal__/DelegatingObserver.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import {
   DisposableContainerLike,
@@ -92,7 +92,7 @@ const Observable_merge: Observable.Signature["merge"] = /*@__PURE__*/ (<
 
         for (const observable of observables) {
           pipe(
-            Observer_createWithDelegate(observer),
+            DelegatingObserver.createNonDisposing(observer),
             Disposable.addTo(observer),
             DisposableContainer.onComplete(() => {
               completed++;

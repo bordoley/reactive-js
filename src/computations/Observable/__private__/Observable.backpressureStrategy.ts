@@ -9,6 +9,7 @@ import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.j
 import { BackpressureStrategy, ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
+import * as DelegatingObserver from "../../../utils/__internal__/DelegatingObserver.js";
 
 const createBackpressureObserver: <T>(
   delegate: ObserverLike<T>,
@@ -27,8 +28,13 @@ const createBackpressureObserver: <T>(
         backpressureStrategy: BackpressureStrategy;
       },
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, this, delegate);
-      init(LiftedObserverMixin<T>(), this, delegate, options);
+      // Wrap the delegate in a delegating observer to prevent
+      // notifications from bypassing the backpressure queue.
+      // LiftedObserverMixin bypasses EventListnerLike_notify calls
+      // when chained. The delegate here prevents it from doing so.
+      const wrappedDelegate = DelegatingObserver.create(delegate);
+      init(DelegatingDisposableMixin, this, wrappedDelegate);
+      init(LiftedObserverMixin<T>(), this, wrappedDelegate, options);
 
       return this;
     },

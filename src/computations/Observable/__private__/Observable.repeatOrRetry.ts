@@ -13,7 +13,7 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
+import * as DelegatingObserver from "../../../utils/__internal__/DelegatingObserver.js";
 import {
   DisposableLike_dispose,
   EventListenerLike_notify,
@@ -66,7 +66,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
     };
 
     return pipe(
-      Observer_createWithDelegate(delegate),
+      DelegatingObserver.createNonDisposing(delegate),
       Disposable.addToContainer(delegate),
       DisposableContainer.onDisposed(doOnDispose),
     );

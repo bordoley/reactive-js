@@ -11,9 +11,7 @@ import {
 } from "../../__internal__/mixins.js";
 import {
   Function1,
-  Method1,
   Optional,
-  SideEffect1,
   bind,
   bindMethod,
   isSome,
@@ -53,6 +51,7 @@ import {
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
+import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
 import QueueMixin from "./QueueMixin.js";
 import SerialDisposableMixin from "./SerialDisposableMixin.js";
 
@@ -113,18 +112,10 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
   TB = TA,
 >() => {
   const LiftedObserverMixin_consumer = Symbol("LiftedObserverMixin_consumer");
-  const LiftedObserverMixin_consumerCallback = Symbol(
-    "LiftedObserverMixin_consumerCallback",
-  );
 
   type TProperties = {
     [LiftedObserverLike_delegate]: ObserverLike<TB>;
     [LiftedObserverMixin_consumer]: ObserverLike;
-    [LiftedObserverMixin_consumerCallback]: Method1<
-      SideEffect1<ContinuationContextLike>,
-      ContinuationContextLike
-    >;
-    [SchedulerLike_inContinuation]: boolean;
     [LiftedObserverLike_notifyDelegate]: Function1<TB, void>;
   };
 
@@ -231,6 +222,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
       Omit<
         LiftedObserverLike<TA, TB>,
         | keyof DisposableLike
+        | keyof SchedulerLike
         | typeof SchedulerLike_inContinuation
         | typeof QueueableLike_isReady
         | typeof SinkLike_isCompleted
@@ -256,17 +248,22 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         backpressureStrategy?: BackpressureStrategy;
       }>
     >(
-      include(QueueMixin(), SerialDisposableMixin()),
+      include(QueueMixin(), SerialDisposableMixin(), DelegatingSchedulerMixin),
       function LiftedObserverMixin(
         this: TProperties &
           Omit<
             LiftedObserverLike<TA, TB>,
-            | typeof SchedulerLike_inContinuation
             | typeof QueueableLike_isReady
             | typeof SinkLike_isCompleted
             | typeof QueueableLike_addOnReadyListener
             | typeof QueueableLike_backpressureStrategy
             | typeof QueueableLike_capacity
+            | typeof SchedulerLike_maxYieldInterval
+            | typeof SchedulerLike_inContinuation
+            | typeof SchedulerLike_now
+            | typeof SchedulerLike_shouldYield
+            | typeof SchedulerLike_requestYield
+            | typeof SchedulerLike_schedule
           >,
         delegate: ObserverLike<TB>,
         options: Optional<{
@@ -280,6 +277,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           ...(options ?? {}),
         });
         init(SerialDisposableMixin(), this, Disposable.disposed);
+        init(DelegatingSchedulerMixin, this, delegate);
 
         const delegateIsLifted = isSome(
           (delegate as Partial<LiftedObserverLike<TB>>)[
@@ -296,18 +294,6 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           (delegate as unknown as TProperties)[LiftedObserverMixin_consumer] ??
           delegate;
 
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
-        const instance = this;
-        this[LiftedObserverMixin_consumerCallback] =
-          function ObserverMixinSchedulerCallback(
-            this: SideEffect1<ContinuationContextLike>,
-            ctx: ContinuationContextLike,
-          ) {
-            instance[SchedulerLike_inContinuation] = true;
-            this(ctx);
-            instance[SchedulerLike_inContinuation] = false;
-          };
-
         pipe(
           this,
           DisposableContainer.onDisposed(bindMethod(this, SinkLike_complete)),
@@ -316,53 +302,14 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         return this;
       },
       props<TProperties>({
-        [SchedulerLike_inContinuation]: false,
         [LiftedObserverLike_delegate]: none,
         [LiftedObserverMixin_consumer]: none,
-        [LiftedObserverMixin_consumerCallback]: none,
         [LiftedObserverLike_notifyDelegate]: none,
       }),
       proto({
         get [LiftedObserverLike_isReady]() {
           unsafeCast<TProperties>(this);
           return this[LiftedObserverMixin_consumer][QueueableLike_isReady];
-        },
-
-        get [SchedulerLike_maxYieldInterval]() {
-          unsafeCast<TProperties>(this);
-          return this[LiftedObserverMixin_consumer][
-            SchedulerLike_maxYieldInterval
-          ];
-        },
-
-        get [SchedulerLike_now]() {
-          unsafeCast<TProperties>(this);
-          return this[LiftedObserverMixin_consumer][SchedulerLike_now];
-        },
-
-        get [SchedulerLike_shouldYield]() {
-          unsafeCast<TProperties>(this);
-          return this[LiftedObserverMixin_consumer][SchedulerLike_shouldYield];
-        },
-
-        [SchedulerLike_requestYield](this: TProperties) {
-          this[LiftedObserverMixin_consumer][SchedulerLike_requestYield]();
-        },
-
-        [SchedulerLike_schedule](
-          this: TProperties & SchedulerLike & DisposableLike,
-          continuation: SideEffect1<ContinuationContextLike>,
-          options?: {
-            readonly delay?: number;
-          },
-        ): DisposableLike {
-          return pipe(
-            this[LiftedObserverLike_delegate][SchedulerLike_schedule](
-              bind(this[LiftedObserverMixin_consumerCallback], continuation),
-              options,
-            ),
-            Disposable.addToContainer(this),
-          );
         },
 
         [EventListenerLike_notify](

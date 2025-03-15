@@ -18,7 +18,7 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
+import * as DelegatingObserver from "../../../utils/__internal__/DelegatingObserver.js";
 import {
   DisposableLike_dispose,
   ObserverLike,
@@ -38,7 +38,7 @@ const Observable_catchError: Observable.Signature["catchError"] = (<T>(
   pipe(
     (delegate: ObserverLike<T>) =>
       pipe(
-        Observer_createWithDelegate(delegate),
+        DelegatingObserver.createNonDisposing(delegate),
         Disposable.addToContainer(delegate),
         DisposableContainer.onError(err => {
           let action: Optional<ObservableLike<T>> = none;

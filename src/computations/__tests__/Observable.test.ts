@@ -198,6 +198,10 @@ testModule(
           capacity: 0,
           backpressureStrategy: DropLatestBackpressureStrategy,
         }),
+        Observable.backpressureStrategy({
+          capacity: 10000,
+          backpressureStrategy: DropLatestBackpressureStrategy,
+        }),
         Observable.last(),
         expectIsNone,
       ),
