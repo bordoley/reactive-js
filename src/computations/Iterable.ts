@@ -8,7 +8,9 @@ import {
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
+  ComputationLike_isSynchronous,
   ComputationModule,
   ComputationType,
   Computation_T,
@@ -251,6 +253,22 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
       ? arr
       : newInstance(FromReadonlyArrayIterable, arr, count, start);
   };
+
+class GenIterable<T> implements PureIterableLike<T> {
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isPure]: true = true as const;
+
+  constructor(readonly f: Factory<Generator<T>>) {}
+
+  *[Symbol.iterator]() {
+    const iter = this.f();
+    yield* iter;
+  }
+}
+
+export const gen: Signature["gen"] = (<T>(factory: Factory<Generator<T>>) =>
+  newInstance(GenIterable<T>, factory)) as Signature["gen"];
 
 class GeneratorIterable<T> {
   public readonly [ComputationLike_isPure]?: true;

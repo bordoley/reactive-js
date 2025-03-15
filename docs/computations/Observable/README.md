@@ -58,6 +58,7 @@
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
 - [fromStore](functions/fromStore.md)
 - [fromValue](functions/fromValue.md)
+- [gen](functions/gen.md)
 - [generate](functions/generate.md)
 - [keep](functions/keep.md)
 - [keyFrame](functions/keyFrame.md)

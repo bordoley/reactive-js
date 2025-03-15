@@ -30,6 +30,7 @@ export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const firstAsync: Signature["firstAsync"];
 export declare const forEach: Signature["forEach"];
 export declare const fromValue: Signature["fromValue"];
+export declare const gen: Signature["gen"];
 export declare const generate: Signature["generate"];
 export declare const keep: Signature["keep"];
 export declare const lastAsync: Signature["lastAsync"];

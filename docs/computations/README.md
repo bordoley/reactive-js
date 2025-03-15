@@ -78,6 +78,7 @@
 - [FromObservableOperator](type-aliases/FromObservableOperator.md)
 - [FromReadonlyArrayOperator](type-aliases/FromReadonlyArrayOperator.md)
 - [FromValueOperator](type-aliases/FromValueOperator.md)
+- [GeneratorConstructor](type-aliases/GeneratorConstructor.md)
 - [GeneratorOf](type-aliases/GeneratorOf.md)
 - [HigherOrderComputationOperator](type-aliases/HigherOrderComputationOperator.md)
 - [HigherOrderInnerComputationLike](type-aliases/HigherOrderInnerComputationLike.md)

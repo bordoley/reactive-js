@@ -3,7 +3,7 @@
 import { Array_length, Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
-import { ComputationLike_isPure, Computation_baseOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
 import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raise as raiseError, returns, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as ComputationM from "./Computation.js";
@@ -118,6 +118,20 @@ export const fromReadonlyArray = (options) => (arr) => {
         ? arr
         : newInstance(FromReadonlyArrayIterable, arr, count, start);
 };
+class GenIterable {
+    f;
+    [ComputationLike_isSynchronous] = true;
+    [ComputationLike_isDeferred] = true;
+    [ComputationLike_isPure] = true;
+    constructor(f) {
+        this.f = f;
+    }
+    *[Symbol.iterator]() {
+        const iter = this.f();
+        yield* iter;
+    }
+}
+export const gen = ((factory) => newInstance((GenIterable), factory));
 class GeneratorIterable {
     generator;
     initialValue;

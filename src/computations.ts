@@ -545,6 +545,16 @@ export type FromObservableOperator<
 ) : never;
 
 // prettier-ignore
+export type GeneratorConstructor<
+  TComputationType extends ComputationType,
+  T, 
+> = PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType,T> ? 
+    PureSynchronousComputationOf<TComputationType, T> : 
+  PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? 
+    PureDeferredComputationOf<TComputationType, T> : 
+    MulticastComputationOf<TComputationType, T> & DisposableLike
+
+// prettier-ignore
 export type FromIterableOperator<
   TComputationType extends ComputationType,
   T,
@@ -997,6 +1007,7 @@ export interface ComputationModule<
     fromIterable?: Record<string, any>;
     fromReadonlyArray?: Record<string, any>;
     fromValue?: Record<string, any>;
+    gen?: Record<string, any>;
     generate?: Record<string, any>;
     lastAsync?: Record<string, any>;
     raise?: Record<string, any>;
@@ -1009,6 +1020,11 @@ export interface ComputationModule<
   firstAsync<T>(
     options?: TCreationOptions["firstAsync"],
   ): AsyncFunction1<ComputationOf<TComputationType, T>, Optional<T>>;
+
+  gen<T>(
+    factory: Factory<Generator<T>>,
+    options?: TCreationOptions["gen"],
+  ): GeneratorConstructor<TComputationType, T>;
 
   fromIterable<T>(
     options?: TCreationOptions["fromIterable"],

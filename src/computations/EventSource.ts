@@ -20,6 +20,7 @@ import EventSource_fromIterable from "./EventSource/__private__/EventSource.from
 import EventSource_fromPromise from "./EventSource/__private__/EventSource.fromPromise.js";
 import EventSource_fromReadonlyArray from "./EventSource/__private__/EventSource.fromReadonlyArray.js";
 import EventSource_fromValue from "./EventSource/__private__/EventSource.fromValue.js";
+import EventSource_gen from "./EventSource/__private__/EventSource.gen.js";
 import EventSource_generate from "./EventSource/__private__/EventSource.generate.js";
 import EventSource_keep from "./EventSource/__private__/EventSource.keep.js";
 import EventSource_lastAsync from "./EventSource/__private__/EventSource.lastAsync.js";
@@ -85,6 +86,7 @@ export const fromPromise: Signature["fromPromise"] = EventSource_fromPromise;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   EventSource_fromReadonlyArray;
 export const fromValue: Signature["fromValue"] = EventSource_fromValue;
+export const gen: Signature["gen"] = EventSource_gen;
 export const generate: Signature["generate"] = EventSource_generate;
 export const keep: Signature["keep"] = EventSource_keep;
 export const lastAsync: Signature["lastAsync"] = EventSource_lastAsync;

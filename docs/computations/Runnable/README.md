@@ -32,6 +32,7 @@
 - [fromIterable](functions/fromIterable.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
 - [fromValue](functions/fromValue.md)
+- [gen](functions/gen.md)
 - [generate](functions/generate.md)
 - [keep](functions/keep.md)
 - [last](functions/last.md)

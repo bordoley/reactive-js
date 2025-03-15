@@ -84,6 +84,7 @@ import Observable_fromPromise from "./Observable/__private__/Observable.fromProm
 import Observable_fromReadonlyArray from "./Observable/__private__/Observable.fromReadonlyArray.js";
 import Observable_fromStore from "./Observable/__private__/Observable.fromStore.js";
 import Observable_fromValue from "./Observable/__private__/Observable.fromValue.js";
+import Observable_gen from "./Observable/__private__/Observable.gen.js";
 import Observable_generate from "./Observable/__private__/Observable.generate.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
 import Observable_keyFrame from "./Observable/__private__/Observable.keyFrame.js";
@@ -185,7 +186,7 @@ export interface ObservableModule
           readonly scheduler?: SchedulerLike;
         };
         fromIterable: {
-          readonly delay: number;
+          readonly delay?: number;
           readonly delayStart?: boolean;
         };
         fromReadonlyArray: {
@@ -467,6 +468,7 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   Observable_fromReadonlyArray;
 export const fromStore: Signature["fromStore"] = Observable_fromStore;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;
+export const gen: Signature["gen"] = Observable_gen;
 export const generate: Signature["generate"] = Observable_generate;
 export const keep: Signature["keep"] = Observable_keep;
 export const keyFrame: Signature["keyFrame"] = Observable_keyFrame;

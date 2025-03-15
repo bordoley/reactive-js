@@ -9,6 +9,7 @@ import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import {
   AsyncIterableLike,
   AsyncIterableWithSideEffectsLike,
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ComputationModule,
@@ -354,8 +355,25 @@ export const fromValue: Signature["fromValue"] =
   /*@__PURE__*/
   returns(v => fromReadonlyArray()([v])) as Signature["fromValue"];
 
+class GenAsyncIterable<T> implements PureAsyncIterableLike<T> {
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isPure]: true = true as const;
+
+  constructor(readonly f: Factory<Generator<T>>) {}
+
+  async *[Symbol.asyncIterator]() {
+    const iter = this.f();
+    yield* iter;
+  }
+}
+
+export const gen: Signature["gen"] = (<T>(factory: Factory<Generator<T>>) =>
+  newInstance(GenAsyncIterable<T>, factory)) as Signature["gen"];
+
 class GeneratorAsyncIterable<T> implements PureAsyncIterableLike<T> {
   public readonly [ComputationLike_isSynchronous]: false = false as const;
+  public readonly [ComputationLike_isPure]: true = true as const;
 
   constructor(
     readonly generator: Updater<T>,

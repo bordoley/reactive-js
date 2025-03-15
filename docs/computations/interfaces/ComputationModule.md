@@ -136,6 +136,30 @@
 
 ***
 
+### gen()
+
+> **gen**\<`T`\>(`factory`, `options`?): [`GeneratorConstructor`](../type-aliases/GeneratorConstructor.md)\<`TComputationType`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### factory
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`Generator`\<`T`, `any`, `any`\>\>
+
+##### options?
+
+`TCreationOptions`\[`"gen"`\]
+
+#### Returns
+
+[`GeneratorConstructor`](../type-aliases/GeneratorConstructor.md)\<`TComputationType`, `T`\>
+
+***
+
 ### generate()
 
 > **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`GeneratorOf`](../type-aliases/GeneratorOf.md)\<`TComputationType`, `T`\>

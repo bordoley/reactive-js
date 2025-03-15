@@ -128,12 +128,12 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
     ctx: ContinuationContextLike,
   ) {
     // This is the ultimate downstream consumer of events.
-    const scheduler = this[LiftedObserverMixin_consumer];
+    const consumer = this[LiftedObserverMixin_consumer];
 
     while (this[QueueLike_count] > 0 && !this[DisposableLike_isDisposed]) {
       // Avoid dequeing values if the downstream consumer
       // is applying backpressure.
-      if (!scheduler[QueueableLike_isReady]) {
+      if (!consumer[QueueableLike_isReady]) {
         // Set up the onReady listener
         scheduleDrainQueue(this);
         break;

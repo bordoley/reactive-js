@@ -33,6 +33,7 @@ import Observable_fromPromise from "./Observable/__private__/Observable.fromProm
 import Observable_fromReadonlyArray from "./Observable/__private__/Observable.fromReadonlyArray.js";
 import Observable_fromStore from "./Observable/__private__/Observable.fromStore.js";
 import Observable_fromValue from "./Observable/__private__/Observable.fromValue.js";
+import Observable_gen from "./Observable/__private__/Observable.gen.js";
 import Observable_generate from "./Observable/__private__/Observable.generate.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
 import Observable_keyFrame from "./Observable/__private__/Observable.keyFrame.js";
@@ -109,6 +110,7 @@ export const fromPromise = Observable_fromPromise;
 export const fromReadonlyArray = Observable_fromReadonlyArray;
 export const fromStore = Observable_fromStore;
 export const fromValue = Observable_fromValue;
+export const gen = Observable_gen;
 export const generate = Observable_generate;
 export const keep = Observable_keep;
 export const keyFrame = Observable_keyFrame;

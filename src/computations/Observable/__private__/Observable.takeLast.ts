@@ -5,9 +5,11 @@ import {
   props,
   proto,
 } from "../../../__internal__/mixins.js";
+import { ObservableLike_observe } from "../../../computations.js";
 import {
   Optional,
-  bind,
+  call,
+  invoke,
   isSome,
   none,
   partial,
@@ -21,22 +23,18 @@ import LiftedObserverMixin, {
   LiftedObserverLike,
   LiftedObserverLike_complete,
   LiftedObserverLike_completeDelegate,
-  LiftedObserverLike_isReady,
+  LiftedObserverLike_delegate,
   LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
   EventListenerLike_notify,
   ObserverLike,
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
-  SchedulerLike_requestYield,
-  SchedulerLike_schedule,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
+import Observable_fromIterable from "./Observable.fromIterable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
 const createTakeLastObserver: <T>(
@@ -49,31 +47,12 @@ const createTakeLastObserver: <T>(
     [TakeLastObserver_queue]: QueueLike<T>;
   };
 
-  function notifyDelegate(
-    this: TProperties & LiftedObserverLike<T>,
-    ctx: ContinuationContextLike,
-  ) {
+  function* notifyLast(this: TProperties) {
     const queue = this[TakeLastObserver_queue];
-
     let v: Optional<T> = none;
     while (((v = queue[QueueLike_dequeue]()), isSome(v))) {
-      if (!this[LiftedObserverLike_isReady]) {
-        this[SchedulerLike_requestYield]();
-        ctx[ContinuationContextLike_yield]();
-      }
-
-      this[LiftedObserverLike_notifyDelegate](v);
-
-      if (!this[LiftedObserverLike_isReady]) {
-        this[SchedulerLike_requestYield]();
-      }
-
-      if (queue[QueueLike_count] > 0) {
-        ctx[ContinuationContextLike_yield]();
-      }
+      yield v;
     }
-
-    this[LiftedObserverLike_completeDelegate]();
   }
 
   return mixInstanceFactory(
@@ -109,9 +88,13 @@ const createTakeLastObserver: <T>(
 
         if (count === 0) {
           this[LiftedObserverLike_completeDelegate]();
+        } else {
+          pipe(
+            call(notifyLast, this),
+            Observable_fromIterable(),
+            invoke(ObservableLike_observe, this[LiftedObserverLike_delegate]),
+          );
         }
-
-        this[SchedulerLike_schedule](bind(notifyDelegate, this));
       },
     }),
   );

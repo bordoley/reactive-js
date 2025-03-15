@@ -30,6 +30,7 @@
 - [fromPromise](functions/fromPromise.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
 - [fromValue](functions/fromValue.md)
+- [gen](functions/gen.md)
 - [generate](functions/generate.md)
 - [keep](functions/keep.md)
 - [lastAsync](functions/lastAsync.md)

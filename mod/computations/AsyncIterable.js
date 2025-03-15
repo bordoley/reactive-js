@@ -2,7 +2,7 @@
 
 import { Array_map, Array_push, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
-import { ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, } from "../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, } from "../computations.js";
 import { alwaysTrue, bindMethod, error, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raiseError, returns, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
@@ -169,11 +169,26 @@ export const forEach = ((effect) => (iter) => newInstance(ForEachAsyncIterable, 
 export const fromValue = 
 /*@__PURE__*/
 returns(v => fromReadonlyArray()([v]));
+class GenAsyncIterable {
+    f;
+    [ComputationLike_isSynchronous] = false;
+    [ComputationLike_isDeferred] = true;
+    [ComputationLike_isPure] = true;
+    constructor(f) {
+        this.f = f;
+    }
+    async *[Symbol.asyncIterator]() {
+        const iter = this.f();
+        yield* iter;
+    }
+}
+export const gen = ((factory) => newInstance((GenAsyncIterable), factory));
 class GeneratorAsyncIterable {
     generator;
     initialValue;
     count;
     [ComputationLike_isSynchronous] = false;
+    [ComputationLike_isPure] = true;
     constructor(generator, initialValue, count) {
         this.generator = generator;
         this.initialValue = initialValue;

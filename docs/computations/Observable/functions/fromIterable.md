@@ -16,7 +16,7 @@
 
 ### options?
 
-#### delay
+#### delay?
 
 `number`
 

@@ -408,6 +408,34 @@
 
 ***
 
+### gen()
+
+> **gen**\<`T`\>(`factory`, `options`?): `never`
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### factory
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`Generator`\<`T`, `any`, `any`\>\>
+
+##### options?
+
+`unknown`
+
+#### Returns
+
+`never`
+
+#### Inherited from
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`gen`](../../interfaces/ComputationModule.md#gen)
+
+***
+
 ### generate()
 
 > **generate**\<`T`\>(`generator`, `initialValue`, `options`?): `never`
