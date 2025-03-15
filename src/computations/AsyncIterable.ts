@@ -23,7 +23,6 @@ import {
   EventSourceLike,
   HigherOrderInnerComputationLike,
   InteractiveComputationModule,
-  IterableLike,
   PauseableEventSourceLike,
   PauseableObservableLike,
   PureAsyncIterableLike,
@@ -245,22 +244,6 @@ export const fromAsyncFactory: Signature["fromAsyncFactory"] = returns(
   factory => newInstance(FromAsyncFactoryIterable, factory),
 );
 
-class FromIterableAsyncIterable<T> implements PureAsyncIterableLike<T> {
-  public readonly [ComputationLike_isSynchronous]: false = false as const;
-
-  constructor(private s: IterableLike<T>) {}
-
-  async *[Symbol.asyncIterator]() {
-    yield* this.s;
-  }
-}
-
-export const fromIterable: Signature["fromIterable"] =
-  /*@__PURE__*/
-  returns(arr =>
-    newInstance(FromIterableAsyncIterable, arr),
-  ) as Signature["fromIterable"];
-
 class FromReadonlyArrayAsyncIterable<T> implements PureAsyncIterableLike<T> {
   public readonly [ComputationLike_isSynchronous]: false = false as const;
 
@@ -370,6 +353,29 @@ class GenAsyncIterable<T> implements PureAsyncIterableLike<T> {
 
 export const gen: Signature["gen"] = (<T>(factory: Factory<Generator<T>>) =>
   newInstance(GenAsyncIterable<T>, factory)) as Signature["gen"];
+
+class GenWithSideEffectsAsyncIterable<T>
+  implements AsyncIterableWithSideEffectsLike<T>
+{
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isPure]: false = false as const;
+
+  constructor(readonly f: Factory<Generator<T>>) {}
+
+  async *[Symbol.asyncIterator]() {
+    const iter = this.f();
+    yield* iter;
+  }
+}
+
+export const genWithSideEffects: Signature["genWithSideEffects"] = (<T>(
+  factory: Factory<Generator<T>>,
+) =>
+  newInstance(
+    GenWithSideEffectsAsyncIterable<T>,
+    factory,
+  )) as Signature["genWithSideEffects"];
 
 class GeneratorAsyncIterable<T> implements PureAsyncIterableLike<T> {
   public readonly [ComputationLike_isSynchronous]: false = false as const;

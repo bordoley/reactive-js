@@ -11,15 +11,8 @@ import {
   DeferredComputationModule,
   SynchronousComputationModule,
 } from "../../../computations.js";
-import {
-  Optional,
-  ignore,
-  pipe,
-  pipeLazy,
-  returns,
-} from "../../../functions.js";
+import { Optional, pipe, pipeLazy, returns } from "../../../functions.js";
 import { increment } from "../../../math.js";
-import * as Iterable from "../../Iterable.js";
 import * as Runnable from "../../Runnable.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
 
@@ -47,13 +40,6 @@ const SynchronousComputationModuleTests = <
       test(
         "returns the none when computation is empty",
         pipeLazy([], m.fromReadonlyArray(), m.first(), expectIsNone),
-      ),
-    ),
-    describe(
-      "fromIterable",
-      ComputationTest.isPureSynchronous(m.fromIterable()([])),
-      ComputationTest.isSynchronousWithSideEffects(
-        pipe([], Iterable.forEach(ignore), m.fromIterable()),
       ),
     ),
     describe(

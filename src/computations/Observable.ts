@@ -78,13 +78,13 @@ import Observable_forkMerge from "./Observable/__private__/Observable.forkMerge.
 import Observable_fromAsyncFactory from "./Observable/__private__/Observable.fromAsyncFactory.js";
 import Observable_fromAsyncIterable from "./Observable/__private__/Observable.fromAsyncIterable.js";
 import Observable_fromEventSource from "./Observable/__private__/Observable.fromEventSource.js";
-import Observable_fromIterable from "./Observable/__private__/Observable.fromIterable.js";
 import Observable_fromObservable from "./Observable/__private__/Observable.fromObservable.js";
 import Observable_fromPromise from "./Observable/__private__/Observable.fromPromise.js";
 import Observable_fromReadonlyArray from "./Observable/__private__/Observable.fromReadonlyArray.js";
 import Observable_fromStore from "./Observable/__private__/Observable.fromStore.js";
 import Observable_fromValue from "./Observable/__private__/Observable.fromValue.js";
 import Observable_gen from "./Observable/__private__/Observable.gen.js";
+import Observable_genWithSideEffects from "./Observable/__private__/Observable.genWithSideEffects.js";
 import Observable_generate from "./Observable/__private__/Observable.generate.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
 import Observable_keyFrame from "./Observable/__private__/Observable.keyFrame.js";
@@ -460,7 +460,6 @@ export const fromAsyncIterable: Signature["fromAsyncIterable"] =
   Observable_fromAsyncIterable;
 export const fromEventSource: Signature["fromEventSource"] =
   Observable_fromEventSource;
-export const fromIterable: Signature["fromIterable"] = Observable_fromIterable;
 export const fromObservable: Signature["fromObservable"] =
   Observable_fromObservable;
 export const fromPromise: Signature["fromPromise"] = Observable_fromPromise;
@@ -469,6 +468,8 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
 export const fromStore: Signature["fromStore"] = Observable_fromStore;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;
 export const gen: Signature["gen"] = Observable_gen;
+export const genWithSideEffects: Signature["genWithSideEffects"] =
+  Observable_genWithSideEffects;
 export const generate: Signature["generate"] = Observable_generate;
 export const keep: Signature["keep"] = Observable_keep;
 export const keyFrame: Signature["keyFrame"] = Observable_keyFrame;

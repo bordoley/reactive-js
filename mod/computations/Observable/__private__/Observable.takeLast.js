@@ -9,8 +9,14 @@ import * as Queue from "../../../utils/Queue.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_completeDelegate, LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { EventListenerLike_notify, QueueLike_count, QueueLike_dequeue, } from "../../../utils.js";
-import Observable_fromIterable from "./Observable.fromIterable.js";
+import * as Computation from "../../Computation.js";
+import Observable_gen from "./Observable.gen.js";
+import Observable_genWithSideEffects from "./Observable.genWithSideEffects.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
+const ObservableModule = {
+    gen: Observable_gen,
+    genWithSideEffects: Observable_genWithSideEffects,
+};
 const createTakeLastObserver = /*@__PURE__*/ (() => {
     const TakeLastObserver_queue = Symbol("TakeLastObserver_queue");
     function* notifyLast() {
@@ -37,7 +43,7 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
                 this[LiftedObserverLike_completeDelegate]();
             }
             else {
-                pipe(call(notifyLast, this), Observable_fromIterable(), invoke(ObservableLike_observe, this[LiftedObserverLike_delegate]));
+                pipe(call(notifyLast, this), Computation.fromIterable(ObservableModule), invoke(ObservableLike_observe, this[LiftedObserverLike_delegate]));
             }
         },
     }));

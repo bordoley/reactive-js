@@ -26,10 +26,10 @@ import Runnable_encodeUtf8 from "./Runnable/__private__/Runnable.encodeUtf8.js";
 import Runnable_first from "./Runnable/__private__/Runnable.first.js";
 import Runnable_firstAsync from "./Runnable/__private__/Runnable.firstAsync.js";
 import Runnable_forEach from "./Runnable/__private__/Runnable.forEach.js";
-import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
 import Runnable_fromReadonlyArray from "./Runnable/__private__/Runnable.fromReadonlyArray.js";
 import Runnable_fromValue from "./Runnable/__private__/Runnable.fromValue.js";
 import Runnable_gen from "./Runnable/__private__/Runnable.gen.js";
+import Runnable_genWithSideEffects from "./Runnable/__private__/Runnable.genWithSideEffects.js";
 import Runnable_generate from "./Runnable/__private__/Runnable.generate.js";
 import Runnable_keep from "./Runnable/__private__/Runnable.keep.js";
 import Runnable_last from "./Runnable/__private__/Runnable.last.js";
@@ -89,11 +89,12 @@ export const encodeUtf8: Signature["encodeUtf8"] = Runnable_encodeUtf8;
 export const first: Signature["first"] = Runnable_first;
 export const firstAsync: Signature["firstAsync"] = Runnable_firstAsync;
 export const forEach: Signature["forEach"] = Runnable_forEach;
-export const fromIterable: Signature["fromIterable"] = Runnable_fromIterable;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   Runnable_fromReadonlyArray;
 export const fromValue: Signature["fromValue"] = Runnable_fromValue;
 export const gen: Signature["gen"] = Runnable_gen;
+export const genWithSideEffects: Signature["genWithSideEffects"] =
+  Runnable_genWithSideEffects;
 export const generate: Signature["generate"] = Runnable_generate;
 export const keep: Signature["keep"] = Runnable_keep;
 export const last: Signature["last"] = Runnable_last;

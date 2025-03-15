@@ -1,6 +1,7 @@
 import {
   describe,
   expectArrayEquals,
+  expectFalse,
   expectToHaveBeenCalledTimes,
   mockFn,
   test,
@@ -8,6 +9,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import {
+  ComputationLike_isPure,
   Computation_deferredWithSideEffectsOfT,
   Computation_multicastOfT,
   Computation_pureDeferredOfT,
@@ -20,6 +22,7 @@ import {
   ignore,
   isSome,
   none,
+  pick,
   pipe,
   pipeLazy,
   pipeLazyAsync,
@@ -160,6 +163,53 @@ testModule(
         }),
         Iterable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+  ),
+  describe(
+    "fromIterable",
+    testAsync(
+      "with array",
+      pipeLazyAsync(
+        [1, 2, 3],
+        Computation.fromIterable<Iterable.Computation, number>(Iterable),
+        Iterable.toReadonlyArrayAsync(),
+        expectArrayEquals([1, 2, 3]),
+      ),
+    ),
+    test(
+      "with Observable options",
+      pipeLazy(
+        [9, 9, 9, 9],
+        Computation.fromIterable<Observable.Computation, number>(Observable, {
+          delay: 2,
+        }),
+        Observable.withCurrentTime(t => t),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([0, 2, 4, 6]),
+      ),
+    ),
+    test(
+      "with Observable delay and delayed start",
+      pipeLazy(
+        [9, 9, 9, 9],
+        Computation.fromIterable<Observable.Computation, number>(Observable, {
+          delay: 2,
+          delayStart: true,
+        }),
+        Observable.withCurrentTime(t => t),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([2, 4, 6, 8]),
+      ),
+    ),
+    test(
+      "from Iterable that has side effects",
+      pipeLazy(
+        [1, 2, 3],
+        Iterable.forEach<number>(() => {}),
+        Computation.fromIterable<Iterable.Computation, number>(Iterable),
+        pick(ComputationLike_isPure),
+        expectFalse("expected iterable to have side effects"),
       ),
     ),
   ),

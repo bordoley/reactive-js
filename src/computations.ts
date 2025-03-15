@@ -545,13 +545,23 @@ export type FromObservableOperator<
 ) : never;
 
 // prettier-ignore
-export type GeneratorConstructor<
+export type GenPureConstructor<
   TComputationType extends ComputationType,
   T, 
 > = PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType,T> ? 
     PureSynchronousComputationOf<TComputationType, T> : 
   PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? 
     PureDeferredComputationOf<TComputationType, T> : 
+    MulticastComputationOf<TComputationType, T> & DisposableLike
+
+// prettier-ignore
+export type GenWithSideEffectsConstructor<
+  TComputationType extends ComputationType,
+  T, 
+> = SynchronousComputationWithSideEffectsOf<TComputationType, T> extends ComputationBaseOf<TComputationType,T> ? 
+    SynchronousComputationWithSideEffectsOf<TComputationType, T> : 
+    DeferredComputationWithSideEffectsOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? 
+    DeferredComputationWithSideEffectsOf<TComputationType, T> : 
     MulticastComputationOf<TComputationType, T> & DisposableLike
 
 // prettier-ignore
@@ -1004,7 +1014,6 @@ export interface ComputationModule<
   TCreationOptions extends {
     empty?: Record<string, any>;
     firstAsync?: Record<string, any>;
-    fromIterable?: Record<string, any>;
     fromReadonlyArray?: Record<string, any>;
     fromValue?: Record<string, any>;
     gen?: Record<string, any>;
@@ -1024,11 +1033,12 @@ export interface ComputationModule<
   gen<T>(
     factory: Factory<Generator<T>>,
     options?: TCreationOptions["gen"],
-  ): GeneratorConstructor<TComputationType, T>;
+  ): GenPureConstructor<TComputationType, T>;
 
-  fromIterable<T>(
-    options?: TCreationOptions["fromIterable"],
-  ): FromIterableOperator<TComputationType, T>;
+  genWithSideEffects<T>(
+    factory: Factory<Generator<T>>,
+    options?: TCreationOptions["gen"],
+  ): GenWithSideEffectsConstructor<TComputationType, T>;
 
   fromReadonlyArray<T>(
     options?: {

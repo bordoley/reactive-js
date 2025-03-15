@@ -19,6 +19,10 @@
 - [PickOperator](interfaces/PickOperator.md)
 - [Signature](interfaces/Signature.md)
 
+## Type Aliases
+
+- [FromIterableOperator](type-aliases/FromIterableOperator.md)
+
 ## Functions
 
 - [areAllDeferred](functions/areAllDeferred.md)
@@ -34,6 +38,7 @@
 - [flatMap](functions/flatMap.md)
 - [flatMapAsync](functions/flatMapAsync.md)
 - [flatMapIterable](functions/flatMapIterable.md)
+- [fromIterable](functions/fromIterable.md)
 - [hasSideEffects](functions/hasSideEffects.md)
 - [ignoreElements](functions/ignoreElements.md)
 - [isDeferred](functions/isDeferred.md)

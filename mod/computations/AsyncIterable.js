@@ -88,19 +88,6 @@ class FromAsyncFactoryIterable {
     }
 }
 export const fromAsyncFactory = returns(factory => newInstance(FromAsyncFactoryIterable, factory));
-class FromIterableAsyncIterable {
-    s;
-    [ComputationLike_isSynchronous] = false;
-    constructor(s) {
-        this.s = s;
-    }
-    async *[Symbol.asyncIterator]() {
-        yield* this.s;
-    }
-}
-export const fromIterable = 
-/*@__PURE__*/
-returns(arr => newInstance(FromIterableAsyncIterable, arr));
 class FromReadonlyArrayAsyncIterable {
     arr;
     count;
@@ -183,6 +170,20 @@ class GenAsyncIterable {
     }
 }
 export const gen = ((factory) => newInstance((GenAsyncIterable), factory));
+class GenWithSideEffectsAsyncIterable {
+    f;
+    [ComputationLike_isSynchronous] = false;
+    [ComputationLike_isDeferred] = true;
+    [ComputationLike_isPure] = false;
+    constructor(f) {
+        this.f = f;
+    }
+    async *[Symbol.asyncIterator]() {
+        const iter = this.f();
+        yield* iter;
+    }
+}
+export const genWithSideEffects = ((factory) => newInstance((GenWithSideEffectsAsyncIterable), factory));
 class GeneratorAsyncIterable {
     generator;
     initialValue;

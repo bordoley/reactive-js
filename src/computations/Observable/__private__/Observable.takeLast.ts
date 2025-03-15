@@ -33,9 +33,16 @@ import {
   QueueLike_count,
   QueueLike_dequeue,
 } from "../../../utils.js";
+import * as Computation from "../../Computation.js";
 import type * as Observable from "../../Observable.js";
-import Observable_fromIterable from "./Observable.fromIterable.js";
+import Observable_gen from "./Observable.gen.js";
+import Observable_genWithSideEffects from "./Observable.genWithSideEffects.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
+
+const ObservableModule = {
+  gen: Observable_gen,
+  genWithSideEffects: Observable_genWithSideEffects,
+};
 
 const createTakeLastObserver: <T>(
   delegate: ObserverLike<T>,
@@ -91,7 +98,9 @@ const createTakeLastObserver: <T>(
         } else {
           pipe(
             call(notifyLast, this),
-            Observable_fromIterable(),
+            Computation.fromIterable<Observable.Computation, T>(
+              ObservableModule,
+            ),
             invoke(ObservableLike_observe, this[LiftedObserverLike_delegate]),
           );
         }

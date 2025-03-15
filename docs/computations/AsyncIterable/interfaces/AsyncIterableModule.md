@@ -330,30 +330,6 @@
 
 ***
 
-### fromIterable()
-
-> **fromIterable**\<`T`\>(`options`?): [`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`unknown`
-
-#### Returns
-
-[`FromIterableOperator`](../../type-aliases/FromIterableOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
-
-#### Inherited from
-
-[`ComputationModule`](../../interfaces/ComputationModule.md).[`fromIterable`](../../interfaces/ComputationModule.md#fromiterable)
-
-***
-
 ### fromReadonlyArray()
 
 > **fromReadonlyArray**\<`T`\>(`options`?): [`FromReadonlyArrayOperator`](../../type-aliases/FromReadonlyArrayOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
@@ -467,6 +443,34 @@
 #### Inherited from
 
 [`ComputationModule`](../../interfaces/ComputationModule.md).[`generate`](../../interfaces/ComputationModule.md#generate)
+
+***
+
+### genWithSideEffects()
+
+> **genWithSideEffects**\<`T`\>(`factory`, `options`?): `never`
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### factory
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`Generator`\<`T`, `any`, `any`\>\>
+
+##### options?
+
+`unknown`
+
+#### Returns
+
+`never`
+
+#### Inherited from
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`genWithSideEffects`](../../interfaces/ComputationModule.md#genwithsideeffects)
 
 ***
 

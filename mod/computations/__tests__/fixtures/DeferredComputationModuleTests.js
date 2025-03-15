@@ -1,13 +1,12 @@
 /// <reference types="./DeferredComputationModuleTests.d.ts" />
 
 import { Array_push } from "../../../__internal__/constants.js";
-import { describe, expectArrayEquals, expectEquals, expectFalse, expectToThrowAsync, expectToThrowErrorAsync, testAsync, } from "../../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectToThrowAsync, expectToThrowErrorAsync, testAsync, } from "../../../__internal__/testing.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import { ComputationLike_isPure, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, DeferredComputationWithSideEffects, PureDeferredComputation, PureSynchronousComputation, SynchronousComputationWithSideEffects, } from "../../../computations.js";
-import { alwaysTrue, ignore, lessThan, none, pick, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, } from "../../../functions.js";
+import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, DeferredComputationWithSideEffects, PureDeferredComputation, PureSynchronousComputation, SynchronousComputationWithSideEffects, } from "../../../computations.js";
+import { alwaysTrue, ignore, lessThan, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, } from "../../../functions.js";
 import { increment } from "../../../math.js";
 import * as Computation from "../../Computation.js";
-import * as Iterable from "../../Iterable.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
 import ComputationOperatorWithSideEffectsTests from "./operators/ComputationOperatorWithSideEffectsTests.js";
 import HigherOrderComputationOperatorTests from "./operators/HigherOrderComputationOperatorTests.js";
@@ -82,7 +81,7 @@ const DeferredComputationModuleTests = (m, computations) => {
         await pipeAsync(pipeLazy([1, 1], m.fromReadonlyArray(), m.forEach(_ => {
             throw err;
         }), m.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
-    })), describe("fromIterable", testAsync("from Iterable that has side effects", pipeLazyAsync([1, 2, 3], Iterable.forEach(() => { }), m.fromIterable(), pick(ComputationLike_isPure), x => x, expectFalse("expected iterable to have side effects")))), describe("repeat", StatelessComputationOperatorTests({
+    })), describe("repeat", StatelessComputationOperatorTests({
         ...computations,
         // Repeat does not support multicasted input
         [Computation_multicastOfT]: none,
@@ -107,7 +106,7 @@ const DeferredComputationModuleTests = (m, computations) => {
             throw err;
         };
         await pipeAsync(pipeLazy([1, 1], m.fromReadonlyArray(), m.scan((a, b) => a + b, initialValue), m.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
-    })), describe("takeFirst", StatefulSynchronousComputationOperatorTests(computations, m.takeFirst()), testAsync("with default count", pipeLazyAsync([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeFirst(), m.toReadonlyArrayAsync(), expectArrayEquals([1]))), testAsync("when taking fewer than the total number of elements in the source", pipeLazyAsync([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeFirst({ count: 3 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]))), testAsync("when taking more than all the items produced by the source", pipeLazyAsync([1, 2], m.fromReadonlyArray(), m.takeFirst({ count: 3 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2]))), testAsync("from iterable source", pipeLazyAsync([1, 2, 3, 4], m.fromIterable(), m.takeFirst({ count: 2 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2]))), testAsync("when source is empty", pipeLazyAsync([], m.fromReadonlyArray(), m.takeFirst({ count: 3 }), m.toReadonlyArrayAsync(), expectArrayEquals([]))), testAsync("with default count", pipeLazyAsync([1, 2, 3], m.fromReadonlyArray(), m.takeFirst(), m.toReadonlyArrayAsync(), expectArrayEquals([1]))), testAsync("when count is 0", pipeLazyAsync([1, 2, 3], m.fromReadonlyArray(), m.takeFirst({ count: 0 }), m.toReadonlyArrayAsync(), expectArrayEquals([])))), describe("takeWhile", StatefulSynchronousComputationOperatorTests(computations, m.takeWhile(alwaysTrue)), testAsync("exclusive", async () => {
+    })), describe("takeFirst", StatefulSynchronousComputationOperatorTests(computations, m.takeFirst()), testAsync("with default count", pipeLazyAsync([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeFirst(), m.toReadonlyArrayAsync(), expectArrayEquals([1]))), testAsync("when taking fewer than the total number of elements in the source", pipeLazyAsync([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeFirst({ count: 3 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]))), testAsync("when taking more than all the items produced by the source", pipeLazyAsync([1, 2], m.fromReadonlyArray(), m.takeFirst({ count: 3 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2]))), testAsync("from iterable source", pipeLazyAsync([1, 2, 3, 4], Computation.fromIterable(m), m.takeFirst({ count: 2 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2]))), testAsync("when source is empty", pipeLazyAsync([], m.fromReadonlyArray(), m.takeFirst({ count: 3 }), m.toReadonlyArrayAsync(), expectArrayEquals([]))), testAsync("with default count", pipeLazyAsync([1, 2, 3], m.fromReadonlyArray(), m.takeFirst(), m.toReadonlyArrayAsync(), expectArrayEquals([1]))), testAsync("when count is 0", pipeLazyAsync([1, 2, 3], m.fromReadonlyArray(), m.takeFirst({ count: 0 }), m.toReadonlyArrayAsync(), expectArrayEquals([])))), describe("takeWhile", StatefulSynchronousComputationOperatorTests(computations, m.takeWhile(alwaysTrue)), testAsync("exclusive", async () => {
         await pipeAsync([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeWhile(lessThan(4)), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]));
         await pipeAsync([1, 2, 3], m.fromReadonlyArray(), m.takeWhile(alwaysTrue), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]));
         await pipeAsync([], m.fromReadonlyArray(), m.takeWhile(alwaysTrue), m.toReadonlyArrayAsync(), expectArrayEquals([]));

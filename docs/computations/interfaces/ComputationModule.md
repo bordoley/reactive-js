@@ -76,26 +76,6 @@
 
 ***
 
-### fromIterable()
-
-> **fromIterable**\<`T`\>(`options`?): [`FromIterableOperator`](../type-aliases/FromIterableOperator.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`TCreationOptions`\[`"fromIterable"`\]
-
-#### Returns
-
-[`FromIterableOperator`](../type-aliases/FromIterableOperator.md)\<`TComputationType`, `T`\>
-
-***
-
 ### fromReadonlyArray()
 
 > **fromReadonlyArray**\<`T`\>(`options`?): [`FromReadonlyArrayOperator`](../type-aliases/FromReadonlyArrayOperator.md)\<`TComputationType`, `T`\>
@@ -138,7 +118,7 @@
 
 ### gen()
 
-> **gen**\<`T`\>(`factory`, `options`?): [`GeneratorConstructor`](../type-aliases/GeneratorConstructor.md)\<`TComputationType`, `T`\>
+> **gen**\<`T`\>(`factory`, `options`?): [`GenPureConstructor`](../type-aliases/GenPureConstructor.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -156,7 +136,7 @@
 
 #### Returns
 
-[`GeneratorConstructor`](../type-aliases/GeneratorConstructor.md)\<`TComputationType`, `T`\>
+[`GenPureConstructor`](../type-aliases/GenPureConstructor.md)\<`TComputationType`, `T`\>
 
 ***
 
@@ -185,6 +165,30 @@
 #### Returns
 
 [`GeneratorOf`](../type-aliases/GeneratorOf.md)\<`TComputationType`, `T`\>
+
+***
+
+### genWithSideEffects()
+
+> **genWithSideEffects**\<`T`\>(`factory`, `options`?): [`GenWithSideEffectsConstructor`](../type-aliases/GenWithSideEffectsConstructor.md)\<`TComputationType`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### factory
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`Generator`\<`T`, `any`, `any`\>\>
+
+##### options?
+
+`TCreationOptions`\[`"gen"`\]
+
+#### Returns
+
+[`GenWithSideEffectsConstructor`](../type-aliases/GenWithSideEffectsConstructor.md)\<`TComputationType`, `T`\>
 
 ***
 

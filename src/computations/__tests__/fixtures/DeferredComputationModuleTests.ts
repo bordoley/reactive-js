@@ -3,14 +3,12 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
-  expectFalse,
   expectToThrowAsync,
   expectToThrowErrorAsync,
   testAsync,
 } from "../../../__internal__/testing.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import {
-  ComputationLike_isPure,
   ComputationModule,
   ComputationType,
   ComputationTypeOf,
@@ -32,7 +30,6 @@ import {
   ignore,
   lessThan,
   none,
-  pick,
   pipe,
   pipeAsync,
   pipeLazy,
@@ -42,7 +39,6 @@ import {
 } from "../../../functions.js";
 import { increment } from "../../../math.js";
 import * as Computation from "../../Computation.js";
-import * as Iterable from "../../Iterable.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
 import ComputationOperatorWithSideEffectsTests from "./operators/ComputationOperatorWithSideEffectsTests.js";
 import HigherOrderComputationOperatorTests from "./operators/HigherOrderComputationOperatorTests.js";
@@ -288,20 +284,6 @@ const DeferredComputationModuleTests = <
       }),
     ),
     describe(
-      "fromIterable",
-      testAsync(
-        "from Iterable that has side effects",
-        pipeLazyAsync(
-          [1, 2, 3],
-          Iterable.forEach<number>(() => {}),
-          m.fromIterable(),
-          pick(ComputationLike_isPure),
-          x => x as boolean,
-          expectFalse("expected iterable to have side effects"),
-        ),
-      ),
-    ),
-    describe(
       "repeat",
       StatelessComputationOperatorTests(
         {
@@ -500,7 +482,7 @@ const DeferredComputationModuleTests = <
         "from iterable source",
         pipeLazyAsync(
           [1, 2, 3, 4],
-          m.fromIterable<number>(),
+          Computation.fromIterable<TComputationType, number>(m),
           m.takeFirst<number>({ count: 2 }),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2]),

@@ -4,12 +4,12 @@ import { Array_length, Array_map, Iterator_done, Iterator_next, Iterator_value, 
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
-import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raise as raiseError, returns, tuple, } from "../functions.js";
+import { alwaysTrue, error, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raise as raiseError, returns, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as ComputationM from "./Computation.js";
 import Iterable_first from "./Iterable/__private__/Iterable.first.js";
-import Observable_fromIterable from "./Observable/__private__/Observable.fromIterable.js";
-import Runnable_fromIterable from "./Runnable/__private__/Runnable.fromIterable.js";
+import Iterable_toObservable from "./Iterable/__private__/Iterable.toObservable.js";
+import Iterable_toRunnable from "./Iterable/__private__/Iterable.toRunnable.js";
 class CatchErrorIterable {
     s;
     onError;
@@ -91,7 +91,6 @@ class ForEachIterable {
     }
 }
 export const forEach = (effect) => (iterable) => newInstance(ForEachIterable, iterable, effect);
-export const fromIterable = /*@__PURE__*/ returns(identity);
 export const fromValue = /*@__PURE__*/ returns(tuple);
 class FromReadonlyArrayIterable {
     arr;
@@ -132,6 +131,20 @@ class GenIterable {
     }
 }
 export const gen = ((factory) => newInstance((GenIterable), factory));
+class GenWithSideEffectsIterable {
+    f;
+    [ComputationLike_isSynchronous] = true;
+    [ComputationLike_isDeferred] = true;
+    [ComputationLike_isPure] = false;
+    constructor(f) {
+        this.f = f;
+    }
+    *[Symbol.iterator]() {
+        const iter = this.f();
+        yield* iter;
+    }
+}
+export const genWithSideEffects = ((factory) => newInstance((GenWithSideEffectsIterable), factory));
 class GeneratorIterable {
     generator;
     initialValue;
@@ -379,11 +392,11 @@ class ThrowIfEmptyIterable {
     }
 }
 export const throwIfEmpty = ((factory) => (iter) => newInstance(ThrowIfEmptyIterable, iter, factory));
-export const toObservable = Observable_fromIterable;
+export const toObservable = Iterable_toObservable;
 export const toReadonlyArray = ReadonlyArray.fromIterable;
 export const toReadonlyArrayAsync = 
 /*@__PURE__*/ returns(async (iter) => pipe(iter, toReadonlyArray()));
-export const toRunnable = Runnable_fromIterable;
+export const toRunnable = Iterable_toRunnable;
 class ZipIterable {
     iters;
     [ComputationLike_isPure];

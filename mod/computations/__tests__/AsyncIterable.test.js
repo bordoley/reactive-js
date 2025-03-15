@@ -60,6 +60,7 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import { PauseableLike_pause, PauseableLike_resume, SchedulerLike_schedule, } from "../../utils.js";
 import * as AsyncIterable from "../AsyncIterable.js";
+import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentDeferredComputationModuleTests from "./fixtures/ConcurrentDeferredComputationModuleTests.js";
@@ -69,7 +70,7 @@ const AsyncIterableTypes = {
     [Computation_deferredWithSideEffectsOfT]: pipe((async function* () { })(), AsyncIterable.of()),
     [Computation_pureDeferredOfT]: pipe([], AsyncIterable.fromReadonlyArray()),
 };
-testModule("AsyncIterable", ComputationModuleTests(AsyncIterable, AsyncIterableTypes), DeferredComputationModuleTests(AsyncIterable, AsyncIterableTypes), InteractiveComputationModuleTests(AsyncIterable), ConcurrentDeferredComputationModuleTests(AsyncIterable), describe("toEventSource", testAsync("notifies all the values produced by the iterable", pipeLazyAsync([1, 2, 3, 4], AsyncIterable.fromIterable(), AsyncIterable.toEventSource(), EventSource.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4])))), describe("toPauseableEventSource", testAsync("iterable that completes", async () => {
+testModule("AsyncIterable", ComputationModuleTests(AsyncIterable, AsyncIterableTypes), DeferredComputationModuleTests(AsyncIterable, AsyncIterableTypes), InteractiveComputationModuleTests(AsyncIterable), ConcurrentDeferredComputationModuleTests(AsyncIterable), describe("toEventSource", testAsync("notifies all the values produced by the iterable", pipeLazyAsync([1, 2, 3, 4], Computation.fromIterable(AsyncIterable), AsyncIterable.toEventSource(), EventSource.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4])))), describe("toPauseableEventSource", testAsync("iterable that completes", async () => {
     const flowed = pipe((async function* foo() {
         yield 1;
         yield 2;

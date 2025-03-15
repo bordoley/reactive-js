@@ -28,6 +28,7 @@ import {
   returns,
 } from "../../../functions.js";
 import { increment } from "../../../math.js";
+import * as Computation from "../../Computation.js";
 import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
 
 const ComputationModuleTests = <TComputationType extends ComputationType>(
@@ -53,14 +54,19 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "returns the first value",
         pipeLazyAsync(
           [1, 2, 3, 4, 5],
-          m.fromIterable<number>(),
+          Computation.fromIterable<TComputationType, number>(m),
           m.firstAsync(),
           expectEquals<Optional<number>>(1),
         ),
       ),
       testAsync(
         "empty source",
-        pipeLazyAsync([], m.fromIterable(), m.firstAsync(), expectIsNone),
+        pipeLazyAsync(
+          [],
+          Computation.fromIterable<TComputationType, number>(m),
+          m.firstAsync(),
+          expectIsNone,
+        ),
       ),
       testAsync(
         "an iterable that throws",
@@ -69,33 +75,8 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
             (function* Generator() {
               throw newInstance(Error);
             })(),
-            m.fromIterable(),
+            Computation.fromIterable<TComputationType, number>(m),
             m.firstAsync(),
-          ),
-          expectToThrowAsync,
-        ),
-      ),
-    ),
-    describe(
-      "fromIterable",
-      testAsync(
-        "with array",
-        pipeLazyAsync(
-          [1, 2, 3],
-          m.fromIterable<number>(),
-          m.toReadonlyArrayAsync(),
-          expectArrayEquals([1, 2, 3]),
-        ),
-      ),
-      testAsync(
-        "when the iterable throws",
-        pipeLazyAsync(
-          pipeLazy(
-            (function* Generator() {
-              throw newInstance(Error);
-            })(),
-            m.fromIterable(),
-            m.toReadonlyArrayAsync(),
           ),
           expectToThrowAsync,
         ),
@@ -158,6 +139,21 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
           m.fromValue(),
           m.toReadonlyArrayAsync(),
           expectArrayEquals([1]),
+        ),
+      ),
+    ),
+    describe(
+      "gen",
+      testAsync(
+        "when the iterable throws",
+        pipeLazyAsync(
+          pipeLazy(
+            m.gen<number>(function* Generator() {
+              throw newInstance(Error);
+            }),
+            m.toReadonlyArrayAsync(),
+          ),
+          expectToThrowAsync,
         ),
       ),
     ),
@@ -243,14 +239,19 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "returns the last value",
         pipeLazyAsync(
           [1, 2, 3, 4, 5],
-          m.fromIterable<number>(),
+          Computation.fromIterable<TComputationType, number>(m),
           m.lastAsync(),
           expectEquals<Optional<number>>(5),
         ),
       ),
       testAsync(
         "empty source",
-        pipeLazyAsync([], m.fromIterable(), m.lastAsync(), expectIsNone),
+        pipeLazyAsync(
+          [],
+          Computation.fromIterable<TComputationType, number>(m),
+          m.lastAsync(),
+          expectIsNone,
+        ),
       ),
       testAsync(
         "an iterable that throws",
@@ -259,7 +260,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
             (function* Generator() {
               throw newInstance(Error);
             })(),
-            m.fromIterable(),
+            Computation.fromIterable<TComputationType, number>(m),
             m.lastAsync(),
           ),
           expectToThrowAsync,
@@ -330,7 +331,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "returns the sum of values",
         pipeLazyAsync(
           [1, 1, 1, 1, 1],
-          m.fromIterable<number>(),
+          Computation.fromIterable<TComputationType, number>(m),
           m.reduceAsync(
             (acc, next) => next + acc,
             () => 0,
@@ -342,7 +343,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "empty source",
         pipeLazyAsync(
           [],
-          m.fromIterable<number>(),
+          Computation.fromIterable<TComputationType, number>(m),
           m.reduceAsync(
             (acc, next) => next + acc,
             () => 0,
@@ -357,7 +358,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
             (function* Generator() {
               throw newInstance(Error);
             })(),
-            m.fromIterable<number>(),
+            Computation.fromIterable<TComputationType, number>(m),
             m.reduceAsync(
               (acc, next) => next + acc,
               () => 0,

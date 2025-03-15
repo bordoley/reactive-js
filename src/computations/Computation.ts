@@ -22,6 +22,8 @@ import {
   HigherOrderComputationOperator,
   HigherOrderInnerComputationLike,
   HigherOrderInnerComputationOf,
+  IterableLike,
+  IterableWithSideEffectsLike,
   MulticastComputationLike,
   MulticastComputationOf,
   MulticastComputationOfModule,
@@ -54,7 +56,11 @@ import {
   returns,
 } from "../functions.js";
 import { increment } from "../math.js";
-import { EventListenerLike, EventListenerLike_notify } from "../utils.js";
+import {
+  DisposableLike,
+  EventListenerLike,
+  EventListenerLike_notify,
+} from "../utils.js";
 
 export interface ConcatManyOperator<TComputationType extends ComputationType> {
   <T>(
@@ -191,6 +197,26 @@ export interface ConcatWithOperator<TComputationType extends ComputationType> {
   >;
 }
 
+// prettier-ignore
+export type FromIterableOperator<
+  TComputationType extends ComputationType,
+  T,
+> = <TIterable extends IterableLike<T>>(
+  iterable: TIterable,
+) => TIterable extends PureIterableLike ? (
+  PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType,T> ? 
+    PureSynchronousComputationOf<TComputationType, T> : 
+  PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? 
+    PureDeferredComputationOf<TComputationType, T> : 
+    MulticastComputationOf<TComputationType, T> & DisposableLike
+) : TIterable extends IterableWithSideEffectsLike ? (  
+  SynchronousComputationWithSideEffectsOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? 
+    SynchronousComputationWithSideEffectsOf<TComputationType, T> : 
+  DeferredComputationWithSideEffectsOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? 
+    DeferredComputationWithSideEffectsOf<TComputationType, T> :
+    MulticastComputationOf<TComputationType, T> & DisposableLike
+) : ComputationBaseOf<TComputationType, T> ;
+
 export interface MergeManyOperator<TComputationType extends ComputationType> {
   <T>(
     computations: readonly PureSynchronousComputationOf<TComputationType, T>[],
@@ -301,7 +327,7 @@ export interface Signature {
       TComputationType,
       ComputationModule<TComputationType> &
         DeferredComputationModule<TComputationType>,
-      "concatAll" | "map" | "fromIterable"
+      "concatAll" | "map" | "gen" | "genWithSideEffects"
     >,
   ): ConcatMapIterableOperator<TComputationType>;
 
@@ -395,7 +421,7 @@ export interface Signature {
     m: PickComputationModule<
       TComputationType,
       ComputationModule<TComputationType>,
-      "map" | "fromIterable"
+      "map" | "gen" | "genWithSideEffects"
     > & {
       readonly [key in
         | TFlattenKey
@@ -406,6 +432,15 @@ export interface Signature {
         : unknown;
     },
   ): FlatMapIterableOperator<TComputationType, TFlattenKey>;
+
+  fromIterable<TComputationType extends ComputationType, T>(
+    m: PickComputationModule<
+      TComputationType,
+      ComputationModule<TComputationType>,
+      "gen" | "genWithSideEffects"
+    >,
+    options?: Parameters<(typeof m)["gen"]>[1],
+  ): FromIterableOperator<TComputationType, T>;
 
   hasSideEffects<TComputationType extends ComputationLike>(
     computation: TComputationType,
@@ -580,7 +615,7 @@ export const concatMapIterable: Signature["concatMapIterable"] =
           TComputationType,
           ComputationModule<TComputationType> &
             DeferredComputationModule<TComputationType>,
-          "concatAll" | "map" | "fromIterable"
+          "concatAll" | "map" | "gen" | "genWithSideEffects"
         >,
       ) =>
         (selector, options) =>
@@ -691,7 +726,7 @@ export const flatMapIterable: Signature["flatMapIterable"] = /*@__PURE__*/ (<
       m: PickComputationModule<
         TComputationType,
         ComputationModule<TComputationType>,
-        "map" | "fromIterable"
+        "map" | "gen" | "genWithSideEffects"
       > & {
         readonly [key in
           | TFlattenKey
@@ -703,10 +738,30 @@ export const flatMapIterable: Signature["flatMapIterable"] = /*@__PURE__*/ (<
       },
     ) =>
       (key: TFlattenKey, selector, options) => {
-        const mapper = compose(selector, m.fromIterable());
+        const mapper = compose(selector, fromIterable(m));
         return flatMap<TComputationType, TFlattenKey>(m)(key, mapper, options);
       },
   ))() as Signature["flatMapIterable"];
+
+export const fromIterable: Signature["fromIterable"] = (<
+    TComputationType extends ComputationType,
+    T,
+  >(
+    m: PickComputationModule<
+      TComputationType,
+      ComputationModule<TComputationType>,
+      "gen" | "genWithSideEffects"
+    >,
+    options?: any, //FIXME: for now
+  ) =>
+  // FIXME: Memoize if no options
+  (iterable: IterableLike<T>) => {
+    const gen = isPure(iterable) ? m.gen : m.genWithSideEffects;
+
+    return gen(function* FromIterable() {
+      yield* iterable;
+    }, options);
+  }) as Signature["fromIterable"];
 
 export const hasSideEffects: Signature["hasSideEffects"] = <
   TComputationType extends ComputationLike,

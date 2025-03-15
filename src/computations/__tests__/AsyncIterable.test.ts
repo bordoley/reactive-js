@@ -19,6 +19,7 @@ import {
   SchedulerLike_schedule,
 } from "../../utils.js";
 import * as AsyncIterable from "../AsyncIterable.js";
+import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentDeferredComputationModuleTests from "./fixtures/ConcurrentDeferredComputationModuleTests.js";
@@ -46,7 +47,9 @@ testModule(
       "notifies all the values produced by the iterable",
       pipeLazyAsync(
         [1, 2, 3, 4],
-        AsyncIterable.fromIterable<number>(),
+        Computation.fromIterable<AsyncIterable.Computation, number>(
+          AsyncIterable,
+        ),
         AsyncIterable.toEventSource(),
         EventSource.toReadonlyArrayAsync<number>(),
         expectArrayEquals([1, 2, 3, 4]),

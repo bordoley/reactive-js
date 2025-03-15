@@ -16,7 +16,6 @@ import EventSource_empty from "./EventSource/__private__/EventSource.empty.js";
 import EventSource_firstAsync from "./EventSource/__private__/EventSource.firstAsync.js";
 import EventSource_forkMerge from "./EventSource/__private__/EventSource.forkMerge.js";
 import EventSource_fromAsyncIterable from "./EventSource/__private__/EventSource.fromAsyncIterable.js";
-import EventSource_fromIterable from "./EventSource/__private__/EventSource.fromIterable.js";
 import EventSource_fromPromise from "./EventSource/__private__/EventSource.fromPromise.js";
 import EventSource_fromReadonlyArray from "./EventSource/__private__/EventSource.fromReadonlyArray.js";
 import EventSource_fromValue from "./EventSource/__private__/EventSource.fromValue.js";
@@ -79,7 +78,6 @@ export const firstAsync: Signature["firstAsync"] = EventSource_firstAsync;
 export const forkMerge: Signature["forkMerge"] = EventSource_forkMerge;
 export const fromAsyncIterable: Signature["fromAsyncIterable"] =
   EventSource_fromAsyncIterable;
-export const fromIterable: Signature["fromIterable"] = EventSource_fromIterable;
 export const fromObservable: Signature["fromObservable"] =
   Observable_toEventSource as Signature["fromObservable"];
 export const fromPromise: Signature["fromPromise"] = EventSource_fromPromise;
@@ -87,6 +85,8 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   EventSource_fromReadonlyArray;
 export const fromValue: Signature["fromValue"] = EventSource_fromValue;
 export const gen: Signature["gen"] = EventSource_gen;
+export const genWithSideEffects: Signature["genWithSideEffects"] =
+  EventSource_gen;
 export const generate: Signature["generate"] = EventSource_generate;
 export const keep: Signature["keep"] = EventSource_keep;
 export const lastAsync: Signature["lastAsync"] = EventSource_lastAsync;

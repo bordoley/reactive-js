@@ -1,8 +1,8 @@
 /// <reference types="./Computation.test.d.ts" />
 
-import { describe, expectArrayEquals, expectToHaveBeenCalledTimes, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
-import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../computations.js";
-import { ignore, isSome, none, pipe, pipeLazy, pipeLazyAsync, } from "../../functions.js";
+import { describe, expectArrayEquals, expectFalse, expectToHaveBeenCalledTimes, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
+import { ComputationLike_isPure, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../computations.js";
+import { ignore, isSome, none, pick, pipe, pipeLazy, pipeLazyAsync, } from "../../functions.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as AsyncIterable from "../AsyncIterable.js";
 import * as Computation from "../Computation.js";
@@ -35,7 +35,12 @@ testModule("Computation", describe("concatMany", test("concats the input contain
     yield 1;
     yield 2;
     yield 3;
-}), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("ignoreElements", test("ignores all elements", pipeLazy([1, 2, 3], Computation.ignoreElements(Iterable)(), Iterable.toReadonlyArray(), expectArrayEquals([]))), test("invokes all side-effects", () => {
+}), Iterable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("fromIterable", testAsync("with array", pipeLazyAsync([1, 2, 3], Computation.fromIterable(Iterable), Iterable.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]))), test("with Observable options", pipeLazy([9, 9, 9, 9], Computation.fromIterable(Observable, {
+    delay: 2,
+}), Observable.withCurrentTime(t => t), Observable.toReadonlyArray(), expectArrayEquals([0, 2, 4, 6]))), test("with Observable delay and delayed start", pipeLazy([9, 9, 9, 9], Computation.fromIterable(Observable, {
+    delay: 2,
+    delayStart: true,
+}), Observable.withCurrentTime(t => t), Observable.toReadonlyArray(), expectArrayEquals([2, 4, 6, 8]))), test("from Iterable that has side effects", pipeLazy([1, 2, 3], Iterable.forEach(() => { }), Computation.fromIterable(Iterable), pick(ComputationLike_isPure), expectFalse("expected iterable to have side effects")))), describe("ignoreElements", test("ignores all elements", pipeLazy([1, 2, 3], Computation.ignoreElements(Iterable)(), Iterable.toReadonlyArray(), expectArrayEquals([]))), test("invokes all side-effects", () => {
     const f = mockFn();
     pipe([1, 2, 3], Iterable.forEach(f), Computation.ignoreElements(Iterable)(), Iterable.toReadonlyArray(), expectArrayEquals([]));
     pipe(f, expectToHaveBeenCalledTimes(3));

@@ -3,7 +3,7 @@
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, DeferredComputationWithSideEffects, } from "../computations.js";
 import { alwaysFalse, bindMethod, debug as breakPoint, compose, log as consoleLog, memoize, pickUnsafe, pipe, returns, } from "../functions.js";
 import { increment } from "../math.js";
-import { EventListenerLike_notify } from "../utils.js";
+import { EventListenerLike_notify, } from "../utils.js";
 export const areAllDeferred = (computations) => computations.every(isDeferred);
 export const areAllMulticasted = (computations) => computations.every(isMulticasted);
 export const areAllPure = (computations) => computations.every(isPure);
@@ -24,9 +24,17 @@ export const flatMapAsync = /*@__PURE__*/ (() => memoize((m) => (key, f) => {
     });
 }))();
 export const flatMapIterable = /*@__PURE__*/ (() => memoize((m) => (key, selector, options) => {
-    const mapper = compose(selector, m.fromIterable());
+    const mapper = compose(selector, fromIterable(m));
     return flatMap(m)(key, mapper, options);
 }))();
+export const fromIterable = ((m, options) => 
+// FIXME: Memoize if no options
+(iterable) => {
+    const gen = isPure(iterable) ? m.gen : m.genWithSideEffects;
+    return gen(function* FromIterable() {
+        yield* iterable;
+    }, options);
+});
 export const hasSideEffects = (computation) => !(computation[ComputationLike_isPure] ?? true);
 export const ignoreElements = 
 /*@__PURE__*/ memoize(m => returns(m.keep(alwaysFalse)));
