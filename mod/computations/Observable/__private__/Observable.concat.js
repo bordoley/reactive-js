@@ -7,7 +7,7 @@ import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isS
 import { bind, bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
+import * as DelegatingObserver from "../../../utils/__internal__/DelegatingObserver.js";
 import { SinkLike_complete } from "../../../utils.js";
 import Observable_empty from "./Observable.empty.js";
 const Observable_concat = /*@__PURE__*/ (() => {
@@ -29,7 +29,7 @@ const Observable_concat = /*@__PURE__*/ (() => {
     }
     const createConcatObserver = (ctx) => {
         const delegate = ctx[ConcatObserverCtx_delegate];
-        return pipe(Observer_createWithDelegate(delegate), Disposable.addTo(delegate), DisposableContainer.onComplete(bind(onConcatObserverComplete, ctx)));
+        return pipe(DelegatingObserver.createNotifyOnlyNonCompletingNonDisposing(delegate), Disposable.addTo(delegate), DisposableContainer.onComplete(bind(onConcatObserverComplete, ctx)));
     };
     const ConcatObservable_observables = Symbol("ConcatObservable_observables");
     const isConcatObservable = (observable) => isSome(observable[ConcatObservable_observables]);

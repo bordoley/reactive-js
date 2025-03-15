@@ -92,7 +92,9 @@ const Observable_merge: Observable.Signature["merge"] = /*@__PURE__*/ (<
 
         for (const observable of observables) {
           pipe(
-            DelegatingObserver.createNonDisposing(observer),
+            DelegatingObserver.createNotifyOnlyNonCompletingNonDisposing(
+              observer,
+            ),
             Disposable.addTo(observer),
             DisposableContainer.onComplete(() => {
               completed++;

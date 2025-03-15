@@ -1,4 +1,4 @@
 import { Mixin1 } from "../../__internal__/mixins.js";
-import { QueueableLike } from "../../utils.js";
-declare const DelegatingQueueableMixin: <TReq>() => Mixin1<QueueableLike<TReq>, QueueableLike<TReq>>;
+import { DisposableLike, QueueableLike } from "../../utils.js";
+declare const DelegatingQueueableMixin: <TReq>() => Mixin1<Omit<QueueableLike<TReq>, keyof DisposableLike>, QueueableLike<TReq>, unknown, Omit<QueueableLike<TReq>, keyof DisposableLike>>;
 export default DelegatingQueueableMixin;

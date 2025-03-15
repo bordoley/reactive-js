@@ -47,6 +47,7 @@ import {
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Queue from "../utils/Queue.js";
+import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingQueueableMixin from "../utils/__mixins__/DelegatingQueueableMixin.js";
 import {
   BackpressureStrategy,
@@ -136,6 +137,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
 
   return mixInstanceFactory(
     include(
+      DelegatingDisposableMixin,
       DelegatingQueueableMixin<
         ReadonlyObjectMapLike<
           string,
@@ -342,6 +344,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
       };
 
+      init(DelegatingDisposableMixin, this, queue);
       init(
         DelegatingQueueableMixin<
           ReadonlyObjectMapLike<string, Function1<Optional<T>, T>>

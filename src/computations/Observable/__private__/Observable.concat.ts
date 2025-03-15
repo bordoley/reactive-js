@@ -45,7 +45,7 @@ const Observable_concat: Observable.Signature["concat"] = /*@__PURE__*/ (<
   const createConcatObserver = (ctx: ConcatObserverCtx) => {
     const delegate = ctx[ConcatObserverCtx_delegate];
     return pipe(
-      DelegatingObserver.createNonDisposing(delegate),
+      DelegatingObserver.createNotifyOnlyNonCompletingNonDisposing(delegate),
       Disposable.addTo(delegate),
       DisposableContainer.onComplete(bind(onConcatObserverComplete, ctx)),
     );

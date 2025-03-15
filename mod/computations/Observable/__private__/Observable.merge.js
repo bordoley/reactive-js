@@ -7,7 +7,7 @@ import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isS
 import { bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
+import * as DelegatingObserver from "../../../utils/__internal__/DelegatingObserver.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import { DisposableLike_dispose, SinkLike_complete, } from "../../../utils.js";
 const Observable_merge = /*@__PURE__*/ (() => {
@@ -35,7 +35,7 @@ const Observable_merge = /*@__PURE__*/ (() => {
             const count = observables[Array_length];
             let completed = 0;
             for (const observable of observables) {
-                pipe(Observer_createWithDelegate(observer), Disposable.addTo(observer), DisposableContainer.onComplete(() => {
+                pipe(DelegatingObserver.createNotifyOnlyNonCompletingNonDisposing(observer), Disposable.addTo(observer), DisposableContainer.onComplete(() => {
                     completed++;
                     if (completed >= count) {
                         observer[SinkLike_complete]();

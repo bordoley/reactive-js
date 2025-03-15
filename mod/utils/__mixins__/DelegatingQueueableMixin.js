@@ -1,13 +1,11 @@
 /// <reference types="./DelegatingQueueableMixin.d.ts" />
 
-import { include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
+import { mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { none, returns } from "../../functions.js";
 import { EventListenerLike_notify, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
-import DelegatingDisposableMixin from "./DelegatingDisposableMixin.js";
 const DelegatingQueueableMixin = /*@__PURE__*/ (() => {
     const DelegatingQueueableMixin_delegate = Symbol("DelegatingQueueableMixin_delegate");
-    return returns(mix(include(DelegatingDisposableMixin), function DelegatingQueueableMixin(delegate) {
-        init(DelegatingDisposableMixin, this, delegate);
+    return returns(mix(function DelegatingQueueableMixin(delegate) {
         this[DelegatingQueueableMixin_delegate] = delegate;
         return this;
     }, props({

@@ -38,7 +38,7 @@ const Observable_catchError: Observable.Signature["catchError"] = (<T>(
   pipe(
     (delegate: ObserverLike<T>) =>
       pipe(
-        DelegatingObserver.createNonDisposing(delegate),
+        DelegatingObserver.createNotifyOnlyNonCompletingNonDisposing(delegate),
         Disposable.addToContainer(delegate),
         DisposableContainer.onError(err => {
           let action: Optional<ObservableLike<T>> = none;

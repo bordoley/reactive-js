@@ -66,7 +66,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
     };
 
     return pipe(
-      DelegatingObserver.createNonDisposing(delegate),
+      DelegatingObserver.createNotifyOnlyNonCompletingNonDisposing(delegate),
       Disposable.addToContainer(delegate),
       DisposableContainer.onDisposed(doOnDispose),
     );

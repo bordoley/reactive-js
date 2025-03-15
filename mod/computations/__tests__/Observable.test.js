@@ -99,6 +99,9 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
 })), ComputationModuleTests(Observable, ObservableTypes), DeferredComputationModuleTests(Observable, ObservableTypes), DeferredReactiveComputationModuleTests(Observable, ObservableTypes), SynchronousComputationModuleTests(Observable), ConcurrentReactiveComputationModuleTests(Observable, ObservableTypes), ConcurrentDeferredComputationModuleTests(Observable), describe("backpressureStrategy", test("with a capacity of 0", pipeLazy([1, 2, 3, 4], Observable.fromReadonlyArray(), Observable.backpressureStrategy({
     capacity: 0,
     backpressureStrategy: DropLatestBackpressureStrategy,
+}), Observable.backpressureStrategy({
+    capacity: 10000,
+    backpressureStrategy: DropLatestBackpressureStrategy,
 }), Observable.last(), expectIsNone)), test("with a capacity of 0 and throw backpressure strategy", pipeLazy(pipeLazy([1, 2, 3, 4], Observable.fromReadonlyArray(), Observable.forEach(ignore), Observable.backpressureStrategy({
     capacity: 0,
     backpressureStrategy: ThrowBackpressureStrategy,

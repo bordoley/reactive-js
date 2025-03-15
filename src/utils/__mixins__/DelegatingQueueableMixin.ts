@@ -1,13 +1,7 @@
-import {
-  Mixin1,
-  include,
-  init,
-  mix,
-  props,
-  unsafeCast,
-} from "../../__internal__/mixins.js";
+import { Mixin1, mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { SideEffect1, none, returns } from "../../functions.js";
 import {
+  DisposableLike,
   EventListenerLike_notify,
   QueueableLike,
   QueueableLike_addOnReadyListener,
@@ -17,11 +11,12 @@ import {
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
-import DelegatingDisposableMixin from "./DelegatingDisposableMixin.js";
 
 const DelegatingQueueableMixin: <TReq>() => Mixin1<
+  Omit<QueueableLike<TReq>, keyof DisposableLike>,
   QueueableLike<TReq>,
-  QueueableLike<TReq>
+  unknown,
+  Omit<QueueableLike<TReq>, keyof DisposableLike>
 > = /*@__PURE__*/ (<TReq>() => {
   const DelegatingQueueableMixin_delegate = Symbol(
     "DelegatingQueueableMixin_delegate",
@@ -33,7 +28,6 @@ const DelegatingQueueableMixin: <TReq>() => Mixin1<
 
   return returns(
     mix(
-      include(DelegatingDisposableMixin),
       function DelegatingQueueableMixin(
         this: Pick<
           QueueableLike,
@@ -47,8 +41,7 @@ const DelegatingQueueableMixin: <TReq>() => Mixin1<
         > &
           TProperties,
         delegate: QueueableLike<TReq>,
-      ): QueueableLike<TReq> {
-        init(DelegatingDisposableMixin, this, delegate);
+      ): Omit<QueueableLike<TReq>, keyof DisposableLike> {
         this[DelegatingQueueableMixin_delegate] = delegate;
 
         return this;

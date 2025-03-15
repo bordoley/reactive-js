@@ -3,7 +3,7 @@
 import { bindMethod, error, isSome, none, partial, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import Observer_createWithDelegate from "../../../utils/Observer/__internal__/Observer.createWithDelegate.js";
+import * as DelegatingObserver from "../../../utils/__internal__/DelegatingObserver.js";
 import { DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_liftPure from "./Observable.liftPure.js";
@@ -32,7 +32,7 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
                 pipe(observable, Observable_forEach(bindMethod(delegate, EventListenerLike_notify)), Observable_subscribe(delegate), DisposableContainer.onDisposed(doOnDispose));
             }
         };
-        return pipe(Observer_createWithDelegate(delegate), Disposable.addToContainer(delegate), DisposableContainer.onDisposed(doOnDispose));
+        return pipe(DelegatingObserver.createNotifyOnlyNonCompletingNonDisposing(delegate), Disposable.addToContainer(delegate), DisposableContainer.onDisposed(doOnDispose));
     };
     return ((shouldRepeat) => (observable) => Observable_liftPure(pipe(createRepeatObserver, partial(observable, shouldRepeat)))(observable));
 })();

@@ -3,9 +3,10 @@
 import { __DEV__ } from "../../__internal__/constants.js";
 import { include, init, mix, props, proto, super_, unsafeCast, } from "../../__internal__/mixins.js";
 import { bind, bindMethod, isSome, memoize, none, pipe, pipeLazy, raiseIf, returns, } from "../../functions.js";
-import { ContinuationContextLike_yield, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_count, QueueLike_dequeue, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { ContinuationContextLike_yield, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_count, QueueLike_dequeue, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SchedulerLike_inContinuation, SchedulerLike_schedule, SerialDisposableLike_current, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
+import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
 import QueueMixin from "./QueueMixin.js";
 import SerialDisposableMixin from "./SerialDisposableMixin.js";
 export const LiftedObserverLike_notify = Symbol("LiftedObserverLike_notify");
@@ -16,7 +17,6 @@ export const LiftedObserverLike_delegate = Symbol("LiftedObserverLike_delegate")
 export const LiftedObserverLike_isReady = Symbol("LiftedObserverLike_isReady");
 const LiftedObserverMixin = /*@__PURE__*/ (() => {
     const LiftedObserverMixin_consumer = Symbol("LiftedObserverMixin_consumer");
-    const LiftedObserverMixin_consumerCallback = Symbol("LiftedObserverMixin_consumerCallback");
     function liftedObserverSchedulerContinuation(ctx) {
         // This is the ultimate downstream consumer of events.
         const scheduler = this[LiftedObserverMixin_consumer];
@@ -68,13 +68,14 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
     function pushDelegate(next) {
         this[LiftedObserverLike_delegate][EventListenerLike_notify](next);
     }
-    return returns(mix(include(QueueMixin(), SerialDisposableMixin()), function LiftedObserverMixin(delegate, options) {
+    return returns(mix(include(QueueMixin(), SerialDisposableMixin(), DelegatingSchedulerMixin), function LiftedObserverMixin(delegate, options) {
         init(QueueMixin(), this, {
             backpressureStrategy: delegate[QueueableLike_backpressureStrategy],
             capacity: delegate[QueueableLike_capacity],
             ...(options ?? {}),
         });
         init(SerialDisposableMixin(), this, Disposable.disposed);
+        init(DelegatingSchedulerMixin, this, delegate);
         const delegateIsLifted = isSome(delegate[LiftedObserverLike_notify]);
         this[LiftedObserverLike_notifyDelegate] = delegateIsLifted
             ? notifyLiftedDelegate
@@ -83,44 +84,16 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
         this[LiftedObserverMixin_consumer] =
             delegate[LiftedObserverMixin_consumer] ??
                 delegate;
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
-        const instance = this;
-        this[LiftedObserverMixin_consumerCallback] =
-            function ObserverMixinSchedulerCallback(ctx) {
-                instance[SchedulerLike_inContinuation] = true;
-                this(ctx);
-                instance[SchedulerLike_inContinuation] = false;
-            };
         pipe(this, DisposableContainer.onDisposed(bindMethod(this, SinkLike_complete)));
         return this;
     }, props({
-        [SchedulerLike_inContinuation]: false,
         [LiftedObserverLike_delegate]: none,
         [LiftedObserverMixin_consumer]: none,
-        [LiftedObserverMixin_consumerCallback]: none,
         [LiftedObserverLike_notifyDelegate]: none,
     }), proto({
         get [LiftedObserverLike_isReady]() {
             unsafeCast(this);
             return this[LiftedObserverMixin_consumer][QueueableLike_isReady];
-        },
-        get [SchedulerLike_maxYieldInterval]() {
-            unsafeCast(this);
-            return this[LiftedObserverMixin_consumer][SchedulerLike_maxYieldInterval];
-        },
-        get [SchedulerLike_now]() {
-            unsafeCast(this);
-            return this[LiftedObserverMixin_consumer][SchedulerLike_now];
-        },
-        get [SchedulerLike_shouldYield]() {
-            unsafeCast(this);
-            return this[LiftedObserverMixin_consumer][SchedulerLike_shouldYield];
-        },
-        [SchedulerLike_requestYield]() {
-            this[LiftedObserverMixin_consumer][SchedulerLike_requestYield]();
-        },
-        [SchedulerLike_schedule](continuation, options) {
-            return pipe(this[LiftedObserverLike_delegate][SchedulerLike_schedule](bind(this[LiftedObserverMixin_consumerCallback], continuation), options), Disposable.addToContainer(this));
         },
         [EventListenerLike_notify](next) {
             const inSchedulerContinuation = this[SchedulerLike_inContinuation];

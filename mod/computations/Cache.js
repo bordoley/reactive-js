@@ -11,6 +11,7 @@ import { alwaysNone, bindMethod, identity, isNone, isSome, newInstance, none, pi
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Queue from "../utils/Queue.js";
+import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingQueueableMixin from "../utils/__mixins__/DelegatingQueueableMixin.js";
 import { ContinuationContextLike_yield, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_dequeue, SchedulerLike_schedule, } from "../utils.js";
 import * as Observable from "./Observable.js";
@@ -26,7 +27,7 @@ export const create = /*@__PURE__*/ (() => {
         keep: Observable.keep,
         map: Observable.map,
     };
-    return mixInstanceFactory(include(DelegatingQueueableMixin()), function Cache(scheduler, options) {
+    return mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingQueueableMixin()), function Cache(scheduler, options) {
         const { maxEntries = MAX_SAFE_INTEGER, cleanupScheduler = scheduler, persistentStore, } = options ?? {};
         const queue = QueueableObservable.create(options);
         const store = newInstance(Map);
@@ -93,6 +94,7 @@ export const create = /*@__PURE__*/ (() => {
             cleanupJob =
                 cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
         };
+        init(DelegatingDisposableMixin, this, queue);
         init(DelegatingQueueableMixin(), this, queue);
         return this;
     }, props({

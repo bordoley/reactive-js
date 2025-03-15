@@ -8,6 +8,7 @@ import {
 import { Function1, Optional, pipe, returns } from "../../functions.js";
 import { clampPositiveInteger } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
+import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingQueueableMixin from "../../utils/__mixins__/DelegatingQueueableMixin.js";
 import {
   BackpressureStrategy,
@@ -32,6 +33,7 @@ const StreamMixin: <TReq, T>() => Mixin3<
   returns(
     mix(
       include(
+        DelegatingDisposableMixin,
         DelegatingQueueableMixin(),
         DelegatingMulticastObservableMixin<T>(),
       ),
@@ -64,6 +66,7 @@ const StreamMixin: <TReq, T>() => Mixin3<
           Disposable.addTo(queue),
         );
 
+        init(DelegatingDisposableMixin, this, queue);
         init(DelegatingQueueableMixin<TReq>(), this, queue);
         init(DelegatingMulticastObservableMixin<T>(), this, delegate);
 
