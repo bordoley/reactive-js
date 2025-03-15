@@ -16,7 +16,7 @@ const Observable_takeUntil = /*@__PURE__*/ (() => {
     const createTakeUntilObserver = mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function TakeUntilObserver(delegate, notifier) {
         init(DelegatingDisposableMixin, this, delegate);
         init(LiftedObserverMixin(), this, delegate, none);
-        pipe(notifier, Observable_takeFirst(), Observable_subscribe(delegate, delegate), Disposable.addTo(this), DisposableContainer.onComplete(bindMethod(this, SinkLike_complete)));
+        pipe(notifier, Observable_takeFirst(), Observable_subscribe(delegate), Disposable.addTo(this), DisposableContainer.onComplete(bindMethod(this, SinkLike_complete)));
         return this;
     });
     return (notifier) => pipe(createTakeUntilObserver, partial(notifier), Observable_lift({

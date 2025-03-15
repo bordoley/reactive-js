@@ -99,7 +99,13 @@ const CombineConstructorTests = (operator) => {
 };
 testModule("Observable", describe("effects", test("calling an effect from outside a computation expression throws", () => {
     expectToThrow(() => __constant(0));
-})), ComputationModuleTests(Observable, ObservableTypes), DeferredComputationModuleTests(Observable, ObservableTypes), DeferredReactiveComputationModuleTests(Observable, ObservableTypes), SynchronousComputationModuleTests(Observable), ConcurrentReactiveComputationModuleTests(Observable, ObservableTypes), ConcurrentDeferredComputationModuleTests(Observable), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", async () => {
+})), ComputationModuleTests(Observable, ObservableTypes), DeferredComputationModuleTests(Observable, ObservableTypes), DeferredReactiveComputationModuleTests(Observable, ObservableTypes), SynchronousComputationModuleTests(Observable), ConcurrentReactiveComputationModuleTests(Observable, ObservableTypes), ConcurrentDeferredComputationModuleTests(Observable), describe("backpressureStrategy", test("with a capacity of 0", pipeLazy([1, 2, 3, 4], Observable.fromReadonlyArray(), Observable.backpressureStrategy({
+    capacity: 0,
+    backpressureStrategy: DropLatestBackpressureStrategy,
+}), Observable.last(), expectIsNone)), test("with a capacity of 0 and throw backpressure strategy", pipeLazy(pipeLazy([1, 2, 3, 4], Observable.fromReadonlyArray(), Observable.forEach(ignore), Observable.backpressureStrategy({
+    capacity: 0,
+    backpressureStrategy: ThrowBackpressureStrategy,
+}), Observable.run()), expectToThrow)), testAsync("with a throw backpressure strategy", async () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_1, HostScheduler.create(), false);
@@ -446,7 +452,10 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             while (true) {
                 yield i++;
             }
-        })(), AsyncIterable.of(), Observable.fromAsyncIterable(), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync({ scheduler, capacity: 5 }));
+        })(), AsyncIterable.of(), Observable.fromAsyncIterable(), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.backpressureStrategy({
+            capacity: 5,
+            backpressureStrategy: DropLatestBackpressureStrategy,
+        }), Observable.lastAsync({ scheduler }));
         pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
     catch (e_15) {
@@ -464,7 +473,10 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
             yield 1;
             yield 2;
             yield 3;
-        })(), AsyncIterable.of(), Observable.fromAsyncIterable(), Observable.buffer(), Observable.lastAsync({ scheduler, capacity: 1 }));
+        })(), AsyncIterable.of(), Observable.fromAsyncIterable(), Observable.buffer(), Observable.backpressureStrategy({
+            capacity: 1,
+            backpressureStrategy: DropLatestBackpressureStrategy,
+        }), Observable.lastAsync({ scheduler }));
         pipe(result ?? [], expectArrayEquals([1, 2, 3]));
     }
     catch (e_16) {
@@ -481,7 +493,10 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
         const e = error();
         const result = await pipe((async function* foo() {
             throw e;
-        })(), AsyncIterable.of(), Observable.fromAsyncIterable(), Observable.lastAsync({ scheduler, capacity: 1 }));
+        })(), AsyncIterable.of(), Observable.fromAsyncIterable(), Observable.backpressureStrategy({
+            capacity: 1,
+            backpressureStrategy: DropLatestBackpressureStrategy,
+        }), Observable.lastAsync({ scheduler }));
         pipe(result, expectEquals(e));
     }
     catch (e_17) {
@@ -699,15 +714,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_28);
     }
-}), ComputationTest.isPureSynchronous(Observable.spring())), describe("subscribe", test("with a capacity of 0", pipeLazy([1, 2, 3, 4], Observable.fromReadonlyArray(), Observable.backpressureStrategy({
-    capacity: 1,
-    backpressureStrategy: OverflowBackpressureStrategy,
-}), Observable.last({
-    capacity: 0,
-}), expectIsNone)), test("with a capacity of 0 and throw backpressure strategy", pipeLazy(pipeLazy([1, 2, 3, 4], Observable.fromReadonlyArray(), Observable.forEach(ignore), Observable.run({
-    capacity: 0,
-    backpressureStrategy: ThrowBackpressureStrategy,
-})), expectToThrow))), describe("subscribeOn", StatefulAsynchronousComputationOperatorTests(ObservableTypes, Observable.subscribeOn(VirtualTimeScheduler.create()))), describe("switchAll", test("with empty source", pipeLazy(Observable.empty({ delay: 1 }), Observable.switchAll(), Observable.toReadonlyArray(), expectArrayEquals([]))), test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Computation.flatMap(Observable)("switchAll", _ => pipe([1, 2, 3], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("only produce the last observable", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Computation.flatMap(Observable)("switchAll", x => pipe([x, x, x], Observable.fromReadonlyArray({
+}), ComputationTest.isPureSynchronous(Observable.spring())), describe("subscribeOn", StatefulAsynchronousComputationOperatorTests(ObservableTypes, Observable.subscribeOn(VirtualTimeScheduler.create()))), describe("switchAll", test("with empty source", pipeLazy(Observable.empty({ delay: 1 }), Observable.switchAll(), Observable.toReadonlyArray(), expectArrayEquals([]))), test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Computation.flatMap(Observable)("switchAll", _ => pipe([1, 2, 3], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("only produce the last observable", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Computation.flatMap(Observable)("switchAll", x => pipe([x, x, x], Observable.fromReadonlyArray({
     delay: 1,
     delayStart: true,
 }))), Observable.toReadonlyArray(), expectArrayEquals([3, 3, 3]))), test("overlapping notification", pipeLazy([none, none, none], Observable.fromReadonlyArray({ delay: 4 }), Computation.flatMap(Observable)("switchAll", _ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 1, 2, 1, 2, 3]))), test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Computation.flatMap(Observable)("switchAll", _ => pipe([1, 2, 3], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), HigherOrderComputationOperatorTests(ObservableTypes, Observable.switchAll({

@@ -132,16 +132,18 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
             const scheduler = this[LiftedObserverMixin_consumer];
             const isDelegateReady = scheduler[QueueableLike_isReady];
             const count = this[QueueLike_count];
+            const capacity = this[QueueableLike_capacity];
             const shouldNotify = inSchedulerContinuation &&
                 !shouldIgnore &&
                 isDelegateReady &&
-                count == 0;
+                count == 0 &&
+                capacity > 0;
             if (shouldNotify) {
                 this[LiftedObserverLike_notify](next);
             }
             else if (!shouldIgnore) {
-                scheduleDrainQueue(this);
                 super_(QueueMixin(), this, EventListenerLike_notify, next);
+                scheduleDrainQueue(this);
             }
         },
         [SinkLike_complete]() {

@@ -26,7 +26,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
             if (!observer[LiftedObserverLike_isReady]) {
                 observer[SchedulerLike_requestYield]();
             }
-        }), Observable_subscribe(observer, observer), Disposable.addTo(observer), DisposableContainer.onComplete(bind(onMergeAllObserverInnerObservableComplete, observer)));
+        }), Observable_subscribe(observer), Disposable.addTo(observer), DisposableContainer.onComplete(bind(onMergeAllObserverInnerObservableComplete, observer)));
     };
     function onMergeAllObserverInnerObservableComplete() {
         this[MergeAllObserver_activeCount]--;

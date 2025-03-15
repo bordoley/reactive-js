@@ -6,7 +6,7 @@
 
 # Function: subscribeOn()
 
-> **subscribeOn**\<`T`\>(`scheduler`, `options`?): [`StatefulAsynchronousComputationOperator`](../../type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>
+> **subscribeOn**\<`T`\>(`scheduler`): [`StatefulAsynchronousComputationOperator`](../../type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`, `T`\>
 
 ## Type Parameters
 
@@ -17,16 +17,6 @@
 ### scheduler
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-### options?
-
-#### backpressureStrategy?
-
-[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
-
-#### capacity?
-
-`number`
 
 ## Returns
 

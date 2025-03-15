@@ -78,7 +78,7 @@ export const create = /*@__PURE__*/ (() => {
             ? Computation.concatMap(ObservableModule)(bindMethod(persistentStore, "store"), {
                 innerType: DeferredComputationWithSideEffects,
             })
-            : Computation.ignoreElements(ObservableModule)(), Observable.subscribe(scheduler, options), Disposable.addTo(queue));
+            : Computation.ignoreElements(ObservableModule)(), Observable.subscribe(scheduler), Disposable.addTo(queue));
         let cleanupJob = Disposable.disposed;
         this[CacheStream_store] = store;
         this[CacheStream_subscriptions] = subscriptions;

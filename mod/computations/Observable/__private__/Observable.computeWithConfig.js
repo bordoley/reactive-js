@@ -142,7 +142,7 @@ class ComputeContext {
                             ? pipe(observer[SchedulerLike_schedule](runComputation), Disposable.addTo(observer))
                             : scheduledComputationSubscription;
                 }
-            }), Observable_subscribe(observer, observer), Disposable.addTo(observer), DisposableContainer.onComplete(this[ComputeContext_cleanup]));
+            }), Observable_subscribe(observer), Disposable.addTo(observer), DisposableContainer.onComplete(this[ComputeContext_cleanup]));
             return shouldAwait ? raiseError(awaiting) : none;
         }
     }

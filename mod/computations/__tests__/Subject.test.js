@@ -162,10 +162,10 @@ testModule("Subject", describe("create", test("with replay", () => {
     try {
         const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
         const subject = Subject.create();
-        const subscription = pipe(subject, Observable.forEach(ignore), Observable.subscribe(vts, {
+        const subscription = pipe(subject, Observable.forEach(ignore), Observable.backpressureStrategy({
             backpressureStrategy: ThrowBackpressureStrategy,
             capacity: 1,
-        }));
+        }), Observable.subscribe(vts));
         subject[EventListenerLike_notify](1);
         subject[EventListenerLike_notify](2);
         subject[EventListenerLike_notify](3);

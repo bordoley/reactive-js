@@ -32,7 +32,7 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
         }
     }
     const setupDurationSubscription = (observer, next) => {
-        observer[ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[ThrottleObserver_durationFunction](next), Observable_forEach(bind(notifyThrottleObserverDelegate, observer)), Observable_subscribe(observer, observer), Disposable.addTo(observer));
+        observer[ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[ThrottleObserver_durationFunction](next), Observable_forEach(bind(notifyThrottleObserverDelegate, observer)), Observable_subscribe(observer), Disposable.addTo(observer));
     };
     return mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function ThrottleObserver(delegate, durationFunction, mode) {
         init(DelegatingDisposableMixin, this, delegate);

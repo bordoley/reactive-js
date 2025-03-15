@@ -19,8 +19,6 @@ interface ReactModule {
     }): React.ReactNode;
     createComponent<TProps>(fn: Function1<MulticastObservableLike<TProps>, ObservableLike<ReactElement>>, options?: {
         readonly priority?: 1 | 2 | 3 | 4 | 5;
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
     }): Function1<TProps, React.ReactNode>;
     useSink<TReq>(queue: Optional<SinkLike<TReq>>): {
         notify: Function1<TReq, boolean>;
@@ -37,13 +35,9 @@ interface ReactModule {
      */
     useObserve<T>(observable: Optional<ObservableLike<T>>, options?: {
         readonly priority?: 1 | 2 | 3 | 4 | 5;
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
     }): Optional<T>;
     useObserve<T>(factory: Factory<Optional<ObservableLike<T>>>, deps: readonly unknown[], options?: {
         readonly priority?: 1 | 2 | 3 | 4 | 5;
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
     }): Optional<T>;
     /**
      */

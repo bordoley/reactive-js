@@ -60,20 +60,10 @@ export const useObserve = (observableOrFactory, optionsOrDeps, optionsOrNone) =>
     const observable = isFunction(observableOrFactory)
         ? useMemo(observableOrFactory, optionsOrDeps)
         : observableOrFactory;
-    const { backpressureStrategy, capacity, priority } = (isFunction(observableOrFactory)
+    const { priority } = (isFunction(observableOrFactory)
         ? optionsOrNone
         : optionsOrDeps) ?? {};
-    useDisposable(pipeSomeLazy(observable, Observable.forEach((v) => updateState(_ => v)), Observable.subscribe(ReactScheduler.get(priority), {
-        backpressureStrategy,
-        capacity,
-    }), DisposableContainer.onError(updateError)), [
-        observable,
-        updateState,
-        updateError,
-        priority,
-        backpressureStrategy,
-        capacity,
-    ]);
+    useDisposable(pipeSomeLazy(observable, Observable.forEach((v) => updateState(_ => v)), Observable.subscribe(ReactScheduler.get(priority)), DisposableContainer.onError(updateError)), [observable, updateState, updateError, priority]);
     return isSome(error) ? raiseError(error) : state;
 };
 export const usePauseable = (pauseable) => {

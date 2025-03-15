@@ -29,7 +29,7 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
         init(DelegatingDisposableMixin, this, delegate);
         init(LiftedObserverMixin(), this, delegate, none);
         this[WithLatestFromObserver_selector] = selector;
-        pipe(other, Observable_forEach(bind(onOtherNotify, this)), Observable_subscribe(delegate, delegate), Disposable.addTo(this), DisposableContainer.onComplete(bind(onWithLatestFromObserverOtherSubscriptionComplete, this)));
+        pipe(other, Observable_forEach(bind(onOtherNotify, this)), Observable_subscribe(delegate), Disposable.addTo(this), DisposableContainer.onComplete(bind(onWithLatestFromObserverOtherSubscriptionComplete, this)));
         return this;
     }, props({
         [WithLatestFromObserver_hasLatest]: false,

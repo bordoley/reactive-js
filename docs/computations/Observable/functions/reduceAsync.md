@@ -26,14 +26,6 @@
 
 ### options?
 
-#### backpressureStrategy?
-
-[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
-
-#### capacity?
-
-`number`
-
 #### scheduler?
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)

@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `empty`: \{ `delay`: `number`; \}; `firstAsync`: \{ `backpressureStrategy`: [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md); `capacity`: `number`; `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; `fromIterable`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `fromReadonlyArray`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `fromValue`: \{ `delay`: `number`; \}; `generate`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `lastAsync`: \{ `backpressureStrategy`: [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md); `capacity`: `number`; `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; `raise`: \{ `delay`: `number`; \}; `reduceAsync`: \{ `backpressureStrategy`: [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md); `capacity`: `number`; `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; `toReadonlyArrayAsync`: \{ `backpressureStrategy`: [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md); `capacity`: `number`; `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `first`: \{ `backpressureStrategy`: [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md); `capacity`: `number`; `maxMicroTaskTicks`: `number`; \}; `last`: \{ `backpressureStrategy`: [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md); `capacity`: `number`; `maxMicroTaskTicks`: `number`; \}; `reduce`: \{ `backpressureStrategy`: [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md); `capacity`: `number`; `maxMicroTaskTicks`: `number`; \}; `run`: \{ `backpressureStrategy`: [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md); `capacity`: `number`; `maxMicroTaskTicks`: `number`; \}; `toReadonlyArray`: \{ `backpressureStrategy`: [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md); `capacity`: `number`; `maxMicroTaskTicks`: `number`; \}; `toRunnable`: \{ `backpressureStrategy`: [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md); `capacity`: `number`; `maxMicroTaskTicks`: `number`; \}; \}\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `empty`: \{ `delay`: `number`; \}; `firstAsync`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; `fromIterable`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `fromReadonlyArray`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `fromValue`: \{ `delay`: `number`; \}; `generate`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `lastAsync`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; `raise`: \{ `delay`: `number`; \}; `reduceAsync`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; `toReadonlyArrayAsync`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `first`: \{ `maxMicroTaskTicks`: `number`; \}; `last`: \{ `maxMicroTaskTicks`: `number`; \}; `reduce`: \{ `maxMicroTaskTicks`: `number`; \}; `run`: \{ `maxMicroTaskTicks`: `number`; \}; `toReadonlyArray`: \{ `maxMicroTaskTicks`: `number`; \}; `toRunnable`: \{ `maxMicroTaskTicks`: `number`; \}; \}\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>
 
 ## Properties
 
@@ -362,14 +362,6 @@
 
 `boolean`
 
-###### backpressureStrategy?
-
-[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
-
-###### capacity?
-
-`number`
-
 ###### replay?
 
 `number`
@@ -488,7 +480,7 @@
 
 ### subscribe()
 
-> **subscribe**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+> **subscribe**\<`T`\>(`scheduler`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 #### Type Parameters
 
@@ -499,10 +491,6 @@
 ##### scheduler
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-##### options?
-
-`object` & `Partial`\<`Pick`\<[`QueueableLike`](../../../utils/interfaces/QueueableLike.md)\<`unknown`\>, *typeof* [`QueueableLike_backpressureStrategy`](../../../utils/variables/QueueableLike_backpressureStrategy.md) \| *typeof* [`QueueableLike_capacity`](../../../utils/variables/QueueableLike_capacity.md)\>\>
 
 #### Returns
 
@@ -512,7 +500,7 @@
 
 ### subscribeOn()
 
-> **subscribeOn**\<`T`\>(`scheduler`, `options`?): [`StatefulAsynchronousComputationOperator`](../../type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+> **subscribeOn**\<`T`\>(`scheduler`): [`StatefulAsynchronousComputationOperator`](../../type-aliases/StatefulAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 #### Type Parameters
 
@@ -523,16 +511,6 @@
 ##### scheduler
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-##### options?
-
-###### backpressureStrategy?
-
-[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
-
-###### capacity?
-
-`number`
 
 #### Returns
 
@@ -700,7 +678,7 @@
 
 ### toEventSource()
 
-> **toEventSource**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+> **toEventSource**\<`T`\>(`scheduler`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 #### Type Parameters
 
@@ -711,16 +689,6 @@
 ##### scheduler
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-##### options?
-
-###### backpressureStrategy?
-
-[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
-
-###### capacity?
-
-`number`
 
 #### Returns
 
@@ -730,7 +698,7 @@
 
 ### toPauseableEventSource()
 
-> **toPauseableEventSource**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, [`PauseableEventSourceLike`](../../interfaces/PauseableEventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+> **toPauseableEventSource**\<`T`\>(`scheduler`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, [`PauseableEventSourceLike`](../../interfaces/PauseableEventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 #### Type Parameters
 
@@ -741,16 +709,6 @@
 ##### scheduler
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-##### options?
-
-###### backpressureStrategy?
-
-[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
-
-###### capacity?
-
-`number`
 
 #### Returns
 
@@ -773,14 +731,6 @@
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
 
 ##### options?
-
-###### backpressureStrategy?
-
-[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
-
-###### capacity?
-
-`number`
 
 ###### replay?
 

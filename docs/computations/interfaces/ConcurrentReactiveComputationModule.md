@@ -45,7 +45,7 @@
 
 ### fromObservable()
 
-> **fromObservable**: \<`T`\>(`scheduler`, `options`?) => [`FromObservableOperator`](../type-aliases/FromObservableOperator.md)\<`TComputationType`, `T`\>
+> **fromObservable**: \<`T`\>(`scheduler`) => [`FromObservableOperator`](../type-aliases/FromObservableOperator.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -56,16 +56,6 @@
 ##### scheduler
 
 [`SchedulerLike`](../../utils/interfaces/SchedulerLike.md)
-
-##### options?
-
-###### backpressureStrategy?
-
-[`BackpressureStrategy`](../../utils/type-aliases/BackpressureStrategy.md)
-
-###### capacity?
-
-`number`
 
 #### Returns
 

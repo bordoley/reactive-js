@@ -7,15 +7,13 @@ import { bind, newInstance, none, pipe, raise, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import { BackPressureError, DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, OverflowBackpressureStrategy, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../../utils.js";
-const createObserver = /*@__PURE__*/ (() => {
+const createObserver = 
+/*@__PURE__*/ (() => {
     const SubscribeObserver_scheduler = Symbol("SubscribeObserver_scheduler");
     const SubscribeObserver_schedulerCallback = Symbol("SubscribeObserver_schedulerCallback");
-    return mixInstanceFactory(include(DisposableMixin), function SubscribeObserver(scheduler, config) {
+    return mixInstanceFactory(include(DisposableMixin), function SubscribeObserver(scheduler) {
         init(DisposableMixin, this);
         this[SubscribeObserver_scheduler] = scheduler;
-        this[QueueableLike_capacity] = config[QueueableLike_capacity];
-        this[QueueableLike_backpressureStrategy] =
-            config[QueueableLike_backpressureStrategy];
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const instance = this;
         this[SubscribeObserver_schedulerCallback] =
@@ -29,16 +27,16 @@ const createObserver = /*@__PURE__*/ (() => {
         [SubscribeObserver_scheduler]: none,
         [SubscribeObserver_schedulerCallback]: none,
         [SchedulerLike_inContinuation]: false,
+    }), proto({
         [QueueableLike_capacity]: MAX_SAFE_INTEGER,
         [QueueableLike_backpressureStrategy]: OverflowBackpressureStrategy,
-    }), proto({
         get [SinkLike_isCompleted]() {
             unsafeCast(this);
             return this[DisposableLike_isDisposed];
         },
         get [QueueableLike_isReady]() {
             unsafeCast(this);
-            return (this[QueueableLike_capacity] > 0 && !this[DisposableLike_isDisposed]);
+            return !this[DisposableLike_isDisposed];
         },
         get [SchedulerLike_now]() {
             unsafeCast(this);
@@ -74,16 +72,8 @@ const createObserver = /*@__PURE__*/ (() => {
         },
     }));
 })();
-const Observable_subscribe = (scheduler, config) => (observable) => {
-    const queueConfig = {
-        [QueueableLike_capacity]: config?.[QueueableLike_capacity] ??
-            config?.capacity ??
-            MAX_SAFE_INTEGER,
-        [QueueableLike_backpressureStrategy]: config?.[QueueableLike_backpressureStrategy] ??
-            config?.backpressureStrategy ??
-            OverflowBackpressureStrategy,
-    };
-    const observer = createObserver(scheduler, queueConfig);
+const Observable_subscribe = (scheduler) => (observable) => {
+    const observer = createObserver(scheduler);
     scheduler[DisposableContainerLike_add](observer);
     observable[ObservableLike_observe](observer);
     return observer;

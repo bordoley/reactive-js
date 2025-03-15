@@ -6,7 +6,7 @@
 
 # Function: toEventSource()
 
-> **toEventSource**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+> **toEventSource**\<`T`\>(`scheduler`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 ## Type Parameters
 
@@ -17,16 +17,6 @@
 ### scheduler
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-### options?
-
-#### backpressureStrategy?
-
-[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
-
-#### capacity?
-
-`number`
 
 ## Returns
 

@@ -34,7 +34,7 @@ const createSwitchAllObserver = /*@__PURE__*/ (() => {
                 if (!this[LiftedObserverLike_isReady]) {
                     this[SchedulerLike_requestYield]();
                 }
-            }), Observable_subscribe(this, this), Disposable.addTo(this), DisposableContainer.onComplete(bind(onSwitchAllObserverInnerObservableComplete, this)));
+            }), Observable_subscribe(this), Disposable.addTo(this), DisposableContainer.onComplete(bind(onSwitchAllObserverInnerObservableComplete, this)));
             this[SwitchAllObserver_currentRef][SerialDisposableLike_current] =
                 subscriber;
         },

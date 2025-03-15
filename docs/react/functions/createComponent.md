@@ -20,14 +20,6 @@
 
 ### options?
 
-#### backpressureStrategy?
-
-[`BackpressureStrategy`](../../utils/type-aliases/BackpressureStrategy.md)
-
-#### capacity?
-
-`number`
-
 #### priority?
 
 `2` \| `1` \| `3` \| `4` \| `5`

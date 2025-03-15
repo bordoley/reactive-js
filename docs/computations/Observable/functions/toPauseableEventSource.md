@@ -6,7 +6,7 @@
 
 # Function: toPauseableEventSource()
 
-> **toPauseableEventSource**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, [`PauseableEventSourceLike`](../../interfaces/PauseableEventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+> **toPauseableEventSource**\<`T`\>(`scheduler`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, [`PauseableEventSourceLike`](../../interfaces/PauseableEventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 ## Type Parameters
 
@@ -17,16 +17,6 @@
 ### scheduler
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-### options?
-
-#### backpressureStrategy?
-
-[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
-
-#### capacity?
-
-`number`
 
 ## Returns
 

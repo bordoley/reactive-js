@@ -16,14 +16,6 @@
 
 ### options?
 
-#### backpressureStrategy?
-
-[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
-
-#### capacity?
-
-`number`
-
 #### maxMicroTaskTicks?
 
 `number`

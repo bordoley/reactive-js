@@ -1,3 +1,4 @@
+import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { Mixin3, include, init, mix } from "../../__internal__/mixins.js";
 import {
   DeferredObservableLike,
@@ -5,6 +6,7 @@ import {
   StreamLike,
 } from "../../computations.js";
 import { Function1, Optional, pipe, returns } from "../../functions.js";
+import { clampPositiveInteger } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DelegatingQueueableMixin from "../../utils/__mixins__/DelegatingQueueableMixin.js";
 import {
@@ -16,9 +18,6 @@ import {
 import * as Observable from "../Observable.js";
 import * as QueueableObservable from "../__internal__/QueueableObservable.js";
 import DelegatingMulticastObservableMixin from "../__mixins__/DelegatingMulticastObservableMixin.js";
-import { config } from "process";
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
-import { clampPositiveInteger } from "../../math.js";
 
 const StreamMixin: <TReq, T>() => Mixin3<
   StreamLike<TReq, T> & DisposableLike,

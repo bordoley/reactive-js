@@ -11,7 +11,7 @@ const ObservableModule = {
 };
 const Observable_multicast = (scheduler, options = {}) => observable => {
     const subject = Subject.create(options);
-    pipe(observable, Computation.notify(ObservableModule)(subject), Observable_subscribe(scheduler, options), Disposable.bindTo(subject));
+    pipe(observable, Computation.notify(ObservableModule)(subject), Observable_subscribe(scheduler), Disposable.bindTo(subject));
     return subject;
 };
 export default Observable_multicast;

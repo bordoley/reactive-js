@@ -99,7 +99,7 @@ testModule("AsyncIterable", ComputationModuleTests(AsyncIterable, AsyncIterableT
                 yield i++;
                 timeout = none;
             }
-        })(), AsyncIterable.of(), AsyncIterable.toPauseableObservable(scheduler, { capacity: 1 }), DisposableContainer.onDisposed(_ => {
+        })(), AsyncIterable.of(), AsyncIterable.toPauseableObservable(scheduler), DisposableContainer.onDisposed(_ => {
             if (timeout !== none) {
                 clearTimeout(timeout);
             }
@@ -129,7 +129,7 @@ testModule("AsyncIterable", ComputationModuleTests(AsyncIterable, AsyncIterableT
             yield 1;
             yield 2;
             yield 3;
-        })(), AsyncIterable.of(), AsyncIterable.toPauseableObservable(scheduler, { capacity: 1 }));
+        })(), AsyncIterable.of(), AsyncIterable.toPauseableObservable(scheduler));
         stream[PauseableLike_resume]();
         const result = await pipe(stream, Observable.buffer(), Observable.lastAsync({ scheduler }));
         pipe(result ?? [], expectArrayEquals([1, 2, 3]));
@@ -148,7 +148,7 @@ testModule("AsyncIterable", ComputationModuleTests(AsyncIterable, AsyncIterableT
         const e = error();
         const stream = pipe((async function* foo() {
             throw e;
-        })(), AsyncIterable.of(), AsyncIterable.toPauseableObservable(scheduler, { capacity: 1 }));
+        })(), AsyncIterable.of(), AsyncIterable.toPauseableObservable(scheduler));
         stream[PauseableLike_resume]();
         await pipe(stream, Observable.lastAsync({ scheduler }));
     }

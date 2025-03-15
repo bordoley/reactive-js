@@ -1,6 +1,6 @@
 import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, ConcurrentDeferredComputationModule, DeferredComputationModule, EventSourceLike, InteractiveComputationModule, PauseableEventSourceLike, PauseableObservableLike, PureAsyncIterableLike } from "../computations.js";
 import { Function1 } from "../functions.js";
-import { BackpressureStrategy, DisposableLike, SchedulerLike } from "../utils.js";
+import { DisposableLike, SchedulerLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
@@ -15,10 +15,7 @@ export interface AsyncIterableModule extends ComputationModule<AsyncIterableComp
     toEventSource<T>(): Function1<AsyncIterableLike<T>, EventSourceLike<T> & DisposableLike>;
     toPauseableEventSource<T>(): Function1<AsyncIterableLike<T>, PauseableEventSourceLike<T> & DisposableLike>;
     toPauseableObservable<T>(scheduler: SchedulerLike, options?: {
-        readonly autoDispose?: boolean;
         readonly replay?: number;
-        readonly capacity?: number;
-        readonly backpressureStrategy?: BackpressureStrategy;
     }): Function1<AsyncIterableLike<T>, PauseableObservableLike<T> & DisposableLike>;
 }
 export type Signature = AsyncIterableModule;

@@ -314,10 +314,7 @@ export interface ConcurrentReactiveComputationModule<TComputationType extends Co
     combineLatest: CombineConstructor<TComputationType>;
     forkMerge: ForkMerge<TComputationType>;
     fromAsyncIterable<T>(): FromAsyncIterableOperator<TComputationType, T>;
-    fromObservable: <T>(scheduler: SchedulerLike, options?: {
-        readonly capacity?: number;
-        readonly backpressureStrategy?: BackpressureStrategy;
-    }) => FromObservableOperator<TComputationType, T>;
+    fromObservable: <T>(scheduler: SchedulerLike) => FromObservableOperator<TComputationType, T>;
     fromPromise<T>(): Function1<Promise<T>, MulticastComputationOf<TComputationType, T>>;
     merge<T>(...computations: readonly PureSynchronousComputationOf<TComputationType, T>[]): PureSynchronousComputationOf<TComputationType, T>;
     merge<T>(...computations: readonly SynchronousComputationOf<TComputationType, T>[]): SynchronousComputationWithSideEffectsOf<TComputationType, T>;

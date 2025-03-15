@@ -68,7 +68,7 @@ const Observable_lastAsync = (options) => async (observable) => {
             let result = none;
             pipe(observable, Observable_forEach((next) => {
                 result = next;
-            }), Observable_subscribe(scheduler, options), DisposableContainer.onError(reject), DisposableContainer.onComplete(() => {
+            }), Observable_subscribe(scheduler), DisposableContainer.onError(reject), DisposableContainer.onComplete(() => {
                 resolve(result);
             }));
         });
