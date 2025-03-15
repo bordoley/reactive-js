@@ -348,6 +348,57 @@ const ConcurrentReactiveComputationModuleTests = <
     ),
     describe("never", ComputationTest.isMulticasted(m.never())),
     describe(
+      "takeUntil",
+      test("takes until the notifier notifies its first notification", () => {
+        using vts = VirtualTimeScheduler.create();
+        const result: number[] = [];
+        pipe(
+          [10, 20, 30, 40, 50],
+          Observable.fromReadonlyArray({ delay: 2 }),
+          m.fromObservable(vts),
+          m.takeUntil(
+            pipe(
+              [1],
+              Observable.fromValue({ delay: 3 }),
+              m.fromObservable(vts),
+            ),
+          ),
+          m.toObservable(),
+          Observable.forEach(bind(result.push, result)),
+          Observable.subscribe(vts),
+        );
+
+        vts[VirtualTimeSchedulerLike_run]();
+
+        expectArrayEquals([10, 20])(result);
+      }),
+      pureSynchronousOfT &&
+        StatefulSynchronousComputationOperatorTests(
+          computations,
+          m.takeUntil(pureSynchronousOfT),
+        ),
+      synchronousWithSideEffectsOfT &&
+        ComputationOperatorWithSideEffectsTests(
+          computations,
+          m.takeUntil(synchronousWithSideEffectsOfT),
+        ),
+      pureDeferredOfT &&
+        StatefulAsynchronousComputationOperatorTests(
+          computations,
+          m.takeUntil(pureDeferredOfT),
+        ),
+      deferredWithSideEffectsOfT &&
+        AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests(
+          computations,
+          m.takeUntil(deferredWithSideEffectsOfT),
+        ),
+      multicastOfT &&
+        StatelessAsynchronousComputationOperatorTests(
+          computations,
+          m.takeUntil(multicastOfT),
+        ),
+    ),
+    describe(
       "withLatestFrom",
       test("when source and latest are interlaced", () => {
         using vts = VirtualTimeScheduler.create();

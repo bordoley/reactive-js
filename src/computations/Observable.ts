@@ -1,6 +1,5 @@
 import {
   ComputationModule,
-  ComputationOf,
   ComputationOperatorWithSideEffects,
   ComputationType,
   Computation_T,
@@ -27,7 +26,6 @@ import {
   PureSynchronousObservableLike,
   StatefulAsynchronousComputationOperator,
   StatefulSynchronousComputationOperator,
-  StatelessAsynchronousComputationOperator,
   StoreLike,
   SynchronousComputationModule,
   SynchronousObservableLike,
@@ -391,25 +389,6 @@ export interface ObservableModule
     HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, T>,
     T
   >;
-
-  takeUntil<T>(
-    notifier: PureSynchronousObservableLike,
-  ): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
-  takeUntil<T>(
-    notifier: SynchronousObservableWithSideEffectsLike,
-  ): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
-  takeUntil<T>(
-    notifier: PureDeferredObservableLike,
-  ): StatefulAsynchronousComputationOperator<ObservableComputation, T, T>;
-  takeUntil<T>(
-    notifier: DeferredObservableWithSideEffectsLike,
-  ): Function1<
-    ComputationOf<ObservableComputation, T>,
-    DeferredObservableWithSideEffectsLike<T>
-  >;
-  takeUntil<T>(
-    notifier: MulticastObservableLike,
-  ): StatelessAsynchronousComputationOperator<ObservableComputation, T, T>;
 
   throttle<T>(
     duration: number,

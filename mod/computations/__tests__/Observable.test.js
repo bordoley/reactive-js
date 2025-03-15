@@ -78,12 +78,10 @@ import DeferredComputationModuleTests from "./fixtures/DeferredComputationModule
 import DeferredReactiveComputationModuleTests from "./fixtures/DeferredReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 import * as ComputationTest from "./fixtures/helpers/ComputationTest.js";
-import AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests from "./fixtures/operators/AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests.js";
 import ComputationOperatorWithSideEffectsTests from "./fixtures/operators/ComputationOperatorWithSideEffectsTests.js";
 import HigherOrderComputationOperatorTests from "./fixtures/operators/HigherOrderComputationOperatorTests.js";
 import StatefulAsynchronousComputationOperatorTests from "./fixtures/operators/StatefulAsynchronousComputationOperatorTests.js";
 import StatefulSynchronousComputationOperatorTests from "./fixtures/operators/StatefulSynchronousComputationOperatorTests.js";
-import StatelessAsynchronousComputationOperatorTests from "./fixtures/operators/StatelessAsynchronousComputationOperatorTests.js";
 import StatelessComputationOperatorTests from "./fixtures/operators/StatelessComputationOperatorTests.js";
 const ObservableTypes = {
     [Computation_pureSynchronousOfT]: Observable.empty({ delay: 1 }),
@@ -671,7 +669,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     innerType: PureDeferredComputation,
 }), Observable.switchAll({
     innerType: DeferredComputationWithSideEffects,
-}))), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([10, 20, 30, 40, 50], Observable.fromReadonlyArray({ delay: 2 }), Observable.takeUntil(pipe([1], Observable.fromValue({ delay: 3 }))), Observable.toReadonlyArray(), expectArrayEquals([10, 20]))), StatefulSynchronousComputationOperatorTests(ObservableTypes, Observable.takeUntil(Observable.empty({ delay: 1 }))), ComputationOperatorWithSideEffectsTests(ObservableTypes, Observable.takeUntil(pipe(Observable.empty({ delay: 1 }), Observable.forEach(ignore)))), StatefulAsynchronousComputationOperatorTests(ObservableTypes, Observable.takeUntil(pipe(Observable.empty(), Observable.subscribeOn(HostScheduler.create())))), AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests(ObservableTypes, Observable.takeUntil(pipe(() => Promise.resolve(1), Observable.fromAsyncFactory(), Observable.forEach(ignore)))), StatelessAsynchronousComputationOperatorTests(ObservableTypes, Observable.takeUntil(Subject.create()))), describe("throttle", test("first", pipeLazy(Observable.generate(increment, returns(-1), {
+}))), describe("throttle", test("first", pipeLazy(Observable.generate(increment, returns(-1), {
     delay: 1,
     delayStart: true,
 }), Observable.takeFirst({ count: 101 }), Observable.throttle(50, { mode: "first" }), Observable.toReadonlyArray(), expectArrayEquals([0, 49, 99]))), test("last", pipeLazy(Observable.generate(increment, returns(-1), {

@@ -324,6 +324,11 @@ export interface ConcurrentReactiveComputationModule<TComputationType extends Co
     merge<T>(...computations: readonly PureComputationOf<TComputationType, T>[]): PureDeferredComputationOf<TComputationType, T>;
     merge<T>(...computations: readonly ComputationOf<TComputationType, T>[]): DeferredComputationWithSideEffectsOf<TComputationType, T>;
     never<T>(): MulticastComputationOf<TComputationType, T>;
+    takeUntil<T>(notifier: PureSynchronousComputationOf<TComputationType, unknown>): StatefulSynchronousComputationOperator<TComputationType, T, T>;
+    takeUntil<T>(notifier: SynchronousComputationWithSideEffectsOf<TComputationType, unknown>): ComputationOperatorWithSideEffects<TComputationType, T, T>;
+    takeUntil<T>(notifier: PureDeferredComputationOf<TComputationType, unknown>): StatefulAsynchronousComputationOperator<TComputationType, T, T>;
+    takeUntil<T>(notifier: DeferredComputationWithSideEffectsOf<TComputationType, unknown>): Function1<ComputationOf<TComputationType, T>, DeferredComputationWithSideEffectsOf<TComputationType, T>>;
+    takeUntil<T>(notifier: MulticastComputationOf<TComputationType, unknown>): StatelessAsynchronousComputationOperator<TComputationType, T, T>;
     withLatestFrom<TA, TB>(other: PureSynchronousComputationOf<TComputationType, TB>): StatefulSynchronousComputationOperator<TComputationType, TA, Tuple2<TA, TB>>;
     withLatestFrom<TA, TB, T>(other: PureSynchronousComputationOf<TComputationType, TB>, selector: Function2<TA, TB, T>): StatefulSynchronousComputationOperator<TComputationType, TA, T>;
     withLatestFrom<TA, TB>(other: SynchronousComputationWithSideEffectsOf<TComputationType, TB>): ComputationOperatorWithSideEffects<TComputationType, TA, Tuple2<TA, TB>>;

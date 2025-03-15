@@ -18,7 +18,7 @@
 
 #### notifier
 
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`unknown`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`unknown`\>
 
 ### Returns
 
@@ -36,7 +36,7 @@
 
 #### notifier
 
-[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)
+[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`unknown`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`unknown`\>
 
 ### Returns
 
@@ -54,7 +54,7 @@
 
 #### notifier
 
-[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)
+[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`unknown`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`unknown`\>
 
 ### Returns
 
@@ -62,7 +62,7 @@
 
 ## Call Signature
 
-> **takeUntil**\<`T`\>(`notifier`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
+> **takeUntil**\<`T`\>(`notifier`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
 
 ### Type Parameters
 
@@ -72,11 +72,11 @@
 
 #### notifier
 
-[`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)
+[`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`unknown`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`unknown`\>
 
 ### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
 
 ## Call Signature
 
@@ -90,7 +90,7 @@
 
 #### notifier
 
-[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)
+`NonNullable`\<[`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`unknown`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`unknown`\>\>
 
 ### Returns
 

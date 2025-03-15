@@ -38,6 +38,7 @@
 - [never](functions/never.md)
 - [raise](functions/raise.md)
 - [reduceAsync](functions/reduceAsync.md)
+- [takeUntil](functions/takeUntil.md)
 - [toObservable](functions/toObservable.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
 - [withLatestFrom](functions/withLatestFrom.md)

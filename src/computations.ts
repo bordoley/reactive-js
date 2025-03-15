@@ -1311,6 +1311,28 @@ export interface ConcurrentReactiveComputationModule<
 
   never<T>(): MulticastComputationOf<TComputationType, T>;
 
+  takeUntil<T>(
+    notifier: PureSynchronousComputationOf<TComputationType, unknown>,
+  ): StatefulSynchronousComputationOperator<TComputationType, T, T>;
+  takeUntil<T>(
+    notifier: SynchronousComputationWithSideEffectsOf<
+      TComputationType,
+      unknown
+    >,
+  ): ComputationOperatorWithSideEffects<TComputationType, T, T>;
+  takeUntil<T>(
+    notifier: PureDeferredComputationOf<TComputationType, unknown>,
+  ): StatefulAsynchronousComputationOperator<TComputationType, T, T>;
+  takeUntil<T>(
+    notifier: DeferredComputationWithSideEffectsOf<TComputationType, unknown>,
+  ): Function1<
+    ComputationOf<TComputationType, T>,
+    DeferredComputationWithSideEffectsOf<TComputationType, T>
+  >;
+  takeUntil<T>(
+    notifier: MulticastComputationOf<TComputationType, unknown>,
+  ): StatelessAsynchronousComputationOperator<TComputationType, T, T>;
+
   withLatestFrom<TA, TB>(
     other: PureSynchronousComputationOf<TComputationType, TB>,
   ): StatefulSynchronousComputationOperator<
