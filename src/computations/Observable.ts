@@ -10,9 +10,9 @@ import {
   Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
+  ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
   DeferredComputationModule,
-  DeferredComputationWithSideEffectsLike,
   DeferredObservableWithSideEffectsLike,
   DeferredReactiveComputationModule,
   EventSourceLike,
@@ -34,8 +34,6 @@ import {
   SynchronousObservableWithSideEffectsLike,
 } from "../computations.js";
 import {
-  AsyncFunction1,
-  AsyncFunction2,
   Equality,
   Factory,
   Function1,
@@ -80,7 +78,6 @@ import Observable_enqueue from "./Observable/__private__/Observable.enqueue.js";
 import Observable_exhaust from "./Observable/__private__/Observable.exhaust.js";
 import Observable_first from "./Observable/__private__/Observable.first.js";
 import Observable_firstAsync from "./Observable/__private__/Observable.firstAsync.js";
-import Observable_flatMapAsync from "./Observable/__private__/Observable.flatMapAsync.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
 import Observable_forkMerge from "./Observable/__private__/Observable.forkMerge.js";
 import Observable_fromAsyncFactory from "./Observable/__private__/Observable.fromAsyncFactory.js";
@@ -265,7 +262,8 @@ export interface ObservableModule
       }
     >,
     DeferredReactiveComputationModule<ObservableComputation>,
-    ConcurrentReactiveComputationModule<ObservableComputation> {
+    ConcurrentReactiveComputationModule<ObservableComputation>,
+    ConcurrentDeferredComputationModule<ObservableComputation> {
   actionReducer<TAction, T>(
     reducer: Reducer<TAction, T>,
     initialState: Factory<T>,
@@ -318,20 +316,6 @@ export interface ObservableModule
     TInnerLike,
     HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, T>,
     T
-  >;
-
-  flatMapAsync<TA, TB>(
-    f: AsyncFunction2<TA, AbortSignal, TB>,
-  ): HigherOrderComputationOperator<
-    ObservableComputation,
-    DeferredComputationWithSideEffectsLike,
-    TA,
-    TB
-  >;
-
-  fromAsyncFactory<T>(): Function1<
-    AsyncFunction1<AbortSignal, T>,
-    DeferredObservableWithSideEffectsLike<T>
   >;
 
   fromEventSource<T>(): Function1<
@@ -537,7 +521,6 @@ export const enqueue: Signature["enqueue"] = Observable_enqueue;
 export const exhaust: Signature["exhaust"] = Observable_exhaust;
 export const first: Signature["first"] = Observable_first;
 export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
-export const flatMapAsync: Signature["flatMapAsync"] = Observable_flatMapAsync;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const forkMerge: Signature["forkMerge"] = Observable_forkMerge;
 export const fromAsyncFactory: Signature["fromAsyncFactory"] =

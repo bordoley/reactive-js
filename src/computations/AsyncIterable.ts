@@ -17,6 +17,7 @@ import {
   Computation_baseOfT,
   Computation_deferredWithSideEffectsOfT,
   Computation_pureDeferredOfT,
+  ConcurrentDeferredComputationModule,
   DeferredComputationModule,
   EventSourceLike,
   HigherOrderInnerComputationLike,
@@ -98,7 +99,8 @@ export type Computation = AsyncIterableComputation;
 export interface AsyncIterableModule
   extends ComputationModule<AsyncIterableComputation>,
     DeferredComputationModule<AsyncIterableComputation>,
-    InteractiveComputationModule<AsyncIterableComputation> {
+    InteractiveComputationModule<AsyncIterableComputation>,
+    ConcurrentDeferredComputationModule<AsyncIterableComputation> {
   of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
 
   toEventSource<T>(): Function1<
@@ -227,6 +229,24 @@ export const concat: Signature["concat"] = (<T>(
     ConcatAsyncIterable,
     iterables,
   )) as unknown as Signature["concat"];
+
+class FromAsyncFactoryIterable<T>
+  implements AsyncIterableWithSideEffectsLike<T>
+{
+  public [ComputationLike_isPure]: false = false as const;
+  public [ComputationLike_isSynchronous]: false = false as const;
+
+  constructor(private f: (options?: { signal: AbortSignal }) => Promise<T>) {}
+
+  async *[Symbol.asyncIterator]() {
+    const result = await this.f();
+    yield result;
+  }
+}
+
+export const fromAsyncFactory: Signature["fromAsyncFactory"] = returns(
+  factory => newInstance(FromAsyncFactoryIterable, factory),
+);
 
 class FromIterableAsyncIterable<T> implements PureAsyncIterableLike<T> {
   public readonly [ComputationLike_isSynchronous]: false = false as const;

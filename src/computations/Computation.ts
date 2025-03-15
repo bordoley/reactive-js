@@ -10,11 +10,13 @@ import {
   ComputationOperatorWithSideEffects,
   ComputationType,
   ComputationWithSideEffectsLike,
+  ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
   DeferredComputationLike,
   DeferredComputationModule,
   DeferredComputationOf,
   DeferredComputationOfModule,
+  DeferredComputationWithSideEffects,
   DeferredComputationWithSideEffectsLike,
   DeferredComputationWithSideEffectsOf,
   HigherOrderComputationOperator,
@@ -358,6 +360,34 @@ export interface Signature {
     },
   ): FlatMapOperator<TComputationType, TFlattenKey>;
 
+  flatMapAsync<
+    TComputationType extends ComputationType,
+    TFlattenKey extends string | number | symbol,
+  >(
+    m: PickComputationModule<
+      TComputationType,
+      ComputationModule<TComputationType> &
+        ConcurrentDeferredComputationModule<TComputationType>,
+      "map" | "fromAsyncFactory"
+    > & {
+      readonly [key in
+        | TFlattenKey
+        | string
+        | symbol
+        | number]: key extends TFlattenKey
+        ? DeferredComputationModule<TComputationType>["concatAll"]
+        : unknown;
+    },
+  ): <TA, TB>(
+    key: TFlattenKey,
+    selector: (a: TA, options?: { signal?: AbortSignal }) => Promise<TB>,
+  ) => HigherOrderComputationOperator<
+    TComputationType,
+    DeferredComputationWithSideEffectsLike,
+    TA,
+    TB
+  >;
+
   flatMapIterable<
     TComputationType extends ComputationType,
     TFlattenKey extends string | number | symbol,
@@ -614,6 +644,43 @@ export const flatMap: Signature["flatMap"] = /*@__PURE__*/ (<
           m[flatten]<TB, TInnerLike>(options),
         ),
   ))() as Signature["flatMap"];
+
+export const flatMapAsync: Signature["flatMapAsync"] = /*@__PURE__*/ (<
+  TComputationType extends ComputationType,
+  TFlattenKey extends string | number | symbol,
+>() =>
+  memoize(
+    (
+      m: PickComputationModule<
+        TComputationType,
+        ComputationModule<TComputationType> &
+          ConcurrentDeferredComputationModule<TComputationType>,
+        "map" | "fromAsyncFactory"
+      > & {
+        readonly [key in
+          | TFlattenKey
+          | string
+          | symbol
+          | number]: key extends TFlattenKey
+          ? DeferredComputationModule<TComputationType>["concatAll"]
+          : unknown;
+      },
+    ) =>
+      <TA, TB>(
+        key: TFlattenKey,
+        f: (a: TA, options?: { signal?: AbortSignal }) => Promise<TB>,
+      ) => {
+        const mapper = (a: TA) =>
+          pipe(
+            (options?: { signal?: AbortSignal }) => f(a, options),
+            m.fromAsyncFactory(),
+          );
+
+        return flatMap<TComputationType, TFlattenKey>(m)(key, mapper, {
+          innerType: DeferredComputationWithSideEffects,
+        });
+      },
+  ))() as Signature["flatMapAsync"];
 
 export const flatMapIterable: Signature["flatMapIterable"] = /*@__PURE__*/ (<
   TComputationType extends ComputationType,

@@ -11,11 +11,11 @@ import Observable_create from "./Observable.create.js";
 
 const Observable_fromAsyncFactory: Observable.Signature["fromAsyncFactory"] =
   <T>() =>
-  (f: (abortSignal: AbortSignal) => Promise<T>) =>
+  (f: (options?: { signal: AbortSignal }) => Promise<T>) =>
     Observable_create<T>(async (observer: ObserverLike<T>) => {
-      const abortSignal = DisposableContainer.toAbortSignal(observer);
+      const signal = DisposableContainer.toAbortSignal(observer);
       try {
-        const result = await f(abortSignal);
+        const result = await f({ signal });
         observer[EventListenerLike_notify](result);
         observer[SinkLike_complete]();
       } catch (e) {

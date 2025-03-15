@@ -1221,6 +1221,15 @@ export interface InteractiveComputationModule<
   zip: ZipConstructor<TComputationType>;
 }
 
+export interface ConcurrentDeferredComputationModule<
+  TComputationType extends ComputationType,
+> extends ComputationModuleLike<TComputationType> {
+  fromAsyncFactory<T>(): Function1<
+    (options?: { signal?: AbortSignal }) => Promise<T>,
+    DeferredComputationWithSideEffectsOf<TComputationType, T>
+  >;
+}
+
 export interface DeferredReactiveComputationModule<
   TComputationType extends ComputationType,
 > extends ComputationModuleLike<TComputationType> {

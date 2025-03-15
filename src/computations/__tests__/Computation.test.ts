@@ -4,6 +4,7 @@ import {
   expectToHaveBeenCalledTimes,
   mockFn,
   test,
+  testAsync,
   testModule,
 } from "../../__internal__/testing.js";
 import {
@@ -21,6 +22,7 @@ import {
   none,
   pipe,
   pipeLazy,
+  pipeLazyAsync,
 } from "../../functions.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Computation from "../Computation.js";
@@ -31,6 +33,7 @@ import AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests f
 import ComputationOperatorWithSideEffectsTests from "./fixtures/operators/ComputationOperatorWithSideEffectsTests.js";
 import StatefulAsynchronousComputationOperatorTests from "./fixtures/operators/StatefulAsynchronousComputationOperatorTests.js";
 import StatefulSynchronousComputationOperatorTests from "./fixtures/operators/StatefulSynchronousComputationOperatorTests.js";
+import * as AsyncIterable from "../AsyncIterable.js";
 
 const ObservableTypes = {
   [Computation_pureSynchronousOfT]: Observable.empty({ delay: 1 }),
@@ -112,6 +115,22 @@ testModule(
         Computation.concatMap(Iterable)(() => [1, 2, 3]),
         Iterable.toReadonlyArray<number>(),
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+  ),
+  describe(
+    "flatMapAsync",
+    testAsync(
+      "mapping a number to a promise",
+      pipeLazyAsync(
+        1,
+        AsyncIterable.fromValue(),
+        Computation.flatMapAsync(AsyncIterable)(
+          "concatAll",
+          async x => await Promise.resolve(x),
+        ),
+        AsyncIterable.toReadonlyArrayAsync<number>(),
+        expectArrayEquals([1]),
       ),
     ),
   ),

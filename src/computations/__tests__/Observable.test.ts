@@ -6,7 +6,6 @@ import {
   expectFalse,
   expectIsNone,
   expectIsSome,
-  expectPromiseToThrow,
   expectToHaveBeenCalledTimes,
   expectToThrow,
   expectToThrowAsync,
@@ -105,6 +104,7 @@ import StatefulAsynchronousComputationOperatorTests from "./fixtures/operators/S
 import StatefulSynchronousComputationOperatorTests from "./fixtures/operators/StatefulSynchronousComputationOperatorTests.js";
 import StatelessAsynchronousComputationOperatorTests from "./fixtures/operators/StatelessAsynchronousComputationOperatorTests.js";
 import StatelessComputationOperatorTests from "./fixtures/operators/StatelessComputationOperatorTests.js";
+import ConcurrentDeferredComputationModuleTests from "./fixtures/ConcurrentDeferredComputationModuleTests.js";
 
 const ObservableTypes = {
   [Computation_pureSynchronousOfT]: Observable.empty({ delay: 1 }),
@@ -192,6 +192,7 @@ testModule(
   DeferredReactiveComputationModuleTests(Observable, ObservableTypes),
   SynchronousComputationModuleTests<Observable.Computation>(Observable),
   ConcurrentReactiveComputationModuleTests(Observable, ObservableTypes),
+  ConcurrentDeferredComputationModuleTests(Observable),
   describe(
     "backpressureStrategy",
     testAsync("with a throw backpressure strategy", async () => {
@@ -691,26 +692,6 @@ testModule(
     }),
   ),
   describe(
-    "flatMapAsync",
-    testAsync("mapping a number to a promise", async () => {
-      using scheduler = HostScheduler.create();
-      await pipeAsync(
-        1,
-        Observable.fromValue(),
-        Observable.flatMapAsync(async x => await Promise.resolve(x)),
-        Observable.toReadonlyArrayAsync<number>({ scheduler }),
-        expectArrayEquals([1]),
-      );
-    }),
-    HigherOrderComputationOperatorTests(
-      ObservableTypes,
-      none,
-      none,
-      none,
-      Observable.flatMapAsync(async x => await Promise.resolve(x)),
-    ),
-  ),
-  describe(
     "forkMerge",
     StatelessComputationOperatorTests(
       ObservableTypes,
@@ -721,53 +702,6 @@ testModule(
           innerType: MulticastComputation,
         },
       ),
-    ),
-  ),
-  describe(
-    "fromAsyncFactory",
-    testAsync("when promise resolves", async () => {
-      using scheduler = HostScheduler.create();
-      await pipeAsync(
-        async () => {
-          await Promise.resolve(1);
-          return 2;
-        },
-        Observable.fromAsyncFactory(),
-        Observable.lastAsync({ scheduler }),
-        expectEquals<Optional<number>>(2),
-      );
-    }),
-    testAsync("when promise fails with an exception", async () => {
-      using scheduler = HostScheduler.create();
-      await pipe(
-        pipe(
-          async () => {
-            await Promise.resolve(1);
-            raise();
-          },
-          Observable.fromAsyncFactory(),
-          Observable.lastAsync({ scheduler }),
-        ),
-        expectPromiseToThrow,
-      );
-    }),
-    testAsync("when factory throws an exception", async () => {
-      using scheduler = HostScheduler.create();
-      await pipe(
-        pipe(
-          async () => {
-            raise();
-          },
-          Observable.fromAsyncFactory(),
-          Observable.lastAsync({ scheduler }),
-        ),
-        expectPromiseToThrow,
-      );
-    }),
-    ComputationTest.isDeferredWithSideEffects(
-      pipe(async () => {
-        raise();
-      }, Observable.fromAsyncFactory()),
     ),
   ),
   describe(
