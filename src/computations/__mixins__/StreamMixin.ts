@@ -10,11 +10,15 @@ import DelegatingQueueableMixin from "../../utils/__mixins__/DelegatingQueueable
 import {
   BackpressureStrategy,
   DisposableLike,
+  OverflowBackpressureStrategy,
   SchedulerLike,
 } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as QueueableObservable from "../__internal__/QueueableObservable.js";
 import DelegatingMulticastObservableMixin from "../__mixins__/DelegatingMulticastObservableMixin.js";
+import { config } from "process";
+import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
+import { clampPositiveInteger } from "../../math.js";
 
 const StreamMixin: <TReq, T>() => Mixin3<
   StreamLike<TReq, T> & DisposableLike,
@@ -49,6 +53,13 @@ const StreamMixin: <TReq, T>() => Mixin3<
 
         const delegate = pipe(
           queue,
+          Observable.backpressureStrategy({
+            backpressureStrategy:
+              options?.backpressureStrategy ?? OverflowBackpressureStrategy,
+            capacity: clampPositiveInteger(
+              options?.capacity ?? MAX_SAFE_INTEGER,
+            ),
+          }),
           op,
           Observable.multicast<T>(scheduler, options),
           Disposable.addTo(queue),

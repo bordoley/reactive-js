@@ -42,8 +42,6 @@ const Observable_toPauseableObservable: Observable.Signature["toPauseableObserva
         obs: SynchronousObservableLike<T>,
         scheduler: SchedulerLike,
         multicastOptions: Optional<{
-          capacity?: number;
-          backpressureStrategy?: BackpressureStrategy;
           replay?: number;
         }>,
       ): PauseableObservableLike<T> & DisposableLike {

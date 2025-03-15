@@ -319,7 +319,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
               },
             )
           : Computation.ignoreElements(ObservableModule)(),
-        Observable.subscribe(scheduler, options),
+        Observable.subscribe(scheduler),
         Disposable.addTo(queue),
       );
 

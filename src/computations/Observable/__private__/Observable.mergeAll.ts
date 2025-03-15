@@ -92,7 +92,7 @@ const createMergeAllObserverOperator: <T>(options?: {
           observer[SchedulerLike_requestYield]();
         }
       }),
-      Observable_subscribe(observer, observer),
+      Observable_subscribe(observer),
       Disposable.addTo(observer),
       DisposableContainer.onComplete(
         bind(onMergeAllObserverInnerObservableComplete, observer),

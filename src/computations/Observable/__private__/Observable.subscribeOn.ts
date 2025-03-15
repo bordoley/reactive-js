@@ -6,13 +6,7 @@ import {
 import { bindMethod, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import {
-  BackpressureStrategy,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-  SchedulerLike,
-  SinkLike_complete,
-} from "../../../utils.js";
+import { SchedulerLike, SinkLike_complete } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_enqueue from "./Observable.enqueue.js";
@@ -20,10 +14,6 @@ import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
     scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-    },
   ) =>
   (observable: ObservableLike<T>) =>
     Observable_createWithConfig<T>(
@@ -33,13 +23,7 @@ const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
         pipe(
           observable,
           Observable_enqueue(observer),
-          Observable_subscribe(scheduler, {
-            [QueueableLike_capacity]:
-              options?.capacity ?? observer[QueueableLike_capacity],
-            [QueueableLike_backpressureStrategy]:
-              options?.backpressureStrategy ??
-              observer[QueueableLike_backpressureStrategy],
-          }),
+          Observable_subscribe(scheduler),
           Disposable.addTo(observer),
           DisposableContainer.onComplete(
             bindMethod(observer, SinkLike_complete),

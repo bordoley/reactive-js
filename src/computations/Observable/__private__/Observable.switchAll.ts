@@ -100,7 +100,7 @@ const createSwitchAllObserver: <T>(
               this[SchedulerLike_requestYield]();
             }
           }),
-          Observable_subscribe(this, this),
+          Observable_subscribe(this),
           Disposable.addTo(this),
           DisposableContainer.onComplete(
             bind(onSwitchAllObserverInnerObservableComplete, this),

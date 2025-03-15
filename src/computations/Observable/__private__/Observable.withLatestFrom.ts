@@ -93,7 +93,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
       pipe(
         other,
         Observable_forEach(bind(onOtherNotify, this)),
-        Observable_subscribe(delegate, delegate),
+        Observable_subscribe(delegate),
         Disposable.addTo(this),
         DisposableContainer.onComplete(
           bind(onWithLatestFromObserverOtherSubscriptionComplete, this),

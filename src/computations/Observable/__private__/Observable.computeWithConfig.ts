@@ -304,7 +304,7 @@ class ComputeContext {
                 : scheduledComputationSubscription;
           }
         }),
-        Observable_subscribe(observer, observer),
+        Observable_subscribe(observer),
         Disposable.addTo(observer),
         DisposableContainer.onComplete(this[ComputeContext_cleanup]),
       );

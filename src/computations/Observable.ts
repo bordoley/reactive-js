@@ -50,8 +50,6 @@ import {
   DisposableLike,
   ObserverLike,
   QueueableLike,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
   SchedulerLike,
 } from "../utils.js";
 import Observable_actionReducer from "./Observable/__private__/Observable.actionReducer.js";
@@ -187,8 +185,6 @@ export interface ObservableModule
         };
         firstAsync: {
           readonly scheduler?: SchedulerLike;
-          readonly capacity?: number;
-          readonly backpressureStrategy?: BackpressureStrategy;
         };
         fromIterable: {
           readonly delay: number;
@@ -207,21 +203,15 @@ export interface ObservableModule
         };
         lastAsync: {
           readonly scheduler?: SchedulerLike;
-          readonly capacity?: number;
-          readonly backpressureStrategy?: BackpressureStrategy;
         };
         raise: {
           readonly delay?: number;
         };
         reduceAsync: {
           readonly scheduler?: SchedulerLike;
-          readonly capacity?: number;
-          readonly backpressureStrategy?: BackpressureStrategy;
         };
         toReadonlyArrayAsync: {
           readonly scheduler?: SchedulerLike;
-          readonly backpressureStrategy?: BackpressureStrategy;
-          readonly capacity?: number;
         };
       }
     >,
@@ -230,33 +220,21 @@ export interface ObservableModule
       ObservableComputation,
       {
         first: {
-          readonly backpressureStrategy?: BackpressureStrategy;
-          readonly capacity?: number;
           readonly maxMicroTaskTicks?: number;
         };
         last: {
-          readonly backpressureStrategy?: BackpressureStrategy;
-          readonly capacity?: number;
           readonly maxMicroTaskTicks?: number;
         };
         reduce: {
-          readonly backpressureStrategy?: BackpressureStrategy;
-          readonly capacity?: number;
           readonly maxMicroTaskTicks?: number;
         };
         run: {
-          readonly backpressureStrategy?: BackpressureStrategy;
-          readonly capacity?: number;
           readonly maxMicroTaskTicks?: number;
         };
         toReadonlyArray: {
-          readonly backpressureStrategy?: BackpressureStrategy;
-          readonly capacity?: number;
           readonly maxMicroTaskTicks?: number;
         };
         toRunnable: {
-          readonly backpressureStrategy?: BackpressureStrategy;
-          readonly capacity?: number;
           readonly maxMicroTaskTicks?: number;
         };
       }
@@ -359,8 +337,6 @@ export interface ObservableModule
     options?: {
       readonly autoDispose?: boolean;
       readonly replay?: number;
-      readonly capacity?: number;
-      readonly backpressureStrategy?: BackpressureStrategy;
     },
   ): Function1<ObservableLike<T>, MulticastObservableLike<T> & DisposableLike>;
 
@@ -397,24 +373,10 @@ export interface ObservableModule
 
   subscribe<T>(
     scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-    } & Partial<
-      Pick<
-        QueueableLike,
-        | typeof QueueableLike_backpressureStrategy
-        | typeof QueueableLike_capacity
-      >
-    >,
   ): Function1<ObservableLike<T>, DisposableLike>;
 
   subscribeOn<T>(
     scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-    },
   ): StatefulAsynchronousComputationOperator<ObservableComputation, T, T>;
 
   switchAll<T>(): HigherOrderComputationOperator<
@@ -458,18 +420,10 @@ export interface ObservableModule
 
   toEventSource<T>(
     scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-    },
   ): Function1<ObservableLike<T>, EventSourceLike<T> & DisposableLike>;
 
   toPauseableEventSource<T>(
     scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-    },
   ): Function1<
     SynchronousObservableLike<T>,
     PauseableEventSourceLike<T> & DisposableLike
@@ -478,8 +432,6 @@ export interface ObservableModule
   toPauseableObservable<T>(
     scheduler: SchedulerLike,
     options?: {
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
       readonly replay?: number;
     },
   ): Function1<

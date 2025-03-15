@@ -1277,10 +1277,6 @@ export interface ConcurrentReactiveComputationModule<
 
   fromObservable: <T>(
     scheduler: SchedulerLike,
-    options?: {
-      readonly capacity?: number;
-      readonly backpressureStrategy?: BackpressureStrategy;
-    },
   ) => FromObservableOperator<TComputationType, T>;
 
   fromPromise<T>(): Function1<

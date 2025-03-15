@@ -42,7 +42,7 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = /*@__PURE__*/ (<
       pipe(
         notifier,
         Observable_takeFirst(),
-        Observable_subscribe(delegate, delegate),
+        Observable_subscribe(delegate),
         Disposable.addTo(this),
         DisposableContainer.onComplete(bindMethod(this, SinkLike_complete)),
       );

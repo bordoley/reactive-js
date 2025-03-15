@@ -9,17 +9,13 @@ import {
 } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../../utils/HostScheduler.js";
-import { BackpressureStrategy, SchedulerLike } from "../../../utils.js";
+import { SchedulerLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_lastAsync: Observable.Signature["lastAsync"] =
-  <T>(options?: {
-    readonly scheduler?: SchedulerLike;
-    readonly capacity?: number;
-    readonly backpressureStrategy?: BackpressureStrategy;
-  }) =>
+  <T>(options?: { readonly scheduler?: SchedulerLike }) =>
   async (observable: ObservableLike<T>) => {
     let scheduler = options?.scheduler;
     using hostScheduler = isNone(scheduler) ? HostScheduler.create() : none;
@@ -39,7 +35,7 @@ const Observable_lastAsync: Observable.Signature["lastAsync"] =
         Observable_forEach((next: T) => {
           result = next;
         }),
-        Observable_subscribe(scheduler, options),
+        Observable_subscribe(scheduler),
         DisposableContainer.onError(reject),
         DisposableContainer.onComplete(() => {
           resolve(result as T);

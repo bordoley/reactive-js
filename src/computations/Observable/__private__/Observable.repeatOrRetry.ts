@@ -59,7 +59,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
         pipe(
           observable,
           Observable_forEach(bindMethod(delegate, EventListenerLike_notify)),
-          Observable_subscribe(delegate, delegate),
+          Observable_subscribe(delegate),
           DisposableContainer.onDisposed(doOnDispose),
         );
       }

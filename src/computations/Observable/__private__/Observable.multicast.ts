@@ -1,7 +1,7 @@
 import * as Computation from "../../../computations/Computation.js";
 import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { BackpressureStrategy, SchedulerLike } from "../../../utils.js";
+import { SchedulerLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import * as Subject from "../../Subject.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -17,8 +17,6 @@ const Observable_multicast: Observable.Signature["multicast"] =
     options: {
       readonly autoDispose?: boolean;
       readonly replay?: number;
-      readonly capacity?: number;
-      readonly backpressureStrategy?: BackpressureStrategy;
     } = {},
   ) =>
   observable => {
@@ -27,7 +25,7 @@ const Observable_multicast: Observable.Signature["multicast"] =
     pipe(
       observable,
       Computation.notify(ObservableModule)(subject),
-      Observable_subscribe(scheduler, options),
+      Observable_subscribe(scheduler),
       Disposable.bindTo(subject),
     );
 

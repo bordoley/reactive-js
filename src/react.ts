@@ -76,8 +76,6 @@ interface ReactModule {
     >,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
     },
   ): Function1<TProps, React.ReactNode>;
 
@@ -107,8 +105,6 @@ interface ReactModule {
     observable: Optional<ObservableLike<T>>,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
     },
   ): Optional<T>;
   useObserve<T>(
@@ -116,8 +112,6 @@ interface ReactModule {
     deps: readonly unknown[],
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
     },
   ): Optional<T>;
 
@@ -267,14 +261,10 @@ export const useObserve: Signature["useObserve"] = <T>(
   optionsOrDeps:
     | Optional<{
         readonly priority?: 1 | 2 | 3 | 4 | 5;
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
       }>
     | readonly unknown[],
   optionsOrNone?: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly backpressureStrategy?: BackpressureStrategy;
-    readonly capacity?: number;
   },
 ) => {
   const [state, updateState] = useState<Optional<T>>(none);
@@ -284,33 +274,21 @@ export const useObserve: Signature["useObserve"] = <T>(
     ? useMemo(observableOrFactory, optionsOrDeps as readonly unknown[])
     : observableOrFactory;
 
-  const { backpressureStrategy, capacity, priority } =
+  const { priority } =
     (isFunction(observableOrFactory)
       ? optionsOrNone
       : (optionsOrDeps as Optional<{
           readonly priority?: 1 | 2 | 3 | 4 | 5;
-          readonly backpressureStrategy?: BackpressureStrategy;
-          readonly capacity?: number;
         }>)) ?? {};
 
   useDisposable(
     pipeSomeLazy(
       observable,
       Observable.forEach((v: T) => updateState(_ => v)),
-      Observable.subscribe(ReactScheduler.get(priority), {
-        backpressureStrategy,
-        capacity,
-      }),
+      Observable.subscribe(ReactScheduler.get(priority)),
       DisposableContainer.onError(updateError),
     ),
-    [
-      observable,
-      updateState,
-      updateError,
-      priority,
-      backpressureStrategy,
-      capacity,
-    ],
+    [observable, updateState, updateError, priority],
   );
 
   return isSome(error) ? raiseError<T>(error) : state;

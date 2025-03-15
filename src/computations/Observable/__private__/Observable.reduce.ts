@@ -1,6 +1,5 @@
 import { SynchronousObservableLike } from "../../../computations.js";
 import { Factory, Reducer, pipe } from "../../../functions.js";
-import { BackpressureStrategy } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_run from "./Observable.run.js";
@@ -10,8 +9,6 @@ const Observable_reduce: Observable.Signature["reduce"] =
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
     options: {
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
       readonly maxMicroTaskTicks?: number;
     },
   ) =>

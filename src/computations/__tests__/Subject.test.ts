@@ -146,10 +146,11 @@ testModule(
       const subscription = pipe(
         subject,
         Observable.forEach(ignore),
-        Observable.subscribe(vts, {
+        Observable.backpressureStrategy({
           backpressureStrategy: ThrowBackpressureStrategy,
           capacity: 1,
         }),
+        Observable.subscribe(vts),
       );
 
       subject[EventListenerLike_notify](1);

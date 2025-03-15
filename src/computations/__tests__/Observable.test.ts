@@ -195,6 +195,35 @@ testModule(
   ConcurrentDeferredComputationModuleTests(Observable),
   describe(
     "backpressureStrategy",
+    test(
+      "with a capacity of 0",
+      pipeLazy(
+        [1, 2, 3, 4],
+        Observable.fromReadonlyArray(),
+        Observable.backpressureStrategy({
+          capacity: 0,
+          backpressureStrategy: DropLatestBackpressureStrategy,
+        }),
+        Observable.last(),
+        expectIsNone,
+      ),
+    ),
+    test(
+      "with a capacity of 0 and throw backpressure strategy",
+      pipeLazy(
+        pipeLazy(
+          [1, 2, 3, 4],
+          Observable.fromReadonlyArray(),
+          Observable.forEach(ignore),
+          Observable.backpressureStrategy({
+            capacity: 0,
+            backpressureStrategy: ThrowBackpressureStrategy,
+          }),
+          Observable.run(),
+        ),
+        expectToThrow,
+      ),
+    ),
     testAsync("with a throw backpressure strategy", async () => {
       using scheduler = HostScheduler.create();
       await expectToThrowAsync(
@@ -719,7 +748,11 @@ testModule(
         Observable.fromAsyncIterable(),
         Observable.takeFirst({ count: 10 }),
         Observable.buffer<number>(),
-        Observable.lastAsync({ scheduler, capacity: 5 }),
+        Observable.backpressureStrategy<readonly number[]>({
+          capacity: 5,
+          backpressureStrategy: DropLatestBackpressureStrategy,
+        }),
+        Observable.lastAsync<readonly number[]>({ scheduler }),
       );
 
       pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
@@ -735,7 +768,11 @@ testModule(
         AsyncIterable.of(),
         Observable.fromAsyncIterable(),
         Observable.buffer<number>(),
-        Observable.lastAsync({ scheduler, capacity: 1 }),
+        Observable.backpressureStrategy<readonly number[]>({
+          capacity: 1,
+          backpressureStrategy: DropLatestBackpressureStrategy,
+        }),
+        Observable.lastAsync({ scheduler }),
       );
 
       pipe(result ?? [], expectArrayEquals([1, 2, 3]));
@@ -752,7 +789,11 @@ testModule(
           })(),
           AsyncIterable.of(),
           Observable.fromAsyncIterable(),
-          Observable.lastAsync({ scheduler, capacity: 1 }),
+          Observable.backpressureStrategy<readonly number[]>({
+            capacity: 1,
+            backpressureStrategy: DropLatestBackpressureStrategy,
+          }),
+          Observable.lastAsync({ scheduler }),
         );
 
         pipe(result, expectEquals(e as unknown));
@@ -1140,39 +1181,6 @@ testModule(
       );
     }),
     ComputationTest.isPureSynchronous(Observable.spring()),
-  ),
-  describe(
-    "subscribe",
-    test(
-      "with a capacity of 0",
-      pipeLazy(
-        [1, 2, 3, 4],
-        Observable.fromReadonlyArray(),
-        Observable.backpressureStrategy({
-          capacity: 1,
-          backpressureStrategy: OverflowBackpressureStrategy,
-        }),
-        Observable.last({
-          capacity: 0,
-        }),
-        expectIsNone,
-      ),
-    ),
-    test(
-      "with a capacity of 0 and throw backpressure strategy",
-      pipeLazy(
-        pipeLazy(
-          [1, 2, 3, 4],
-          Observable.fromReadonlyArray(),
-          Observable.forEach(ignore),
-          Observable.run({
-            capacity: 0,
-            backpressureStrategy: ThrowBackpressureStrategy,
-          }),
-        ),
-        expectToThrow,
-      ),
-    ),
   ),
   describe(
     "subscribeOn",

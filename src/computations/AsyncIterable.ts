@@ -54,7 +54,6 @@ import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import {
-  BackpressureStrategy,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -116,10 +115,7 @@ export interface AsyncIterableModule
   toPauseableObservable<T>(
     scheduler: SchedulerLike,
     options?: {
-      readonly autoDispose?: boolean;
       readonly replay?: number;
-      readonly capacity?: number;
-      readonly backpressureStrategy?: BackpressureStrategy;
     },
   ): Function1<
     AsyncIterableLike<T>,
@@ -782,10 +778,7 @@ export const toPauseableObservable: Signature["toPauseableObservable"] =
   <T>(
     scheduler: SchedulerLike,
     options?: {
-      readonly autoDispose?: boolean;
       readonly replay?: number;
-      readonly capacity?: number;
-      readonly backpressureStrategy?: BackpressureStrategy;
     },
   ) =>
   (iterable: AsyncIterableLike<T>) =>

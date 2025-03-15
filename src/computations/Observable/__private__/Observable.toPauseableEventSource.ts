@@ -7,13 +7,12 @@ import {
   PauseableEventSourceLike,
   SynchronousObservableLike,
 } from "../../../computations.js";
-import { Optional, pipe } from "../../../functions.js";
+import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
 import {
-  BackpressureStrategy,
   DisposableLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
@@ -42,16 +41,12 @@ const Observable_toPauseableEventSource: Observable.Signature["toPauseableEventS
           >,
           obs: SynchronousObservableLike<T>,
           scheduler: SchedulerLike,
-          options: Optional<{
-            capacity?: number;
-            backpressureStrategy?: BackpressureStrategy;
-          }>,
         ): PauseableEventSourceLike<T> & DisposableLike {
           const pauseableScheduler = PauseableScheduler.create(scheduler);
 
           const eventSource = pipe(
             obs,
-            Observable_toEventSource(scheduler, options),
+            Observable_toEventSource(scheduler),
             Disposable.bindTo(pauseableScheduler),
           );
 
@@ -62,19 +57,8 @@ const Observable_toPauseableEventSource: Observable.Signature["toPauseableEventS
           return this;
         },
       );
-    return (
-        scheduler: SchedulerLike,
-        options?: {
-          readonly backpressureStrategy?: BackpressureStrategy;
-          readonly capacity?: number;
-        },
-      ) =>
-      (obs: SynchronousObservableLike<T>) =>
-        createPauseableEventSourceFromSynchronousObservable(
-          obs,
-          scheduler,
-          options,
-        );
+    return (scheduler: SchedulerLike) => (obs: SynchronousObservableLike<T>) =>
+      createPauseableEventSourceFromSynchronousObservable(obs, scheduler);
   })();
 
 export default Observable_toPauseableEventSource;

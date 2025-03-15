@@ -107,7 +107,7 @@ testModule(
           }
         })(),
         AsyncIterable.of(),
-        AsyncIterable.toPauseableObservable(scheduler, { capacity: 1 }),
+        AsyncIterable.toPauseableObservable(scheduler),
         DisposableContainer.onDisposed(_ => {
           if (timeout !== none) {
             clearTimeout(timeout);
@@ -141,7 +141,7 @@ testModule(
           yield 3;
         })(),
         AsyncIterable.of(),
-        AsyncIterable.toPauseableObservable(scheduler, { capacity: 1 }),
+        AsyncIterable.toPauseableObservable(scheduler),
       );
       stream[PauseableLike_resume]();
 
@@ -164,7 +164,7 @@ testModule(
             throw e;
           })(),
           AsyncIterable.of(),
-          AsyncIterable.toPauseableObservable(scheduler, { capacity: 1 }),
+          AsyncIterable.toPauseableObservable(scheduler),
         );
         stream[PauseableLike_resume]();
 

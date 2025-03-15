@@ -95,7 +95,7 @@ const createThrottleObserver: <T>(
     ] = pipe(
       observer[ThrottleObserver_durationFunction](next),
       Observable_forEach(bind(notifyThrottleObserverDelegate, observer)),
-      Observable_subscribe(observer, observer),
+      Observable_subscribe(observer),
       Disposable.addTo(observer),
     );
   };
