@@ -168,26 +168,6 @@
 
 ***
 
-### enqueue()
-
-> **enqueue**\<`T`\>(`queue`): [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### queue
-
-[`QueueableLike`](../../../utils/interfaces/QueueableLike.md)\<`T`\>
-
-#### Returns
-
-[`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
-
-***
-
 ### exhaust()
 
 #### Call Signature
@@ -480,7 +460,7 @@
 
 ### subscribe()
 
-> **subscribe**\<`T`\>(`scheduler`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+> **subscribe**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 #### Type Parameters
 
@@ -491,6 +471,12 @@
 ##### scheduler
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
+
+##### options?
+
+###### subscriber?
+
+[`QueueableLike`](../../../utils/interfaces/QueueableLike.md)\<`T`\>
 
 #### Returns
 

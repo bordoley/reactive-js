@@ -14,7 +14,6 @@ import {
   identity,
   pipe,
 } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 
@@ -35,10 +34,10 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
   (streamable: StreamableLike<Updater<T>, T>) => ({
     [StreamableLike_stream](scheduler, options) {
       const throttleDuration = syncStateOptions?.throttleDuration ?? 0;
-      const stream = streamable[StreamableLike_stream](scheduler, options);
+      const subscriber = streamable[StreamableLike_stream](scheduler, options);
 
       pipe(
-        stream,
+        subscriber,
         Observable.forkMerge(
           compose(
             Observable.takeFirst(),
@@ -61,13 +60,10 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
           ),
           { innerType: DeferredComputationWithSideEffects },
         ),
-        Observable.enqueue<Updater<T>>(stream),
-        Computation.ignoreElements(ObservableModule)(),
-        Observable.subscribe(scheduler),
-        Disposable.addTo(stream),
+        Observable.subscribe(scheduler, { subscriber }),
       );
 
-      return stream;
+      return subscriber;
     },
   });
 

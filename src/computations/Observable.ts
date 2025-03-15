@@ -72,7 +72,6 @@ import Observable_defer from "./Observable/__private__/Observable.defer.js";
 import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__private__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__private__/Observable.encodeUtf8.js";
-import Observable_enqueue from "./Observable/__private__/Observable.enqueue.js";
 import Observable_exhaust from "./Observable/__private__/Observable.exhaust.js";
 import Observable_first from "./Observable/__private__/Observable.first.js";
 import Observable_firstAsync from "./Observable/__private__/Observable.firstAsync.js";
@@ -277,10 +276,6 @@ export interface ObservableModule
     f: Factory<MulticastObservableLike<T> & DisposableLike>,
   ): PureDeferredObservableLike<T>;
 
-  enqueue<T>(
-    queue: QueueableLike<T>,
-  ): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
-
   exhaust<T>(): HigherOrderComputationOperator<
     ObservableComputation,
     PureSynchronousObservableLike,
@@ -373,6 +368,9 @@ export interface ObservableModule
 
   subscribe<T>(
     scheduler: SchedulerLike,
+    options?: {
+      subscriber?: QueueableLike<T>;
+    },
   ): Function1<ObservableLike<T>, DisposableLike>;
 
   subscribeOn<T>(
@@ -469,7 +467,6 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const empty: Signature["empty"] = Observable_empty;
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
-export const enqueue: Signature["enqueue"] = Observable_enqueue;
 export const exhaust: Signature["exhaust"] = Observable_exhaust;
 export const first: Signature["first"] = Observable_first;
 export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;

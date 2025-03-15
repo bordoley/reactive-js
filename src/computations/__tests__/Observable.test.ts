@@ -41,7 +41,6 @@ import {
   PureSynchronousComputation,
   PureSynchronousObservableLike,
   StoreLike_value,
-  StreamableLike_stream,
   SynchronousComputationWithSideEffects,
   SynchronousObservableLike,
 } from "../../computations.js";
@@ -67,7 +66,6 @@ import { increment, scale } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
-import * as Queue from "../../utils/Queue.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
   DisposableLike_dispose,
@@ -76,14 +74,12 @@ import {
   DropLatestBackpressureStrategy,
   DropOldestBackpressureStrategy,
   EventListenerLike_notify,
-  OverflowBackpressureStrategy,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
   SchedulerLike_now,
   SchedulerLike_schedule,
   SinkLike_complete,
-  SinkLike_isCompleted,
   ThrowBackpressureStrategy,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
@@ -605,67 +601,6 @@ testModule(
 
       pipe(disposedTime, expectEquals(5));
     }),
-  ),
-  describe(
-    "enqueue",
-    test("when backpressure exception is thrown", () => {
-      using vts = VirtualTimeScheduler.create();
-      const stream = Streamable.identity()[StreamableLike_stream](vts, {
-        backpressureStrategy: ThrowBackpressureStrategy,
-        capacity: 1,
-      });
-
-      expectToThrow(
-        pipeLazy(
-          [1, 2, 2, 2, 2, 3, 3, 3, 4],
-          Observable.fromReadonlyArray(),
-          Observable.enqueue<number>(stream),
-          Observable.run(),
-        ),
-      );
-    }),
-    test("when completed successfully", () => {
-      using vts = VirtualTimeScheduler.create();
-      const stream = Streamable.identity()[StreamableLike_stream](vts, {
-        backpressureStrategy: OverflowBackpressureStrategy,
-        capacity: 1,
-      });
-
-      pipe(
-        [1, 2, 2, 2, 2, 3, 3, 3, 4],
-        Observable.fromReadonlyArray(),
-        Observable.enqueue<number>(stream),
-        Observable.toReadonlyArray(),
-      );
-
-      pipe(
-        stream[SinkLike_isCompleted],
-        expectTrue("expected stream to be completed"),
-      );
-    }),
-    test("when completed successfully from delayed source", () => {
-      using vts = VirtualTimeScheduler.create();
-      const stream = Streamable.identity()[StreamableLike_stream](vts, {
-        backpressureStrategy: OverflowBackpressureStrategy,
-        capacity: 1,
-      });
-
-      pipe(
-        [1, 2, 2, 2, 2, 3, 3, 3, 4],
-        Observable.fromReadonlyArray({ delay: 1 }),
-        Observable.enqueue<number>(stream),
-        Observable.toReadonlyArray(),
-      );
-
-      pipe(
-        stream[SinkLike_isCompleted],
-        expectTrue("expected stream to be completed"),
-      );
-    }),
-    ComputationOperatorWithSideEffectsTests(
-      ObservableTypes,
-      Observable.enqueue(Queue.create()),
-    ),
   ),
   describe(
     "exhaust",

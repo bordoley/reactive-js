@@ -90,7 +90,6 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     create<T>(f: SideEffect1<ObserverLike<T>>): DeferredObservableWithSideEffectsLike<T>;
     currentTime: PureSynchronousObservableLike<number>;
     defer<T>(f: Factory<MulticastObservableLike<T> & DisposableLike>): PureDeferredObservableLike<T>;
-    enqueue<T>(queue: QueueableLike<T>): ComputationOperatorWithSideEffects<ObservableComputation, T, T>;
     exhaust<T>(): HigherOrderComputationOperator<ObservableComputation, PureSynchronousObservableLike, PureSynchronousObservableLike<T>, T>;
     exhaust<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
         readonly innerType: TInnerLike;
@@ -125,7 +124,9 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly damping?: number;
         readonly precision?: number;
     }): PureSynchronousObservableLike<number>;
-    subscribe<T>(scheduler: SchedulerLike): Function1<ObservableLike<T>, DisposableLike>;
+    subscribe<T>(scheduler: SchedulerLike, options?: {
+        subscriber?: QueueableLike<T>;
+    }): Function1<ObservableLike<T>, DisposableLike>;
     subscribeOn<T>(scheduler: SchedulerLike): StatefulAsynchronousComputationOperator<ObservableComputation, T, T>;
     switchAll<T>(): HigherOrderComputationOperator<ObservableComputation, PureSynchronousObservableLike, PureSynchronousObservableLike<T>, T>;
     switchAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
@@ -163,7 +164,6 @@ export declare const defer: Signature["defer"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
-export declare const enqueue: Signature["enqueue"];
 export declare const exhaust: Signature["exhaust"];
 export declare const first: Signature["first"];
 export declare const firstAsync: Signature["firstAsync"];

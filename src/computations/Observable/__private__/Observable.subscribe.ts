@@ -13,20 +13,19 @@ import {
 } from "../../../computations.js";
 import {
   Method1,
+  Optional,
   SideEffect1,
   bind,
-  newInstance,
+  identity,
+  isSome,
   none,
   pipe,
-  raise,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
-  BackPressureError,
   BackpressureStrategy,
   ContinuationContextLike,
-  DisposableContainerLike_add,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -47,141 +46,159 @@ import {
   SchedulerLike_shouldYield,
   SinkLike_complete,
   SinkLike_isCompleted,
-  ThrowBackpressureStrategy,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 
-const createObserver: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
-  /*@__PURE__*/ (<T>() => {
-    const SubscribeObserver_scheduler = Symbol("SubscribeObserver_scheduler");
-    const SubscribeObserver_schedulerCallback = Symbol(
-      "SubscribeObserver_schedulerCallback",
-    );
+const Observable_subscribe: Observable.Signature["subscribe"] = /*@__PURE__*/ (<
+  T,
+>() => {
+  const SubscribeObserver_scheduler = Symbol("SubscribeObserver_scheduler");
+  const SubscribeObserver_schedulerCallback = Symbol(
+    "SubscribeObserver_schedulerCallback",
+  );
 
-    type TProperties = {
-      [SubscribeObserver_scheduler]: SchedulerLike;
-      [SubscribeObserver_schedulerCallback]: Method1<
-        SideEffect1<ContinuationContextLike>,
-        ContinuationContextLike
-      >;
-      [SchedulerLike_inContinuation]: boolean;
-    };
+  const SubscribeObserver_consumer = Symbol("SubscribeObserver_consumer");
 
-    return mixInstanceFactory(
-      include(DisposableMixin),
-      function SubscribeObserver(
-        this: TProperties & Omit<ObserverLike<T>, keyof DisposableLike>,
-        scheduler: SchedulerLike,
-      ): ObserverLike<T> {
-        init(DisposableMixin, this);
-        this[SubscribeObserver_scheduler] = scheduler;
-
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
-        const instance = this;
-        this[SubscribeObserver_schedulerCallback] =
-          function SubscribeObserverchedulerCallback(
-            this: SideEffect1<ContinuationContextLike>,
-            ctx: ContinuationContextLike,
-          ) {
-            instance[SchedulerLike_inContinuation] = true;
-            this(ctx);
-            instance[SchedulerLike_inContinuation] = false;
-          };
-
-        return this;
-      },
-      props<TProperties>({
-        [SubscribeObserver_scheduler]: none,
-        [SubscribeObserver_schedulerCallback]: none,
-        [SchedulerLike_inContinuation]: false,
-      }),
-      proto({
-        [QueueableLike_capacity]: MAX_SAFE_INTEGER,
-        [QueueableLike_backpressureStrategy]:
-          OverflowBackpressureStrategy as BackpressureStrategy,
-
-        get [SinkLike_isCompleted]() {
-          unsafeCast<DisposableLike>(this);
-          return this[DisposableLike_isDisposed];
-        },
-
-        get [QueueableLike_isReady]() {
-          unsafeCast<QueueableLike>(this);
-          return !this[DisposableLike_isDisposed];
-        },
-
-        get [SchedulerLike_now]() {
-          unsafeCast<TProperties>(this);
-          return this[SubscribeObserver_scheduler][SchedulerLike_now];
-        },
-
-        get [SchedulerLike_shouldYield]() {
-          unsafeCast<TProperties>(this);
-          return this[SubscribeObserver_scheduler][SchedulerLike_shouldYield];
-        },
-
-        get [SchedulerLike_maxYieldInterval]() {
-          unsafeCast<TProperties>(this);
-          return this[SubscribeObserver_scheduler][
-            SchedulerLike_maxYieldInterval
-          ];
-        },
-
-        [QueueableLike_addOnReadyListener](
-          _callback: SideEffect1<void>,
-        ): DisposableLike {
-          return Disposable.disposed;
-        },
-
-        [EventListenerLike_notify](this: QueueableLike) {
-          const capacity = this[QueueableLike_capacity];
-          const backpressureStrategy = this[QueueableLike_backpressureStrategy];
-
-          if (
-            capacity === 0 &&
-            backpressureStrategy === ThrowBackpressureStrategy
-          ) {
-            raise(
-              newInstance(BackPressureError, capacity, backpressureStrategy),
-            );
-          }
-        },
-
-        [SinkLike_complete](this: DisposableLike) {
-          this[DisposableLike_dispose]();
-        },
-
-        [SchedulerLike_requestYield](this: TProperties) {
-          return this[SubscribeObserver_scheduler][
-            SchedulerLike_requestYield
-          ]();
-        },
-
-        [SchedulerLike_schedule](
-          this: TProperties & DisposableLike,
-          continuation: SideEffect1<ContinuationContextLike>,
-          options?: {
-            readonly delay?: number;
-          },
-        ): DisposableLike {
-          return pipe(
-            this[SubscribeObserver_scheduler][SchedulerLike_schedule](
-              bind(this[SubscribeObserver_schedulerCallback], continuation),
-              options,
-            ),
-            Disposable.addToContainer(this),
-          );
-        },
-      }),
-    );
-  })();
-
-const Observable_subscribe: Observable.Signature["subscribe"] =
-  (scheduler: SchedulerLike) => (observable: ObservableLike) => {
-    const observer = createObserver(scheduler);
-    scheduler[DisposableContainerLike_add](observer);
-    observable[ObservableLike_observe](observer);
-    return observer;
+  type TProperties = {
+    [SubscribeObserver_scheduler]: SchedulerLike;
+    [SubscribeObserver_schedulerCallback]: Method1<
+      SideEffect1<ContinuationContextLike>,
+      ContinuationContextLike
+    >;
+    [SchedulerLike_inContinuation]: boolean;
+    [SubscribeObserver_consumer]: Optional<QueueableLike<T>>;
   };
+
+  const createObserver = mixInstanceFactory(
+    include(DisposableMixin),
+    function SubscribeObserver(
+      this: TProperties & Omit<ObserverLike<T>, keyof DisposableLike>,
+      scheduler: SchedulerLike,
+      consumer: Optional<QueueableLike<T>>,
+    ): ObserverLike<T> {
+      init(DisposableMixin, this);
+      this[SubscribeObserver_scheduler] = scheduler;
+      this[SubscribeObserver_consumer] = consumer;
+
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const instance = this;
+      this[SubscribeObserver_schedulerCallback] =
+        function SubscribeObserverchedulerCallback(
+          this: SideEffect1<ContinuationContextLike>,
+          ctx: ContinuationContextLike,
+        ) {
+          instance[SchedulerLike_inContinuation] = true;
+          this(ctx);
+          instance[SchedulerLike_inContinuation] = false;
+        };
+
+      return this;
+    },
+    props<TProperties>({
+      [SubscribeObserver_scheduler]: none,
+      [SubscribeObserver_schedulerCallback]: none,
+      [SchedulerLike_inContinuation]: false,
+      [SubscribeObserver_consumer]: none,
+    }),
+    proto({
+      [QueueableLike_capacity]: MAX_SAFE_INTEGER,
+      [QueueableLike_backpressureStrategy]:
+        OverflowBackpressureStrategy as BackpressureStrategy,
+
+      get [SinkLike_isCompleted]() {
+        unsafeCast<DisposableLike & TProperties>(this);
+        return (
+          this[SubscribeObserver_consumer]?.[SinkLike_isCompleted] ??
+          this[DisposableLike_isDisposed]
+        );
+      },
+
+      get [QueueableLike_isReady](): boolean {
+        unsafeCast<QueueableLike & TProperties>(this);
+        return (
+          this[SubscribeObserver_consumer]?.[QueueableLike_isReady] ??
+          !this[DisposableLike_isDisposed]
+        );
+      },
+
+      get [SchedulerLike_now]() {
+        unsafeCast<TProperties>(this);
+        return this[SubscribeObserver_scheduler][SchedulerLike_now];
+      },
+
+      get [SchedulerLike_shouldYield]() {
+        unsafeCast<TProperties>(this);
+        return this[SubscribeObserver_scheduler][SchedulerLike_shouldYield];
+      },
+
+      get [SchedulerLike_maxYieldInterval]() {
+        unsafeCast<TProperties>(this);
+        return this[SubscribeObserver_scheduler][
+          SchedulerLike_maxYieldInterval
+        ];
+      },
+
+      [QueueableLike_addOnReadyListener](
+        this: TProperties,
+        callback: SideEffect1<void>,
+      ): DisposableLike {
+        return (
+          this[SubscribeObserver_consumer]?.[QueueableLike_addOnReadyListener](
+            callback,
+          ) ?? Disposable.disposed
+        );
+      },
+
+      [EventListenerLike_notify](this: TProperties, next: T) {
+        this[SubscribeObserver_consumer]?.[EventListenerLike_notify](next);
+      },
+
+      [SinkLike_complete](this: DisposableLike & TProperties) {
+        this[SubscribeObserver_consumer]?.[SinkLike_complete]();
+        this[DisposableLike_dispose]();
+      },
+
+      [SchedulerLike_requestYield](this: TProperties) {
+        return this[SubscribeObserver_scheduler][SchedulerLike_requestYield]();
+      },
+
+      [SchedulerLike_schedule](
+        this: TProperties & DisposableLike,
+        continuation: SideEffect1<ContinuationContextLike>,
+        options?: {
+          readonly delay?: number;
+        },
+      ): DisposableLike {
+        return pipe(
+          this[SubscribeObserver_scheduler][SchedulerLike_schedule](
+            bind(this[SubscribeObserver_schedulerCallback], continuation),
+            options,
+          ),
+          Disposable.addToContainer(this),
+        );
+      },
+    }),
+  );
+
+  return (
+      scheduler: SchedulerLike,
+      options?: {
+        subscriber?: QueueableLike<T>;
+      },
+    ) =>
+    (observable: ObservableLike<T>) => {
+      const { subscriber } = options ?? {};
+
+      const observer = pipe(
+        createObserver(scheduler, subscriber),
+        Disposable.addToContainer(scheduler),
+        isSome(subscriber) ? Disposable.addTo(subscriber) : identity,
+      );
+
+      observable[ObservableLike_observe](observer);
+
+      return observer;
+    };
+})();
 
 export default Observable_subscribe;

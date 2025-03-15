@@ -6,7 +6,7 @@
 
 # Function: subscribe()
 
-> **subscribe**\<`T`\>(`scheduler`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+> **subscribe**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 ## Type Parameters
 
@@ -17,6 +17,12 @@
 ### scheduler
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
+
+### options?
+
+#### subscriber?
+
+[`QueueableLike`](../../../utils/interfaces/QueueableLike.md)\<`T`\>
 
 ## Returns
 

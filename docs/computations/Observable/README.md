@@ -44,7 +44,6 @@
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [empty](functions/empty.md)
 - [encodeUtf8](functions/encodeUtf8.md)
-- [enqueue](functions/enqueue.md)
 - [exhaust](functions/exhaust.md)
 - [first](functions/first.md)
 - [firstAsync](functions/firstAsync.md)
