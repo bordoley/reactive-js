@@ -7,13 +7,11 @@ import {
   props,
   proto,
   super_,
-  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   Function1,
   Optional,
   bind,
-  bindMethod,
   isSome,
   memoize,
   none,
@@ -37,7 +35,6 @@ import {
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
-  SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
@@ -50,9 +47,8 @@ import {
   SinkLike_isCompleted,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
-import * as DisposableContainer from "../DisposableContainer.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
-import {
+import LiftedConsumerMixin, {
   LiftedConsumerLike,
   LiftedConsumerLike_consumer,
   LiftedConsumerLike_isReady,
@@ -103,8 +99,6 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
   TB = TA,
 >() => {
   type TProperties = {
-    [LiftedEventListenerLike_delegate]: ObserverLike<TB>;
-    [LiftedConsumerLike_consumer]: ObserverLike;
     [LiftedEventListenerLike_notifyDelegate]: Function1<TB, void>;
   };
 
@@ -183,7 +177,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
     }
   };
 
-  function notifyLiftedDelegate(this: TProperties, next: TB) {
+  function notifyLiftedDelegate(this: LiftedObserverLike<TA, TB>, next: TB) {
     const delegate = this[
       LiftedEventListenerLike_delegate
     ] as unknown as LiftedObserverLike<TB>;
@@ -200,7 +194,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
     delegate[LiftedEventListenerLike_notify](next);
   }
 
-  function pushDelegate(this: TProperties, next: TB) {
+  function pushDelegate(this: LiftedObserverLike<TA, TB>, next: TB) {
     this[LiftedEventListenerLike_delegate][EventListenerLike_notify](next);
   }
 
@@ -208,29 +202,18 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
     mix<
       LiftedObserverLike<TA, TB>,
       TProperties,
-      Omit<
+      Pick<
         LiftedObserverLike<TA, TB>,
-        | keyof DisposableLike
-        | keyof SchedulerLike
-        | typeof SchedulerLike_inContinuation
-        | typeof ConsumerLike_isReady
-        | typeof SinkLike_isCompleted
-        | typeof ConsumerLike_addOnReadyListener
-        | typeof ConsumerLike_backpressureStrategy
-        | typeof ConsumerLike_capacity
-        | typeof SchedulerLike_inContinuation
+        | typeof EventListenerLike_notify
+        | typeof SinkLike_complete
         | typeof LiftedEventListenerLike_notify
-        | typeof LiftedSinkLike_complete
-        | typeof LiftedEventListenerLike_delegate
-        | typeof LiftedEventListenerLike_notifyDelegate
-        | typeof LiftedConsumerLike_consumer
       >,
       Pick<
         LiftedObserverLike<TA, TB>,
+        | keyof DisposableLike
         | typeof LiftedEventListenerLike_notify
         | typeof LiftedSinkLike_complete
         | typeof LiftedSinkLike_completeDelegate
-        | keyof DisposableLike
       >,
       ObserverLike<TB>,
       Optional<{
@@ -238,13 +221,25 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         backpressureStrategy?: BackpressureStrategy;
       }>
     >(
-      include(QueueMixin(), SerialDisposableMixin(), DelegatingSchedulerMixin),
+      include(
+        LiftedConsumerMixin(),
+        QueueMixin(),
+        SerialDisposableMixin(),
+        DelegatingSchedulerMixin,
+      ),
       function LiftedObserverMixin(
         this: TProperties &
           Omit<
             LiftedObserverLike<TA, TB>,
-            | typeof ConsumerLike_isReady
+            | typeof LiftedEventListenerLike_notify
+            | typeof LiftedEventListenerLike_delegate
+            | typeof EventListenerLike_notify
+            | typeof LiftedEventListenerLike_notifyDelegate
             | typeof SinkLike_isCompleted
+            | typeof SinkLike_complete
+            | typeof LiftedConsumerLike_consumer
+            | typeof ConsumerLike_isReady
+            | typeof LiftedConsumerLike_isReady
             | typeof ConsumerLike_addOnReadyListener
             | typeof ConsumerLike_backpressureStrategy
             | typeof ConsumerLike_capacity
@@ -261,6 +256,11 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           backpressureStrategy?: BackpressureStrategy;
         }>,
       ): LiftedObserverLike<TA, TB> {
+        init(
+          LiftedConsumerMixin<TA, TB, ObserverLike<TB>, ObserverLike>(),
+          this,
+          delegate,
+        );
         init(QueueMixin<TA>(), this, {
           backpressureStrategy: delegate[ConsumerLike_backpressureStrategy],
           capacity: delegate[ConsumerLike_capacity],
@@ -279,29 +279,12 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           ? notifyLiftedDelegate
           : pushDelegate;
 
-        this[LiftedEventListenerLike_delegate] = delegate;
-        this[LiftedConsumerLike_consumer] =
-          (delegate as unknown as TProperties)[LiftedConsumerLike_consumer] ??
-          delegate;
-
-        pipe(
-          this,
-          DisposableContainer.onDisposed(bindMethod(this, SinkLike_complete)),
-        );
-
         return this;
       },
       props<TProperties>({
-        [LiftedEventListenerLike_delegate]: none,
-        [LiftedConsumerLike_consumer]: none,
         [LiftedEventListenerLike_notifyDelegate]: none,
       }),
       proto({
-        get [LiftedConsumerLike_isReady]() {
-          unsafeCast<TProperties>(this);
-          return this[LiftedConsumerLike_consumer][ConsumerLike_isReady];
-        },
-
         [EventListenerLike_notify](
           this: TProperties &
             ObserverLike<TA> &
@@ -352,6 +335,10 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
             return;
           }
 
+          // Note, QueueMixin overrides all the ConsumerLike methods
+          // that are implemented by LiftedConsumerMixin so its
+          // only necessary to call its complete function to tag
+          // the observer complete
           super_(QueueMixin<TA>(), this, SinkLike_complete);
 
           if (inSchedulerContinuation && count == 0) {
@@ -361,18 +348,8 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           }
         },
 
-        [LiftedSinkLike_completeDelegate](this: TProperties) {
-          // We always want to call SinkLike_complete to ensure
-          // cleanup code is invoked.
-          this[LiftedEventListenerLike_delegate][SinkLike_complete]();
-        },
-
         [LiftedEventListenerLike_notify](this: TProperties, next: TA) {
           this[LiftedEventListenerLike_notifyDelegate](next as unknown as TB);
-        },
-
-        [LiftedSinkLike_complete](this: LiftedObserverLike) {
-          this[LiftedSinkLike_completeDelegate]();
         },
       }),
     ),

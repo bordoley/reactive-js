@@ -42,7 +42,8 @@ interface LiftedSinkMixinModule {
   <TA, TB = TA, TDelegateSink extends SinkLike<TB> = SinkLike<TB>>(): Mixin1<
     LiftedSinkLike<TA, TB, TDelegateSink>,
     TDelegateSink,
-    Pick<LiftedSinkLike<TA, TB, TDelegateSink>, keyof DisposableLike>
+    Pick<LiftedSinkLike<TA, TB, TDelegateSink>, keyof DisposableLike>,
+    Pick<LiftedSinkLike<TA, TB, TDelegateSink>, typeof SinkLike_complete>
   >;
 
   <T, TDelegateSink extends SinkLike<T> = SinkLike<T>>(): Mixin1<
@@ -51,7 +52,8 @@ interface LiftedSinkMixinModule {
     Pick<
       LiftedSinkLike<T, T, TDelegateSink>,
       keyof DisposableLike | typeof LiftedEventListenerLike_notify
-    >
+    >,
+    Pick<LiftedSinkLike<T, T, TDelegateSink>, typeof SinkLike_complete>
   >;
 }
 
@@ -68,13 +70,12 @@ const LiftedSinkMixin: LiftedSinkMixinModule = /*@__PURE__*/ (<
     mix<
       LiftedSinkLike<TA, TB, TDelegateSink>,
       unknown,
-      Omit<
+      Pick<
         LiftedSinkLike<TA, TB, TDelegateSink>,
-        | keyof DisposableLike
-        | typeof LiftedEventListenerLike_delegate
-        | typeof EventListenerLike_notify
-        | typeof LiftedEventListenerLike_notify
-        | typeof LiftedEventListenerLike_notifyDelegate
+        | typeof SinkLike_isCompleted
+        | typeof LiftedSinkLike_completeDelegate
+        | typeof LiftedSinkLike_complete
+        | typeof SinkLike_complete
       >,
       Pick<
         LiftedSinkLike<TA, TB, TDelegateSink>,

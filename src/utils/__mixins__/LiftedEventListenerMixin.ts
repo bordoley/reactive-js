@@ -73,9 +73,11 @@ const LiftedEventListenerMixin: LiftedEventListenerMixinModule =
       mix<
         LiftedEventListenerLike<TA, TB, TDelegateEventListener>,
         TProperties,
-        Omit<
+        Pick<
           LiftedEventListenerLike<TA, TB, TDelegateEventListener>,
-          keyof DisposableLike | typeof LiftedEventListenerLike_delegate
+          | typeof LiftedEventListenerLike_notifyDelegate
+          | typeof EventListenerLike_notify
+          | typeof LiftedEventListenerLike_notify
         >,
         Pick<
           LiftedEventListenerLike<TA, TB, TDelegateEventListener>,

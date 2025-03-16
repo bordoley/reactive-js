@@ -88,18 +88,13 @@ const LiftedConsumerMixin: LiftedConsumerMixinModule = /*@__PURE__*/ (<
     mix<
       LiftedConsumerLike<TA, TB, TDelegateConsumer, TConsumer>,
       TProperties,
-      Omit<
+      Pick<
         LiftedConsumerLike<TA, TB, TDelegateConsumer, TConsumer>,
-        | keyof DisposableLike
-        | typeof LiftedEventListenerLike_delegate
-        | typeof EventListenerLike_notify
-        | typeof LiftedEventListenerLike_notify
-        | typeof LiftedEventListenerLike_notifyDelegate
-        | typeof SinkLike_isCompleted
-        | typeof SinkLike_complete
-        | typeof LiftedSinkLike_complete
-        | typeof LiftedSinkLike_completeDelegate
-        | typeof LiftedConsumerLike_consumer
+        | typeof LiftedConsumerLike_isReady
+        | typeof ConsumerLike_isReady
+        | typeof ConsumerLike_backpressureStrategy
+        | typeof ConsumerLike_capacity
+        | typeof ConsumerLike_addOnReadyListener
       >,
       Pick<
         LiftedConsumerLike<TA, TB, TDelegateConsumer>,
