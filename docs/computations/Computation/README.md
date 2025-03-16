@@ -22,6 +22,7 @@
 ## Type Aliases
 
 - [FromIterableOperator](type-aliases/FromIterableOperator.md)
+- [GeneratorOf](type-aliases/GeneratorOf.md)
 
 ## Functions
 
@@ -39,6 +40,7 @@
 - [flatMapAsync](functions/flatMapAsync.md)
 - [flatMapIterable](functions/flatMapIterable.md)
 - [fromIterable](functions/fromIterable.md)
+- [generate](functions/generate.md)
 - [hasSideEffects](functions/hasSideEffects.md)
 - [ignoreElements](functions/ignoreElements.md)
 - [isDeferred](functions/isDeferred.md)
@@ -56,5 +58,4 @@
 - [mergeWith](functions/mergeWith.md)
 - [notify](functions/notify.md)
 - [pick](functions/pick.md)
-- [sequence](functions/sequence.md)
 - [startWith](functions/startWith.md)

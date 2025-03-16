@@ -75,12 +75,20 @@ const ConcurrentReactiveComputationModuleTests = <
         await pipeAsync(
           m.combineLatest<number, number>(
             pipe(
-              Observable.generate(incrementBy(2), returns(1), { delay: 2 }),
+              Computation.generate<Observable.Computation>(Observable)(
+                incrementBy(2),
+                returns(1),
+                { delay: 2 },
+              ),
               Observable.takeFirst<number>({ count: 3 }),
               m.fromObservable(scheduler),
             ),
             pipe(
-              Observable.generate(incrementBy(2), returns(0), { delay: 3 }),
+              Computation.generate<Observable.Computation>(Observable)(
+                incrementBy(2),
+                returns(0),
+                { delay: 3 },
+              ),
               Observable.takeFirst<number>({ count: 2 }),
               m.fromObservable(scheduler),
             ),

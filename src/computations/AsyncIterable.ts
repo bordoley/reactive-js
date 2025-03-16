@@ -35,7 +35,6 @@ import {
   Reducer,
   SideEffect,
   SideEffect1,
-  Updater,
   alwaysTrue,
   bindMethod,
   error,
@@ -376,41 +375,6 @@ export const genWithSideEffects: Signature["genWithSideEffects"] = (<T>(
     GenWithSideEffectsAsyncIterable<T>,
     factory,
   )) as Signature["genWithSideEffects"];
-
-class GeneratorAsyncIterable<T> implements PureAsyncIterableLike<T> {
-  public readonly [ComputationLike_isSynchronous]: false = false as const;
-  public readonly [ComputationLike_isPure]: true = true as const;
-
-  constructor(
-    readonly generator: Updater<T>,
-    readonly initialValue: Factory<T>,
-    readonly count?: number,
-  ) {}
-
-  async *[Symbol.asyncIterator]() {
-    const { count, generator } = this;
-    let acc = this.initialValue();
-
-    for (let cnt = 0; count === none || cnt < count; cnt++) {
-      acc = generator(acc);
-      yield acc;
-    }
-  }
-}
-
-export const generate: Signature["generate"] = (<T>(
-  generator: Updater<T>,
-  initialValue: Factory<T>,
-  options?: {
-    readonly count?: number;
-  },
-) =>
-  newInstance(
-    GeneratorAsyncIterable,
-    generator,
-    initialValue,
-    options?.count,
-  )) as Signature["generate"];
 
 class KeepAsyncIterable<T> implements AsyncIterableLike<T> {
   public readonly [ComputationLike_isPure]?: boolean;

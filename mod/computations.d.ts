@@ -1,4 +1,4 @@
-import type { AsyncFunction1, Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4, Updater } from "./functions.js";
+import type { AsyncFunction1, Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4 } from "./functions.js";
 import type { BackpressureStrategy, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, PauseableLike, QueueableLike, SchedulerLike, SinkLike } from "./utils.js";
 export declare const ComputationLike_isPure: unique symbol;
 export declare const ComputationLike_isDeferred: unique symbol;
@@ -229,9 +229,6 @@ export interface ComputationModule<TComputationType extends ComputationType, TCr
         readonly start?: number;
     } & TCreationOptions["fromReadonlyArray"]): FromReadonlyArrayOperator<TComputationType, T>;
     fromValue<T>(options?: TCreationOptions["fromValue"]): FromValueOperator<TComputationType, T>;
-    generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
-        readonly count?: number;
-    } & TCreationOptions["generate"]): GeneratorOf<TComputationType, T>;
     keep<T>(predicate: Predicate<T>): StatelessComputationOperator<TComputationType, T, T>;
     lastAsync<T>(options?: TCreationOptions["lastAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, Optional<T>>;
     map<TA, TB>(selector: Function1<TA, TB>): StatelessComputationOperator<TComputationType, TA, TB>;

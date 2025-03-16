@@ -17,6 +17,7 @@ import {
   ThrowBackpressureStrategy,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
+import * as Computation from "../Computation.js";
 import * as Observable from "../Observable.js";
 import * as PauseableEventSource from "../PauseableEventSource.js";
 import * as Streamable from "../Streamable.js";
@@ -34,10 +35,11 @@ testModule(
       });
 
       const enqueueSubscription = pipe(
-        Observable.generate(increment, returns(-1), {
-          delay: 1,
-          delayStart: true,
-        }),
+        Computation.generate<Observable.Computation>(Observable)(
+          increment,
+          returns(-1),
+          { delay: 1, delayStart: true },
+        ),
         Observable.takeFirst<number>({ count: 5 }),
         Observable.toPauseableEventSource(vts),
         PauseableEventSource.enqueue(dest),

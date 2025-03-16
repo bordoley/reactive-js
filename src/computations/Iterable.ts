@@ -33,7 +33,6 @@ import {
   Reducer,
   SideEffect,
   SideEffect1,
-  Updater,
   alwaysTrue,
   error,
   invoke,
@@ -285,34 +284,6 @@ export const genWithSideEffects: Signature["genWithSideEffects"] = (<T>(
     GenWithSideEffectsIterable<T>,
     factory,
   )) as Signature["genWithSideEffects"];
-
-class GeneratorIterable<T> {
-  public readonly [ComputationLike_isPure]?: true;
-
-  constructor(
-    readonly generator: Updater<T>,
-    readonly initialValue: Factory<T>,
-    readonly count?: number,
-  ) {}
-
-  *[Symbol.iterator]() {
-    const { count, generator } = this;
-    let acc = this.initialValue();
-
-    for (let cnt = 0; count === none || cnt < count; cnt++) {
-      acc = generator(acc);
-      yield acc;
-    }
-  }
-}
-
-export const generate: Signature["generate"] = <T>(
-  generator: Updater<T>,
-  initialValue: Factory<T>,
-  options?: {
-    readonly count?: number;
-  },
-) => newInstance(GeneratorIterable, generator, initialValue, options?.count);
 
 class KeepIterable<T> implements IterableLike<T> {
   public readonly [ComputationLike_isPure]?: boolean;

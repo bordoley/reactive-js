@@ -13,6 +13,7 @@ import {
 } from "../../../computations.js";
 import { Optional, pipe, pipeLazy, returns } from "../../../functions.js";
 import { increment } from "../../../math.js";
+import * as Computation from "../../Computation.js";
 import * as Runnable from "../../Runnable.js";
 import * as ComputationTest from "./helpers/ComputationTest.js";
 
@@ -51,12 +52,6 @@ const SynchronousComputationModuleTests = <
       ComputationTest.isPureSynchronous(pipe("a", m.fromValue())),
     ),
     describe(
-      "generate",
-      ComputationTest.isPureSynchronous(
-        m.generate(increment, returns(0), { count: 10 }),
-      ),
-    ),
-    describe(
       "last",
       test(
         "returns the last value in the computation",
@@ -86,7 +81,7 @@ const SynchronousComputationModuleTests = <
       test(
         "when deferable sinkcompletes early",
         pipeLazy(
-          m.generate(increment, returns(0)),
+          Computation.generate(m)(increment, returns(0)),
           m.toRunnable(),
           Runnable.takeFirst({ count: 3 }),
           Runnable.toReadonlyArray<number>(),

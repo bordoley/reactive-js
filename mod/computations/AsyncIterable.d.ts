@@ -31,7 +31,6 @@ export declare const forEach: Signature["forEach"];
 export declare const fromValue: Signature["fromValue"];
 export declare const gen: Signature["gen"];
 export declare const genWithSideEffects: Signature["genWithSideEffects"];
-export declare const generate: Signature["generate"];
 export declare const keep: Signature["keep"];
 export declare const lastAsync: Signature["lastAsync"];
 export declare const map: Signature["map"];

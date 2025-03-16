@@ -1,7 +1,7 @@
 /// <reference types="./ComputationModuleTests.d.ts" />
 
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectToThrowAsync, expectToThrowErrorAsync, expectTrue, testAsync, } from "../../../__internal__/testing.js";
-import { alwaysTrue, greaterThan, identity, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, returns, } from "../../../functions.js";
+import { alwaysTrue, greaterThan, identity, newInstance, pipe, pipeAsync, pipeLazy, pipeLazyAsync, } from "../../../functions.js";
 import { increment } from "../../../math.js";
 import * as Computation from "../../Computation.js";
 import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
@@ -9,11 +9,7 @@ const ComputationModuleTests = (m, computations) => describe("ComputationModule"
     throw newInstance(Error);
 })(), Computation.fromIterable(m), m.firstAsync()), expectToThrowAsync))), describe("fromReadonlyArray", testAsync("starting at index greater than 0", pipeLazyAsync([1, 2, 3, 4], m.fromReadonlyArray({ start: 1 }), m.toReadonlyArrayAsync(), expectArrayEquals([2, 3, 4]))), testAsync("starting at index greater than 0 with count", pipeLazyAsync([1, 2, 3, 4], m.fromReadonlyArray({ start: 1, count: 2 }), m.toReadonlyArrayAsync(), expectArrayEquals([2, 3]))), testAsync("starting at index greater than 0 with count exceeding the length", pipeLazyAsync([1, 2, 3, 4], m.fromReadonlyArray({ start: 1, count: 10 }), m.toReadonlyArrayAsync(), expectArrayEquals([2, 3, 4]))), testAsync("negative count", pipeLazyAsync([1, 2, 3, 4], m.fromReadonlyArray({ count: -2 }), m.toReadonlyArrayAsync(), expectArrayEquals([4, 3]))), testAsync("starting at index greater than 0 with negative count", pipeLazyAsync([1, 2, 3, 4], m.fromReadonlyArray({ start: 2, count: -2 }), m.toReadonlyArrayAsync(), expectArrayEquals([3, 2])))), describe("fromValue", testAsync("with array", pipeLazyAsync(1, m.fromValue(), m.toReadonlyArrayAsync(), expectArrayEquals([1])))), describe("gen", testAsync("when the iterable throws", pipeLazyAsync(pipeLazy(m.gen(function* Generator() {
     throw newInstance(Error);
-}), m.toReadonlyArrayAsync()), expectToThrowAsync))), describe("generate", testAsync("with count", pipeLazyAsync(none, 
-// Need to delay instantiating the generate function until
-// after the pipe is invoked because multicast computation
-// types are hot and start producing values immediately
-() => m.generate(increment, returns(0), { count: 10 }), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])))), describe("keep", StatelessComputationOperatorTests(computations, m.keep(alwaysTrue)), testAsync("keeps only values greater than 5", pipeLazyAsync([4, 8, 10, 7], m.fromReadonlyArray(), m.keep(greaterThan(5)), m.toReadonlyArrayAsync(), expectArrayEquals([8, 10, 7]))), testAsync("when predicate throws", async () => {
+}), m.toReadonlyArrayAsync()), expectToThrowAsync))), describe("keep", StatelessComputationOperatorTests(computations, m.keep(alwaysTrue)), testAsync("keeps only values greater than 5", pipeLazyAsync([4, 8, 10, 7], m.fromReadonlyArray(), m.keep(greaterThan(5)), m.toReadonlyArrayAsync(), expectArrayEquals([8, 10, 7]))), testAsync("when predicate throws", async () => {
     const err = new Error();
     const predicate = (_a) => {
         throw err;

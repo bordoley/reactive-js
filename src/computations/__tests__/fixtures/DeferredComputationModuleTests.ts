@@ -353,7 +353,10 @@ const DeferredComputationModuleTests = <
         "retrys the container on an exception",
         pipeLazyAsync(
           m.concat<number>(
-            m.generate(increment, returns(0), { count: 3 }),
+            pipe(
+              Computation.generate(m)(increment, returns(0)),
+              m.takeFirst({ count: 3 }),
+            ),
             m.raise<number>(),
           ),
           m.retry<number>(alwaysTrue),
@@ -366,7 +369,10 @@ const DeferredComputationModuleTests = <
         "retrys with the default predicate",
         pipeLazyAsync(
           m.concat<number>(
-            m.generate(increment, returns(0), { count: 3 }),
+            pipe(
+              Computation.generate(m)(increment, returns(0)),
+              m.takeFirst({ count: 3 }),
+            ),
             m.raise(),
           ),
           m.retry<number>(),
@@ -386,7 +392,10 @@ const DeferredComputationModuleTests = <
         "retrys only twice",
         pipeLazyAsync(
           m.concat<number>(
-            m.generate(increment, returns(0), { count: 3 }),
+            pipe(
+              Computation.generate(m)(increment, returns(0)),
+              m.takeFirst({ count: 3 }),
+            ),
             m.raise(),
           ),
           m.retry<number>((count, _) => count < 2),

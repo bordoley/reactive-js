@@ -297,7 +297,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
     }
 }), test("conditional hooks", pipeLazy(Observable.computeSynchronous(() => {
     const src = __constant(pipe([0, 1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 5 })));
-    const src2 = __constant(Observable.generate(increment, returns(100), { delay: 2 }));
+    const src2 = __constant(Computation.generate(Observable)(increment, returns(100), { delay: 2 }));
     const v = __await(src);
     if (v % 2 === 0) {
         __memo(increment, 1);
@@ -306,7 +306,7 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
     return v;
 }, { mode: "batched" }), Observable.toReadonlyArray(), expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]))), test("conditional await", pipeLazy(Observable.computeSynchronous(() => {
     const src = __constant(pipe([0, 1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 5 })));
-    const src2 = __constant(Observable.generate(increment, returns(100), { delay: 2 }));
+    const src2 = __constant(Computation.generate(Observable)(increment, returns(100), { delay: 2 }));
     const src3 = __constant(pipe(1, Observable.fromValue({ delay: 1 }), Observable.repeat(40)));
     const v = __await(src);
     if (v % 2 === 0) {
@@ -465,7 +465,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
         const vts = __addDisposableResource(env_15, VirtualTimeScheduler.create(), false);
         const result = [];
         pipe(store, Observable.fromStore(), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
-        pipe(Observable.generate(increment, returns(-1), { delay: 3 }), Observable.takeFirst({ count: 3 }), Computation.notify(Observable)(store), Observable.subscribe(vts));
+        pipe(Computation.generate(Observable)(increment, returns(-1), { delay: 3 }), Observable.takeFirst({ count: 3 }), Computation.notify(Observable)(store), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([-1, 0, 1, 2]));
     }
@@ -639,7 +639,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     pipe(pipeLazy([1, 1], Observable.fromReadonlyArray({ delay: 3 }), Observable.repeat(_ => {
         throw err;
     }), Observable.toReadonlyArray()), expectToThrowError(err));
-})), describe("scanMany", test("slow source, fast scan function", pipeLazy(Observable.generate(increment, returns(-1), {
+})), describe("scanMany", test("slow source, fast scan function", pipeLazy(Computation.generate(Observable)(increment, returns(-1), {
     delay: 10,
     delayStart: true,
 }), Observable.takeFirst({ count: 10 }), Observable.scanMany((_acc, next) => pipe(next, Observable.fromValue({ delay: 2 })), returns(0)), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]))), HigherOrderComputationOperatorTests(ObservableTypes, Observable.scanMany((_acc, _next) => Observable.empty(), returns(0), {
@@ -672,13 +672,13 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     innerType: PureDeferredComputation,
 }), Observable.switchAll({
     innerType: DeferredComputationWithSideEffects,
-}))), describe("throttle", test("first", pipeLazy(Observable.generate(increment, returns(-1), {
+}))), describe("throttle", test("first", pipeLazy(Computation.generate(Observable)(increment, returns(-1), {
     delay: 1,
     delayStart: true,
-}), Observable.takeFirst({ count: 101 }), Observable.throttle(50, { mode: "first" }), Observable.toReadonlyArray(), expectArrayEquals([0, 49, 99]))), test("last", pipeLazy(Observable.generate(increment, returns(-1), {
+}), Observable.takeFirst({ count: 101 }), Observable.throttle(50, { mode: "first" }), Observable.toReadonlyArray(), expectArrayEquals([0, 49, 99]))), test("last", pipeLazy(Computation.generate(Observable)(increment, returns(-1), {
     delay: 1,
     delayStart: true,
-}), Observable.takeFirst({ count: 200 }), Observable.throttle(50, { mode: "last" }), Observable.toReadonlyArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", pipeLazy(Observable.generate(increment, returns(-1), {
+}), Observable.takeFirst({ count: 200 }), Observable.throttle(50, { mode: "last" }), Observable.toReadonlyArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", pipeLazy(Computation.generate(Observable)(increment, returns(-1), {
     delay: 1,
     delayStart: true,
 }), Observable.takeFirst({ count: 200 }), Observable.throttle(75, { mode: "interval" }), Observable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199]))), StatefulSynchronousComputationOperatorTests(ObservableTypes, Observable.throttle(1))), describe("throwIfEmpty", test("when source is empty and delayed", () => {
@@ -709,7 +709,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     const env_27 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_27, VirtualTimeScheduler.create(), false);
-        const generateObservable = pipe(Observable.generate(increment, returns(-1), {
+        const generateObservable = pipe(Computation.generate(Observable)(increment, returns(-1), {
             delay: 2,
             delayStart: true,
         }), Observable.toPauseableObservable(vts));

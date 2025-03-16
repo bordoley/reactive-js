@@ -1,5 +1,5 @@
 import { ComputationBaseOf, ComputationLike, ComputationModule, ComputationOf, ComputationOperatorWithSideEffects, ComputationType, ComputationWithSideEffectsLike, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredComputationLike, DeferredComputationModule, DeferredComputationOf, DeferredComputationWithSideEffectsLike, DeferredComputationWithSideEffectsOf, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, IterableLike, IterableWithSideEffectsLike, MulticastComputationLike, MulticastComputationOf, PickComputationModule, PureComputationLike, PureDeferredComputationLike, PureDeferredComputationOf, PureIterableLike, PureSynchronousComputationLike, PureSynchronousComputationOf, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StatelessComputationOperator, SynchronousComputationLike, SynchronousComputationOf, SynchronousComputationWithSideEffectsLike, SynchronousComputationWithSideEffectsOf } from "../computations.js";
-import { Function1, TypePredicate } from "../functions.js";
+import { Factory, Function1, TypePredicate, Updater } from "../functions.js";
 import { DisposableLike, EventListenerLike } from "../utils.js";
 export interface ConcatManyOperator<TComputationType extends ComputationType> {
     <T>(computations: readonly PureSynchronousComputationOf<TComputationType, T>[]): PureSynchronousComputationOf<TComputationType, T>;
@@ -58,6 +58,7 @@ export interface PickOperator<TComputationType extends ComputationType> {
     <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(keyA: TKeyOfTA, keyB: TKeyOfTB): StatelessComputationOperator<TComputationType, T, T[TKeyOfTA][TKeyOfTB]>;
     <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA], TKeyOfTC extends keyof T[TKeyOfTA][TKeyOfTB]>(keyA: TKeyOfTA, keyB: TKeyOfTB, keyC: TKeyOfTC): StatelessComputationOperator<TComputationType, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
 }
+export type GeneratorOf<TComputationType extends ComputationType, T> = PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? PureSynchronousComputationOf<TComputationType, T> : PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? PureDeferredComputationOf<TComputationType, T> : MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? MulticastComputationOf<TComputationType, T> & DisposableLike : never;
 export interface Signature {
     areAllDeferred<TComputationType extends ComputationLike>(computations: readonly TComputationType[]): computations is readonly (TComputationType & DeferredComputationLike)[];
     areAllMulticasted<TComputationType extends ComputationLike>(computations: readonly TComputationType[]): computations is readonly (TComputationType & MulticastComputationLike)[];
@@ -81,6 +82,7 @@ export interface Signature {
         readonly [key in TFlattenKey | string | symbol | number]: key extends TFlattenKey ? DeferredComputationModule<TComputationType>["concatAll"] : unknown;
     }): FlatMapIterableOperator<TComputationType, TFlattenKey>;
     fromIterable<TComputationType extends ComputationType, T>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "gen" | "genWithSideEffects">, options?: Parameters<(typeof m)["gen"]>[1]): FromIterableOperator<TComputationType, T>;
+    generate<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "gen">): <T>(generator: Updater<T>, initialValue: Factory<T>, options?: Parameters<(typeof m)["gen"]>[1]) => GeneratorOf<TComputationType, T>;
     hasSideEffects<TComputationType extends ComputationLike>(computation: TComputationType): computation is TComputationType & ComputationWithSideEffectsLike;
     ignoreElements<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "keep">): <T>() => StatelessComputationOperator<TComputationType, any, T>;
     isDeferred<TComputationType extends ComputationLike = ComputationLike>(computation: TComputationType): computation is TComputationType & DeferredComputationLike;
@@ -98,7 +100,6 @@ export interface Signature {
     mergeWith<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ConcurrentReactiveComputationModule<TComputationType>, "merge">): MergeWithOperator<TComputationType>;
     notify<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType>, "forEach">): <T>(eventListener: EventListenerLike<T>) => ComputationOperatorWithSideEffects<TComputationType, T, T>;
     pick<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "map">): PickOperator<TComputationType>;
-    sequence<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "generate">): (start: number) => ComputationBaseOf<TComputationType, number>;
     startWith<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, DeferredComputationModule<TComputationType> & ComputationModule<TComputationType>, "concat" | "fromReadonlyArray">): <T>(value: T, ...values: readonly T[]) => StatelessComputationOperator<TComputationType, T, T>;
 }
 export declare const areAllDeferred: Signature["areAllDeferred"];
@@ -115,6 +116,7 @@ export declare const flatMap: Signature["flatMap"];
 export declare const flatMapAsync: Signature["flatMapAsync"];
 export declare const flatMapIterable: Signature["flatMapIterable"];
 export declare const fromIterable: Signature["fromIterable"];
+export declare const generate: Signature["generate"];
 export declare const hasSideEffects: Signature["hasSideEffects"];
 export declare const ignoreElements: Signature["ignoreElements"];
 export declare const isDeferred: Signature["isDeferred"];
@@ -132,5 +134,4 @@ export declare const mergeMany: Signature["mergeMany"];
 export declare const mergeWith: Signature["mergeWith"];
 export declare const notify: Signature["notify"];
 export declare const pick: Signature["pick"];
-export declare const sequence: Signature["sequence"];
 export declare const startWith: Signature["startWith"];

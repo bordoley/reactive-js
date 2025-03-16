@@ -18,7 +18,6 @@ import Runnable_fromReadonlyArray from "./Runnable/__private__/Runnable.fromRead
 import Runnable_fromValue from "./Runnable/__private__/Runnable.fromValue.js";
 import Runnable_gen from "./Runnable/__private__/Runnable.gen.js";
 import Runnable_genWithSideEffects from "./Runnable/__private__/Runnable.genWithSideEffects.js";
-import Runnable_generate from "./Runnable/__private__/Runnable.generate.js";
 import Runnable_keep from "./Runnable/__private__/Runnable.keep.js";
 import Runnable_last from "./Runnable/__private__/Runnable.last.js";
 import Runnable_lastAsync from "./Runnable/__private__/Runnable.lastAsync.js";
@@ -53,7 +52,6 @@ export const fromReadonlyArray = Runnable_fromReadonlyArray;
 export const fromValue = Runnable_fromValue;
 export const gen = Runnable_gen;
 export const genWithSideEffects = Runnable_genWithSideEffects;
-export const generate = Runnable_generate;
 export const keep = Runnable_keep;
 export const last = Runnable_last;
 export const lastAsync = Runnable_lastAsync;

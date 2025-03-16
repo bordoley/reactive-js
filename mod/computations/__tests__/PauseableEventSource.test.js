@@ -59,6 +59,7 @@ import { bindMethod, pipe, returns } from "../../functions.js";
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import { DisposableLike_error, DisposableLike_isDisposed, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import * as Computation from "../Computation.js";
 import * as Observable from "../Observable.js";
 import * as PauseableEventSource from "../PauseableEventSource.js";
 import * as Streamable from "../Streamable.js";
@@ -70,10 +71,7 @@ testModule("PauseableEventSource", describe("enqueue", test("a pauseable observa
             backpressureStrategy: ThrowBackpressureStrategy,
             capacity: 1,
         });
-        const enqueueSubscription = pipe(Observable.generate(increment, returns(-1), {
-            delay: 1,
-            delayStart: true,
-        }), Observable.takeFirst({ count: 5 }), Observable.toPauseableEventSource(vts), PauseableEventSource.enqueue(dest));
+        const enqueueSubscription = pipe(Computation.generate(Observable)(increment, returns(-1), { delay: 1, delayStart: true }), Observable.takeFirst({ count: 5 }), Observable.toPauseableEventSource(vts), PauseableEventSource.enqueue(dest));
         const result = [];
         pipe(dest, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();

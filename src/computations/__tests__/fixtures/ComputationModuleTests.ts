@@ -20,12 +20,10 @@ import {
   greaterThan,
   identity,
   newInstance,
-  none,
   pipe,
   pipeAsync,
   pipeLazy,
   pipeLazyAsync,
-  returns,
 } from "../../../functions.js";
 import { increment } from "../../../math.js";
 import * as Computation from "../../Computation.js";
@@ -154,21 +152,6 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
             m.toReadonlyArrayAsync(),
           ),
           expectToThrowAsync,
-        ),
-      ),
-    ),
-    describe(
-      "generate",
-      testAsync(
-        "with count",
-        pipeLazyAsync(
-          none,
-          // Need to delay instantiating the generate function until
-          // after the pipe is invoked because multicast computation
-          // types are hot and start producing values immediately
-          () => m.generate(increment, returns(0), { count: 10 }),
-          m.toReadonlyArrayAsync(),
-          expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
         ),
       ),
     ),

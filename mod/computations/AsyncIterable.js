@@ -184,27 +184,6 @@ class GenWithSideEffectsAsyncIterable {
     }
 }
 export const genWithSideEffects = ((factory) => newInstance((GenWithSideEffectsAsyncIterable), factory));
-class GeneratorAsyncIterable {
-    generator;
-    initialValue;
-    count;
-    [ComputationLike_isSynchronous] = false;
-    [ComputationLike_isPure] = true;
-    constructor(generator, initialValue, count) {
-        this.generator = generator;
-        this.initialValue = initialValue;
-        this.count = count;
-    }
-    async *[Symbol.asyncIterator]() {
-        const { count, generator } = this;
-        let acc = this.initialValue();
-        for (let cnt = 0; count === none || cnt < count; cnt++) {
-            acc = generator(acc);
-            yield acc;
-        }
-    }
-}
-export const generate = ((generator, initialValue, options) => newInstance(GeneratorAsyncIterable, generator, initialValue, options?.count));
 class KeepAsyncIterable {
     d;
     p;

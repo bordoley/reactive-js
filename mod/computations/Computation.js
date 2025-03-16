@@ -2,7 +2,6 @@
 
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, DeferredComputationWithSideEffects, } from "../computations.js";
 import { alwaysFalse, bindMethod, debug as breakPoint, compose, log as consoleLog, memoize, pickUnsafe, pipe, returns, } from "../functions.js";
-import { increment } from "../math.js";
 import { EventListenerLike_notify, } from "../utils.js";
 export const areAllDeferred = (computations) => computations.every(isDeferred);
 export const areAllMulticasted = (computations) => computations.every(isMulticasted);
@@ -35,6 +34,14 @@ export const fromIterable = ((m, options) =>
         yield* iterable;
     }, options);
 });
+export const generate = (m) => (generator, initialValue, options) => m.gen(function* Generate() {
+    let acc = initialValue();
+    while (true) {
+        const prevAcc = acc;
+        acc = generator(prevAcc);
+        yield acc;
+    }
+}, options);
 export const hasSideEffects = (computation) => !(computation[ComputationLike_isPure] ?? true);
 export const ignoreElements = 
 /*@__PURE__*/ memoize(m => returns(m.keep(alwaysFalse)));
@@ -62,5 +69,4 @@ export const mergeMany = /*@__PURE__*/ memoize(m => (computations) => m.merge(..
 export const mergeWith = /*@__PURE__*/ memoize(m => (...tail) => (fst) => m.merge(fst, ...tail));
 export const notify = /*@__PURE__*/ memoize(m => (eventListener) => m.forEach(bindMethod(eventListener, EventListenerLike_notify)));
 export const pick = /*@__PURE__*/ memoize(m => (...keys) => m.map(pickUnsafe(...keys)));
-export const sequence = /*@__PURE__*/ memoize(m => (start) => m.generate(increment, returns(start - 1)));
 export const startWith = /*@__PURE__*/ memoize(m => (...values) => (computation) => pipe(m.fromReadonlyArray()(values), concatWith(m)(computation)));

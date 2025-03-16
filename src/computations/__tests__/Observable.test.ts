@@ -486,7 +486,11 @@ testModule(
               ),
             );
             const src2 = __constant(
-              Observable.generate(increment, returns(100), { delay: 2 }),
+              Computation.generate<Observable.Computation>(Observable)(
+                increment,
+                returns(100),
+                { delay: 2 },
+              ),
             );
 
             const v = __await(src);
@@ -514,7 +518,11 @@ testModule(
             ),
           );
           const src2 = __constant(
-            Observable.generate(increment, returns(100), { delay: 2 }),
+            Computation.generate<Observable.Computation>(Observable)(
+              increment,
+              returns(100),
+              { delay: 2 },
+            ),
           );
 
           const src3 = __constant(
@@ -771,7 +779,11 @@ testModule(
       );
 
       pipe(
-        Observable.generate(increment, returns(-1), { delay: 3 }),
+        Computation.generate<Observable.Computation>(Observable)(
+          increment,
+          returns(-1),
+          { delay: 3 },
+        ),
         Observable.takeFirst({ count: 3 }),
         Computation.notify(Observable)(store),
         Observable.subscribe(vts),
@@ -1034,10 +1046,14 @@ testModule(
     test(
       "slow source, fast scan function",
       pipeLazy(
-        Observable.generate(increment, returns(-1), {
-          delay: 10,
-          delayStart: true,
-        }),
+        Computation.generate<Observable.Computation>(Observable)(
+          increment,
+          returns(-1),
+          {
+            delay: 10,
+            delayStart: true,
+          },
+        ),
         Observable.takeFirst({ count: 10 }),
         Observable.scanMany(
           (_acc: number, next: number) =>
@@ -1189,10 +1205,14 @@ testModule(
     test(
       "first",
       pipeLazy(
-        Observable.generate(increment, returns<number>(-1), {
-          delay: 1,
-          delayStart: true,
-        }),
+        Computation.generate<Observable.Computation>(Observable)(
+          increment,
+          returns<number>(-1),
+          {
+            delay: 1,
+            delayStart: true,
+          },
+        ),
         Observable.takeFirst({ count: 101 }),
         Observable.throttle<number>(50, { mode: "first" }),
         Observable.toReadonlyArray(),
@@ -1202,10 +1222,14 @@ testModule(
     test(
       "last",
       pipeLazy(
-        Observable.generate(increment, returns<number>(-1), {
-          delay: 1,
-          delayStart: true,
-        }),
+        Computation.generate<Observable.Computation>(Observable)(
+          increment,
+          returns<number>(-1),
+          {
+            delay: 1,
+            delayStart: true,
+          },
+        ),
         Observable.takeFirst({ count: 200 }),
         Observable.throttle<number>(50, { mode: "last" }),
         Observable.toReadonlyArray(),
@@ -1215,10 +1239,14 @@ testModule(
     test(
       "interval",
       pipeLazy(
-        Observable.generate(increment, returns<number>(-1), {
-          delay: 1,
-          delayStart: true,
-        }),
+        Computation.generate<Observable.Computation>(Observable)(
+          increment,
+          returns<number>(-1),
+          {
+            delay: 1,
+            delayStart: true,
+          },
+        ),
         Observable.takeFirst({ count: 200 }),
         Observable.throttle<number>(75, { mode: "interval" }),
         Observable.toReadonlyArray(),
@@ -1296,10 +1324,14 @@ testModule(
       using vts = VirtualTimeScheduler.create();
 
       const generateObservable = pipe(
-        Observable.generate(increment, returns(-1), {
-          delay: 2,
-          delayStart: true,
-        }),
+        Computation.generate<Observable.Computation>(Observable)(
+          increment,
+          returns(-1),
+          {
+            delay: 2,
+            delayStart: true,
+          },
+        ),
         Observable.toPauseableObservable(vts),
       );
 

@@ -34,7 +34,6 @@ import Observable_fromStore from "./Observable/__private__/Observable.fromStore.
 import Observable_fromValue from "./Observable/__private__/Observable.fromValue.js";
 import Observable_gen from "./Observable/__private__/Observable.gen.js";
 import Observable_genWithSideEffects from "./Observable/__private__/Observable.genWithSideEffects.js";
-import Observable_generate from "./Observable/__private__/Observable.generate.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
 import Observable_keyFrame from "./Observable/__private__/Observable.keyFrame.js";
 import Observable_last from "./Observable/__private__/Observable.last.js";
@@ -111,7 +110,6 @@ export const fromStore = Observable_fromStore;
 export const fromValue = Observable_fromValue;
 export const gen = Observable_gen;
 export const genWithSideEffects = Observable_genWithSideEffects;
-export const generate = Observable_generate;
 export const keep = Observable_keep;
 export const keyFrame = Observable_keyFrame;
 export const last = Observable_last;

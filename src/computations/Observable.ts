@@ -85,7 +85,6 @@ import Observable_fromStore from "./Observable/__private__/Observable.fromStore.
 import Observable_fromValue from "./Observable/__private__/Observable.fromValue.js";
 import Observable_gen from "./Observable/__private__/Observable.gen.js";
 import Observable_genWithSideEffects from "./Observable/__private__/Observable.genWithSideEffects.js";
-import Observable_generate from "./Observable/__private__/Observable.generate.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
 import Observable_keyFrame from "./Observable/__private__/Observable.keyFrame.js";
 import Observable_last from "./Observable/__private__/Observable.last.js";
@@ -196,7 +195,11 @@ export interface ObservableModule
         fromValue: {
           readonly delay: number;
         };
-        generate: {
+        gen: {
+          readonly delay?: number;
+          readonly delayStart?: boolean;
+        };
+        genWithSideEffects: {
           readonly delay?: number;
           readonly delayStart?: boolean;
         };
@@ -470,7 +473,6 @@ export const fromValue: Signature["fromValue"] = Observable_fromValue;
 export const gen: Signature["gen"] = Observable_gen;
 export const genWithSideEffects: Signature["genWithSideEffects"] =
   Observable_genWithSideEffects;
-export const generate: Signature["generate"] = Observable_generate;
 export const keep: Signature["keep"] = Observable_keep;
 export const keyFrame: Signature["keyFrame"] = Observable_keyFrame;
 export const last: Signature["last"] = Observable_last;

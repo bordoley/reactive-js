@@ -30,7 +30,6 @@ import Runnable_fromReadonlyArray from "./Runnable/__private__/Runnable.fromRead
 import Runnable_fromValue from "./Runnable/__private__/Runnable.fromValue.js";
 import Runnable_gen from "./Runnable/__private__/Runnable.gen.js";
 import Runnable_genWithSideEffects from "./Runnable/__private__/Runnable.genWithSideEffects.js";
-import Runnable_generate from "./Runnable/__private__/Runnable.generate.js";
 import Runnable_keep from "./Runnable/__private__/Runnable.keep.js";
 import Runnable_last from "./Runnable/__private__/Runnable.last.js";
 import Runnable_lastAsync from "./Runnable/__private__/Runnable.lastAsync.js";
@@ -95,7 +94,6 @@ export const fromValue: Signature["fromValue"] = Runnable_fromValue;
 export const gen: Signature["gen"] = Runnable_gen;
 export const genWithSideEffects: Signature["genWithSideEffects"] =
   Runnable_genWithSideEffects;
-export const generate: Signature["generate"] = Runnable_generate;
 export const keep: Signature["keep"] = Runnable_keep;
 export const last: Signature["last"] = Runnable_last;
 export const lastAsync: Signature["lastAsync"] = Runnable_lastAsync;

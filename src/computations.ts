@@ -11,7 +11,6 @@ import type {
   Tuple2,
   Tuple3,
   Tuple4,
-  Updater,
 } from "./functions.js";
 import type {
   BackpressureStrategy,
@@ -1050,14 +1049,6 @@ export interface ComputationModule<
   fromValue<T>(
     options?: TCreationOptions["fromValue"],
   ): FromValueOperator<TComputationType, T>;
-
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-    options?: {
-      readonly count?: number;
-    } & TCreationOptions["generate"],
-  ): GeneratorOf<TComputationType, T>;
 
   keep<T>(
     predicate: Predicate<T>,

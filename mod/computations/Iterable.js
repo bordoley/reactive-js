@@ -145,26 +145,6 @@ class GenWithSideEffectsIterable {
     }
 }
 export const genWithSideEffects = ((factory) => newInstance((GenWithSideEffectsIterable), factory));
-class GeneratorIterable {
-    generator;
-    initialValue;
-    count;
-    [ComputationLike_isPure];
-    constructor(generator, initialValue, count) {
-        this.generator = generator;
-        this.initialValue = initialValue;
-        this.count = count;
-    }
-    *[Symbol.iterator]() {
-        const { count, generator } = this;
-        let acc = this.initialValue();
-        for (let cnt = 0; count === none || cnt < count; cnt++) {
-            acc = generator(acc);
-            yield acc;
-        }
-    }
-}
-export const generate = (generator, initialValue, options) => newInstance(GeneratorIterable, generator, initialValue, options?.count);
 class KeepIterable {
     d;
     p;

@@ -38,7 +38,11 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     fromValue: {
         readonly delay: number;
     };
-    generate: {
+    gen: {
+        readonly delay?: number;
+        readonly delayStart?: boolean;
+    };
+    genWithSideEffects: {
         readonly delay?: number;
         readonly delayStart?: boolean;
     };
@@ -173,7 +177,6 @@ export declare const fromStore: Signature["fromStore"];
 export declare const fromValue: Signature["fromValue"];
 export declare const gen: Signature["gen"];
 export declare const genWithSideEffects: Signature["genWithSideEffects"];
-export declare const generate: Signature["generate"];
 export declare const keep: Signature["keep"];
 export declare const keyFrame: Signature["keyFrame"];
 export declare const last: Signature["last"];

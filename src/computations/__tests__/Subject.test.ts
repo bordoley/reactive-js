@@ -30,6 +30,7 @@ import {
   ThrowBackpressureStrategy,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
+import * as Computation from "../Computation.js";
 
 testModule(
   "Subject",
@@ -94,10 +95,14 @@ testModule(
       );
 
       const generateSubscription = pipe(
-        Observable.generate(increment, returns(-1), {
-          delay: 3,
-          delayStart: true,
-        }),
+        Computation.generate<Observable.Computation>(Observable)(
+          increment,
+          returns(-1),
+          {
+            delay: 3,
+            delayStart: true,
+          },
+        ),
         Observable.forEach(bindMethod(subject, EventListenerLike_notify)),
         Observable.subscribe(vts),
       );

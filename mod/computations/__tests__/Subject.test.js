@@ -61,6 +61,7 @@ import { bindMethod, ignore, pipe, returns, } from "../../functions.js";
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_notify, SchedulerLike_schedule, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import * as Computation from "../Computation.js";
 testModule("Subject", describe("create", test("with replay", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
@@ -118,7 +119,7 @@ testModule("Subject", describe("create", test("with replay", () => {
         const subject = Subject.create();
         const result = [];
         const subjectSubscription = pipe(subject, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
-        const generateSubscription = pipe(Observable.generate(increment, returns(-1), {
+        const generateSubscription = pipe(Computation.generate(Observable)(increment, returns(-1), {
             delay: 3,
             delayStart: true,
         }), Observable.forEach(bindMethod(subject, EventListenerLike_notify)), Observable.subscribe(vts));

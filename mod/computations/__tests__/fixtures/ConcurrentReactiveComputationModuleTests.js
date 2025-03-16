@@ -76,7 +76,7 @@ const ConcurrentReactiveComputationModuleTests = (m, computations) => {
         const env_1 = { stack: [], error: void 0, hasError: false };
         try {
             const scheduler = __addDisposableResource(env_1, HostScheduler.create(), false);
-            await pipeAsync(m.combineLatest(pipe(Observable.generate(incrementBy(2), returns(1), { delay: 2 }), Observable.takeFirst({ count: 3 }), m.fromObservable(scheduler)), pipe(Observable.generate(incrementBy(2), returns(0), { delay: 3 }), Observable.takeFirst({ count: 2 }), m.fromObservable(scheduler))), m.toReadonlyArrayAsync({ scheduler }), expectArrayEquals([tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)], {
+            await pipeAsync(m.combineLatest(pipe(Computation.generate(Observable)(incrementBy(2), returns(1), { delay: 2 }), Observable.takeFirst({ count: 3 }), m.fromObservable(scheduler)), pipe(Computation.generate(Observable)(incrementBy(2), returns(0), { delay: 3 }), Observable.takeFirst({ count: 2 }), m.fromObservable(scheduler))), m.toReadonlyArrayAsync({ scheduler }), expectArrayEquals([tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)], {
                 valuesEquality: arrayEquality(),
             }));
         }

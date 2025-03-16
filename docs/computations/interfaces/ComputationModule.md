@@ -140,34 +140,6 @@
 
 ***
 
-### generate()
-
-> **generate**\<`T`\>(`generator`, `initialValue`, `options`?): [`GeneratorOf`](../type-aliases/GeneratorOf.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### generator
-
-[`Updater`](../../functions/type-aliases/Updater.md)\<`T`\>
-
-##### initialValue
-
-[`Factory`](../../functions/type-aliases/Factory.md)\<`T`\>
-
-##### options?
-
-`object` & `TCreationOptions`\[`"generate"`\]
-
-#### Returns
-
-[`GeneratorOf`](../type-aliases/GeneratorOf.md)\<`TComputationType`, `T`\>
-
-***
-
 ### genWithSideEffects()
 
 > **genWithSideEffects**\<`T`\>(`factory`, `options`?): [`GenWithSideEffectsConstructor`](../type-aliases/GenWithSideEffectsConstructor.md)\<`TComputationType`, `T`\>

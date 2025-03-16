@@ -43,8 +43,10 @@ import {
   SynchronousComputationWithSideEffectsOf,
 } from "../computations.js";
 import {
+  Factory,
   Function1,
   TypePredicate,
+  Updater,
   alwaysFalse,
   bindMethod,
   debug as breakPoint,
@@ -55,7 +57,6 @@ import {
   pipe,
   returns,
 } from "../functions.js";
-import { increment } from "../math.js";
 import {
   DisposableLike,
   EventListenerLike,
@@ -296,6 +297,24 @@ export interface PickOperator<TComputationType extends ComputationType> {
   >;
 }
 
+export type GeneratorOf<TComputationType extends ComputationType, T> =
+  PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<
+    TComputationType,
+    T
+  >
+    ? PureSynchronousComputationOf<TComputationType, T>
+    : PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<
+          TComputationType,
+          T
+        >
+      ? PureDeferredComputationOf<TComputationType, T>
+      : MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<
+            TComputationType,
+            T
+          >
+        ? MulticastComputationOf<TComputationType, T> & DisposableLike
+        : never;
+
 export interface Signature {
   areAllDeferred<TComputationType extends ComputationLike>(
     computations: readonly TComputationType[],
@@ -442,6 +461,18 @@ export interface Signature {
     options?: Parameters<(typeof m)["gen"]>[1],
   ): FromIterableOperator<TComputationType, T>;
 
+  generate<TComputationType extends ComputationType>(
+    m: PickComputationModule<
+      TComputationType,
+      ComputationModule<TComputationType>,
+      "gen"
+    >,
+  ): <T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+    options?: Parameters<(typeof m)["gen"]>[1],
+  ) => GeneratorOf<TComputationType, T>;
+
   hasSideEffects<TComputationType extends ComputationLike>(
     computation: TComputationType,
   ): computation is TComputationType & ComputationWithSideEffectsLike;
@@ -552,14 +583,6 @@ export interface Signature {
       "map"
     >,
   ): PickOperator<TComputationType>;
-
-  sequence<TComputationType extends ComputationType>(
-    m: PickComputationModule<
-      TComputationType,
-      ComputationModule<TComputationType>,
-      "generate"
-    >,
-  ): (start: number) => ComputationBaseOf<TComputationType, number>;
 
   startWith<TComputationType extends ComputationType>(
     m: PickComputationModule<
@@ -763,6 +786,28 @@ export const fromIterable: Signature["fromIterable"] = (<
     }, options);
   }) as Signature["fromIterable"];
 
+export const generate: Signature["generate"] =
+  <TComputationType extends ComputationType>(
+    m: PickComputationModule<
+      TComputationType,
+      ComputationModule<TComputationType>,
+      "gen"
+    >,
+  ) =>
+  <T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+    options?: Parameters<(typeof m)["gen"]>[1],
+  ) =>
+    m.gen(function* Generate() {
+      let acc = initialValue();
+      while (true) {
+        const prevAcc = acc;
+        acc = generator(prevAcc);
+        yield acc;
+      }
+    }, options);
+
 export const hasSideEffects: Signature["hasSideEffects"] = <
   TComputationType extends ComputationLike,
 >(
@@ -878,10 +923,6 @@ export const pick: Signature["pick"] = /*@__PURE__*/ memoize(
   m =>
     (...keys: (string | number | symbol)[]) =>
       m.map(pickUnsafe(...keys)),
-);
-
-export const sequence: Signature["sequence"] = /*@__PURE__*/ memoize(
-  m => (start: number) => m.generate<number>(increment, returns(start - 1)),
 );
 
 export const startWith: Signature["startWith"] = /*@__PURE__*/ memoize(
