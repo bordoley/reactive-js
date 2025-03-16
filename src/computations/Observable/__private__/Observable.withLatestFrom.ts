@@ -24,10 +24,12 @@ import {
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  LiftedEventListenerLike_notify,
+  LiftedEventListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   ConsumerLike,
@@ -79,7 +81,10 @@ const createWithLatestFromObserver: <TA, TB, T>(
   return mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function WithLatestFromObserver(
-      this: Pick<LiftedObserverLike<TA>, typeof LiftedObserverLike_notify> &
+      this: Pick<
+        LiftedObserverLike<TA>,
+        typeof LiftedEventListenerLike_notify
+      > &
         TProperties,
       delegate: ObserverLike<T>,
       other: ObservableLike<TB>,
@@ -108,7 +113,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
       [WithLatestFromObserver_selector]: none,
     }),
     proto({
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProperties & LiftedObserverLike<TA, T>,
         next: TA,
       ) {
@@ -119,7 +124,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
             next,
             this[WithLatestFromObserver_otherLatest] as TB,
           );
-          this[LiftedObserverLike_notifyDelegate](v);
+          this[LiftedEventListenerLike_notifyDelegate](v);
         }
       },
     }),

@@ -32,14 +32,18 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { LiftedConsumerLike_isReady } from "../../../utils/__mixins__/LiftedConsumerMixin.js";
+import {
+  LiftedEventListenerLike_notify,
+  LiftedEventListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_complete,
-  LiftedObserverLike_completeDelegate,
-  LiftedObserverLike_isReady,
-  LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import {
+  LiftedSinkLike_complete,
+  LiftedSinkLike_completeDelegate,
+} from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import {
   BackpressureStrategy,
   EventListenerLike_notify,
@@ -87,8 +91,8 @@ const createMergeAllObserverOperator: <T>(options?: {
     pipe(
       nextObs,
       Observable_forEach<T>(v => {
-        observer[LiftedObserverLike_notifyDelegate](v);
-        if (!observer[LiftedObserverLike_isReady]) {
+        observer[LiftedEventListenerLike_notifyDelegate](v);
+        if (!observer[LiftedConsumerLike_isReady]) {
           observer[SchedulerLike_requestYield]();
         }
       }),
@@ -113,7 +117,7 @@ const createMergeAllObserverOperator: <T>(options?: {
       this[SinkLike_isCompleted] &&
       this[MergeAllObserver_activeCount] <= 0
     ) {
-      this[LiftedObserverLike_completeDelegate]();
+      this[LiftedSinkLike_completeDelegate]();
     }
   }
 
@@ -125,7 +129,7 @@ const createMergeAllObserverOperator: <T>(options?: {
     function MergeAllObserver(
       this: Pick<
         LiftedObserverLike<DeferredObservableWithSideEffectsLike<T>>,
-        typeof LiftedObserverLike_notify
+        typeof LiftedEventListenerLike_notify
       > &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
@@ -154,7 +158,7 @@ const createMergeAllObserverOperator: <T>(options?: {
       [MergeAllObserver_observablesQueue]: none,
     }),
     proto({
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProperties &
           LiftedObserverLike<DeferredObservableWithSideEffectsLike<T>, T>,
         next: DeferredObservableWithSideEffectsLike<T>,
@@ -171,7 +175,7 @@ const createMergeAllObserverOperator: <T>(options?: {
         }
       },
 
-      [LiftedObserverLike_complete](
+      [LiftedSinkLike_complete](
         this: LiftedObserverLike<ObservableLike<T>, T> & TProperties,
       ) {
         if (
@@ -179,7 +183,7 @@ const createMergeAllObserverOperator: <T>(options?: {
             this[MergeAllObserver_activeCount] ===
           0
         ) {
-          this[LiftedObserverLike_completeDelegate]();
+          this[LiftedSinkLike_completeDelegate]();
         }
       },
     }),

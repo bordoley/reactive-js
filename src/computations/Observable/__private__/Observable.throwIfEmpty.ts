@@ -15,13 +15,17 @@ import {
   pipe,
 } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  LiftedEventListenerLike_notify,
+  LiftedEventListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_complete,
-  LiftedObserverLike_completeDelegate,
-  LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import {
+  LiftedSinkLike_complete,
+  LiftedSinkLike_completeDelegate,
+} from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import { DisposableLike_dispose, ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -41,7 +45,7 @@ const createThrowIfEmptyObserver: <T>(
   return mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin<T>()),
     function ThrowIfEmptyObserver(
-      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
+      this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
       factory: Factory<unknown>,
@@ -58,14 +62,14 @@ const createThrowIfEmptyObserver: <T>(
       [ThrowIfEmptyObserver_factory]: none,
     }),
     proto({
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
         this[ThrowIfEmptyObserver_isEmpty] = false;
-        this[LiftedObserverLike_notifyDelegate](next);
+        this[LiftedEventListenerLike_notifyDelegate](next);
       },
-      [LiftedObserverLike_complete](this: TProperties & LiftedObserverLike<T>) {
+      [LiftedSinkLike_complete](this: TProperties & LiftedObserverLike<T>) {
         const factory = this[ThrowIfEmptyObserver_factory];
 
         let err: Optional<Error> = none;
@@ -77,7 +81,7 @@ const createThrowIfEmptyObserver: <T>(
           }
           this[DisposableLike_dispose](err);
         } else {
-          this[LiftedObserverLike_completeDelegate]();
+          this[LiftedSinkLike_completeDelegate]();
         }
       },
     }),

@@ -13,10 +13,12 @@ import {
   strictEquality,
 } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  LiftedEventListenerLike_notify,
+  LiftedEventListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -45,7 +47,7 @@ const createDistinctUntilChangedObserver: <T>(
   mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function DistinctUntilChangedObserver(
-      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
+      this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
         TProps<T>,
       delegate: ObserverLike<T>,
       equality: Equality<T>,
@@ -63,7 +65,7 @@ const createDistinctUntilChangedObserver: <T>(
       [DistinctUntilChangedObserver_hasValue]: false,
     }),
     proto({
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProps<T> & LiftedObserverLike<T>,
         next: T,
       ) {
@@ -77,7 +79,7 @@ const createDistinctUntilChangedObserver: <T>(
         if (shouldEmit) {
           this[DistinctUntilChangedObserver_prev] = next;
           this[DistinctUntilChangedObserver_hasValue] = true;
-          this[LiftedObserverLike_notifyDelegate](next);
+          this[LiftedEventListenerLike_notifyDelegate](next);
         }
       },
     }),

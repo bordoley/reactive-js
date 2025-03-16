@@ -14,10 +14,12 @@ import {
   pipe,
 } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  LiftedEventListenerLike_notify,
+  LiftedEventListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { DisposableLike_dispose, ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -39,7 +41,7 @@ const createScanObserver: <T, TAcc>(
   return mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function ScanObserver(
-      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
+      this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
         TProperties<T, TAcc>,
       delegate: ObserverLike<TAcc>,
       reducer: Reducer<T, TAcc>,
@@ -63,7 +65,7 @@ const createScanObserver: <T, TAcc>(
       [ScanObserver_reducer]: none,
     }),
     proto({
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProperties<T, TAcc> & LiftedObserverLike<T, TAcc>,
         next: T,
       ) {
@@ -71,7 +73,7 @@ const createScanObserver: <T, TAcc>(
         const nextAcc = this[ScanObserver_reducer](oldAcc, next);
         this[ScanObserver_acc] = nextAcc;
 
-        this[LiftedObserverLike_notifyDelegate](nextAcc);
+        this[LiftedEventListenerLike_notifyDelegate](nextAcc);
       },
     }),
   );

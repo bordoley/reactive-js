@@ -5,7 +5,9 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { none, partial, pipe } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_completeDelegate, LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { LiftedEventListenerLike_notify, LiftedEventListenerLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
+import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { LiftedSinkLike_complete, LiftedSinkLike_completeDelegate, } from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createBufferObserver = /*@__PURE__*/ (() => {
     const BufferObserver_buffer = Symbol("BufferObserver_buffer");
@@ -20,23 +22,23 @@ const createBufferObserver = /*@__PURE__*/ (() => {
         [BufferObserver_buffer]: none,
         [BufferObserver_count]: 0,
     }), proto({
-        [LiftedObserverLike_notify](next) {
+        [LiftedEventListenerLike_notify](next) {
             const buffer = this[BufferObserver_buffer];
             const count = this[BufferObserver_count];
             buffer[Array_push](next);
             const shouldEmit = buffer[Array_length] === count;
             if (shouldEmit) {
                 this[BufferObserver_buffer] = [];
-                this[LiftedObserverLike_notifyDelegate](buffer);
+                this[LiftedEventListenerLike_notifyDelegate](buffer);
             }
         },
-        [LiftedObserverLike_complete]() {
+        [LiftedSinkLike_complete]() {
             const buffer = this[BufferObserver_buffer];
             this[BufferObserver_buffer] = [];
             if (buffer[Array_length] > 0) {
-                this[LiftedObserverLike_notifyDelegate](buffer);
+                this[LiftedEventListenerLike_notifyDelegate](buffer);
             }
-            this[LiftedObserverLike_completeDelegate]();
+            this[LiftedSinkLike_completeDelegate]();
         },
     }));
 })();

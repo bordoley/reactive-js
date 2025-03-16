@@ -8,13 +8,17 @@ import {
 } from "../../../__internal__/mixins.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  LiftedEventListenerLike_notify,
+  LiftedEventListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_complete,
-  LiftedObserverLike_completeDelegate,
-  LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import {
+  LiftedSinkLike_complete,
+  LiftedSinkLike_completeDelegate,
+} from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -33,7 +37,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
     function DecodeWithCharsetObserver(
       this: Pick<
         LiftedObserverLike<ArrayBuffer, string>,
-        typeof LiftedObserverLike_notify | typeof LiftedObserverLike_complete
+        typeof LiftedEventListenerLike_notify | typeof LiftedSinkLike_complete
       > &
         TProperties,
       delegate: ObserverLike<string>,
@@ -55,7 +59,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
       [DecodeWithCharsetObserver_textDecoder]: none,
     }),
     proto({
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProperties & LiftedObserverLike<ArrayBuffer, string>,
         next: ArrayBuffer,
       ) {
@@ -66,11 +70,11 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         const shouldEmit = data[Array_length] > 0;
 
         if (shouldEmit) {
-          this[LiftedObserverLike_notifyDelegate](data);
+          this[LiftedEventListenerLike_notifyDelegate](data);
         }
       },
 
-      [LiftedObserverLike_complete](
+      [LiftedSinkLike_complete](
         this: TProperties & LiftedObserverLike<ArrayBuffer, string>,
       ) {
         const data = this[DecodeWithCharsetObserver_textDecoder].decode(
@@ -81,10 +85,10 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         );
 
         if (data[Array_length] > 0) {
-          this[LiftedObserverLike_notifyDelegate](data);
+          this[LiftedEventListenerLike_notifyDelegate](data);
         }
 
-        this[LiftedObserverLike_completeDelegate]();
+        this[LiftedSinkLike_completeDelegate]();
       },
     }),
   );

@@ -13,13 +13,17 @@ import {
 import { Optional, none, partial, pipe } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  LiftedEventListenerLike_notify,
+  LiftedEventListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_complete,
-  LiftedObserverLike_completeDelegate,
-  LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import {
+  LiftedSinkLike_complete,
+  LiftedSinkLike_completeDelegate,
+} from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
@@ -41,7 +45,7 @@ const createBufferObserver: <T>(
     function BufferObserver(
       this: Pick<
         LiftedObserverLike<T, readonly T[]>,
-        typeof LiftedObserverLike_notify | typeof LiftedObserverLike_complete
+        typeof LiftedEventListenerLike_notify | typeof LiftedSinkLike_complete
       > &
         TProperties,
       delegate: ObserverLike<readonly T[]>,
@@ -62,7 +66,7 @@ const createBufferObserver: <T>(
       [BufferObserver_count]: 0,
     }),
     proto({
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProperties & LiftedObserverLike<T, readonly T[]>,
         next: T,
       ) {
@@ -75,19 +79,19 @@ const createBufferObserver: <T>(
 
         if (shouldEmit) {
           this[BufferObserver_buffer] = [];
-          this[LiftedObserverLike_notifyDelegate](buffer);
+          this[LiftedEventListenerLike_notifyDelegate](buffer);
         }
       },
-      [LiftedObserverLike_complete](
+      [LiftedSinkLike_complete](
         this: TProperties & LiftedObserverLike<T, readonly T[]>,
       ) {
         const buffer = this[BufferObserver_buffer];
         this[BufferObserver_buffer] = [];
 
         if (buffer[Array_length] > 0) {
-          this[LiftedObserverLike_notifyDelegate](buffer);
+          this[LiftedEventListenerLike_notifyDelegate](buffer);
         }
-        this[LiftedObserverLike_completeDelegate]();
+        this[LiftedSinkLike_completeDelegate]();
       },
     }),
   );

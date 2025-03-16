@@ -21,11 +21,11 @@ import {
 } from "../../../computations.js";
 import { none, pick, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { LiftedEventListenerLike_notify } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_complete,
-  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { LiftedSinkLike_complete } from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import {
   EventListenerLike_notify,
   ObserverLike,
@@ -62,7 +62,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
   const createLatestObserver = mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function LatestObserver(
-      this: Pick<LiftedObserverLike, typeof LiftedObserverLike_notify> &
+      this: Pick<LiftedObserverLike, typeof LiftedEventListenerLike_notify> &
         Mutable<TProperties>,
       ctx: LatestCtx,
       delegate: ObserverLike,
@@ -80,7 +80,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
       [LatestObserver_ctx]: none,
     }),
     proto({
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProperties & ObserverLike,
         next: unknown,
       ) {
@@ -110,7 +110,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         }
       },
 
-      [LiftedObserverLike_complete](this: TProperties) {
+      [LiftedSinkLike_complete](this: TProperties) {
         const ctx = this[LatestObserver_ctx];
         ctx[LatestCtx_completedCount]++;
 

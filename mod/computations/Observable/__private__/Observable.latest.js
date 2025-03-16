@@ -7,7 +7,9 @@ import * as Computation from "../../../computations/Computation.js";
 import { ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike_observe, } from "../../../computations.js";
 import { none, pick, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { LiftedEventListenerLike_notify } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
+import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { LiftedSinkLike_complete } from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import { EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 const zipMode = 2;
@@ -29,7 +31,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         [LatestObserver_latest]: none,
         [LatestObserver_ctx]: none,
     }), proto({
-        [LiftedObserverLike_notify](next) {
+        [LiftedEventListenerLike_notify](next) {
             const ctx = this[LatestObserver_ctx];
             const mode = ctx[LatestCtx_mode];
             const observers = ctx[LatestCtx_observers];
@@ -47,7 +49,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
                 }
             }
         },
-        [LiftedObserverLike_complete]() {
+        [LiftedSinkLike_complete]() {
             const ctx = this[LatestObserver_ctx];
             ctx[LatestCtx_completedCount]++;
             if (ctx[LatestCtx_completedCount] ===

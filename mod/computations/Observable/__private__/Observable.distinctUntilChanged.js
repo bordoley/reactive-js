@@ -3,7 +3,8 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe, strictEquality, } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { LiftedEventListenerLike_notify, LiftedEventListenerLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
+import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const DistinctUntilChangedObserver_equality = Symbol("DistinctUntilChangedObserver_equality");
 const DistinctUntilChangedObserver_prev = Symbol("DistinctUntilChangedObserver_prev");
@@ -18,13 +19,13 @@ const createDistinctUntilChangedObserver = /*@__PURE__*/ (() => mixInstanceFacto
     [DistinctUntilChangedObserver_prev]: none,
     [DistinctUntilChangedObserver_hasValue]: false,
 }), proto({
-    [LiftedObserverLike_notify](next) {
+    [LiftedEventListenerLike_notify](next) {
         const shouldEmit = !this[DistinctUntilChangedObserver_hasValue] ||
             !this[DistinctUntilChangedObserver_equality](this[DistinctUntilChangedObserver_prev], next);
         if (shouldEmit) {
             this[DistinctUntilChangedObserver_prev] = next;
             this[DistinctUntilChangedObserver_hasValue] = true;
-            this[LiftedObserverLike_notifyDelegate](next);
+            this[LiftedEventListenerLike_notifyDelegate](next);
         }
     },
 })))();

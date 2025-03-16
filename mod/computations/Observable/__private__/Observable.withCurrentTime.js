@@ -3,7 +3,8 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { LiftedEventListenerLike_notify, LiftedEventListenerLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
+import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { SchedulerLike_now } from "../../../utils.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createWithCurrentTimeObserver = /*@__PURE__*/ (() => {
@@ -16,10 +17,10 @@ const createWithCurrentTimeObserver = /*@__PURE__*/ (() => {
     }, props({
         [WithCurrentTimeObserver_selector]: none,
     }), proto({
-        [LiftedObserverLike_notify](next) {
+        [LiftedEventListenerLike_notify](next) {
             const currentTime = this[SchedulerLike_now];
             const mapped = this[WithCurrentTimeObserver_selector](currentTime, next);
-            this[LiftedObserverLike_notifyDelegate](mapped);
+            this[LiftedEventListenerLike_notifyDelegate](mapped);
         },
     }));
 })();

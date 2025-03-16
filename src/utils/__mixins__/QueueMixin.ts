@@ -80,6 +80,7 @@ const QueueMixin: <T>() => Mixin1<
     "QueueMixin_backpressureStrategy",
   );
   const QueueMixin_capacity = Symbol("QueueMixin_capacity");
+  const QueueMixin_isCompleted = Symbol("QueueMixin_isCompleted");
 
   type TProperties = {
     [QueueMixin_autoDispose]: boolean;
@@ -91,7 +92,7 @@ const QueueMixin: <T>() => Mixin1<
     [QueueMixin_capacityMask]: number;
     [QueueMixin_values]: Optional<Optional<T>[] | T>;
     readonly [QueueMixin_comparator]: Optional<Comparator<T>>;
-    [SinkLike_isCompleted]: boolean;
+    [QueueMixin_isCompleted]: boolean;
     [QueueMixin_onReadyPublisher]: Optional<PublisherLike<void>>;
   };
 
@@ -142,6 +143,7 @@ const QueueMixin: <T>() => Mixin1<
       TProperties,
       Pick<
         QueueLike<T>,
+        | typeof SinkLike_isCompleted
         | typeof QueueLike_head
         | typeof ConsumerLike_isReady
         | typeof QueueLike_dequeue
@@ -191,10 +193,15 @@ const QueueMixin: <T>() => Mixin1<
         [QueueMixin_capacityMask]: 31,
         [QueueMixin_values]: none,
         [QueueMixin_comparator]: none,
-        [SinkLike_isCompleted]: false,
+        [QueueMixin_isCompleted]: false,
         [QueueMixin_onReadyPublisher]: none,
       }),
       {
+        get [SinkLike_isCompleted]() {
+          unsafeCast<TProperties>(this);
+          return this[QueueMixin_isCompleted];
+        },
+
         get [ConsumerLike_capacity]() {
           unsafeCast<TProperties>(this);
           return this[QueueMixin_capacity];
@@ -227,7 +234,7 @@ const QueueMixin: <T>() => Mixin1<
         },*/
 
         get [ConsumerLike_isReady]() {
-          unsafeCast<TProperties>(this);
+          unsafeCast<TProperties & QueueLike<T>>(this);
           const count = this[QueueLike_count];
           const capacity = this[QueueMixin_capacity];
           const isCompleted = this[SinkLike_isCompleted];
@@ -495,7 +502,7 @@ const QueueMixin: <T>() => Mixin1<
         },
 
         [SinkLike_complete](this: TProperties & DisposableLike) {
-          this[SinkLike_isCompleted] = true;
+          this[QueueMixin_isCompleted] = true;
 
           this[QueueMixin_onReadyPublisher]?.[DisposableLike_dispose]();
           this[QueueMixin_onReadyPublisher] = none;

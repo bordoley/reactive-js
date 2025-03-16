@@ -18,6 +18,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
     const QueueMixin_onReadyPublisher = Symbol("QueueMixin_onReadyPublisher");
     const QueueMixin_backpressureStrategy = Symbol("QueueMixin_backpressureStrategy");
     const QueueMixin_capacity = Symbol("QueueMixin_capacity");
+    const QueueMixin_isCompleted = Symbol("QueueMixin_isCompleted");
     const computeIndex = (values, count, head, index) => {
         const valuesLength = values[Array_length];
         const headOffsetIndex = index + head;
@@ -60,9 +61,13 @@ const QueueMixin = /*@__PURE__*/ (() => {
         [QueueMixin_capacityMask]: 31,
         [QueueMixin_values]: none,
         [QueueMixin_comparator]: none,
-        [SinkLike_isCompleted]: false,
+        [QueueMixin_isCompleted]: false,
         [QueueMixin_onReadyPublisher]: none,
     }), {
+        get [SinkLike_isCompleted]() {
+            unsafeCast(this);
+            return this[QueueMixin_isCompleted];
+        },
         get [ConsumerLike_capacity]() {
             unsafeCast(this);
             return this[QueueMixin_capacity];
@@ -287,7 +292,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
             this[QueueMixin_capacityMask] = newCapacityMask;
         },
         [SinkLike_complete]() {
-            this[SinkLike_isCompleted] = true;
+            this[QueueMixin_isCompleted] = true;
             this[QueueMixin_onReadyPublisher]?.[DisposableLike_dispose]();
             this[QueueMixin_onReadyPublisher] = none;
             if (this[QueueMixin_autoDispose]) {

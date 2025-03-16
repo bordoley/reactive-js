@@ -8,10 +8,12 @@ import {
 import { none, partial, pipe } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  LiftedEventListenerLike_notify,
+  LiftedEventListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { ObserverLike, SinkLike_complete } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -30,7 +32,7 @@ const createTakeFirstObserver: <T>(
   mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function TakeFirstObserver(
-      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
+      this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
         TProperties,
       delegate: ObserverLike<T>,
       takeCount?: number,
@@ -50,14 +52,14 @@ const createTakeFirstObserver: <T>(
       [TakeFirstObserver_count]: 0,
     }),
     proto({
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
         this[TakeFirstObserver_count];
         this[TakeFirstObserver_count]--;
 
-        this[LiftedObserverLike_notifyDelegate](next);
+        this[LiftedEventListenerLike_notifyDelegate](next);
 
         if (this[TakeFirstObserver_count] <= 0) {
           this[SinkLike_complete]();

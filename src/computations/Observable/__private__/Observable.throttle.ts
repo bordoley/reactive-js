@@ -20,14 +20,18 @@ import {
 import * as Disposable from "../../../utils/Disposable.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  LiftedEventListenerLike_delegate,
+  LiftedEventListenerLike_notify,
+  LiftedEventListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_complete,
-  LiftedObserverLike_completeDelegate,
-  LiftedObserverLike_delegate,
-  LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import {
+  LiftedSinkLike_complete,
+  LiftedSinkLike_completeDelegate,
+} from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import {
   DisposableLike_isDisposed,
   ObserverLike,
@@ -72,7 +76,7 @@ const createThrottleObserver: <T>(
     this: LiftedObserverLike<T> & TProperties,
     _?: unknown,
   ) {
-    const delegate = this[LiftedObserverLike_delegate];
+    const delegate = this[LiftedEventListenerLike_delegate];
     const delegateIsCompleted = delegate[SinkLike_isCompleted];
 
     if (this[ThrottleObserver_hasValue] && !delegateIsCompleted) {
@@ -80,7 +84,7 @@ const createThrottleObserver: <T>(
       this[ThrottleObserver_value] = none;
       this[ThrottleObserver_hasValue] = false;
 
-      this[LiftedObserverLike_notifyDelegate](value);
+      this[LiftedEventListenerLike_notifyDelegate](value);
 
       setupDurationSubscription(this, value);
     }
@@ -103,7 +107,7 @@ const createThrottleObserver: <T>(
   return mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function ThrottleObserver(
-      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
+      this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
       durationFunction: Function1<T, ObservableLike>,
@@ -130,7 +134,7 @@ const createThrottleObserver: <T>(
       [ThrottleObserver_mode]: ThrottleIntervalMode,
     }),
     proto({
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: LiftedObserverLike<T> & TProperties,
         next: T,
       ) {
@@ -152,8 +156,8 @@ const createThrottleObserver: <T>(
         }
       },
 
-      [LiftedObserverLike_complete](this: TProperties & LiftedObserverLike<T>) {
-        const delegate = this[LiftedObserverLike_delegate];
+      [LiftedSinkLike_complete](this: TProperties & LiftedObserverLike<T>) {
+        const delegate = this[LiftedEventListenerLike_delegate];
         if (
           this[ThrottleObserver_mode] !== ThrottleFirstMode &&
           this[ThrottleObserver_hasValue] &&
@@ -163,9 +167,9 @@ const createThrottleObserver: <T>(
           const value = this[ThrottleObserver_value];
           this[ThrottleObserver_value] = none;
           this[ThrottleObserver_hasValue] = false;
-          this[LiftedObserverLike_notifyDelegate](value);
+          this[LiftedEventListenerLike_notifyDelegate](value);
         }
-        this[LiftedObserverLike_completeDelegate]();
+        this[LiftedSinkLike_completeDelegate]();
       },
     }),
   );

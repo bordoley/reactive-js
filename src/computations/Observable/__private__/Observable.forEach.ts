@@ -6,10 +6,12 @@ import {
 } from "../../../__internal__/mixins.js";
 import { SideEffect1, none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  LiftedEventListenerLike_notify,
+  LiftedEventListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -29,7 +31,7 @@ const createForEachObserver: <T>(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function ForEachObserver(
       this: TProperties &
-        Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify>,
+        Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify>,
       delegate: ObserverLike<T>,
       effect: SideEffect1<T>,
     ): ObserverLike<T> {
@@ -44,12 +46,12 @@ const createForEachObserver: <T>(
       [ForEachObserver_effect]: none,
     }),
     {
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
         this[ForEachObserver_effect](next);
-        this[LiftedObserverLike_notifyDelegate](next);
+        this[LiftedEventListenerLike_notifyDelegate](next);
       },
     },
   );

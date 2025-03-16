@@ -8,10 +8,12 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Function2, none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  LiftedEventListenerLike_notify,
+  LiftedEventListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { ObserverLike, SchedulerLike_now } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -32,7 +34,10 @@ const createWithCurrentTimeObserver: <TA, TB>(
   return mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function WithCurrentTimeObserver(
-      this: Pick<LiftedObserverLike<TA, TB>, typeof LiftedObserverLike_notify> &
+      this: Pick<
+        LiftedObserverLike<TA, TB>,
+        typeof LiftedEventListenerLike_notify
+      > &
         Mutable<TProperties>,
       delegate: ObserverLike<TB>,
       selector: Function2<number, TA, TB>,
@@ -48,7 +53,7 @@ const createWithCurrentTimeObserver: <TA, TB>(
       [WithCurrentTimeObserver_selector]: none,
     }),
     proto({
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProperties & LiftedObserverLike<TA, TB>,
         next: TA,
       ) {
@@ -58,7 +63,7 @@ const createWithCurrentTimeObserver: <TA, TB>(
           next,
         );
 
-        this[LiftedObserverLike_notifyDelegate](mapped);
+        this[LiftedEventListenerLike_notifyDelegate](mapped);
       },
     }),
   );

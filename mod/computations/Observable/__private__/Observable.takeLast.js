@@ -7,7 +7,9 @@ import { clampPositiveInteger } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_completeDelegate, LiftedObserverLike_delegate, LiftedObserverLike_notify, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { LiftedEventListenerLike_delegate, LiftedEventListenerLike_notify, } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
+import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { LiftedSinkLike_complete, LiftedSinkLike_completeDelegate, } from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import { EventListenerLike_notify, QueueLike_count, QueueLike_dequeue, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import Observable_gen from "./Observable.gen.js";
@@ -34,16 +36,16 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
     }, props({
         [TakeLastObserver_queue]: none,
     }), proto({
-        [LiftedObserverLike_notify](next) {
+        [LiftedEventListenerLike_notify](next) {
             this[TakeLastObserver_queue][EventListenerLike_notify](next);
         },
-        [LiftedObserverLike_complete]() {
+        [LiftedSinkLike_complete]() {
             const count = this[TakeLastObserver_queue][QueueLike_count];
             if (count === 0) {
-                this[LiftedObserverLike_completeDelegate]();
+                this[LiftedSinkLike_completeDelegate]();
             }
             else {
-                pipe(call(notifyLast, this), Computation.fromIterable(ObservableModule), invoke(ObservableLike_observe, this[LiftedObserverLike_delegate]));
+                pipe(call(notifyLast, this), Computation.fromIterable(ObservableModule), invoke(ObservableLike_observe, this[LiftedEventListenerLike_delegate]));
             }
         },
     }));

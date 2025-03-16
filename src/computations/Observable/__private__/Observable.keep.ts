@@ -7,10 +7,12 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  LiftedEventListenerLike_notify,
+  LiftedEventListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -29,7 +31,7 @@ const createKeepObserver: <T>(
   mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function KeepObserver(
-      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
+      this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
         TProperties<T>,
       delegate: ObserverLike<T>,
       predicate: Predicate<T>,
@@ -45,14 +47,14 @@ const createKeepObserver: <T>(
       [KeepObserver_predicate]: none,
     }),
     proto({
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProperties<T> & LiftedObserverLike<T>,
         next: T,
       ) {
         const shouldNotify = this[KeepObserver_predicate](next);
 
         if (shouldNotify) {
-          this[LiftedObserverLike_notifyDelegate](next);
+          this[LiftedEventListenerLike_notifyDelegate](next);
         }
       },
     }),

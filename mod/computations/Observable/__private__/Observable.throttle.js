@@ -5,7 +5,9 @@ import { bind, isSome, none, partial, pipe, pipeLazy, } from "../../../functions
 import * as Disposable from "../../../utils/Disposable.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_complete, LiftedObserverLike_completeDelegate, LiftedObserverLike_delegate, LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { LiftedEventListenerLike_delegate, LiftedEventListenerLike_notify, LiftedEventListenerLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
+import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { LiftedSinkLike_complete, LiftedSinkLike_completeDelegate, } from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import { DisposableLike_isDisposed, SerialDisposableLike_current, SinkLike_isCompleted, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_fromValue from "./Observable.fromValue.js";
@@ -21,13 +23,13 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
     const ThrottleObserver_durationFunction = Symbol("ThrottleObserver_durationFunction");
     const ThrottleObserver_mode = Symbol("ThrottleObserver_mode");
     function notifyThrottleObserverDelegate(_) {
-        const delegate = this[LiftedObserverLike_delegate];
+        const delegate = this[LiftedEventListenerLike_delegate];
         const delegateIsCompleted = delegate[SinkLike_isCompleted];
         if (this[ThrottleObserver_hasValue] && !delegateIsCompleted) {
             const value = this[ThrottleObserver_value];
             this[ThrottleObserver_value] = none;
             this[ThrottleObserver_hasValue] = false;
-            this[LiftedObserverLike_notifyDelegate](value);
+            this[LiftedEventListenerLike_notifyDelegate](value);
             setupDurationSubscription(this, value);
         }
     }
@@ -48,7 +50,7 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
         [ThrottleObserver_durationFunction]: none,
         [ThrottleObserver_mode]: ThrottleIntervalMode,
     }), proto({
-        [LiftedObserverLike_notify](next) {
+        [LiftedEventListenerLike_notify](next) {
             this[ThrottleObserver_value] = next;
             this[ThrottleObserver_hasValue] = true;
             const durationSubscriptionDisposableIsDisposed = this[ThrottleObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed];
@@ -60,8 +62,8 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
                 setupDurationSubscription(this, next);
             }
         },
-        [LiftedObserverLike_complete]() {
-            const delegate = this[LiftedObserverLike_delegate];
+        [LiftedSinkLike_complete]() {
+            const delegate = this[LiftedEventListenerLike_delegate];
             if (this[ThrottleObserver_mode] !== ThrottleFirstMode &&
                 this[ThrottleObserver_hasValue] &&
                 !delegate[SinkLike_isCompleted] &&
@@ -69,9 +71,9 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
                 const value = this[ThrottleObserver_value];
                 this[ThrottleObserver_value] = none;
                 this[ThrottleObserver_hasValue] = false;
-                this[LiftedObserverLike_notifyDelegate](value);
+                this[LiftedEventListenerLike_notifyDelegate](value);
             }
-            this[LiftedObserverLike_completeDelegate]();
+            this[LiftedSinkLike_completeDelegate]();
         },
     }));
 })();

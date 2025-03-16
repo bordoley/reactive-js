@@ -8,10 +8,12 @@ import {
 import { none, partial, pipe } from "../../../functions.js";
 import { clampPositiveInteger, max } from "../../../math.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  LiftedEventListenerLike_notify,
+  LiftedEventListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -30,7 +32,7 @@ const createSkipFirstObserver: <T>(
   mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function SkipFirstObserver(
-      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
+      this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
         TProperties,
       delegate: ObserverLike<T>,
       skipCount?: number,
@@ -46,7 +48,7 @@ const createSkipFirstObserver: <T>(
       [SkipFirstObserver_count]: 0,
     }),
     proto({
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
@@ -58,7 +60,7 @@ const createSkipFirstObserver: <T>(
         const shouldEmit = this[SkipFirstObserver_count] < 0;
 
         if (shouldEmit) {
-          this[LiftedObserverLike_notifyDelegate](next);
+          this[LiftedEventListenerLike_notifyDelegate](next);
         }
       },
     }),

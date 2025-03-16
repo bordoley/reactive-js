@@ -7,7 +7,8 @@ import { bind, none, partial, pipe, tuple, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { LiftedEventListenerLike_notify, LiftedEventListenerLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
+import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { SinkLike_complete, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
@@ -36,11 +37,11 @@ const createWithLatestFromObserver = /*@__PURE__*/ (() => {
         [WithLatestFromObserver_otherLatest]: none,
         [WithLatestFromObserver_selector]: none,
     }), proto({
-        [LiftedObserverLike_notify](next) {
+        [LiftedEventListenerLike_notify](next) {
             const shouldEmit = this[WithLatestFromObserver_hasLatest];
             if (shouldEmit) {
                 const v = this[WithLatestFromObserver_selector](next, this[WithLatestFromObserver_otherLatest]);
-                this[LiftedObserverLike_notifyDelegate](v);
+                this[LiftedEventListenerLike_notifyDelegate](v);
             }
         },
     }));

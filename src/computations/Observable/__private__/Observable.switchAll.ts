@@ -19,14 +19,18 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { LiftedConsumerLike_isReady } from "../../../utils/__mixins__/LiftedConsumerMixin.js";
+import {
+  LiftedEventListenerLike_notify,
+  LiftedEventListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_complete,
-  LiftedObserverLike_completeDelegate,
-  LiftedObserverLike_isReady,
-  LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import {
+  LiftedSinkLike_complete,
+  LiftedSinkLike_completeDelegate,
+} from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import {
   DisposableLike_isDisposed,
   ObserverLike,
@@ -55,7 +59,7 @@ const createSwitchAllObserver: <T>(
     this: TProperties & LiftedObserverLike<ObservableLike<T>, T>,
   ) {
     if (this[SinkLike_isCompleted]) {
-      this[LiftedObserverLike_completeDelegate]();
+      this[LiftedSinkLike_completeDelegate]();
     }
   }
 
@@ -67,7 +71,7 @@ const createSwitchAllObserver: <T>(
     function SwitchAllObserver(
       this: Pick<
         LiftedObserverLike<ObservableLike<T>>,
-        typeof LiftedObserverLike_notify
+        typeof LiftedEventListenerLike_notify
       > &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
@@ -86,7 +90,7 @@ const createSwitchAllObserver: <T>(
       [SwitchAllObserver_currentRef]: none,
     }),
     proto({
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProperties &
           LiftedObserverLike<ObservableLike<T>, T> &
           SerialDisposableLike,
@@ -95,8 +99,8 @@ const createSwitchAllObserver: <T>(
         const subscriber = pipe(
           next,
           Observable_forEach<T>(v => {
-            this[LiftedObserverLike_notifyDelegate](v);
-            if (!this[LiftedObserverLike_isReady]) {
+            this[LiftedEventListenerLike_notifyDelegate](v);
+            if (!this[LiftedConsumerLike_isReady]) {
               this[SchedulerLike_requestYield]();
             }
           }),
@@ -111,7 +115,7 @@ const createSwitchAllObserver: <T>(
           subscriber;
       },
 
-      [LiftedObserverLike_complete](
+      [LiftedSinkLike_complete](
         this: TProperties & LiftedObserverLike<ObservableLike<T>, T>,
       ) {
         if (
@@ -119,7 +123,7 @@ const createSwitchAllObserver: <T>(
             DisposableLike_isDisposed
           ]
         ) {
-          this[LiftedObserverLike_completeDelegate]();
+          this[LiftedSinkLike_completeDelegate]();
         }
       },
     }),

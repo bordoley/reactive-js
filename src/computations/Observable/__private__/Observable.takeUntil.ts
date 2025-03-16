@@ -14,9 +14,9 @@ import { bindMethod, none, partial, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { LiftedEventListenerLike_notify } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { ObserverLike, SinkLike_complete } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -32,7 +32,7 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = /*@__PURE__*/ (<
   const createTakeUntilObserver = mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function TakeUntilObserver(
-      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify>,
+      this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify>,
       delegate: ObserverLike<T>,
       notifier: PureSynchronousObservableLike,
     ): ObserverLike<T> {

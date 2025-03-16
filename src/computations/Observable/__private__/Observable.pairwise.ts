@@ -6,10 +6,12 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Tuple2, none, tuple } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  LiftedEventListenerLike_notify,
+  LiftedEventListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_notify,
-  LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -29,7 +31,7 @@ const createPairwiseObserver: <T>(
   mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function PairwiseObserver(
-      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify>,
+      this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify>,
       delegate: ObserverLike<Tuple2<T, T>>,
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, delegate);
@@ -42,7 +44,7 @@ const createPairwiseObserver: <T>(
       [PairwiseObserver_hasPrev]: false,
     }),
     {
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProperties<T> & LiftedObserverLike<T, Tuple2<T, T>>,
         next: T,
       ) {
@@ -54,7 +56,7 @@ const createPairwiseObserver: <T>(
 
         if (hasPrev) {
           const pair = tuple(prev, next);
-          this[LiftedObserverLike_notifyDelegate](pair);
+          this[LiftedEventListenerLike_notifyDelegate](pair);
         }
       },
     },

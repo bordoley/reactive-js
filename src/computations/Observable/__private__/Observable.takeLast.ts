@@ -19,13 +19,17 @@ import { clampPositiveInteger } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  LiftedEventListenerLike_delegate,
+  LiftedEventListenerLike_notify,
+} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
-  LiftedObserverLike_complete,
-  LiftedObserverLike_completeDelegate,
-  LiftedObserverLike_delegate,
-  LiftedObserverLike_notify,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import {
+  LiftedSinkLike_complete,
+  LiftedSinkLike_completeDelegate,
+} from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import {
   EventListenerLike_notify,
   ObserverLike,
@@ -65,7 +69,7 @@ const createTakeLastObserver: <T>(
   return mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function TakeLastObserver(
-      this: Pick<LiftedObserverLike<T>, typeof LiftedObserverLike_notify> &
+      this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
         TProperties,
       delegate: ObserverLike<T>,
       takeLastCount: number,
@@ -84,24 +88,27 @@ const createTakeLastObserver: <T>(
       [TakeLastObserver_queue]: none,
     }),
     proto({
-      [LiftedObserverLike_notify](
+      [LiftedEventListenerLike_notify](
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
         this[TakeLastObserver_queue][EventListenerLike_notify](next);
       },
-      [LiftedObserverLike_complete](this: TProperties & LiftedObserverLike<T>) {
+      [LiftedSinkLike_complete](this: TProperties & LiftedObserverLike<T>) {
         const count = this[TakeLastObserver_queue][QueueLike_count];
 
         if (count === 0) {
-          this[LiftedObserverLike_completeDelegate]();
+          this[LiftedSinkLike_completeDelegate]();
         } else {
           pipe(
             call(notifyLast, this),
             Computation.fromIterable<Observable.Computation, T>(
               ObservableModule,
             ),
-            invoke(ObservableLike_observe, this[LiftedObserverLike_delegate]),
+            invoke(
+              ObservableLike_observe,
+              this[LiftedEventListenerLike_delegate],
+            ),
           );
         }
       },

@@ -7,19 +7,15 @@ import { ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, Con
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
+import { LiftedConsumerLike_consumer, LiftedConsumerLike_isReady, } from "./LiftedConsumerMixin.js";
+import { LiftedEventListenerLike_delegate, LiftedEventListenerLike_notify, LiftedEventListenerLike_notifyDelegate, } from "./LiftedEventListenerMixin.js";
+import { LiftedSinkLike_complete, LiftedSinkLike_completeDelegate, } from "./LiftedSinkMixin.js";
 import QueueMixin from "./QueueMixin.js";
 import SerialDisposableMixin from "./SerialDisposableMixin.js";
-export const LiftedObserverLike_notify = Symbol("LiftedObserverLike_notify");
-export const LiftedObserverLike_notifyDelegate = Symbol("LiftedObserverLike_notifyDelegate");
-export const LiftedObserverLike_complete = Symbol("LiftedObserverLike_complete");
-export const LiftedObserverLike_completeDelegate = Symbol("LiftedObserverLike_complete");
-export const LiftedObserverLike_delegate = Symbol("LiftedObserverLike_delegate");
-export const LiftedObserverLike_isReady = Symbol("LiftedObserverLike_isReady");
 const LiftedObserverMixin = /*@__PURE__*/ (() => {
-    const LiftedObserverMixin_consumer = Symbol("LiftedObserverMixin_consumer");
     function liftedObserverSchedulerContinuation(ctx) {
         // This is the ultimate downstream consumer of events.
-        const consumer = this[LiftedObserverMixin_consumer];
+        const consumer = this[LiftedConsumerLike_consumer];
         while (this[QueueLike_count] > 0 && !this[DisposableLike_isDisposed]) {
             // Avoid dequeing values if the downstream consumer
             // is applying backpressure.
@@ -29,23 +25,23 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
                 break;
             }
             const next = this[QueueLike_dequeue]();
-            this[LiftedObserverLike_notify](next);
+            this[LiftedEventListenerLike_notify](next);
             if (this[QueueLike_count] > 0) {
                 ctx[ContinuationContextLike_yield]();
             }
         }
         if (this[SinkLike_isCompleted]) {
-            this[LiftedObserverLike_complete]();
+            this[LiftedSinkLike_complete]();
         }
     }
     // memoize to avoid adding a local proper to track if
     // we already have a consumer lister setup. Not that performant.
     const setUpOnConsumerReadyListenerMemoized = memoize((observer) => {
-        const consumer = observer[LiftedObserverMixin_consumer];
+        const consumer = observer[LiftedConsumerLike_consumer];
         return pipe(consumer[ConsumerLike_addOnReadyListener](pipeLazy(observer, scheduleDrainQueue)), Disposable.addTo(observer));
     });
     const scheduleDrainQueue = (observer) => {
-        const consumer = observer[LiftedObserverMixin_consumer];
+        const consumer = observer[LiftedConsumerLike_consumer];
         const isConsumerReady = consumer[ConsumerLike_isReady];
         const isConumerDisposed = consumer[DisposableLike_isDisposed];
         const isDrainScheduled = !observer[SerialDisposableLike_current][DisposableLike_isDisposed];
@@ -57,16 +53,16 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
         }
     };
     function notifyLiftedDelegate(next) {
-        const delegate = this[LiftedObserverLike_delegate];
+        const delegate = this[LiftedEventListenerLike_delegate];
         if (__DEV__) {
             raiseIf(!delegate[SchedulerLike_inContinuation], "Observer can only be notified from within a Scheduler continuation");
             raiseIf(delegate[SinkLike_isCompleted], "Observer is completed");
             raiseIf(delegate[DisposableLike_isDisposed], "Observer is disposed");
         }
-        delegate[LiftedObserverLike_notify](next);
+        delegate[LiftedEventListenerLike_notify](next);
     }
     function pushDelegate(next) {
-        this[LiftedObserverLike_delegate][EventListenerLike_notify](next);
+        this[LiftedEventListenerLike_delegate][EventListenerLike_notify](next);
     }
     return returns(mix(include(QueueMixin(), SerialDisposableMixin(), DelegatingSchedulerMixin), function LiftedObserverMixin(delegate, options) {
         init(QueueMixin(), this, {
@@ -76,24 +72,24 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
         });
         init(SerialDisposableMixin(), this, Disposable.disposed);
         init(DelegatingSchedulerMixin, this, delegate);
-        const delegateIsLifted = isSome(delegate[LiftedObserverLike_notify]);
-        this[LiftedObserverLike_notifyDelegate] = delegateIsLifted
+        const delegateIsLifted = isSome(delegate[LiftedEventListenerLike_notify]);
+        this[LiftedEventListenerLike_notifyDelegate] = delegateIsLifted
             ? notifyLiftedDelegate
             : pushDelegate;
-        this[LiftedObserverLike_delegate] = delegate;
-        this[LiftedObserverMixin_consumer] =
-            delegate[LiftedObserverMixin_consumer] ??
+        this[LiftedEventListenerLike_delegate] = delegate;
+        this[LiftedConsumerLike_consumer] =
+            delegate[LiftedConsumerLike_consumer] ??
                 delegate;
         pipe(this, DisposableContainer.onDisposed(bindMethod(this, SinkLike_complete)));
         return this;
     }, props({
-        [LiftedObserverLike_delegate]: none,
-        [LiftedObserverMixin_consumer]: none,
-        [LiftedObserverLike_notifyDelegate]: none,
+        [LiftedEventListenerLike_delegate]: none,
+        [LiftedConsumerLike_consumer]: none,
+        [LiftedEventListenerLike_notifyDelegate]: none,
     }), proto({
-        get [LiftedObserverLike_isReady]() {
+        get [LiftedConsumerLike_isReady]() {
             unsafeCast(this);
-            return this[LiftedObserverMixin_consumer][ConsumerLike_isReady];
+            return this[LiftedConsumerLike_consumer][ConsumerLike_isReady];
         },
         [EventListenerLike_notify](next) {
             const inSchedulerContinuation = this[SchedulerLike_inContinuation];
@@ -102,7 +98,7 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
             // Make queueing decisions based upon whether the root non-lifted observer
             // wants to apply back pressure, as lifted observers just pass through
             // notifications and never queue in practice.
-            const scheduler = this[LiftedObserverMixin_consumer];
+            const scheduler = this[LiftedConsumerLike_consumer];
             const isDelegateReady = scheduler[ConsumerLike_isReady];
             const count = this[QueueLike_count];
             const capacity = this[ConsumerLike_capacity];
@@ -112,7 +108,7 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
                 count == 0 &&
                 capacity > 0;
             if (shouldNotify) {
-                this[LiftedObserverLike_notify](next);
+                this[LiftedEventListenerLike_notify](next);
             }
             else if (!shouldIgnore) {
                 super_(QueueMixin(), this, EventListenerLike_notify, next);
@@ -128,22 +124,22 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
             }
             super_(QueueMixin(), this, SinkLike_complete);
             if (inSchedulerContinuation && count == 0) {
-                this[LiftedObserverLike_complete]();
+                this[LiftedSinkLike_complete]();
             }
             else {
                 scheduleDrainQueue(this);
             }
         },
-        [LiftedObserverLike_completeDelegate]() {
+        [LiftedSinkLike_completeDelegate]() {
             // We always want to call SinkLike_complete to ensure
             // cleanup code is invoked.
-            this[LiftedObserverLike_delegate][SinkLike_complete]();
+            this[LiftedEventListenerLike_delegate][SinkLike_complete]();
         },
-        [LiftedObserverLike_notify](next) {
-            this[LiftedObserverLike_notifyDelegate](next);
+        [LiftedEventListenerLike_notify](next) {
+            this[LiftedEventListenerLike_notifyDelegate](next);
         },
-        [LiftedObserverLike_complete]() {
-            this[LiftedObserverLike_completeDelegate]();
+        [LiftedSinkLike_complete]() {
+            this[LiftedSinkLike_completeDelegate]();
         },
     })));
 })();

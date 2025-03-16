@@ -3,7 +3,8 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { LiftedEventListenerLike_notify, LiftedEventListenerLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
+import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 const MapObserver_selector = Symbol("MapObserver_selector");
 const createMapObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function MapObserver(delegate, selector) {
@@ -14,9 +15,9 @@ const createMapObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(Delega
 }, props({
     [MapObserver_selector]: none,
 }), proto({
-    [LiftedObserverLike_notify](next) {
+    [LiftedEventListenerLike_notify](next) {
         const mapped = this[MapObserver_selector](next);
-        this[LiftedObserverLike_notifyDelegate](mapped);
+        this[LiftedEventListenerLike_notifyDelegate](mapped);
     },
 })))();
 const Observable_map = (selector) => pipe((createMapObserver), partial(selector), Observable_liftPure);

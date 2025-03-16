@@ -3,7 +3,8 @@
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import LiftedObserverMixin, { LiftedObserverLike_notify, LiftedObserverLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { LiftedEventListenerLike_notify, LiftedEventListenerLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
+import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 const createForEachObserver = /*@__PURE__*/ (() => {
     const ForEachObserver_effect = Symbol("ForEachObserver_effect");
@@ -15,9 +16,9 @@ const createForEachObserver = /*@__PURE__*/ (() => {
     }, props({
         [ForEachObserver_effect]: none,
     }), {
-        [LiftedObserverLike_notify](next) {
+        [LiftedEventListenerLike_notify](next) {
             this[ForEachObserver_effect](next);
-            this[LiftedObserverLike_notifyDelegate](next);
+            this[LiftedEventListenerLike_notifyDelegate](next);
         },
     });
 })();
