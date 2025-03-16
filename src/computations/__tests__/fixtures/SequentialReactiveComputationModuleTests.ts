@@ -9,8 +9,8 @@ import {
   ComputationModule,
   ComputationType,
   ComputationTypeOf,
-  DeferredComputationModule,
-  DeferredReactiveComputationModule,
+  SequentialComputationModule,
+  SequentialReactiveComputationModule,
   SynchronousComputationModule,
 } from "../../../computations.js";
 import {
@@ -23,17 +23,17 @@ import {
 } from "../../../functions.js";
 import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSynchronousComputationOperatorTests.js";
 
-const DeferredReactiveComputationModuleTests = <
+const SequentialReactiveComputationModuleTests = <
   TComputationType extends ComputationType,
 >(
   m: ComputationModule<TComputationType> &
-    DeferredComputationModule<TComputationType> &
-    DeferredReactiveComputationModule<TComputationType> &
+    SequentialComputationModule<TComputationType> &
+    SequentialReactiveComputationModule<TComputationType> &
     SynchronousComputationModule<TComputationType>,
   computations: ComputationTypeOf<TComputationType>,
 ) =>
   describe(
-    "DeferredReactiveComputationModule",
+    "SequentialReactiveComputationModule",
     describe(
       "buffer",
       StatefulSynchronousComputationOperatorTests(computations, m.buffer()),
@@ -333,4 +333,4 @@ const DeferredReactiveComputationModuleTests = <
     ),
   );
 
-export default DeferredReactiveComputationModuleTests;
+export default SequentialReactiveComputationModuleTests;

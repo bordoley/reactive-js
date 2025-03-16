@@ -6,8 +6,8 @@ import {
 import { ignore, pipe } from "../../functions.js";
 import * as Runnable from "../Runnable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
-import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
-import DeferredReactiveComputationModuleTests from "./fixtures/DeferredReactiveComputationModuleTests.js";
+import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
+import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 
 const RunnableTypes = {
@@ -21,8 +21,8 @@ const RunnableTypes = {
 testModule(
   "Runnable",
   ComputationModuleTests(Runnable, RunnableTypes),
-  DeferredComputationModuleTests(Runnable, RunnableTypes),
-  DeferredReactiveComputationModuleTests(Runnable, RunnableTypes),
+  SequentialComputationModuleTests(Runnable, RunnableTypes),
+  SequentialReactiveComputationModuleTests(Runnable, RunnableTypes),
   SynchronousComputationModuleTests(Runnable),
 );
 

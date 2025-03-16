@@ -1,4 +1,5 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   RunnableLike,
   RunnableLike_eval,
@@ -21,6 +22,7 @@ import type * as Runnable from "../../Runnable.js";
 
 class RepeatRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
+  readonly [ComputationLike_isDeferred]: false = false as const;
 
   constructor(
     private readonly s: RunnableLike<T>,

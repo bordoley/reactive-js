@@ -1,11 +1,12 @@
 /// <reference types="./Runnable.fromValue.d.ts" />
 
-import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
 import { EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
 class FromValueRunnable {
     v;
     [ComputationLike_isPure] = true;
+    [ComputationLike_isDeferred] = false;
     constructor(v) {
         this.v = v;
     }

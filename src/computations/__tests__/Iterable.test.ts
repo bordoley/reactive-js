@@ -6,8 +6,8 @@ import {
 import { ignore, pipe } from "../../functions.js";
 import * as Iterable from "../Iterable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
-import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
 import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
+import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 
 const IterableTypes = {
@@ -21,7 +21,7 @@ const IterableTypes = {
 testModule(
   "Iterable",
   ComputationModuleTests(Iterable, IterableTypes),
-  DeferredComputationModuleTests(Iterable, IterableTypes),
+  SequentialComputationModuleTests(Iterable, IterableTypes),
   SynchronousComputationModuleTests(Iterable),
   InteractiveComputationModuleTests(Iterable),
 );

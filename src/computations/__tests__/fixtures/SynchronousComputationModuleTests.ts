@@ -8,7 +8,7 @@ import {
 import {
   ComputationModule,
   ComputationType,
-  DeferredComputationModule,
+  SequentialComputationModule,
   SynchronousComputationModule,
 } from "../../../computations.js";
 import { Optional, pipe, pipeLazy, returns } from "../../../functions.js";
@@ -21,7 +21,7 @@ const SynchronousComputationModuleTests = <
   TComputationType extends ComputationType,
 >(
   m: SynchronousComputationModule<TComputationType> &
-    DeferredComputationModule<TComputationType> &
+    SequentialComputationModule<TComputationType> &
     ComputationModule<TComputationType>,
 ) => {
   return describe(

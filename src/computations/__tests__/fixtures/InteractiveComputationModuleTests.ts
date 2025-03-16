@@ -6,8 +6,8 @@ import {
 import {
   ComputationModule,
   ComputationType,
-  DeferredComputationModule,
   InteractiveComputationModule,
+  SequentialComputationModule,
 } from "../../../computations.js";
 import { pipeLazyAsync } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
@@ -16,7 +16,7 @@ const InteractiveComputationModuleTests = <
   TComputationType extends ComputationType,
 >(
   m: InteractiveComputationModule<TComputationType> &
-    DeferredComputationModule<TComputationType> &
+    SequentialComputationModule<TComputationType> &
     ComputationModule<TComputationType>,
 ) =>
   describe(

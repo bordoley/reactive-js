@@ -18,7 +18,7 @@
 
 ### \[ComputationLike\_isDeferred\]?
 
-> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
+> `optional` **\[ComputationLike\_isDeferred\]**: `true`
 
 #### Inherited from
 
@@ -38,7 +38,7 @@
 
 ### \[ComputationLike\_isSynchronous\]?
 
-> `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `true`
+> `optional` **\[ComputationLike\_isSynchronous\]**: `true`
 
 #### Inherited from
 

@@ -17,12 +17,12 @@ import {
   Computation_baseOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
-  DeferredComputationModule,
   HigherOrderInnerComputationLike,
   InteractiveComputationModule,
   IterableLike,
   IterableWithSideEffectsLike,
   PureIterableLike,
+  SequentialComputationModule,
   SynchronousComputationModule,
 } from "../computations.js";
 import {
@@ -71,7 +71,7 @@ export type Computation = IterableComputation;
 
 export interface IterableModule
   extends ComputationModule<IterableComputation>,
-    DeferredComputationModule<IterableComputation>,
+    SequentialComputationModule<IterableComputation>,
     SynchronousComputationModule<IterableComputation>,
     InteractiveComputationModule<IterableComputation> {}
 

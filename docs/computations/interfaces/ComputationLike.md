@@ -11,6 +11,7 @@
 - [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md)
 - [`PureComputationLike`](PureComputationLike.md)
 - [`DeferredComputationLike`](DeferredComputationLike.md)
+- [`SynchronousComputationLike`](SynchronousComputationLike.md)
 - [`MulticastComputationLike`](MulticastComputationLike.md)
 - [`ProducerLike`](ProducerLike.md)
 - [`ObservableLike`](ObservableLike.md)

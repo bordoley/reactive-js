@@ -22,7 +22,7 @@
 
 #### Overrides
 
-`SynchronousObservableLike.[ComputationLike_isDeferred]`
+[`SynchronousObservableLike`](SynchronousObservableLike.md).[`[ComputationLike_isDeferred]`](SynchronousObservableLike.md#computationlike_isdeferred)
 
 ***
 

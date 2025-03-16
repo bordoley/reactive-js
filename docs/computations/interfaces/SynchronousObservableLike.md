@@ -21,6 +21,16 @@
 
 ## Properties
 
+### \[ComputationLike\_isDeferred\]?
+
+> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
+
+#### Overrides
+
+[`SynchronousComputationLike`](SynchronousComputationLike.md).[`[ComputationLike_isDeferred]`](SynchronousComputationLike.md#computationlike_isdeferred)
+
+***
+
 ### \[ComputationLike\_isSynchronous\]?
 
 > `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `true`

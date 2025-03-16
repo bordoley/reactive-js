@@ -1,6 +1,6 @@
 /// <reference types="./Runnable.repeat.d.ts" />
 
-import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { alwaysTrue, isFunction, isNone, newInstance, } from "../../../functions.js";
 import DelegatingNonCompletingSink from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
 import { SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
@@ -9,6 +9,7 @@ class RepeatRunnable {
     s;
     p;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = false;
     constructor(s, p) {
         this.s = s;
         this.p = p;

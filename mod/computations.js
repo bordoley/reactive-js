@@ -12,13 +12,23 @@ export const Computation_synchronousWithSideEffectsOfT = Symbol("Computation_syn
 export const Computation_multicastOfT = Symbol("Computation_multicastOfT");
 const ComputationModuleLike_computationType = Symbol("ComputationModuleLike_tComputation");
 export const RunnableLike_eval = Symbol("RunnableLike_eval");
-export const PureSynchronousComputation = {
+export const PureSynchronousDeferredComputation = {
     [ComputationLike_isDeferred]: true,
     [ComputationLike_isPure]: true,
     [ComputationLike_isSynchronous]: true,
 };
-export const SynchronousComputationWithSideEffects = {
+export const PureSynchronousNonDeferredComputation = {
+    [ComputationLike_isDeferred]: false,
+    [ComputationLike_isPure]: true,
+    [ComputationLike_isSynchronous]: true,
+};
+export const SynchronousDeferredComputationWithSideEffects = {
     [ComputationLike_isDeferred]: true,
+    [ComputationLike_isPure]: false,
+    [ComputationLike_isSynchronous]: true,
+};
+export const SynchronousNonDeferredComputationWithSideEffects = {
+    [ComputationLike_isDeferred]: false,
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: true,
 };

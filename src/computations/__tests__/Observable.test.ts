@@ -38,10 +38,10 @@ import {
   DeferredComputationWithSideEffects,
   MulticastComputation,
   PureDeferredComputation,
-  PureSynchronousComputation,
+  PureSynchronousDeferredComputation,
   PureSynchronousObservableLike,
   StoreLike_value,
-  SynchronousComputationWithSideEffects,
+  SynchronousDeferredComputationWithSideEffects,
   SynchronousObservableLike,
 } from "../../computations.js";
 import {
@@ -90,8 +90,8 @@ import * as WritableStore from "../WritableStore.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentDeferredComputationModuleTests from "./fixtures/ConcurrentDeferredComputationModuleTests.js";
 import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReactiveComputationModuleTests.js";
-import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
-import DeferredReactiveComputationModuleTests from "./fixtures/DeferredReactiveComputationModuleTests.js";
+import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
+import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 import * as ComputationTest from "./fixtures/helpers/ComputationTest.js";
 import ComputationOperatorWithSideEffectsTests from "./fixtures/operators/ComputationOperatorWithSideEffectsTests.js";
@@ -182,8 +182,8 @@ testModule(
     }),
   ),
   ComputationModuleTests(Observable, ObservableTypes),
-  DeferredComputationModuleTests(Observable, ObservableTypes),
-  DeferredReactiveComputationModuleTests(Observable, ObservableTypes),
+  SequentialComputationModuleTests(Observable, ObservableTypes),
+  SequentialReactiveComputationModuleTests(Observable, ObservableTypes),
   SynchronousComputationModuleTests<Observable.Computation>(Observable),
   ConcurrentReactiveComputationModuleTests(Observable, ObservableTypes),
   ConcurrentDeferredComputationModuleTests(Observable),
@@ -631,10 +631,10 @@ testModule(
     HigherOrderComputationOperatorTests(
       ObservableTypes,
       Observable.exhaust({
-        innerType: PureSynchronousComputation,
+        innerType: PureSynchronousDeferredComputation,
       }),
       Observable.exhaust({
-        innerType: SynchronousComputationWithSideEffects,
+        innerType: SynchronousDeferredComputationWithSideEffects,
       }),
       Observable.exhaust({
         innerType: PureDeferredComputation,
@@ -883,10 +883,10 @@ testModule(
     HigherOrderComputationOperatorTests(
       ObservableTypes,
       Observable.mergeAll({
-        innerType: PureSynchronousComputation,
+        innerType: PureSynchronousDeferredComputation,
       }),
       Observable.mergeAll({
-        innerType: SynchronousComputationWithSideEffects,
+        innerType: SynchronousDeferredComputationWithSideEffects,
       }),
       Observable.mergeAll({
         innerType: PureDeferredComputation,
@@ -1067,12 +1067,12 @@ testModule(
     HigherOrderComputationOperatorTests(
       ObservableTypes,
       Observable.scanMany((_acc, _next) => Observable.empty(), returns(0), {
-        innerType: PureSynchronousComputation,
+        innerType: PureSynchronousDeferredComputation,
       }),
       Observable.scanMany(
         (_acc, _next) => pipe(Observable.empty(), Observable.forEach(ignore)),
         returns(0),
-        { innerType: SynchronousComputationWithSideEffects },
+        { innerType: SynchronousDeferredComputationWithSideEffects },
       ),
       Observable.scanMany(
         (_acc, _next) =>
@@ -1187,10 +1187,10 @@ testModule(
     HigherOrderComputationOperatorTests(
       ObservableTypes,
       Observable.switchAll({
-        innerType: PureSynchronousComputation,
+        innerType: PureSynchronousDeferredComputation,
       }),
       Observable.switchAll({
-        innerType: SynchronousComputationWithSideEffects,
+        innerType: SynchronousDeferredComputationWithSideEffects,
       }),
       Observable.switchAll({
         innerType: PureDeferredComputation,

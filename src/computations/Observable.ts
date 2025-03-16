@@ -11,9 +11,7 @@ import {
   Computation_synchronousWithSideEffectsOfT,
   ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
-  DeferredComputationModule,
   DeferredObservableWithSideEffectsLike,
-  DeferredReactiveComputationModule,
   EventSourceLike,
   HigherOrderComputationOperator,
   HigherOrderInnerComputationLike,
@@ -25,6 +23,8 @@ import {
   ProducerLike,
   PureDeferredObservableLike,
   PureSynchronousObservableLike,
+  SequentialComputationModule,
+  SequentialReactiveComputationModule,
   StatefulAsynchronousComputationOperator,
   StatefulSynchronousComputationOperator,
   StoreLike,
@@ -217,7 +217,7 @@ export interface ObservableModule
         };
       }
     >,
-    DeferredComputationModule<ObservableComputation>,
+    SequentialComputationModule<ObservableComputation>,
     SynchronousComputationModule<
       ObservableComputation,
       {
@@ -241,7 +241,7 @@ export interface ObservableModule
         };
       }
     >,
-    DeferredReactiveComputationModule<ObservableComputation>,
+    SequentialReactiveComputationModule<ObservableComputation>,
     ConcurrentReactiveComputationModule<ObservableComputation>,
     ConcurrentDeferredComputationModule<ObservableComputation> {
   actionReducer<TAction, T>(

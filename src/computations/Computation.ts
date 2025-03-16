@@ -13,7 +13,6 @@ import {
   ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
   DeferredComputationLike,
-  DeferredComputationModule,
   DeferredComputationOf,
   DeferredComputationOfModule,
   DeferredComputationWithSideEffects,
@@ -34,6 +33,7 @@ import {
   PureIterableLike,
   PureSynchronousComputationLike,
   PureSynchronousComputationOf,
+  SequentialComputationModule,
   StatefulAsynchronousComputationOperator,
   StatefulSynchronousComputationOperator,
   StatelessComputationOperator,
@@ -336,7 +336,7 @@ export interface Signature {
     m: PickComputationModule<
       TComputationType,
       ComputationModule<TComputationType> &
-        DeferredComputationModule<TComputationType>,
+        SequentialComputationModule<TComputationType>,
       "concatAll" | "map"
     >,
   ): ConcatMapOperator<TComputationType>;
@@ -345,7 +345,7 @@ export interface Signature {
     m: PickComputationModule<
       TComputationType,
       ComputationModule<TComputationType> &
-        DeferredComputationModule<TComputationType>,
+        SequentialComputationModule<TComputationType>,
       "concatAll" | "map" | "gen" | "genWithSideEffects"
     >,
   ): ConcatMapIterableOperator<TComputationType>;
@@ -353,7 +353,7 @@ export interface Signature {
   concatMany<TComputationType extends ComputationType>(
     m: PickComputationModule<
       TComputationType,
-      DeferredComputationModule<TComputationType>,
+      SequentialComputationModule<TComputationType>,
       "concat"
     >,
   ): ConcatManyOperator<TComputationType>;
@@ -361,7 +361,7 @@ export interface Signature {
   concatWith<TComputationType extends ComputationType>(
     m: PickComputationModule<
       TComputationType,
-      DeferredComputationModule<TComputationType>,
+      SequentialComputationModule<TComputationType>,
       "concat"
     >,
   ): ConcatWithOperator<TComputationType>;
@@ -369,7 +369,7 @@ export interface Signature {
   debug<TComputationType extends ComputationType>(
     m: PickComputationModule<
       TComputationType,
-      DeferredComputationModule<TComputationType>,
+      SequentialComputationModule<TComputationType>,
       "forEach"
     >,
   ): <T>() => ComputationOperatorWithSideEffects<TComputationType, T, T>;
@@ -377,7 +377,7 @@ export interface Signature {
   endWith<TComputationType extends ComputationType>(
     m: PickComputationModule<
       TComputationType,
-      DeferredComputationModule<TComputationType> &
+      SequentialComputationModule<TComputationType> &
         ComputationModule<TComputationType>,
       "concat" | "fromReadonlyArray"
     >,
@@ -400,7 +400,7 @@ export interface Signature {
         | string
         | symbol
         | number]: key extends TFlattenKey
-        ? DeferredComputationModule<TComputationType>["concatAll"]
+        ? SequentialComputationModule<TComputationType>["concatAll"]
         : unknown;
     },
   ): FlatMapOperator<TComputationType, TFlattenKey>;
@@ -420,7 +420,7 @@ export interface Signature {
         | string
         | symbol
         | number]: key extends TFlattenKey
-        ? DeferredComputationModule<TComputationType>["concatAll"]
+        ? SequentialComputationModule<TComputationType>["concatAll"]
         : unknown;
     },
   ): <TA, TB>(
@@ -447,7 +447,7 @@ export interface Signature {
         | string
         | symbol
         | number]: key extends TFlattenKey
-        ? DeferredComputationModule<TComputationType>["concatAll"]
+        ? SequentialComputationModule<TComputationType>["concatAll"]
         : unknown;
     },
   ): FlatMapIterableOperator<TComputationType, TFlattenKey>;
@@ -535,7 +535,7 @@ export interface Signature {
   log<TComputationType extends ComputationType>(
     m: PickComputationModule<
       TComputationType,
-      DeferredComputationModule<TComputationType>,
+      SequentialComputationModule<TComputationType>,
       "forEach"
     >,
   ): <T>() => ComputationOperatorWithSideEffects<TComputationType, T, T>;
@@ -569,7 +569,7 @@ export interface Signature {
   notify<TComputationType extends ComputationType>(
     m: PickComputationModule<
       TComputationType,
-      DeferredComputationModule<TComputationType>,
+      SequentialComputationModule<TComputationType>,
       "forEach"
     >,
   ): <T>(
@@ -587,7 +587,7 @@ export interface Signature {
   startWith<TComputationType extends ComputationType>(
     m: PickComputationModule<
       TComputationType,
-      DeferredComputationModule<TComputationType> &
+      SequentialComputationModule<TComputationType> &
         ComputationModule<TComputationType>,
       "concat" | "fromReadonlyArray"
     >,
@@ -637,7 +637,7 @@ export const concatMapIterable: Signature["concatMapIterable"] =
         m: PickComputationModule<
           TComputationType,
           ComputationModule<TComputationType> &
-            DeferredComputationModule<TComputationType>,
+            SequentialComputationModule<TComputationType>,
           "concatAll" | "map" | "gen" | "genWithSideEffects"
         >,
       ) =>
@@ -683,7 +683,7 @@ export const flatMap: Signature["flatMap"] = /*@__PURE__*/ (<
         ComputationModule<TComputationType>,
         "map"
       > & {
-        readonly [key in TFlattenKey]: DeferredComputationModule<TComputationType>["concatAll"];
+        readonly [key in TFlattenKey]: SequentialComputationModule<TComputationType>["concatAll"];
       },
     ) =>
       <TA, TB, TInnerLike extends HigherOrderInnerComputationLike>(
@@ -720,7 +720,7 @@ export const flatMapAsync: Signature["flatMapAsync"] = /*@__PURE__*/ (<
           | string
           | symbol
           | number]: key extends TFlattenKey
-          ? DeferredComputationModule<TComputationType>["concatAll"]
+          ? SequentialComputationModule<TComputationType>["concatAll"]
           : unknown;
       },
     ) =>
@@ -756,7 +756,7 @@ export const flatMapIterable: Signature["flatMapIterable"] = /*@__PURE__*/ (<
           | string
           | symbol
           | number]: key extends TFlattenKey
-          ? DeferredComputationModule<TComputationType>["concatAll"]
+          ? SequentialComputationModule<TComputationType>["concatAll"]
           : unknown;
       },
     ) =>
@@ -864,7 +864,6 @@ export const isPureSynchronous: Signature["isPureSynchronous"] = <
   computation: TComputationType,
 ): computation is TComputationType & PureSynchronousComputationLike =>
   (computation[ComputationLike_isPure] ?? true) &&
-  (computation[ComputationLike_isDeferred] ?? true) &&
   (computation[ComputationLike_isSynchronous] ?? true);
 
 export const isSynchronous: Signature["isSynchronous"] = <
@@ -872,8 +871,7 @@ export const isSynchronous: Signature["isSynchronous"] = <
 >(
   computation: TComputationType,
 ): computation is TComputationType & SynchronousComputationLike =>
-  (computation[ComputationLike_isSynchronous] ?? true) &&
-  (computation[ComputationLike_isDeferred] ?? true);
+  computation[ComputationLike_isSynchronous] ?? true;
 
 export const isSynchronousWithSideEffects: Signature["isSynchronousWithSideEffects"] =
   <TComputationType extends ComputationLike>(
@@ -881,7 +879,6 @@ export const isSynchronousWithSideEffects: Signature["isSynchronousWithSideEffec
   ): computation is TComputationType &
     SynchronousComputationWithSideEffectsLike =>
     (computation[ComputationLike_isSynchronous] ?? true) &&
-    (computation[ComputationLike_isDeferred] ?? true) &&
     !(computation[ComputationLike_isPure] ?? true);
 
 export const keepType: Signature["keepType"] = /*@__PURE__*/ memoize(

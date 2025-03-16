@@ -16,7 +16,7 @@ import type * as Runnable from "../../Runnable.js";
 
 class GenWithSideEffectsRunnable<T> implements RunnableWithSideEffectsLike<T> {
   readonly [ComputationLike_isPure]: false = false as const;
-  readonly [ComputationLike_isDeferred]: true = true as const;
+  readonly [ComputationLike_isDeferred]: false = false as const;
   readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(private readonly f: Factory<Generator<T>>) {}

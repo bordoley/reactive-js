@@ -1,6 +1,6 @@
 /// <reference types="./Runnable.d.ts" />
 
-import { Computation_baseOfT, Computation_multicastOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
+import { Computation_baseOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
 import { identity, returns } from "../functions.js";
 import Observable_fromRunnable from "./Observable/__private__/Observable.fromRunnable.js";
 import Runnable_buffer from "./Runnable/__private__/Runnable.buffer.js";

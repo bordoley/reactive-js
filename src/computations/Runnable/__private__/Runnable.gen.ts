@@ -16,7 +16,7 @@ import type * as Runnable from "../../Runnable.js";
 
 class GenRunnable<T> implements PureRunnableLike<T> {
   readonly [ComputationLike_isPure]: true = true as const;
-  readonly [ComputationLike_isDeferred]: true = true as const;
+  readonly [ComputationLike_isDeferred]: false = false as const;
   readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(private readonly f: Factory<Generator<T>>) {}

@@ -58,7 +58,7 @@ export interface DeferredComputationWithSideEffectsLike
   readonly [ComputationLike_isPure]: false;
 }
 
-export interface SynchronousComputationLike extends DeferredComputationLike {
+export interface SynchronousComputationLike extends ComputationLike {
   readonly [ComputationLike_isSynchronous]?: true;
 }
 
@@ -107,11 +107,9 @@ export interface GenericComputationType<
     PureDeferredComputationLike,
   TDeferredDeferredComputationWithSideEffectsOfT extends TComputationBaseOfT &
     DeferredComputationWithSideEffectsLike,
-  TPureSynchronousOfT extends TPureDeferredComputationOfT &
-    PureSynchronousComputationLike,
+  TPureSynchronousOfT extends PureSynchronousComputationLike,
   TSynchronousWithSideEffectsOfT extends
-    TDeferredDeferredComputationWithSideEffectsOfT &
-      SynchronousComputationWithSideEffectsLike,
+    SynchronousComputationWithSideEffectsLike,
   TMulticastComputationOfT extends TComputationBaseOfT & MulticastLike,
 > {
   readonly [Computation_T]?: unknown;
@@ -1081,7 +1079,7 @@ export interface ComputationModule<
   ): AsyncFunction1<ComputationOf<TComputationType, T>, ReadonlyArray<T>>;
 }
 
-export interface DeferredComputationModule<
+export interface SequentialComputationModule<
   TComputationType extends ComputationType,
 > extends ComputationModuleLike<TComputationType> {
   catchError<T>(
@@ -1247,7 +1245,7 @@ export interface ConcurrentDeferredComputationModule<
   >;
 }
 
-export interface DeferredReactiveComputationModule<
+export interface SequentialReactiveComputationModule<
   TComputationType extends ComputationType,
 > extends ComputationModuleLike<TComputationType> {
   buffer<T>(options?: {
@@ -1413,6 +1411,7 @@ export const RunnableLike_eval = Symbol("RunnableLike_eval");
  * Represents a deferred computation that is synchronously evaluated.
  */
 export interface RunnableLike<T = unknown> extends SynchronousComputationLike {
+  readonly [ComputationLike_isDeferred]: false;
   [RunnableLike_eval](sink: SinkLike<T>): void;
 }
 
@@ -1427,7 +1426,11 @@ export interface RunnableWithSideEffectsLike<T = unknown>
 
 export interface IterableLike<T = unknown>
   extends Iterable<T>,
-    SynchronousComputationLike {}
+    SynchronousComputationLike,
+    DeferredComputationLike {
+  [ComputationLike_isDeferred]?: true;
+  [ComputationLike_isSynchronous]?: true;
+}
 
 export interface PureIterableLike<T = unknown> extends IterableLike<T> {
   readonly [ComputationLike_isPure]?: true;
@@ -1438,15 +1441,30 @@ export interface IterableWithSideEffectsLike<T = unknown>
   readonly [ComputationLike_isPure]: false;
 }
 
-export const PureSynchronousComputation: PureSynchronousComputationLike = {
-  [ComputationLike_isDeferred]: true,
-  [ComputationLike_isPure]: true,
-  [ComputationLike_isSynchronous]: true,
-};
-
-export const SynchronousComputationWithSideEffects: SynchronousComputationWithSideEffectsLike =
+export const PureSynchronousDeferredComputation: PureSynchronousComputationLike =
   {
     [ComputationLike_isDeferred]: true,
+    [ComputationLike_isPure]: true,
+    [ComputationLike_isSynchronous]: true,
+  };
+
+export const PureSynchronousNonDeferredComputation: PureSynchronousComputationLike =
+  {
+    [ComputationLike_isDeferred]: false,
+    [ComputationLike_isPure]: true,
+    [ComputationLike_isSynchronous]: true,
+  };
+
+export const SynchronousDeferredComputationWithSideEffects: SynchronousComputationWithSideEffectsLike =
+  {
+    [ComputationLike_isDeferred]: true,
+    [ComputationLike_isPure]: false,
+    [ComputationLike_isSynchronous]: true,
+  };
+
+export const SynchronousNonDeferredComputationWithSideEffects: SynchronousComputationWithSideEffectsLike =
+  {
+    [ComputationLike_isDeferred]: false,
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: true,
   };
@@ -1555,6 +1573,7 @@ export interface DeferredObservableLike<out T = unknown>
 export interface SynchronousObservableLike<out T = unknown>
   extends DeferredObservableLike<T>,
     SynchronousComputationLike {
+  readonly [ComputationLike_isDeferred]?: true;
   readonly [ComputationLike_isSynchronous]?: true;
 }
 

@@ -23,7 +23,7 @@ export interface PureDeferredComputationLike extends DeferredComputationLike {
 export interface DeferredComputationWithSideEffectsLike extends DeferredComputationLike {
     readonly [ComputationLike_isPure]: false;
 }
-export interface SynchronousComputationLike extends DeferredComputationLike {
+export interface SynchronousComputationLike extends ComputationLike {
     readonly [ComputationLike_isSynchronous]?: true;
 }
 export interface PureSynchronousComputationLike extends SynchronousComputationLike {
@@ -49,7 +49,7 @@ export declare const Computation_multicastOfT: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface GenericComputationType<TComputationBaseOfT extends ComputationLike, TPureDeferredComputationOfT extends TComputationBaseOfT & PureDeferredComputationLike, TDeferredDeferredComputationWithSideEffectsOfT extends TComputationBaseOfT & DeferredComputationWithSideEffectsLike, TPureSynchronousOfT extends TPureDeferredComputationOfT & PureSynchronousComputationLike, TSynchronousWithSideEffectsOfT extends TDeferredDeferredComputationWithSideEffectsOfT & SynchronousComputationWithSideEffectsLike, TMulticastComputationOfT extends TComputationBaseOfT & MulticastLike> {
+export interface GenericComputationType<TComputationBaseOfT extends ComputationLike, TPureDeferredComputationOfT extends TComputationBaseOfT & PureDeferredComputationLike, TDeferredDeferredComputationWithSideEffectsOfT extends TComputationBaseOfT & DeferredComputationWithSideEffectsLike, TPureSynchronousOfT extends PureSynchronousComputationLike, TSynchronousWithSideEffectsOfT extends SynchronousComputationWithSideEffectsLike, TMulticastComputationOfT extends TComputationBaseOfT & MulticastLike> {
     readonly [Computation_T]?: unknown;
     readonly [Computation_baseOfT]?: TComputationBaseOfT;
     readonly [Computation_pureDeferredOfT]?: TPureDeferredComputationOfT;
@@ -239,7 +239,7 @@ export interface ComputationModule<TComputationType extends ComputationType, TCr
     toObservable<T>(): ToObservableOperator<TComputationType, T>;
     toReadonlyArrayAsync<T>(options?: TCreationOptions["toReadonlyArrayAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, ReadonlyArray<T>>;
 }
-export interface DeferredComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
+export interface SequentialComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
     catchError<T>(onError: SideEffect1<Error>): StatefulSynchronousComputationOperator<TComputationType, T, T>;
     catchError<T, TInnerLike extends HigherOrderInnerComputationLike>(onError: Function1<Error, HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>>, options: {
         readonly innerType: TInnerLike;
@@ -290,7 +290,7 @@ export interface ConcurrentDeferredComputationModule<TComputationType extends Co
         signal?: AbortSignal;
     }) => Promise<T>, DeferredComputationWithSideEffectsOf<TComputationType, T>>;
 }
-export interface DeferredReactiveComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
+export interface SequentialReactiveComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
     buffer<T>(options?: {
         count?: number;
     }): StatefulSynchronousComputationOperator<TComputationType, T, readonly T[]>;
@@ -346,6 +346,7 @@ export declare const RunnableLike_eval: unique symbol;
  * Represents a deferred computation that is synchronously evaluated.
  */
 export interface RunnableLike<T = unknown> extends SynchronousComputationLike {
+    readonly [ComputationLike_isDeferred]: false;
     [RunnableLike_eval](sink: SinkLike<T>): void;
 }
 export interface PureRunnableLike<T = unknown> extends RunnableLike<T> {
@@ -354,7 +355,9 @@ export interface PureRunnableLike<T = unknown> extends RunnableLike<T> {
 export interface RunnableWithSideEffectsLike<T = unknown> extends RunnableLike<T> {
     readonly [ComputationLike_isPure]: false;
 }
-export interface IterableLike<T = unknown> extends Iterable<T>, SynchronousComputationLike {
+export interface IterableLike<T = unknown> extends Iterable<T>, SynchronousComputationLike, DeferredComputationLike {
+    [ComputationLike_isDeferred]?: true;
+    [ComputationLike_isSynchronous]?: true;
 }
 export interface PureIterableLike<T = unknown> extends IterableLike<T> {
     readonly [ComputationLike_isPure]?: true;
@@ -362,8 +365,10 @@ export interface PureIterableLike<T = unknown> extends IterableLike<T> {
 export interface IterableWithSideEffectsLike<T = unknown> extends IterableLike<T> {
     readonly [ComputationLike_isPure]: false;
 }
-export declare const PureSynchronousComputation: PureSynchronousComputationLike;
-export declare const SynchronousComputationWithSideEffects: SynchronousComputationWithSideEffectsLike;
+export declare const PureSynchronousDeferredComputation: PureSynchronousComputationLike;
+export declare const PureSynchronousNonDeferredComputation: PureSynchronousComputationLike;
+export declare const SynchronousDeferredComputationWithSideEffects: SynchronousComputationWithSideEffectsLike;
+export declare const SynchronousNonDeferredComputationWithSideEffects: SynchronousComputationWithSideEffectsLike;
 export declare const PureDeferredComputation: PureDeferredComputationLike;
 export declare const DeferredComputationWithSideEffects: DeferredComputationWithSideEffectsLike;
 export declare const MulticastComputation: MulticastComputationLike;
@@ -429,6 +434,7 @@ export interface DeferredObservableLike<out T = unknown> extends ObservableLike<
  * @noInheritDoc
  */
 export interface SynchronousObservableLike<out T = unknown> extends DeferredObservableLike<T>, SynchronousComputationLike {
+    readonly [ComputationLike_isDeferred]?: true;
     readonly [ComputationLike_isSynchronous]?: true;
 }
 /**

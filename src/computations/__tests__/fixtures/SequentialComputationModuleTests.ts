@@ -17,12 +17,12 @@ import {
   Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
-  DeferredComputationModule,
   DeferredComputationOf,
   DeferredComputationWithSideEffects,
   PureDeferredComputation,
-  PureSynchronousComputation,
-  SynchronousComputationWithSideEffects,
+  PureSynchronousDeferredComputation,
+  SequentialComputationModule,
+  SynchronousDeferredComputationWithSideEffects,
 } from "../../../computations.js";
 import {
   Optional,
@@ -45,10 +45,10 @@ import HigherOrderComputationOperatorTests from "./operators/HigherOrderComputat
 import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSynchronousComputationOperatorTests.js";
 import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
 
-const DeferredComputationModuleTests = <
+const SequentialComputationModuleTests = <
   TComputationType extends ComputationType,
 >(
-  m: DeferredComputationModule<TComputationType> &
+  m: SequentialComputationModule<TComputationType> &
     ComputationModule<TComputationType>,
   computations: ComputationTypeOf<TComputationType>,
 ) => {
@@ -59,18 +59,18 @@ const DeferredComputationModuleTests = <
     [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT,
   } = computations;
   return describe(
-    "DeferredComputationModule",
+    "SequentialComputationModule",
     describe(
       "catchError",
       HigherOrderComputationOperatorTests(
         computations,
         pureSynchronousOfT &&
           m.catchError(_ => pureSynchronousOfT, {
-            innerType: PureSynchronousComputation,
+            innerType: PureSynchronousDeferredComputation,
           }),
         synchronousWithSideEffectsOfT &&
           m.catchError(_ => synchronousWithSideEffectsOfT, {
-            innerType: SynchronousComputationWithSideEffects,
+            innerType: SynchronousDeferredComputationWithSideEffects,
           }),
         pureDeferredOfT &&
           m.catchError(_ => pureDeferredOfT, {
@@ -138,10 +138,10 @@ const DeferredComputationModuleTests = <
       HigherOrderComputationOperatorTests(
         computations,
         m.concatAll({
-          innerType: PureSynchronousComputation,
+          innerType: PureSynchronousDeferredComputation,
         }),
         m.concatAll({
-          innerType: SynchronousComputationWithSideEffects,
+          innerType: SynchronousDeferredComputationWithSideEffects,
         }),
         m.concatAll({
           innerType: PureDeferredComputation,
@@ -208,11 +208,6 @@ const DeferredComputationModuleTests = <
       pureSynchronousOfT &&
         ComputationTest.isPureSynchronous(
           m.concat(pureSynchronousOfT, pureSynchronousOfT),
-        ),
-      pureDeferredOfT &&
-        pureSynchronousOfT &&
-        ComputationTest.isPureDeferred(
-          m.concat(pureDeferredOfT, pureSynchronousOfT),
         ),
       synchronousWithSideEffectsOfT &&
         pureSynchronousOfT &&
@@ -632,4 +627,4 @@ const DeferredComputationModuleTests = <
   );
 };
 
-export default DeferredComputationModuleTests;
+export default SequentialComputationModuleTests;

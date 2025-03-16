@@ -44,7 +44,7 @@
 
 ## Call Signature
 
-> **concat**\<`T`\>(...`computations`): [`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+> **concat**\<`T`\>(...`computations`): `never`
 
 ### Type Parameters
 
@@ -54,15 +54,15 @@
 
 #### computations
 
-...readonly [`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>[]
+...readonly `never`[]
 
 ### Returns
 
-[`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+`never`
 
 ## Call Signature
 
-> **concat**\<`T`\>(...`computations`): [`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md) & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+> **concat**\<`T`\>(...`computations`): `never`
 
 ### Type Parameters
 
@@ -72,8 +72,8 @@
 
 #### computations
 
-...readonly [`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`\>[]
+...readonly `never`[]
 
 ### Returns
 
-[`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md) & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+`never`

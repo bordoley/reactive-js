@@ -6,7 +6,7 @@ import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } fr
 class GenWithSideEffectsRunnable {
     f;
     [ComputationLike_isPure] = false;
-    [ComputationLike_isDeferred] = true;
+    [ComputationLike_isDeferred] = false;
     [ComputationLike_isSynchronous] = true;
     constructor(f) {
         this.f = f;

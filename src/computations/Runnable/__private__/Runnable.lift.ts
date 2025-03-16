@@ -1,5 +1,6 @@
 import {
   ComputationBaseOf,
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationOperatorWithSideEffects,
   RunnableLike,
@@ -14,6 +15,7 @@ import type * as Runnable from "../../Runnable.js";
 
 class LiftedRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
+  readonly [ComputationLike_isDeferred]: false = false as const;
 
   constructor(
     public readonly src: RunnableLike<any>,

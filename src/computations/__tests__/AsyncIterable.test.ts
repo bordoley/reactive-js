@@ -23,8 +23,8 @@ import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentDeferredComputationModuleTests from "./fixtures/ConcurrentDeferredComputationModuleTests.js";
-import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
 import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
+import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 
 const AsyncIterableTypes = {
   [Computation_deferredWithSideEffectsOfT]: pipe(
@@ -38,7 +38,7 @@ const AsyncIterableTypes = {
 testModule(
   "AsyncIterable",
   ComputationModuleTests(AsyncIterable, AsyncIterableTypes),
-  DeferredComputationModuleTests(AsyncIterable, AsyncIterableTypes),
+  SequentialComputationModuleTests(AsyncIterable, AsyncIterableTypes),
   InteractiveComputationModuleTests(AsyncIterable),
   ConcurrentDeferredComputationModuleTests(AsyncIterable),
   describe(

@@ -1,4 +1,4 @@
-import { ComputationModule, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredObservableWithSideEffectsLike, DeferredReactiveComputationModule, EventSourceLike, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastObservableLike, ObservableLike, PauseableEventSourceLike, PauseableObservableLike, ProducerLike, PureDeferredObservableLike, PureSynchronousObservableLike, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StoreLike, SynchronousComputationModule, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../computations.js";
+import { ComputationModule, ComputationOperatorWithSideEffects, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredObservableWithSideEffectsLike, EventSourceLike, HigherOrderComputationOperator, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, MulticastObservableLike, ObservableLike, PauseableEventSourceLike, PauseableObservableLike, ProducerLike, PureDeferredObservableLike, PureSynchronousObservableLike, SequentialComputationModule, SequentialReactiveComputationModule, StatefulAsynchronousComputationOperator, StatefulSynchronousComputationOperator, StoreLike, SynchronousComputationModule, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../computations.js";
 import { Equality, Factory, Function1, Function2, Optional, Reducer, SideEffect, SideEffect1 } from "../functions.js";
 import { BackpressureStrategy, DisposableLike, ObserverLike, SchedulerLike } from "../utils.js";
 export interface ObservableComputation extends ComputationType {
@@ -58,7 +58,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     toReadonlyArrayAsync: {
         readonly scheduler?: SchedulerLike;
     };
-}>, DeferredComputationModule<ObservableComputation>, SynchronousComputationModule<ObservableComputation, {
+}>, SequentialComputationModule<ObservableComputation>, SynchronousComputationModule<ObservableComputation, {
     first: {
         readonly maxMicroTaskTicks?: number;
     };
@@ -77,7 +77,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     toRunnable: {
         readonly maxMicroTaskTicks?: number;
     };
-}>, DeferredReactiveComputationModule<ObservableComputation>, ConcurrentReactiveComputationModule<ObservableComputation>, ConcurrentDeferredComputationModule<ObservableComputation> {
+}>, SequentialReactiveComputationModule<ObservableComputation>, ConcurrentReactiveComputationModule<ObservableComputation>, ConcurrentDeferredComputationModule<ObservableComputation> {
     actionReducer<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
         readonly equality?: Equality<T>;
     }): StatefulSynchronousComputationOperator<ObservableComputation, TAction, T>;

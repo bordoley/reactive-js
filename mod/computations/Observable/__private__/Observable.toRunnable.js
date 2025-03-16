@@ -1,7 +1,7 @@
 /// <reference types="./Observable.toRunnable.d.ts" />
 
 import * as Computation from "../../../computations/Computation.js";
-import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { bindMethod, newInstance, pipe } from "../../../functions.js";
 import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -11,6 +11,7 @@ class SynchronousObservableRunnable {
     obs;
     options;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = false;
     constructor(obs, options) {
         this.obs = obs;
         this.options = options;

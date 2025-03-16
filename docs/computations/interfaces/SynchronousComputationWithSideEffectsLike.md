@@ -14,7 +14,7 @@
 
 ### \[ComputationLike\_isDeferred\]?
 
-> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
+> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `boolean`
 
 #### Inherited from
 

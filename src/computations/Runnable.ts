@@ -3,14 +3,13 @@ import {
   ComputationType,
   Computation_T,
   Computation_baseOfT,
-  Computation_multicastOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
-  DeferredComputationModule,
-  DeferredReactiveComputationModule,
   PureRunnableLike,
   RunnableLike,
   RunnableWithSideEffectsLike,
+  SequentialComputationModule,
+  SequentialReactiveComputationModule,
   SynchronousComputationModule,
 } from "../computations.js";
 import { identity, returns } from "../functions.js";
@@ -61,16 +60,14 @@ export interface RunnableComputation extends ComputationType {
   readonly [Computation_synchronousWithSideEffectsOfT]?: RunnableWithSideEffectsLike<
     this[typeof Computation_T]
   >;
-
-  readonly [Computation_multicastOfT]?: never;
 }
 
 export type Computation = RunnableComputation;
 
 export interface RunnableModule
   extends ComputationModule<RunnableComputation>,
-    DeferredComputationModule<RunnableComputation>,
-    DeferredReactiveComputationModule<RunnableComputation>,
+    SequentialComputationModule<RunnableComputation>,
+    SequentialReactiveComputationModule<RunnableComputation>,
     SynchronousComputationModule<RunnableComputation> {}
 
 export type Signature = RunnableModule;

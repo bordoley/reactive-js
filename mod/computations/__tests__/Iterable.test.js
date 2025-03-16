@@ -5,11 +5,11 @@ import { Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsO
 import { ignore, pipe } from "../../functions.js";
 import * as Iterable from "../Iterable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
-import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
 import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
+import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 const IterableTypes = {
     [Computation_pureSynchronousOfT]: Iterable.empty(),
     [Computation_synchronousWithSideEffectsOfT]: pipe(Iterable.empty(), Iterable.forEach(ignore)),
 };
-testModule("Iterable", ComputationModuleTests(Iterable, IterableTypes), DeferredComputationModuleTests(Iterable, IterableTypes), SynchronousComputationModuleTests(Iterable), InteractiveComputationModuleTests(Iterable));
+testModule("Iterable", ComputationModuleTests(Iterable, IterableTypes), SequentialComputationModuleTests(Iterable, IterableTypes), SynchronousComputationModuleTests(Iterable), InteractiveComputationModuleTests(Iterable));

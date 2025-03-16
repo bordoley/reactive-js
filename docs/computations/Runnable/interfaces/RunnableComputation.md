@@ -22,16 +22,6 @@
 
 ***
 
-### \[Computation\_multicastOfT\]?
-
-> `readonly` `optional` **\[Computation\_multicastOfT\]**: `undefined`
-
-#### Overrides
-
-`ComputationType.[Computation_multicastOfT]`
-
-***
-
 ### \[Computation\_pureSynchronousOfT\]?
 
 > `readonly` `optional` **\[Computation\_pureSynchronousOfT\]**: [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`unknown`\>

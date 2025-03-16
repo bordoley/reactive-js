@@ -14,9 +14,9 @@
 
 • **TDeferredDeferredComputationWithSideEffectsOfT** *extends* `TComputationBaseOfT` & [`DeferredComputationWithSideEffectsLike`](DeferredComputationWithSideEffectsLike.md)
 
-• **TPureSynchronousOfT** *extends* `TPureDeferredComputationOfT` & [`PureSynchronousComputationLike`](PureSynchronousComputationLike.md)
+• **TPureSynchronousOfT** *extends* [`PureSynchronousComputationLike`](PureSynchronousComputationLike.md)
 
-• **TSynchronousWithSideEffectsOfT** *extends* `TDeferredDeferredComputationWithSideEffectsOfT` & [`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md)
+• **TSynchronousWithSideEffectsOfT** *extends* [`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md)
 
 • **TMulticastComputationOfT** *extends* `TComputationBaseOfT` & [`MulticastLike`](MulticastLike.md)
 

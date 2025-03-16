@@ -55,12 +55,9 @@ export const isPure = (computation) => computation[ComputationLike_isPure] ?? tr
 export const isPureDeferred = (computation) => (computation[ComputationLike_isPure] ?? true) &&
     (computation[ComputationLike_isDeferred] ?? true);
 export const isPureSynchronous = (computation) => (computation[ComputationLike_isPure] ?? true) &&
-    (computation[ComputationLike_isDeferred] ?? true) &&
     (computation[ComputationLike_isSynchronous] ?? true);
-export const isSynchronous = (computation) => (computation[ComputationLike_isSynchronous] ?? true) &&
-    (computation[ComputationLike_isDeferred] ?? true);
+export const isSynchronous = (computation) => computation[ComputationLike_isSynchronous] ?? true;
 export const isSynchronousWithSideEffects = (computation) => (computation[ComputationLike_isSynchronous] ?? true) &&
-    (computation[ComputationLike_isDeferred] ?? true) &&
     !(computation[ComputationLike_isPure] ?? true);
 export const keepType = /*@__PURE__*/ memoize(m => (predicate) => m.keep(predicate));
 export const log = /*@__PURE__*/ memoize(m => returns(m.forEach(consoleLog)));

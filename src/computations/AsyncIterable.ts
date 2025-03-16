@@ -19,13 +19,13 @@ import {
   Computation_deferredWithSideEffectsOfT,
   Computation_pureDeferredOfT,
   ConcurrentDeferredComputationModule,
-  DeferredComputationModule,
   EventSourceLike,
   HigherOrderInnerComputationLike,
   InteractiveComputationModule,
   PauseableEventSourceLike,
   PauseableObservableLike,
   PureAsyncIterableLike,
+  SequentialComputationModule,
 } from "../computations.js";
 import {
   Factory,
@@ -96,7 +96,7 @@ export type Computation = AsyncIterableComputation;
 
 export interface AsyncIterableModule
   extends ComputationModule<AsyncIterableComputation>,
-    DeferredComputationModule<AsyncIterableComputation>,
+    SequentialComputationModule<AsyncIterableComputation>,
     InteractiveComputationModule<AsyncIterableComputation>,
     ConcurrentDeferredComputationModule<AsyncIterableComputation> {
   of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;

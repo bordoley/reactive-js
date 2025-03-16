@@ -59,7 +59,7 @@ import { __await, __constant, __do, __memo, __observe, __state, __stream, } from
 import * as Observable from "../../computations/Observable.js";
 import * as Streamable from "../../computations/Streamable.js";
 import * as Subject from "../../computations/Subject.js";
-import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, DeferredComputationWithSideEffects, MulticastComputation, PureDeferredComputation, PureSynchronousComputation, StoreLike_value, SynchronousComputationWithSideEffects, } from "../../computations.js";
+import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, DeferredComputationWithSideEffects, MulticastComputation, PureDeferredComputation, PureSynchronousDeferredComputation, StoreLike_value, SynchronousDeferredComputationWithSideEffects, } from "../../computations.js";
 import { bindMethod, error, ignore, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
 import { increment, scale } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -74,8 +74,8 @@ import * as WritableStore from "../WritableStore.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentDeferredComputationModuleTests from "./fixtures/ConcurrentDeferredComputationModuleTests.js";
 import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReactiveComputationModuleTests.js";
-import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
-import DeferredReactiveComputationModuleTests from "./fixtures/DeferredReactiveComputationModuleTests.js";
+import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
+import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 import * as ComputationTest from "./fixtures/helpers/ComputationTest.js";
 import ComputationOperatorWithSideEffectsTests from "./fixtures/operators/ComputationOperatorWithSideEffectsTests.js";
@@ -96,7 +96,7 @@ const CombineConstructorTests = (operator) => {
 };
 testModule("Observable", describe("effects", test("calling an effect from outside a computation expression throws", () => {
     expectToThrow(() => __constant(0));
-})), ComputationModuleTests(Observable, ObservableTypes), DeferredComputationModuleTests(Observable, ObservableTypes), DeferredReactiveComputationModuleTests(Observable, ObservableTypes), SynchronousComputationModuleTests(Observable), ConcurrentReactiveComputationModuleTests(Observable, ObservableTypes), ConcurrentDeferredComputationModuleTests(Observable), describe("backpressureStrategy", test("with a capacity of 0", pipeLazy([1, 2, 3, 4], Observable.fromReadonlyArray(), Observable.backpressureStrategy({
+})), ComputationModuleTests(Observable, ObservableTypes), SequentialComputationModuleTests(Observable, ObservableTypes), SequentialReactiveComputationModuleTests(Observable, ObservableTypes), SynchronousComputationModuleTests(Observable), ConcurrentReactiveComputationModuleTests(Observable, ObservableTypes), ConcurrentDeferredComputationModuleTests(Observable), describe("backpressureStrategy", test("with a capacity of 0", pipeLazy([1, 2, 3, 4], Observable.fromReadonlyArray(), Observable.backpressureStrategy({
     capacity: 0,
     backpressureStrategy: DropLatestBackpressureStrategy,
 }), Observable.backpressureStrategy({
@@ -355,9 +355,9 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     pipe([4, 5, 6], Observable.fromReadonlyArray()),
     pipe([7, 8, 9], Observable.fromReadonlyArray()),
 ], Observable.fromReadonlyArray(), Observable.exhaust(), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), HigherOrderComputationOperatorTests(ObservableTypes, Observable.exhaust({
-    innerType: PureSynchronousComputation,
+    innerType: PureSynchronousDeferredComputation,
 }), Observable.exhaust({
-    innerType: SynchronousComputationWithSideEffects,
+    innerType: SynchronousDeferredComputationWithSideEffects,
 }), Observable.exhaust({
     innerType: PureDeferredComputation,
 }), Observable.exhaust({
@@ -524,9 +524,9 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
         __disposeResources(env_18);
     }
 }), test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Computation.concatMap(Observable)(x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]))), HigherOrderComputationOperatorTests(ObservableTypes, Observable.mergeAll({
-    innerType: PureSynchronousComputation,
+    innerType: PureSynchronousDeferredComputation,
 }), Observable.mergeAll({
-    innerType: SynchronousComputationWithSideEffects,
+    innerType: SynchronousDeferredComputationWithSideEffects,
 }), Observable.mergeAll({
     innerType: PureDeferredComputation,
 }), Observable.mergeAll({
@@ -643,8 +643,8 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     delay: 10,
     delayStart: true,
 }), Observable.takeFirst({ count: 10 }), Observable.scanMany((_acc, next) => pipe(next, Observable.fromValue({ delay: 2 })), returns(0)), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]))), HigherOrderComputationOperatorTests(ObservableTypes, Observable.scanMany((_acc, _next) => Observable.empty(), returns(0), {
-    innerType: PureSynchronousComputation,
-}), Observable.scanMany((_acc, _next) => pipe(Observable.empty(), Observable.forEach(ignore)), returns(0), { innerType: SynchronousComputationWithSideEffects }), Observable.scanMany((_acc, _next) => pipe(Observable.empty(), Observable.subscribeOn(VirtualTimeScheduler.create())), returns(0), {
+    innerType: PureSynchronousDeferredComputation,
+}), Observable.scanMany((_acc, _next) => pipe(Observable.empty(), Observable.forEach(ignore)), returns(0), { innerType: SynchronousDeferredComputationWithSideEffects }), Observable.scanMany((_acc, _next) => pipe(Observable.empty(), Observable.subscribeOn(VirtualTimeScheduler.create())), returns(0), {
     innerType: PureDeferredComputation,
 }), Observable.scanMany((_acc, _next) => pipe(Observable.empty(), Observable.forEach(ignore), Observable.subscribeOn(VirtualTimeScheduler.create())), returns(0), {
     innerType: DeferredComputationWithSideEffects,
@@ -665,9 +665,9 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     delay: 1,
     delayStart: true,
 }))), Observable.toReadonlyArray(), expectArrayEquals([3, 3, 3]))), test("overlapping notification", pipeLazy([none, none, none], Observable.fromReadonlyArray({ delay: 4 }), Computation.flatMap(Observable)("switchAll", _ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 1, 2, 1, 2, 3]))), test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Computation.flatMap(Observable)("switchAll", _ => pipe([1, 2, 3], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), HigherOrderComputationOperatorTests(ObservableTypes, Observable.switchAll({
-    innerType: PureSynchronousComputation,
+    innerType: PureSynchronousDeferredComputation,
 }), Observable.switchAll({
-    innerType: SynchronousComputationWithSideEffects,
+    innerType: SynchronousDeferredComputationWithSideEffects,
 }), Observable.switchAll({
     innerType: PureDeferredComputation,
 }), Observable.switchAll({

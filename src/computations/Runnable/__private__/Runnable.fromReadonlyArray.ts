@@ -1,5 +1,6 @@
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   PureRunnableLike,
   RunnableLike_eval,
@@ -15,6 +16,7 @@ import type * as Runnable from "../../Runnable.js";
 
 class FromReadonlyArrayRunnable<T> implements PureRunnableLike<T> {
   readonly [ComputationLike_isPure]: true = true as const;
+  readonly [ComputationLike_isDeferred]: false = false as const;
 
   constructor(
     private readonly arr: readonly T[],

@@ -1,4 +1,5 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
   PureRunnableLike,
   RunnableLike_eval,
@@ -9,6 +10,7 @@ import type * as Runnable from "../../Runnable.js";
 
 class EmptyRunnable<T> implements PureRunnableLike<T> {
   readonly [ComputationLike_isPure]: true = true as const;
+  readonly [ComputationLike_isDeferred]: false = false as const;
 
   [RunnableLike_eval](sink: SinkLike<T>): void {
     sink[SinkLike_complete]();
