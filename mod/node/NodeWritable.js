@@ -4,7 +4,7 @@ import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../__internal__/mixins.js";
 import * as EventSource from "../computations/EventSource.js";
 import * as Publisher from "../computations/Publisher.js";
-import { bindMethod, none, pipe, } from "../functions.js";
+import { bindMethod, newInstance, none, pipe, raise, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
@@ -59,7 +59,7 @@ export const toConsumer = /*@__PURE__*/ (() => {
                 writable.write(Buffer.from(data));
             }
             else {
-                throw new BackPressureError(this[ConsumerLike_capacity], ThrowBackpressureStrategy);
+                raise(newInstance(BackPressureError, this));
             }
         },
         [SinkLike_complete]() {

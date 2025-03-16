@@ -16,8 +16,10 @@ import {
   Optional,
   SideEffect1,
   bindMethod,
+  newInstance,
   none,
   pipe,
+  raise,
 } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
@@ -144,10 +146,7 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
           const writable = this[WritableConsumer_writable];
           writable.write(Buffer.from(data));
         } else {
-          throw new BackPressureError(
-            this[ConsumerLike_capacity],
-            ThrowBackpressureStrategy,
-          );
+          raise(newInstance(BackPressureError, this));
         }
       },
 

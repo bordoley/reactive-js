@@ -117,7 +117,8 @@ export interface QueueLike<T = unknown> extends ConsumerLike<T>, Iterable<T> {
 export declare class BackPressureError extends Error {
     readonly [ConsumerLike_capacity]: number;
     readonly [ConsumerLike_backpressureStrategy]: BackpressureStrategy;
-    constructor(capacity: number, backpressureStrategy: BackpressureStrategy);
+    readonly [ConsumerLike_isReady]: boolean;
+    constructor(consumer: ConsumerLike);
 }
 export declare const SchedulerLike_inContinuation: unique symbol;
 export declare const SchedulerLike_maxYieldInterval: unique symbol;

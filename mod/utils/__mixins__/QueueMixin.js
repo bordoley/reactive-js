@@ -231,7 +231,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
             }
             else if (backpressureStrategy === ThrowBackpressureStrategy &&
                 applyBackpressure) {
-                raiseError(newInstance(BackPressureError, capacity, backpressureStrategy));
+                raiseError(newInstance(BackPressureError, this));
             }
             // Assign these after applying backpressure because backpressure
             // can mutate the state of the queue.

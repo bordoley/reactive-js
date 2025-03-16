@@ -33,10 +33,13 @@ export const QueueLike_count = Symbol("QueueLike_count");
 export class BackPressureError extends Error {
     [ConsumerLike_capacity];
     [ConsumerLike_backpressureStrategy];
-    constructor(capacity, backpressureStrategy) {
+    [ConsumerLike_isReady];
+    constructor(consumer) {
         super();
-        this[ConsumerLike_capacity] = capacity;
-        this[ConsumerLike_backpressureStrategy] = backpressureStrategy;
+        this[ConsumerLike_capacity] = consumer[ConsumerLike_capacity];
+        this[ConsumerLike_backpressureStrategy] =
+            consumer[ConsumerLike_backpressureStrategy];
+        this[ConsumerLike_isReady] = consumer[ConsumerLike_isReady];
     }
 }
 export const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");

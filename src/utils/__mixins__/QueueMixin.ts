@@ -412,9 +412,7 @@ const QueueMixin: <T>() => Mixin1<
             backpressureStrategy === ThrowBackpressureStrategy &&
             applyBackpressure
           ) {
-            raiseError(
-              newInstance(BackPressureError, capacity, backpressureStrategy),
-            );
+            raiseError(newInstance(BackPressureError, this));
           }
 
           // Assign these after applying backpressure because backpressure

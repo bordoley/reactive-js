@@ -169,11 +169,14 @@ export interface QueueLike<T = unknown> extends ConsumerLike<T>, Iterable<T> {
 export class BackPressureError extends Error {
   readonly [ConsumerLike_capacity]: number;
   readonly [ConsumerLike_backpressureStrategy]: BackpressureStrategy;
+  readonly [ConsumerLike_isReady]: boolean;
 
-  constructor(capacity: number, backpressureStrategy: BackpressureStrategy) {
+  constructor(consumer: ConsumerLike) {
     super();
-    this[ConsumerLike_capacity] = capacity;
-    this[ConsumerLike_backpressureStrategy] = backpressureStrategy;
+    this[ConsumerLike_capacity] = consumer[ConsumerLike_capacity];
+    this[ConsumerLike_backpressureStrategy] =
+      consumer[ConsumerLike_backpressureStrategy];
+    this[ConsumerLike_isReady] = consumer[ConsumerLike_isReady];
   }
 }
 

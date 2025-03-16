@@ -14,17 +14,13 @@
 
 ### new BackPressureError()
 
-> **new BackPressureError**(`capacity`, `backpressureStrategy`): [`BackPressureError`](BackPressureError.md)
+> **new BackPressureError**(`consumer`): [`BackPressureError`](BackPressureError.md)
 
 #### Parameters
 
-##### capacity
+##### consumer
 
-`number`
-
-##### backpressureStrategy
-
-[`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)
+[`ConsumerLike`](../interfaces/ConsumerLike.md)
 
 #### Returns
 
@@ -45,3 +41,9 @@
 ### \[ConsumerLike\_capacity\]
 
 > `readonly` **\[ConsumerLike\_capacity\]**: `number`
+
+***
+
+### \[ConsumerLike\_isReady\]
+
+> `readonly` **\[ConsumerLike\_isReady\]**: `boolean`
