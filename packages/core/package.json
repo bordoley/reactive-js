@@ -75,7 +75,9 @@
     
     "./math": "./math.js",
 
+    "./node/NodeReadable": "./node/NodeReadable.js",
     "./node/NodeStream": "./node/NodeStream.js",
+    "./node/NodeWritable": "./node/NodeWritable.js",
 
     "./react": "./react.js",
     "./react/Scheduler": "./react/Scheduler.js",

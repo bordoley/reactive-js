@@ -6,7 +6,13 @@
 
 # node/NodeStream
 
+## Type Aliases
+
+- [NodeStream](type-aliases/NodeStream.md)
+- [Signature](type-aliases/Signature.md)
+
 ## Functions
 
-- [create](functions/create.md)
-- [writeTo](functions/writeTo.md)
+- [add](functions/add.md)
+- [addTo](functions/addTo.md)
+- [addToNodeStream](functions/addToNodeStream.md)

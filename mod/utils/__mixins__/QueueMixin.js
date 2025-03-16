@@ -295,10 +295,13 @@ const QueueMixin = /*@__PURE__*/ (() => {
             }
         },
         [ConsumerLike_addOnReadyListener](callback) {
-            const publisher = this[QueueMixin_onReadyPublisher];
-            this[QueueMixin_onReadyPublisher] =
-                publisher ?? pipe(Publisher.create(), Disposable.addTo(this));
-            return pipe(this[QueueMixin_onReadyPublisher], EventSource_addEventHandler(callback), Disposable.addTo(this));
+            const publisher = this[QueueMixin_onReadyPublisher] ??
+                (() => {
+                    const publisher = pipe(Publisher.create(), Disposable.addTo(this));
+                    this[QueueMixin_onReadyPublisher] = publisher;
+                    return publisher;
+                })();
+            return pipe(publisher, EventSource_addEventHandler(callback), Disposable.addTo(this));
         },
     }));
 })();

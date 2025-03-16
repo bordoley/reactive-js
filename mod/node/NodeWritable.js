@@ -1,0 +1,77 @@
+/// <reference types="./NodeWritable.d.ts" />
+
+import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
+import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../__internal__/mixins.js";
+import * as EventSource from "../computations/EventSource.js";
+import * as Publisher from "../computations/Publisher.js";
+import { bindMethod, none, pipe, } from "../functions.js";
+import * as Disposable from "../utils/Disposable.js";
+import * as DisposableContainer from "../utils/DisposableContainer.js";
+import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
+import { BackPressureError, ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../utils.js";
+import * as NodeStream from "./NodeStream.js";
+export const toConsumer = /*@__PURE__*/ (() => {
+    const WritableConsumer_autoDispose = Symbol("WritableConsumer_autoDispose");
+    const WritableConsumer_writable = Symbol("WritableConsumer_writable");
+    const WritableConsumer_onReadyPublisher = Symbol("WritableConsumer_onReadyPublisher");
+    const createNodeWritableConsumer = mixInstanceFactory(include(DisposableMixin), function WritableConsumer(writable, options) {
+        init(DisposableMixin, this);
+        this[WritableConsumer_writable] = writable;
+        this[WritableConsumer_autoDispose] = options?.autoDispose ?? false;
+        writable.on("finish", () => {
+            this[SinkLike_isCompleted] = true;
+            if (this[WritableConsumer_autoDispose]) {
+                this[DisposableLike_dispose]();
+            }
+        });
+        pipe(this, NodeStream.addToNodeStream(writable), DisposableContainer.onDisposed(bindMethod(this, SinkLike_complete)));
+        return this;
+    }, props({
+        [WritableConsumer_autoDispose]: false,
+        [WritableConsumer_writable]: none,
+        [SinkLike_isCompleted]: false,
+        [WritableConsumer_onReadyPublisher]: none,
+    }), proto({
+        [ConsumerLike_backpressureStrategy]: ThrowBackpressureStrategy,
+        [ConsumerLike_capacity]: MAX_SAFE_INTEGER,
+        get [ConsumerLike_isReady]() {
+            unsafeCast(this);
+            const writable = this[WritableConsumer_writable];
+            const needsDrain = writable.writableNeedDrain;
+            const result = !this[SinkLike_isCompleted] && !needsDrain;
+            return result;
+        },
+        [ConsumerLike_addOnReadyListener](callback) {
+            const publisher = this[WritableConsumer_onReadyPublisher] ??
+                (() => {
+                    const writable = this[WritableConsumer_writable];
+                    const publisher = pipe(Publisher.create(), Disposable.addTo(this));
+                    const onDrain = bindMethod(publisher, EventListenerLike_notify);
+                    writable.on("drain", onDrain);
+                    this[WritableConsumer_onReadyPublisher] = publisher;
+                    return publisher;
+                })();
+            return pipe(publisher, EventSource.addEventHandler(callback), Disposable.addTo(this));
+        },
+        [EventListenerLike_notify](data) {
+            if (this[ConsumerLike_isReady]) {
+                const writable = this[WritableConsumer_writable];
+                writable.write(Buffer.from(data));
+            }
+            else {
+                throw new BackPressureError(this[ConsumerLike_capacity], ThrowBackpressureStrategy);
+            }
+        },
+        [SinkLike_complete]() {
+            const isCompleted = this[SinkLike_isCompleted];
+            const writable = this[WritableConsumer_writable];
+            const ended = writable.writableEnded;
+            this[SinkLike_isCompleted] = true;
+            if (isCompleted || ended) {
+                return;
+            }
+            writable.end();
+        },
+    }));
+    return options => writable => createNodeWritableConsumer(writable, options);
+})();

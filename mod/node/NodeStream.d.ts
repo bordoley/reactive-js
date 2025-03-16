@@ -1,12 +1,14 @@
-import { Readable, Writable } from "stream";
-import { PauseableEventSourceLike } from "../computations.js";
+import { Readable, Transform, Writable } from "stream";
 import { Function1 } from "../functions.js";
 import { DisposableLike } from "../utils.js";
-interface FlowableStreamModule {
-    create(factory: Readable): PauseableEventSourceLike<Uint8Array> & DisposableLike;
-    writeTo(writable: Writable): Function1<PauseableEventSourceLike<Uint8Array>, DisposableLike>;
+interface NodeStreamModule {
+    add<TNodeStream extends NodeStream>(disposable: DisposableLike): Function1<TNodeStream, TNodeStream>;
+    addTo<TNodeStream extends NodeStream>(disposable: DisposableLike): Function1<TNodeStream, TNodeStream>;
+    addToNodeStream<TDisposable extends DisposableLike>(stream: NodeStream): Function1<TDisposable, TDisposable>;
 }
-type Signature = FlowableStreamModule;
-export declare const create: Signature["create"];
-export declare const writeTo: Signature["writeTo"];
+export type Signature = NodeStreamModule;
+export type NodeStream = Readable | Writable | Transform;
+export declare const add: Signature["add"];
+export declare const addTo: Signature["addTo"];
+export declare const addToNodeStream: Signature["addToNodeStream"];
 export {};
