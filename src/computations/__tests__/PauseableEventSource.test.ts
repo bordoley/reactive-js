@@ -7,8 +7,11 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { StreamableLike_stream } from "../../computations.js";
-import { bindMethod, pipe, returns } from "../../functions.js";
+import {
+  ProducerLike_consume,
+  StreamableLike_stream,
+} from "../../computations.js";
+import { bindMethod, invoke, pipe, returns } from "../../functions.js";
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
@@ -34,7 +37,7 @@ testModule(
         capacity: 1,
       });
 
-      const enqueueSubscription = pipe(
+      pipe(
         Computation.generate<Observable.Computation>(Observable)(
           increment,
           returns(-1),
@@ -42,7 +45,8 @@ testModule(
         ),
         Observable.takeFirst<number>({ count: 5 }),
         Observable.toPauseableEventSource(vts),
-        PauseableEventSource.enqueue(dest),
+        PauseableEventSource.toProducer(),
+        invoke(ProducerLike_consume, dest),
       );
 
       const result: number[] = [];
@@ -54,8 +58,8 @@ testModule(
 
       vts[VirtualTimeSchedulerLike_run]();
 
-      pipe(enqueueSubscription[DisposableLike_isDisposed], expectTrue());
-      pipe(enqueueSubscription[DisposableLike_error], expectIsNone);
+      pipe(dest[DisposableLike_isDisposed], expectTrue());
+      pipe(dest[DisposableLike_error], expectIsNone);
       pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
     }),
   ),

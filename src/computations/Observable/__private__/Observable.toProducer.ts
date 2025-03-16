@@ -41,7 +41,7 @@ const Observable_toProducer: Observable.Signature["toProducer"] =
       },
     );
 
-    class Producer implements ProducerLike<T> {
+    class ProducerFromObservable implements ProducerLike<T> {
       public readonly [ComputationLike_isPure]?: boolean;
       public readonly [ComputationLike_isDeferred]?: boolean;
       public readonly [ComputationLike_isSynchronous]?: boolean;
@@ -62,7 +62,7 @@ const Observable_toProducer: Observable.Signature["toProducer"] =
     }
 
     return (scheduler: SchedulerLike) => (observable: ObservableLike<T>) =>
-      newInstance(Producer, observable, scheduler);
+      newInstance(ProducerFromObservable, observable, scheduler);
   })();
 
 export default Observable_toProducer;

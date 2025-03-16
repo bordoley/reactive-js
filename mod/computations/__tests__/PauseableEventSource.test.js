@@ -54,8 +54,8 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 });
 import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectIsNone, expectTrue, test, testModule, } from "../../__internal__/testing.js";
-import { StreamableLike_stream } from "../../computations.js";
-import { bindMethod, pipe, returns } from "../../functions.js";
+import { ProducerLike_consume, StreamableLike_stream, } from "../../computations.js";
+import { bindMethod, invoke, pipe, returns } from "../../functions.js";
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import { DisposableLike_error, DisposableLike_isDisposed, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
@@ -71,12 +71,12 @@ testModule("PauseableEventSource", describe("enqueue", test("a pauseable observa
             backpressureStrategy: ThrowBackpressureStrategy,
             capacity: 1,
         });
-        const enqueueSubscription = pipe(Computation.generate(Observable)(increment, returns(-1), { delay: 1, delayStart: true }), Observable.takeFirst({ count: 5 }), Observable.toPauseableEventSource(vts), PauseableEventSource.enqueue(dest));
+        pipe(Computation.generate(Observable)(increment, returns(-1), { delay: 1, delayStart: true }), Observable.takeFirst({ count: 5 }), Observable.toPauseableEventSource(vts), PauseableEventSource.toProducer(), invoke(ProducerLike_consume, dest));
         const result = [];
         pipe(dest, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
-        pipe(enqueueSubscription[DisposableLike_isDisposed], expectTrue());
-        pipe(enqueueSubscription[DisposableLike_error], expectIsNone);
+        pipe(dest[DisposableLike_isDisposed], expectTrue());
+        pipe(dest[DisposableLike_error], expectIsNone);
         pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
     }
     catch (e_1) {

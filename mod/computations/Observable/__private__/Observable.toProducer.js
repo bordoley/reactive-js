@@ -15,7 +15,7 @@ const Observable_toProducer =
         init(DelegatingConsumerMixin(), this, consumer);
         return this;
     });
-    class Producer {
+    class ProducerFromObservable {
         o;
         s;
         [ComputationLike_isPure];
@@ -33,6 +33,6 @@ const Observable_toProducer =
             this.o[ObservableLike_observe](observer);
         }
     }
-    return (scheduler) => (observable) => newInstance(Producer, observable, scheduler);
+    return (scheduler) => (observable) => newInstance(ProducerFromObservable, observable, scheduler);
 })();
 export default Observable_toProducer;

@@ -1,11 +1,11 @@
-import { EventSourceLike, PauseableEventSourceLike } from "../computations.js";
+import { EventSourceLike, PauseableEventSourceLike, ProducerLike } from "../computations.js";
 import { Function1 } from "../functions.js";
-import { ConsumerLike, DisposableLike } from "../utils.js";
+import { DisposableLike } from "../utils.js";
 interface PauseableEventSourceModule {
     create<T>(op: Function1<EventSourceLike<boolean> & DisposableLike, EventSourceLike<T>>): PauseableEventSourceLike<T> & DisposableLike;
-    enqueue<T>(queue: ConsumerLike<T>): Function1<PauseableEventSourceLike<T>, EventSourceLike<T> & DisposableLike>;
+    toProducer<T>(): Function1<PauseableEventSourceLike<T>, ProducerLike<T>>;
 }
 export type Signature = PauseableEventSourceModule;
 export declare const create: Signature["create"];
-export declare const enqueue: Signature["enqueue"];
+export declare const toProducer: Signature["toProducer"];
 export {};

@@ -1,8 +1,8 @@
 /// <reference types="./PauseableEventSource.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
-import { EventSourceLike_addEventListener, StoreLike_value, } from "../computations.js";
-import { bindMethod, none, pipe } from "../functions.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ProducerLike_consume, StoreLike_value, } from "../computations.js";
+import { bindMethod, newInstance, none, pipe, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import { ConsumerLike_addOnReadyListener, ConsumerLike_isReady, EventListenerLike_notify, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } from "../utils.js";
@@ -28,14 +28,27 @@ export const create = /*@__PURE__*/ (() => {
         },
     });
 })();
-export const enqueue = (queue) => (src) => EventSource.create((listener) => {
-    pipe(queue[ConsumerLike_addOnReadyListener](bindMethod(src, PauseableLike_resume)), Disposable.addTo(listener));
-    pipe(src, EventSource.addEventHandler(v => {
-        queue[EventListenerLike_notify](v);
-        if (!queue[ConsumerLike_isReady]) {
-            src[PauseableLike_pause]();
+class ProducerFromPauseableEventSource {
+    e;
+    [ComputationLike_isPure] = true;
+    [ComputationLike_isDeferred] = false;
+    [ComputationLike_isSynchronous] = false;
+    constructor(e) {
+        this.e = e;
+    }
+    [ProducerLike_consume](consumer) {
+        const src = this.e;
+        src[PauseableLike_pause]();
+        consumer[ConsumerLike_addOnReadyListener](bindMethod(src, PauseableLike_resume));
+        pipe(src, EventSource.addEventHandler(v => {
+            consumer[EventListenerLike_notify](v);
+            if (!consumer[ConsumerLike_isReady]) {
+                src[PauseableLike_pause]();
+            }
+        }), Disposable.addTo(consumer));
+        if (consumer[ConsumerLike_isReady]) {
+            src[PauseableLike_resume]();
         }
-    }), Disposable.addTo(listener));
-    src[EventSourceLike_addEventListener](listener);
-    src[PauseableLike_resume]();
-});
+    }
+}
+export const toProducer = () => (pauseable) => newInstance(ProducerFromPauseableEventSource, pauseable);

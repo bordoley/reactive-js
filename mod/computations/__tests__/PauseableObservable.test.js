@@ -54,8 +54,8 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 });
 import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectTrue, test, testModule, } from "../../__internal__/testing.js";
-import { StreamableLike_stream } from "../../computations.js";
-import { bindMethod, pipe, returns } from "../../functions.js";
+import { ProducerLike_consume, StreamableLike_stream, } from "../../computations.js";
+import { bindMethod, invoke, pipe, returns } from "../../functions.js";
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import { DisposableLike_isDisposed, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
@@ -63,7 +63,7 @@ import * as Computation from "../Computation.js";
 import * as Observable from "../Observable.js";
 import * as PauseableObservable from "../PauseableObservable.js";
 import * as Streamable from "../Streamable.js";
-testModule("PauseableObservable", describe("enqueue", test("a pauseable observable enqueueing into a stream with backpressure", () => {
+testModule("PauseableObservable", describe("toProducer", test("a pauseable observable enqueueing into a stream with backpressure", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);
@@ -71,11 +71,11 @@ testModule("PauseableObservable", describe("enqueue", test("a pauseable observab
             backpressureStrategy: ThrowBackpressureStrategy,
             capacity: 1,
         });
-        const enqueueSubscription = pipe(Computation.generate(Observable)(increment, returns(-1), { delay: 1, delayStart: true }), Observable.takeFirst({ count: 5 }), Observable.toPauseableObservable(vts), PauseableObservable.enqueue(dest), Observable.subscribe(vts));
+        pipe(Computation.generate(Observable)(increment, returns(-1), { delay: 1, delayStart: true }), Observable.takeFirst({ count: 5 }), Observable.toPauseableObservable(vts), PauseableObservable.toProducer(vts), invoke(ProducerLike_consume, dest));
         const result = [];
         pipe(dest, Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
         vts[VirtualTimeSchedulerLike_run]();
-        pipe(enqueueSubscription[DisposableLike_isDisposed], expectTrue());
+        pipe(dest[DisposableLike_isDisposed], expectTrue());
         pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
     }
     catch (e_1) {

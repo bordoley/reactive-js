@@ -5,15 +5,24 @@ import {
   props,
 } from "../__internal__/mixins.js";
 import {
-  DeferredObservableWithSideEffectsLike,
+  ComputationLike_isDeferred,
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
   EventSourceLike,
   MulticastObservableLike,
-  ObservableLike_observe,
   PauseableObservableLike,
+  ProducerLike,
+  ProducerLike_consume,
   StoreLike_value,
   WritableStoreLike,
 } from "../computations.js";
-import { Function1, bindMethod, invoke, none, pipe } from "../functions.js";
+import {
+  Function1,
+  bindMethod,
+  newInstance,
+  none,
+  pipe,
+} from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
@@ -25,9 +34,10 @@ import {
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
+  SchedulerLike,
 } from "../utils.js";
-import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
+import Observable_subscribe from "./Observable/__private__/Observable.subscribe.js";
 import * as WritableStore from "./WritableStore.js";
 import DelegatingMulticastObservableMixin from "./__mixins__/DelegatingMulticastObservableMixin.js";
 
@@ -36,12 +46,9 @@ interface PauseableObservableModule {
     op: Function1<EventSourceLike<boolean>, MulticastObservableLike<T>>,
   ): PauseableObservableLike<T> & DisposableLike;
 
-  enqueue<T>(
-    queue: ConsumerLike<T>,
-  ): Function1<
-    PauseableObservableLike<T>,
-    DeferredObservableWithSideEffectsLike<T>
-  >;
+  toProducer<T>(
+    scheduler: SchedulerLike,
+  ): Function1<PauseableObservableLike<T>, ProducerLike<T>>;
 }
 
 export type Signature = PauseableObservableModule;
@@ -87,28 +94,45 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
   );
 })();
 
-export const enqueue: Signature["enqueue"] =
-  <T>(queue: ConsumerLike<T>) =>
-  (src: PauseableObservableLike<T>) =>
-    Observable_create<T>(observer => {
-      pipe(
-        queue[ConsumerLike_addOnReadyListener](
-          bindMethod(src, PauseableLike_resume),
-        ),
-        Disposable.addTo(observer),
-      );
+class ProducerFromPauseableObservable<T> implements ProducerLike<T> {
+  public readonly [ComputationLike_isPure] = true;
+  public readonly [ComputationLike_isDeferred] = false;
+  public readonly [ComputationLike_isSynchronous] = false;
 
-      pipe(
-        src,
-        Observable_forEach<T>(v => {
-          queue[EventListenerLike_notify](v);
+  constructor(
+    private readonly o: PauseableObservableLike<T>,
+    private readonly s: SchedulerLike,
+  ) {}
 
-          if (!queue[ConsumerLike_isReady]) {
-            src[PauseableLike_pause]();
-          }
-        }),
-        invoke(ObservableLike_observe, observer),
-      );
+  [ProducerLike_consume](consumer: ConsumerLike<T>): void {
+    const src = this.o;
+    const scheduler = this.s;
 
+    src[PauseableLike_pause]();
+
+    consumer[ConsumerLike_addOnReadyListener](
+      bindMethod(src, PauseableLike_resume),
+    );
+
+    pipe(
+      src,
+      Observable_forEach<T>(v => {
+        consumer[EventListenerLike_notify](v);
+
+        if (!consumer[ConsumerLike_isReady]) {
+          src[PauseableLike_pause]();
+        }
+      }),
+      Observable_subscribe(scheduler),
+    );
+
+    if (consumer[ConsumerLike_isReady]) {
       src[PauseableLike_resume]();
-    });
+    }
+  }
+}
+
+export const toProducer: Signature["toProducer"] =
+  <T>(scheduler: SchedulerLike) =>
+  (pauseable: PauseableObservableLike<T>) =>
+    newInstance(ProducerFromPauseableObservable, pauseable, scheduler);

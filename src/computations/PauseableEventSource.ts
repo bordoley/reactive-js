@@ -5,13 +5,23 @@ import {
   props,
 } from "../__internal__/mixins.js";
 import {
+  ComputationLike_isDeferred,
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
   EventSourceLike,
-  EventSourceLike_addEventListener,
   PauseableEventSourceLike,
+  ProducerLike,
+  ProducerLike_consume,
   StoreLike_value,
   WritableStoreLike,
 } from "../computations.js";
-import { Function1, bindMethod, none, pipe } from "../functions.js";
+import {
+  Function1,
+  bindMethod,
+  newInstance,
+  none,
+  pipe,
+} from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
@@ -19,7 +29,6 @@ import {
   ConsumerLike_addOnReadyListener,
   ConsumerLike_isReady,
   DisposableLike,
-  EventListenerLike,
   EventListenerLike_notify,
   PauseableLike_isPaused,
   PauseableLike_pause,
@@ -37,12 +46,7 @@ interface PauseableEventSourceModule {
     >,
   ): PauseableEventSourceLike<T> & DisposableLike;
 
-  enqueue<T>(
-    queue: ConsumerLike<T>,
-  ): Function1<
-    PauseableEventSourceLike<T>,
-    EventSourceLike<T> & DisposableLike
-  >;
+  toProducer<T>(): Function1<PauseableEventSourceLike<T>, ProducerLike<T>>;
 }
 
 export type Signature = PauseableEventSourceModule;
@@ -90,30 +94,41 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
   );
 })();
 
-export const enqueue: Signature["enqueue"] =
-  <T>(queue: ConsumerLike<T>) =>
-  (src: PauseableEventSourceLike<T>) =>
-    EventSource.create((listener: EventListenerLike<T>) => {
-      pipe(
-        queue[ConsumerLike_addOnReadyListener](
-          bindMethod(src, PauseableLike_resume),
-        ),
-        Disposable.addTo(listener),
-      );
+class ProducerFromPauseableEventSource<T> implements ProducerLike<T> {
+  public readonly [ComputationLike_isPure] = true;
+  public readonly [ComputationLike_isDeferred] = false;
+  public readonly [ComputationLike_isSynchronous] = false;
 
-      pipe(
-        src,
-        EventSource.addEventHandler(v => {
-          queue[EventListenerLike_notify](v);
+  constructor(private readonly e: PauseableEventSourceLike<T>) {}
 
-          if (!queue[ConsumerLike_isReady]) {
-            src[PauseableLike_pause]();
-          }
-        }),
-        Disposable.addTo(listener),
-      );
+  [ProducerLike_consume](consumer: ConsumerLike<T>): void {
+    const src = this.e;
 
-      src[EventSourceLike_addEventListener](listener);
+    src[PauseableLike_pause]();
 
+    consumer[ConsumerLike_addOnReadyListener](
+      bindMethod(src, PauseableLike_resume),
+    );
+
+    pipe(
+      src,
+      EventSource.addEventHandler(v => {
+        consumer[EventListenerLike_notify](v);
+
+        if (!consumer[ConsumerLike_isReady]) {
+          src[PauseableLike_pause]();
+        }
+      }),
+      Disposable.addTo(consumer),
+    );
+
+    if (consumer[ConsumerLike_isReady]) {
       src[PauseableLike_resume]();
-    });
+    }
+  }
+}
+
+export const toProducer: Signature["toProducer"] =
+  <T>() =>
+  (pauseable: PauseableEventSourceLike<T>) =>
+    newInstance(ProducerFromPauseableEventSource, pauseable);
