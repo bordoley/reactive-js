@@ -18,13 +18,15 @@ const Observable_toProducer =
     class Producer {
         o;
         s;
-        [ComputationLike_isDeferred] = true;
-        [ComputationLike_isSynchronous] = false;
         [ComputationLike_isPure];
+        [ComputationLike_isDeferred];
+        [ComputationLike_isSynchronous];
         constructor(o, s) {
             this.o = o;
             this.s = s;
             this[ComputationLike_isPure] = Computation.isPure(o);
+            this[ComputationLike_isDeferred] = Computation.isDeferred(o);
+            this[ComputationLike_isSynchronous] = Computation.isSynchronous(o);
         }
         [ProducerLike_consume](consumer) {
             const observer = createProducerConsumerObserver(this.s, consumer);

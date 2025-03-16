@@ -381,9 +381,7 @@ export declare const ProducerLike_consume: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface ProducerLike<out T = unknown> extends DeferredComputationLike {
-    readonly [ComputationLike_isDeferred]: true;
-    readonly [ComputationLike_isSynchronous]: false;
+export interface ProducerLike<out T = unknown> extends ComputationLike {
     [ProducerLike_consume](consumer: QueueableLike<T>): void;
 }
 /**

@@ -42,16 +42,17 @@ const Observable_toProducer: Observable.Signature["toProducer"] =
     );
 
     class Producer implements ProducerLike<T> {
-      public readonly [ComputationLike_isDeferred]: true = true as const;
-      public readonly [ComputationLike_isSynchronous]: false = false as const;
-
       public readonly [ComputationLike_isPure]?: boolean;
+      public readonly [ComputationLike_isDeferred]?: boolean;
+      public readonly [ComputationLike_isSynchronous]?: boolean;
 
       constructor(
         private readonly o: ObservableLike<T>,
         private readonly s: SchedulerLike,
       ) {
         this[ComputationLike_isPure] = Computation.isPure(o);
+        this[ComputationLike_isDeferred] = Computation.isDeferred(o);
+        this[ComputationLike_isSynchronous] = Computation.isSynchronous(o);
       }
 
       [ProducerLike_consume](consumer: QueueableLike<T>): void {
