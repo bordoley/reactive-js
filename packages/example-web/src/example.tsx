@@ -62,6 +62,11 @@ import {
 import * as AnimationFrameScheduler from "@reactive-js/core/web/AnimationFrameScheduler";
 import * as Cache from "@reactive-js/core/computations/Cache";
 import { increment, scale } from "@reactive-js/core/math";
+import * as Computation from "@reactive-js/core/computations/Computation";
+
+const ObservableModule = {
+  gen: Observable.gen,
+};
 
 const AnimatedBox = ({
   animation,
@@ -183,7 +188,10 @@ const Counter = () => {
 
   const counter = useDisposable(
     pipeLazy(
-      Observable.generate(increment, returns(counterInitialValue ?? -1)),
+      Computation.generate<Observable.Computation>(ObservableModule)(
+        increment,
+        returns(counterInitialValue ?? -1),
+      ),
       Observable.forEach<number>(value =>
         history.replace((uri: WindowLocationURI) => ({
           ...uri,
