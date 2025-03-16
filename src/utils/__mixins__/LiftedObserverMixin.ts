@@ -24,6 +24,10 @@ import {
 } from "../../functions.js";
 import {
   BackpressureStrategy,
+  ConsumerLike_addOnReadyListener,
+  ConsumerLike_backpressureStrategy,
+  ConsumerLike_capacity,
+  ConsumerLike_isReady,
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DisposableLike,
@@ -33,10 +37,6 @@ import {
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
-  QueueableLike_addOnReadyListener,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-  QueueableLike_isReady,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -133,7 +133,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
     while (this[QueueLike_count] > 0 && !this[DisposableLike_isDisposed]) {
       // Avoid dequeing values if the downstream consumer
       // is applying backpressure.
-      if (!consumer[QueueableLike_isReady]) {
+      if (!consumer[ConsumerLike_isReady]) {
         // Set up the onReady listener
         scheduleDrainQueue(this);
         break;
@@ -164,7 +164,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
     ) => {
       const consumer = observer[LiftedObserverMixin_consumer];
       return pipe(
-        consumer[QueueableLike_addOnReadyListener](
+        consumer[ConsumerLike_addOnReadyListener](
           pipeLazy(observer, scheduleDrainQueue),
         ),
         Disposable.addTo(observer),
@@ -180,7 +180,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
       LiftedObserverLike<TA, TB>,
   ) => {
     const consumer = observer[LiftedObserverMixin_consumer];
-    const isConsumerReady = consumer[QueueableLike_isReady];
+    const isConsumerReady = consumer[ConsumerLike_isReady];
     const isConumerDisposed = consumer[DisposableLike_isDisposed];
     const isDrainScheduled =
       !observer[SerialDisposableLike_current][DisposableLike_isDisposed];
@@ -224,11 +224,11 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         | keyof DisposableLike
         | keyof SchedulerLike
         | typeof SchedulerLike_inContinuation
-        | typeof QueueableLike_isReady
+        | typeof ConsumerLike_isReady
         | typeof SinkLike_isCompleted
-        | typeof QueueableLike_addOnReadyListener
-        | typeof QueueableLike_backpressureStrategy
-        | typeof QueueableLike_capacity
+        | typeof ConsumerLike_addOnReadyListener
+        | typeof ConsumerLike_backpressureStrategy
+        | typeof ConsumerLike_capacity
         | typeof SchedulerLike_inContinuation
         | typeof LiftedObserverLike_notify
         | typeof LiftedObserverLike_complete
@@ -253,11 +253,11 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         this: TProperties &
           Omit<
             LiftedObserverLike<TA, TB>,
-            | typeof QueueableLike_isReady
+            | typeof ConsumerLike_isReady
             | typeof SinkLike_isCompleted
-            | typeof QueueableLike_addOnReadyListener
-            | typeof QueueableLike_backpressureStrategy
-            | typeof QueueableLike_capacity
+            | typeof ConsumerLike_addOnReadyListener
+            | typeof ConsumerLike_backpressureStrategy
+            | typeof ConsumerLike_capacity
             | typeof SchedulerLike_maxYieldInterval
             | typeof SchedulerLike_inContinuation
             | typeof SchedulerLike_now
@@ -272,8 +272,8 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         }>,
       ): LiftedObserverLike<TA, TB> {
         init(QueueMixin<TA>(), this, {
-          backpressureStrategy: delegate[QueueableLike_backpressureStrategy],
-          capacity: delegate[QueueableLike_capacity],
+          backpressureStrategy: delegate[ConsumerLike_backpressureStrategy],
+          capacity: delegate[ConsumerLike_capacity],
           ...(options ?? {}),
         });
         init(SerialDisposableMixin(), this, Disposable.disposed);
@@ -309,7 +309,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
       proto({
         get [LiftedObserverLike_isReady]() {
           unsafeCast<TProperties>(this);
-          return this[LiftedObserverMixin_consumer][QueueableLike_isReady];
+          return this[LiftedObserverMixin_consumer][ConsumerLike_isReady];
         },
 
         [EventListenerLike_notify](
@@ -328,9 +328,9 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           // wants to apply back pressure, as lifted observers just pass through
           // notifications and never queue in practice.
           const scheduler = this[LiftedObserverMixin_consumer];
-          const isDelegateReady = scheduler[QueueableLike_isReady];
+          const isDelegateReady = scheduler[ConsumerLike_isReady];
           const count = this[QueueLike_count];
-          const capacity = this[QueueableLike_capacity];
+          const capacity = this[ConsumerLike_capacity];
 
           const shouldNotify =
             inSchedulerContinuation &&

@@ -29,7 +29,7 @@ const createBackpressureObserver: <T>(
       },
     ): ObserverLike<T> {
       // Wrap the delegate in a delegating observer to prevent
-      // notifications from bypassing the backpressure queue.
+      // notifications from bypassing the backpressure checks.
       // LiftedObserverMixin bypasses EventListnerLike_notify calls
       // when chained. The delegate here prevents it from doing so.
       const wrappedDelegate = DelegatingObserver.create(delegate);

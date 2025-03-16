@@ -17,14 +17,14 @@ import { Function1, bindMethod, invoke, none, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
+  ConsumerLike,
+  ConsumerLike_addOnReadyListener,
+  ConsumerLike_isReady,
   DisposableLike,
   EventListenerLike_notify,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
-  QueueableLike,
-  QueueableLike_addOnReadyListener,
-  QueueableLike_isReady,
 } from "../utils.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
@@ -37,7 +37,7 @@ interface PauseableObservableModule {
   ): PauseableObservableLike<T> & DisposableLike;
 
   enqueue<T>(
-    queue: QueueableLike<T>,
+    queue: ConsumerLike<T>,
   ): Function1<
     PauseableObservableLike<T>,
     DeferredObservableWithSideEffectsLike<T>
@@ -88,11 +88,11 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
 })();
 
 export const enqueue: Signature["enqueue"] =
-  <T>(queue: QueueableLike<T>) =>
+  <T>(queue: ConsumerLike<T>) =>
   (src: PauseableObservableLike<T>) =>
     Observable_create<T>(observer => {
       pipe(
-        queue[QueueableLike_addOnReadyListener](
+        queue[ConsumerLike_addOnReadyListener](
           bindMethod(src, PauseableLike_resume),
         ),
         Disposable.addTo(observer),
@@ -103,7 +103,7 @@ export const enqueue: Signature["enqueue"] =
         Observable_forEach<T>(v => {
           queue[EventListenerLike_notify](v);
 
-          if (!queue[QueueableLike_isReady]) {
+          if (!queue[ConsumerLike_isReady]) {
             src[PauseableLike_pause]();
           }
         }),

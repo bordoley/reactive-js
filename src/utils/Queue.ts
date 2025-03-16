@@ -10,12 +10,12 @@ import {
 import { Comparator, Optional } from "../functions.js";
 import {
   BackpressureStrategy,
+  ConsumerLike,
+  ConsumerLike_capacity,
+  ConsumerLike_isReady,
   DropOldestBackpressureStrategy,
   OverflowBackpressureStrategy,
   QueueLike,
-  QueueableLike,
-  QueueableLike_capacity,
-  QueueableLike_isReady,
   SinkLike_isCompleted,
 } from "../utils.js";
 import DisposableMixin from "./__mixins__/DisposableMixin.js";
@@ -111,14 +111,14 @@ export const createDropOldestWithoutBackpressure: <T>(
     },
     props(),
     proto({
-      get [QueueableLike_isReady](): boolean {
-        unsafeCast<QueueableLike<T>>(this);
+      get [ConsumerLike_isReady](): boolean {
+        unsafeCast<ConsumerLike<T>>(this);
         const isCompleted = this[SinkLike_isCompleted];
 
         return !isCompleted;
       },
 
-      get [QueueableLike_capacity](): number {
+      get [ConsumerLike_capacity](): number {
         return MAX_SAFE_INTEGER;
       },
     }),

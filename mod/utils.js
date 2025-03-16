@@ -20,10 +20,10 @@ export const DropLatestBackpressureStrategy = "drop-latest";
 export const DropOldestBackpressureStrategy = "drop-oldest";
 export const OverflowBackpressureStrategy = "overflow";
 export const ThrowBackpressureStrategy = "throw";
-export const QueueableLike_backpressureStrategy = Symbol("QueueableLike_backpressureStrategy");
-export const QueueableLike_capacity = Symbol("QueueableLike_capacity");
-export const QueueableLike_isReady = Symbol("QueueableLike_isReady");
-export const QueueableLike_addOnReadyListener = Symbol("QueueableLike_addOnReadyListener");
+export const ConsumerLike_backpressureStrategy = Symbol("ConsumerLike_backpressureStrategy");
+export const ConsumerLike_capacity = Symbol("ConsumerLike_capacity");
+export const ConsumerLike_isReady = Symbol("ConsumerLike_isReady");
+export const ConsumerLike_addOnReadyListener = Symbol("ConsumerLike_addOnReadyListener");
 export const QueueLike_head = Symbol("QueueLike_head");
 export const QueueLike_dequeue = Symbol("QueueLike_dequeue");
 export const QueueLike_count = Symbol("QueueLike_count");
@@ -31,12 +31,12 @@ export const QueueLike_count = Symbol("QueueLike_count");
  * @noInheritDoc
  */
 export class BackPressureError extends Error {
-    [QueueableLike_capacity];
-    [QueueableLike_backpressureStrategy];
+    [ConsumerLike_capacity];
+    [ConsumerLike_backpressureStrategy];
     constructor(capacity, backpressureStrategy) {
         super();
-        this[QueueableLike_capacity] = capacity;
-        this[QueueableLike_backpressureStrategy] = backpressureStrategy;
+        this[ConsumerLike_capacity] = capacity;
+        this[ConsumerLike_backpressureStrategy] = backpressureStrategy;
     }
 }
 export const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");

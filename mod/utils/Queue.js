@@ -2,7 +2,7 @@
 
 import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../__internal__/mixins.js";
-import { DropOldestBackpressureStrategy, OverflowBackpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SinkLike_isCompleted, } from "../utils.js";
+import { ConsumerLike_capacity, ConsumerLike_isReady, DropOldestBackpressureStrategy, OverflowBackpressureStrategy, SinkLike_isCompleted, } from "../utils.js";
 import DisposableMixin from "./__mixins__/DisposableMixin.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
 const createInternal = /*@__PURE__*/ (() => {
@@ -35,12 +35,12 @@ export const createDropOldestWithoutBackpressure = /*@__PURE__*/ (() => mixInsta
     });
     return this;
 }, props(), proto({
-    get [QueueableLike_isReady]() {
+    get [ConsumerLike_isReady]() {
         unsafeCast(this);
         const isCompleted = this[SinkLike_isCompleted];
         return !isCompleted;
     },
-    get [QueueableLike_capacity]() {
+    get [ConsumerLike_capacity]() {
         return MAX_SAFE_INTEGER;
     },
 })))();

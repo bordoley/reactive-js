@@ -47,10 +47,11 @@ import {
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Queue from "../utils/Queue.js";
+import DelegatingConsumerMixin from "../utils/__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
-import DelegatingQueueableMixin from "../utils/__mixins__/DelegatingQueueableMixin.js";
 import {
   BackpressureStrategy,
+  ConsumerLike,
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DisposableContainerLike,
@@ -58,13 +59,12 @@ import {
   DisposableLike_isDisposed,
   EventListenerLike_notify,
   QueueLike_dequeue,
-  QueueableLike,
   SchedulerLike,
   SchedulerLike_schedule,
 } from "../utils.js";
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
-import * as QueueableObservable from "./__internal__/QueueableObservable.js";
+import * as ConsumerObservable from "./__internal__/ConsumerObservable.js";
 
 export const CacheLike_get = Symbol("CacheLike_get");
 
@@ -72,7 +72,7 @@ export const CacheLike_get = Symbol("CacheLike_get");
  * @noInheritDoc
  */
 export interface CacheLike<T>
-  extends QueueableLike<ReadonlyObjectMapLike<string, Updater<Optional<T>>>>,
+  extends ConsumerLike<ReadonlyObjectMapLike<string, Updater<Optional<T>>>>,
     DisposableContainerLike {
   [CacheLike_get](index: string): ObservableLike<T>;
 }
@@ -138,7 +138,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
   return mixInstanceFactory(
     include(
       DelegatingDisposableMixin,
-      DelegatingQueueableMixin<
+      DelegatingConsumerMixin<
         ReadonlyObjectMapLike<
           string,
           ReadonlyObjectMapLike<string, Updater<Optional<T>>>
@@ -171,8 +171,8 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
         persistentStore,
       } = options ?? {};
 
-      const queue =
-        QueueableObservable.create<
+      const consumer =
+        ConsumerObservable.create<
           ReadonlyObjectMapLike<string, Updater<Optional<T>>>
         >(options);
 
@@ -181,7 +181,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
         newInstance<Map<string, SubjectLike<Optional<T>>>>(Map);
       const cleanupQueue = pipe(
         Queue.create<string>(),
-        Disposable.addTo(queue),
+        Disposable.addTo(consumer),
       );
 
       const cleanupContinuation = (ctx: ContinuationContextLike) => {
@@ -199,7 +199,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
       };
 
       pipe(
-        queue,
+        consumer,
         Observable.map(
           (
             updaters: ReadonlyObjectMapLike<
@@ -322,7 +322,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
             )
           : Computation.ignoreElements(ObservableModule)(),
         Observable.subscribe(scheduler),
-        Disposable.addTo(queue),
+        Disposable.addTo(consumer),
       );
 
       let cleanupJob = Disposable.disposed;
@@ -344,13 +344,13 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
       };
 
-      init(DelegatingDisposableMixin, this, queue);
+      init(DelegatingDisposableMixin, this, consumer);
       init(
-        DelegatingQueueableMixin<
+        DelegatingConsumerMixin<
           ReadonlyObjectMapLike<string, Function1<Optional<T>, T>>
         >(),
         this,
-        queue,
+        consumer,
       );
 
       return this;

@@ -7,7 +7,7 @@ import { alwaysTrue, bindMethod, error, invoke, isFunction, isNone, isSome, newI
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, QueueableLike_isReady, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SinkLike_complete, } from "../utils.js";
+import { ConsumerLike_isReady, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SinkLike_complete, } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource/__private__/EventSource.create.js";
@@ -466,7 +466,7 @@ export const toPauseableObservable = (scheduler, options) => (iterable) => Pause
                     break;
                 }
                 else if ((observer[EventListenerLike_notify](next[Iterator_value]),
-                    !observer[QueueableLike_isReady])) {
+                    !observer[ConsumerLike_isReady])) {
                     // An async iterable can produce resolved promises which are immediately
                     // scheduled on the microtask queue. This prevents the observer's scheduler
                     // from running and draining queued events.

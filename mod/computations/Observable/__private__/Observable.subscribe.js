@@ -7,24 +7,24 @@ import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingSchedulerMixin from "../../../utils/__mixins__/DelegatingSchedulerMixin.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, OverflowBackpressureStrategy, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, OverflowBackpressureStrategy, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 const Observable_subscribe = /*@__PURE__*/ (() => {
     const createSubscribeObserver = mixInstanceFactory(include(DisposableMixin, DelegatingSchedulerMixin), function SubscribeObserver(scheduler) {
         init(DisposableMixin, this);
         init(DelegatingSchedulerMixin, this, scheduler);
         return this;
     }, props(), proto({
-        [QueueableLike_capacity]: MAX_SAFE_INTEGER,
-        [QueueableLike_backpressureStrategy]: OverflowBackpressureStrategy,
+        [ConsumerLike_capacity]: MAX_SAFE_INTEGER,
+        [ConsumerLike_backpressureStrategy]: OverflowBackpressureStrategy,
         get [SinkLike_isCompleted]() {
             unsafeCast(this);
             return this[DisposableLike_isDisposed];
         },
-        get [QueueableLike_isReady]() {
+        get [ConsumerLike_isReady]() {
             unsafeCast(this);
             return !this[DisposableLike_isDisposed];
         },
-        [QueueableLike_addOnReadyListener](_) {
+        [ConsumerLike_addOnReadyListener](_) {
             return Disposable.disposed;
         },
         [EventListenerLike_notify](_) { },

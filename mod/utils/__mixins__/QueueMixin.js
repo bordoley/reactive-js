@@ -6,7 +6,7 @@ import EventSource_addEventHandler from "../../computations/EventSource/__privat
 import * as Publisher from "../../computations/Publisher.js";
 import { isSome, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
-import { BackPressureError, DisposableLike_dispose, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../utils.js";
+import { BackPressureError, ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, DisposableLike_dispose, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 const QueueMixin = /*@__PURE__*/ (() => {
     const QueueMixin_autoDispose = Symbol("QueueMixin_autoDispose");
@@ -63,11 +63,11 @@ const QueueMixin = /*@__PURE__*/ (() => {
         [SinkLike_isCompleted]: false,
         [QueueMixin_onReadyPublisher]: none,
     }), {
-        get [QueueableLike_capacity]() {
+        get [ConsumerLike_capacity]() {
             unsafeCast(this);
             return this[QueueMixin_capacity];
         },
-        get [QueueableLike_backpressureStrategy]() {
+        get [ConsumerLike_backpressureStrategy]() {
             unsafeCast(this);
             return this[QueueMixin_backpressureStrategy];
         },
@@ -89,7 +89,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
 
           return head === tail ? none : values[index];
         },*/
-        get [QueueableLike_isReady]() {
+        get [ConsumerLike_isReady]() {
             unsafeCast(this);
             const count = this[QueueLike_count];
             const capacity = this[QueueMixin_capacity];
@@ -294,7 +294,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
                 this[DisposableLike_dispose]();
             }
         },
-        [QueueableLike_addOnReadyListener](callback) {
+        [ConsumerLike_addOnReadyListener](callback) {
             const publisher = this[QueueMixin_onReadyPublisher];
             this[QueueMixin_onReadyPublisher] =
                 publisher ?? pipe(Publisher.create(), Disposable.addTo(this));

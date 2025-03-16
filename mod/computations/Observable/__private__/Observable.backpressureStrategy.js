@@ -8,7 +8,7 @@ import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.j
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 const createBackpressureObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function BackpressureObserver(delegate, options) {
     // Wrap the delegate in a delegating observer to prevent
-    // notifications from bypassing the backpressure queue.
+    // notifications from bypassing the backpressure checks.
     // LiftedObserverMixin bypasses EventListnerLike_notify calls
     // when chained. The delegate here prevents it from doing so.
     const wrappedDelegate = DelegatingObserver.create(delegate);

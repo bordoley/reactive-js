@@ -63,7 +63,7 @@ import { StreamableLike_stream } from "../../computations.js";
 import { bindMethod, invoke, none, pipe, pipeSome, returns, } from "../../functions.js";
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
-import { DropLatestBackpressureStrategy, EventListenerLike_notify, QueueableLike_backpressureStrategy, QueueableLike_capacity, SinkLike_complete, SinkLike_isCompleted, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { ConsumerLike_backpressureStrategy, ConsumerLike_capacity, DropLatestBackpressureStrategy, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 testModule("Streamable", describe("animation", test("integration", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
@@ -117,8 +117,8 @@ testModule("Streamable", describe("animation", test("integration", () => {
             capacity: 20,
             backpressureStrategy: DropLatestBackpressureStrategy,
         });
-        pipe(stateStream[QueueableLike_capacity], expectEquals(20));
-        pipe(stateStream[QueueableLike_backpressureStrategy], expectEquals(DropLatestBackpressureStrategy));
+        pipe(stateStream[ConsumerLike_capacity], expectEquals(20));
+        pipe(stateStream[ConsumerLike_backpressureStrategy], expectEquals(DropLatestBackpressureStrategy));
         stateStream[EventListenerLike_notify](returns(2));
         stateStream[EventListenerLike_notify](returns(3));
         stateStream[SinkLike_complete]();

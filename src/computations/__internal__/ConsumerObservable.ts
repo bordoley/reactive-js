@@ -25,63 +25,62 @@ import * as Queue from "../../utils/Queue.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import {
   BackpressureStrategy,
+  ConsumerLike,
+  ConsumerLike_addOnReadyListener,
+  ConsumerLike_backpressureStrategy,
+  ConsumerLike_capacity,
+  ConsumerLike_isReady,
   DisposableLike,
   EventListenerLike_notify,
   ObserverLike,
   QueueLike,
   QueueLike_dequeue,
-  QueueableLike,
-  QueueableLike_addOnReadyListener,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-  QueueableLike_isReady,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 import * as Publisher from "../Publisher.js";
 
-export interface QueueableObservableLike<out T>
+export interface ConsumerObservableLike<out T>
   extends PureDeferredObservableLike<T>,
-    QueueableLike,
+    ConsumerLike,
     DisposableLike {}
 
 export const create: <T>(config?: {
   autoDispose?: boolean;
   capacity?: number;
   backpressureStrategy?: BackpressureStrategy;
-}) => QueueableObservableLike<T> = (<T>() => {
-  const QueueableObservable_delegate = Symbol("QueueableObservable_delegate");
-  const QueueableObservable_onReadyPublisher = Symbol(
-    "QueueableObservable_onReadyPublisher",
+}) => ConsumerObservableLike<T> = (<T>() => {
+  const ConsumerObservable_delegate = Symbol("ConsumerObservable_delegate");
+  const ConsumerObservable_onReadyPublisher = Symbol(
+    "ConsumerObservable_onReadyPublisher",
   );
 
   type TProperties = {
-    [QueueableObservable_delegate]: QueueableLike<T>;
-    [QueueableObservable_onReadyPublisher]: PublisherLike<void>;
+    [ConsumerObservable_delegate]: ConsumerLike<T>;
+    [ConsumerObservable_onReadyPublisher]: PublisherLike<void>;
   };
 
   return mixInstanceFactory(
     include(DisposableMixin),
-    function QueueableObservable(
-      this: Omit<QueueableObservableLike<T>, keyof DisposableLike> &
-        TProperties,
+    function ConsumerObservable(
+      this: Omit<ConsumerObservableLike<T>, keyof DisposableLike> & TProperties,
       config: Optional<{
         autoDispose?: boolean;
         capacity?: number;
         backpressureStrategy?: BackpressureStrategy;
       }>,
-    ): QueueableObservableLike<T> {
+    ): ConsumerObservableLike<T> {
       init(DisposableMixin, this);
 
       const onReadyPublisher = pipe(Publisher.create(), Disposable.addTo(this));
       const queue = pipe(Queue.create(config), Disposable.addTo(this));
 
-      this[QueueableObservable_delegate] = queue;
-      this[QueueableObservable_onReadyPublisher] = onReadyPublisher;
+      this[ConsumerObservable_delegate] = queue;
+      this[ConsumerObservable_onReadyPublisher] = onReadyPublisher;
 
       pipe(
-        queue[QueueableLike_addOnReadyListener](
+        queue[ConsumerLike_addOnReadyListener](
           bindMethod(onReadyPublisher, EventListenerLike_notify),
         ),
         Disposable.addTo(this),
@@ -90,47 +89,47 @@ export const create: <T>(config?: {
       return this;
     },
     props<TProperties>({
-      [QueueableObservable_delegate]: none,
-      [QueueableObservable_onReadyPublisher]: none,
+      [ConsumerObservable_delegate]: none,
+      [ConsumerObservable_onReadyPublisher]: none,
     }),
     {
       [ComputationLike_isDeferred]: true as const,
       [ComputationLike_isSynchronous]: false as const,
 
-      get [QueueableLike_backpressureStrategy]() {
+      get [ConsumerLike_backpressureStrategy]() {
         unsafeCast<TProperties>(this);
-        return this[QueueableObservable_delegate][
-          QueueableLike_backpressureStrategy
+        return this[ConsumerObservable_delegate][
+          ConsumerLike_backpressureStrategy
         ];
       },
 
-      get [QueueableLike_capacity]() {
+      get [ConsumerLike_capacity]() {
         unsafeCast<TProperties>(this);
-        return this[QueueableObservable_delegate][QueueableLike_capacity];
+        return this[ConsumerObservable_delegate][ConsumerLike_capacity];
       },
 
-      get [QueueableLike_isReady]() {
+      get [ConsumerLike_isReady]() {
         unsafeCast<TProperties>(this);
-        return this[QueueableObservable_delegate][QueueableLike_isReady];
+        return this[ConsumerObservable_delegate][ConsumerLike_isReady];
       },
 
       get [SinkLike_isCompleted]() {
         unsafeCast<TProperties>(this);
-        return this[QueueableObservable_delegate][SinkLike_isCompleted];
+        return this[ConsumerObservable_delegate][SinkLike_isCompleted];
       },
 
       [ObservableLike_observe](
-        this: QueueableObservableLike<T> & TProperties,
+        this: ConsumerObservableLike<T> & TProperties,
         observer: ObserverLike<T>,
       ) {
-        const oldDelegate = this[QueueableObservable_delegate];
-        this[QueueableObservable_delegate] = observer;
+        const oldDelegate = this[ConsumerObservable_delegate];
+        this[ConsumerObservable_delegate] = observer;
         pipe(this, Disposable.bindTo(observer));
 
         pipe(
-          observer[QueueableLike_addOnReadyListener](
+          observer[ConsumerLike_addOnReadyListener](
             bindMethod(
-              this[QueueableObservable_onReadyPublisher],
+              this[ConsumerObservable_onReadyPublisher],
               EventListenerLike_notify,
             ),
           ),
@@ -154,19 +153,19 @@ export const create: <T>(config?: {
       },
 
       [SinkLike_complete](this: TProperties & DisposableLike) {
-        this[QueueableObservable_delegate][SinkLike_complete]();
+        this[ConsumerObservable_delegate][SinkLike_complete]();
       },
 
       [EventListenerLike_notify](this: TProperties, v: T): void {
-        this[QueueableObservable_delegate][EventListenerLike_notify](v);
+        this[ConsumerObservable_delegate][EventListenerLike_notify](v);
       },
 
-      [QueueableLike_addOnReadyListener](
+      [ConsumerLike_addOnReadyListener](
         this: TProperties & DisposableLike,
         callback: SideEffect1<void>,
       ) {
         return pipe(
-          this[QueueableObservable_onReadyPublisher],
+          this[ConsumerObservable_onReadyPublisher],
           EventSource.addEventHandler(callback),
           Disposable.addTo(this),
         );

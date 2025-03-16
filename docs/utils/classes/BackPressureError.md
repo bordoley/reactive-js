@@ -36,12 +36,12 @@
 
 ## Properties
 
-### \[QueueableLike\_backpressureStrategy\]
+### \[ConsumerLike\_backpressureStrategy\]
 
-> `readonly` **\[QueueableLike\_backpressureStrategy\]**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)
+> `readonly` **\[ConsumerLike\_backpressureStrategy\]**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)
 
 ***
 
-### \[QueueableLike\_capacity\]
+### \[ConsumerLike\_capacity\]
 
-> `readonly` **\[QueueableLike\_capacity\]**: `number`
+> `readonly` **\[ConsumerLike\_capacity\]**: `number`

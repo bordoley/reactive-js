@@ -15,15 +15,15 @@ import { Function1, bindMethod, none, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
+  ConsumerLike,
+  ConsumerLike_addOnReadyListener,
+  ConsumerLike_isReady,
   DisposableLike,
   EventListenerLike,
   EventListenerLike_notify,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
-  QueueableLike,
-  QueueableLike_addOnReadyListener,
-  QueueableLike_isReady,
 } from "../utils.js";
 import * as EventSource from "./EventSource.js";
 import * as WritableStore from "./WritableStore.js";
@@ -38,7 +38,7 @@ interface PauseableEventSourceModule {
   ): PauseableEventSourceLike<T> & DisposableLike;
 
   enqueue<T>(
-    queue: QueueableLike<T>,
+    queue: ConsumerLike<T>,
   ): Function1<
     PauseableEventSourceLike<T>,
     EventSourceLike<T> & DisposableLike
@@ -91,11 +91,11 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
 })();
 
 export const enqueue: Signature["enqueue"] =
-  <T>(queue: QueueableLike<T>) =>
+  <T>(queue: ConsumerLike<T>) =>
   (src: PauseableEventSourceLike<T>) =>
     EventSource.create((listener: EventListenerLike<T>) => {
       pipe(
-        queue[QueueableLike_addOnReadyListener](
+        queue[ConsumerLike_addOnReadyListener](
           bindMethod(src, PauseableLike_resume),
         ),
         Disposable.addTo(listener),
@@ -106,7 +106,7 @@ export const enqueue: Signature["enqueue"] =
         EventSource.addEventHandler(v => {
           queue[EventListenerLike_notify](v);
 
-          if (!queue[QueueableLike_isReady]) {
+          if (!queue[ConsumerLike_isReady]) {
             src[PauseableLike_pause]();
           }
         }),

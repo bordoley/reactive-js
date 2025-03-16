@@ -12,7 +12,7 @@
 
 ## Extended by
 
-- [`QueueableLike`](QueueableLike.md)
+- [`ConsumerLike`](ConsumerLike.md)
 
 ## Type Parameters
 

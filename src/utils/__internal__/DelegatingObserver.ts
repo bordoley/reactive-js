@@ -10,8 +10,8 @@ import {
   ObserverLike,
   SinkLike_complete,
 } from "../../utils.js";
+import DelegatingConsumerMixin from "../__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
-import DelegatingQueueableMixin from "../__mixins__/DelegatingQueueableMixin.js";
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 
@@ -20,7 +20,7 @@ export const create: <T>(o: ObserverLike<T>) => ObserverLike<T> =
     return mixInstanceFactory(
       include(
         DelegatingDisposableMixin,
-        DelegatingQueueableMixin(),
+        DelegatingConsumerMixin(),
         DelegatingSchedulerMixin,
       ),
       function DelegatingObserver(
@@ -28,7 +28,7 @@ export const create: <T>(o: ObserverLike<T>) => ObserverLike<T> =
         delegate: ObserverLike<T>,
       ): ObserverLike<T> {
         init(DelegatingDisposableMixin, this, delegate);
-        init(DelegatingQueueableMixin(), this, delegate);
+        init(DelegatingConsumerMixin(), this, delegate);
         init(DelegatingSchedulerMixin, this, delegate);
 
         return this;
@@ -42,7 +42,7 @@ export const createNotifyOnlyNonCompletingNonDisposing: <T>(
   mixInstanceFactory(
     include(
       DisposableMixin,
-      DelegatingQueueableMixin(),
+      DelegatingConsumerMixin(),
       DelegatingSchedulerMixin,
     ),
     function NonDisposingDelegatingObserver(
@@ -50,7 +50,7 @@ export const createNotifyOnlyNonCompletingNonDisposing: <T>(
       delegate: ObserverLike<T>,
     ): ObserverLike<T> {
       init(DisposableMixin, this);
-      init(DelegatingQueueableMixin(), this, delegate);
+      init(DelegatingConsumerMixin(), this, delegate);
       init(DelegatingSchedulerMixin, this, delegate);
 
       return this;

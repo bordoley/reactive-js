@@ -17,16 +17,16 @@ import DelegatingSchedulerMixin from "../../../utils/__mixins__/DelegatingSchedu
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import {
   BackpressureStrategy,
+  ConsumerLike_addOnReadyListener,
+  ConsumerLike_backpressureStrategy,
+  ConsumerLike_capacity,
+  ConsumerLike_isReady,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EventListenerLike_notify,
   ObserverLike,
   OverflowBackpressureStrategy,
-  QueueableLike_addOnReadyListener,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-  QueueableLike_isReady,
   SchedulerLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -49,8 +49,8 @@ const Observable_subscribe: Observable.Signature["subscribe"] = /*@__PURE__*/ (<
     },
     props(),
     proto({
-      [QueueableLike_capacity]: MAX_SAFE_INTEGER,
-      [QueueableLike_backpressureStrategy]:
+      [ConsumerLike_capacity]: MAX_SAFE_INTEGER,
+      [ConsumerLike_backpressureStrategy]:
         OverflowBackpressureStrategy as BackpressureStrategy,
 
       get [SinkLike_isCompleted]() {
@@ -58,12 +58,12 @@ const Observable_subscribe: Observable.Signature["subscribe"] = /*@__PURE__*/ (<
         return this[DisposableLike_isDisposed];
       },
 
-      get [QueueableLike_isReady](): boolean {
+      get [ConsumerLike_isReady](): boolean {
         unsafeCast<DisposableLike>(this);
         return !this[DisposableLike_isDisposed];
       },
 
-      [QueueableLike_addOnReadyListener](_: SideEffect1<void>): DisposableLike {
+      [ConsumerLike_addOnReadyListener](_: SideEffect1<void>): DisposableLike {
         return Disposable.disposed;
       },
 

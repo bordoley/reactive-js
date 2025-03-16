@@ -16,14 +16,14 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import {
+  ConsumerLike_addOnReadyListener,
+  ConsumerLike_isReady,
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EventListenerLike_notify,
   ObserverLike,
-  QueueableLike_addOnReadyListener,
-  QueueableLike_isReady,
   SchedulerLike_schedule,
   SerialDisposableLike_current,
   SinkLike_complete,
@@ -54,7 +54,7 @@ const Observable_genWithSideEffects: Observable.Signature["genWithSideEffects"] 
         );
 
         const continuation = (ctx: ContinuationContextLike) => {
-          while (observer[QueueableLike_isReady]) {
+          while (observer[ConsumerLike_isReady]) {
             let next: Optional<IteratorResult<T, any>> = none;
 
             try {
@@ -83,7 +83,7 @@ const Observable_genWithSideEffects: Observable.Signature["genWithSideEffects"] 
           Disposable.addTo(observer),
         );
 
-        observer[QueueableLike_addOnReadyListener](() => {
+        observer[ConsumerLike_addOnReadyListener](() => {
           const active =
             !subscription[SerialDisposableLike_current][
               DisposableLike_isDisposed

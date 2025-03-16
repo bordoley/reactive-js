@@ -30,9 +30,9 @@ import LiftedObserverMixin, {
   LiftedObserverLike_notifyDelegate,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
+  ConsumerLike,
   DisposableLike,
   ObserverLike,
-  QueueableLike,
   SinkLike_complete,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -64,7 +64,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
   };
 
   function onWithLatestFromObserverOtherSubscriptionComplete(
-    this: TProperties & DisposableLike & QueueableLike,
+    this: TProperties & DisposableLike & ConsumerLike,
   ) {
     if (!this[WithLatestFromObserver_hasLatest]) {
       this[SinkLike_complete]();

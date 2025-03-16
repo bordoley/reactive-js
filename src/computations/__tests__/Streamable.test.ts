@@ -26,10 +26,10 @@ import {
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
+  ConsumerLike_backpressureStrategy,
+  ConsumerLike_capacity,
   DropLatestBackpressureStrategy,
   EventListenerLike_notify,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
   SinkLike_complete,
   SinkLike_isCompleted,
   VirtualTimeSchedulerLike_run,
@@ -103,9 +103,9 @@ testModule(
         backpressureStrategy: DropLatestBackpressureStrategy,
       });
 
-      pipe(stateStream[QueueableLike_capacity], expectEquals(20));
+      pipe(stateStream[ConsumerLike_capacity], expectEquals(20));
       pipe(
-        stateStream[QueueableLike_backpressureStrategy],
+        stateStream[ConsumerLike_backpressureStrategy],
         expectEquals(DropLatestBackpressureStrategy),
       );
 

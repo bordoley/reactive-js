@@ -3,16 +3,16 @@
 import { include, init, mixInstanceFactory, } from "../../../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike_observe, ProducerLike_consume, } from "../../../computations.js";
 import { newInstance } from "../../../functions.js";
+import DelegatingConsumerMixin from "../../../utils/__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import DelegatingQueueableMixin from "../../../utils/__mixins__/DelegatingQueueableMixin.js";
 import DelegatingSchedulerMixin from "../../../utils/__mixins__/DelegatingSchedulerMixin.js";
 import * as Computation from "../../Computation.js";
 const Observable_toProducer = 
 /*@__PURE__*/ (() => {
-    const createProducerConsumerObserver = mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingSchedulerMixin, DelegatingQueueableMixin()), function ProducerConsumerObserver(scheduler, consumer) {
+    const createProducerConsumerObserver = mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingSchedulerMixin, DelegatingConsumerMixin()), function ProducerConsumerObserver(scheduler, consumer) {
         init(DelegatingDisposableMixin, this, consumer);
         init(DelegatingSchedulerMixin, this, scheduler);
-        init(DelegatingQueueableMixin(), this, consumer);
+        init(DelegatingConsumerMixin(), this, consumer);
         return this;
     });
     class Producer {

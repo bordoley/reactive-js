@@ -5,7 +5,7 @@ import { EventSourceLike_addEventListener, StoreLike_value, } from "../computati
 import { bindMethod, none, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
-import { EventListenerLike_notify, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_addOnReadyListener, QueueableLike_isReady, } from "../utils.js";
+import { ConsumerLike_addOnReadyListener, ConsumerLike_isReady, EventListenerLike_notify, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } from "../utils.js";
 import * as EventSource from "./EventSource.js";
 import * as WritableStore from "./WritableStore.js";
 import DelegatingEventSourceMixin from "./__mixins__/DelegatingEventSourceMixin.js";
@@ -29,10 +29,10 @@ export const create = /*@__PURE__*/ (() => {
     });
 })();
 export const enqueue = (queue) => (src) => EventSource.create((listener) => {
-    pipe(queue[QueueableLike_addOnReadyListener](bindMethod(src, PauseableLike_resume)), Disposable.addTo(listener));
+    pipe(queue[ConsumerLike_addOnReadyListener](bindMethod(src, PauseableLike_resume)), Disposable.addTo(listener));
     pipe(src, EventSource.addEventHandler(v => {
         queue[EventListenerLike_notify](v);
-        if (!queue[QueueableLike_isReady]) {
+        if (!queue[ConsumerLike_isReady]) {
             src[PauseableLike_pause]();
         }
     }), Disposable.addTo(listener));

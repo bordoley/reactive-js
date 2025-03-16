@@ -6,7 +6,7 @@
 
 # Function: useSink()
 
-> **useSink**\<`TReq`\>(`queue`): `object`
+> **useSink**\<`TReq`\>(`sink`): `object`
 
 ## Type Parameters
 
@@ -14,7 +14,7 @@
 
 ## Parameters
 
-### queue
+### sink
 
 [`Optional`](../../functions/type-aliases/Optional.md)\<[`SinkLike`](../../utils/interfaces/SinkLike.md)\<`TReq`\>\>
 

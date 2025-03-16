@@ -11,12 +11,12 @@ import { alwaysNone, bindMethod, identity, isNone, isSome, newInstance, none, pi
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Queue from "../utils/Queue.js";
+import DelegatingConsumerMixin from "../utils/__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
-import DelegatingQueueableMixin from "../utils/__mixins__/DelegatingQueueableMixin.js";
 import { ContinuationContextLike_yield, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_dequeue, SchedulerLike_schedule, } from "../utils.js";
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
-import * as QueueableObservable from "./__internal__/QueueableObservable.js";
+import * as ConsumerObservable from "./__internal__/ConsumerObservable.js";
 export const CacheLike_get = Symbol("CacheLike_get");
 export const create = /*@__PURE__*/ (() => {
     const CacheStream_scheduleCleanup = Symbol("CacheStream_scheduleCleanup");
@@ -27,12 +27,12 @@ export const create = /*@__PURE__*/ (() => {
         keep: Observable.keep,
         map: Observable.map,
     };
-    return mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingQueueableMixin()), function Cache(scheduler, options) {
+    return mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingConsumerMixin()), function Cache(scheduler, options) {
         const { maxEntries = MAX_SAFE_INTEGER, cleanupScheduler = scheduler, persistentStore, } = options ?? {};
-        const queue = QueueableObservable.create(options);
+        const consumer = ConsumerObservable.create(options);
         const store = newInstance(Map);
         const subscriptions = newInstance(Map);
-        const cleanupQueue = pipe(Queue.create(), Disposable.addTo(queue));
+        const cleanupQueue = pipe(Queue.create(), Disposable.addTo(consumer));
         const cleanupContinuation = (ctx) => {
             while (store[Map_size] > maxEntries) {
                 const key = cleanupQueue[QueueLike_dequeue]();
@@ -45,7 +45,7 @@ export const create = /*@__PURE__*/ (() => {
                 ctx[ContinuationContextLike_yield]();
             }
         };
-        pipe(queue, Observable.map((updaters) => tuple(updaters, pipe(updaters, ReadonlyObjectMap.map((_, k) => this[CacheStream_store][Map_get](k))))), isSome(persistentStore)
+        pipe(consumer, Observable.map((updaters) => tuple(updaters, pipe(updaters, ReadonlyObjectMap.map((_, k) => this[CacheStream_store][Map_get](k))))), isSome(persistentStore)
             ? Computation.concatMap(ObservableModule)(next => {
                 const [updaters, values] = next;
                 const keys = pipe(values, ReadonlyObjectMap.keep(isNone), Collection.keySet(ReadonlyObjectMap.keys));
@@ -79,7 +79,7 @@ export const create = /*@__PURE__*/ (() => {
             ? Computation.concatMap(ObservableModule)(bindMethod(persistentStore, "store"), {
                 innerType: DeferredComputationWithSideEffects,
             })
-            : Computation.ignoreElements(ObservableModule)(), Observable.subscribe(scheduler), Disposable.addTo(queue));
+            : Computation.ignoreElements(ObservableModule)(), Observable.subscribe(scheduler), Disposable.addTo(consumer));
         let cleanupJob = Disposable.disposed;
         this[CacheStream_store] = store;
         this[CacheStream_subscriptions] = subscriptions;
@@ -94,8 +94,8 @@ export const create = /*@__PURE__*/ (() => {
             cleanupJob =
                 cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
         };
-        init(DelegatingDisposableMixin, this, queue);
-        init(DelegatingQueueableMixin(), this, queue);
+        init(DelegatingDisposableMixin, this, consumer);
+        init(DelegatingConsumerMixin(), this, consumer);
         return this;
     }, props({
         [CacheStream_scheduleCleanup]: none,

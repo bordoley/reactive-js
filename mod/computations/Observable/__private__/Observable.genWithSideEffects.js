@@ -5,7 +5,7 @@ import { error, isSome, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
-import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, QueueableLike_addOnReadyListener, QueueableLike_isReady, SchedulerLike_schedule, SerialDisposableLike_current, SinkLike_complete, } from "../../../utils.js";
+import { ConsumerLike_addOnReadyListener, ConsumerLike_isReady, ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, SchedulerLike_schedule, SerialDisposableLike_current, SinkLike_complete, } from "../../../utils.js";
 import Observable_createSynchronousObservableWithSideEffects from "./Observable.createSynchronousObservableWithSideEffects.js";
 const Observable_genWithSideEffects = (factory, options) => Observable_createSynchronousObservableWithSideEffects((observer) => {
     const { delay = 0, delayStart = false } = options ?? {};
@@ -14,7 +14,7 @@ const Observable_genWithSideEffects = (factory, options) => Observable_createSyn
     const subscription = SerialDisposable.create();
     pipe(observer, DisposableContainer.onDisposed(() => iterator.return(none)), Disposable.add(observer));
     const continuation = (ctx) => {
-        while (observer[QueueableLike_isReady]) {
+        while (observer[ConsumerLike_isReady]) {
             let next = none;
             try {
                 next = iterator[Iterator_next]();
@@ -35,7 +35,7 @@ const Observable_genWithSideEffects = (factory, options) => Observable_createSyn
         }
     };
     subscription[SerialDisposableLike_current] = pipe(observer[SchedulerLike_schedule](continuation, delayStart ? options : none), Disposable.addTo(observer));
-    observer[QueueableLike_addOnReadyListener](() => {
+    observer[ConsumerLike_addOnReadyListener](() => {
         const active = !subscription[SerialDisposableLike_current][DisposableLike_isDisposed];
         if (active) {
             return;

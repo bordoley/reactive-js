@@ -53,13 +53,13 @@ import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import {
+  ConsumerLike_isReady,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EventListenerLike,
   EventListenerLike_notify,
   ObserverLike,
-  QueueableLike_isReady,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
@@ -794,7 +794,7 @@ export const toPauseableObservable: Signature["toPauseableObservable"] =
                   break;
                 } else if (
                   (observer[EventListenerLike_notify](next[Iterator_value]),
-                  !observer[QueueableLike_isReady])
+                  !observer[ConsumerLike_isReady])
                 ) {
                   // An async iterable can produce resolved promises which are immediately
                   // scheduled on the microtask queue. This prevents the observer's scheduler

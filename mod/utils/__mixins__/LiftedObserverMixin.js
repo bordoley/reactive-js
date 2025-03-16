@@ -3,7 +3,7 @@
 import { __DEV__ } from "../../__internal__/constants.js";
 import { include, init, mix, props, proto, super_, unsafeCast, } from "../../__internal__/mixins.js";
 import { bind, bindMethod, isSome, memoize, none, pipe, pipeLazy, raiseIf, returns, } from "../../functions.js";
-import { ContinuationContextLike_yield, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_count, QueueLike_dequeue, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SchedulerLike_inContinuation, SchedulerLike_schedule, SerialDisposableLike_current, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, ContinuationContextLike_yield, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_count, QueueLike_dequeue, SchedulerLike_inContinuation, SchedulerLike_schedule, SerialDisposableLike_current, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
@@ -23,7 +23,7 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
         while (this[QueueLike_count] > 0 && !this[DisposableLike_isDisposed]) {
             // Avoid dequeing values if the downstream consumer
             // is applying backpressure.
-            if (!consumer[QueueableLike_isReady]) {
+            if (!consumer[ConsumerLike_isReady]) {
                 // Set up the onReady listener
                 scheduleDrainQueue(this);
                 break;
@@ -42,11 +42,11 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
     // we already have a consumer lister setup. Not that performant.
     const setUpOnConsumerReadyListenerMemoized = memoize((observer) => {
         const consumer = observer[LiftedObserverMixin_consumer];
-        return pipe(consumer[QueueableLike_addOnReadyListener](pipeLazy(observer, scheduleDrainQueue)), Disposable.addTo(observer));
+        return pipe(consumer[ConsumerLike_addOnReadyListener](pipeLazy(observer, scheduleDrainQueue)), Disposable.addTo(observer));
     });
     const scheduleDrainQueue = (observer) => {
         const consumer = observer[LiftedObserverMixin_consumer];
-        const isConsumerReady = consumer[QueueableLike_isReady];
+        const isConsumerReady = consumer[ConsumerLike_isReady];
         const isConumerDisposed = consumer[DisposableLike_isDisposed];
         const isDrainScheduled = !observer[SerialDisposableLike_current][DisposableLike_isDisposed];
         if (!isDrainScheduled && isConsumerReady) {
@@ -70,8 +70,8 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
     }
     return returns(mix(include(QueueMixin(), SerialDisposableMixin(), DelegatingSchedulerMixin), function LiftedObserverMixin(delegate, options) {
         init(QueueMixin(), this, {
-            backpressureStrategy: delegate[QueueableLike_backpressureStrategy],
-            capacity: delegate[QueueableLike_capacity],
+            backpressureStrategy: delegate[ConsumerLike_backpressureStrategy],
+            capacity: delegate[ConsumerLike_capacity],
             ...(options ?? {}),
         });
         init(SerialDisposableMixin(), this, Disposable.disposed);
@@ -93,7 +93,7 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
     }), proto({
         get [LiftedObserverLike_isReady]() {
             unsafeCast(this);
-            return this[LiftedObserverMixin_consumer][QueueableLike_isReady];
+            return this[LiftedObserverMixin_consumer][ConsumerLike_isReady];
         },
         [EventListenerLike_notify](next) {
             const inSchedulerContinuation = this[SchedulerLike_inContinuation];
@@ -103,9 +103,9 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
             // wants to apply back pressure, as lifted observers just pass through
             // notifications and never queue in practice.
             const scheduler = this[LiftedObserverMixin_consumer];
-            const isDelegateReady = scheduler[QueueableLike_isReady];
+            const isDelegateReady = scheduler[ConsumerLike_isReady];
             const count = this[QueueLike_count];
-            const capacity = this[QueueableLike_capacity];
+            const capacity = this[ConsumerLike_capacity];
             const shouldNotify = inSchedulerContinuation &&
                 !shouldIgnore &&
                 isDelegateReady &&

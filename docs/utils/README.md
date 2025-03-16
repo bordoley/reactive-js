@@ -12,6 +12,7 @@
 
 ## Interfaces
 
+- [ConsumerLike](interfaces/ConsumerLike.md)
 - [ContinuationContextLike](interfaces/ContinuationContextLike.md)
 - [DisposableContainerLike](interfaces/DisposableContainerLike.md)
 - [DisposableLike](interfaces/DisposableLike.md)
@@ -19,7 +20,6 @@
 - [ObserverLike](interfaces/ObserverLike.md)
 - [PauseableLike](interfaces/PauseableLike.md)
 - [PauseableSchedulerLike](interfaces/PauseableSchedulerLike.md)
-- [QueueableLike](interfaces/QueueableLike.md)
 - [QueueLike](interfaces/QueueLike.md)
 - [SchedulerLike](interfaces/SchedulerLike.md)
 - [SerialDisposableLike](interfaces/SerialDisposableLike.md)
@@ -32,6 +32,10 @@
 
 ## Variables
 
+- [ConsumerLike\_addOnReadyListener](variables/ConsumerLike_addOnReadyListener.md)
+- [ConsumerLike\_backpressureStrategy](variables/ConsumerLike_backpressureStrategy.md)
+- [ConsumerLike\_capacity](variables/ConsumerLike_capacity.md)
+- [ConsumerLike\_isReady](variables/ConsumerLike_isReady.md)
 - [ContinuationContextLike\_yield](variables/ContinuationContextLike_yield.md)
 - [DisposableContainerLike\_add](variables/DisposableContainerLike_add.md)
 - [DisposableLike\_dispose](variables/DisposableLike_dispose.md)
@@ -44,10 +48,6 @@
 - [PauseableLike\_isPaused](variables/PauseableLike_isPaused.md)
 - [PauseableLike\_pause](variables/PauseableLike_pause.md)
 - [PauseableLike\_resume](variables/PauseableLike_resume.md)
-- [QueueableLike\_addOnReadyListener](variables/QueueableLike_addOnReadyListener.md)
-- [QueueableLike\_backpressureStrategy](variables/QueueableLike_backpressureStrategy.md)
-- [QueueableLike\_capacity](variables/QueueableLike_capacity.md)
-- [QueueableLike\_isReady](variables/QueueableLike_isReady.md)
 - [QueueLike\_count](variables/QueueLike_count.md)
 - [QueueLike\_dequeue](variables/QueueLike_dequeue.md)
 - [QueueLike\_head](variables/QueueLike_head.md)

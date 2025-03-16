@@ -14,12 +14,12 @@ import type {
 } from "./functions.js";
 import type {
   BackpressureStrategy,
+  ConsumerLike,
   DisposableContainerLike,
   DisposableLike,
   EventListenerLike,
   ObserverLike,
   PauseableLike,
-  QueueableLike,
   SchedulerLike,
   SinkLike,
 } from "./utils.js";
@@ -1491,7 +1491,7 @@ export const ProducerLike_consume = Symbol("ProducerLike_consume");
  * @noInheritDoc
  */
 export interface ProducerLike<out T = unknown> extends ComputationLike {
-  [ProducerLike_consume](consumer: QueueableLike<T>): void;
+  [ProducerLike_consume](consumer: ConsumerLike<T>): void;
 }
 
 /**
@@ -1637,7 +1637,7 @@ export interface PauseableObservableLike<out T = unknown>
  * @noInheritDoc
  */
 export interface StreamLike<TReq, out T>
-  extends QueueableLike<TReq>,
+  extends ConsumerLike<TReq>,
     MulticastObservableLike<T> {}
 
 export const StreamableLike_stream = Symbol("StreamableLike_stream");

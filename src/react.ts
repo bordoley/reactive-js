@@ -79,7 +79,7 @@ interface ReactModule {
     },
   ): Function1<TProps, React.ReactNode>;
 
-  useSink<TReq>(queue: Optional<SinkLike<TReq>>): {
+  useSink<TReq>(sink: Optional<SinkLike<TReq>>): {
     notify: Function1<TReq, boolean>;
     complete: SideEffect;
   };

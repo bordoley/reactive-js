@@ -28,9 +28,9 @@ import {
 } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import {
+  ConsumerLike,
   DisposableLike,
   EventListenerLike_notify,
-  QueueableLike,
   SchedulerLike,
 } from "../utils.js";
 import { CSSStyleMapLike } from "../web.js";
@@ -90,7 +90,7 @@ type Signature = WebEffectsModule;
 const returnsNone = returns(none);
 const makeRefSetter =
   (
-    queue: QueueableLike<Updater<Optional<HTMLElement | null>>>,
+    queue: ConsumerLike<Updater<Optional<HTMLElement | null>>>,
   ): SideEffect1<HTMLElement | null | undefined> =>
   ele =>
     queue[EventListenerLike_notify](returns(ele));

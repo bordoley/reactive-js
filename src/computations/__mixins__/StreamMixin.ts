@@ -8,8 +8,8 @@ import {
 import { Function1, Optional, pipe, returns } from "../../functions.js";
 import { clampPositiveInteger } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
+import DelegatingConsumerMixin from "../../utils/__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
-import DelegatingQueueableMixin from "../../utils/__mixins__/DelegatingQueueableMixin.js";
 import {
   BackpressureStrategy,
   DisposableLike,
@@ -17,7 +17,7 @@ import {
   SchedulerLike,
 } from "../../utils.js";
 import * as Observable from "../Observable.js";
-import * as QueueableObservable from "../__internal__/QueueableObservable.js";
+import * as ConsumerObservable from "../__internal__/ConsumerObservable.js";
 import DelegatingMulticastObservableMixin from "../__mixins__/DelegatingMulticastObservableMixin.js";
 
 const StreamMixin: <TReq, T>() => Mixin3<
@@ -34,7 +34,7 @@ const StreamMixin: <TReq, T>() => Mixin3<
     mix(
       include(
         DelegatingDisposableMixin,
-        DelegatingQueueableMixin(),
+        DelegatingConsumerMixin(),
         DelegatingMulticastObservableMixin<T>(),
       ),
       function Stream(
@@ -50,10 +50,10 @@ const StreamMixin: <TReq, T>() => Mixin3<
           backpressureStrategy?: BackpressureStrategy;
         },
       ): StreamLike<TReq, T> & DisposableLike {
-        const queue = QueueableObservable.create<TReq>(options);
+        const consumer = ConsumerObservable.create<TReq>(options);
 
         const delegate = pipe(
-          queue,
+          consumer,
           Observable.backpressureStrategy({
             backpressureStrategy:
               options?.backpressureStrategy ?? OverflowBackpressureStrategy,
@@ -63,11 +63,11 @@ const StreamMixin: <TReq, T>() => Mixin3<
           }),
           op,
           Observable.multicast<T>(scheduler, options),
-          Disposable.addTo(queue),
+          Disposable.addTo(consumer),
         );
 
-        init(DelegatingDisposableMixin, this, queue);
-        init(DelegatingQueueableMixin<TReq>(), this, queue);
+        init(DelegatingDisposableMixin, this, consumer);
+        init(DelegatingConsumerMixin<TReq>(), this, consumer);
         init(DelegatingMulticastObservableMixin<T>(), this, delegate);
 
         return this;

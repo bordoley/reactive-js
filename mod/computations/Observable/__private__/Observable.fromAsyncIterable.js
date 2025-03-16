@@ -3,7 +3,7 @@
 import { Iterator_done, Iterator_next, Iterator_value, } from "../../../__internal__/constants.js";
 import { error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { DisposableLike_dispose, EventListenerLike_notify, QueueableLike_addOnReadyListener, QueueableLike_isReady, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { ConsumerLike_addOnReadyListener, ConsumerLike_isReady, DisposableLike_dispose, EventListenerLike_notify, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import Observable_create from "./Observable.create.js";
 import Observable_createPureDeferredObservable from "./Observable.createPureDeferredObservable.js";
@@ -22,7 +22,7 @@ const Observable_fromAsyncIterable = (() => (iterable) => {
                 // unless we enter the loop.
                 let done = true;
                 while (!observer[SinkLike_isCompleted] &&
-                    observer[QueueableLike_isReady] &&
+                    observer[ConsumerLike_isReady] &&
                     observer[SchedulerLike_now] - startTime < maxYieldInterval) {
                     done = false;
                     const next = await iterator[Iterator_next]();
@@ -32,7 +32,7 @@ const Observable_fromAsyncIterable = (() => (iterable) => {
                         break;
                     }
                     else if ((observer[EventListenerLike_notify](next[Iterator_value]),
-                        !observer[QueueableLike_isReady])) {
+                        !observer[ConsumerLike_isReady])) {
                         // An async iterable can produce resolved promises which are immediately
                         // scheduled on the microtask queue. This prevents the observer's scheduler
                         // from running and draining queued events.
@@ -43,7 +43,7 @@ const Observable_fromAsyncIterable = (() => (iterable) => {
                     }
                 }
                 continuationIsActive = false;
-                if (!done && observer[QueueableLike_isReady]) {
+                if (!done && observer[ConsumerLike_isReady]) {
                     pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
                     continuationIsActive = true;
                 }
@@ -53,7 +53,7 @@ const Observable_fromAsyncIterable = (() => (iterable) => {
                 return;
             }
         };
-        observer[QueueableLike_addOnReadyListener](() => {
+        observer[ConsumerLike_addOnReadyListener](() => {
             if (!continuationIsActive) {
                 pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
                 continuationIsActive = true;

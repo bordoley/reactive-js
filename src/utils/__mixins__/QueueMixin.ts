@@ -28,6 +28,10 @@ import { clampPositiveInteger, floor } from "../../math.js";
 import {
   BackPressureError,
   BackpressureStrategy,
+  ConsumerLike_addOnReadyListener,
+  ConsumerLike_backpressureStrategy,
+  ConsumerLike_capacity,
+  ConsumerLike_isReady,
   DisposableLike,
   DisposableLike_dispose,
   DropLatestBackpressureStrategy,
@@ -38,10 +42,6 @@ import {
   QueueLike_count,
   QueueLike_dequeue,
   QueueLike_head,
-  QueueableLike_addOnReadyListener,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-  QueueableLike_isReady,
   SinkLike_complete,
   SinkLike_isCompleted,
   ThrowBackpressureStrategy,
@@ -60,9 +60,9 @@ const QueueMixin: <T>() => Mixin1<
   Pick<
     QueueLike<T>,
     | typeof QueueLike_head
-    | typeof QueueableLike_isReady
-    | typeof QueueableLike_capacity
-    | typeof QueueableLike_backpressureStrategy
+    | typeof ConsumerLike_isReady
+    | typeof ConsumerLike_capacity
+    | typeof ConsumerLike_backpressureStrategy
     | typeof QueueLike_dequeue
     | typeof Symbol.iterator
     | typeof EventListenerLike_notify
@@ -143,14 +143,14 @@ const QueueMixin: <T>() => Mixin1<
       Pick<
         QueueLike<T>,
         | typeof QueueLike_head
-        | typeof QueueableLike_isReady
+        | typeof ConsumerLike_isReady
         | typeof QueueLike_dequeue
         | typeof Symbol.iterator
         | typeof EventListenerLike_notify
         | typeof SinkLike_complete
-        | typeof QueueableLike_addOnReadyListener
-        | typeof QueueableLike_capacity
-        | typeof QueueableLike_backpressureStrategy
+        | typeof ConsumerLike_addOnReadyListener
+        | typeof ConsumerLike_capacity
+        | typeof ConsumerLike_backpressureStrategy
       >,
       DisposableLike,
       Optional<{
@@ -195,12 +195,12 @@ const QueueMixin: <T>() => Mixin1<
         [QueueMixin_onReadyPublisher]: none,
       }),
       {
-        get [QueueableLike_capacity]() {
+        get [ConsumerLike_capacity]() {
           unsafeCast<TProperties>(this);
           return this[QueueMixin_capacity];
         },
 
-        get [QueueableLike_backpressureStrategy]() {
+        get [ConsumerLike_backpressureStrategy]() {
           unsafeCast<TProperties>(this);
           return this[QueueMixin_backpressureStrategy];
         },
@@ -226,7 +226,7 @@ const QueueMixin: <T>() => Mixin1<
           return head === tail ? none : values[index];
         },*/
 
-        get [QueueableLike_isReady]() {
+        get [ConsumerLike_isReady]() {
           unsafeCast<TProperties>(this);
           const count = this[QueueLike_count];
           const capacity = this[QueueMixin_capacity];
@@ -507,7 +507,7 @@ const QueueMixin: <T>() => Mixin1<
           }
         },
 
-        [QueueableLike_addOnReadyListener](
+        [ConsumerLike_addOnReadyListener](
           this: TProperties & DisposableLike,
           callback: SideEffect1<void>,
         ) {

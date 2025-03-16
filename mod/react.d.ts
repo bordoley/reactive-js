@@ -20,7 +20,7 @@ interface ReactModule {
     createComponent<TProps>(fn: Function1<MulticastObservableLike<TProps>, ObservableLike<ReactElement>>, options?: {
         readonly priority?: 1 | 2 | 3 | 4 | 5;
     }): Function1<TProps, React.ReactNode>;
-    useSink<TReq>(queue: Optional<SinkLike<TReq>>): {
+    useSink<TReq>(sink: Optional<SinkLike<TReq>>): {
         notify: Function1<TReq, boolean>;
         complete: SideEffect;
     };

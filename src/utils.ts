@@ -115,35 +115,35 @@ export type BackpressureStrategy =
   | typeof OverflowBackpressureStrategy
   | typeof ThrowBackpressureStrategy;
 
-export const QueueableLike_backpressureStrategy = Symbol(
-  "QueueableLike_backpressureStrategy",
+export const ConsumerLike_backpressureStrategy = Symbol(
+  "ConsumerLike_backpressureStrategy",
 );
-export const QueueableLike_capacity = Symbol("QueueableLike_capacity");
-export const QueueableLike_isReady = Symbol("QueueableLike_isReady");
-export const QueueableLike_addOnReadyListener = Symbol(
-  "QueueableLike_addOnReadyListener",
+export const ConsumerLike_capacity = Symbol("ConsumerLike_capacity");
+export const ConsumerLike_isReady = Symbol("ConsumerLike_isReady");
+export const ConsumerLike_addOnReadyListener = Symbol(
+  "ConsumerLike_addOnReadyListener",
 );
 
 /**
- * A `QueueableLike` type that consumes enqueued events to
+ * A `ConsumerLike` type that consumes enqueued events to
  * be consumed.
  *
  * @noInheritDoc
  */
-export interface QueueableLike<T = unknown> extends SinkLike<T> {
-  readonly [QueueableLike_isReady]: boolean;
+export interface ConsumerLike<T = unknown> extends SinkLike<T> {
+  readonly [ConsumerLike_isReady]: boolean;
 
   /**
    * The back pressure strategy utilized by the queue when it is at capacity.
    */
-  readonly [QueueableLike_backpressureStrategy]: BackpressureStrategy;
+  readonly [ConsumerLike_backpressureStrategy]: BackpressureStrategy;
 
   /**
    * The number of items the queue is capable of efficiently buffering.
    */
-  readonly [QueueableLike_capacity]: number;
+  readonly [ConsumerLike_capacity]: number;
 
-  [QueueableLike_addOnReadyListener](
+  [ConsumerLike_addOnReadyListener](
     callback: SideEffect1<void>,
   ): DisposableLike;
 }
@@ -155,7 +155,7 @@ export const QueueLike_count = Symbol("QueueLike_count");
 /**
  * @noInheritDoc
  */
-export interface QueueLike<T = unknown> extends QueueableLike<T>, Iterable<T> {
+export interface QueueLike<T = unknown> extends ConsumerLike<T>, Iterable<T> {
   readonly [QueueLike_count]: number;
 
   readonly [QueueLike_head]: Optional<T>;
@@ -167,13 +167,13 @@ export interface QueueLike<T = unknown> extends QueueableLike<T>, Iterable<T> {
  * @noInheritDoc
  */
 export class BackPressureError extends Error {
-  readonly [QueueableLike_capacity]: number;
-  readonly [QueueableLike_backpressureStrategy]: BackpressureStrategy;
+  readonly [ConsumerLike_capacity]: number;
+  readonly [ConsumerLike_backpressureStrategy]: BackpressureStrategy;
 
   constructor(capacity: number, backpressureStrategy: BackpressureStrategy) {
     super();
-    this[QueueableLike_capacity] = capacity;
-    this[QueueableLike_backpressureStrategy] = backpressureStrategy;
+    this[ConsumerLike_capacity] = capacity;
+    this[ConsumerLike_backpressureStrategy] = backpressureStrategy;
   }
 }
 
@@ -304,5 +304,5 @@ export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {}
  * @noInheritDoc
  */
 export interface ObserverLike<T = unknown>
-  extends QueueableLike<T>,
+  extends ConsumerLike<T>,
     SchedulerLike {}

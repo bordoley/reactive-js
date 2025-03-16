@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`QueueableLike`](QueueableLike.md)\<`T`\>.`Iterable`\<`T`\>
+- [`ConsumerLike`](ConsumerLike.md)\<`T`\>.`Iterable`\<`T`\>
 
 ## Type Parameters
 

@@ -24,7 +24,7 @@
 
 ##### consumer
 
-[`QueueableLike`](../../utils/interfaces/QueueableLike.md)\<`T`\>
+[`ConsumerLike`](../../utils/interfaces/ConsumerLike.md)\<`T`\>
 
 #### Returns
 
