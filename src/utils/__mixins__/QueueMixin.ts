@@ -511,13 +511,19 @@ const QueueMixin: <T>() => Mixin1<
           this: TProperties & DisposableLike,
           callback: SideEffect1<void>,
         ) {
-          const publisher = this[QueueMixin_onReadyPublisher];
-
-          this[QueueMixin_onReadyPublisher] =
-            publisher ?? pipe(Publisher.create<void>(), Disposable.addTo(this));
+          const publisher =
+            this[QueueMixin_onReadyPublisher] ??
+            (() => {
+              const publisher = pipe(
+                Publisher.create<void>(),
+                Disposable.addTo(this),
+              );
+              this[QueueMixin_onReadyPublisher] = publisher;
+              return publisher;
+            })();
 
           return pipe(
-            this[QueueMixin_onReadyPublisher],
+            publisher,
             EventSource_addEventHandler(callback),
             Disposable.addTo(this),
           );
