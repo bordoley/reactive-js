@@ -10,6 +10,13 @@
 
 - [`ComputationLike`](ComputationLike.md)
 
+## Extended by
+
+- [`MulticastProducerLike`](MulticastProducerLike.md)
+- [`DeferredProducerLike`](DeferredProducerLike.md)
+- [`PureDeferredProducerLike`](PureDeferredProducerLike.md)
+- [`DeferredProducerWithSideEffectsLike`](DeferredProducerWithSideEffectsLike.md)
+
 ## Type Parameters
 
 • **T** = `unknown`

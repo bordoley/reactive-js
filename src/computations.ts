@@ -1515,6 +1515,48 @@ export interface ProducerLike<out T = unknown> extends ComputationLike {
 /**
  * @noInheritDoc
  */
+export interface MulticastProducerLike<out T = unknown>
+  extends ProducerLike<T>,
+    MulticastLike {
+  readonly [ComputationLike_isDeferred]: false;
+  readonly [ComputationLike_isPure]?: true;
+  readonly [ComputationLike_isSynchronous]: false;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface DeferredProducerLike<out T = unknown>
+  extends ProducerLike<T>,
+    DeferredComputationLike {
+  readonly [ComputationLike_isDeferred]?: true;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface PureDeferredProducerLike<out T = unknown>
+  extends ProducerLike<T>,
+    PureDeferredComputationLike {
+  readonly [ComputationLike_isDeferred]?: true;
+  readonly [ComputationLike_isPure]?: true;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface DeferredProducerWithSideEffectsLike<out T = unknown>
+  extends ProducerLike<T>,
+    DeferredComputationWithSideEffectsLike {
+  readonly [ComputationLike_isDeferred]?: true;
+  readonly [ComputationLike_isPure]: false;
+}
+
+// FIXME: Runnable producers are possible if we validate schedulers are VTS in observable
+
+/**
+ * @noInheritDoc
+ */
 export interface PublisherLike<T = unknown>
   extends EventSourceLike<T>,
     EventListenerLike<T> {}

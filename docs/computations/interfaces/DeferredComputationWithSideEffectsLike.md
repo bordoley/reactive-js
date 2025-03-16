@@ -10,6 +10,10 @@
 
 - [`DeferredComputationLike`](DeferredComputationLike.md)
 
+## Extended by
+
+- [`DeferredProducerWithSideEffectsLike`](DeferredProducerWithSideEffectsLike.md)
+
 ## Properties
 
 ### \[ComputationLike\_isDeferred\]?

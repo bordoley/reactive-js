@@ -13,6 +13,7 @@
 ## Extended by
 
 - [`EventSourceLike`](EventSourceLike.md)
+- [`MulticastProducerLike`](MulticastProducerLike.md)
 - [`MulticastObservableLike`](MulticastObservableLike.md)
 
 ## Properties

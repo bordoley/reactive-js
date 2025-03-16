@@ -15,6 +15,8 @@ interface NodeReadable {
   toPauseableEventSource(
     readable: Readable,
   ): PauseableEventSourceLike<Uint8Array> & DisposableLike;
+
+  // FIXME: add toProducer()
 }
 
 type Signature = NodeReadable;
